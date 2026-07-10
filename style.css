@@ -828,7 +828,53 @@ background:#51A51C;
 color:white;
 
 }
+/* =========================
+   MOBILE FIX
+========================= */
 
+@media (max-width: 900px){
+
+header{
+
+padding:20px;
+
+height:auto;
+
+}
+
+.logo img{
+
+width:60px;
+
+height:60px;
+
+}
+
+.logo span{
+
+font-size:28px;
+
+}
+
+.hero{
+
+padding-top:260px;
+
+}
+
+.hero h1{
+
+font-size:52px;
+
+}
+
+.hero h2{
+
+font-size:38px;
+
+}
+
+}
 /* =========================================================
    END
 ========================================================= */
