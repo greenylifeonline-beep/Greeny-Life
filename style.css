@@ -1,19 +1,15 @@
 /* =========================
-   GREENY LIFE DESIGN SYSTEM
+   GREENY LIFE Design System
 ========================= */
 
 :root{
 
 --green:#51A51C;
---white:#FFFFFF;
---dark:#1E1E1E;
---light:#F7F8F6;
-
---gold:#C9A227;
-
---radius:18px;
-
---shadow:0 10px 30px rgba(0,0,0,.08);
+--green-dark:#3d8614;
+--white:#ffffff;
+--light:#f8faf8;
+--gray:#666;
+--shadow:0 15px 40px rgba(0,0,0,.08);
 
 }
 
@@ -23,19 +19,34 @@ padding:0;
 box-sizing:border-box;
 }
 
+html{
+scroll-behavior:smooth;
+}
+
 body{
 
-font-family:Montserrat,sans-serif;
-
-background:#f7f7f7;
-
+font-family:'Montserrat',sans-serif;
+background:#fff;
 color:#222;
-
 line-height:1.6;
 
 }
 
+/* HEADER */
+
 header{
+
+position:fixed;
+
+top:0;
+
+left:0;
+
+right:0;
+
+height:80px;
+
+background:white;
 
 display:flex;
 
@@ -43,35 +54,23 @@ justify-content:space-between;
 
 align-items:center;
 
-padding:25px 60px;
-
-background:white;
+padding:0 60px;
 
 box-shadow:var(--shadow);
 
-position:sticky;
-
-top:0;
-
-z-index:100;
+z-index:999;
 
 }
 
-.logo h1{
+.logo{
+
+font-size:30px;
+
+font-weight:700;
 
 color:var(--green);
 
-font-family:"Playfair Display",serif;
-
-font-size:34px;
-
-}
-
-.logo p{
-
-color:#666;
-
-font-size:14px;
+font-family:'Playfair Display',serif;
 
 }
 
@@ -79,7 +78,7 @@ nav{
 
 display:flex;
 
-gap:30px;
+gap:35px;
 
 }
 
@@ -87,7 +86,7 @@ nav a{
 
 text-decoration:none;
 
-color:#333;
+color:#444;
 
 font-weight:600;
 
@@ -101,65 +100,141 @@ color:var(--green);
 
 }
 
+/* HERO */
+
 .hero{
 
-padding:90px 50px;
+height:100vh;
+
+display:flex;
+
+justify-content:center;
+
+align-items:center;
 
 text-align:center;
 
-background:white;
+background:linear-gradient(180deg,#ffffff,#f5fff0);
+
+padding:30px;
 
 }
 
-.hero h2{
+.hero-content{
 
-font-size:52px;
+max-width:900px;
 
-font-family:"Playfair Display",serif;
+}
+
+.hero h1{
+
+font-size:74px;
 
 color:var(--green);
+
+font-family:'Playfair Display',serif;
 
 margin-bottom:15px;
 
 }
 
+.hero h2{
+
+font-size:34px;
+
+margin-bottom:25px;
+
+}
+
 .hero p{
+
+font-size:20px;
+
+color:#666;
 
 max-width:700px;
 
 margin:auto;
 
-font-size:20px;
-
-color:#555;
-
-}
-
-.collections{
-
-padding:70px 40px;
-
-}
-
-.collections h2{
-
-font-size:38px;
-
 margin-bottom:40px;
+
+}
+
+.btn{
+
+display:inline-block;
+
+padding:18px 42px;
+
+background:var(--green);
+
+color:white;
+
+border-radius:60px;
+
+text-decoration:none;
+
+font-weight:700;
+
+transition:.3s;
+
+}
+
+.btn:hover{
+
+background:var(--green-dark);
+
+transform:translateY(-4px);
+
+}
+
+/* INTRO */
+
+.intro{
+
+padding:120px 40px;
 
 text-align:center;
 
+}
+
+.intro h2{
+
+font-size:48px;
+
 color:var(--green);
+
+margin-bottom:25px;
+
+font-family:'Playfair Display',serif;
 
 }
 
-.grid{
+.intro p{
+
+max-width:850px;
+
+margin:auto;
+
+font-size:20px;
+
+color:#666;
+
+}
+
+/* COLLECTIONS */
+
+.collections{
+
+padding:80px;
 
 display:grid;
 
-grid-template-columns:repeat(auto-fit,minmax(270px,1fr));
+grid-template-columns:repeat(auto-fit,minmax(260px,1fr));
 
-gap:25px;
+gap:30px;
+
+background:#fafafa;
 
 }
 
@@ -167,38 +242,98 @@ gap:25px;
 
 background:white;
 
-padding:35px;
+padding:45px;
 
-border-radius:18px;
+border-radius:24px;
 
 box-shadow:var(--shadow);
 
 transition:.35s;
 
-cursor:pointer;
+text-align:center;
 
 }
 
 .card:hover{
 
-transform:translateY(-8px);
+transform:translateY(-10px);
+
+}
+
+.card{
+
+font-size:60px;
 
 }
 
 .card h3{
 
+margin:25px 0 15px;
+
+font-size:28px;
+
 color:var(--green);
-
-margin-bottom:18px;
-
-font-size:24px;
 
 }
 
 .card p{
 
-margin-bottom:8px;
-
 color:#666;
+
+}
+
+/* MOBILE */
+
+@media(max-width:900px){
+
+header{
+
+padding:20px;
+
+flex-direction:column;
+
+height:auto;
+
+gap:15px;
+
+}
+
+nav{
+
+flex-wrap:wrap;
+
+justify-content:center;
+
+}
+
+.hero h1{
+
+font-size:46px;
+
+}
+
+.hero h2{
+
+font-size:26px;
+
+}
+
+.hero p{
+
+font-size:17px;
+
+}
+
+.intro h2{
+
+font-size:34px;
+
+}
+
+.collections{
+
+padding:30px;
+
+}
 
 }
