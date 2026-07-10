@@ -263,49 +263,53 @@ background:#fafafa;
 
 }
 
-.card p{
-
-    color:#666;
-
-    font-size:18px;
-
-    line-height:1.8;
-
-    font-weight:400;
-
-    text-align:center;
-
-    margin-top:18px;
-
-}
-
-.card:hover{
-
-transform:translateY(-10px);
-
-}
-
 /* ===========================
    COLLECTION CARDS
 =========================== */
 
 .card{
 
+    background:#ffffff;
+
+    border-radius:24px;
+
+    padding:45px 35px;
+
     text-align:center;
 
-    padding:40px 30px;
+    min-height:430px;
 
-    font-size:18px;
+    box-shadow:0 15px 40px rgba(0,0,0,.08);
 
-    line-height:1.8;
-
-    color:#666;
+    transition:.35s;
 
 }
 
+.card:hover{
+
+    transform:translateY(-10px);
+
+    box-shadow:0 20px 50px rgba(0,0,0,.12);
+
+}
+
+/* Card Icon */
+
+.card > :first-child{
+
+    display:block;
+
+    font-size:42px;
+
+    margin-bottom:18px;
+
+}
+
+/* Card Title */
+
 .card h3{
 
-    margin:18px 0 18px;
+    margin:18px 0;
 
     font-size:30px;
 
@@ -347,7 +351,7 @@ transform:translateY(-10px);
 
 }
 
-/* Product list */
+/* Product List */
 
 .card p{
 
@@ -359,13 +363,9 @@ transform:translateY(-10px);
 
     color:#666;
 
+    text-align:center;
+
     margin-top:15px;
-
-}
-
-.card p{
-
-color:#666;
 
 }
 
