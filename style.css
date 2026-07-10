@@ -107,6 +107,10 @@ header{
 
 .logo{
 
+    display:flex;
+
+    align-items:center;
+
     font-family:'Cormorant Garamond',serif;
 
     font-size:34px;
@@ -118,6 +122,16 @@ header{
     letter-spacing:2px;
 
     text-transform:uppercase;
+
+}
+
+.logo img{
+
+    height:60px;
+
+    width:auto;
+
+    display:block;
 
 }
 
