@@ -285,30 +285,82 @@ transform:translateY(-10px);
 
 }
 
+/* ===========================
+   COLLECTION CARDS
+=========================== */
+
 .card{
-    font-size:34px;
-    line-height:1.2;
+
+    text-align:center;
+
+    padding:40px 30px;
+
+    font-size:18px;
+
+    line-height:1.8;
+
+    color:#666;
+
 }
 
 .card h3{
-    margin:25px 0 15px;
-    font-size:28px;
+
+    margin:18px 0 18px;
+
+    font-size:30px;
+
+    font-weight:700;
+
+    line-height:1.2;
+
 }
+
+/* Honey */
 
 .card:nth-child(1) h3{
+
     color:#C48A00;
+
 }
+
+/* Bee Products */
 
 .card:nth-child(2) h3{
+
     color:#B8860B;
+
 }
+
+/* Premium Spices */
 
 .card:nth-child(3) h3{
-    color:#5E8C31;
+
+    color:#B85C00;
+
 }
 
+/* Natural Oils */
+
 .card:nth-child(4) h3{
+
     color:#2E8B57;
+
+}
+
+/* Product list */
+
+.card p{
+
+    font-size:18px;
+
+    font-weight:400;
+
+    line-height:1.8;
+
+    color:#666;
+
+    margin-top:15px;
+
 }
 
 .card p{
