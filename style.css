@@ -1,285 +1,357 @@
-/* =========================
-   GREENY LIFE Design System
-========================= */
-@import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@500;600;700&display=swap');
+/* =========================================================
+   GREENY LIFE
+   Premium Packaging Design System
+   Version 2.0
+========================================================= */
+
+/* Google Fonts */
+
+@import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@500;600;700&family=Montserrat:wght@300;400;500;600;700&display=swap');
+
+/* =========================================================
+   ROOT
+========================================================= */
 
 :root{
 
---green:#51A51C;
---green-dark:#3d8614;
---white:#ffffff;
---light:#f8faf8;
---gray:#666;
---shadow:0 15px 40px rgba(0,0,0,.08);
+    --green:#51A51C;
+    --green-dark:#3D8614;
+
+    --white:#FFFFFF;
+    --offwhite:#FAFAF8;
+
+    --text:#222222;
+    --gray:#666666;
+
+    --honey:#C9A227;
+    --spices:#B85C00;
+    --bee:#7D8C1F;
+    --oil:#16A085;
+
+    --shadow:0 15px 40px rgba(0,0,0,.08);
+    --shadow-hover:0 25px 60px rgba(0,0,0,.12);
+
+    --radius:24px;
 
 }
 
+/* =========================================================
+   RESET
+========================================================= */
+
 *{
-margin:0;
-padding:0;
-box-sizing:border-box;
+
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+
 }
 
 html{
-scroll-behavior:smooth;
+
+    scroll-behavior:smooth;
+
 }
 
 body{
 
-font-family:'Montserrat',sans-serif;
-background:#fff;
-color:#222;
-line-height:1.6;
+    font-family:'Montserrat',sans-serif;
+
+    color:var(--text);
+
+    background:#fff;
+
+    line-height:1.6;
+
+    overflow-x:hidden;
 
 }
 
-/* HEADER */
+/* =========================================================
+   HEADER
+========================================================= */
 
 header{
 
-position:fixed;
+    position:fixed;
 
-top:0;
+    top:0;
 
-left:0;
+    left:0;
 
-right:0;
+    width:100%;
 
-height:80px;
+    height:84px;
 
-background:white;
+    background:rgba(255,255,255,.96);
 
-display:flex;
+    backdrop-filter:blur(10px);
 
-justify-content:space-between;
+    display:flex;
 
-align-items:center;
+    justify-content:space-between;
 
-padding:0 60px;
+    align-items:center;
 
-box-shadow:var(--shadow);
+    padding:0 70px;
 
-z-index:999;
+    box-shadow:var(--shadow);
+
+    z-index:9999;
 
 }
+
+/* =========================================================
+   LOGO
+========================================================= */
 
 .logo{
 
-font-size:30px;
+    font-family:'Cormorant Garamond',serif;
 
-font-weight:700;
+    font-size:34px;
 
-color:var(--green);
+    font-weight:700;
 
-font-family:'Cormorant Garamond',serif;
-letter-spacing:2px;
-text-transform:uppercase;
+    color:var(--green);
+
+    letter-spacing:2px;
+
+    text-transform:uppercase;
+
 }
+
+/* =========================================================
+   NAVIGATION
+========================================================= */
 
 nav{
 
-display:flex;
+    display:flex;
 
-gap:35px;
+    gap:38px;
 
 }
 
 nav a{
 
-text-decoration:none;
+    color:#444;
 
-color:#444;
+    text-decoration:none;
 
-font-weight:600;
+    font-size:15px;
 
-transition:.3s;
+    font-weight:600;
+
+    transition:.35s;
 
 }
 
 nav a:hover{
 
-color:var(--green);
+    color:var(--green);
 
 }
 
-/* HERO */
+/* =========================================================
+   HERO
+========================================================= */
 
 .hero{
 
-height:100vh;
+    min-height:100vh;
 
-display:flex;
+    display:flex;
 
-justify-content:center;
+    justify-content:center;
 
-align-items:center;
+    align-items:center;
 
-text-align:center;
+    text-align:center;
 
-padding:60px;
+    padding:120px 40px 80px;
 
-background:
-linear-gradient(rgba(255,255,255,.88),rgba(255,255,255,.92)),
-url("https://images.unsplash.com/photo-1471943311424-646960669fbc?auto=format&fit=crop&w=1800&q=80");
+    background:
 
-background-size:cover;
+    linear-gradient(
+    rgba(255,255,255,.90),
+    rgba(255,255,255,.94)
+    ),
 
-background-position:center;
+    url("https://images.unsplash.com/photo-1471943311424-646960669fbc?auto=format&fit=crop&w=1800&q=80");
+
+    background-size:cover;
+
+    background-position:center;
 
 }
 
+/* =========================================================
+   HERO CONTENT
+========================================================= */
+
 .hero-content{
 
-max-width:900px;
+    max-width:950px;
 
 }
 
 .hero h1{
 
-font-size:82px;
+    font-family:'Cormorant Garamond',serif;
 
-font-family:'Playfair Display',serif;
+    font-size:76px;
 
-font-weight:700;
+    font-weight:700;
 
-letter-spacing:2px;
+    color:var(--green);
 
-color:#51A51C;
+    letter-spacing:4px;
 
-text-transform:uppercase;
+    text-transform:uppercase;
 
-margin-bottom:15px;
+    margin-bottom:10px;
 
 }
 
 .hero h2{
 
-font-size:60px;
+    font-family:'Cormorant Garamond',serif;
 
-font-family:'Playfair Display',serif;
+    font-size:56px;
 
-font-weight:700;
+    font-weight:600;
 
-line-height:1.15;
+    color:#222;
 
-color:#222;
-
-margin-bottom:25px;
+    margin-bottom:28px;
 
 }
 
 .hero p{
 
-font-size:20px;
+    max-width:760px;
 
-color:#666;
+    margin:auto;
 
-max-width:700px;
+    font-size:20px;
 
-margin:auto;
+    color:#666;
 
-margin-bottom:40px;
+    line-height:1.9;
+
+    margin-bottom:42px;
 
 }
+
+/* =========================================================
+   BUTTON
+========================================================= */
 
 .btn{
 
-display:inline-block;
+    display:inline-block;
 
-padding:18px 42px;
+    padding:18px 44px;
 
-background:#51A51C;
+    border-radius:50px;
 
-color:white;
+    background:var(--green);
 
-border-radius:50px;
+    color:#fff;
 
-font-weight:700;
+    text-decoration:none;
 
-text-decoration:none;
+    font-weight:700;
 
-box-shadow:0 10px 30px rgba(81,165,28,.35);
+    transition:.35s;
 
-transition:.35s;
+    box-shadow:0 10px 30px rgba(81,165,28,.35);
 
 }
-
 
 .btn:hover{
 
-background:var(--green-dark);
+    background:var(--green-dark);
 
-transform:translateY(-4px);
+    transform:translateY(-5px);
 
 }
-
-/* INTRO */
+/* =========================================================
+   INTRO
+========================================================= */
 
 .intro{
 
-padding:120px 40px;
+    padding:110px 40px 80px;
 
-text-align:center;
+    text-align:center;
+
+    background:#fff;
 
 }
 
 .intro h2{
 
-font-size:48px;
+    font-family:'Cormorant Garamond',serif;
 
-color:var(--green);
+    font-size:48px;
 
-margin-bottom:25px;
+    color:var(--green);
 
-font-family:'Playfair Display',serif;
+    margin-bottom:22px;
 
 }
 
 .intro p{
 
-max-width:850px;
+    max-width:820px;
 
-margin:auto;
+    margin:auto;
 
-font-size:20px;
+    color:#666;
 
-color:#666;
+    font-size:20px;
+
+    line-height:1.9;
 
 }
 
-/* COLLECTIONS */
+/* =========================================================
+   COLLECTIONS
+========================================================= */
 
 .collections{
 
-padding:80px;
+    background:#FAFAFA;
 
-display:grid;
+    padding:90px 60px;
 
-grid-template-columns:repeat(auto-fit,minmax(260px,1fr));
+    display:grid;
 
-gap:30px;
+    grid-template-columns:repeat(auto-fit,minmax(280px,1fr));
 
-background:#fafafa;
+    gap:35px;
 
 }
 
-/* ===========================
-   COLLECTION CARDS
-=========================== */
+/* =========================================================
+   CARD
+========================================================= */
 
 .card{
 
-    background:#ffffff;
+    background:#fff;
 
     border-radius:24px;
 
     padding:45px 35px;
 
-    text-align:center;
-
     min-height:430px;
 
-    box-shadow:0 15px 40px rgba(0,0,0,.08);
+    text-align:center;
+
+    box-shadow:var(--shadow);
 
     transition:.35s;
 
@@ -289,69 +361,43 @@ background:#fafafa;
 
     transform:translateY(-10px);
 
-    box-shadow:0 20px 50px rgba(0,0,0,.12);
+    box-shadow:var(--shadow-hover);
 
 }
 
-/* Card Icon */
+/* =========================================================
+   CARD ICON
+========================================================= */
 
-.card > :first-child{
+.card .icon{
 
-    display:block;
+    font-size:52px;
 
-    font-size:42px;
-
-    margin-bottom:18px;
+    margin-bottom:20px;
 
 }
 
-/* Card Title */
+/* =========================================================
+   CARD TITLE
+========================================================= */
 
 .card h3{
 
-    margin:18px 0;
+    font-family:'Cormorant Garamond',serif;
 
-    font-size:30px;
+    font-size:34px;
 
     font-weight:700;
+
+    margin-bottom:22px;
 
     line-height:1.2;
 
 }
 
-/* Honey */
-
-.card:nth-child(1) h3{
-
-    color:#C48A00;
-
-}
-
-/* Bee Products */
-
-.card:nth-child(2) h3{
-
-    color:#B8860B;
-
-}
-
-/* Premium Spices */
-
-.card:nth-child(3) h3{
-
-    color:#B85C00;
-
-}
-
-/* Natural Oils */
-
-.card:nth-child(4) h3{
-
-    color:#2E8B57;
-
-}
-
-/* Product List */
+/* =========================================================
+   PRODUCT LIST
+========================================================= */
 
 .card p{
 
@@ -359,68 +405,368 @@ background:#fafafa;
 
     font-weight:400;
 
-    line-height:1.8;
-
     color:#666;
+
+    line-height:2;
+
+}
+
+/* =========================================================
+   CATEGORY COLORS
+========================================================= */
+
+/* Honey */
+
+.honey-title{
+
+    color:var(--honey);
+
+}
+
+/* Premium Spices */
+
+.spices-title{
+
+    color:var(--spices);
+
+}
+
+/* Bee Superfoods */
+
+.bee-title{
+
+    color:var(--bee);
+
+}
+
+/* Natural Oils */
+
+.natural-title{
+
+    color:var(--oil);
+
+}
+
+/* =========================================================
+   CARD BORDER ACCENT
+========================================================= */
+
+.card:nth-child(1){
+
+    border-top:6px solid var(--honey);
+
+}
+
+.card:nth-child(2){
+
+    border-top:6px solid var(--spices);
+
+}
+
+.card:nth-child(3){
+
+    border-top:6px solid var(--bee);
+
+}
+
+.card:nth-child(4){
+
+    border-top:6px solid var(--oil);
+
+}
+/* =========================================================
+   FOOTER
+========================================================= */
+
+footer{
+
+    background:#1f1f1f;
+
+    color:#ffffff;
+
+    padding:70px 40px;
 
     text-align:center;
 
-    margin-top:15px;
+}
+
+footer h2{
+
+    font-family:'Cormorant Garamond',serif;
+
+    font-size:36px;
+
+    color:#ffffff;
+
+    letter-spacing:2px;
+
+    margin-bottom:15px;
 
 }
 
-/* MOBILE */
+footer p{
 
-@media(max-width:900px){
+    color:#cfcfcf;
+
+    font-size:16px;
+
+    margin-bottom:12px;
+
+}
+
+.footer-links{
+
+    margin-top:30px;
+
+    display:flex;
+
+    justify-content:center;
+
+    flex-wrap:wrap;
+
+    gap:30px;
+
+}
+
+.footer-links a{
+
+    color:#ffffff;
+
+    text-decoration:none;
+
+    font-weight:600;
+
+    transition:.3s;
+
+}
+
+.footer-links a:hover{
+
+    color:var(--green);
+
+}
+
+/* =========================================================
+   SECTION SPACING
+========================================================= */
+
+section{
+
+    scroll-margin-top:100px;
+
+}
+
+/* =========================================================
+   SMOOTH IMAGE EFFECT
+========================================================= */
+
+img{
+
+    max-width:100%;
+
+    display:block;
+
+}
+
+/* =========================================================
+   TRANSITIONS
+========================================================= */
+
+a,
+button,
+.card,
+.btn{
+
+    transition:all .35s ease;
+
+}
+
+/* =========================================================
+   TABLET
+========================================================= */
+
+@media (max-width:1024px){
 
 header{
 
-padding:20px;
-
-flex-direction:column;
-
-height:auto;
-
-gap:15px;
-
-}
-
-nav{
-
-flex-wrap:wrap;
-
-justify-content:center;
+    padding:0 35px;
 
 }
 
 .hero h1{
 
-font-size:46px;
+    font-size:60px;
 
 }
 
 .hero h2{
 
-font-size:26px;
-
-}
-
-.hero p{
-
-font-size:17px;
-
-}
-
-.intro h2{
-
-font-size:34px;
+    font-size:42px;
 
 }
 
 .collections{
 
-padding:30px;
+    grid-template-columns:repeat(2,1fr);
 
 }
 
 }
+
+/* =========================================================
+   MOBILE
+========================================================= */
+
+@media (max-width:768px){
+
+header{
+
+    flex-direction:column;
+
+    justify-content:center;
+
+    height:auto;
+
+    padding:18px;
+
+    gap:15px;
+
+}
+
+.logo{
+
+    font-size:28px;
+
+}
+
+nav{
+
+    flex-wrap:wrap;
+
+    justify-content:center;
+
+    gap:18px;
+
+}
+
+nav a{
+
+    font-size:14px;
+
+}
+
+.hero{
+
+    padding:150px 25px 80px;
+
+}
+
+.hero h1{
+
+    font-size:46px;
+
+    letter-spacing:2px;
+
+}
+
+.hero h2{
+
+    font-size:30px;
+
+}
+
+.hero p{
+
+    font-size:17px;
+
+    line-height:1.8;
+
+}
+
+.btn{
+
+    padding:15px 32px;
+
+}
+
+.intro{
+
+    padding:70px 25px;
+
+}
+
+.intro h2{
+
+    font-size:34px;
+
+}
+
+.intro p{
+
+    font-size:17px;
+
+}
+
+.collections{
+
+    padding:30px 20px;
+
+    grid-template-columns:1fr;
+
+    gap:25px;
+
+}
+
+.card{
+
+    min-height:auto;
+
+    padding:35px 25px;
+
+}
+
+.card .icon{
+
+    font-size:42px;
+
+}
+
+.card h3{
+
+    font-size:28px;
+
+}
+
+.card p{
+
+    font-size:16px;
+
+    line-height:1.8;
+
+}
+
+footer{
+
+    padding:50px 25px;
+
+}
+
+footer h2{
+
+    font-size:28px;
+
+}
+
+.footer-links{
+
+    flex-direction:column;
+
+    gap:15px;
+
+}
+
+}
+
+/* =========================================================
+   END
+========================================================= */
