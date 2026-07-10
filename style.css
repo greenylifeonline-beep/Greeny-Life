@@ -107,31 +107,45 @@ header{
 
 .logo{
 
-    display:flex;
+display:flex;
 
-    align-items:center;
+align-items:center;
 
-    font-family:'Cormorant Garamond',serif;
+gap:14px;
 
-    font-size:34px;
+font-family:'Cormorant Garamond',serif;
 
-    font-weight:700;
+font-size:34px;
 
-    color:var(--green);
+font-weight:700;
 
-    letter-spacing:2px;
+color:var(--green);
 
-    text-transform:uppercase;
+letter-spacing:2px;
+
+text-transform:uppercase;
 
 }
 
 .logo img{
 
-    height:60px;
+width:55px;
 
-    width:auto;
+height:55px;
 
-    display:block;
+object-fit:contain;
+
+display:block;
+
+}
+
+.logo span{
+
+font-size:34px;
+
+font-weight:700;
+
+color:#51A51C;
 
 }
 
