@@ -1,7 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
@@ -12,135 +11,7 @@
 
 <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700&family=Playfair+Display:wght@500;700&display=swap" rel="stylesheet">
 
-<style>
-
-*{
-margin:0;
-padding:0;
-box-sizing:border-box;
-}
-
-body{
-
-background:#f5f7f5;
-font-family:Montserrat,sans-serif;
-
-}
-
-header{
-
-background:#51A51C;
-color:white;
-padding:35px;
-
-}
-
-header h1{
-
-font-size:40px;
-
-}
-
-header p{
-
-margin-top:10px;
-
-opacity:.9;
-
-}
-
-.container{
-
-width:95%;
-max-width:1500px;
-margin:auto;
-padding:40px;
-
-}
-
-.grid{
-
-display:grid;
-
-grid-template-columns:repeat(auto-fill,minmax(300px,1fr));
-
-gap:30px;
-
-}
-
-.card{
-
-background:white;
-
-border-radius:18px;
-
-box-shadow:0 10px 25px rgba(0,0,0,.08);
-
-overflow:hidden;
-
-transition:.3s;
-
-}
-
-.card:hover{
-
-transform:translateY(-8px);
-
-}
-
-.card img{
-
-width:100%;
-
-display:block;
-
-}
-
-.info{
-
-padding:25px;
-
-}
-
-.info h2{
-
-font-family:"Playfair Display";
-
-color:#51A51C;
-
-margin-bottom:10px;
-
-}
-
-.badge{
-
-display:inline-block;
-
-padding:8px 16px;
-
-border-radius:30px;
-
-background:#C9A227;
-
-color:white;
-
-margin-top:15px;
-
-font-size:14px;
-
-}
-
-footer{
-
-padding:40px;
-
-text-align:center;
-
-color:#666;
-
-}
-
-</style>
+<link rel="stylesheet" href="style.css">
 
 </head>
 
@@ -148,89 +19,107 @@ color:#666;
 
 <header>
 
-<h1>GREENY LIFE Packaging System</h1>
+<div class="logo">
 
-<p>Interactive Packaging Design Platform</p>
+<h1>GREENY LIFE</h1>
+
+<p>From Nature, For Life</p>
+
+</div>
+
+<nav>
+
+<a href="#">Home</a>
+<a href="#">Collections</a>
+<a href="#">Packaging</a>
+<a href="#">Design System</a>
+<a href="#">Downloads</a>
+
+</nav>
 
 </header>
 
-<div class="container">
+
+<section class="hero">
+
+<h2>Packaging System</h2>
+
+<p>
+
+Unified Packaging System for all GREENY LIFE products.
+
+</p>
+
+</section>
+
+
+<section class="collections">
+
+<h2>Collections</h2>
 
 <div class="grid">
 
 <div class="card">
 
-<img src="https://placehold.co/600x700?text=Wildflower+Honey">
+<h3>🍯 Honey Collection</h3>
 
-<div class="info">
+<p>Wildflower Honey</p>
 
-<h2>Wildflower Honey</h2>
+<p>Clover Honey</p>
 
-<p>100% Pure Natural Honey</p>
-
-<span class="badge">Honey Collection</span>
-
-</div>
+<p>Citrus Honey</p>
 
 </div>
 
 <div class="card">
 
-<img src="https://placehold.co/600x700?text=Clover+Honey">
+<h3>🐝 Bee Products</h3>
 
-<div class="info">
+<p>Pure Beeswax</p>
 
-<h2>Clover Honey</h2>
+<p>Bee Pollen</p>
 
-<p>100% Pure Natural Honey</p>
+<p>Royal Jelly</p>
 
-<span class="badge">Honey Collection</span>
-
-</div>
+<p>Raw Propolis</p>
 
 </div>
 
 <div class="card">
 
-<img src="https://placehold.co/600x700?text=Citrus+Honey">
+<h3>🌿 Spices</h3>
 
-<div class="info">
+<p>Garlic Powder</p>
 
-<h2>Citrus Honey</h2>
+<p>Onion Powder</p>
 
-<p>100% Pure Natural Honey</p>
+<p>Turmeric</p>
 
-<span class="badge">Honey Collection</span>
+<p>Paprika</p>
 
-</div>
+<p>Cumin</p>
+
+<p>Black Pepper</p>
+
+<p>Seven Spice</p>
+
+<p>Thyme Dukkah</p>
 
 </div>
 
 <div class="card">
 
-<img src="https://placehold.co/600x700?text=Pure+Beeswax">
+<h3>💊 Future Collection</h3>
 
-<div class="info">
-
-<h2>Pure Beeswax</h2>
-
-<p>Premium Natural Beeswax</p>
-
-<span class="badge">Bee Products</span>
+<p>Black Seed Oil</p>
 
 </div>
 
 </div>
 
-</div>
+</section>
 
-</div>
-
-<footer>
-
-GREENY LIFE © 2026
-
-</footer>
+<script src="script.js"></script>
 
 </body>
 
