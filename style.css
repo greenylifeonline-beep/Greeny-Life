@@ -284,19 +284,29 @@ transform:translateY(-10px);
 }
 
 .card{
-
-font-size:60px;
-
+    font-size:34px;
+    line-height:1.2;
 }
 
 .card h3{
+    margin:25px 0 15px;
+    font-size:28px;
+}
 
-margin:25px 0 15px;
+.card:nth-child(1) h3{
+    color:#C48A00;
+}
 
-font-size:28px;
+.card:nth-child(2) h3{
+    color:#B8860B;
+}
 
-color:var(--green);
+.card:nth-child(3) h3{
+    color:#5E8C31;
+}
 
+.card:nth-child(4) h3{
+    color:#2E8B57;
 }
 
 .card p{
