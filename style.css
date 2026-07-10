@@ -73,34 +73,31 @@ body{
 
 header{
 
-    position:fixed;
+position:fixed;
 
-    top:0;
+top:0;
 
-    left:0;
+left:0;
 
-    width:100%;
+right:0;
 
-    height:84px;
+height:90px;
 
-    background:rgba(255,255,255,.96);
+background:white;
 
-    backdrop-filter:blur(10px);
+display:flex;
 
-    display:flex;
+justify-content:space-between;
 
-    justify-content:space-between;
+align-items:center;
 
-    align-items:center;
+padding:0 60px;
 
-    padding:0 70px;
+box-shadow:0 8px 25px rgba(0,0,0,.08);
 
-    box-shadow:var(--shadow);
-
-    z-index:9999;
+z-index:999;
 
 }
-
 /* =========================================================
    LOGO
 ========================================================= */
