@@ -1,0 +1,62 @@
+{
+  "schemaVersion": "1.0.0",
+
+  "packaging": [
+
+    {
+      "id": "PKG-GLS-250",
+
+      "family": "GLASS",
+
+      "code": "GLS-250",
+
+      "status": "ACTIVE",
+
+      "version": "1.0",
+
+      "name": "Glass Jar 250g",
+
+      "material": {
+        "type": "Glass",
+        "foodGrade": true,
+        "bpaFree": true,
+        "recyclable": true,
+        "color": "Clear"
+      },
+
+      "capacity": {
+        "nominal": "250g"
+      },
+
+      "lid": {
+        "material": "Metal",
+        "color": "CATEGORY",
+        "tamperEvident": true,
+        "inductionSeal": true
+      },
+
+      "label": {
+        "front": true,
+        "back": true,
+        "barcode": true,
+        "qr": true
+      },
+
+      "compatibleCategories": [
+        "CAT-HON",
+        "CAT-BEE",
+        "CAT-SPC",
+        "CAT-OIL"
+      ],
+
+      "logistics": {
+        "unitsPerCarton": null,
+        "cartonsPerPallet": null,
+        "container20ft": null,
+        "container40hc": null
+      }
+
+    }
+
+  ]
+}
