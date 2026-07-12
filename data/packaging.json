@@ -1,62 +1,379 @@
 [
   {
     "id": "PKG-GLASS-100",
-    "name": "Glass Jar 100g",
+    "code": "PKG-GLASS-100",
+    "version": "1.0",
+    "status": "ACTIVE",
+
+    "name": {
+      "en": "Glass Jar 100g",
+      "ar": "برطمان زجاج 100 جم",
+      "no": "Glasskrukke 100 g"
+    },
+
+    "family": "GLASS",
     "type": "Glass Jar",
-    "material": "Food Grade Glass",
-    "capacity": 100,
-    "unit": "g",
-    "closure": "Black Metal Lid",
-    "tamperSeal": true,
-    "retail": true,
-    "wholesale": false
+
+    "material": {
+      "type": "Glass",
+      "grade": "Food Grade",
+      "color": "Clear",
+      "foodGrade": true,
+      "bpaFree": true,
+      "recyclable": true,
+      "exportApproved": true
+    },
+
+    "capacity": {
+      "value": 100,
+      "unitId": "UNT-G"
+    },
+
+    "closure": {
+      "type": "Metal Lid",
+      "color": "Category Color",
+      "tamperSeal": true,
+      "inductionSeal": true
+    },
+
+    "dimensions": {
+      "height_mm": null,
+      "diameter_mm": null
+    },
+
+    "weights": {
+      "tare_g": null,
+      "gross_g": null
+    },
+
+    "label": {
+      "front": true,
+      "back": true,
+      "barcode": true,
+      "qr": true
+    },
+
+    "usage": {
+      "retail": true,
+      "wholesale": false
+    },
+
+    "compatibleCategories": [
+      "CAT-HON",
+      "CAT-BEE",
+      "CAT-SPC",
+      "CAT-OIL"
+    ],
+
+    "logistics": {
+      "unitsPerCarton": null,
+      "cartonsPerLayer": null,
+      "layersPerPallet": null,
+      "cartonsPerPallet": null,
+      "palletsPer20FT": null,
+      "palletsPer40HC": null
+    }
   },
+
   {
     "id": "PKG-GLASS-250",
-    "name": "Glass Jar 250g",
+    "code": "PKG-GLASS-250",
+    "version": "1.0",
+    "status": "ACTIVE",
+
+    "name": {
+      "en": "Glass Jar 250g",
+      "ar": "برطمان زجاج 250 جم",
+      "no": "Glasskrukke 250 g"
+    },
+
+    "family": "GLASS",
     "type": "Glass Jar",
-    "material": "Food Grade Glass",
-    "capacity": 250,
-    "unit": "g",
-    "closure": "Black Metal Lid",
-    "tamperSeal": true,
-    "retail": true,
-    "wholesale": false
+
+    "material": {
+      "type": "Glass",
+      "grade": "Food Grade",
+      "color": "Clear",
+      "foodGrade": true,
+      "bpaFree": true,
+      "recyclable": true,
+      "exportApproved": true
+    },
+
+    "capacity": {
+      "value": 250,
+      "unitId": "UNT-G"
+    },
+
+    "closure": {
+      "type": "Metal Lid",
+      "color": "Category Color",
+      "tamperSeal": true,
+      "inductionSeal": true
+    },
+
+    "dimensions": {
+      "height_mm": null,
+      "diameter_mm": null
+    },
+
+    "weights": {
+      "tare_g": null,
+      "gross_g": null
+    },
+
+    "label": {
+      "front": true,
+      "back": true,
+      "barcode": true,
+      "qr": true
+    },
+
+    "usage": {
+      "retail": true,
+      "wholesale": false
+    },
+
+    "compatibleCategories": [
+      "CAT-HON",
+      "CAT-BEE",
+      "CAT-SPC",
+      "CAT-OIL"
+    ],
+
+    "logistics": {
+      "unitsPerCarton": null,
+      "cartonsPerLayer": null,
+      "layersPerPallet": null,
+      "cartonsPerPallet": null,
+      "palletsPer20FT": null,
+      "palletsPer40HC": null
+    }
   },
+
   {
     "id": "PKG-GLASS-1000",
-    "name": "Glass Jar 1kg",
+    "code": "PKG-GLASS-1000",
+    "version": "1.0",
+    "status": "ACTIVE",
+
+    "name": {
+      "en": "Glass Jar 1kg",
+      "ar": "برطمان زجاج 1 كجم",
+      "no": "Glasskrukke 1 kg"
+    },
+
+    "family": "GLASS",
     "type": "Glass Jar",
-    "material": "Food Grade Glass",
-    "capacity": 1000,
-    "unit": "g",
-    "closure": "Black Metal Lid",
-    "tamperSeal": true,
-    "retail": true,
-    "wholesale": false
+
+    "material": {
+      "type": "Glass",
+      "grade": "Food Grade",
+      "color": "Clear",
+      "foodGrade": true,
+      "bpaFree": true,
+      "recyclable": true,
+      "exportApproved": true
+    },
+
+    "capacity": {
+      "value": 1000,
+      "unitId": "UNT-G"
+    },
+
+    "closure": {
+      "type": "Metal Lid",
+      "color": "Category Color",
+      "tamperSeal": true,
+      "inductionSeal": true
+    },
+
+    "dimensions": {
+      "height_mm": null,
+      "diameter_mm": null
+    },
+
+    "weights": {
+      "tare_g": null,
+      "gross_g": null
+    },
+
+    "label": {
+      "front": true,
+      "back": true,
+      "barcode": true,
+      "qr": true
+    },
+
+    "usage": {
+      "retail": true,
+      "wholesale": false
+    },
+
+    "compatibleCategories": [
+      "CAT-HON",
+      "CAT-BEE",
+      "CAT-SPC",
+      "CAT-OIL"
+    ],
+
+    "logistics": {
+      "unitsPerCarton": null,
+      "cartonsPerLayer": null,
+      "layersPerPallet": null,
+      "cartonsPerPallet": null,
+      "palletsPer20FT": null,
+      "palletsPer40HC": null
+    }
   },
+
   {
     "id": "PKG-BUCKET-25KG",
-    "name": "Food Grade Bucket 25kg",
+    "code": "PKG-BUCKET-25KG",
+    "version": "1.0",
+    "status": "ACTIVE",
+
+    "name": {
+      "en": "Food Grade Bucket 25kg",
+      "ar": "جردل غذائي 25 كجم",
+      "no": "Matgodkjent bøtte 25 kg"
+    },
+
+    "family": "BUCKET",
     "type": "Bucket",
-    "material": "HDPE Food Grade",
-    "capacity": 25,
-    "unit": "kg",
-    "closure": "Tamper Evident Lid",
-    "tamperSeal": true,
-    "retail": false,
-    "wholesale": true
+
+    "material": {
+      "type": "HDPE",
+      "grade": "Food Grade",
+      "color": "White",
+      "foodGrade": true,
+      "bpaFree": true,
+      "recyclable": true,
+      "exportApproved": true
+    },
+
+    "capacity": {
+      "value": 25,
+      "unitId": "UNT-KG"
+    },
+
+    "closure": {
+      "type": "Tamper Evident Lid",
+      "color": "White",
+      "tamperSeal": true,
+      "inductionSeal": false
+    },
+
+    "dimensions": {
+      "height_mm": null,
+      "diameter_mm": null
+    },
+
+    "weights": {
+      "tare_g": null,
+      "gross_g": null
+    },
+
+    "label": {
+      "front": true,
+      "back": false,
+      "barcode": true,
+      "qr": true
+    },
+
+    "usage": {
+      "retail": false,
+      "wholesale": true
+    },
+
+    "compatibleCategories": [
+      "CAT-HON",
+      "CAT-SPC",
+      "CAT-OIL"
+    ],
+
+    "logistics": {
+      "unitsPerCarton": null,
+      "cartonsPerLayer": null,
+      "layersPerPallet": null,
+      "cartonsPerPallet": null,
+      "palletsPer20FT": null,
+      "palletsPer40HC": null
+    }
   },
+
   {
     "id": "PKG-DRUM-300KG",
-    "name": "Food Grade Drum 300kg",
+    "code": "PKG-DRUM-300KG",
+    "version": "1.0",
+    "status": "ACTIVE",
+
+    "name": {
+      "en": "Food Grade Drum 300kg",
+      "ar": "برميل غذائي 300 كجم",
+      "no": "Matgodkjent fat 300 kg"
+    },
+
+    "family": "DRUM",
     "type": "Drum",
-    "material": "HDPE Food Grade",
-    "capacity": 300,
-    "unit": "kg",
-    "closure": "Industrial Seal",
-    "tamperSeal": true,
-    "retail": false,
-    "wholesale": true
+
+    "material": {
+      "type": "HDPE",
+      "grade": "Food Grade",
+      "color": "Blue",
+      "foodGrade": true,
+      "bpaFree": true,
+      "recyclable": true,
+      "exportApproved": true
+    },
+
+    "capacity": {
+      "value": 300,
+      "unitId": "UNT-KG"
+    },
+
+    "closure": {
+      "type": "Industrial Seal",
+      "color": "Blue",
+      "tamperSeal": true,
+      "inductionSeal": false
+    },
+
+    "dimensions": {
+      "height_mm": null,
+      "diameter_mm": null
+    },
+
+    "weights": {
+      "tare_g": null,
+      "gross_g": null
+    },
+
+    "label": {
+      "front": true,
+      "back": false,
+      "barcode": true,
+      "qr": true
+    },
+
+    "usage": {
+      "retail": false,
+      "wholesale": true
+    },
+
+    "compatibleCategories": [
+      "CAT-HON",
+      "CAT-SPC",
+      "CAT-OIL"
+    ],
+
+    "logistics": {
+      "unitsPerCarton": null,
+      "cartonsPerLayer": null,
+      "layersPerPallet": null,
+      "cartonsPerPallet": null,
+      "palletsPer20FT": null,
+      "palletsPer40HC": null
+    }
   }
 ]
