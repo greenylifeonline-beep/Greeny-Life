@@ -23,3 +23,25 @@ document.addEventListener("DOMContentLoaded", () => {
     });
 
 });
+
+/* ===========================
+   GL-DOS Product Engine v1.0
+=========================== */
+
+async function loadProducts() {
+    try {
+
+        const response = await fetch("data/master/products.json");
+
+        const products = await response.json();
+
+        console.log("GL-DOS Products Loaded:", products);
+
+    } catch (error) {
+
+        console.error("Failed to load products", error);
+
+    }
+}
+
+document.addEventListener("DOMContentLoaded", loadProducts);
