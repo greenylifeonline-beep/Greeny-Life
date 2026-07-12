@@ -1,62 +1,62 @@
-{
-  "schemaVersion": "1.0.0",
-
-  "packaging": [
-
-    {
-      "id": "PKG-GLS-250",
-
-      "family": "GLASS",
-
-      "code": "GLS-250",
-
-      "status": "ACTIVE",
-
-      "version": "1.0",
-
-      "name": "Glass Jar 250g",
-
-      "material": {
-        "type": "Glass",
-        "foodGrade": true,
-        "bpaFree": true,
-        "recyclable": true,
-        "color": "Clear"
-      },
-
-      "capacity": {
-        "nominal": "250g"
-      },
-
-      "lid": {
-        "material": "Metal",
-        "color": "CATEGORY",
-        "tamperEvident": true,
-        "inductionSeal": true
-      },
-
-      "label": {
-        "front": true,
-        "back": true,
-        "barcode": true,
-        "qr": true
-      },
-
-      "compatibleCategories": [
-        "CAT-HON",
-        "CAT-BEE",
-        "CAT-SPC",
-        "CAT-OIL"
-      ],
-
-      "logistics": {
-        "unitsPerCarton": null,
-        "cartonsPerPallet": null,
-        "container20ft": null,
-        "container40hc": null
-      }
-
-    }
-
-  ]
-}
+[
+  {
+    "id": "PKG-GLASS-100",
+    "name": "Glass Jar 100g",
+    "type": "Glass Jar",
+    "material": "Food Grade Glass",
+    "capacity": 100,
+    "unit": "g",
+    "closure": "Black Metal Lid",
+    "tamperSeal": true,
+    "retail": true,
+    "wholesale": false
+  },
+  {
+    "id": "PKG-GLASS-250",
+    "name": "Glass Jar 250g",
+    "type": "Glass Jar",
+    "material": "Food Grade Glass",
+    "capacity": 250,
+    "unit": "g",
+    "closure": "Black Metal Lid",
+    "tamperSeal": true,
+    "retail": true,
+    "wholesale": false
+  },
+  {
+    "id": "PKG-GLASS-1000",
+    "name": "Glass Jar 1kg",
+    "type": "Glass Jar",
+    "material": "Food Grade Glass",
+    "capacity": 1000,
+    "unit": "g",
+    "closure": "Black Metal Lid",
+    "tamperSeal": true,
+    "retail": true,
+    "wholesale": false
+  },
+  {
+    "id": "PKG-BUCKET-25KG",
+    "name": "Food Grade Bucket 25kg",
+    "type": "Bucket",
+    "material": "HDPE Food Grade",
+    "capacity": 25,
+    "unit": "kg",
+    "closure": "Tamper Evident Lid",
+    "tamperSeal": true,
+    "retail": false,
+    "wholesale": true
+  },
+  {
+    "id": "PKG-DRUM-300KG",
+    "name": "Food Grade Drum 300kg",
+    "type": "Drum",
+    "material": "HDPE Food Grade",
+    "capacity": 300,
+    "unit": "kg",
+    "closure": "Industrial Seal",
+    "tamperSeal": true,
+    "retail": false,
+    "wholesale": true
+  }
+]
