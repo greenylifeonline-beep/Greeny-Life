@@ -1,10 +1,23 @@
 async function loadProducts() {
 
-    const response = await fetch("../data/products.json");
+    try {
 
-    const products = await response.json();
+        const response = await fetch("../../data/products.json");
 
-    console.log(products);
+        if (!response.ok) {
+            throw new Error("Failed to load products.json");
+        }
+
+        const products = await response.json();
+
+        console.log("Products Loaded:");
+        console.log(products);
+
+    } catch (error) {
+
+        console.error("Error:", error);
+
+    }
 
 }
 
