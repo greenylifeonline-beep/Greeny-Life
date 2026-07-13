@@ -1,8 +1,8 @@
 const imageMap = {
-    "Honey": "../assets/images/categories/Honey.jpg",
-    "Bee Products": "../assets/images/categories/BeeProducts.jpg",
-    "Premium Spices": "../assets/images/categories/Spices.jpg",
-    "Natural Oils": "../assets/images/categories/Oils.jpg"
+    "Honey": "../assets/images/categories/honey.jpg",
+    "Bee Products": "../assets/images/categories/bee-products.jpg",
+    "Premium Spices": "../assets/images/categories/spices.jpg",
+    "Natural Oils": "../assets/images/categories/oils.jpg"
 };
 
 const linkMap = {
