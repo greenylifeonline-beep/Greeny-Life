@@ -6,13 +6,13 @@ async function loadProducts() {
 
         const products = await response.json();
 
-        alert("Products loaded: " + products.length);
+        alert("Products count = " + products.length);
 
-        console.log(products);
+    }
 
-    } catch (error) {
+    catch(error){
 
-        alert("ERROR: " + error);
+        alert(error);
 
     }
 
