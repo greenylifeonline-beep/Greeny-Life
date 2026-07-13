@@ -1,44 +1,66 @@
-const imageMap = {
-    "Honey": "../assets/images/categories/honey.jpg",
-    "Bee Products": "../assets/images/categories/bee-products.jpg",
-    "Premium Spices": "../assets/images/categories/spices.jpg",
-    "Natural Oils": "../assets/images/categories/oils.jpg"
-};
+async function loadCategories() {
 
-const linkMap = {
-    "Honey": "honey.html",
-    "Bee Products": "bee-products.html",
-    "Premium Spices": "spices.html",
-    "Natural Oils": "natural-oils.html"
-};
+    const imageMap = {
+        "Honey": "../assets/images/categories/honey.jpg",
+        "Bee Products": "../assets/images/categories/bee-products.jpg",
+        "Premium Spices": "../assets/images/categories/spices.jpg",
+        "Natural Oils": "../assets/images/categories/oils.jpg"
+    };
 
-for (const category in categories) {
+    const linkMap = {
+        "Honey": "honey.html",
+        "Bee Products": "bee-products.html",
+        "Premium Spices": "spices.html",
+        "Natural Oils": "natural-oils.html"
+    };
 
-    const card = document.createElement("a");
+    const response = await fetch("../../data/products.json");
+    const products = await response.json();
 
-    card.className = "card category-card";
+    const container = document.getElementById("collections");
 
-    card.href = linkMap[category] || "#";
+    const categories = {};
 
-    card.innerHTML = `
-        <img
-            src="${imageMap[category]}"
-            alt="${category}"
-            class="category-image">
+    products.forEach(product => {
 
-        <div class="category-content">
+        if (!categories[product.category]) {
+            categories[product.category] = [];
+        }
 
-            <h3>${category}</h3>
+        categories[product.category].push(product);
 
-            <p>${categories[category].length} Products</p>
+    });
 
-            <span class="explore-btn">
-                Explore Collection →
-            </span>
+    container.innerHTML = "";
 
-        </div>
-    `;
+    for (const category in categories) {
 
-    container.appendChild(card);
+        const card = document.createElement("a");
+
+        card.className = "card category-card";
+
+        card.href = linkMap[category] || "#";
+
+        card.innerHTML = `
+            <img src="${imageMap[category]}" alt="${category}" class="category-image">
+
+            <div class="category-content">
+
+                <h3>${category}</h3>
+
+                <p>${categories[category].length} Products</p>
+
+                <span class="explore-btn">
+                    Explore Collection →
+                </span>
+
+            </div>
+        `;
+
+        container.appendChild(card);
+
+    }
 
 }
+
+loadCategories();
