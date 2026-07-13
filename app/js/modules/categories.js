@@ -1,19 +1,44 @@
-async function loadCategories() {
+const imageMap = {
+    "Honey": "../assets/images/categories/Honey.jpg",
+    "Bee Products": "../assets/images/categories/BeeProducts.jpg",
+    "Premium Spices": "../assets/images/categories/Spices.jpg",
+    "Natural Oils": "../assets/images/categories/Oils.jpg"
+};
 
-    try {
+const linkMap = {
+    "Honey": "honey.html",
+    "Bee Products": "bee-products.html",
+    "Premium Spices": "spices.html",
+    "Natural Oils": "natural-oils.html"
+};
 
-        const response = await fetch("../../data/categories.json");
+for (const category in categories) {
 
-        const categories = await response.json();
+    const card = document.createElement("a");
 
-        console.log(categories);
+    card.className = "card category-card";
 
-    } catch (error) {
+    card.href = linkMap[category] || "#";
 
-        console.error(error);
+    card.innerHTML = `
+        <img
+            src="${imageMap[category]}"
+            alt="${category}"
+            class="category-image">
 
-    }
+        <div class="category-content">
+
+            <h3>${category}</h3>
+
+            <p>${categories[category].length} Products</p>
+
+            <span class="explore-btn">
+                Explore Collection →
+            </span>
+
+        </div>
+    `;
+
+    container.appendChild(card);
 
 }
-
-loadCategories();
