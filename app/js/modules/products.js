@@ -4,7 +4,11 @@ async function loadProducts() {
 
         const response = await fetch("../../data/products.json");
 
-        alert("Status: " + response.status);
+        const products = await response.json();
+
+        alert("Products loaded: " + products.length);
+
+        console.log(products);
 
     } catch (error) {
 
