@@ -3,16 +3,16 @@ async function loadCategories() {
     const imageMap = {
     "Honey": "../assets/images/categories/honey.jpg",
     "Bee Products": "../assets/images/categories/bee-products.jpg",
-    "Premium Spices": "../assets/images/categories/spices.jpg",
+    "Spices": "../assets/images/categories/spices.jpg",
     "Natural Oils": "../assets/images/categories/oils.jpg"
 };
 
-    const linkMap = {
-        "Honey": "honey.html",
-        "Bee Products": "bee-products.html",
-        "Premium Spices": "spices.html",
-        "Natural Oils": "natural-oils.html"
-    };
+const linkMap = {
+    "Honey": "products.html?category=Honey",
+    "Bee Products": "products.html?category=Bee%20Products",
+    "Spices": "products.html?category=Spices",
+    "Natural Oils": "products.html?category=Natural%20Oils"
+};
 
     const response = await fetch("../../data/products.json");
     const products = await response.json();
