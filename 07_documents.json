@@ -1,0 +1,178 @@
+{
+  "version": {
+    "schema": "1.0.0"
+  },
+
+  "document_types": [
+
+    {
+      "id": "coa",
+      "name": {
+        "en": "Certificate of Analysis",
+        "ar": "شهادة تحليل"
+      },
+      "category": "quality",
+      "required": true,
+      "multiple_files": true
+    },
+
+    {
+      "id": "specification",
+      "name": {
+        "en": "Product Specification",
+        "ar": "المواصفات الفنية"
+      },
+      "category": "technical",
+      "required": true,
+      "multiple_files": false
+    },
+
+    {
+      "id": "nutrition",
+      "name": {
+        "en": "Nutrition Facts",
+        "ar": "القيم الغذائية"
+      },
+      "category": "technical",
+      "required": true,
+      "multiple_files": false
+    },
+
+    {
+      "id": "origin_certificate",
+      "name": {
+        "en": "Certificate of Origin",
+        "ar": "شهادة المنشأ"
+      },
+      "category": "export",
+      "required": true,
+      "multiple_files": true
+    },
+
+    {
+      "id": "health_certificate",
+      "name": {
+        "en": "Health Certificate",
+        "ar": "الشهادة الصحية"
+      },
+      "category": "export",
+      "required": false,
+      "multiple_files": true
+    },
+
+    {
+      "id": "halal_certificate",
+      "name": {
+        "en": "Halal Certificate",
+        "ar": "شهادة حلال"
+      },
+      "category": "certification",
+      "required": false,
+      "multiple_files": false
+    },
+
+    {
+      "id": "organic_certificate",
+      "name": {
+        "en": "Organic Certificate",
+        "ar": "الشهادة العضوية"
+      },
+      "category": "certification",
+      "required": false,
+      "multiple_files": false
+    },
+
+    {
+      "id": "iso22000",
+      "name": {
+        "en": "ISO 22000 Certificate",
+        "ar": "شهادة ISO 22000"
+      },
+      "category": "certification",
+      "required": false,
+      "multiple_files": false
+    },
+
+    {
+      "id": "haccp",
+      "name": {
+        "en": "HACCP Certificate",
+        "ar": "شهادة HACCP"
+      },
+      "category": "certification",
+      "required": false,
+      "multiple_files": false
+    },
+
+    {
+      "id": "gmp",
+      "name": {
+        "en": "GMP Certificate",
+        "ar": "شهادة GMP"
+      },
+      "category": "certification",
+      "required": false,
+      "multiple_files": false
+    },
+
+    {
+      "id": "laboratory_report",
+      "name": {
+        "en": "Laboratory Report",
+        "ar": "تقرير مختبر"
+      },
+      "category": "quality",
+      "required": false,
+      "multiple_files": true
+    },
+
+    {
+      "id": "msds",
+      "name": {
+        "en": "Material Safety Data Sheet",
+        "ar": "صحيفة بيانات السلامة"
+      },
+      "category": "technical",
+      "required": false,
+      "multiple_files": false
+    },
+
+    {
+      "id": "product_catalog",
+      "name": {
+        "en": "Product Catalog",
+        "ar": "كتالوج المنتج"
+      },
+      "category": "marketing",
+      "required": false,
+      "multiple_files": false
+    },
+
+    {
+      "id": "packaging_guide",
+      "name": {
+        "en": "Packaging Guide",
+        "ar": "دليل التعبئة والتغليف"
+      },
+      "category": "packaging",
+      "required": false,
+      "multiple_files": false
+    },
+
+    {
+      "id": "product_datasheet",
+      "name": {
+        "en": "Product Datasheet",
+        "ar": "ورقة بيانات المنتج"
+      },
+      "category": "technical",
+      "required": false,
+      "multiple_files": false
+    }
+
+  ]
+}
+
+
+
+

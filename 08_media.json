@@ -1,0 +1,190 @@
+{
+  "version": {
+    "schema": "1.0.0"
+  },
+
+  "media_types": [
+
+    {
+      "id": "product_image",
+      "name": {
+        "en": "Product Image",
+        "ar": "صورة المنتج"
+      },
+      "category": "product",
+      "required": true,
+      "multiple_files": false,
+      "recommended_format": [
+        "jpg",
+        "webp"
+      ]
+    },
+
+    {
+      "id": "packaging_image",
+      "name": {
+        "en": "Packaging Image",
+        "ar": "صورة العبوة"
+      },
+      "category": "packaging",
+      "required": true,
+      "multiple_files": false,
+      "recommended_format": [
+        "jpg",
+        "webp"
+      ]
+    },
+
+    {
+      "id": "hero_image",
+      "name": {
+        "en": "Hero Image",
+        "ar": "الصورة الرئيسية"
+      },
+      "category": "marketing",
+      "required": false,
+      "multiple_files": false,
+      "recommended_format": [
+        "jpg",
+        "webp"
+      ]
+    },
+
+    {
+      "id": "cover_image",
+      "name": {
+        "en": "Cover Image",
+        "ar": "صورة الغلاف"
+      },
+      "category": "marketing",
+      "required": false,
+      "multiple_files": false,
+      "recommended_format": [
+        "jpg",
+        "webp"
+      ]
+    },
+
+    {
+      "id": "gallery_image",
+      "name": {
+        "en": "Gallery Image",
+        "ar": "صورة المعرض"
+      },
+      "category": "gallery",
+      "required": false,
+      "multiple_files": true,
+      "recommended_format": [
+        "jpg",
+        "webp"
+      ]
+    },
+
+    {
+      "id": "lifestyle_image",
+      "name": {
+        "en": "Lifestyle Image",
+        "ar": "صورة استخدام المنتج"
+      },
+      "category": "marketing",
+      "required": false,
+      "multiple_files": true,
+      "recommended_format": [
+        "jpg",
+        "webp"
+      ]
+    },
+
+    {
+      "id": "ingredient_image",
+      "name": {
+        "en": "Ingredient Image",
+        "ar": "صورة المكون"
+      },
+      "category": "ingredient",
+      "required": false,
+      "multiple_files": true,
+      "recommended_format": [
+        "jpg",
+        "webp"
+      ]
+    },
+
+    {
+      "id": "label_preview",
+      "name": {
+        "en": "Label Preview",
+        "ar": "معاينة الملصق"
+      },
+      "category": "label",
+      "required": false,
+      "multiple_files": false,
+      "recommended_format": [
+        "png",
+        "svg"
+      ]
+    },
+
+    {
+      "id": "catalog_image",
+      "name": {
+        "en": "Catalog Image",
+        "ar": "صورة الكتالوج"
+      },
+      "category": "marketing",
+      "required": false,
+      "multiple_files": false,
+      "recommended_format": [
+        "jpg",
+        "pdf"
+      ]
+    },
+
+    {
+      "id": "thumbnail",
+      "name": {
+        "en": "Thumbnail",
+        "ar": "الصورة المصغرة"
+      },
+      "category": "website",
+      "required": true,
+      "multiple_files": false,
+      "recommended_format": [
+        "jpg",
+        "webp"
+      ]
+    },
+
+    {
+      "id": "certificate_image",
+      "name": {
+        "en": "Certificate Image",
+        "ar": "صورة الشهادة"
+      },
+      "category": "documents",
+      "required": false,
+      "multiple_files": true,
+      "recommended_format": [
+        "jpg",
+        "png",
+        "pdf"
+      ]
+    },
+
+    {
+      "id": "video",
+      "name": {
+        "en": "Product Video",
+        "ar": "فيديو المنتج"
+      },
+      "category": "video",
+      "required": false,
+      "multiple_files": true,
+      "recommended_format": [
+        "mp4",
+        "webm"
+      ]
+    }
+
+  ]
+}

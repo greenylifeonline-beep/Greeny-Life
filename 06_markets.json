@@ -1,0 +1,279 @@
+{
+  "version": {
+    "schema": "1.0.0"
+  },
+
+  "markets": [
+
+    {
+      "id": "gcc",
+
+      "name": {
+        "en": "Gulf Cooperation Council (GCC)",
+        "ar": "دول مجلس التعاون الخليجي"
+      },
+
+      "countries": [
+        "Saudi Arabia",
+        "United Arab Emirates",
+        "Qatar",
+        "Kuwait",
+        "Bahrain",
+        "Oman"
+      ],
+
+      "default_language": "ar",
+
+      "supported_languages": [
+        "ar",
+        "en"
+      ],
+
+      "currency": [
+        "SAR",
+        "AED",
+        "QAR",
+        "KWD",
+        "BHD",
+        "OMR"
+      ],
+
+      "business_channels": [
+        "b2c",
+        "b2b",
+        "private_label"
+      ],
+
+      "export_enabled": true
+    },
+
+    {
+      "id": "eu",
+
+      "name": {
+        "en": "European Union",
+        "ar": "الاتحاد الأوروبي"
+      },
+
+      "countries": [
+        "Germany",
+        "France",
+        "Italy",
+        "Spain",
+        "Netherlands",
+        "Belgium",
+        "Sweden",
+        "Denmark",
+        "Finland",
+        "Austria",
+        "Poland",
+        "Ireland",
+        "Portugal",
+        "Greece",
+        "Czech Republic",
+        "Romania",
+        "Hungary",
+        "Slovakia",
+        "Slovenia",
+        "Croatia",
+        "Bulgaria",
+        "Lithuania",
+        "Latvia",
+        "Estonia",
+        "Luxembourg",
+        "Cyprus",
+        "Malta"
+      ],
+
+      "default_language": "en",
+
+      "supported_languages": [
+        "en",
+        "de",
+        "fr",
+        "it",
+        "es"
+      ],
+
+      "currency": [
+        "EUR"
+      ],
+
+      "business_channels": [
+        "b2c",
+        "b2b",
+        "private_label"
+      ],
+
+      "export_enabled": true
+    },
+
+    {
+      "id": "uk",
+
+      "name": {
+        "en": "United Kingdom",
+        "ar": "المملكة المتحدة"
+      },
+
+      "countries": [
+        "United Kingdom"
+      ],
+
+      "default_language": "en",
+
+      "supported_languages": [
+        "en"
+      ],
+
+      "currency": [
+        "GBP"
+      ],
+
+      "business_channels": [
+        "b2c",
+        "b2b",
+        "private_label"
+      ],
+
+      "export_enabled": true
+    },
+
+    {
+      "id": "usa",
+
+      "name": {
+        "en": "United States",
+        "ar": "الولايات المتحدة"
+      },
+
+      "countries": [
+        "United States"
+      ],
+
+      "default_language": "en",
+
+      "supported_languages": [
+        "en"
+      ],
+
+      "currency": [
+        "USD"
+      ],
+
+      "business_channels": [
+        "b2c",
+        "b2b",
+        "private_label"
+      ],
+
+      "export_enabled": true
+    },
+
+    {
+      "id": "canada",
+
+      "name": {
+        "en": "Canada",
+        "ar": "كندا"
+      },
+
+      "countries": [
+        "Canada"
+      ],
+
+      "default_language": "en",
+
+      "supported_languages": [
+        "en",
+        "fr"
+      ],
+
+      "currency": [
+        "CAD"
+      ],
+
+      "business_channels": [
+        "b2c",
+        "b2b",
+        "private_label"
+      ],
+
+      "export_enabled": true
+    },
+
+    {
+      "id": "asia",
+
+      "name": {
+        "en": "Asia",
+        "ar": "آسيا"
+      },
+
+      "countries": [
+        "Japan",
+        "South Korea",
+        "Singapore",
+        "Malaysia"
+      ],
+
+      "default_language": "en",
+
+      "supported_languages": [
+        "en"
+      ],
+
+      "currency": [
+        "JPY",
+        "KRW",
+        "SGD",
+        "MYR"
+      ],
+
+      "business_channels": [
+        "b2b",
+        "private_label"
+      ],
+
+      "export_enabled": true
+    },
+
+    {
+      "id": "africa",
+
+      "name": {
+        "en": "Africa",
+        "ar": "أفريقيا"
+      },
+
+      "countries": [
+        "Egypt",
+        "South Africa",
+        "Kenya",
+        "Morocco"
+      ],
+
+      "default_language": "en",
+
+      "supported_languages": [
+        "en",
+        "ar"
+      ],
+
+      "currency": [
+        "EGP",
+        "ZAR",
+        "KES",
+        "MAD"
+      ],
+
+      "business_channels": [
+        "b2b",
+        "private_label"
+      ],
+
+      "export_enabled": true
+    }
+  ]
+}
+
