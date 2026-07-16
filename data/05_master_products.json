@@ -7,7 +7,9 @@
 
     {
       "id": "wildflower-honey",
+      "product_code": "HON001",
       "ref_id": "GL-HON-001",
+
       "collection": "honey",
 
       "name": {
@@ -19,15 +21,24 @@
 
       "packaging_profile": "honey_default",
 
+      "media": {
+        "profile": "wildflower-honey"
+      },
+
+      "sort_order": 10,
+
       "status": {
         "published": true,
-        "active": true
+        "active": true,
+        "featured": true
       }
     },
 
     {
       "id": "citrus-honey",
+      "product_code": "HON002",
       "ref_id": "GL-HON-002",
+
       "collection": "honey",
 
       "name": {
@@ -39,15 +50,24 @@
 
       "packaging_profile": "honey_default",
 
+      "media": {
+        "profile": "citrus-honey"
+      },
+
+      "sort_order": 20,
+
       "status": {
         "published": true,
-        "active": true
+        "active": true,
+        "featured": false
       }
     },
 
     {
       "id": "clover-honey",
+      "product_code": "HON003",
       "ref_id": "GL-HON-003",
+
       "collection": "honey",
 
       "name": {
@@ -59,15 +79,24 @@
 
       "packaging_profile": "honey_default",
 
+      "media": {
+        "profile": "clover-honey"
+      },
+
+      "sort_order": 30,
+
       "status": {
         "published": true,
-        "active": true
+        "active": true,
+        "featured": false
       }
     },
 
     {
       "id": "royal-jelly",
+      "product_code": "BEE001",
       "ref_id": "GL-BEE-001",
+
       "collection": "bee_products",
 
       "name": {
@@ -79,15 +108,24 @@
 
       "packaging_profile": "royal_jelly",
 
+      "media": {
+        "profile": "royal-jelly"
+      },
+
+      "sort_order": 40,
+
       "status": {
         "published": true,
-        "active": true
+        "active": true,
+        "featured": true
       }
     },
 
     {
       "id": "raw-propolis",
+      "product_code": "BEE002",
       "ref_id": "GL-BEE-002",
+
       "collection": "bee_products",
 
       "name": {
@@ -99,15 +137,24 @@
 
       "packaging_profile": "propolis",
 
+      "media": {
+        "profile": "raw-propolis"
+      },
+
+      "sort_order": 50,
+
       "status": {
         "published": true,
-        "active": true
+        "active": true,
+        "featured": false
       }
     },
 
     {
       "id": "bee-pollen",
+      "product_code": "BEE003",
       "ref_id": "GL-BEE-003",
+
       "collection": "bee_products",
 
       "name": {
@@ -119,15 +166,24 @@
 
       "packaging_profile": "bee_pollen",
 
+      "media": {
+        "profile": "bee-pollen"
+      },
+
+      "sort_order": 60,
+
       "status": {
         "published": true,
-        "active": true
+        "active": true,
+        "featured": false
       }
     },
 
     {
       "id": "pure-beeswax",
+      "product_code": "BEE004",
       "ref_id": "GL-BEE-004",
+
       "collection": "bee_products",
 
       "name": {
@@ -139,15 +195,22 @@
 
       "packaging_profile": "beeswax",
 
+      "media": {
+        "profile": "pure-beeswax"
+      },
+
+      "sort_order": 70,
+
       "status": {
         "published": true,
-        "active": true
+        "active": true,
+        "featured": false
       }
-    },
-
-    {
+    },    {
       "id": "garlic-powder",
+      "product_code": "SPC001",
       "ref_id": "GL-SPC-001",
+
       "collection": "spices",
 
       "name": {
@@ -159,15 +222,24 @@
 
       "packaging_profile": "spices_default",
 
+      "media": {
+        "profile": "garlic-powder"
+      },
+
+      "sort_order": 80,
+
       "status": {
         "published": true,
-        "active": true
+        "active": true,
+        "featured": false
       }
     },
 
     {
       "id": "onion-powder",
+      "product_code": "SPC002",
       "ref_id": "GL-SPC-002",
+
       "collection": "spices",
 
       "name": {
@@ -179,15 +251,24 @@
 
       "packaging_profile": "spices_default",
 
+      "media": {
+        "profile": "onion-powder"
+      },
+
+      "sort_order": 90,
+
       "status": {
         "published": true,
-        "active": true
+        "active": true,
+        "featured": false
       }
     },
 
     {
       "id": "turmeric-powder",
+      "product_code": "SPC003",
       "ref_id": "GL-SPC-003",
+
       "collection": "spices",
 
       "name": {
@@ -199,15 +280,24 @@
 
       "packaging_profile": "spices_default",
 
+      "media": {
+        "profile": "turmeric-powder"
+      },
+
+      "sort_order": 100,
+
       "status": {
         "published": true,
-        "active": true
+        "active": true,
+        "featured": false
       }
     },
 
     {
       "id": "sweet-paprika",
+      "product_code": "SPC004",
       "ref_id": "GL-SPC-004",
+
       "collection": "spices",
 
       "name": {
@@ -219,15 +309,24 @@
 
       "packaging_profile": "spices_default",
 
+      "media": {
+        "profile": "sweet-paprika"
+      },
+
+      "sort_order": 110,
+
       "status": {
         "published": true,
-        "active": true
+        "active": true,
+        "featured": false
       }
     },
 
     {
       "id": "roasted-cumin",
+      "product_code": "SPC005",
       "ref_id": "GL-SPC-005",
+
       "collection": "spices",
 
       "name": {
@@ -239,15 +338,24 @@
 
       "packaging_profile": "spices_default",
 
+      "media": {
+        "profile": "roasted-cumin"
+      },
+
+      "sort_order": 120,
+
       "status": {
         "published": true,
-        "active": true
+        "active": true,
+        "featured": false
       }
     },
 
     {
       "id": "seven-spices-blend",
+      "product_code": "SPC006",
       "ref_id": "GL-SPC-006",
+
       "collection": "spices",
 
       "name": {
@@ -259,15 +367,24 @@
 
       "packaging_profile": "spices_default",
 
+      "media": {
+        "profile": "seven-spices-blend"
+      },
+
+      "sort_order": 130,
+
       "status": {
         "published": true,
-        "active": true
+        "active": true,
+        "featured": true
       }
     },
 
     {
       "id": "hibiscus-flowers",
+      "product_code": "HRB001",
       "ref_id": "GL-HRB-001",
+
       "collection": "herbs",
 
       "name": {
@@ -279,15 +396,24 @@
 
       "packaging_profile": "herbs_default",
 
+      "media": {
+        "profile": "hibiscus-flowers"
+      },
+
+      "sort_order": 140,
+
       "status": {
         "published": true,
-        "active": true
+        "active": true,
+        "featured": false
       }
     },
 
     {
       "id": "black-seed-oil",
+      "product_code": "OIL001",
       "ref_id": "GL-OIL-001",
+
       "collection": "oils",
 
       "name": {
@@ -299,9 +425,16 @@
 
       "packaging_profile": "black_seed_oil",
 
+      "media": {
+        "profile": "black-seed-oil"
+      },
+
+      "sort_order": 150,
+
       "status": {
         "published": true,
-        "active": true
+        "active": true,
+        "featured": true
       }
     }
 

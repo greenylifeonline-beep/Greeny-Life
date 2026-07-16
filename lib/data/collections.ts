@@ -1,11 +1,11 @@
-import collections from "@/data/02_collections.json";
+import collectionsData from "@/data/02_collections.json";
 
 export function getCollections() {
-  return collections;
+  return collectionsData.collections;
 }
 
-export function getCollection(id: string) {
-  return collections.find(
-    collection => collection.id === id
+export function getCollectionById(id: string) {
+  return collectionsData.collections.find(
+    (collection) => collection.id === id
   );
 }

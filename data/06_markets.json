@@ -6,274 +6,137 @@
   "markets": [
 
     {
-      "id": "gcc",
-
-      "name": {
-        "en": "Gulf Cooperation Council (GCC)",
-        "ar": "دول مجلس التعاون الخليجي"
-      },
-
-      "countries": [
-        "Saudi Arabia",
-        "United Arab Emirates",
-        "Qatar",
-        "Kuwait",
-        "Bahrain",
-        "Oman"
-      ],
-
-      "default_language": "ar",
-
-      "supported_languages": [
-        "ar",
-        "en"
-      ],
-
-      "currency": [
-        "SAR",
-        "AED",
-        "QAR",
-        "KWD",
-        "BHD",
-        "OMR"
-      ],
-
-      "business_channels": [
-        "b2c",
-        "b2b",
-        "private_label"
-      ],
-
-      "export_enabled": true
-    },
-
-    {
-      "id": "eu",
+      "id": "EU",
 
       "name": {
         "en": "European Union",
         "ar": "الاتحاد الأوروبي"
       },
 
-      "countries": [
-        "Germany",
-        "France",
-        "Italy",
-        "Spain",
-        "Netherlands",
-        "Belgium",
-        "Sweden",
-        "Denmark",
-        "Finland",
-        "Austria",
-        "Poland",
-        "Ireland",
-        "Portugal",
-        "Greece",
-        "Czech Republic",
-        "Romania",
-        "Hungary",
-        "Slovakia",
-        "Slovenia",
-        "Croatia",
-        "Bulgaria",
-        "Lithuania",
-        "Latvia",
-        "Estonia",
-        "Luxembourg",
-        "Cyprus",
-        "Malta"
-      ],
+      "currency": "EUR",
 
-      "default_language": "en",
+      "language": "en",
 
-      "supported_languages": [
-        "en",
-        "de",
-        "fr",
-        "it",
-        "es"
-      ],
+      "region": "Europe",
 
-      "currency": [
-        "EUR"
-      ],
-
-      "business_channels": [
-        "b2c",
-        "b2b",
-        "private_label"
-      ],
-
-      "export_enabled": true
+      "status": {
+        "active": true
+      }
     },
 
     {
-      "id": "uk",
+      "id": "GCC",
+
+      "name": {
+        "en": "Gulf Cooperation Council",
+        "ar": "دول مجلس التعاون الخليجي"
+      },
+
+      "currency": "SAR",
+
+      "language": "ar",
+
+      "region": "Middle East",
+
+      "status": {
+        "active": true
+      }
+    },
+
+    {
+      "id": "UK",
 
       "name": {
         "en": "United Kingdom",
         "ar": "المملكة المتحدة"
       },
 
-      "countries": [
-        "United Kingdom"
-      ],
+      "currency": "GBP",
 
-      "default_language": "en",
+      "language": "en",
 
-      "supported_languages": [
-        "en"
-      ],
+      "region": "Europe",
 
-      "currency": [
-        "GBP"
-      ],
-
-      "business_channels": [
-        "b2c",
-        "b2b",
-        "private_label"
-      ],
-
-      "export_enabled": true
+      "status": {
+        "active": true
+      }
     },
 
     {
-      "id": "usa",
+      "id": "USA",
 
       "name": {
         "en": "United States",
         "ar": "الولايات المتحدة"
       },
 
-      "countries": [
-        "United States"
-      ],
+      "currency": "USD",
 
-      "default_language": "en",
+      "language": "en",
 
-      "supported_languages": [
-        "en"
-      ],
+      "region": "North America",
 
-      "currency": [
-        "USD"
-      ],
-
-      "business_channels": [
-        "b2c",
-        "b2b",
-        "private_label"
-      ],
-
-      "export_enabled": true
+      "status": {
+        "active": true
+      }
     },
 
     {
-      "id": "canada",
+      "id": "CAN",
 
       "name": {
         "en": "Canada",
         "ar": "كندا"
       },
 
-      "countries": [
-        "Canada"
-      ],
+      "currency": "CAD",
 
-      "default_language": "en",
+      "language": "en",
 
-      "supported_languages": [
-        "en",
-        "fr"
-      ],
+      "region": "North America",
 
-      "currency": [
-        "CAD"
-      ],
-
-      "business_channels": [
-        "b2c",
-        "b2b",
-        "private_label"
-      ],
-
-      "export_enabled": true
+      "status": {
+        "active": true
+      }
     },
 
     {
-      "id": "asia",
+      "id": "AFR",
+
+      "name": {
+        "en": "Africa",
+        "ar": "إفريقيا"
+      },
+
+      "currency": null,
+
+      "language": "en",
+
+      "region": "Africa",
+
+      "status": {
+        "active": true
+      }
+    },
+
+    {
+      "id": "ASIA",
 
       "name": {
         "en": "Asia",
         "ar": "آسيا"
       },
 
-      "countries": [
-        "Japan",
-        "South Korea",
-        "Singapore",
-        "Malaysia"
-      ],
+      "currency": null,
 
-      "default_language": "en",
+      "language": "en",
 
-      "supported_languages": [
-        "en"
-      ],
+      "region": "Asia",
 
-      "currency": [
-        "JPY",
-        "KRW",
-        "SGD",
-        "MYR"
-      ],
-
-      "business_channels": [
-        "b2b",
-        "private_label"
-      ],
-
-      "export_enabled": true
-    },
-
-    {
-      "id": "africa",
-
-      "name": {
-        "en": "Africa",
-        "ar": "أفريقيا"
-      },
-
-      "countries": [
-        "Egypt",
-        "South Africa",
-        "Kenya",
-        "Morocco"
-      ],
-
-      "default_language": "en",
-
-      "supported_languages": [
-        "en",
-        "ar"
-      ],
-
-      "currency": [
-        "EGP",
-        "ZAR",
-        "KES",
-        "MAD"
-      ],
-
-      "business_channels": [
-        "b2b",
-        "private_label"
-      ],
-
-      "export_enabled": true
+      "status": {
+        "active": true
+      }
     }
+
   ]
 }
-
