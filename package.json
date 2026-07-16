@@ -1,0 +1,63 @@
+{
+  "name": "greeny-life",
+  "version": "1.0.0",
+  "private": true,
+  "description": "GREENY LIFE Digital Operating System (GL-DOS) - Enterprise platform for product management, packaging, branding, digital assets, catalogs, export documentation, quotations, and customer-facing content.",
+  "keywords": [
+    "greeny-life",
+    "gl-dos",
+    "enterprise",
+    "nextjs",
+    "react",
+    "typescript",
+    "packaging",
+    "branding",
+    "catalog",
+    "products",
+    "export",
+    "cms",
+    "digital-assets"
+  ],
+  "author": "GREENY LIFE",
+  "license": "MIT",
+  "homepage": "https://github.com/greenylifeonline-beep/Greeny-Life",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/greenylifeonline-beep/Greeny-Life.git"
+  },
+  "bugs": {
+    "url": "https://github.com/greenylifeonline-beep/Greeny-Life/issues"
+  },
+  "type": "module",
+  "directories": {
+    "app": "app",
+    "data": "data",
+    "docs": "docs",
+    "lib": "lib",
+    "public": "public"
+  },
+  "scripts": {
+    "dev": "next dev",
+    "build": "next build",
+    "start": "next start",
+    "lint": "next lint",
+    "type-check": "tsc --noEmit",
+    "clean": "rmdir /s /q .next 2>nul & rmdir /s /q node_modules\\.cache 2>nul",
+    "prepare": "echo GREENY LIFE project initialized successfully."
+  },
+  "dependencies": {
+    "next": "^16.2.10",
+    "react": "^19.2.7",
+    "react-dom": "^19.2.7"
+  },
+  "devDependencies": {
+    "@types/node": "^26.1.1",
+    "@types/react": "^19.2.17",
+    "@types/react-dom": "^19.2.3",
+    "typescript": "7.0.2"
+  },
+  "engines": {
+    "node": ">=24.18.0",
+    "npm": ">=11.16.0"
+  }
+}
