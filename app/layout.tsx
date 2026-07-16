@@ -2,7 +2,7 @@ import "./globals.css";
 
 export const metadata = {
   title: "GREENY LIFE",
-  description: "Natural Products",
+  description: "Premium Egyptian Natural Products",
 };
 
 export default function RootLayout({
@@ -12,9 +12,7 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en">
-      <body>
-        {children}
-      </body>
+      <body>{children}</body>
     </html>
   );
 }
