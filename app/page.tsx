@@ -1,7 +1,10 @@
-import { getBrand } from "@/lib/data/global";
+import { getBrand, getWebsite } from "@/lib/data/global";
 
 export default function HomePage() {
   const brand = getBrand();
+  const website = getWebsite();
+
+  const language = website.default_language as "en" | "ar";
 
   return (
     <main
@@ -13,7 +16,7 @@ export default function HomePage() {
     >
       <h1>{brand.name}</h1>
 
-      <p>{brand.tagline}</p>
+      <p>{brand.tagline[language]}</p>
 
       <hr />
 

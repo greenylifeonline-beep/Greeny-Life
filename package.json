@@ -2,6 +2,7 @@
   "name": "greeny-life",
   "version": "1.0.0",
   "private": true,
+
   "description": "GREENY LIFE Digital Operating System",
   "author": "GREENY LIFE",
   "license": "MIT",
@@ -15,15 +16,19 @@
   },
 
   "dependencies": {
-    "next": "^16.0.0",
-    "react": "^19.1.0",
-    "react-dom": "^19.1.0"
+    "next": "^16.2.10",
+    "react": "^19.1.1",
+    "react-dom": "^19.1.1"
   },
 
   "devDependencies": {
     "typescript": "^5.9.2",
     "@types/node": "^24.0.0",
-    "@types/react": "^19.1.0",
-    "@types/react-dom": "^19.1.0"
+    "@types/react": "^19.1.10",
+    "@types/react-dom": "^19.1.7"
+  },
+
+  "engines": {
+    "node": ">=20.11.1"
   }
 }
