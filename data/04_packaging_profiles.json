@@ -2,150 +2,141 @@
   "version": {
     "schema": "1.0.0"
   },
-
   "profiles": [
-
     {
       "id": "honey_default",
-
       "name": {
         "en": "Honey Standard Packaging",
         "ar": "التعبئة القياسية للعسل"
       },
-
       "supported_products": [
         "wildflower-honey",
         "citrus-honey",
         "clover-honey"
       ],
-
       "containers": [
         "glass_jar",
         "pet_jar",
         "bucket",
         "drum"
       ],
-
       "business_channels": [
         "b2c",
         "b2b",
         "private_label"
       ],
-
-      "customization": true
+      "customization": true,
+      "sort_order": 10,
+      "status": {
+        "published": true,
+        "active": true
+      }
     },
-
     {
       "id": "royal_jelly",
-
       "name": {
         "en": "Royal Jelly Packaging",
         "ar": "تعبئة غذاء ملكات النحل"
       },
-
       "supported_products": [
         "royal-jelly"
       ],
-
       "containers": [
         "glass_jar"
       ],
-
       "business_channels": [
         "b2c",
         "b2b",
         "private_label"
       ],
-
-      "customization": true
+      "customization": true,
+      "sort_order": 20,
+      "status": {
+        "published": true,
+        "active": true
+      }
     },
-
     {
       "id": "propolis",
-
       "name": {
         "en": "Raw Propolis Packaging",
         "ar": "تعبئة البروبوليس الخام"
       },
-
       "supported_products": [
         "raw-propolis"
       ],
-
       "containers": [
         "glass_jar",
         "standup_pouch"
       ],
-
       "business_channels": [
         "b2c",
         "b2b",
         "private_label"
       ],
-
-      "customization": true
+      "customization": true,
+      "sort_order": 30,
+      "status": {
+        "published": true,
+        "active": true
+      }
     },
-
     {
       "id": "bee_pollen",
-
       "name": {
         "en": "Bee Pollen Packaging",
         "ar": "تعبئة حبوب اللقاح"
       },
-
       "supported_products": [
         "bee-pollen"
       ],
-
       "containers": [
         "glass_jar",
         "standup_pouch"
       ],
-
       "business_channels": [
         "b2c",
         "b2b",
         "private_label"
       ],
-
-      "customization": true
+      "customization": true,
+      "sort_order": 40,
+      "status": {
+        "published": true,
+        "active": true
+      }
     },
-
     {
       "id": "beeswax",
-
       "name": {
         "en": "Pure Beeswax Packaging",
         "ar": "تعبئة شمع النحل"
       },
-
       "supported_products": [
         "pure-beeswax"
       ],
-
       "containers": [
         "glass_jar",
         "bucket"
       ],
-
       "business_channels": [
         "b2c",
         "b2b",
         "private_label"
       ],
-
-      "customization": true
+      "customization": true,
+      "sort_order": 50,
+      "status": {
+        "published": true,
+        "active": true
+      }
     },
-
     {
       "id": "spices_default",
-
       "name": {
         "en": "Spices Standard Packaging",
         "ar": "التعبئة القياسية للتوابل"
       },
-
       "supported_products": [
         "garlic-powder",
         "onion-powder",
@@ -154,73 +145,72 @@
         "roasted-cumin",
         "seven-spices-blend"
       ],
-
       "containers": [
         "glass_jar",
         "standup_pouch"
       ],
-
       "business_channels": [
         "b2c",
         "food_service",
         "b2b",
         "private_label"
       ],
-
-      "customization": true
+      "customization": true,
+      "sort_order": 60,
+      "status": {
+        "published": true,
+        "active": true
+      }
     },
-
     {
       "id": "herbs_default",
-
       "name": {
         "en": "Herbs Standard Packaging",
         "ar": "التعبئة القياسية للأعشاب"
       },
-
       "supported_products": [
         "hibiscus-flowers"
       ],
-
       "containers": [
         "standup_pouch",
         "glass_jar"
       ],
-
       "business_channels": [
         "b2c",
         "food_service",
         "b2b",
         "private_label"
       ],
-
-      "customization": true
+      "customization": true,
+      "sort_order": 70,
+      "status": {
+        "published": true,
+        "active": true
+      }
     },
-
     {
       "id": "black_seed_oil",
-
       "name": {
         "en": "Black Seed Oil Packaging",
         "ar": "تعبئة زيت حبة البركة"
       },
-
       "supported_products": [
         "black-seed-oil"
       ],
-
       "containers": [
         "glass_jar"
       ],
-
       "business_channels": [
         "b2c",
         "b2b",
         "private_label"
       ],
-
-      "customization": true
+      "customization": true,
+      "sort_order": 80,
+      "status": {
+        "published": true,
+        "active": true
+      }
     }
-
   ]
 }

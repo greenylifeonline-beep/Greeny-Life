@@ -1,0 +1,49 @@
+{
+  "schemaVersion": "1.0.0",
+
+  "extensions": {
+
+    "CAT-SPC": {
+      "technicalAttributes": [
+        "meshSize",
+        "moisture",
+        "totalAsh",
+        "acidInsolubleAsh",
+        "volatileOil",
+        "foreignMatter"
+      ]
+    },
+
+    "CAT-HON": {
+      "technicalAttributes": [
+        "moisture",
+        "hmf",
+        "diastase",
+        "electricalConductivity",
+        "sucrose",
+        "reducingSugars"
+      ]
+    },
+
+    "CAT-OIL": {
+      "technicalAttributes": [
+        "density",
+        "viscosity",
+        "acidValue",
+        "peroxideValue",
+        "refractiveIndex"
+      ]
+    },
+
+    "CAT-BEE": {
+      "technicalAttributes": [
+        "purity",
+        "moisture",
+        "appearance",
+        "color",
+        "odor"
+      ]
+    }
+
+  }
+}

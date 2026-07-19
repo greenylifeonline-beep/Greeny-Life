@@ -1,0 +1,180 @@
+{
+  "version": {
+    "schema": "1.0.0"
+  },
+
+  "documents": [
+
+    {
+      "id": "coa",
+
+      "name": {
+        "en": "Certificate of Analysis",
+        "ar": "شهادة تحليل"
+      },
+
+      "code": "COA",
+
+      "category": "quality",
+
+      "required": true,
+
+      "status": {
+        "active": true
+      }
+    },
+
+    {
+      "id": "msds",
+
+      "name": {
+        "en": "Material Safety Data Sheet",
+        "ar": "صحيفة بيانات السلامة"
+      },
+
+      "code": "MSDS",
+
+      "category": "safety",
+
+      "required": false,
+
+      "status": {
+        "active": true
+      }
+    },
+
+    {
+      "id": "halal",
+
+      "name": {
+        "en": "Halal Certificate",
+        "ar": "شهادة حلال"
+      },
+
+      "code": "HALAL",
+
+      "category": "certification",
+
+      "required": false,
+
+      "status": {
+        "active": true
+      }
+    },
+
+    {
+      "id": "organic",
+
+      "name": {
+        "en": "Organic Certificate",
+        "ar": "شهادة عضوية"
+      },
+
+      "code": "ORG",
+
+      "category": "certification",
+
+      "required": false,
+
+      "status": {
+        "active": true
+      }
+    },
+
+    {
+      "id": "iso22000",
+
+      "name": {
+        "en": "ISO 22000 Certificate",
+        "ar": "شهادة ISO 22000"
+      },
+
+      "code": "ISO22000",
+
+      "category": "certification",
+
+      "required": false,
+
+      "status": {
+        "active": true
+      }
+    },
+
+    {
+      "id": "barcode",
+
+      "name": {
+        "en": "Barcode",
+        "ar": "باركود"
+      },
+
+      "code": "BARCODE",
+
+      "category": "product",
+
+      "required": true,
+
+      "status": {
+        "active": true
+      }
+    },
+
+    {
+      "id": "label",
+
+      "name": {
+        "en": "Product Label",
+        "ar": "ملصق المنتج"
+      },
+
+      "code": "LABEL",
+
+      "category": "packaging",
+
+      "required": true,
+
+      "status": {
+        "active": true
+      }
+    },
+
+    {
+      "id": "nutrition",
+
+      "name": {
+        "en": "Nutrition Facts",
+        "ar": "القيم الغذائية"
+      },
+
+      "code": "NUTRITION",
+
+      "category": "labeling",
+
+      "required": false,
+
+      "status": {
+        "active": true
+      }
+    },
+
+    {
+      "id": "specification",
+
+      "name": {
+        "en": "Product Specification",
+        "ar": "المواصفات الفنية"
+      },
+
+      "code": "SPEC",
+
+      "category": "technical",
+
+      "required": true,
+
+      "status": {
+        "active": true
+      }
+    }
+
+  ]
+}

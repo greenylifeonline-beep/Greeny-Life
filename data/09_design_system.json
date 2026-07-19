@@ -1,0 +1,182 @@
+{
+  "version": {
+    "schema": "1.0.0"
+  },
+  "design_system": {
+    "id": "gl_design_system",
+    "sort_order": 10,
+    "name": {
+      "en": "GREENY LIFE Design System",
+      "ar": "نظام التصميم GREENY LIFE"
+    },
+    "description": {
+      "en": "Enterprise design tokens for GREENY LIFE.",
+      "ar": "رموز التصميم الرسمية."
+    },
+    "status": {
+      "published": true,
+      "active": true
+    },
+    "colors": {
+      "brand": {
+        "primary": "#51A51C",
+        "primary_dark": "#3D8614",
+        "white": "#FFFFFF",
+        "off_white": "#FAFAF8",
+        "black": "#222222",
+        "gray": "#666666"
+      },
+      "collections": {
+        "honey": "#C9A227",
+        "bee_products": "#D4A017",
+        "spices": "#B5651D",
+        "herbs": "#6B8E23",
+        "oils": "#1F1F1F"
+      },
+      "semantic": {
+        "success": "#4CAF50",
+        "warning": "#FFC107",
+        "danger": "#E53935",
+        "info": "#2196F3"
+      }
+    },
+    "typography": {
+      "families": {
+        "heading": "Playfair Display",
+        "body": "Inter",
+        "accent": "Montserrat"
+      },
+      "weights": {
+        "light": 300,
+        "regular": 400,
+        "medium": 500,
+        "semibold": 600,
+        "bold": 700
+      },
+      "sizes": {
+        "h1": 64,
+        "h2": 48,
+        "h3": 36,
+        "h4": 28,
+        "body": 16,
+        "small": 14,
+        "caption": 12
+      }
+    },
+    "spacing": {
+      "xs": 4,
+      "sm": 8,
+      "md": 16,
+      "lg": 24,
+      "xl": 32,
+      "xxl": 48,
+      "section": 80,
+      "page": 120
+    },
+    "sizing": {
+      "container": 1200,
+      "content": 900,
+      "header_height": 90,
+      "logo": 64,
+      "icon": 24,
+      "icon_large": 48
+    },
+    "radius": {
+      "none": 0,
+      "sm": 6,
+      "md": 12,
+      "lg": 20,
+      "xl": 24,
+      "pill": 999
+    },
+    "shadows": {
+      "sm": "0 4px 12px rgba(0,0,0,.05)",
+      "md": "0 10px 25px rgba(0,0,0,.08)",
+      "lg": "0 15px 40px rgba(0,0,0,.12)",
+      "hover": "0 25px 60px rgba(0,0,0,.15)"
+    },
+    "borders": {
+      "thin": "1px solid",
+      "normal": "2px solid",
+      "accent": "6px solid"
+    },
+    "layout": {
+      "max_width": 1200,
+      "content_width": 900,
+      "grid_gap": 32,
+      "section_gap": 80
+    },
+    "breakpoints": {
+      "mobile": 768,
+      "tablet": 1024,
+      "desktop": 1280,
+      "wide": 1440
+    },
+    "animations": {
+      "fast": 150,
+      "normal": 300,
+      "slow": 500,
+      "easing": "ease"
+    },
+    "buttons": {
+      "primary": {
+        "radius": "pill",
+        "padding": [
+          18,
+          44
+        ]
+      },
+      "secondary": {
+        "radius": "pill",
+        "padding": [
+          18,
+          44
+        ]
+      }
+    },
+    "cards": {
+      "padding": 32,
+      "radius": "xl",
+      "shadow": "md",
+      "hover_shadow": "hover"
+    },
+    "forms": {
+      "input_height": 48,
+      "radius": "md",
+      "label_weight": 600
+    },
+    "tables": {
+      "row_height": 52,
+      "header_weight": 600
+    },
+    "badges": {
+      "radius": "pill",
+      "padding": [
+        6,
+        12
+      ]
+    },
+    "icons": {
+      "default": 24,
+      "large": 48
+    },
+    "images": {
+      "radius": 20,
+      "fit": "cover"
+    },
+    "navigation": {
+      "sticky": true,
+      "height": 90
+    },
+    "footer": {
+      "background": "#1F1F1F",
+      "text": "#FFFFFF"
+    },
+    "z_index": {
+      "header": 1000,
+      "modal": 2000,
+      "toast": 3000,
+      "tooltip": 4000
+    }
+  }
+}

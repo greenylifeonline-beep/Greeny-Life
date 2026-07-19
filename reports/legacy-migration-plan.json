@@ -1,0 +1,156 @@
+{
+  "generated_at": "2026-07-19T13:41:22.146Z",
+  "engine": {
+    "name": "GREENY LIFE Migration Registry Builder",
+    "version": "1.0.0"
+  },
+  "created_by": "GREENY LIFE Migration Registry Builder",
+  "total_tasks": 6,
+  "review_required": 0,
+  "tasks": [
+    {
+      "id": "component:components:layout:Footer",
+      "phase": 1,
+      "component": "Footer",
+      "target": "components/layout/Footer.tsx",
+      "status": "pending",
+      "priority": "critical",
+      "sources": [
+        "app/views/about.html",
+        "app/views/home.html",
+        "app/views/packaging.html"
+      ],
+      "decisions": [
+        "REUSE"
+      ],
+      "reasons": [
+        "Contains reusable layout.",
+        "Contains reusable sections.",
+        "HTML page detected."
+      ],
+      "dependencies": []
+    },
+    {
+      "id": "component:components:layout:Header",
+      "phase": 1,
+      "component": "Header",
+      "target": "components/layout/Header.tsx",
+      "status": "pending",
+      "priority": "critical",
+      "sources": [
+        "app/views/about.html",
+        "app/views/contact.html",
+        "app/views/home.html",
+        "app/views/packaging.html",
+        "app/views/product.html"
+      ],
+      "decisions": [
+        "REUSE"
+      ],
+      "reasons": [
+        "Contains reusable layout.",
+        "Contains reusable sections.",
+        "HTML page detected."
+      ],
+      "dependencies": []
+    },
+    {
+      "id": "component:components:layout:Navigation",
+      "phase": 1,
+      "component": "Navigation",
+      "target": "components/layout/Navigation.tsx",
+      "status": "pending",
+      "priority": "critical",
+      "sources": [
+        "app/views/about.html",
+        "app/views/contact.html",
+        "app/views/home.html",
+        "app/views/packaging.html",
+        "app/views/product.html"
+      ],
+      "decisions": [
+        "REUSE"
+      ],
+      "reasons": [
+        "Contains reusable layout.",
+        "Contains reusable sections.",
+        "HTML page detected."
+      ],
+      "dependencies": [
+        "component:components:layout:Header"
+      ]
+    },
+    {
+      "id": "component:components:sections:Collections",
+      "phase": 2,
+      "component": "Collections",
+      "target": "components/sections/Collections.tsx",
+      "status": "pending",
+      "priority": "high",
+      "sources": [
+        "app/views/about.html",
+        "app/views/home.html",
+        "app/views/packaging.html",
+        "app/views/product.html"
+      ],
+      "decisions": [
+        "REUSE"
+      ],
+      "reasons": [
+        "Contains reusable layout.",
+        "Contains reusable sections.",
+        "HTML page detected."
+      ],
+      "dependencies": [
+        "component:components:sections:Hero"
+      ]
+    },
+    {
+      "id": "component:components:sections:Contact",
+      "phase": 2,
+      "component": "Contact",
+      "target": "components/sections/Contact.tsx",
+      "status": "pending",
+      "priority": "high",
+      "sources": [
+        "app/views/contact.html",
+        "app/views/home.html"
+      ],
+      "decisions": [
+        "REUSE"
+      ],
+      "reasons": [
+        "Contains reusable layout.",
+        "Contains reusable sections.",
+        "HTML page detected."
+      ],
+      "dependencies": []
+    },
+    {
+      "id": "component:components:sections:Hero",
+      "phase": 2,
+      "component": "Hero",
+      "target": "components/sections/Hero.tsx",
+      "status": "pending",
+      "priority": "high",
+      "sources": [
+        "app/views/about.html",
+        "app/views/contact.html",
+        "app/views/home.html",
+        "app/views/packaging.html",
+        "app/views/product.html"
+      ],
+      "decisions": [
+        "REUSE"
+      ],
+      "reasons": [
+        "Contains reusable layout.",
+        "Contains reusable sections.",
+        "HTML page detected."
+      ],
+      "dependencies": [
+        "component:components:layout:Header"
+      ]
+    }
+  ]
+}

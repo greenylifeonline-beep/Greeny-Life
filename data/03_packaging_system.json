@@ -2,7 +2,6 @@
   "version": {
     "schema": "1.0.0"
   },
-
   "containers": [
     {
       "id": "glass_jar",
@@ -29,9 +28,13 @@
           "value": 1000,
           "unit": "g"
         }
-      ]
+      ],
+      "sort_order": 10,
+      "status": {
+        "published": true,
+        "active": true
+      }
     },
-
     {
       "id": "pet_jar",
       "name": {
@@ -53,9 +56,13 @@
           "value": 1000,
           "unit": "g"
         }
-      ]
+      ],
+      "sort_order": 20,
+      "status": {
+        "published": true,
+        "active": true
+      }
     },
-
     {
       "id": "standup_pouch",
       "name": {
@@ -89,9 +96,13 @@
           "value": 5000,
           "unit": "g"
         }
-      ]
+      ],
+      "sort_order": 30,
+      "status": {
+        "published": true,
+        "active": true
+      }
     },
-
     {
       "id": "bucket",
       "name": {
@@ -117,9 +128,13 @@
           "value": 25,
           "unit": "kg"
         }
-      ]
+      ],
+      "sort_order": 40,
+      "status": {
+        "published": true,
+        "active": true
+      }
     },
-
     {
       "id": "drum",
       "name": {
@@ -137,10 +152,14 @@
           "value": 300,
           "unit": "kg"
         }
-      ]
+      ],
+      "sort_order": 50,
+      "status": {
+        "published": true,
+        "active": true
+      }
     }
   ],
-
   "usage_profiles": {
     "retail": {
       "name": {
@@ -153,7 +172,6 @@
         "standup_pouch"
       ]
     },
-
     "food_service": {
       "name": {
         "en": "Food Service",
@@ -163,7 +181,6 @@
         "bucket"
       ]
     },
-
     "wholesale": {
       "name": {
         "en": "Wholesale",
@@ -175,7 +192,6 @@
       ]
     }
   },
-
   "business_channels": {
     "b2c": {
       "enabled": true,
@@ -184,7 +200,6 @@
         "ar": "البيع للمستهلك"
       }
     },
-
     "b2b": {
       "enabled": true,
       "name": {
@@ -197,7 +212,6 @@
         "full_container_load": true
       }
     },
-
     "private_label": {
       "enabled": true,
       "name": {
@@ -206,10 +220,8 @@
       }
     }
   },
-
   "customization": {
     "enabled": true,
-
     "options": {
       "custom_packaging": true,
       "custom_container": true,

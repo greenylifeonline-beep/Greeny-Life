@@ -1,0 +1,875 @@
+{
+  "generated_at": "2026-07-19T14:48:56.141Z",
+  "statistics": {
+    "folders": 64,
+    "files": 110
+  },
+  "html": [
+    {
+      "path": "app\\views\\about.html",
+      "size": 2706
+    },
+    {
+      "path": "app\\views\\contact.html",
+      "size": 2999
+    },
+    {
+      "path": "app\\views\\home.html",
+      "size": 5660
+    },
+    {
+      "path": "app\\views\\packaging.html",
+      "size": 3052
+    },
+    {
+      "path": "app\\views\\product.html",
+      "size": 3590
+    },
+    {
+      "path": "app\\views\\products.html",
+      "size": 0
+    },
+    {
+      "path": "index.html",
+      "size": 338
+    }
+  ],
+  "css": [
+    {
+      "path": "app\\assets\\css\\style.css",
+      "size": 12404
+    },
+    {
+      "path": "app\\globals.css",
+      "size": 379
+    }
+  ],
+  "js": [
+    {
+      "path": "scripts\\audit-project.js",
+      "size": 3585
+    },
+    {
+      "path": "scripts\\backup-data.js",
+      "size": 2169
+    },
+    {
+      "path": "scripts\\integrity-check.js",
+      "size": 973
+    },
+    {
+      "path": "scripts\\migrate-data.js",
+      "size": 675
+    },
+    {
+      "path": "scripts\\migrate-schema.js",
+      "size": 4733
+    },
+    {
+      "path": "scripts\\migration\\config.js",
+      "size": 2828
+    },
+    {
+      "path": "scripts\\migration\\legacy-engine.js",
+      "size": 15169
+    },
+    {
+      "path": "scripts\\migration\\migration-decision-engine.js",
+      "size": 12548
+    },
+    {
+      "path": "scripts\\migration\\migration-executor.js",
+      "size": 7327
+    },
+    {
+      "path": "scripts\\migration\\registry-builder.js",
+      "size": 12594
+    },
+    {
+      "path": "scripts\\migration\\utils.js",
+      "size": 5544
+    },
+    {
+      "path": "scripts\\validate-schema.js",
+      "size": 2928
+    }
+  ],
+  "ts": [
+    {
+      "path": "app\\layout.tsx",
+      "size": 316
+    },
+    {
+      "path": "app\\page.tsx",
+      "size": 548
+    },
+    {
+      "path": "components\\ui\\Loader.tsx",
+      "size": 108
+    },
+    {
+      "path": "components\\ui\\Modal.tsx",
+      "size": 289
+    },
+    {
+      "path": "components\\ui\\Toast.tsx",
+      "size": 131
+    },
+    {
+      "path": "lib\\data\\collections.ts",
+      "size": 283
+    },
+    {
+      "path": "lib\\data\\documents.ts",
+      "size": 0
+    },
+    {
+      "path": "lib\\data\\global.ts",
+      "size": 668
+    },
+    {
+      "path": "lib\\data\\markets.ts",
+      "size": 0
+    },
+    {
+      "path": "lib\\data\\media.ts",
+      "size": 2380
+    },
+    {
+      "path": "lib\\data\\packaging-profiles.ts",
+      "size": 736
+    },
+    {
+      "path": "lib\\data\\packaging.ts",
+      "size": 1231
+    },
+    {
+      "path": "lib\\data\\products.ts",
+      "size": 2253
+    },
+    {
+      "path": "next-env.d.ts",
+      "size": 257
+    },
+    {
+      "path": "services\\api.ts",
+      "size": 532
+    }
+  ],
+  "json": [
+    {
+      "path": "data\\01_global.json",
+      "size": 1069
+    },
+    {
+      "path": "data\\02_collections.json",
+      "size": 2452
+    },
+    {
+      "path": "data\\03_packaging_system.json",
+      "size": 4424
+    },
+    {
+      "path": "data\\04_packaging_profiles.json",
+      "size": 4440
+    },
+    {
+      "path": "data\\05_master_products.json",
+      "size": 9106
+    },
+    {
+      "path": "data\\06_markets.json",
+      "size": 2004
+    },
+    {
+      "path": "data\\07_documents.json",
+      "size": 2670
+    },
+    {
+      "path": "data\\08_media.json",
+      "size": 3576
+    },
+    {
+      "path": "data\\09_design_system.json",
+      "size": 3721
+    },
+    {
+      "path": "data\\legacy\\brand.json",
+      "size": 4235
+    },
+    {
+      "path": "data\\legacy\\categories.json",
+      "size": 936
+    },
+    {
+      "path": "data\\legacy\\category-extensions.json",
+      "size": 832
+    },
+    {
+      "path": "data\\legacy\\certificates.json",
+      "size": 719
+    },
+    {
+      "path": "data\\legacy\\countries.json",
+      "size": 142
+    },
+    {
+      "path": "data\\legacy\\incoterms.json",
+      "size": 670
+    },
+    {
+      "path": "data\\legacy\\legal-entities.json",
+      "size": 490
+    },
+    {
+      "path": "data\\legacy\\markets.json",
+      "size": 367
+    },
+    {
+      "path": "data\\legacy\\packaging.json",
+      "size": 7077
+    },
+    {
+      "path": "data\\legacy\\product-variants.json",
+      "size": 1140
+    },
+    {
+      "path": "data\\legacy\\product.schema.json",
+      "size": 782
+    },
+    {
+      "path": "data\\legacy\\products.json",
+      "size": 2631
+    },
+    {
+      "path": "data\\legacy\\units.json",
+      "size": 507
+    },
+    {
+      "path": "data\\migrated_brand.json",
+      "size": 4235
+    },
+    {
+      "path": "data\\migrated_categories.json",
+      "size": 936
+    },
+    {
+      "path": "data\\migrated_products.json",
+      "size": 2631
+    },
+    {
+      "path": "data\\migration\\migration-history.json",
+      "size": 183
+    },
+    {
+      "path": "data\\migration\\migration-progress.json",
+      "size": 452
+    },
+    {
+      "path": "package-lock.json",
+      "size": 33284
+    },
+    {
+      "path": "package.json",
+      "size": 996
+    },
+    {
+      "path": "schema\\entity.schema.json",
+      "size": 413
+    },
+    {
+      "path": "tsconfig.json",
+      "size": 699
+    }
+  ],
+  "images": [
+    {
+      "path": "app\\assets\\images\\categories\\bee-products.jpg",
+      "size": 117546
+    },
+    {
+      "path": "app\\assets\\images\\categories\\honey.jpg",
+      "size": 138294
+    },
+    {
+      "path": "app\\assets\\images\\categories\\large\\bee-products.jpg",
+      "size": 103132
+    },
+    {
+      "path": "app\\assets\\images\\categories\\large\\honey.jpg",
+      "size": 142599
+    },
+    {
+      "path": "app\\assets\\images\\categories\\large\\natural-oils.jpg",
+      "size": 145009
+    },
+    {
+      "path": "app\\assets\\images\\categories\\large\\primum-spices.jpg",
+      "size": 144564
+    },
+    {
+      "path": "app\\assets\\images\\categories\\natural-oils.jpg",
+      "size": 145009
+    },
+    {
+      "path": "app\\assets\\images\\categories\\premium-spices.jpg",
+      "size": 158296
+    },
+    {
+      "path": "app\\assets\\images\\products\\bee-pollen\\bee-pollen.jpg",
+      "size": 208466
+    },
+    {
+      "path": "app\\assets\\images\\products\\black-seed-oil\\black-seed-oil.jpg",
+      "size": 247646
+    },
+    {
+      "path": "app\\assets\\images\\products\\citrus-honey\\citrus-honey.jpg",
+      "size": 248537
+    },
+    {
+      "path": "app\\assets\\images\\products\\clove-honey\\clover-honey.jpg",
+      "size": 241003
+    },
+    {
+      "path": "app\\assets\\images\\products\\cumin-powder\\cumin-powder.jpg",
+      "size": 272630
+    },
+    {
+      "path": "app\\assets\\images\\products\\garlic-powder\\garlic-powder.jpg",
+      "size": 248631
+    },
+    {
+      "path": "app\\assets\\images\\products\\hibiscus-flower\\hibiscus-flowers.jpg",
+      "size": 272474
+    },
+    {
+      "path": "app\\assets\\images\\products\\onion-powder\\union-powder.jpg",
+      "size": 252158
+    },
+    {
+      "path": "app\\assets\\images\\products\\propolis\\propolis.jpg",
+      "size": 278408
+    },
+    {
+      "path": "app\\assets\\images\\products\\pure-beeswax\\pure-beeswax.jpg",
+      "size": 229342
+    },
+    {
+      "path": "app\\assets\\images\\products\\royal-jelly\\Royal-jelly.jpg",
+      "size": 226718
+    },
+    {
+      "path": "app\\assets\\images\\products\\seven-spices-blend\\seven-spices-blend.jpg",
+      "size": 278225
+    },
+    {
+      "path": "app\\assets\\images\\products\\sweet-paprika\\sweet-paprika.jpg",
+      "size": 264677
+    },
+    {
+      "path": "app\\assets\\images\\products\\turmeric-powder\\turmeric-powder.jpg",
+      "size": 268832
+    },
+    {
+      "path": "app\\assets\\images\\products\\wildflower-honey\\wildflower-honey.jpg",
+      "size": 260512
+    },
+    {
+      "path": "app\\assets\\logos\\logo.jpg",
+      "size": 21523
+    },
+    {
+      "path": "logo.png",
+      "size": 21523
+    }
+  ],
+  "fonts": [],
+  "markdown": [
+    {
+      "path": "docs\\architecture\\SYSTEM_ARCHITECTURE.md",
+      "size": 4235
+    },
+    {
+      "path": "docs\\packaging\\packaging_master.md",
+      "size": 3456
+    },
+    {
+      "path": "docs\\packaging\\PACKING_CODES.md",
+      "size": 734
+    },
+    {
+      "path": "docs\\products\\PRODUCT_CODE.md",
+      "size": 801
+    },
+    {
+      "path": "docs\\products\\PRODUCT_DATABASE.md",
+      "size": 774
+    },
+    {
+      "path": "docs\\products\\PRODUCT_LIBRARY.md",
+      "size": 803
+    },
+    {
+      "path": "docs\\products\\PRODUCT_MASTER.md",
+      "size": 1114
+    },
+    {
+      "path": "docs\\products\\PRODUCT_TEMPLATE.md",
+      "size": 712
+    },
+    {
+      "path": "docs\\README.md",
+      "size": 1057
+    },
+    {
+      "path": "docs\\standards\\01_BRAND_STANDARD.md",
+      "size": 1447
+    }
+  ],
+  "emptyFolders": [
+    "app\\assets\\fonts",
+    "app\\assets\\icons",
+    "app\\assets\\images\\certifications",
+    "app\\assets\\images\\countries",
+    "app\\assets\\images\\gallery",
+    "app\\assets\\images\\hero",
+    "app\\assets\\products",
+    "app\\assets\\videos",
+    "cards",
+    "forms",
+    "lib\\data\\validators",
+    "lib\\helpers",
+    "packaging",
+    "public\\backgrounds",
+    "public\\brand",
+    "public\\certifications",
+    "public\\flags",
+    "public\\icons",
+    "public\\mokups",
+    "public\\packaging",
+    "public\\products",
+    "ui"
+  ],
+  "emptyFiles": [
+    "app\\views\\products.html",
+    "lib\\data\\documents.ts",
+    "lib\\data\\markets.ts"
+  ],
+  "reusable": [],
+  "tree": {
+    "files": [
+      ".gitignore",
+      "app_tree.txt",
+      "folders_tree.txt",
+      "index.html",
+      "logo.png",
+      "next-env.d.ts",
+      "package-lock.json",
+      "package.json",
+      "project-summary.txt",
+      "project-tree.txt",
+      "Project_Audit.txt",
+      "project_tree.txt",
+      "Real_Project_Files.txt",
+      "tsconfig.json"
+    ],
+    "folders": {
+      "app": {
+        "files": [
+          "globals.css",
+          "layout.tsx",
+          "page.tsx"
+        ],
+        "folders": {
+          "assets": {
+            "files": [],
+            "folders": {
+              "css": {
+                "files": [
+                  "style.css"
+                ],
+                "folders": {}
+              },
+              "fonts": {
+                "files": [],
+                "folders": {}
+              },
+              "icons": {
+                "files": [],
+                "folders": {}
+              },
+              "images": {
+                "files": [],
+                "folders": {
+                  "categories": {
+                    "files": [
+                      "bee-products.jpg",
+                      "honey.jpg",
+                      "natural-oils.jpg",
+                      "premium-spices.jpg"
+                    ],
+                    "folders": {
+                      "large": {
+                        "files": [
+                          "bee-products.jpg",
+                          "honey.jpg",
+                          "natural-oils.jpg",
+                          "primum-spices.jpg"
+                        ],
+                        "folders": {}
+                      }
+                    }
+                  },
+                  "certifications": {
+                    "files": [],
+                    "folders": {}
+                  },
+                  "countries": {
+                    "files": [],
+                    "folders": {}
+                  },
+                  "gallery": {
+                    "files": [],
+                    "folders": {}
+                  },
+                  "hero": {
+                    "files": [],
+                    "folders": {}
+                  },
+                  "products": {
+                    "files": [],
+                    "folders": {
+                      "bee-pollen": {
+                        "files": [
+                          "bee-pollen.jpg"
+                        ],
+                        "folders": {}
+                      },
+                      "black-seed-oil": {
+                        "files": [
+                          "black-seed-oil.jpg"
+                        ],
+                        "folders": {}
+                      },
+                      "citrus-honey": {
+                        "files": [
+                          "citrus-honey.jpg"
+                        ],
+                        "folders": {}
+                      },
+                      "clove-honey": {
+                        "files": [
+                          "clover-honey.jpg"
+                        ],
+                        "folders": {}
+                      },
+                      "cumin-powder": {
+                        "files": [
+                          "cumin-powder.jpg"
+                        ],
+                        "folders": {}
+                      },
+                      "garlic-powder": {
+                        "files": [
+                          "garlic-powder.jpg"
+                        ],
+                        "folders": {}
+                      },
+                      "hibiscus-flower": {
+                        "files": [
+                          "hibiscus-flowers.jpg"
+                        ],
+                        "folders": {}
+                      },
+                      "onion-powder": {
+                        "files": [
+                          "union-powder.jpg"
+                        ],
+                        "folders": {}
+                      },
+                      "propolis": {
+                        "files": [
+                          "propolis.jpg"
+                        ],
+                        "folders": {}
+                      },
+                      "pure-beeswax": {
+                        "files": [
+                          "pure-beeswax.jpg"
+                        ],
+                        "folders": {}
+                      },
+                      "royal-jelly": {
+                        "files": [
+                          "Royal-jelly.jpg"
+                        ],
+                        "folders": {}
+                      },
+                      "seven-spices-blend": {
+                        "files": [
+                          "seven-spices-blend.jpg"
+                        ],
+                        "folders": {}
+                      },
+                      "sweet-paprika": {
+                        "files": [
+                          "sweet-paprika.jpg"
+                        ],
+                        "folders": {}
+                      },
+                      "turmeric-powder": {
+                        "files": [
+                          "turmeric-powder.jpg"
+                        ],
+                        "folders": {}
+                      },
+                      "wildflower-honey": {
+                        "files": [
+                          "wildflower-honey.jpg"
+                        ],
+                        "folders": {}
+                      }
+                    }
+                  }
+                }
+              },
+              "logos": {
+                "files": [
+                  "logo.jpg"
+                ],
+                "folders": {}
+              },
+              "products": {
+                "files": [],
+                "folders": {}
+              },
+              "videos": {
+                "files": [],
+                "folders": {}
+              }
+            }
+          },
+          "views": {
+            "files": [
+              "about.html",
+              "contact.html",
+              "home.html",
+              "packaging.html",
+              "product.html",
+              "products.html"
+            ],
+            "folders": {}
+          }
+        }
+      },
+      "cards": {
+        "files": [],
+        "folders": {}
+      },
+      "components": {
+        "files": [],
+        "folders": {
+          "ui": {
+            "files": [
+              "Loader.tsx",
+              "Modal.tsx",
+              "Toast.tsx"
+            ],
+            "folders": {}
+          }
+        }
+      },
+      "data": {
+        "files": [
+          "01_global.json",
+          "02_collections.json",
+          "03_packaging_system.json",
+          "04_packaging_profiles.json",
+          "05_master_products.json",
+          "06_markets.json",
+          "07_documents.json",
+          "08_media.json",
+          "09_design_system.json",
+          "migrated_brand.json",
+          "migrated_categories.json",
+          "migrated_products.json"
+        ],
+        "folders": {
+          "legacy": {
+            "files": [
+              "brand.json",
+              "categories.json",
+              "category-extensions.json",
+              "certificates.json",
+              "countries.json",
+              "incoterms.json",
+              "legal-entities.json",
+              "markets.json",
+              "packaging.json",
+              "product-variants.json",
+              "product.schema.json",
+              "products.json",
+              "units.json"
+            ],
+            "folders": {}
+          },
+          "migration": {
+            "files": [
+              "migration-history.json",
+              "migration-progress.json"
+            ],
+            "folders": {}
+          }
+        }
+      },
+      "docs": {
+        "files": [
+          "README.md"
+        ],
+        "folders": {
+          "architecture": {
+            "files": [
+              "SYSTEM_ARCHITECTURE.md"
+            ],
+            "folders": {}
+          },
+          "packaging": {
+            "files": [
+              "packaging_master.md",
+              "PACKING_CODES.md"
+            ],
+            "folders": {}
+          },
+          "products": {
+            "files": [
+              "PRODUCT_CODE.md",
+              "PRODUCT_DATABASE.md",
+              "PRODUCT_LIBRARY.md",
+              "PRODUCT_MASTER.md",
+              "PRODUCT_TEMPLATE.md"
+            ],
+            "folders": {}
+          },
+          "standards": {
+            "files": [
+              "01_BRAND_STANDARD.md"
+            ],
+            "folders": {}
+          }
+        }
+      },
+      "forms": {
+        "files": [],
+        "folders": {}
+      },
+      "lib": {
+        "files": [],
+        "folders": {
+          "data": {
+            "files": [
+              "collections.ts",
+              "documents.ts",
+              "global.ts",
+              "markets.ts",
+              "media.ts",
+              "packaging-profiles.ts",
+              "packaging.ts",
+              "products.ts"
+            ],
+            "folders": {
+              "validators": {
+                "files": [],
+                "folders": {}
+              }
+            }
+          },
+          "helpers": {
+            "files": [],
+            "folders": {}
+          }
+        }
+      },
+      "packaging": {
+        "files": [],
+        "folders": {}
+      },
+      "public": {
+        "files": [],
+        "folders": {
+          "backgrounds": {
+            "files": [],
+            "folders": {}
+          },
+          "brand": {
+            "files": [],
+            "folders": {}
+          },
+          "certifications": {
+            "files": [],
+            "folders": {}
+          },
+          "flags": {
+            "files": [],
+            "folders": {}
+          },
+          "icons": {
+            "files": [],
+            "folders": {}
+          },
+          "mokups": {
+            "files": [],
+            "folders": {}
+          },
+          "packaging": {
+            "files": [],
+            "folders": {}
+          },
+          "products": {
+            "files": [],
+            "folders": {}
+          }
+        }
+      },
+      "schema": {
+        "files": [
+          "entity.schema.json"
+        ],
+        "folders": {}
+      },
+      "scripts": {
+        "files": [
+          "audit-project.js",
+          "backup-data.js",
+          "integrity-check.js",
+          "migrate-data.js",
+          "migrate-schema.js",
+          "validate-schema.js"
+        ],
+        "folders": {
+          "migration": {
+            "files": [
+              "config.js",
+              "legacy-engine.js",
+              "migration-decision-engine.js",
+              "migration-executor.js",
+              "registry-builder.js",
+              "utils.js"
+            ],
+            "folders": {}
+          }
+        }
+      },
+      "services": {
+        "files": [
+          "api.ts"
+        ],
+        "folders": {}
+      },
+      "ui": {
+        "files": [],
+        "folders": {}
+      }
+    }
+  }
+}

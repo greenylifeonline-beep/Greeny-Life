@@ -1,0 +1,46 @@
+{
+  "generated_at": "2026-07-19T11:15:27.313Z",
+  "total": 4,
+  "files": [
+    {
+      "file": "app\\globals.css",
+      "type": "css",
+      "score": 25,
+      "decision": "ARCHIVE",
+      "reasons": [
+        "Stylesheet detected."
+      ]
+    },
+    {
+      "file": "app\\js\\modules\\categories.js",
+      "type": "javascript",
+      "score": 10,
+      "decision": "ARCHIVE",
+      "reasons": [
+        "Fetch API detected.",
+        "DOM manipulation requires migration."
+      ]
+    },
+    {
+      "file": "app\\js\\script.js",
+      "type": "javascript",
+      "score": 20,
+      "decision": "ARCHIVE",
+      "reasons": [
+        "Fetch API detected.",
+        "Events detected.",
+        "DOM manipulation requires migration."
+      ]
+    },
+    {
+      "file": "app\\views\\products.html",
+      "type": "html",
+      "score": 30,
+      "decision": "ARCHIVE",
+      "reasons": [
+        "HTML page detected."
+      ]
+    }
+  ],
+  "created_by": "GREENY LIFE Migration Engine"
+}

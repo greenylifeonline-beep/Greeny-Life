@@ -1,0 +1,391 @@
+[
+  {
+    "component": "Review Required",
+    "source": "app\\js\\modules\\categories.js",
+    "target": "Manual review required",
+    "fileType": "javascript",
+    "score": 10,
+    "decision": "ARCHIVE",
+    "reasons": [
+      "Fetch API detected.",
+      "DOM manipulation requires migration."
+    ],
+    "status": "pending"
+  },
+  {
+    "component": "Review Required",
+    "source": "app\\js\\modules\\products.js",
+    "target": "Manual review required",
+    "fileType": "javascript",
+    "score": 50,
+    "decision": "REFACTOR",
+    "reasons": [
+      "Business logic detected.",
+      "Fetch API detected.",
+      "DOM manipulation requires migration."
+    ],
+    "status": "pending"
+  },
+  {
+    "component": "Review Required",
+    "source": "app\\js\\script.js",
+    "target": "Manual review required",
+    "fileType": "javascript",
+    "score": 20,
+    "decision": "ARCHIVE",
+    "reasons": [
+      "Fetch API detected.",
+      "Events detected.",
+      "DOM manipulation requires migration."
+    ],
+    "status": "pending"
+  },
+  {
+    "component": "Header",
+    "source": "app\\views\\about.html",
+    "target": "components/layout/Header.tsx",
+    "fileType": "html",
+    "score": 70,
+    "decision": "REUSE",
+    "reasons": [
+      "HTML page detected.",
+      "Contains reusable sections.",
+      "Contains reusable layout."
+    ],
+    "status": "pending"
+  },
+  {
+    "component": "Footer",
+    "source": "app\\views\\about.html",
+    "target": "components/layout/Footer.tsx",
+    "fileType": "html",
+    "score": 70,
+    "decision": "REUSE",
+    "reasons": [
+      "HTML page detected.",
+      "Contains reusable sections.",
+      "Contains reusable layout."
+    ],
+    "status": "pending"
+  },
+  {
+    "component": "Navigation",
+    "source": "app\\views\\about.html",
+    "target": "components/layout/Navigation.tsx",
+    "fileType": "html",
+    "score": 70,
+    "decision": "REUSE",
+    "reasons": [
+      "HTML page detected.",
+      "Contains reusable sections.",
+      "Contains reusable layout."
+    ],
+    "status": "pending"
+  },
+  {
+    "component": "Hero",
+    "source": "app\\views\\about.html",
+    "target": "components/sections/Hero.tsx",
+    "fileType": "html",
+    "score": 70,
+    "decision": "REUSE",
+    "reasons": [
+      "HTML page detected.",
+      "Contains reusable sections.",
+      "Contains reusable layout."
+    ],
+    "status": "pending"
+  },
+  {
+    "component": "Collections",
+    "source": "app\\views\\about.html",
+    "target": "components/sections/Collections.tsx",
+    "fileType": "html",
+    "score": 70,
+    "decision": "REUSE",
+    "reasons": [
+      "HTML page detected.",
+      "Contains reusable sections.",
+      "Contains reusable layout."
+    ],
+    "status": "pending"
+  },
+  {
+    "component": "Header",
+    "source": "app\\views\\contact.html",
+    "target": "components/layout/Header.tsx",
+    "fileType": "html",
+    "score": 70,
+    "decision": "REUSE",
+    "reasons": [
+      "HTML page detected.",
+      "Contains reusable sections.",
+      "Contains reusable layout."
+    ],
+    "status": "pending"
+  },
+  {
+    "component": "Navigation",
+    "source": "app\\views\\contact.html",
+    "target": "components/layout/Navigation.tsx",
+    "fileType": "html",
+    "score": 70,
+    "decision": "REUSE",
+    "reasons": [
+      "HTML page detected.",
+      "Contains reusable sections.",
+      "Contains reusable layout."
+    ],
+    "status": "pending"
+  },
+  {
+    "component": "Hero",
+    "source": "app\\views\\contact.html",
+    "target": "components/sections/Hero.tsx",
+    "fileType": "html",
+    "score": 70,
+    "decision": "REUSE",
+    "reasons": [
+      "HTML page detected.",
+      "Contains reusable sections.",
+      "Contains reusable layout."
+    ],
+    "status": "pending"
+  },
+  {
+    "component": "Contact",
+    "source": "app\\views\\contact.html",
+    "target": "components/sections/Contact.tsx",
+    "fileType": "html",
+    "score": 70,
+    "decision": "REUSE",
+    "reasons": [
+      "HTML page detected.",
+      "Contains reusable sections.",
+      "Contains reusable layout."
+    ],
+    "status": "pending"
+  },
+  {
+    "component": "Header",
+    "source": "app\\views\\home.html",
+    "target": "components/layout/Header.tsx",
+    "fileType": "html",
+    "score": 70,
+    "decision": "REUSE",
+    "reasons": [
+      "HTML page detected.",
+      "Contains reusable sections.",
+      "Contains reusable layout."
+    ],
+    "status": "pending"
+  },
+  {
+    "component": "Footer",
+    "source": "app\\views\\home.html",
+    "target": "components/layout/Footer.tsx",
+    "fileType": "html",
+    "score": 70,
+    "decision": "REUSE",
+    "reasons": [
+      "HTML page detected.",
+      "Contains reusable sections.",
+      "Contains reusable layout."
+    ],
+    "status": "pending"
+  },
+  {
+    "component": "Navigation",
+    "source": "app\\views\\home.html",
+    "target": "components/layout/Navigation.tsx",
+    "fileType": "html",
+    "score": 70,
+    "decision": "REUSE",
+    "reasons": [
+      "HTML page detected.",
+      "Contains reusable sections.",
+      "Contains reusable layout."
+    ],
+    "status": "pending"
+  },
+  {
+    "component": "Hero",
+    "source": "app\\views\\home.html",
+    "target": "components/sections/Hero.tsx",
+    "fileType": "html",
+    "score": 70,
+    "decision": "REUSE",
+    "reasons": [
+      "HTML page detected.",
+      "Contains reusable sections.",
+      "Contains reusable layout."
+    ],
+    "status": "pending"
+  },
+  {
+    "component": "Collections",
+    "source": "app\\views\\home.html",
+    "target": "components/sections/Collections.tsx",
+    "fileType": "html",
+    "score": 70,
+    "decision": "REUSE",
+    "reasons": [
+      "HTML page detected.",
+      "Contains reusable sections.",
+      "Contains reusable layout."
+    ],
+    "status": "pending"
+  },
+  {
+    "component": "Contact",
+    "source": "app\\views\\home.html",
+    "target": "components/sections/Contact.tsx",
+    "fileType": "html",
+    "score": 70,
+    "decision": "REUSE",
+    "reasons": [
+      "HTML page detected.",
+      "Contains reusable sections.",
+      "Contains reusable layout."
+    ],
+    "status": "pending"
+  },
+  {
+    "component": "Header",
+    "source": "app\\views\\packaging.html",
+    "target": "components/layout/Header.tsx",
+    "fileType": "html",
+    "score": 70,
+    "decision": "REUSE",
+    "reasons": [
+      "HTML page detected.",
+      "Contains reusable sections.",
+      "Contains reusable layout."
+    ],
+    "status": "pending"
+  },
+  {
+    "component": "Footer",
+    "source": "app\\views\\packaging.html",
+    "target": "components/layout/Footer.tsx",
+    "fileType": "html",
+    "score": 70,
+    "decision": "REUSE",
+    "reasons": [
+      "HTML page detected.",
+      "Contains reusable sections.",
+      "Contains reusable layout."
+    ],
+    "status": "pending"
+  },
+  {
+    "component": "Navigation",
+    "source": "app\\views\\packaging.html",
+    "target": "components/layout/Navigation.tsx",
+    "fileType": "html",
+    "score": 70,
+    "decision": "REUSE",
+    "reasons": [
+      "HTML page detected.",
+      "Contains reusable sections.",
+      "Contains reusable layout."
+    ],
+    "status": "pending"
+  },
+  {
+    "component": "Hero",
+    "source": "app\\views\\packaging.html",
+    "target": "components/sections/Hero.tsx",
+    "fileType": "html",
+    "score": 70,
+    "decision": "REUSE",
+    "reasons": [
+      "HTML page detected.",
+      "Contains reusable sections.",
+      "Contains reusable layout."
+    ],
+    "status": "pending"
+  },
+  {
+    "component": "Collections",
+    "source": "app\\views\\packaging.html",
+    "target": "components/sections/Collections.tsx",
+    "fileType": "html",
+    "score": 70,
+    "decision": "REUSE",
+    "reasons": [
+      "HTML page detected.",
+      "Contains reusable sections.",
+      "Contains reusable layout."
+    ],
+    "status": "pending"
+  },
+  {
+    "component": "Header",
+    "source": "app\\views\\product.html",
+    "target": "components/layout/Header.tsx",
+    "fileType": "html",
+    "score": 70,
+    "decision": "REUSE",
+    "reasons": [
+      "HTML page detected.",
+      "Contains reusable sections.",
+      "Contains reusable layout."
+    ],
+    "status": "pending"
+  },
+  {
+    "component": "Navigation",
+    "source": "app\\views\\product.html",
+    "target": "components/layout/Navigation.tsx",
+    "fileType": "html",
+    "score": 70,
+    "decision": "REUSE",
+    "reasons": [
+      "HTML page detected.",
+      "Contains reusable sections.",
+      "Contains reusable layout."
+    ],
+    "status": "pending"
+  },
+  {
+    "component": "Hero",
+    "source": "app\\views\\product.html",
+    "target": "components/sections/Hero.tsx",
+    "fileType": "html",
+    "score": 70,
+    "decision": "REUSE",
+    "reasons": [
+      "HTML page detected.",
+      "Contains reusable sections.",
+      "Contains reusable layout."
+    ],
+    "status": "pending"
+  },
+  {
+    "component": "Collections",
+    "source": "app\\views\\product.html",
+    "target": "components/sections/Collections.tsx",
+    "fileType": "html",
+    "score": 70,
+    "decision": "REUSE",
+    "reasons": [
+      "HTML page detected.",
+      "Contains reusable sections.",
+      "Contains reusable layout."
+    ],
+    "status": "pending"
+  },
+  {
+    "component": "Review Required",
+    "source": "app\\views\\products.html",
+    "target": "Manual review required",
+    "fileType": "html",
+    "score": 30,
+    "decision": "ARCHIVE",
+    "reasons": [
+      "HTML page detected."
+    ],
+    "status": "pending"
+  }
+]

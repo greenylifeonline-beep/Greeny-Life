@@ -8,12 +8,22 @@
   "license": "MIT",
 
   "scripts": {
-    "dev": "next dev",
-    "build": "next build",
-    "start": "next start",
-    "lint": "next lint",
-    "type-check": "tsc --noEmit"
-  },
+  "dev": "next dev",
+  "build": "next build",
+  "start": "next start",
+  "lint": "next lint",
+  "type-check": "tsc --noEmit",
+
+  "migration": "node scripts/migration/legacy-engine.js",
+
+  "migration:verify": "node scripts/migration/legacy-engine.js",
+
+  "migration:decision": "node scripts/migration/migration-decision-engine.js",
+
+  "migration:executor": "node scripts/migration/migration-executor.js",
+
+  "migration:all": "npm run migration && npm run migration:decision && npm run migration:executor"
+},
 
   "dependencies": {
     "next": "^16.2.10",

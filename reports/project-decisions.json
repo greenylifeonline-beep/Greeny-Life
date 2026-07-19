@@ -1,0 +1,1339 @@
+{
+  "generated_at": "2026-07-19T13:39:13.582Z",
+  "engine": {
+    "name": "GREENY LIFE Migration Decision Engine",
+    "version": "1.0.0"
+  },
+  "project": "GREENY LIFE",
+  "version": "1.0.0",
+  "root": "C:\\Users\\Ghanam\\OneDrive\\projects\\Greeny-Life",
+  "summary": {
+    "entities": {
+      "total": 7,
+      "keep": 6,
+      "migrate": 0,
+      "move": 0,
+      "archive": 0,
+      "review_required": 1
+    },
+    "files": {
+      "total": 77,
+      "keep": 24,
+      "migrate": 5,
+      "move": 29,
+      "archive": 15,
+      "review_required": 4
+    }
+  },
+  "entities": [
+    {
+      "id": "component:components:layout:Footer",
+      "entity": "Footer",
+      "target": "components/layout/Footer.tsx",
+      "action": "KEEP",
+      "confidence": 90,
+      "decisionsource": "migration_registry",
+      "move_to": null,
+      "phase": 1,
+      "fingerprint": null,
+      "approved": false,
+      "executor_status": "pending",
+      "reasons": [
+        "Contains reusable layout.",
+        "Contains reusable sections.",
+        "HTML page detected."
+      ]
+    },
+    {
+      "id": "component:components:layout:Header",
+      "entity": "Header",
+      "target": "components/layout/Header.tsx",
+      "action": "KEEP",
+      "confidence": 90,
+      "decisionsource": "migration_registry",
+      "move_to": null,
+      "phase": 1,
+      "fingerprint": null,
+      "approved": false,
+      "executor_status": "pending",
+      "reasons": [
+        "Contains reusable layout.",
+        "Contains reusable sections.",
+        "HTML page detected."
+      ]
+    },
+    {
+      "id": "component:components:layout:Navigation",
+      "entity": "Navigation",
+      "target": "components/layout/Navigation.tsx",
+      "action": "KEEP",
+      "confidence": 90,
+      "decisionsource": "migration_registry",
+      "move_to": null,
+      "phase": 1,
+      "fingerprint": null,
+      "approved": false,
+      "executor_status": "pending",
+      "reasons": [
+        "Contains reusable layout.",
+        "Contains reusable sections.",
+        "HTML page detected."
+      ]
+    },
+    {
+      "id": "component:components:sections:Collections",
+      "entity": "Collections",
+      "target": "components/sections/Collections.tsx",
+      "action": "KEEP",
+      "confidence": 90,
+      "decisionsource": "migration_registry",
+      "move_to": null,
+      "phase": 2,
+      "fingerprint": null,
+      "approved": false,
+      "executor_status": "pending",
+      "reasons": [
+        "Contains reusable layout.",
+        "Contains reusable sections.",
+        "HTML page detected."
+      ]
+    },
+    {
+      "id": "component:components:sections:Contact",
+      "entity": "Contact",
+      "target": "components/sections/Contact.tsx",
+      "action": "KEEP",
+      "confidence": 90,
+      "decisionsource": "migration_registry",
+      "move_to": null,
+      "phase": 2,
+      "fingerprint": null,
+      "approved": false,
+      "executor_status": "pending",
+      "reasons": [
+        "Contains reusable layout.",
+        "Contains reusable sections.",
+        "HTML page detected."
+      ]
+    },
+    {
+      "id": "component:components:sections:Hero",
+      "entity": "Hero",
+      "target": "components/sections/Hero.tsx",
+      "action": "KEEP",
+      "confidence": 90,
+      "decisionsource": "migration_registry",
+      "move_to": null,
+      "phase": 2,
+      "fingerprint": null,
+      "approved": false,
+      "executor_status": "pending",
+      "reasons": [
+        "Contains reusable layout.",
+        "Contains reusable sections.",
+        "HTML page detected."
+      ]
+    },
+    {
+      "id": "component:Manual:review:required",
+      "entity": "Review Required",
+      "target": "Manual review required",
+      "action": "REVIEW_REQUIRED",
+      "confidence": 100,
+      "decisionsource": "migration_registry",
+      "move_to": null,
+      "phase": null,
+      "fingerprint": null,
+      "approved": false,
+      "executor_status": "pending",
+      "reasons": [
+        "Business logic detected.",
+        "DOM manipulation requires migration.",
+        "Events detected.",
+        "Fetch API detected.",
+        "HTML page detected."
+      ]
+    }
+  ],
+  "files": [
+    {
+      "file": "app/assets/css/style.css",
+      "entity": null,
+      "action": "MOVE",
+      "confidence": 75,
+      "decisionsource": "legacy_refactor",
+      "move_to": null,
+      "phase": null,
+      "fingerprint": null,
+      "approved": false,
+      "executor_status": "pending",
+      "reasons": [
+        "Stylesheet detected.",
+        "Uses CSS variables."
+      ]
+    },
+    {
+      "file": "app/assets/images/categories/bee-products.jpg",
+      "entity": null,
+      "action": "KEEP",
+      "confidence": 85,
+      "decisionsource": "legacy_refactor",
+      "move_to": null,
+      "phase": null,
+      "fingerprint": null,
+      "approved": false,
+      "executor_status": "pending",
+      "reasons": [
+        "Reusable asset.",
+        "Reusable legacy asset."
+      ]
+    },
+    {
+      "file": "app/assets/images/categories/honey.jpg",
+      "entity": null,
+      "action": "KEEP",
+      "confidence": 85,
+      "decisionsource": "legacy_refactor",
+      "move_to": null,
+      "phase": null,
+      "fingerprint": null,
+      "approved": false,
+      "executor_status": "pending",
+      "reasons": [
+        "Reusable asset.",
+        "Reusable legacy asset."
+      ]
+    },
+    {
+      "file": "app/assets/images/categories/large/bee-products.jpg",
+      "entity": null,
+      "action": "KEEP",
+      "confidence": 85,
+      "decisionsource": "legacy_refactor",
+      "move_to": null,
+      "phase": null,
+      "fingerprint": null,
+      "approved": false,
+      "executor_status": "pending",
+      "reasons": [
+        "Reusable asset.",
+        "Reusable legacy asset."
+      ]
+    },
+    {
+      "file": "app/assets/images/categories/large/honey.jpg",
+      "entity": null,
+      "action": "KEEP",
+      "confidence": 85,
+      "decisionsource": "legacy_refactor",
+      "move_to": null,
+      "phase": null,
+      "fingerprint": null,
+      "approved": false,
+      "executor_status": "pending",
+      "reasons": [
+        "Reusable asset.",
+        "Reusable legacy asset."
+      ]
+    },
+    {
+      "file": "app/assets/images/categories/large/natural-oils.jpg",
+      "entity": null,
+      "action": "KEEP",
+      "confidence": 85,
+      "decisionsource": "legacy_refactor",
+      "move_to": null,
+      "phase": null,
+      "fingerprint": null,
+      "approved": false,
+      "executor_status": "pending",
+      "reasons": [
+        "Reusable asset.",
+        "Reusable legacy asset."
+      ]
+    },
+    {
+      "file": "app/assets/images/categories/large/primum-spices.jpg",
+      "entity": null,
+      "action": "KEEP",
+      "confidence": 85,
+      "decisionsource": "legacy_refactor",
+      "move_to": null,
+      "phase": null,
+      "fingerprint": null,
+      "approved": false,
+      "executor_status": "pending",
+      "reasons": [
+        "Reusable asset.",
+        "Reusable legacy asset."
+      ]
+    },
+    {
+      "file": "app/assets/images/categories/natural-oils.jpg",
+      "entity": null,
+      "action": "KEEP",
+      "confidence": 85,
+      "decisionsource": "legacy_refactor",
+      "move_to": null,
+      "phase": null,
+      "fingerprint": null,
+      "approved": false,
+      "executor_status": "pending",
+      "reasons": [
+        "Reusable asset.",
+        "Reusable legacy asset."
+      ]
+    },
+    {
+      "file": "app/assets/images/categories/premium-spices.jpg",
+      "entity": null,
+      "action": "KEEP",
+      "confidence": 85,
+      "decisionsource": "legacy_refactor",
+      "move_to": null,
+      "phase": null,
+      "fingerprint": null,
+      "approved": false,
+      "executor_status": "pending",
+      "reasons": [
+        "Reusable asset.",
+        "Reusable legacy asset."
+      ]
+    },
+    {
+      "file": "app/assets/images/products/bee-pollen/bee-pollen.jpg",
+      "entity": null,
+      "action": "KEEP",
+      "confidence": 85,
+      "decisionsource": "legacy_refactor",
+      "move_to": null,
+      "phase": null,
+      "fingerprint": null,
+      "approved": false,
+      "executor_status": "pending",
+      "reasons": [
+        "Reusable asset.",
+        "Reusable legacy asset."
+      ]
+    },
+    {
+      "file": "app/assets/images/products/black-seed-oil/black-seed-oil.jpg",
+      "entity": null,
+      "action": "KEEP",
+      "confidence": 85,
+      "decisionsource": "legacy_refactor",
+      "move_to": null,
+      "phase": null,
+      "fingerprint": null,
+      "approved": false,
+      "executor_status": "pending",
+      "reasons": [
+        "Reusable asset.",
+        "Reusable legacy asset."
+      ]
+    },
+    {
+      "file": "app/assets/images/products/citrus-honey/citrus-honey.jpg",
+      "entity": null,
+      "action": "KEEP",
+      "confidence": 85,
+      "decisionsource": "legacy_refactor",
+      "move_to": null,
+      "phase": null,
+      "fingerprint": null,
+      "approved": false,
+      "executor_status": "pending",
+      "reasons": [
+        "Reusable asset.",
+        "Reusable legacy asset."
+      ]
+    },
+    {
+      "file": "app/assets/images/products/clove-honey/clover-honey.jpg",
+      "entity": null,
+      "action": "KEEP",
+      "confidence": 85,
+      "decisionsource": "legacy_refactor",
+      "move_to": null,
+      "phase": null,
+      "fingerprint": null,
+      "approved": false,
+      "executor_status": "pending",
+      "reasons": [
+        "Reusable asset.",
+        "Reusable legacy asset."
+      ]
+    },
+    {
+      "file": "app/assets/images/products/cumin-powder/cumin-powder.jpg",
+      "entity": null,
+      "action": "KEEP",
+      "confidence": 85,
+      "decisionsource": "legacy_refactor",
+      "move_to": null,
+      "phase": null,
+      "fingerprint": null,
+      "approved": false,
+      "executor_status": "pending",
+      "reasons": [
+        "Reusable asset.",
+        "Reusable legacy asset."
+      ]
+    },
+    {
+      "file": "app/assets/images/products/garlic-powder/garlic-powder.jpg",
+      "entity": null,
+      "action": "KEEP",
+      "confidence": 85,
+      "decisionsource": "legacy_refactor",
+      "move_to": null,
+      "phase": null,
+      "fingerprint": null,
+      "approved": false,
+      "executor_status": "pending",
+      "reasons": [
+        "Reusable asset.",
+        "Reusable legacy asset."
+      ]
+    },
+    {
+      "file": "app/assets/images/products/hibiscus-flower/hibiscus-flowers.jpg",
+      "entity": null,
+      "action": "KEEP",
+      "confidence": 85,
+      "decisionsource": "legacy_refactor",
+      "move_to": null,
+      "phase": null,
+      "fingerprint": null,
+      "approved": false,
+      "executor_status": "pending",
+      "reasons": [
+        "Reusable asset.",
+        "Reusable legacy asset."
+      ]
+    },
+    {
+      "file": "app/assets/images/products/onion-powder/union-powder.jpg",
+      "entity": null,
+      "action": "KEEP",
+      "confidence": 85,
+      "decisionsource": "legacy_refactor",
+      "move_to": null,
+      "phase": null,
+      "fingerprint": null,
+      "approved": false,
+      "executor_status": "pending",
+      "reasons": [
+        "Reusable asset.",
+        "Reusable legacy asset."
+      ]
+    },
+    {
+      "file": "app/assets/images/products/propolis/propolis.jpg",
+      "entity": null,
+      "action": "KEEP",
+      "confidence": 85,
+      "decisionsource": "legacy_refactor",
+      "move_to": null,
+      "phase": null,
+      "fingerprint": null,
+      "approved": false,
+      "executor_status": "pending",
+      "reasons": [
+        "Reusable asset.",
+        "Reusable legacy asset."
+      ]
+    },
+    {
+      "file": "app/assets/images/products/pure-beeswax/pure-beeswax.jpg",
+      "entity": null,
+      "action": "KEEP",
+      "confidence": 85,
+      "decisionsource": "legacy_refactor",
+      "move_to": null,
+      "phase": null,
+      "fingerprint": null,
+      "approved": false,
+      "executor_status": "pending",
+      "reasons": [
+        "Reusable asset.",
+        "Reusable legacy asset."
+      ]
+    },
+    {
+      "file": "app/assets/images/products/royal-jelly/Royal-jelly.jpg",
+      "entity": null,
+      "action": "KEEP",
+      "confidence": 85,
+      "decisionsource": "legacy_refactor",
+      "move_to": null,
+      "phase": null,
+      "fingerprint": null,
+      "approved": false,
+      "executor_status": "pending",
+      "reasons": [
+        "Reusable asset.",
+        "Reusable legacy asset."
+      ]
+    },
+    {
+      "file": "app/assets/images/products/seven-spices-blend/seven-spices-blend.jpg",
+      "entity": null,
+      "action": "KEEP",
+      "confidence": 85,
+      "decisionsource": "legacy_refactor",
+      "move_to": null,
+      "phase": null,
+      "fingerprint": null,
+      "approved": false,
+      "executor_status": "pending",
+      "reasons": [
+        "Reusable asset.",
+        "Reusable legacy asset."
+      ]
+    },
+    {
+      "file": "app/assets/images/products/sweet-paprika/sweet-paprika.jpg",
+      "entity": null,
+      "action": "KEEP",
+      "confidence": 85,
+      "decisionsource": "legacy_refactor",
+      "move_to": null,
+      "phase": null,
+      "fingerprint": null,
+      "approved": false,
+      "executor_status": "pending",
+      "reasons": [
+        "Reusable asset.",
+        "Reusable legacy asset."
+      ]
+    },
+    {
+      "file": "app/assets/images/products/turmeric-powder/turmeric-powder.jpg",
+      "entity": null,
+      "action": "KEEP",
+      "confidence": 85,
+      "decisionsource": "legacy_refactor",
+      "move_to": null,
+      "phase": null,
+      "fingerprint": null,
+      "approved": false,
+      "executor_status": "pending",
+      "reasons": [
+        "Reusable asset.",
+        "Reusable legacy asset."
+      ]
+    },
+    {
+      "file": "app/assets/images/products/wildflower-honey/wildflower-honey.jpg",
+      "entity": null,
+      "action": "KEEP",
+      "confidence": 85,
+      "decisionsource": "legacy_refactor",
+      "move_to": null,
+      "phase": null,
+      "fingerprint": null,
+      "approved": false,
+      "executor_status": "pending",
+      "reasons": [
+        "Reusable asset.",
+        "Reusable legacy asset."
+      ]
+    },
+    {
+      "file": "app/assets/logos/logo.jpg",
+      "entity": null,
+      "action": "KEEP",
+      "confidence": 85,
+      "decisionsource": "legacy_refactor",
+      "move_to": null,
+      "phase": null,
+      "fingerprint": null,
+      "approved": false,
+      "executor_status": "pending",
+      "reasons": [
+        "Reusable asset.",
+        "Reusable legacy asset."
+      ]
+    },
+    {
+      "file": "app/globals.css",
+      "entity": null,
+      "action": "ARCHIVE",
+      "confidence": 75,
+      "decisionsource": "legacy_archive",
+      "move_to": null,
+      "phase": null,
+      "fingerprint": null,
+      "approved": false,
+      "executor_status": "pending",
+      "reasons": [
+        "Stylesheet detected."
+      ]
+    },
+    {
+      "file": "app/js/core/api.js",
+      "entity": null,
+      "action": "ARCHIVE",
+      "confidence": 75,
+      "decisionsource": "legacy_remove",
+      "move_to": null,
+      "phase": null,
+      "fingerprint": null,
+      "approved": false,
+      "executor_status": "pending",
+      "reasons": []
+    },
+    {
+      "file": "app/js/core/config.js",
+      "entity": null,
+      "action": "ARCHIVE",
+      "confidence": 75,
+      "decisionsource": "legacy_remove",
+      "move_to": null,
+      "phase": null,
+      "fingerprint": null,
+      "approved": false,
+      "executor_status": "pending",
+      "reasons": []
+    },
+    {
+      "file": "app/js/core/router.js",
+      "entity": null,
+      "action": "ARCHIVE",
+      "confidence": 75,
+      "decisionsource": "legacy_remove",
+      "move_to": null,
+      "phase": null,
+      "fingerprint": null,
+      "approved": false,
+      "executor_status": "pending",
+      "reasons": []
+    },
+    {
+      "file": "app/js/modules/categories.js",
+      "entity": "Review Required",
+      "action": "REVIEW_REQUIRED",
+      "confidence": 100,
+      "decisionsource": "decision_conflict",
+      "move_to": null,
+      "phase": null,
+      "fingerprint": null,
+      "approved": false,
+      "executor_status": "pending",
+      "reasons": [
+        "Business logic detected.",
+        "DOM manipulation requires migration.",
+        "Events detected.",
+        "Fetch API detected.",
+        "HTML page detected."
+      ]
+    },
+    {
+      "file": "app/js/modules/footer.js",
+      "entity": null,
+      "action": "ARCHIVE",
+      "confidence": 75,
+      "decisionsource": "legacy_remove",
+      "move_to": null,
+      "phase": null,
+      "fingerprint": null,
+      "approved": false,
+      "executor_status": "pending",
+      "reasons": []
+    },
+    {
+      "file": "app/js/modules/header.js",
+      "entity": null,
+      "action": "ARCHIVE",
+      "confidence": 75,
+      "decisionsource": "legacy_remove",
+      "move_to": null,
+      "phase": null,
+      "fingerprint": null,
+      "approved": false,
+      "executor_status": "pending",
+      "reasons": []
+    },
+    {
+      "file": "app/js/modules/products.js",
+      "entity": "Review Required",
+      "action": "REVIEW_REQUIRED",
+      "confidence": 100,
+      "decisionsource": "decision_conflict",
+      "move_to": null,
+      "phase": null,
+      "fingerprint": null,
+      "approved": false,
+      "executor_status": "pending",
+      "reasons": [
+        "Business logic detected.",
+        "DOM manipulation requires migration.",
+        "Events detected.",
+        "Fetch API detected.",
+        "HTML page detected."
+      ]
+    },
+    {
+      "file": "app/js/script.js",
+      "entity": "Review Required",
+      "action": "REVIEW_REQUIRED",
+      "confidence": 100,
+      "decisionsource": "decision_conflict",
+      "move_to": null,
+      "phase": null,
+      "fingerprint": null,
+      "approved": false,
+      "executor_status": "pending",
+      "reasons": [
+        "Business logic detected.",
+        "DOM manipulation requires migration.",
+        "Events detected.",
+        "Fetch API detected.",
+        "HTML page detected."
+      ]
+    },
+    {
+      "file": "app/js/ui/loader.js",
+      "entity": null,
+      "action": "ARCHIVE",
+      "confidence": 75,
+      "decisionsource": "legacy_remove",
+      "move_to": null,
+      "phase": null,
+      "fingerprint": null,
+      "approved": false,
+      "executor_status": "pending",
+      "reasons": []
+    },
+    {
+      "file": "app/js/ui/modal.js",
+      "entity": null,
+      "action": "ARCHIVE",
+      "confidence": 75,
+      "decisionsource": "legacy_remove",
+      "move_to": null,
+      "phase": null,
+      "fingerprint": null,
+      "approved": false,
+      "executor_status": "pending",
+      "reasons": []
+    },
+    {
+      "file": "app/js/ui/toast.js",
+      "entity": null,
+      "action": "ARCHIVE",
+      "confidence": 75,
+      "decisionsource": "legacy_remove",
+      "move_to": null,
+      "phase": null,
+      "fingerprint": null,
+      "approved": false,
+      "executor_status": "pending",
+      "reasons": []
+    },
+    {
+      "file": "app/layout.tsx",
+      "entity": null,
+      "action": "ARCHIVE",
+      "confidence": 75,
+      "decisionsource": "legacy_remove",
+      "move_to": null,
+      "phase": null,
+      "fingerprint": null,
+      "approved": false,
+      "executor_status": "pending",
+      "reasons": []
+    },
+    {
+      "file": "app/page.tsx",
+      "entity": null,
+      "action": "ARCHIVE",
+      "confidence": 75,
+      "decisionsource": "legacy_remove",
+      "move_to": null,
+      "phase": null,
+      "fingerprint": null,
+      "approved": false,
+      "executor_status": "pending",
+      "reasons": []
+    },
+    {
+      "file": "app/views/about.html",
+      "entity": "Footer",
+      "action": "MIGRATE",
+      "confidence": 90,
+      "decisionsource": "migration_registry",
+      "move_to": null,
+      "phase": 1,
+      "fingerprint": null,
+      "approved": false,
+      "executor_status": "pending",
+      "reasons": [
+        "Contains reusable layout.",
+        "Contains reusable sections.",
+        "HTML page detected."
+      ]
+    },
+    {
+      "file": "app/views/contact.html",
+      "entity": "Header",
+      "action": "MIGRATE",
+      "confidence": 90,
+      "decisionsource": "migration_registry",
+      "move_to": null,
+      "phase": 1,
+      "fingerprint": null,
+      "approved": false,
+      "executor_status": "pending",
+      "reasons": [
+        "Contains reusable layout.",
+        "Contains reusable sections.",
+        "HTML page detected."
+      ]
+    },
+    {
+      "file": "app/views/home.html",
+      "entity": "Footer",
+      "action": "MIGRATE",
+      "confidence": 90,
+      "decisionsource": "migration_registry",
+      "move_to": null,
+      "phase": 1,
+      "fingerprint": null,
+      "approved": false,
+      "executor_status": "pending",
+      "reasons": [
+        "Contains reusable layout.",
+        "Contains reusable sections.",
+        "HTML page detected."
+      ]
+    },
+    {
+      "file": "app/views/packaging.html",
+      "entity": "Footer",
+      "action": "MIGRATE",
+      "confidence": 90,
+      "decisionsource": "migration_registry",
+      "move_to": null,
+      "phase": 1,
+      "fingerprint": null,
+      "approved": false,
+      "executor_status": "pending",
+      "reasons": [
+        "Contains reusable layout.",
+        "Contains reusable sections.",
+        "HTML page detected."
+      ]
+    },
+    {
+      "file": "app/views/product.html",
+      "entity": "Header",
+      "action": "MIGRATE",
+      "confidence": 90,
+      "decisionsource": "migration_registry",
+      "move_to": null,
+      "phase": 1,
+      "fingerprint": null,
+      "approved": false,
+      "executor_status": "pending",
+      "reasons": [
+        "Contains reusable layout.",
+        "Contains reusable sections.",
+        "HTML page detected."
+      ]
+    },
+    {
+      "file": "app/views/products.html",
+      "entity": "Review Required",
+      "action": "REVIEW_REQUIRED",
+      "confidence": 100,
+      "decisionsource": "decision_conflict",
+      "move_to": null,
+      "phase": null,
+      "fingerprint": null,
+      "approved": false,
+      "executor_status": "pending",
+      "reasons": [
+        "Business logic detected.",
+        "DOM manipulation requires migration.",
+        "Events detected.",
+        "Fetch API detected.",
+        "HTML page detected."
+      ]
+    },
+    {
+      "file": "data/01_global.json",
+      "entity": null,
+      "action": "MOVE",
+      "confidence": 75,
+      "decisionsource": "legacy_refactor",
+      "move_to": null,
+      "phase": null,
+      "fingerprint": null,
+      "approved": false,
+      "executor_status": "pending",
+      "reasons": [
+        "Business data detected."
+      ]
+    },
+    {
+      "file": "data/02_collections.json",
+      "entity": null,
+      "action": "MOVE",
+      "confidence": 75,
+      "decisionsource": "legacy_refactor",
+      "move_to": null,
+      "phase": null,
+      "fingerprint": null,
+      "approved": false,
+      "executor_status": "pending",
+      "reasons": [
+        "Business data detected."
+      ]
+    },
+    {
+      "file": "data/03_packaging_system.json",
+      "entity": null,
+      "action": "MOVE",
+      "confidence": 75,
+      "decisionsource": "legacy_refactor",
+      "move_to": null,
+      "phase": null,
+      "fingerprint": null,
+      "approved": false,
+      "executor_status": "pending",
+      "reasons": [
+        "Business data detected."
+      ]
+    },
+    {
+      "file": "data/04_packaging_profiles.json",
+      "entity": null,
+      "action": "MOVE",
+      "confidence": 75,
+      "decisionsource": "legacy_refactor",
+      "move_to": null,
+      "phase": null,
+      "fingerprint": null,
+      "approved": false,
+      "executor_status": "pending",
+      "reasons": [
+        "Business data detected."
+      ]
+    },
+    {
+      "file": "data/05_master_products.json",
+      "entity": null,
+      "action": "MOVE",
+      "confidence": 75,
+      "decisionsource": "legacy_refactor",
+      "move_to": null,
+      "phase": null,
+      "fingerprint": null,
+      "approved": false,
+      "executor_status": "pending",
+      "reasons": [
+        "Business data detected."
+      ]
+    },
+    {
+      "file": "data/06_markets.json",
+      "entity": null,
+      "action": "MOVE",
+      "confidence": 75,
+      "decisionsource": "legacy_refactor",
+      "move_to": null,
+      "phase": null,
+      "fingerprint": null,
+      "approved": false,
+      "executor_status": "pending",
+      "reasons": [
+        "Business data detected."
+      ]
+    },
+    {
+      "file": "data/07_documents.json",
+      "entity": null,
+      "action": "MOVE",
+      "confidence": 75,
+      "decisionsource": "legacy_refactor",
+      "move_to": null,
+      "phase": null,
+      "fingerprint": null,
+      "approved": false,
+      "executor_status": "pending",
+      "reasons": [
+        "Business data detected."
+      ]
+    },
+    {
+      "file": "data/08_media.json",
+      "entity": null,
+      "action": "MOVE",
+      "confidence": 75,
+      "decisionsource": "legacy_refactor",
+      "move_to": null,
+      "phase": null,
+      "fingerprint": null,
+      "approved": false,
+      "executor_status": "pending",
+      "reasons": [
+        "Business data detected."
+      ]
+    },
+    {
+      "file": "data/09_design_system.json",
+      "entity": null,
+      "action": "MOVE",
+      "confidence": 75,
+      "decisionsource": "legacy_refactor",
+      "move_to": null,
+      "phase": null,
+      "fingerprint": null,
+      "approved": false,
+      "executor_status": "pending",
+      "reasons": [
+        "Business data detected."
+      ]
+    },
+    {
+      "file": "data/legacy/brand.json",
+      "entity": null,
+      "action": "MOVE",
+      "confidence": 75,
+      "decisionsource": "legacy_refactor",
+      "move_to": null,
+      "phase": null,
+      "fingerprint": null,
+      "approved": false,
+      "executor_status": "pending",
+      "reasons": [
+        "Business data detected."
+      ]
+    },
+    {
+      "file": "data/legacy/categories.json",
+      "entity": null,
+      "action": "MOVE",
+      "confidence": 75,
+      "decisionsource": "legacy_refactor",
+      "move_to": null,
+      "phase": null,
+      "fingerprint": null,
+      "approved": false,
+      "executor_status": "pending",
+      "reasons": [
+        "Business data detected."
+      ]
+    },
+    {
+      "file": "data/legacy/category-extensions.json",
+      "entity": null,
+      "action": "MOVE",
+      "confidence": 75,
+      "decisionsource": "legacy_refactor",
+      "move_to": null,
+      "phase": null,
+      "fingerprint": null,
+      "approved": false,
+      "executor_status": "pending",
+      "reasons": [
+        "Business data detected."
+      ]
+    },
+    {
+      "file": "data/legacy/certificates.json",
+      "entity": null,
+      "action": "MOVE",
+      "confidence": 75,
+      "decisionsource": "legacy_refactor",
+      "move_to": null,
+      "phase": null,
+      "fingerprint": null,
+      "approved": false,
+      "executor_status": "pending",
+      "reasons": [
+        "Business data detected."
+      ]
+    },
+    {
+      "file": "data/legacy/countries.json",
+      "entity": null,
+      "action": "MOVE",
+      "confidence": 75,
+      "decisionsource": "legacy_refactor",
+      "move_to": null,
+      "phase": null,
+      "fingerprint": null,
+      "approved": false,
+      "executor_status": "pending",
+      "reasons": [
+        "Business data detected."
+      ]
+    },
+    {
+      "file": "data/legacy/incoterms.json",
+      "entity": null,
+      "action": "MOVE",
+      "confidence": 75,
+      "decisionsource": "legacy_refactor",
+      "move_to": null,
+      "phase": null,
+      "fingerprint": null,
+      "approved": false,
+      "executor_status": "pending",
+      "reasons": [
+        "Business data detected."
+      ]
+    },
+    {
+      "file": "data/legacy/legal-entities.json",
+      "entity": null,
+      "action": "MOVE",
+      "confidence": 75,
+      "decisionsource": "legacy_refactor",
+      "move_to": null,
+      "phase": null,
+      "fingerprint": null,
+      "approved": false,
+      "executor_status": "pending",
+      "reasons": [
+        "Business data detected."
+      ]
+    },
+    {
+      "file": "data/legacy/markets.json",
+      "entity": null,
+      "action": "MOVE",
+      "confidence": 75,
+      "decisionsource": "legacy_refactor",
+      "move_to": null,
+      "phase": null,
+      "fingerprint": null,
+      "approved": false,
+      "executor_status": "pending",
+      "reasons": [
+        "Business data detected."
+      ]
+    },
+    {
+      "file": "data/legacy/packaging.json",
+      "entity": null,
+      "action": "MOVE",
+      "confidence": 75,
+      "decisionsource": "legacy_refactor",
+      "move_to": null,
+      "phase": null,
+      "fingerprint": null,
+      "approved": false,
+      "executor_status": "pending",
+      "reasons": [
+        "Business data detected."
+      ]
+    },
+    {
+      "file": "data/legacy/product-variants.json",
+      "entity": null,
+      "action": "MOVE",
+      "confidence": 75,
+      "decisionsource": "legacy_refactor",
+      "move_to": null,
+      "phase": null,
+      "fingerprint": null,
+      "approved": false,
+      "executor_status": "pending",
+      "reasons": [
+        "Business data detected."
+      ]
+    },
+    {
+      "file": "data/legacy/product.schema.json",
+      "entity": null,
+      "action": "MOVE",
+      "confidence": 75,
+      "decisionsource": "legacy_refactor",
+      "move_to": null,
+      "phase": null,
+      "fingerprint": null,
+      "approved": false,
+      "executor_status": "pending",
+      "reasons": [
+        "Business data detected."
+      ]
+    },
+    {
+      "file": "data/legacy/products.json",
+      "entity": null,
+      "action": "MOVE",
+      "confidence": 75,
+      "decisionsource": "legacy_refactor",
+      "move_to": null,
+      "phase": null,
+      "fingerprint": null,
+      "approved": false,
+      "executor_status": "pending",
+      "reasons": [
+        "Business data detected."
+      ]
+    },
+    {
+      "file": "data/legacy/units.json",
+      "entity": null,
+      "action": "MOVE",
+      "confidence": 75,
+      "decisionsource": "legacy_refactor",
+      "move_to": null,
+      "phase": null,
+      "fingerprint": null,
+      "approved": false,
+      "executor_status": "pending",
+      "reasons": [
+        "Business data detected."
+      ]
+    },
+    {
+      "file": "data/migration/migration-history.json",
+      "entity": null,
+      "action": "MOVE",
+      "confidence": 75,
+      "decisionsource": "legacy_refactor",
+      "move_to": null,
+      "phase": null,
+      "fingerprint": null,
+      "approved": false,
+      "executor_status": "pending",
+      "reasons": [
+        "Business data detected."
+      ]
+    },
+    {
+      "file": "data/migration/migration-progress.json",
+      "entity": null,
+      "action": "MOVE",
+      "confidence": 75,
+      "decisionsource": "legacy_refactor",
+      "move_to": null,
+      "phase": null,
+      "fingerprint": null,
+      "approved": false,
+      "executor_status": "pending",
+      "reasons": [
+        "Business data detected."
+      ]
+    },
+    {
+      "file": "lib/data/collections.ts",
+      "entity": null,
+      "action": "MOVE",
+      "confidence": 75,
+      "decisionsource": "legacy_refactor",
+      "move_to": null,
+      "phase": null,
+      "fingerprint": null,
+      "approved": false,
+      "executor_status": "pending",
+      "reasons": [
+        "Business logic detected."
+      ]
+    },
+    {
+      "file": "lib/data/documents.ts",
+      "entity": null,
+      "action": "ARCHIVE",
+      "confidence": 75,
+      "decisionsource": "legacy_remove",
+      "move_to": null,
+      "phase": null,
+      "fingerprint": null,
+      "approved": false,
+      "executor_status": "pending",
+      "reasons": []
+    },
+    {
+      "file": "lib/data/global.ts",
+      "entity": null,
+      "action": "ARCHIVE",
+      "confidence": 75,
+      "decisionsource": "legacy_remove",
+      "move_to": null,
+      "phase": null,
+      "fingerprint": null,
+      "approved": false,
+      "executor_status": "pending",
+      "reasons": []
+    },
+    {
+      "file": "lib/data/markets.ts",
+      "entity": null,
+      "action": "ARCHIVE",
+      "confidence": 75,
+      "decisionsource": "legacy_remove",
+      "move_to": null,
+      "phase": null,
+      "fingerprint": null,
+      "approved": false,
+      "executor_status": "pending",
+      "reasons": []
+    },
+    {
+      "file": "lib/data/media.ts",
+      "entity": null,
+      "action": "ARCHIVE",
+      "confidence": 75,
+      "decisionsource": "legacy_remove",
+      "move_to": null,
+      "phase": null,
+      "fingerprint": null,
+      "approved": false,
+      "executor_status": "pending",
+      "reasons": []
+    },
+    {
+      "file": "lib/data/packaging-profiles.ts",
+      "entity": null,
+      "action": "MOVE",
+      "confidence": 75,
+      "decisionsource": "legacy_refactor",
+      "move_to": null,
+      "phase": null,
+      "fingerprint": null,
+      "approved": false,
+      "executor_status": "pending",
+      "reasons": [
+        "Business logic detected."
+      ]
+    },
+    {
+      "file": "lib/data/packaging.ts",
+      "entity": null,
+      "action": "MOVE",
+      "confidence": 75,
+      "decisionsource": "legacy_refactor",
+      "move_to": null,
+      "phase": null,
+      "fingerprint": null,
+      "approved": false,
+      "executor_status": "pending",
+      "reasons": [
+        "Business logic detected."
+      ]
+    },
+    {
+      "file": "lib/data/products.ts",
+      "entity": null,
+      "action": "MOVE",
+      "confidence": 75,
+      "decisionsource": "legacy_refactor",
+      "move_to": null,
+      "phase": null,
+      "fingerprint": null,
+      "approved": false,
+      "executor_status": "pending",
+      "reasons": [
+        "Business logic detected."
+      ]
+    }
+  ],
+  "errors": []
+}

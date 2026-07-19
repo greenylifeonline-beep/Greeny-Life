@@ -1,0 +1,222 @@
+{
+  "version": {
+    "schema": "1.0.0"
+  },
+
+  "containers": [
+    {
+      "id": "glass_jar",
+      "name": {
+        "en": "Glass Jar",
+        "ar": "برطمان زجاج"
+      },
+      "material": "Glass",
+      "food_grade": true,
+      "available_sizes": [
+        {
+          "value": 250,
+          "unit": "g"
+        },
+        {
+          "value": 500,
+          "unit": "g"
+        },
+        {
+          "value": 750,
+          "unit": "g"
+        },
+        {
+          "value": 1000,
+          "unit": "g"
+        }
+      ]
+    },
+
+    {
+      "id": "pet_jar",
+      "name": {
+        "en": "PET Jar",
+        "ar": "برطمان PET"
+      },
+      "material": "PET",
+      "food_grade": true,
+      "available_sizes": [
+        {
+          "value": 250,
+          "unit": "g"
+        },
+        {
+          "value": 500,
+          "unit": "g"
+        },
+        {
+          "value": 1000,
+          "unit": "g"
+        }
+      ]
+    },
+
+    {
+      "id": "standup_pouch",
+      "name": {
+        "en": "Stand-up Pouch",
+        "ar": "كيس قائم"
+      },
+      "material": "Food Grade Laminated Pouch",
+      "food_grade": true,
+      "available_sizes": [
+        {
+          "value": 100,
+          "unit": "g"
+        },
+        {
+          "value": 250,
+          "unit": "g"
+        },
+        {
+          "value": 500,
+          "unit": "g"
+        },
+        {
+          "value": 1000,
+          "unit": "g"
+        },
+        {
+          "value": 2000,
+          "unit": "g"
+        },
+        {
+          "value": 5000,
+          "unit": "g"
+        }
+      ]
+    },
+
+    {
+      "id": "bucket",
+      "name": {
+        "en": "Food Grade Bucket",
+        "ar": "دلو غذائي"
+      },
+      "material": "HDPE Food Grade",
+      "food_grade": true,
+      "available_sizes": [
+        {
+          "value": 3,
+          "unit": "kg"
+        },
+        {
+          "value": 5,
+          "unit": "kg"
+        },
+        {
+          "value": 10,
+          "unit": "kg"
+        },
+        {
+          "value": 25,
+          "unit": "kg"
+        }
+      ]
+    },
+
+    {
+      "id": "drum",
+      "name": {
+        "en": "Food Grade Drum",
+        "ar": "برميل غذائي"
+      },
+      "material": "HDPE Food Grade",
+      "food_grade": true,
+      "available_sizes": [
+        {
+          "value": 50,
+          "unit": "kg"
+        },
+        {
+          "value": 300,
+          "unit": "kg"
+        }
+      ]
+    }
+  ],
+
+  "usage_profiles": {
+    "retail": {
+      "name": {
+        "en": "Retail",
+        "ar": "التجزئة"
+      },
+      "containers": [
+        "glass_jar",
+        "pet_jar",
+        "standup_pouch"
+      ]
+    },
+
+    "food_service": {
+      "name": {
+        "en": "Food Service",
+        "ar": "قطاع المطاعم والخدمات الغذائية"
+      },
+      "containers": [
+        "bucket"
+      ]
+    },
+
+    "wholesale": {
+      "name": {
+        "en": "Wholesale",
+        "ar": "الجملة"
+      },
+      "containers": [
+        "bucket",
+        "drum"
+      ]
+    }
+  },
+
+  "business_channels": {
+    "b2c": {
+      "enabled": true,
+      "name": {
+        "en": "Business to Consumer",
+        "ar": "البيع للمستهلك"
+      }
+    },
+
+    "b2b": {
+      "enabled": true,
+      "name": {
+        "en": "Business to Business",
+        "ar": "البيع للشركات"
+      },
+      "features": {
+        "master_carton": true,
+        "mixed_pallet": true,
+        "full_container_load": true
+      }
+    },
+
+    "private_label": {
+      "enabled": true,
+      "name": {
+        "en": "Private Label",
+        "ar": "العلامة التجارية الخاصة"
+      }
+    }
+  },
+
+  "customization": {
+    "enabled": true,
+
+    "options": {
+      "custom_packaging": true,
+      "custom_container": true,
+      "custom_size": true,
+      "custom_label": true,
+      "custom_branding": true,
+      "master_carton": true
+    }
+  }
+}
