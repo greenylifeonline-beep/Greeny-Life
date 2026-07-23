@@ -1,0 +1,391 @@
+{
+  "generated": "2026-07-22T19:21:11.427Z",
+  "files": [
+    {
+      "file": "data\\01_global.json",
+      "status": "VALID",
+      "type": "OBJECT",
+      "keys": [
+        "version",
+        "brand",
+        "identity",
+        "typography",
+        "website",
+        "manufacturer",
+        "contact"
+      ]
+    },
+    {
+      "file": "data\\02_collections.json",
+      "status": "VALID",
+      "type": "OBJECT",
+      "keys": [
+        "version",
+        "collections"
+      ]
+    },
+    {
+      "file": "data\\03_packaging_system.json",
+      "status": "VALID",
+      "type": "OBJECT",
+      "keys": [
+        "version",
+        "containers",
+        "usage_profiles",
+        "business_channels",
+        "customization"
+      ]
+    },
+    {
+      "file": "data\\04_packaging_profiles.json",
+      "status": "VALID",
+      "type": "OBJECT",
+      "keys": [
+        "version",
+        "profiles"
+      ]
+    },
+    {
+      "file": "data\\05_master_products.json",
+      "status": "VALID",
+      "type": "OBJECT",
+      "keys": [
+        "version",
+        "products"
+      ]
+    },
+    {
+      "file": "data\\06_markets.json",
+      "status": "VALID",
+      "type": "OBJECT",
+      "keys": [
+        "version",
+        "markets"
+      ]
+    },
+    {
+      "file": "data\\07_documents.json",
+      "status": "VALID",
+      "type": "OBJECT",
+      "keys": [
+        "version",
+        "documents"
+      ]
+    },
+    {
+      "file": "data\\08_media.json",
+      "status": "VALID",
+      "type": "OBJECT",
+      "keys": [
+        "version",
+        "media"
+      ]
+    },
+    {
+      "file": "data\\09_design_system.json",
+      "status": "VALID",
+      "type": "OBJECT",
+      "keys": [
+        "version",
+        "design_system"
+      ]
+    },
+    {
+      "file": "data\\legacy\\categories.json",
+      "status": "VALID",
+      "type": "ARRAY",
+      "keys": [
+        "0",
+        "1",
+        "2",
+        "3"
+      ]
+    },
+    {
+      "file": "data\\legacy\\category-extensions.json",
+      "status": "VALID",
+      "type": "OBJECT",
+      "keys": [
+        "schemaVersion",
+        "extensions"
+      ]
+    },
+    {
+      "file": "data\\legacy\\certificates.json",
+      "status": "VALID",
+      "type": "ARRAY",
+      "keys": [
+        "0",
+        "1",
+        "2",
+        "3",
+        "4",
+        "5"
+      ]
+    },
+    {
+      "file": "data\\legacy\\countries.json",
+      "status": "VALID",
+      "type": "ARRAY",
+      "keys": [
+        "0"
+      ]
+    },
+    {
+      "file": "data\\legacy\\incoterms.json",
+      "status": "VALID",
+      "type": "ARRAY",
+      "keys": [
+        "0",
+        "1",
+        "2",
+        "3",
+        "4",
+        "5",
+        "6"
+      ]
+    },
+    {
+      "file": "data\\legacy\\legal-entities.json",
+      "status": "VALID",
+      "type": "ARRAY",
+      "keys": [
+        "0"
+      ]
+    },
+    {
+      "file": "data\\legacy\\markets.json",
+      "status": "VALID",
+      "type": "ARRAY",
+      "keys": [
+        "0",
+        "1",
+        "2",
+        "3",
+        "4",
+        "5"
+      ]
+    },
+    {
+      "file": "data\\legacy\\packaging.json",
+      "status": "VALID",
+      "type": "ARRAY",
+      "keys": [
+        "0",
+        "1",
+        "2",
+        "3",
+        "4"
+      ]
+    },
+    {
+      "file": "data\\legacy\\product-variants.json",
+      "status": "VALID",
+      "type": "ARRAY",
+      "keys": [
+        "0",
+        "1",
+        "2",
+        "3",
+        "4"
+      ]
+    },
+    {
+      "file": "data\\legacy\\product.schema.json",
+      "status": "VALID",
+      "type": "OBJECT",
+      "keys": [
+        "schemaVersion",
+        "entity",
+        "required",
+        "recommended",
+        "optional"
+      ]
+    },
+    {
+      "file": "data\\legacy\\products.json",
+      "status": "VALID",
+      "type": "ARRAY",
+      "keys": [
+        "0",
+        "1",
+        "2",
+        "3",
+        "4",
+        "5",
+        "6",
+        "7",
+        "8",
+        "9",
+        "10",
+        "11",
+        "12",
+        "13"
+      ]
+    },
+    {
+      "file": "data\\legacy\\units.json",
+      "status": "VALID",
+      "type": "ARRAY",
+      "keys": [
+        "0",
+        "1",
+        "2",
+        "3",
+        "4",
+        "5",
+        "6"
+      ]
+    },
+    {
+      "file": "data\\legacy_brand.json",
+      "status": "VALID",
+      "type": "OBJECT",
+      "keys": [
+        "migration_task",
+        "created_at",
+        "data"
+      ]
+    },
+    {
+      "file": "data\\legacy_categories.json",
+      "status": "VALID",
+      "type": "OBJECT",
+      "keys": [
+        "migration_task",
+        "created_at",
+        "data"
+      ]
+    },
+    {
+      "file": "data\\legacy_certificates.json",
+      "status": "VALID",
+      "type": "OBJECT",
+      "keys": [
+        "migration_task",
+        "created_at",
+        "data"
+      ]
+    },
+    {
+      "file": "data\\legacy_countries.json",
+      "status": "VALID",
+      "type": "OBJECT",
+      "keys": [
+        "migration_task",
+        "created_at",
+        "data"
+      ]
+    },
+    {
+      "file": "data\\legacy_incoterms.json",
+      "status": "VALID",
+      "type": "OBJECT",
+      "keys": [
+        "migration_task",
+        "created_at",
+        "data"
+      ]
+    },
+    {
+      "file": "data\\legacy_markets.json",
+      "status": "VALID",
+      "type": "OBJECT",
+      "keys": [
+        "migration_task",
+        "created_at",
+        "data"
+      ]
+    },
+    {
+      "file": "data\\legacy_packaging.json",
+      "status": "VALID",
+      "type": "OBJECT",
+      "keys": [
+        "migration_task",
+        "created_at",
+        "data"
+      ]
+    },
+    {
+      "file": "data\\legacy_products.json",
+      "status": "VALID",
+      "type": "OBJECT",
+      "keys": [
+        "migration_task",
+        "created_at",
+        "data"
+      ]
+    },
+    {
+      "file": "data\\legacy_units.json",
+      "status": "VALID",
+      "type": "OBJECT",
+      "keys": [
+        "migration_task",
+        "created_at",
+        "data"
+      ]
+    },
+    {
+      "file": "data\\migrated_categories.json",
+      "status": "VALID",
+      "type": "ARRAY",
+      "keys": [
+        "0",
+        "1",
+        "2",
+        "3"
+      ]
+    },
+    {
+      "file": "data\\migrated_products.json",
+      "status": "VALID",
+      "type": "ARRAY",
+      "keys": [
+        "0",
+        "1",
+        "2",
+        "3",
+        "4",
+        "5",
+        "6",
+        "7",
+        "8",
+        "9",
+        "10",
+        "11",
+        "12",
+        "13"
+      ]
+    },
+    {
+      "file": "data\\migration\\migration-history.json",
+      "status": "VALID",
+      "type": "OBJECT",
+      "keys": [
+        "project",
+        "version",
+        "generated_at",
+        "engine",
+        "events"
+      ]
+    },
+    {
+      "file": "data\\migration\\migration-progress.json",
+      "status": "VALID",
+      "type": "OBJECT",
+      "keys": [
+        "project",
+        "version",
+        "generated_at",
+        "updated_at",
+        "engine",
+        "summary",
+        "current_phase",
+        "current_task",
+        "tasks"
+      ]
+    }
+  ]
+}

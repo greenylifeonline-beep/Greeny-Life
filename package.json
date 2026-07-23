@@ -2,42 +2,36 @@
   "name": "greeny-life",
   "version": "1.0.0",
   "private": true,
-
   "description": "GREENY LIFE Digital Operating System",
   "author": "GREENY LIFE",
   "license": "MIT",
-
   "scripts": {
-  "dev": "next dev",
-  "build": "next build",
-  "start": "next start",
-  "lint": "next lint",
-  "type-check": "tsc --noEmit",
-
-  "migration": "node scripts/migration/legacy-engine.js",
-
-  "migration:verify": "node scripts/migration/legacy-engine.js",
-
-  "migration:decision": "node scripts/migration/migration-decision-engine.js",
-
-  "migration:executor": "node scripts/migration/migration-executor.js",
-
-  "migration:all": "npm run migration && npm run migration:decision && npm run migration:executor"
-},
-
+    "dev": "next dev",
+    "build": "next build",
+    "start": "next start",
+    "lint": "next lint",
+    "type-check": "tsc --noEmit",
+    "intelligence":"tsx intelligence/index.ts",
+    "audit":"tsx intelligence/product-audit.ts",
+    "health":"npm run type-check && npm run intelligence && npm run audit",
+    "migration": "node scripts/migration/legacy-engine.js",
+    "migration:verify": "node scripts/migration/legacy-engine.js",
+    "migration:decision": "node scripts/migration/migration-decision-engine.js",
+    "migration:executor": "node scripts/migration/migration-executor.js",
+    "migration:all": "npm run migration && npm run migration:decision && npm run migration:executor"
+  },
   "dependencies": {
     "next": "^16.2.10",
     "react": "^19.1.1",
     "react-dom": "^19.1.1"
   },
-
   "devDependencies": {
-    "typescript": "^5.9.2",
     "@types/node": "^24.0.0",
     "@types/react": "^19.1.10",
-    "@types/react-dom": "^19.1.7"
+    "@types/react-dom": "^19.1.7",
+    "tsx": "^4.23.1",
+    "typescript": "^5.9.3"
   },
-
   "engines": {
     "node": ">=20.11.1"
   }

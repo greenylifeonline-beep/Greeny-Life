@@ -1,46 +1,5 @@
 [
   {
-    "component": "Review Required",
-    "source": "app\\js\\modules\\categories.js",
-    "target": "Manual review required",
-    "fileType": "javascript",
-    "score": 10,
-    "decision": "ARCHIVE",
-    "reasons": [
-      "Fetch API detected.",
-      "DOM manipulation requires migration."
-    ],
-    "status": "pending"
-  },
-  {
-    "component": "Review Required",
-    "source": "app\\js\\modules\\products.js",
-    "target": "Manual review required",
-    "fileType": "javascript",
-    "score": 50,
-    "decision": "REFACTOR",
-    "reasons": [
-      "Business logic detected.",
-      "Fetch API detected.",
-      "DOM manipulation requires migration."
-    ],
-    "status": "pending"
-  },
-  {
-    "component": "Review Required",
-    "source": "app\\js\\script.js",
-    "target": "Manual review required",
-    "fileType": "javascript",
-    "score": 20,
-    "decision": "ARCHIVE",
-    "reasons": [
-      "Fetch API detected.",
-      "Events detected.",
-      "DOM manipulation requires migration."
-    ],
-    "status": "pending"
-  },
-  {
     "component": "Header",
     "source": "app\\views\\about.html",
     "target": "components/layout/Header.tsx",

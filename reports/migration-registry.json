@@ -1,5 +1,5 @@
 {
-  "generated_at": "2026-07-19T13:41:22.148Z",
+  "generated_at": "2026-07-21T18:06:56.304Z",
   "engine": {
     "name": "GREENY LIFE Migration Registry Builder",
     "version": "1.0.0"
@@ -172,25 +172,16 @@
       "target": "Manual review required",
       "fingerprint": null,
       "sources": [
-        "app/js/modules/categories.js",
-        "app/js/modules/products.js",
-        "app/js/script.js",
         "app/views/products.html"
       ],
       "decisions": [
-        "ARCHIVE",
-        "REFACTOR"
+        "ARCHIVE"
       ],
       "reasons": [
-        "Business logic detected.",
-        "DOM manipulation requires migration.",
-        "Events detected.",
-        "Fetch API detected.",
         "HTML page detected."
       ],
       "file_types": [
-        "html",
-        "javascript"
+        "html"
       ],
       "status": "review_required",
       "review_required": true,

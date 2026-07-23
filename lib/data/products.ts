@@ -33,8 +33,8 @@ export interface ProductsRegistry {
 
 // تحويل البيانات المستوردة لنوع المنتجات الصارم
 const registry = productsData as unknown as ProductsRegistry;
-const allProducts: Product[] = registry.products;
 
+const allProducts: Product[] = registry.products ?? [];
 
 /**
  * Return complete products registry

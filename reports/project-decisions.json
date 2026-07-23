@@ -1,5 +1,5 @@
 {
-  "generated_at": "2026-07-19T13:39:13.582Z",
+  "generated_at": "2026-07-21T18:07:48.137Z",
   "engine": {
     "name": "GREENY LIFE Migration Decision Engine",
     "version": "1.0.0"
@@ -17,12 +17,12 @@
       "review_required": 1
     },
     "files": {
-      "total": 77,
+      "total": 72,
       "keep": 24,
       "migrate": 5,
-      "move": 29,
-      "archive": 15,
-      "review_required": 4
+      "move": 35,
+      "archive": 8,
+      "review_required": 0
     }
   },
   "entities": [
@@ -147,10 +147,6 @@
       "approved": false,
       "executor_status": "pending",
       "reasons": [
-        "Business logic detected.",
-        "DOM manipulation requires migration.",
-        "Events detected.",
-        "Fetch API detected.",
         "HTML page detected."
       ]
     }
@@ -572,167 +568,6 @@
       ]
     },
     {
-      "file": "app/js/core/api.js",
-      "entity": null,
-      "action": "ARCHIVE",
-      "confidence": 75,
-      "decisionsource": "legacy_remove",
-      "move_to": null,
-      "phase": null,
-      "fingerprint": null,
-      "approved": false,
-      "executor_status": "pending",
-      "reasons": []
-    },
-    {
-      "file": "app/js/core/config.js",
-      "entity": null,
-      "action": "ARCHIVE",
-      "confidence": 75,
-      "decisionsource": "legacy_remove",
-      "move_to": null,
-      "phase": null,
-      "fingerprint": null,
-      "approved": false,
-      "executor_status": "pending",
-      "reasons": []
-    },
-    {
-      "file": "app/js/core/router.js",
-      "entity": null,
-      "action": "ARCHIVE",
-      "confidence": 75,
-      "decisionsource": "legacy_remove",
-      "move_to": null,
-      "phase": null,
-      "fingerprint": null,
-      "approved": false,
-      "executor_status": "pending",
-      "reasons": []
-    },
-    {
-      "file": "app/js/modules/categories.js",
-      "entity": "Review Required",
-      "action": "REVIEW_REQUIRED",
-      "confidence": 100,
-      "decisionsource": "decision_conflict",
-      "move_to": null,
-      "phase": null,
-      "fingerprint": null,
-      "approved": false,
-      "executor_status": "pending",
-      "reasons": [
-        "Business logic detected.",
-        "DOM manipulation requires migration.",
-        "Events detected.",
-        "Fetch API detected.",
-        "HTML page detected."
-      ]
-    },
-    {
-      "file": "app/js/modules/footer.js",
-      "entity": null,
-      "action": "ARCHIVE",
-      "confidence": 75,
-      "decisionsource": "legacy_remove",
-      "move_to": null,
-      "phase": null,
-      "fingerprint": null,
-      "approved": false,
-      "executor_status": "pending",
-      "reasons": []
-    },
-    {
-      "file": "app/js/modules/header.js",
-      "entity": null,
-      "action": "ARCHIVE",
-      "confidence": 75,
-      "decisionsource": "legacy_remove",
-      "move_to": null,
-      "phase": null,
-      "fingerprint": null,
-      "approved": false,
-      "executor_status": "pending",
-      "reasons": []
-    },
-    {
-      "file": "app/js/modules/products.js",
-      "entity": "Review Required",
-      "action": "REVIEW_REQUIRED",
-      "confidence": 100,
-      "decisionsource": "decision_conflict",
-      "move_to": null,
-      "phase": null,
-      "fingerprint": null,
-      "approved": false,
-      "executor_status": "pending",
-      "reasons": [
-        "Business logic detected.",
-        "DOM manipulation requires migration.",
-        "Events detected.",
-        "Fetch API detected.",
-        "HTML page detected."
-      ]
-    },
-    {
-      "file": "app/js/script.js",
-      "entity": "Review Required",
-      "action": "REVIEW_REQUIRED",
-      "confidence": 100,
-      "decisionsource": "decision_conflict",
-      "move_to": null,
-      "phase": null,
-      "fingerprint": null,
-      "approved": false,
-      "executor_status": "pending",
-      "reasons": [
-        "Business logic detected.",
-        "DOM manipulation requires migration.",
-        "Events detected.",
-        "Fetch API detected.",
-        "HTML page detected."
-      ]
-    },
-    {
-      "file": "app/js/ui/loader.js",
-      "entity": null,
-      "action": "ARCHIVE",
-      "confidence": 75,
-      "decisionsource": "legacy_remove",
-      "move_to": null,
-      "phase": null,
-      "fingerprint": null,
-      "approved": false,
-      "executor_status": "pending",
-      "reasons": []
-    },
-    {
-      "file": "app/js/ui/modal.js",
-      "entity": null,
-      "action": "ARCHIVE",
-      "confidence": 75,
-      "decisionsource": "legacy_remove",
-      "move_to": null,
-      "phase": null,
-      "fingerprint": null,
-      "approved": false,
-      "executor_status": "pending",
-      "reasons": []
-    },
-    {
-      "file": "app/js/ui/toast.js",
-      "entity": null,
-      "action": "ARCHIVE",
-      "confidence": 75,
-      "decisionsource": "legacy_remove",
-      "move_to": null,
-      "phase": null,
-      "fingerprint": null,
-      "approved": false,
-      "executor_status": "pending",
-      "reasons": []
-    },
-    {
       "file": "app/layout.tsx",
       "entity": null,
       "action": "ARCHIVE",
@@ -748,15 +583,17 @@
     {
       "file": "app/page.tsx",
       "entity": null,
-      "action": "ARCHIVE",
+      "action": "MOVE",
       "confidence": 75,
-      "decisionsource": "legacy_remove",
+      "decisionsource": "legacy_refactor",
       "move_to": null,
       "phase": null,
       "fingerprint": null,
       "approved": false,
       "executor_status": "pending",
-      "reasons": []
+      "reasons": [
+        "Business logic detected."
+      ]
     },
     {
       "file": "app/views/about.html",
@@ -846,21 +683,56 @@
     {
       "file": "app/views/products.html",
       "entity": "Review Required",
-      "action": "REVIEW_REQUIRED",
+      "action": "ARCHIVE",
       "confidence": 100,
-      "decisionsource": "decision_conflict",
+      "decisionsource": "empty_file_rule",
       "move_to": null,
       "phase": null,
       "fingerprint": null,
       "approved": false,
       "executor_status": "pending",
       "reasons": [
-        "Business logic detected.",
-        "DOM manipulation requires migration.",
-        "Events detected.",
-        "Fetch API detected.",
-        "HTML page detected."
+        "File is empty (0 bytes)."
       ]
+    },
+    {
+      "file": "components/ui/Loader.tsx",
+      "entity": null,
+      "action": "ARCHIVE",
+      "confidence": 75,
+      "decisionsource": "legacy_remove",
+      "move_to": null,
+      "phase": null,
+      "fingerprint": null,
+      "approved": false,
+      "executor_status": "pending",
+      "reasons": []
+    },
+    {
+      "file": "components/ui/Modal.tsx",
+      "entity": null,
+      "action": "ARCHIVE",
+      "confidence": 75,
+      "decisionsource": "legacy_remove",
+      "move_to": null,
+      "phase": null,
+      "fingerprint": null,
+      "approved": false,
+      "executor_status": "pending",
+      "reasons": []
+    },
+    {
+      "file": "components/ui/Toast.tsx",
+      "entity": null,
+      "action": "ARCHIVE",
+      "confidence": 75,
+      "decisionsource": "legacy_remove",
+      "move_to": null,
+      "phase": null,
+      "fingerprint": null,
+      "approved": false,
+      "executor_status": "pending",
+      "reasons": []
     },
     {
       "file": "data/01_global.json",
@@ -1193,6 +1065,51 @@
       ]
     },
     {
+      "file": "data/migrated_brand.json",
+      "entity": null,
+      "action": "MOVE",
+      "confidence": 75,
+      "decisionsource": "legacy_refactor",
+      "move_to": null,
+      "phase": null,
+      "fingerprint": null,
+      "approved": false,
+      "executor_status": "pending",
+      "reasons": [
+        "Business data detected."
+      ]
+    },
+    {
+      "file": "data/migrated_categories.json",
+      "entity": null,
+      "action": "MOVE",
+      "confidence": 75,
+      "decisionsource": "legacy_refactor",
+      "move_to": null,
+      "phase": null,
+      "fingerprint": null,
+      "approved": false,
+      "executor_status": "pending",
+      "reasons": [
+        "Business data detected."
+      ]
+    },
+    {
+      "file": "data/migrated_products.json",
+      "entity": null,
+      "action": "MOVE",
+      "confidence": 75,
+      "decisionsource": "legacy_refactor",
+      "move_to": null,
+      "phase": null,
+      "fingerprint": null,
+      "approved": false,
+      "executor_status": "pending",
+      "reasons": [
+        "Business data detected."
+      ]
+    },
+    {
       "file": "data/migration/migration-history.json",
       "entity": null,
       "action": "MOVE",
@@ -1240,15 +1157,18 @@
     {
       "file": "lib/data/documents.ts",
       "entity": null,
-      "action": "ARCHIVE",
+      "action": "MOVE",
       "confidence": 75,
-      "decisionsource": "legacy_remove",
+      "decisionsource": "legacy_refactor",
       "move_to": null,
       "phase": null,
       "fingerprint": null,
       "approved": false,
       "executor_status": "pending",
-      "reasons": []
+      "reasons": [
+        "Business logic detected.",
+        "JSON processing detected."
+      ]
     },
     {
       "file": "lib/data/global.ts",
@@ -1266,15 +1186,18 @@
     {
       "file": "lib/data/markets.ts",
       "entity": null,
-      "action": "ARCHIVE",
+      "action": "MOVE",
       "confidence": 75,
-      "decisionsource": "legacy_remove",
+      "decisionsource": "legacy_refactor",
       "move_to": null,
       "phase": null,
       "fingerprint": null,
       "approved": false,
       "executor_status": "pending",
-      "reasons": []
+      "reasons": [
+        "Business logic detected.",
+        "JSON processing detected."
+      ]
     },
     {
       "file": "lib/data/media.ts",

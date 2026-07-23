@@ -1,0 +1,20 @@
+{
+ "forbidden":[
+
+ {
+  "pattern":".backup",
+  "reason":"backup files cannot enter production"
+ },
+
+ {
+  "pattern":"from from",
+  "reason":"invalid import syntax"
+ },
+
+ {
+  "pattern":"import .* from \"products\"",
+  "reason":"missing alias resolution"
+ }
+
+ ]
+}

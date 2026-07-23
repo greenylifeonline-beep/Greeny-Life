@@ -1,14 +1,16 @@
 import { getBrand, getWebsite } from "@/lib/data/global";
 
-// تم تصحيح المسار هنا بناءً على بنية المجلدات في جذر مشروع Greeny Life
-import { getActiveProducts, getFeaturedProducts } from "../products"; 
+///Greeny Life
+import {
+  getActiveProducts,
+  getFeaturedProducts
+} from "@/lib/data/products";
 
 interface ProductStatus {
   active: boolean;
   published: boolean;
   featured: boolean;
 }
-
 interface ProductType {
   id: string;
   product_code: string;

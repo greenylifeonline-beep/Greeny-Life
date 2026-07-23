@@ -1,6 +1,6 @@
 {
-  "generated_at": "2026-07-19T11:15:27.313Z",
-  "total": 54,
+  "generated_at": "2026-07-21T18:06:06.895Z",
+  "total": 59,
   "files": [
     {
       "file": "app\\assets\\css\\style.css",
@@ -229,14 +229,12 @@
       ]
     },
     {
-      "file": "app\\js\\modules\\products.js",
+      "file": "app\\page.tsx",
       "type": "javascript",
-      "score": 50,
+      "score": 40,
       "decision": "REFACTOR",
       "reasons": [
-        "Business logic detected.",
-        "Fetch API detected.",
-        "DOM manipulation requires migration."
+        "Business logic detected."
       ]
     },
     {
@@ -438,6 +436,33 @@
       ]
     },
     {
+      "file": "data\\migrated_brand.json",
+      "type": "json",
+      "score": 60,
+      "decision": "REFACTOR",
+      "reasons": [
+        "Business data detected."
+      ]
+    },
+    {
+      "file": "data\\migrated_categories.json",
+      "type": "json",
+      "score": 60,
+      "decision": "REFACTOR",
+      "reasons": [
+        "Business data detected."
+      ]
+    },
+    {
+      "file": "data\\migrated_products.json",
+      "type": "json",
+      "score": 60,
+      "decision": "REFACTOR",
+      "reasons": [
+        "Business data detected."
+      ]
+    },
+    {
       "file": "data\\migration\\migration-history.json",
       "type": "json",
       "score": 60,
@@ -462,6 +487,26 @@
       "decision": "REFACTOR",
       "reasons": [
         "Business logic detected."
+      ]
+    },
+    {
+      "file": "lib\\data\\documents.ts",
+      "type": "javascript",
+      "score": 50,
+      "decision": "REFACTOR",
+      "reasons": [
+        "Business logic detected.",
+        "JSON processing detected."
+      ]
+    },
+    {
+      "file": "lib\\data\\markets.ts",
+      "type": "javascript",
+      "score": 50,
+      "decision": "REFACTOR",
+      "reasons": [
+        "Business logic detected.",
+        "JSON processing detected."
       ]
     },
     {
