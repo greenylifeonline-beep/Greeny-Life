@@ -1,0 +1,21 @@
+﻿sonarqube:
+  url: http://localhost:9000
+  token: 
+
+github:
+  token: 
+
+llm:
+  provider: claude
+  model: claude-3-opus-20240229
+
+security:
+  tools: ["bandit"]
+  severity_threshold: MEDIUM
+
+performance:
+  tool: k6
+  test_dir: tests/performance
+
+documentation:
+  auto_fix: true

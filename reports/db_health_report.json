@@ -1,0 +1,33 @@
+{
+  "timestamp": "2026-07-24T23:29:47.042203",
+  "status": "HEALTHY",
+  "master_data_status": {
+    "path": "eos_architecture\\01.Master_Data",
+    "product_lines_count": 0,
+    "total_registered_skus": 0,
+    "product_schemas": []
+  },
+  "core_entities_architecture": {
+    "total_expected_entities": 17,
+    "entities": [
+      "User",
+      "Tenant",
+      "Role",
+      "Permission",
+      "Product",
+      "ProductSKU",
+      "Inventory",
+      "Warehouse",
+      "Supplier",
+      "PurchaseOrder",
+      "SalesOrder",
+      "Shipment",
+      "CustomsDeclaration",
+      "Invoice",
+      "Payment",
+      "AuditLog",
+      "Document"
+    ],
+    "schema_source": "prisma/schema.prisma"
+  }
+}
