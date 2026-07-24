@@ -1,8 +1,8 @@
-{
+﻿{
   "metadata": {
     "system": "GREENY LIFE Enterprise Operating System (EOS)",
     "blueprint_version": "1.0",
-    "timestamp": "2026-07-24T21:55:27.315759",
+    "timestamp": "2026-07-24T22:03:11.406327",
     "status": "OPERATIONAL"
   },
   "id_architecture": {
@@ -24,25 +24,11 @@
     "certificate": "GL-COA-001",
     "payment": "GL-PAY-001"
   },
-  "eos_domains": [
-    "01.Master_Data",
-    "02.Gl-DOS",
-    "03.Operations",
-    "04.CRM",
-    "05.Logistics",
-    "06.Compliance",
-    "07.Finance",
-    "08.Analytics",
-    "09.Administration"
-  ],
-  "gl_dos_core": {
-    "role": "Product & Label Intelligence Core",
-    "modules": [
-      "Product Intelligence",
-      "GELS Label System v2.0",
-      "Packaging Intelligence",
-      "Traceability"
-    ]
+  "compliance_and_standards": {
+    "brand_packaging": "PASSED",
+    "traceability_gels": "PASSED",
+    "export_compliance": "PASSED",
+    "missing_fields": []
   },
   "system_health": {
     "syntax_errors_found": 0,
