@@ -1,9 +1,22 @@
 {
-  "project": "Greeny-Life",
+  "project": "GREENY LIFE",
   "version": "1.0",
-  "knownProblems": [],
-  "ignoredPatterns": [],
-  "validatedFiles": [],
-  "lastScan": null,
-  "rulesVersion": 1
+  "decisions": [
+    {
+      "date": "2026-07-23T11:33:54.900Z",
+      "engine": "Duplicate Engine",
+      "finding": "14 migration duplicates detected",
+      "decision": "KEEP_BOTH_UNTIL_MIGRATION_COMPLETE"
+    },
+    {
+      "id": "DEC-0002",
+      "date": "2026-07-23T14:24:51.096Z",
+      "engine": "Duplicate Engine",
+      "source": "data/migrated_products.json",
+      "finding": "29 migration duplicates detected",
+      "decision": "KEEP_BOTH_UNTIL_MIGRATION_COMPLETE",
+      "severity": "INFO",
+      "status": "ACTIVE"
+    }
+  ]
 }

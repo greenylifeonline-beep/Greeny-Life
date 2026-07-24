@@ -1,0 +1,44 @@
+
+{
+  "PRODUCT_SCHEMA_MAP": {
+    "id": "product",
+    "product_code": "GL",
+    "ref_id": "REFERENCE",
+    "master": {
+      "required": ["id", "product_code", "ref_id", "name", "collection", "media", "status"],
+      "transform": {
+        "id": "id",
+        "name": { "en": "name.en", "ar": "name.ar" },
+        "category": "collection",
+        "image": "media.profile",
+        "status": "status.active"
+      }
+    },
+    "migrated": {
+      "required": ["id", "name", "category", "image", "status"],
+      "transform": {
+        "id": "id",
+        "name": "name",
+        "category": "category",
+        "image": "image",
+        "status": "status"
+      }
+    },
+    "legacy": {
+      "required": ["id", "name", "category", "image", "status"],
+      "transform": {
+        "id": "id",
+        "name": "name",
+        "category": "category",
+        "image": "image",
+        "status": "status"
+      }
+    }
+  },
+  "PRODUCT_REGISTRY": [
+    { "id": "wildflower-honey", "code": "HON001", "category": "honey" },
+    { "id": "citrus-honey", "code": "HON002", "category": "honey" },
+    { "id": "clover-honey", "code": "HON003", "category": "honey" },
+    { "id": "royal-jelly", "code": "BEE001", "category": "bee-products" }
+  ]
+}

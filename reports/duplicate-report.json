@@ -1,0 +1,303 @@
+{
+  "system": "GL-DOS",
+  "engine": "Duplicate Engine",
+  "version": "2.0",
+  "generated": "2026-07-24T12:10:32.758Z",
+  "summary": {
+    "total_findings": 14,
+    "migration_matches": 14,
+    "exact_duplicates": 0,
+    "data_conflicts": 0,
+    "possible_duplicates": 0
+  },
+  "policy": {
+    "identity_fields": [
+      "id",
+      "ref_id",
+      "product_code"
+    ],
+    "comparison_mode": "semantic"
+  },
+  "findings": [
+    {
+      "identity": {
+        "field": "id",
+        "value": "H001"
+      },
+      "type": "MIGRATION_MATCH",
+      "confidence": 100,
+      "records": [
+        {
+          "file": "data/migrated_products.json",
+          "id": "H001"
+        },
+        {
+          "file": "data/legacy/products.json",
+          "id": "H001"
+        }
+      ],
+      "differences": [],
+      "recommendation": "SAFE_MIGRATION_CLEANUP"
+    },
+    {
+      "identity": {
+        "field": "id",
+        "value": "H002"
+      },
+      "type": "MIGRATION_MATCH",
+      "confidence": 100,
+      "records": [
+        {
+          "file": "data/migrated_products.json",
+          "id": "H002"
+        },
+        {
+          "file": "data/legacy/products.json",
+          "id": "H002"
+        }
+      ],
+      "differences": [],
+      "recommendation": "SAFE_MIGRATION_CLEANUP"
+    },
+    {
+      "identity": {
+        "field": "id",
+        "value": "H003"
+      },
+      "type": "MIGRATION_MATCH",
+      "confidence": 100,
+      "records": [
+        {
+          "file": "data/migrated_products.json",
+          "id": "H003"
+        },
+        {
+          "file": "data/legacy/products.json",
+          "id": "H003"
+        }
+      ],
+      "differences": [],
+      "recommendation": "SAFE_MIGRATION_CLEANUP"
+    },
+    {
+      "identity": {
+        "field": "id",
+        "value": "B001"
+      },
+      "type": "MIGRATION_MATCH",
+      "confidence": 100,
+      "records": [
+        {
+          "file": "data/migrated_products.json",
+          "id": "B001"
+        },
+        {
+          "file": "data/legacy/products.json",
+          "id": "B001"
+        }
+      ],
+      "differences": [],
+      "recommendation": "SAFE_MIGRATION_CLEANUP"
+    },
+    {
+      "identity": {
+        "field": "id",
+        "value": "B002"
+      },
+      "type": "MIGRATION_MATCH",
+      "confidence": 100,
+      "records": [
+        {
+          "file": "data/migrated_products.json",
+          "id": "B002"
+        },
+        {
+          "file": "data/legacy/products.json",
+          "id": "B002"
+        }
+      ],
+      "differences": [],
+      "recommendation": "SAFE_MIGRATION_CLEANUP"
+    },
+    {
+      "identity": {
+        "field": "id",
+        "value": "B003"
+      },
+      "type": "MIGRATION_MATCH",
+      "confidence": 100,
+      "records": [
+        {
+          "file": "data/migrated_products.json",
+          "id": "B003"
+        },
+        {
+          "file": "data/legacy/products.json",
+          "id": "B003"
+        }
+      ],
+      "differences": [],
+      "recommendation": "SAFE_MIGRATION_CLEANUP"
+    },
+    {
+      "identity": {
+        "field": "id",
+        "value": "B004"
+      },
+      "type": "MIGRATION_MATCH",
+      "confidence": 100,
+      "records": [
+        {
+          "file": "data/migrated_products.json",
+          "id": "B004"
+        },
+        {
+          "file": "data/legacy/products.json",
+          "id": "B004"
+        }
+      ],
+      "differences": [],
+      "recommendation": "SAFE_MIGRATION_CLEANUP"
+    },
+    {
+      "identity": {
+        "field": "id",
+        "value": "S001"
+      },
+      "type": "MIGRATION_MATCH",
+      "confidence": 100,
+      "records": [
+        {
+          "file": "data/migrated_products.json",
+          "id": "S001"
+        },
+        {
+          "file": "data/legacy/products.json",
+          "id": "S001"
+        }
+      ],
+      "differences": [],
+      "recommendation": "SAFE_MIGRATION_CLEANUP"
+    },
+    {
+      "identity": {
+        "field": "id",
+        "value": "S002"
+      },
+      "type": "MIGRATION_MATCH",
+      "confidence": 100,
+      "records": [
+        {
+          "file": "data/migrated_products.json",
+          "id": "S002"
+        },
+        {
+          "file": "data/legacy/products.json",
+          "id": "S002"
+        }
+      ],
+      "differences": [],
+      "recommendation": "SAFE_MIGRATION_CLEANUP"
+    },
+    {
+      "identity": {
+        "field": "id",
+        "value": "S003"
+      },
+      "type": "MIGRATION_MATCH",
+      "confidence": 100,
+      "records": [
+        {
+          "file": "data/migrated_products.json",
+          "id": "S003"
+        },
+        {
+          "file": "data/legacy/products.json",
+          "id": "S003"
+        }
+      ],
+      "differences": [],
+      "recommendation": "SAFE_MIGRATION_CLEANUP"
+    },
+    {
+      "identity": {
+        "field": "id",
+        "value": "S004"
+      },
+      "type": "MIGRATION_MATCH",
+      "confidence": 100,
+      "records": [
+        {
+          "file": "data/migrated_products.json",
+          "id": "S004"
+        },
+        {
+          "file": "data/legacy/products.json",
+          "id": "S004"
+        }
+      ],
+      "differences": [],
+      "recommendation": "SAFE_MIGRATION_CLEANUP"
+    },
+    {
+      "identity": {
+        "field": "id",
+        "value": "S005"
+      },
+      "type": "MIGRATION_MATCH",
+      "confidence": 100,
+      "records": [
+        {
+          "file": "data/migrated_products.json",
+          "id": "S005"
+        },
+        {
+          "file": "data/legacy/products.json",
+          "id": "S005"
+        }
+      ],
+      "differences": [],
+      "recommendation": "SAFE_MIGRATION_CLEANUP"
+    },
+    {
+      "identity": {
+        "field": "id",
+        "value": "S007"
+      },
+      "type": "MIGRATION_MATCH",
+      "confidence": 100,
+      "records": [
+        {
+          "file": "data/migrated_products.json",
+          "id": "S007"
+        },
+        {
+          "file": "data/legacy/products.json",
+          "id": "S007"
+        }
+      ],
+      "differences": [],
+      "recommendation": "SAFE_MIGRATION_CLEANUP"
+    },
+    {
+      "identity": {
+        "field": "id",
+        "value": "O001"
+      },
+      "type": "MIGRATION_MATCH",
+      "confidence": 100,
+      "records": [
+        {
+          "file": "data/migrated_products.json",
+          "id": "O001"
+        },
+        {
+          "file": "data/legacy/products.json",
+          "id": "O001"
+        }
+      ],
+      "differences": [],
+      "recommendation": "SAFE_MIGRATION_CLEANUP"
+    }
+  ]
+}

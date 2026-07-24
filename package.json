@@ -5,34 +5,119 @@
   "description": "GREENY LIFE Digital Operating System",
   "author": "GREENY LIFE",
   "license": "MIT",
+
   "scripts": {
+
     "dev": "next dev",
+
     "build": "next build",
+
     "start": "next start",
+
     "lint": "next lint",
+
+
     "type-check": "tsc --noEmit",
-    "intelligence":"tsx intelligence/index.ts",
-    "audit":"tsx intelligence/product-audit.ts",
-    "health":"npm run type-check && npm run intelligence && npm run audit",
-    "migration": "node scripts/migration/legacy-engine.js",
-    "migration:verify": "node scripts/migration/legacy-engine.js",
-    "migration:decision": "node scripts/migration/migration-decision-engine.js",
-    "migration:executor": "node scripts/migration/migration-executor.js",
-    "migration:all": "npm run migration && npm run migration:decision && npm run migration:executor"
+
+
+    "intelligence": "tsx intelligence/index.ts",
+
+    "audit": "tsx intelligence/product-audit.ts",
+
+
+    "health":
+    "npm run type-check && npm run intelligence && npm run audit",
+
+
+
+    "migration":
+    "node scripts/migration/legacy-engine.js",
+
+    "migration:verify":
+    "node scripts/migration/legacy-engine.js",
+
+    "migration:decision":
+    "node scripts/migration/migration-decision-engine.js",
+
+    "migration:executor":
+    "node scripts/migration/migration-executor.js",
+
+    "migration:all":
+    "npm run migration && npm run migration:decision && npm run migration:executor",
+
+
+
+    "test:intelligence":
+    "tsx intelligence/intelligence-test.ts",
+
+    "test:registry":
+    "tsx intelligence/test/test-registry.ts",
+
+    "test:health":
+    "tsx intelligence/test/test-health.ts",
+
+    "test:cleanup":
+    "tsx intelligence/test/test-cleanup.ts",
+
+    "test:duplicate-v2":
+    "tsx intelligence/test/test-duplicate-v2.ts",
+
+    "test:audit": "tsx intelligence/test/test-audit.ts",
+
+    "test:integrity": "tsx intelligence/test/test-integrity.ts",
+
+    "test:all":
+    "npm run test:intelligence && npm run test:registry && npm run test:health && npm run test:cleanup && npm run test:duplicate-v2",
+
+    "verify":
+    "npm run type-check && npm run intelligence && npm run audit && npm run test:all",
+
+
+
+    "diagnose":
+    "npm run gl-dos",
+
+
+
+    "gl-dos":
+    "tsx intelligence/gl-dos.ts",
+
+
+
+"gl-check":
+"npm run type-check && npm run intelligence && npm run audit && npm run test:intelligence && npm run test:health && npm run test:duplicate-v2 && npm run test:cleanup"
   },
+
+
   "dependencies": {
+
     "next": "^16.2.10",
+
     "react": "^19.1.1",
+
     "react-dom": "^19.1.1"
+
   },
+
+
   "devDependencies": {
+
     "@types/node": "^24.0.0",
+
     "@types/react": "^19.1.10",
+
     "@types/react-dom": "^19.1.7",
+
     "tsx": "^4.23.1",
+
     "typescript": "^5.9.3"
+
   },
+
+
   "engines": {
+
     "node": ">=20.11.1"
+
   }
 }

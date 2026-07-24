@@ -1,6 +1,8 @@
 import fs from "fs";
 import path from "path";
-
+import {runDuplicateEngineV2} from "./engines/duplicate-engine-v2";
+import { saveDecision } from "./memory/project-memory";
+import {generateAllReports} from "./core/report-writer";
 
 const ROOT = process.cwd();
 
@@ -148,6 +150,63 @@ function run(){
         )
 
     );
+
+    const duplicates =
+    runDuplicateEngineV2();
+    
+
+console.log(
+    "Duplicate Engine completed:",
+    duplicates.length
+);
+
+
+
+const reports =
+generateAllReports(
+    duplicates
+);
+
+
+
+console.log(
+    "Reports generated:"
+);
+
+
+
+console.log(
+    reports
+);
+
+if(duplicates.length > 0){
+
+saveDecision({
+
+    date:
+    new Date().toISOString(),
+
+    engine:
+    "Duplicate Engine",
+
+    source:
+    "data/migrated_products.json",
+
+    finding:
+    `${duplicates.length} migration duplicates detected`,
+
+    decision:
+    "KEEP_BOTH_UNTIL_MIGRATION_COMPLETE",
+
+    severity:
+    "INFO",
+
+    status:
+    "ACTIVE"
+
+});
+
+}
 
 
     console.log(
