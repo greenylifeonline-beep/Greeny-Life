@@ -463,7 +463,9 @@ export default function () {
 # CLI Entry Point
 # ============================================================================
 def main():
-    parser = argparse.ArgumentParser(description="Greeny-Life EOS Brain with Security, Performance & Documentation Agents")
+    parser = argparse.ArgumentParser(
+        description="Greeny-Life EOS Brain with Security, Performance & Documentation Agents"
+    )
     parser.add_argument("--repo", required=True, help="Path to the repository")
     parser.add_argument("--config", help="Path to config YAML file")
     parser.add_argument("--no-fix", action="store_true", help="Skip auto-remediation")
@@ -475,11 +477,13 @@ def main():
     results = brain.run_full_pipeline(auto_fix=not args.no_fix, create_pr=not args.no_pr)
 
     if args.output:
-        with open(args.output, 'w') as f:
+        output_path = Path(args.output)
+        output_path.parent.mkdir(parents=True, exist_ok=True)
+        with output_path.open("w", encoding="utf-8") as f:
             json.dump(results, f, indent=2, default=str)
-        print(f"📄 Results saved to {args.output}")
+        print(f"Results saved to {output_path}")
 
-    sys.exit(0 if results["overall_status"] == "PASSED" else 1)
+    sys.exit(0 if results.get("overall_status") == "PASSED" else 1)
 
 if __name__ == "__main__":
     main()
