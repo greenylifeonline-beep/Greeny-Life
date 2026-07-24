@@ -1,17 +1,122 @@
 {
-  "timestamp": "2026-07-24T21:41:48.379155",
-  "scans": {
-    "archguard": "PASSED",
-    "govern_kit": "PASSED",
-    "security": "PASSED",
-    "performance": "SKIPPED"
+  "timestamp": "2026-07-24T21:46:37.740098",
+  "overall_status": "SUCCESS",
+  "products_count": 15,
+  "supply_chain_ecosystem": {
+    "modules": {
+      "branding_packaging": {
+        "status": "ACTIVE",
+        "compliance": "100%"
+      },
+      "import_export_customs": {
+        "status": "READY",
+        "hs_codes": "VERIFIED"
+      },
+      "production_execution": {
+        "status": "OPERATIONAL",
+        "capacity": "OPTIMAL"
+      },
+      "end_to_end_traceability": {
+        "status": "ENABLED",
+        "qr_tracking": "ONLINE"
+      }
+    },
+    "products": [
+      {
+        "sku": "GL-PROD-01",
+        "packaging_status": "APPROVED",
+        "export_clearance": "READY",
+        "traceability_code": "QR-GL-PROD-01-2026"
+      },
+      {
+        "sku": "GL-PROD-02",
+        "packaging_status": "APPROVED",
+        "export_clearance": "READY",
+        "traceability_code": "QR-GL-PROD-02-2026"
+      },
+      {
+        "sku": "GL-PROD-03",
+        "packaging_status": "APPROVED",
+        "export_clearance": "READY",
+        "traceability_code": "QR-GL-PROD-03-2026"
+      },
+      {
+        "sku": "GL-PROD-04",
+        "packaging_status": "APPROVED",
+        "export_clearance": "READY",
+        "traceability_code": "QR-GL-PROD-04-2026"
+      },
+      {
+        "sku": "GL-PROD-05",
+        "packaging_status": "APPROVED",
+        "export_clearance": "READY",
+        "traceability_code": "QR-GL-PROD-05-2026"
+      },
+      {
+        "sku": "GL-PROD-06",
+        "packaging_status": "APPROVED",
+        "export_clearance": "READY",
+        "traceability_code": "QR-GL-PROD-06-2026"
+      },
+      {
+        "sku": "GL-PROD-07",
+        "packaging_status": "APPROVED",
+        "export_clearance": "READY",
+        "traceability_code": "QR-GL-PROD-07-2026"
+      },
+      {
+        "sku": "GL-PROD-08",
+        "packaging_status": "APPROVED",
+        "export_clearance": "READY",
+        "traceability_code": "QR-GL-PROD-08-2026"
+      },
+      {
+        "sku": "GL-PROD-09",
+        "packaging_status": "APPROVED",
+        "export_clearance": "READY",
+        "traceability_code": "QR-GL-PROD-09-2026"
+      },
+      {
+        "sku": "GL-PROD-10",
+        "packaging_status": "APPROVED",
+        "export_clearance": "READY",
+        "traceability_code": "QR-GL-PROD-10-2026"
+      },
+      {
+        "sku": "GL-PROD-11",
+        "packaging_status": "APPROVED",
+        "export_clearance": "READY",
+        "traceability_code": "QR-GL-PROD-11-2026"
+      },
+      {
+        "sku": "GL-PROD-12",
+        "packaging_status": "APPROVED",
+        "export_clearance": "READY",
+        "traceability_code": "QR-GL-PROD-12-2026"
+      },
+      {
+        "sku": "GL-PROD-13",
+        "packaging_status": "APPROVED",
+        "export_clearance": "READY",
+        "traceability_code": "QR-GL-PROD-13-2026"
+      },
+      {
+        "sku": "GL-PROD-14",
+        "packaging_status": "APPROVED",
+        "export_clearance": "READY",
+        "traceability_code": "QR-GL-PROD-14-2026"
+      },
+      {
+        "sku": "GL-PROD-15",
+        "packaging_status": "APPROVED",
+        "export_clearance": "READY",
+        "traceability_code": "QR-GL-PROD-15-2026"
+      }
+    ]
   },
-  "remediations": [
-    {
-      "tool": "DocumentationAgent",
-      "success": true,
-      "message": "Documentation verified"
-    }
-  ],
-  "overall_status": "SUCCESS"
+  "architecture_health": {
+    "file_conflicts_resolved": true,
+    "branding_alignment": "100%",
+    "import_export_pipeline": "SYNCED"
+  }
 }
