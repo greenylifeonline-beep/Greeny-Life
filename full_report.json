@@ -1,332 +1,56 @@
 {
-  "execution_metadata": {
-    "timestamp": "2026-07-24T21:49:41.721377",
-    "orchestrated_by": "System Manager Command",
-    "status": "ATTENTION_REQUIRED"
+  "metadata": {
+    "system": "GREENY LIFE Enterprise Operating System (EOS)",
+    "blueprint_version": "1.0",
+    "timestamp": "2026-07-24T21:53:13.767219",
+    "status": "NEEDS_FIX"
   },
-  "architecture_and_files": {
-    "structure_verified": true,
-    "corrupted_files_detected": 2,
-    "corrupted_details": [
+  "id_architecture": {
+    "organization": "GL-ORG-001",
+    "supplier": "GL-SUP-001",
+    "product": "GL-PROD-001",
+    "sku": "GL-SKU-001",
+    "batch": "GL-BATCH-001",
+    "label": "GL-LBL-001",
+    "packaging": "GL-PKG-001",
+    "warehouse": "GL-WH-001",
+    "inventory": "GL-INVST-001",
+    "customer": "GL-CUST-001",
+    "order": "GL-ORD-001",
+    "invoice": "GL-INVC-001",
+    "shipment": "GL-SHP-001",
+    "container": "GL-CNT-001",
+    "document": "GL-DOC-001",
+    "certificate": "GL-COA-001",
+    "payment": "GL-PAY-001"
+  },
+  "eos_domains": [
+    "01.Master_Data",
+    "02.Gl-DOS",
+    "03.Operations",
+    "04.CRM",
+    "05.Logistics",
+    "06.Compliance",
+    "07.Finance",
+    "08.Analytics",
+    "09.Administration"
+  ],
+  "gl_dos_core": {
+    "role": "Product & Label Intelligence Core",
+    "modules": [
+      "Product Intelligence",
+      "GELS Label System v2.0",
+      "Packaging Intelligence",
+      "Traceability"
+    ]
+  },
+  "system_health": {
+    "syntax_errors_found": 1,
+    "error_details": [
       {
-        "file": "C:\\Users\\Ghanam\\OneDrive\\projects\\Greeny-Life\\brain.py",
+        "file": "brain.py",
         "error": "invalid non-printable character U+FEFF (brain.py, line 1)"
-      },
-      {
-        "file": "C:\\Users\\Ghanam\\OneDrive\\projects\\Greeny-Life\\.venv\\Lib\\site-packages\\joblib\\test\\test_func_inspect_special_encoding.py",
-        "error": "'utf-8' codec can't decode byte 0xa4 in position 64: invalid start byte"
       }
     ]
-  },
-  "products_management": {
-    "total_products": 15,
-    "products_catalog": [
-      {
-        "sku": "GL-PROD-01",
-        "name": "Greeny Product #1",
-        "branding": {
-          "label": "Greeny-Life Eco Premium",
-          "status": "ALIGNED"
-        },
-        "packaging": {
-          "material": "Recyclable / Biodegradable",
-          "qc": "PASSED"
-        },
-        "trade": {
-          "hs_code": "3824.99",
-          "export_ready": true
-        },
-        "traceability": {
-          "batch_id": "BATCH-2026-Q3",
-          "qr_code": "QR-GL-PROD-01-SYNC"
-        }
-      },
-      {
-        "sku": "GL-PROD-02",
-        "name": "Greeny Product #2",
-        "branding": {
-          "label": "Greeny-Life Eco Premium",
-          "status": "ALIGNED"
-        },
-        "packaging": {
-          "material": "Recyclable / Biodegradable",
-          "qc": "PASSED"
-        },
-        "trade": {
-          "hs_code": "3824.99",
-          "export_ready": true
-        },
-        "traceability": {
-          "batch_id": "BATCH-2026-Q3",
-          "qr_code": "QR-GL-PROD-02-SYNC"
-        }
-      },
-      {
-        "sku": "GL-PROD-03",
-        "name": "Greeny Product #3",
-        "branding": {
-          "label": "Greeny-Life Eco Premium",
-          "status": "ALIGNED"
-        },
-        "packaging": {
-          "material": "Recyclable / Biodegradable",
-          "qc": "PASSED"
-        },
-        "trade": {
-          "hs_code": "3824.99",
-          "export_ready": true
-        },
-        "traceability": {
-          "batch_id": "BATCH-2026-Q3",
-          "qr_code": "QR-GL-PROD-03-SYNC"
-        }
-      },
-      {
-        "sku": "GL-PROD-04",
-        "name": "Greeny Product #4",
-        "branding": {
-          "label": "Greeny-Life Eco Premium",
-          "status": "ALIGNED"
-        },
-        "packaging": {
-          "material": "Recyclable / Biodegradable",
-          "qc": "PASSED"
-        },
-        "trade": {
-          "hs_code": "3824.99",
-          "export_ready": true
-        },
-        "traceability": {
-          "batch_id": "BATCH-2026-Q3",
-          "qr_code": "QR-GL-PROD-04-SYNC"
-        }
-      },
-      {
-        "sku": "GL-PROD-05",
-        "name": "Greeny Product #5",
-        "branding": {
-          "label": "Greeny-Life Eco Premium",
-          "status": "ALIGNED"
-        },
-        "packaging": {
-          "material": "Recyclable / Biodegradable",
-          "qc": "PASSED"
-        },
-        "trade": {
-          "hs_code": "3824.99",
-          "export_ready": true
-        },
-        "traceability": {
-          "batch_id": "BATCH-2026-Q3",
-          "qr_code": "QR-GL-PROD-05-SYNC"
-        }
-      },
-      {
-        "sku": "GL-PROD-06",
-        "name": "Greeny Product #6",
-        "branding": {
-          "label": "Greeny-Life Eco Premium",
-          "status": "ALIGNED"
-        },
-        "packaging": {
-          "material": "Recyclable / Biodegradable",
-          "qc": "PASSED"
-        },
-        "trade": {
-          "hs_code": "3824.99",
-          "export_ready": true
-        },
-        "traceability": {
-          "batch_id": "BATCH-2026-Q3",
-          "qr_code": "QR-GL-PROD-06-SYNC"
-        }
-      },
-      {
-        "sku": "GL-PROD-07",
-        "name": "Greeny Product #7",
-        "branding": {
-          "label": "Greeny-Life Eco Premium",
-          "status": "ALIGNED"
-        },
-        "packaging": {
-          "material": "Recyclable / Biodegradable",
-          "qc": "PASSED"
-        },
-        "trade": {
-          "hs_code": "3824.99",
-          "export_ready": true
-        },
-        "traceability": {
-          "batch_id": "BATCH-2026-Q3",
-          "qr_code": "QR-GL-PROD-07-SYNC"
-        }
-      },
-      {
-        "sku": "GL-PROD-08",
-        "name": "Greeny Product #8",
-        "branding": {
-          "label": "Greeny-Life Eco Premium",
-          "status": "ALIGNED"
-        },
-        "packaging": {
-          "material": "Recyclable / Biodegradable",
-          "qc": "PASSED"
-        },
-        "trade": {
-          "hs_code": "3824.99",
-          "export_ready": true
-        },
-        "traceability": {
-          "batch_id": "BATCH-2026-Q3",
-          "qr_code": "QR-GL-PROD-08-SYNC"
-        }
-      },
-      {
-        "sku": "GL-PROD-09",
-        "name": "Greeny Product #9",
-        "branding": {
-          "label": "Greeny-Life Eco Premium",
-          "status": "ALIGNED"
-        },
-        "packaging": {
-          "material": "Recyclable / Biodegradable",
-          "qc": "PASSED"
-        },
-        "trade": {
-          "hs_code": "3824.99",
-          "export_ready": true
-        },
-        "traceability": {
-          "batch_id": "BATCH-2026-Q3",
-          "qr_code": "QR-GL-PROD-09-SYNC"
-        }
-      },
-      {
-        "sku": "GL-PROD-10",
-        "name": "Greeny Product #10",
-        "branding": {
-          "label": "Greeny-Life Eco Premium",
-          "status": "ALIGNED"
-        },
-        "packaging": {
-          "material": "Recyclable / Biodegradable",
-          "qc": "PASSED"
-        },
-        "trade": {
-          "hs_code": "3824.99",
-          "export_ready": true
-        },
-        "traceability": {
-          "batch_id": "BATCH-2026-Q3",
-          "qr_code": "QR-GL-PROD-10-SYNC"
-        }
-      },
-      {
-        "sku": "GL-PROD-11",
-        "name": "Greeny Product #11",
-        "branding": {
-          "label": "Greeny-Life Eco Premium",
-          "status": "ALIGNED"
-        },
-        "packaging": {
-          "material": "Recyclable / Biodegradable",
-          "qc": "PASSED"
-        },
-        "trade": {
-          "hs_code": "3824.99",
-          "export_ready": true
-        },
-        "traceability": {
-          "batch_id": "BATCH-2026-Q3",
-          "qr_code": "QR-GL-PROD-11-SYNC"
-        }
-      },
-      {
-        "sku": "GL-PROD-12",
-        "name": "Greeny Product #12",
-        "branding": {
-          "label": "Greeny-Life Eco Premium",
-          "status": "ALIGNED"
-        },
-        "packaging": {
-          "material": "Recyclable / Biodegradable",
-          "qc": "PASSED"
-        },
-        "trade": {
-          "hs_code": "3824.99",
-          "export_ready": true
-        },
-        "traceability": {
-          "batch_id": "BATCH-2026-Q3",
-          "qr_code": "QR-GL-PROD-12-SYNC"
-        }
-      },
-      {
-        "sku": "GL-PROD-13",
-        "name": "Greeny Product #13",
-        "branding": {
-          "label": "Greeny-Life Eco Premium",
-          "status": "ALIGNED"
-        },
-        "packaging": {
-          "material": "Recyclable / Biodegradable",
-          "qc": "PASSED"
-        },
-        "trade": {
-          "hs_code": "3824.99",
-          "export_ready": true
-        },
-        "traceability": {
-          "batch_id": "BATCH-2026-Q3",
-          "qr_code": "QR-GL-PROD-13-SYNC"
-        }
-      },
-      {
-        "sku": "GL-PROD-14",
-        "name": "Greeny Product #14",
-        "branding": {
-          "label": "Greeny-Life Eco Premium",
-          "status": "ALIGNED"
-        },
-        "packaging": {
-          "material": "Recyclable / Biodegradable",
-          "qc": "PASSED"
-        },
-        "trade": {
-          "hs_code": "3824.99",
-          "export_ready": true
-        },
-        "traceability": {
-          "batch_id": "BATCH-2026-Q3",
-          "qr_code": "QR-GL-PROD-14-SYNC"
-        }
-      },
-      {
-        "sku": "GL-PROD-15",
-        "name": "Greeny Product #15",
-        "branding": {
-          "label": "Greeny-Life Eco Premium",
-          "status": "ALIGNED"
-        },
-        "packaging": {
-          "material": "Recyclable / Biodegradable",
-          "qc": "PASSED"
-        },
-        "trade": {
-          "hs_code": "3824.99",
-          "export_ready": true
-        },
-        "traceability": {
-          "batch_id": "BATCH-2026-Q3",
-          "qr_code": "QR-GL-PROD-15-SYNC"
-        }
-      }
-    ]
-  },
-  "end_to_end_operations": {
-    "branding_compliance": "100%",
-    "packaging_standard": "Eco-Friendly Validated",
-    "import_export_pipeline": "Active & Cleared",
-    "traceability_node": "Operational"
   }
 }
