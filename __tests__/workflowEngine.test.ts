@@ -1,39 +1,27 @@
 ﻿import { describe, it, expect, vi, beforeEach } from "vitest";
-import { EOSWorkflowEngine, OrderWorkflowState } from "@/lib/workflowEngine";
+import { EOSWorkflowEngine, OrderWorkflowState } from "../lib/workflowEngine";
 
-// محاكاة لـ Prisma Client لتجنب الاعتماد على قاعدة بيانات حية أثناء اختبارات الوحدة
+const findUniqueMock = vi.fn();
+const updateMock = vi.fn();
+const auditCreateMock = vi.fn();
+const transactionMock = vi.fn(async (callback) => {
+  return await callback({
+    salesOrder: { update: updateMock },
+    auditLog: { create: auditCreateMock }
+  });
+});
+
 vi.mock("@prisma/client", () => {
   return {
     PrismaClient: class {
       salesOrder = {
-        findUnique: vi.fn().mockResolvedValue({
-          id: "order-123",
-          status: "CREATED",
-          items: [{ productId: "p-1", quantity: 10, unitPriceUSD: 50 }]
-        }),
-        update: vi.fn().mockResolvedValue({
-          id: "order-123",
-          status: "IN_PRODUCTION",
-          updatedAt: new Date()
-        })
+        findUnique: (...args: any[]) => findUniqueMock(...args),
+        update: (...args: any[]) => updateMock(...args)
       };
       auditLog = {
-        create: vi.fn().mockResolvedValue({ id: "log-1" })
+        create: (...args: any[]) => auditCreateMock(...args)
       };
-      $transaction = vi.fn(async (callback) => {
-        return await callback({
-          salesOrder: {
-            update: vi.fn().mockResolvedValue({
-              id: "order-123",
-              status: "IN_PRODUCTION",
-              updatedAt: new Date()
-            })
-          },
-          auditLog: {
-            create: vi.fn().mockResolvedValue({ id: "log-1" })
-          }
-        });
-      });
+      $transaction = (...args: any[]) => transactionMock(...args);
     }
   };
 });
@@ -45,35 +33,39 @@ describe("EOSWorkflowEngine Unit & Integration Tests", () => {
   });
 
   it("should calculate logistics and customs cost correctly", () => {
-    // الكمية: 10، السعر: 100 دولار، نسبة الجمرك: 5%، الشحن: 50 دولار
     const result = EOSWorkflowEngine.calculateLogisticsCost(10, 100, 5, 50);
 
-    expect(result.subtotalUSD).toBe(1000);         // 10 * 100
-    expect(result.customsDutyUSD).toBe(50);        // 5% من 1000
-    expect(result.shippingFeeUSD).toBe(50);      // 50 ثابت
-    expect(result.totalCostUSD).toBe(1100);        // 1000 + 50 + 50
+    expect(result.subtotalUSD).toBe(1000);
+    expect(result.customsDutyUSD).toBe(50);
+    expect(result.shippingFeeUSD).toBe(50);
+    expect(result.totalCostUSD).toBe(1100);
   });
 
   it("should transition order state successfully", async () => {
-    const orderId = "order-123";
-    const targetState = OrderWorkflowState.IN_PRODUCTION;
-    const userId = "user-admin-1";
+    findUniqueMock.mockResolvedValueOnce({
+      id: "order-123",
+      status: "CREATED",
+      items: [{ productId: "p-1", quantity: 10, unitPriceUSD: 50 }]
+    });
+    updateMock.mockResolvedValueOnce({
+      id: "order-123",
+      status: "IN_PRODUCTION",
+      updatedAt: new Date()
+    });
 
     const updatedOrder = await EOSWorkflowEngine.transitionOrderState(
-      orderId, 
-      targetState, 
-      userId
+      "order-123", 
+      OrderWorkflowState.IN_PRODUCTION, 
+      "user-admin-1"
     );
 
     expect(updatedOrder).toBeDefined();
-    expect(updatedOrder.id).toBe(orderId);
+    expect(updatedOrder.id).toBe("order-123");
   });
 
   it("should throw error if order does not exist during transition", async () => {
-    // تعديل مؤقت للـ mock لإرجاع null
-    const { PrismaClient } = await import("@prisma/client");
-    const prismaMock = new (PrismaClient as any)();
-    prismaMock.salesOrder.findUnique.mockResolvedValueOnce(null);
+    // إرجاع null خصيصاً لهذا الاختبار لضمان رمي الخطأ
+    findUniqueMock.mockResolvedValueOnce(null);
 
     await expect(
       EOSWorkflowEngine.transitionOrderState("non-existent", OrderWorkflowState.DELIVERED, "user-1")
