@@ -653,3 +653,46 @@ java.lang.IllegalStateException: Failed to get server version
 2026-07-25 16:53:42,541 - GreenyLifeBrain - INFO - 
 📍 [Phase 3] Performance Testing
 2026-07-25 16:53:42,544 - GreenyLifeBrain - INFO - ⚡  [Performance Agent] تشغيل اختبارات الأداء...
+2026-07-25 16:53:54,952 - GreenyLifeBrain - INFO -    تعذر تحليل نتائج k6: 'value'
+2026-07-25 16:53:54,969 - GreenyLifeBrain - INFO - 
+📍 [Phase 4] Documentation Generation
+2026-07-25 16:53:54,984 - GreenyLifeBrain - INFO - 📝  [Documentation Agent] توليد التوثيق...
+2026-07-25 16:53:55,196 - GreenyLifeBrain - INFO -    - استخدام Claude لتوليد توثيق متقدم...
+2026-07-25 16:53:55,322 - GreenyLifeBrain - ERROR - 💥 خطأ في تنفيذ الأمر: [WinError 2] The system cannot find the file specified
+2026-07-25 16:53:55,339 - GreenyLifeBrain - INFO -    ✅ تم حفظ التوثيق في: C:\Users\Ghanam\OneDrive\projects\Greeny-Life\docs\auto-generated\INDEX.md
+2026-07-25 16:53:55,352 - GreenyLifeBrain - INFO - 
+📍 [Phase 5] Intelligence Tools Discovery & Merge
+2026-07-25 16:53:55,361 - GreenyLifeBrain - INFO - 🧩  [Intelligence Integrator] اكتشاف ودمج الأدوات القديمة...
+2026-07-25 16:53:55,522 - GreenyLifeBrain - INFO -    ✅ تم دمج 0 أداة.
+2026-07-25 16:53:55,542 - GreenyLifeBrain - INFO - 
+📍 [Phase 6] Global Project Mapping
+2026-07-25 16:53:55,562 - GreenyLifeBrain - INFO - 🌐  [Global Mapper] مسح شامل للمشروع...
+2026-07-25 16:54:20,622 - GreenyLifeBrain - INFO -    ✅ تم مسح 362 ملفاً. حجم إجمالي: 112.12 MB
+2026-07-25 16:54:20,643 - GreenyLifeBrain - INFO - 
+📍 [Phase 7] Deep Context Analysis
+2026-07-25 16:54:20,666 - GreenyLifeBrain - INFO - 🔬  [Deep Analyzer] تحليل عميق للملفات (الأكثر أهمية)...
+2026-07-25 16:54:29,569 - GreenyLifeBrain - INFO -    ✅ تم تحليل 200 ملفاً بعمق.
+2026-07-25 16:54:29,666 - GreenyLifeBrain - INFO - 
+📍 [Phase 8] Advanced Analysis (Brand, UI, Inventory)
+2026-07-25 16:54:29,706 - GreenyLifeBrain - INFO - 🎨 [Visual Brand] Analyzing visual brand...
+2026-07-25 16:54:43,217 - GreenyLifeBrain - INFO - 📦  [Packaging Policy] استخلاص سياسات التعبئة والعرض...
+2026-07-25 16:54:51,860 - GreenyLifeBrain - INFO -    ✅ تم استخلاص 16 قاعدة تعبئة و 26 قاعدة عرض.
+2026-07-25 16:54:51,862 - GreenyLifeBrain - INFO - 🖥️ [UI Analyzer] Analyzing UI structure...
+2026-07-25 16:55:07,601 - GreenyLifeBrain - INFO - 📊  [Inventory Analyzer] تحليل المخزون والمنتجات...
+2026-07-25 16:55:14,857 - GreenyLifeBrain - INFO -    ✅ تم تحليل المخزون: 14 منتج.
+2026-07-25 16:55:14,863 - GreenyLifeBrain - INFO - 
+📍 [Phase 9] Duplication Reason Analysis
+2026-07-25 16:55:14,902 - GreenyLifeBrain - INFO - 
+📍 [Phase 10] Auto-Remediation
+2026-07-25 16:55:14,904 - GreenyLifeBrain - WARNING - ⚠️ Issues detected, initiating automated remediation...
+2026-07-25 16:55:14,907 - GreenyLifeBrain - INFO - 📊  [SonarQube] بدء تحليل جودة الكود...
+2026-07-25 16:55:18,488 - GreenyLifeBrain - INFO -    فشل فحص SonarQube: 16:55:18.150 ERROR Error during SonarScanner CLI execution
+java.lang.IllegalStateException: Failed to get server version
+	at org.sonarsource.scanner.lib.ScannerEngineBootstrapper.getServerVersion(Scan
+2026-07-25 16:55:18,490 - GreenyLifeBrain - INFO - 
+📍 [Phase 12] Comprehensive Report Generation
+2026-07-25 16:55:18,536 - GreenyLifeBrain - INFO - 
+================================================================================
+2026-07-25 16:55:18,543 - GreenyLifeBrain - INFO - 🏁 Brain cycle completed. Final Status: FAILED
+2026-07-25 16:55:18,560 - GreenyLifeBrain - INFO - 📄 Comprehensive Report: C:\Users\Ghanam\OneDrive\projects\Greeny-Life\intelligence\comprehensive_report.md
+2026-07-25 16:55:18,577 - GreenyLifeBrain - INFO - ================================================================================
