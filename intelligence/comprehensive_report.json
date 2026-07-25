@@ -1,0 +1,2181 @@
+{
+  "timestamp": "2026-07-25T16:45:46.236537",
+  "project_path": "C:\\Users\\Ghanam\\OneDrive\\projects\\Greeny-Life",
+  "status": "RUNNING",
+  "scans": {
+    "archguard": {
+      "tool": "ArchGuard",
+      "passed": false,
+      "score": 100.0,
+      "findings": [],
+      "summary": "Scan failed: Unknown execution error.",
+      "raw_output": ""
+    },
+    "govern_kit": {
+      "tool": "govern-kit",
+      "passed": false,
+      "score": 50,
+      "findings": [],
+      "summary": "فشل اجتياز بوابة الثقة. يُطلب مراجعة بشرية.",
+      "raw_output": "{\n  \"overall\": {\n    \"claims\": 0,\n    \"high_confidence_claims\": 0,\n    \"high_confidence_hit_rate\": 0.0,\n    \"min_hit_rate\": 0.95,\n    \"verdict\": \"GATE\",\n    \"reason\": \"no claims in scope\",\n    \"require_measured\": true,\n    \"window\": 10,\n    \"change_class\": null,\n    \"exclude_goodhart\": true\n  },\n  \"per_class\": {}\n}\n"
+    },
+    "ouro_loop": {
+      "tool": "Ouro Loop",
+      "passed": false,
+      "score": 100.0,
+      "findings": [],
+      "summary": "ouro-loop غير مثبت.",
+      "raw_output": ""
+    },
+    "sonarqube": {
+      "tool": "SonarQube",
+      "passed": false,
+      "score": 100.0,
+      "findings": [],
+      "summary": "فشل فحص SonarQube: 16:45:52.368 ERROR Error during SonarScanner CLI execution\njava.lang.IllegalStateException: Failed to get server version\n\tat org.sonarsource.scanner.lib.ScannerEngineBootstrapper.getServerVersion(Scan",
+      "raw_output": "16:45:51.528 INFO  Scanner configuration file: C:\\ProgramData\\chocolatey\\lib\\sonarqube-scanner.portable\\tools\\sonar-scanner-6.2.1.4610-windows-x64\\bin\\..\\conf\\sonar-scanner.properties\n16:45:51.532 INFO  Project root configuration file: NONE\n16:45:51.552 INFO  SonarScanner CLI 6.2.1.4610\n16:45:51.556 INFO  Java 17.0.12 Eclipse Adoptium (64-bit)\n16:45:51.556 INFO  Windows 11 10.0 amd64\n16:45:51.579 INFO  User cache: C:\\Users\\Ghanam\\.sonar\\cache\n16:45:52.367 INFO  EXECUTION FAILURE\n16:45:52.368 INFO  Total time: 0.843s\n16:45:52.368 ERROR Error during SonarScanner CLI execution\njava.lang.IllegalStateException: Failed to get server version\n\tat org.sonarsource.scanner.lib.ScannerEngineBootstrapper.getServerVersion(ScannerEngineBootstrapper.java:194)\n\tat org.sonarsource.scanner.lib.ScannerEngineBootstrapper.bootstrap(ScannerEngineBootstrapper.java:117)\n\tat org.sonarsource.scanner.cli.Main.analyze(Main.java:75)\n\tat org.sonarsource.scanner.cli.Main.main(Main.java:63)\n\tSuppressed: java.lang.IllegalStateException: Call to URL [http://localhost:9000/api/v2/analysis/version] failed\n\t\tat org.sonarsource.scanner.lib.internal.http.ScannerHttpClient.callUrl(ScannerHttpClient.java:159)\n\t\tat org.sonarsource.scanner.lib.internal.http.ScannerHttpClient.callApi(ScannerHttpClient.java:126)\n\t\tat org.sonarsource.scanner.lib.internal.http.ScannerHttpClient.callRestApi(ScannerHttpClient.java:104)\n\t\tat org.sonarsource.scanner.lib.ScannerEngineBootstrapper.getServerVersion(ScannerEngineBootstrapper.java:189)\n\t\t... 3 common frames omitted\n\tCaused by: java.net.ConnectException: Failed to connect to localhost/[0:0:0:0:0:0:0:1]:9000\n\t\tat okhttp3.internal.connection.RealConnection.connectSocket(RealConnection.kt:297)\n\t\tat okhttp3.internal.connection.RealConnection.connect(RealConnection.kt:207)\n\t\tat okhttp3.internal.connection.ExchangeFinder.findConnection(ExchangeFinder.kt:226)\n\t\tat okhttp3.internal.connection.ExchangeFinder.findHealthyConnection(ExchangeFinder.kt:106)\n\t\tat okhttp3.internal.connection.ExchangeFinder.find(ExchangeFinder.kt:74)\n\t\tat okhttp3.internal.connection.RealCall.initExchange$okhttp(RealCall.kt:255)\n\t\tat okhttp3.internal.connection.ConnectInterceptor.intercept(ConnectInterceptor.kt:32)\n\t\tat okhttp3.internal.http.RealInterceptorChain.proceed(RealInterceptorChain.kt:109)\n\t\tat okhttp3.internal.cache.CacheInterceptor.intercept(CacheInterceptor.kt:95)\n\t\tat okhttp3.internal.http.RealInterceptorChain.proceed(RealInterceptorChain.kt:109)\n\t\tat okhttp3.internal.http.BridgeInterceptor.intercept(BridgeInterceptor.kt:83)\n\t\tat okhttp3.internal.http.RealInterceptorChain.proceed(RealInterceptorChain.kt:109)\n\t\tat okhttp3.internal.http.RetryAndFollowUpInterceptor.intercept(RetryAndFollowUpInterceptor.kt:76)\n\t\tat okhttp3.internal.http.RealInterceptorChain.proceed(RealInterceptorChain.kt:109)\n\t\tat okhttp3.logging.HttpLoggingInterceptor.intercept(HttpLoggingInterceptor.kt:221)\n\t\tat okhttp3.internal.http.RealInterceptorChain.proceed(RealInterceptorChain.kt:109)\n\t\tat okhttp3.internal.connection.RealCall.getResponseWithInterceptorChain$okhttp(RealCall.kt:201)\n\t\tat okhttp3.internal.connection.RealCall.execute(RealCall.kt:154)\n\t\tat org.sonarsource.scanner.lib.internal.http.ScannerHttpClient.callUrl(ScannerHttpClient.java:157)\n\t\t... 6 common frames omitted\n\t\tSuppressed: java.net.ConnectException: Failed to connect to localhost/127.0.0.1:9000\n\t\t\t... 25 common frames omitted\n\t\tCaused by: java.net.ConnectException: Connection refused: getsockopt\n\t\t\tat java.base/sun.nio.ch.Net.pollConnect(Native Method)\n\t\t\tat java.base/sun.nio.ch.Net.pollConnectNow(Unknown Source)\n\t\t\tat java.base/sun.nio.ch.NioSocketImpl.timedFinishConnect(Unknown Source)\n\t\t\tat java.base/sun.nio.ch.NioSocketImpl.connect(Unknown Source)\n\t\t\tat java.base/java.net.SocksSocketImpl.connect(Unknown Source)\n\t\t\tat java.base/java.net.Socket.connect(Unknown Source)\n\t\t\tat okhttp3.internal.platform.Platform.connectSocket(Platform.kt:128)\n\t\t\tat okhttp3.internal.connection.RealConnection.connectSocket(RealConnection.kt:295)\n\t\t\t... 24 common frames omitted\n\tCaused by: java.net.ConnectException: Connection refused: getsockopt\n\t\tat java.base/sun.nio.ch.Net.pollConnect(Native Method)\n\t\tat java.base/sun.nio.ch.Net.pollConnectNow(Unknown Source)\n\t\tat java.base/sun.nio.ch.NioSocketImpl.timedFinishConnect(Unknown Source)\n\t\tat java.base/sun.nio.ch.NioSocketImpl.connect(Unknown Source)\n\t\tat java.base/java.net.SocksSocketImpl.connect(Unknown Source)\n\t\tat java.base/java.net.Socket.connect(Unknown Source)\n\t\tat okhttp3.internal.platform.Platform.connectSocket(Platform.kt:128)\n\t\tat okhttp3.internal.connection.RealConnection.connectSocket(RealConnection.kt:295)\n\t\t... 24 common frames omitted\nCaused by: java.lang.IllegalStateException: Call to URL [http://localhost:9000/api/server/version] failed\n\tat org.sonarsource.scanner.lib.internal.http.ScannerHttpClient.callUrl(ScannerHttpClient.java:159)\n\tat org.sonarsource.scanner.lib.internal.http.ScannerHttpClient.callApi(ScannerHttpClient.java:126)\n\tat org.sonarsource.scanner.lib.internal.http.ScannerHttpClient.callWebApi(ScannerHttpClient.java:112)\n\tat org.sonarsource.scanner.lib.ScannerEngineBootstrapper.getServerVersion(ScannerEngineBootstrapper.java:192)\n\t... 3 common frames omitted\nCaused by: java.net.ConnectException: Failed to connect to localhost/[0:0:0:0:0:0:0:1]:9000\n\tat okhttp3.internal.connection.RealConnection.connectSocket(RealConnection.kt:297)\n\tat okhttp3.internal.connection.RealConnection.connect(RealConnection.kt:207)\n\tat okhttp3.internal.connection.ExchangeFinder.findConnection(ExchangeFinder.kt:226)\n\tat okhttp3.internal.connection.ExchangeFinder.findHealthyConnection(ExchangeFinder.kt:106)\n\tat okhttp3.internal.connection.ExchangeFinder.find(ExchangeFinder.kt:74)\n\tat okhttp3.internal.connection.RealCall.initExchange$okhttp(RealCall.kt:255)\n\tat okhttp3.internal.connection.ConnectInterceptor.intercept(ConnectInterceptor.kt:32)\n\tat okhttp3.internal.http.RealInterceptorChain.proceed(RealInterceptorChain.kt:109)\n\tat okhttp3.internal.cache.CacheInterceptor.intercept(CacheInterceptor.kt:95)\n\tat okhttp3.internal.http.RealInterceptorChain.proceed(RealInterceptorChain.kt:109)\n\tat okhttp3.internal.http.BridgeInterceptor.intercept(BridgeInterceptor.kt:83)\n\tat okhttp3.internal.http.RealInterceptorChain.proceed(RealInterceptorChain.kt:109)\n\tat okhttp3.internal.http.RetryAndFollowUpInterceptor.intercept(RetryAndFollowUpInterceptor.kt:76)\n\tat okhttp3.internal.http.RealInterceptorChain.proceed(RealInterceptorChain.kt:109)\n\tat okhttp3.logging.HttpLoggingInterceptor.intercept(HttpLoggingInterceptor.kt:221)\n\tat okhttp3.internal.http.RealInterceptorChain.proceed(RealInterceptorChain.kt:109)\n\tat okhttp3.internal.connection.RealCall.getResponseWithInterceptorChain$okhttp(RealCall.kt:201)\n\tat okhttp3.internal.connection.RealCall.execute(RealCall.kt:154)\n\tat org.sonarsource.scanner.lib.internal.http.ScannerHttpClient.callUrl(ScannerHttpClient.java:157)\n\t... 6 common frames omitted\n\tSuppressed: java.net.ConnectException: Failed to connect to localhost/127.0.0.1:9000\n\t\t... 25 common frames omitted\n\tCaused by: java.net.ConnectException: Connection refused: getsockopt\n\t\tat java.base/sun.nio.ch.Net.pollConnect(Native Method)\n\t\tat java.base/sun.nio.ch.Net.pollConnectNow(Unknown Source)\n\t\tat java.base/sun.nio.ch.NioSocketImpl.timedFinishConnect(Unknown Source)\n\t\tat java.base/sun.nio.ch.NioSocketImpl.connect(Unknown Source)\n\t\tat java.base/java.net.SocksSocketImpl.connect(Unknown Source)\n\t\tat java.base/java.net.Socket.connect(Unknown Source)\n\t\tat okhttp3.internal.platform.Platform.connectSocket(Platform.kt:128)\n\t\tat okhttp3.internal.connection.RealConnection.connectSocket(RealConnection.kt:295)\n\t\t... 24 common frames omitted\nCaused by: java.net.ConnectException: Connection refused: getsockopt\n\tat java.base/sun.nio.ch.Net.pollConnect(Native Method)\n\tat java.base/sun.nio.ch.Net.pollConnectNow(Unknown Source)\n\tat java.base/sun.nio.ch.NioSocketImpl.timedFinishConnect(Unknown Source)\n\tat java.base/sun.nio.ch.NioSocketImpl.connect(Unknown Source)\n\tat java.base/java.net.SocksSocketImpl.connect(Unknown Source)\n\tat java.base/java.net.Socket.connect(Unknown Source)\n\tat okhttp3.internal.platform.Platform.connectSocket(Platform.kt:128)\n\tat okhttp3.internal.connection.RealConnection.connectSocket(RealConnection.kt:295)\n\t... 24 common frames omitted\n16:45:52.372 ERROR \n16:45:52.372 ERROR Re-run SonarScanner CLI using the -X switch to enable full debug logging.\n"
+    },
+    "security": {
+      "tool": "SecurityAgent",
+      "passed": true,
+      "score": 100,
+      "findings": [],
+      "summary": "Bandit: ✅ لا توجد ثغرات أمنية.",
+      "raw_output": "{\n  \"errors\": [],\n  \"generated_at\": \"2026-07-25T14:45:53Z\",\n  \"metrics\": {\n    \"_totals\": {\n      \"CONFIDENCE.HIGH\": 0,\n      \"CONFIDENCE.LOW\": 0,\n      \"CONFIDENCE.MEDIUM\": 0,\n      \"CONFIDENCE.UNDEFINED\": 0,\n      \"SEVERITY.HIGH\": 0,\n      \"SEVERITY.LOW\": 0,\n      \"SEVERITY.MEDIUM\": 0,\n      \"SEVERITY.UNDEFINED\": 0,\n      \"loc\": 0,\n      \"nosec\": 0,\n      \"skipped_tests\": 0\n    },\n    \"src\\\\administration\\\\__init__.py\": {\n      \"CONFIDENCE.HIGH\": 0,\n      \"CONFIDENCE.LOW\": 0,\n      \"CONFIDENCE.MEDIUM\": 0,\n      \"CONFIDENCE.UNDEFINED\": 0,\n      \"SEVERITY.HIGH\": 0,\n      \"SEVERITY.LOW\": 0,\n      \"SEVERITY.MEDIUM\": 0,\n      \"SEVERITY.UNDEFINED\": 0,\n      \"loc\": 0,\n      \"nosec\": 0,\n      \"skipped_tests\": 0\n    },\n    \"src\\\\analytics\\\\__init__.py\": {\n      \"CONFIDENCE.HIGH\": 0,\n      \"CONFIDENCE.LOW\": 0,\n      \"CONFIDENCE.MEDIUM\": 0,\n      \"CONFIDENCE.UNDEFINED\": 0,\n      \"SEVERITY.HIGH\": 0,\n      \"SEVERITY.LOW\": 0,\n      \"SEVERITY.MEDIUM\": 0,\n      \"SEVERITY.UNDEFINED\": 0,\n      \"loc\": 0,\n      \"nosec\": 0,\n      \"skipped_tests\": 0\n    },\n    \"src\\\\compliance\\\\__init__.py\": {\n      \"CONFIDENCE.HIGH\": 0,\n      \"CONFIDENCE.LOW\": 0,\n      \"CONFIDENCE.MEDIUM\": 0,\n      \"CONFIDENCE.UNDEFINED\": 0,\n      \"SEVERITY.HIGH\": 0,\n      \"SEVERITY.LOW\": 0,\n      \"SEVERITY.MEDIUM\": 0,\n      \"SEVERITY.UNDEFINED\": 0,\n      \"loc\": 0,\n      \"nosec\": 0,\n      \"skipped_tests\": 0\n    },\n    \"src\\\\crm\\\\__init__.py\": {\n      \"CONFIDENCE.HIGH\": 0,\n      \"CONFIDENCE.LOW\": 0,\n      \"CONFIDENCE.MEDIUM\": 0,\n      \"CONFIDENCE.UNDEFINED\": 0,\n      \"SEVERITY.HIGH\": 0,\n      \"SEVERITY.LOW\": 0,\n      \"SEVERITY.MEDIUM\": 0,\n      \"SEVERITY.UNDEFINED\": 0,\n      \"loc\": 0,\n      \"nosec\": 0,\n      \"skipped_tests\": 0\n    },\n    \"src\\\\finance\\\\__init__.py\": {\n      \"CONFIDENCE.HIGH\": 0,\n      \"CONFIDENCE.LOW\": 0,\n      \"CONFIDENCE.MEDIUM\": 0,\n      \"CONFIDENCE.UNDEFINED\": 0,\n      \"SEVERITY.HIGH\": 0,\n      \"SEVERITY.LOW\": 0,\n      \"SEVERITY.MEDIUM\": 0,\n      \"SEVERITY.UNDEFINED\": 0,\n      \"loc\": 0,\n      \"nosec\": 0,\n      \"skipped_tests\": 0\n    },\n    \"src\\\\gl_dos\\\\__init__.py\": {\n      \"CONFIDENCE.HIGH\": 0,\n      \"CONFIDENCE.LOW\": 0,\n      \"CONFIDENCE.MEDIUM\": 0,\n      \"CONFIDENCE.UNDEFINED\": 0,\n      \"SEVERITY.HIGH\": 0,\n      \"SEVERITY.LOW\": 0,\n      \"SEVERITY.MEDIUM\": 0,\n      \"SEVERITY.UNDEFINED\": 0,\n      \"loc\": 0,\n      \"nosec\": 0,\n      \"skipped_tests\": 0\n    },\n    \"src\\\\logistics\\\\__init__.py\": {\n      \"CONFIDENCE.HIGH\": 0,\n      \"CONFIDENCE.LOW\": 0,\n      \"CONFIDENCE.MEDIUM\": 0,\n      \"CONFIDENCE.UNDEFINED\": 0,\n      \"SEVERITY.HIGH\": 0,\n      \"SEVERITY.LOW\": 0,\n      \"SEVERITY.MEDIUM\": 0,\n      \"SEVERITY.UNDEFINED\": 0,\n      \"loc\": 0,\n      \"nosec\": 0,\n      \"skipped_tests\": 0\n    },\n    \"src\\\\master_data\\\\__init__.py\": {\n      \"CONFIDENCE.HIGH\": 0,\n      \"CONFIDENCE.LOW\": 0,\n      \"CONFIDENCE.MEDIUM\": 0,\n      \"CONFIDENCE.UNDEFINED\": 0,\n      \"SEVERITY.HIGH\": 0,\n      \"SEVERITY.LOW\": 0,\n      \"SEVERITY.MEDIUM\": 0,\n      \"SEVERITY.UNDEFINED\": 0,\n      \"loc\": 0,\n      \"nosec\": 0,\n      \"skipped_tests\": 0\n    },\n    \"src\\\\operations\\\\__init__.py\": {\n      \"CONFIDENCE.HIGH\": 0,\n      \"CONFIDENCE.LOW\": 0,\n      \"CONFIDENCE.MEDIUM\": 0,\n      \"CONFIDENCE.UNDEFINED\": 0,\n      \"SEVERITY.HIGH\": 0,\n      \"SEVERITY.LOW\": 0,\n      \"SEVERITY.MEDIUM\": 0,\n      \"SEVERITY.UNDEFINED\": 0,\n      \"loc\": 0,\n      \"nosec\": 0,\n      \"skipped_tests\": 0\n    }\n  },\n  \"results\": []\n}"
+    },
+    "performance": {
+      "tool": "PerformanceAgent",
+      "passed": true,
+      "score": 100,
+      "findings": [],
+      "summary": "تعذر تحليل نتائج k6: 'value'",
+      "raw_output": "\n         /\\      Grafana   /â€¾â€¾/  \n    /\\  /  \\     |\\  __   /  /   \n   /  \\/    \\    | |/ /  /   â€¾â€¾\\ \n  /          \\   |   (  |  (â€¾)  |\n / __________ \\  |_|\\_\\  \\_____/ \n\n\n     execution: local\n        script: C:\\Users\\Ghanam\\OneDrive\\projects\\Greeny-Life\\tests\\performance\\smoke_test.js\n        output: json (C:\\Users\\Ghanam\\OneDrive\\projects\\Greeny-Life\\tests\\performance\\results.json)\n\n     scenarios: (100.00%) 1 scenario, 10 max VUs, 40s max duration (incl. graceful stop):\n              * default: 10 looping VUs for 10s (gracefulStop: 30s)\n\n\nrunning (01.0s), 10/10 VUs, 0 complete and 0 interrupted iterations\ndefault   [  10% ] 10 VUs  01.0s/10s\n\nrunning (02.0s), 10/10 VUs, 10 complete and 0 interrupted iterations\ndefault   [  20% ] 10 VUs  02.0s/10s\n\nrunning (03.0s), 10/10 VUs, 20 complete and 0 interrupted iterations\ndefault   [  30% ] 10 VUs  03.0s/10s\n\nrunning (04.0s), 10/10 VUs, 30 complete and 0 interrupted iterations\ndefault   [  40% ] 10 VUs  04.0s/10s\n\nrunning (05.0s), 10/10 VUs, 40 complete and 0 interrupted iterations\ndefault   [  50% ] 10 VUs  05.0s/10s\n\nrunning (06.0s), 10/10 VUs, 50 complete and 0 interrupted iterations\ndefault   [  60% ] 10 VUs  06.0s/10s\n\nrunning (07.0s), 10/10 VUs, 60 complete and 0 interrupted iterations\ndefault   [  70% ] 10 VUs  07.0s/10s\n\nrunning (08.0s), 10/10 VUs, 70 complete and 0 interrupted iterations\ndefault   [  80% ] 10 VUs  08.0s/10s\n\nrunning (09.0s), 10/10 VUs, 80 complete and 0 interrupted iterations\ndefault   [  90% ] 10 VUs  09.0s/10s\n\nrunning (10.0s), 10/10 VUs, 90 complete and 0 interrupted iterations\ndefault   [ 100% ] 10 VUs  10.0s/10s\n\n\n  â–ˆ THRESHOLDS \n\n    http_req_duration\n    âœ“ 'p(95)<500' p(95)=0s\n\n    http_req_failed\n    âœ— 'rate<0.05' rate=100.00%\n\n\n  â–ˆ TOTAL RESULTS \n\n    checks_total.......: 100     9.811281/s\n    checks_succeeded...: 0.00%   0 out of 100\n    checks_failed......: 100.00% 100 out of 100\n\n    âœ— status is 200\n      â†³  0% â€” âœ“ 0 / âœ— 100\n\n    HTTP\n    http_req_duration....: avg=0s    min=0s med=0s    max=0s    p(90)=0s    p(95)=0s   \n    http_req_failed......: 100.00% 100 out of 100\n    http_reqs............: 100     9.811281/s\n\n    EXECUTION\n    iteration_duration...: avg=1.01s min=1s med=1.01s max=1.04s p(90)=1.03s p(95)=1.04s\n    iterations...........: 100     9.811281/s\n    vus..................: 10      min=10         max=10\n    vus_max..............: 10      min=10         max=10\n\n    NETWORK\n    data_received........: 0 B     0 B/s\n    data_sent............: 0 B     0 B/s\n\n\n\n\nrunning (10.2s), 00/10 VUs, 100 complete and 0 interrupted iterations\ndefault âœ“ [ 100% ] 10 VUs  10s\ntime=\"2026-07-25T16:46:12+02:00\" level=warning msg=\"Request Failed\" error=\"Get \\\"http://localhost:3000/health\\\": dial tcp 127.0.0.1:3000: connectex: No connection could be made because the target machine actively refused it.\"\ntime=\"2026-07-25T16:46:12+02:00\" level=warning msg=\"Request Failed\" error=\"Get \\\"http://localhost:3000/health\\\": dial tcp 127.0.0.1:3000: connectex: No connection could be made because the target machine actively refused it.\"\ntime=\"2026-07-25T16:46:12+02:00\" level=warning msg=\"Request Failed\" error=\"Get \\\"http://localhost:3000/health\\\": dial tcp 127.0.0.1:3000: connectex: No connection could be made because the target machine actively refused it.\"\ntime=\"2026-07-25T16:46:12+02:00\" level=warning msg=\"Request Failed\" error=\"Get \\\"http://localhost:3000/health\\\": dial tcp 127.0.0.1:3000: connectex: No connection could be made because the target machine actively refused it.\"\ntime=\"2026-07-25T16:46:12+02:00\" level=warning msg=\"Request Failed\" error=\"Get \\\"http://localhost:3000/health\\\": dial tcp 127.0.0.1:3000: connectex: No connection could be made because the target machine actively refused it.\"\ntime=\"2026-07-25T16:46:12+02:00\" level=warning msg=\"Request Failed\" error=\"Get \\\"http://localhost:3000/health\\\": dial tcp 127.0.0.1:3000: connectex: No connection could be made because the target machine actively refused it.\"\ntime=\"2026-07-25T16:46:12+02:00\" level=warning msg=\"Request Failed\" error=\"Get \\\"http://localhost:3000/health\\\": dial tcp 127.0.0.1:3000: connectex: No connection could be made because the target machine actively refused it.\"\ntime=\"2026-07-25T16:46:12+02:00\" level=warning msg=\"Request Failed\" error=\"Get \\\"http://localhost:3000/health\\\": dial tcp 127.0.0.1:3000: connectex: No connection could be made because the target machine actively refused it.\"\ntime=\"2026-07-25T16:46:12+02:00\" level=warning msg=\"Request Failed\" error=\"Get \\\"http://localhost:3000/health\\\": dial tcp 127.0.0.1:3000: connectex: No connection could be made because the target machine actively refused it.\"\ntime=\"2026-07-25T16:46:12+02:00\" level=warning msg=\"Request Failed\" error=\"Get \\\"http://localhost:3000/health\\\": dial tcp 127.0.0.1:3000: connectex: No connection could be made because the target machine actively refused it.\"\ntime=\"2026-07-25T16:46:13+02:00\" level=warning msg=\"Request Failed\" error=\"Get \\\"http://localhost:3000/health\\\": dial tcp 127.0.0.1:3000: connectex: No connection could be made because the target machine actively refused it.\"\ntime=\"2026-07-25T16:46:13+02:00\" level=warning msg=\"Request Failed\" error=\"Get \\\"http://localhost:3000/health\\\": dial tcp 127.0.0.1:3000: connectex: No connection could be made because the target machine actively refused it.\"\ntime=\"2026-07-25T16:46:13+02:00\" level=warning msg=\"Request Failed\" error=\"Get \\\"http://localhost:3000/health\\\": dial tcp 127.0.0.1:3000: connectex: No connection could be made because the target machine actively refused it.\"\ntime=\"2026-07-25T16:46:13+02:00\" level=warning msg=\"Request Failed\" error=\"Get \\\"http://localhost:3000/health\\\": dial tcp 127.0.0.1:3000: connectex: No connection could be made because the target machine actively refused it.\"\ntime=\"2026-07-25T16:46:13+02:00\" level=warning msg=\"Request Failed\" error=\"Get \\\"http://localhost:3000/health\\\": dial tcp 127.0.0.1:3000: connectex: No connection could be made because the target machine actively refused it.\"\ntime=\"2026-07-25T16:46:13+02:00\" level=warning msg=\"Request Failed\" error=\"Get \\\"http://localhost:3000/health\\\": dial tcp 127.0.0.1:3000: connectex: No connection could be made because the target machine actively refused it.\"\ntime=\"2026-07-25T16:46:13+02:00\" level=warning msg=\"Request Failed\" error=\"Get \\\"http://localhost:3000/health\\\": dial tcp 127.0.0.1:3000: connectex: No connection could be made because the target machine actively refused it.\"\ntime=\"2026-07-25T16:46:13+02:00\" level=warning msg=\"Request Failed\" error=\"Get \\\"http://localhost:3000/health\\\": dial tcp 127.0.0.1:3000: connectex: No connection could be made because the target machine actively refused it.\"\ntime=\"2026-07-25T16:46:13+02:00\" level=warning msg=\"Request Failed\" error=\"Get \\\"http://localhost:3000/health\\\": dial tcp 127.0.0.1:3000: connectex: No connection could be made because the target machine actively refused it.\"\ntime=\"2026-07-25T16:46:13+02:00\" level=warning msg=\"Request Failed\" error=\"Get \\\"http://localhost:3000/health\\\": dial tcp 127.0.0.1:3000: connectex: No connection could be made because the target machine actively refused it.\"\ntime=\"2026-07-25T16:46:14+02:00\" level=warning msg=\"Request Failed\" error=\"Get \\\"http://localhost:3000/health\\\": dial tcp 127.0.0.1:3000: connectex: No connection could be made because the target machine actively refused it.\"\ntime=\"2026-07-25T16:46:14+02:00\" level=warning msg=\"Request Failed\" error=\"Get \\\"http://localhost:3000/health\\\": dial tcp 127.0.0.1:3000: connectex: No connection could be made because the target machine actively refused it.\"\ntime=\"2026-07-25T16:46:14+02:00\" level=warning msg=\"Request Failed\" error=\"Get \\\"http://localhost:3000/health\\\": dial tcp 127.0.0.1:3000: connectex: No connection could be made because the target machine actively refused it.\"\ntime=\"2026-07-25T16:46:14+02:00\" level=warning msg=\"Request Failed\" error=\"Get \\\"http://localhost:3000/health\\\": dial tcp 127.0.0.1:3000: connectex: No connection could be made because the target machine actively refused it.\"\ntime=\"2026-07-25T16:46:14+02:00\" level=warning msg=\"Request Failed\" error=\"Get \\\"http://localhost:3000/health\\\": dial tcp 127.0.0.1:3000: connectex: No connection could be made because the target machine actively refused it.\"\ntime=\"2026-07-25T16:46:14+02:00\" level=warning msg=\"Request Failed\" error=\"Get \\\"http://localhost:3000/health\\\": dial tcp 127.0.0.1:3000: connectex: No connection could be made because the target machine actively refused it.\"\ntime=\"2026-07-25T16:46:14+02:00\" level=warning msg=\"Request Failed\" error=\"Get \\\"http://localhost:3000/health\\\": dial tcp 127.0.0.1:3000: connectex: No connection could be made because the target machine actively refused it.\"\ntime=\"2026-07-25T16:46:14+02:00\" level=warning msg=\"Request Failed\" error=\"Get \\\"http://localhost:3000/health\\\": dial tcp 127.0.0.1:3000: connectex: No connection could be made because the target machine actively refused it.\"\ntime=\"2026-07-25T16:46:14+02:00\" level=warning msg=\"Request Failed\" error=\"Get \\\"http://localhost:3000/health\\\": dial tcp 127.0.0.1:3000: connectex: No connection could be made because the target machine actively refused it.\"\ntime=\"2026-07-25T16:46:14+02:00\" level=warning msg=\"Request Failed\" error=\"Get \\\"http://localhost:3000/health\\\": dial tcp 127.0.0.1:3000: connectex: No connection could be made because the target machine actively refused it.\"\ntime=\"2026-07-25T16:46:15+02:00\" level=warning msg=\"Request Failed\" error=\"Get \\\"http://localhost:3000/health\\\": dial tcp 127.0.0.1:3000: connectex: No connection could be made because the target machine actively refused it.\"\ntime=\"2026-07-25T16:46:15+02:00\" level=warning msg=\"Request Failed\" error=\"Get \\\"http://localhost:3000/health\\\": dial tcp 127.0.0.1:3000: connectex: No connection could be made because the target machine actively refused it.\"\ntime=\"2026-07-25T16:46:15+02:00\" level=warning msg=\"Request Failed\" error=\"Get \\\"http://localhost:3000/health\\\": dial tcp 127.0.0.1:3000: connectex: No connection could be made because the target machine actively refused it.\"\ntime=\"2026-07-25T16:46:15+02:00\" level=warning msg=\"Request Failed\" error=\"Get \\\"http://localhost:3000/health\\\": dial tcp 127.0.0.1:3000: connectex: No connection could be made because the target machine actively refused it.\"\ntime=\"2026-07-25T16:46:15+02:00\" level=warning msg=\"Request Failed\" error=\"Get \\\"http://localhost:3000/health\\\": dial tcp 127.0.0.1:3000: connectex: No connection could be made because the target machine actively refused it.\"\ntime=\"2026-07-25T16:46:15+02:00\" level=warning msg=\"Request Failed\" error=\"Get \\\"http://localhost:3000/health\\\": dial tcp 127.0.0.1:3000: connectex: No connection could be made because the target machine actively refused it.\"\ntime=\"2026-07-25T16:46:15+02:00\" level=warning msg=\"Request Failed\" error=\"Get \\\"http://localhost:3000/health\\\": dial tcp 127.0.0.1:3000: connectex: No connection could be made because the target machine actively refused it.\"\ntime=\"2026-07-25T16:46:15+02:00\" level=warning msg=\"Request Failed\" error=\"Get \\\"http://localhost:3000/health\\\": dial tcp 127.0.0.1:3000: connectex: No connection could be made because the target machine actively refused it.\"\ntime=\"2026-07-25T16:46:15+02:00\" level=warning msg=\"Request Failed\" error=\"Get \\\"http://localhost:3000/health\\\": dial tcp 127.0.0.1:3000: connectex: No connection could be made because the target machine actively refused it.\"\ntime=\"2026-07-25T16:46:15+02:00\" level=warning msg=\"Request Failed\" error=\"Get \\\"http://localhost:3000/health\\\": dial tcp 127.0.0.1:3000: connectex: No connection could be made because the target machine actively refused it.\"\ntime=\"2026-07-25T16:46:16+02:00\" level=warning msg=\"Request Failed\" error=\"Get \\\"http://localhost:3000/health\\\": dial tcp 127.0.0.1:3000: connectex: No connection could be made because the target machine actively refused it.\"\ntime=\"2026-07-25T16:46:16+02:00\" level=warning msg=\"Request Failed\" error=\"Get \\\"http://localhost:3000/health\\\": dial tcp 127.0.0.1:3000: connectex: No connection could be made because the target machine actively refused it.\"\ntime=\"2026-07-25T16:46:16+02:00\" level=warning msg=\"Request Failed\" error=\"Get \\\"http://localhost:3000/health\\\": dial tcp 127.0.0.1:3000: connectex: No connection could be made because the target machine actively refused it.\"\ntime=\"2026-07-25T16:46:16+02:00\" level=warning msg=\"Request Failed\" error=\"Get \\\"http://localhost:3000/health\\\": dial tcp 127.0.0.1:3000: connectex: No connection could be made because the target machine actively refused it.\"\ntime=\"2026-07-25T16:46:16+02:00\" level=warning msg=\"Request Failed\" error=\"Get \\\"http://localhost:3000/health\\\": dial tcp 127.0.0.1:3000: connectex: No connection could be made because the target machine actively refused it.\"\ntime=\"2026-07-25T16:46:16+02:00\" level=warning msg=\"Request Failed\" error=\"Get \\\"http://localhost:3000/health\\\": dial tcp 127.0.0.1:3000: connectex: No connection could be made because the target machine actively refused it.\"\ntime=\"2026-07-25T16:46:16+02:00\" level=warning msg=\"Request Failed\" error=\"Get \\\"http://localhost:3000/health\\\": dial tcp 127.0.0.1:3000: connectex: No connection could be made because the target machine actively refused it.\"\ntime=\"2026-07-25T16:46:16+02:00\" level=warning msg=\"Request Failed\" error=\"Get \\\"http://localhost:3000/health\\\": dial tcp 127.0.0.1:3000: connectex: No connection could be made because the target machine actively refused it.\"\ntime=\"2026-07-25T16:46:16+02:00\" level=warning msg=\"Request Failed\" error=\"Get \\\"http://localhost:3000/health\\\": dial tcp 127.0.0.1:3000: connectex: No connection could be made because the target machine actively refused it.\"\ntime=\"2026-07-25T16:46:16+02:00\" level=warning msg=\"Request Failed\" error=\"Get \\\"http://localhost:3000/health\\\": dial tcp 127.0.0.1:3000: connectex: No connection could be made because the target machine actively refused it.\"\ntime=\"2026-07-25T16:46:17+02:00\" level=warning msg=\"Request Failed\" error=\"Get \\\"http://localhost:3000/health\\\": dial tcp 127.0.0.1:3000: connectex: No connection could be made because the target machine actively refused it.\"\ntime=\"2026-07-25T16:46:17+02:00\" level=warning msg=\"Request Failed\" error=\"Get \\\"http://localhost:3000/health\\\": dial tcp 127.0.0.1:3000: connectex: No connection could be made because the target machine actively refused it.\"\ntime=\"2026-07-25T16:46:17+02:00\" level=warning msg=\"Request Failed\" error=\"Get \\\"http://localhost:3000/health\\\": dial tcp 127.0.0.1:3000: connectex: No connection could be made because the target machine actively refused it.\"\ntime=\"2026-07-25T16:46:17+02:00\" level=warning msg=\"Request Failed\" error=\"Get \\\"http://localhost:3000/health\\\": dial tcp 127.0.0.1:3000: connectex: No connection could be made because the target machine actively refused it.\"\ntime=\"2026-07-25T16:46:17+02:00\" level=warning msg=\"Request Failed\" error=\"Get \\\"http://localhost:3000/health\\\": dial tcp 127.0.0.1:3000: connectex: No connection could be made because the target machine actively refused it.\"\ntime=\"2026-07-25T16:46:17+02:00\" level=warning msg=\"Request Failed\" error=\"Get \\\"http://localhost:3000/health\\\": dial tcp 127.0.0.1:3000: connectex: No connection could be made because the target machine actively refused it.\"\ntime=\"2026-07-25T16:46:17+02:00\" level=warning msg=\"Request Failed\" error=\"Get \\\"http://localhost:3000/health\\\": dial tcp 127.0.0.1:3000: connectex: No connection could be made because the target machine actively refused it.\"\ntime=\"2026-07-25T16:46:17+02:00\" level=warning msg=\"Request Failed\" error=\"Get \\\"http://localhost:3000/health\\\": dial tcp 127.0.0.1:3000: connectex: No connection could be made because the target machine actively refused it.\"\ntime=\"2026-07-25T16:46:17+02:00\" level=warning msg=\"Request Failed\" error=\"Get \\\"http://localhost:3000/health\\\": dial tcp 127.0.0.1:3000: connectex: No connection could be made because the target machine actively refused it.\"\ntime=\"2026-07-25T16:46:17+02:00\" level=warning msg=\"Request Failed\" error=\"Get \\\"http://localhost:3000/health\\\": dial tcp 127.0.0.1:3000: connectex: No connection could be made because the target machine actively refused it.\"\ntime=\"2026-07-25T16:46:18+02:00\" level=warning msg=\"Request Failed\" error=\"Get \\\"http://localhost:3000/health\\\": dial tcp 127.0.0.1:3000: connectex: No connection could be made because the target machine actively refused it.\"\ntime=\"2026-07-25T16:46:18+02:00\" level=warning msg=\"Request Failed\" error=\"Get \\\"http://localhost:3000/health\\\": dial tcp 127.0.0.1:3000: connectex: No connection could be made because the target machine actively refused it.\"\ntime=\"2026-07-25T16:46:18+02:00\" level=warning msg=\"Request Failed\" error=\"Get \\\"http://localhost:3000/health\\\": dial tcp 127.0.0.1:3000: connectex: No connection could be made because the target machine actively refused it.\"\ntime=\"2026-07-25T16:46:18+02:00\" level=warning msg=\"Request Failed\" error=\"Get \\\"http://localhost:3000/health\\\": dial tcp 127.0.0.1:3000: connectex: No connection could be made because the target machine actively refused it.\"\ntime=\"2026-07-25T16:46:18+02:00\" level=warning msg=\"Request Failed\" error=\"Get \\\"http://localhost:3000/health\\\": dial tcp 127.0.0.1:3000: connectex: No connection could be made because the target machine actively refused it.\"\ntime=\"2026-07-25T16:46:18+02:00\" level=warning msg=\"Request Failed\" error=\"Get \\\"http://localhost:3000/health\\\": dial tcp 127.0.0.1:3000: connectex: No connection could be made because the target machine actively refused it.\"\ntime=\"2026-07-25T16:46:18+02:00\" level=warning msg=\"Request Failed\" error=\"Get \\\"http://localhost:3000/health\\\": dial tcp 127.0.0.1:3000: connectex: No connection could be made because the target machine actively refused it.\"\ntime=\"2026-07-25T16:46:18+02:00\" level=warning msg=\"Request Failed\" error=\"Get \\\"http://localhost:3000/health\\\": dial tcp 127.0.0.1:3000: connectex: No connection could be made because the target machine actively refused it.\"\ntime=\"2026-07-25T16:46:18+02:00\" level=warning msg=\"Request Failed\" error=\"Get \\\"http://localhost:3000/health\\\": dial tcp 127.0.0.1:3000: connectex: No connection could be made because the target machine actively refused it.\"\ntime=\"2026-07-25T16:46:18+02:00\" level=warning msg=\"Request Failed\" error=\"Get \\\"http://localhost:3000/health\\\": dial tcp 127.0.0.1:3000: connectex: No connection could be made because the target machine actively refused it.\"\ntime=\"2026-07-25T16:46:19+02:00\" level=warning msg=\"Request Failed\" error=\"Get \\\"http://localhost:3000/health\\\": dial tcp 127.0.0.1:3000: connectex: No connection could be made because the target machine actively refused it.\"\ntime=\"2026-07-25T16:46:19+02:00\" level=warning msg=\"Request Failed\" error=\"Get \\\"http://localhost:3000/health\\\": dial tcp 127.0.0.1:3000: connectex: No connection could be made because the target machine actively refused it.\"\ntime=\"2026-07-25T16:46:19+02:00\" level=warning msg=\"Request Failed\" error=\"Get \\\"http://localhost:3000/health\\\": dial tcp 127.0.0.1:3000: connectex: No connection could be made because the target machine actively refused it.\"\ntime=\"2026-07-25T16:46:19+02:00\" level=warning msg=\"Request Failed\" error=\"Get \\\"http://localhost:3000/health\\\": dial tcp 127.0.0.1:3000: connectex: No connection could be made because the target machine actively refused it.\"\ntime=\"2026-07-25T16:46:19+02:00\" level=warning msg=\"Request Failed\" error=\"Get \\\"http://localhost:3000/health\\\": dial tcp 127.0.0.1:3000: connectex: No connection could be made because the target machine actively refused it.\"\ntime=\"2026-07-25T16:46:19+02:00\" level=warning msg=\"Request Failed\" error=\"Get \\\"http://localhost:3000/health\\\": dial tcp 127.0.0.1:3000: connectex: No connection could be made because the target machine actively refused it.\"\ntime=\"2026-07-25T16:46:19+02:00\" level=warning msg=\"Request Failed\" error=\"Get \\\"http://localhost:3000/health\\\": dial tcp 127.0.0.1:3000: connectex: No connection could be made because the target machine actively refused it.\"\ntime=\"2026-07-25T16:46:19+02:00\" level=warning msg=\"Request Failed\" error=\"Get \\\"http://localhost:3000/health\\\": dial tcp 127.0.0.1:3000: connectex: No connection could be made because the target machine actively refused it.\"\ntime=\"2026-07-25T16:46:19+02:00\" level=warning msg=\"Request Failed\" error=\"Get \\\"http://localhost:3000/health\\\": dial tcp 127.0.0.1:3000: connectex: No connection could be made because the target machine actively refused it.\"\ntime=\"2026-07-25T16:46:19+02:00\" level=warning msg=\"Request Failed\" error=\"Get \\\"http://localhost:3000/health\\\": dial tcp 127.0.0.1:3000: connectex: No connection could be made because the target machine actively refused it.\"\ntime=\"2026-07-25T16:46:20+02:00\" level=warning msg=\"Request Failed\" error=\"Get \\\"http://localhost:3000/health\\\": dial tcp 127.0.0.1:3000: connectex: No connection could be made because the target machine actively refused it.\"\ntime=\"2026-07-25T16:46:20+02:00\" level=warning msg=\"Request Failed\" error=\"Get \\\"http://localhost:3000/health\\\": dial tcp 127.0.0.1:3000: connectex: No connection could be made because the target machine actively refused it.\"\ntime=\"2026-07-25T16:46:20+02:00\" level=warning msg=\"Request Failed\" error=\"Get \\\"http://localhost:3000/health\\\": dial tcp 127.0.0.1:3000: connectex: No connection could be made because the target machine actively refused it.\"\ntime=\"2026-07-25T16:46:20+02:00\" level=warning msg=\"Request Failed\" error=\"Get \\\"http://localhost:3000/health\\\": dial tcp 127.0.0.1:3000: connectex: No connection could be made because the target machine actively refused it.\"\ntime=\"2026-07-25T16:46:20+02:00\" level=warning msg=\"Request Failed\" error=\"Get \\\"http://localhost:3000/health\\\": dial tcp 127.0.0.1:3000: connectex: No connection could be made because the target machine actively refused it.\"\ntime=\"2026-07-25T16:46:20+02:00\" level=warning msg=\"Request Failed\" error=\"Get \\\"http://localhost:3000/health\\\": dial tcp 127.0.0.1:3000: connectex: No connection could be made because the target machine actively refused it.\"\ntime=\"2026-07-25T16:46:20+02:00\" level=warning msg=\"Request Failed\" error=\"Get \\\"http://localhost:3000/health\\\": dial tcp 127.0.0.1:3000: connectex: No connection could be made because the target machine actively refused it.\"\ntime=\"2026-07-25T16:46:20+02:00\" level=warning msg=\"Request Failed\" error=\"Get \\\"http://localhost:3000/health\\\": dial tcp 127.0.0.1:3000: connectex: No connection could be made because the target machine actively refused it.\"\ntime=\"2026-07-25T16:46:20+02:00\" level=warning msg=\"Request Failed\" error=\"Get \\\"http://localhost:3000/health\\\": dial tcp 127.0.0.1:3000: connectex: No connection could be made because the target machine actively refused it.\"\ntime=\"2026-07-25T16:46:20+02:00\" level=warning msg=\"Request Failed\" error=\"Get \\\"http://localhost:3000/health\\\": dial tcp 127.0.0.1:3000: connectex: No connection could be made because the target machine actively refused it.\"\ntime=\"2026-07-25T16:46:21+02:00\" level=warning msg=\"Request Failed\" error=\"Get \\\"http://localhost:3000/health\\\": dial tcp 127.0.0.1:3000: connectex: No connection could be made because the target machine actively refused it.\"\ntime=\"2026-07-25T16:46:21+02:00\" level=warning msg=\"Request Failed\" error=\"Get \\\"http://localhost:3000/health\\\": dial tcp 127.0.0.1:3000: connectex: No connection could be made because the target machine actively refused it.\"\ntime=\"2026-07-25T16:46:21+02:00\" level=warning msg=\"Request Failed\" error=\"Get \\\"http://localhost:3000/health\\\": dial tcp 127.0.0.1:3000: connectex: No connection could be made because the target machine actively refused it.\"\ntime=\"2026-07-25T16:46:21+02:00\" level=warning msg=\"Request Failed\" error=\"Get \\\"http://localhost:3000/health\\\": dial tcp 127.0.0.1:3000: connectex: No connection could be made because the target machine actively refused it.\"\ntime=\"2026-07-25T16:46:21+02:00\" level=warning msg=\"Request Failed\" error=\"Get \\\"http://localhost:3000/health\\\": dial tcp 127.0.0.1:3000: connectex: No connection could be made because the target machine actively refused it.\"\ntime=\"2026-07-25T16:46:21+02:00\" level=warning msg=\"Request Failed\" error=\"Get \\\"http://localhost:3000/health\\\": dial tcp 127.0.0.1:3000: connectex: No connection could be made because the target machine actively refused it.\"\ntime=\"2026-07-25T16:46:21+02:00\" level=warning msg=\"Request Failed\" error=\"Get \\\"http://localhost:3000/health\\\": dial tcp 127.0.0.1:3000: connectex: No connection could be made because the target machine actively refused it.\"\ntime=\"2026-07-25T16:46:21+02:00\" level=warning msg=\"Request Failed\" error=\"Get \\\"http://localhost:3000/health\\\": dial tcp 127.0.0.1:3000: connectex: No connection could be made because the target machine actively refused it.\"\ntime=\"2026-07-25T16:46:21+02:00\" level=warning msg=\"Request Failed\" error=\"Get \\\"http://localhost:3000/health\\\": dial tcp 127.0.0.1:3000: connectex: No connection could be made because the target machine actively refused it.\"\ntime=\"2026-07-25T16:46:21+02:00\" level=warning msg=\"Request Failed\" error=\"Get \\\"http://localhost:3000/health\\\": dial tcp 127.0.0.1:3000: connectex: No connection could be made because the target machine actively refused it.\"\ntime=\"2026-07-25T16:46:22+02:00\" level=error msg=\"thresholds on metrics 'http_req_failed' have been crossed\"\n"
+    },
+    "sonarqube_after": {
+      "tool": "SonarQube",
+      "passed": false,
+      "score": 100.0,
+      "findings": [],
+      "summary": "فشل فحص SonarQube: 16:47:34.808 ERROR Error during SonarScanner CLI execution\njava.lang.IllegalStateException: Failed to get server version\n\tat org.sonarsource.scanner.lib.ScannerEngineBootstrapper.getServerVersion(Scan",
+      "raw_output": "16:47:33.807 INFO  Scanner configuration file: C:\\ProgramData\\chocolatey\\lib\\sonarqube-scanner.portable\\tools\\sonar-scanner-6.2.1.4610-windows-x64\\bin\\..\\conf\\sonar-scanner.properties\n16:47:33.813 INFO  Project root configuration file: NONE\n16:47:33.830 INFO  SonarScanner CLI 6.2.1.4610\n16:47:33.834 INFO  Java 17.0.12 Eclipse Adoptium (64-bit)\n16:47:33.834 INFO  Windows 11 10.0 amd64\n16:47:33.857 INFO  User cache: C:\\Users\\Ghanam\\.sonar\\cache\n16:47:34.807 INFO  EXECUTION FAILURE\n16:47:34.808 INFO  Total time: 1.006s\n16:47:34.808 ERROR Error during SonarScanner CLI execution\njava.lang.IllegalStateException: Failed to get server version\n\tat org.sonarsource.scanner.lib.ScannerEngineBootstrapper.getServerVersion(ScannerEngineBootstrapper.java:194)\n\tat org.sonarsource.scanner.lib.ScannerEngineBootstrapper.bootstrap(ScannerEngineBootstrapper.java:117)\n\tat org.sonarsource.scanner.cli.Main.analyze(Main.java:75)\n\tat org.sonarsource.scanner.cli.Main.main(Main.java:63)\n\tSuppressed: java.lang.IllegalStateException: Call to URL [http://localhost:9000/api/v2/analysis/version] failed\n\t\tat org.sonarsource.scanner.lib.internal.http.ScannerHttpClient.callUrl(ScannerHttpClient.java:159)\n\t\tat org.sonarsource.scanner.lib.internal.http.ScannerHttpClient.callApi(ScannerHttpClient.java:126)\n\t\tat org.sonarsource.scanner.lib.internal.http.ScannerHttpClient.callRestApi(ScannerHttpClient.java:104)\n\t\tat org.sonarsource.scanner.lib.ScannerEngineBootstrapper.getServerVersion(ScannerEngineBootstrapper.java:189)\n\t\t... 3 common frames omitted\n\tCaused by: java.net.ConnectException: Failed to connect to localhost/[0:0:0:0:0:0:0:1]:9000\n\t\tat okhttp3.internal.connection.RealConnection.connectSocket(RealConnection.kt:297)\n\t\tat okhttp3.internal.connection.RealConnection.connect(RealConnection.kt:207)\n\t\tat okhttp3.internal.connection.ExchangeFinder.findConnection(ExchangeFinder.kt:226)\n\t\tat okhttp3.internal.connection.ExchangeFinder.findHealthyConnection(ExchangeFinder.kt:106)\n\t\tat okhttp3.internal.connection.ExchangeFinder.find(ExchangeFinder.kt:74)\n\t\tat okhttp3.internal.connection.RealCall.initExchange$okhttp(RealCall.kt:255)\n\t\tat okhttp3.internal.connection.ConnectInterceptor.intercept(ConnectInterceptor.kt:32)\n\t\tat okhttp3.internal.http.RealInterceptorChain.proceed(RealInterceptorChain.kt:109)\n\t\tat okhttp3.internal.cache.CacheInterceptor.intercept(CacheInterceptor.kt:95)\n\t\tat okhttp3.internal.http.RealInterceptorChain.proceed(RealInterceptorChain.kt:109)\n\t\tat okhttp3.internal.http.BridgeInterceptor.intercept(BridgeInterceptor.kt:83)\n\t\tat okhttp3.internal.http.RealInterceptorChain.proceed(RealInterceptorChain.kt:109)\n\t\tat okhttp3.internal.http.RetryAndFollowUpInterceptor.intercept(RetryAndFollowUpInterceptor.kt:76)\n\t\tat okhttp3.internal.http.RealInterceptorChain.proceed(RealInterceptorChain.kt:109)\n\t\tat okhttp3.logging.HttpLoggingInterceptor.intercept(HttpLoggingInterceptor.kt:221)\n\t\tat okhttp3.internal.http.RealInterceptorChain.proceed(RealInterceptorChain.kt:109)\n\t\tat okhttp3.internal.connection.RealCall.getResponseWithInterceptorChain$okhttp(RealCall.kt:201)\n\t\tat okhttp3.internal.connection.RealCall.execute(RealCall.kt:154)\n\t\tat org.sonarsource.scanner.lib.internal.http.ScannerHttpClient.callUrl(ScannerHttpClient.java:157)\n\t\t... 6 common frames omitted\n\t\tSuppressed: java.net.ConnectException: Failed to connect to localhost/127.0.0.1:9000\n\t\t\t... 25 common frames omitted\n\t\tCaused by: java.net.ConnectException: Connection refused: getsockopt\n\t\t\tat java.base/sun.nio.ch.Net.pollConnect(Native Method)\n\t\t\tat java.base/sun.nio.ch.Net.pollConnectNow(Unknown Source)\n\t\t\tat java.base/sun.nio.ch.NioSocketImpl.timedFinishConnect(Unknown Source)\n\t\t\tat java.base/sun.nio.ch.NioSocketImpl.connect(Unknown Source)\n\t\t\tat java.base/java.net.SocksSocketImpl.connect(Unknown Source)\n\t\t\tat java.base/java.net.Socket.connect(Unknown Source)\n\t\t\tat okhttp3.internal.platform.Platform.connectSocket(Platform.kt:128)\n\t\t\tat okhttp3.internal.connection.RealConnection.connectSocket(RealConnection.kt:295)\n\t\t\t... 24 common frames omitted\n\tCaused by: java.net.ConnectException: Connection refused: getsockopt\n\t\tat java.base/sun.nio.ch.Net.pollConnect(Native Method)\n\t\tat java.base/sun.nio.ch.Net.pollConnectNow(Unknown Source)\n\t\tat java.base/sun.nio.ch.NioSocketImpl.timedFinishConnect(Unknown Source)\n\t\tat java.base/sun.nio.ch.NioSocketImpl.connect(Unknown Source)\n\t\tat java.base/java.net.SocksSocketImpl.connect(Unknown Source)\n\t\tat java.base/java.net.Socket.connect(Unknown Source)\n\t\tat okhttp3.internal.platform.Platform.connectSocket(Platform.kt:128)\n\t\tat okhttp3.internal.connection.RealConnection.connectSocket(RealConnection.kt:295)\n\t\t... 24 common frames omitted\nCaused by: java.lang.IllegalStateException: Call to URL [http://localhost:9000/api/server/version] failed\n\tat org.sonarsource.scanner.lib.internal.http.ScannerHttpClient.callUrl(ScannerHttpClient.java:159)\n\tat org.sonarsource.scanner.lib.internal.http.ScannerHttpClient.callApi(ScannerHttpClient.java:126)\n\tat org.sonarsource.scanner.lib.internal.http.ScannerHttpClient.callWebApi(ScannerHttpClient.java:112)\n\tat org.sonarsource.scanner.lib.ScannerEngineBootstrapper.getServerVersion(ScannerEngineBootstrapper.java:192)\n\t... 3 common frames omitted\nCaused by: java.net.ConnectException: Failed to connect to localhost/[0:0:0:0:0:0:0:1]:9000\n\tat okhttp3.internal.connection.RealConnection.connectSocket(RealConnection.kt:297)\n\tat okhttp3.internal.connection.RealConnection.connect(RealConnection.kt:207)\n\tat okhttp3.internal.connection.ExchangeFinder.findConnection(ExchangeFinder.kt:226)\n\tat okhttp3.internal.connection.ExchangeFinder.findHealthyConnection(ExchangeFinder.kt:106)\n\tat okhttp3.internal.connection.ExchangeFinder.find(ExchangeFinder.kt:74)\n\tat okhttp3.internal.connection.RealCall.initExchange$okhttp(RealCall.kt:255)\n\tat okhttp3.internal.connection.ConnectInterceptor.intercept(ConnectInterceptor.kt:32)\n\tat okhttp3.internal.http.RealInterceptorChain.proceed(RealInterceptorChain.kt:109)\n\tat okhttp3.internal.cache.CacheInterceptor.intercept(CacheInterceptor.kt:95)\n\tat okhttp3.internal.http.RealInterceptorChain.proceed(RealInterceptorChain.kt:109)\n\tat okhttp3.internal.http.BridgeInterceptor.intercept(BridgeInterceptor.kt:83)\n\tat okhttp3.internal.http.RealInterceptorChain.proceed(RealInterceptorChain.kt:109)\n\tat okhttp3.internal.http.RetryAndFollowUpInterceptor.intercept(RetryAndFollowUpInterceptor.kt:76)\n\tat okhttp3.internal.http.RealInterceptorChain.proceed(RealInterceptorChain.kt:109)\n\tat okhttp3.logging.HttpLoggingInterceptor.intercept(HttpLoggingInterceptor.kt:221)\n\tat okhttp3.internal.http.RealInterceptorChain.proceed(RealInterceptorChain.kt:109)\n\tat okhttp3.internal.connection.RealCall.getResponseWithInterceptorChain$okhttp(RealCall.kt:201)\n\tat okhttp3.internal.connection.RealCall.execute(RealCall.kt:154)\n\tat org.sonarsource.scanner.lib.internal.http.ScannerHttpClient.callUrl(ScannerHttpClient.java:157)\n\t... 6 common frames omitted\n\tSuppressed: java.net.ConnectException: Failed to connect to localhost/127.0.0.1:9000\n\t\t... 25 common frames omitted\n\tCaused by: java.net.ConnectException: Connection refused: getsockopt\n\t\tat java.base/sun.nio.ch.Net.pollConnect(Native Method)\n\t\tat java.base/sun.nio.ch.Net.pollConnectNow(Unknown Source)\n\t\tat java.base/sun.nio.ch.NioSocketImpl.timedFinishConnect(Unknown Source)\n\t\tat java.base/sun.nio.ch.NioSocketImpl.connect(Unknown Source)\n\t\tat java.base/java.net.SocksSocketImpl.connect(Unknown Source)\n\t\tat java.base/java.net.Socket.connect(Unknown Source)\n\t\tat okhttp3.internal.platform.Platform.connectSocket(Platform.kt:128)\n\t\tat okhttp3.internal.connection.RealConnection.connectSocket(RealConnection.kt:295)\n\t\t... 24 common frames omitted\nCaused by: java.net.ConnectException: Connection refused: getsockopt\n\tat java.base/sun.nio.ch.Net.pollConnect(Native Method)\n\tat java.base/sun.nio.ch.Net.pollConnectNow(Unknown Source)\n\tat java.base/sun.nio.ch.NioSocketImpl.timedFinishConnect(Unknown Source)\n\tat java.base/sun.nio.ch.NioSocketImpl.connect(Unknown Source)\n\tat java.base/java.net.SocksSocketImpl.connect(Unknown Source)\n\tat java.base/java.net.Socket.connect(Unknown Source)\n\tat okhttp3.internal.platform.Platform.connectSocket(Platform.kt:128)\n\tat okhttp3.internal.connection.RealConnection.connectSocket(RealConnection.kt:295)\n\t... 24 common frames omitted\n16:47:34.811 ERROR \n16:47:34.811 ERROR Re-run SonarScanner CLI using the -X switch to enable full debug logging.\n"
+    }
+  },
+  "remediations": [
+    {
+      "tool": "DocumentationAgent",
+      "success": true,
+      "pr_url": null,
+      "commit_hash": null,
+      "message": "تم توليد التوثيق الهيكلي بنجاح (بدون AI)."
+    },
+    {
+      "tool": "AutoFix",
+      "success": true,
+      "pr_url": null,
+      "commit_hash": null,
+      "message": "Automated fixes applied successfully."
+    }
+  ],
+  "insights": [
+    {
+      "path": "DOC_INDEX.txt",
+      "extension": ".txt",
+      "size_kb": 0.0,
+      "last_modified": "2026-07-19T19:01:59.445159",
+      "content_type": "text",
+      "purpose": "غير محدد",
+      "key_entities": [],
+      "business_rules": [],
+      "related_modules": [],
+      "duplication_reason": "",
+      "recommendation": "ملف طبيعي، لا توجد توصيات خاصة.",
+      "raw_preview": "",
+      "business_value": {
+        "products": [],
+        "packaging_rules": [],
+        "export_regulations": [],
+        "api_endpoints": [],
+        "workflows": []
+      }
+    },
+    {
+      "path": "tests\\performance\\__init__.py",
+      "extension": ".py",
+      "size_kb": 0.0,
+      "last_modified": "2026-07-24T21:04:18.438244",
+      "content_type": "text",
+      "purpose": "غير محدد",
+      "key_entities": [],
+      "business_rules": [],
+      "related_modules": [],
+      "duplication_reason": "",
+      "recommendation": "ملف طبيعي، لا توجد توصيات خاصة.",
+      "raw_preview": "",
+      "business_value": {
+        "products": [],
+        "packaging_rules": [],
+        "export_regulations": [],
+        "api_endpoints": [],
+        "workflows": []
+      }
+    },
+    {
+      "path": "src\\administration\\__init__.py",
+      "extension": ".py",
+      "size_kb": 0.0,
+      "last_modified": "2026-07-24T21:04:18.435726",
+      "content_type": "text",
+      "purpose": "غير محدد",
+      "key_entities": [],
+      "business_rules": [],
+      "related_modules": [],
+      "duplication_reason": "",
+      "recommendation": "ملف طبيعي، لا توجد توصيات خاصة.",
+      "raw_preview": "",
+      "business_value": {
+        "products": [],
+        "packaging_rules": [],
+        "export_regulations": [],
+        "api_endpoints": [],
+        "workflows": []
+      }
+    },
+    {
+      "path": "src\\analytics\\__init__.py",
+      "extension": ".py",
+      "size_kb": 0.0,
+      "last_modified": "2026-07-24T21:04:18.434725",
+      "content_type": "text",
+      "purpose": "غير محدد",
+      "key_entities": [],
+      "business_rules": [],
+      "related_modules": [],
+      "duplication_reason": "",
+      "recommendation": "ملف طبيعي، لا توجد توصيات خاصة.",
+      "raw_preview": "",
+      "business_value": {
+        "products": [],
+        "packaging_rules": [],
+        "export_regulations": [],
+        "api_endpoints": [],
+        "workflows": []
+      }
+    },
+    {
+      "path": "src\\compliance\\__init__.py",
+      "extension": ".py",
+      "size_kb": 0.0,
+      "last_modified": "2026-07-24T21:04:18.432723",
+      "content_type": "text",
+      "purpose": "غير محدد",
+      "key_entities": [],
+      "business_rules": [],
+      "related_modules": [],
+      "duplication_reason": "",
+      "recommendation": "ملف طبيعي، لا توجد توصيات خاصة.",
+      "raw_preview": "",
+      "business_value": {
+        "products": [],
+        "packaging_rules": [],
+        "export_regulations": [],
+        "api_endpoints": [],
+        "workflows": []
+      }
+    },
+    {
+      "path": "src\\crm\\__init__.py",
+      "extension": ".py",
+      "size_kb": 0.0,
+      "last_modified": "2026-07-24T21:04:18.429224",
+      "content_type": "text",
+      "purpose": "غير محدد",
+      "key_entities": [],
+      "business_rules": [],
+      "related_modules": [],
+      "duplication_reason": "",
+      "recommendation": "ملف طبيعي، لا توجد توصيات خاصة.",
+      "raw_preview": "",
+      "business_value": {
+        "products": [],
+        "packaging_rules": [],
+        "export_regulations": [],
+        "api_endpoints": [],
+        "workflows": []
+      }
+    },
+    {
+      "path": "src\\finance\\__init__.py",
+      "extension": ".py",
+      "size_kb": 0.0,
+      "last_modified": "2026-07-24T21:04:18.433723",
+      "content_type": "text",
+      "purpose": "غير محدد",
+      "key_entities": [],
+      "business_rules": [],
+      "related_modules": [],
+      "duplication_reason": "",
+      "recommendation": "ملف طبيعي، لا توجد توصيات خاصة.",
+      "raw_preview": "",
+      "business_value": {
+        "products": [],
+        "packaging_rules": [],
+        "export_regulations": [],
+        "api_endpoints": [],
+        "workflows": []
+      }
+    },
+    {
+      "path": "src\\gl_dos\\__init__.py",
+      "extension": ".py",
+      "size_kb": 0.0,
+      "last_modified": "2026-07-24T21:04:18.426037",
+      "content_type": "text",
+      "purpose": "غير محدد",
+      "key_entities": [],
+      "business_rules": [],
+      "related_modules": [],
+      "duplication_reason": "",
+      "recommendation": "ملف طبيعي، لا توجد توصيات خاصة.",
+      "raw_preview": "",
+      "business_value": {
+        "products": [],
+        "packaging_rules": [],
+        "export_regulations": [],
+        "api_endpoints": [],
+        "workflows": []
+      }
+    },
+    {
+      "path": "src\\logistics\\__init__.py",
+      "extension": ".py",
+      "size_kb": 0.0,
+      "last_modified": "2026-07-24T21:04:18.430717",
+      "content_type": "text",
+      "purpose": "غير محدد",
+      "key_entities": [],
+      "business_rules": [],
+      "related_modules": [],
+      "duplication_reason": "",
+      "recommendation": "ملف طبيعي، لا توجد توصيات خاصة.",
+      "raw_preview": "",
+      "business_value": {
+        "products": [],
+        "packaging_rules": [],
+        "export_regulations": [],
+        "api_endpoints": [],
+        "workflows": []
+      }
+    },
+    {
+      "path": "src\\master_data\\__init__.py",
+      "extension": ".py",
+      "size_kb": 0.0,
+      "last_modified": "2026-07-24T21:04:18.424030",
+      "content_type": "text",
+      "purpose": "غير محدد",
+      "key_entities": [],
+      "business_rules": [],
+      "related_modules": [],
+      "duplication_reason": "",
+      "recommendation": "ملف طبيعي، لا توجد توصيات خاصة.",
+      "raw_preview": "",
+      "business_value": {
+        "products": [],
+        "packaging_rules": [],
+        "export_regulations": [],
+        "api_endpoints": [],
+        "workflows": []
+      }
+    },
+    {
+      "path": "src\\operations\\__init__.py",
+      "extension": ".py",
+      "size_kb": 0.0,
+      "last_modified": "2026-07-24T21:04:18.428227",
+      "content_type": "text",
+      "purpose": "غير محدد",
+      "key_entities": [],
+      "business_rules": [],
+      "related_modules": [],
+      "duplication_reason": "",
+      "recommendation": "ملف طبيعي، لا توجد توصيات خاصة.",
+      "raw_preview": "",
+      "business_value": {
+        "products": [],
+        "packaging_rules": [],
+        "export_regulations": [],
+        "api_endpoints": [],
+        "workflows": []
+      }
+    },
+    {
+      "path": "node_modules\\client-only\\index.js",
+      "extension": ".js",
+      "size_kb": 0.0,
+      "last_modified": "2026-07-16T18:53:30.432855",
+      "content_type": "source_code",
+      "purpose": "مكون أو منطق في Next.js",
+      "key_entities": [],
+      "business_rules": [],
+      "related_modules": [],
+      "duplication_reason": "",
+      "recommendation": "ملف طبيعي، لا توجد توصيات خاصة.",
+      "raw_preview": "",
+      "business_value": {
+        "products": [],
+        "packaging_rules": [],
+        "export_regulations": [],
+        "api_endpoints": [],
+        "workflows": []
+      }
+    },
+    {
+      "path": "node_modules\\next\\font\\google\\index.js",
+      "extension": ".js",
+      "size_kb": 0.0,
+      "last_modified": "2026-07-16T18:53:37.568660",
+      "content_type": "source_code",
+      "purpose": "مكون أو منطق في Next.js",
+      "key_entities": [],
+      "business_rules": [],
+      "related_modules": [],
+      "duplication_reason": "",
+      "recommendation": "ملف طبيعي، لا توجد توصيات خاصة.",
+      "raw_preview": "",
+      "business_value": {
+        "products": [],
+        "packaging_rules": [],
+        "export_regulations": [],
+        "api_endpoints": [],
+        "workflows": []
+      }
+    },
+    {
+      "path": "node_modules\\next\\font\\local\\index.js",
+      "extension": ".js",
+      "size_kb": 0.0,
+      "last_modified": "2026-07-16T18:53:37.568660",
+      "content_type": "source_code",
+      "purpose": "مكون أو منطق في Next.js",
+      "key_entities": [],
+      "business_rules": [],
+      "related_modules": [],
+      "duplication_reason": "",
+      "recommendation": "ملف طبيعي، لا توجد توصيات خاصة.",
+      "raw_preview": "",
+      "business_value": {
+        "products": [],
+        "packaging_rules": [],
+        "export_regulations": [],
+        "api_endpoints": [],
+        "workflows": []
+      }
+    },
+    {
+      "path": "node_modules\\next\\dist\\lib\\require-instrumentation-client.d.ts",
+      "extension": ".ts",
+      "size_kb": 0.0,
+      "last_modified": "2026-07-16T18:53:55.654747",
+      "content_type": "source_code",
+      "purpose": "مكون أو منطق في Next.js",
+      "key_entities": [],
+      "business_rules": [],
+      "related_modules": [],
+      "duplication_reason": "",
+      "recommendation": "ملف طبيعي، لا توجد توصيات خاصة.",
+      "raw_preview": "",
+      "business_value": {
+        "products": [],
+        "packaging_rules": [],
+        "export_regulations": [],
+        "api_endpoints": [],
+        "workflows": []
+      }
+    },
+    {
+      "path": "node_modules\\next\\dist\\lib\\setup-exception-listeners.d.ts",
+      "extension": ".ts",
+      "size_kb": 0.0,
+      "last_modified": "2026-07-16T18:53:55.919138",
+      "content_type": "source_code",
+      "purpose": "مكون أو منطق في Next.js",
+      "key_entities": [],
+      "business_rules": [],
+      "related_modules": [],
+      "duplication_reason": "",
+      "recommendation": "ملف طبيعي، لا توجد توصيات خاصة.",
+      "raw_preview": "",
+      "business_value": {
+        "products": [],
+        "packaging_rules": [],
+        "export_regulations": [],
+        "api_endpoints": [],
+        "workflows": []
+      }
+    },
+    {
+      "path": "node_modules\\next\\dist\\server\\node-environment-baseline.d.ts",
+      "extension": ".ts",
+      "size_kb": 0.0,
+      "last_modified": "2026-07-16T18:53:55.214673",
+      "content_type": "source_code",
+      "purpose": "مكون أو منطق في Next.js",
+      "key_entities": [],
+      "business_rules": [],
+      "related_modules": [],
+      "duplication_reason": "",
+      "recommendation": "ملف طبيعي، لا توجد توصيات خاصة.",
+      "raw_preview": "",
+      "business_value": {
+        "products": [],
+        "packaging_rules": [],
+        "export_regulations": [],
+        "api_endpoints": [],
+        "workflows": []
+      }
+    },
+    {
+      "path": "node_modules\\next\\dist\\server\\node-polyfill-crypto.d.ts",
+      "extension": ".ts",
+      "size_kb": 0.0,
+      "last_modified": "2026-07-16T18:53:55.224749",
+      "content_type": "source_code",
+      "purpose": "مكون أو منطق في Next.js",
+      "key_entities": [],
+      "business_rules": [],
+      "related_modules": [],
+      "duplication_reason": "",
+      "recommendation": "ملف طبيعي، لا توجد توصيات خاصة.",
+      "raw_preview": "",
+      "business_value": {
+        "products": [],
+        "packaging_rules": [],
+        "export_regulations": [],
+        "api_endpoints": [],
+        "workflows": []
+      }
+    },
+    {
+      "path": "node_modules\\next\\dist\\server\\route-modules\\pages\\vendored\\contexts\\app-router-context.d.ts",
+      "extension": ".ts",
+      "size_kb": 0.0,
+      "last_modified": "2026-07-16T18:53:52.849715",
+      "content_type": "source_code",
+      "purpose": "نقطة نهاية API (Route) في Next.js",
+      "key_entities": [],
+      "business_rules": [],
+      "related_modules": [],
+      "duplication_reason": "",
+      "recommendation": "ملف طبيعي، لا توجد توصيات خاصة.",
+      "raw_preview": "",
+      "business_value": {
+        "products": [],
+        "packaging_rules": [],
+        "export_regulations": [],
+        "api_endpoints": [],
+        "workflows": []
+      }
+    },
+    {
+      "path": "node_modules\\next\\dist\\server\\route-modules\\pages\\vendored\\contexts\\head-manager-context.d.ts",
+      "extension": ".ts",
+      "size_kb": 0.0,
+      "last_modified": "2026-07-16T18:53:54.125138",
+      "content_type": "source_code",
+      "purpose": "مكون أو منطق في Next.js",
+      "key_entities": [],
+      "business_rules": [],
+      "related_modules": [],
+      "duplication_reason": "",
+      "recommendation": "ملف طبيعي، لا توجد توصيات خاصة.",
+      "raw_preview": "",
+      "business_value": {
+        "products": [],
+        "packaging_rules": [],
+        "export_regulations": [],
+        "api_endpoints": [],
+        "workflows": []
+      }
+    },
+    {
+      "path": "node_modules\\next\\dist\\server\\route-modules\\pages\\vendored\\contexts\\hooks-client-context.d.ts",
+      "extension": ".ts",
+      "size_kb": 0.0,
+      "last_modified": "2026-07-16T18:53:54.148396",
+      "content_type": "source_code",
+      "purpose": "مكون أو منطق في Next.js",
+      "key_entities": [],
+      "business_rules": [],
+      "related_modules": [],
+      "duplication_reason": "",
+      "recommendation": "ملف طبيعي، لا توجد توصيات خاصة.",
+      "raw_preview": "",
+      "business_value": {
+        "products": [],
+        "packaging_rules": [],
+        "export_regulations": [],
+        "api_endpoints": [],
+        "workflows": []
+      }
+    },
+    {
+      "path": "node_modules\\next\\dist\\server\\route-modules\\pages\\vendored\\contexts\\html-context.d.ts",
+      "extension": ".ts",
+      "size_kb": 0.0,
+      "last_modified": "2026-07-16T18:53:54.199889",
+      "content_type": "source_code",
+      "purpose": "مكون أو منطق في Next.js",
+      "key_entities": [],
+      "business_rules": [],
+      "related_modules": [],
+      "duplication_reason": "",
+      "recommendation": "ملف طبيعي، لا توجد توصيات خاصة.",
+      "raw_preview": "",
+      "business_value": {
+        "products": [],
+        "packaging_rules": [],
+        "export_regulations": [],
+        "api_endpoints": [],
+        "workflows": []
+      }
+    },
+    {
+      "path": "node_modules\\next\\dist\\server\\route-modules\\pages\\vendored\\contexts\\image-config-context.d.ts",
+      "extension": ".ts",
+      "size_kb": 0.0,
+      "last_modified": "2026-07-16T18:53:54.225097",
+      "content_type": "source_code",
+      "purpose": "مكون أو منطق في Next.js",
+      "key_entities": [],
+      "business_rules": [],
+      "related_modules": [],
+      "duplication_reason": "",
+      "recommendation": "ملف طبيعي، لا توجد توصيات خاصة.",
+      "raw_preview": "",
+      "business_value": {
+        "products": [],
+        "packaging_rules": [],
+        "export_regulations": [],
+        "api_endpoints": [],
+        "workflows": []
+      }
+    },
+    {
+      "path": "node_modules\\next\\dist\\server\\route-modules\\pages\\vendored\\contexts\\loadable-context.d.ts",
+      "extension": ".ts",
+      "size_kb": 0.0,
+      "last_modified": "2026-07-16T18:53:54.670508",
+      "content_type": "source_code",
+      "purpose": "مكون أو منطق في Next.js",
+      "key_entities": [],
+      "business_rules": [],
+      "related_modules": [],
+      "duplication_reason": "",
+      "recommendation": "ملف طبيعي، لا توجد توصيات خاصة.",
+      "raw_preview": "",
+      "business_value": {
+        "products": [],
+        "packaging_rules": [],
+        "export_regulations": [],
+        "api_endpoints": [],
+        "workflows": []
+      }
+    },
+    {
+      "path": "node_modules\\next\\dist\\server\\route-modules\\pages\\vendored\\contexts\\loadable.d.ts",
+      "extension": ".ts",
+      "size_kb": 0.0,
+      "last_modified": "2026-07-16T18:53:54.675071",
+      "content_type": "source_code",
+      "purpose": "مكون أو منطق في Next.js",
+      "key_entities": [],
+      "business_rules": [],
+      "related_modules": [],
+      "duplication_reason": "",
+      "recommendation": "ملف طبيعي، لا توجد توصيات خاصة.",
+      "raw_preview": "",
+      "business_value": {
+        "products": [],
+        "packaging_rules": [],
+        "export_regulations": [],
+        "api_endpoints": [],
+        "workflows": []
+      }
+    },
+    {
+      "path": "node_modules\\next\\dist\\server\\route-modules\\pages\\vendored\\contexts\\router-context.d.ts",
+      "extension": ".ts",
+      "size_kb": 0.0,
+      "last_modified": "2026-07-16T18:53:55.759158",
+      "content_type": "source_code",
+      "purpose": "نقطة نهاية API (Route) في Next.js",
+      "key_entities": [],
+      "business_rules": [],
+      "related_modules": [],
+      "duplication_reason": "",
+      "recommendation": "ملف طبيعي، لا توجد توصيات خاصة.",
+      "raw_preview": "",
+      "business_value": {
+        "products": [],
+        "packaging_rules": [],
+        "export_regulations": [],
+        "api_endpoints": [],
+        "workflows": []
+      }
+    },
+    {
+      "path": "node_modules\\next\\dist\\server\\route-modules\\pages\\vendored\\contexts\\server-inserted-html.d.ts",
+      "extension": ".ts",
+      "size_kb": 0.0,
+      "last_modified": "2026-07-16T18:53:55.858119",
+      "content_type": "source_code",
+      "purpose": "مكون أو منطق في Next.js",
+      "key_entities": [],
+      "business_rules": [],
+      "related_modules": [],
+      "duplication_reason": "",
+      "recommendation": "ملف طبيعي، لا توجد توصيات خاصة.",
+      "raw_preview": "",
+      "business_value": {
+        "products": [],
+        "packaging_rules": [],
+        "export_regulations": [],
+        "api_endpoints": [],
+        "workflows": []
+      }
+    },
+    {
+      "path": "node_modules\\next\\dist\\server\\route-modules\\app-page\\vendored\\contexts\\app-router-context.d.ts",
+      "extension": ".ts",
+      "size_kb": 0.0,
+      "last_modified": "2026-07-16T18:53:52.849715",
+      "content_type": "source_code",
+      "purpose": "نقطة نهاية API (Route) في Next.js",
+      "key_entities": [],
+      "business_rules": [],
+      "related_modules": [],
+      "duplication_reason": "",
+      "recommendation": "ملف طبيعي، لا توجد توصيات خاصة.",
+      "raw_preview": "",
+      "business_value": {
+        "products": [],
+        "packaging_rules": [],
+        "export_regulations": [],
+        "api_endpoints": [],
+        "workflows": []
+      }
+    },
+    {
+      "path": "node_modules\\next\\dist\\server\\route-modules\\app-page\\vendored\\contexts\\head-manager-context.d.ts",
+      "extension": ".ts",
+      "size_kb": 0.0,
+      "last_modified": "2026-07-16T18:53:54.122463",
+      "content_type": "source_code",
+      "purpose": "مكون أو منطق في Next.js",
+      "key_entities": [],
+      "business_rules": [],
+      "related_modules": [],
+      "duplication_reason": "",
+      "recommendation": "ملف طبيعي، لا توجد توصيات خاصة.",
+      "raw_preview": "",
+      "business_value": {
+        "products": [],
+        "packaging_rules": [],
+        "export_regulations": [],
+        "api_endpoints": [],
+        "workflows": []
+      }
+    },
+    {
+      "path": "node_modules\\next\\dist\\server\\route-modules\\app-page\\vendored\\contexts\\hooks-client-context.d.ts",
+      "extension": ".ts",
+      "size_kb": 0.0,
+      "last_modified": "2026-07-16T18:53:54.148396",
+      "content_type": "source_code",
+      "purpose": "مكون أو منطق في Next.js",
+      "key_entities": [],
+      "business_rules": [],
+      "related_modules": [],
+      "duplication_reason": "",
+      "recommendation": "ملف طبيعي، لا توجد توصيات خاصة.",
+      "raw_preview": "",
+      "business_value": {
+        "products": [],
+        "packaging_rules": [],
+        "export_regulations": [],
+        "api_endpoints": [],
+        "workflows": []
+      }
+    },
+    {
+      "path": "node_modules\\next\\dist\\server\\route-modules\\app-page\\vendored\\contexts\\image-config-context.d.ts",
+      "extension": ".ts",
+      "size_kb": 0.0,
+      "last_modified": "2026-07-16T18:53:54.215608",
+      "content_type": "source_code",
+      "purpose": "مكون أو منطق في Next.js",
+      "key_entities": [],
+      "business_rules": [],
+      "related_modules": [],
+      "duplication_reason": "",
+      "recommendation": "ملف طبيعي، لا توجد توصيات خاصة.",
+      "raw_preview": "",
+      "business_value": {
+        "products": [],
+        "packaging_rules": [],
+        "export_regulations": [],
+        "api_endpoints": [],
+        "workflows": []
+      }
+    },
+    {
+      "path": "node_modules\\next\\dist\\server\\route-modules\\app-page\\vendored\\contexts\\router-context.d.ts",
+      "extension": ".ts",
+      "size_kb": 0.0,
+      "last_modified": "2026-07-16T18:53:55.759158",
+      "content_type": "source_code",
+      "purpose": "نقطة نهاية API (Route) في Next.js",
+      "key_entities": [],
+      "business_rules": [],
+      "related_modules": [],
+      "duplication_reason": "",
+      "recommendation": "ملف طبيعي، لا توجد توصيات خاصة.",
+      "raw_preview": "",
+      "business_value": {
+        "products": [],
+        "packaging_rules": [],
+        "export_regulations": [],
+        "api_endpoints": [],
+        "workflows": []
+      }
+    },
+    {
+      "path": "node_modules\\next\\dist\\server\\route-modules\\app-page\\vendored\\contexts\\server-inserted-html.d.ts",
+      "extension": ".ts",
+      "size_kb": 0.0,
+      "last_modified": "2026-07-16T18:53:55.858119",
+      "content_type": "source_code",
+      "purpose": "مكون أو منطق في Next.js",
+      "key_entities": [],
+      "business_rules": [],
+      "related_modules": [],
+      "duplication_reason": "",
+      "recommendation": "ملف طبيعي، لا توجد توصيات خاصة.",
+      "raw_preview": "",
+      "business_value": {
+        "products": [],
+        "packaging_rules": [],
+        "export_regulations": [],
+        "api_endpoints": [],
+        "workflows": []
+      }
+    },
+    {
+      "path": "node_modules\\next\\dist\\server\\route-modules\\app-page\\vendored\\rsc\\react-compiler-runtime.d.ts",
+      "extension": ".ts",
+      "size_kb": 0.0,
+      "last_modified": "2026-07-16T18:53:55.528188",
+      "content_type": "source_code",
+      "purpose": "مكون أو منطق في Next.js",
+      "key_entities": [],
+      "business_rules": [],
+      "related_modules": [],
+      "duplication_reason": "",
+      "recommendation": "ملف طبيعي، لا توجد توصيات خاصة.",
+      "raw_preview": "",
+      "business_value": {
+        "products": [],
+        "packaging_rules": [],
+        "export_regulations": [],
+        "api_endpoints": [],
+        "workflows": []
+      }
+    },
+    {
+      "path": "node_modules\\next\\dist\\server\\route-modules\\app-page\\vendored\\rsc\\react-dom.d.ts",
+      "extension": ".ts",
+      "size_kb": 0.0,
+      "last_modified": "2026-07-16T18:53:55.531191",
+      "content_type": "source_code",
+      "purpose": "مكون أو منطق في Next.js",
+      "key_entities": [],
+      "business_rules": [],
+      "related_modules": [],
+      "duplication_reason": "",
+      "recommendation": "ملف طبيعي، لا توجد توصيات خاصة.",
+      "raw_preview": "",
+      "business_value": {
+        "products": [],
+        "packaging_rules": [],
+        "export_regulations": [],
+        "api_endpoints": [],
+        "workflows": []
+      }
+    },
+    {
+      "path": "node_modules\\next\\dist\\server\\route-modules\\app-page\\vendored\\rsc\\react-jsx-dev-runtime.d.ts",
+      "extension": ".ts",
+      "size_kb": 0.0,
+      "last_modified": "2026-07-16T18:53:55.538754",
+      "content_type": "source_code",
+      "purpose": "مكون أو منطق في Next.js",
+      "key_entities": [],
+      "business_rules": [],
+      "related_modules": [],
+      "duplication_reason": "",
+      "recommendation": "ملف طبيعي، لا توجد توصيات خاصة.",
+      "raw_preview": "",
+      "business_value": {
+        "products": [],
+        "packaging_rules": [],
+        "export_regulations": [],
+        "api_endpoints": [],
+        "workflows": []
+      }
+    },
+    {
+      "path": "node_modules\\next\\dist\\server\\route-modules\\app-page\\vendored\\rsc\\react-jsx-runtime.d.ts",
+      "extension": ".ts",
+      "size_kb": 0.0,
+      "last_modified": "2026-07-16T18:53:55.540384",
+      "content_type": "source_code",
+      "purpose": "مكون أو منطق في Next.js",
+      "key_entities": [],
+      "business_rules": [],
+      "related_modules": [],
+      "duplication_reason": "",
+      "recommendation": "ملف طبيعي، لا توجد توصيات خاصة.",
+      "raw_preview": "",
+      "business_value": {
+        "products": [],
+        "packaging_rules": [],
+        "export_regulations": [],
+        "api_endpoints": [],
+        "workflows": []
+      }
+    },
+    {
+      "path": "node_modules\\next\\dist\\server\\route-modules\\app-page\\vendored\\rsc\\react-server-dom-turbopack-server.d.ts",
+      "extension": ".ts",
+      "size_kb": 0.0,
+      "last_modified": "2026-07-16T18:53:55.547221",
+      "content_type": "source_code",
+      "purpose": "مكون أو منطق في Next.js",
+      "key_entities": [],
+      "business_rules": [],
+      "related_modules": [],
+      "duplication_reason": "",
+      "recommendation": "ملف طبيعي، لا توجد توصيات خاصة.",
+      "raw_preview": "",
+      "business_value": {
+        "products": [],
+        "packaging_rules": [],
+        "export_regulations": [],
+        "api_endpoints": [],
+        "workflows": []
+      }
+    },
+    {
+      "path": "node_modules\\next\\dist\\server\\route-modules\\app-page\\vendored\\rsc\\react-server-dom-turbopack-static.d.ts",
+      "extension": ".ts",
+      "size_kb": 0.0,
+      "last_modified": "2026-07-16T18:53:55.556470",
+      "content_type": "source_code",
+      "purpose": "مكون أو منطق في Next.js",
+      "key_entities": [],
+      "business_rules": [],
+      "related_modules": [],
+      "duplication_reason": "",
+      "recommendation": "ملف طبيعي، لا توجد توصيات خاصة.",
+      "raw_preview": "",
+      "business_value": {
+        "products": [],
+        "packaging_rules": [],
+        "export_regulations": [],
+        "api_endpoints": [],
+        "workflows": []
+      }
+    },
+    {
+      "path": "node_modules\\next\\dist\\server\\route-modules\\app-page\\vendored\\rsc\\react-server-dom-webpack-server.d.ts",
+      "extension": ".ts",
+      "size_kb": 0.0,
+      "last_modified": "2026-07-16T18:53:55.557828",
+      "content_type": "source_code",
+      "purpose": "مكون أو منطق في Next.js",
+      "key_entities": [],
+      "business_rules": [],
+      "related_modules": [],
+      "duplication_reason": "",
+      "recommendation": "ملف طبيعي، لا توجد توصيات خاصة.",
+      "raw_preview": "",
+      "business_value": {
+        "products": [],
+        "packaging_rules": [],
+        "export_regulations": [],
+        "api_endpoints": [],
+        "workflows": []
+      }
+    },
+    {
+      "path": "node_modules\\next\\dist\\server\\route-modules\\app-page\\vendored\\rsc\\react-server-dom-webpack-static.d.ts",
+      "extension": ".ts",
+      "size_kb": 0.0,
+      "last_modified": "2026-07-16T18:53:55.561765",
+      "content_type": "source_code",
+      "purpose": "مكون أو منطق في Next.js",
+      "key_entities": [],
+      "business_rules": [],
+      "related_modules": [],
+      "duplication_reason": "",
+      "recommendation": "ملف طبيعي، لا توجد توصيات خاصة.",
+      "raw_preview": "",
+      "business_value": {
+        "products": [],
+        "packaging_rules": [],
+        "export_regulations": [],
+        "api_endpoints": [],
+        "workflows": []
+      }
+    },
+    {
+      "path": "node_modules\\next\\dist\\server\\route-modules\\app-page\\vendored\\rsc\\react.d.ts",
+      "extension": ".ts",
+      "size_kb": 0.0,
+      "last_modified": "2026-07-16T18:53:55.564675",
+      "content_type": "source_code",
+      "purpose": "مكون أو منطق في Next.js",
+      "key_entities": [],
+      "business_rules": [],
+      "related_modules": [],
+      "duplication_reason": "",
+      "recommendation": "ملف طبيعي، لا توجد توصيات خاصة.",
+      "raw_preview": "",
+      "business_value": {
+        "products": [],
+        "packaging_rules": [],
+        "export_regulations": [],
+        "api_endpoints": [],
+        "workflows": []
+      }
+    },
+    {
+      "path": "node_modules\\next\\dist\\server\\route-modules\\app-page\\vendored\\ssr\\react-compiler-runtime.d.ts",
+      "extension": ".ts",
+      "size_kb": 0.0,
+      "last_modified": "2026-07-16T18:53:55.531191",
+      "content_type": "source_code",
+      "purpose": "مكون أو منطق في Next.js",
+      "key_entities": [],
+      "business_rules": [],
+      "related_modules": [],
+      "duplication_reason": "",
+      "recommendation": "ملف طبيعي، لا توجد توصيات خاصة.",
+      "raw_preview": "",
+      "business_value": {
+        "products": [],
+        "packaging_rules": [],
+        "export_regulations": [],
+        "api_endpoints": [],
+        "workflows": []
+      }
+    },
+    {
+      "path": "node_modules\\next\\dist\\server\\route-modules\\app-page\\vendored\\ssr\\react-dom-server.d.ts",
+      "extension": ".ts",
+      "size_kb": 0.0,
+      "last_modified": "2026-07-16T18:53:55.531191",
+      "content_type": "source_code",
+      "purpose": "مكون أو منطق في Next.js",
+      "key_entities": [],
+      "business_rules": [],
+      "related_modules": [],
+      "duplication_reason": "",
+      "recommendation": "ملف طبيعي، لا توجد توصيات خاصة.",
+      "raw_preview": "",
+      "business_value": {
+        "products": [],
+        "packaging_rules": [],
+        "export_regulations": [],
+        "api_endpoints": [],
+        "workflows": []
+      }
+    },
+    {
+      "path": "node_modules\\next\\dist\\server\\route-modules\\app-page\\vendored\\ssr\\react-dom.d.ts",
+      "extension": ".ts",
+      "size_kb": 0.0,
+      "last_modified": "2026-07-16T18:53:55.531191",
+      "content_type": "source_code",
+      "purpose": "مكون أو منطق في Next.js",
+      "key_entities": [],
+      "business_rules": [],
+      "related_modules": [],
+      "duplication_reason": "",
+      "recommendation": "ملف طبيعي، لا توجد توصيات خاصة.",
+      "raw_preview": "",
+      "business_value": {
+        "products": [],
+        "packaging_rules": [],
+        "export_regulations": [],
+        "api_endpoints": [],
+        "workflows": []
+      }
+    },
+    {
+      "path": "node_modules\\next\\dist\\server\\route-modules\\app-page\\vendored\\ssr\\react-jsx-dev-runtime.d.ts",
+      "extension": ".ts",
+      "size_kb": 0.0,
+      "last_modified": "2026-07-16T18:53:55.540384",
+      "content_type": "source_code",
+      "purpose": "مكون أو منطق في Next.js",
+      "key_entities": [],
+      "business_rules": [],
+      "related_modules": [],
+      "duplication_reason": "",
+      "recommendation": "ملف طبيعي، لا توجد توصيات خاصة.",
+      "raw_preview": "",
+      "business_value": {
+        "products": [],
+        "packaging_rules": [],
+        "export_regulations": [],
+        "api_endpoints": [],
+        "workflows": []
+      }
+    },
+    {
+      "path": "node_modules\\next\\dist\\server\\route-modules\\app-page\\vendored\\ssr\\react-jsx-runtime.d.ts",
+      "extension": ".ts",
+      "size_kb": 0.0,
+      "last_modified": "2026-07-16T18:53:55.540384",
+      "content_type": "source_code",
+      "purpose": "مكون أو منطق في Next.js",
+      "key_entities": [],
+      "business_rules": [],
+      "related_modules": [],
+      "duplication_reason": "",
+      "recommendation": "ملف طبيعي، لا توجد توصيات خاصة.",
+      "raw_preview": "",
+      "business_value": {
+        "products": [],
+        "packaging_rules": [],
+        "export_regulations": [],
+        "api_endpoints": [],
+        "workflows": []
+      }
+    },
+    {
+      "path": "node_modules\\next\\dist\\server\\route-modules\\app-page\\vendored\\ssr\\react-server-dom-turbopack-client.d.ts",
+      "extension": ".ts",
+      "size_kb": 0.0,
+      "last_modified": "2026-07-16T18:53:55.547221",
+      "content_type": "source_code",
+      "purpose": "مكون أو منطق في Next.js",
+      "key_entities": [],
+      "business_rules": [],
+      "related_modules": [],
+      "duplication_reason": "",
+      "recommendation": "ملف طبيعي، لا توجد توصيات خاصة.",
+      "raw_preview": "",
+      "business_value": {
+        "products": [],
+        "packaging_rules": [],
+        "export_regulations": [],
+        "api_endpoints": [],
+        "workflows": []
+      }
+    },
+    {
+      "path": "node_modules\\next\\dist\\server\\route-modules\\app-page\\vendored\\ssr\\react-server-dom-webpack-client.d.ts",
+      "extension": ".ts",
+      "size_kb": 0.0,
+      "last_modified": "2026-07-16T18:53:55.557828",
+      "content_type": "source_code",
+      "purpose": "مكون أو منطق في Next.js",
+      "key_entities": [],
+      "business_rules": [],
+      "related_modules": [],
+      "duplication_reason": "",
+      "recommendation": "ملف طبيعي، لا توجد توصيات خاصة.",
+      "raw_preview": "",
+      "business_value": {
+        "products": [],
+        "packaging_rules": [],
+        "export_regulations": [],
+        "api_endpoints": [],
+        "workflows": []
+      }
+    },
+    {
+      "path": "node_modules\\next\\dist\\server\\route-modules\\app-page\\vendored\\ssr\\react.d.ts",
+      "extension": ".ts",
+      "size_kb": 0.0,
+      "last_modified": "2026-07-16T18:53:55.564675",
+      "content_type": "source_code",
+      "purpose": "مكون أو منطق في Next.js",
+      "key_entities": [],
+      "business_rules": [],
+      "related_modules": [],
+      "duplication_reason": "",
+      "recommendation": "ملف طبيعي، لا توجد توصيات خاصة.",
+      "raw_preview": "",
+      "business_value": {
+        "products": [],
+        "packaging_rules": [],
+        "export_regulations": [],
+        "api_endpoints": [],
+        "workflows": []
+      }
+    }
+  ],
+  "knowledge_base": {
+    "intelligence_tools": {
+      "tools_found": [],
+      "execution_results": [],
+      "merged_skills": []
+    },
+    "project_metadata": {
+      "project_name": "Greeny-Life",
+      "total_files": 362,
+      "total_size_mb": 112.11467838287354,
+      "file_types": {
+        ".env": 1,
+        "no_ext": 3,
+        ".toml": 2,
+        ".txt": 14,
+        ".md": 26,
+        ".py": 18,
+        ".yaml": 1,
+        ".csv": 2,
+        ".ps1": 4,
+        ".json": 175,
+        ".html": 7,
+        ".png": 1,
+        ".ts": 44,
+        ".js": 16,
+        ".tsbuildinfo": 1,
+        ".css": 2,
+        ".tsx": 11,
+        ".jsonl": 4,
+        ".sql": 2,
+        ".prisma": 1,
+        ".backup": 2,
+        ".jpg": 24,
+        ".yml": 1
+      },
+      "folders": {},
+      "duplicates": [
+        {
+          "file1": "docs\\legacy_brand.md",
+          "file2": "docs\\migrated_brand.md",
+          "hash": "38f396e2d4e8c099e52b69d5cb3e4614"
+        },
+        {
+          "file1": "DOC_METADATA.csv",
+          "file2": "reports\\doc-metadata.csv",
+          "hash": "aea5c0a3686c936d0f48cc9dc9b746fa"
+        },
+        {
+          "file1": "reports\\project-decisions.before-execution.json",
+          "file2": "reports\\project-decisions.json",
+          "hash": "b07d7ab87f90b853636ccf2c5d773654"
+        },
+        {
+          "file1": "scripts\\migration\\legacy-engine.js",
+          "file2": "scripts\\migration\\legacy-engine.js.backup",
+          "hash": "56d18644c0e0da077fe0ac7240add31b"
+        },
+        {
+          "file1": "docs\\legacy_brand.md",
+          "file2": "docs\\architecture\\SYSTEM_ARCHITECTURE.md",
+          "hash": "38f396e2d4e8c099e52b69d5cb3e4614"
+        },
+        {
+          "file1": "data\\migrated_categories.json",
+          "file2": "data\\legacy\\categories.json",
+          "hash": "5f4a3cecebdf6e2e3d5654091f3c38a4"
+        },
+        {
+          "file1": "data\\01_global.json",
+          "file2": "backup\\2026-07-17_18-51-09\\01_global.json",
+          "hash": "4025a4c5b710423bcea2b1f9c65c49bd"
+        },
+        {
+          "file1": "data\\08_media.json",
+          "file2": "backup\\2026-07-17_18-51-09\\08_media.json",
+          "hash": "f63885057f31fb4e4146473d0d28dd90"
+        },
+        {
+          "file1": "data\\01_global.json",
+          "file2": "backup\\2026-07-18_13-18-28\\01_global.json",
+          "hash": "4025a4c5b710423bcea2b1f9c65c49bd"
+        },
+        {
+          "file1": "backup\\2026-07-17_18-51-09\\02_collections.json",
+          "file2": "backup\\2026-07-18_13-18-28\\02_collections.json",
+          "hash": "2e895c2eaa3fb9284786be732e8f47a2"
+        },
+        {
+          "file1": "backup\\2026-07-17_18-51-09\\03_packaging_system.json",
+          "file2": "backup\\2026-07-18_13-18-28\\03_packaging_system.json",
+          "hash": "82dcb885836ce23bc8dfb550c3edf8a2"
+        },
+        {
+          "file1": "backup\\2026-07-17_18-51-09\\04_packaging_profiles.json",
+          "file2": "backup\\2026-07-18_13-18-28\\04_packaging_profiles.json",
+          "hash": "bf9b221ce3d4aecd26b455391e3ebf98"
+        },
+        {
+          "file1": "backup\\2026-07-17_18-51-09\\05_master_products.json",
+          "file2": "backup\\2026-07-18_13-18-28\\05_master_products.json",
+          "hash": "a0a5b51fb9578afb66e22cb0bc7a09a1"
+        },
+        {
+          "file1": "backup\\2026-07-17_18-51-09\\06_markets.json",
+          "file2": "backup\\2026-07-18_13-18-28\\06_markets.json",
+          "hash": "7882ad17c105d8c3b76de2f09b8df64b"
+        },
+        {
+          "file1": "backup\\2026-07-17_18-51-09\\07_documents.json",
+          "file2": "backup\\2026-07-18_13-18-28\\07_documents.json",
+          "hash": "f40a01ad99cd63282c521a0347fc6ee0"
+        },
+        {
+          "file1": "data\\08_media.json",
+          "file2": "backup\\2026-07-18_13-18-28\\08_media.json",
+          "hash": "f63885057f31fb4e4146473d0d28dd90"
+        },
+        {
+          "file1": "data\\01_global.json",
+          "file2": "backup\\2026-07-18_13-21-54\\01_global.json",
+          "hash": "4025a4c5b710423bcea2b1f9c65c49bd"
+        },
+        {
+          "file1": "backup\\2026-07-17_18-51-09\\02_collections.json",
+          "file2": "backup\\2026-07-18_13-21-54\\02_collections.json",
+          "hash": "2e895c2eaa3fb9284786be732e8f47a2"
+        },
+        {
+          "file1": "backup\\2026-07-17_18-51-09\\03_packaging_system.json",
+          "file2": "backup\\2026-07-18_13-21-54\\03_packaging_system.json",
+          "hash": "82dcb885836ce23bc8dfb550c3edf8a2"
+        },
+        {
+          "file1": "backup\\2026-07-17_18-51-09\\04_packaging_profiles.json",
+          "file2": "backup\\2026-07-18_13-21-54\\04_packaging_profiles.json",
+          "hash": "bf9b221ce3d4aecd26b455391e3ebf98"
+        },
+        {
+          "file1": "backup\\2026-07-17_18-51-09\\05_master_products.json",
+          "file2": "backup\\2026-07-18_13-21-54\\05_master_products.json",
+          "hash": "a0a5b51fb9578afb66e22cb0bc7a09a1"
+        },
+        {
+          "file1": "backup\\2026-07-17_18-51-09\\06_markets.json",
+          "file2": "backup\\2026-07-18_13-21-54\\06_markets.json",
+          "hash": "7882ad17c105d8c3b76de2f09b8df64b"
+        },
+        {
+          "file1": "backup\\2026-07-17_18-51-09\\07_documents.json",
+          "file2": "backup\\2026-07-18_13-21-54\\07_documents.json",
+          "hash": "f40a01ad99cd63282c521a0347fc6ee0"
+        },
+        {
+          "file1": "data\\08_media.json",
+          "file2": "backup\\2026-07-18_13-21-54\\08_media.json",
+          "hash": "f63885057f31fb4e4146473d0d28dd90"
+        },
+        {
+          "file1": "data\\01_global.json",
+          "file2": "backup\\2026-07-18_13-49-51\\01_global.json",
+          "hash": "4025a4c5b710423bcea2b1f9c65c49bd"
+        },
+        {
+          "file1": "backup\\2026-07-17_18-51-09\\02_collections.json",
+          "file2": "backup\\2026-07-18_13-49-51\\02_collections.json",
+          "hash": "2e895c2eaa3fb9284786be732e8f47a2"
+        },
+        {
+          "file1": "backup\\2026-07-17_18-51-09\\03_packaging_system.json",
+          "file2": "backup\\2026-07-18_13-49-51\\03_packaging_system.json",
+          "hash": "82dcb885836ce23bc8dfb550c3edf8a2"
+        },
+        {
+          "file1": "backup\\2026-07-17_18-51-09\\04_packaging_profiles.json",
+          "file2": "backup\\2026-07-18_13-49-51\\04_packaging_profiles.json",
+          "hash": "bf9b221ce3d4aecd26b455391e3ebf98"
+        },
+        {
+          "file1": "backup\\2026-07-17_18-51-09\\05_master_products.json",
+          "file2": "backup\\2026-07-18_13-49-51\\05_master_products.json",
+          "hash": "a0a5b51fb9578afb66e22cb0bc7a09a1"
+        },
+        {
+          "file1": "backup\\2026-07-17_18-51-09\\06_markets.json",
+          "file2": "backup\\2026-07-18_13-49-51\\06_markets.json",
+          "hash": "7882ad17c105d8c3b76de2f09b8df64b"
+        },
+        {
+          "file1": "backup\\2026-07-17_18-51-09\\07_documents.json",
+          "file2": "backup\\2026-07-18_13-49-51\\07_documents.json",
+          "hash": "f40a01ad99cd63282c521a0347fc6ee0"
+        },
+        {
+          "file1": "data\\08_media.json",
+          "file2": "backup\\2026-07-18_13-49-51\\08_media.json",
+          "hash": "f63885057f31fb4e4146473d0d28dd90"
+        },
+        {
+          "file1": "docs\\legacy_brand.md",
+          "file2": "backup\\2026-07-18_13-49-51\\legacy\\brand.json",
+          "hash": "38f396e2d4e8c099e52b69d5cb3e4614"
+        },
+        {
+          "file1": "data\\migrated_categories.json",
+          "file2": "backup\\2026-07-18_13-49-51\\legacy\\categories.json",
+          "hash": "5f4a3cecebdf6e2e3d5654091f3c38a4"
+        },
+        {
+          "file1": "data\\legacy\\category-extensions.json",
+          "file2": "backup\\2026-07-18_13-49-51\\legacy\\category-extensions.json",
+          "hash": "d4e8e0a34d1d8b7476a8c2e007f7555b"
+        },
+        {
+          "file1": "data\\legacy\\certificates.json",
+          "file2": "backup\\2026-07-18_13-49-51\\legacy\\certificates.json",
+          "hash": "4abd84649e39307daa442b8eb6b402c7"
+        },
+        {
+          "file1": "data\\legacy\\countries.json",
+          "file2": "backup\\2026-07-18_13-49-51\\legacy\\countries.json",
+          "hash": "536ec5c5eee432bd25e5af8edaf79680"
+        },
+        {
+          "file1": "data\\legacy\\incoterms.json",
+          "file2": "backup\\2026-07-18_13-49-51\\legacy\\incoterms.json",
+          "hash": "c91548ac1e649344802a41237a4fb50f"
+        },
+        {
+          "file1": "data\\legacy\\legal-entities.json",
+          "file2": "backup\\2026-07-18_13-49-51\\legacy\\legal-entities.json",
+          "hash": "dd2e613b0e2cf36e5cd70368b67c04a7"
+        },
+        {
+          "file1": "data\\legacy\\markets.json",
+          "file2": "backup\\2026-07-18_13-49-51\\legacy\\markets.json",
+          "hash": "44ad9a068dc8a55fffed16c9cf74ed66"
+        },
+        {
+          "file1": "data\\legacy\\packaging.json",
+          "file2": "backup\\2026-07-18_13-49-51\\legacy\\packaging.json",
+          "hash": "96073808e63c6f6e510805788fb7b979"
+        },
+        {
+          "file1": "data\\legacy\\product-variants.json",
+          "file2": "backup\\2026-07-18_13-49-51\\legacy\\product-variants.json",
+          "hash": "f246af945089ee2767677bb348f0614c"
+        },
+        {
+          "file1": "data\\legacy\\product.schema.json",
+          "file2": "backup\\2026-07-18_13-49-51\\legacy\\product.schema.json",
+          "hash": "b66b6d5187db5329d2f6f22606a09365"
+        },
+        {
+          "file1": "data\\legacy\\units.json",
+          "file2": "backup\\2026-07-18_13-49-51\\legacy\\units.json",
+          "hash": "495b3ba8b87bcde8200168fe64581753"
+        },
+        {
+          "file1": "docs\\legacy_brand.md",
+          "file2": "backup\\2026-07-18_13-21-54\\legacy\\brand.json",
+          "hash": "38f396e2d4e8c099e52b69d5cb3e4614"
+        },
+        {
+          "file1": "data\\migrated_categories.json",
+          "file2": "backup\\2026-07-18_13-21-54\\legacy\\categories.json",
+          "hash": "5f4a3cecebdf6e2e3d5654091f3c38a4"
+        },
+        {
+          "file1": "data\\legacy\\category-extensions.json",
+          "file2": "backup\\2026-07-18_13-21-54\\legacy\\category-extensions.json",
+          "hash": "d4e8e0a34d1d8b7476a8c2e007f7555b"
+        },
+        {
+          "file1": "data\\legacy\\certificates.json",
+          "file2": "backup\\2026-07-18_13-21-54\\legacy\\certificates.json",
+          "hash": "4abd84649e39307daa442b8eb6b402c7"
+        },
+        {
+          "file1": "data\\legacy\\countries.json",
+          "file2": "backup\\2026-07-18_13-21-54\\legacy\\countries.json",
+          "hash": "536ec5c5eee432bd25e5af8edaf79680"
+        },
+        {
+          "file1": "data\\legacy\\incoterms.json",
+          "file2": "backup\\2026-07-18_13-21-54\\legacy\\incoterms.json",
+          "hash": "c91548ac1e649344802a41237a4fb50f"
+        },
+        {
+          "file1": "data\\legacy\\legal-entities.json",
+          "file2": "backup\\2026-07-18_13-21-54\\legacy\\legal-entities.json",
+          "hash": "dd2e613b0e2cf36e5cd70368b67c04a7"
+        },
+        {
+          "file1": "data\\legacy\\markets.json",
+          "file2": "backup\\2026-07-18_13-21-54\\legacy\\markets.json",
+          "hash": "44ad9a068dc8a55fffed16c9cf74ed66"
+        },
+        {
+          "file1": "data\\legacy\\packaging.json",
+          "file2": "backup\\2026-07-18_13-21-54\\legacy\\packaging.json",
+          "hash": "96073808e63c6f6e510805788fb7b979"
+        },
+        {
+          "file1": "data\\legacy\\product-variants.json",
+          "file2": "backup\\2026-07-18_13-21-54\\legacy\\product-variants.json",
+          "hash": "f246af945089ee2767677bb348f0614c"
+        },
+        {
+          "file1": "data\\legacy\\product.schema.json",
+          "file2": "backup\\2026-07-18_13-21-54\\legacy\\product.schema.json",
+          "hash": "b66b6d5187db5329d2f6f22606a09365"
+        },
+        {
+          "file1": "backup\\2026-07-18_13-49-51\\legacy\\products.json",
+          "file2": "backup\\2026-07-18_13-21-54\\legacy\\products.json",
+          "hash": "0d0d8be2d635e253da40f76df5c46ff7"
+        },
+        {
+          "file1": "data\\legacy\\units.json",
+          "file2": "backup\\2026-07-18_13-21-54\\legacy\\units.json",
+          "hash": "495b3ba8b87bcde8200168fe64581753"
+        },
+        {
+          "file1": "docs\\legacy_brand.md",
+          "file2": "backup\\2026-07-18_13-18-28\\legacy\\brand.json",
+          "hash": "38f396e2d4e8c099e52b69d5cb3e4614"
+        },
+        {
+          "file1": "data\\migrated_categories.json",
+          "file2": "backup\\2026-07-18_13-18-28\\legacy\\categories.json",
+          "hash": "5f4a3cecebdf6e2e3d5654091f3c38a4"
+        },
+        {
+          "file1": "data\\legacy\\category-extensions.json",
+          "file2": "backup\\2026-07-18_13-18-28\\legacy\\category-extensions.json",
+          "hash": "d4e8e0a34d1d8b7476a8c2e007f7555b"
+        },
+        {
+          "file1": "data\\legacy\\certificates.json",
+          "file2": "backup\\2026-07-18_13-18-28\\legacy\\certificates.json",
+          "hash": "4abd84649e39307daa442b8eb6b402c7"
+        },
+        {
+          "file1": "data\\legacy\\countries.json",
+          "file2": "backup\\2026-07-18_13-18-28\\legacy\\countries.json",
+          "hash": "536ec5c5eee432bd25e5af8edaf79680"
+        },
+        {
+          "file1": "data\\legacy\\incoterms.json",
+          "file2": "backup\\2026-07-18_13-18-28\\legacy\\incoterms.json",
+          "hash": "c91548ac1e649344802a41237a4fb50f"
+        },
+        {
+          "file1": "data\\legacy\\legal-entities.json",
+          "file2": "backup\\2026-07-18_13-18-28\\legacy\\legal-entities.json",
+          "hash": "dd2e613b0e2cf36e5cd70368b67c04a7"
+        },
+        {
+          "file1": "data\\legacy\\markets.json",
+          "file2": "backup\\2026-07-18_13-18-28\\legacy\\markets.json",
+          "hash": "44ad9a068dc8a55fffed16c9cf74ed66"
+        },
+        {
+          "file1": "data\\legacy\\packaging.json",
+          "file2": "backup\\2026-07-18_13-18-28\\legacy\\packaging.json",
+          "hash": "96073808e63c6f6e510805788fb7b979"
+        },
+        {
+          "file1": "data\\legacy\\product-variants.json",
+          "file2": "backup\\2026-07-18_13-18-28\\legacy\\product-variants.json",
+          "hash": "f246af945089ee2767677bb348f0614c"
+        },
+        {
+          "file1": "data\\legacy\\product.schema.json",
+          "file2": "backup\\2026-07-18_13-18-28\\legacy\\product.schema.json",
+          "hash": "b66b6d5187db5329d2f6f22606a09365"
+        },
+        {
+          "file1": "backup\\2026-07-18_13-49-51\\legacy\\products.json",
+          "file2": "backup\\2026-07-18_13-18-28\\legacy\\products.json",
+          "hash": "0d0d8be2d635e253da40f76df5c46ff7"
+        },
+        {
+          "file1": "data\\legacy\\units.json",
+          "file2": "backup\\2026-07-18_13-18-28\\legacy\\units.json",
+          "hash": "495b3ba8b87bcde8200168fe64581753"
+        },
+        {
+          "file1": "docs\\legacy_brand.md",
+          "file2": "backup\\2026-07-17_18-51-09\\legacy\\brand.json",
+          "hash": "38f396e2d4e8c099e52b69d5cb3e4614"
+        },
+        {
+          "file1": "data\\migrated_categories.json",
+          "file2": "backup\\2026-07-17_18-51-09\\legacy\\categories.json",
+          "hash": "5f4a3cecebdf6e2e3d5654091f3c38a4"
+        },
+        {
+          "file1": "data\\legacy\\category-extensions.json",
+          "file2": "backup\\2026-07-17_18-51-09\\legacy\\category-extensions.json",
+          "hash": "d4e8e0a34d1d8b7476a8c2e007f7555b"
+        },
+        {
+          "file1": "data\\legacy\\certificates.json",
+          "file2": "backup\\2026-07-17_18-51-09\\legacy\\certificates.json",
+          "hash": "4abd84649e39307daa442b8eb6b402c7"
+        },
+        {
+          "file1": "data\\legacy\\countries.json",
+          "file2": "backup\\2026-07-17_18-51-09\\legacy\\countries.json",
+          "hash": "536ec5c5eee432bd25e5af8edaf79680"
+        },
+        {
+          "file1": "data\\legacy\\incoterms.json",
+          "file2": "backup\\2026-07-17_18-51-09\\legacy\\incoterms.json",
+          "hash": "c91548ac1e649344802a41237a4fb50f"
+        },
+        {
+          "file1": "data\\legacy\\legal-entities.json",
+          "file2": "backup\\2026-07-17_18-51-09\\legacy\\legal-entities.json",
+          "hash": "dd2e613b0e2cf36e5cd70368b67c04a7"
+        },
+        {
+          "file1": "data\\legacy\\markets.json",
+          "file2": "backup\\2026-07-17_18-51-09\\legacy\\markets.json",
+          "hash": "44ad9a068dc8a55fffed16c9cf74ed66"
+        },
+        {
+          "file1": "data\\legacy\\packaging.json",
+          "file2": "backup\\2026-07-17_18-51-09\\legacy\\packaging.json",
+          "hash": "96073808e63c6f6e510805788fb7b979"
+        },
+        {
+          "file1": "data\\legacy\\product-variants.json",
+          "file2": "backup\\2026-07-17_18-51-09\\legacy\\product-variants.json",
+          "hash": "f246af945089ee2767677bb348f0614c"
+        },
+        {
+          "file1": "data\\legacy\\product.schema.json",
+          "file2": "backup\\2026-07-17_18-51-09\\legacy\\product.schema.json",
+          "hash": "b66b6d5187db5329d2f6f22606a09365"
+        },
+        {
+          "file1": "backup\\2026-07-18_13-49-51\\legacy\\products.json",
+          "file2": "backup\\2026-07-17_18-51-09\\legacy\\products.json",
+          "hash": "0d0d8be2d635e253da40f76df5c46ff7"
+        },
+        {
+          "file1": "data\\legacy\\units.json",
+          "file2": "backup\\2026-07-17_18-51-09\\legacy\\units.json",
+          "hash": "495b3ba8b87bcde8200168fe64581753"
+        },
+        {
+          "file1": "logo.png",
+          "file2": "app\\assets\\logos\\logo.jpg",
+          "hash": "49de1d30f65f90356346997c25806c05"
+        },
+        {
+          "file1": "app\\assets\\images\\categories\\natural-oils.jpg",
+          "file2": "app\\assets\\images\\categories\\large\\natural-oils.jpg",
+          "hash": "8f05c00efc6acb2bf1f3199ece6a9091"
+        }
+      ],
+      "old_files": [],
+      "corrupted_files": [],
+      "unique_extensions": "{'.yaml', '.md', '.csv', '.backup', '.js', '.png', '.tsx', '.yml', '.css', '.jpg', '.py', '.toml', '.env', '.txt', '.json', 'no_ext', '.tsbuildinfo', '.ps1', '.sql', '.prisma', '.jsonl', '.ts', '.html'}"
+    }
+  },
+  "overall_status": "PASSED",
+  "pr_url": null,
+  "summary": "",
+  "advanced_analysis": {
+    "brand": {
+      "colors": {
+        "primary": [],
+        "secondary": [],
+        "background": [],
+        "accent": []
+      },
+      "fonts": [
+        "globals.css",
+        "node_modules_react-dom_0kla17-._.js",
+        "app_globals_0yg4wg8.css",
+        "3sv3tapwyp-so.css",
+        "node_modules_next_dist_compiled_react-dom_096_9a-._.js",
+        "node_modules_next_dist_compiled_next-devtools_index_090k2jm.js",
+        "style.css",
+        "node_modules_next_dist_compiled_14ibvna._.js",
+        "3rxl-jt3pdxgx.js"
+      ],
+      "images": [
+        "logo.png",
+        ".venv\\Lib\\site-packages\\sympy\\plotting\\tests\\test_region_and.png",
+        ".venv\\Lib\\site-packages\\sympy\\plotting\\tests\\test_region_not.png",
+        ".venv\\Lib\\site-packages\\sympy\\plotting\\tests\\test_region_or.png",
+        ".venv\\Lib\\site-packages\\sympy\\plotting\\tests\\test_region_xor.png",
+        ".venv\\Lib\\site-packages\\scipy\\ndimage\\tests\\dots.png",
+        ".venv\\Lib\\site-packages\\networkx\\drawing\\tests\\baseline\\test_display_complex.png",
+        ".venv\\Lib\\site-packages\\networkx\\drawing\\tests\\baseline\\test_display_empty_graph.png",
+        ".venv\\Lib\\site-packages\\networkx\\drawing\\tests\\baseline\\test_display_house_with_colors.png",
+        ".venv\\Lib\\site-packages\\networkx\\drawing\\tests\\baseline\\test_display_labels_and_colors.png",
+        ".venv\\Lib\\site-packages\\networkx\\drawing\\tests\\baseline\\test_display_shortest_path.png",
+        ".venv\\Lib\\site-packages\\networkx\\drawing\\tests\\baseline\\test_house_with_colors.png",
+        "app\\assets\\logos\\logo.jpg",
+        "app\\assets\\images\\categories\\bee-products.jpg",
+        "app\\assets\\images\\categories\\honey.jpg",
+        "app\\assets\\images\\categories\\natural-oils.jpg",
+        "app\\assets\\images\\categories\\premium-spices.jpg",
+        "app\\assets\\images\\products\\bee-pollen\\bee-pollen.jpg",
+        "app\\assets\\images\\products\\black-seed-oil\\black-seed-oil.jpg",
+        "app\\assets\\images\\products\\citrus-honey\\citrus-honey.jpg",
+        "app\\assets\\images\\products\\clove-honey\\clover-honey.jpg",
+        "app\\assets\\images\\products\\cumin-powder\\cumin-powder.jpg",
+        "app\\assets\\images\\products\\garlic-powder\\garlic-powder.jpg",
+        "app\\assets\\images\\products\\hibiscus-flower\\hibiscus-flowers.jpg",
+        "app\\assets\\images\\products\\onion-powder\\union-powder.jpg",
+        "app\\assets\\images\\products\\propolis\\propolis.jpg",
+        "app\\assets\\images\\products\\pure-beeswax\\pure-beeswax.jpg",
+        "app\\assets\\images\\products\\royal-jelly\\Royal-jelly.jpg",
+        "app\\assets\\images\\products\\seven-spices-blend\\seven-spices-blend.jpg",
+        "app\\assets\\images\\products\\sweet-paprika\\sweet-paprika.jpg",
+        "app\\assets\\images\\products\\turmeric-powder\\turmeric-powder.jpg",
+        "app\\assets\\images\\products\\wildflower-honey\\wildflower-honey.jpg",
+        "app\\assets\\images\\categories\\large\\bee-products.jpg",
+        "app\\assets\\images\\categories\\large\\honey.jpg",
+        "app\\assets\\images\\categories\\large\\natural-oils.jpg",
+        "app\\assets\\images\\categories\\large\\primum-spices.jpg",
+        ".venv\\Lib\\site-packages\\sklearn\\datasets\\images\\china.jpg",
+        ".venv\\Lib\\site-packages\\sklearn\\datasets\\images\\flower.jpg"
+      ],
+      "violations": []
+    },
+    "packaging": {
+      "packaging_rules": [
+        "150_000 });",
+        "0) -> Tensor",
+        "10\\\\\\\\\\\\\\\\n\\\\\\\\\\\\\\\\n    NETWORK\\\\\\\\\\\\\\\\n    data_received........: 0 B     0 B/s\\\\\\\\\\\\\\\\n    data_sent............: 0 B     0 B/s\\\\\\\\\\\\\\\\n\\\\\\\\\\\\\\\\n\\\\\\\\\\\\\\\\n\\\\\\\\\\\\\\\\n\\\\\\\\\\\\\\\\nrunning (10.3s)",
+        "None) -> Tensor",
+        "None) -> ()",
+        "None) -> Tensor(a!)",
+        "1.03s p(90)=1.02s p(95)=1.03s\\n    iterations...........: 100     9.910922/s\\n    vus..................: 10      min=10         max=10\\n    vus_max..............: 10      min=10         max=10\\n\\n    NETWORK\\n    data_received........: 0 B     0 B/s\\n    data_sent............: 0 B     0 B/s\\n\\n\\n\\n\\nrunning (10.1s)`",
+        "clamp_backward_min_max(grad",
+        "10",
+        "10\\\\\\\\n\\\\\\\\n    NETWORK\\\\\\\\n    data_received........: 0 B     0 B/s\\\\\\\\n    data_sent............: 0 B     0 B/s\\\\\\\\n\\\\\\\\n\\\\\\\\n\\\\\\\\n\\\\\\\\nrunning (10.3s)`",
+        "150_000",
+        "0s    p(90)=0s    p(95)=0s   \\n    http_req_failed......: 100.00% 100 out of 100\\n    http_reqs............: 100     9.933937/s\\n\\n    EXECUTION\\n    iteration_duration...: avg=1s min=1s med=1s max=1.03s p(90)=1.01s p(95)=1.03s\\n    iterations...........: 100     9.933937/s\\n    vus..................: 10      min=10         max=10\\n    vus_max..............: 10      min=10         max=10\\n\\n    NETWORK\\n    data_received........: 0 B     0 B/s\\n    data_sent............: 0 B     0 B/s\\n\\n\\n\\n\\nrunning (10.1s)",
+        "10\\\\\\\\n    vus_max..............: 10      min=10         max=10\\\\\\\\n\\\\\\\\n    NETWORK\\\\\\\\n    data_received........: 0 B     0 B/s\\\\\\\\n    data_sent............: 0 B     0 B/s\\\\\\\\n\\\\\\\\n\\\\\\\\n\\\\\\\\n\\\\\\\\nrunning (10.1s)",
+        "where(self > max",
+        "1000 });",
+        "1.03s p(90)=1.02s p(95)=1.03s\\\\n    iterations...........: 100     9.910922/s\\\\n    vus..................: 10      min=10         max=10\\\\n    vus_max..............: 10      min=10         max=10\\\\n\\\\n    NETWORK\\\\n    data_received........: 0 B     0 B/s\\\\n    data_sent............: 0 B     0 B/s\\\\n\\\\n\\\\n\\\\n\\\\nrunning (10.1s)",
+        "10\\\\n    vus_max..............: 10      min=10         max=10\\\\n\\\\n    NETWORK\\\\n    data_received........: 0 B     0 B/s\\\\n    data_sent............: 0 B     0 B/s\\\\n\\\\n\\\\n\\\\n\\\\nrunning (10.1s)`",
+        "2;"
+      ],
+      "display_rules": [
+        "none` but remains in the document. This applies both to routes preserved by Cache Components and to content you hide with `<Activity>` directly. It affects end-to-end testing with tools like Playwright",
+        "None",
+        "standalone",
+        "optional",
+        "intrinsic",
+        "none` does not stop playback. Add explicit cleanup with `useLayoutEffect`:",
+        "responsive",
+        "[",
+        "swap",
+        "grid",
+        "block`. This is necessary for the proper rendering of the image element in that layout mode.",
+        "none` on the old snapshot prevents a flash where both old and new headers are briefly visible. The `z-index: 100` ensures the header renders above the sliding content.",
+        "grid`) will not work.",
+        "none`)",
+        "```tsx filename=",
+        "{layout}",
+        "torch.jagged.",
+        "Navigation",
+        "Header",
+        "flex",
+        "none` while maintaining state and cleaning up Effects",
+        "fixed",
+        "None) -> ()",
+        "none;",
+        "inline-block;",
+        "Footer"
+      ],
+      "policy_files": [
+        "full_report.json",
+        "data\\01_global.json",
+        "data\\03_packaging_system.json",
+        "data\\04_packaging_profiles.json",
+        "data\\05_master_products.json",
+        "data\\07_documents.json",
+        "data\\09_design_system.json",
+        "data\\legacy_packaging.json",
+        "docs\\legacy_brand.md",
+        "docs\\migrated_brand.md",
+        "docs\\README.md",
+        "intelligence\\comprehensive_report.json",
+        "intelligence\\comprehensive_report.md",
+        "legacy_audit_reports\\active_master_products.json",
+        "legacy_audit_reports\\legacy_system_inventory.json",
+        "products_data\\catalog.json",
+        "reports\\cleanup-actions.json",
+        "reports\\intelligence-schema-report.json",
+        "reports\\legacy-analysis.json",
+        "reports\\legacy-components.json",
+        "reports\\legacy-migration-plan.json",
+        "reports\\legacy-refactor.json",
+        "reports\\migration-registry.json",
+        "reports\\migration-report.json",
+        "reports\\project-audit.json",
+        "reports\\project-decisions.before-execution.json",
+        "reports\\project-decisions.json",
+        "reports\\project-roadmap.json",
+        "node_modules\\.better-result-WzyXDbg8\\package.json",
+        "node_modules\\.better-result-WzyXDbg8\\README.md",
+        "node_modules\\.d3-array-2lV9XPJN\\README.md",
+        "node_modules\\.d3-color-jySO6SNo\\README.md",
+        "node_modules\\.d3-delaunay-9O4d6oB2\\package.json",
+        "node_modules\\.d3-delaunay-9O4d6oB2\\README.md",
+        "node_modules\\.d3-format-8Q3GynmH\\README.md",
+        "node_modules\\.d3-geo-MZ2vBHwN\\README.md",
+        "node_modules\\.d3-interpolate-O5nkvejx\\README.md",
+        "node_modules\\.d3-scale-66Rz4jBQ\\README.md",
+        "node_modules\\.d3-shape-AbXuKmD9\\README.md",
+        "node_modules\\.deepmerge-ts-FB9P5pVO\\CHANGELOG.md",
+        "node_modules\\.defu-PrMaJgMf\\package.json",
+        "node_modules\\.defu-PrMaJgMf\\README.md",
+        "node_modules\\.denque-SSs7YEMb\\README.md",
+        "node_modules\\.elkjs-HhGpEcOF\\LICENSE.md",
+        "node_modules\\.fast-check-u42xe9Nx\\CHANGELOG.md",
+        "node_modules\\.find-my-way-cesluaKj\\README.md",
+        "node_modules\\.lru.min-unVET5r3\\README.md",
+        "node_modules\\.ohash-imXGGtCs\\README.md",
+        "node_modules\\.std-env-CGE6eceV\\README.md",
+        "node_modules\\baseline-browser-mapping\\LICENSE.txt",
+        "node_modules\\better-result\\package.json",
+        "node_modules\\better-result\\README.md",
+        "node_modules\\csstype\\README.md",
+        "node_modules\\d3-array\\README.md",
+        "node_modules\\d3-color\\README.md",
+        "node_modules\\d3-delaunay\\package.json",
+        "node_modules\\d3-delaunay\\README.md",
+        "node_modules\\d3-format\\README.md",
+        "node_modules\\d3-geo\\README.md",
+        "node_modules\\d3-interpolate\\README.md",
+        "node_modules\\d3-scale\\README.md",
+        "node_modules\\d3-shape\\README.md",
+        "node_modules\\deepmerge-ts\\CHANGELOG.md",
+        "node_modules\\defu\\package.json",
+        "node_modules\\defu\\README.md",
+        "node_modules\\denque\\README.md",
+        "node_modules\\elkjs\\LICENSE.md",
+        "node_modules\\fast-check\\CHANGELOG.md",
+        "node_modules\\find-my-way\\README.md",
+        "node_modules\\lru.min\\README.md",
+        "node_modules\\ohash\\README.md",
+        "node_modules\\sharp\\README.md",
+        "node_modules\\std-env\\README.md",
+        "node_modules\\styled-jsx\\readme.md",
+        "node_modules\\typescript\\LICENSE.txt",
+        "node_modules\\typescript\\ThirdPartyNoticeText.txt",
+        "node_modules\\typescript\\lib\\cs\\diagnosticMessages.generated.json",
+        "node_modules\\typescript\\lib\\de\\diagnosticMessages.generated.json",
+        "node_modules\\typescript\\lib\\es\\diagnosticMessages.generated.json",
+        "node_modules\\typescript\\lib\\fr\\diagnosticMessages.generated.json",
+        "node_modules\\typescript\\lib\\it\\diagnosticMessages.generated.json",
+        "node_modules\\typescript\\lib\\ja\\diagnosticMessages.generated.json",
+        "node_modules\\typescript\\lib\\ko\\diagnosticMessages.generated.json",
+        "node_modules\\typescript\\lib\\pl\\diagnosticMessages.generated.json",
+        "node_modules\\typescript\\lib\\pt-br\\diagnosticMessages.generated.json",
+        "node_modules\\typescript\\lib\\ru\\diagnosticMessages.generated.json",
+        "node_modules\\typescript\\lib\\tr\\diagnosticMessages.generated.json",
+        "node_modules\\typescript\\lib\\zh-cn\\diagnosticMessages.generated.json",
+        "node_modules\\typescript\\lib\\zh-tw\\diagnosticMessages.generated.json",
+        "node_modules\\rc9\\dist\\THIRD-PARTY-LICENSES.md",
+        "node_modules\\next\\dist\\bundle-analyzer\\index.txt",
+        "node_modules\\next\\dist\\bundle-analyzer\\_not-found.txt",
+        "node_modules\\next\\dist\\bundle-analyzer\\__next._full.txt",
+        "node_modules\\next\\dist\\bundle-analyzer\\__next._index.txt",
+        "node_modules\\next\\dist\\docs\\01-app\\04-glossary.md",
+        "node_modules\\next\\dist\\docs\\03-architecture\\nextjs-compiler.md",
+        "node_modules\\next\\dist\\docs\\04-community\\01-contribution-guide.md",
+        "node_modules\\next\\dist\\docs\\02-pages\\02-guides\\forms.md",
+        "node_modules\\next\\dist\\docs\\02-pages\\04-api-reference\\01-components\\image-legacy.md",
+        "node_modules\\next\\dist\\docs\\02-pages\\04-api-reference\\03-functions\\get-static-paths.md",
+        "node_modules\\next\\dist\\docs\\02-pages\\03-building-your-application\\01-routing\\07-api-routes.md",
+        "node_modules\\next\\dist\\docs\\02-pages\\03-building-your-application\\02-rendering\\05-client-side-rendering.md",
+        "node_modules\\next\\dist\\docs\\01-app\\01-getting-started\\04-linking-and-navigating.md",
+        "node_modules\\next\\dist\\docs\\01-app\\01-getting-started\\06-fetching-data.md",
+        "node_modules\\next\\dist\\docs\\01-app\\01-getting-started\\10-error-handling.md",
+        "node_modules\\next\\dist\\docs\\01-app\\01-getting-started\\13-fonts.md",
+        "node_modules\\next\\dist\\docs\\01-app\\01-getting-started\\14-metadata-and-og-images.md",
+        "node_modules\\next\\dist\\docs\\01-app\\01-getting-started\\17-deploying.md",
+        "node_modules\\next\\dist\\docs\\01-app\\02-guides\\authentication.md",
+        "node_modules\\next\\dist\\docs\\01-app\\02-guides\\ci-build-caching.md",
+        "node_modules\\next\\dist\\docs\\01-app\\02-guides\\css-in-js.md",
+        "node_modules\\next\\dist\\docs\\01-app\\02-guides\\debugging.md",
+        "node_modules\\next\\dist\\docs\\01-app\\02-guides\\forms.md",
+        "node_modules\\next\\dist\\docs\\01-app\\02-guides\\incremental-static-regeneration.md",
+        "node_modules\\next\\dist\\docs\\01-app\\02-guides\\internationalization.md",
+        "node_modules\\next\\dist\\docs\\01-app\\02-guides\\local-development.md",
+        "node_modules\\next\\dist\\docs\\01-app\\02-guides\\mdx.md",
+        "node_modules\\next\\dist\\docs\\01-app\\02-guides\\preserving-ui-state.md",
+        "node_modules\\next\\dist\\docs\\01-app\\02-guides\\preventing-flash-before-hydration.md",
+        "node_modules\\next\\dist\\docs\\01-app\\02-guides\\progressive-web-apps.md",
+        "node_modules\\next\\dist\\docs\\01-app\\02-guides\\public-static-pages.md",
+        "node_modules\\next\\dist\\docs\\01-app\\02-guides\\streaming.md",
+        "node_modules\\next\\dist\\docs\\01-app\\02-guides\\third-party-libraries.md",
+        "node_modules\\next\\dist\\docs\\01-app\\02-guides\\videos.md",
+        "node_modules\\next\\dist\\docs\\01-app\\02-guides\\view-transitions.md",
+        "node_modules\\next\\dist\\docs\\01-app\\03-api-reference\\01-directives\\use-cache-remote.md",
+        "node_modules\\next\\dist\\docs\\01-app\\03-api-reference\\02-components\\font.md",
+        "node_modules\\next\\dist\\docs\\01-app\\03-api-reference\\02-components\\form.md",
+        "node_modules\\next\\dist\\docs\\01-app\\03-api-reference\\02-components\\image.md",
+        "node_modules\\next\\dist\\docs\\01-app\\03-api-reference\\02-components\\link.md",
+        "node_modules\\next\\dist\\docs\\01-app\\03-api-reference\\03-file-conventions\\error.md",
+        "node_modules\\next\\dist\\docs\\01-app\\03-api-reference\\03-file-conventions\\instrumentation-client.md",
+        "node_modules\\next\\dist\\docs\\01-app\\03-api-reference\\03-file-conventions\\intercepting-routes.md",
+        "node_modules\\next\\dist\\docs\\01-app\\03-api-reference\\03-file-conventions\\layout.md",
+        "node_modules\\next\\dist\\docs\\01-app\\03-api-reference\\03-file-conventions\\loading.md",
+        "node_modules\\next\\dist\\docs\\01-app\\03-api-reference\\03-file-conventions\\not-found.md",
+        "node_modules\\next\\dist\\docs\\01-app\\03-api-reference\\03-file-conventions\\page.md",
+        "node_modules\\next\\dist\\docs\\01-app\\03-api-reference\\03-file-conventions\\proxy.md",
+        "node_modules\\next\\dist\\docs\\01-app\\03-api-reference\\03-file-conventions\\public-folder.md",
+        "node_modules\\next\\dist\\docs\\01-app\\03-api-reference\\03-file-conventions\\unauthorized.md",
+        "node_modules\\next\\dist\\docs\\01-app\\03-api-reference\\04-functions\\cacheLife.md",
+        "node_modules\\next\\dist\\docs\\01-app\\03-api-reference\\04-functions\\catchError.md",
+        "node_modules\\next\\dist\\docs\\01-app\\03-api-reference\\04-functions\\generate-image-metadata.md",
+        "node_modules\\next\\dist\\docs\\01-app\\03-api-reference\\04-functions\\generate-metadata.md",
+        "node_modules\\next\\dist\\docs\\01-app\\03-api-reference\\04-functions\\image-response.md",
+        "node_modules\\next\\dist\\docs\\01-app\\03-api-reference\\04-functions\\unauthorized.md",
+        "node_modules\\next\\dist\\docs\\01-app\\03-api-reference\\04-functions\\updateTag.md",
+        "node_modules\\next\\dist\\docs\\01-app\\03-api-reference\\04-functions\\use-link-status.md",
+        "node_modules\\next\\dist\\docs\\01-app\\03-api-reference\\04-functions\\use-selected-layout-segment.md",
+        "node_modules\\next\\dist\\docs\\01-app\\03-api-reference\\05-config\\03-eslint.md",
+        "node_modules\\next\\dist\\docs\\01-app\\03-api-reference\\06-cli\\next.md",
+        "node_modules\\next\\dist\\docs\\01-app\\03-api-reference\\05-config\\01-next-config-js\\devIndicators.md",
+        "node_modules\\next\\dist\\docs\\01-app\\03-api-reference\\05-config\\01-next-config-js\\headers.md",
+        "node_modules\\next\\dist\\docs\\01-app\\03-api-reference\\05-config\\01-next-config-js\\inlineCss.md",
+        "node_modules\\next\\dist\\docs\\01-app\\03-api-reference\\05-config\\01-next-config-js\\logging.md",
+        "node_modules\\next\\dist\\docs\\01-app\\03-api-reference\\05-config\\01-next-config-js\\optimizePackageImports.md",
+        "node_modules\\next\\dist\\docs\\01-app\\03-api-reference\\05-config\\01-next-config-js\\useLightningcss.md",
+        "node_modules\\next\\dist\\docs\\01-app\\03-api-reference\\03-file-conventions\\01-metadata\\app-icons.md",
+        "node_modules\\next\\dist\\docs\\01-app\\03-api-reference\\03-file-conventions\\01-metadata\\manifest.md",
+        "node_modules\\next\\dist\\docs\\01-app\\03-api-reference\\03-file-conventions\\01-metadata\\opengraph-image.md",
+        "node_modules\\next\\dist\\docs\\01-app\\02-guides\\migrating\\from-create-react-app.md",
+        "node_modules\\next\\dist\\docs\\01-app\\02-guides\\migrating\\from-vite.md",
+        "node_modules\\next\\dist\\docs\\01-app\\02-guides\\testing\\cypress.md",
+        "node_modules\\next\\dist\\docs\\01-app\\02-guides\\upgrading\\version-16.md",
+        "node_modules\\next\\dist\\compiled\\@next\\font\\dist\\google\\font-data.json",
+        "node_modules\\next\\dist\\bundle-analyzer\\_not-found\\__next._full.txt",
+        "node_modules\\next\\dist\\bundle-analyzer\\_not-found\\__next._index.txt",
+        "node_modules\\next\\dist\\bundle-analyzer\\_not-found\\__next._not-found.__PAGE__.txt",
+        "node_modules\\confbox\\dist\\THIRD-PARTY-LICENSES.md",
+        "node_modules\\@visx\\.responsive-9MOH1c8Z\\Readme.md",
+        "node_modules\\@visx\\.scale-yj2wOv2Z\\Readme.md",
+        "node_modules\\@visx\\responsive\\Readme.md",
+        "node_modules\\@visx\\scale\\Readme.md",
+        "node_modules\\@visx\\vendor\\node_modules\\d3-array\\README.md",
+        "node_modules\\@visx\\.vendor-fne4izBC\\node_modules\\d3-array\\README.md",
+        "node_modules\\@prisma\\.studio-core-8S0Mrkrh\\README.md",
+        "node_modules\\@prisma\\studio-core\\README.md",
+        "node_modules\\@electric-sql\\.pglite-socket-FsXddumv\\README.md",
+        "node_modules\\@electric-sql\\pglite-socket\\README.md",
+        "node_modules\\.rc9-DUOY09ZO\\dist\\THIRD-PARTY-LICENSES.md",
+        "node_modules\\.confbox-wVW1rK7W\\dist\\THIRD-PARTY-LICENSES.md",
+        "intelligence\\knowledge_base\\project_metadata.json",
+        "eos_architecture\\01.Master_Data\\honey_reference.json",
+        "eos_architecture\\01.Master_Data\\schema_v1.json",
+        "docs\\architecture\\SYSTEM_ARCHITECTURE.md",
+        "docs\\auto-generated\\INDEX.md",
+        "docs\\packaging\\packaging_master.md",
+        "docs\\packaging\\PACKING_CODES.md",
+        "docs\\products\\PRODUCT_DATABASE.md",
+        "docs\\products\\PRODUCT_LIBRARY.md",
+        "docs\\products\\PRODUCT_MASTER.md",
+        "docs\\products\\PRODUCT_TEMPLATE.md",
+        "docs\\standards\\01_BRAND_STANDARD.md",
+        "data\\legacy\\packaging.json",
+        "data\\legacy\\product-variants.json",
+        "data\\legacy\\product.schema.json",
+        "backup\\2026-07-17_18-51-09\\01_global.json",
+        "backup\\2026-07-17_18-51-09\\03_packaging_system.json",
+        "backup\\2026-07-17_18-51-09\\04_packaging_profiles.json",
+        "backup\\2026-07-17_18-51-09\\05_master_products.json",
+        "backup\\2026-07-17_18-51-09\\07_documents.json",
+        "backup\\2026-07-18_13-18-28\\01_global.json",
+        "backup\\2026-07-18_13-18-28\\03_packaging_system.json",
+        "backup\\2026-07-18_13-18-28\\04_packaging_profiles.json",
+        "backup\\2026-07-18_13-18-28\\05_master_products.json",
+        "backup\\2026-07-18_13-18-28\\07_documents.json",
+        "backup\\2026-07-18_13-21-54\\01_global.json",
+        "backup\\2026-07-18_13-21-54\\03_packaging_system.json",
+        "backup\\2026-07-18_13-21-54\\04_packaging_profiles.json",
+        "backup\\2026-07-18_13-21-54\\05_master_products.json",
+        "backup\\2026-07-18_13-21-54\\07_documents.json",
+        "backup\\2026-07-18_13-49-51\\01_global.json",
+        "backup\\2026-07-18_13-49-51\\03_packaging_system.json",
+        "backup\\2026-07-18_13-49-51\\04_packaging_profiles.json",
+        "backup\\2026-07-18_13-49-51\\05_master_products.json",
+        "backup\\2026-07-18_13-49-51\\07_documents.json",
+        "backup\\2026-07-18_13-49-51\\legacy\\brand.json",
+        "backup\\2026-07-18_13-49-51\\legacy\\packaging.json",
+        "backup\\2026-07-18_13-49-51\\legacy\\product-variants.json",
+        "backup\\2026-07-18_13-49-51\\legacy\\product.schema.json",
+        "backup\\2026-07-18_13-21-54\\legacy\\brand.json",
+        "backup\\2026-07-18_13-21-54\\legacy\\packaging.json",
+        "backup\\2026-07-18_13-21-54\\legacy\\product-variants.json",
+        "backup\\2026-07-18_13-21-54\\legacy\\product.schema.json",
+        "backup\\2026-07-18_13-18-28\\legacy\\brand.json",
+        "backup\\2026-07-18_13-18-28\\legacy\\packaging.json",
+        "backup\\2026-07-18_13-18-28\\legacy\\product-variants.json",
+        "backup\\2026-07-18_13-18-28\\legacy\\product.schema.json",
+        "backup\\2026-07-17_18-51-09\\legacy\\brand.json",
+        "backup\\2026-07-17_18-51-09\\legacy\\packaging.json",
+        "backup\\2026-07-17_18-51-09\\legacy\\product-variants.json",
+        "backup\\2026-07-17_18-51-09\\legacy\\product.schema.json",
+        ".venv\\Lib\\site-packages\\scipy-1.18.0.dist-info\\LICENSE.txt",
+        ".venv\\Lib\\site-packages\\typer\\_click\\LICENSE.txt",
+        ".venv\\Lib\\site-packages\\torchgen\\packaged\\autograd\\derivatives.yaml",
+        ".venv\\Lib\\site-packages\\torchgen\\packaged\\ATen\\native\\native_functions.yaml",
+        ".venv\\Lib\\site-packages\\torchgen\\packaged\\ATen\\native\\tags.yaml",
+        ".venv\\Lib\\site-packages\\torch-2.13.0.dist-info\\licenses\\third_party\\cutlass\\LICENSE.txt",
+        ".venv\\Lib\\site-packages\\torch-2.13.0.dist-info\\licenses\\third_party\\llvm-openmp\\LICENSE.txt",
+        ".venv\\Lib\\site-packages\\torch-2.13.0.dist-info\\licenses\\third_party\\NVTX\\LICENSE.txt",
+        ".venv\\Lib\\site-packages\\torch-2.13.0.dist-info\\licenses\\third_party\\sleef\\LICENSE.txt",
+        ".venv\\Lib\\site-packages\\torch-2.13.0.dist-info\\licenses\\third_party\\tensorpipe\\LICENSE.txt",
+        ".venv\\Lib\\site-packages\\torch-2.13.0.dist-info\\licenses\\third_party\\tensorpipe\\third_party\\pybind11\\tools\\clang\\LICENSE.txt",
+        ".venv\\Lib\\site-packages\\torch-2.13.0.dist-info\\licenses\\third_party\\NVTX\\docs\\LICENSE.txt",
+        ".venv\\Lib\\site-packages\\torch-2.13.0.dist-info\\licenses\\third_party\\NVTX\\python\\LICENSE.txt",
+        ".venv\\Lib\\site-packages\\torch-2.13.0.dist-info\\licenses\\third_party\\mslk\\external\\cutlass\\LICENSE.txt",
+        ".venv\\Lib\\site-packages\\torch-2.13.0.dist-info\\licenses\\third_party\\mslk\\external\\cutlass\\python\\LICENSE.txt",
+        ".venv\\Lib\\site-packages\\torch-2.13.0.dist-info\\licenses\\third_party\\kineto\\libkineto\\third_party\\dynolog\\third_party\\DCGM\\testing\\python3\\libs_3rdparty\\colorama\\LICENSE.txt",
+        ".venv\\Lib\\site-packages\\torch-2.13.0.dist-info\\licenses\\third_party\\flash-attention\\csrc\\cutlass\\LICENSE.txt",
+        ".venv\\Lib\\site-packages\\torch-2.13.0.dist-info\\licenses\\third_party\\flash-attention\\csrc\\cutlass\\python\\LICENSE.txt",
+        ".venv\\Lib\\site-packages\\torch-2.13.0.dist-info\\licenses\\third_party\\fbgemm\\external\\cutlass\\LICENSE.txt",
+        ".venv\\Lib\\site-packages\\torch-2.13.0.dist-info\\licenses\\third_party\\fbgemm\\external\\cutlass\\python\\LICENSE.txt",
+        ".venv\\Lib\\site-packages\\torch-2.13.0.dist-info\\licenses\\third_party\\cutlass\\python\\LICENSE.txt",
+        ".venv\\Lib\\site-packages\\torch\\_dynamo\\graph_break_registry.json",
+        ".venv\\Lib\\site-packages\\sentence_transformers\\base\\model_card_template.md",
+        ".venv\\Lib\\site-packages\\sentence_transformers\\sentence_transformer\\model_card_template.md",
+        ".venv\\Lib\\site-packages\\sentence_transformers\\sparse_encoder\\model_card_template.md",
+        ".venv\\Lib\\site-packages\\scipy\\fft\\_duccfft\\LICENSE.md",
+        ".venv\\Lib\\site-packages\\regex-2026.7.19.dist-info\\licenses\\LICENSE.txt",
+        ".venv\\Lib\\site-packages\\pydantic_core-2.46.4.dist-info\\sboms\\pydantic-core.cyclonedx.json",
+        ".venv\\Lib\\site-packages\\pip-26.1.2.dist-info\\licenses\\AUTHORS.txt",
+        ".venv\\Lib\\site-packages\\pip-26.1.2.dist-info\\licenses\\src\\pip\\_vendor\\distlib\\LICENSE.txt",
+        ".venv\\Lib\\site-packages\\pip-26.1.2.dist-info\\licenses\\src\\pip\\_vendor\\idna\\LICENSE.md",
+        ".venv\\Lib\\site-packages\\pip\\_vendor\\vendor.txt",
+        ".venv\\Lib\\site-packages\\pip\\_vendor\\distlib\\LICENSE.txt",
+        ".venv\\Lib\\site-packages\\pip\\_vendor\\idna\\LICENSE.md",
+        ".venv\\Lib\\site-packages\\pillow-12.3.0.dist-info\\sboms\\pillow-12.3.0.cdx.json",
+        ".venv\\Lib\\site-packages\\numpy-2.5.1.dist-info\\licenses\\LICENSE.txt",
+        ".venv\\Lib\\site-packages\\numpy-2.5.1.dist-info\\licenses\\numpy\\random\\LICENSE.md",
+        ".venv\\Lib\\site-packages\\numpy-2.5.1.dist-info\\licenses\\numpy\\_core\\src\\npysort\\x86-simd-sort\\LICENSE.md",
+        ".venv\\Lib\\site-packages\\numpy-2.5.1.dist-info\\licenses\\numpy\\random\\src\\distributions\\LICENSE.md",
+        ".venv\\Lib\\site-packages\\numpy-2.5.1.dist-info\\licenses\\numpy\\random\\src\\mt19937\\LICENSE.md",
+        ".venv\\Lib\\site-packages\\numpy-2.5.1.dist-info\\licenses\\numpy\\random\\src\\philox\\LICENSE.md",
+        ".venv\\Lib\\site-packages\\numpy-2.5.1.dist-info\\licenses\\numpy\\linalg\\lapack_lite\\LICENSE.txt",
+        ".venv\\Lib\\site-packages\\numpy-2.5.1.dist-info\\licenses\\numpy\\fft\\pocketfft\\LICENSE.md",
+        ".venv\\Lib\\site-packages\\numpy\\random\\LICENSE.md",
+        ".venv\\Lib\\site-packages\\networkx-3.6.1.dist-info\\licenses\\LICENSE.txt",
+        ".venv\\Lib\\site-packages\\model2vec\\modelcards\\model_card_template.md",
+        ".venv\\Lib\\site-packages\\markupsafe-3.0.3.dist-info\\licenses\\LICENSE.txt",
+        ".venv\\Lib\\site-packages\\joblib-1.5.3.dist-info\\licenses\\LICENSE.txt",
+        ".venv\\Lib\\site-packages\\jinja2-3.1.6.dist-info\\licenses\\LICENSE.txt",
+        ".venv\\Lib\\site-packages\\idna-3.18.dist-info\\licenses\\LICENSE.md",
+        ".venv\\Lib\\site-packages\\httpx-0.28.1.dist-info\\licenses\\LICENSE.md",
+        ".venv\\Lib\\site-packages\\httpcore-1.0.9.dist-info\\licenses\\LICENSE.md",
+        ".venv\\Lib\\site-packages\\hf_xet-1.5.2.dist-info\\sboms\\hf_xet.cyclonedx.json",
+        ".venv\\Lib\\site-packages\\colorama-0.4.6.dist-info\\licenses\\LICENSE.txt",
+        ".venv\\Lib\\site-packages\\click-8.4.2.dist-info\\licenses\\LICENSE.txt",
+        ".venv\\Lib\\site-packages\\archguard\\models\\potion-base-8M\\README.md",
+        ".venv\\Lib\\site-packages\\archguard\\models\\potion-base-8M\\tokenizer.json"
+      ],
+      "violations": []
+    },
+    "ui": {
+      "framework": "React/Next.js/Vue",
+      "pages": [
+        "app\\page.tsx",
+        "node_modules\\next\\dist\\shared\\lib\\page-path\\absolute-path-to-page.d.ts",
+        "node_modules\\next\\dist\\shared\\lib\\page-path\\absolute-path-to-page.js",
+        "node_modules\\next\\dist\\shared\\lib\\page-path\\absolute-path-to-page.js.map",
+        "node_modules\\next\\dist\\export\\routes\\app-page.d.ts",
+        "node_modules\\next\\dist\\export\\routes\\app-page.js",
+        "node_modules\\next\\dist\\export\\routes\\app-page.js.map",
+        "node_modules\\next\\dist\\esm\\shared\\lib\\page-path\\absolute-path-to-page.js",
+        "node_modules\\next\\dist\\esm\\shared\\lib\\page-path\\absolute-path-to-page.js.map",
+        "node_modules\\next\\dist\\esm\\export\\routes\\app-page.js",
+        "node_modules\\next\\dist\\esm\\export\\routes\\app-page.js.map",
+        "node_modules\\next\\dist\\esm\\client\\components\\client-page.js",
+        "node_modules\\next\\dist\\esm\\client\\components\\client-page.js.map",
+        "node_modules\\next\\dist\\esm\\build\\templates\\app-page.js",
+        "node_modules\\next\\dist\\esm\\build\\templates\\app-page.js.map",
+        "node_modules\\next\\dist\\docs\\01-app\\03-api-reference\\03-file-conventions\\page.md",
+        "node_modules\\next\\dist\\compiled\\next-server\\app-page.runtime.dev.js",
+        "node_modules\\next\\dist\\compiled\\next-server\\app-page.runtime.dev.js.map",
+        "node_modules\\next\\dist\\compiled\\next-server\\app-page.runtime.prod.js",
+        "node_modules\\next\\dist\\compiled\\next-server\\app-page.runtime.prod.js.map",
+        "node_modules\\next\\dist\\client\\components\\client-page.d.ts",
+        "node_modules\\next\\dist\\client\\components\\client-page.js",
+        "node_modules\\next\\dist\\client\\components\\client-page.js.map",
+        "node_modules\\next\\dist\\build\\templates\\app-page.d.ts",
+        "node_modules\\next\\dist\\build\\templates\\app-page.js",
+        "node_modules\\next\\dist\\build\\templates\\app-page.js.map",
+        ".next\\server\\app\\page.js",
+        ".next\\server\\app\\page.js.map",
+        ".next\\server\\app\\page.js.nft.json",
+        ".next\\server\\app\\_global-error\\page.js"
+      ],
+      "api_routes": [],
+      "components": [
+        "app\\layout.tsx",
+        "app\\page.tsx",
+        "node_modules\\@radix-ui\\react-use-effect-event\\src\\use-effect-event.tsx",
+        "node_modules\\@radix-ui\\.react-use-effect-event-xsXrYxLs\\src\\use-effect-event.tsx",
+        "components\\layout\\Footer.tsx",
+        "components\\layout\\Header.tsx",
+        "components\\layout\\Navigation.tsx",
+        "components\\sections\\Collections.tsx",
+        "components\\sections\\Contact.tsx",
+        "components\\sections\\Hero.tsx",
+        "components\\ui\\Loader.tsx",
+        "components\\ui\\Modal.tsx",
+        "components\\ui\\Toast.tsx",
+        "prisma.config.js",
+        "scripts\\audit-project.js",
+        "scripts\\backup-data.js",
+        "scripts\\integrity-check.js",
+        "scripts\\migrate-data.js",
+        "scripts\\migrate-schema.js",
+        "scripts\\validate-schema.js",
+        "tests\\performance\\smoke_test.js",
+        "scripts\\migration\\config.js",
+        "scripts\\migration\\legacy-engine.js",
+        "scripts\\migration\\migration-decision-engine.js",
+        "scripts\\migration\\migration-executor.backup.js",
+        "scripts\\migration\\migration-executor.js",
+        "scripts\\migration\\registry-builder.js",
+        "scripts\\migration\\utils.js",
+        "node_modules\\.ajv-xe6xiV5n\\.runkit_example.js",
+        "node_modules\\.chokidar-yidbZj9H\\handler.js",
+        "node_modules\\.chokidar-yidbZj9H\\index.js",
+        "node_modules\\.classnames-FAiCd0Jx\\bind.js",
+        "node_modules\\.classnames-FAiCd0Jx\\dedupe.js",
+        "node_modules\\.classnames-FAiCd0Jx\\index.js",
+        "node_modules\\.cross-spawn-7AsMwJR9\\index.js",
+        "node_modules\\.delaunator-cYCLxXKl\\delaunator.js",
+        "node_modules\\.delaunator-cYCLxXKl\\delaunator.min.js",
+        "node_modules\\.delaunator-cYCLxXKl\\index.js",
+        "node_modules\\.denque-SSs7YEMb\\index.js",
+        "node_modules\\.dotenv-gj4dxxTN\\config.js",
+        "node_modules\\.empathic-Sc0QxhGA\\access.js",
+        "node_modules\\.empathic-Sc0QxhGA\\find.js",
+        "node_modules\\.empathic-Sc0QxhGA\\package.js",
+        "node_modules\\.empathic-Sc0QxhGA\\resolve.js",
+        "node_modules\\.empathic-Sc0QxhGA\\walk.js",
+        "node_modules\\.env-paths-1GqU2Gev\\index.js",
+        "node_modules\\.fast-decode-uri-component-dnLHcWOn\\bench.js",
+        "node_modules\\.fast-decode-uri-component-dnLHcWOn\\index.js",
+        "node_modules\\.fast-decode-uri-component-dnLHcWOn\\test.js",
+        "node_modules\\.fast-deep-equal-GCdw1zVf\\index.js"
+      ],
+      "middleware": null
+    },
+    "inventory": {
+      "total_items": 14,
+      "categories": {
+        "Unknown": 15,
+        "Honey": 15,
+        "Bee Products": 20,
+        "Premium Spices": 30,
+        "Herbal Products": 1,
+        "Natural Oils": 5
+      },
+      "out_of_stock": 86,
+      "low_stock": 0,
+      "in_stock": 0,
+      "files_analyzed": [
+        "products_data\\catalog.json",
+        "data\\legacy\\products.json",
+        "backup\\2026-07-18_13-49-51\\legacy\\products.json",
+        "backup\\2026-07-18_13-21-54\\legacy\\products.json",
+        "backup\\2026-07-18_13-18-28\\legacy\\products.json",
+        "backup\\2026-07-17_18-51-09\\legacy\\products.json"
+      ],
+      "top_products": []
+    }
+  },
+  "duplication_analysis": [
+    {
+      "file1": "docs\\legacy_brand.md",
+      "file2": "docs\\migrated_brand.md",
+      "reason": "تكرار كامل (نسخ احتياطي أو خطأ مطور).",
+      "recommendation": "احذف الأقدم (حسب تاريخ التعديل)."
+    },
+    {
+      "file1": "DOC_METADATA.csv",
+      "file2": "reports\\doc-metadata.csv",
+      "reason": "تكرار كامل (نسخ احتياطي أو خطأ مطور).",
+      "recommendation": "احذف الأقدم (حسب تاريخ التعديل)."
+    },
+    {
+      "file1": "reports\\project-decisions.before-execution.json",
+      "file2": "reports\\project-decisions.json",
+      "reason": "تكرار كامل (نسخ احتياطي أو خطأ مطور).",
+      "recommendation": "احذف الأقدم (حسب تاريخ التعديل)."
+    },
+    {
+      "file1": "scripts\\migration\\legacy-engine.js",
+      "file2": "scripts\\migration\\legacy-engine.js.backup",
+      "reason": "تكرار كامل (نسخ احتياطي أو خطأ مطور).",
+      "recommendation": "احذف الأقدم (حسب تاريخ التعديل)."
+    },
+    {
+      "file1": "docs\\legacy_brand.md",
+      "file2": "docs\\architecture\\SYSTEM_ARCHITECTURE.md",
+      "reason": "تكرار كامل (نسخ احتياطي أو خطأ مطور).",
+      "recommendation": "احذف الأقدم (حسب تاريخ التعديل)."
+    },
+    {
+      "file1": "data\\migrated_categories.json",
+      "file2": "data\\legacy\\categories.json",
+      "reason": "تكرار كامل (نسخ احتياطي أو خطأ مطور).",
+      "recommendation": "احذف الأقدم (حسب تاريخ التعديل)."
+    },
+    {
+      "file1": "data\\01_global.json",
+      "file2": "backup\\2026-07-17_18-51-09\\01_global.json",
+      "reason": "تكرار كامل (نسخ احتياطي أو خطأ مطور).",
+      "recommendation": "احذف الأقدم (حسب تاريخ التعديل)."
+    },
+    {
+      "file1": "data\\08_media.json",
+      "file2": "backup\\2026-07-17_18-51-09\\08_media.json",
+      "reason": "تكرار كامل (نسخ احتياطي أو خطأ مطور).",
+      "recommendation": "احذف الأقدم (حسب تاريخ التعديل)."
+    },
+    {
+      "file1": "data\\01_global.json",
+      "file2": "backup\\2026-07-18_13-18-28\\01_global.json",
+      "reason": "تكرار كامل (نسخ احتياطي أو خطأ مطور).",
+      "recommendation": "احذف الأقدم (حسب تاريخ التعديل)."
+    },
+    {
+      "file1": "backup\\2026-07-17_18-51-09\\02_collections.json",
+      "file2": "backup\\2026-07-18_13-18-28\\02_collections.json",
+      "reason": "تكرار كامل (نسخ احتياطي أو خطأ مطور).",
+      "recommendation": "احذف الأقدم (حسب تاريخ التعديل)."
+    }
+  ],
+  "report_path": "C:\\Users\\Ghanam\\OneDrive\\projects\\Greeny-Life\\intelligence\\comprehensive_report.md"
+}

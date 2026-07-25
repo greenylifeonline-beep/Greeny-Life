@@ -260,14 +260,28 @@ class GreenyLifeBrain:
         dirs = ["src", "tests", "docs", "logs", "intelligence", "intelligence/knowledge_base", "intelligence/backups"]
         for d in dirs:
             (self.repo_path / d).mkdir(parents=True, exist_ok=True)
-
     def _run_command(self, cmd: List[str], cwd: Optional[Path] = None, env: Optional[Dict] = None, timeout: int = 300) -> Tuple[int, str, str]:
         """تنفيذ أمر في النظام مع التعامل مع الأخطاء."""
         cwd = cwd or self.repo_path
-        full_env = os.environ.copy()
-        if env: full_env.update(env)
+        
+        # تجهيز متغيرات البيئة وضمان أن تكون جميع المفاتيح والقيم نصوصاً (str)
+        full_env = {str(k): str(v) for k, v in os.environ.items() if v is not None}
+        if env:
+            for k, v in env.items():
+                if v is not None:
+                    full_env[str(k)] = str(v)
         try:
-            proc = subprocess.run(cmd, cwd=cwd, env=full_env, capture_output=True, text=True, timeout=timeout)
+            # تم إضافة encoding و errors لتجنب مشاكل ترميز الحروف
+            proc = subprocess.run(
+                cmd,
+                cwd=cwd,
+                env=full_env,
+                capture_output=True,
+                text=True,
+                encoding='utf-8',
+                errors='ignore',
+                timeout=timeout,
+            )
             return proc.returncode, proc.stdout, proc.stderr
         except subprocess.TimeoutExpired:
             self.logger.error(f"⏰ انتهى وقت تنفيذ الأمر: {' '.join(cmd)}")
@@ -275,7 +289,7 @@ class GreenyLifeBrain:
         except Exception as e:
             self.logger.error(f"💥 خطأ في تنفيذ الأمر: {e}")
             return -1, "", str(e)
-
+        
     # ========================================================================
     # 2. وكلاء الحوكمة المعمارية (Governance & Architecture)
     # ========================================================================
@@ -1043,9 +1057,11 @@ export default function () {
                     elif 'accent' in content:
                         result["colors"]["accent"].append(c)
 
-                # استخراج الخطوط
-                fonts = re.findall(r'font-family\s*:\s*([^;]+)', content)
-                result["fonts"].extend([f.strip() for f in fonts])
+                # استخراج الخطوط   مع تنظيف القيم
+                fonts = re.findall(r'font-family\s*:\s*["\']?([^"\'{};]+)["\']?', content)
+                for f in fonts:
+                    if not f.endswith(('.js', '.jsx', '.ts', '.tsx')):
+                        result["fonts"].append(f.strip())
             except Exception:
                 pass
 
@@ -1121,43 +1137,36 @@ export default function () {
     # ========================================================================
 
     def analyze_ui_structure(self) -> Dict:
-        """تحليل مكونات الواجهة والصفحات ونقاط النهاية."""
-        self.logger.info("🖥️  [UI Analyzer] تحليل هيكل واجهة المستخدم...")
-        result = {
+        """Analyzes the UI architecture safely across the repository."""
+        self.logger.info("🖥️ [UI Analyzer] Analyzing UI structure...")
+        ui_data = {
+            "framework": "React/Next.js/Vue",
             "pages": [],
-            "components": [],
             "api_routes": [],
-            "layouts": [],
-            "middleware": None,
-            "framework": "Unknown"
+            "components": [],
+            "middleware": None
         }
-
-        # التحقق من Next.js
-        if (self.repo_path / "next.config.js").exists() or (self.repo_path / "app").exists():
-            result["framework"] = "Next.js"
-            app_dir = self.repo_path / "app"
-            if app_dir.exists():
-                for page in app_dir.rglob("page.js"):
-                    result["pages"].append(str(page.relative_to(self.repo_path)))
-                for api in app_dir.rglob("api/**/route.js"):
-                    result["api_routes"].append(str(api.relative_to(self.repo_path)))
-                for layout in app_dir.rglob("layout.js"):
-                    result["layouts"].append(str(layout.relative_to(self.repo_path)))
-
-        # البحث عن مجلد components
-        for comp_dir in ["components", "src/components", "app/components"]:
-            path = self.repo_path / comp_dir
-            if path.exists():
-                for comp in path.rglob("*.jsx") + list(path.rglob("*.tsx")):
-                    result["components"].append(str(comp.relative_to(self.repo_path)))
-
-        # البحث عن middleware
-        for mw in ["middleware.js", "middleware.ts"]:
-            if (self.repo_path / mw).exists():
-                result["middleware"] = mw
-
-        self.logger.info(f"   ✅ تم العثور على {len(result['pages'])} صفحة و {len(result['api_routes'])} نقطة نهاية API.")
-        return result
+        
+        try:
+            # Safe component path collection
+            comp_paths = []
+            for ext in ("*.jsx", "*.tsx", "*.vue", "*.js"):
+                comp_paths.extend(list(self.repo_path.rglob(ext)))
+                
+            ui_data["components"] = [str(p.relative_to(self.repo_path)) for p in comp_paths[:50]]
+            
+            # Safe page path collection
+            page_paths = []
+            for pattern in ("*page.*", "*route.*", "*index.*"):
+                page_paths.extend(list(self.repo_path.rglob(pattern)))
+                
+            ui_data["pages"] = [str(p.relative_to(self.repo_path)) for p in page_paths[:30]]
+            
+        except Exception as e:
+            self.logger.warning(f"⚠️ UI structure analysis warning: {e}")
+            
+        return ui_data
+    
 
     # ========================================================================
     # 12. وكيل تحليل المخزون والمنتجات

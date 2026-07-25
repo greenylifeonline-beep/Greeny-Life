@@ -1,6 +1,6 @@
 # 📚 Greeny-Life EOS - التوثيق التلقائي
 
-تم توليد هذا التوثيق بواسطة العقل الاصطناعي في 2026-07-25 14:57:29.
+تم توليد هذا التوثيق بواسطة العقل الاصطناعي في 2026-07-25 16:46:22.
 
 ## الهيكل العام للمشروع
 
@@ -270,6 +270,8 @@
 ├── initial_inspection.json
 ├── intelligence
 │   ├── backups
+│   ├── comprehensive_report.json
+│   ├── comprehensive_report.md
 │   ├── core
 │   │   ├── confidence.ts
 │   │   ├── engine-registry.ts

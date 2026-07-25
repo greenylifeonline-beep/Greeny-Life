@@ -1,21 +1,46 @@
 ﻿sonarqube:
   url: http://localhost:9000
-  token: 
+  token: ${SONAR_TOKEN}
 
 github:
-  token: 
+  token: ${GITHUB_TOKEN}
 
 llm:
   provider: claude
   model: claude-3-opus-20240229
+
+govern:
+  trust_threshold: 0.80
+  window_size: 10
+
+archguard:
+  config: .archguard.yml
+
+ouro_loop:
+  bound_file: BOUND.md
+
+audit:
+  tier: DEEP
 
 security:
   tools: ["bandit"]
   severity_threshold: MEDIUM
 
 performance:
-  tool: k6
   test_dir: tests/performance
+  vus: 10
+  duration: 10s
 
 documentation:
   auto_fix: true
+  ignore_patterns: [".*test.*", ".*migrations.*"]
+
+brand:
+  primary_color: ["#2E8B57"]
+  logo_aspect_ratio: 1.0
+
+brain:
+  max_files_to_deep_scan: 200
+  enable_ai_summary: true
+  backup_before_fix: true
+  knowledge_base_path: "intelligence/knowledge_base"
