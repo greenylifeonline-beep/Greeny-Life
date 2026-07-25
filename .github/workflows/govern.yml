@@ -1,0 +1,28 @@
+name: govern
+on:
+  pull_request:
+  push:
+    branches: [main]
+jobs:
+  gate:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with: {fetch-depth: 0}
+      - uses: actions/setup-python@v5
+        with: {python-version: "3.12"}
+      - name: install govern
+        run: pip install ./packages/govern || pip install govern-kit
+      - name: scoreboard
+        run: govern status
+      # Advisory until a track record exists: a fresh install has an empty
+      # ledger, and hard-failing GATE on every PR before any claim is scored
+      # blocks humans, not automation (learned installing the first external
+      # repo). Make it required only once classes earn ELIGIBLE.
+      - name: calibration gate (advisory on a young ledger)
+        run: govern gate || echo "::notice::gate GATE — no auto-merge eligibility yet"
+      - name: score merged receipts (main only)
+        if: github.ref == 'refs/heads/main'
+        run: |
+          git fetch origin main
+          govern score --all || true
