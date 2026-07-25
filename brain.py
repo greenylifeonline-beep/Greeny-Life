@@ -17,6 +17,14 @@ Date: 2026-07-25
 # ============================================================================
 import os
 import sys
+
+# فرض ترميز UTF-8 لتجنب مشاكل قراءة المخرجات في ويندوز (cp1252 UnicodeDecodeError)
+os.environ["PYTHONIOENCODING"] = "utf-8"
+if sys.platform.startswith("win"):
+    if hasattr(sys.stdout, "reconfigure"):
+        sys.stdout.reconfigure(encoding="utf-8")
+    if hasattr(sys.stderr, "reconfigure"):
+        sys.stderr.reconfigure(encoding="utf-8")
 import json
 import yaml
 import re
@@ -219,7 +227,7 @@ class GreenyLifeBrain:
         """
         Verify that required and optional tools are available in the system PATH.
         Required tools will halt execution if missing; optional tools are skipped.
-        Uses shutil.which() for cross-platform compatibility.
+        Uses import.which() for cross-platform compatibility.
         """
         required_tools = ["git", "python3"]
         optional_tools = [
@@ -274,14 +282,16 @@ class GreenyLifeBrain:
     ) -> Tuple[int, str, str]:
         """
         Execute a shell command with error handling and timeout.
-
-        Returns:
-            Tuple[int, str, str]: (return_code, stdout, stderr)
+        Forces UTF-8 encoding to avoid UnicodeDecodeError on Windows.
         """
         cwd = cwd or self.repo_path
         full_env = os.environ.copy()
         if env:
             full_env.update(env)
+
+        # Force UTF-8 for subprocess output
+        full_env["PYTHONIOENCODING"] = "utf-8"
+        full_env["LANG"] = "en_US.UTF-8"
 
         try:
             proc = subprocess.run(
@@ -290,7 +300,9 @@ class GreenyLifeBrain:
                 env=full_env,
                 capture_output=True,
                 text=True,
-                timeout=timeout
+                timeout=timeout,
+                encoding='utf-8',   # <- المفتاح: فرض ترميز UTF-8
+                errors='ignore'     # تجاهل الأحرف غير القابلة للفك
             )
             return proc.returncode, proc.stdout, proc.stderr
         except subprocess.TimeoutExpired:
@@ -299,6 +311,7 @@ class GreenyLifeBrain:
         except Exception as e:
             self.logger.error(f"Command execution failed: {e}")
             return -1, "", str(e)
+
 
     # -------------------------------------------------------------------------
     # Agent 1: Architectural Governance (ArchGuard)
@@ -313,6 +326,58 @@ class GreenyLifeBrain:
             result.passed = False
             result.summary = "ArchGuard is not installed."
             return result
+
+        config_file = self.repo_path / self.config["archguard"]["config"]
+        if not config_file.exists():
+            self._run_command(["archguard", "init"])
+
+        # Try different command names
+        output = ""
+        ret = -1
+        err = ""
+        for cmd_name in ["analyze", "scan", "check"]:
+            ret, out, err = self._run_command(
+                ["archguard", cmd_name, "--format", "json"]
+            )
+            output = out
+            # ✅ التصحيح: التحقق من أن err ليست None قبل استخدام `in`
+            if ret == 0 or (err is not None and "No such command" not in err):
+                break
+
+        # ✅ التحقق إضافي في حالة كان err None
+        if ret != 0 and (err is None or "No such command" in err):
+            result.passed = False
+            result.summary = "ArchGuard command not recognized. Please update the tool."
+            result.raw_output = err or ""
+            self.logger.warning(f"   {result.summary}")
+            return result
+
+        result.raw_output = output
+
+        if ret != 0:
+            result.passed = False
+            result.summary = f"Scan failed: {(err or '')[:200]}"
+            self.logger.warning(f"   {result.summary}")
+            return result
+
+        try:
+            data = json.loads(output)
+            violations = data.get("violations", [])
+            result.findings = violations
+            if violations:
+                result.passed = False
+                result.summary = f"Found {len(violations)} architectural violations."
+                result.score = max(0, 100 - len(violations) * 5)
+            else:
+                result.summary = "No architectural violations detected."
+                result.score = 100
+        except json.JSONDecodeError:
+            result.passed = False
+            result.summary = "Failed to parse ArchGuard output."
+
+        self.logger.info(f"   {result.summary}")
+        return result
+
 
         # Initialize if config is missing
         config_file = self.repo_path / self.config["archguard"]["config"]
@@ -1326,69 +1391,412 @@ export default function () {
         )
         return result
 
-    # -------------------------------------------------------------------------
-    # Agent 12: Packaging & Display Policy Analyzer
-    # -------------------------------------------------------------------------
-
-    def analyze_packaging_policies(self) -> Dict:
+    def analyze_and_complete_enterprise_labels(self) -> Dict:
         """
-        Extract packaging and display rules from policy documents.
-        Excludes source code files to avoid false positives.
+        Reads the existing master_products.json, maps it to GELS v2.0,
+        generates missing fields automatically, and produces a compliance report.
         """
-        self.logger.info("[Packaging Policy] Extracting packaging and display rules...")
+        self.logger.info("[GELS v2.0 Integrator] Integrating existing master_products.json...")
+        
         result = {
-            "packaging_rules": [],
-            "display_rules": [],
-            "policy_files": [],
-            "violations": []
+            "total_products": 0,
+            "products_completed": [],
+            "products_with_issues": [],
+            "generated_files": [],
+            "summary": ""
         }
 
-        keywords = [
-            "packaging", "تعبئة", "weight", "وزن",
-            "dimension", "أبعاد", "display", "عرض",
-            "material", "مادة"
-        ]
-        code_extensions = ['.py', '.js', '.jsx', '.ts', '.tsx', '.java', '.c', '.cpp', '.go', '.rb']
+        master_path = self.repo_path / "data" / "master_products.json"
+        if not master_path.exists():
+            result["summary"] = "CRITICAL: master_products.json not found in data/ folder."
+            self.logger.warning(f"   {result['summary']}")
+            return result
 
-        for file_path in self.repo_path.rglob("*"):
-            if not file_path.is_file() or file_path.stat().st_size > 1024 * 1024:
-                continue
-            if file_path.suffix in code_extensions:
-                continue
-            if file_path.suffix in ['.json', '.yaml', '.yml', '.txt', '.md', '.pdf', '.docx']:
-                try:
-                    content = file_path.read_text(encoding='utf-8', errors='ignore')
-                    if any(k in content.lower() for k in keywords):
-                        result["policy_files"].append(
-                            str(file_path.relative_to(self.repo_path))
-                        )
+        try:
+            with open(master_path, 'r', encoding='utf-8') as f:
+                data = json.load(f)
+        except Exception as e:
+            result["summary"] = f"Failed to parse master_products.json: {e}"
+            self.logger.error(f"   {result['summary']}")
+            return result
 
-                        rules = re.findall(
-                            r'(?:rule|قاعدة|max|حد)\s*[:=]\s*["\']?([^"\'\n,]+)["\']?',
-                            content,
-                            re.IGNORECASE
-                        )
-                        result["packaging_rules"].extend(rules[:5])
+        products = data.get("products", [])
+        result["total_products"] = len(products)
 
-                        display_rules = re.findall(
-                            r'(?:display|عرض|layout)\s*[:=]\s*["\']?([^"\'\n,]+)["\']?',
-                            content,
-                            re.IGNORECASE
-                        )
-                        result["display_rules"].extend(display_rules[:3])
+        # Define default templates based on collection
+        templates = {
+            "honey": {
+                "back_label": {
+                    "ingredients": ["100% Pure Honey"],
+                    "nutrition_facts": {"serving_size": "20g", "calories": 60, "sugars": "16g"},
+                    "storage": "Store in a cool, dry place away from direct sunlight.",
+                    "warnings": ["Not suitable for infants under 12 months."],
+                    "certifications": ["Halal", "HACCP", "ISO 22000"],
+                    "sustainability_claims": ["Ethically Sourced", "Supports Local Beekeepers"]
+                },
+                "side_panel": {
+                    "moisture": "<20%",
+                    "hmf": "<40 mg/kg",
+                    "usage": "Daily sweetener, immune support"
+                }
+            },
+            "bee_products": {
+                "back_label": {
+                    "ingredients": ["100% Pure Bee Product"],
+                    "nutrition_facts": {"serving_size": "5g", "calories": 30, "sugars": "5g"},
+                    "storage": "Keep refrigerated after opening.",
+                    "warnings": ["People allergic to bee products should consult a physician."],
+                    "certifications": ["Halal", "HACCP", "ISO 22000"],
+                    "sustainability_claims": ["Supports Bee Conservation", "Ethically Harvested"]
+                },
+                "side_panel": {
+                    "usage": "Consult a healthcare professional before use."
+                }
+            },
+            "spices": {
+                "back_label": {
+                    "ingredients": ["100% Pure Spice", "No Additives", "No Preservatives"],
+                    "nutrition_facts": {"serving_size": "5g", "calories": 10, "sugars": "0g"},
+                    "storage": "Store in a cool, dry place away from direct sunlight.",
+                    "warnings": ["May contain traces of allergens.", "Keep away from children."],
+                    "certifications": ["HACCP", "ISO 22000"],
+                    "sustainability_claims": ["Supports Local Farmers", "Plastic-Free Packaging"]
+                },
+                "side_panel": {
+                    "usage": "Add to cooking as desired."
+                }
+            },
+            "herbs": {
+                "back_label": {
+                    "ingredients": ["100% Pure Herbs", "No Additives", "No Preservatives"],
+                    "nutrition_facts": {"serving_size": "5g", "calories": 5, "sugars": "0g"},
+                    "storage": "Store in a cool, dry place away from direct sunlight.",
+                    "warnings": ["Consult a healthcare professional before use.", "Keep away from children."],
+                    "certifications": ["HACCP", "ISO 22000"],
+                    "sustainability_claims": ["Supports Sustainable Farming", "Eco-Friendly Packaging"]
+                },
+                "side_panel": {
+                    "usage": "Brew as tea or use in cooking."
+                }
+            },
+            "oils": {
+                "back_label": {
+                    "ingredients": ["100% Pure Cold-Pressed Oil", "No Additives", "No Preservatives"],
+                    "nutrition_facts": {"serving_size": "15ml", "calories": 120, "sugars": "0g"},
+                    "storage": "Store in a cool, dark place away from direct sunlight.",
+                    "warnings": ["Consult a healthcare professional before use.", "Keep away from children."],
+                    "certifications": ["HACCP", "ISO 22000"],
+                    "sustainability_claims": ["Supports Local Farmers", "Eco-Friendly Packaging"]
+                },
+                "side_panel": {
+                    "usage": "Use as a dietary supplement or for cooking."
+                }
+            }
+        }
 
-                except Exception:
-                    continue
+        traceability_template = {
+            "batch_number": "",
+            "production_date": "",
+            "expiry_date": "",
+            "factory_code": "GL-EGY-001",
+            "qr_verification": True
+        }
 
-        result["packaging_rules"] = list(set(result["packaging_rules"]))
-        result["display_rules"] = list(set(result["display_rules"]))
+        generated_dir = self.repo_path / "generated_labels"
+        generated_dir.mkdir(parents=True, exist_ok=True)
 
-        self.logger.info(
-            f"   Extracted {len(result['packaging_rules'])} packaging rules "
-            f"and {len(result['display_rules'])} display rules."
-        )
+        for product in products:
+            product_id = product.get("id", "unknown")
+            collection = product.get("collection", "unknown")
+            ref_id = product.get("ref_id", "")
+            
+            # Convert ref_id to GELS v2.0 standard (add LBL if missing)
+            if ref_id.startswith("GL-") and "LBL" not in ref_id:
+                parts = ref_id.split("-")
+                if len(parts) >= 3:
+                    new_ref = f"{parts[0]}-LBL-{parts[1]}-{parts[2]}"
+                    product["ref_id"] = new_ref
+                    self.logger.info(f"   Converted ref_id: {ref_id} -> {new_ref}")
+
+            template = templates.get(collection, templates.get("honey", {}))
+            
+            if "back_label" not in product or not product["back_label"]:
+                product["back_label"] = template.get("back_label", {})
+                self.logger.info(f"   Generated back_label for {product_id} based on collection '{collection}'")
+            
+            if "side_panel" not in product or not product["side_panel"]:
+                product["side_panel"] = template.get("side_panel", {})
+                self.logger.info(f"   Generated side_panel for {product_id} based on collection '{collection}'")
+            
+            if "traceability" not in product or not product["traceability"]:
+                product["traceability"] = traceability_template.copy()
+                self.logger.info(f"   Generated traceability for {product_id}")
+            
+            if "sustainability_claims" not in product["back_label"]:
+                product["back_label"]["sustainability_claims"] = template.get("back_label", {}).get("sustainability_claims", ["Ethically Sourced"])
+                self.logger.info(f"   Added sustainability_claims for {product_id}")
+
+            label_file = generated_dir / f"{product_id}_label.json"
+            label_data = {
+                "schema_version": "GELS_v2.0_Enterprise",
+                "ref_id": product.get("ref_id"),
+                "product_name": product.get("name"),
+                "accent_color": product.get("accent_color"),
+                "front_label": {
+                    "elements": ["logo", "product_name", "lifestyle_image", "100_natural", "net_weight", "origin_egypt", "qr_small"],
+                    "accent_usage": "Product name + frame"
+                },
+                "back_label": product.get("back_label"),
+                "side_panel": product.get("side_panel"),
+                "traceability": product.get("traceability"),
+                "packaging_profile": product.get("packaging_profile"),
+                "media": product.get("media")
+            }
+            
+            with open(label_file, 'w', encoding='utf-8') as f:
+                json.dump(label_data, f, indent=2, ensure_ascii=False)
+            
+            result["generated_files"].append(str(label_file.relative_to(self.repo_path)))
+            result["products_completed"].append({
+                "id": product_id,
+                "ref_id": product.get("ref_id"),
+                "status": "completed"
+            })
+
+        enhanced_master_path = self.repo_path / "data" / "master_products_enhanced.json"
+        with open(enhanced_master_path, 'w', encoding='utf-8') as f:
+            json.dump(data, f, indent=2, ensure_ascii=False)
+        self.logger.info(f"   Enhanced master file saved to: {enhanced_master_path}")
+
+        result["summary"] = f"Completed {len(result['products_completed'])} products. Generated {len(result['generated_files'])} label files."
+
+        self.logger.info(f"   {result['summary']}")
+        return result
+    
+    def integrate_packaging_and_visual_policy(self) -> Dict:
+        """
+        Integrates the Packaging Policy (Retail, Refill, Food Service, Wholesale, OEM)
+        and Visual Identity Policy (VPS-STUDIO-FOOD-01) with the master_products.json.
+        Generates complete specs for every product.
+        """
+        self.logger.info("[Packaging & Visual Policy Agent] Integrating enterprise policies...")
+        
+        result = {
+            "total_products": 0,
+            "products_processed": [],
+            "generated_files": [],
+            "summary": ""
+        }
+
+        master_path = self.repo_path / "data" / "master_products.json"
+        if not master_path.exists():
+            result["summary"] = "CRITICAL: master_products.json not found."
+            self.logger.warning(f"   {result['summary']}")
+            return result
+
+        try:
+            with open(master_path, 'r', encoding='utf-8') as f:
+                data = json.load(f)
+        except Exception as e:
+            result["summary"] = f"Failed to parse: {e}"
+            return result
+
+        # ===================================================================
+        # 1. PACKAGING POLICY MAP (Derived from your uploaded image)
+        # ===================================================================
+        packaging_policy = {
+            "honey_default": {
+                "retail": {"material": "Glass Jar", "sizes": ["250g", "500g", "750g", "1kg"], "goal": "Premium experience, attractive display"},
+                "refill": {"material": "Stand-up Pouch", "sizes": ["500g", "1kg"], "goal": "Reduce waste, lower cost"},
+                "food_service": {"material": "Food Grade Bucket", "sizes": ["3kg", "5kg", "10kg"], "goal": "Practical, durable for high volume"},
+                "wholesale": {"material": "Food Grade Drum", "sizes": ["25kg", "50kg", "300kg"], "goal": "Efficient transport & storage"},
+                "private_label": {"available": True, "services": ["Custom Packaging", "Custom Label", "Barcode & QR", "Multi-language"]}
+            },
+            "spices_default": {
+                "retail": {"material": "Glass Jar", "sizes": ["250g", "500g", "750g", "1kg"], "goal": "Premium display"},
+                "refill": {"material": "Stand-up Pouch", "sizes": ["500g", "1kg"], "goal": "Refill & save"},
+                "food_service": {"material": "Heavy Duty Pouch", "sizes": ["500g", "1kg"], "goal": "Easy use in kitchens"},
+                "wholesale": {"material": "Industrial Multi-Layer Bag", "sizes": ["10kg", "25kg"], "goal": "Cost efficient"},
+                "private_label": {"available": True, "services": ["Custom Packaging", "Brand Printing"]}
+            },
+            "herbs_default": {
+                "retail": {"material": "Glass Jar", "sizes": ["250g", "500g"], "goal": "Premium display"},
+                "refill": {"material": "Stand-up Pouch", "sizes": ["500g"], "goal": "Refill & save"},
+                "food_service": {"material": "Heavy Duty Pouch", "sizes": ["500g"], "goal": "Easy use"},
+                "wholesale": {"material": "Industrial Multi-Layer Bag", "sizes": ["10kg", "25kg"], "goal": "Cost efficient"},
+                "private_label": {"available": True, "services": ["Custom Packaging"]}
+            },
+            "royal_jelly": {
+                "retail": {"material": "Glass Jar (Amber)", "sizes": ["30ml", "50ml", "100ml"], "goal": "Premium, UV protection"},
+                "refill": {"material": "Not Applicable", "sizes": []},
+                "food_service": {"material": "Not Applicable", "sizes": []},
+                "wholesale": {"material": "Food Grade Bucket", "sizes": ["1kg", "5kg"]},
+                "private_label": {"available": True, "services": ["Custom Label"]}
+            },
+            "propolis": {
+                "retail": {"material": "Glass Jar (Amber)", "sizes": ["30ml", "50ml", "100ml"], "goal": "Premium, UV protection"},
+                "refill": {"material": "Not Applicable", "sizes": []},
+                "food_service": {"material": "Not Applicable", "sizes": []},
+                "wholesale": {"material": "Food Grade Bucket", "sizes": ["1kg", "5kg"]},
+                "private_label": {"available": True, "services": ["Custom Label"]}
+            },
+            "bee_pollen": {
+                "retail": {"material": "Glass Jar", "sizes": ["100g", "250g", "500g"], "goal": "Premium display"},
+                "refill": {"material": "Stand-up Pouch", "sizes": ["250g", "500g"]},
+                "food_service": {"material": "Not Applicable", "sizes": []},
+                "wholesale": {"material": "Food Grade Bucket", "sizes": ["5kg", "10kg"]},
+                "private_label": {"available": True, "services": ["Custom Label"]}
+            },
+            "beeswax": {
+                "retail": {"material": "Glass Jar", "sizes": ["50g", "100g", "250g"], "goal": "Premium display"},
+                "refill": {"material": "Stand-up Pouch", "sizes": ["100g", "250g"]},
+                "food_service": {"material": "Not Applicable", "sizes": []},
+                "wholesale": {"material": "Food Grade Block", "sizes": ["1kg", "5kg"]},
+                "private_label": {"available": True, "services": ["Custom Packaging"]}
+            },
+            "black_seed_oil": {
+                "retail": {"material": "Glass Bottle (Amber)", "sizes": ["30ml", "50ml", "100ml", "250ml"], "goal": "Premium, UV protection"},
+                "refill": {"material": "Not Applicable", "sizes": []},
+                "food_service": {"material": "HDPE Food Grade", "sizes": ["1L", "5L"]},
+                "wholesale": {"material": "HDPE Food Grade", "sizes": ["5L", "20L"]},
+                "private_label": {"available": True, "services": ["Custom Label", "Custom Bottle"]}
+            },
+            "oils_default": {
+                "retail": {"material": "Glass Bottle", "sizes": ["30ml", "50ml", "100ml", "250ml", "500ml"], "goal": "Premium look"},
+                "refill": {"material": "Not Applicable", "sizes": []},
+                "food_service": {"material": "HDPE Food Grade", "sizes": ["1L", "5L", "20L"], "goal": "Practical"},
+                "wholesale": {"material": "HDPE Food Grade", "sizes": ["1L", "5L", "20L"], "goal": "Efficient"},
+                "private_label": {"available": True, "services": ["Custom Bottle", "Custom Label"]}
+            }
+        }
+
+        # ===================================================================
+        # 2. VISUAL IDENTITY POLICY MAP (VPS-STUDIO-FOOD-01)
+        # ===================================================================
+        visual_policy = {
+            "vps_code": "VPS-STUDIO-FOOD-01",
+            "photography_style": "High-end Studio",
+            "lighting": "Softbox 45° from side, fill light low intensity",
+            "camera_angle": "45° Front",
+            "lens": "85mm Macro",
+            "depth_of_field": "Medium (Product in focus, background soft)",
+            "color_temperature": "5000K – 5500K (Neutral)",
+            "shadow_style": "Soft natural shadow",
+            "reflection": "Natural glass reflection",
+            "image_resolution": "8K (7680x4320 px)",
+            "image_ratios": ["4:5 (Hero)", "1:1", "16:9"],
+            "retouching": "Allowed (Clean, Natural)",
+            "filters": "Not Allowed",
+            "human_presence": "Not Allowed",
+            "props_allowed": ["Natural (wood, flowers, raw ingredient only)"],
+            "props_not_allowed": ["Colored tools, cloth, metal shiny props"],
+            "digital_assets": {
+                "hero_image": {"required": True, "format": "JPG / PNG", "min_resolution": "8K (7680x4320)"},
+                "packshot": {"required": True, "format": "PNG", "min_resolution": "8K (300 DPI)"},
+                "transparent_png": {"required": True, "format": "PNG", "min_resolution": "8K (300 DPI)"},
+                "texture_macro": {"required": True, "format": "JPG", "min_resolution": "8K (7680x4320)"},
+                "ingredient_layout": {"required": True, "format": "PNG / JPG", "min_resolution": "8K (300 DPI)"},
+                "lifestyle_image": {"required": True, "format": "JPG", "min_resolution": "8K (7680x4320)"},
+                "amazon_image": {"required": True, "format": "JPG", "min_resolution": "2000x2000 px"},
+                "banner_image": {"required": True, "format": "JPG", "min_resolution": "3840x2160 px"},
+                "thumbnail": {"required": True, "format": "JPG / PNG", "min_resolution": "1024x1024 px"},
+                "gs1_image": {"required": True, "format": "JPG", "min_resolution": "500x500 px"}
+            },
+            "color_palettes": {
+                "honey": {
+                    "Golden Honey": {"HEX": "#D4A017", "PANTONE": "7550 C"},
+                    "Amber": {"HEX": "#836800", "PANTONE": "1535 C"},
+                    "Cream White": {"HEX": "#F73E9F", "PANTONE": "7499 C"},
+                    "Natural Brown": {"HEX": "#74AE21", "PANTONE": "4625 C"},
+                    "Leaf Green": {"HEX": "#5EBE3E", "PANTONE": "7740 C"}
+                },
+                "bee_products": {
+                    "Royal Gold": {"HEX": "#F4E7C6"},
+                    "Dark Amber": {"HEX": "#7A4A24"},
+                    "Pollen Yellow": {"HEX": "#E2B400"},
+                    "Wax Gold": {"HEX": "#D4A017"}
+                },
+                "spices": {
+                    "Garlic Cream": {"HEX": "#E8DDC6"},
+                    "Onion Brown": {"HEX": "#A47149"},
+                    "Turmeric Gold": {"HEX": "#E5B800"},
+                    "Paprika Red": {"HEX": "#C6452D"},
+                    "Cumin Brown": {"HEX": "#8B5A2B"},
+                    "Spice Green": {"HEX": "#6E8B3D"}
+                },
+                "herbs": {
+                    "Hibiscus Red": {"HEX": "#B22222"}
+                },
+                "oils": {
+                    "Black Gold": {"HEX": "#1F1F1F"}
+                }
+            },
+            "master_prompt": "Product photography of {product_name_en}, premium {packaging_material} packaging, aesthetic studio lighting, macro shot showing product texture, raw natural {ingredient} placed gracefully beside, minimalist cream background, professional food styling, 8k resolution, elegant, high-end branding, consistent lighting across the series."
+        }
+
+        # ===================================================================
+        # 3. PROCESS EACH PRODUCT
+        # ===================================================================
+        output_dir = self.repo_path / "generated_specs"
+        output_dir.mkdir(parents=True, exist_ok=True)
+
+        for product in data.get("products", []):
+            product_id = product.get("id")
+            collection = product.get("collection", "unknown")
+            packaging_profile_key = product.get("packaging_profile", "honey_default")
+            accent_color = product.get("accent_color", "#FFFFFF")
+            
+            packaging_specs = packaging_policy.get(packaging_profile_key, packaging_policy.get("honey_default"))
+            
+            visual_specs = visual_policy.copy()
+            color_palette = visual_policy["color_palettes"].get(collection, visual_policy["color_palettes"].get("honey"))
+            visual_specs["color_palette"] = color_palette
+            
+            product_name_en = product.get("name", {}).get("en", product_id)
+            packaging_material = packaging_specs.get("retail", {}).get("material", "Glass Jar")
+            ingredient = product_id.replace("-", " ")
+            
+            custom_prompt = visual_policy["master_prompt"].format(
+                product_name_en=product_name_en,
+                packaging_material=packaging_material,
+                ingredient=ingredient
+            )
+            visual_specs["custom_prompt"] = custom_prompt
+
+            complete_spec = {
+                "product_id": product_id,
+                "ref_id": product.get("ref_id"),
+                "packaging": packaging_specs,
+                "visual_identity": visual_specs,
+                "sustainability": {
+                    "recyclable": packaging_material in ["Glass", "HDPE", "Paper"],
+                    "food_grade": True,
+                    "policy_aligned": True
+                }
+            }
+
+            spec_file = output_dir / f"{product_id}_complete_spec.json"
+            with open(spec_file, 'w', encoding='utf-8') as f:
+                json.dump(complete_spec, f, indent=2, ensure_ascii=False)
+            
+            result["generated_files"].append(str(spec_file.relative_to(self.repo_path)))
+            result["products_processed"].append({
+                "id": product_id,
+                "packaging_material": packaging_material,
+                "visual_prompt": custom_prompt[:100] + "..."
+            })
+
+        result["total_products"] = len(data.get("products", []))
+        result["summary"] = f"Processed {result['total_products']} products. Generated {len(result['generated_files'])} spec files."
+
+        report_path = self.repo_path / "data" / "packaging_visual_integration_report.json"
+        with open(report_path, 'w', encoding='utf-8') as f:
+            json.dump(result, f, indent=2, ensure_ascii=False)
+
+        self.logger.info(f"   {result['summary']}")
         return result
 
+ 
     # -------------------------------------------------------------------------
     # Agent 13: UI/UX Structure Analyzer
     # -------------------------------------------------------------------------
@@ -1913,7 +2321,10 @@ export default function () {
                     lines.append(
                         f"- Fix issues in **{key}**: {scan.get('summary', '')}"
                     )
-            lines.append("- Review the detailed report in 'intelligence/comprehensive_report.json'.")
+            lines.append(
+                "- Review the detailed report in "
+                "`intelligence/comprehensive_report.json`."
+            )
             lines.append("- After fixing, re-run the brain to verify.")
 
         lines.append("")
@@ -2006,4 +2417,3 @@ export default function () {
 
 if __name__ == "__main__":
     GreenyLifeBrain.cli()
-
