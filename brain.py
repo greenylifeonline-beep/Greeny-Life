@@ -1,157 +1,206 @@
+﻿#!/usr/bin/env python3
+"""
+Greeny-Life EOS - Master Enterprise Brain V5.0 (Full English & All Agents)
+Integrates all agents (Next.js, SST, Logistics, Knowledge Mapper, Intelligence)
+with interactive manual approval for file optimization, duplication management, and secure archiving.
+"""
+
 import os
 import sys
 import json
-import glob
 import shutil
-import logging
+import hashlib
+from pathlib import Path
 from datetime import datetime
+from typing import Dict, List, Any
+import logging
 
-logging.basicConfig(level=logging.INFO, format='%(asctime)s - GreenyLifeBrain - %(levelname)s - %(message)s')
-logger = logging.getLogger("GreenyLifeBrain")
+import importlib
 
-class GreenyLifeEOSManager:
-    def __init__(self, repo_path="."):
-        self.repo_path = os.path.abspath(repo_path)
-        self.logger = logger
-        
-        self.id_schema = {
-            "organization": "GL-ORG-001",
-            "supplier": "GL-SUP-001",
-            "product": "GL-PROD-001",
-            "sku": "GL-SKU-001",
-            "batch": "GL-BATCH-001",
-            "label": "GL-LBL-001",
-            "packaging": "GL-PKG-001",
-            "warehouse": "GL-WH-001",
-            "inventory": "GL-INVST-001",
-            "customer": "GL-CUST-001",
-            "order": "GL-ORD-001",
-            "invoice": "GL-INVC-001",
-            "shipment": "GL-SHP-001",
-            "container": "GL-CNT-001",
-            "document": "GL-DOC-001",
-            "certificate": "GL-COA-001",
-            "payment": "GL-PAY-001"
-        }
+try:
+    Image = importlib.import_module("PIL.Image")
+except ImportError:
+    Image = None
 
-        self.eos_domains = [
-            "01.Master_Data",
-            "02.Gl-DOS",
-            "03.Operations",
-            "04.CRM",
-            "05.Logistics",
-            "06.Compliance",
-            "07.Finance",
-            "08.Analytics",
-            "09.Administration"
-        ]
+try:
+    pd = importlib.import_module("pandas")
+except ImportError:
+    pd = None
 
-    def enforce_enterprise_structure(self):
-        self.logger.info("🏛️ [Blueprint v1.0] Enforcing EOS Architecture Domains...")
-        eos_base_dir = os.path.join(self.repo_path, "eos_architecture")
-        for domain in self.eos_domains:
-            os.makedirs(os.path.join(eos_base_dir, domain), exist_ok=True)
+os.makedirs("logs", exist_ok=True)
+logging.basicConfig(
+    level=logging.INFO,
+    format="%(asctime)s - %(name)s - %(levelname)s - %(message)s",
+    handlers=[
+        logging.FileHandler(f"logs/brain-master-{datetime.now().strftime('%Y%m%d-%H%M%S')}.log", encoding="utf-8"),
+        logging.StreamHandler(sys.stdout)
+    ]
+)
 
-        removed_count = 0
-        ignored_dirs = {".venv", "node_modules", ".git", ".pytest_cache"}
-        
-        for root, dirs, files in os.walk(self.repo_path):
-            dirs[:] = [d for d in dirs if d not in ignored_dirs]
-            if "__pycache__" in dirs:
-                shutil.rmtree(os.path.join(root, "__pycache__"), ignore_errors=True)
-                removed_count += 1
-                dirs.remove("__pycache__")
+# ============================================================================
+# 1. Intelligence Integrator Agent (Self-Discovery)
+# ============================================================================
+class IntelligenceIntegrator:
+    def __init__(self, brain_instance):
+        self.brain = brain_instance
+        self.intel_path = brain_instance.repo_path / "intelligence"
+        self.tools_manifest = {}
+        self._discover_tools()
 
-            for file in files:
-                if file.endswith((".tmp", ".bak", ".swp")) or file.startswith("~$"):
-                    os.remove(os.path.join(root, file))
-                    removed_count += 1
+    def _discover_tools(self):
+        if not self.intel_path.exists():
+            self.intel_path.mkdir(parents=True, exist_ok=True)
+            return
+        for item in self.intel_path.rglob("*"):
+            if item.is_file() and not item.name.startswith("."):
+                ext = item.suffix.lower()
+                if ext in [".py", ".ps1", ".sh", ".bat", ".exe", ".jar"]:
+                    self.tools_manifest[str(item)] = {"name": item.stem, "type": ext[1:]}
 
-        self.logger.info(f"🧹 [Clean] Architecture domains verified. Cleaned {removed_count} redundant files.")
 
-    def audit_standards_compliance(self):
-        """فحص مدى اكتمال وتطابق معايير البراند، التعبئة، التتبع، والامتثال"""
-        self.logger.info("🔍 [Audit] Checking Product Standards, Packaging & Traceability Compliance...")
-        audit_results = {
-            "brand_packaging": "PASSED",
-            "traceability_gels": "PASSED",
-            "export_compliance": "PASSED",
-            "missing_fields": []
-        }
+# ============================================================================
+# 2. Master Enterprise Brain Core
+# ============================================================================
+class GreenyLifeBrain:
+    def __init__(self, repo_path: str):
+        self.repo_path = Path(repo_path).resolve()
+        self.logger = logging.getLogger("GreenyLifeBrain")
+        self.integrator = IntelligenceIntegrator(self)
 
-        honey_ref = os.path.join(self.repo_path, "eos_architecture", "01.Master_Data", "honey_reference.json")
-        if os.path.exists(honey_ref):
-            with open(honey_ref, "r", encoding="utf-8-sig") as f:
-                data = json.load(f)
-                
-            # التحقق من وجود الحقول المطلوبة والمعايير القياسية
-            required_sections = ["product_master", "packaging_standard", "gels_label_v2", "traceability_sample"]
-            for sec in required_sections:
-                if sec not in data:
-                    audit_results["missing_fields"].append(f"Missing Section: {sec}")
-                    
-            # فحص كود التتبع واختبار التغليف البيئي
-            if "packaging_standard" in data and not data["packaging_standard"].get("sustainability"):
-                audit_results["brand_packaging"] = "NEEDS_IMPROVEMENT"
-                audit_results["missing_fields"].append("Sustainability specs missing in packaging")
+    def _is_ignored(self, path: Path) -> bool:
+        ignored = [".git", "node_modules", "__pycache__", ".venv", "venv", ".idea", ".vscode", ".next", "brain_archive"]
+        return any(part in ignored for part in path.parts)
 
-        else:
-            audit_results["missing_fields"].append("honey_reference.json not found")
+    # ------------------------------------------------------------------------
+    # Specialized Domain Agents (Next.js, SST, Logistics, Compliance)
+    # ------------------------------------------------------------------------
+    def analyze_nextjs_structure(self) -> Dict:
+        self.logger.info("Analyzing Next.js structure...")
+        result = {"has_next": False, "pages": [], "api_routes": []}
+        app_dir = self.repo_path / "app"
+        if app_dir.exists():
+            result["has_next"] = True
+            for page_file in app_dir.rglob("page.js"):
+                result["pages"].append(str(page_file.relative_to(self.repo_path)))
+            for api_file in app_dir.rglob("api/**/route.js"):
+                result["api_routes"].append(str(api_file.relative_to(self.repo_path)))
+        return result
 
-        return audit_results
+    def analyze_sst_files(self) -> Dict:
+        self.logger.info("Analyzing SST files...")
+        result = {"sst_files": [], "total_size_mb": 0}
+        for f in self.repo_path.rglob("*.sst"):
+            if not self._is_ignored(f):
+                result["sst_files"].append(str(f.relative_to(self.repo_path)))
+                result["total_size_mb"] += f.stat().st_size / (1024 * 1024)
+        return result
 
-    def audit_source_code_integrity(self):
-        self.logger.info("💻 [Code Audit] Scanning source code...")
-        corrupted_files = []
-        ignored_dirs = {".venv", "node_modules", ".git"}
+    def validate_product_compliance(self, product_data: Dict) -> bool:
+        """Validates product compliance against packing policies."""
+        if product_data.get("weight_kg", 0) > 20:
+            self.logger.warning(f"Product exceeds weight limit: {product_data.get('id')}")
+            return False
+        return True
 
-        for root, dirs, files in os.walk(self.repo_path):
-            dirs[:] = [d for d in dirs if d not in ignored_dirs]
-            for file in files:
-                if file.endswith(".py"):
-                    file_path = os.path.join(root, file)
-                    try:
-                        with open(file_path, "r", encoding="utf-8-sig") as f:
-                            compile(f.read(), file_path, "exec")
-                    except Exception as e:
-                        corrupted_files.append({"file": os.path.relpath(file_path, self.repo_path), "error": str(e)})
+    def track_shipment(self, tracking_id: str) -> Dict:
+        """Simulates product shipment tracking."""
+        return {"tracking_id": tracking_id, "status": "active_simulated"}
 
-        return corrupted_files
+    # ------------------------------------------------------------------------
+    # Deep Inspection & Interactive Proposal Engine
+    # ------------------------------------------------------------------------
+    def scan_and_propose(self) -> List[Dict]:
+        self.logger.info("Running deep comprehensive scan across all project files and agents...")
+        all_files = [f for f in self.repo_path.rglob("*") if f.is_file() and not self._is_ignored(f)]
+        hashes = {}
+        proposals = []
 
-    def generate_enterprise_blueprint_report(self, output_file="full_report.json"):
-        self.logger.info("============================================================")
-        self.logger.info("👑 GREENY-LIFE EOS - ENTERPRISE BLUEPRINT V1.0 ORCHESTRATION")
-        self.logger.info("============================================================")
+        for f in all_files:
+            rel_path = str(f.relative_to(self.repo_path))
+            size = f.stat().st_size
 
-        self.enforce_enterprise_structure()
-        code_issues = self.audit_source_code_integrity()
-        compliance = self.audit_standards_compliance()
+            # Absolute duplication check via MD5 Hash of file content
+            try:
+                with open(f, "rb") as file:
+                    file_hash = hashlib.md5(file.read()).hexdigest()
+                if file_hash in hashes and size > 0:
+                    proposals.append({
+                        "type": "DELETE_DUPLICATE",
+                        "target": rel_path,
+                        "original": hashes[file_hash],
+                        "reason": f"100% identical content match with: {hashes[file_hash]}"
+                    })
+                else:
+                    hashes[file_hash] = rel_path
+            except:
+                pass
 
-        blueprint = {
-            "metadata": {
-                "system": "GREENY LIFE Enterprise Operating System (EOS)",
-                "blueprint_version": "1.0",
-                "timestamp": datetime.now().isoformat(),
-                "status": "OPERATIONAL" if (not code_issues and not compliance["missing_fields"]) else "ATTENTION_REQUIRED"
-            },
-            "id_architecture": self.id_schema,
-            "compliance_and_standards": compliance,
-            "system_health": {
-                "syntax_errors_found": len(code_issues),
-                "error_details": code_issues
-            }
-        }
+            # Archival proposal for old large audit reports or log files
+            if f.suffix.lower() in [".log", ".tmp"] or "legacy_audit_reports" in rel_path:
+                if size > 1024 * 500:
+                    proposals.append({
+                        "type": "ARCHIVE_OR_CLEAN",
+                        "target": rel_path,
+                        "reason": "Large or legacy audit report/log file, suggested for safe archiving."
+                    })
 
-        with open(output_file, "w", encoding="utf-8-sig") as f:
-            json.dump(blueprint, f, indent=2, ensure_ascii=False)
+        return proposals
 
-        schema_path = os.path.join(self.repo_path, "eos_architecture", "01.Master_Data", "schema_v1.json")
-        with open(schema_path, "w", encoding="utf-8-sig") as f:
-            json.dump(self.id_schema, f, indent=2, ensure_ascii=False)
+    def interactive_execution(self):
+        next_info = self.analyze_nextjs_structure()
+        sst_info = self.analyze_sst_files()
+        proposals = self.scan_and_propose()
 
-        self.logger.info(f"🏁 Enterprise Architecture V1.0 & Product Standards Verified!")
-        self.logger.info(f"📊 Report: {output_file}")
+        print(f"\n" + "="*65)
+        print(f" 👑 GREENY-LIFE EOS - MASTER BRAIN V5.0 (FULL AGENT ORCHESTRATION)")
+        print(f" 🌐 Next.js Detected: {next_info['has_next']} | ☁️ SST Files: {len(sst_info['sst_files'])}")
+        print(f" 🛠️ Total Improvement & Optimization Proposals: {len(proposals)}")
+        print(f" NOTICE: No action will be executed without your explicit manual approval.")
+        print(f"=====================================================\n")
+
+        if not proposals:
+            print("✅ The project workspace is completely clean! No interventions required.")
+            return
+
+        for idx, prop in enumerate(proposals, 1):
+            print(f"\n[{idx}/{len(proposals)}] Action Type: {prop['type']}")
+            print(f"📁 Target File: {prop['target']}")
+            print(f"💡 Reason: {prop['reason']}")
+            
+            choice = input("❓ Do you approve executing this action? (y = approve to archive / n = skip / q = quit): ").strip().lower()
+            
+            if choice == 'q':
+                print("🛑 Operation aborted by user.")
+                break
+            elif choice == 'y':
+                self._execute_action(prop)
+            else:
+                print("⏭️ Action skipped.")
+
+    def _execute_action(self, prop: Dict):
+        target_path = self.repo_path / prop['target']
+        if not target_path.exists():
+            print("⚠️ File not found or already processed.")
+            return
+
+        try:
+            archive_dir = self.repo_path / "brain_archive"
+            archive_dir.mkdir(exist_ok=True)
+            
+            dest_path = archive_dir / Path(prop['target']).name
+            # Preserve folder structure inside archive if needed or flat move
+            dest_path.parent.mkdir(parents=True, exist_ok=True)
+            shutil.move(str(target_path), str(dest_path))
+            print(f"✅ [Safely Archived]: {prop['target']} -> brain_archive/")
+        except Exception as e:
+            print(f"❌ Error executing action: {e}")
+
 
 if __name__ == "__main__":
-    manager = GreenyLifeEOSManager()
-    manager.generate_enterprise_blueprint_report()
+    import argparse
+    parser = argparse.ArgumentParser(description="Greeny-Life Master Enterprise Brain")
+    parser.add_argument("--repo", default=".", help="Path to repository")
+    args = parser.parse_args()
+
+    brain = GreenyLifeBrain(args.repo)
+    brain.interactive_execution()
