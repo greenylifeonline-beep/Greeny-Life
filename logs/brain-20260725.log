@@ -864,3 +864,780 @@ java.lang.IllegalStateException: Failed to get server version
 2026-07-25 21:52:14,555 - GreenyLifeBrain - INFO - 
 [Phase 1] Architectural Governance
 2026-07-25 21:52:14,559 - GreenyLifeBrain - INFO - [ArchGuard] Starting architecture analysis...
+2026-07-25 21:57:17,199 - GreenyLifeBrain - ERROR - Command timed out: archguard check --format json
+2026-07-25 21:57:17,206 - GreenyLifeBrain - WARNING -    Scan failed: Timeout
+2026-07-25 21:57:17,210 - GreenyLifeBrain - INFO - [govern-kit] Measuring trust level...
+2026-07-25 21:57:17,836 - GreenyLifeBrain - INFO -    Trust gate failed. Human review required.
+2026-07-25 21:57:17,837 - GreenyLifeBrain - INFO - [Ouro Loop] Verifying absolute boundaries...
+2026-07-25 21:57:17,838 - GreenyLifeBrain - INFO -    Ouro Loop is not installed. Skipping.
+2026-07-25 21:57:17,838 - GreenyLifeBrain - INFO - 
+[Phase 2] Code Quality & Security
+2026-07-25 21:57:17,839 - GreenyLifeBrain - INFO - [SonarQube] Starting quality analysis...
+2026-07-25 21:57:17,840 - GreenyLifeBrain - WARNING -    SONAR_TOKEN environment variable is not set.
+2026-07-25 21:57:17,841 - GreenyLifeBrain - INFO - [Security Agent] Running vulnerability scan...
+2026-07-25 21:57:17,841 - GreenyLifeBrain - INFO -    - Running Bandit...
+2026-07-25 21:57:18,544 - GreenyLifeBrain - INFO -    Bandit: No security issues found.
+2026-07-25 21:57:18,550 - GreenyLifeBrain - INFO - 
+[Phase 3] Performance Testing
+2026-07-25 21:57:18,555 - GreenyLifeBrain - INFO - [Performance Agent] Running performance tests...
+2026-07-25 21:57:29,438 - GreenyLifeBrain - INFO -    Performance metrics could not be extracted.
+2026-07-25 21:57:29,442 - GreenyLifeBrain - INFO - 
+[Phase 4] Documentation Generation
+2026-07-25 21:57:29,443 - GreenyLifeBrain - INFO - [Documentation Agent] Generating documentation...
+2026-07-25 21:57:29,559 - GreenyLifeBrain - INFO -    - Using Claude for advanced AI summary...
+2026-07-25 21:57:29,608 - GreenyLifeBrain - ERROR - Command execution failed: [WinError 2] The system cannot find the file specified
+2026-07-25 21:57:29,609 - GreenyLifeBrain - WARNING - Claude execution failed: [WinError 2] The system cannot find the file specified
+2026-07-25 21:57:29,611 - GreenyLifeBrain - INFO -    Documentation saved to: C:\Users\Ghanam\OneDrive\projects\Greeny-Life\docs\auto-generated\INDEX.md
+2026-07-25 21:57:29,615 - GreenyLifeBrain - INFO - 
+[Phase 5] Legacy Tools Integration
+2026-07-25 21:57:29,620 - GreenyLifeBrain - INFO - [Intelligence Integrator] Discovering legacy tools...
+2026-07-25 21:57:29,682 - GreenyLifeBrain - INFO -    Merged 0 tools.
+2026-07-25 21:57:29,683 - GreenyLifeBrain - INFO - 
+[Phase 6] Global Project Mapping
+2026-07-25 21:57:29,685 - GreenyLifeBrain - INFO - [Global Mapper] Scanning project...
+2026-07-25 21:57:49,171 - GreenyLifeBrain - INFO -    Scanned 362 files, total size: 112.14 MB
+2026-07-25 21:57:49,179 - GreenyLifeBrain - INFO - 
+[Phase 7] Deep Context Analysis
+2026-07-25 21:57:49,185 - GreenyLifeBrain - INFO - [Deep Analyzer] Performing deep file analysis...
+2026-07-25 21:57:56,739 - GreenyLifeBrain - INFO -    Deep analyzed 200 files.
+2026-07-25 21:57:56,824 - GreenyLifeBrain - INFO - 
+[Phase 8] Advanced Business Analysis
+2026-07-25 21:57:56,835 - GreenyLifeBrain - INFO - [Visual Brand] Analyzing visual identity...
+2026-07-25 22:05:02,655 - GreenyLifeBrain - INFO - Optional tool 'sonar-scanner' is available.
+2026-07-25 22:05:02,657 - GreenyLifeBrain - INFO - Optional tool 'bandit' is available.
+2026-07-25 22:05:02,659 - GreenyLifeBrain - INFO - Optional tool 'k6' is available.
+2026-07-25 22:05:02,663 - GreenyLifeBrain - INFO - Optional tool 'claude' is available.
+2026-07-25 22:05:02,669 - GreenyLifeBrain - WARNING - Optional tool 'gh' not found. Some features will be disabled.
+2026-07-25 22:05:02,675 - GreenyLifeBrain - WARNING - Optional tool 'docker' not found. Some features will be disabled.
+2026-07-25 22:05:02,680 - GreenyLifeBrain - INFO - Optional tool 'archguard' is available.
+2026-07-25 22:05:02,691 - GreenyLifeBrain - WARNING - Optional tool 'ouro-loop' not found. Some features will be disabled.
+2026-07-25 22:05:02,694 - GreenyLifeBrain - INFO - Optional tool 'govern' is available.
+2026-07-25 22:05:02,701 - GreenyLifeBrain - WARNING - Optional tool 'codeql' not found. Some features will be disabled.
+2026-07-25 22:05:02,706 - GreenyLifeBrain - INFO - Optional tool 'npx' is available.
+2026-07-25 22:05:02,710 - GreenyLifeBrain - INFO - ================================================================================
+2026-07-25 22:05:02,721 - GreenyLifeBrain - INFO - Greeny-Life EOS Brain initialized successfully.
+2026-07-25 22:05:02,738 - GreenyLifeBrain - INFO - Project Path: C:\Users\Ghanam\OneDrive\projects\Greeny-Life
+2026-07-25 22:05:02,743 - GreenyLifeBrain - INFO - ================================================================================
+2026-07-25 22:05:02,753 - GreenyLifeBrain - INFO - ================================================================================
+2026-07-25 22:05:02,764 - GreenyLifeBrain - INFO - Greeny-Life EOS Brain - Full Pipeline Execution
+2026-07-25 22:05:02,776 - GreenyLifeBrain - INFO - ================================================================================
+2026-07-25 22:05:02,778 - GreenyLifeBrain - INFO - 
+[Phase 1] Architectural Governance
+2026-07-25 22:05:02,786 - GreenyLifeBrain - INFO - [ArchGuard] Starting architecture analysis...
+2026-07-25 22:10:06,081 - GreenyLifeBrain - ERROR - Command timed out: archguard check --format json
+2026-07-25 22:10:06,090 - GreenyLifeBrain - WARNING -    Scan failed: Timeout
+2026-07-25 22:10:06,095 - GreenyLifeBrain - INFO - [govern-kit] Measuring trust level...
+2026-07-25 22:10:07,002 - GreenyLifeBrain - INFO -    Trust gate failed. Human review required.
+2026-07-25 22:10:07,005 - GreenyLifeBrain - INFO - [Ouro Loop] Verifying absolute boundaries...
+2026-07-25 22:10:07,008 - GreenyLifeBrain - INFO -    Ouro Loop is not installed. Skipping.
+2026-07-25 22:10:07,009 - GreenyLifeBrain - INFO - 
+[Phase 2] Code Quality & Security
+2026-07-25 22:10:07,037 - GreenyLifeBrain - INFO - [SonarQube] Starting quality analysis...
+2026-07-25 22:10:07,057 - GreenyLifeBrain - WARNING -    SONAR_TOKEN environment variable is not set.
+2026-07-25 22:10:07,059 - GreenyLifeBrain - INFO - [Security Agent] Running vulnerability scan...
+2026-07-25 22:10:07,066 - GreenyLifeBrain - INFO -    - Running Bandit...
+2026-07-25 22:10:10,169 - GreenyLifeBrain - INFO -    Bandit: No security issues found.
+2026-07-25 22:10:10,169 - GreenyLifeBrain - INFO - 
+[Phase 3] Performance Testing
+2026-07-25 22:10:10,169 - GreenyLifeBrain - INFO - [Performance Agent] Running performance tests...
+2026-07-25 22:10:21,052 - GreenyLifeBrain - INFO -    Performance metrics could not be extracted.
+2026-07-25 22:10:21,055 - GreenyLifeBrain - INFO - 
+[Phase 4] Documentation Generation
+2026-07-25 22:10:21,056 - GreenyLifeBrain - INFO - [Documentation Agent] Generating documentation...
+2026-07-25 22:10:21,180 - GreenyLifeBrain - INFO -    - Using Claude for advanced AI summary...
+2026-07-25 22:10:21,229 - GreenyLifeBrain - ERROR - Command execution failed: [WinError 2] The system cannot find the file specified
+2026-07-25 22:10:21,230 - GreenyLifeBrain - WARNING - Claude execution failed: [WinError 2] The system cannot find the file specified
+2026-07-25 22:10:21,232 - GreenyLifeBrain - INFO -    Documentation saved to: C:\Users\Ghanam\OneDrive\projects\Greeny-Life\docs\auto-generated\INDEX.md
+2026-07-25 22:10:21,242 - GreenyLifeBrain - INFO - 
+[Phase 5] Legacy Tools Integration
+2026-07-25 22:10:21,243 - GreenyLifeBrain - INFO - [Intelligence Integrator] Discovering legacy tools...
+2026-07-25 22:10:21,284 - GreenyLifeBrain - INFO -    Merged 0 tools.
+2026-07-25 22:10:21,290 - GreenyLifeBrain - INFO - 
+[Phase 6] Global Project Mapping
+2026-07-25 22:10:21,292 - GreenyLifeBrain - INFO - [Global Mapper] Scanning project...
+2026-07-25 22:10:45,259 - GreenyLifeBrain - INFO -    Scanned 362 files, total size: 112.14 MB
+2026-07-25 22:10:45,259 - GreenyLifeBrain - INFO - 
+[Phase 7] Deep Context Analysis
+2026-07-25 22:10:45,262 - GreenyLifeBrain - INFO - [Deep Analyzer] Performing deep file analysis...
+2026-07-25 22:10:53,908 - GreenyLifeBrain - INFO -    Deep analyzed 200 files.
+2026-07-25 22:10:53,971 - GreenyLifeBrain - INFO - 
+[Phase 8] Advanced Business Analysis
+2026-07-25 22:10:53,977 - GreenyLifeBrain - INFO - [Visual Brand] Analyzing visual identity...
+2026-07-25 22:11:05,226 - GreenyLifeBrain - INFO -    Analyzed 38 images and 5 fonts.
+2026-07-25 22:12:43,370 - GreenyLifeBrain - INFO - Optional tool 'sonar-scanner' is available.
+2026-07-25 22:12:43,375 - GreenyLifeBrain - INFO - Optional tool 'bandit' is available.
+2026-07-25 22:12:43,380 - GreenyLifeBrain - INFO - Optional tool 'k6' is available.
+2026-07-25 22:12:43,406 - GreenyLifeBrain - INFO - Optional tool 'claude' is available.
+2026-07-25 22:12:43,412 - GreenyLifeBrain - WARNING - Optional tool 'gh' not found. Some features will be disabled.
+2026-07-25 22:12:43,424 - GreenyLifeBrain - WARNING - Optional tool 'docker' not found. Some features will be disabled.
+2026-07-25 22:12:43,430 - GreenyLifeBrain - INFO - Optional tool 'archguard' is available.
+2026-07-25 22:12:43,440 - GreenyLifeBrain - WARNING - Optional tool 'ouro-loop' not found. Some features will be disabled.
+2026-07-25 22:12:43,445 - GreenyLifeBrain - INFO - Optional tool 'govern' is available.
+2026-07-25 22:12:43,477 - GreenyLifeBrain - WARNING - Optional tool 'codeql' not found. Some features will be disabled.
+2026-07-25 22:12:43,492 - GreenyLifeBrain - INFO - Optional tool 'npx' is available.
+2026-07-25 22:12:43,497 - GreenyLifeBrain - INFO - ================================================================================
+2026-07-25 22:12:43,509 - GreenyLifeBrain - INFO - Greeny-Life EOS Brain initialized successfully.
+2026-07-25 22:12:43,513 - GreenyLifeBrain - INFO - Project Path: C:\Users\Ghanam\OneDrive\projects\Greeny-Life
+2026-07-25 22:12:43,514 - GreenyLifeBrain - INFO - ================================================================================
+2026-07-25 22:12:43,523 - GreenyLifeBrain - INFO - ================================================================================
+2026-07-25 22:12:43,539 - GreenyLifeBrain - INFO - Greeny-Life EOS Brain - Full Pipeline Execution
+2026-07-25 22:12:43,543 - GreenyLifeBrain - INFO - ================================================================================
+2026-07-25 22:12:43,544 - GreenyLifeBrain - INFO - 
+[Phase 1] Architectural Governance
+2026-07-25 22:12:43,546 - GreenyLifeBrain - INFO - [ArchGuard] Starting architecture analysis...
+2026-07-25 22:17:46,616 - GreenyLifeBrain - ERROR - Command timed out: archguard check --format json
+2026-07-25 22:17:46,620 - GreenyLifeBrain - WARNING -    Scan failed: Timeout
+2026-07-25 22:17:46,622 - GreenyLifeBrain - INFO - [govern-kit] Measuring trust level...
+2026-07-25 22:17:47,262 - GreenyLifeBrain - INFO -    Trust gate failed. Human review required.
+2026-07-25 22:17:47,263 - GreenyLifeBrain - INFO - [Ouro Loop] Verifying absolute boundaries...
+2026-07-25 22:17:47,266 - GreenyLifeBrain - INFO -    Ouro Loop is not installed. Skipping.
+2026-07-25 22:17:47,269 - GreenyLifeBrain - INFO - 
+[Phase 2] Code Quality & Security
+2026-07-25 22:17:47,271 - GreenyLifeBrain - INFO - [SonarQube] Starting quality analysis...
+2026-07-25 22:17:47,274 - GreenyLifeBrain - WARNING -    SONAR_TOKEN environment variable is not set.
+2026-07-25 22:17:47,292 - GreenyLifeBrain - INFO - [Security Agent] Running vulnerability scan...
+2026-07-25 22:17:47,304 - GreenyLifeBrain - INFO -    - Running Bandit...
+2026-07-25 22:17:48,053 - GreenyLifeBrain - INFO -    Bandit: No security issues found.
+2026-07-25 22:17:48,054 - GreenyLifeBrain - INFO - 
+[Phase 3] Performance Testing
+2026-07-25 22:17:48,054 - GreenyLifeBrain - INFO - [Performance Agent] Running performance tests...
+2026-07-25 22:17:58,990 - GreenyLifeBrain - INFO -    Performance metrics could not be extracted.
+2026-07-25 22:17:58,996 - GreenyLifeBrain - INFO - 
+[Phase 4] Documentation Generation
+2026-07-25 22:17:59,000 - GreenyLifeBrain - INFO - [Documentation Agent] Generating documentation...
+2026-07-25 22:17:59,092 - GreenyLifeBrain - INFO -    - Using Claude for advanced AI summary...
+2026-07-25 22:17:59,131 - GreenyLifeBrain - ERROR - Command execution failed: [WinError 2] The system cannot find the file specified
+2026-07-25 22:17:59,136 - GreenyLifeBrain - WARNING - Claude execution failed: [WinError 2] The system cannot find the file specified
+2026-07-25 22:17:59,148 - GreenyLifeBrain - INFO -    Documentation saved to: C:\Users\Ghanam\OneDrive\projects\Greeny-Life\docs\auto-generated\INDEX.md
+2026-07-25 22:17:59,150 - GreenyLifeBrain - INFO - 
+[Phase 5] Legacy Tools Integration
+2026-07-25 22:17:59,158 - GreenyLifeBrain - INFO - [Intelligence Integrator] Discovering legacy tools...
+2026-07-25 22:17:59,186 - GreenyLifeBrain - INFO -    Merged 0 tools.
+2026-07-25 22:17:59,195 - GreenyLifeBrain - INFO - 
+[Phase 6] Global Project Mapping
+2026-07-25 22:17:59,198 - GreenyLifeBrain - INFO - [Global Mapper] Scanning project...
+2026-07-25 22:18:20,042 - GreenyLifeBrain - INFO -    Scanned 362 files, total size: 112.16 MB
+2026-07-25 22:18:20,045 - GreenyLifeBrain - INFO - 
+[Phase 7] Deep Context Analysis
+2026-07-25 22:18:20,047 - GreenyLifeBrain - INFO - [Deep Analyzer] Performing deep file analysis...
+2026-07-25 22:18:28,827 - GreenyLifeBrain - INFO -    Deep analyzed 200 files.
+2026-07-25 22:18:28,988 - GreenyLifeBrain - INFO - 
+[Phase 8] Advanced Business Analysis
+2026-07-25 22:18:28,998 - GreenyLifeBrain - INFO - [Visual Brand] Analyzing visual identity...
+2026-07-25 22:18:38,546 - GreenyLifeBrain - INFO -    Analyzed 38 images and 5 fonts.
+2026-07-25 22:30:42,254 - GreenyLifeBrain - INFO - Optional tool 'sonar-scanner' is available.
+2026-07-25 22:30:42,256 - GreenyLifeBrain - INFO - Optional tool 'bandit' is available.
+2026-07-25 22:30:42,260 - GreenyLifeBrain - INFO - Optional tool 'k6' is available.
+2026-07-25 22:30:42,269 - GreenyLifeBrain - INFO - Optional tool 'claude' is available.
+2026-07-25 22:30:42,276 - GreenyLifeBrain - WARNING - Optional tool 'gh' not found. Some features will be disabled.
+2026-07-25 22:30:42,284 - GreenyLifeBrain - WARNING - Optional tool 'docker' not found. Some features will be disabled.
+2026-07-25 22:30:42,285 - GreenyLifeBrain - INFO - Optional tool 'archguard' is available.
+2026-07-25 22:30:42,292 - GreenyLifeBrain - WARNING - Optional tool 'ouro-loop' not found. Some features will be disabled.
+2026-07-25 22:30:42,300 - GreenyLifeBrain - INFO - Optional tool 'govern' is available.
+2026-07-25 22:30:42,304 - GreenyLifeBrain - WARNING - Optional tool 'codeql' not found. Some features will be disabled.
+2026-07-25 22:30:42,321 - GreenyLifeBrain - INFO - Optional tool 'npx' is available.
+2026-07-25 22:30:42,335 - GreenyLifeBrain - INFO - ================================================================================
+2026-07-25 22:30:42,336 - GreenyLifeBrain - INFO - Greeny-Life EOS Brain initialized successfully.
+2026-07-25 22:30:42,339 - GreenyLifeBrain - INFO - Project Path: C:\Users\Ghanam\OneDrive\projects\Greeny-Life
+2026-07-25 22:30:42,340 - GreenyLifeBrain - INFO - ================================================================================
+2026-07-25 22:30:42,342 - GreenyLifeBrain - INFO - ================================================================================
+2026-07-25 22:30:42,349 - GreenyLifeBrain - INFO - Greeny-Life EOS Brain - Full Pipeline Execution
+2026-07-25 22:30:42,352 - GreenyLifeBrain - INFO - ================================================================================
+2026-07-25 22:30:42,359 - GreenyLifeBrain - INFO - 
+[Phase 1] Architectural Governance
+2026-07-25 22:30:42,362 - GreenyLifeBrain - INFO - [ArchGuard] Starting architecture analysis...
+2026-07-25 22:35:45,548 - GreenyLifeBrain - ERROR - Command timed out: archguard check --format json
+2026-07-25 22:35:45,549 - GreenyLifeBrain - WARNING -    Scan failed: Timeout
+2026-07-25 22:35:45,550 - GreenyLifeBrain - INFO - [govern-kit] Measuring trust level...
+2026-07-25 22:35:46,111 - GreenyLifeBrain - INFO -    Trust gate failed. Human review required.
+2026-07-25 22:35:46,114 - GreenyLifeBrain - INFO - [Ouro Loop] Verifying absolute boundaries...
+2026-07-25 22:35:46,115 - GreenyLifeBrain - INFO -    Ouro Loop is not installed. Skipping.
+2026-07-25 22:35:46,115 - GreenyLifeBrain - INFO - 
+[Phase 2] Code Quality & Security
+2026-07-25 22:35:46,116 - GreenyLifeBrain - INFO - [SonarQube] Starting quality analysis...
+2026-07-25 22:35:46,116 - GreenyLifeBrain - WARNING -    SONAR_TOKEN environment variable is not set.
+2026-07-25 22:35:46,117 - GreenyLifeBrain - INFO - [Security Agent] Running vulnerability scan...
+2026-07-25 22:35:46,117 - GreenyLifeBrain - INFO -    - Running Bandit...
+2026-07-25 22:35:46,997 - GreenyLifeBrain - INFO -    Bandit: No security issues found.
+2026-07-25 22:35:46,998 - GreenyLifeBrain - INFO - 
+[Phase 3] Performance Testing
+2026-07-25 22:35:46,998 - GreenyLifeBrain - INFO - [Performance Agent] Running performance tests...
+2026-07-25 22:35:58,154 - GreenyLifeBrain - INFO -    Performance metrics could not be extracted.
+2026-07-25 22:35:58,155 - GreenyLifeBrain - INFO - 
+[Phase 4] Documentation Generation
+2026-07-25 22:35:58,155 - GreenyLifeBrain - INFO - [Documentation Agent] Generating documentation...
+2026-07-25 22:35:58,250 - GreenyLifeBrain - INFO -    - Using Claude for advanced AI summary...
+2026-07-25 22:35:58,275 - GreenyLifeBrain - ERROR - Command execution failed: [WinError 2] The system cannot find the file specified
+2026-07-25 22:35:58,286 - GreenyLifeBrain - WARNING - Claude execution failed: [WinError 2] The system cannot find the file specified
+2026-07-25 22:35:58,296 - GreenyLifeBrain - INFO -    Documentation saved to: C:\Users\Ghanam\OneDrive\projects\Greeny-Life\docs\auto-generated\INDEX.md
+2026-07-25 22:35:58,301 - GreenyLifeBrain - INFO - 
+[Phase 5] Legacy Tools Integration
+2026-07-25 22:35:58,306 - GreenyLifeBrain - INFO - [Intelligence Integrator] Discovering legacy tools...
+2026-07-25 22:35:58,348 - GreenyLifeBrain - INFO -    Merged 0 tools.
+2026-07-25 22:35:58,354 - GreenyLifeBrain - INFO - 
+[Phase 6] Global Project Mapping
+2026-07-25 22:35:58,356 - GreenyLifeBrain - INFO - [Global Mapper] Scanning project...
+2026-07-25 22:36:15,817 - GreenyLifeBrain - INFO -    Scanned 365 files, total size: 112.16 MB
+2026-07-25 22:36:15,820 - GreenyLifeBrain - INFO - 
+[Phase 7] Deep Context Analysis
+2026-07-25 22:36:15,823 - GreenyLifeBrain - INFO - [Deep Analyzer] Performing deep file analysis...
+2026-07-25 22:36:22,038 - GreenyLifeBrain - INFO -    Deep analyzed 200 files.
+2026-07-25 22:36:22,094 - GreenyLifeBrain - INFO - 
+[Phase 8] Advanced Business Analysis
+2026-07-25 22:36:22,097 - GreenyLifeBrain - INFO - [Visual Brand] Analyzing visual identity...
+2026-07-25 22:36:28,960 - GreenyLifeBrain - INFO -    Analyzed 38 images and 5 fonts.
+2026-07-25 22:36:28,964 - GreenyLifeBrain - INFO - [Packaging Agent] Analyzing packaging policies...
+2026-07-25 22:36:28,968 - GreenyLifeBrain - INFO -    Packaging policies analyzed successfully.
+2026-07-25 22:36:28,982 - GreenyLifeBrain - INFO - [UI Analyzer] Analyzing UI structure...
+2026-07-25 22:47:19,162 - GreenyLifeBrain - INFO - Optional tool 'sonar-scanner' is available.
+2026-07-25 22:47:19,164 - GreenyLifeBrain - INFO - Optional tool 'bandit' is available.
+2026-07-25 22:47:19,168 - GreenyLifeBrain - INFO - Optional tool 'k6' is available.
+2026-07-25 22:47:19,174 - GreenyLifeBrain - INFO - Optional tool 'claude' is available.
+2026-07-25 22:47:19,179 - GreenyLifeBrain - WARNING - Optional tool 'gh' not found. Some features will be disabled.
+2026-07-25 22:47:19,186 - GreenyLifeBrain - WARNING - Optional tool 'docker' not found. Some features will be disabled.
+2026-07-25 22:47:19,190 - GreenyLifeBrain - INFO - Optional tool 'archguard' is available.
+2026-07-25 22:47:19,199 - GreenyLifeBrain - WARNING - Optional tool 'ouro-loop' not found. Some features will be disabled.
+2026-07-25 22:47:19,205 - GreenyLifeBrain - INFO - Optional tool 'govern' is available.
+2026-07-25 22:47:19,212 - GreenyLifeBrain - WARNING - Optional tool 'codeql' not found. Some features will be disabled.
+2026-07-25 22:47:19,226 - GreenyLifeBrain - INFO - Optional tool 'npx' is available.
+2026-07-25 22:47:19,231 - GreenyLifeBrain - INFO - ================================================================================
+2026-07-25 22:47:19,237 - GreenyLifeBrain - INFO - Greeny-Life EOS Brain initialized successfully.
+2026-07-25 22:47:19,242 - GreenyLifeBrain - INFO - Project Path: C:\Users\Ghanam\OneDrive\projects\Greeny-Life
+2026-07-25 22:47:19,248 - GreenyLifeBrain - INFO - ================================================================================
+2026-07-25 22:47:19,257 - GreenyLifeBrain - INFO - ================================================================================
+2026-07-25 22:47:19,263 - GreenyLifeBrain - INFO - Greeny-Life EOS Brain - Full Pipeline Execution
+2026-07-25 22:47:19,270 - GreenyLifeBrain - INFO - ================================================================================
+2026-07-25 22:47:19,270 - GreenyLifeBrain - INFO - 
+[Phase 1] Architectural Governance
+2026-07-25 22:47:19,275 - GreenyLifeBrain - INFO - [ArchGuard] Starting architecture analysis...
+2026-07-25 22:52:22,950 - GreenyLifeBrain - ERROR - Command timed out: archguard check --format json
+2026-07-25 22:52:22,978 - GreenyLifeBrain - WARNING -    Scan failed: Timeout
+2026-07-25 22:52:22,995 - GreenyLifeBrain - INFO - [govern-kit] Measuring trust level...
+2026-07-25 22:52:24,117 - GreenyLifeBrain - INFO -    Trust gate failed. Human review required.
+2026-07-25 22:52:24,119 - GreenyLifeBrain - INFO - [Ouro Loop] Verifying absolute boundaries...
+2026-07-25 22:52:24,121 - GreenyLifeBrain - INFO -    Ouro Loop is not installed. Skipping.
+2026-07-25 22:52:24,122 - GreenyLifeBrain - INFO - 
+[Phase 2] Code Quality & Security
+2026-07-25 22:52:24,123 - GreenyLifeBrain - INFO - [SonarQube] Starting quality analysis...
+2026-07-25 22:52:24,124 - GreenyLifeBrain - WARNING -    SONAR_TOKEN environment variable is not set.
+2026-07-25 22:52:24,124 - GreenyLifeBrain - INFO - [Security Agent] Running vulnerability scan...
+2026-07-25 22:52:24,125 - GreenyLifeBrain - INFO -    - Running Bandit...
+2026-07-25 22:52:25,115 - GreenyLifeBrain - INFO -    Bandit: No security issues found.
+2026-07-25 22:52:25,120 - GreenyLifeBrain - INFO - 
+[Phase 3] Performance Testing
+2026-07-25 22:52:25,123 - GreenyLifeBrain - INFO - [Performance Agent] Running performance tests...
+2026-07-25 22:52:36,366 - GreenyLifeBrain - INFO -    Performance metrics could not be extracted.
+2026-07-25 22:52:36,367 - GreenyLifeBrain - INFO - 
+[Phase 4] Documentation Generation
+2026-07-25 22:52:36,368 - GreenyLifeBrain - INFO - [Documentation Agent] Generating documentation...
+2026-07-25 22:52:36,517 - GreenyLifeBrain - INFO -    - Using Claude for advanced AI summary...
+2026-07-25 22:52:36,559 - GreenyLifeBrain - ERROR - Command execution failed: [WinError 2] The system cannot find the file specified
+2026-07-25 22:52:36,561 - GreenyLifeBrain - WARNING - Claude execution failed: [WinError 2] The system cannot find the file specified
+2026-07-25 22:52:36,563 - GreenyLifeBrain - INFO -    Documentation saved to: C:\Users\Ghanam\OneDrive\projects\Greeny-Life\docs\auto-generated\INDEX.md
+2026-07-25 22:52:36,564 - GreenyLifeBrain - INFO - 
+[Phase 5] Legacy Tools Integration
+2026-07-25 22:52:36,565 - GreenyLifeBrain - INFO - [Intelligence Integrator] Discovering legacy tools...
+2026-07-25 22:52:36,605 - GreenyLifeBrain - INFO -    Merged 0 tools.
+2026-07-25 22:52:36,609 - GreenyLifeBrain - INFO - 
+[Phase 6] Global Project Mapping
+2026-07-25 22:52:36,611 - GreenyLifeBrain - INFO - [Global Mapper] Scanning project...
+2026-07-25 22:52:58,249 - GreenyLifeBrain - INFO -    Scanned 366 files, total size: 112.16 MB
+2026-07-25 22:52:58,257 - GreenyLifeBrain - INFO - 
+[Phase 7] Deep Context Analysis
+2026-07-25 22:52:58,264 - GreenyLifeBrain - INFO - [Deep Analyzer] Performing deep file analysis...
+2026-07-25 22:53:05,321 - GreenyLifeBrain - INFO -    Deep analyzed 200 files.
+2026-07-25 22:53:05,387 - GreenyLifeBrain - INFO - 
+[Phase 8] Advanced Business Analysis
+2026-07-25 22:53:05,388 - GreenyLifeBrain - INFO - [Visual Brand] Analyzing visual identity...
+2026-07-25 22:53:12,955 - GreenyLifeBrain - INFO -    Analyzed 38 images and 5 fonts.
+2026-07-25 22:53:12,964 - GreenyLifeBrain - INFO - [Packaging Agent] Analyzing packaging policies...
+2026-07-25 22:53:12,968 - GreenyLifeBrain - INFO -    Packaging policies analyzed successfully.
+2026-07-25 22:53:12,969 - GreenyLifeBrain - INFO - [UI Analyzer] Analyzing UI structure...
+2026-07-25 22:53:13,014 - GreenyLifeBrain - INFO -    Found 0 pages, 0 API endpoints.
+2026-07-25 22:53:13,017 - GreenyLifeBrain - INFO - [Inventory Analyzer] Analyzing inventory data...
+2026-07-25 22:53:18,118 - GreenyLifeBrain - INFO -    Analyzed inventory: 14 products.
+2026-07-25 22:53:18,122 - GreenyLifeBrain - INFO - 
+[Phase 9] Duplication Analysis
+2026-07-25 22:53:18,134 - GreenyLifeBrain - INFO - 
+[Phase 10] Auto-Remediation
+2026-07-25 22:53:18,142 - GreenyLifeBrain - WARNING - Issues detected. Starting auto-remediation...
+2026-07-25 22:53:18,144 - GreenyLifeBrain - INFO - [SonarQube] Starting quality analysis...
+2026-07-25 22:53:18,145 - GreenyLifeBrain - WARNING -    SONAR_TOKEN environment variable is not set.
+2026-07-25 22:53:18,148 - GreenyLifeBrain - INFO - 
+[Phase 11] Creating GitHub Pull Request
+2026-07-25 22:53:18,150 - GreenyLifeBrain - INFO - [GitHub PR] Creating pull request: ai-remediation
+2026-07-25 22:53:18,150 - GreenyLifeBrain - WARNING - GitHub CLI (gh) is not installed. Skipping PR creation.
+2026-07-25 22:53:18,154 - GreenyLifeBrain - INFO - 
+[Phase 12] Comprehensive Report Generation
+2026-07-25 22:53:18,166 - GreenyLifeBrain - INFO - 
+[Phase 16] Building Extended Product Master
+2026-07-25 22:53:18,173 - GreenyLifeBrain - INFO - [Master Data Agent] Building extended product master...
+2026-07-25 22:53:18,177 - GreenyLifeBrain - INFO - 
+[Phase 17] Building CRM & Supplier Data
+2026-07-25 22:53:18,182 - GreenyLifeBrain - INFO - [CRM & Supplier Agent] Building customer and supplier data...
+2026-07-25 22:53:18,192 - GreenyLifeBrain - INFO -    Created 2 customers, 1 suppliers, 1 opportunities.
+2026-07-25 22:53:18,198 - GreenyLifeBrain - INFO - 
+[Phase 18] Generating Certificate Report
+2026-07-25 22:53:18,208 - GreenyLifeBrain - INFO - [Certificate Agent] Generating certificate report...
+2026-07-25 23:04:31,785 - GreenyLifeBrain - INFO - Optional tool 'sonar-scanner' is available.
+2026-07-25 23:04:31,788 - GreenyLifeBrain - INFO - Optional tool 'bandit' is available.
+2026-07-25 23:04:31,790 - GreenyLifeBrain - INFO - Optional tool 'k6' is available.
+2026-07-25 23:04:31,794 - GreenyLifeBrain - INFO - Optional tool 'claude' is available.
+2026-07-25 23:04:31,800 - GreenyLifeBrain - WARNING - Optional tool 'gh' not found. Some features will be disabled.
+2026-07-25 23:04:31,807 - GreenyLifeBrain - WARNING - Optional tool 'docker' not found. Some features will be disabled.
+2026-07-25 23:04:31,814 - GreenyLifeBrain - INFO - Optional tool 'archguard' is available.
+2026-07-25 23:04:31,821 - GreenyLifeBrain - WARNING - Optional tool 'ouro-loop' not found. Some features will be disabled.
+2026-07-25 23:04:31,826 - GreenyLifeBrain - INFO - Optional tool 'govern' is available.
+2026-07-25 23:04:31,837 - GreenyLifeBrain - WARNING - Optional tool 'codeql' not found. Some features will be disabled.
+2026-07-25 23:04:31,840 - GreenyLifeBrain - INFO - Optional tool 'npx' is available.
+2026-07-25 23:04:31,846 - GreenyLifeBrain - INFO - ================================================================================
+2026-07-25 23:04:31,852 - GreenyLifeBrain - INFO - Greeny-Life EOS Brain initialized successfully.
+2026-07-25 23:04:31,854 - GreenyLifeBrain - INFO - Project Path: C:\Users\Ghanam\OneDrive\projects\Greeny-Life
+2026-07-25 23:04:31,854 - GreenyLifeBrain - INFO - ================================================================================
+2026-07-25 23:04:31,854 - GreenyLifeBrain - INFO - ================================================================================
+2026-07-25 23:04:31,855 - GreenyLifeBrain - INFO - Greeny-Life EOS Brain - Full Pipeline Execution
+2026-07-25 23:04:31,855 - GreenyLifeBrain - INFO - ================================================================================
+2026-07-25 23:04:31,855 - GreenyLifeBrain - INFO - 
+[Phase 1] Architectural Governance
+2026-07-25 23:04:31,855 - GreenyLifeBrain - INFO - [ArchGuard] Starting architecture analysis...
+2026-07-25 23:09:36,068 - GreenyLifeBrain - ERROR - Command timed out: archguard check --format json
+2026-07-25 23:09:36,069 - GreenyLifeBrain - WARNING -    Scan failed: Timeout
+2026-07-25 23:09:36,070 - GreenyLifeBrain - INFO - [govern-kit] Measuring trust level...
+2026-07-25 23:09:36,652 - GreenyLifeBrain - INFO -    Trust gate failed. Human review required.
+2026-07-25 23:09:36,653 - GreenyLifeBrain - INFO - [Ouro Loop] Verifying absolute boundaries...
+2026-07-25 23:09:36,653 - GreenyLifeBrain - INFO -    Ouro Loop is not installed. Skipping.
+2026-07-25 23:09:36,654 - GreenyLifeBrain - INFO - 
+[Phase 2] Code Quality & Security
+2026-07-25 23:09:36,654 - GreenyLifeBrain - INFO - [SonarQube] Starting quality analysis...
+2026-07-25 23:09:36,657 - GreenyLifeBrain - WARNING -    Cannot connect to SonarQube server: 'latin-1' codec can't encode characters in position 0-1: ordinal not in range(256)
+2026-07-25 23:09:36,658 - GreenyLifeBrain - INFO - [Security Agent] Running vulnerability scan...
+2026-07-25 23:09:36,666 - GreenyLifeBrain - INFO -    - Running Bandit...
+2026-07-25 23:09:37,412 - GreenyLifeBrain - INFO -    Bandit: No security issues found.
+2026-07-25 23:09:37,413 - GreenyLifeBrain - INFO - 
+[Phase 3] Performance Testing
+2026-07-25 23:09:37,413 - GreenyLifeBrain - INFO - [Performance Agent] Running performance tests...
+2026-07-25 23:09:48,275 - GreenyLifeBrain - INFO -    Performance metrics could not be extracted.
+2026-07-25 23:09:48,276 - GreenyLifeBrain - INFO - 
+[Phase 4] Documentation Generation
+2026-07-25 23:09:48,277 - GreenyLifeBrain - INFO - [Documentation Agent] Generating documentation...
+2026-07-25 23:09:48,327 - GreenyLifeBrain - INFO -    - Using Claude for advanced AI summary...
+2026-07-25 23:09:48,357 - GreenyLifeBrain - ERROR - Command execution failed: [WinError 2] The system cannot find the file specified
+2026-07-25 23:09:48,358 - GreenyLifeBrain - WARNING - Claude execution failed: [WinError 2] The system cannot find the file specified
+2026-07-25 23:09:48,361 - GreenyLifeBrain - INFO -    Documentation saved to: C:\Users\Ghanam\OneDrive\projects\Greeny-Life\docs\auto-generated\INDEX.md
+2026-07-25 23:09:48,364 - GreenyLifeBrain - INFO - 
+[Phase 5] Legacy Tools Integration
+2026-07-25 23:09:48,365 - GreenyLifeBrain - INFO - [Intelligence Integrator] Discovering legacy tools...
+2026-07-25 23:09:48,403 - GreenyLifeBrain - INFO -    Merged 0 tools.
+2026-07-25 23:09:48,406 - GreenyLifeBrain - INFO - 
+[Phase 6] Global Project Mapping
+2026-07-25 23:09:48,406 - GreenyLifeBrain - INFO - [Global Mapper] Scanning project...
+2026-07-25 23:10:05,017 - GreenyLifeBrain - INFO -    Scanned 367 files, total size: 112.16 MB
+2026-07-25 23:10:05,023 - GreenyLifeBrain - INFO - 
+[Phase 7] Deep Context Analysis
+2026-07-25 23:10:05,028 - GreenyLifeBrain - INFO - [Deep Analyzer] Performing deep file analysis...
+2026-07-25 23:10:11,912 - GreenyLifeBrain - INFO -    Deep analyzed 200 files.
+2026-07-25 23:10:11,975 - GreenyLifeBrain - INFO - 
+[Phase 8] Advanced Business Analysis
+2026-07-25 23:10:11,978 - GreenyLifeBrain - INFO - [Visual Brand] Analyzing visual identity...
+2026-07-25 23:10:18,802 - GreenyLifeBrain - INFO -    Analyzed 38 images and 5 fonts.
+2026-07-25 23:10:18,802 - GreenyLifeBrain - INFO - [Packaging Agent] Analyzing packaging policies...
+2026-07-25 23:10:18,804 - GreenyLifeBrain - INFO -    Packaging policies analyzed successfully.
+2026-07-25 23:10:18,804 - GreenyLifeBrain - INFO - [UI Analyzer] Analyzing UI structure...
+2026-07-25 23:10:18,831 - GreenyLifeBrain - INFO -    Found 0 pages, 0 API endpoints.
+2026-07-25 23:10:18,831 - GreenyLifeBrain - INFO - [Inventory Analyzer] Analyzing inventory data...
+2026-07-25 23:10:24,280 - GreenyLifeBrain - INFO -    Analyzed inventory: 14 products.
+2026-07-25 23:10:24,281 - GreenyLifeBrain - INFO - 
+[Phase 9] Duplication Analysis
+2026-07-25 23:10:24,293 - GreenyLifeBrain - INFO - 
+[Phase 10] Auto-Remediation
+2026-07-25 23:10:24,296 - GreenyLifeBrain - WARNING - Issues detected. Starting auto-remediation...
+2026-07-25 23:10:24,296 - GreenyLifeBrain - INFO - [SonarQube] Starting quality analysis...
+2026-07-25 23:10:24,298 - GreenyLifeBrain - WARNING -    Cannot connect to SonarQube server: 'latin-1' codec can't encode characters in position 0-1: ordinal not in range(256)
+2026-07-25 23:10:24,299 - GreenyLifeBrain - INFO - 
+[Phase 11] Creating GitHub Pull Request
+2026-07-25 23:10:24,300 - GreenyLifeBrain - INFO - [GitHub PR] Creating pull request: ai-remediation
+2026-07-25 23:10:24,307 - GreenyLifeBrain - WARNING - GitHub CLI (gh) is not installed. Skipping PR creation.
+2026-07-25 23:10:24,313 - GreenyLifeBrain - INFO - 
+[Phase 12] Comprehensive Report Generation
+2026-07-25 23:10:24,327 - GreenyLifeBrain - INFO - 
+[Phase 16] Building Extended Product Master
+2026-07-25 23:10:24,333 - GreenyLifeBrain - INFO - [Master Data Agent] Building extended product master...
+2026-07-25 23:10:24,335 - GreenyLifeBrain - INFO - 
+[Phase 17] Building CRM & Supplier Data
+2026-07-25 23:10:24,343 - GreenyLifeBrain - INFO - [CRM & Supplier Agent] Building customer and supplier data...
+2026-07-25 23:10:24,361 - GreenyLifeBrain - INFO -    Created 2 customers, 1 suppliers, 1 opportunities.
+2026-07-25 23:10:24,364 - GreenyLifeBrain - INFO - 
+[Phase 18] Generating Certificate Report
+2026-07-25 23:10:24,365 - GreenyLifeBrain - INFO - [Certificate Agent] Generating certificate report...
+2026-07-25 23:15:54,696 - GreenyLifeBrain - INFO - Optional tool 'sonar-scanner' is available.
+2026-07-25 23:15:54,704 - GreenyLifeBrain - INFO - Optional tool 'bandit' is available.
+2026-07-25 23:15:54,712 - GreenyLifeBrain - INFO - Optional tool 'k6' is available.
+2026-07-25 23:15:54,729 - GreenyLifeBrain - INFO - Optional tool 'claude' is available.
+2026-07-25 23:15:54,744 - GreenyLifeBrain - WARNING - Optional tool 'gh' not found. Some features will be disabled.
+2026-07-25 23:15:54,759 - GreenyLifeBrain - WARNING - Optional tool 'docker' not found. Some features will be disabled.
+2026-07-25 23:15:54,762 - GreenyLifeBrain - INFO - Optional tool 'archguard' is available.
+2026-07-25 23:15:54,777 - GreenyLifeBrain - WARNING - Optional tool 'ouro-loop' not found. Some features will be disabled.
+2026-07-25 23:15:54,791 - GreenyLifeBrain - INFO - Optional tool 'govern' is available.
+2026-07-25 23:15:54,821 - GreenyLifeBrain - WARNING - Optional tool 'codeql' not found. Some features will be disabled.
+2026-07-25 23:15:54,868 - GreenyLifeBrain - INFO - Optional tool 'npx' is available.
+2026-07-25 23:15:54,881 - GreenyLifeBrain - INFO - ================================================================================
+2026-07-25 23:15:54,898 - GreenyLifeBrain - INFO - Greeny-Life EOS Brain initialized successfully.
+2026-07-25 23:15:54,912 - GreenyLifeBrain - INFO - Project Path: C:\Users\Ghanam\OneDrive\projects\Greeny-Life
+2026-07-25 23:15:54,919 - GreenyLifeBrain - INFO - ================================================================================
+2026-07-25 23:15:54,921 - GreenyLifeBrain - INFO - ================================================================================
+2026-07-25 23:15:54,924 - GreenyLifeBrain - INFO - Greeny-Life EOS Brain - Full Pipeline Execution
+2026-07-25 23:15:54,925 - GreenyLifeBrain - INFO - ================================================================================
+2026-07-25 23:15:54,931 - GreenyLifeBrain - INFO - 
+[Phase 1] Architectural Governance
+2026-07-25 23:15:54,932 - GreenyLifeBrain - INFO - [ArchGuard] Starting architecture analysis...
+2026-07-25 23:20:57,836 - GreenyLifeBrain - ERROR - Command timed out: archguard check --format json
+2026-07-25 23:20:57,839 - GreenyLifeBrain - WARNING -    Scan failed: Timeout
+2026-07-25 23:20:57,840 - GreenyLifeBrain - INFO - [govern-kit] Measuring trust level...
+2026-07-25 23:20:58,528 - GreenyLifeBrain - INFO -    Trust gate failed. Human review required.
+2026-07-25 23:20:58,529 - GreenyLifeBrain - INFO - [Ouro Loop] Verifying absolute boundaries...
+2026-07-25 23:20:58,532 - GreenyLifeBrain - INFO -    Ouro Loop is not installed. Skipping.
+2026-07-25 23:20:58,533 - GreenyLifeBrain - INFO - 
+[Phase 2] Code Quality & Security
+2026-07-25 23:20:58,533 - GreenyLifeBrain - INFO - [SonarQube] Starting quality analysis...
+2026-07-25 23:20:58,545 - GreenyLifeBrain - WARNING -    Cannot connect to SonarQube server: 'latin-1' codec can't encode characters in position 0-1: ordinal not in range(256)
+2026-07-25 23:20:58,549 - GreenyLifeBrain - INFO - [Security Agent] Running vulnerability scan...
+2026-07-25 23:20:58,551 - GreenyLifeBrain - INFO -    - Running Bandit...
+2026-07-25 23:20:59,295 - GreenyLifeBrain - INFO -    Bandit: No security issues found.
+2026-07-25 23:20:59,296 - GreenyLifeBrain - INFO - 
+[Phase 3] Performance Testing
+2026-07-25 23:20:59,298 - GreenyLifeBrain - INFO - [Performance Agent] Running performance tests...
+2026-07-25 23:21:10,032 - GreenyLifeBrain - INFO -    Performance metrics could not be extracted.
+2026-07-25 23:21:10,033 - GreenyLifeBrain - INFO - 
+[Phase 4] Documentation Generation
+2026-07-25 23:21:10,034 - GreenyLifeBrain - INFO - [Documentation Agent] Generating documentation...
+2026-07-25 23:21:10,132 - GreenyLifeBrain - INFO -    - Using Claude for advanced AI summary...
+2026-07-25 23:21:10,174 - GreenyLifeBrain - ERROR - Command execution failed: [WinError 2] The system cannot find the file specified
+2026-07-25 23:21:10,177 - GreenyLifeBrain - WARNING - Claude execution failed: [WinError 2] The system cannot find the file specified
+2026-07-25 23:21:10,182 - GreenyLifeBrain - INFO -    Documentation saved to: C:\Users\Ghanam\OneDrive\projects\Greeny-Life\docs\auto-generated\INDEX.md
+2026-07-25 23:21:10,193 - GreenyLifeBrain - INFO - 
+[Phase 5] Legacy Tools Integration
+2026-07-25 23:21:10,195 - GreenyLifeBrain - INFO - [Intelligence Integrator] Discovering legacy tools...
+2026-07-25 23:21:10,247 - GreenyLifeBrain - INFO -    Merged 0 tools.
+2026-07-25 23:21:10,252 - GreenyLifeBrain - INFO - 
+[Phase 6] Global Project Mapping
+2026-07-25 23:21:10,261 - GreenyLifeBrain - INFO - [Global Mapper] Scanning project...
+2026-07-25 23:21:30,132 - GreenyLifeBrain - INFO -    Scanned 368 files, total size: 112.16 MB
+2026-07-25 23:21:30,143 - GreenyLifeBrain - INFO - 
+[Phase 7] Deep Context Analysis
+2026-07-25 23:21:30,150 - GreenyLifeBrain - INFO - [Deep Analyzer] Performing deep file analysis...
+2026-07-25 23:21:38,853 - GreenyLifeBrain - INFO -    Deep analyzed 200 files.
+2026-07-25 23:21:38,926 - GreenyLifeBrain - INFO - 
+[Phase 8] Advanced Business Analysis
+2026-07-25 23:21:38,927 - GreenyLifeBrain - INFO - [Visual Brand] Analyzing visual identity...
+2026-07-25 23:21:46,849 - GreenyLifeBrain - INFO -    Analyzed 38 images and 5 fonts.
+2026-07-25 23:21:46,849 - GreenyLifeBrain - INFO - [Packaging Agent] Analyzing packaging policies...
+2026-07-25 23:21:46,850 - GreenyLifeBrain - INFO -    Packaging policies analyzed successfully.
+2026-07-25 23:21:46,851 - GreenyLifeBrain - INFO - [UI Analyzer] Analyzing UI structure...
+2026-07-25 23:21:46,879 - GreenyLifeBrain - INFO -    Found 0 pages, 0 API endpoints.
+2026-07-25 23:21:46,880 - GreenyLifeBrain - INFO - [Inventory Analyzer] Analyzing inventory data...
+2026-07-25 23:21:52,666 - GreenyLifeBrain - INFO -    Analyzed inventory: 14 products.
+2026-07-25 23:21:52,670 - GreenyLifeBrain - INFO - 
+[Phase 9] Duplication Analysis
+2026-07-25 23:21:52,688 - GreenyLifeBrain - INFO - 
+[Phase 10] Auto-Remediation
+2026-07-25 23:21:52,689 - GreenyLifeBrain - WARNING - Issues detected. Starting auto-remediation...
+2026-07-25 23:21:52,690 - GreenyLifeBrain - INFO - [SonarQube] Starting quality analysis...
+2026-07-25 23:21:52,691 - GreenyLifeBrain - WARNING -    Cannot connect to SonarQube server: 'latin-1' codec can't encode characters in position 0-1: ordinal not in range(256)
+2026-07-25 23:21:52,691 - GreenyLifeBrain - INFO - 
+[Phase 11] Creating GitHub Pull Request
+2026-07-25 23:21:52,692 - GreenyLifeBrain - INFO - [GitHub PR] Creating pull request: ai-remediation
+2026-07-25 23:21:52,692 - GreenyLifeBrain - WARNING - GitHub CLI (gh) is not installed. Skipping PR creation.
+2026-07-25 23:21:52,693 - GreenyLifeBrain - INFO - 
+[Phase 12] Comprehensive Report Generation
+2026-07-25 23:21:52,705 - GreenyLifeBrain - INFO - 
+[Phase 16] Building Extended Product Master
+2026-07-25 23:21:52,710 - GreenyLifeBrain - INFO - [Master Data Agent] Building extended product master...
+2026-07-25 23:21:52,714 - GreenyLifeBrain - INFO - 
+[Phase 17] Building CRM & Supplier Data
+2026-07-25 23:21:52,719 - GreenyLifeBrain - INFO - [CRM & Supplier Agent] Building customer and supplier data...
+2026-07-25 23:21:52,728 - GreenyLifeBrain - INFO -    Created 2 customers, 1 suppliers, 1 opportunities.
+2026-07-25 23:21:52,732 - GreenyLifeBrain - INFO - 
+[Phase 18] Generating Certificate Report
+2026-07-25 23:27:26,194 - GreenyLifeBrain - INFO - Optional tool 'sonar-scanner' is available.
+2026-07-25 23:27:26,198 - GreenyLifeBrain - INFO - Optional tool 'bandit' is available.
+2026-07-25 23:27:26,201 - GreenyLifeBrain - INFO - Optional tool 'k6' is available.
+2026-07-25 23:27:26,207 - GreenyLifeBrain - INFO - Optional tool 'claude' is available.
+2026-07-25 23:27:26,218 - GreenyLifeBrain - WARNING - Optional tool 'gh' not found. Some features will be disabled.
+2026-07-25 23:27:26,223 - GreenyLifeBrain - WARNING - Optional tool 'docker' not found. Some features will be disabled.
+2026-07-25 23:27:26,228 - GreenyLifeBrain - INFO - Optional tool 'archguard' is available.
+2026-07-25 23:27:26,236 - GreenyLifeBrain - WARNING - Optional tool 'ouro-loop' not found. Some features will be disabled.
+2026-07-25 23:27:26,247 - GreenyLifeBrain - INFO - Optional tool 'govern' is available.
+2026-07-25 23:27:26,253 - GreenyLifeBrain - WARNING - Optional tool 'codeql' not found. Some features will be disabled.
+2026-07-25 23:27:26,266 - GreenyLifeBrain - INFO - Optional tool 'npx' is available.
+2026-07-25 23:27:26,271 - GreenyLifeBrain - INFO - ================================================================================
+2026-07-25 23:27:26,271 - GreenyLifeBrain - INFO - Greeny-Life EOS Brain initialized successfully.
+2026-07-25 23:27:26,272 - GreenyLifeBrain - INFO - Project Path: C:\Users\Ghanam\OneDrive\projects\Greeny-Life
+2026-07-25 23:27:26,273 - GreenyLifeBrain - INFO - ================================================================================
+2026-07-25 23:27:26,274 - GreenyLifeBrain - INFO - ================================================================================
+2026-07-25 23:27:26,280 - GreenyLifeBrain - INFO - Greeny-Life EOS Brain - Full Pipeline Execution
+2026-07-25 23:27:26,282 - GreenyLifeBrain - INFO - ================================================================================
+2026-07-25 23:27:26,283 - GreenyLifeBrain - INFO - 
+[Phase 1] Architectural Governance
+2026-07-25 23:27:26,283 - GreenyLifeBrain - INFO - [ArchGuard] Starting architecture analysis...
+2026-07-25 23:32:30,023 - GreenyLifeBrain - ERROR - Command timed out: archguard check --format json
+2026-07-25 23:32:30,024 - GreenyLifeBrain - WARNING -    Scan failed: Timeout
+2026-07-25 23:32:30,026 - GreenyLifeBrain - INFO - [govern-kit] Measuring trust level...
+2026-07-25 23:32:30,653 - GreenyLifeBrain - INFO -    Trust gate failed. Human review required.
+2026-07-25 23:32:30,654 - GreenyLifeBrain - INFO - [Ouro Loop] Verifying absolute boundaries...
+2026-07-25 23:32:30,654 - GreenyLifeBrain - INFO -    Ouro Loop is not installed. Skipping.
+2026-07-25 23:32:30,655 - GreenyLifeBrain - INFO - 
+[Phase 2] Code Quality & Security
+2026-07-25 23:32:30,655 - GreenyLifeBrain - INFO - [SonarQube] Starting quality analysis...
+2026-07-25 23:32:30,662 - GreenyLifeBrain - WARNING -    Cannot connect to SonarQube server: 'latin-1' codec can't encode characters in position 0-1: ordinal not in range(256)
+2026-07-25 23:32:30,663 - GreenyLifeBrain - INFO - [Security Agent] Running vulnerability scan...
+2026-07-25 23:32:30,669 - GreenyLifeBrain - INFO -    - Running Bandit...
+2026-07-25 23:32:31,350 - GreenyLifeBrain - INFO -    Bandit: No security issues found.
+2026-07-25 23:32:31,350 - GreenyLifeBrain - INFO - 
+[Phase 3] Performance Testing
+2026-07-25 23:32:31,351 - GreenyLifeBrain - INFO - [Performance Agent] Running performance tests...
+2026-07-25 23:32:42,271 - GreenyLifeBrain - INFO -    Performance metrics could not be extracted.
+2026-07-25 23:32:42,272 - GreenyLifeBrain - INFO - 
+[Phase 4] Documentation Generation
+2026-07-25 23:32:42,272 - GreenyLifeBrain - INFO - [Documentation Agent] Generating documentation...
+2026-07-25 23:32:42,357 - GreenyLifeBrain - INFO -    - Using Claude for advanced AI summary...
+2026-07-25 23:32:42,473 - GreenyLifeBrain - ERROR - Command execution failed: [WinError 2] The system cannot find the file specified
+2026-07-25 23:32:42,505 - GreenyLifeBrain - WARNING - Claude execution failed: [WinError 2] The system cannot find the file specified
+2026-07-25 23:32:42,539 - GreenyLifeBrain - INFO -    Documentation saved to: C:\Users\Ghanam\OneDrive\projects\Greeny-Life\docs\auto-generated\INDEX.md
+2026-07-25 23:32:42,542 - GreenyLifeBrain - INFO - 
+[Phase 5] Legacy Tools Integration
+2026-07-25 23:32:42,542 - GreenyLifeBrain - INFO - [Intelligence Integrator] Discovering legacy tools...
+2026-07-25 23:32:42,602 - GreenyLifeBrain - INFO -    Merged 0 tools.
+2026-07-25 23:32:42,602 - GreenyLifeBrain - INFO - 
+[Phase 6] Global Project Mapping
+2026-07-25 23:32:42,603 - GreenyLifeBrain - INFO - [Global Mapper] Scanning project...
+2026-07-25 23:33:00,266 - GreenyLifeBrain - INFO -    Scanned 368 files, total size: 112.16 MB
+2026-07-25 23:33:00,270 - GreenyLifeBrain - INFO - 
+[Phase 7] Deep Context Analysis
+2026-07-25 23:33:00,273 - GreenyLifeBrain - INFO - [Deep Analyzer] Performing deep file analysis...
+2026-07-25 23:33:06,516 - GreenyLifeBrain - INFO -    Deep analyzed 200 files.
+2026-07-25 23:33:06,573 - GreenyLifeBrain - INFO - 
+[Phase 8] Advanced Business Analysis
+2026-07-25 23:33:06,574 - GreenyLifeBrain - INFO - [Visual Brand] Analyzing visual identity...
+2026-07-25 23:33:13,144 - GreenyLifeBrain - INFO -    Analyzed 38 images and 5 fonts.
+2026-07-25 23:33:13,146 - GreenyLifeBrain - INFO - [Packaging Agent] Analyzing packaging policies...
+2026-07-25 23:33:13,147 - GreenyLifeBrain - INFO -    Packaging policies analyzed successfully.
+2026-07-25 23:33:13,149 - GreenyLifeBrain - INFO - [UI Analyzer] Analyzing UI structure...
+2026-07-25 23:33:13,178 - GreenyLifeBrain - INFO -    Found 0 pages, 0 API endpoints.
+2026-07-25 23:33:13,180 - GreenyLifeBrain - INFO - [Inventory Analyzer] Analyzing inventory data...
+2026-07-25 23:33:17,944 - GreenyLifeBrain - INFO -    Analyzed inventory: 14 products.
+2026-07-25 23:33:17,945 - GreenyLifeBrain - INFO - 
+[Phase 9] Duplication Analysis
+2026-07-25 23:33:17,951 - GreenyLifeBrain - INFO - 
+[Phase 10] Auto-Remediation
+2026-07-25 23:33:17,956 - GreenyLifeBrain - WARNING - Issues detected. Starting auto-remediation...
+2026-07-25 23:33:17,960 - GreenyLifeBrain - INFO - [SonarQube] Starting quality analysis...
+2026-07-25 23:33:17,965 - GreenyLifeBrain - WARNING -    Cannot connect to SonarQube server: 'latin-1' codec can't encode characters in position 0-1: ordinal not in range(256)
+2026-07-25 23:33:17,966 - GreenyLifeBrain - INFO - 
+[Phase 11] Creating GitHub Pull Request
+2026-07-25 23:33:17,969 - GreenyLifeBrain - INFO - [GitHub PR] Creating pull request: ai-remediation
+2026-07-25 23:33:17,976 - GreenyLifeBrain - WARNING - GitHub CLI (gh) is not installed. Skipping PR creation.
+2026-07-25 23:33:17,980 - GreenyLifeBrain - INFO - 
+[Phase 12] Comprehensive Report Generation
+2026-07-25 23:33:17,989 - GreenyLifeBrain - INFO - 
+[Phase 16] Building Extended Product Master
+2026-07-25 23:33:17,991 - GreenyLifeBrain - INFO - [Master Data Agent] Building extended product master...
+2026-07-25 23:33:17,992 - GreenyLifeBrain - INFO - 
+[Phase 17] Building CRM & Supplier Data
+2026-07-25 23:33:17,992 - GreenyLifeBrain - INFO - [CRM & Supplier Agent] Building customer and supplier data...
+2026-07-25 23:33:17,999 - GreenyLifeBrain - INFO -    Created 2 customers, 1 suppliers, 1 opportunities.
+2026-07-25 23:33:18,000 - GreenyLifeBrain - INFO - 
+[Phase 18] Generating Certificate Report
+2026-07-25 23:46:34,638 - GreenyLifeBrain - INFO - Optional tool 'sonar-scanner' is available.
+2026-07-25 23:46:34,646 - GreenyLifeBrain - INFO - Optional tool 'bandit' is available.
+2026-07-25 23:46:34,656 - GreenyLifeBrain - INFO - Optional tool 'k6' is available.
+2026-07-25 23:46:34,672 - GreenyLifeBrain - INFO - Optional tool 'claude' is available.
+2026-07-25 23:46:34,684 - GreenyLifeBrain - WARNING - Optional tool 'gh' not found. Some features will be disabled.
+2026-07-25 23:46:34,693 - GreenyLifeBrain - WARNING - Optional tool 'docker' not found. Some features will be disabled.
+2026-07-25 23:46:34,708 - GreenyLifeBrain - INFO - Optional tool 'archguard' is available.
+2026-07-25 23:46:34,729 - GreenyLifeBrain - WARNING - Optional tool 'ouro-loop' not found. Some features will be disabled.
+2026-07-25 23:46:34,739 - GreenyLifeBrain - INFO - Optional tool 'govern' is available.
+2026-07-25 23:46:34,757 - GreenyLifeBrain - WARNING - Optional tool 'codeql' not found. Some features will be disabled.
+2026-07-25 23:46:34,777 - GreenyLifeBrain - INFO - Optional tool 'npx' is available.
+2026-07-25 23:46:34,787 - GreenyLifeBrain - INFO - ================================================================================
+2026-07-25 23:46:34,797 - GreenyLifeBrain - INFO - Greeny-Life EOS Brain initialized successfully.
+2026-07-25 23:46:34,801 - GreenyLifeBrain - INFO - Project Path: C:\Users\Ghanam\OneDrive\projects\Greeny-Life
+2026-07-25 23:46:34,807 - GreenyLifeBrain - INFO - ================================================================================
+2026-07-25 23:46:34,818 - GreenyLifeBrain - INFO - ================================================================================
+2026-07-25 23:46:34,821 - GreenyLifeBrain - INFO - Greeny-Life EOS Brain - Full Pipeline Execution
+2026-07-25 23:46:34,833 - GreenyLifeBrain - INFO - ================================================================================
+2026-07-25 23:46:34,838 - GreenyLifeBrain - INFO - 
+[Phase 1] Architectural Governance
+2026-07-25 23:46:34,839 - GreenyLifeBrain - INFO - [ArchGuard] Starting architecture analysis...
+2026-07-25 23:51:41,386 - GreenyLifeBrain - ERROR - Command timed out: archguard check --format json
+2026-07-25 23:51:41,400 - GreenyLifeBrain - WARNING -    Scan failed: Timeout
+2026-07-25 23:51:41,405 - GreenyLifeBrain - INFO - [govern-kit] Measuring trust level...
+2026-07-25 23:51:42,258 - GreenyLifeBrain - INFO -    Trust gate failed. Human review required.
+2026-07-25 23:51:42,264 - GreenyLifeBrain - INFO - [Ouro Loop] Verifying absolute boundaries...
+2026-07-25 23:51:42,267 - GreenyLifeBrain - INFO -    Ouro Loop is not installed. Skipping.
+2026-07-25 23:51:42,276 - GreenyLifeBrain - INFO - 
+[Phase 2] Code Quality & Security
+2026-07-25 23:51:42,284 - GreenyLifeBrain - INFO - [SonarQube] Starting quality analysis...
+2026-07-25 23:51:42,346 - GreenyLifeBrain - WARNING -    Cannot connect to SonarQube server: 'latin-1' codec can't encode characters in position 0-1: ordinal not in range(256)
+2026-07-25 23:51:42,350 - GreenyLifeBrain - INFO - [Security Agent] Running vulnerability scan...
+2026-07-25 23:51:42,355 - GreenyLifeBrain - INFO -    - Running Bandit...
+2026-07-25 23:51:43,587 - GreenyLifeBrain - INFO -    Bandit: No security issues found.
+2026-07-25 23:51:43,591 - GreenyLifeBrain - INFO - 
+[Phase 3] Performance Testing
+2026-07-25 23:51:43,594 - GreenyLifeBrain - INFO - [Performance Agent] Running performance tests...
+2026-07-25 23:51:54,951 - GreenyLifeBrain - INFO -    Performance metrics could not be extracted.
+2026-07-25 23:51:54,956 - GreenyLifeBrain - INFO - 
+[Phase 4] Documentation Generation
+2026-07-25 23:51:54,959 - GreenyLifeBrain - INFO - [Documentation Agent] Generating documentation...
+2026-07-25 23:51:55,189 - GreenyLifeBrain - INFO -    - Using Claude for advanced AI summary...
+2026-07-25 23:51:55,229 - GreenyLifeBrain - ERROR - Command execution failed: [WinError 2] The system cannot find the file specified
+2026-07-25 23:51:55,234 - GreenyLifeBrain - WARNING - Claude execution failed: [WinError 2] The system cannot find the file specified
+2026-07-25 23:51:55,241 - GreenyLifeBrain - INFO -    Documentation saved to: C:\Users\Ghanam\OneDrive\projects\Greeny-Life\docs\auto-generated\INDEX.md
+2026-07-25 23:51:55,255 - GreenyLifeBrain - INFO - 
+[Phase 5] Legacy Tools Integration
+2026-07-25 23:51:55,259 - GreenyLifeBrain - INFO - [Intelligence Integrator] Discovering legacy tools...
+2026-07-25 23:51:55,318 - GreenyLifeBrain - INFO -    Merged 0 tools.
+2026-07-25 23:51:55,325 - GreenyLifeBrain - INFO - 
+[Phase 6] Global Project Mapping
+2026-07-25 23:51:55,336 - GreenyLifeBrain - INFO - [Global Mapper] Scanning project...
+2026-07-25 23:52:15,646 - GreenyLifeBrain - INFO -    Scanned 368 files, total size: 112.16 MB
+2026-07-25 23:52:15,648 - GreenyLifeBrain - INFO - 
+[Phase 7] Deep Context Analysis
+2026-07-25 23:52:15,649 - GreenyLifeBrain - INFO - [Deep Analyzer] Performing deep file analysis...
+2026-07-25 23:52:24,943 - GreenyLifeBrain - INFO -    Deep analyzed 200 files.
+2026-07-25 23:52:25,019 - GreenyLifeBrain - INFO - 
+[Phase 8] Advanced Business Analysis
+2026-07-25 23:52:25,025 - GreenyLifeBrain - INFO - [Visual Brand] Analyzing visual identity...
+2026-07-25 23:52:33,548 - GreenyLifeBrain - INFO -    Analyzed 38 images and 5 fonts.
+2026-07-25 23:52:33,556 - GreenyLifeBrain - INFO - [Packaging Agent] Analyzing packaging policies...
+2026-07-25 23:52:33,567 - GreenyLifeBrain - INFO -    Packaging policies analyzed successfully.
+2026-07-25 23:52:33,574 - GreenyLifeBrain - INFO - [UI Analyzer] Analyzing UI structure...
+2026-07-25 23:52:33,613 - GreenyLifeBrain - INFO -    Found 0 pages, 0 API endpoints.
+2026-07-25 23:52:33,617 - GreenyLifeBrain - INFO - [Inventory Analyzer] Analyzing inventory data...
+2026-07-25 23:52:40,818 - GreenyLifeBrain - INFO -    Analyzed inventory: 14 products.
+2026-07-25 23:52:40,821 - GreenyLifeBrain - INFO - 
+[Phase 9] Duplication Analysis
+2026-07-25 23:52:40,846 - GreenyLifeBrain - INFO - 
+[Phase 10] Auto-Remediation
+2026-07-25 23:52:40,854 - GreenyLifeBrain - WARNING - Issues detected. Starting auto-remediation...
+2026-07-25 23:52:40,860 - GreenyLifeBrain - INFO - [SonarQube] Starting quality analysis...
+2026-07-25 23:52:40,863 - GreenyLifeBrain - WARNING -    Cannot connect to SonarQube server: 'latin-1' codec can't encode characters in position 0-1: ordinal not in range(256)
+2026-07-25 23:52:40,867 - GreenyLifeBrain - INFO - 
+[Phase - Intelligence Integration] Activating local tools inside 'intelligence/'...
+2026-07-25 23:52:40,878 - GreenyLifeBrain - INFO -    Successfully executed 0 internal tools from 'intelligence' folder.
+2026-07-25 23:52:40,881 - GreenyLifeBrain - INFO - 
+[Phase 11] Creating GitHub Pull Request
+2026-07-25 23:52:40,885 - GreenyLifeBrain - INFO - [GitHub PR] Creating pull request: ai-remediation
+2026-07-25 23:52:40,893 - GreenyLifeBrain - WARNING - GitHub CLI (gh) is not installed. Skipping PR creation.
+2026-07-25 23:52:40,898 - GreenyLifeBrain - INFO - 
+[Phase 12] Comprehensive Report Generation
+2026-07-25 23:52:40,906 - GreenyLifeBrain - INFO - 
+[Phase 16] Building Extended Product Master
+2026-07-25 23:52:40,914 - GreenyLifeBrain - INFO - [Master Data Agent] Building extended product master...
+2026-07-25 23:52:40,917 - GreenyLifeBrain - INFO - 
+[Phase 17] Building CRM & Supplier Data
+2026-07-25 23:52:40,926 - GreenyLifeBrain - INFO - [CRM & Supplier Agent] Building customer and supplier data...
+2026-07-25 23:52:40,937 - GreenyLifeBrain - INFO -    Created 2 customers, 1 suppliers, 1 opportunities.
+2026-07-25 23:52:40,942 - GreenyLifeBrain - INFO - 
+[Phase 18] Generating Certificate Report
+2026-07-25 23:52:40,966 - GreenyLifeBrain - INFO - 
+================================================================================
+2026-07-25 23:52:40,970 - GreenyLifeBrain - INFO - Pipeline complete. Final Status: FAILED
+2026-07-25 23:52:40,977 - GreenyLifeBrain - INFO - Report: C:\Users\Ghanam\OneDrive\projects\Greeny-Life\intelligence\comprehensive_report.md
+2026-07-25 23:52:40,981 - GreenyLifeBrain - INFO - ================================================================================
+2026-07-25 23:53:50,586 - GreenyLifeBrain - INFO - Optional tool 'sonar-scanner' is available.
+2026-07-25 23:53:50,588 - GreenyLifeBrain - INFO - Optional tool 'bandit' is available.
+2026-07-25 23:53:50,599 - GreenyLifeBrain - INFO - Optional tool 'k6' is available.
+2026-07-25 23:53:50,606 - GreenyLifeBrain - INFO - Optional tool 'claude' is available.
+2026-07-25 23:53:50,616 - GreenyLifeBrain - WARNING - Optional tool 'gh' not found. Some features will be disabled.
+2026-07-25 23:53:50,622 - GreenyLifeBrain - WARNING - Optional tool 'docker' not found. Some features will be disabled.
+2026-07-25 23:53:50,625 - GreenyLifeBrain - INFO - Optional tool 'archguard' is available.
+2026-07-25 23:53:50,632 - GreenyLifeBrain - WARNING - Optional tool 'ouro-loop' not found. Some features will be disabled.
+2026-07-25 23:53:50,635 - GreenyLifeBrain - INFO - Optional tool 'govern' is available.
+2026-07-25 23:53:50,641 - GreenyLifeBrain - WARNING - Optional tool 'codeql' not found. Some features will be disabled.
+2026-07-25 23:53:50,648 - GreenyLifeBrain - INFO - Optional tool 'npx' is available.
+2026-07-25 23:53:50,659 - GreenyLifeBrain - INFO - ================================================================================
+2026-07-25 23:53:50,667 - GreenyLifeBrain - INFO - Greeny-Life EOS Brain initialized successfully.
+2026-07-25 23:53:50,673 - GreenyLifeBrain - INFO - Project Path: C:\Users\Ghanam\OneDrive\projects\Greeny-Life
+2026-07-25 23:53:50,682 - GreenyLifeBrain - INFO - ================================================================================
+2026-07-25 23:53:50,690 - GreenyLifeBrain - INFO - ================================================================================
+2026-07-25 23:53:50,700 - GreenyLifeBrain - INFO - Greeny-Life EOS Brain - Full Pipeline Execution
+2026-07-25 23:53:50,708 - GreenyLifeBrain - INFO - ================================================================================
+2026-07-25 23:53:50,716 - GreenyLifeBrain - INFO - 
+[Phase 1] Architectural Governance
+2026-07-25 23:53:50,726 - GreenyLifeBrain - INFO - [ArchGuard] Starting architecture analysis...
+2026-07-26 12:49:20,953 - GreenyLifeBrain - ERROR - Command timed out: archguard check --format json
+2026-07-26 12:49:20,969 - GreenyLifeBrain - WARNING -    Scan failed: Timeout
+2026-07-26 12:49:20,977 - GreenyLifeBrain - INFO - [govern-kit] Measuring trust level...
+2026-07-26 12:49:23,372 - GreenyLifeBrain - INFO -    Trust gate failed. Human review required.
+2026-07-26 12:49:23,375 - GreenyLifeBrain - INFO - [Ouro Loop] Verifying absolute boundaries...
+2026-07-26 12:49:23,376 - GreenyLifeBrain - INFO -    Ouro Loop is not installed. Skipping.
+2026-07-26 12:49:23,377 - GreenyLifeBrain - INFO - 
+[Phase 2] Code Quality & Security
+2026-07-26 12:49:23,378 - GreenyLifeBrain - INFO - [SonarQube] Starting quality analysis...
+2026-07-26 12:49:23,417 - GreenyLifeBrain - WARNING -    Cannot connect to SonarQube server: 'latin-1' codec can't encode characters in position 0-1: ordinal not in range(256)
+2026-07-26 12:49:23,418 - GreenyLifeBrain - INFO - [Security Agent] Running vulnerability scan...
+2026-07-26 12:49:23,418 - GreenyLifeBrain - INFO -    - Running Bandit...
+2026-07-26 12:49:29,682 - GreenyLifeBrain - INFO -    Bandit: No security issues found.
+2026-07-26 12:49:29,689 - GreenyLifeBrain - INFO - 
+[Phase 3] Performance Testing
+2026-07-26 12:49:29,694 - GreenyLifeBrain - INFO - [Performance Agent] Running performance tests...
+2026-07-26 12:49:43,751 - GreenyLifeBrain - INFO -    Performance metrics could not be extracted.
+2026-07-26 12:49:43,756 - GreenyLifeBrain - INFO - 
+[Phase 4] Documentation Generation
+2026-07-26 12:49:43,762 - GreenyLifeBrain - INFO - [Documentation Agent] Generating documentation...
+2026-07-26 12:49:44,121 - GreenyLifeBrain - INFO -    - Using Claude for advanced AI summary...
+2026-07-26 12:49:44,228 - GreenyLifeBrain - ERROR - Command execution failed: [WinError 2] The system cannot find the file specified
+2026-07-26 12:49:44,232 - GreenyLifeBrain - WARNING - Claude execution failed: [WinError 2] The system cannot find the file specified
+2026-07-26 12:49:44,243 - GreenyLifeBrain - INFO -    Documentation saved to: C:\Users\Ghanam\OneDrive\projects\Greeny-Life\docs\auto-generated\INDEX.md
+2026-07-26 12:49:44,248 - GreenyLifeBrain - INFO - 
+[Phase 5] Legacy Tools Integration
+2026-07-26 12:49:44,254 - GreenyLifeBrain - INFO - [Intelligence Integrator] Discovering legacy tools...
+2026-07-26 12:49:44,411 - GreenyLifeBrain - INFO -    Merged 0 tools.
+2026-07-26 12:49:44,423 - GreenyLifeBrain - INFO - 
+[Phase 6] Global Project Mapping
+2026-07-26 12:49:44,435 - GreenyLifeBrain - INFO - [Global Mapper] Scanning project...
+2026-07-26 12:50:30,265 - GreenyLifeBrain - INFO -    Scanned 368 files, total size: 112.12 MB
+2026-07-26 12:50:30,275 - GreenyLifeBrain - INFO - 
+[Phase 7] Deep Context Analysis
+2026-07-26 12:50:30,288 - GreenyLifeBrain - INFO - [Deep Analyzer] Performing deep file analysis...
+2026-07-26 12:50:46,367 - GreenyLifeBrain - INFO -    Deep analyzed 200 files.
+2026-07-26 12:50:46,562 - GreenyLifeBrain - INFO - 
+[Phase 8] Advanced Business Analysis
+2026-07-26 12:50:46,568 - GreenyLifeBrain - INFO - [Visual Brand] Analyzing visual identity...
+2026-07-26 12:51:05,325 - GreenyLifeBrain - INFO -    Analyzed 38 images and 5 fonts.
+2026-07-26 12:51:05,338 - GreenyLifeBrain - INFO - [Packaging Agent] Analyzing packaging policies...
+2026-07-26 12:51:05,344 - GreenyLifeBrain - INFO -    Packaging policies analyzed successfully.
+2026-07-26 12:51:05,351 - GreenyLifeBrain - INFO - [UI Analyzer] Analyzing UI structure...
+2026-07-26 12:51:05,481 - GreenyLifeBrain - INFO -    Found 0 pages, 0 API endpoints.
+2026-07-26 12:51:05,489 - GreenyLifeBrain - INFO - [Inventory Analyzer] Analyzing inventory data...
+2026-07-26 12:51:18,744 - GreenyLifeBrain - INFO -    Analyzed inventory: 14 products.
+2026-07-26 12:51:18,746 - GreenyLifeBrain - INFO - 
+[Phase 9] Duplication Analysis
+2026-07-26 12:51:18,779 - GreenyLifeBrain - INFO - 
+[Phase 10] Auto-Remediation
+2026-07-26 12:51:18,781 - GreenyLifeBrain - WARNING - Issues detected. Starting auto-remediation...
+2026-07-26 12:51:18,784 - GreenyLifeBrain - INFO - [SonarQube] Starting quality analysis...
+2026-07-26 12:51:18,788 - GreenyLifeBrain - WARNING -    Cannot connect to SonarQube server: 'latin-1' codec can't encode characters in position 0-1: ordinal not in range(256)
+2026-07-26 12:51:18,791 - GreenyLifeBrain - INFO - 
+[Phase - Intelligence Integration] Activating local tools inside 'intelligence/'...
+2026-07-26 12:51:18,797 - GreenyLifeBrain - INFO -    Successfully executed 0 internal tools from 'intelligence' folder.
+2026-07-26 12:51:18,799 - GreenyLifeBrain - INFO - 
+[Phase 11] Creating GitHub Pull Request
+2026-07-26 12:51:18,802 - GreenyLifeBrain - INFO - [GitHub PR] Creating pull request: ai-remediation
+2026-07-26 12:51:18,803 - GreenyLifeBrain - WARNING - GitHub CLI (gh) is not installed. Skipping PR creation.
+2026-07-26 12:51:18,804 - GreenyLifeBrain - INFO - 
+[Phase 12] Comprehensive Report Generation
+2026-07-26 12:51:18,812 - GreenyLifeBrain - INFO - 
+[Phase 16] Building Extended Product Master
+2026-07-26 12:51:18,822 - GreenyLifeBrain - INFO - [Master Data Agent] Building extended product master...
+2026-07-26 12:51:18,829 - GreenyLifeBrain - INFO - 
+[Phase 17] Building CRM & Supplier Data
+2026-07-26 12:51:18,835 - GreenyLifeBrain - INFO - [CRM & Supplier Agent] Building customer and supplier data...
+2026-07-26 12:51:18,854 - GreenyLifeBrain - INFO -    Created 2 customers, 1 suppliers, 1 opportunities.
+2026-07-26 12:51:18,860 - GreenyLifeBrain - INFO - 
+[Phase 18] Generating Certificate Report
+2026-07-26 12:51:18,888 - GreenyLifeBrain - INFO - 
+================================================================================
+2026-07-26 12:51:18,890 - GreenyLifeBrain - INFO - Pipeline complete. Final Status: FAILED
+2026-07-26 12:51:18,893 - GreenyLifeBrain - INFO - Report: C:\Users\Ghanam\OneDrive\projects\Greeny-Life\intelligence\comprehensive_report.md
+2026-07-26 12:51:18,895 - GreenyLifeBrain - INFO - ================================================================================

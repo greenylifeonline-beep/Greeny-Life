@@ -1,8 +1,8 @@
-# 📚 Greeny-Life EOS - التوثيق التلقائي
+# 📚 Greeny-Life EOS - Auto-Generated Documentation
 
-تم توليد هذا التوثيق بواسطة العقل الاصطناعي في 2026-07-25 16:53:55.
+Generated on: 2026-07-26 12:49:43
 
-## الهيكل العام للمشروع
+## Project Structure
 
 ```
 ├── (.env
@@ -25,17 +25,17 @@
 │   │   ├── icons
 │   │   ├── images
 │   │   │   ├── categories
-│   │   │   │   ... (المزيد)
+│   │   │   │   ... (more)
 │   │   │   ├── certifications
-│   │   │   │   ... (المزيد)
+│   │   │   │   ... (more)
 │   │   │   ├── countries
-│   │   │   │   ... (المزيد)
+│   │   │   │   ... (more)
 │   │   │   ├── gallery
-│   │   │   │   ... (المزيد)
+│   │   │   │   ... (more)
 │   │   │   ├── hero
-│   │   │   │   ... (المزيد)
+│   │   │   │   ... (more)
 │   │   │   └── products
-│   │   │       ... (المزيد)
+│   │   │       ... (more)
 │   │   ├── logos
 │   │   │   └── logo.jpg
 │   │   ├── products
@@ -178,6 +178,7 @@
 │   ├── 07_documents.json
 │   ├── 08_media.json
 │   ├── 09_design_system.json
+│   ├── customers.json
 │   ├── legacy
 │   │   ├── categories.json
 │   │   ├── category-extensions.json
@@ -202,9 +203,13 @@
 │   ├── legacy_units.json
 │   ├── migrated_categories.json
 │   ├── migrated_products.json
-│   └── migration
-│       ├── migration-history.json
-│       └── migration-progress.json
+│   ├── migration
+│   │   ├── migration-history.json
+│   │   └── migration-progress.json
+│   ├── opportunities.json
+│   ├── packaging_policies.json
+│   ├── product_master_extended.json
+│   └── suppliers.json
 ├── DOC_INDEX.txt
 ├── DOC_METADATA.csv
 ├── docs
@@ -223,6 +228,7 @@
 │   │   └── operations.md
 │   ├── calibration
 │   │   └── improvement_claim_ledger.jsonl
+│   ├── certificates_data.json
 │   ├── GOVERN_STOP.md
 │   ├── improvements
 │   │   └── 0000-template.md
@@ -473,23 +479,23 @@
 
 ```
 
-## وحدات الكود المصدري (Modules)
+## Source Modules
 
-### administration (1 ملفات)
+### administration (1 files)
 
-### analytics (1 ملفات)
+### analytics (1 files)
 
-### compliance (1 ملفات)
+### compliance (1 files)
 
-### crm (1 ملفات)
+### crm (1 files)
 
-### finance (1 ملفات)
+### finance (1 files)
 
-### gl_dos (1 ملفات)
+### gl_dos (1 files)
 
-### logistics (1 ملفات)
+### logistics (1 files)
 
-### master_data (1 ملفات)
+### master_data (1 files)
 
-### operations (1 ملفات)
+### operations (1 files)
 

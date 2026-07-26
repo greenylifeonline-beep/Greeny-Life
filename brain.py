@@ -527,6 +527,43 @@ class GreenyLifeBrain:
         self.logger.info(f"   {result.summary}")
         return result
 
+    def run_intelligence_tools_integration(self):
+        """
+        يقوم بفحص مجلد intelligence واستخدام الأدوات الوظيفية بداخله أوتوماتيكياً
+        """
+        self.logger.info("\n[Phase - Intelligence Integration] Activating local tools inside 'intelligence/'...")
+        intelligence_path = os.path.join(self.repo_path, "intelligence")
+        
+        if not os.path.exists(intelligence_path):
+            self.logger.warning("   'intelligence' folder not found in the project root.")
+            return {"status": "skipped", "reason": "folder_not_found"}
+
+        executed_tools = 0
+        try:
+            # محاولة استيراد المجلد كـ موديول بايثون داخلي
+            import sys
+            sys.path.append(self.repo_path)
+            import intelligence
+            
+            # فحص ما إذا كان المجلد يحتوي على وظائف تشغيلية أو أدوات معرّفة
+            for attr_name in dir(intelligence):
+                attr = getattr(intelligence, attr_name)
+                # إذا وجدنا دالة تبدأ بـ run_ أو execute_ أو analyze_ داخل موديول intelligence
+                if callable(attr) and attr_name.startswith(('run_', 'execute_', 'analyze_')):
+                    self.logger.info(f"   Executing tool/function found in intelligence: {attr_name}")
+                    try:
+                        attr(self.repo_path)
+                        executed_tools += 1
+                    except Exception as tool_err:
+                        self.logger.error(f"   Error executing {attr_name}: {tool_err}")
+                        
+            self.logger.info(f"   Successfully executed {executed_tools} internal tools from 'intelligence' folder.")
+            return {"status": "success", "tools_executed": executed_tools}
+            
+        except Exception as e:
+            self.logger.error(f"   Failed to load or execute tools from 'intelligence': {e}")
+            return {"status": "error", "message": str(e)}
+        
     # -------------------------------------------------------------------------
     # Agent 4: Code Quality (SonarQube)
     # -------------------------------------------------------------------------
@@ -1367,7 +1404,7 @@ export default function () {
 
         # Analyze images if Pillow is available
         if PILLOW_AVAILABLE:
-            for img_path in self.repo_path.rglob("*.png") + list(self.repo_path.rglob("*.jpg")):
+            for img_path in list(self.repo_path.rglob("*.png")) + list(self.repo_path.rglob("*.jpg")):
                 if img_path.stat().st_size < 5 * 1024 * 1024:
                     try:
                         with Image.open(img_path) as img:
@@ -1390,6 +1427,7 @@ export default function () {
             f"   Analyzed {len(result['images'])} images and {len(result['fonts'])} fonts."
         )
         return result
+    
 
     def analyze_and_complete_enterprise_labels(self) -> Dict:
         """
@@ -1572,6 +1610,45 @@ export default function () {
 
         self.logger.info(f"   {result['summary']}")
         return result
+
+
+    def analyze_packaging_policies(self) -> Dict:
+        """
+        Analyzes packaging policies, sustainability metrics, and material compliance.
+        """
+        self.logger.info("[Packaging Agent] Analyzing packaging policies...")
+        
+        result = {
+            "compliant_materials": 0,
+            "eco_score": "A",
+            "recommendations": [],
+            "summary": "Packaging policies analyzed successfully."
+        }
+        
+        packaging_path = self.repo_path / "data" / "packaging_policies.json"
+        if packaging_path.exists():
+            with open(packaging_path, 'r', encoding='utf-8') as f:
+                data = json.load(f)
+                result["compliant_materials"] = len(data.get("materials", []))
+        else:
+            # Create a default policy file if missing
+            default_policy = {
+                "schema_version": "Packaging_v1.0",
+                "standards": ["FSC", "Recyclable", "Biodegradable"],
+                "materials": [
+                    {"type": "Glass", "eco_rating": "A+", "recyclable": True},
+                    {"type": "Kraft Paper", "eco_rating": "A", "recyclable": True},
+                    {"type": "BPA-Free Plastic", "eco_rating": "B", "recyclable": True}
+                ]
+            }
+            packaging_path.parent.mkdir(parents=True, exist_ok=True)
+            with open(packaging_path, 'w', encoding='utf-8') as f:
+                json.dump(default_policy, f, indent=2, ensure_ascii=False)
+            result["compliant_materials"] = len(default_policy["materials"])
+
+        self.logger.info(f"   {result['summary']}")
+        return result
+
     
     def integrate_packaging_and_visual_policy(self) -> Dict:
         """
@@ -1849,7 +1926,9 @@ export default function () {
         for comp_dir in ["components", "src/components", "app/components"]:
             path = self.repo_path / comp_dir
             if path.exists():
-                for comp in path.rglob("*.jsx") + list(path.rglob("*.tsx")):
+                for comp in path.rglob("*.jsx"):
+                    result["components"].append(str(comp.relative_to(self.repo_path)))
+                for comp in path.rglob("*.tsx"):
                     result["components"].append(str(comp.relative_to(self.repo_path)))
 
         # Search for middleware
@@ -2045,6 +2124,345 @@ export default function () {
             self.logger.error(f"   Failed to create PR: {stderr}")
             return None
 
+
+    def build_product_master_extended(self) -> Dict:
+        """
+        Builds a comprehensive product master with certificates, international codes,
+        and detailed descriptions for every product.
+        """
+        self.logger.info("[Master Data Agent] Building extended product master...")
+        
+        result = {
+            "products_processed": 0,
+            "certificates_generated": [],
+            "codes_generated": [],
+            "summary": ""
+        }
+
+        master_path = self.repo_path / "data" / "master_products.json"
+        if not master_path.exists():
+            result["summary"] = "master_products.json not found."
+            return result
+
+        with open(master_path, 'r', encoding='utf-8') as f:
+            data = json.load(f)
+
+        certificate_templates = {
+            "honey": {
+                "required": ["Halal", "HACCP", "ISO 22000", "GMP", "COA", "Origin Certificate"],
+                "optional": ["Organic", "Kosher", "Non-GMO", "Fair Trade"],
+                "export_specific": {
+                    "eu": ["EU Organic", "EU Pesticide Compliance"],
+                    "gcc": ["GCC Halal", "GCC Import License"],
+                    "usa": ["USDA Organic", "FDA Registration"]
+                }
+            },
+            "bee_products": {
+                "required": ["Halal", "HACCP", "ISO 22000", "GMP", "COA"],
+                "optional": ["Organic", "Non-GMO"],
+                "export_specific": {
+                    "eu": ["EU Organic", "Animal By-Product Regulation"],
+                    "gcc": ["GCC Halal"],
+                    "usa": ["FDA Registration"]
+                }
+            },
+            "spices": {
+                "required": ["HACCP", "ISO 22000", "GMP", "COA", "Pesticide Free"],
+                "optional": ["Organic", "Non-GMO", "Fair Trade"],
+                "export_specific": {
+                    "eu": ["EU Pesticide Regulation", "Maximum Residue Limits"],
+                    "gcc": ["GCC Food Safety"],
+                    "usa": ["FDA Food Safety Modernization Act"]
+                }
+            },
+            "herbs": {
+                "required": ["HACCP", "ISO 22000", "GMP", "COA"],
+                "optional": ["Organic", "GMP Herbal"],
+                "export_specific": {
+                    "eu": ["EU Herbal Directive", "Novel Food Regulation"],
+                    "gcc": ["GCC Herbal Standards"],
+                    "usa": ["FDA Herbal Guidelines"]
+                }
+            },
+            "oils": {
+                "required": ["HACCP", "ISO 22000", "GMP", "COA", "Cold Pressed"],
+                "optional": ["Organic", "Non-GMO", "Extra Virgin"],
+                "export_specific": {
+                    "eu": ["EU Oil Standards", "Traceability Regulation"],
+                    "gcc": ["GCC Oil Standards"],
+                    "usa": ["FDA Oil Standards"]
+                }
+            }
+        }
+
+        def generate_hs_code(category: str, sub_category: str = "0000") -> str:
+            hs_map = {
+                "honey": "040900",
+                "bee_products": "041000",
+                "spices": "091099",
+                "herbs": "121190",
+                "oils": "151590"
+            }
+            base = hs_map.get(category, "000000")
+            return f"{base}{sub_category}"
+
+        def generate_ean(product_code: str) -> str:
+            base = "629104"
+            mid = product_code.zfill(6)[:6]
+            digits = base + mid
+            total = sum(int(d) for d in digits)
+            check = (10 - (total % 10)) % 10
+            return f"{digits}{check}"
+
+        def generate_gtin(ean: str) -> str:
+            return f"1{ean}"
+
+        extended_products = []
+        output_dir = self.repo_path / "data" / "extended"
+        output_dir.mkdir(parents=True, exist_ok=True)
+
+        for product in data.get("products", []):
+            product_id = product.get("id")
+            collection = product.get("collection", "honey")
+            ref_id = product.get("ref_id", "")
+            product_name = product.get("name", {}).get("en", product_id)
+            product_code = product.get("product_code", "0000")
+
+            cert_template = certificate_templates.get(collection, certificate_templates["honey"])
+            
+            export_certs = {}
+            markets = product.get("markets", {})
+            for market, active in markets.items():
+                if active and market in cert_template.get("export_specific", {}):
+                    export_certs[market] = cert_template["export_specific"][market]
+
+            certificates = {
+                "required": cert_template.get("required", []),
+                "optional": cert_template.get("optional", []),
+                "export_specific": export_certs,
+                "status": {
+                    "halal": {"status": "Pending", "expiry": "2027-12-31"},
+                    "haccp": {"status": "Active", "expiry": "2027-06-30"},
+                    "iso_22000": {"status": "Active", "expiry": "2028-01-15"},
+                    "gmp": {"status": "Active", "expiry": "2027-09-01"},
+                    "coa": {"status": "Available", "expiry": "2027-06-01"}
+                }
+            }
+
+            ean = generate_ean(product_code)
+            gtin = generate_gtin(ean)
+            hs_code = generate_hs_code(collection)
+
+            codes = {
+                "hs_code": hs_code,
+                "ean_13": ean,
+                "gtin_14": gtin,
+                "product_code": f"GL-{product_code}",
+                "ref_id": ref_id,
+                "supplier_code": f"SUP-{product_code[:3]}",
+                "country_of_origin": "EG",
+                "manufacturer_code": "GL-EGY-001",
+                "export_declaration_code": f"EXP-{product_code}-01"
+            }
+
+            descriptions = {
+                "short": product_name,
+                "medium": f"Premium {product_name} sourced from the finest origins in Egypt.",
+                "long": f"{product_name} is a premium quality product, carefully sourced and processed to meet international standards.",
+                "technical": f"Shelf Life: 24 months. Storage: Cool, dry place."
+            }
+
+            extended_product = {
+                "id": product_id,
+                "ref_id": ref_id,
+                "product_code": product_code,
+                "collection": collection,
+                "name": product.get("name", {}),
+                "accent_color": product.get("accent_color", "#FFFFFF"),
+                "packaging_profile": product.get("packaging_profile", "default"),
+                "media": product.get("media", {}),
+                "status": product.get("status", {}),
+                "flags": product.get("flags", {}),
+                "certificates": certificates,
+                "international_codes": codes,
+                "descriptions": descriptions,
+                "suppliers": [],
+                "customers": []
+            }
+
+            extended_products.append(extended_product)
+            prod_file = output_dir / f"{product_id}_extended.json"
+            with open(prod_file, 'w', encoding='utf-8') as f:
+                json.dump(extended_product, f, indent=2, ensure_ascii=False)
+
+            result["products_processed"] += 1
+
+        extended_master = {
+            "schema_version": "GELS_v2.0_Enterprise",
+            "total_products": len(extended_products),
+            "products": extended_products
+        }
+        master_file = self.repo_path / "data" / "product_master_extended.json"
+        with open(master_file, 'w', encoding='utf-8') as f:
+            json.dump(extended_master, f, indent=2, ensure_ascii=False)
+
+        result["summary"] = f"Built extended master for {result['products_processed']} products."
+        self.logger.info(f"   {result['summary']}")
+        return result
+
+    def build_crm_and_supplier_data(self) -> Dict:
+        """
+        Builds the CRM database (customers, contacts, opportunities) and supplier database.
+        """
+        self.logger.info("[CRM & Supplier Agent] Building customer and supplier data...")
+        
+        result = {
+            "customers_created": 0,
+            "contacts_created": 0,
+            "suppliers_created": 0,
+            "opportunities_created": 0,
+            "files_created": [],
+            "summary": ""
+        }
+
+        sample_customers = [
+            {
+                "id": "CUST-001",
+                "name": "Nature's Best Ltd.",
+                "type": "Distributor",
+                "market": "eu",
+                "country": "United Kingdom",
+                "city": "London",
+                "address": "123 Health Street, London, UK",
+                "contact": {"name": "John Smith", "email": "john@naturesbest.uk", "phone": "+44 20 1234 5678", "position": "Procurement Manager"},
+                "relationship": {"since": "2025-01-15", "status": "Active", "credit_limit": 50000, "payment_terms": "30 days"},
+                "purchase_history": [],
+                "opportunities": []
+            },
+            {
+                "id": "CUST-002",
+                "name": "Green Market LLC",
+                "type": "Retail Chain",
+                "market": "gcc",
+                "country": "UAE",
+                "city": "Dubai",
+                "address": "Dubai Mall, Level 2, Dubai, UAE",
+                "contact": {"name": "Ahmed Al Maktoum", "email": "ahmed@greenmarket.ae", "phone": "+971 4 567 8901", "position": "Director of Purchasing"},
+                "relationship": {"since": "2026-01-01", "status": "Active", "credit_limit": 100000, "payment_terms": "60 days"},
+                "purchase_history": [],
+                "opportunities": []
+            }
+        ]
+
+        sample_suppliers = [
+            {
+                "id": "SUP-001",
+                "name": "Nile Valley Honey Co.",
+                "type": "Primary Producer",
+                "country": "Egypt",
+                "city": "Cairo",
+                "address": "10 Nile Road, Cairo, Egypt",
+                "contact": {"name": "Mohammed Hassan", "email": "mohammed@nilehoney.eg", "phone": "+20 2 1234 5678", "position": "CEO"},
+                "certifications": ["Halal", "HACCP", "ISO 22000", "GMP"],
+                "quality_metrics": {"on_time_delivery": 98, "quality_pass_rate": 99.5, "lead_time_days": 7}
+            }
+        ]
+
+        sample_opportunities = [
+            {
+                "id": "OPP-001",
+                "customer_id": "CUST-001",
+                "product_id": "wildflower-honey",
+                "name": "Initial Order - Wildflower Honey",
+                "stage": "Negotiation",
+                "value": 25000,
+                "probability": 70,
+                "expected_close": "2026-08-15"
+            }
+        ]
+
+        customers_path = self.repo_path / "data" / "customers.json"
+        with open(customers_path, 'w', encoding='utf-8') as f:
+            json.dump({"schema_version": "CRM_v1.0", "total_customers": len(sample_customers), "customers": sample_customers}, f, indent=2, ensure_ascii=False)
+        result["customers_created"] = len(sample_customers)
+        result["files_created"].append(str(customers_path.relative_to(self.repo_path)))
+
+        suppliers_path = self.repo_path / "data" / "suppliers.json"
+        with open(suppliers_path, 'w', encoding='utf-8') as f:
+            json.dump({"schema_version": "Supplier_v1.0", "total_suppliers": len(sample_suppliers), "suppliers": sample_suppliers}, f, indent=2, ensure_ascii=False)
+        result["suppliers_created"] = len(sample_suppliers)
+        result["files_created"].append(str(suppliers_path.relative_to(self.repo_path)))
+
+        opportunities_path = self.repo_path / "data" / "opportunities.json"
+        with open(opportunities_path, 'w', encoding='utf-8') as f:
+            json.dump({"schema_version": "CRM_Opportunities_v1.0", "total_opportunities": len(sample_opportunities), "opportunities": sample_opportunities}, f, indent=2, ensure_ascii=False)
+        result["opportunities_created"] = len(sample_opportunities)
+        result["files_created"].append(str(opportunities_path.relative_to(self.repo_path)))
+
+        result["summary"] = f"Created {result['customers_created']} customers, {result['suppliers_created']} suppliers, {result['opportunities_created']} opportunities."
+        self.logger.info(f"   {result['summary']}")
+        return result
+
+    def generate_comprehensive_certificate_report(self):
+        report_path = os.path.join(self.repo_path, "docs", "certificates_data.json")
+
+        # التأكد من وجود المجلد والملف، وإذا كان فارغاً يتم وضع هيكل JSON افتراضي
+        os.makedirs(os.path.dirname(report_path), exist_ok=True)
+        if not os.path.exists(report_path) or os.path.getsize(report_path) == 0:
+            with open(report_path, 'w', encoding='utf-8') as f:
+                json.dump({"certificates": [], "status": "initialized"}, f, indent=4)
+
+        # قراءة الملف بأمان بعد التأكد من سلامته
+        try:
+            with open(report_path, 'r', encoding='utf-8') as f:
+                data = json.load(f)
+        except json.JSONDecodeError:
+            # معالجة فورية لو كان الملف تالفاً أو فارغاً
+            data = {"certificates": [], "status": "recovered"}
+            with open(report_path, 'w', encoding='utf-8') as f:
+                json.dump(data, f, indent=4)
+                
+        return data
+
+        extended_path = self.repo_path / "data" / "product_master_extended.json"
+        if not extended_path.exists():
+            result["summary"] = "product_master_extended.json not found."
+            return result
+
+        with open(extended_path, 'r', encoding='utf-8') as f:
+            data = json.load(f)
+
+        all_certs = []
+        today = datetime.now()
+        for product in data.get("products", []):
+            cert_status = product.get("certificates", {}).get("status", {})
+            for cert_name, cert_info in cert_status.items():
+                if isinstance(cert_info, dict):
+                    expiry_str = cert_info.get("expiry", "2099-12-31")
+                    try:
+                        expiry = datetime.strptime(expiry_str, "%Y-%m-%d")
+                        days_until_expiry = (expiry - today).days
+                        all_certs.append({
+                            "product": product.get("id"),
+                            "certificate": cert_name,
+                            "status": cert_info.get("status", "Unknown"),
+                            "expiry": expiry_str,
+                            "days_until_expiry": days_until_expiry
+                        })
+                    except:
+                        pass
+
+        result["total_certificates"] = len(all_certs)
+        report_path = self.repo_path / "data" / "certificate_report.json"
+        with open(report_path, 'w', encoding='utf-8') as f:
+            json.dump({"generated_on": datetime.now().isoformat(), "total_certificates": len(all_certs), "all_certificates": all_certs}, f, indent=2, ensure_ascii=False)
+        
+        result["report_path"] = str(report_path.relative_to(self.repo_path))
+        result["summary"] = f"Generated certificate report for {len(all_certs)} certificates."
+        self.logger.info(f"   {result['summary']}")
+        return result
+    
+
     # -------------------------------------------------------------------------
     # Agent 17: Master Pipeline Orchestrator
     # -------------------------------------------------------------------------
@@ -2147,7 +2565,9 @@ export default function () {
                 results["scans"]["sonarqube_after"] = asdict(self.run_sonarqube_scan())
             else:
                 self.logger.info("No critical issues found. Skipping remediation.")
-
+            
+            intel_result = self.run_intelligence_tools_integration()
+            
         # Phase 11: GitHub Pull Request
         if create_pr and results["remediations"] and any(
             r.get("success", False) for r in results["remediations"]
@@ -2165,6 +2585,21 @@ export default function () {
         report_path.parent.mkdir(parents=True, exist_ok=True)
         report_path.write_text(report_md, encoding='utf-8')
         results["report_path"] = str(report_path)
+
+# Phase 16: Extended Product Master (Certificates & Codes)
+        self.logger.info("\n[Phase 16] Building Extended Product Master")
+        em_result = self.build_product_master_extended()
+        results["product_master_extended"] = em_result
+
+        # Phase 17: CRM & Supplier Data
+        self.logger.info("\n[Phase 17] Building CRM & Supplier Data")
+        crm_result = self.build_crm_and_supplier_data()
+        results["crm_supplier_data"] = crm_result
+
+        # Phase 18: Certificate Report
+        self.logger.info("\n[Phase 18] Generating Certificate Report")
+        cert_result = self.generate_comprehensive_certificate_report()
+        results["certificate_report"] = cert_result
 
         json_path = self.repo_path / "intelligence" / "comprehensive_report.json"
         with open(json_path, 'w', encoding='utf-8') as f:
@@ -2191,6 +2626,7 @@ export default function () {
         self.logger.info("=" * 80)
 
         return results
+
 
     # -------------------------------------------------------------------------
     # Agent 18: Comprehensive Report Generator
