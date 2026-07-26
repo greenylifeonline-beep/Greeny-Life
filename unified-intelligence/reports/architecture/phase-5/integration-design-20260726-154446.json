@@ -1,0 +1,181 @@
+﻿{
+    "phase":  "PHASE_5",
+    "name":  "Integration Design and Controlled Wiring",
+    "generatedAt":  "2026-07-26T15:45:18.2525497+02:00",
+    "system":  "Greeny-Life",
+    "architecture":  {
+                         "model":  "Unified Intelligence Architecture",
+                         "layers":  [
+                                        {
+                                            "outputs":  [
+                                                            "canonical_entities",
+                                                            "canonical_products",
+                                                            "validated_reference_data"
+                                                        ],
+                                            "path":  "unified-intelligence/master-data",
+                                            "authority":  "AUTHORITATIVE",
+                                            "name":  "Master Data",
+                                            "role":  "System of Record"
+                                        },
+                                        {
+                                            "outputs":  [
+                                                            "project_context",
+                                                            "runtime_context",
+                                                            "knowledge_references"
+                                                        ],
+                                            "path":  "unified-intelligence/memory",
+                                            "authority":  "CONTEXTUAL",
+                                            "name":  "Memory and Knowledge",
+                                            "role":  "Context and Institutional Knowledge"
+                                        },
+                                        {
+                                            "outputs":  [
+                                                            "analysis",
+                                                            "validation",
+                                                            "scanning",
+                                                            "integrity_results",
+                                                            "duplicate_detection",
+                                                            "health_assessments"
+                                                        ],
+                                            "path":  "unified-intelligence/intelligence",
+                                            "authority":  "DERIVED",
+                                            "name":  "Intelligence",
+                                            "role":  "Capability and Intelligence Engines"
+                                        },
+                                        {
+                                            "outputs":  [
+                                                            "decisions",
+                                                            "execution_plans",
+                                                            "orchestration_results"
+                                                        ],
+                                            "path":  "unified-intelligence/brain",
+                                            "authority":  "ORCHESTRATION",
+                                            "name":  "Brain",
+                                            "role":  "Central Intelligence Orchestration"
+                                        },
+                                        {
+                                            "outputs":  [
+                                                            "policy_decisions",
+                                                            "execution_authorization",
+                                                            "integrity_gates",
+                                                            "audit_events"
+                                                        ],
+                                            "path":  "unified-intelligence/governance/gl-dos",
+                                            "authority":  "CONTROL",
+                                            "name":  "GL-DOS",
+                                            "role":  "Governance, Integrity, Policy and Control"
+                                        },
+                                        {
+                                            "outputs":  [
+                                                            "audit_reports",
+                                                            "health_reports",
+                                                            "architecture_reports",
+                                                            "integrity_reports"
+                                                        ],
+                                            "path":  "unified-intelligence/reports",
+                                            "authority":  "DERIVED",
+                                            "name":  "Reports",
+                                            "role":  "Traceable Reporting"
+                                        }
+                                    ]
+                     },
+    "wiringRules":  [
+                        {
+                            "id":  "W001",
+                            "rule":  "Master Data is the canonical source of truth",
+                            "allowed":  true,
+                            "to":  [
+                                       "intelligence",
+                                       "brain",
+                                       "reports"
+                                   ],
+                            "from":  "master-data",
+                            "direction":  "ONE_WAY"
+                        },
+                        {
+                            "id":  "W002",
+                            "rule":  "Intelligence may derive findings but may not mutate Master Data directly",
+                            "allowed":  true,
+                            "to":  [
+                                       "brain",
+                                       "reports"
+                                   ],
+                            "from":  "intelligence",
+                            "direction":  "ONE_WAY"
+                        },
+                        {
+                            "id":  "W003",
+                            "rule":  "Brain orchestrates capabilities but cannot bypass governance",
+                            "allowed":  true,
+                            "to":  [
+                                       "intelligence",
+                                       "governance"
+                                   ],
+                            "from":  "brain",
+                            "direction":  "CONTROLLED"
+                        },
+                        {
+                            "id":  "W004",
+                            "rule":  "GL-DOS authorizes controlled execution",
+                            "allowed":  true,
+                            "to":  [
+                                       "brain",
+                                       "intelligence"
+                                   ],
+                            "from":  "governance",
+                            "direction":  "CONTROLLED"
+                        },
+                        {
+                            "id":  "W005",
+                            "rule":  "Reports are generated from traceable execution and evidence",
+                            "allowed":  true,
+                            "to":  [
+                                       "reports"
+                                   ],
+                            "from":  "brain",
+                            "direction":  "ONE_WAY"
+                        },
+                        {
+                            "id":  "W006",
+                            "rule":  "Memory and Knowledge provide context but cannot override Master Data authority",
+                            "allowed":  true,
+                            "to":  [
+                                       "brain",
+                                       "intelligence"
+                                   ],
+                            "from":  "memory-knowledge",
+                            "direction":  "CONTEXT_ONLY"
+                        },
+                        {
+                            "id":  "W007",
+                            "rule":  "Direct legacy-to-master mutation is prohibited",
+                            "allowed":  false,
+                            "to":  [
+                                       "master-data"
+                                   ],
+                            "from":  "legacy",
+                            "direction":  "BLOCKED"
+                        }
+                    ],
+    "executionFlow":  [
+                          "REQUEST",
+                          "CONTEXT_LOAD",
+                          "MASTER_DATA_RESOLUTION",
+                          "CAPABILITY_DISCOVERY",
+                          "INTELLIGENCE_EXECUTION",
+                          "BRAIN_DECISION",
+                          "GL_DOS_POLICY_GATE",
+                          "CONTROLLED_EXECUTION",
+                          "TRACE_CAPTURE",
+                          "REPORT_GENERATION"
+                      ],
+    "safetyGates":  [
+                        "MASTER_DATA_AUTHORITY_CHECK",
+                        "CONTRACT_VALIDATION",
+                        "GOVERNANCE_POLICY_CHECK",
+                        "EXECUTION_AUTHORIZATION",
+                        "TRACEABILITY_CHECK",
+                        "REPORT_INTEGRITY_CHECK"
+                    ],
+    "status":  "DESIGNED_FOR_CONTROLLED_WIRING"
+}

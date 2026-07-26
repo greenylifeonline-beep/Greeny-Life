@@ -1,0 +1,79 @@
+﻿{
+    "phase":  "PHASE_5",
+    "name":  "Controlled Wiring Manifest",
+    "generatedAt":  "2026-07-26T15:45:33.0066117+02:00",
+    "system":  "Greeny-Life",
+    "sourceOfTruth":  {
+                          "authorityRegistry":  "unified-intelligence/contracts/authority-registry.json",
+                          "masterData":  "unified-intelligence/master-data",
+                          "executionContract":  "unified-intelligence/contracts/execution-contract.json"
+                      },
+    "controlledConnections":  [
+                                  {
+                                      "target":  "intelligence",
+                                      "purpose":  "Provide canonical data for analysis",
+                                      "source":  "master-data",
+                                      "mode":  "READ_ONLY"
+                                  },
+                                  {
+                                      "target":  "brain",
+                                      "purpose":  "Provide canonical entities and products",
+                                      "source":  "master-data",
+                                      "mode":  "READ_ONLY"
+                                  },
+                                  {
+                                      "target":  "brain",
+                                      "purpose":  "Provide project and runtime context",
+                                      "source":  "memory",
+                                      "mode":  "READ_ONLY"
+                                  },
+                                  {
+                                      "target":  "intelligence",
+                                      "purpose":  "Provide reference knowledge",
+                                      "source":  "knowledge",
+                                      "mode":  "READ_ONLY"
+                                  },
+                                  {
+                                      "target":  "brain",
+                                      "purpose":  "Provide derived findings and capability results",
+                                      "source":  "intelligence",
+                                      "mode":  "CONTROLLED"
+                                  },
+                                  {
+                                      "target":  "governance",
+                                      "purpose":  "Request execution authorization",
+                                      "source":  "brain",
+                                      "mode":  "CONTROLLED"
+                                  },
+                                  {
+                                      "target":  "brain",
+                                      "purpose":  "Return policy and authorization decision",
+                                      "source":  "governance",
+                                      "mode":  "CONTROLLED"
+                                  },
+                                  {
+                                      "target":  "reports",
+                                      "purpose":  "Emit traceable execution outputs",
+                                      "source":  "brain",
+                                      "mode":  "CONTROLLED"
+                                  }
+                              ],
+    "blockedConnections":  [
+                               {
+                                   "target":  "master-data",
+                                   "source":  "legacy",
+                                   "reason":  "Legacy systems must not bypass authority controls"
+                               },
+                               {
+                                   "target":  "master-data",
+                                   "source":  "intelligence",
+                                   "reason":  "Intelligence engines must not directly mutate canonical data"
+                               },
+                               {
+                                   "target":  "master-data",
+                                   "source":  "reports",
+                                   "reason":  "Reports are outputs, not authoritative inputs"
+                               }
+                           ],
+    "status":  "CONTROLLED_WIRING_DEFINED"
+}

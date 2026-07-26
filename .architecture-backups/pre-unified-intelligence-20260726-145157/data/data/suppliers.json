@@ -1,0 +1,31 @@
+{
+  "schema_version": "Supplier_v1.0",
+  "total_suppliers": 1,
+  "suppliers": [
+    {
+      "id": "SUP-001",
+      "name": "Nile Valley Honey Co.",
+      "type": "Primary Producer",
+      "country": "Egypt",
+      "city": "Cairo",
+      "address": "10 Nile Road, Cairo, Egypt",
+      "contact": {
+        "name": "Mohammed Hassan",
+        "email": "mohammed@nilehoney.eg",
+        "phone": "+20 2 1234 5678",
+        "position": "CEO"
+      },
+      "certifications": [
+        "Halal",
+        "HACCP",
+        "ISO 22000",
+        "GMP"
+      ],
+      "quality_metrics": {
+        "on_time_delivery": 98,
+        "quality_pass_rate": 99.5,
+        "lead_time_days": 7
+      }
+    }
+  ]
+}

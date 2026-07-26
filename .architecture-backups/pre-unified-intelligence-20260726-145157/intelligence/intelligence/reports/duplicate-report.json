@@ -1,0 +1,90 @@
+{
+  "system": "GL-DOS",
+  "engine": "Duplicate Engine",
+  "version": "2.0",
+
+  "generated": "2026-07-23T00:00:00.000Z",
+
+  "summary": {
+
+    "total_findings": 14,
+
+    "migration_matches": 14,
+
+    "exact_duplicates": 0,
+
+    "data_conflicts": 0,
+
+    "possible_duplicates": 0
+
+  },
+
+
+  "policy": {
+
+    "identity_fields": [
+
+      "id",
+      "product_code",
+      "ref_id"
+
+    ],
+
+    "comparison_mode":
+    "semantic"
+
+  },
+
+
+  "findings": [
+
+    {
+
+      "key": "product_code",
+
+      "value": "HON001",
+
+      "type": "MIGRATION_MATCH",
+
+      "confidence": 100,
+
+
+      "records": [
+
+        {
+
+          "file":
+          "data/legacy/products.json",
+
+          "id":
+          "wildflower-honey"
+
+        },
+
+
+        {
+
+          "file":
+          "data/migrated_products.json",
+
+          "id":
+          "wildflower-honey"
+
+        }
+
+      ],
+
+
+      "differences": [],
+
+
+      "recommendation":
+
+      "SAFE_MIGRATION_CLEANUP"
+
+
+    }
+
+  ]
+
+}

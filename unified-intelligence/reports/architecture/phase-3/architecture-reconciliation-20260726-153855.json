@@ -1,0 +1,102 @@
+﻿{
+    "Phase":  "Phase 3",
+    "Name":  "Architecture Reconciliation \u0026 Intelligence Integration",
+    "GeneratedAt":  "2026-07-26T15:39:01.4528621+02:00",
+    "ProjectRoot":  "C:\\Users\\Ghanam\\OneDrive\\projects\\Greeny-Life",
+    "Inputs":  {
+                   "CapabilityDiscovery":  "C:\\Users\\Ghanam\\OneDrive\\projects\\Greeny-Life\\unified-intelligence\\reports\\discovery\\capability-discovery-20260726-145740.json",
+                   "DependencyMap":  "C:\\Users\\Ghanam\\OneDrive\\projects\\Greeny-Life\\unified-intelligence\\reports\\discovery\\dependency-map-20260726-145740.json"
+               },
+    "TargetArchitecture":  {
+                               "Brain":  {
+                                             "Role":  "Central orchestration and decision coordination",
+                                             "Authority":  "Coordinates execution; does not own master truth",
+                                             "Status":  "TARGET"
+                                         },
+                               "Intelligence":  {
+                                                    "Role":  "Analysis, validation, scanning, audit, cleanup and reasoning engines",
+                                                    "Authority":  "Produces evidence and recommendations",
+                                                    "Status":  "TARGET"
+                                                },
+                               "GLDOS":  {
+                                             "Role":  "Governance, integrity, policy enforcement and execution control",
+                                             "Authority":  "Controls what may execute and under which conditions",
+                                             "Status":  "TARGET"
+                                         },
+                               "MemoryKnowledge":  {
+                                                       "Role":  "Project memory, runtime memory, knowledge base and references",
+                                                       "Authority":  "Context and knowledge; not master transactional truth",
+                                                       "Status":  "TARGET"
+                                                   },
+                               "MasterData":  {
+                                                  "Role":  "Canonical source of truth for governed entities and products",
+                                                  "Authority":  "Authoritative business data",
+                                                  "Status":  "TARGET"
+                                              },
+                               "Reports":  {
+                                               "Role":  "Traceable outputs, audits, health reports and decisions",
+                                               "Authority":  "Evidence and observability layer",
+                                               "Status":  "TARGET"
+                                           }
+                           },
+    "IntegrationPrinciples":  [
+                                  "No silent deletion",
+                                  "No destructive migration without approved decision",
+                                  "Master Data remains canonical source of truth",
+                                  "Intelligence produces evidence before mutation",
+                                  "GL-DOS governs execution",
+                                  "Brain orchestrates capabilities",
+                                  "Memory and Knowledge provide context",
+                                  "Reports remain traceable to source artifacts",
+                                  "Legacy assets remain preserved until migration decisions are approved"
+                              ],
+    "RequiredIntegrationEdges":  [
+                                     {
+                                         "From":  "Brain",
+                                         "To":  "Intelligence",
+                                         "Purpose":  "Capability discovery, analysis and execution requests"
+                                     },
+                                     {
+                                         "From":  "Intelligence",
+                                         "To":  "GL-DOS",
+                                         "Purpose":  "Policy and integrity validation before mutation"
+                                     },
+                                     {
+                                         "From":  "GL-DOS",
+                                         "To":  "Master Data",
+                                         "Purpose":  "Governed writes and canonical data protection"
+                                     },
+                                     {
+                                         "From":  "Master Data",
+                                         "To":  "Memory/Knowledge",
+                                         "Purpose":  "Controlled contextualization and indexing"
+                                     },
+                                     {
+                                         "From":  "All Intelligence Components",
+                                         "To":  "Reports",
+                                         "Purpose":  "Traceable evidence and observability"
+                                     },
+                                     {
+                                         "From":  "Reports",
+                                         "To":  "Brain",
+                                         "Purpose":  "Feedback loop for decisions and orchestration"
+                                     }
+                                 ],
+    "NextActions":  [
+                        "Map discovered capabilities to canonical Intelligence registry",
+                        "Map dependencies to Brain orchestration boundaries",
+                        "Identify duplicate or overlapping engines",
+                        "Identify governance enforcement gaps",
+                        "Identify Master Data authority conflicts",
+                        "Define report lineage and traceability requirements",
+                        "Create integration readiness matrix",
+                        "Prepare Phase 4 execution plan"
+                    ],
+    "Safety":  {
+                   "BackupRequiredBeforeMutation":  true,
+                   "DestructiveOperationsAllowed":  false,
+                   "AutoDeleteAllowed":  false,
+                   "AutoMergeAllowed":  false,
+                   "MigrationRequiresApproval":  true
+               }
+}

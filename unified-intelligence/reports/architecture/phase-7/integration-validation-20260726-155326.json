@@ -1,0 +1,145 @@
+﻿{
+    "phase":  "PHASE_7",
+    "name":  "Integration Validation and Runtime Contract Testing",
+    "generatedAt":  "2026-07-26T15:53:43.3905027+02:00",
+    "system":  "Greeny-Life",
+    "status":  "VALIDATION_PASSED",
+    "phase6Manifest":  "C:\\Users\\Ghanam\\OneDrive\\projects\\Greeny-Life\\unified-intelligence\\reports\\architecture\\phase-6\\phase-6-manifest-20260726-154756.json",
+    "architectureFlow":  {
+                             "expected":  [
+                                              "MASTER_DATA",
+                                              "MEMORY_KNOWLEDGE",
+                                              "INTELLIGENCE",
+                                              "BRAIN",
+                                              "GL_DOS",
+                                              "CONTROLLED_EXECUTION",
+                                              "TRACEABLE_REPORTS"
+                                          ],
+                             "actual":  [
+                                            "MASTER_DATA",
+                                            "MEMORY_KNOWLEDGE",
+                                            "INTELLIGENCE",
+                                            "BRAIN",
+                                            "GL_DOS",
+                                            "CONTROLLED_EXECUTION",
+                                            "TRACEABLE_REPORTS"
+                                        ],
+                             "status":  "PASS"
+                         },
+    "safetyProperties":  {
+                             "expected":  [
+                                              "MASTER_DATA_READ_ONLY",
+                                              "NO_DIRECT_LEGACY_MUTATION",
+                                              "GOVERNANCE_GATE_REQUIRED",
+                                              "CORRELATION_ID_REQUIRED",
+                                              "TRACEABLE_EXECUTION"
+                                          ],
+                             "actual":  [
+                                            "MASTER_DATA_READ_ONLY",
+                                            "NO_DIRECT_LEGACY_MUTATION",
+                                            "GOVERNANCE_GATE_REQUIRED",
+                                            "CORRELATION_ID_REQUIRED",
+                                            "TRACEABLE_EXECUTION"
+                                        ],
+                             "status":  "PASS"
+                         },
+    "artifactValidation":  [
+                               {
+                                   "Artifact":  "GovernanceGate",
+                                   "Path":  "C:\\Users\\Ghanam\\OneDrive\\projects\\Greeny-Life\\unified-intelligence\\adapters\\gl-dos-governance-gate.ts",
+                                   "Exists":  true,
+                                   "Status":  "READY"
+                               },
+                               {
+                                   "Artifact":  "RuntimeOrchestrator",
+                                   "Path":  "C:\\Users\\Ghanam\\OneDrive\\projects\\Greeny-Life\\unified-intelligence\\runtime\\controlled-runtime-orchestrator.ts",
+                                   "Exists":  true,
+                                   "Status":  "READY"
+                               },
+                               {
+                                   "Artifact":  "MasterDataAdapter",
+                                   "Path":  "C:\\Users\\Ghanam\\OneDrive\\projects\\Greeny-Life\\unified-intelligence\\adapters\\master-data-adapter.ts",
+                                   "Exists":  true,
+                                   "Status":  "READY"
+                               },
+                               {
+                                   "Artifact":  "ReportAdapter",
+                                   "Path":  "C:\\Users\\Ghanam\\OneDrive\\projects\\Greeny-Life\\unified-intelligence\\adapters\\traceable-report-adapter.ts",
+                                   "Exists":  true,
+                                   "Status":  "READY"
+                               },
+                               {
+                                   "Artifact":  "IntelligenceAdapter",
+                                   "Path":  "C:\\Users\\Ghanam\\OneDrive\\projects\\Greeny-Life\\unified-intelligence\\adapters\\intelligence-adapter.ts",
+                                   "Exists":  true,
+                                   "Status":  "READY"
+                               }
+                           ],
+    "sourceContractValidation":  [
+                                     {
+                                         "Check":  "GovernanceGateSourcePresent",
+                                         "Status":  "PASS"
+                                     },
+                                     {
+                                         "Check":  "RuntimeOrchestratorSourcePresent",
+                                         "Status":  "PASS"
+                                     },
+                                     {
+                                         "Check":  "MasterDataAdapterSourcePresent",
+                                         "Status":  "PASS"
+                                     },
+                                     {
+                                         "Check":  "TraceableReportAdapterSourcePresent",
+                                         "Status":  "PASS"
+                                     },
+                                     {
+                                         "Check":  "IntelligenceAdapterSourcePresent",
+                                         "Status":  "PASS"
+                                     }
+                                 ],
+    "runtimeContractValidation":  [
+                                      {
+                                          "Check":  "CorrelationIdSignal",
+                                          "Status":  "PASS"
+                                      },
+                                      {
+                                          "Check":  "GovernanceGateSignal",
+                                          "Status":  "PASS"
+                                      },
+                                      {
+                                          "Check":  "MasterDataSignal",
+                                          "Status":  "REVIEW"
+                                      },
+                                      {
+                                          "Check":  "TraceabilitySignal",
+                                          "Status":  "PASS"
+                                      }
+                                  ],
+    "masterDataProtection":  {
+                                 "readOnlyExpected":  true,
+                                 "mutationSignalsDetected":  [
+
+                                                             ],
+                                 "status":  "PASS"
+                             },
+    "legacyProtection":  {
+                             "directMutationBlocked":  true,
+                             "legacyReferenceDetected":  false,
+                             "status":  "PASS"
+                         },
+    "correlationContract":  {
+                                "required":  true,
+                                "implementedSignalDetected":  true,
+                                "status":  "PASS"
+                            },
+    "traceabilityContract":  {
+                                 "required":  true,
+                                 "implementedSignalDetected":  true,
+                                 "status":  "PASS"
+                             },
+    "gate":  {
+                 "passed":  true,
+                 "decision":  "PROCEED_TO_RUNTIME_CONTRACT_TESTING"
+             },
+    "nextPhase":  "PHASE_8_RUNTIME_CONTRACT_EXECUTION_TESTS"
+}

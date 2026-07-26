@@ -1,0 +1,36 @@
+{
+  "schemaVersion": "3.0.0",
+
+  "entity": "Product",
+
+  "required": {
+    "id": "string",
+    "code": "string",
+    "name": "multilingual",
+    "brandId": "reference",
+    "categoryId": "reference",
+    "countryId": "reference",
+    "hsCode": "string",
+    "packagingIds": "reference[]",
+    "status": "string"
+  },
+
+  "recommended": {
+    "gtin": "string",
+    "scientificName": "multilingual",
+    "certificateIds": "reference[]",
+    "marketIds": "reference[]",
+    "incotermIds": "reference[]",
+    "seo": "object"
+  },
+
+  "optional": {
+    "technical": "object",
+    "nutrition": "object",
+    "marketing": "object",
+    "digitalAssets": "object",
+    "traceability": "object",
+    "relationships": "object",
+    "workflow": "object"
+  }
+}

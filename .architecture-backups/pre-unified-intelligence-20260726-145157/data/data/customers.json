@@ -1,0 +1,52 @@
+{
+  "schema_version": "CRM_v1.0",
+  "total_customers": 2,
+  "customers": [
+    {
+      "id": "CUST-001",
+      "name": "Nature's Best Ltd.",
+      "type": "Distributor",
+      "market": "eu",
+      "country": "United Kingdom",
+      "city": "London",
+      "address": "123 Health Street, London, UK",
+      "contact": {
+        "name": "John Smith",
+        "email": "john@naturesbest.uk",
+        "phone": "+44 20 1234 5678",
+        "position": "Procurement Manager"
+      },
+      "relationship": {
+        "since": "2025-01-15",
+        "status": "Active",
+        "credit_limit": 50000,
+        "payment_terms": "30 days"
+      },
+      "purchase_history": [],
+      "opportunities": []
+    },
+    {
+      "id": "CUST-002",
+      "name": "Green Market LLC",
+      "type": "Retail Chain",
+      "market": "gcc",
+      "country": "UAE",
+      "city": "Dubai",
+      "address": "Dubai Mall, Level 2, Dubai, UAE",
+      "contact": {
+        "name": "Ahmed Al Maktoum",
+        "email": "ahmed@greenmarket.ae",
+        "phone": "+971 4 567 8901",
+        "position": "Director of Purchasing"
+      },
+      "relationship": {
+        "since": "2026-01-01",
+        "status": "Active",
+        "credit_limit": 100000,
+        "payment_terms": "60 days"
+      },
+      "purchase_history": [],
+      "opportunities": []
+    }
+  ]
+}

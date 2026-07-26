@@ -1,0 +1,15 @@
+﻿{
+    "phase":  "PHASE_14",
+    "name":  "Operational Launch Final Gate",
+    "system":  "Greeny-Life",
+    "status":  "OPERATIONAL_GATE_PASSED",
+    "decision":  "APPROVED_FOR_GO_LIVE_CONTROL",
+    "prerequisites":  {
+                          "productionSimulation":  "PASSED",
+                          "runtime":  "PASSED",
+                          "governance":  "PASSED",
+                          "safety":  "PASSED",
+                          "observability":  "PASSED"
+                      },
+    "nextPhase":  "PHASE_15_GO_LIVE_CONTROL_GATE"
+}

@@ -1,0 +1,31 @@
+﻿{
+    "phase":  "PHASE_6",
+    "name":  "Integration Adapters and Controlled Runtime Wiring",
+    "generatedAt":  "2026-07-26T15:49:51.4630074+02:00",
+    "status":  "IMPLEMENTED_BASELINE",
+    "artifacts":  {
+                      "governanceGate":  "C:\\Users\\Ghanam\\OneDrive\\projects\\Greeny-Life\\unified-intelligence\\adapters\\gl-dos-governance-gate.ts",
+                      "runtimeOrchestrator":  "C:\\Users\\Ghanam\\OneDrive\\projects\\Greeny-Life\\unified-intelligence\\runtime\\controlled-runtime-orchestrator.ts",
+                      "registry":  "C:\\Users\\Ghanam\\OneDrive\\projects\\Greeny-Life\\unified-intelligence\\reports\\architecture\\phase-6\\phase-6-registry-20260726-154756.json",
+                      "masterDataAdapter":  "C:\\Users\\Ghanam\\OneDrive\\projects\\Greeny-Life\\unified-intelligence\\adapters\\master-data-adapter.ts",
+                      "reportAdapter":  "C:\\Users\\Ghanam\\OneDrive\\projects\\Greeny-Life\\unified-intelligence\\adapters\\traceable-report-adapter.ts",
+                      "intelligenceAdapter":  "C:\\Users\\Ghanam\\OneDrive\\projects\\Greeny-Life\\unified-intelligence\\adapters\\intelligence-adapter.ts"
+                  },
+    "architectureFlow":  [
+                             "MASTER_DATA",
+                             "MEMORY_KNOWLEDGE",
+                             "INTELLIGENCE",
+                             "BRAIN",
+                             "GL_DOS",
+                             "CONTROLLED_EXECUTION",
+                             "TRACEABLE_REPORTS"
+                         ],
+    "safetyProperties":  [
+                             "MASTER_DATA_READ_ONLY",
+                             "NO_DIRECT_LEGACY_MUTATION",
+                             "GOVERNANCE_GATE_REQUIRED",
+                             "CORRELATION_ID_REQUIRED",
+                             "TRACEABLE_EXECUTION"
+                         ],
+    "nextPhase":  "Integration Validation and Runtime Contract Testing"
+}

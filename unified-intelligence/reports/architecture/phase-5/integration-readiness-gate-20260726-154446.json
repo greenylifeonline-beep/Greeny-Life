@@ -1,0 +1,32 @@
+﻿{
+    "phase":  "PHASE_5",
+    "name":  "Integration Design Readiness Gate",
+    "generatedAt":  "2026-07-26T15:45:42.9458991+02:00",
+    "system":  "Greeny-Life",
+    "status":  "READY_FOR_CONTROLLED_WIRING",
+    "requiredArtifacts":  [
+                              {
+                                  "artifact":  "architecture.manifest.json",
+                                  "path":  "C:\\Users\\Ghanam\\OneDrive\\projects\\Greeny-Life\\unified-intelligence\\architecture.manifest.json",
+                                  "exists":  true,
+                                  "status":  "READY"
+                              },
+                              {
+                                  "artifact":  "contracts\\authority-registry.json",
+                                  "path":  "C:\\Users\\Ghanam\\OneDrive\\projects\\Greeny-Life\\unified-intelligence\\contracts\\authority-registry.json",
+                                  "exists":  true,
+                                  "status":  "READY"
+                              },
+                              {
+                                  "artifact":  "contracts\\execution-contract.json",
+                                  "path":  "C:\\Users\\Ghanam\\OneDrive\\projects\\Greeny-Life\\unified-intelligence\\contracts\\execution-contract.json",
+                                  "exists":  true,
+                                  "status":  "READY"
+                              }
+                          ],
+    "missingArtifacts":  0,
+    "governanceRequired":  true,
+    "masterDataAuthorityRequired":  true,
+    "traceabilityRequired":  true,
+    "nextPhase":  "Implement Integration Adapters and Controlled Runtime Wiring"
+}

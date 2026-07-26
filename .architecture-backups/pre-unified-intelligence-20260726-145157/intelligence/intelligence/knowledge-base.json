@@ -1,0 +1,49 @@
+{
+  "project": "Greeny Life",
+
+  "root": ".",
+
+  "canonical_paths": {
+    "data": "data",
+    "lib": "lib",
+    "lib_data": "lib/data",
+    "images": "app/assets/images",
+    "components": "components",
+    "reports": "reports"
+  },
+
+  "allowed_extensions": {
+    "data": [
+      ".json"
+    ],
+    "typescript": [
+      ".ts",
+      ".tsx"
+    ],
+    "images": [
+      ".jpg",
+      ".jpeg",
+      ".png",
+      ".webp",
+      ".svg"
+    ]
+  },
+
+  "forbidden_patterns": [
+    ".backup",
+    "_backup",
+    "migration_",
+    "assets_images.",
+    "assets_logos.",
+    "data_products.ts",
+    "data_products.json.tmp"
+  ],
+
+  "rules": {
+    "no_extension_files": false,
+    "validate_json": true,
+    "validate_typescript": true,
+    "detect_duplicates": true,
+    "protect_existing_files": true
+  }
+}

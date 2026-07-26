@@ -1,0 +1,58 @@
+﻿import { NextRequest, NextResponse } from "next/server";
+import { PrismaClient } from "@prisma/client";
+
+const prisma = new PrismaClient();
+
+// GET: جلب قائمة المنتجات
+export async function GET(request: NextRequest) {
+  try {
+    const { searchParams } = new URL(request.url);
+    const categoryId = searchParams.get("categoryId");
+
+    const products = await prisma.product.findMany({
+      where: categoryId ? { categoryId } : {},
+      include: {
+        category: true,
+        supplier: true,
+        packagingProfile: true,
+      },
+      orderBy: { createdAt: "desc" },
+    });
+
+    return NextResponse.json({ success: true, count: products.length, data: products });
+  } catch (error) {
+    return NextResponse.json(
+      { success: false, error: "Failed to fetch products", details: (error as Error).message },
+      { status: 500 }
+    );
+  }
+}
+
+// POST: إنشاء منتج جديد
+export async function POST(request: NextRequest) {
+  try {
+    const body = await request.json();
+    const { productId, sku, nameAr, nameEn, hsCode, unitPriceUSD, categoryId, supplierId, packagingProfileId } = body;
+
+    const newProduct = await prisma.product.create({
+      data: {
+        productId,
+        sku,
+        nameAr,
+        nameEn,
+        hsCode,
+        unitPriceUSD: parseFloat(unitPriceUSD),
+        categoryId,
+        supplierId,
+        packagingProfileId,
+      },
+    });
+
+    return NextResponse.json({ success: true, data: newProduct }, { status: 201 });
+  } catch (error) {
+    return NextResponse.json(
+      { success: false, error: "Failed to create product", details: (error as Error).message },
+      { status: 400 }
+    );
+  }
+}
