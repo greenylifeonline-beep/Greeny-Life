@@ -1,9 +1,12 @@
-﻿import { NextRequest, NextResponse } from "next/server";
+import { authorizeRequest, writeRolePolicy } from "@/lib/authz";
+import { NextRequest, NextResponse } from "next/server";
 import { EOSWorkflowEngine, OrderWorkflowState } from "../../../canonical/lib/workflowEngine";
 import { reviewWorkflowTransition } from "@/lib/intelligence/workflow-governance";
 
 // POST: تغيير حالة الطلب وسير العمل
 export async function POST(request: NextRequest) {
+  const authorization = await authorizeRequest(request, writeRolePolicy.workflow, "/api/workflow", "POST" );
+  if (authorization.response) return authorization.response;
   try {
     const body = await request.json();
     const { orderId, targetState, userId } = body;

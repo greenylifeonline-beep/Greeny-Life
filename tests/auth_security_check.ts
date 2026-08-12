@@ -1,0 +1,11 @@
+import assert from "node:assert/strict";
+process.env.APP_SESSION_SECRET = "test-secret-which-is-more-than-thirty-two-characters";
+import { createSession, hashPassword, readSession, verifyPassword } from "../lib/auth";
+const password = "Long_Test_Password_2026!";
+const hash = hashPassword(password);
+assert.equal(verifyPassword(password, hash), true);
+assert.equal(verifyPassword("incorrect", hash), false);
+const token = createSession({ userId: "u1", email: "admin@example.test", role: "ADMIN" });
+assert.equal(readSession(token)?.role, "ADMIN");
+assert.equal(readSession(`${token}bad`), null);
+console.log("Authentication security: PASS");

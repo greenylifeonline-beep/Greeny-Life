@@ -1,3 +1,4 @@
+import { authorizeRequest, writeRolePolicy } from "@/lib/authz";
 import crypto from "crypto";
 import { NextRequest, NextResponse } from "next/server";
 import { ControlledRuntimeOrchestrator } from "@/canonical/intelligence/runtime/controlled-runtime-orchestrator";
@@ -23,6 +24,9 @@ export async function GET(request: NextRequest) {
 }
 
 export async function POST(request: NextRequest) {
+  const authorization = await authorizeRequest(request, writeRolePolicy.training, "/api/learning/training-cases", "POST" );
+  if (authorization.response) return authorization.response;
+  const actorEmail = authorization.session!.email;
   try {
     const body = await request.json() as Record<string, unknown>;
     const outcomeId = text(body.outcomeId);
@@ -32,7 +36,7 @@ export async function POST(request: NextRequest) {
     if (!outcome) return NextResponse.json({ success: false, error: "Outcome record was not found." }, { status: 404 });
     const [existing] = await prisma.$queryRaw<Pick<TrainingRow, "id">[]>`SELECT "id" FROM "TrainingCase" WHERE "outcomeId" = ${outcomeId}`;
     if (existing) return NextResponse.json({ success: false, error: "A training case already exists for this outcome; it cannot be duplicated.", trainingCaseId: existing.id }, { status: 409 });
-    const training = buildTrainingCase({ outcome, expectedDecision: text(body.expectedDecision), actualDecision: text(body.actualDecision), rootCause: text(body.rootCause) || undefined, actor });
+    const training = buildTrainingCase({ outcome, expectedDecision: text(body.expectedDecision), actualDecision: text(body.actualDecision), rootCause: text(body.rootCause) || undefined, actor: actorEmail });
     const governance = await new ControlledRuntimeOrchestrator().execute({ operation: "learning:create-training-case", actor, riskLevel: "MEDIUM", input: training });
     const id = crypto.randomUUID();
     await prisma.$executeRaw`

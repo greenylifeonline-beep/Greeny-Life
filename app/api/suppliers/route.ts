@@ -1,4 +1,5 @@
-﻿import { NextRequest, NextResponse } from "next/server";
+import { authorizeRequest, writeRolePolicy } from "@/lib/authz";
+import { NextRequest, NextResponse } from "next/server";
 import { prisma } from "@/lib/prisma";
 const text = (value: unknown): value is string => typeof value === "string" && value.trim().length > 0;
 
@@ -12,6 +13,8 @@ export async function GET() {
 }
 
 export async function POST(request: NextRequest) {
+  const authorization = await authorizeRequest(request, writeRolePolicy.supplierMaster, "/api/suppliers", "POST" );
+  if (authorization.response) return authorization.response;
   try {
     const body = (await request.json()) as Record<string, unknown>;
     const { entityId, supplierId, nameAr, nameEn, contactPerson, email, phone, country } = body;

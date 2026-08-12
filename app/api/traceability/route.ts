@@ -1,3 +1,4 @@
+import { authorizeRequest, writeRolePolicy } from "@/lib/authz";
 import crypto from "crypto";
 
 import { NextRequest, NextResponse } from "next/server";
@@ -58,6 +59,9 @@ export async function GET(request: NextRequest) {
 }
 
 export async function POST(request: NextRequest) {
+  const authorization = await authorizeRequest(request, writeRolePolicy.traceability, "/api/traceability", "POST" );
+  if (authorization.response) return authorization.response;
+  const actorEmail = authorization.session!.email;
   try {
     const body = (await request.json()) as Record<string, unknown>;
     const input: TraceRecordInput = {
@@ -89,7 +93,7 @@ export async function POST(request: NextRequest) {
 
     const governance = await new ControlledRuntimeOrchestrator().execute({
       operation: `traceability:${input.recordType}`,
-      actor: input.actor,
+      actor: actorEmail,
       riskLevel: "HIGH",
       input,
     });

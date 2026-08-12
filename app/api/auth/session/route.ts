@@ -1,0 +1,3 @@
+import { NextRequest, NextResponse } from "next/server";
+import { readSession, authCookieName } from "@/lib/auth";
+export async function GET(request: NextRequest) { const session = readSession(request.cookies.get(authCookieName)?.value); return NextResponse.json({ success: true, authenticated: Boolean(session), session: session ? { userId: session.userId, email: session.email, role: session.role, expiresAt: new Date(session.expiresAt).toISOString() } : null }); }

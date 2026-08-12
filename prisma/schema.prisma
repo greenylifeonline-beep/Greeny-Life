@@ -216,6 +216,7 @@ model User {
   name          String
   role          String        @default("EMPLOYEE")
   department    String?
+  passwordHash  String?
   createdAt     DateTime      @default(now())
 }
 
@@ -372,4 +373,19 @@ model OrchestrationTask {
   @@index([ownerCompany, status, createdAt])
   @@index([subjectId, taskType])
   @@index([executor, status])
+}
+// Security events are append-only operational audit evidence.
+model SecurityAuditEvent {
+  id         String   @id @default(uuid())
+  route      String
+  action     String
+  actorEmail String?
+  role       String?
+  outcome    String
+  reason     String
+  createdAt  DateTime @default(now())
+
+  @@index([createdAt])
+  @@index([route, outcome])
+  @@index([actorEmail, createdAt])
 }

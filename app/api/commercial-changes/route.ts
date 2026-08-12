@@ -1,3 +1,4 @@
+import { authorizeRequest, writeRolePolicy } from "@/lib/authz";
 import { NextRequest, NextResponse } from "next/server";
 import crypto from "crypto";
 
@@ -67,6 +68,9 @@ export async function GET(request: NextRequest) {
 }
 
 export async function POST(request: NextRequest) {
+  const authorization = await authorizeRequest(request, writeRolePolicy.commercialChange, "/api/commercial-changes", "POST" );
+  if (authorization.response) return authorization.response;
+  const actorEmail = authorization.session!.email;
   try {
     const body = (await request.json()) as Record<string, unknown>;
     const { domain, subjectType, subjectId, changeType, source, payload, requestedBy } = body;
@@ -91,7 +95,7 @@ export async function POST(request: NextRequest) {
     const riskLevel = requiredRisk(normalizedDomain, submittedRisk);
     const governance = await new ControlledRuntimeOrchestrator().execute({
       operation: `commercial-change:${normalizedDomain}:${changeType.trim().toUpperCase()}`,
-      actor: requestedBy.trim(),
+      actor: actorEmail,
       riskLevel: riskLevel as "LOW" | "MEDIUM" | "HIGH" | "CRITICAL",
       input: payload,
     });

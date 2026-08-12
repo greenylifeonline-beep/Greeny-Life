@@ -1,3 +1,4 @@
+import { authorizeRequest, writeRolePolicy } from "@/lib/authz";
 import crypto from "crypto";
 import { NextRequest, NextResponse } from "next/server";
 import { ControlledRuntimeOrchestrator } from "@/canonical/intelligence/runtime/controlled-runtime-orchestrator";
@@ -28,6 +29,9 @@ export async function GET(request: NextRequest) {
 }
 
 export async function POST(request: NextRequest) {
+  const authorization = await authorizeRequest(request, writeRolePolicy.outcome, "/api/learning/outcomes", "POST" );
+  if (authorization.response) return authorization.response;
+  const actorEmail = authorization.session!.email;
   try {
     const body = await request.json() as Record<string, unknown>;
     const input: OutcomeInput = {
@@ -39,7 +43,7 @@ export async function POST(request: NextRequest) {
     };
     const errors = validateOutcomeInput(input);
     if (errors.length) return NextResponse.json({ success: false, errors }, { status: 400 });
-    const governance = await new ControlledRuntimeOrchestrator().execute({ operation: "learning:record-outcome", actor: input.actor, riskLevel: "MEDIUM", input });
+    const governance = await new ControlledRuntimeOrchestrator().execute({ operation: "learning:record-outcome", actor: actorEmail, riskLevel: "MEDIUM", input });
     const proposal = learningProposal(input);
     const id = crypto.randomUUID();
     await prisma.$executeRaw`

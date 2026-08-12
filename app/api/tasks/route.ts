@@ -1,3 +1,4 @@
+import { authorizeRequest, writeRolePolicy } from "@/lib/authz";
 import { Prisma } from "@prisma/client";
 import crypto from "node:crypto";
 import { NextRequest, NextResponse } from "next/server";
@@ -22,6 +23,8 @@ export async function GET(request: NextRequest) {
 }
 
 export async function POST(request: NextRequest) {
+  const authorization = await authorizeRequest(request, writeRolePolicy.task, "/api/tasks", "POST" );
+  if (authorization.response) return authorization.response;
   try {
     const body = await request.json() as Record<string, unknown>;
     const taskType = text(body.taskType).toUpperCase();

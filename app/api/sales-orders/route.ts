@@ -1,4 +1,5 @@
-﻿import { NextRequest, NextResponse } from "next/server";
+import { authorizeRequest, writeRolePolicy } from "@/lib/authz";
+import { NextRequest, NextResponse } from "next/server";
 import { prisma } from "@/lib/prisma";
 const text = (value: unknown): value is string => typeof value === "string" && value.trim().length > 0;
 const numeric = (value: unknown): number | null => {
@@ -21,6 +22,8 @@ export async function GET() {
 }
 
 export async function POST(request: NextRequest) {
+  const authorization = await authorizeRequest(request, writeRolePolicy.salesOrder, "/api/sales-orders", "POST" );
+  if (authorization.response) return authorization.response;
   try {
     const body = (await request.json()) as Record<string, unknown>;
     if (body.marketId !== undefined) return invalid("marketId Ù„Ø§ ÙŠÙ…Ù„Ùƒ Ù…Ù‚Ø§Ø¨Ù„Ø§Ù‹ ÙÙŠ Ø§Ù„Ù†Ù…ÙˆØ°Ø¬ Ø§Ù„Ù‚Ø§Ù†ÙˆÙ†ÙŠ Ø§Ù„Ø­Ø§Ù„ÙŠØ› Ù„Ø§ ÙŠÙ…ÙƒÙ† Ø­ÙØ¸Ù‡ Ø¨ØµÙ…Øª.");

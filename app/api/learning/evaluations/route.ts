@@ -1,3 +1,4 @@
+import { authorizeRequest, writeRolePolicy } from "@/lib/authz";
 import { Prisma } from "@prisma/client";
 import crypto from "crypto";
 import { NextRequest, NextResponse } from "next/server";
@@ -34,6 +35,9 @@ export async function GET(request: NextRequest) {
 }
 
 export async function POST(request: NextRequest) {
+  const authorization = await authorizeRequest(request, writeRolePolicy.evaluation, "/api/learning/evaluations", "POST" );
+  if (authorization.response) return authorization.response;
+  const actorEmail = authorization.session!.email;
   try {
     const body = await request.json() as Record<string, unknown>;
     const input = inputFrom(body);
@@ -46,7 +50,7 @@ export async function POST(request: NextRequest) {
     const evaluationKey = crypto.createHash("sha256").update(JSON.stringify({ candidateVersion: input.candidateVersion, baselineVersion: input.baselineVersion ?? null, trainingCaseIds: [...input.trainingCaseIds].sort(), metricScores: input.metricScores })).digest("hex");
     const [existing] = await prisma.$queryRaw<Pick<EvaluationRow, "id">[]>`SELECT "id" FROM "EvaluationRun" WHERE "evaluationKey" = ${evaluationKey}`;
     if (existing) return NextResponse.json({ success: false, error: "This exact evaluation already exists; duplicate benchmark runs are blocked.", evaluationId: existing.id }, { status: 409 });
-    const governance = await new ControlledRuntimeOrchestrator().execute({ operation: "learning:record-benchmark", actor: input.actor, riskLevel: "HIGH", input });
+    const governance = await new ControlledRuntimeOrchestrator().execute({ operation: "learning:record-benchmark", actor: actorEmail, riskLevel: "HIGH", input });
     const id = crypto.randomUUID();
     await prisma.$executeRaw`
       INSERT INTO "EvaluationRun" (
