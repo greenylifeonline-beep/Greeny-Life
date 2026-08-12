@@ -350,3 +350,26 @@ model EvaluationRun {
   @@index([candidateVersion, createdAt])
   @@index([status])
 }
+// A durable, idempotent task record. Task creation is never commercial execution.
+model OrchestrationTask {
+  id             String   @id @default(uuid())
+  taskType       String
+  ownerCompany   String
+  subjectId      String
+  requestedBy    String
+  executor       String
+  status         String   @default("REVIEW_REQUIRED")
+  priority       String   @default("MEDIUM")
+  evidenceIds    Json
+  dependsOn      Json
+  payload        Json
+  outputContract String
+  idempotencyKey String   @unique
+  correlationId  String   @unique
+  createdAt      DateTime @default(now())
+  updatedAt      DateTime @updatedAt
+
+  @@index([ownerCompany, status, createdAt])
+  @@index([subjectId, taskType])
+  @@index([executor, status])
+}
