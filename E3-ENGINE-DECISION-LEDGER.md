@@ -105,3 +105,9 @@ That behavior conflicts with the required approval model.
 The repaired gate returns `REVIEW_REQUIRED` for LOW, MEDIUM, and HIGH
 operations, and `DENIED` for CRITICAL operations. It does not issue an
 execution authorization; a separate durable user-approval mechanism is required.
+
+## `greenlines_brain` evidence-brain proof
+
+The extracted knowledge runtime was tested against `Egypt / honey / Norway` and `Egypt / spices / EU`. Both scenarios returned `NEEDS_VERIFICATION` with `UNKNOWN` confidence, zero supporting evidence, and no `GO` decision.
+
+Disposition: `KEEP_AS_EVIDENCE_AND_KNOWLEDGE_COMPONENT`. It is not MasterMind AI and not the Greeny-Life Egypt operational brain. It may supply evidence, provenance, knowledge-graph, and fail-closed reasoning capabilities through a controlled adapter only. Its identity mutation and any unscoped knowledge must not be used as trade authorization.
