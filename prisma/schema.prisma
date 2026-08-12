@@ -255,3 +255,32 @@ model CommercialChange {
   @@index([domain, subjectType, subjectId, status])
   @@index([effectiveFrom, effectiveTo])
 }
+
+// Immutable operational trace ledger. A record is created for a received raw
+// material, a processing/packaging output, or a re-export plan. It never
+// substitutes legal customs or ownership documents; it preserves their chain.
+model TradeTraceRecord {
+  id                String   @id @default(uuid())
+  traceCode         String   @unique
+  recordType        String
+  parentTraceCode   String?
+  sourceParty       String
+  holderCompany     String
+  destinationParty  String?
+  materialName      String
+  batchCode         String
+  quantity          Float
+  unit              String
+  originCountry     String
+  processingCountry String?
+  status            String   @default("REVIEW_REQUIRED")
+  ownershipHistory  Json
+  evidence          Json?
+  correlationId     String   @unique
+  createdAt         DateTime @default(now())
+  updatedAt         DateTime @updatedAt
+
+  @@index([parentTraceCode])
+  @@index([holderCompany, status])
+  @@index([batchCode])
+}
