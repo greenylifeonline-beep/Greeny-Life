@@ -111,3 +111,9 @@ execution authorization; a separate durable user-approval mechanism is required.
 The extracted knowledge runtime was tested against `Egypt / honey / Norway` and `Egypt / spices / EU`. Both scenarios returned `NEEDS_VERIFICATION` with `UNKNOWN` confidence, zero supporting evidence, and no `GO` decision.
 
 Disposition: `KEEP_AS_EVIDENCE_AND_KNOWLEDGE_COMPONENT`. It is not MasterMind AI and not the Greeny-Life Egypt operational brain. It may supply evidence, provenance, knowledge-graph, and fail-closed reasoning capabilities through a controlled adapter only. Its identity mutation and any unscoped knowledge must not be used as trade authorization.
+
+## Canonical integrity adapter proof
+
+The canonical audit and data-integrity engines are read-only: they read `canonical/data/master_products.json` and return findings without writing, deleting, or altering source data. A unified adapter now supplies their health, source, timestamp, and boundaries to Greeny-Life Egypt Brain.
+
+Disposition: `KEEP_AND_RECONNECT`. It validates the internal product reference only; it is not proof of live inventory, supplier approval, certificates, price, customs, or export eligibility.

@@ -10,7 +10,9 @@ interface IntegrityFinding {
         | "INVALID_JSON"
         | "DATA_CONFLICT"
         | "DUPLICATE_ID"
-        | "DUPLICATE_SLUG";
+        | "DUPLICATE_SLUG"
+        | "MISSING_MIGRATION"
+        | "MISSING_LEGACY";
 
     severity:
         | "ERROR"
