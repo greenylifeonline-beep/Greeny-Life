@@ -7,13 +7,14 @@ import { reviewWorkflowTransition } from "@/lib/intelligence/workflow-governance
 export async function POST(request: NextRequest) {
   const authorization = await authorizeRequest(request, writeRolePolicy.workflow, "/api/workflow", "POST" );
   if (authorization.response) return authorization.response;
+  const actorEmail = authorization.session!.email;
   try {
     const body = await request.json();
-    const { orderId, targetState, userId } = body;
+    const { orderId, targetState } = body;
 
-    if (!orderId || !targetState || !userId) {
+    if (!orderId || !targetState) {
       return NextResponse.json(
-        { success: false, error: "Missing required fields: orderId, targetState, userId" },
+        { success: false, error: "Missing required fields: orderId, targetState" },
         { status: 400 }
       );
     }
@@ -29,7 +30,7 @@ export async function POST(request: NextRequest) {
     const governance = await reviewWorkflowTransition({
       orderId: String(orderId).trim(),
       targetState: targetState as OrderWorkflowState,
-      actor: String(userId).trim(),
+      actor: actorEmail,
     });
     if (governance.status !== "AUTHORIZED") {
       return NextResponse.json({
@@ -40,7 +41,7 @@ export async function POST(request: NextRequest) {
         executionRule: governance.executionRule,
       }, { status: 202 });
     }
-    const result = await EOSWorkflowEngine.transitionOrderState(orderId, targetState as OrderWorkflowState, userId);
+    const result = await EOSWorkflowEngine.transitionOrderState(orderId, targetState as OrderWorkflowState, actorEmail);
 
     return NextResponse.json({ success: true, data: result });
   } catch (error) {

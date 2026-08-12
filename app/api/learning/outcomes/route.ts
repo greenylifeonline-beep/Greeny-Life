@@ -37,7 +37,7 @@ export async function POST(request: NextRequest) {
     const input: OutcomeInput = {
       decisionId: text(body.decisionId), contextId: text(body.contextId), metric: text(body.metric),
       expectedValue: numeric(body.expectedValue), actualValue: numeric(body.actualValue), unit: text(body.unit),
-      observedAt: text(body.observedAt), actor: text(body.actor),
+      observedAt: text(body.observedAt), actor: actorEmail,
       evidenceIds: Array.isArray(body.evidenceIds) ? body.evidenceIds.filter((item): item is string => typeof item === "string").map((item) => item.trim()) : [],
       notes: text(body.notes) || undefined,
     };

@@ -25,12 +25,13 @@ export async function GET(request: NextRequest) {
 export async function POST(request: NextRequest) {
   const authorization = await authorizeRequest(request, writeRolePolicy.task, "/api/tasks", "POST" );
   if (authorization.response) return authorization.response;
+  const actorEmail = authorization.session!.email;
   try {
     const body = await request.json() as Record<string, unknown>;
     const taskType = text(body.taskType).toUpperCase();
     const ownerCompany = text(body.ownerCompany).toUpperCase();
     if (!taskTypes.has(taskType) || !companies.has(ownerCompany)) return NextResponse.json({ success: false, error: "Unknown taskType or ownerCompany." }, { status: 400 });
-    const input: TaskInput = { taskType: taskType as TaskInput["taskType"], ownerCompany: ownerCompany as TaskInput["ownerCompany"], subjectId: text(body.subjectId), requestedBy: text(body.requestedBy), evidenceIds: Array.isArray(body.evidenceIds) ? body.evidenceIds.filter((item): item is string => typeof item === "string").map((item) => item.trim()) : [], dependsOn: Array.isArray(body.dependsOn) ? body.dependsOn.filter((item): item is string => typeof item === "string").map((item) => item.trim()) : [], priority: text(body.priority).toUpperCase() as TaskInput["priority"], payload: body.payload && typeof body.payload === "object" && !Array.isArray(body.payload) ? body.payload as Record<string, unknown> : {} };
+    const input: TaskInput = { taskType: taskType as TaskInput["taskType"], ownerCompany: ownerCompany as TaskInput["ownerCompany"], subjectId: text(body.subjectId), requestedBy: actorEmail, evidenceIds: Array.isArray(body.evidenceIds) ? body.evidenceIds.filter((item): item is string => typeof item === "string").map((item) => item.trim()) : [], dependsOn: Array.isArray(body.dependsOn) ? body.dependsOn.filter((item): item is string => typeof item === "string").map((item) => item.trim()) : [], priority: text(body.priority).toUpperCase() as TaskInput["priority"], payload: body.payload && typeof body.payload === "object" && !Array.isArray(body.payload) ? body.payload as Record<string, unknown> : {} };
     const errors = validateTaskInput(input);
     if (errors.length) return NextResponse.json({ success: false, errors }, { status: 400 });
     const task = createTaskContract(input);

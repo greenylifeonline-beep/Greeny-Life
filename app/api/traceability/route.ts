@@ -77,7 +77,7 @@ export async function POST(request: NextRequest) {
       unit: stringValue(body.unit),
       originCountry: stringValue(body.originCountry),
       processingCountry: stringValue(body.processingCountry) || undefined,
-      actor: stringValue(body.actor),
+      actor: actorEmail,
       evidence: body.evidence && typeof body.evidence === "object" && !Array.isArray(body.evidence) ? body.evidence as Record<string, unknown> : undefined,
     };
     const errors = validateTraceRecord(input);

@@ -40,7 +40,7 @@ export async function POST(request: NextRequest) {
   const actorEmail = authorization.session!.email;
   try {
     const body = await request.json() as Record<string, unknown>;
-    const input = inputFrom(body);
+    const input = { ...inputFrom(body), actor: actorEmail };
     const errors = validateEvaluationInput(input);
     if (errors.length) return NextResponse.json({ success: false, errors }, { status: 400 });
     const cases = await prisma.$queryRaw<TrainingRow[]>`SELECT "id", "status" FROM "TrainingCase" WHERE "id" IN (${Prisma.join(input.trainingCaseIds)})`;
