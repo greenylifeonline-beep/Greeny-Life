@@ -8,12 +8,12 @@ The only runtime target is this directory:
 
 The active application is limited to:
 
-- `app/` — Next.js UI and API routes
-- `lib/prisma.ts` — shared Prisma client
-- `prisma/schema.prisma` — active database schema
-- `prisma.config.js` — Prisma CLI configuration
-- `.env` — local-only database connection (never commit)
-- `package.json` / `package-lock.json` — Node runtime dependencies
+- `app/` - Next.js UI and API routes
+- `lib/prisma.ts` - shared Prisma client
+- `prisma/schema.prisma` - active database schema
+- `prisma.config.js` - Prisma CLI configuration
+- `.env` - local-only database connection (never commit)
+- `package.json` / `package-lock.json` - Node runtime dependencies
 
 ## Verified baseline
 
