@@ -1,3 +1,4 @@
+import { Prisma } from "@prisma/client";
 import crypto from "node:crypto";
 import { NextRequest, NextResponse } from "next/server";
 import { createTaskContract, type TaskInput, type TaskStatus, validateTaskInput } from "@/lib/intelligence/task-orchestration";
@@ -33,7 +34,7 @@ export async function POST(request: NextRequest) {
     const [existing] = await prisma.$queryRaw<Pick<TaskRow, "id">[]>`SELECT "id" FROM "OrchestrationTask" WHERE "idempotencyKey" = ${task.idempotencyKey}`;
     if (existing) return NextResponse.json({ success: false, error: "Identical task already exists; duplicate creation is blocked.", taskId: existing.id }, { status: 409 });
     if (task.dependsOn.length) {
-      const dependencies = await prisma.$queryRaw<Array<Pick<TaskRow, "id">>>`SELECT "id" FROM "OrchestrationTask" WHERE "id" IN (${prisma.join(task.dependsOn)})`;
+      const dependencies = await prisma.$queryRaw<Array<Pick<TaskRow, "id">>>`SELECT "id" FROM "OrchestrationTask" WHERE "id" IN (${Prisma.join(task.dependsOn)})`;
       if (dependencies.length !== task.dependsOn.length) return NextResponse.json({ success: false, error: "Every dependency task ID must exist." }, { status: 400 });
     }
     const id = crypto.randomUUID(); const correlationId = crypto.randomUUID();

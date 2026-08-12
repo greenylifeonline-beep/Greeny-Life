@@ -1,3 +1,4 @@
+import { Prisma } from "@prisma/client";
 import crypto from "crypto";
 import { NextRequest, NextResponse } from "next/server";
 import { ControlledRuntimeOrchestrator } from "@/canonical/intelligence/runtime/controlled-runtime-orchestrator";
@@ -38,7 +39,7 @@ export async function POST(request: NextRequest) {
     const input = inputFrom(body);
     const errors = validateEvaluationInput(input);
     if (errors.length) return NextResponse.json({ success: false, errors }, { status: 400 });
-    const cases = await prisma.$queryRaw<TrainingRow[]>`SELECT "id", "status" FROM "TrainingCase" WHERE "id" IN (${prisma.join(input.trainingCaseIds)})`;
+    const cases = await prisma.$queryRaw<TrainingRow[]>`SELECT "id", "status" FROM "TrainingCase" WHERE "id" IN (${Prisma.join(input.trainingCaseIds)})`;
     if (cases.length !== input.trainingCaseIds.length) return NextResponse.json({ success: false, error: "Every trainingCaseId must exist." }, { status: 400 });
     if (cases.some((item) => item.status !== "REVIEW_REQUIRED")) return NextResponse.json({ success: false, error: "Every training case must remain REVIEW_REQUIRED; no promoted or altered case may be benchmark input." }, { status: 400 });
     const evaluation = evaluateCandidate(input);
