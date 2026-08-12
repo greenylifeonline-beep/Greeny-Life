@@ -4,6 +4,7 @@ import { NextRequest, NextResponse } from "next/server";
 
 import { ControlledRuntimeOrchestrator } from "@/canonical/intelligence/runtime/controlled-runtime-orchestrator";
 import { initialOwnership, type TraceRecordInput, validateTraceRecord } from "@/lib/domain/trade-traceability";
+import { findLegacyBatch, legacyBatchRegistry } from "@/lib/intelligence/legacy-batch-traceability";
 import { prisma } from "@/lib/prisma";
 
 interface TraceRow {
@@ -33,12 +34,20 @@ const numberValue = (value: unknown) => typeof value === "number" ? value : Numb
 
 export async function GET(request: NextRequest) {
   try {
-    const traceCode = new URL(request.url).searchParams.get("traceCode")?.trim();
-    if (!traceCode) return NextResponse.json({ success: false, error: "traceCode is required." }, { status: 400 });
+    const params = new URL(request.url).searchParams;
+    if (params.get("legacy") === "true") {
+      return NextResponse.json({ success: true, data: legacyBatchRegistry() });
+    }
+    const traceCode = params.get("traceCode")?.trim();
+    if (!traceCode) return NextResponse.json({ success: false, error: "traceCode is required; use legacy=true for the consolidated historical batch registry." }, { status: 400 });
     const [record] = await prisma.$queryRaw<TraceRow[]>`
       SELECT * FROM "TradeTraceRecord" WHERE "traceCode" = ${traceCode}
     `;
-    if (!record) return NextResponse.json({ success: false, error: "Trace record not found." }, { status: 404 });
+    if (!record) {
+      const legacy = findLegacyBatch(traceCode);
+      if (legacy) return NextResponse.json({ success: true, data: { record: legacy, descendants: [], sourceStatus: "HISTORICAL_REFERENCE_NOT_CURRENT_EVIDENCE" } });
+      return NextResponse.json({ success: false, error: "Trace record not found." }, { status: 404 });
+    }
     const descendants = await prisma.$queryRaw<TraceRow[]>`
       SELECT * FROM "TradeTraceRecord" WHERE "parentTraceCode" = ${traceCode} ORDER BY "createdAt" ASC
     `;
