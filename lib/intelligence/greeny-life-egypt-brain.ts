@@ -5,6 +5,7 @@ import stockSource from "@/canonical/inventory/stock-levels.json";
 import warehousesSource from "@/canonical/inventory/warehouses.json";
 import shipmentsSource from "@/canonical/logistics/shipments.json";
 import { canonicalIntegrityReview } from "@/lib/intelligence/canonical-integrity-adapter";
+import { operationalDataStatus } from "@/lib/intelligence/operational-data-freshness";
 
 export const greenyLifeEgyptBrainIdentity = {
   id: "GREENY_LIFE_EGYPT_BRAIN",
@@ -44,12 +45,18 @@ export function greenyLifeEgyptOperationalView(productId?: string) {
   const exportReadySuppliers = relatedSuppliers.filter((supplier) => supplier.status === "active" && supplier.capabilities.export_ready);
   const candidateOrUnaudited = relatedSuppliers.filter((supplier) => supplier.status !== "active" || supplier.quality?.audit_status !== "approved");
   const selectedShipments = selectedProduct ? shipments.filter((shipment) => shipment.product_id === selectedProduct.id) : shipments;
+  const operationalData = operationalDataStatus({
+    stockUpdatedAt: productStock.map((item) => item.last_updated),
+    supplierGeneratedAt: (suppliersSource as { generated_at?: string }).generated_at,
+    shipmentUpdatedAt: selectedShipments.map((shipment) => shipment.last_updated),
+  });
   const activeShipmentStatuses = new Set(["PACKED", "SHIPPED", "AT_PORT", "IN_TRANSIT", "CUSTOMS_CLEARANCE"]);
   const activeShipments = selectedShipments.filter((shipment) => activeShipmentStatuses.has(shipment.status));
   const warehouseById = new Map(warehouses.map((warehouse) => [warehouse.id, warehouse]));
 
   const blockers = [
     ...integrity.blockers,
+    ...operationalData.blockers,
     ...(selectedProduct && !productStock.length ? [`No stock record exists for ${selectedProduct.id}.`] : []),
     ...lowStock.map((item) => `${item.product_id} is at or below its reorder level in ${warehouseById.get(item.warehouse_id)?.name ?? item.warehouse_id}.`),
     ...candidateOrUnaudited.map((supplier) => `${supplier.name} is ${supplier.status} with audit status ${supplier.quality?.audit_status ?? "missing"}; it is not approved for automatic use.`),
@@ -65,6 +72,7 @@ export function greenyLifeEgyptOperationalView(productId?: string) {
     selectedProduct: selectedProduct ? { id: selectedProduct.id, code: selectedProduct.product_code, category: selectedProduct.category, name: selectedProduct.name?.en ?? selectedProduct.id } : null,
     operations: {
       canonicalIntegrity: integrity,
+      operationalData,
       products: products.length,
       warehouses: warehouses.map(({ id, name, location, capacity }) => ({ id, name, location, capacity })),
       stock: productStock.map((item) => ({ ...item, warehouse: warehouseById.get(item.warehouse_id)?.name ?? item.warehouse_id })),

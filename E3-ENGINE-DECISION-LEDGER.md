@@ -117,3 +117,9 @@ Disposition: `KEEP_AS_EVIDENCE_AND_KNOWLEDGE_COMPONENT`. It is not MasterMind AI
 The canonical audit and data-integrity engines are read-only: they read `canonical/data/master_products.json` and return findings without writing, deleting, or altering source data. A unified adapter now supplies their health, source, timestamp, and boundaries to Greeny-Life Egypt Brain.
 
 Disposition: `KEEP_AND_RECONNECT`. It validates the internal product reference only; it is not proof of live inventory, supplier approval, certificates, price, customs, or export eligibility.
+
+## Operational-data freshness boundary
+
+The Egypt stock, supplier, and shipment files currently contain reference timestamps dated 2026-08-07. A freshness adapter now exposes their age and marks records older than 24 hours as `STALE_REFERENCE`. These records can inform a review but cannot support automatic production, purchase, allocation, shipment, or export decisions.
+
+Disposition: `HARDEN_BEFORE_LIVE_USE`. A connected, authenticated source with independently verified retrieval time is required before a record can be called `LIVE_CONFIRMED`.
