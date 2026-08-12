@@ -45,11 +45,17 @@ export async function GET(request: NextRequest) {
   const tariff = parseFloat(searchParams.get("tariff") || "5"); // نسبة الجمرك الافتراضية
   const shipping = parseFloat(searchParams.get("shipping") || "50"); // رسوم الشحن الثابتة
 
-  const calculation = EOSWorkflowEngine.calculateLogisticsCost(qty, price, tariff, shipping);
-
-  return NextResponse.json({
-    success: true,
-    parameters: { qty, price, tariff, shipping },
-    calculation
-  });
+  try {
+    const calculation = EOSWorkflowEngine.calculateLogisticsCost(qty, price, tariff, shipping);
+    return NextResponse.json({
+      success: true,
+      parameters: { qty, price, tariff, shipping },
+      calculation
+    });
+  } catch (error) {
+    return NextResponse.json(
+      { success: false, error: (error as Error).message },
+      { status: 400 },
+    );
+  }
 }

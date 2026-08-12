@@ -26,6 +26,12 @@ const staleLegacyTargets = [
   "intelligence/gl-dos.ts",
 ];
 
+const emptyLegacyLayers = {
+  domain: 18,
+  application: 18,
+  database: 9,
+};
+
 function health() {
   const knowledge = exists("greenlines_brain/dna/extracted_knowledge.json")
     ? readJson("greenlines_brain/dna/extracted_knowledge.json")
@@ -53,6 +59,13 @@ function health() {
       rule: "Missing or non-current evidence must block execution and require verification.",
     },
     retiredCommands: staleLegacyTargets.filter((target) => !exists(target)),
+    legacyLayers: {
+      status: "SKELETONS_NOT_RUNTIME",
+      emptyFiles: emptyLegacyLayers,
+      totalEmptyFiles: Object.values(emptyLegacyLayers).reduce((total, count) => total + count, 0),
+      activeReplacement: "lib/domain/order-workflow.ts and the Prisma-backed API routes",
+      rule: "Empty historical files are retained as architectural evidence only; they cannot be claimed as executed business logic.",
+    },
     repairRule: "Old source is retained as evidence or reusable code; only verified adapters enter the final runtime.",
   };
 }

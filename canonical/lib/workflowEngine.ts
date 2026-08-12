@@ -1,18 +1,10 @@
 import { PrismaClient } from "@prisma/client";
 import { prisma } from "@/lib/prisma";
+import { assertOrderTransition, calculateLandedCost, OrderWorkflowState } from "@/lib/domain/order-workflow";
 
 type WorkflowTransaction = Pick<PrismaClient, "salesOrder" | "auditLog">;
 
-export enum OrderWorkflowState {
-  CREATED = "CREATED",
-  PENDING_SUPPLIER = "PENDING_SUPPLIER",
-  IN_PRODUCTION = "IN_PRODUCTION",
-  SHIPPED_FROM_SUPPLIER = "SHIPPED_FROM_SUPPLIER",
-  CUSTOMS_CLEARANCE = "CUSTOMS_CLEARANCE",
-  IN_WAREHOUSE = "IN_WAREHOUSE",
-  DELIVERED = "DELIVERED",
-  CANCELLED = "CANCELLED",
-}
+export { OrderWorkflowState } from "@/lib/domain/order-workflow";
 
 export class EOSWorkflowEngine {
   public static async transitionOrderState(
@@ -26,6 +18,7 @@ export class EOSWorkflowEngine {
     });
 
     if (!order) throw new Error(`Order with ID ${orderId} not found.`);
+    assertOrderTransition(order.status, targetState);
 
     return prisma.$transaction(async (tx: WorkflowTransaction) => {
       const currentOrder = await tx.salesOrder.update({
@@ -50,13 +43,6 @@ export class EOSWorkflowEngine {
     customsTariffRate: number,
     shippingFee: number
   ) {
-    const subtotal = itemsQuantity * basePrice;
-    const customsDuty = subtotal * (customsTariffRate / 100);
-    return {
-      subtotalUSD: subtotal,
-      customsDutyUSD: customsDuty,
-      shippingFeeUSD: shippingFee,
-      totalCostUSD: subtotal + customsDuty + shippingFee,
-    };
+    return calculateLandedCost(itemsQuantity, basePrice, customsTariffRate, shippingFee);
   }
 }
