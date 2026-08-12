@@ -284,3 +284,28 @@ model TradeTraceRecord {
   @@index([holderCompany, status])
   @@index([batchCode])
 }
+
+// Outcome evidence is append-only operational learning input. It never grants
+// approval or changes a model, policy, master record, or commercial action.
+model DecisionOutcome {
+  id              String   @id @default(uuid())
+  decisionId      String
+  contextId       String
+  metric          String
+  expectedValue   Float
+  actualValue     Float
+  variance        Float
+  variancePercent Float?
+  unit            String
+  status          String   @default("REVIEW_REQUIRED")
+  evidenceIds     Json
+  notes           String?
+  observedAt      DateTime
+  recordedBy      String
+  correlationId   String   @unique
+  createdAt       DateTime @default(now())
+
+  @@index([decisionId, createdAt])
+  @@index([contextId, metric, observedAt])
+  @@index([status])
+}
