@@ -90,3 +90,10 @@ The following tests were run successfully in the repaired project. They are exec
 | Evidence registry | Python unit suite | Passed: official evidence supports; missing/stale/unverified evidence requires review; prohibition is `NO_GO`. |
 
 This establishes a minimal reusable core for Greeny-Life Egypt Brain: canonical data integrity, workflow validation, fail-closed evidence, and approval governance. It does not establish live ERP, production, supplier, QC, customs, pricing, or logistics integration.
+
+## Workflow hardening decision
+
+- `calculateLogisticsCost` is retained as a calculation only; every input is explicit and labelled unverified.
+- `transitionOrderState` is retained as a controlled write only. The public API now submits a high-risk governance review and does not mutate an order while no durable approval record exists.
+
+Disposition: `HARDEN`. The engine is not an autonomous execution engine.
