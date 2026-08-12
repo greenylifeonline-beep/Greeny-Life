@@ -97,3 +97,11 @@ This establishes a minimal reusable core for Greeny-Life Egypt Brain: canonical 
 - `transitionOrderState` is retained as a controlled write only. The public API now submits a high-risk governance review and does not mutate an order while no durable approval record exists.
 
 Disposition: `HARDEN`. The engine is not an autonomous execution engine.
+## GL-DOS governance hardening decision
+
+The legacy gate automatically authorized low- and medium-risk operations.
+That behavior conflicts with the required approval model.
+
+The repaired gate returns `REVIEW_REQUIRED` for LOW, MEDIUM, and HIGH
+operations, and `DENIED` for CRITICAL operations. It does not issue an
+execution authorization; a separate durable user-approval mechanism is required.
