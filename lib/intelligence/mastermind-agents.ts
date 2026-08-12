@@ -1,0 +1,138 @@
+import { buildExportDecision } from "@/lib/intelligence/export-decision";
+import { assetAssimilationRegistry, egyptianExportPortfolio } from "@/lib/intelligence/portfolio-and-assets";
+import { assessCorridor, companies, type CompanyId } from "@/lib/intelligence/trade-corridors";
+import { findLegacyBatch, legacyBatchRegistry } from "@/lib/intelligence/legacy-batch-traceability";
+
+export type AgentStatus = "SUPPORTED" | "REVIEW_REQUIRED" | "NOT_READY";
+
+export interface AgentFinding {
+  agent: string;
+  status: AgentStatus;
+  summary: string;
+  evidence: string[];
+  blockers: string[];
+  data: unknown;
+}
+
+export interface MasterMindRequest {
+  productId: string;
+  destination: string;
+  originCompany: CompanyId;
+  destinationCompany: CompanyId;
+  actor: string;
+  traceCode?: string;
+}
+
+const commercialCompanies = new Set<CompanyId>([
+  "GREENY_LIFE_EGYPT",
+  "GREENS_NATURE_UAE",
+  "GREEN_LINES_NORWAY_EU",
+]);
+
+function statusFromExport(status: string): AgentStatus {
+  return status === "NOT_READY" ? "NOT_READY" : "REVIEW_REQUIRED";
+}
+
+export function evidenceComplianceAgent(productId: string, destination: string): AgentFinding {
+  const decision = buildExportDecision(productId, destination);
+  const blockers = decision.findings.filter((item) => item.state !== "SUPPORTED").map((item) => item.message);
+  return {
+    agent: "EVIDENCE_COMPLIANCE",
+    status: statusFromExport(decision.decision.status),
+    summary: decision.decision.recommendedAction,
+    evidence: decision.findings.filter((item) => item.state === "SUPPORTED").map((item) => `${item.code}: ${item.source}`),
+    blockers,
+    data: decision,
+  };
+}
+
+export function productMarketAgent(productId: string, destination: string): AgentFinding {
+  const portfolio = egyptianExportPortfolio();
+  const product = portfolio.products.find((item) => item.id.toUpperCase() === productId.trim().toUpperCase());
+  if (!product) {
+    return { agent: "PRODUCT_MARKET", status: "NOT_READY", summary: "Product is absent from the canonical portfolio.", evidence: [portfolio.source], blockers: ["Canonical product identity is required."], data: null };
+  }
+  const destinationHint = destination.trim().toUpperCase();
+  const marketEnabled = product.targetMarkets.some((market) => destinationHint.includes(market) || market.includes(destinationHint));
+  return {
+    agent: "PRODUCT_MARKET",
+    status: marketEnabled ? "REVIEW_REQUIRED" : "NOT_READY",
+    summary: marketEnabled ? "Product is internally marked for a related target market; external market evidence is still required." : "Destination is not represented in the product's internal target-market flags.",
+    evidence: [portfolio.source, `Product ${product.id}`, `HS ${product.hsCode ?? "missing"}`],
+    blockers: marketEnabled ? ["Internal market flags are not official market authorization."] : ["Market fit must be reviewed before commercial planning."],
+    data: product,
+  };
+}
+
+export async function tradeCorridorAgent(request: MasterMindRequest): Promise<AgentFinding> {
+  if (!commercialCompanies.has(request.originCompany) || !commercialCompanies.has(request.destinationCompany)) {
+    return { agent: "TRADE_CORRIDOR", status: "NOT_READY", summary: "MasterMind AI cannot be used as a commercial party.", evidence: ["TRADE-GOVERNANCE.md"], blockers: ["Origin and destination must be commercial companies."], data: null };
+  }
+  const assessment = await assessCorridor(request.originCompany, request.destinationCompany, "EXPORT", request.actor, request.productId);
+  return {
+    agent: "TRADE_CORRIDOR",
+    status: assessment.status === "REVIEW_REQUIRED" ? "REVIEW_REQUIRED" : "NOT_READY",
+    summary: assessment.recommendedAction,
+    evidence: assessment.requirements,
+    blockers: assessment.blockers,
+    data: assessment,
+  };
+}
+
+export function traceabilityAgent(traceCode?: string): AgentFinding {
+  const registry = legacyBatchRegistry();
+  if (!traceCode) {
+    return { agent: "TRACEABILITY", status: "REVIEW_REQUIRED", summary: "No batch was supplied; traceability must be attached before shipment planning.", evidence: registry.sourceFiles, blockers: ["Provide a current ledger trace code or a historical batch reference."], data: { historicalBatchCount: registry.records.length } };
+  }
+  const legacy = findLegacyBatch(traceCode);
+  if (!legacy) return { agent: "TRACEABILITY", status: "NOT_READY", summary: "Trace code is unknown to the consolidated historical registry.", evidence: registry.sourceFiles, blockers: ["Record a verified current traceability event before proceeding."], data: null };
+  return {
+    agent: "TRACEABILITY",
+    status: "REVIEW_REQUIRED",
+    summary: "Historical batch was found; its historic PASS label must be re-verified with current quality and custody evidence.",
+    evidence: [legacy.source, legacy.batchCode, legacy.productId ?? "No product ID"],
+    blockers: ["Historical batch status is not current quality or customs evidence."],
+    data: legacy,
+  };
+}
+
+export function systemLearningAgent(): AgentFinding {
+  const assets = assetAssimilationRegistry();
+  const active = assets.classes.ACTIVE_RUNTIME?.count ?? 0;
+  const reusable = assets.classes.REUSABLE_SOURCE?.count ?? 0;
+  return {
+    agent: "SYSTEM_LEARNING",
+    status: "REVIEW_REQUIRED",
+    summary: "The system can identify reusable legacy assets, but it can only propose reviewed integrations; it cannot self-modify.",
+    evidence: [assets.manifest, `${active} active runtime assets`, `${reusable} reusable source assets`],
+    blockers: ["No automatic code, data, model, or policy modification is permitted."],
+    data: { totalAssets: assets.totalAssets, classes: assets.classes },
+  };
+}
+
+export async function buildMasterMindDecisionPackage(request: MasterMindRequest) {
+  const agents = [
+    evidenceComplianceAgent(request.productId, request.destination),
+    productMarketAgent(request.productId, request.destination),
+    await tradeCorridorAgent(request),
+    traceabilityAgent(request.traceCode),
+    systemLearningAgent(),
+  ];
+  const blockers = agents.flatMap((agent) => agent.blockers.map((blocker) => `${agent.agent}: ${blocker}`));
+  const notReady = agents.some((agent) => agent.status === "NOT_READY");
+  return {
+    system: "MasterMind AI",
+    mode: "READ_ONLY_DECISION_INTELLIGENCE",
+    authority: companies.MASTERMIND.authority,
+    prohibited: companies.MASTERMIND.prohibited,
+    decision: {
+      status: notReady ? "NOT_READY" : "REQUIRES_HUMAN_REVIEW",
+      automaticExecution: false,
+      recommendedAction: notReady ? "Hold. Complete missing evidence, traceability, and commercial approvals." : "Submit the complete decision package to an authorized human reviewer.",
+    },
+    request,
+    agents,
+    blockers,
+    auditRule: "Every agent is read-only. MasterMind proposes; authorized humans approve execution through separate operational controls.",
+  };
+}

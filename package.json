@@ -31,8 +31,9 @@
     "test:domain": "tsx tests/domain_workflow_check.ts",
     "test:traceability": "tsx tests/trade_traceability_check.ts",
     "test:canonical-intelligence": "tsx tests/canonical_intelligence_check.ts",
+    "test:mastermind": "tsx tests/mastermind_agents_check.ts",
     "test:all": "npm run test:intelligence && npm run test:registry && npm run test:health && npm run test:cleanup && npm run test:duplicate-v2",
-    "verify": "npm run type-check && npm run intelligence && npm run audit && npm run test:domain && npm run test:traceability && npm run test:canonical-intelligence && npm run test:all",
+    "verify": "npm run type-check && npm run intelligence && npm run audit && npm run test:domain && npm run test:traceability && npm run test:canonical-intelligence && npm run test:mastermind && npm run test:all",
     "diagnose": "npm run intelligence",
     "gl-dos": "node scripts/legacy-health.cjs",
     "gl-check": "npm run verify"
