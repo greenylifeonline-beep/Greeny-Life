@@ -129,3 +129,9 @@ Disposition: `HARDEN_BEFORE_LIVE_USE`. A connected, authenticated source with in
 Exact product-to-supplier links and product certificate requirements are now read through a dedicated review. The current supplier master has no `approved` audit status, and certificate links are requirements rather than verified, current certificates. Therefore the review returns `NOT_READY` and cannot select, activate, contract with, or purchase from a supplier.
 
 Disposition: `HARDEN_BEFORE_COMMERCIAL_USE`. Connect current supplier audits and certificate evidence scoped to supplier, product, batch, destination, and validity period.
+
+## Shipment and tracking decision boundary
+
+Shipment and tracking records are now compared by tracking code. Their timestamps are historical, and a disagreement between a declared shipment status and its latest tracking update is surfaced as a blocker. No carrier API, signed transport document, customs message, or proof-of-delivery is connected.
+
+Disposition: `HARDEN_BEFORE_LIVE_USE`. The review informs human investigation only; it cannot release, reroute, clear customs, invoice, or confirm delivery.
