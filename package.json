@@ -35,8 +35,9 @@
     "test:operating-brains": "tsx tests/three_operating_brains_check.ts",
     "test:tool-registry": "tsx tests/tool_registry_check.ts",
     "test:commercial-context": "tsx tests/commercial_context_fabric_check.ts",
+    "test:commercial-changes": "tsx tests/commercial_change_review_check.ts",
     "test:all": "npm run test:intelligence && npm run test:registry && npm run test:health && npm run test:cleanup && npm run test:duplicate-v2",
-    "verify": "npm run type-check && npm run intelligence && npm run audit && npm run test:domain && npm run test:traceability && npm run test:canonical-intelligence && npm run test:mastermind && npm run test:operating-brains && npm run test:tool-registry && npm run test:commercial-context && npm run test:all",
+    "verify": "npm run type-check && npm run intelligence && npm run audit && npm run test:domain && npm run test:traceability && npm run test:canonical-intelligence && npm run test:mastermind && npm run test:operating-brains && npm run test:tool-registry && npm run test:commercial-context && npm run test:commercial-changes && npm run test:all",
     "diagnose": "npm run intelligence",
     "gl-dos": "node scripts/legacy-health.cjs",
     "gl-check": "npm run verify"

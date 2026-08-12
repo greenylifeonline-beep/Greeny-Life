@@ -16,8 +16,9 @@ async function main() {
   assert.equal(decision.system, "MasterMind AI");
   assert.equal(decision.mode, "READ_ONLY_DECISION_INTELLIGENCE");
   assert.equal(decision.decision.automaticExecution, false);
-  assert.equal(decision.agents.length, 6);
+  assert.equal(decision.agents.length, 7);
   assert.ok(decision.agents.some((agent) => agent.agent === "CUSTOMER_CONTEXT"));
+  assert.ok(decision.agents.some((agent) => agent.agent === "COMMERCIAL_CHANGE_REVIEW"));
   assert.equal(decision.decision.status, "NOT_READY");
   assert.ok(decision.blockers.some((blocker) => blocker.startsWith("EVIDENCE_COMPLIANCE:")));
   console.log("MasterMind agents: PASS");

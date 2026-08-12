@@ -4,6 +4,7 @@ import { assessCorridor, companies, type CompanyId } from "@/lib/intelligence/tr
 import { findLegacyBatch, legacyBatchRegistry } from "@/lib/intelligence/legacy-batch-traceability";
 import { approvalNotification, escalationReasons, localBrainFor, mastermindAuthority } from "@/lib/intelligence/three-operating-brains";
 import { customerContext } from "@/lib/intelligence/commercial-context-fabric";
+import { commercialChangeReview } from "@/lib/intelligence/commercial-change-review";
 
 export type AgentStatus = "SUPPORTED" | "REVIEW_REQUIRED" | "NOT_READY";
 
@@ -126,6 +127,18 @@ export function customerContextAgent(request: MasterMindRequest): AgentFinding {
   };
 }
 
+export async function commercialChangeAgent(request: MasterMindRequest): Promise<AgentFinding> {
+  const review = await commercialChangeReview(request.productId);
+  return {
+    agent: "COMMERCIAL_CHANGE_REVIEW",
+    status: review.status,
+    summary: review.summary,
+    evidence: review.evidence,
+    blockers: review.blockers,
+    data: review.data,
+  };
+}
+
 export async function buildMasterMindDecisionPackage(request: MasterMindRequest) {
   const agents = [
     evidenceComplianceAgent(request.productId, request.destination),
@@ -133,6 +146,7 @@ export async function buildMasterMindDecisionPackage(request: MasterMindRequest)
     await tradeCorridorAgent(request),
     traceabilityAgent(request.traceCode),
     customerContextAgent(request),
+    await commercialChangeAgent(request),
     systemLearningAgent(),
   ];
   const blockers = agents.flatMap((agent) => agent.blockers.map((blocker) => `${agent.agent}: ${blocker}`));
