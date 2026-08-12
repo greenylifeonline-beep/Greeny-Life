@@ -25,6 +25,7 @@ The active application is limited to:
 - TypeScript check: passed.
 - Production build: passed.
 - Live routes: `/`, `/api/products`, `/api/suppliers`, `/api/sales-orders` returned HTTP 200.
+- Commercial changes use a source, validity period, risk level, governance decision, and correlation ID. A price, supplier, or shipment change requires review; a critical request is denied.
 
 ## Authority boundaries
 

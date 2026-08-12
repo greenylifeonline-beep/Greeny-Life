@@ -228,3 +228,30 @@ model AuditLog {
   details       Json?
   createdAt     DateTime      @default(now())
 }
+
+// Commercial facts are time-bound. They are deliberately recorded before any
+// operational master record is changed, so pricing, suppliers, shipping and
+// offers remain traceable and reversible.
+model CommercialChange {
+  id            String   @id @default(uuid())
+  domain        String
+  subjectType   String
+  subjectId     String
+  changeType    String
+  status        String   @default("PROPOSED")
+  riskLevel     String
+  source        String
+  payload       Json
+  rationale     String?
+  effectiveFrom DateTime?
+  effectiveTo   DateTime?
+  requestedBy   String
+  reviewedBy    String?
+  reviewedAt    DateTime?
+  correlationId String   @unique
+  createdAt     DateTime @default(now())
+  updatedAt     DateTime @updatedAt
+
+  @@index([domain, subjectType, subjectId, status])
+  @@index([effectiveFrom, effectiveTo])
+}

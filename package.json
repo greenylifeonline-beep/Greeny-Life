@@ -11,6 +11,7 @@
     "start": "next start",
     "lint": "next lint",
     "type-check": "tsc --noEmit",
+    "data:preflight": "node scripts/data-import-preflight.cjs",
     "intelligence": "tsx intelligence/index.ts",
     "audit": "tsx intelligence/product-audit.ts",
     "health": "npm run type-check && npm run intelligence && npm run audit",
