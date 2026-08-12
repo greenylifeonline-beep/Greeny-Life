@@ -1,0 +1,230 @@
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+model Organization {
+  id        String   @id @default(uuid())
+  code      String   @unique
+  nameAr    String
+  nameEn    String
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  entities  Entity[]
+}
+
+model Entity {
+  id             String         @id @default(uuid())
+  orgId          String
+  organization   Organization   @relation(fields: [orgId], references: [id])
+  code           String         @unique
+  nameAr         String
+  nameEn         String
+  country        String
+  warehouses     Warehouse[]
+  suppliers      Supplier[]
+  customers      Customer[]
+  salesOrders    SalesOrder[]
+  createdAt      DateTime       @default(now())
+  updatedAt      DateTime       @updatedAt
+}
+
+model Supplier {
+  id            String        @id @default(uuid())
+  entityId      String
+  entity        Entity        @relation(fields: [entityId], references: [id])
+  supplierId    String        @unique
+  nameAr        String
+  nameEn        String
+  contactPerson String?
+  email         String?
+  phone         String?
+  country       String        @default("Egypt")
+  products      Product[]
+  createdAt     DateTime      @default(now())
+  updatedAt     DateTime      @updatedAt
+}
+
+model Product {
+  id            String        @id @default(uuid())
+  supplierId    String
+  supplier      Supplier      @relation(fields: [supplierId], references: [id])
+  productId     String        @unique
+  nameAr        String
+  nameEn        String
+  category      String
+  marketRules   Json?
+  skus          SKU[]
+  batches       Batch[]
+  createdAt     DateTime      @default(now())
+  updatedAt     DateTime      @updatedAt
+}
+
+model SKU {
+  id            String           @id @default(uuid())
+  productId     String
+  product       Product          @relation(fields: [productId], references: [id])
+  skuCode       String           @unique
+  barcode       String?
+  unitPriceUSD  Float
+  weightKg      Float
+  packaging     Packaging[]
+  inventories   Inventory[]
+  orderItems    SalesOrderItem[]
+  createdAt     DateTime         @default(now())
+  updatedAt     DateTime         @updatedAt
+}
+
+model Batch {
+  id            String        @id @default(uuid())
+  productId     String
+  product       Product       @relation(fields: [productId], references: [id])
+  batchCode     String        @unique
+  productionDate DateTime
+  expiryDate    DateTime
+  qcPassed      Boolean       @default(false)
+  traceability  Json?
+  createdAt     DateTime      @default(now())
+}
+
+model Packaging {
+  id            String        @id @default(uuid())
+  skuId         String
+  sku           SKU           @relation(fields: [skuId], references: [id])
+  packageType   String
+  dimensions    String?
+  labelCode     String?
+  createdAt     DateTime      @default(now())
+}
+
+model Warehouse {
+  id            String        @id @default(uuid())
+  entityId      String
+  entity        Entity        @relation(fields: [entityId], references: [id])
+  warehouseCode String        @unique
+  nameAr        String
+  nameEn        String
+  location      String
+  inventories   Inventory[]
+  createdAt     DateTime      @default(now())
+}
+
+model Inventory {
+  id            String        @id @default(uuid())
+  warehouseId   String
+  warehouse     Warehouse     @relation(fields: [warehouseId], references: [id])
+  skuId         String
+  sku           SKU           @relation(fields: [skuId], references: [id])
+  quantity      Int           @default(0)
+  reservedQty   Int           @default(0)
+  updatedAt     DateTime      @updatedAt
+}
+
+model Customer {
+  id            String        @id @default(uuid())
+  entityId      String
+  entity        Entity        @relation(fields: [entityId], references: [id])
+  customerCode  String        @unique
+  name          String
+  country       String
+  email         String?
+  salesOrders   SalesOrder[]
+  createdAt     DateTime      @default(now())
+}
+
+model SalesOrder {
+  id            String           @id @default(uuid())
+  entityId      String
+  entity        Entity           @relation(fields: [entityId], references: [id])
+  orderCode     String           @unique
+  customerId    String
+  customer      Customer         @relation(fields: [customerId], references: [id])
+  status        String           @default("CREATED")
+  totalAmount   Float
+  currency      String           @default("USD")
+  items         SalesOrderItem[]
+  shipments     Shipment[]
+  invoices      Invoice[]
+  auditLogs     AuditLog[]
+  createdAt     DateTime         @default(now())
+  updatedAt     DateTime         @updatedAt
+}
+
+model SalesOrderItem {
+  id            String        @id @default(uuid())
+  orderId       String
+  salesOrder    SalesOrder    @relation(fields: [orderId], references: [id])
+  skuId         String
+  sku           SKU           @relation(fields: [skuId], references: [id])
+  quantity      Int
+  unitPriceUSD  Float
+  totalPriceUSD Float
+}
+
+model Shipment {
+  id            String        @id @default(uuid())
+  orderId       String
+  salesOrder    SalesOrder    @relation(fields: [orderId], references: [id])
+  trackingNo    String        @unique
+  carrier       String?
+  containerNo   String?
+  status        String        @default("PREPARING")
+  etd           DateTime?
+  eta           DateTime?
+  documents     Document[]
+  createdAt     DateTime      @default(now())
+}
+
+model Document {
+  id            String        @id @default(uuid())
+  shipmentId    String?
+  shipment      Shipment?     @relation(fields: [shipmentId], references: [id])
+  docType       String
+  fileUrl       String
+  issuedBy      String?
+  createdAt     DateTime      @default(now())
+}
+
+model Invoice {
+  id            String        @id @default(uuid())
+  orderId       String
+  salesOrder    SalesOrder    @relation(fields: [orderId], references: [id])
+  invoiceNo     String        @unique
+  amountUSD     Float
+  status        String        @default("PENDING")
+  payments      Payment[]
+  createdAt     DateTime      @default(now())
+}
+
+model Payment {
+  id            String        @id @default(uuid())
+  invoiceId     String
+  invoice       Invoice       @relation(fields: [invoiceId], references: [id])
+  amountUSD     Float
+  method        String
+  transactionRef String?
+  paidAt        DateTime      @default(now())
+}
+
+model User {
+  id            String        @id @default(uuid())
+  email         String        @unique
+  name          String
+  role          String        @default("EMPLOYEE")
+  department    String?
+  createdAt     DateTime      @default(now())
+}
+
+model AuditLog {
+  id            String        @id @default(uuid())
+  orderId       String?
+  salesOrder    SalesOrder?   @relation(fields: [orderId], references: [id])
+  action        String
+  actor         String
+  details       Json?
+  createdAt     DateTime      @default(now())
+}
