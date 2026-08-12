@@ -6,6 +6,7 @@ import warehousesSource from "@/canonical/inventory/warehouses.json";
 import shipmentsSource from "@/canonical/logistics/shipments.json";
 import { canonicalIntegrityReview } from "@/lib/intelligence/canonical-integrity-adapter";
 import { operationalDataStatus } from "@/lib/intelligence/operational-data-freshness";
+import { supplierQualityReview } from "@/lib/intelligence/supplier-quality-review";
 
 export const greenyLifeEgyptBrainIdentity = {
   id: "GREENY_LIFE_EGYPT_BRAIN",
@@ -39,6 +40,7 @@ function categoryMatches(productCategory: string, supplierCategories: string[]) 
 export function greenyLifeEgyptOperationalView(productId?: string) {
   const integrity = canonicalIntegrityReview();
   const selectedProduct = productId ? products.find((product) => product.id.toUpperCase() === productId.trim().toUpperCase()) : undefined;
+  const supplierQuality = selectedProduct ? supplierQualityReview(selectedProduct.id) : null;
   const productStock = selectedProduct ? stock.filter((item) => item.product_id === selectedProduct.id) : stock;
   const lowStock = productStock.filter((item) => item.quantity <= item.reorder_level);
   const relatedSuppliers = selectedProduct ? suppliers.filter((supplier) => categoryMatches(selectedProduct.category, supplier.category)) : suppliers;
@@ -57,6 +59,7 @@ export function greenyLifeEgyptOperationalView(productId?: string) {
   const blockers = [
     ...integrity.blockers,
     ...operationalData.blockers,
+    ...(supplierQuality?.blockers ?? []),
     ...(selectedProduct && !productStock.length ? [`No stock record exists for ${selectedProduct.id}.`] : []),
     ...lowStock.map((item) => `${item.product_id} is at or below its reorder level in ${warehouseById.get(item.warehouse_id)?.name ?? item.warehouse_id}.`),
     ...candidateOrUnaudited.map((supplier) => `${supplier.name} is ${supplier.status} with audit status ${supplier.quality?.audit_status ?? "missing"}; it is not approved for automatic use.`),
@@ -73,6 +76,7 @@ export function greenyLifeEgyptOperationalView(productId?: string) {
     operations: {
       canonicalIntegrity: integrity,
       operationalData,
+      supplierQuality,
       products: products.length,
       warehouses: warehouses.map(({ id, name, location, capacity }) => ({ id, name, location, capacity })),
       stock: productStock.map((item) => ({ ...item, warehouse: warehouseById.get(item.warehouse_id)?.name ?? item.warehouse_id })),

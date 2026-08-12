@@ -123,3 +123,9 @@ Disposition: `KEEP_AND_RECONNECT`. It validates the internal product reference o
 The Egypt stock, supplier, and shipment files currently contain reference timestamps dated 2026-08-07. A freshness adapter now exposes their age and marks records older than 24 hours as `STALE_REFERENCE`. These records can inform a review but cannot support automatic production, purchase, allocation, shipment, or export decisions.
 
 Disposition: `HARDEN_BEFORE_LIVE_USE`. A connected, authenticated source with independently verified retrieval time is required before a record can be called `LIVE_CONFIRMED`.
+
+## Supplier and quality decision boundary
+
+Exact product-to-supplier links and product certificate requirements are now read through a dedicated review. The current supplier master has no `approved` audit status, and certificate links are requirements rather than verified, current certificates. Therefore the review returns `NOT_READY` and cannot select, activate, contract with, or purchase from a supplier.
+
+Disposition: `HARDEN_BEFORE_COMMERCIAL_USE`. Connect current supplier audits and certificate evidence scoped to supplier, product, batch, destination, and validity period.
