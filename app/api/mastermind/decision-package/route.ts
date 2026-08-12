@@ -18,6 +18,7 @@ export async function POST(request: NextRequest) {
       originCompany: body.originCompany,
       destinationCompany: body.destinationCompany,
       traceCode: typeof body.traceCode === "string" ? body.traceCode.trim() : undefined,
+      eventType: typeof body.eventType === "string" ? body.eventType.trim() : undefined,
     });
     return NextResponse.json({ success: true, data }, { status: 201 });
   } catch (error) {

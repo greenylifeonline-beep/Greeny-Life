@@ -2,6 +2,7 @@ import { buildExportDecision } from "@/lib/intelligence/export-decision";
 import { assetAssimilationRegistry, egyptianExportPortfolio } from "@/lib/intelligence/portfolio-and-assets";
 import { assessCorridor, companies, type CompanyId } from "@/lib/intelligence/trade-corridors";
 import { findLegacyBatch, legacyBatchRegistry } from "@/lib/intelligence/legacy-batch-traceability";
+import { approvalNotification, escalationReasons, localBrainFor, mastermindAuthority } from "@/lib/intelligence/three-operating-brains";
 
 export type AgentStatus = "SUPPORTED" | "REVIEW_REQUIRED" | "NOT_READY";
 
@@ -21,6 +22,7 @@ export interface MasterMindRequest {
   destinationCompany: CompanyId;
   actor: string;
   traceCode?: string;
+  eventType?: string;
 }
 
 const commercialCompanies = new Set<CompanyId>([
@@ -120,19 +122,33 @@ export async function buildMasterMindDecisionPackage(request: MasterMindRequest)
   ];
   const blockers = agents.flatMap((agent) => agent.blockers.map((blocker) => `${agent.agent}: ${blocker}`));
   const notReady = agents.some((agent) => agent.status === "NOT_READY");
+  const localBrain = localBrainFor(request.originCompany);
+  const escalation = escalationReasons(request);
+  const recommendation = notReady ? "Hold. Complete missing evidence, traceability, and commercial approvals." : "Submit the complete decision package to an authorized human reviewer.";
   return {
     system: "MasterMind AI",
     mode: "READ_ONLY_DECISION_INTELLIGENCE",
+    primaryAuthority: mastermindAuthority,
+    operatingContext: localBrain ? { localBrain, definition: (await import("@/lib/intelligence/three-operating-brains")).operatingBrains[localBrain] } : null,
+    escalation,
     authority: companies.MASTERMIND.authority,
     prohibited: companies.MASTERMIND.prohibited,
     decision: {
       status: notReady ? "NOT_READY" : "REQUIRES_HUMAN_REVIEW",
       automaticExecution: false,
-      recommendedAction: notReady ? "Hold. Complete missing evidence, traceability, and commercial approvals." : "Submit the complete decision package to an authorized human reviewer.",
+      recommendedAction: recommendation,
     },
     request,
     agents,
     blockers,
-    auditRule: "Every agent is read-only. MasterMind proposes; authorized humans approve execution through separate operational controls.",
+    approvalNotification: approvalNotification({
+      localBrain,
+      escalation,
+      recommendation,
+      blockers,
+      alternatives: ["Hold and collect evidence", "Choose a different verified supplier/route", "Defer or reject the opportunity"],
+      proposedActions: ["Collect official evidence", "Validate commercial terms", "Submit revised package for user approval"],
+    }),
+    auditRule: "Local brains manage their own operating context. MasterMind AI is the primary decision authority and command router. Every agent is read-only; user approval is required before controlled operational execution.",
   };
 }
