@@ -3,6 +3,7 @@ import { assetAssimilationRegistry, egyptianExportPortfolio } from "@/lib/intell
 import { assessCorridor, companies, type CompanyId } from "@/lib/intelligence/trade-corridors";
 import { findLegacyBatch, legacyBatchRegistry } from "@/lib/intelligence/legacy-batch-traceability";
 import { approvalNotification, escalationReasons, localBrainFor, mastermindAuthority } from "@/lib/intelligence/three-operating-brains";
+import { customerContext } from "@/lib/intelligence/commercial-context-fabric";
 
 export type AgentStatus = "SUPPORTED" | "REVIEW_REQUIRED" | "NOT_READY";
 
@@ -23,6 +24,7 @@ export interface MasterMindRequest {
   actor: string;
   traceCode?: string;
   eventType?: string;
+  customerId?: string;
 }
 
 const commercialCompanies = new Set<CompanyId>([
@@ -112,12 +114,25 @@ export function systemLearningAgent(): AgentFinding {
   };
 }
 
+export function customerContextAgent(request: MasterMindRequest): AgentFinding {
+  const context = customerContext(request);
+  return {
+    agent: "CUSTOMER_CONTEXT",
+    status: context.status,
+    summary: context.summary,
+    evidence: context.evidence,
+    blockers: context.blockers,
+    data: context.data,
+  };
+}
+
 export async function buildMasterMindDecisionPackage(request: MasterMindRequest) {
   const agents = [
     evidenceComplianceAgent(request.productId, request.destination),
     productMarketAgent(request.productId, request.destination),
     await tradeCorridorAgent(request),
     traceabilityAgent(request.traceCode),
+    customerContextAgent(request),
     systemLearningAgent(),
   ];
   const blockers = agents.flatMap((agent) => agent.blockers.map((blocker) => `${agent.agent}: ${blocker}`));

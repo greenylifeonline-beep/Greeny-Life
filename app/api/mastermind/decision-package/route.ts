@@ -19,6 +19,7 @@ export async function POST(request: NextRequest) {
       destinationCompany: body.destinationCompany,
       traceCode: typeof body.traceCode === "string" ? body.traceCode.trim() : undefined,
       eventType: typeof body.eventType === "string" ? body.eventType.trim() : undefined,
+      customerId: typeof body.customerId === "string" ? body.customerId.trim() : undefined,
     });
     return NextResponse.json({ success: true, data }, { status: 201 });
   } catch (error) {
