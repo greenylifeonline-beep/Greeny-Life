@@ -45,8 +45,10 @@
     "test:shipment-tracking": "tsx tests/shipment_tracking_review_check.ts",
     "test:greeny-life-verification": "tsx tests/greeny_life_verification_check.ts",
     "test:controlled-learning": "tsx tests/controlled_learning_check.ts",
+    "test:training-factory": "tsx tests/training_factory_check.ts",
+    "test:evaluation-governance": "tsx tests/evaluation_governance_check.ts",
     "test:all": "npm run test:intelligence && npm run test:registry && npm run test:health && npm run test:cleanup && npm run test:duplicate-v2",
-    "verify": "npm run type-check && npm run intelligence && npm run audit && npm run test:domain && npm run test:traceability && npm run test:canonical-intelligence && npm run test:mastermind && npm run test:operating-brains && npm run test:tool-registry && npm run test:commercial-context && npm run test:commercial-changes && npm run test:greeny-life-egypt && npm run test:workflow-governance && npm run test:gldos-governance && npm run test:legacy-brain && npm run test:operational-freshness && npm run test:supplier-quality && npm run test:shipment-tracking && npm run test:greeny-life-verification && npm run test:controlled-learning && npm run test:all",
+    "verify": "npm run type-check && npm run intelligence && npm run audit && npm run test:domain && npm run test:traceability && npm run test:canonical-intelligence && npm run test:mastermind && npm run test:operating-brains && npm run test:tool-registry && npm run test:commercial-context && npm run test:commercial-changes && npm run test:greeny-life-egypt && npm run test:workflow-governance && npm run test:gldos-governance && npm run test:legacy-brain && npm run test:operational-freshness && npm run test:supplier-quality && npm run test:shipment-tracking && npm run test:greeny-life-verification && npm run test:controlled-learning && npm run test:training-factory && npm run test:evaluation-governance && npm run test:all",
     "diagnose": "npm run intelligence",
     "gl-dos": "node scripts/legacy-health.cjs",
     "gl-check": "npm run verify"

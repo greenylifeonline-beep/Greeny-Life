@@ -309,3 +309,44 @@ model DecisionOutcome {
   @@index([contextId, metric, observedAt])
   @@index([status])
 }
+// A reviewed training case is derived from exactly one persisted outcome.
+// It is not a model deployment, policy change, or execution authorization.
+model TrainingCase {
+  id               String   @id @default(uuid())
+  outcomeId        String   @unique
+  decisionId       String
+  contextId        String
+  metric           String
+  expectedDecision String
+  actualDecision   String
+  rootCause        String?
+  learningSignal   String
+  evidenceIds      Json
+  status           String   @default("REVIEW_REQUIRED")
+  recordedBy       String
+  correlationId    String   @unique
+  createdAt        DateTime @default(now())
+
+  @@index([decisionId, createdAt])
+  @@index([contextId, metric])
+  @@index([status])
+}
+// A benchmark record evaluates a candidate against reviewed training cases.
+// It deliberately has no deployment, promotion, or authority side effect.
+model EvaluationRun {
+  id               String   @id @default(uuid())
+  evaluationKey    String   @unique
+  candidateVersion String
+  baselineVersion  String?
+  trainingCaseIds  Json
+  metricScores     Json
+  score            Float
+  status           String
+  notes            String?
+  recordedBy       String
+  correlationId    String   @unique
+  createdAt        DateTime @default(now())
+
+  @@index([candidateVersion, createdAt])
+  @@index([status])
+}
