@@ -2,6 +2,7 @@ import crypto from "node:crypto";
 import { NextRequest, NextResponse } from "next/server";
 import { authorizeRequest } from "@/lib/authz";
 import { prisma } from "@/lib/prisma";
+import { isOfficialEvidenceSourceUrl } from "@/lib/intelligence/official-evidence-gate";
 
 const value = (input: unknown) => typeof input === "string" ? input.trim() : "";
 const allowedGates = new Set(["country_eligibility", "establishment_listing", "official_certificate", "border_process", "importer_registration"]);
@@ -28,6 +29,7 @@ export async function POST(request: NextRequest) {
     const product=value(body.product), destination=value(body.destination), sourceTitle=value(body.sourceTitle), sourceUrl=value(body.sourceUrl);
     const requestedGates=Array.isArray(body.gates) ? body.gates.filter((gate): gate is string => typeof gate === "string" && allowedGates.has(gate)) : [];
     if(!product || !destination || !sourceTitle || !sourceUrl || !requestedGates.length) return NextResponse.json({success:false,error:"product, destination, sourceTitle, sourceUrl, and at least one valid gate are required."},{status:400});
+    if(!isOfficialEvidenceSourceUrl(sourceUrl)) return NextResponse.json({success:false,error:"sourceUrl must be a valid HTTP(S) URL."},{status:400});
     const record=await prisma.officialEvidenceRegistry.create({data:{
       evidenceKey:"EV-"+crypto.randomUUID().slice(0,8).toUpperCase(), product, destination, sourceTitle, sourceUrl,
       sourceExcerpt:value(body.sourceExcerpt) || null, gates:requestedGates, authority:"unknown", verificationStatus:"unverified",

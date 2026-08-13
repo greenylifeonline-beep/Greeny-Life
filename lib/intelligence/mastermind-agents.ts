@@ -6,7 +6,8 @@ import { approvalNotification, escalationReasons, localBrainFor, mastermindAutho
 import { customerContext } from "@/lib/intelligence/commercial-context-fabric";
 import { commercialChangeReview } from "@/lib/intelligence/commercial-change-review";
 import { prisma } from "@/lib/prisma";
-import { assessOfficialExportEvidence, type OfficialEvidenceRecord } from "@/lib/intelligence/official-evidence-gate";
+import { assessOfficialExportEvidence } from "@/lib/intelligence/official-evidence-gate";
+import { mapPersistedOfficialEvidence } from "@/lib/intelligence/persisted-official-evidence";
 
 export type AgentStatus = "SUPPORTED" | "REVIEW_REQUIRED" | "NOT_READY";
 
@@ -36,34 +37,49 @@ const commercialCompanies = new Set<CompanyId>([
   "GREEN_LINES_NORWAY_EU",
 ]);
 
-function statusFromExport(status: string): AgentStatus {
-  return status === "NOT_READY" ? "NOT_READY" : "REVIEW_REQUIRED";
+export type DecisionSafetyPolicy = {
+  version: string;
+  minimumConfidence: number;
+  requireHumanApproval: true;
+  automaticExecution: false;
+};
+
+export const MASTERMIND_DECISION_POLICY: DecisionSafetyPolicy = {
+  version: "MASTERMIND-DECISION-POLICY-v1",
+  minimumConfidence: 70,
+  requireHumanApproval: true,
+  automaticExecution: false,
+};
+
+function isValidDecisionSafetyPolicy(policy: DecisionSafetyPolicy | undefined): policy is DecisionSafetyPolicy {
+  if (!policy) return false;
+  return /^MASTERMIND-DECISION-POLICY-v\d+$/.test(policy.version) &&
+    Number.isFinite(policy.minimumConfidence) && policy.minimumConfidence >= 0 && policy.minimumConfidence <= 100 &&
+    policy.requireHumanApproval === true && policy.automaticExecution === false;
 }
 
-function mapOfficialEvidence(row: {
-  evidenceKey: string; product: string; destination: string; authority: string;
-  verificationStatus: string; claimStatus: string; validTo: Date | null; gates: unknown; sourceUrl: string | null;
-}): OfficialEvidenceRecord {
-  const validAuthorities = ["official", "secondary", "internal", "unknown"];
-  const validVerificationStates = ["verified_current", "unverified", "expired", "unknown"];
-  const validClaimStates = ["supported", "prohibited", "unknown"];
-  const validGates = ["country_eligibility", "establishment_listing", "official_certificate", "border_process", "importer_registration"];
+export function assessReadOnlyDecisionSafety(input: { confidence: number | null; policy?: DecisionSafetyPolicy }) {
+  const blockers: string[] = [];
+  if (!isValidDecisionSafetyPolicy(input.policy)) blockers.push("A valid versioned decision policy is required.");
+  if (input.confidence === null || !Number.isFinite(input.confidence) || input.confidence < 0 || input.confidence > 100) blockers.push("Decision confidence is missing or invalid.");
+  else if (input.policy && input.confidence < input.policy.minimumConfidence) blockers.push(`Decision confidence ${input.confidence} is below policy minimum ${input.policy.minimumConfidence}.`);
   return {
-    id: row.evidenceKey,
-    scope: { product: row.product, destination: row.destination },
-    authority: validAuthorities.includes(row.authority) ? row.authority as OfficialEvidenceRecord["authority"] : "unknown",
-    verificationStatus: validVerificationStates.includes(row.verificationStatus) ? row.verificationStatus as OfficialEvidenceRecord["verificationStatus"] : "unknown",
-    claimStatus: validClaimStates.includes(row.claimStatus) ? row.claimStatus as OfficialEvidenceRecord["claimStatus"] : "unknown",
-    validTo: row.validTo?.toISOString().slice(0, 10),
-    gates: Array.isArray(row.gates) ? row.gates.filter((gate): gate is OfficialEvidenceRecord["gates"][number] => validGates.includes(String(gate))) : [],
-    sourceUrl: row.sourceUrl ?? undefined,
+    status: blockers.length ? "NOT_READY" as const : "REQUIRES_HUMAN_REVIEW" as const,
+    automaticExecution: false as const,
+    confidence: input.confidence,
+    policyVersion: input.policy?.version ?? null,
+    blockers,
   };
+}
+
+function statusFromExport(status: string): AgentStatus {
+  return status === "NOT_READY" ? "NOT_READY" : "REVIEW_REQUIRED";
 }
 
 export async function evidenceComplianceAgent(productId: string, destination: string): Promise<AgentFinding> {
   const baseline = buildExportDecision(productId, destination);
   const stored = await prisma.officialEvidenceRegistry.findMany({ where: { product: productId.trim(), destination: destination.trim() }, orderBy: { updatedAt: "desc" } });
-  const assessment = assessOfficialExportEvidence(stored.map(mapOfficialEvidence), productId, destination);
+  const assessment = assessOfficialExportEvidence(stored.map(mapPersistedOfficialEvidence), productId, destination);
   const identityBlockers = baseline.findings
     .filter((item) => item.code === "PRODUCT_IDENTITY" || item.code === "SUPPLIER_LINK" || item.code === "MARKET")
     .filter((item) => item.state !== "SUPPORTED")
@@ -167,6 +183,11 @@ export async function commercialChangeAgent(request: MasterMindRequest): Promise
 }
 
 export async function buildMasterMindDecisionPackage(request: MasterMindRequest) {
+  const baseline = buildExportDecision(request.productId, request.destination);
+  const decisionSafety = assessReadOnlyDecisionSafety({
+    confidence: baseline.decision.confidence,
+    policy: MASTERMIND_DECISION_POLICY,
+  });
   const agents = [
     await evidenceComplianceAgent(request.productId, request.destination),
     productMarketAgent(request.productId, request.destination),
@@ -176,8 +197,11 @@ export async function buildMasterMindDecisionPackage(request: MasterMindRequest)
     await commercialChangeAgent(request),
     systemLearningAgent(),
   ];
-  const blockers = agents.flatMap((agent) => agent.blockers.map((blocker) => `${agent.agent}: ${blocker}`));
-  const notReady = agents.some((agent) => agent.status === "NOT_READY");
+  const blockers = [
+    ...agents.flatMap((agent) => agent.blockers.map((blocker) => `${agent.agent}: ${blocker}`)),
+    ...decisionSafety.blockers.map((blocker) => `DECISION_SAFETY: ${blocker}`),
+  ];
+  const notReady = agents.some((agent) => agent.status === "NOT_READY") || decisionSafety.status === "NOT_READY";
   const localBrain = localBrainFor(request.originCompany);
   const escalation = escalationReasons(request);
   const recommendation = notReady ? "Hold. Complete missing evidence, traceability, and commercial approvals." : "Submit the complete decision package to an authorized human reviewer.";
@@ -192,6 +216,8 @@ export async function buildMasterMindDecisionPackage(request: MasterMindRequest)
     decision: {
       status: notReady ? "NOT_READY" : "REQUIRES_HUMAN_REVIEW",
       automaticExecution: false,
+      confidence: decisionSafety.confidence,
+      policyVersion: decisionSafety.policyVersion,
       recommendedAction: recommendation,
     },
     request,

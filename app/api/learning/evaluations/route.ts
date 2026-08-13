@@ -21,6 +21,8 @@ function inputFrom(body: Record<string, unknown>): EvaluationInput {
 }
 
 export async function GET(request: NextRequest) {
+  const authorization = await authorizeRequest(request, writeRolePolicy.evaluation, "/api/learning/evaluations", "READ_EVALUATION_RUNS");
+  if (authorization.response) return authorization.response;
   try {
     const candidateVersion = new URL(request.url).searchParams.get("candidateVersion")?.trim();
     const rows = await prisma.$queryRaw<EvaluationRow[]>`

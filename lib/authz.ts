@@ -16,23 +16,55 @@ export const writeRolePolicy = {
   evaluation: ["ADMIN"] as AppRole[],
 } as const;
 
-async function audit(route: string, action: string, actorEmail: string | null, role: string | null, outcome: "ALLOWED" | "DENIED", reason: string) {
+export type AuthorizationAuditWriter = (event: {
+  route: string;
+  action: string;
+  actorEmail: string | null;
+  role: string | null;
+  outcome: "ALLOWED" | "DENIED";
+  reason: string;
+}) => Promise<boolean>;
+
+const persistAuthorizationAudit: AuthorizationAuditWriter = async (event) => {
   try {
     await prisma.$executeRaw`
       INSERT INTO "SecurityAuditEvent" ("id", "route", "action", "actorEmail", "role", "outcome", "reason", "createdAt")
-      VALUES (${crypto.randomUUID()}, ${route}, ${action}, ${actorEmail}, ${role}, ${outcome}, ${reason}, NOW())
+      VALUES (${crypto.randomUUID()}, ${event.route}, ${event.action}, ${event.actorEmail}, ${event.role}, ${event.outcome}, ${event.reason}, NOW())
     `;
+    return true;
   } catch {
-    // Auditing must never make an authorization failure appear authorized.
+    return false;
   }
-}
+};
 
-export async function authorizeRequest(request: NextRequest, allowed: readonly AppRole[], route: string, action: string) {
+export async function authorizeRequest(
+  request: NextRequest,
+  allowed: readonly AppRole[],
+  route: string,
+  action: string,
+  options: { auditWriter?: AuthorizationAuditWriter } = {},
+) {
+  const auditWriter = options.auditWriter ?? persistAuthorizationAudit;
   const authorization = requireRole(request, allowed);
   if (authorization.response) {
-    await audit(route, action, authorization.session?.email ?? null, authorization.session?.role ?? null, "DENIED", "Authentication missing or role insufficient.");
+    await auditWriter({
+      route, action, actorEmail: authorization.session?.email ?? null, role: authorization.session?.role ?? null,
+      outcome: "DENIED", reason: "Authentication missing or role insufficient.",
+    });
     return { session: authorization.session, response: authorization.response };
   }
-  await audit(route, action, authorization.session!.email, authorization.session!.role, "ALLOWED", "Role policy satisfied.");
+  const audited = await auditWriter({
+    route, action, actorEmail: authorization.session!.email, role: authorization.session!.role,
+    outcome: "ALLOWED", reason: "Role policy satisfied.",
+  });
+  if (!audited) {
+    return {
+      session: authorization.session,
+      response: NextResponse.json(
+        { success: false, error: "Authorization audit persistence failed; write operations are blocked." },
+        { status: 503 },
+      ),
+    };
+  }
   return { session: authorization.session!, response: null as NextResponse | null };
 }

@@ -149,8 +149,9 @@ model SalesOrder {
   items       SalesOrderItem[]
   shipments   Shipment[]
   invoices    Invoice[]
-  auditLogs   AuditLog[]
-  createdAt   DateTime         @default(now())
+  auditLogs          AuditLog[]
+  workflowApprovals  WorkflowApproval[]
+  createdAt          DateTime         @default(now())
   updatedAt   DateTime         @updatedAt
 }
 
@@ -228,6 +229,29 @@ model AuditLog {
   actor      String
   details    Json?
   createdAt  DateTime    @default(now())
+}
+
+// A one-time, human-approved gate for an existing order workflow transition.
+// Approval is not execution: it is consumed only inside the same transaction
+// that updates the order state and writes the workflow audit record.
+model WorkflowApproval {
+  id          String     @id @default(uuid())
+  orderId     String
+  salesOrder  SalesOrder @relation(fields: [orderId], references: [id])
+  targetState String
+  requestedBy String
+  approvedBy  String?
+  status      String     @default("PENDING_APPROVAL")
+  expiresAt   DateTime
+  approvedAt  DateTime?
+  executedAt  DateTime?
+  correlationId String   @unique
+  createdAt   DateTime   @default(now())
+  updatedAt   DateTime   @updatedAt
+
+  @@index([orderId, targetState, status])
+  @@index([expiresAt, status])
+  @@index([requestedBy, createdAt])
 }
 
 // Commercial facts are time-bound. They are deliberately recorded before any

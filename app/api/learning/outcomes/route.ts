@@ -15,6 +15,8 @@ const text = (value: unknown) => typeof value === "string" ? value.trim() : "";
 const numeric = (value: unknown) => typeof value === "number" ? value : Number(value);
 
 export async function GET(request: NextRequest) {
+  const authorization = await authorizeRequest(request, writeRolePolicy.outcome, "/api/learning/outcomes", "READ_DECISION_OUTCOMES");
+  if (authorization.response) return authorization.response;
   try {
     const decisionId = new URL(request.url).searchParams.get("decisionId")?.trim();
     const rows = await prisma.$queryRaw<OutcomeRow[]>`

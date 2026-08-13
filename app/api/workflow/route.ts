@@ -2,6 +2,7 @@ import { authorizeRequest, writeRolePolicy } from "@/lib/authz";
 import { NextRequest, NextResponse } from "next/server";
 import { EOSWorkflowEngine, OrderWorkflowState } from "../../../canonical/lib/workflowEngine";
 import { reviewWorkflowTransition } from "@/lib/intelligence/workflow-governance";
+import { findExecutableWorkflowApproval } from "@/lib/intelligence/workflow-approval";
 
 // POST: تغيير حالة الطلب وسير العمل
 export async function POST(request: NextRequest) {
@@ -10,11 +11,11 @@ export async function POST(request: NextRequest) {
   const actorEmail = authorization.session!.email;
   try {
     const body = await request.json();
-    const { orderId, targetState } = body;
+    const { orderId, targetState, approvalId } = body;
 
-    if (!orderId || !targetState) {
+    if (!orderId || !targetState || !approvalId) {
       return NextResponse.json(
-        { success: false, error: "Missing required fields: orderId, targetState" },
+        { success: false, error: "Missing required fields: orderId, targetState, approvalId" },
         { status: 400 }
       );
     }
@@ -32,16 +33,18 @@ export async function POST(request: NextRequest) {
       targetState: targetState as OrderWorkflowState,
       actor: actorEmail,
     });
-    if (governance.status !== "AUTHORIZED") {
+    if (governance.status === "DENIED") {
+      return NextResponse.json({ success: false, status: "DENIED", automaticExecution: false, governance: { correlationId: governance.correlationId, reason: governance.governanceReason } }, { status: 403 });
+    }
+    const approval = await findExecutableWorkflowApproval({ approvalId: String(approvalId).trim(), orderId: String(orderId).trim(), targetState: targetState as OrderWorkflowState });
+    if (!approval.eligible) {
       return NextResponse.json({
-        success: false,
-        status: governance.status,
-        automaticExecution: false,
+        success: false, status: "REVIEW_REQUIRED", automaticExecution: false,
         governance: { correlationId: governance.correlationId, reason: governance.governanceReason },
-        executionRule: governance.executionRule,
+        approval: { eligible: false, reason: approval.reason }, executionRule: governance.executionRule,
       }, { status: 202 });
     }
-    const result = await EOSWorkflowEngine.transitionOrderState(orderId, targetState as OrderWorkflowState, actorEmail);
+    const result = await EOSWorkflowEngine.transitionOrderState(String(orderId).trim(), targetState as OrderWorkflowState, actorEmail, String(approvalId).trim());
 
     return NextResponse.json({ success: true, data: result });
   } catch (error) {

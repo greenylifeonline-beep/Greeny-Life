@@ -10,6 +10,8 @@ interface TrainingRow { id: string; outcomeId: string; decisionId: string; conte
 const text = (value: unknown) => typeof value === "string" ? value.trim() : "";
 
 export async function GET(request: NextRequest) {
+  const authorization = await authorizeRequest(request, writeRolePolicy.training, "/api/learning/training-cases", "READ_TRAINING_CASES");
+  if (authorization.response) return authorization.response;
   try {
     const outcomeId = new URL(request.url).searchParams.get("outcomeId")?.trim();
     const rows = await prisma.$queryRaw<TrainingRow[]>`
@@ -30,14 +32,13 @@ export async function POST(request: NextRequest) {
   try {
     const body = await request.json() as Record<string, unknown>;
     const outcomeId = text(body.outcomeId);
-    const actor = text(body.actor);
-    if (!outcomeId || !actor) return NextResponse.json({ success: false, errors: ["outcomeId and actor are required."] }, { status: 400 });
+    if (!outcomeId) return NextResponse.json({ success: false, errors: ["outcomeId is required."] }, { status: 400 });
     const [outcome] = await prisma.$queryRaw<OutcomeRow[]>`SELECT * FROM "DecisionOutcome" WHERE "id" = ${outcomeId}`;
     if (!outcome) return NextResponse.json({ success: false, error: "Outcome record was not found." }, { status: 404 });
     const [existing] = await prisma.$queryRaw<Pick<TrainingRow, "id">[]>`SELECT "id" FROM "TrainingCase" WHERE "outcomeId" = ${outcomeId}`;
     if (existing) return NextResponse.json({ success: false, error: "A training case already exists for this outcome; it cannot be duplicated.", trainingCaseId: existing.id }, { status: 409 });
     const training = buildTrainingCase({ outcome, expectedDecision: text(body.expectedDecision), actualDecision: text(body.actualDecision), rootCause: text(body.rootCause) || undefined, actor: actorEmail });
-    const governance = await new ControlledRuntimeOrchestrator().execute({ operation: "learning:create-training-case", actor, riskLevel: "MEDIUM", input: training });
+    const governance = await new ControlledRuntimeOrchestrator().execute({ operation: "learning:create-training-case", actor: actorEmail, riskLevel: "MEDIUM", input: training });
     const id = crypto.randomUUID();
     await prisma.$executeRaw`
       INSERT INTO "TrainingCase" (
@@ -45,7 +46,7 @@ export async function POST(request: NextRequest) {
         "learningSignal", "evidenceIds", "status", "recordedBy", "correlationId", "createdAt"
       ) VALUES (
         ${id}, ${training.outcomeId}, ${training.decisionId}, ${training.contextId}, ${training.metric}, ${training.expectedDecision}, ${training.actualDecision}, ${training.rootCause},
-        ${training.learningSignal}, ${JSON.stringify(training.evidenceIds)}::jsonb, ${training.status}, ${actor}, ${governance.correlationId}, NOW()
+        ${training.learningSignal}, ${JSON.stringify(training.evidenceIds)}::jsonb, ${training.status}, ${actorEmail}, ${governance.correlationId}, NOW()
       )
     `;
     const [record] = await prisma.$queryRaw<TrainingRow[]>`SELECT * FROM "TrainingCase" WHERE "id" = ${id}`;
