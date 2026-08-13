@@ -17,6 +17,9 @@ export async function POST(request: NextRequest) {
     "OFFICIAL_EVIDENCE_REVIEW",
   );
   if (authorization.response) return authorization.response;
+  if (!authorization.session) {
+    return NextResponse.json({ success: false, error: "Authenticated session is required." }, { status: 401 });
+  }
 
   try {
     const body = await request.json() as Record<string, unknown>;
