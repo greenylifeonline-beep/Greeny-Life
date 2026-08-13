@@ -59,7 +59,8 @@
                     "diagnose":  "npm run intelligence",
                     "gl-dos":  "node scripts/legacy-health.cjs",
                     "gl-check":  "npm run verify",
-                    "test:official-evidence-gate":  "tsx tests/official_evidence_gate_check.ts"
+                    "test:official-evidence-gate":  "tsx tests/official_evidence_gate_check.ts",
+                    "test:official-evidence-review":  "tsx tests/official_evidence_review_route_check.ts"
                 },
     "dependencies":  {
                          "@prisma/client":  "^6.19.1",
