@@ -5,6 +5,8 @@ import { findLegacyBatch, legacyBatchRegistry } from "@/lib/intelligence/legacy-
 import { approvalNotification, escalationReasons, localBrainFor, mastermindAuthority } from "@/lib/intelligence/three-operating-brains";
 import { customerContext } from "@/lib/intelligence/commercial-context-fabric";
 import { commercialChangeReview } from "@/lib/intelligence/commercial-change-review";
+import { prisma } from "@/lib/prisma";
+import { assessOfficialExportEvidence, type OfficialEvidenceRecord } from "@/lib/intelligence/official-evidence-gate";
 
 export type AgentStatus = "SUPPORTED" | "REVIEW_REQUIRED" | "NOT_READY";
 
@@ -38,16 +40,41 @@ function statusFromExport(status: string): AgentStatus {
   return status === "NOT_READY" ? "NOT_READY" : "REVIEW_REQUIRED";
 }
 
-export function evidenceComplianceAgent(productId: string, destination: string): AgentFinding {
-  const decision = buildExportDecision(productId, destination);
-  const blockers = decision.findings.filter((item) => item.state !== "SUPPORTED").map((item) => item.message);
+function mapOfficialEvidence(row: {
+  evidenceKey: string; product: string; destination: string; authority: string;
+  verificationStatus: string; claimStatus: string; validTo: Date | null; gates: unknown; sourceUrl: string | null;
+}): OfficialEvidenceRecord {
+  const validAuthorities = ["official", "secondary", "internal", "unknown"];
+  const validVerificationStates = ["verified_current", "unverified", "expired", "unknown"];
+  const validClaimStates = ["supported", "prohibited", "unknown"];
+  const validGates = ["country_eligibility", "establishment_listing", "official_certificate", "border_process", "importer_registration"];
+  return {
+    id: row.evidenceKey,
+    scope: { product: row.product, destination: row.destination },
+    authority: validAuthorities.includes(row.authority) ? row.authority as OfficialEvidenceRecord["authority"] : "unknown",
+    verificationStatus: validVerificationStates.includes(row.verificationStatus) ? row.verificationStatus as OfficialEvidenceRecord["verificationStatus"] : "unknown",
+    claimStatus: validClaimStates.includes(row.claimStatus) ? row.claimStatus as OfficialEvidenceRecord["claimStatus"] : "unknown",
+    validTo: row.validTo?.toISOString().slice(0, 10),
+    gates: Array.isArray(row.gates) ? row.gates.filter((gate): gate is OfficialEvidenceRecord["gates"][number] => validGates.includes(String(gate))) : [],
+    sourceUrl: row.sourceUrl ?? undefined,
+  };
+}
+
+export async function evidenceComplianceAgent(productId: string, destination: string): Promise<AgentFinding> {
+  const baseline = buildExportDecision(productId, destination);
+  const stored = await prisma.officialEvidenceRegistry.findMany({ where: { product: productId.trim(), destination: destination.trim() }, orderBy: { updatedAt: "desc" } });
+  const assessment = assessOfficialExportEvidence(stored.map(mapOfficialEvidence), productId, destination);
+  const identityBlockers = baseline.findings
+    .filter((item) => item.code === "PRODUCT_IDENTITY" || item.code === "SUPPLIER_LINK" || item.code === "MARKET")
+    .filter((item) => item.state !== "SUPPORTED")
+    .map((item) => item.message);
   return {
     agent: "EVIDENCE_COMPLIANCE",
-    status: statusFromExport(decision.decision.status),
-    summary: decision.decision.recommendedAction,
-    evidence: decision.findings.filter((item) => item.state === "SUPPORTED").map((item) => `${item.code}: ${item.source}`),
-    blockers,
-    data: decision,
+    status: assessment.state === "SUPPORTED_BY_OFFICIAL_SOURCE" && !identityBlockers.length ? "REVIEW_REQUIRED" : "NOT_READY",
+    summary: assessment.state === "SUPPORTED_BY_OFFICIAL_SOURCE" ? "Current official evidence covers regulatory gates; separate human and operational gates remain required." : "Official evidence is insufficient or blocked; export execution is not ready.",
+    evidence: assessment.evidenceIds,
+    blockers: [...identityBlockers, ...assessment.reasons, ...assessment.missingGates.map((gate) => `Official evidence gate missing: ${gate}`)],
+    data: { baseline, assessment, persistedEvidenceCount: stored.length },
   };
 }
 
@@ -141,7 +168,7 @@ export async function commercialChangeAgent(request: MasterMindRequest): Promise
 
 export async function buildMasterMindDecisionPackage(request: MasterMindRequest) {
   const agents = [
-    evidenceComplianceAgent(request.productId, request.destination),
+    await evidenceComplianceAgent(request.productId, request.destination),
     productMarketAgent(request.productId, request.destination),
     await tradeCorridorAgent(request),
     traceabilityAgent(request.traceCode),
