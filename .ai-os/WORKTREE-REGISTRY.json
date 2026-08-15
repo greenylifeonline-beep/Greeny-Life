@@ -1,0 +1,41 @@
+{
+    "schema_version":  "1.0",
+    "baseline":  {
+                     "branch":  "codex-clean",
+                     "head":  "d4ca29b8dfb42837bfb8869cea2929ba1d74b4a0",
+                     "repository":  "C:\\Users\\Ghanam\\Documents\\Codex\\Greeny-Life-Repair"
+                 },
+    "legacy_source":  {
+                          "path":  "C:\\Users\\Ghanam\\OneDrive\\projects\\Greeny-Life",
+                          "mode":  "READ_ONLY"
+                      },
+    "worktrees":  {
+                      "GL-004":  {
+                                     "branch":  "raios/gl-004-runtime",
+                                     "path":  "C:\\Users\\Ghanam\\Documents\\Codex\\Greeny-Life-Worktrees\\GL-004-Runtime",
+                                     "preferred_agent":  "cursor",
+                                     "mission":  "RUNTIME_API_PRISMA_TESTS"
+                                 },
+                      "GL-002":  {
+                                     "branch":  "raios/gl-002-main-brain",
+                                     "path":  "C:\\Users\\Ghanam\\Documents\\Codex\\Greeny-Life-Worktrees\\GL-002-Main-Brain",
+                                     "preferred_agent":  "future-strong-agent",
+                                     "mission":  "MAIN_BRAIN_AND_GOVERNANCE"
+                                 },
+                      "GL-003":  {
+                                     "branch":  "raios/gl-003-project-brains",
+                                     "path":  "C:\\Users\\Ghanam\\Documents\\Codex\\Greeny-Life-Worktrees\\GL-003-Project-Brains",
+                                     "preferred_agent":  "deepseek-local-for-analysis",
+                                     "mission":  "THREE_PROJECT_BRAINS"
+                                 }
+                  },
+    "convergence":  {
+                        "requires":  [
+                                         "GL-002 validated",
+                                         "GL-003 validated",
+                                         "GL-004 validated"
+                                     ],
+                        "target_branch":  "codex-clean",
+                        "task":  "GL-005"
+                    }
+}

@@ -42,8 +42,8 @@
                                              "gemini-cli"
                                          ],
                       "validation":  "One authoritative intelligence path.",
-                      "status":  "IN_PROGRESS",
-                      "claimed_by":  "claude-code"
+                      "status":  "READY",
+                      "claimed_by":  null
                   },
                   {
                       "id":  "GL-003",
@@ -61,11 +61,12 @@
                       "allowed_agents":  [
                                              "gemini-cli",
                                              "codex",
-                                             "claude-code"
+                                             "claude-code",
+                                             "deepseek-local"
                                          ],
                       "validation":  "Three verified brain inventories integrated.",
-                      "status":  "READY",
-                      "claimed_by":  null
+                      "status":  "IN_PROGRESS",
+                      "claimed_by":  "deepseek-local"
                   },
                   {
                       "id":  "GL-004",
