@@ -1,0 +1,52 @@
+{
+    "Status":  "LIVE_OPERATION_READY",
+    "ConnectedAssets":  1,
+    "NextStage":  "REAL_EXPORT_TRANSACTION_ENGINE_V1",
+    "Pipeline":  [
+                     {
+                         "Step":  1,
+                         "Name":  "Supplier Validation",
+                         "Status":  "EXECUTED"
+                     },
+                     {
+                         "Step":  2,
+                         "Name":  "Product Master Validation",
+                         "Status":  "EXECUTED"
+                     },
+                     {
+                         "Step":  3,
+                         "Name":  "Packaging GELS Validation",
+                         "Status":  "EXECUTED"
+                     },
+                     {
+                         "Step":  4,
+                         "Name":  "Quality Compliance Check",
+                         "Status":  "EXECUTED"
+                     },
+                     {
+                         "Step":  5,
+                         "Name":  "Export Preparation",
+                         "Status":  "EXECUTED"
+                     },
+                     {
+                         "Step":  6,
+                         "Name":  "Logistics Readiness",
+                         "Status":  "EXECUTED"
+                     },
+                     {
+                         "Step":  7,
+                         "Name":  "Commercial Documentation",
+                         "Status":  "EXECUTED"
+                     }
+                 ],
+    "BusinessObjects":  {
+                            "Packaging":  98,
+                            "Brand":  9,
+                            "ExportStandards":  17,
+                            "Products":  148,
+                            "Suppliers":  12
+                        },
+    "Engine":  "LIVE_BUSINESS_EXECUTION_ENGINE_V1",
+    "Scenario":  "Egypt Export Operation",
+    "System":  "GREENY-LIFE EOS"
+}

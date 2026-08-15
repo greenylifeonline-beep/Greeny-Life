@@ -1,0 +1,2021 @@
+{
+    "report":  "E3 Deep Command Caller/Ownership and Grouped Archive Proof",
+    "generatedAt":  "2026-08-13T22:49:15.7733452+02:00",
+    "mode":  "READ_ONLY_TARGETED_CONTINUATION",
+    "inputs":  [
+                   "C:\\Users\\Ghanam\\Documents\\Codex\\Greeny-Life-Repair\\package.json",
+                   "C:\\Users\\Ghanam\\Documents\\Codex\\Greeny-Life-Repair\\archive\\generated-reports\\e3-closure\\2026-08-13_220334\\E3-CURRENT-ASSET-CODE-CLOSURE.json",
+                   "C:\\Users\\Ghanam\\Documents\\Codex\\Greeny-Life-Repair\\archive\\generated-reports\\e3-canonical-command-ownership\\2026-08-13_224406\\E3-CANONICAL-COMMAND-OWNERSHIP-PROOF.json"
+               ],
+    "aliasGroups":  [
+                        {
+                            "ALIAS_GROUP":  "E3-CMD-01-LEGACY-HEALTH",
+                            "OWNER":  "UNPROVEN",
+                            "CANONICAL_COMMAND":  "intelligence",
+                            "DEPRECATED_ALIASES":  [
+                                                       "gl-dos"
+                                                   ],
+                            "MEMBERS":  [
+                                            {
+                                                "alias":  "intelligence",
+                                                "command":  "node scripts/legacy-health.cjs",
+                                                "packageCallers":  [
+                                                                       "diagnose",
+                                                                       "health",
+                                                                       "verify"
+                                                                   ],
+                                                "targetExists":  true
+                                            },
+                                            {
+                                                "alias":  "gl-dos",
+                                                "command":  "node scripts/legacy-health.cjs",
+                                                "packageCallers":  [
+
+                                                                   ],
+                                                "targetExists":  true
+                                            }
+                                        ],
+                            "CALLERS":  {
+                                            "package":  [
+                                                            "diagnose",
+                                                            "health",
+                                                            "verify"
+                                                        ],
+                                            "static":  [
+                                                           {
+                                                               "path":  "canonical\\intelligence\\intelligence\\gl-dos.ts",
+                                                               "match":  "npm run intelligence"
+                                                           }
+                                                       ],
+                                            "external":  "UNPROVEN: repository inspection cannot prove operator, CI or user-shell callers."
+                                        },
+                            "TESTS":  "No distinct per-alias test behavior; legacy-health.cjs emits the same health report unless --blocked-migration is used.",
+                            "COMMON_FUNCTION":  "Read-only legacy/current health report",
+                            "DIFFERENCES":  "Exact command target equivalence in package.json.",
+                            "COMPATIBILITY_EVIDENCE":  "Targets exist; package and static callers traced; E3 Wave 4 owner/SOR remains unproven.",
+                            "RISK":  "MEDIUM",
+                            "DECISION":  "REVIEW",
+                            "BLOCKERS":  [
+                                             "Accountable operational owner not proven",
+                                             "External caller inventory not proven"
+                                         ]
+                        },
+                        {
+                            "ALIAS_GROUP":  "E3-CMD-02-BLOCKED-MIGRATION",
+                            "OWNER":  "UNPROVEN",
+                            "CANONICAL_COMMAND":  "migration",
+                            "DEPRECATED_ALIASES":  [
+                                                       "migration:verify",
+                                                       "migration:decision",
+                                                       "migration:executor",
+                                                       "migration:all"
+                                                   ],
+                            "MEMBERS":  [
+                                            {
+                                                "alias":  "migration",
+                                                "command":  "node scripts/legacy-health.cjs --blocked-migration",
+                                                "packageCallers":  [
+
+                                                                   ],
+                                                "targetExists":  true
+                                            },
+                                            {
+                                                "alias":  "migration:verify",
+                                                "command":  "node scripts/legacy-health.cjs --blocked-migration",
+                                                "packageCallers":  [
+
+                                                                   ],
+                                                "targetExists":  true
+                                            },
+                                            {
+                                                "alias":  "migration:decision",
+                                                "command":  "node scripts/legacy-health.cjs --blocked-migration",
+                                                "packageCallers":  [
+
+                                                                   ],
+                                                "targetExists":  true
+                                            },
+                                            {
+                                                "alias":  "migration:executor",
+                                                "command":  "node scripts/legacy-health.cjs --blocked-migration",
+                                                "packageCallers":  [
+
+                                                                   ],
+                                                "targetExists":  true
+                                            },
+                                            {
+                                                "alias":  "migration:all",
+                                                "command":  "node scripts/legacy-health.cjs --blocked-migration",
+                                                "packageCallers":  [
+
+                                                                   ],
+                                                "targetExists":  true
+                                            }
+                                        ],
+                            "CALLERS":  {
+                                            "package":  [
+
+                                                        ],
+                                            "static":  [
+
+                                                       ],
+                                            "external":  "UNPROVEN: repository inspection cannot prove operator, CI or user-shell callers."
+                                        },
+                            "TESTS":  "No distinct per-alias test behavior; legacy-health.cjs emits the same health report unless --blocked-migration is used.",
+                            "COMMON_FUNCTION":  "Intentional fail-closed migration block",
+                            "DIFFERENCES":  "Names encode distinct historical migration stages, but implementation intentionally blocks every stage.",
+                            "COMPATIBILITY_EVIDENCE":  "Targets exist; package and static callers traced; E3 Wave 4 owner/SOR remains unproven.",
+                            "RISK":  "HIGH",
+                            "DECISION":  "REVIEW",
+                            "BLOCKERS":  [
+                                             "Accountable operational owner not proven",
+                                             "External caller inventory not proven"
+                                         ]
+                        },
+                        {
+                            "ALIAS_GROUP":  "E3-CMD-03-LEGACY-HEALTH-TEST",
+                            "OWNER":  "UNPROVEN",
+                            "CANONICAL_COMMAND":  "test:intelligence",
+                            "DEPRECATED_ALIASES":  [
+                                                       "test:registry",
+                                                       "test:health",
+                                                       "test:cleanup",
+                                                       "test:duplicate-v2",
+                                                       "test:audit",
+                                                       "test:integrity"
+                                                   ],
+                            "MEMBERS":  [
+                                            {
+                                                "alias":  "test:intelligence",
+                                                "command":  "node scripts/legacy-health.cjs --test",
+                                                "packageCallers":  [
+                                                                       "test:all"
+                                                                   ],
+                                                "targetExists":  true
+                                            },
+                                            {
+                                                "alias":  "test:registry",
+                                                "command":  "node scripts/legacy-health.cjs --test",
+                                                "packageCallers":  [
+                                                                       "test:all"
+                                                                   ],
+                                                "targetExists":  true
+                                            },
+                                            {
+                                                "alias":  "test:health",
+                                                "command":  "node scripts/legacy-health.cjs --test",
+                                                "packageCallers":  [
+                                                                       "test:all"
+                                                                   ],
+                                                "targetExists":  true
+                                            },
+                                            {
+                                                "alias":  "test:cleanup",
+                                                "command":  "node scripts/legacy-health.cjs --test",
+                                                "packageCallers":  [
+                                                                       "test:all"
+                                                                   ],
+                                                "targetExists":  true
+                                            },
+                                            {
+                                                "alias":  "test:duplicate-v2",
+                                                "command":  "node scripts/legacy-health.cjs --test",
+                                                "packageCallers":  [
+                                                                       "test:all"
+                                                                   ],
+                                                "targetExists":  true
+                                            },
+                                            {
+                                                "alias":  "test:audit",
+                                                "command":  "node scripts/legacy-health.cjs --test",
+                                                "packageCallers":  [
+
+                                                                   ],
+                                                "targetExists":  true
+                                            },
+                                            {
+                                                "alias":  "test:integrity",
+                                                "command":  "node scripts/legacy-health.cjs --test",
+                                                "packageCallers":  [
+
+                                                                   ],
+                                                "targetExists":  true
+                                            }
+                                        ],
+                            "CALLERS":  {
+                                            "package":  [
+                                                            "test:all"
+                                                        ],
+                                            "static":  [
+                                                           {
+                                                               "path":  "canonical\\intelligence\\intelligence\\gl-dos.ts",
+                                                               "match":  "npm run test:intelligence"
+                                                           }
+                                                       ],
+                                            "external":  "UNPROVEN: repository inspection cannot prove operator, CI or user-shell callers."
+                                        },
+                            "TESTS":  "No distinct per-alias test behavior; legacy-health.cjs emits the same health report unless --blocked-migration is used.",
+                            "COMMON_FUNCTION":  "Legacy health snapshot, not distinct test modes",
+                            "DIFFERENCES":  "Only aliases in test:all have package callers; test:audit and test:integrity have none. All seven execute the same health output.",
+                            "COMPATIBILITY_EVIDENCE":  "Targets exist; package and static callers traced; E3 Wave 4 owner/SOR remains unproven.",
+                            "RISK":  "HIGH",
+                            "DECISION":  "REVIEW",
+                            "BLOCKERS":  [
+                                             "Accountable operational owner not proven",
+                                             "External caller inventory not proven"
+                                         ]
+                        },
+                        {
+                            "ALIAS_GROUP":  "E3-CMD-04-OFFICIAL-EVIDENCE",
+                            "OWNER":  "UNPROVEN",
+                            "CANONICAL_COMMAND":  "test:official-evidence-gate",
+                            "DEPRECATED_ALIASES":  [
+                                                       "test:evidence-fail-closed"
+                                                   ],
+                            "MEMBERS":  [
+                                            {
+                                                "alias":  "test:official-evidence-gate",
+                                                "command":  "tsx tests/official_evidence_gate_check.ts",
+                                                "packageCallers":  [
+
+                                                                   ],
+                                                "targetExists":  true
+                                            },
+                                            {
+                                                "alias":  "test:evidence-fail-closed",
+                                                "command":  "tsx tests/official_evidence_gate_check.ts",
+                                                "packageCallers":  [
+
+                                                                   ],
+                                                "targetExists":  true
+                                            }
+                                        ],
+                            "CALLERS":  {
+                                            "package":  [
+
+                                                        ],
+                                            "static":  [
+
+                                                       ],
+                                            "external":  "UNPROVEN: repository inspection cannot prove operator, CI or user-shell callers."
+                                        },
+                            "TESTS":  "tests/official_evidence_gate_check.ts; Wave 5: PASS",
+                            "COMMON_FUNCTION":  "Official-evidence fail-closed test",
+                            "DIFFERENCES":  "Exact command target equivalence in package.json.",
+                            "COMPATIBILITY_EVIDENCE":  "Targets exist; package and static callers traced; E3 Wave 4 owner/SOR remains unproven.",
+                            "RISK":  "LOW",
+                            "DECISION":  "REVIEW",
+                            "BLOCKERS":  [
+                                             "Accountable operational owner not proven",
+                                             "External caller inventory not proven"
+                                         ]
+                        }
+                    ],
+    "archiveGroups":  [
+                          {
+                              "GROUP":  "DERIVED_REPORT_OR_BUNDLE",
+                              "assets":  10,
+                              "roots":  [
+                                            "_GREENY_DIAGNOSTIC_20260809_233236",
+                                            "ALL_SOURCE_CODE.txt",
+                                            "canonical",
+                                            "E3-SOURCE-TRACE-PACKAGE.zip",
+                                            "FileSummary.csv",
+                                            "GreenyLifeEOS_Review.zip",
+                                            "ImageInventory.csv",
+                                            "project_tree.txt",
+                                            "system_manifest.json",
+                                            "unified-intelligence-restore-5946c6bc.zip"
+                                        ],
+                              "checksumRecorded":  10,
+                              "staticReferenceOrAmbiguity":  6,
+                              "owner":  "UNPROVEN",
+                              "systemOfRecord":  "UNPROVEN",
+                              "canonicalReplacement":  "UNPROVEN",
+                              "recoveryManifest":  "UNPROVEN",
+                              "DECISION":  "REVIEW",
+                              "REASON":  "No physical archive: at least owner, SOR, canonical replacement and approved recovery manifest remain unproven for every asset in this group."
+                          },
+                          {
+                              "GROUP":  "DERIVED_REPORT_CANDIDATE",
+                              "assets":  47,
+                              "roots":  [
+                                            "_GREENY_DIAGNOSTIC_20260809_233236",
+                                            "canonical",
+                                            "E3-GIT-HEAD.txt",
+                                            "E3-GIT-STATUS.txt",
+                                            "E3-GIT-TRACKED.txt",
+                                            "E3-REPOSITORY-MANIFEST.json",
+                                            "els_final.json",
+                                            "els_final_v2.json",
+                                            "els_final_with_business.json",
+                                            "intelligence",
+                                            "run_full_audit.ps1"
+                                        ],
+                              "checksumRecorded":  47,
+                              "staticReferenceOrAmbiguity":  35,
+                              "owner":  "UNPROVEN",
+                              "systemOfRecord":  "UNPROVEN",
+                              "canonicalReplacement":  "UNPROVEN",
+                              "recoveryManifest":  "UNPROVEN",
+                              "DECISION":  "REVIEW",
+                              "REASON":  "No physical archive: at least owner, SOR, canonical replacement and approved recovery manifest remain unproven for every asset in this group."
+                          }
+                      ],
+    "archiveAssets":  [
+                          {
+                              "path":  "ALL_SOURCE_CODE.txt",
+                              "functionalFamily":  "DERIVED_REPORT_OR_BUNDLE",
+                              "exists":  true,
+                              "bytes":  16000617,
+                              "sha256":  "0F5688B10DC11489B88F053BEA5A146DBCD717CB3AEDD41791A9D7A319268937",
+                              "staticReferences":  [
+
+                                                   ],
+                              "owner":  "UNPROVEN",
+                              "systemOfRecord":  "UNPROVEN",
+                              "canonicalReplacement":  "UNPROVEN",
+                              "activeDependency":  "NO_STATIC_REFERENCE_FOUND_NOT_RUNTIME_PROOF",
+                              "uniqueBusinessValue":  "UNPROVEN",
+                              "recoveryPath":  "UNPROVEN: checksum recorded here, but no approved preservation manifest for this asset yet.",
+                              "DECISION":  "REVIEW"
+                          },
+                          {
+                              "path":  "E3-GIT-HEAD.txt",
+                              "functionalFamily":  "DERIVED_REPORT_CANDIDATE",
+                              "exists":  true,
+                              "bytes":  86,
+                              "sha256":  "7E0A292B9814172474C4384911336405E8360062F0CB6D89986603F970681803",
+                              "staticReferences":  [
+
+                                                   ],
+                              "owner":  "UNPROVEN",
+                              "systemOfRecord":  "UNPROVEN",
+                              "canonicalReplacement":  "UNPROVEN",
+                              "activeDependency":  "NO_STATIC_REFERENCE_FOUND_NOT_RUNTIME_PROOF",
+                              "uniqueBusinessValue":  "UNPROVEN",
+                              "recoveryPath":  "UNPROVEN: checksum recorded here, but no approved preservation manifest for this asset yet.",
+                              "DECISION":  "REVIEW"
+                          },
+                          {
+                              "path":  "E3-GIT-STATUS.txt",
+                              "functionalFamily":  "DERIVED_REPORT_CANDIDATE",
+                              "exists":  true,
+                              "bytes":  110,
+                              "sha256":  "D803F8E2B546069AE6AA1C33AE437D59F2DDC7E5F494D1EA977DD796866C3F41",
+                              "staticReferences":  [
+
+                                                   ],
+                              "owner":  "UNPROVEN",
+                              "systemOfRecord":  "UNPROVEN",
+                              "canonicalReplacement":  "UNPROVEN",
+                              "activeDependency":  "NO_STATIC_REFERENCE_FOUND_NOT_RUNTIME_PROOF",
+                              "uniqueBusinessValue":  "UNPROVEN",
+                              "recoveryPath":  "UNPROVEN: checksum recorded here, but no approved preservation manifest for this asset yet.",
+                              "DECISION":  "REVIEW"
+                          },
+                          {
+                              "path":  "E3-GIT-TRACKED.txt",
+                              "functionalFamily":  "DERIVED_REPORT_CANDIDATE",
+                              "exists":  true,
+                              "bytes":  521116,
+                              "sha256":  "1011760E20161B9900F27AC8CE34D1A5482EA141DD426144ED243ADEEC91623C",
+                              "staticReferences":  [
+
+                                                   ],
+                              "owner":  "UNPROVEN",
+                              "systemOfRecord":  "UNPROVEN",
+                              "canonicalReplacement":  "UNPROVEN",
+                              "activeDependency":  "NO_STATIC_REFERENCE_FOUND_NOT_RUNTIME_PROOF",
+                              "uniqueBusinessValue":  "UNPROVEN",
+                              "recoveryPath":  "UNPROVEN: checksum recorded here, but no approved preservation manifest for this asset yet.",
+                              "DECISION":  "REVIEW"
+                          },
+                          {
+                              "path":  "E3-REPOSITORY-MANIFEST.json",
+                              "functionalFamily":  "DERIVED_REPORT_CANDIDATE",
+                              "exists":  true,
+                              "bytes":  9967674,
+                              "sha256":  "DCFC008D471A009ECCD09903D253F7566AF7620044CD7D9F08265AE86587C315",
+                              "staticReferences":  [
+                                                       {
+                                                           "path":  "lib\\intelligence\\portfolio-and-assets.ts",
+                                                           "match":  "E3-REPOSITORY-MANIFEST.json"
+                                                       }
+                                                   ],
+                              "owner":  "UNPROVEN",
+                              "systemOfRecord":  "UNPROVEN",
+                              "canonicalReplacement":  "UNPROVEN",
+                              "activeDependency":  "NO_STATIC_REFERENCE_FOUND_NOT_RUNTIME_PROOF",
+                              "uniqueBusinessValue":  "UNPROVEN",
+                              "recoveryPath":  "UNPROVEN: checksum recorded here, but no approved preservation manifest for this asset yet.",
+                              "DECISION":  "REVIEW"
+                          },
+                          {
+                              "path":  "E3-SOURCE-TRACE-PACKAGE.zip",
+                              "functionalFamily":  "DERIVED_REPORT_OR_BUNDLE",
+                              "exists":  true,
+                              "bytes":  59654,
+                              "sha256":  "B3F84A2D24085CCBA6BD260BE39CA79DBE5EE4EFEA34072F318EB06517390B88",
+                              "staticReferences":  [
+
+                                                   ],
+                              "owner":  "UNPROVEN",
+                              "systemOfRecord":  "UNPROVEN",
+                              "canonicalReplacement":  "UNPROVEN",
+                              "activeDependency":  "NO_STATIC_REFERENCE_FOUND_NOT_RUNTIME_PROOF",
+                              "uniqueBusinessValue":  "UNPROVEN",
+                              "recoveryPath":  "UNPROVEN: checksum recorded here, but no approved preservation manifest for this asset yet.",
+                              "DECISION":  "REVIEW"
+                          },
+                          {
+                              "path":  "FileSummary.csv",
+                              "functionalFamily":  "DERIVED_REPORT_OR_BUNDLE",
+                              "exists":  true,
+                              "bytes":  239,
+                              "sha256":  "D057875A88C73450D3C8729A3AAD118FF27A271329AD046F127A1DC8653FC5BC",
+                              "staticReferences":  [
+                                                       {
+                                                           "path":  "docs\\auto-generated\\INDEX.md",
+                                                           "match":  "FileSummary.csv"
+                                                       },
+                                                       {
+                                                           "path":  "docs\\INDEX.md",
+                                                           "match":  "FileSummary.csv"
+                                                       }
+                                                   ],
+                              "owner":  "UNPROVEN",
+                              "systemOfRecord":  "UNPROVEN",
+                              "canonicalReplacement":  "UNPROVEN",
+                              "activeDependency":  "STATIC_REFERENCE_FOUND_OR_AMBIGUOUS",
+                              "uniqueBusinessValue":  "UNPROVEN",
+                              "recoveryPath":  "UNPROVEN: checksum recorded here, but no approved preservation manifest for this asset yet.",
+                              "DECISION":  "REVIEW"
+                          },
+                          {
+                              "path":  "GreenyLifeEOS_Review.zip",
+                              "functionalFamily":  "DERIVED_REPORT_OR_BUNDLE",
+                              "exists":  true,
+                              "bytes":  21265973,
+                              "sha256":  "AC2A7562954707BD5E1A19D8912D09CD0B5CE0854DDBBA5D3F2A11AB75919172",
+                              "staticReferences":  [
+
+                                                   ],
+                              "owner":  "UNPROVEN",
+                              "systemOfRecord":  "UNPROVEN",
+                              "canonicalReplacement":  "UNPROVEN",
+                              "activeDependency":  "NO_STATIC_REFERENCE_FOUND_NOT_RUNTIME_PROOF",
+                              "uniqueBusinessValue":  "UNPROVEN",
+                              "recoveryPath":  "UNPROVEN: checksum recorded here, but no approved preservation manifest for this asset yet.",
+                              "DECISION":  "REVIEW"
+                          },
+                          {
+                              "path":  "ImageInventory.csv",
+                              "functionalFamily":  "DERIVED_REPORT_OR_BUNDLE",
+                              "exists":  true,
+                              "bytes":  0,
+                              "sha256":  "E3B0C44298FC1C149AFBF4C8996FB92427AE41E4649B934CA495991B7852B855",
+                              "staticReferences":  [
+                                                       {
+                                                           "path":  "docs\\auto-generated\\INDEX.md",
+                                                           "match":  "ImageInventory.csv"
+                                                       },
+                                                       {
+                                                           "path":  "docs\\INDEX.md",
+                                                           "match":  "ImageInventory.csv"
+                                                       }
+                                                   ],
+                              "owner":  "UNPROVEN",
+                              "systemOfRecord":  "UNPROVEN",
+                              "canonicalReplacement":  "UNPROVEN",
+                              "activeDependency":  "STATIC_REFERENCE_FOUND_OR_AMBIGUOUS",
+                              "uniqueBusinessValue":  "UNPROVEN",
+                              "recoveryPath":  "UNPROVEN: checksum recorded here, but no approved preservation manifest for this asset yet.",
+                              "DECISION":  "REVIEW"
+                          },
+                          {
+                              "path":  "_GREENY_DIAGNOSTIC_20260809_233236/FILES.txt",
+                              "functionalFamily":  "DERIVED_REPORT_CANDIDATE",
+                              "exists":  true,
+                              "bytes":  4486490,
+                              "sha256":  "5203C69847ABB4E268D41BBB7588D1B685A12607B2BE3462869777C286CB977D",
+                              "staticReferences":  [
+                                                       {
+                                                           "path":  "canonical\\classification_report_v2.json",
+                                                           "match":  "FILES.txt"
+                                                       },
+                                                       {
+                                                           "path":  "canonical\\docs\\auto-generated\\INDEX.md",
+                                                           "match":  "FILES.txt"
+                                                       },
+                                                       {
+                                                           "path":  "canonical\\governance\\review-required-files-v1.json",
+                                                           "match":  "FILES.txt"
+                                                       },
+                                                       {
+                                                           "path":  "canonical\\intelligence\\asset_classification_report_v2.json",
+                                                           "match":  "FILES.txt"
+                                                       }
+                                                   ],
+                              "owner":  "UNPROVEN",
+                              "systemOfRecord":  "UNPROVEN",
+                              "canonicalReplacement":  "UNPROVEN",
+                              "activeDependency":  "STATIC_REFERENCE_FOUND_OR_AMBIGUOUS",
+                              "uniqueBusinessValue":  "UNPROVEN",
+                              "recoveryPath":  "UNPROVEN: checksum recorded here, but no approved preservation manifest for this asset yet.",
+                              "DECISION":  "REVIEW"
+                          },
+                          {
+                              "path":  "_GREENY_DIAGNOSTIC_20260809_233236/GIT_STATUS.txt",
+                              "functionalFamily":  "DERIVED_REPORT_CANDIDATE",
+                              "exists":  true,
+                              "bytes":  5815,
+                              "sha256":  "6968B236037EEB446F1B573761567471F05ABDA53053701E09A8923896E60B4C",
+                              "staticReferences":  [
+
+                                                   ],
+                              "owner":  "UNPROVEN",
+                              "systemOfRecord":  "UNPROVEN",
+                              "canonicalReplacement":  "UNPROVEN",
+                              "activeDependency":  "NO_STATIC_REFERENCE_FOUND_NOT_RUNTIME_PROOF",
+                              "uniqueBusinessValue":  "UNPROVEN",
+                              "recoveryPath":  "UNPROVEN: checksum recorded here, but no approved preservation manifest for this asset yet.",
+                              "DECISION":  "REVIEW"
+                          },
+                          {
+                              "path":  "_GREENY_DIAGNOSTIC_20260809_233236/KEY_SEARCH.txt",
+                              "functionalFamily":  "DERIVED_REPORT_CANDIDATE",
+                              "exists":  true,
+                              "bytes":  6028,
+                              "sha256":  "3FC517015D31CEA8BD6359123D75A5632F466608669C5A5A389F7C8314DD4AB1",
+                              "staticReferences":  [
+
+                                                   ],
+                              "owner":  "UNPROVEN",
+                              "systemOfRecord":  "UNPROVEN",
+                              "canonicalReplacement":  "UNPROVEN",
+                              "activeDependency":  "NO_STATIC_REFERENCE_FOUND_NOT_RUNTIME_PROOF",
+                              "uniqueBusinessValue":  "UNPROVEN",
+                              "recoveryPath":  "UNPROVEN: checksum recorded here, but no approved preservation manifest for this asset yet.",
+                              "DECISION":  "REVIEW"
+                          },
+                          {
+                              "path":  "_GREENY_DIAGNOSTIC_20260809_233236/PROJECT_DIAGNOSTIC.txt",
+                              "functionalFamily":  "DERIVED_REPORT_CANDIDATE",
+                              "exists":  true,
+                              "bytes":  3563898,
+                              "sha256":  "977A99643C7BE3029BBB1D549E2801CB4F765B0AEB2F53D14ABFA864756930CD",
+                              "staticReferences":  [
+
+                                                   ],
+                              "owner":  "UNPROVEN",
+                              "systemOfRecord":  "UNPROVEN",
+                              "canonicalReplacement":  "UNPROVEN",
+                              "activeDependency":  "NO_STATIC_REFERENCE_FOUND_NOT_RUNTIME_PROOF",
+                              "uniqueBusinessValue":  "UNPROVEN",
+                              "recoveryPath":  "UNPROVEN: checksum recorded here, but no approved preservation manifest for this asset yet.",
+                              "DECISION":  "REVIEW"
+                          },
+                          {
+                              "path":  "_GREENY_DIAGNOSTIC_20260809_233236/PROJECT_TREE.txt",
+                              "functionalFamily":  "DERIVED_REPORT_OR_BUNDLE",
+                              "exists":  true,
+                              "bytes":  2946924,
+                              "sha256":  "E4C9B1E0C308B27D901BBDCC5047F55D5DD36F21872216AFC782AE8B76A17048",
+                              "staticReferences":  [
+                                                       {
+                                                           "path":  "canonical\\governance\\review-required-files-v1.json",
+                                                           "match":  "PROJECT_TREE.txt"
+                                                       }
+                                                   ],
+                              "owner":  "UNPROVEN",
+                              "systemOfRecord":  "UNPROVEN",
+                              "canonicalReplacement":  "UNPROVEN",
+                              "activeDependency":  "NO_STATIC_REFERENCE_FOUND_NOT_RUNTIME_PROOF",
+                              "uniqueBusinessValue":  "UNPROVEN",
+                              "recoveryPath":  "UNPROVEN: checksum recorded here, but no approved preservation manifest for this asset yet.",
+                              "DECISION":  "REVIEW"
+                          },
+                          {
+                              "path":  "canonical/classification_report_v2.json",
+                              "functionalFamily":  "DERIVED_REPORT_CANDIDATE",
+                              "exists":  true,
+                              "bytes":  160790,
+                              "sha256":  "71ABA269BE1B344E2AF532597E67891E81DD7ACB2FB0C05713BF23F93318EA25",
+                              "staticReferences":  [
+                                                       {
+                                                           "path":  "canonical\\classification_report_v2.json",
+                                                           "match":  "classification_report_v2.json"
+                                                       },
+                                                       {
+                                                           "path":  "docs\\auto-generated\\INDEX.md",
+                                                           "match":  "classification_report_v2.json"
+                                                       },
+                                                       {
+                                                           "path":  "docs\\INDEX.md",
+                                                           "match":  "classification_report_v2.json"
+                                                       }
+                                                   ],
+                              "owner":  "UNPROVEN",
+                              "systemOfRecord":  "UNPROVEN",
+                              "canonicalReplacement":  "UNPROVEN",
+                              "activeDependency":  "STATIC_REFERENCE_FOUND_OR_AMBIGUOUS",
+                              "uniqueBusinessValue":  "UNPROVEN",
+                              "recoveryPath":  "UNPROVEN: checksum recorded here, but no approved preservation manifest for this asset yet.",
+                              "DECISION":  "REVIEW"
+                          },
+                          {
+                              "path":  "canonical/cleanup_report.json",
+                              "functionalFamily":  "DERIVED_REPORT_CANDIDATE",
+                              "exists":  true,
+                              "bytes":  5246,
+                              "sha256":  "30D5766039B0CF36E0C898487388207F4DF1C8216A21A829800396A98C8BBB67",
+                              "staticReferences":  [
+                                                       {
+                                                           "path":  "canonical\\classification_report_v2.json",
+                                                           "match":  "cleanup_report.json"
+                                                       },
+                                                       {
+                                                           "path":  "canonical\\cleanup_report.json",
+                                                           "match":  "cleanup_report.json"
+                                                       },
+                                                       {
+                                                           "path":  "canonical\\docs\\auto-generated\\INDEX.md",
+                                                           "match":  "cleanup_report.json"
+                                                       },
+                                                       {
+                                                           "path":  "canonical\\final_audit.json",
+                                                           "match":  "cleanup_report.json"
+                                                       },
+                                                       {
+                                                           "path":  "canonical\\intelligence\\asset_classification_report_v2.json",
+                                                           "match":  "cleanup_report.json"
+                                                       },
+                                                       {
+                                                           "path":  "canonical\\intelligence\\cleanup_report.json",
+                                                           "match":  "cleanup_report.json"
+                                                       },
+                                                       {
+                                                           "path":  "canonical\\intelligence\\comprehensive_report.json",
+                                                           "match":  "cleanup_report.json"
+                                                       },
+                                                       {
+                                                           "path":  "docs\\auto-generated\\INDEX.md",
+                                                           "match":  "cleanup_report.json"
+                                                       },
+                                                       {
+                                                           "path":  "docs\\INDEX.md",
+                                                           "match":  "cleanup_report.json"
+                                                       }
+                                                   ],
+                              "owner":  "UNPROVEN",
+                              "systemOfRecord":  "UNPROVEN",
+                              "canonicalReplacement":  "UNPROVEN",
+                              "activeDependency":  "STATIC_REFERENCE_FOUND_OR_AMBIGUOUS",
+                              "uniqueBusinessValue":  "UNPROVEN",
+                              "recoveryPath":  "UNPROVEN: checksum recorded here, but no approved preservation manifest for this asset yet.",
+                              "DECISION":  "REVIEW"
+                          },
+                          {
+                              "path":  "canonical/final_audit.json",
+                              "functionalFamily":  "DERIVED_REPORT_CANDIDATE",
+                              "exists":  true,
+                              "bytes":  83941,
+                              "sha256":  "A232BCE1ADBD40309940D1F753A53BBBD93DD39D7780E20E792EFC62B274A778",
+                              "staticReferences":  [
+                                                       {
+                                                           "path":  "canonical\\classification_report_v2.json",
+                                                           "match":  "final_audit.json"
+                                                       },
+                                                       {
+                                                           "path":  "canonical\\docs\\auto-generated\\INDEX.md",
+                                                           "match":  "final_audit.json"
+                                                       },
+                                                       {
+                                                           "path":  "canonical\\final_audit.json",
+                                                           "match":  "final_audit.json"
+                                                       },
+                                                       {
+                                                           "path":  "canonical\\intelligence\\asset_classification_report_v2.json",
+                                                           "match":  "final_audit.json"
+                                                       },
+                                                       {
+                                                           "path":  "canonical\\intelligence\\comprehensive_report.json",
+                                                           "match":  "final_audit.json"
+                                                       },
+                                                       {
+                                                           "path":  "docs\\auto-generated\\INDEX.md",
+                                                           "match":  "final_audit.json"
+                                                       },
+                                                       {
+                                                           "path":  "docs\\INDEX.md",
+                                                           "match":  "final_audit.json"
+                                                       }
+                                                   ],
+                              "owner":  "UNPROVEN",
+                              "systemOfRecord":  "UNPROVEN",
+                              "canonicalReplacement":  "UNPROVEN",
+                              "activeDependency":  "STATIC_REFERENCE_FOUND_OR_AMBIGUOUS",
+                              "uniqueBusinessValue":  "UNPROVEN",
+                              "recoveryPath":  "UNPROVEN: checksum recorded here, but no approved preservation manifest for this asset yet.",
+                              "DECISION":  "REVIEW"
+                          },
+                          {
+                              "path":  "canonical/intelligence/architecture.manifest.json",
+                              "functionalFamily":  "DERIVED_REPORT_CANDIDATE",
+                              "exists":  true,
+                              "bytes":  1171,
+                              "sha256":  "B42842C5A0E8292165913F55D5385D1B864C9232B4B16CD87B907FD0AEBF8DAC",
+                              "staticReferences":  [
+                                                       {
+                                                           "path":  "canonical\\classification_report_v2.json",
+                                                           "match":  "architecture.manifest.json"
+                                                       },
+                                                       {
+                                                           "path":  "canonical\\docs\\auto-generated\\INDEX.md",
+                                                           "match":  "architecture.manifest.json"
+                                                       },
+                                                       {
+                                                           "path":  "canonical\\governance\\review-required-files-v1.json",
+                                                           "match":  "architecture.manifest.json"
+                                                       },
+                                                       {
+                                                           "path":  "canonical\\intelligence\\asset_classification_report_v2.json",
+                                                           "match":  "architecture.manifest.json"
+                                                       },
+                                                       {
+                                                           "path":  "canonical\\KNOWLEDGE-BASE\\AI-INTELLIGENCE-DISCOVERY-REPORT.json",
+                                                           "match":  "architecture.manifest.json"
+                                                       },
+                                                       {
+                                                           "path":  "docs\\auto-generated\\INDEX.md",
+                                                           "match":  "architecture.manifest.json"
+                                                       },
+                                                       {
+                                                           "path":  "docs\\INDEX.md",
+                                                           "match":  "architecture.manifest.json"
+                                                       }
+                                                   ],
+                              "owner":  "UNPROVEN",
+                              "systemOfRecord":  "UNPROVEN",
+                              "canonicalReplacement":  "UNPROVEN",
+                              "activeDependency":  "STATIC_REFERENCE_FOUND_OR_AMBIGUOUS",
+                              "uniqueBusinessValue":  "UNPROVEN",
+                              "recoveryPath":  "UNPROVEN: checksum recorded here, but no approved preservation manifest for this asset yet.",
+                              "DECISION":  "REVIEW"
+                          },
+                          {
+                              "path":  "canonical/intelligence/asset_classification_report_v2.json",
+                              "functionalFamily":  "DERIVED_REPORT_CANDIDATE",
+                              "exists":  true,
+                              "bytes":  80585,
+                              "sha256":  "77A9A4CECCFAA4EBB6416ECBA043ECD9D80E2211AF06D73E1E6957E6D5FBE460",
+                              "staticReferences":  [
+                                                       {
+                                                           "path":  "canonical\\classification_report_v2.json",
+                                                           "match":  "asset_classification_report_v2.json"
+                                                       },
+                                                       {
+                                                           "path":  "docs\\auto-generated\\INDEX.md",
+                                                           "match":  "asset_classification_report_v2.json"
+                                                       },
+                                                       {
+                                                           "path":  "docs\\INDEX.md",
+                                                           "match":  "asset_classification_report_v2.json"
+                                                       }
+                                                   ],
+                              "owner":  "UNPROVEN",
+                              "systemOfRecord":  "UNPROVEN",
+                              "canonicalReplacement":  "UNPROVEN",
+                              "activeDependency":  "STATIC_REFERENCE_FOUND_OR_AMBIGUOUS",
+                              "uniqueBusinessValue":  "UNPROVEN",
+                              "recoveryPath":  "UNPROVEN: checksum recorded here, but no approved preservation manifest for this asset yet.",
+                              "DECISION":  "REVIEW"
+                          },
+                          {
+                              "path":  "canonical/intelligence/cleanup_report.json",
+                              "functionalFamily":  "DERIVED_REPORT_CANDIDATE",
+                              "exists":  true,
+                              "bytes":  5246,
+                              "sha256":  "30D5766039B0CF36E0C898487388207F4DF1C8216A21A829800396A98C8BBB67",
+                              "staticReferences":  [
+                                                       {
+                                                           "path":  "canonical\\classification_report_v2.json",
+                                                           "match":  "cleanup_report.json"
+                                                       },
+                                                       {
+                                                           "path":  "canonical\\cleanup_report.json",
+                                                           "match":  "cleanup_report.json"
+                                                       },
+                                                       {
+                                                           "path":  "canonical\\docs\\auto-generated\\INDEX.md",
+                                                           "match":  "cleanup_report.json"
+                                                       },
+                                                       {
+                                                           "path":  "canonical\\final_audit.json",
+                                                           "match":  "cleanup_report.json"
+                                                       },
+                                                       {
+                                                           "path":  "canonical\\intelligence\\asset_classification_report_v2.json",
+                                                           "match":  "cleanup_report.json"
+                                                       },
+                                                       {
+                                                           "path":  "canonical\\intelligence\\cleanup_report.json",
+                                                           "match":  "cleanup_report.json"
+                                                       },
+                                                       {
+                                                           "path":  "canonical\\intelligence\\comprehensive_report.json",
+                                                           "match":  "cleanup_report.json"
+                                                       },
+                                                       {
+                                                           "path":  "docs\\auto-generated\\INDEX.md",
+                                                           "match":  "cleanup_report.json"
+                                                       },
+                                                       {
+                                                           "path":  "docs\\INDEX.md",
+                                                           "match":  "cleanup_report.json"
+                                                       }
+                                                   ],
+                              "owner":  "UNPROVEN",
+                              "systemOfRecord":  "UNPROVEN",
+                              "canonicalReplacement":  "UNPROVEN",
+                              "activeDependency":  "STATIC_REFERENCE_FOUND_OR_AMBIGUOUS",
+                              "uniqueBusinessValue":  "UNPROVEN",
+                              "recoveryPath":  "UNPROVEN: checksum recorded here, but no approved preservation manifest for this asset yet.",
+                              "DECISION":  "REVIEW"
+                          },
+                          {
+                              "path":  "canonical/intelligence/comprehensive_report.json",
+                              "functionalFamily":  "DERIVED_REPORT_CANDIDATE",
+                              "exists":  true,
+                              "bytes":  83770,
+                              "sha256":  "B2331D28F45987C9904713D4E41F066636B1A843A0F9C165D64635F4BA9A1248",
+                              "staticReferences":  [
+                                                       {
+                                                           "path":  "canonical\\classification_report_v2.json",
+                                                           "match":  "comprehensive_report.json"
+                                                       },
+                                                       {
+                                                           "path":  "canonical\\docs\\auto-generated\\INDEX.md",
+                                                           "match":  "comprehensive_report.json"
+                                                       },
+                                                       {
+                                                           "path":  "canonical\\final_audit.json",
+                                                           "match":  "comprehensive_report.json"
+                                                       },
+                                                       {
+                                                           "path":  "canonical\\intelligence\\asset_classification_report_v2.json",
+                                                           "match":  "comprehensive_report.json"
+                                                       },
+                                                       {
+                                                           "path":  "canonical\\intelligence\\comprehensive_report.json",
+                                                           "match":  "comprehensive_report.json"
+                                                       },
+                                                       {
+                                                           "path":  "canonical\\KNOWLEDGE-BASE\\AI-INTELLIGENCE-DISCOVERY-REPORT.json",
+                                                           "match":  "comprehensive_report.json"
+                                                       },
+                                                       {
+                                                           "path":  "docs\\auto-generated\\INDEX.md",
+                                                           "match":  "comprehensive_report.json"
+                                                       },
+                                                       {
+                                                           "path":  "docs\\INDEX.md",
+                                                           "match":  "comprehensive_report.json"
+                                                       }
+                                                   ],
+                              "owner":  "UNPROVEN",
+                              "systemOfRecord":  "UNPROVEN",
+                              "canonicalReplacement":  "UNPROVEN",
+                              "activeDependency":  "STATIC_REFERENCE_FOUND_OR_AMBIGUOUS",
+                              "uniqueBusinessValue":  "UNPROVEN",
+                              "recoveryPath":  "UNPROVEN: checksum recorded here, but no approved preservation manifest for this asset yet.",
+                              "DECISION":  "REVIEW"
+                          },
+                          {
+                              "path":  "canonical/intelligence/eos-enterprise-architecture-final.json",
+                              "functionalFamily":  "DERIVED_REPORT_CANDIDATE",
+                              "exists":  true,
+                              "bytes":  2469,
+                              "sha256":  "7B8C738457A9B4A84729285E0201DB2107C4FE2BBE255CD185D8B328A1D85E5F",
+                              "staticReferences":  [
+                                                       {
+                                                           "path":  "canonical\\classification_report_v2.json",
+                                                           "match":  "eos-enterprise-architecture-final.json"
+                                                       },
+                                                       {
+                                                           "path":  "canonical\\docs\\auto-generated\\INDEX.md",
+                                                           "match":  "eos-enterprise-architecture-final.json"
+                                                       },
+                                                       {
+                                                           "path":  "canonical\\governance\\review-required-files-v1.json",
+                                                           "match":  "eos-enterprise-architecture-final.json"
+                                                       },
+                                                       {
+                                                           "path":  "canonical\\intelligence\\asset_classification_report_v2.json",
+                                                           "match":  "eos-enterprise-architecture-final.json"
+                                                       },
+                                                       {
+                                                           "path":  "canonical\\intelligence\\foundation-closure-report-final.json",
+                                                           "match":  "eos-enterprise-architecture-final.json"
+                                                       },
+                                                       {
+                                                           "path":  "canonical\\KNOWLEDGE-BASE\\AI-INTELLIGENCE-DISCOVERY-REPORT.json",
+                                                           "match":  "eos-enterprise-architecture-final.json"
+                                                       },
+                                                       {
+                                                           "path":  "docs\\auto-generated\\INDEX.md",
+                                                           "match":  "eos-enterprise-architecture-final.json"
+                                                       },
+                                                       {
+                                                           "path":  "docs\\INDEX.md",
+                                                           "match":  "eos-enterprise-architecture-final.json"
+                                                       }
+                                                   ],
+                              "owner":  "UNPROVEN",
+                              "systemOfRecord":  "UNPROVEN",
+                              "canonicalReplacement":  "UNPROVEN",
+                              "activeDependency":  "STATIC_REFERENCE_FOUND_OR_AMBIGUOUS",
+                              "uniqueBusinessValue":  "UNPROVEN",
+                              "recoveryPath":  "UNPROVEN: checksum recorded here, but no approved preservation manifest for this asset yet.",
+                              "DECISION":  "REVIEW"
+                          },
+                          {
+                              "path":  "canonical/intelligence/foundation-closure-report-final.json",
+                              "functionalFamily":  "DERIVED_REPORT_CANDIDATE",
+                              "exists":  true,
+                              "bytes":  1870,
+                              "sha256":  "84533595B3248022A663FC26FC35ED88E6F9C9516B2B938688BECBEF003B3865",
+                              "staticReferences":  [
+                                                       {
+                                                           "path":  "canonical\\classification_report_v2.json",
+                                                           "match":  "foundation-closure-report-final.json"
+                                                       },
+                                                       {
+                                                           "path":  "canonical\\docs\\auto-generated\\INDEX.md",
+                                                           "match":  "foundation-closure-report-final.json"
+                                                       },
+                                                       {
+                                                           "path":  "canonical\\intelligence\\asset_classification_report_v2.json",
+                                                           "match":  "foundation-closure-report-final.json"
+                                                       },
+                                                       {
+                                                           "path":  "canonical\\KNOWLEDGE-BASE\\AI-INTELLIGENCE-DISCOVERY-REPORT.json",
+                                                           "match":  "foundation-closure-report-final.json"
+                                                       },
+                                                       {
+                                                           "path":  "docs\\auto-generated\\INDEX.md",
+                                                           "match":  "foundation-closure-report-final.json"
+                                                       },
+                                                       {
+                                                           "path":  "docs\\INDEX.md",
+                                                           "match":  "foundation-closure-report-final.json"
+                                                       }
+                                                   ],
+                              "owner":  "UNPROVEN",
+                              "systemOfRecord":  "UNPROVEN",
+                              "canonicalReplacement":  "UNPROVEN",
+                              "activeDependency":  "STATIC_REFERENCE_FOUND_OR_AMBIGUOUS",
+                              "uniqueBusinessValue":  "UNPROVEN",
+                              "recoveryPath":  "UNPROVEN: checksum recorded here, but no approved preservation manifest for this asset yet.",
+                              "DECISION":  "REVIEW"
+                          },
+                          {
+                              "path":  "canonical/intelligence/intelligence/health/health-reporter.ts",
+                              "functionalFamily":  "DERIVED_REPORT_CANDIDATE",
+                              "exists":  true,
+                              "bytes":  1235,
+                              "sha256":  "AECD572DDFEC0EDA31BB5471F11718821B51AC4305266EF1D717ED696C5DF6C3",
+                              "staticReferences":  [
+                                                       {
+                                                           "path":  "canonical\\classification_report_v2.json",
+                                                           "match":  "health-reporter.ts"
+                                                       },
+                                                       {
+                                                           "path":  "canonical\\docs\\auto-generated\\INDEX.md",
+                                                           "match":  "health-reporter.ts"
+                                                       },
+                                                       {
+                                                           "path":  "canonical\\intelligence\\asset_classification_report_v2.json",
+                                                           "match":  "health-reporter.ts"
+                                                       },
+                                                       {
+                                                           "path":  "canonical\\intelligence\\eos-business-contract-discovery.json",
+                                                           "match":  "health-reporter.ts"
+                                                       },
+                                                       {
+                                                           "path":  "canonical\\intelligence\\eos-execution-truth-map.json",
+                                                           "match":  "health-reporter.ts"
+                                                       },
+                                                       {
+                                                           "path":  "canonical\\intelligence\\eos-intelligent-domain-ownership-graph.json",
+                                                           "match":  "health-reporter.ts"
+                                                       },
+                                                       {
+                                                           "path":  "canonical\\intelligence\\eos-real-execution-path-map.json",
+                                                           "match":  "health-reporter.ts"
+                                                       },
+                                                       {
+                                                           "path":  "canonical\\KNOWLEDGE-BASE\\AI-INTELLIGENCE-DISCOVERY-REPORT.json",
+                                                           "match":  "health-reporter.ts"
+                                                       },
+                                                       {
+                                                           "path":  "docs\\auto-generated\\INDEX.md",
+                                                           "match":  "health-reporter.ts"
+                                                       },
+                                                       {
+                                                           "path":  "docs\\INDEX.md",
+                                                           "match":  "health-reporter.ts"
+                                                       }
+                                                   ],
+                              "owner":  "UNPROVEN",
+                              "systemOfRecord":  "UNPROVEN",
+                              "canonicalReplacement":  "UNPROVEN",
+                              "activeDependency":  "STATIC_REFERENCE_FOUND_OR_AMBIGUOUS",
+                              "uniqueBusinessValue":  "UNPROVEN",
+                              "recoveryPath":  "UNPROVEN: checksum recorded here, but no approved preservation manifest for this asset yet.",
+                              "DECISION":  "REVIEW"
+                          },
+                          {
+                              "path":  "canonical/system_manifest.json",
+                              "functionalFamily":  "DERIVED_REPORT_OR_BUNDLE",
+                              "exists":  true,
+                              "bytes":  3368,
+                              "sha256":  "74DF0B64E0EF8C6181D20629045F29DDD124318A93E2FFA97781A91445298521",
+                              "staticReferences":  [
+                                                       {
+                                                           "path":  "canonical\\classification_report_v2.json",
+                                                           "match":  "system_manifest.json"
+                                                       },
+                                                       {
+                                                           "path":  "canonical\\docs\\auto-generated\\INDEX.md",
+                                                           "match":  "system_manifest.json"
+                                                       },
+                                                       {
+                                                           "path":  "canonical\\final_audit.json",
+                                                           "match":  "system_manifest.json"
+                                                       },
+                                                       {
+                                                           "path":  "canonical\\intelligence\\asset_classification_report_v2.json",
+                                                           "match":  "system_manifest.json"
+                                                       },
+                                                       {
+                                                           "path":  "canonical\\intelligence\\comprehensive_report.json",
+                                                           "match":  "system_manifest.json"
+                                                       },
+                                                       {
+                                                           "path":  "docs\\auto-generated\\INDEX.md",
+                                                           "match":  "system_manifest.json"
+                                                       },
+                                                       {
+                                                           "path":  "docs\\INDEX.md",
+                                                           "match":  "system_manifest.json"
+                                                       }
+                                                   ],
+                              "owner":  "UNPROVEN",
+                              "systemOfRecord":  "UNPROVEN",
+                              "canonicalReplacement":  "UNPROVEN",
+                              "activeDependency":  "STATIC_REFERENCE_FOUND_OR_AMBIGUOUS",
+                              "uniqueBusinessValue":  "UNPROVEN",
+                              "recoveryPath":  "UNPROVEN: checksum recorded here, but no approved preservation manifest for this asset yet.",
+                              "DECISION":  "REVIEW"
+                          },
+                          {
+                              "path":  "els_final.json",
+                              "functionalFamily":  "DERIVED_REPORT_CANDIDATE",
+                              "exists":  true,
+                              "bytes":  1005,
+                              "sha256":  "8CD94C0B163218968CAD82F7C4C11AC307D2ECC7F805B2B00C76D27606B57765",
+                              "staticReferences":  [
+                                                       {
+                                                           "path":  "docs\\auto-generated\\INDEX.md",
+                                                           "match":  "els_final.json"
+                                                       },
+                                                       {
+                                                           "path":  "docs\\INDEX.md",
+                                                           "match":  "els_final.json"
+                                                       }
+                                                   ],
+                              "owner":  "UNPROVEN",
+                              "systemOfRecord":  "UNPROVEN",
+                              "canonicalReplacement":  "UNPROVEN",
+                              "activeDependency":  "STATIC_REFERENCE_FOUND_OR_AMBIGUOUS",
+                              "uniqueBusinessValue":  "UNPROVEN",
+                              "recoveryPath":  "UNPROVEN: checksum recorded here, but no approved preservation manifest for this asset yet.",
+                              "DECISION":  "REVIEW"
+                          },
+                          {
+                              "path":  "els_final_v2.json",
+                              "functionalFamily":  "DERIVED_REPORT_CANDIDATE",
+                              "exists":  true,
+                              "bytes":  1005,
+                              "sha256":  "27B0B86105698A91C5398498F47060C27ADDFE42B7FD7E08FBFE0D53321EB071",
+                              "staticReferences":  [
+                                                       {
+                                                           "path":  "docs\\auto-generated\\INDEX.md",
+                                                           "match":  "els_final_v2.json"
+                                                       },
+                                                       {
+                                                           "path":  "docs\\INDEX.md",
+                                                           "match":  "els_final_v2.json"
+                                                       }
+                                                   ],
+                              "owner":  "UNPROVEN",
+                              "systemOfRecord":  "UNPROVEN",
+                              "canonicalReplacement":  "UNPROVEN",
+                              "activeDependency":  "STATIC_REFERENCE_FOUND_OR_AMBIGUOUS",
+                              "uniqueBusinessValue":  "UNPROVEN",
+                              "recoveryPath":  "UNPROVEN: checksum recorded here, but no approved preservation manifest for this asset yet.",
+                              "DECISION":  "REVIEW"
+                          },
+                          {
+                              "path":  "els_final_with_business.json",
+                              "functionalFamily":  "DERIVED_REPORT_CANDIDATE",
+                              "exists":  true,
+                              "bytes":  1005,
+                              "sha256":  "27B0B86105698A91C5398498F47060C27ADDFE42B7FD7E08FBFE0D53321EB071",
+                              "staticReferences":  [
+                                                       {
+                                                           "path":  "docs\\INDEX.md",
+                                                           "match":  "els_final_with_business.json"
+                                                       }
+                                                   ],
+                              "owner":  "UNPROVEN",
+                              "systemOfRecord":  "UNPROVEN",
+                              "canonicalReplacement":  "UNPROVEN",
+                              "activeDependency":  "NO_STATIC_REFERENCE_FOUND_NOT_RUNTIME_PROOF",
+                              "uniqueBusinessValue":  "UNPROVEN",
+                              "recoveryPath":  "UNPROVEN: checksum recorded here, but no approved preservation manifest for this asset yet.",
+                              "DECISION":  "REVIEW"
+                          },
+                          {
+                              "path":  "intelligence/analytics-validation-report.json",
+                              "functionalFamily":  "DERIVED_REPORT_CANDIDATE",
+                              "exists":  true,
+                              "bytes":  295,
+                              "sha256":  "DE88161F040479F10509B72AE3849EFDEF4809F1162E130C40F4633A16E10992",
+                              "staticReferences":  [
+                                                       {
+                                                           "path":  "docs\\auto-generated\\INDEX.md",
+                                                           "match":  "analytics-validation-report.json"
+                                                       },
+                                                       {
+                                                           "path":  "docs\\INDEX.md",
+                                                           "match":  "analytics-validation-report.json"
+                                                       }
+                                                   ],
+                              "owner":  "UNPROVEN",
+                              "systemOfRecord":  "UNPROVEN",
+                              "canonicalReplacement":  "UNPROVEN",
+                              "activeDependency":  "STATIC_REFERENCE_FOUND_OR_AMBIGUOUS",
+                              "uniqueBusinessValue":  "UNPROVEN",
+                              "recoveryPath":  "UNPROVEN: checksum recorded here, but no approved preservation manifest for this asset yet.",
+                              "DECISION":  "REVIEW"
+                          },
+                          {
+                              "path":  "intelligence/archive-intelligence-report.json",
+                              "functionalFamily":  "DERIVED_REPORT_CANDIDATE",
+                              "exists":  true,
+                              "bytes":  42941,
+                              "sha256":  "17F2B2BB48E4A14B554DD5C9FB53D9A0F26AA11735E06D37CA6BF8AAA9B785C2",
+                              "staticReferences":  [
+                                                       {
+                                                           "path":  "docs\\auto-generated\\INDEX.md",
+                                                           "match":  "archive-intelligence-report.json"
+                                                       },
+                                                       {
+                                                           "path":  "docs\\INDEX.md",
+                                                           "match":  "archive-intelligence-report.json"
+                                                       }
+                                                   ],
+                              "owner":  "UNPROVEN",
+                              "systemOfRecord":  "UNPROVEN",
+                              "canonicalReplacement":  "UNPROVEN",
+                              "activeDependency":  "STATIC_REFERENCE_FOUND_OR_AMBIGUOUS",
+                              "uniqueBusinessValue":  "UNPROVEN",
+                              "recoveryPath":  "UNPROVEN: checksum recorded here, but no approved preservation manifest for this asset yet.",
+                              "DECISION":  "REVIEW"
+                          },
+                          {
+                              "path":  "intelligence/asset_classification_report_v3.json",
+                              "functionalFamily":  "DERIVED_REPORT_CANDIDATE",
+                              "exists":  true,
+                              "bytes":  93838,
+                              "sha256":  "E8BCCA4BB176C0B10F6A9F8BE9CD8D901FD5765E589A8266A19CBD8ACEBD31F6",
+                              "staticReferences":  [
+
+                                                   ],
+                              "owner":  "UNPROVEN",
+                              "systemOfRecord":  "UNPROVEN",
+                              "canonicalReplacement":  "UNPROVEN",
+                              "activeDependency":  "NO_STATIC_REFERENCE_FOUND_NOT_RUNTIME_PROOF",
+                              "uniqueBusinessValue":  "UNPROVEN",
+                              "recoveryPath":  "UNPROVEN: checksum recorded here, but no approved preservation manifest for this asset yet.",
+                              "DECISION":  "REVIEW"
+                          },
+                          {
+                              "path":  "intelligence/ast_extraction_audit_report.json",
+                              "functionalFamily":  "DERIVED_REPORT_CANDIDATE",
+                              "exists":  true,
+                              "bytes":  7942,
+                              "sha256":  "7639EE0C922EE7D83462D1135040B283117897FBD1E6C7FC4349E6F9890BD868",
+                              "staticReferences":  [
+
+                                                   ],
+                              "owner":  "UNPROVEN",
+                              "systemOfRecord":  "UNPROVEN",
+                              "canonicalReplacement":  "UNPROVEN",
+                              "activeDependency":  "NO_STATIC_REFERENCE_FOUND_NOT_RUNTIME_PROOF",
+                              "uniqueBusinessValue":  "UNPROVEN",
+                              "recoveryPath":  "UNPROVEN: checksum recorded here, but no approved preservation manifest for this asset yet.",
+                              "DECISION":  "REVIEW"
+                          },
+                          {
+                              "path":  "intelligence/ast_raw_findings_report.json",
+                              "functionalFamily":  "DERIVED_REPORT_CANDIDATE",
+                              "exists":  true,
+                              "bytes":  4531499,
+                              "sha256":  "ABCAE14E3A87386923492CDC34125820577503B3BE1F3FC07573A774F1048CCD",
+                              "staticReferences":  [
+
+                                                   ],
+                              "owner":  "UNPROVEN",
+                              "systemOfRecord":  "UNPROVEN",
+                              "canonicalReplacement":  "UNPROVEN",
+                              "activeDependency":  "NO_STATIC_REFERENCE_FOUND_NOT_RUNTIME_PROOF",
+                              "uniqueBusinessValue":  "UNPROVEN",
+                              "recoveryPath":  "UNPROVEN: checksum recorded here, but no approved preservation manifest for this asset yet.",
+                              "DECISION":  "REVIEW"
+                          },
+                          {
+                              "path":  "intelligence/brain_intelligence_audit_v2.json",
+                              "functionalFamily":  "DERIVED_REPORT_CANDIDATE",
+                              "exists":  true,
+                              "bytes":  3302,
+                              "sha256":  "EF58656B8136A05DE8820CABD7A71522F3E16A1DE19CAA8ADE7AD8602CE0E9E9",
+                              "staticReferences":  [
+
+                                                   ],
+                              "owner":  "UNPROVEN",
+                              "systemOfRecord":  "UNPROVEN",
+                              "canonicalReplacement":  "UNPROVEN",
+                              "activeDependency":  "NO_STATIC_REFERENCE_FOUND_NOT_RUNTIME_PROOF",
+                              "uniqueBusinessValue":  "UNPROVEN",
+                              "recoveryPath":  "UNPROVEN: checksum recorded here, but no approved preservation manifest for this asset yet.",
+                              "DECISION":  "REVIEW"
+                          },
+                          {
+                              "path":  "intelligence/brain_intelligence_audit_v2_final.json",
+                              "functionalFamily":  "DERIVED_REPORT_CANDIDATE",
+                              "exists":  true,
+                              "bytes":  3259,
+                              "sha256":  "B676E5BDE3836AD355F8D2254A5243EC3D5622D2CF6798B37C6D26FA0C545003",
+                              "staticReferences":  [
+
+                                                   ],
+                              "owner":  "UNPROVEN",
+                              "systemOfRecord":  "UNPROVEN",
+                              "canonicalReplacement":  "UNPROVEN",
+                              "activeDependency":  "NO_STATIC_REFERENCE_FOUND_NOT_RUNTIME_PROOF",
+                              "uniqueBusinessValue":  "UNPROVEN",
+                              "recoveryPath":  "UNPROVEN: checksum recorded here, but no approved preservation manifest for this asset yet.",
+                              "DECISION":  "REVIEW"
+                          },
+                          {
+                              "path":  "intelligence/certificate-validation-report.json",
+                              "functionalFamily":  "DERIVED_REPORT_CANDIDATE",
+                              "exists":  true,
+                              "bytes":  7181,
+                              "sha256":  "A69580412B907DC375A097C2C494E035067F59AEB85649387260DB41C7023316",
+                              "staticReferences":  [
+                                                       {
+                                                           "path":  "docs\\auto-generated\\INDEX.md",
+                                                           "match":  "certificate-validation-report.json"
+                                                       },
+                                                       {
+                                                           "path":  "docs\\INDEX.md",
+                                                           "match":  "certificate-validation-report.json"
+                                                       }
+                                                   ],
+                              "owner":  "UNPROVEN",
+                              "systemOfRecord":  "UNPROVEN",
+                              "canonicalReplacement":  "UNPROVEN",
+                              "activeDependency":  "STATIC_REFERENCE_FOUND_OR_AMBIGUOUS",
+                              "uniqueBusinessValue":  "UNPROVEN",
+                              "recoveryPath":  "UNPROVEN: checksum recorded here, but no approved preservation manifest for this asset yet.",
+                              "DECISION":  "REVIEW"
+                          },
+                          {
+                              "path":  "intelligence/cleanup_report.json",
+                              "functionalFamily":  "DERIVED_REPORT_CANDIDATE",
+                              "exists":  true,
+                              "bytes":  19356,
+                              "sha256":  "EB46AA007C956D30CD2C63B1ABDE86560EC0CF4FFE19C8A6B4FA9E4FF0CE0DD1",
+                              "staticReferences":  [
+                                                       {
+                                                           "path":  "canonical\\classification_report_v2.json",
+                                                           "match":  "cleanup_report.json"
+                                                       },
+                                                       {
+                                                           "path":  "canonical\\cleanup_report.json",
+                                                           "match":  "cleanup_report.json"
+                                                       },
+                                                       {
+                                                           "path":  "canonical\\docs\\auto-generated\\INDEX.md",
+                                                           "match":  "cleanup_report.json"
+                                                       },
+                                                       {
+                                                           "path":  "canonical\\final_audit.json",
+                                                           "match":  "cleanup_report.json"
+                                                       },
+                                                       {
+                                                           "path":  "canonical\\intelligence\\asset_classification_report_v2.json",
+                                                           "match":  "cleanup_report.json"
+                                                       },
+                                                       {
+                                                           "path":  "canonical\\intelligence\\cleanup_report.json",
+                                                           "match":  "cleanup_report.json"
+                                                       },
+                                                       {
+                                                           "path":  "canonical\\intelligence\\comprehensive_report.json",
+                                                           "match":  "cleanup_report.json"
+                                                       },
+                                                       {
+                                                           "path":  "docs\\auto-generated\\INDEX.md",
+                                                           "match":  "cleanup_report.json"
+                                                       },
+                                                       {
+                                                           "path":  "docs\\INDEX.md",
+                                                           "match":  "cleanup_report.json"
+                                                       }
+                                                   ],
+                              "owner":  "UNPROVEN",
+                              "systemOfRecord":  "UNPROVEN",
+                              "canonicalReplacement":  "UNPROVEN",
+                              "activeDependency":  "STATIC_REFERENCE_FOUND_OR_AMBIGUOUS",
+                              "uniqueBusinessValue":  "UNPROVEN",
+                              "recoveryPath":  "UNPROVEN: checksum recorded here, but no approved preservation manifest for this asset yet.",
+                              "DECISION":  "REVIEW"
+                          },
+                          {
+                              "path":  "intelligence/comprehensive_report.json",
+                              "functionalFamily":  "DERIVED_REPORT_CANDIDATE",
+                              "exists":  true,
+                              "bytes":  86711,
+                              "sha256":  "CD829FB597C4C4784D1B8A6747825EA4FF64DBCA0AD141B34A5D16EA109B0646",
+                              "staticReferences":  [
+                                                       {
+                                                           "path":  "canonical\\classification_report_v2.json",
+                                                           "match":  "comprehensive_report.json"
+                                                       },
+                                                       {
+                                                           "path":  "canonical\\docs\\auto-generated\\INDEX.md",
+                                                           "match":  "comprehensive_report.json"
+                                                       },
+                                                       {
+                                                           "path":  "canonical\\final_audit.json",
+                                                           "match":  "comprehensive_report.json"
+                                                       },
+                                                       {
+                                                           "path":  "canonical\\intelligence\\asset_classification_report_v2.json",
+                                                           "match":  "comprehensive_report.json"
+                                                       },
+                                                       {
+                                                           "path":  "canonical\\intelligence\\comprehensive_report.json",
+                                                           "match":  "comprehensive_report.json"
+                                                       },
+                                                       {
+                                                           "path":  "canonical\\KNOWLEDGE-BASE\\AI-INTELLIGENCE-DISCOVERY-REPORT.json",
+                                                           "match":  "comprehensive_report.json"
+                                                       },
+                                                       {
+                                                           "path":  "docs\\auto-generated\\INDEX.md",
+                                                           "match":  "comprehensive_report.json"
+                                                       },
+                                                       {
+                                                           "path":  "docs\\INDEX.md",
+                                                           "match":  "comprehensive_report.json"
+                                                       }
+                                                   ],
+                              "owner":  "UNPROVEN",
+                              "systemOfRecord":  "UNPROVEN",
+                              "canonicalReplacement":  "UNPROVEN",
+                              "activeDependency":  "STATIC_REFERENCE_FOUND_OR_AMBIGUOUS",
+                              "uniqueBusinessValue":  "UNPROVEN",
+                              "recoveryPath":  "UNPROVEN: checksum recorded here, but no approved preservation manifest for this asset yet.",
+                              "DECISION":  "REVIEW"
+                          },
+                          {
+                              "path":  "intelligence/comprehensive_report.md",
+                              "functionalFamily":  "DERIVED_REPORT_CANDIDATE",
+                              "exists":  true,
+                              "bytes":  5929,
+                              "sha256":  "48FB08F036060BFB0D6A4EDACA7F9809CD71737020F65171DED8C63FE70F9AAE",
+                              "staticReferences":  [
+                                                       {
+                                                           "path":  "canonical\\classification_report_v2.json",
+                                                           "match":  "comprehensive_report.md"
+                                                       },
+                                                       {
+                                                           "path":  "canonical\\docs\\auto-generated\\INDEX.md",
+                                                           "match":  "comprehensive_report.md"
+                                                       },
+                                                       {
+                                                           "path":  "canonical\\final_audit.json",
+                                                           "match":  "comprehensive_report.md"
+                                                       },
+                                                       {
+                                                           "path":  "canonical\\intelligence\\asset_classification_report_v2.json",
+                                                           "match":  "comprehensive_report.md"
+                                                       },
+                                                       {
+                                                           "path":  "canonical\\intelligence\\comprehensive_report.json",
+                                                           "match":  "comprehensive_report.md"
+                                                       },
+                                                       {
+                                                           "path":  "canonical\\KNOWLEDGE-BASE\\AI-INTELLIGENCE-DISCOVERY-REPORT.json",
+                                                           "match":  "comprehensive_report.md"
+                                                       },
+                                                       {
+                                                           "path":  "canonical\\system_manifest.json",
+                                                           "match":  "intelligence/comprehensive_report.md"
+                                                       },
+                                                       {
+                                                           "path":  "docs\\auto-generated\\INDEX.md",
+                                                           "match":  "comprehensive_report.md"
+                                                       },
+                                                       {
+                                                           "path":  "docs\\INDEX.md",
+                                                           "match":  "comprehensive_report.md"
+                                                       }
+                                                   ],
+                              "owner":  "UNPROVEN",
+                              "systemOfRecord":  "UNPROVEN",
+                              "canonicalReplacement":  "UNPROVEN",
+                              "activeDependency":  "STATIC_REFERENCE_FOUND_OR_AMBIGUOUS",
+                              "uniqueBusinessValue":  "UNPROVEN",
+                              "recoveryPath":  "UNPROVEN: checksum recorded here, but no approved preservation manifest for this asset yet.",
+                              "DECISION":  "REVIEW"
+                          },
+                          {
+                              "path":  "intelligence/crm-validation-report.json",
+                              "functionalFamily":  "DERIVED_REPORT_CANDIDATE",
+                              "exists":  true,
+                              "bytes":  202,
+                              "sha256":  "7042D22511DBC676F63F24BBC0EFE0565FBECAE40282F7C2FAB292388159844A",
+                              "staticReferences":  [
+                                                       {
+                                                           "path":  "docs\\auto-generated\\INDEX.md",
+                                                           "match":  "crm-validation-report.json"
+                                                       },
+                                                       {
+                                                           "path":  "docs\\INDEX.md",
+                                                           "match":  "crm-validation-report.json"
+                                                       }
+                                                   ],
+                              "owner":  "UNPROVEN",
+                              "systemOfRecord":  "UNPROVEN",
+                              "canonicalReplacement":  "UNPROVEN",
+                              "activeDependency":  "STATIC_REFERENCE_FOUND_OR_AMBIGUOUS",
+                              "uniqueBusinessValue":  "UNPROVEN",
+                              "recoveryPath":  "UNPROVEN: checksum recorded here, but no approved preservation manifest for this asset yet.",
+                              "DECISION":  "REVIEW"
+                          },
+                          {
+                              "path":  "intelligence/customer-validation-report.json",
+                              "functionalFamily":  "DERIVED_REPORT_CANDIDATE",
+                              "exists":  true,
+                              "bytes":  267,
+                              "sha256":  "DCDCAB13DDC4048139D6D2220B2B92A93DD8D48E178B992D10295EBD70EC8230",
+                              "staticReferences":  [
+                                                       {
+                                                           "path":  "docs\\auto-generated\\INDEX.md",
+                                                           "match":  "customer-validation-report.json"
+                                                       },
+                                                       {
+                                                           "path":  "docs\\INDEX.md",
+                                                           "match":  "customer-validation-report.json"
+                                                       }
+                                                   ],
+                              "owner":  "UNPROVEN",
+                              "systemOfRecord":  "UNPROVEN",
+                              "canonicalReplacement":  "UNPROVEN",
+                              "activeDependency":  "STATIC_REFERENCE_FOUND_OR_AMBIGUOUS",
+                              "uniqueBusinessValue":  "UNPROVEN",
+                              "recoveryPath":  "UNPROVEN: checksum recorded here, but no approved preservation manifest for this asset yet.",
+                              "DECISION":  "REVIEW"
+                          },
+                          {
+                              "path":  "intelligence/daily_reports/daily_audit_20260805.json",
+                              "functionalFamily":  "DERIVED_REPORT_CANDIDATE",
+                              "exists":  true,
+                              "bytes":  91648,
+                              "sha256":  "8C14C8438C7CFB44A0EEEEBB5C228EE1E3F9DC0CB7BACDBD768488F6321E347D",
+                              "staticReferences":  [
+                                                       {
+                                                           "path":  "docs\\auto-generated\\INDEX.md",
+                                                           "match":  "daily_audit_20260805.json"
+                                                       },
+                                                       {
+                                                           "path":  "docs\\INDEX.md",
+                                                           "match":  "daily_audit_20260805.json"
+                                                       }
+                                                   ],
+                              "owner":  "UNPROVEN",
+                              "systemOfRecord":  "UNPROVEN",
+                              "canonicalReplacement":  "UNPROVEN",
+                              "activeDependency":  "STATIC_REFERENCE_FOUND_OR_AMBIGUOUS",
+                              "uniqueBusinessValue":  "UNPROVEN",
+                              "recoveryPath":  "UNPROVEN: checksum recorded here, but no approved preservation manifest for this asset yet.",
+                              "DECISION":  "REVIEW"
+                          },
+                          {
+                              "path":  "intelligence/deep_clean_report.json",
+                              "functionalFamily":  "DERIVED_REPORT_CANDIDATE",
+                              "exists":  true,
+                              "bytes":  265,
+                              "sha256":  "E77EEF24D7B033B0E44250BF10B7F3C21D8706268F7DBAA116CE70DA24D32D95",
+                              "staticReferences":  [
+                                                       {
+                                                           "path":  "docs\\auto-generated\\INDEX.md",
+                                                           "match":  "deep_clean_report.json"
+                                                       },
+                                                       {
+                                                           "path":  "docs\\INDEX.md",
+                                                           "match":  "deep_clean_report.json"
+                                                       }
+                                                   ],
+                              "owner":  "UNPROVEN",
+                              "systemOfRecord":  "UNPROVEN",
+                              "canonicalReplacement":  "UNPROVEN",
+                              "activeDependency":  "STATIC_REFERENCE_FOUND_OR_AMBIGUOUS",
+                              "uniqueBusinessValue":  "UNPROVEN",
+                              "recoveryPath":  "UNPROVEN: checksum recorded here, but no approved preservation manifest for this asset yet.",
+                              "DECISION":  "REVIEW"
+                          },
+                          {
+                              "path":  "intelligence/deep_packaging_audit_report.json",
+                              "functionalFamily":  "DERIVED_REPORT_CANDIDATE",
+                              "exists":  true,
+                              "bytes":  24912,
+                              "sha256":  "382F738F420D1B2A5AFBB4851F12516E69ACDF564020848ED8FB42DE27421904",
+                              "staticReferences":  [
+                                                       {
+                                                           "path":  "docs\\INDEX.md",
+                                                           "match":  "deep_packaging_audit_report.json"
+                                                       }
+                                                   ],
+                              "owner":  "UNPROVEN",
+                              "systemOfRecord":  "UNPROVEN",
+                              "canonicalReplacement":  "UNPROVEN",
+                              "activeDependency":  "NO_STATIC_REFERENCE_FOUND_NOT_RUNTIME_PROOF",
+                              "uniqueBusinessValue":  "UNPROVEN",
+                              "recoveryPath":  "UNPROVEN: checksum recorded here, but no approved preservation manifest for this asset yet.",
+                              "DECISION":  "REVIEW"
+                          },
+                          {
+                              "path":  "intelligence/eos-final-enterprise-blueprint-package-v1.json",
+                              "functionalFamily":  "DERIVED_REPORT_CANDIDATE",
+                              "exists":  true,
+                              "bytes":  942,
+                              "sha256":  "6AC9C84A715E557DC76A485C9E76729921D4483CFD04378DA5E6CCAC9987EA94",
+                              "staticReferences":  [
+                                                       {
+                                                           "path":  "canonical\\classification_report_v2.json",
+                                                           "match":  "eos-final-enterprise-blueprint-package-v1.json"
+                                                       },
+                                                       {
+                                                           "path":  "canonical\\data\\packaging-gels-registry-v1.json",
+                                                           "match":  "eos-final-enterprise-blueprint-package-v1.json"
+                                                       },
+                                                       {
+                                                           "path":  "canonical\\docs\\auto-generated\\INDEX.md",
+                                                           "match":  "eos-final-enterprise-blueprint-package-v1.json"
+                                                       },
+                                                       {
+                                                           "path":  "canonical\\governance\\eos-deep-asset-discovery-v1.json",
+                                                           "match":  "eos-final-enterprise-blueprint-package-v1.json"
+                                                       },
+                                                       {
+                                                           "path":  "canonical\\governance\\keep-assets-files-v1.json",
+                                                           "match":  "eos-final-enterprise-blueprint-package-v1.json"
+                                                       },
+                                                       {
+                                                           "path":  "canonical\\intelligence\\asset_classification_report_v2.json",
+                                                           "match":  "eos-final-enterprise-blueprint-package-v1.json"
+                                                       },
+                                                       {
+                                                           "path":  "canonical\\KNOWLEDGE-BASE\\AI-INTELLIGENCE-DISCOVERY-REPORT.json",
+                                                           "match":  "eos-final-enterprise-blueprint-package-v1.json"
+                                                       },
+                                                       {
+                                                           "path":  "canonical\\legacy-data\\product-asset-link-map-v1.json",
+                                                           "match":  "eos-final-enterprise-blueprint-package-v1.json"
+                                                       },
+                                                       {
+                                                           "path":  "docs\\auto-generated\\INDEX.md",
+                                                           "match":  "eos-final-enterprise-blueprint-package-v1.json"
+                                                       },
+                                                       {
+                                                           "path":  "docs\\INDEX.md",
+                                                           "match":  "eos-final-enterprise-blueprint-package-v1.json"
+                                                       }
+                                                   ],
+                              "owner":  "UNPROVEN",
+                              "systemOfRecord":  "UNPROVEN",
+                              "canonicalReplacement":  "UNPROVEN",
+                              "activeDependency":  "STATIC_REFERENCE_FOUND_OR_AMBIGUOUS",
+                              "uniqueBusinessValue":  "UNPROVEN",
+                              "recoveryPath":  "UNPROVEN: checksum recorded here, but no approved preservation manifest for this asset yet.",
+                              "DECISION":  "REVIEW"
+                          },
+                          {
+                              "path":  "intelligence/finance-validation-report.json",
+                              "functionalFamily":  "DERIVED_REPORT_CANDIDATE",
+                              "exists":  true,
+                              "bytes":  170,
+                              "sha256":  "78B2A419894F0C04460EA80CA83CE1E11352CABC53C7A057D57C7161CDD5013B",
+                              "staticReferences":  [
+                                                       {
+                                                           "path":  "docs\\auto-generated\\INDEX.md",
+                                                           "match":  "finance-validation-report.json"
+                                                       },
+                                                       {
+                                                           "path":  "docs\\INDEX.md",
+                                                           "match":  "finance-validation-report.json"
+                                                       }
+                                                   ],
+                              "owner":  "UNPROVEN",
+                              "systemOfRecord":  "UNPROVEN",
+                              "canonicalReplacement":  "UNPROVEN",
+                              "activeDependency":  "STATIC_REFERENCE_FOUND_OR_AMBIGUOUS",
+                              "uniqueBusinessValue":  "UNPROVEN",
+                              "recoveryPath":  "UNPROVEN: checksum recorded here, but no approved preservation manifest for this asset yet.",
+                              "DECISION":  "REVIEW"
+                          },
+                          {
+                              "path":  "intelligence/gels-validation-report.json",
+                              "functionalFamily":  "DERIVED_REPORT_CANDIDATE",
+                              "exists":  true,
+                              "bytes":  10678,
+                              "sha256":  "7F1AD4FC090D59521E8211F4FBBE9E4B69334D54ECA337553CE45049D3ECFCFF",
+                              "staticReferences":  [
+                                                       {
+                                                           "path":  "docs\\auto-generated\\INDEX.md",
+                                                           "match":  "gels-validation-report.json"
+                                                       },
+                                                       {
+                                                           "path":  "docs\\INDEX.md",
+                                                           "match":  "gels-validation-report.json"
+                                                       }
+                                                   ],
+                              "owner":  "UNPROVEN",
+                              "systemOfRecord":  "UNPROVEN",
+                              "canonicalReplacement":  "UNPROVEN",
+                              "activeDependency":  "STATIC_REFERENCE_FOUND_OR_AMBIGUOUS",
+                              "uniqueBusinessValue":  "UNPROVEN",
+                              "recoveryPath":  "UNPROVEN: checksum recorded here, but no approved preservation manifest for this asset yet.",
+                              "DECISION":  "REVIEW"
+                          },
+                          {
+                              "path":  "intelligence/intelligence/reporting/index.ts",
+                              "functionalFamily":  "DERIVED_REPORT_CANDIDATE",
+                              "exists":  true,
+                              "bytes":  0,
+                              "sha256":  "E3B0C44298FC1C149AFBF4C8996FB92427AE41E4649B934CA495991B7852B855",
+                              "staticReferences":  [
+                                                       {
+                                                           "path":  "canonical\\classification_report_v2.json",
+                                                           "match":  "index.ts"
+                                                       },
+                                                       {
+                                                           "path":  "canonical\\cleanup_report.json",
+                                                           "match":  "index.ts"
+                                                       },
+                                                       {
+                                                           "path":  "canonical\\docs\\auto-generated\\INDEX.md",
+                                                           "match":  "index.ts"
+                                                       },
+                                                       {
+                                                           "path":  "canonical\\final_audit.json",
+                                                           "match":  "index.ts"
+                                                       },
+                                                       {
+                                                           "path":  "canonical\\governance\\keep-core-files-v1.json",
+                                                           "match":  "index.ts"
+                                                       },
+                                                       {
+                                                           "path":  "canonical\\governance\\review-required-files-v1.json",
+                                                           "match":  "index.ts"
+                                                       },
+                                                       {
+                                                           "path":  "canonical\\intelligence\\asset_classification_report_v2.json",
+                                                           "match":  "index.ts"
+                                                       },
+                                                       {
+                                                           "path":  "canonical\\intelligence\\cleanup_report.json",
+                                                           "match":  "index.ts"
+                                                       },
+                                                       {
+                                                           "path":  "canonical\\intelligence\\comprehensive_report.json",
+                                                           "match":  "index.ts"
+                                                       },
+                                                       {
+                                                           "path":  "canonical\\intelligence\\eos-business-contract-discovery.json",
+                                                           "match":  "index.ts"
+                                                       },
+                                                       {
+                                                           "path":  "canonical\\intelligence\\eos-execution-truth-map.json",
+                                                           "match":  "index.ts"
+                                                       },
+                                                       {
+                                                           "path":  "canonical\\intelligence\\eos-intelligent-domain-ownership-graph.json",
+                                                           "match":  "index.ts"
+                                                       },
+                                                       {
+                                                           "path":  "canonical\\intelligence\\eos-real-execution-path-map.json",
+                                                           "match":  "index.ts"
+                                                       },
+                                                       {
+                                                           "path":  "canonical\\KNOWLEDGE-BASE\\AI-INTELLIGENCE-DISCOVERY-REPORT.json",
+                                                           "match":  "index.ts"
+                                                       },
+                                                       {
+                                                           "path":  "docs\\auto-generated\\INDEX.md",
+                                                           "match":  "index.ts"
+                                                       },
+                                                       {
+                                                           "path":  "docs\\INDEX.md",
+                                                           "match":  "index.ts"
+                                                       },
+                                                       {
+                                                           "path":  "scripts\\legacy-health.cjs",
+                                                           "match":  "index.ts"
+                                                       }
+                                                   ],
+                              "owner":  "UNPROVEN",
+                              "systemOfRecord":  "UNPROVEN",
+                              "canonicalReplacement":  "UNPROVEN",
+                              "activeDependency":  "STATIC_REFERENCE_FOUND_OR_AMBIGUOUS",
+                              "uniqueBusinessValue":  "UNPROVEN",
+                              "recoveryPath":  "UNPROVEN: checksum recorded here, but no approved preservation manifest for this asset yet.",
+                              "DECISION":  "REVIEW"
+                          },
+                          {
+                              "path":  "intelligence/inventory-validation-report.json",
+                              "functionalFamily":  "DERIVED_REPORT_CANDIDATE",
+                              "exists":  true,
+                              "bytes":  203,
+                              "sha256":  "65F79FBFDB346BF0111ED72D49D75CD20DF6BF82C774F155867056C5D862481C",
+                              "staticReferences":  [
+                                                       {
+                                                           "path":  "docs\\auto-generated\\INDEX.md",
+                                                           "match":  "inventory-validation-report.json"
+                                                       },
+                                                       {
+                                                           "path":  "docs\\INDEX.md",
+                                                           "match":  "inventory-validation-report.json"
+                                                       }
+                                                   ],
+                              "owner":  "UNPROVEN",
+                              "systemOfRecord":  "UNPROVEN",
+                              "canonicalReplacement":  "UNPROVEN",
+                              "activeDependency":  "STATIC_REFERENCE_FOUND_OR_AMBIGUOUS",
+                              "uniqueBusinessValue":  "UNPROVEN",
+                              "recoveryPath":  "UNPROVEN: checksum recorded here, but no approved preservation manifest for this asset yet.",
+                              "DECISION":  "REVIEW"
+                          },
+                          {
+                              "path":  "intelligence/knowledge_base/tools_manifest.json",
+                              "functionalFamily":  "DERIVED_REPORT_CANDIDATE",
+                              "exists":  true,
+                              "bytes":  144,
+                              "sha256":  "4FC5069BC4A460CB64EE82390C0923AED0ED4F297C6A450D17A0E322F55DD58A",
+                              "staticReferences":  [
+                                                       {
+                                                           "path":  "canonical\\classification_report_v2.json",
+                                                           "match":  "tools_manifest.json"
+                                                       },
+                                                       {
+                                                           "path":  "canonical\\docs\\auto-generated\\INDEX.md",
+                                                           "match":  "tools_manifest.json"
+                                                       },
+                                                       {
+                                                           "path":  "canonical\\governance\\keep-core-files-v1.json",
+                                                           "match":  "tools_manifest.json"
+                                                       },
+                                                       {
+                                                           "path":  "canonical\\governance\\review-required-files-v1.json",
+                                                           "match":  "tools_manifest.json"
+                                                       },
+                                                       {
+                                                           "path":  "canonical\\intelligence\\asset_classification_report_v2.json",
+                                                           "match":  "tools_manifest.json"
+                                                       },
+                                                       {
+                                                           "path":  "docs\\auto-generated\\INDEX.md",
+                                                           "match":  "tools_manifest.json"
+                                                       },
+                                                       {
+                                                           "path":  "docs\\INDEX.md",
+                                                           "match":  "tools_manifest.json"
+                                                       }
+                                                   ],
+                              "owner":  "UNPROVEN",
+                              "systemOfRecord":  "UNPROVEN",
+                              "canonicalReplacement":  "UNPROVEN",
+                              "activeDependency":  "STATIC_REFERENCE_FOUND_OR_AMBIGUOUS",
+                              "uniqueBusinessValue":  "UNPROVEN",
+                              "recoveryPath":  "UNPROVEN: checksum recorded here, but no approved preservation manifest for this asset yet.",
+                              "DECISION":  "REVIEW"
+                          },
+                          {
+                              "path":  "intelligence/logistics-validation-report.json",
+                              "functionalFamily":  "DERIVED_REPORT_CANDIDATE",
+                              "exists":  true,
+                              "bytes":  254,
+                              "sha256":  "FFD34B552D3776E6BFF338E01F5488F376465E56AB0D76DB3FC06E6BD83FD6A1",
+                              "staticReferences":  [
+                                                       {
+                                                           "path":  "docs\\auto-generated\\INDEX.md",
+                                                           "match":  "logistics-validation-report.json"
+                                                       },
+                                                       {
+                                                           "path":  "docs\\INDEX.md",
+                                                           "match":  "logistics-validation-report.json"
+                                                       }
+                                                   ],
+                              "owner":  "UNPROVEN",
+                              "systemOfRecord":  "UNPROVEN",
+                              "canonicalReplacement":  "UNPROVEN",
+                              "activeDependency":  "STATIC_REFERENCE_FOUND_OR_AMBIGUOUS",
+                              "uniqueBusinessValue":  "UNPROVEN",
+                              "recoveryPath":  "UNPROVEN: checksum recorded here, but no approved preservation manifest for this asset yet.",
+                              "DECISION":  "REVIEW"
+                          },
+                          {
+                              "path":  "intelligence/master-data-integrity-report.json",
+                              "functionalFamily":  "DERIVED_REPORT_CANDIDATE",
+                              "exists":  true,
+                              "bytes":  91339,
+                              "sha256":  "A3BEC40A73ED04BC29C5F56A4363A6FC2A35E11FD3358DBF5704D0E65599EF8F",
+                              "staticReferences":  [
+                                                       {
+                                                           "path":  "docs\\auto-generated\\INDEX.md",
+                                                           "match":  "master-data-integrity-report.json"
+                                                       },
+                                                       {
+                                                           "path":  "docs\\INDEX.md",
+                                                           "match":  "master-data-integrity-report.json"
+                                                       }
+                                                   ],
+                              "owner":  "UNPROVEN",
+                              "systemOfRecord":  "UNPROVEN",
+                              "canonicalReplacement":  "UNPROVEN",
+                              "activeDependency":  "STATIC_REFERENCE_FOUND_OR_AMBIGUOUS",
+                              "uniqueBusinessValue":  "UNPROVEN",
+                              "recoveryPath":  "UNPROVEN: checksum recorded here, but no approved preservation manifest for this asset yet.",
+                              "DECISION":  "REVIEW"
+                          },
+                          {
+                              "path":  "intelligence/supplier-validation-report.json",
+                              "functionalFamily":  "DERIVED_REPORT_CANDIDATE",
+                              "exists":  true,
+                              "bytes":  194,
+                              "sha256":  "97ACD099E0A5E0520170E86923BB0371FDED8A3069A191B22BD37ECA43FF6F3A",
+                              "staticReferences":  [
+                                                       {
+                                                           "path":  "docs\\auto-generated\\INDEX.md",
+                                                           "match":  "supplier-validation-report.json"
+                                                       },
+                                                       {
+                                                           "path":  "docs\\INDEX.md",
+                                                           "match":  "supplier-validation-report.json"
+                                                       }
+                                                   ],
+                              "owner":  "UNPROVEN",
+                              "systemOfRecord":  "UNPROVEN",
+                              "canonicalReplacement":  "UNPROVEN",
+                              "activeDependency":  "STATIC_REFERENCE_FOUND_OR_AMBIGUOUS",
+                              "uniqueBusinessValue":  "UNPROVEN",
+                              "recoveryPath":  "UNPROVEN: checksum recorded here, but no approved preservation manifest for this asset yet.",
+                              "DECISION":  "REVIEW"
+                          },
+                          {
+                              "path":  "project_tree.txt",
+                              "functionalFamily":  "DERIVED_REPORT_OR_BUNDLE",
+                              "exists":  true,
+                              "bytes":  1776750,
+                              "sha256":  "E2EA77C868A77D47AE3D01AFB89547F1A90F3BE3DA772750B4627516B8D70D79",
+                              "staticReferences":  [
+                                                       {
+                                                           "path":  "canonical\\governance\\review-required-files-v1.json",
+                                                           "match":  "project_tree.txt"
+                                                       }
+                                                   ],
+                              "owner":  "UNPROVEN",
+                              "systemOfRecord":  "UNPROVEN",
+                              "canonicalReplacement":  "UNPROVEN",
+                              "activeDependency":  "NO_STATIC_REFERENCE_FOUND_NOT_RUNTIME_PROOF",
+                              "uniqueBusinessValue":  "UNPROVEN",
+                              "recoveryPath":  "UNPROVEN: checksum recorded here, but no approved preservation manifest for this asset yet.",
+                              "DECISION":  "REVIEW"
+                          },
+                          {
+                              "path":  "run_full_audit.ps1",
+                              "functionalFamily":  "DERIVED_REPORT_CANDIDATE",
+                              "exists":  true,
+                              "bytes":  1340,
+                              "sha256":  "2DB2AECFD6456EB328A51C0B5168FBF4D10272E5DDCF8507BDE22F75D728F3EA",
+                              "staticReferences":  [
+
+                                                   ],
+                              "owner":  "UNPROVEN",
+                              "systemOfRecord":  "UNPROVEN",
+                              "canonicalReplacement":  "UNPROVEN",
+                              "activeDependency":  "NO_STATIC_REFERENCE_FOUND_NOT_RUNTIME_PROOF",
+                              "uniqueBusinessValue":  "UNPROVEN",
+                              "recoveryPath":  "UNPROVEN: checksum recorded here, but no approved preservation manifest for this asset yet.",
+                              "DECISION":  "REVIEW"
+                          },
+                          {
+                              "path":  "system_manifest.json",
+                              "functionalFamily":  "DERIVED_REPORT_OR_BUNDLE",
+                              "exists":  true,
+                              "bytes":  3368,
+                              "sha256":  "F970F518574A09401AD9B1F83C4D858CD7EF1F3A3A6414C20D0638D381929EE4",
+                              "staticReferences":  [
+                                                       {
+                                                           "path":  "canonical\\classification_report_v2.json",
+                                                           "match":  "system_manifest.json"
+                                                       },
+                                                       {
+                                                           "path":  "canonical\\docs\\auto-generated\\INDEX.md",
+                                                           "match":  "system_manifest.json"
+                                                       },
+                                                       {
+                                                           "path":  "canonical\\final_audit.json",
+                                                           "match":  "system_manifest.json"
+                                                       },
+                                                       {
+                                                           "path":  "canonical\\intelligence\\asset_classification_report_v2.json",
+                                                           "match":  "system_manifest.json"
+                                                       },
+                                                       {
+                                                           "path":  "canonical\\intelligence\\comprehensive_report.json",
+                                                           "match":  "system_manifest.json"
+                                                       },
+                                                       {
+                                                           "path":  "docs\\auto-generated\\INDEX.md",
+                                                           "match":  "system_manifest.json"
+                                                       },
+                                                       {
+                                                           "path":  "docs\\INDEX.md",
+                                                           "match":  "system_manifest.json"
+                                                       }
+                                                   ],
+                              "owner":  "UNPROVEN",
+                              "systemOfRecord":  "UNPROVEN",
+                              "canonicalReplacement":  "UNPROVEN",
+                              "activeDependency":  "STATIC_REFERENCE_FOUND_OR_AMBIGUOUS",
+                              "uniqueBusinessValue":  "UNPROVEN",
+                              "recoveryPath":  "UNPROVEN: checksum recorded here, but no approved preservation manifest for this asset yet.",
+                              "DECISION":  "REVIEW"
+                          },
+                          {
+                              "path":  "unified-intelligence-restore-5946c6bc.zip",
+                              "functionalFamily":  "DERIVED_REPORT_OR_BUNDLE",
+                              "exists":  true,
+                              "bytes":  3355639,
+                              "sha256":  "354461E14DB4DDD092338CB167288A30C54700914D88127EC21CB7BEA3A59D2A",
+                              "staticReferences":  [
+
+                                                   ],
+                              "owner":  "UNPROVEN",
+                              "systemOfRecord":  "UNPROVEN",
+                              "canonicalReplacement":  "UNPROVEN",
+                              "activeDependency":  "NO_STATIC_REFERENCE_FOUND_NOT_RUNTIME_PROOF",
+                              "uniqueBusinessValue":  "UNPROVEN",
+                              "recoveryPath":  "UNPROVEN: checksum recorded here, but no approved preservation manifest for this asset yet.",
+                              "DECISION":  "REVIEW"
+                          }
+                      ],
+    "summary":  {
+                    "aliasGroups":  4,
+                    "aliasesUnified":  0,
+                    "aliasesReview":  4,
+                    "archiveCandidateAssetsOutsideArchive":  57,
+                    "archiveGroups":  2,
+                    "archiveGroupsApproved":  0,
+                    "archiveAssetsReview":  57,
+                    "alreadyInArchiveKeep":  497,
+                    "unresolved":  [
+                                       "All four command-family operational owners",
+                                       "External caller inventory for all aliases",
+                                       "Per-asset canonical replacement/SOR/recovery manifest for archive candidates"
+                                   ],
+                    "packageChanged":  false,
+                    "assetsMoved":  0,
+                    "assetsDeleted":  0
+                }
+}

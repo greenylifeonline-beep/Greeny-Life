@@ -1,0 +1,151 @@
+{
+    "schema_version":  "supplier-master-v1",
+    "generated_at":  "2026-08-13T18:10:35.3580045Z",
+    "total_suppliers":  5,
+    "suppliers":  [
+                      {
+                          "supplier_id":  "SUP-EGY-HONEY-001",
+                          "name":  "Nile Valley Honey Co.",
+                          "category":  [
+                                           "Honey"
+                                       ],
+                          "country":  "Egypt",
+                          "city":  "Cairo",
+                          "contact":  {
+                                          "email":  "info@nilevalleyhoney.com",
+                                          "phone":  "+20 2 1234 5678",
+                                          "website":  "https://nilevalleyhoney.com"
+                                      },
+                          "capabilities":  {
+                                               "production":  true,
+                                               "private_label":  true,
+                                               "export_ready":  true
+                                           },
+                          "certifications":  [
+                                                 "HACCP",
+                                                 "ISO 22000",
+                                                 "GMP"
+                                             ],
+                          "quality":  {
+                                          "rating":  null,
+                                          "audit_status":  "pending"
+                                      },
+                          "status":  "active"
+                      },
+                      {
+                          "supplier_id":  "SUP-EGY-SPICE-001",
+                          "name":  "Sinai Spice Mills",
+                          "category":  [
+                                           "Spices"
+                                       ],
+                          "country":  "Egypt",
+                          "city":  "Alexandria",
+                          "contact":  {
+                                          "email":  "info@sinaispice.com",
+                                          "phone":  "+20 3 9876 5432",
+                                          "website":  "https://sinaispice.com"
+                                      },
+                          "capabilities":  {
+                                               "production":  true,
+                                               "private_label":  true,
+                                               "export_ready":  false
+                                           },
+                          "certifications":  [
+                                                 "HACCP",
+                                                 "ISO 22000",
+                                                 "GMP",
+                                                 "Organic"
+                                             ],
+                          "quality":  {
+                                          "rating":  null,
+                                          "audit_status":  "pending"
+                                      },
+                          "status":  "candidate"
+                      },
+                      {
+                          "supplier_id":  "SUP-EGY-BEE-001",
+                          "name":  "Green Valley Bee Products",
+                          "category":  [
+                                           "Bee Products"
+                                       ],
+                          "country":  "Egypt",
+                          "city":  "Fayoum",
+                          "contact":  {
+                                          "email":  "info@greenvalleybee.com",
+                                          "phone":  "+20 4 5678 9012",
+                                          "website":  "https://greenvalleybee.com"
+                                      },
+                          "capabilities":  {
+                                               "production":  true,
+                                               "private_label":  false,
+                                               "export_ready":  true
+                                           },
+                          "certifications":  [
+                                                 "HACCP",
+                                                 "ISO 22000",
+                                                 "GMP"
+                                             ],
+                          "quality":  {
+                                          "rating":  null,
+                                          "audit_status":  "pending"
+                                      },
+                          "status":  "candidate"
+                      },
+                      {
+                          "supplier_id":  "SUP-EGY-OIL-001",
+                          "name":  "Green Valley Herbs \u0026 Oils",
+                          "category":  [
+                                           "Natural Oils"
+                                       ],
+                          "country":  "Egypt",
+                          "city":  "Fayoum",
+                          "contact":  {
+                                          "email":  "info@greenvalleyoil.com",
+                                          "phone":  "+20 4 5678 9013",
+                                          "website":  "https://greenvalleyoil.com"
+                                      },
+                          "capabilities":  {
+                                               "production":  true,
+                                               "private_label":  true,
+                                               "export_ready":  true
+                                           },
+                          "certifications":  [
+                                                 "HACCP",
+                                                 "ISO 22000",
+                                                 "GMP"
+                                             ],
+                          "quality":  {
+                                          "rating":  null,
+                                          "audit_status":  "pending"
+                                      },
+                          "status":  "candidate"
+                      },
+                      {
+                          "supplier_id":  "SUP-EGY-HERBS-PENDING-001",
+                          "name":  "H004 Herbs Supplier - Pending Verification",
+                          "category":  [
+                                           "Herbs"
+                                       ],
+                          "country":  "Egypt",
+                          "city":  "UNKNOWN",
+                          "contact":  {
+                                          "email":  null,
+                                          "phone":  null,
+                                          "website":  null
+                                      },
+                          "capabilities":  {
+                                               "production":  false,
+                                               "private_label":  false,
+                                               "export_ready":  false
+                                           },
+                          "certifications":  [
+
+                                             ],
+                          "quality":  {
+                                          "rating":  null,
+                                          "audit_status":  "requires_verification"
+                                      },
+                          "status":  "pending_verification"
+                      }
+                  ]
+}

@@ -1,0 +1,42 @@
+[
+    {
+        "API":  "\\app\\api\\products\\route.ts",
+        "Size":  1679,
+        "Lines":  58,
+        "UsesPrisma":  true,
+        "UsesApplication":  false,
+        "UsesWorkflow":  false,
+        "UsesDomain":  true,
+        "Methods":  "import { NextRequest, NextResponse } from \"next/server\";\nimport { PrismaClient } from \"@prisma/client\";\n\nconst prisma = new PrismaClient();\n\n// GET: ??? ????? ????????\nexport async function GET(request: NextRequest) {\n  try {\n    const { searchParams } = new URL(request.url);\n    const categoryId = searchParams.get(\"categoryId\");\n\n    const products = await prisma.product.findMany({\n      where: categoryId ? { categoryId } : {},\n      include: {\n        category: true,\n        supplier: true,\n        packagingProfile: true,\n      },\n      orderBy: { createdAt: \"desc\" },\n    });\n\n    return NextResponse.json({ success: true, count: products.length, data: products });\n  } catch (error) {\n    return NextResponse.json(\n      { success: false, error: \"Failed to fetch products\", details: (error as Error).message },\n      { status: 500 }\n    );\n  }\n}\n\n// POST: ????? ???? ????\nexport async function POST(request: NextRequest) {\n  try {\n    const body = await request.json();\n    const { productId, sku, nameAr, nameEn, hsCode, unitPriceUSD, categoryId, supplierId, packagingProfileId } = body;\n\n    const newProduct = await prisma.product.create({\n      data: {\n        productId,\n        sku,\n        nameAr,\n        nameEn,\n        hsCode,\n        unitPriceUSD: parseFloat(unitPriceUSD),\n        categoryId,\n        supplierId,\n        packagingProfileId,\n      },\n    });\n\n    return NextResponse.json({ success: true, data: newProduct }, { status: 201 });\n  } catch (error) {\n    return NextResponse.json(\n      { success: false, error: \"Failed to create product\", details: (error as Error).message },\n      { status: 400 }\n    );\n  }\n}"
+    },
+    {
+        "API":  "\\app\\api\\sales-orders\\route.ts",
+        "Size":  1879,
+        "Lines":  67,
+        "UsesPrisma":  true,
+        "UsesApplication":  false,
+        "UsesWorkflow":  false,
+        "UsesDomain":  true,
+        "Methods":  "import { NextRequest, NextResponse } from \"next/server\";\nimport { PrismaClient } from \"@prisma/client\";\n\nconst prisma = new PrismaClient();\n\n// GET: ??? ????? ?????\nexport async function GET() {\n  try {\n    const orders = await prisma.salesOrder.findMany({\n      include: {\n        customer: true,\n        market: true,\n        items: {\n          include: { product: true },\n        },\n      },\n      orderBy: { createdAt: \"desc\" },\n    });\n\n    return NextResponse.json({ success: true, count: orders.length, data: orders });\n  } catch (error) {\n    return NextResponse.json(\n      { success: false, error: \"Failed to fetch sales orders\", details: (error as Error).message },\n      { status: 500 }\n    );\n  }\n}\n\n// POST: ????? ??? ??? ????\nexport async function POST(request: NextRequest) {\n  try {\n    const body = await request.json();\n    const { orderId, customerId, marketId, items } = body;\n\n    let totalAmountUSD = 0;\n    const orderItemsData = items.map((item: { productId: string; quantity: number; unitPriceUSD: number }) =\u003e {\n      totalAmountUSD += item.quantity * item.unitPriceUSD;\n      return {\n        productId: item.productId,\n        quantity: item.quantity,\n        unitPriceUSD: item.unitPriceUSD,\n      };\n    });\n\n    const newOrder = await prisma.$transaction(async (tx) =\u003e {\n      return await tx.salesOrder.create({\n        data: {\n          orderId,\n          customerId,\n          marketId,\n          totalAmountUSD,\n          items: {\n            create: orderItemsData,\n          },\n        },\n        include: { items: true },\n      });\n    });\n\n    return NextResponse.json({ success: true, data: newOrder }, { status: 201 });\n  } catch (error) {\n    return NextResponse.json(\n      { success: false, error: \"Failed to create sales order\", details: (error as Error).message },\n      { status: 400 }\n    );\n  }\n}"
+    },
+    {
+        "API":  "\\app\\api\\suppliers\\route.ts",
+        "Size":  1471,
+        "Lines":  48,
+        "UsesPrisma":  true,
+        "UsesApplication":  false,
+        "UsesWorkflow":  false,
+        "UsesDomain":  true,
+        "Methods":  "import { NextRequest, NextResponse } from \"next/server\";\nimport { PrismaClient } from \"@prisma/client\";\n\nconst prisma = new PrismaClient();\n\n// GET: ??? ????? ????????\nexport async function GET() {\n  try {\n    const suppliers = await prisma.supplier.findMany({\n      include: { products: true },\n      orderBy: { createdAt: \"desc\" },\n    });\n\n    return NextResponse.json({ success: true, count: suppliers.length, data: suppliers });\n  } catch (error) {\n    return NextResponse.json(\n      { success: false, error: \"Failed to fetch suppliers\", details: (error as Error).message },\n      { status: 500 }\n    );\n  }\n}\n\n// POST: ????? ???? ???? ????? ???????\nexport async function POST(request: NextRequest) {\n  try {\n    const body = await request.json();\n    const { supplierId, nameAr, nameEn, contactPerson, email, phone, country } = body;\n\n    const newSupplier = await prisma.supplier.create({\n      data: {\n        supplierId,\n        nameAr,\n        nameEn,\n        contactPerson,\n        email,\n        phone,\n        country: country || \"Egypt\", // ?????? ???????: ?????? ????? ??????? ????????\n      },\n    });\n\n    return NextResponse.json({ success: true, data: newSupplier }, { status: 201 });\n  } catch (error) {\n    return NextResponse.json(\n      { success: false, error: \"Failed to create supplier\", details: (error as Error).message },\n      { status: 400 }\n    );\n  }\n}"
+    },
+    {
+        "API":  "\\app\\api\\workflow\\route.ts",
+        "Size":  1971,
+        "Lines":  55,
+        "UsesPrisma":  false,
+        "UsesApplication":  false,
+        "UsesWorkflow":  true,
+        "UsesDomain":  true,
+        "Methods":  "import { NextRequest, NextResponse } from \"next/server\";\nimport { EOSWorkflowEngine, OrderWorkflowState } from \"@/lib/workflowEngine\";\n\n// POST: ????? ???? ????? ???? ?????\nexport async function POST(request: NextRequest) {\n  try {\n    const body = await request.json();\n    const { orderId, targetState, userId } = body;\n\n    if (!orderId || !targetState || !userId) {\n      return NextResponse.json(\n        { success: false, error: \"Missing required fields: orderId, targetState, userId\" },\n        { status: 400 }\n      );\n    }\n\n    // ?????? ?? ??? ?????? ???????\n    if (!Object.values(OrderWorkflowState).includes(targetState)) {\n      return NextResponse.json(\n        { success: false, error: \"Invalid target workflow state\" },\n        { status: 400 }\n      );\n    }\n\n    const result = await EOSWorkflowEngine.transitionOrderState(\n      orderId, \n      targetState as OrderWorkflowState, \n      userId\n    );\n\n    return NextResponse.json({ success: true, data: result });\n  } catch (error) {\n    return NextResponse.json(\n      { success: false, error: \"Workflow transition failed\", details: (error as Error).message },\n      { status: 500 }\n    );\n  }\n}\n\n// GET: ???? ???????? ????????? ????????? ????? ?? ????\nexport async function GET(request: NextRequest) {\n  const { searchParams } = new URL(request.url);\n  const qty = parseFloat(searchParams.get(\"qty\") || \"0\");\n  const price = parseFloat(searchParams.get(\"price\") || \"0\");\n  const tariff = parseFloat(searchParams.get(\"tariff\") || \"5\"); // ???? ?????? ??????????\n  const shipping = parseFloat(searchParams.get(\"shipping\") || \"50\"); // ???? ????? ???????\n\n  const calculation = EOSWorkflowEngine.calculateLogisticsCost(qty, price, tariff, shipping);\n\n  return NextResponse.json({\n    success: true,\n    parameters: { qty, price, tariff, shipping },\n    calculation\n  });\n}"
+    }
+]

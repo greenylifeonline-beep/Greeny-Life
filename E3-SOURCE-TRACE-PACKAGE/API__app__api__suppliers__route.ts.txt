@@ -1,0 +1,49 @@
+﻿import { NextRequest, NextResponse } from "next/server";
+import { PrismaClient } from "@prisma/client";
+
+const prisma = new PrismaClient();
+
+// GET: جلب قائمة الموردين
+export async function GET() {
+  try {
+    const suppliers = await prisma.supplier.findMany({
+      include: { products: true },
+      orderBy: { createdAt: "desc" },
+    });
+
+    return NextResponse.json({ success: true, count: suppliers.length, data: suppliers });
+  } catch (error) {
+    return NextResponse.json(
+      { success: false, error: "Failed to fetch suppliers", details: (error as Error).message },
+      { status: 500 }
+    );
+  }
+}
+
+// POST: إضافة مورد جديد لنظام التصدير
+export async function POST(request: NextRequest) {
+  try {
+    const body = await request.json();
+    const { supplierId, nameAr, nameEn, contactPerson, email, phone, country } = body;
+
+    const newSupplier = await prisma.supplier.create({
+      data: {
+        supplierId,
+        nameAr,
+        nameEn,
+        contactPerson,
+        email,
+        phone,
+        country: country || "Egypt", // المبدأ الأساسي: منتجات مصرية للأسواق العالمية
+      },
+    });
+
+    return NextResponse.json({ success: true, data: newSupplier }, { status: 201 });
+  } catch (error) {
+    return NextResponse.json(
+      { success: false, error: "Failed to create supplier", details: (error as Error).message },
+      { status: 400 }
+    );
+  }
+}
+

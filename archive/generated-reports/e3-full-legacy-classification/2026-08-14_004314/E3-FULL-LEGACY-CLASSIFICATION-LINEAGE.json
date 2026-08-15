@@ -1,0 +1,223 @@
+{
+    "report":  "E3 P3 Deep Understanding and Lineage Framework",
+    "generatedAt":  "2026-08-14T00:43:58.8241927+02:00",
+    "mode":  "READ_ONLY_STATIC_UNDERSTANDING",
+    "inputs":  {
+                   "phase2":  "C:\\Users\\Ghanam\\Documents\\Codex\\Greeny-Life-Repair\\archive\\generated-reports\\e3-phase-2-primary-classification\\2026-08-14_003259\\E3-PHASE-2-PRIMARY-LEGACY-CLASSIFICATION.json",
+                   "phase2Manifest":  "C:\\Users\\Ghanam\\Documents\\Codex\\Greeny-Life-Repair\\archive\\generated-reports\\e3-phase-2-primary-classification\\2026-08-14_003259\\E3-PHASE-2-PRIMARY-LEGACY-CLASSIFICATION.csv",
+                   "expected":  50104
+               },
+    "coverageProof":  {
+                          "classifiedInput":  50104,
+                          "p3Records":  50104,
+                          "contentReadErrors":  0,
+                          "unresolvedRoles":  31,
+                          "complete":  true,
+                          "status":  "PASS",
+                          "statement":  "Every Phase 2 record received a P3 state. Grouped records are covered at group level; project/domain candidates receive static content-role analysis when safely readable."
+                      },
+    "functionalFamilies":  [
+                               {
+                                   "family":  "BUSINESS_DOMAIN",
+                                   "assets":  113
+                               },
+                               {
+                                   "family":  "DATA_ARCHITECTURE",
+                                   "assets":  15
+                               },
+                               {
+                                   "family":  "DATA_OR_CONFIGURATION",
+                                   "assets":  11
+                               },
+                               {
+                                   "family":  "DECISION_INTELLIGENCE",
+                                   "assets":  121
+                               },
+                               {
+                                   "family":  "DOCUMENTATION_REFERENCE",
+                                   "assets":  9
+                               },
+                               {
+                                   "family":  "ENVIRONMENT_OR_GENERATED_GROUP",
+                                   "assets":  49340
+                               },
+                               {
+                                   "family":  "EVIDENCE_COMPLIANCE",
+                                   "assets":  91
+                               },
+                               {
+                                   "family":  "PRESERVATION_GROUP",
+                                   "assets":  260
+                               },
+                               {
+                                   "family":  "UNRESOLVED_ROLE",
+                                   "assets":  31
+                               },
+                               {
+                                   "family":  "WORKFLOW_GOVERNANCE",
+                                   "assets":  113
+                               }
+                           ],
+    "treatmentCounts":  [
+                            {
+                                "decision":  "REVIEW",
+                                "assets":  49600
+                            },
+                            {
+                                "decision":  "UNKNOWN",
+                                "assets":  504
+                            }
+                        ],
+    "duplicateGroups":  [
+                            {
+                                "sha256":  "396FF2AB253EF41C10DD1F0E1B0507157A1C153B37EE2537760C876636C7F56C",
+                                "paths":  [
+                                              "els_report.json",
+                                              "els_report_final.json"
+                                          ],
+                                "assets":  2,
+                                "decision":  "REVIEW",
+                                "reason":  "Exact content match inside eligible project/domain candidates. Caller/dependency, unique value, canonical replacement, owner/SOR, test and recovery proof remain required."
+                            },
+                            {
+                                "sha256":  "B7EB65CCA1EC39FFEC5CEA106B8CCE5D55F4209AAD1B86DA0ABAB04FD172E12B",
+                                "paths":  [
+                                              "canonical\\KNOWLEDGE-BASE\\KEEP-PACKAGE\\GELS\\gels-normalized-registry-v1.json",
+                                              "canonical\\legacy-data\\gels-normalized-registry-v1.json"
+                                          ],
+                                "assets":  2,
+                                "decision":  "REVIEW",
+                                "reason":  "Exact content match inside eligible project/domain candidates. Caller/dependency, unique value, canonical replacement, owner/SOR, test and recovery proof remain required."
+                            },
+                            {
+                                "sha256":  "E5B431921174B76094587AE6F68A2FF93D60A7A6C74EB10D127E96E3EEAA525B",
+                                "paths":  [
+                                              "canonical\\docs\\legacy_brand.md",
+                                              "canonical\\docs\\migrated_brand.md",
+                                              "canonical\\docs\\architecture\\SYSTEM_ARCHITECTURE.md"
+                                          ],
+                                "assets":  3,
+                                "decision":  "REVIEW",
+                                "reason":  "Exact content match inside eligible project/domain candidates. Caller/dependency, unique value, canonical replacement, owner/SOR, test and recovery proof remain required."
+                            },
+                            {
+                                "sha256":  "27B0B86105698A91C5398498F47060C27ADDFE42B7FD7E08FBFE0D53321EB071",
+                                "paths":  [
+                                              "els_final_confirm.json",
+                                              "els_final_v2.json",
+                                              "els_final_with_business.json",
+                                              "els_report_final_v5.json",
+                                              "els_report_new.json"
+                                          ],
+                                "assets":  5,
+                                "decision":  "REVIEW",
+                                "reason":  "Exact content match inside eligible project/domain candidates. Caller/dependency, unique value, canonical replacement, owner/SOR, test and recovery proof remain required."
+                            },
+                            {
+                                "sha256":  "65ADC9247AE0591ED4B874EA2F4EC8C1816C0DE75C31BB016B85627E38D241E7",
+                                "paths":  [
+                                              "analytics_report.json",
+                                              "analytics_with_business.json"
+                                          ],
+                                "assets":  2,
+                                "decision":  "REVIEW",
+                                "reason":  "Exact content match inside eligible project/domain candidates. Caller/dependency, unique value, canonical replacement, owner/SOR, test and recovery proof remain required."
+                            },
+                            {
+                                "sha256":  "E7390189BAF6DB607C92AA318DC6B7913B102CB95028E6C99062F326E43F29B8",
+                                "paths":  [
+                                              "suppliers_confirm.json",
+                                              "supplier_report_v4.json"
+                                          ],
+                                "assets":  2,
+                                "decision":  "REVIEW",
+                                "reason":  "Exact content match inside eligible project/domain candidates. Caller/dependency, unique value, canonical replacement, owner/SOR, test and recovery proof remain required."
+                            },
+                            {
+                                "sha256":  "30D5766039B0CF36E0C898487388207F4DF1C8216A21A829800396A98C8BBB67",
+                                "paths":  [
+                                              "canonical\\cleanup_report.json",
+                                              "canonical\\intelligence\\cleanup_report.json"
+                                          ],
+                                "assets":  2,
+                                "decision":  "REVIEW",
+                                "reason":  "Exact content match inside eligible project/domain candidates. Caller/dependency, unique value, canonical replacement, owner/SOR, test and recovery proof remain required."
+                            },
+                            {
+                                "sha256":  "8CD94C0B163218968CAD82F7C4C11AC307D2ECC7F805B2B00C76D27606B57765",
+                                "paths":  [
+                                              "els_final.json",
+                                              "els_report_final_v2.json",
+                                              "els_report_final_v4.json"
+                                          ],
+                                "assets":  3,
+                                "decision":  "REVIEW",
+                                "reason":  "Exact content match inside eligible project/domain candidates. Caller/dependency, unique value, canonical replacement, owner/SOR, test and recovery proof remain required."
+                            },
+                            {
+                                "sha256":  "6CCCECA9002B4FCC1654E5BCA0A9A15D5DA713956DE6D744C701C43E65BF6351",
+                                "paths":  [
+                                              "certificate_report_v2.json",
+                                              "certificate_report_v4.json",
+                                              "certs_confirm.json"
+                                          ],
+                                "assets":  3,
+                                "decision":  "REVIEW",
+                                "reason":  "Exact content match inside eligible project/domain candidates. Caller/dependency, unique value, canonical replacement, owner/SOR, test and recovery proof remain required."
+                            },
+                            {
+                                "sha256":  "0391EC483B7D90DEA75EA50E54351D789B21EBD8FCD81C4C9D7BFC4D48AFE6BD",
+                                "paths":  [
+                                              "eos-core\\governance\\guardrails\\.gitignore",
+                                              "guardrails\\.gitignore"
+                                          ],
+                                "assets":  2,
+                                "decision":  "REVIEW",
+                                "reason":  "Exact content match inside eligible project/domain candidates. Caller/dependency, unique value, canonical replacement, owner/SOR, test and recovery proof remain required."
+                            },
+                            {
+                                "sha256":  "7BD3DFEACBFED7B29639A07C3613DEE29C9D23F7FB10D90ACF8FFE6874E4B14E",
+                                "paths":  [
+                                              "supplier_report_v2.json",
+                                              "supplier_report_v3.json"
+                                          ],
+                                "assets":  2,
+                                "decision":  "REVIEW",
+                                "reason":  "Exact content match inside eligible project/domain candidates. Caller/dependency, unique value, canonical replacement, owner/SOR, test and recovery proof remain required."
+                            }
+                        ],
+    "output":  {
+                   "csv":  "C:\\Users\\Ghanam\\Documents\\Codex\\Greeny-Life-Repair\\archive\\generated-reports\\e3-full-legacy-classification\\2026-08-14_004314\\E3-P3-LEGACY-UNDERSTANDING-LINEAGE.csv",
+                   "sha256":  "DE9E7CB80D23BCDDCF4269A70D28DA73F3624BEE38E1768FB9DFDBFACB0C84C6",
+                   "records":  50104
+               },
+    "framework":  {
+                      "extendWhen":  [
+                                         "NEW_ROLE_PATTERN",
+                                         "UNRESOLVED_STATIC_IMPORT",
+                                         "NEW_DATA_FORMAT",
+                                         "NEW_LINEAGE_REQUIREMENT"
+                                     ],
+                      "rule":  "When a gap is observed, trace an existing E3 capability first; extend or harden it with parser/test/proof before continuing. Do not create a parallel scanner or execute Legacy."
+                  },
+    "deferred":  [
+                     "RESOLVED_DEPENDENCY_CALLERS",
+                     "DATA_BUSINESS_LINEAGE",
+                     "ALGORITHM_RULE_VALIDATION",
+                     "CURRENT_EQUIVALENCE_PROOF",
+                     "UNIQUE_CAPABILITY",
+                     "OWNER_SOR",
+                     "VALUE_REPLACEMENT_RECOVERY",
+                     "FINAL_TREATMENT"
+                 ],
+    "prohibitions":  [
+                         "NO_LEGACY_EXECUTION",
+                         "NO_ARCHIVE_OPENING",
+                         "NO_MOVE",
+                         "NO_DELETE",
+                         "NO_MERGE",
+                         "NO_DATABASE_CHANGE",
+                         "NO_GIT_CHANGE",
+                         "NO_CURRENT_CHANGE"
+                     ]
+}

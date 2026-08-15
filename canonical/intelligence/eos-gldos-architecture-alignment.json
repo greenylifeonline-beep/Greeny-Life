@@ -1,0 +1,49 @@
+{
+    "System":  "Greeny-Life",
+    "Architecture":  "Enterprise Operating System (EOS)",
+    "Component":  "GL-DOS",
+    "FullName":  "Greeny-Life Domain Operating System",
+    "Location":  "eos-core\\domains",
+    "Layers":  [
+                   "DOMAIN_ORCHESTRATION",
+                   "BUSINESS_PROCESS_CONTROL",
+                   "WORKFLOW_MANAGEMENT",
+                   "RULE_ENGINE",
+                   "OPERATION_COORDINATION"
+               ],
+    "Responsibilities":  [
+                             "CONNECT_DOMAINS",
+                             "EXECUTE_BUSINESS_FLOWS",
+                             "CONTROL_WORKFLOWS",
+                             "APPLY_BUSINESS_RULES",
+                             "TRACK_OPERATION_STATE"
+                         ],
+    "ConnectedDomains":  [
+                             "PRODUCT",
+                             "SUPPLIER",
+                             "INVENTORY",
+                             "QUALITY",
+                             "LOGISTICS",
+                             "CRM",
+                             "FINANCE",
+                             "COMPLIANCE"
+                         ],
+    "Rules":  [
+                  "DOMAIN_LOGIC_SEPARATED",
+                  "NO_MASTER_DATA_OWNERSHIP",
+                  "NO_DATABASE_OWNERSHIP",
+                  "PROCESS_TRACEABILITY_REQUIRED",
+                  "WORKFLOW_STATE_REQUIRED"
+              ],
+    "Protected":  [
+                      "eos-core",
+                      "services",
+                      "application"
+                  ],
+    "Restrictions":  [
+                         "NO_PROCESS_EXECUTION",
+                         "NO_DOMAIN_MIGRATION",
+                         "ARCHITECTURE_ALIGNMENT_ONLY"
+                     ],
+    "Status":  "EOS_GLDOS_ARCHITECTURE_ALIGNMENT_COMPLETED"
+}

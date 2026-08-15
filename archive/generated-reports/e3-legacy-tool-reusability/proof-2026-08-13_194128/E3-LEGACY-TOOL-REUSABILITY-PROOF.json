@@ -1,0 +1,495 @@
+﻿{
+    "reportType":  "E3_LEGACY_TOOL_REUSABILITY_PROOF_V1",
+    "generatedAtUtc":  "2026-08-13T17:41:28.1331019Z",
+    "mode":  "STATIC_READ_ONLY",
+    "protections":  [
+                        "NO_LEGACY_EXECUTION",
+                        "NO_IMPORT",
+                        "NO_FILE_WRITE",
+                        "NO_DATABASE",
+                        "NO_NETWORK",
+                        "NO_GIT_CHANGE",
+                        "NO_MOVE",
+                        "NO_DELETE"
+                    ],
+    "inputDecisionProof":  "C:\\Users\\Ghanam\\Documents\\Codex\\Greeny-Life-Repair\\archive\\generated-reports\\e3-asset-decision-proof\\decision-2026-08-13_192709\\E3-ASSET-DECISION-PROOF.json",
+    "currentComparisonRoots":  [
+                                   "app",
+                                   "lib",
+                                   "canonical"
+                               ],
+    "records":  [
+                    {
+                        "asset":  "audit_ast_extraction.py",
+                        "status":  "PRESENT",
+                        "symbols":  [
+                                        "__init__",
+                                        "ASTExtractionAudit",
+                                        "audit",
+                                        "count_ast_nodes",
+                                        "load_report",
+                                        "main",
+                                        "parse_source"
+                                    ],
+                        "capabilityTokens":  [
+                                                 "ANALYSIS",
+                                                 "GOVERNANCE"
+                                             ],
+                        "currentMatches":  [
+                                               "System.Collections.Hashtable"
+                                           ],
+                        "currentMatchCount":  2,
+                        "directExecutionProhibited":  true,
+                        "decision":  "REUSE_OR_EXTRACT_CANDIDATE",
+                        "nextAction":  "EXTRACT_READ_ONLY_ALGORITHM_DESIGN_ONLY; DIRECT_EXECUTION_PROHIBITED",
+                        "reason":  "Static declared-symbol and vocabulary comparison only. A match is not functional equivalence; no match is not proof of uniqueness."
+                    },
+                    {
+                        "asset":  "audit_brain_intelligence.py",
+                        "status":  "PRESENT",
+                        "symbols":  [
+                                        "audit"
+                                    ],
+                        "capabilityTokens":  [
+                                                 "ANALYSIS",
+                                                 "GOVERNANCE",
+                                                 "KNOWLEDGE"
+                                             ],
+                        "currentMatches":  [
+                                               "System.Collections.Hashtable"
+                                           ],
+                        "currentMatchCount":  2,
+                        "directExecutionProhibited":  true,
+                        "decision":  "REUSE_OR_EXTRACT_CANDIDATE",
+                        "nextAction":  "EXTRACT_READ_ONLY_ALGORITHM_DESIGN_ONLY; DIRECT_EXECUTION_PROHIBITED",
+                        "reason":  "Static declared-symbol and vocabulary comparison only. A match is not functional equivalence; no match is not proof of uniqueness."
+                    },
+                    {
+                        "asset":  "audit_brain_intelligence_v2.py",
+                        "status":  "PRESENT",
+                        "symbols":  [
+                                        "__init__",
+                                        "analyze",
+                                        "BrainIntelligenceAudit",
+                                        "load_enriched",
+                                        "main"
+                                    ],
+                        "capabilityTokens":  [
+                                                 "ANALYSIS",
+                                                 "GOVERNANCE",
+                                                 "KNOWLEDGE"
+                                             ],
+                        "currentMatches":  [
+                                               "System.Collections.Hashtable"
+                                           ],
+                        "currentMatchCount":  2,
+                        "directExecutionProhibited":  true,
+                        "decision":  "REUSE_OR_EXTRACT_CANDIDATE",
+                        "nextAction":  "EXTRACT_READ_ONLY_ALGORITHM_DESIGN_ONLY; DIRECT_EXECUTION_PROHIBITED",
+                        "reason":  "Static declared-symbol and vocabulary comparison only. A match is not functional equivalence; no match is not proof of uniqueness."
+                    },
+                    {
+                        "asset":  "canonical/fix_brain.py",
+                        "status":  "PRESENT",
+                        "symbols":  [
+
+                                    ],
+                        "capabilityTokens":  [
+                                                 "KNOWLEDGE",
+                                                 "REPAIR"
+                                             ],
+                        "currentMatches":  [
+                                               "System.Collections.Hashtable"
+                                           ],
+                        "currentMatchCount":  2,
+                        "directExecutionProhibited":  true,
+                        "decision":  "REUSE_OR_EXTRACT_CANDIDATE",
+                        "nextAction":  "EXTRACT_READ_ONLY_ALGORITHM_DESIGN_ONLY; DIRECT_EXECUTION_PROHIBITED",
+                        "reason":  "Static declared-symbol and vocabulary comparison only. A match is not functional equivalence; no match is not proof of uniqueness."
+                    },
+                    {
+                        "asset":  "canonical/fix_indent.py",
+                        "status":  "PRESENT",
+                        "symbols":  [
+
+                                    ],
+                        "capabilityTokens":  [
+                                                 "REPAIR"
+                                             ],
+                        "currentMatches":  [
+                                               "System.Collections.Hashtable"
+                                           ],
+                        "currentMatchCount":  2,
+                        "directExecutionProhibited":  true,
+                        "decision":  "REUSE_OR_EXTRACT_CANDIDATE",
+                        "nextAction":  "EXTRACT_READ_ONLY_ALGORITHM_DESIGN_ONLY; DIRECT_EXECUTION_PROHIBITED",
+                        "reason":  "Static declared-symbol and vocabulary comparison only. A match is not functional equivalence; no match is not proof of uniqueness."
+                    },
+                    {
+                        "asset":  "canonical/run_all.ps1",
+                        "status":  "PRESENT",
+                        "symbols":  [
+
+                                    ],
+                        "capabilityTokens":  [
+
+                                             ],
+                        "currentMatches":  [
+                                               "System.Collections.Hashtable"
+                                           ],
+                        "currentMatchCount":  2,
+                        "directExecutionProhibited":  true,
+                        "decision":  "REUSE_OR_EXTRACT_CANDIDATE",
+                        "nextAction":  "EXTRACT_READ_ONLY_ALGORITHM_DESIGN_ONLY; DIRECT_EXECUTION_PROHIBITED",
+                        "reason":  "Static declared-symbol and vocabulary comparison only. A match is not functional equivalence; no match is not proof of uniqueness."
+                    },
+                    {
+                        "asset":  "config.yaml",
+                        "status":  "PRESENT",
+                        "symbols":  [
+
+                                    ],
+                        "capabilityTokens":  [
+
+                                             ],
+                        "currentMatches":  [
+
+                                           ],
+                        "currentMatchCount":  0,
+                        "directExecutionProhibited":  false,
+                        "decision":  "UNKNOWN",
+                        "nextAction":  "MANUAL_DOMAIN_REVIEW_FOR_UNIQUE_LOGIC",
+                        "reason":  "Static declared-symbol and vocabulary comparison only. A match is not functional equivalence; no match is not proof of uniqueness."
+                    },
+                    {
+                        "asset":  "enrich_context.py",
+                        "status":  "PRESENT",
+                        "symbols":  [
+                                        "__init__",
+                                        "_get_ast_path",
+                                        "_get_context",
+                                        "_get_git_info",
+                                        "_get_node_location",
+                                        "_get_normalized_source",
+                                        "_get_stable_fingerprint",
+                                        "ContextEnricher",
+                                        "enrich",
+                                        "main"
+                                    ],
+                        "capabilityTokens":  [
+                                                 "ANALYSIS"
+                                             ],
+                        "currentMatches":  [
+                                               "System.Collections.Hashtable"
+                                           ],
+                        "currentMatchCount":  2,
+                        "directExecutionProhibited":  true,
+                        "decision":  "REUSE_OR_EXTRACT_CANDIDATE",
+                        "nextAction":  "EXTRACT_READ_ONLY_ALGORITHM_DESIGN_ONLY; DIRECT_EXECUTION_PROHIBITED",
+                        "reason":  "Static declared-symbol and vocabulary comparison only. A match is not functional equivalence; no match is not proof of uniqueness."
+                    },
+                    {
+                        "asset":  "enrich_context_fixed.py",
+                        "status":  "PRESENT",
+                        "symbols":  [
+                                        "__init__",
+                                        "_get_ast_path",
+                                        "_get_context",
+                                        "_get_git_info",
+                                        "_get_node_location",
+                                        "_get_normalized_source",
+                                        "_get_stable_fingerprint",
+                                        "ContextEnricherV2",
+                                        "enrich",
+                                        "main"
+                                    ],
+                        "capabilityTokens":  [
+                                                 "ANALYSIS",
+                                                 "REPAIR"
+                                             ],
+                        "currentMatches":  [
+                                               "System.Collections.Hashtable"
+                                           ],
+                        "currentMatchCount":  2,
+                        "directExecutionProhibited":  true,
+                        "decision":  "REUSE_OR_EXTRACT_CANDIDATE",
+                        "nextAction":  "EXTRACT_READ_ONLY_ALGORITHM_DESIGN_ONLY; DIRECT_EXECUTION_PROHIBITED",
+                        "reason":  "Static declared-symbol and vocabulary comparison only. A match is not functional equivalence; no match is not proof of uniqueness."
+                    },
+                    {
+                        "asset":  "fix_brain.py",
+                        "status":  "PRESENT",
+                        "symbols":  [
+
+                                    ],
+                        "capabilityTokens":  [
+                                                 "KNOWLEDGE",
+                                                 "REPAIR"
+                                             ],
+                        "currentMatches":  [
+                                               "System.Collections.Hashtable"
+                                           ],
+                        "currentMatchCount":  2,
+                        "directExecutionProhibited":  true,
+                        "decision":  "REUSE_OR_EXTRACT_CANDIDATE",
+                        "nextAction":  "EXTRACT_READ_ONLY_ALGORITHM_DESIGN_ONLY; DIRECT_EXECUTION_PROHIBITED",
+                        "reason":  "Static declared-symbol and vocabulary comparison only. A match is not functional equivalence; no match is not proof of uniqueness."
+                    },
+                    {
+                        "asset":  "phase1_repair.py",
+                        "status":  "PRESENT",
+                        "symbols":  [
+                                        "EvidenceGateTests",
+                                        "EvidenceType",
+                                        "search",
+                                        "test_missing_evidence_blocks_export_twice"
+                                    ],
+                        "capabilityTokens":  [
+                                                 "REPAIR",
+                                                 "TESTING"
+                                             ],
+                        "currentMatches":  [
+                                               "System.Collections.Hashtable"
+                                           ],
+                        "currentMatchCount":  2,
+                        "directExecutionProhibited":  true,
+                        "decision":  "REUSE_OR_EXTRACT_CANDIDATE",
+                        "nextAction":  "EXTRACT_READ_ONLY_ALGORITHM_DESIGN_ONLY; DIRECT_EXECUTION_PROHIBITED",
+                        "reason":  "Static declared-symbol and vocabulary comparison only. A match is not functional equivalence; no match is not proof of uniqueness."
+                    },
+                    {
+                        "asset":  "requirements.txt",
+                        "status":  "PRESENT",
+                        "symbols":  [
+
+                                    ],
+                        "capabilityTokens":  [
+
+                                             ],
+                        "currentMatches":  [
+
+                                           ],
+                        "currentMatchCount":  0,
+                        "directExecutionProhibited":  false,
+                        "decision":  "UNKNOWN",
+                        "nextAction":  "MANUAL_DOMAIN_REVIEW_FOR_UNIQUE_LOGIC",
+                        "reason":  "Static declared-symbol and vocabulary comparison only. A match is not functional equivalence; no match is not proof of uniqueness."
+                    },
+                    {
+                        "asset":  "run_all.ps1",
+                        "status":  "PRESENT",
+                        "symbols":  [
+
+                                    ],
+                        "capabilityTokens":  [
+
+                                             ],
+                        "currentMatches":  [
+
+                                           ],
+                        "currentMatchCount":  0,
+                        "directExecutionProhibited":  false,
+                        "decision":  "UNKNOWN",
+                        "nextAction":  "MANUAL_DOMAIN_REVIEW_FOR_UNIQUE_LOGIC",
+                        "reason":  "Static declared-symbol and vocabulary comparison only. A match is not functional equivalence; no match is not proof of uniqueness."
+                    },
+                    {
+                        "asset":  "run_ast_analysis.py",
+                        "status":  "PRESENT",
+                        "symbols":  [
+                                        "main"
+                                    ],
+                        "capabilityTokens":  [
+                                                 "ANALYSIS"
+                                             ],
+                        "currentMatches":  [
+                                               "lib\\intelligence\\gels-label-readiness.ts",
+                                               "lib\\intelligence\\task-orchestration.ts",
+                                               "lib\\intelligence\\tool-registry.ts"
+                                           ],
+                        "currentMatchCount":  3,
+                        "directExecutionProhibited":  false,
+                        "decision":  "REUSE_OR_EXTRACT_CANDIDATE",
+                        "nextAction":  "COMPARE_DECLARED_RESPONSIBILITY_WITH_EXISTING_CURRENT_COMPONENTS",
+                        "reason":  "Static declared-symbol and vocabulary comparison only. A match is not functional equivalence; no match is not proof of uniqueness."
+                    },
+                    {
+                        "asset":  "run_audit_hack.py",
+                        "status":  "PRESENT",
+                        "symbols":  [
+
+                                    ],
+                        "capabilityTokens":  [
+                                                 "ANALYSIS",
+                                                 "GOVERNANCE"
+                                             ],
+                        "currentMatches":  [
+                                               "System.Collections.Hashtable"
+                                           ],
+                        "currentMatchCount":  2,
+                        "directExecutionProhibited":  true,
+                        "decision":  "REUSE_OR_EXTRACT_CANDIDATE",
+                        "nextAction":  "EXTRACT_READ_ONLY_ALGORITHM_DESIGN_ONLY; DIRECT_EXECUTION_PROHIBITED",
+                        "reason":  "Static declared-symbol and vocabulary comparison only. A match is not functional equivalence; no match is not proof of uniqueness."
+                    },
+                    {
+                        "asset":  "run_audit_v2.py",
+                        "status":  "PRESENT",
+                        "symbols":  [
+
+                                    ],
+                        "capabilityTokens":  [
+                                                 "ANALYSIS",
+                                                 "GOVERNANCE"
+                                             ],
+                        "currentMatches":  [
+                                               "System.Collections.Hashtable"
+                                           ],
+                        "currentMatchCount":  2,
+                        "directExecutionProhibited":  true,
+                        "decision":  "REUSE_OR_EXTRACT_CANDIDATE",
+                        "nextAction":  "EXTRACT_READ_ONLY_ALGORITHM_DESIGN_ONLY; DIRECT_EXECUTION_PROHIBITED",
+                        "reason":  "Static declared-symbol and vocabulary comparison only. A match is not functional equivalence; no match is not proof of uniqueness."
+                    },
+                    {
+                        "asset":  "run_brain.ps1",
+                        "status":  "PRESENT",
+                        "symbols":  [
+
+                                    ],
+                        "capabilityTokens":  [
+                                                 "KNOWLEDGE"
+                                             ],
+                        "currentMatches":  [
+                                               "System.Collections.Hashtable"
+                                           ],
+                        "currentMatchCount":  2,
+                        "directExecutionProhibited":  true,
+                        "decision":  "REUSE_OR_EXTRACT_CANDIDATE",
+                        "nextAction":  "EXTRACT_READ_ONLY_ALGORITHM_DESIGN_ONLY; DIRECT_EXECUTION_PROHIBITED",
+                        "reason":  "Static declared-symbol and vocabulary comparison only. A match is not functional equivalence; no match is not proof of uniqueness."
+                    },
+                    {
+                        "asset":  "run_brain_cli.py",
+                        "status":  "PRESENT",
+                        "symbols":  [
+
+                                    ],
+                        "capabilityTokens":  [
+                                                 "KNOWLEDGE",
+                                                 "ORCHESTRATION"
+                                             ],
+                        "currentMatches":  [
+                                               "lib\\intelligence\\tool-registry.ts"
+                                           ],
+                        "currentMatchCount":  1,
+                        "directExecutionProhibited":  false,
+                        "decision":  "QUARANTINE",
+                        "nextAction":  "QUARANTINE_EMPTY_IMPLEMENTATION",
+                        "reason":  "Static declared-symbol and vocabulary comparison only. A match is not functional equivalence; no match is not proof of uniqueness."
+                    },
+                    {
+                        "asset":  "run_brain_cli_backup.py",
+                        "status":  "PRESENT",
+                        "symbols":  [
+                                        "main"
+                                    ],
+                        "capabilityTokens":  [
+                                                 "KNOWLEDGE",
+                                                 "ORCHESTRATION"
+                                             ],
+                        "currentMatches":  [
+                                               "System.Collections.Hashtable"
+                                           ],
+                        "currentMatchCount":  2,
+                        "directExecutionProhibited":  true,
+                        "decision":  "REUSE_OR_EXTRACT_CANDIDATE",
+                        "nextAction":  "EXTRACT_READ_ONLY_ALGORITHM_DESIGN_ONLY; DIRECT_EXECUTION_PROHIBITED",
+                        "reason":  "Static declared-symbol and vocabulary comparison only. A match is not functional equivalence; no match is not proof of uniqueness."
+                    },
+                    {
+                        "asset":  "standalone_ast_analysis.py",
+                        "status":  "PRESENT",
+                        "symbols":  [
+                                        "analyze_ast",
+                                        "main"
+                                    ],
+                        "capabilityTokens":  [
+                                                 "ANALYSIS"
+                                             ],
+                        "currentMatches":  [
+                                               "System.Collections.Hashtable"
+                                           ],
+                        "currentMatchCount":  2,
+                        "directExecutionProhibited":  true,
+                        "decision":  "REUSE_OR_EXTRACT_CANDIDATE",
+                        "nextAction":  "EXTRACT_READ_ONLY_ALGORITHM_DESIGN_ONLY; DIRECT_EXECUTION_PROHIBITED",
+                        "reason":  "Static declared-symbol and vocabulary comparison only. A match is not functional equivalence; no match is not proof of uniqueness."
+                    },
+                    {
+                        "asset":  "test_brain.py",
+                        "status":  "PRESENT",
+                        "symbols":  [
+
+                                    ],
+                        "capabilityTokens":  [
+                                                 "KNOWLEDGE",
+                                                 "TESTING"
+                                             ],
+                        "currentMatches":  [
+                                               "lib\\intelligence\\tool-registry.ts"
+                                           ],
+                        "currentMatchCount":  1,
+                        "directExecutionProhibited":  false,
+                        "decision":  "REUSE_OR_EXTRACT_CANDIDATE",
+                        "nextAction":  "COMPARE_DECLARED_RESPONSIBILITY_WITH_EXISTING_CURRENT_COMPONENTS",
+                        "reason":  "Static declared-symbol and vocabulary comparison only. A match is not functional equivalence; no match is not proof of uniqueness."
+                    },
+                    {
+                        "asset":  "test_brain_v2.py",
+                        "status":  "PRESENT",
+                        "symbols":  [
+                                        "main"
+                                    ],
+                        "capabilityTokens":  [
+                                                 "KNOWLEDGE",
+                                                 "TESTING"
+                                             ],
+                        "currentMatches":  [
+                                               "lib\\intelligence\\tool-registry.ts"
+                                           ],
+                        "currentMatchCount":  1,
+                        "directExecutionProhibited":  false,
+                        "decision":  "REUSE_OR_EXTRACT_CANDIDATE",
+                        "nextAction":  "COMPARE_DECLARED_RESPONSIBILITY_WITH_EXISTING_CURRENT_COMPONENTS",
+                        "reason":  "Static declared-symbol and vocabulary comparison only. A match is not functional equivalence; no match is not proof of uniqueness."
+                    },
+                    {
+                        "asset":  "test_brain_v3.py",
+                        "status":  "PRESENT",
+                        "symbols":  [
+                                        "print_section",
+                                        "test_brain"
+                                    ],
+                        "capabilityTokens":  [
+                                                 "KNOWLEDGE",
+                                                 "TESTING"
+                                             ],
+                        "currentMatches":  [
+                                               "lib\\intelligence\\tool-registry.ts"
+                                           ],
+                        "currentMatchCount":  1,
+                        "directExecutionProhibited":  false,
+                        "decision":  "REUSE_OR_EXTRACT_CANDIDATE",
+                        "nextAction":  "COMPARE_DECLARED_RESPONSIBILITY_WITH_EXISTING_CURRENT_COMPONENTS",
+                        "reason":  "Static declared-symbol and vocabulary comparison only. A match is not functional equivalence; no match is not proof of uniqueness."
+                    }
+                ],
+    "summary":  {
+                    "total":  23,
+                    "reuseOrExtractCandidates":  19,
+                    "emptyQuarantined":  1,
+                    "manualUniqueReview":  3
+                },
+    "rule":  "This report authorizes no merge, copy, execution, adoption, archive move, or deletion. Any REUSE_OR_EXTRACT_CANDIDATE requires responsibility comparison and isolated test evidence."
+}

@@ -1,0 +1,76 @@
+{
+    "Database":  {
+                     "Location":  ".\\GREENY-LIFE-EOS-PRODUCTION\\database",
+                     "Status":  "AVAILABLE"
+                 },
+    "OverallStatus":  "READY_FOR_OPERATION",
+    "Engine":  "PRODUCTION_ACTIVATION_ENGINE_V1",
+    "NextStep":  "REAL_DATA_IMPORT_AND_OPERATION",
+    "ExecutionDate":  {
+                          "value":  "\/Date(1785446286127)\/",
+                          "DisplayHint":  2,
+                          "DateTime":  "Thursday, July 30, 2026 11:18:06 PM"
+                      },
+    "System":  "GREENY-LIFE EOS",
+    "BusinessFlow":  {
+                         "Scenario":  "Egypt Export Order Simulation",
+                         "Status":  "SIMULATION_READY",
+                         "Steps":  [
+                                       "Supplier Registered",
+                                       "Product Created",
+                                       "Quality Approved",
+                                       "Inventory Received",
+                                       "Customer Order Created",
+                                       "Shipment Prepared",
+                                       "Invoice Generated"
+                                   ]
+                     },
+    "AIValidation":  {
+                         "Input":  "Export Product Scenario",
+                         "Status":  "ACTIVE",
+                         "Engine":  "ai-decision-engine",
+                         "Decision":  "PROCESS_READY"
+                     },
+    "Services":  [
+                     {
+                         "Service":  "services\\product-service",
+                         "Status":  "AVAILABLE"
+                     },
+                     {
+                         "Service":  "services\\supplier-service",
+                         "Status":  "AVAILABLE"
+                     },
+                     {
+                         "Service":  "services\\inventory-service",
+                         "Status":  "AVAILABLE"
+                     },
+                     {
+                         "Service":  "services\\quality-service",
+                         "Status":  "AVAILABLE"
+                     },
+                     {
+                         "Service":  "services\\sales-order-service",
+                         "Status":  "AVAILABLE"
+                     },
+                     {
+                         "Service":  "services\\logistics-service",
+                         "Status":  "AVAILABLE"
+                     },
+                     {
+                         "Service":  "services\\finance-service",
+                         "Status":  "AVAILABLE"
+                     },
+                     {
+                         "Service":  "services\\crm-service",
+                         "Status":  "AVAILABLE"
+                     },
+                     {
+                         "Service":  "platform\\ai-decision-engine",
+                         "Status":  "AVAILABLE"
+                     },
+                     {
+                         "Service":  "platform\\runtime-governance",
+                         "Status":  "AVAILABLE"
+                     }
+                 ]
+}

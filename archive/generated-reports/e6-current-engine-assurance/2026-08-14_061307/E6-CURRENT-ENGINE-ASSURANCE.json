@@ -1,0 +1,262 @@
+﻿{
+    "report":  "E6-CURRENT-ENGINE-ASSURANCE",
+    "createdAt":  "2026-08-14T06:13:07.7573837+02:00",
+    "mode":  "EXISTING_TEST_CONTRACTS_ONLY",
+    "currentProject":  "C:\\Users\\Ghanam\\Documents\\Codex\\Greeny-Life-Repair",
+    "checks":  [
+                   {
+                       "family":  "E6 control plane",
+                       "script":  "test:tool-registry",
+                       "status":  "PASS",
+                       "exitCode":  0,
+                       "durationMs":  1268,
+                       "outputTail":  [
+                                          "",
+                                          "\u003e greeny-life@1.0.0 test:tool-registry",
+                                          "\u003e tsx tests/tool_registry_check.ts",
+                                          "",
+                                          "MasterMind tool registry: PASS"
+                                      ]
+                   },
+                   {
+                       "family":  "Evidence authority",
+                       "script":  "test:official-evidence-gate",
+                       "status":  "PASS",
+                       "exitCode":  0,
+                       "durationMs":  1258,
+                       "outputTail":  [
+                                          "",
+                                          "\u003e greeny-life@1.0.0 test:official-evidence-gate",
+                                          "\u003e tsx tests/official_evidence_gate_check.ts",
+                                          "",
+                                          "official_evidence_gate_check: PASS"
+                                      ]
+                   },
+                   {
+                       "family":  "Decision safety",
+                       "script":  "test:decision-safety-adversarial",
+                       "status":  "PASS",
+                       "exitCode":  0,
+                       "durationMs":  1088,
+                       "outputTail":  [
+                                          "Ôöé 10      Ôöé \u002719_HIGH_MODEL_CONFIDENCE_WITHOUT_EVIDENCE\u0027 Ôöé \u0027PASS\u0027    Ôöé \u0027Untrusted confidence metadata is ignored by the evidence gate.\u0027                                  Ôöé",
+                                          "Ôöé 11      Ôöé \u0027NO_DECISION_SIDE_EFFECT\u0027                   Ôöé \u0027PASS\u0027    Ôöé \u0027MasterMind package is read-only and automaticExecution is false.\u0027                                Ôöé",
+                                          "Ôöé 12      Ôöé \u0027AUTHORIZED_ACTOR_BOUNDARY\u0027                 Ôöé \u0027PASS\u0027    Ôöé \u0027The signed session, not request body, supplies the actor.\u0027                                       Ôöé",
+                                          "Ôöé 13      Ôöé \u002706_INSUFFICIENT_CONFIDENCE\u0027                Ôöé \u0027PASS\u0027    Ôöé \u0027Missing or low confidence fails closed at the read-only decision boundary.\u0027                      Ôöé",
+                                          "Ôöé 14      Ôöé \u002707_MISSING_POLICY\u0027                         Ôöé \u0027PASS\u0027    Ôöé \u0027A missing policy cannot authorize a decision.\u0027                                                   Ôöé",
+                                          "Ôöé 15      Ôöé \u002708_INVALID_POLICY\u0027                         Ôöé \u0027PASS\u0027    Ôöé \u0027An invalid versioned policy cannot authorize a decision.\u0027                                        Ôöé",
+                                          "Ôöé 16      Ôöé \u002711_MISSING_AUDIT\u0027                          Ôöé \u0027UNKNOWN\u0027 Ôöé \u0027Authorization audit exists, but audit persistence is not yet fail-closed at an action boundary.\u0027 Ôöé",
+                                          "Ôöé 17      Ôöé \u002712_INVALID_STATE_TRANSITION\u0027               Ôöé \u0027UNKNOWN\u0027 Ôöé \u0027MasterMind has no verified execution transition to test yet.\u0027                                    Ôöé",
+                                          "Ôöé 18      Ôöé \u002716_EXPIRED_POLICY\u0027                         Ôöé \u0027UNKNOWN\u0027 Ôöé \u0027Policies have no effective-period enforcement at this boundary yet.\u0027                             Ôöé",
+                                          "Ôöé 19      Ôöé \u002720_FAILED_STATE_TRANSITION\u0027                Ôöé \u0027UNKNOWN\u0027 Ôöé \u0027The endpoint is read-only; controlled executor and rollback proof remain required.\u0027              Ôöé",
+                                          "ÔööÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔö┤ÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔö┤ÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔö┤ÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÿ",
+                                          "decision_safety_adversarial_check: PASS 16 | UNKNOWN 4"
+                                      ]
+                   },
+                   {
+                       "family":  "MasterMind",
+                       "script":  "test:mastermind",
+                       "status":  "PASS",
+                       "exitCode":  0,
+                       "durationMs":  1361,
+                       "outputTail":  [
+                                          "",
+                                          "\u003e greeny-life@1.0.0 test:mastermind",
+                                          "\u003e tsx tests/mastermind_agents_check.ts",
+                                          "",
+                                          "MasterMind agents: PASS"
+                                      ]
+                   },
+                   {
+                       "family":  "Workflow governance",
+                       "script":  "test:workflow-governance",
+                       "status":  "PASS",
+                       "exitCode":  0,
+                       "durationMs":  978,
+                       "outputTail":  [
+                                          "",
+                                          "\u003e greeny-life@1.0.0 test:workflow-governance",
+                                          "\u003e tsx tests/workflow_governance_check.ts",
+                                          "",
+                                          "Workflow governance: PASS"
+                                      ]
+                   },
+                   {
+                       "family":  "Workflow approval",
+                       "script":  "test:workflow-approval-contract",
+                       "status":  "PASS",
+                       "exitCode":  0,
+                       "durationMs":  1054,
+                       "outputTail":  [
+                                          "",
+                                          "\u003e greeny-life@1.0.0 test:workflow-approval-contract",
+                                          "\u003e tsx tests/workflow_approval_contract_check.ts",
+                                          "",
+                                          "workflow_approval_contract_check: PASS"
+                                      ]
+                   },
+                   {
+                       "family":  "Trade traceability",
+                       "script":  "test:traceability",
+                       "status":  "PASS",
+                       "exitCode":  0,
+                       "durationMs":  1099,
+                       "outputTail":  [
+                                          "",
+                                          "\u003e greeny-life@1.0.0 test:traceability",
+                                          "\u003e tsx tests/trade_traceability_check.ts",
+                                          "",
+                                          "Trade traceability rules: PASS"
+                                      ]
+                   },
+                   {
+                       "family":  "Supplier policy",
+                       "script":  "test:supplier-master-policy",
+                       "status":  "PASS",
+                       "exitCode":  0,
+                       "durationMs":  936,
+                       "outputTail":  [
+                                          "",
+                                          "\u003e greeny-life@1.0.0 test:supplier-master-policy",
+                                          "\u003e tsx tests/supplier_master_policy_check.ts",
+                                          "",
+                                          "supplier_master_policy_check: PASS"
+                                      ]
+                   },
+                   {
+                       "family":  "Supplier quality",
+                       "script":  "test:supplier-quality",
+                       "status":  "PASS",
+                       "exitCode":  0,
+                       "durationMs":  921,
+                       "outputTail":  [
+                                          "",
+                                          "\u003e greeny-life@1.0.0 test:supplier-quality",
+                                          "\u003e tsx tests/supplier_quality_review_check.ts",
+                                          "",
+                                          "Supplier quality review: PASS"
+                                      ]
+                   },
+                   {
+                       "family":  "Shipment tracking",
+                       "script":  "test:shipment-tracking",
+                       "status":  "PASS",
+                       "exitCode":  0,
+                       "durationMs":  938,
+                       "outputTail":  [
+                                          "",
+                                          "\u003e greeny-life@1.0.0 test:shipment-tracking",
+                                          "\u003e tsx tests/shipment_tracking_review_check.ts",
+                                          "",
+                                          "Shipment tracking review: PASS"
+                                      ]
+                   },
+                   {
+                       "family":  "Data intelligence",
+                       "script":  "test:data-fabric",
+                       "status":  "PASS",
+                       "exitCode":  0,
+                       "durationMs":  961,
+                       "outputTail":  [
+                                          "",
+                                          "\u003e greeny-life@1.0.0 test:data-fabric",
+                                          "\u003e tsx tests/data_intelligence_fabric_check.ts",
+                                          "",
+                                          "Data intelligence fabric: PASS"
+                                      ]
+                   },
+                   {
+                       "family":  "Learning controls",
+                       "script":  "test:learning-access-control",
+                       "status":  "PASS",
+                       "exitCode":  0,
+                       "durationMs":  978,
+                       "outputTail":  [
+                                          "",
+                                          "\u003e greeny-life@1.0.0 test:learning-access-control",
+                                          "\u003e tsx tests/learning_access_and_control_check.ts",
+                                          "",
+                                          "learning_access_and_control_check: PASS"
+                                      ]
+                   },
+                   {
+                       "family":  "Task orchestration",
+                       "script":  "test:task-orchestration",
+                       "status":  "PASS",
+                       "exitCode":  0,
+                       "durationMs":  1038,
+                       "outputTail":  [
+                                          "",
+                                          "\u003e greeny-life@1.0.0 test:task-orchestration",
+                                          "\u003e tsx tests/task_orchestration_check.ts",
+                                          "",
+                                          "Task orchestration core: PASS"
+                                      ]
+                   },
+                   {
+                       "family":  "Authorization audit",
+                       "script":  "test:authorization-audit-fail-closed",
+                       "status":  "PASS",
+                       "exitCode":  0,
+                       "durationMs":  1275,
+                       "outputTail":  [
+                                          "",
+                                          "\u003e greeny-life@1.0.0 test:authorization-audit-fail-closed",
+                                          "\u003e tsx tests/authorization_audit_fail_closed_check.ts",
+                                          "",
+                                          "Authorization audit fail-closed: PASS"
+                                      ]
+                   },
+                   {
+                       "family":  "Current duplicate review",
+                       "script":  "e5:duplicate-review",
+                       "status":  "PASS",
+                       "exitCode":  0,
+                       "durationMs":  822,
+                       "outputTail":  [
+                                          "ÔöîÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔö¼ÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔö¼ÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔö¼ÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔö¼ÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔö¼ÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔö¼ÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÉ",
+                                          "Ôöé Format     Ôöé Files analyzed Ôöé Total lines Ôöé Total tokens Ôöé Clones found Ôöé Duplicated lines Ôöé Duplicated tokens Ôöé",
+                                          "Ôö£ÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔö╝ÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔö╝ÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔö╝ÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔö╝ÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔö╝ÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔö╝ÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöñ",
+                                          "Ôöé javascript Ôöé 3              Ôöé 160         Ôöé 1353         Ôöé 0            Ôöé 0 (0.00%)        Ôöé 0 (0.00%)         Ôöé",
+                                          "Ôö£ÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔö╝ÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔö╝ÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔö╝ÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔö╝ÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔö╝ÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔö╝ÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöñ",
+                                          "Ôöé typescript Ôöé 90             Ôöé 4521        Ôöé 47785        Ôöé 0            Ôöé 0 (0.00%)        Ôöé 0 (0.00%)         Ôöé",
+                                          "Ôö£ÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔö╝ÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔö╝ÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔö╝ÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔö╝ÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔö╝ÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔö╝ÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöñ",
+                                          "Ôöé Total:     Ôöé 93             Ôöé 4681        Ôöé 49138        Ôöé 0            Ôöé 0 (0.00%)        Ôöé 0 (0.00%)         Ôöé",
+                                          "ÔööÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔö┤ÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔö┤ÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔö┤ÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔö┤ÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔö┤ÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔö┤ÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÿ",
+                                          "Found 0 clones.",
+                                          "JSON report saved to archive/generated-reports/e5-code-duplication\\jscpd-report.json",
+                                          "time: 48.234ms"
+                                      ]
+                   },
+                   {
+                       "family":  "TypeScript boundary",
+                       "script":  "type-check",
+                       "status":  "PASS",
+                       "exitCode":  0,
+                       "durationMs":  4035,
+                       "outputTail":  [
+                                          "",
+                                          "\u003e greeny-life@1.0.0 type-check",
+                                          "\u003e tsc --noEmit",
+                                          ""
+                                      ]
+                   }
+               ],
+    "summary":  {
+                    "total":  16,
+                    "passed":  16,
+                    "failed":  0,
+                    "buildIncluded":  false
+                },
+    "safety":  [
+                   "NO_BRAIN_IMPORT",
+                   "NO_RAW_LEGACY_EXECUTION",
+                   "NO_DATABASE_MUTATION",
+                   "NO_MERGE",
+                   "NO_ARCHIVE",
+                   "NO_QUARANTINE",
+                   "NO_RETIREMENT",
+                   "NO_DELETE"
+               ],
+    "result":  "PASS"
+}

@@ -1,0 +1,32 @@
+﻿{
+    "reportType":  "E3_LEGACY_CANDIDATE_CORRECTION_V1",
+    "generatedAtUtc":  "2026-08-13T17:35:02.0923553Z",
+    "mode":  "READ_ONLY_CORRECTION",
+    "protections":  [
+                        "NO_EXECUTION",
+                        "NO_IMPORT",
+                        "NO_FILE_WRITE",
+                        "NO_DATABASE",
+                        "NO_NETWORK",
+                        "NO_GIT_CHANGE",
+                        "NO_MOVE",
+                        "NO_DELETE"
+                    ],
+    "inputContracts":  "C:\\Users\\Ghanam\\Documents\\Codex\\Greeny-Life-Repair\\archive\\generated-reports\\e3-legacy-safe-contracts\\contracts-2026-08-13_193322\\E3-LEGACY-SAFE-CANDIDATE-CONTRACTS.json",
+    "correction":  {
+                       "asset":  "run_brain_cli.py",
+                       "observedBytes":  5,
+                       "observedSemanticContent":  "EMPTY_AFTER_BOM_AND_WHITESPACE_NORMALIZATION",
+                       "priorStaticStatus":  "ELIGIBLE_FOR_TEMPORARY_COPY_ACCEPTANCE_PROOF",
+                       "correctedStatus":  "QUARANTINE_EMPTY_IMPLEMENTATION",
+                       "directExecution":  "PROHIBITED",
+                       "nextAction":  "TRACE_REFERENCES_AND_INTENDED_OWNER; DO_NOT_BUILD_REPLACEMENT_FROM_FILENAME",
+                       "reason":  "A syntactically harmless empty file is not an executable capability. The prior eligibility was a static false positive caused by no detected imports, writes, network, process, or brain dependency."
+                   },
+    "revisedSummary":  {
+                           "temporaryCopyProofEligible":  0,
+                           "staticTraceOnly":  6,
+                           "emptyImplementationQuarantined":  1
+                       },
+    "rule":  "No Legacy tool is authorized for direct execution by the current evidence set."
+}

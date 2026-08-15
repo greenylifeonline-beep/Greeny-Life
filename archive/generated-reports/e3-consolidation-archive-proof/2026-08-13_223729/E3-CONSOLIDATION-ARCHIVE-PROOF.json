@@ -1,0 +1,141 @@
+{
+    "reportType":  "E3_CONSOLIDATION_ARCHIVE_PROOF_V1",
+    "generatedAtUtc":  "2026-08-13T20:37:29.5904496Z",
+    "mode":  "READ_ONLY_EVIDENCE_SYNTHESIS",
+    "protections":  [
+                        "NO_PACKAGE_EDIT",
+                        "NO_MOVE",
+                        "NO_ARCHIVE_MOVE",
+                        "NO_DELETE",
+                        "NO_LEGACY_EXECUTION",
+                        "NO_DATABASE",
+                        "NO_GIT_STAGE",
+                        "NO_COMMIT",
+                        "NO_PUSH"
+                    ],
+    "inputs":  {
+                   "packageJson":  "C:\\Users\\Ghanam\\Documents\\Codex\\Greeny-Life-Repair\\package.json",
+                   "closure":  "C:\\Users\\Ghanam\\Documents\\Codex\\Greeny-Life-Repair\\archive\\generated-reports\\e3-closure\\2026-08-13_220334\\E3-CURRENT-ASSET-CODE-CLOSURE.json",
+                   "assetDecision":  "C:\\Users\\Ghanam\\Documents\\Codex\\Greeny-Life-Repair\\archive\\generated-reports\\e3-asset-decision-proof\\decision-2026-08-13_192709\\E3-ASSET-DECISION-PROOF.json",
+                   "preservationManifest":  "C:\\Users\\Ghanam\\Documents\\Codex\\Greeny-Life-Repair\\archive\\derived-report-preservation\\2026-08-13_192255\\E3-SAFE-DERIVED-REPORT-ARCHIVE-MANIFEST.json"
+               },
+    "scriptAliasProof":  [
+                             {
+                                 "command":  "node scripts/legacy-health.cjs",
+                                 "scripts":  [
+                                                 "intelligence",
+                                                 "gl-dos"
+                                             ],
+                                 "count":  2,
+                                 "category":  "EXACT_HEALTH_ALIAS",
+                                 "decision":  "REVIEW",
+                                 "nextAction":  "CONSOLIDATION_REVIEW: choose intelligence as canonical; retain gl-dos until callers/owner are closed.",
+                                 "replacementProven":  false,
+                                 "activeDependencyProven":  false,
+                                 "archiveApproved":  false
+                             },
+                             {
+                                 "command":  "node scripts/legacy-health.cjs --blocked-migration",
+                                 "scripts":  [
+                                                 "migration",
+                                                 "migration:verify",
+                                                 "migration:decision",
+                                                 "migration:executor",
+                                                 "migration:all"
+                                             ],
+                                 "count":  5,
+                                 "category":  "INTENTIONAL_BLOCKED_OPERATION",
+                                 "decision":  "REVIEW",
+                                 "nextAction":  "KEEP_QUARANTINE: names encode blocked commercial migration intent; no consolidation or execution.",
+                                 "replacementProven":  false,
+                                 "activeDependencyProven":  false,
+                                 "archiveApproved":  false
+                             },
+                             {
+                                 "command":  "node scripts/legacy-health.cjs --test",
+                                 "scripts":  [
+                                                 "test:intelligence",
+                                                 "test:registry",
+                                                 "test:health",
+                                                 "test:cleanup",
+                                                 "test:duplicate-v2",
+                                                 "test:audit",
+                                                 "test:integrity"
+                                             ],
+                                 "count":  7,
+                                 "category":  "EXACT_TEST_ALIAS",
+                                 "decision":  "REVIEW",
+                                 "nextAction":  "CONSOLIDATION_REVIEW: choose one canonical name only after confirming no external caller needs a historical alias.",
+                                 "replacementProven":  false,
+                                 "activeDependencyProven":  false,
+                                 "archiveApproved":  false
+                             },
+                             {
+                                 "command":  "tsx tests/official_evidence_gate_check.ts",
+                                 "scripts":  [
+                                                 "test:official-evidence-gate",
+                                                 "test:evidence-fail-closed"
+                                             ],
+                                 "count":  2,
+                                 "category":  "EXACT_TEST_ALIAS",
+                                 "decision":  "REVIEW",
+                                 "nextAction":  "CONSOLIDATION_REVIEW: choose one canonical name only after confirming no external caller needs a historical alias.",
+                                 "replacementProven":  false,
+                                 "activeDependencyProven":  false,
+                                 "archiveApproved":  false
+                             }
+                         ],
+    "archiveProofSummary":  [
+                                {
+                                    "group":  "ALREADY_IN_ARCHIVE_TREE",
+                                    "count":  497,
+                                    "archiveApproved":  0,
+                                    "movePerformed":  0
+                                },
+                                {
+                                    "group":  "DERIVED_BUNDLE_OR_REPORT_OUTSIDE_ARCHIVE",
+                                    "count":  10,
+                                    "archiveApproved":  0,
+                                    "movePerformed":  0
+                                },
+                                {
+                                    "group":  "DERIVED_REPORT_OUTSIDE_ARCHIVE",
+                                    "count":  47,
+                                    "archiveApproved":  0,
+                                    "movePerformed":  0
+                                }
+                            ],
+    "archiveGate":  {
+                        "candidates":  554,
+                        "approved":  0,
+                        "moved":  0,
+                        "blockedBecause":  [
+                                               "Canonical replacement not proven for each asset.",
+                                               "No active dependency proof for each asset.",
+                                               "Owner/SOR mostly unproven.",
+                                               "No explicit archive authorization.",
+                                               "Recoverability is partial, not per-asset proven."
+                                           ]
+                    },
+    "consolidationGate":  {
+                              "aliasGroups":  4,
+                              "scriptsInAliasGroups":  16,
+                              "consolidated":  0,
+                              "blockedBecause":  [
+                                                     "Canonical script names require owner/caller closure.",
+                                                     "Historical migration aliases are intentionally blocked rather than duplicates to execute.",
+                                                     "No package.json edit was authorized by this evidence proof."
+                                                 ]
+                          },
+    "retirementGate":  {
+                           "candidates":  0,
+                           "deleted":  0,
+                           "status":  "BLOCKED_BY_EXISTING_E3_EVIDENCE"
+                       },
+    "nextActions":  [
+                        "Assign an owner for each script alias family.",
+                        "Trace package.json consumers outside the project and decide whether historical aliases remain compatibility entry points.",
+                        "Approve a small archive batch only after its manifest proves every selected asset has no active dependency and a checksum-verified recovery copy.",
+                        "Treat deletion as a separate future decision after archive verification."
+                    ]
+}

@@ -1,0 +1,44 @@
+[
+    {
+        "Flow":  "FLOW_02_PRODUCT_TO_INVENTORY",
+        "ExecutionScore":  18,
+        "EvidenceCount":  5,
+        "RuntimeLevel":  "VERIFIED_RUNTIME_FLOW",
+        "EvidenceFiles":  "\\app\\api\\products\\route.ts;\\app\\api\\sales-orders\\route.ts;\\app\\api\\suppliers\\route.ts;\\lib\\workflowEngine.ts;\\prisma\\schema.prisma"
+    },
+    {
+        "Flow":  "FLOW_06_QUALITY_TO_BATCH_AUDIT",
+        "ExecutionScore":  6,
+        "EvidenceCount":  2,
+        "RuntimeLevel":  "PARTIAL_BUSINESS_LOGIC",
+        "EvidenceFiles":  "\\lib\\workflowEngine.ts;\\prisma\\schema.prisma"
+    },
+    {
+        "Flow":  "FLOW_05_INVOICE_TO_PAYMENT",
+        "ExecutionScore":  4,
+        "EvidenceCount":  1,
+        "RuntimeLevel":  "SYMBOLIC_ONLY",
+        "EvidenceFiles":  "\\prisma\\schema.prisma"
+    },
+    {
+        "Flow":  "FLOW_03_CUSTOMER_TO_SALES_ORDER",
+        "ExecutionScore":  22,
+        "EvidenceCount":  6,
+        "RuntimeLevel":  "VERIFIED_RUNTIME_FLOW",
+        "EvidenceFiles":  "\\app\\api\\products\\route.ts;\\app\\api\\sales-orders\\route.ts;\\app\\api\\suppliers\\route.ts;\\app\\api\\workflow\\route.ts;\\lib\\workflowEngine.ts;\\prisma\\schema.prisma"
+    },
+    {
+        "Flow":  "FLOW_01_SUPPLIER_TO_PRODUCT",
+        "ExecutionScore":  31,
+        "EvidenceCount":  8,
+        "RuntimeLevel":  "VERIFIED_RUNTIME_FLOW",
+        "EvidenceFiles":  "\\app\\api\\products\\route.ts;\\app\\api\\sales-orders\\route.ts;\\app\\api\\suppliers\\route.ts;\\eos-core\\intelligence\\intelligence\\core\\report-writer.ts;\\eos-core\\intelligence\\intelligence\\index.ts;\\eos-core\\intelligence\\intelligence\\intelligence-test.ts;\\lib\\workflowEngine.ts;\\prisma\\schema.prisma"
+    },
+    {
+        "Flow":  "FLOW_04_ORDER_TO_SHIPMENT",
+        "ExecutionScore":  4,
+        "EvidenceCount":  1,
+        "RuntimeLevel":  "SYMBOLIC_ONLY",
+        "EvidenceFiles":  "\\prisma\\schema.prisma"
+    }
+]

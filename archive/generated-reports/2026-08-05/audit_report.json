@@ -1,0 +1,2291 @@
+{
+  "sources": [
+    {
+      "path": "intelligence\\certificate-validation-report.json",
+      "product_count": 15,
+      "sample": [
+        {
+          "product_id": "H001",
+          "product_name": {
+            "en": "Wildflower Honey",
+            "ar": "عسل الزهور البرية"
+          },
+          "required_certificates": [
+            "CERT-HALAL-001",
+            "CERT-HACCP-001",
+            "CERT-ISO22000-001",
+            "CERT-GMP-001",
+            "CERT-COA-001",
+            "CERT-ORGANIC-001",
+            "CERT-KOSHER-001",
+            "CERT-USDA-001",
+            "CERT-EU-001"
+          ],
+          "status": "PASSED"
+        },
+        {
+          "product_id": "H002",
+          "product_name": {
+            "en": "Clover Honey",
+            "ar": "عسل البرسيم"
+          },
+          "required_certificates": [
+            "CERT-HALAL-001",
+            "CERT-HACCP-001",
+            "CERT-ISO22000-001",
+            "CERT-GMP-001",
+            "CERT-COA-001",
+            "CERT-ORGANIC-001",
+            "CERT-KOSHER-001",
+            "CERT-EU-001"
+          ],
+          "status": "PASSED"
+        },
+        {
+          "product_id": "H003",
+          "product_name": {
+            "en": "Citrus Honey",
+            "ar": "عسل الحمضيات"
+          },
+          "required_certificates": [
+            "CERT-HALAL-001",
+            "CERT-HACCP-001",
+            "CERT-ISO22000-001",
+            "CERT-GMP-001",
+            "CERT-COA-001",
+            "CERT-ORGANIC-001",
+            "CERT-KOSHER-001",
+            "CERT-EU-001"
+          ],
+          "status": "PASSED"
+        }
+      ]
+    },
+    {
+      "path": "data\\product-master-v7\\GELS-product-links-v1.json",
+      "product_count": 15,
+      "sample": [
+        {
+          "ProductID": "H001",
+          "ProductName": "Wildflower Honey",
+          "GELS": "LINKED",
+          "Packaging": "LINKED",
+          "ExportProfile": "READY"
+        },
+        {
+          "ProductID": "H002",
+          "ProductName": "Clover Honey",
+          "GELS": "LINKED",
+          "Packaging": "LINKED",
+          "ExportProfile": "READY"
+        },
+        {
+          "ProductID": "H003",
+          "ProductName": "Citrus Honey",
+          "GELS": "LINKED",
+          "Packaging": "LINKED",
+          "ExportProfile": "READY"
+        }
+      ]
+    },
+    {
+      "path": "canonical\\analytics\\inventory-summary.json",
+      "product_count": 10,
+      "sample": [
+        {
+          "product_id": "H002",
+          "product_name": {
+            "en": "Clover Honey",
+            "ar": "عسل البرسيم"
+          },
+          "sold_quantity": 415
+        },
+        {
+          "product_id": "B001",
+          "product_name": {
+            "en": "Royal Jelly",
+            "ar": "غذاء ملكات النحل"
+          },
+          "sold_quantity": 277
+        },
+        {
+          "product_id": "H001",
+          "product_name": {
+            "en": "Wildflower Honey",
+            "ar": "عسل الزهور البرية"
+          },
+          "sold_quantity": 234
+        }
+      ]
+    },
+    {
+      "path": "canonical\\analytics\\top-products.json",
+      "product_count": 10,
+      "sample": [
+        {
+          "product_id": "H002",
+          "product_name": {
+            "en": "Clover Honey",
+            "ar": "عسل البرسيم"
+          },
+          "revenue": 13837
+        },
+        {
+          "product_id": "H001",
+          "product_name": {
+            "en": "Wildflower Honey",
+            "ar": "عسل الزهور البرية"
+          },
+          "revenue": 12315
+        },
+        {
+          "product_id": "B001",
+          "product_name": {
+            "en": "Royal Jelly",
+            "ar": "غذاء ملكات النحل"
+          },
+          "revenue": 10422
+        }
+      ]
+    },
+    {
+      "path": "canonical\\data\\master_products.json",
+      "product_count": 15,
+      "sample": [
+        {
+          "id": "H001",
+          "product_code": "HON001",
+          "ref_id": "GL-LBL-HON-001",
+          "collection": "honey",
+          "category": "Honey",
+          "name": {
+            "en": "Wildflower Honey",
+            "ar": "عسل الزهور البرية"
+          },
+          "accent_color": "#C9A227",
+          "packaging_profile": "honey_default",
+          "media": {
+            "profile": "wildflower-honey",
+            "hero": "wildflower_hero.jpg",
+            "product": "wildflower_jar.png",
+            "lifestyle": "wildflower_lifestyle.jpg",
+            "catalog": "honey_catalog.pdf"
+          },
+          "sort_order": 10,
+          "status": {
+            "published": true,
+            "active": true,
+            "featured": true
+          },
+          "flags": {
+            "featured": false,
+            "new": false,
+            "bestseller": false
+          },
+          "markets": {
+            "gcc": true,
+            "eu": true,
+            "usa": true,
+            "asia": true
+          },
+          "sustainability": {
+            "recyclable": true,
+            "food_grade": true,
+            "bpa_free": true,
+            "recycled_material": false
+          },
+          "traceability": {
+            "batch_number": "",
+            "harvest_date": "",
+            "production_date": "",
+            "expiry_date": "",
+            "factory_code": "GL-EGY-HONEY",
+            "qr_verification": true
+          },
+          "documents": {
+            "coa": true,
+            "nutrition": true,
+            "specification": true,
+            "msds": false,
+            "origin_certificate": true,
+            "halal": true,
+            "iso22000": true,
+            "haccp": true,
+            "gmp": true
+          },
+          "front_label": {
+            "elements": [
+              "logo",
+              "product_name",
+              "lifestyle_image",
+              "100_natural",
+              "net_weight",
+              "origin_egypt",
+              "qr_small"
+            ],
+            "accent_usage": "Product name + frame"
+          },
+          "back_label": {
+            "ingredients": [
+              "100% Pure Wildflower Honey"
+            ],
+            "nutrition_facts": {
+              "serving_size": "20g",
+              "calories": 60,
+              "sugars": "16g"
+            },
+            "description": {
+              "ar": "عسل طبيعي 100% من زهور برية مصرية، غني بالإنزيمات والمضادات الأكسدة.",
+              "en": "100% Natural honey harvested from Egyptian wildflowers."
+            },
+            "storage": "Store in a cool, dry place away from direct sunlight.",
+            "warnings": [
+              "Not suitable for infants under 12 months."
+            ],
+            "certifications": [
+              "Halal",
+              "HACCP",
+              "ISO 22000",
+              "GMP"
+            ],
+            "sustainability_claims": [
+              "Ethically Sourced",
+              "Plastic-Free Packaging Options",
+              "Supports Egyptian Beekeepers"
+            ]
+          },
+          "side_panel": {
+            "floral_source": "Diverse Egyptian wildflowers",
+            "moisture": "<20%",
+            "hmf": "<40 mg/kg",
+            "usage": "Daily sweetener, immune support, natural preservative"
+          }
+        },
+        {
+          "id": "H002",
+          "product_code": "HON002",
+          "ref_id": "GL-LBL-HON-002",
+          "collection": "honey",
+          "category": "Honey",
+          "name": {
+            "en": "Clover Honey",
+            "ar": "عسل البرسيم"
+          },
+          "accent_color": "#E8D5A3",
+          "packaging_profile": "honey_default",
+          "media": {
+            "profile": "clover-honey",
+            "hero": "clover_hero.jpg",
+            "product": "clover_jar.png",
+            "lifestyle": "clover_lifestyle.jpg",
+            "catalog": "honey_catalog.pdf"
+          },
+          "sort_order": 20,
+          "status": {
+            "published": true,
+            "active": true,
+            "featured": false
+          },
+          "flags": {
+            "featured": false,
+            "new": false,
+            "bestseller": false
+          },
+          "markets": {
+            "gcc": true,
+            "eu": true,
+            "usa": false,
+            "asia": true
+          },
+          "sustainability": {
+            "recyclable": true,
+            "food_grade": true,
+            "bpa_free": true,
+            "recycled_material": false
+          },
+          "traceability": {
+            "batch_number": "",
+            "harvest_date": "",
+            "production_date": "",
+            "expiry_date": "",
+            "factory_code": "GL-EGY-HONEY",
+            "qr_verification": true
+          },
+          "documents": {
+            "coa": true,
+            "nutrition": true,
+            "specification": true,
+            "msds": false,
+            "origin_certificate": true,
+            "halal": true,
+            "iso22000": true,
+            "haccp": true,
+            "gmp": true
+          },
+          "front_label": {
+            "elements": [
+              "logo",
+              "product_name",
+              "lifestyle_image",
+              "100_natural",
+              "net_weight",
+              "origin_egypt",
+              "qr_small"
+            ],
+            "accent_usage": "Product name + frame"
+          },
+          "back_label": {
+            "ingredients": [
+              "100% Pure Clover Honey"
+            ],
+            "nutrition_facts": {
+              "serving_size": "20g",
+              "calories": 60,
+              "sugars": "16g"
+            },
+            "description": {
+              "ar": "عسل برسيم مصري نقي 100% خفيف المذاق.",
+              "en": "100% Pure Egyptian Clover Honey with a mild, sweet taste."
+            },
+            "storage": "Store in a cool, dry place.",
+            "warnings": [
+              "Not suitable for infants under 12 months."
+            ],
+            "certifications": [
+              "Halal",
+              "HACCP",
+              "ISO 22000",
+              "GMP"
+            ],
+            "sustainability_claims": [
+              "Supports Local Farmers",
+              "Ethically Sourced"
+            ]
+          },
+          "side_panel": {
+            "floral_source": "Egyptian Clover Fields",
+            "moisture": "<18%",
+            "hmf": "<25 mg/kg",
+            "usage": "Excellent for daily consumption and cooking."
+          }
+        },
+        {
+          "id": "H003",
+          "product_code": "HON003",
+          "ref_id": "GL-LBL-HON-003",
+          "collection": "honey",
+          "category": "Honey",
+          "name": {
+            "en": "Citrus Honey",
+            "ar": "عسل الحمضيات"
+          },
+          "accent_color": "#E8913A",
+          "packaging_profile": "honey_default",
+          "media": {
+            "profile": "citrus-honey",
+            "hero": "citrus_hero.jpg",
+            "product": "citrus_jar.png",
+            "lifestyle": "citrus_lifestyle.jpg",
+            "catalog": "honey_catalog.pdf"
+          },
+          "sort_order": 30,
+          "status": {
+            "published": true,
+            "active": true,
+            "featured": false
+          },
+          "flags": {
+            "featured": false,
+            "new": false,
+            "bestseller": false
+          },
+          "markets": {
+            "gcc": true,
+            "eu": true,
+            "usa": false,
+            "asia": true
+          },
+          "sustainability": {
+            "recyclable": true,
+            "food_grade": true,
+            "bpa_free": true,
+            "recycled_material": false
+          },
+          "traceability": {
+            "batch_number": "",
+            "harvest_date": "",
+            "production_date": "",
+            "expiry_date": "",
+            "factory_code": "GL-EGY-HONEY",
+            "qr_verification": true
+          },
+          "documents": {
+            "coa": true,
+            "nutrition": true,
+            "specification": true,
+            "msds": false,
+            "origin_certificate": true,
+            "halal": true,
+            "iso22000": true,
+            "haccp": true,
+            "gmp": true
+          },
+          "front_label": {
+            "elements": [
+              "logo",
+              "product_name",
+              "lifestyle_image",
+              "100_natural",
+              "net_weight",
+              "origin_egypt",
+              "qr_small"
+            ],
+            "accent_usage": "Product name + frame"
+          },
+          "back_label": {
+            "ingredients": [
+              "100% Pure Citrus Honey"
+            ],
+            "nutrition_facts": {
+              "serving_size": "20g",
+              "calories": 60,
+              "sugars": "16g"
+            },
+            "description": {
+              "ar": "عسل حمضيات مصري نقي 100% بنكهة منعشة.",
+              "en": "100% Pure Egyptian Citrus Honey with a refreshing taste."
+            },
+            "storage": "Store in a cool, dry place.",
+            "warnings": [
+              "Not suitable for infants under 12 months."
+            ],
+            "certifications": [
+              "Halal",
+              "HACCP",
+              "ISO 22000",
+              "GMP"
+            ],
+            "sustainability_claims": [
+              "Supports Citrus Farmers",
+              "Ethically Sourced"
+            ]
+          },
+          "side_panel": {
+            "floral_source": "Egyptian Citrus Orchards",
+            "moisture": "<19%",
+            "hmf": "<30 mg/kg",
+            "usage": "Ideal for tea, baking, and breakfast."
+          }
+        }
+      ]
+    },
+    {
+      "path": "canonical\\data\\product-master-v7\\GELS-product-links-v1.json",
+      "product_count": 15,
+      "sample": [
+        {
+          "ProductID": "H001",
+          "ProductName": "Wildflower Honey",
+          "GELS": "LINKED",
+          "Packaging": "LINKED",
+          "ExportProfile": "READY"
+        },
+        {
+          "ProductID": "H002",
+          "ProductName": "Clover Honey",
+          "GELS": "LINKED",
+          "Packaging": "LINKED",
+          "ExportProfile": "READY"
+        },
+        {
+          "ProductID": "H003",
+          "ProductName": "Citrus Honey",
+          "GELS": "LINKED",
+          "Packaging": "LINKED",
+          "ExportProfile": "READY"
+        }
+      ]
+    }
+  ],
+  "canonical_products": [
+    {
+      "id": "H001",
+      "product_code": "HON001",
+      "ref_id": "GL-LBL-HON-001",
+      "collection": "honey",
+      "category": "Honey",
+      "name": {
+        "en": "Wildflower Honey",
+        "ar": "عسل الزهور البرية"
+      },
+      "accent_color": "#C9A227",
+      "packaging_profile": "honey_default",
+      "media": {
+        "profile": "wildflower-honey",
+        "hero": "wildflower_hero.jpg",
+        "product": "wildflower_jar.png",
+        "lifestyle": "wildflower_lifestyle.jpg",
+        "catalog": "honey_catalog.pdf"
+      },
+      "sort_order": 10,
+      "status": {
+        "published": true,
+        "active": true,
+        "featured": true
+      },
+      "flags": {
+        "featured": false,
+        "new": false,
+        "bestseller": false
+      },
+      "markets": {
+        "gcc": true,
+        "eu": true,
+        "usa": true,
+        "asia": true
+      },
+      "sustainability": {
+        "recyclable": true,
+        "food_grade": true,
+        "bpa_free": true,
+        "recycled_material": false
+      },
+      "traceability": {
+        "batch_number": "",
+        "harvest_date": "",
+        "production_date": "",
+        "expiry_date": "",
+        "factory_code": "GL-EGY-HONEY",
+        "qr_verification": true
+      },
+      "documents": {
+        "coa": true,
+        "nutrition": true,
+        "specification": true,
+        "msds": false,
+        "origin_certificate": true,
+        "halal": true,
+        "iso22000": true,
+        "haccp": true,
+        "gmp": true
+      },
+      "front_label": {
+        "elements": [
+          "logo",
+          "product_name",
+          "lifestyle_image",
+          "100_natural",
+          "net_weight",
+          "origin_egypt",
+          "qr_small"
+        ],
+        "accent_usage": "Product name + frame"
+      },
+      "back_label": {
+        "ingredients": [
+          "100% Pure Wildflower Honey"
+        ],
+        "nutrition_facts": {
+          "serving_size": "20g",
+          "calories": 60,
+          "sugars": "16g"
+        },
+        "description": {
+          "ar": "عسل طبيعي 100% من زهور برية مصرية، غني بالإنزيمات والمضادات الأكسدة.",
+          "en": "100% Natural honey harvested from Egyptian wildflowers."
+        },
+        "storage": "Store in a cool, dry place away from direct sunlight.",
+        "warnings": [
+          "Not suitable for infants under 12 months."
+        ],
+        "certifications": [
+          "Halal",
+          "HACCP",
+          "ISO 22000",
+          "GMP"
+        ],
+        "sustainability_claims": [
+          "Ethically Sourced",
+          "Plastic-Free Packaging Options",
+          "Supports Egyptian Beekeepers"
+        ]
+      },
+      "side_panel": {
+        "floral_source": "Diverse Egyptian wildflowers",
+        "moisture": "<20%",
+        "hmf": "<40 mg/kg",
+        "usage": "Daily sweetener, immune support, natural preservative"
+      }
+    },
+    {
+      "id": "H002",
+      "product_code": "HON002",
+      "ref_id": "GL-LBL-HON-002",
+      "collection": "honey",
+      "category": "Honey",
+      "name": {
+        "en": "Clover Honey",
+        "ar": "عسل البرسيم"
+      },
+      "accent_color": "#E8D5A3",
+      "packaging_profile": "honey_default",
+      "media": {
+        "profile": "clover-honey",
+        "hero": "clover_hero.jpg",
+        "product": "clover_jar.png",
+        "lifestyle": "clover_lifestyle.jpg",
+        "catalog": "honey_catalog.pdf"
+      },
+      "sort_order": 20,
+      "status": {
+        "published": true,
+        "active": true,
+        "featured": false
+      },
+      "flags": {
+        "featured": false,
+        "new": false,
+        "bestseller": false
+      },
+      "markets": {
+        "gcc": true,
+        "eu": true,
+        "usa": false,
+        "asia": true
+      },
+      "sustainability": {
+        "recyclable": true,
+        "food_grade": true,
+        "bpa_free": true,
+        "recycled_material": false
+      },
+      "traceability": {
+        "batch_number": "",
+        "harvest_date": "",
+        "production_date": "",
+        "expiry_date": "",
+        "factory_code": "GL-EGY-HONEY",
+        "qr_verification": true
+      },
+      "documents": {
+        "coa": true,
+        "nutrition": true,
+        "specification": true,
+        "msds": false,
+        "origin_certificate": true,
+        "halal": true,
+        "iso22000": true,
+        "haccp": true,
+        "gmp": true
+      },
+      "front_label": {
+        "elements": [
+          "logo",
+          "product_name",
+          "lifestyle_image",
+          "100_natural",
+          "net_weight",
+          "origin_egypt",
+          "qr_small"
+        ],
+        "accent_usage": "Product name + frame"
+      },
+      "back_label": {
+        "ingredients": [
+          "100% Pure Clover Honey"
+        ],
+        "nutrition_facts": {
+          "serving_size": "20g",
+          "calories": 60,
+          "sugars": "16g"
+        },
+        "description": {
+          "ar": "عسل برسيم مصري نقي 100% خفيف المذاق.",
+          "en": "100% Pure Egyptian Clover Honey with a mild, sweet taste."
+        },
+        "storage": "Store in a cool, dry place.",
+        "warnings": [
+          "Not suitable for infants under 12 months."
+        ],
+        "certifications": [
+          "Halal",
+          "HACCP",
+          "ISO 22000",
+          "GMP"
+        ],
+        "sustainability_claims": [
+          "Supports Local Farmers",
+          "Ethically Sourced"
+        ]
+      },
+      "side_panel": {
+        "floral_source": "Egyptian Clover Fields",
+        "moisture": "<18%",
+        "hmf": "<25 mg/kg",
+        "usage": "Excellent for daily consumption and cooking."
+      }
+    },
+    {
+      "id": "H003",
+      "product_code": "HON003",
+      "ref_id": "GL-LBL-HON-003",
+      "collection": "honey",
+      "category": "Honey",
+      "name": {
+        "en": "Citrus Honey",
+        "ar": "عسل الحمضيات"
+      },
+      "accent_color": "#E8913A",
+      "packaging_profile": "honey_default",
+      "media": {
+        "profile": "citrus-honey",
+        "hero": "citrus_hero.jpg",
+        "product": "citrus_jar.png",
+        "lifestyle": "citrus_lifestyle.jpg",
+        "catalog": "honey_catalog.pdf"
+      },
+      "sort_order": 30,
+      "status": {
+        "published": true,
+        "active": true,
+        "featured": false
+      },
+      "flags": {
+        "featured": false,
+        "new": false,
+        "bestseller": false
+      },
+      "markets": {
+        "gcc": true,
+        "eu": true,
+        "usa": false,
+        "asia": true
+      },
+      "sustainability": {
+        "recyclable": true,
+        "food_grade": true,
+        "bpa_free": true,
+        "recycled_material": false
+      },
+      "traceability": {
+        "batch_number": "",
+        "harvest_date": "",
+        "production_date": "",
+        "expiry_date": "",
+        "factory_code": "GL-EGY-HONEY",
+        "qr_verification": true
+      },
+      "documents": {
+        "coa": true,
+        "nutrition": true,
+        "specification": true,
+        "msds": false,
+        "origin_certificate": true,
+        "halal": true,
+        "iso22000": true,
+        "haccp": true,
+        "gmp": true
+      },
+      "front_label": {
+        "elements": [
+          "logo",
+          "product_name",
+          "lifestyle_image",
+          "100_natural",
+          "net_weight",
+          "origin_egypt",
+          "qr_small"
+        ],
+        "accent_usage": "Product name + frame"
+      },
+      "back_label": {
+        "ingredients": [
+          "100% Pure Citrus Honey"
+        ],
+        "nutrition_facts": {
+          "serving_size": "20g",
+          "calories": 60,
+          "sugars": "16g"
+        },
+        "description": {
+          "ar": "عسل حمضيات مصري نقي 100% بنكهة منعشة.",
+          "en": "100% Pure Egyptian Citrus Honey with a refreshing taste."
+        },
+        "storage": "Store in a cool, dry place.",
+        "warnings": [
+          "Not suitable for infants under 12 months."
+        ],
+        "certifications": [
+          "Halal",
+          "HACCP",
+          "ISO 22000",
+          "GMP"
+        ],
+        "sustainability_claims": [
+          "Supports Citrus Farmers",
+          "Ethically Sourced"
+        ]
+      },
+      "side_panel": {
+        "floral_source": "Egyptian Citrus Orchards",
+        "moisture": "<19%",
+        "hmf": "<30 mg/kg",
+        "usage": "Ideal for tea, baking, and breakfast."
+      }
+    },
+    {
+      "id": "B001",
+      "product_code": "BEE001",
+      "ref_id": "GL-LBL-BEE-001",
+      "collection": "bee_products",
+      "category": "Bee Products",
+      "name": {
+        "en": "Royal Jelly",
+        "ar": "غذاء ملكات النحل"
+      },
+      "accent_color": "#F4E7C6",
+      "packaging_profile": "royal_jelly",
+      "media": {
+        "profile": "royal-jelly",
+        "hero": "royal_jelly_hero.jpg",
+        "product": "royal_jelly_jar.png",
+        "lifestyle": "royal_jelly_lifestyle.jpg",
+        "catalog": "bee_catalog.pdf"
+      },
+      "sort_order": 40,
+      "status": {
+        "published": true,
+        "active": true,
+        "featured": true
+      },
+      "flags": {
+        "featured": false,
+        "new": false,
+        "bestseller": false
+      },
+      "markets": {
+        "gcc": true,
+        "eu": true,
+        "usa": true,
+        "asia": true
+      },
+      "sustainability": {
+        "recyclable": true,
+        "food_grade": true,
+        "bpa_free": true,
+        "recycled_material": false
+      },
+      "traceability": {
+        "batch_number": "",
+        "harvest_date": "",
+        "production_date": "",
+        "expiry_date": "",
+        "factory_code": "GL-EGY-BEE",
+        "qr_verification": true
+      },
+      "documents": {
+        "coa": true,
+        "nutrition": true,
+        "specification": true,
+        "msds": false,
+        "origin_certificate": true,
+        "halal": true,
+        "iso22000": true,
+        "haccp": true,
+        "gmp": true
+      },
+      "front_label": {
+        "elements": [
+          "logo",
+          "product_name",
+          "lifestyle_image",
+          "100_natural",
+          "net_weight",
+          "origin_egypt",
+          "qr_small"
+        ],
+        "accent_usage": "Product name + frame"
+      },
+      "back_label": {
+        "ingredients": [
+          "100% Pure Royal Jelly"
+        ],
+        "nutrition_facts": {
+          "serving_size": "5g",
+          "calories": 30,
+          "sugars": "5g"
+        },
+        "description": {
+          "ar": "غذاء ملكات النحل النقي 100%، غني بالفيتامينات والمعادن.",
+          "en": "100% Pure Royal Jelly, rich in vitamins and minerals."
+        },
+        "storage": "Keep refrigerated after opening.",
+        "warnings": [
+          "People allergic to bee products should consult a physician."
+        ],
+        "certifications": [
+          "Halal",
+          "HACCP",
+          "ISO 22000",
+          "GMP"
+        ],
+        "sustainability_claims": [
+          "Supports Bee Conservation",
+          "Ethically Harvested"
+        ]
+      },
+      "side_panel": {
+        "usage": "Consult a healthcare professional before use.",
+        "storage": "Keep Refrigerated",
+        "warning": "People allergic to bee products should consult a physician."
+      }
+    },
+    {
+      "id": "B002",
+      "product_code": "BEE002",
+      "ref_id": "GL-LBL-BEE-002",
+      "collection": "bee_products",
+      "category": "Bee Products",
+      "name": {
+        "en": "Bee Pollen",
+        "ar": "حبوب لقاح النحل"
+      },
+      "accent_color": "#E2B400",
+      "packaging_profile": "bee_pollen",
+      "media": {
+        "profile": "bee-pollen",
+        "hero": "bee_pollen_hero.jpg",
+        "product": "bee_pollen_jar.png",
+        "lifestyle": "bee_pollen_lifestyle.jpg",
+        "catalog": "bee_catalog.pdf"
+      },
+      "sort_order": 50,
+      "status": {
+        "published": true,
+        "active": true,
+        "featured": false
+      },
+      "flags": {
+        "featured": false,
+        "new": false,
+        "bestseller": false
+      },
+      "markets": {
+        "gcc": true,
+        "eu": true,
+        "usa": true,
+        "asia": true
+      },
+      "sustainability": {
+        "recyclable": true,
+        "food_grade": true,
+        "bpa_free": true,
+        "recycled_material": false
+      },
+      "traceability": {
+        "batch_number": "",
+        "harvest_date": "",
+        "production_date": "",
+        "expiry_date": "",
+        "factory_code": "GL-EGY-BEE",
+        "qr_verification": true
+      },
+      "documents": {
+        "coa": true,
+        "nutrition": true,
+        "specification": true,
+        "msds": false,
+        "origin_certificate": true,
+        "halal": true,
+        "iso22000": true,
+        "haccp": true,
+        "gmp": true
+      },
+      "front_label": {
+        "elements": [
+          "logo",
+          "product_name",
+          "lifestyle_image",
+          "100_natural",
+          "net_weight",
+          "origin_egypt",
+          "qr_small"
+        ],
+        "accent_usage": "Product name + frame"
+      },
+      "back_label": {
+        "ingredients": [
+          "100% Pure Bee Pollen"
+        ],
+        "nutrition_facts": {
+          "serving_size": "5g",
+          "calories": 25,
+          "sugars": "4g"
+        },
+        "description": {
+          "ar": "حبوب لقاح النحل النقي 100%، مصدر غني بالبروتين والفيتامينات.",
+          "en": "100% Pure Bee Pollen, rich in protein and vitamins."
+        },
+        "storage": "Store in a cool, dry place.",
+        "warnings": [
+          "People allergic to bee products should consult a physician."
+        ],
+        "certifications": [
+          "Halal",
+          "HACCP",
+          "ISO 22000",
+          "GMP"
+        ],
+        "sustainability_claims": [
+          "Supports Bee Conservation",
+          "Ethically Harvested"
+        ]
+      },
+      "side_panel": {
+        "usage": "Consult a healthcare professional before use.",
+        "warning": "People allergic to bee products should consult a physician."
+      }
+    },
+    {
+      "id": "B003",
+      "product_code": "BEE003",
+      "ref_id": "GL-LBL-BEE-003",
+      "collection": "bee_products",
+      "category": "Bee Products",
+      "name": {
+        "en": "Pure Beeswax",
+        "ar": "شمع النحل النقي"
+      },
+      "accent_color": "#D4A017",
+      "packaging_profile": "beeswax",
+      "media": {
+        "profile": "pure-beeswax",
+        "hero": "beeswax_hero.jpg",
+        "product": "beeswax_block.png",
+        "lifestyle": "beeswax_lifestyle.jpg",
+        "catalog": "bee_catalog.pdf"
+      },
+      "sort_order": 60,
+      "status": {
+        "published": true,
+        "active": true,
+        "featured": false
+      },
+      "flags": {
+        "featured": false,
+        "new": false,
+        "bestseller": false
+      },
+      "markets": {
+        "gcc": true,
+        "eu": true,
+        "usa": true,
+        "asia": true
+      },
+      "sustainability": {
+        "recyclable": true,
+        "food_grade": true,
+        "bpa_free": true,
+        "recycled_material": false
+      },
+      "traceability": {
+        "batch_number": "",
+        "harvest_date": "",
+        "production_date": "",
+        "expiry_date": "",
+        "factory_code": "GL-EGY-BEE",
+        "qr_verification": true
+      },
+      "documents": {
+        "coa": true,
+        "nutrition": true,
+        "specification": true,
+        "msds": false,
+        "origin_certificate": true,
+        "halal": true,
+        "iso22000": true,
+        "haccp": true,
+        "gmp": true
+      },
+      "front_label": {
+        "elements": [
+          "logo",
+          "product_name",
+          "lifestyle_image",
+          "100_natural",
+          "net_weight",
+          "origin_egypt",
+          "qr_small"
+        ],
+        "accent_usage": "Product name + frame"
+      },
+      "back_label": {
+        "ingredients": [
+          "100% Pure Beeswax"
+        ],
+        "nutrition_facts": {
+          "serving_size": "10g",
+          "calories": 0,
+          "sugars": "0g"
+        },
+        "description": {
+          "ar": "شمع نحل نقي 100%، طبيعي وصالح للاستخدام الغذائي.",
+          "en": "100% Pure Beeswax, natural and food-grade."
+        },
+        "storage": "Store in a cool, dry place.",
+        "warnings": [
+          "Food Grade",
+          "Natural Wax"
+        ],
+        "certifications": [
+          "Halal",
+          "HACCP",
+          "ISO 22000",
+          "GMP"
+        ],
+        "sustainability_claims": [
+          "Supports Bee Conservation",
+          "Ethically Harvested"
+        ]
+      },
+      "side_panel": {
+        "usage": "Food Grade, Natural Wax",
+        "warning": "Food Grade, Natural Wax"
+      }
+    },
+    {
+      "id": "B004",
+      "product_code": "BEE004",
+      "ref_id": "GL-LBL-BEE-004",
+      "collection": "bee_products",
+      "category": "Bee Products",
+      "name": {
+        "en": "Raw Propolis",
+        "ar": "صمغ النحل الخام"
+      },
+      "accent_color": "#7A4A24",
+      "packaging_profile": "propolis",
+      "media": {
+        "profile": "raw-propolis",
+        "hero": "propolis_hero.jpg",
+        "product": "propolis_jar.png",
+        "lifestyle": "propolis_lifestyle.jpg",
+        "catalog": "bee_catalog.pdf"
+      },
+      "sort_order": 70,
+      "status": {
+        "published": true,
+        "active": true,
+        "featured": false
+      },
+      "flags": {
+        "featured": false,
+        "new": false,
+        "bestseller": false
+      },
+      "markets": {
+        "gcc": true,
+        "eu": true,
+        "usa": true,
+        "asia": true
+      },
+      "sustainability": {
+        "recyclable": true,
+        "food_grade": true,
+        "bpa_free": true,
+        "recycled_material": false
+      },
+      "traceability": {
+        "batch_number": "",
+        "harvest_date": "",
+        "production_date": "",
+        "expiry_date": "",
+        "factory_code": "GL-EGY-BEE",
+        "qr_verification": true
+      },
+      "documents": {
+        "coa": true,
+        "nutrition": true,
+        "specification": true,
+        "msds": false,
+        "origin_certificate": true,
+        "halal": true,
+        "iso22000": true,
+        "haccp": true,
+        "gmp": true
+      },
+      "front_label": {
+        "elements": [
+          "logo",
+          "product_name",
+          "lifestyle_image",
+          "100_natural",
+          "net_weight",
+          "origin_egypt",
+          "qr_small"
+        ],
+        "accent_usage": "Product name + frame"
+      },
+      "back_label": {
+        "ingredients": [
+          "100% Pure Raw Propolis"
+        ],
+        "nutrition_facts": {
+          "serving_size": "5g",
+          "calories": 20,
+          "sugars": "2g"
+        },
+        "description": {
+          "ar": "صمغ النحل الخام النقي 100%، غني بالمركبات الطبيعية.",
+          "en": "100% Pure Raw Propolis, rich in natural compounds."
+        },
+        "storage": "Store in a cool, dry place.",
+        "warnings": [
+          "May cause allergic reactions."
+        ],
+        "certifications": [
+          "Halal",
+          "HACCP",
+          "ISO 22000",
+          "GMP"
+        ],
+        "sustainability_claims": [
+          "Supports Bee Conservation",
+          "Ethically Harvested"
+        ]
+      },
+      "side_panel": {
+        "usage": "Consult a healthcare professional before use.",
+        "warning": "May cause allergic reactions."
+      }
+    },
+    {
+      "id": "S001",
+      "product_code": "SPC001",
+      "ref_id": "GL-LBL-SPC-001",
+      "collection": "spices",
+      "category": "Spices",
+      "name": {
+        "en": "Garlic Powder",
+        "ar": "بودرة الثوم"
+      },
+      "accent_color": "#E8DDC6",
+      "packaging_profile": "spices_default",
+      "media": {
+        "profile": "garlic-powder",
+        "hero": "garlic_powder_hero.jpg",
+        "product": "garlic_powder_jar.png",
+        "lifestyle": "garlic_powder_lifestyle.jpg",
+        "catalog": "spices_catalog.pdf"
+      },
+      "sort_order": 80,
+      "status": {
+        "published": true,
+        "active": true,
+        "featured": false
+      },
+      "flags": {
+        "featured": false,
+        "new": false,
+        "bestseller": false
+      },
+      "markets": {
+        "gcc": true,
+        "eu": true,
+        "usa": true,
+        "asia": true
+      },
+      "sustainability": {
+        "recyclable": true,
+        "food_grade": true,
+        "bpa_free": true,
+        "recycled_material": false
+      },
+      "traceability": {
+        "batch_number": "",
+        "harvest_date": "",
+        "production_date": "",
+        "expiry_date": "",
+        "factory_code": "GL-EGY-SPC",
+        "qr_verification": true
+      },
+      "documents": {
+        "coa": true,
+        "nutrition": true,
+        "specification": true,
+        "msds": false,
+        "origin_certificate": true,
+        "halal": true,
+        "iso22000": true,
+        "haccp": true,
+        "gmp": true
+      },
+      "front_label": {
+        "elements": [
+          "logo",
+          "product_name",
+          "lifestyle_image",
+          "100_natural",
+          "net_weight",
+          "origin_egypt",
+          "qr_small"
+        ],
+        "accent_usage": "Product name + frame"
+      },
+      "back_label": {
+        "ingredients": [
+          "100% Pure Garlic Powder",
+          "No Additives",
+          "No Preservatives"
+        ],
+        "nutrition_facts": {
+          "serving_size": "5g",
+          "calories": 10,
+          "sugars": "0g"
+        },
+        "description": {
+          "ar": "بودرة ثوم طبيعية 100%، ناعمة وعالية الجودة.",
+          "en": "100% Natural Garlic Powder, fine and high quality."
+        },
+        "storage": "Store in a cool, dry place away from direct sunlight.",
+        "warnings": [
+          "May contain traces of allergens.",
+          "Keep away from children."
+        ],
+        "certifications": [
+          "HACCP",
+          "ISO 22000",
+          "GMP"
+        ],
+        "sustainability_claims": [
+          "Supports Local Farmers",
+          "Plastic-Free Packaging"
+        ]
+      },
+      "side_panel": {
+        "usage": "Add to cooking as desired.",
+        "grinding_level": "Fine"
+      }
+    },
+    {
+      "id": "S002",
+      "product_code": "SPC002",
+      "ref_id": "GL-LBL-SPC-002",
+      "collection": "spices",
+      "category": "Spices",
+      "name": {
+        "en": "Onion Powder",
+        "ar": "بودرة البصل"
+      },
+      "accent_color": "#A47149",
+      "packaging_profile": "spices_default",
+      "media": {
+        "profile": "onion-powder",
+        "hero": "onion_powder_hero.jpg",
+        "product": "onion_powder_jar.png",
+        "lifestyle": "onion_powder_lifestyle.jpg",
+        "catalog": "spices_catalog.pdf"
+      },
+      "sort_order": 90,
+      "status": {
+        "published": true,
+        "active": true,
+        "featured": false
+      },
+      "flags": {
+        "featured": false,
+        "new": false,
+        "bestseller": false
+      },
+      "markets": {
+        "gcc": true,
+        "eu": true,
+        "usa": true,
+        "asia": true
+      },
+      "sustainability": {
+        "recyclable": true,
+        "food_grade": true,
+        "bpa_free": true,
+        "recycled_material": false
+      },
+      "traceability": {
+        "batch_number": "",
+        "harvest_date": "",
+        "production_date": "",
+        "expiry_date": "",
+        "factory_code": "GL-EGY-SPC",
+        "qr_verification": true
+      },
+      "documents": {
+        "coa": true,
+        "nutrition": true,
+        "specification": true,
+        "msds": false,
+        "origin_certificate": true,
+        "halal": true,
+        "iso22000": true,
+        "haccp": true,
+        "gmp": true
+      },
+      "front_label": {
+        "elements": [
+          "logo",
+          "product_name",
+          "lifestyle_image",
+          "100_natural",
+          "net_weight",
+          "origin_egypt",
+          "qr_small"
+        ],
+        "accent_usage": "Product name + frame"
+      },
+      "back_label": {
+        "ingredients": [
+          "100% Pure Onion Powder",
+          "No Additives",
+          "No Preservatives"
+        ],
+        "nutrition_facts": {
+          "serving_size": "5g",
+          "calories": 10,
+          "sugars": "0g"
+        },
+        "description": {
+          "ar": "بودرة بصل طبيعية 100%، ناعمة وعالية الجودة.",
+          "en": "100% Natural Onion Powder, fine and high quality."
+        },
+        "storage": "Store in a cool, dry place away from direct sunlight.",
+        "warnings": [
+          "May contain traces of allergens.",
+          "Keep away from children."
+        ],
+        "certifications": [
+          "HACCP",
+          "ISO 22000",
+          "GMP"
+        ],
+        "sustainability_claims": [
+          "Supports Local Farmers",
+          "Plastic-Free Packaging"
+        ]
+      },
+      "side_panel": {
+        "usage": "Add to cooking as desired.",
+        "grinding_level": "Fine"
+      }
+    },
+    {
+      "id": "S003",
+      "product_code": "SPC003",
+      "ref_id": "GL-LBL-SPC-003",
+      "collection": "spices",
+      "category": "Spices",
+      "name": {
+        "en": "Turmeric Powder",
+        "ar": "بودرة الكركم"
+      },
+      "accent_color": "#E5B800",
+      "packaging_profile": "spices_default",
+      "media": {
+        "profile": "turmeric-powder",
+        "hero": "turmeric_powder_hero.jpg",
+        "product": "turmeric_powder_jar.png",
+        "lifestyle": "turmeric_powder_lifestyle.jpg",
+        "catalog": "spices_catalog.pdf"
+      },
+      "sort_order": 100,
+      "status": {
+        "published": true,
+        "active": true,
+        "featured": false
+      },
+      "flags": {
+        "featured": false,
+        "new": false,
+        "bestseller": false
+      },
+      "markets": {
+        "gcc": true,
+        "eu": true,
+        "usa": true,
+        "asia": true
+      },
+      "sustainability": {
+        "recyclable": true,
+        "food_grade": true,
+        "bpa_free": true,
+        "recycled_material": false
+      },
+      "traceability": {
+        "batch_number": "",
+        "harvest_date": "",
+        "production_date": "",
+        "expiry_date": "",
+        "factory_code": "GL-EGY-SPC",
+        "qr_verification": true
+      },
+      "documents": {
+        "coa": true,
+        "nutrition": true,
+        "specification": true,
+        "msds": false,
+        "origin_certificate": true,
+        "halal": true,
+        "iso22000": true,
+        "haccp": true,
+        "gmp": true
+      },
+      "front_label": {
+        "elements": [
+          "logo",
+          "product_name",
+          "lifestyle_image",
+          "100_natural",
+          "net_weight",
+          "origin_egypt",
+          "qr_small"
+        ],
+        "accent_usage": "Product name + frame"
+      },
+      "back_label": {
+        "ingredients": [
+          "100% Pure Turmeric Powder",
+          "No Additives",
+          "No Preservatives"
+        ],
+        "nutrition_facts": {
+          "serving_size": "5g",
+          "calories": 10,
+          "sugars": "0g"
+        },
+        "description": {
+          "ar": "بودرة كركم طبيعية 100%، ناعمة وعالية الجودة.",
+          "en": "100% Natural Turmeric Powder, fine and high quality."
+        },
+        "storage": "Store in a cool, dry place away from direct sunlight.",
+        "warnings": [
+          "May contain traces of allergens.",
+          "Keep away from children."
+        ],
+        "certifications": [
+          "HACCP",
+          "ISO 22000",
+          "GMP"
+        ],
+        "sustainability_claims": [
+          "Supports Local Farmers",
+          "Plastic-Free Packaging"
+        ]
+      },
+      "side_panel": {
+        "usage": "Add to cooking as desired.",
+        "grinding_level": "Fine"
+      }
+    },
+    {
+      "id": "S004",
+      "product_code": "SPC004",
+      "ref_id": "GL-LBL-SPC-004",
+      "collection": "spices",
+      "category": "Spices",
+      "name": {
+        "en": "Sweet Paprika",
+        "ar": "البابريكا الحلوة"
+      },
+      "accent_color": "#C6452D",
+      "packaging_profile": "spices_default",
+      "media": {
+        "profile": "sweet-paprika",
+        "hero": "paprika_hero.jpg",
+        "product": "paprika_jar.png",
+        "lifestyle": "paprika_lifestyle.jpg",
+        "catalog": "spices_catalog.pdf"
+      },
+      "sort_order": 110,
+      "status": {
+        "published": true,
+        "active": true,
+        "featured": false
+      },
+      "flags": {
+        "featured": false,
+        "new": false,
+        "bestseller": false
+      },
+      "markets": {
+        "gcc": true,
+        "eu": true,
+        "usa": true,
+        "asia": true
+      },
+      "sustainability": {
+        "recyclable": true,
+        "food_grade": true,
+        "bpa_free": true,
+        "recycled_material": false
+      },
+      "traceability": {
+        "batch_number": "",
+        "harvest_date": "",
+        "production_date": "",
+        "expiry_date": "",
+        "factory_code": "GL-EGY-SPC",
+        "qr_verification": true
+      },
+      "documents": {
+        "coa": true,
+        "nutrition": true,
+        "specification": true,
+        "msds": false,
+        "origin_certificate": true,
+        "halal": true,
+        "iso22000": true,
+        "haccp": true,
+        "gmp": true
+      },
+      "front_label": {
+        "elements": [
+          "logo",
+          "product_name",
+          "lifestyle_image",
+          "100_natural",
+          "net_weight",
+          "origin_egypt",
+          "qr_small"
+        ],
+        "accent_usage": "Product name + frame"
+      },
+      "back_label": {
+        "ingredients": [
+          "100% Pure Sweet Paprika",
+          "No Additives",
+          "No Preservatives"
+        ],
+        "nutrition_facts": {
+          "serving_size": "5g",
+          "calories": 10,
+          "sugars": "0g"
+        },
+        "description": {
+          "ar": "بابريكا حلوة طبيعية 100%، ناعمة وعالية الجودة.",
+          "en": "100% Natural Sweet Paprika, fine and high quality."
+        },
+        "storage": "Store in a cool, dry place away from direct sunlight.",
+        "warnings": [
+          "May contain traces of allergens.",
+          "Keep away from children."
+        ],
+        "certifications": [
+          "HACCP",
+          "ISO 22000",
+          "GMP"
+        ],
+        "sustainability_claims": [
+          "Supports Local Farmers",
+          "Plastic-Free Packaging"
+        ]
+      },
+      "side_panel": {
+        "usage": "Add to cooking as desired.",
+        "grinding_level": "Fine"
+      }
+    },
+    {
+      "id": "S005",
+      "product_code": "SPC005",
+      "ref_id": "GL-LBL-SPC-005",
+      "collection": "spices",
+      "category": "Spices",
+      "name": {
+        "en": "Roasted Cumin",
+        "ar": "الكمون المحمص"
+      },
+      "accent_color": "#8B5A2B",
+      "packaging_profile": "spices_default",
+      "media": {
+        "profile": "roasted-cumin",
+        "hero": "cumin_hero.jpg",
+        "product": "cumin_jar.png",
+        "lifestyle": "cumin_lifestyle.jpg",
+        "catalog": "spices_catalog.pdf"
+      },
+      "sort_order": 120,
+      "status": {
+        "published": true,
+        "active": true,
+        "featured": false
+      },
+      "flags": {
+        "featured": false,
+        "new": false,
+        "bestseller": false
+      },
+      "markets": {
+        "gcc": true,
+        "eu": true,
+        "usa": true,
+        "asia": true
+      },
+      "sustainability": {
+        "recyclable": true,
+        "food_grade": true,
+        "bpa_free": true,
+        "recycled_material": false
+      },
+      "traceability": {
+        "batch_number": "",
+        "harvest_date": "",
+        "production_date": "",
+        "expiry_date": "",
+        "factory_code": "GL-EGY-SPC",
+        "qr_verification": true
+      },
+      "documents": {
+        "coa": true,
+        "nutrition": true,
+        "specification": true,
+        "msds": false,
+        "origin_certificate": true,
+        "halal": true,
+        "iso22000": true,
+        "haccp": true,
+        "gmp": true
+      },
+      "front_label": {
+        "elements": [
+          "logo",
+          "product_name",
+          "lifestyle_image",
+          "100_natural",
+          "net_weight",
+          "origin_egypt",
+          "qr_small"
+        ],
+        "accent_usage": "Product name + frame"
+      },
+      "back_label": {
+        "ingredients": [
+          "100% Pure Roasted Cumin",
+          "No Additives",
+          "No Preservatives"
+        ],
+        "nutrition_facts": {
+          "serving_size": "5g",
+          "calories": 10,
+          "sugars": "0g"
+        },
+        "description": {
+          "ar": "كمون محمص طبيعي 100%، ناعم وعالي الجودة.",
+          "en": "100% Natural Roasted Cumin, fine and high quality."
+        },
+        "storage": "Store in a cool, dry place away from direct sunlight.",
+        "warnings": [
+          "May contain traces of allergens.",
+          "Keep away from children."
+        ],
+        "certifications": [
+          "HACCP",
+          "ISO 22000",
+          "GMP"
+        ],
+        "sustainability_claims": [
+          "Supports Local Farmers",
+          "Plastic-Free Packaging"
+        ]
+      },
+      "side_panel": {
+        "usage": "Add to cooking as desired.",
+        "grinding_level": "Fine"
+      }
+    },
+    {
+      "id": "S006",
+      "product_code": "SPC006",
+      "ref_id": "GL-LBL-SPC-006",
+      "collection": "spices",
+      "category": "Spices",
+      "name": {
+        "en": "Seven Spices Blend",
+        "ar": "خلطة السبع بهارات"
+      },
+      "accent_color": "#6E8B3D",
+      "packaging_profile": "spices_default",
+      "media": {
+        "profile": "seven-spices-blend",
+        "hero": "seven_spices_hero.jpg",
+        "product": "seven_spices_jar.png",
+        "lifestyle": "seven_spices_lifestyle.jpg",
+        "catalog": "spices_catalog.pdf"
+      },
+      "sort_order": 130,
+      "status": {
+        "published": true,
+        "active": true,
+        "featured": true
+      },
+      "flags": {
+        "featured": false,
+        "new": false,
+        "bestseller": false
+      },
+      "markets": {
+        "gcc": true,
+        "eu": true,
+        "usa": true,
+        "asia": true
+      },
+      "sustainability": {
+        "recyclable": true,
+        "food_grade": true,
+        "bpa_free": true,
+        "recycled_material": false
+      },
+      "traceability": {
+        "batch_number": "",
+        "harvest_date": "",
+        "production_date": "",
+        "expiry_date": "",
+        "factory_code": "GL-EGY-SPC",
+        "qr_verification": true
+      },
+      "documents": {
+        "coa": true,
+        "nutrition": true,
+        "specification": true,
+        "msds": false,
+        "origin_certificate": true,
+        "halal": true,
+        "iso22000": true,
+        "haccp": true,
+        "gmp": true
+      },
+      "front_label": {
+        "elements": [
+          "logo",
+          "product_name",
+          "lifestyle_image",
+          "100_natural",
+          "net_weight",
+          "origin_egypt",
+          "qr_small"
+        ],
+        "accent_usage": "Product name + frame"
+      },
+      "back_label": {
+        "ingredients": [
+          "100% Pure Seven Spices Blend",
+          "No Additives",
+          "No Preservatives"
+        ],
+        "nutrition_facts": {
+          "serving_size": "5g",
+          "calories": 10,
+          "sugars": "0g"
+        },
+        "description": {
+          "ar": "خلطة السبع بهارات الطبيعية 100%، ناعمة وعالية الجودة.",
+          "en": "100% Natural Seven Spices Blend, fine and high quality."
+        },
+        "storage": "Store in a cool, dry place away from direct sunlight.",
+        "warnings": [
+          "May contain traces of allergens.",
+          "Keep away from children."
+        ],
+        "certifications": [
+          "HACCP",
+          "ISO 22000",
+          "GMP"
+        ],
+        "sustainability_claims": [
+          "Supports Local Farmers",
+          "Plastic-Free Packaging"
+        ]
+      },
+      "side_panel": {
+        "usage": "Add to cooking as desired.",
+        "grinding_level": "Fine"
+      }
+    },
+    {
+      "id": "H004",
+      "product_code": "HRB001",
+      "ref_id": "GL-LBL-HRB-001",
+      "collection": "herbs",
+      "category": "Herbs",
+      "name": {
+        "en": "Hibiscus Flowers",
+        "ar": "زهور الكركديه"
+      },
+      "accent_color": "#B22222",
+      "packaging_profile": "herbs_default",
+      "media": {
+        "profile": "hibiscus-flowers",
+        "hero": "hibiscus_hero.jpg",
+        "product": "hibiscus_pack.png",
+        "lifestyle": "hibiscus_lifestyle.jpg",
+        "catalog": "herbs_catalog.pdf"
+      },
+      "sort_order": 140,
+      "status": {
+        "published": true,
+        "active": true,
+        "featured": false
+      },
+      "flags": {
+        "featured": false,
+        "new": false,
+        "bestseller": false
+      },
+      "markets": {
+        "gcc": true,
+        "eu": true,
+        "usa": true,
+        "asia": true
+      },
+      "sustainability": {
+        "recyclable": true,
+        "food_grade": true,
+        "bpa_free": true,
+        "recycled_material": false
+      },
+      "traceability": {
+        "batch_number": "",
+        "harvest_date": "",
+        "production_date": "",
+        "expiry_date": "",
+        "factory_code": "GL-EGY-HRB",
+        "qr_verification": true
+      },
+      "documents": {
+        "coa": true,
+        "nutrition": true,
+        "specification": true,
+        "msds": false,
+        "origin_certificate": true,
+        "halal": true,
+        "iso22000": true,
+        "haccp": true,
+        "gmp": true
+      },
+      "front_label": {
+        "elements": [
+          "logo",
+          "product_name",
+          "lifestyle_image",
+          "100_natural",
+          "net_weight",
+          "origin_egypt",
+          "qr_small"
+        ],
+        "accent_usage": "Product name + frame"
+      },
+      "back_label": {
+        "ingredients": [
+          "100% Pure Hibiscus Flowers",
+          "No Additives",
+          "No Preservatives"
+        ],
+        "nutrition_facts": {
+          "serving_size": "5g",
+          "calories": 5,
+          "sugars": "0g"
+        },
+        "description": {
+          "ar": "زهور كركديه طبيعية 100%، عالية الجودة.",
+          "en": "100% Natural Hibiscus Flowers, high quality."
+        },
+        "storage": "Store in a cool, dry place away from direct sunlight.",
+        "warnings": [
+          "Consult a healthcare professional before use.",
+          "Keep away from children."
+        ],
+        "certifications": [
+          "HACCP",
+          "ISO 22000",
+          "GMP"
+        ],
+        "sustainability_claims": [
+          "Supports Sustainable Farming",
+          "Eco-Friendly Packaging"
+        ]
+      },
+      "side_panel": {
+        "usage": "Brew as tea or use in cooking.",
+        "scientific_name": "Hibiscus sabdariffa",
+        "brewing_instructions": "Steep 1-2 tablespoons in hot water for 5-7 minutes."
+      }
+    },
+    {
+      "id": "O001",
+      "product_code": "OIL001",
+      "ref_id": "GL-LBL-OIL-001",
+      "collection": "oils",
+      "category": "Natural Oils",
+      "name": {
+        "en": "Black Seed Oil",
+        "ar": "زيت حبة البركة"
+      },
+      "accent_color": "#1F1F1F",
+      "packaging_profile": "black_seed_oil",
+      "media": {
+        "profile": "black-seed-oil",
+        "hero": "black_seed_oil_hero.jpg",
+        "product": "black_seed_oil_bottle.png",
+        "lifestyle": "black_seed_oil_lifestyle.jpg",
+        "catalog": "oils_catalog.pdf"
+      },
+      "sort_order": 150,
+      "status": {
+        "published": true,
+        "active": true,
+        "featured": true
+      },
+      "flags": {
+        "featured": false,
+        "new": false,
+        "bestseller": false
+      },
+      "markets": {
+        "gcc": true,
+        "eu": true,
+        "usa": true,
+        "asia": true
+      },
+      "sustainability": {
+        "recyclable": true,
+        "food_grade": true,
+        "bpa_free": true,
+        "recycled_material": false
+      },
+      "traceability": {
+        "batch_number": "",
+        "harvest_date": "",
+        "production_date": "",
+        "expiry_date": "",
+        "factory_code": "GL-EGY-OIL",
+        "qr_verification": true
+      },
+      "documents": {
+        "coa": true,
+        "nutrition": true,
+        "specification": true,
+        "msds": false,
+        "origin_certificate": true,
+        "halal": true,
+        "iso22000": true,
+        "haccp": true,
+        "gmp": true
+      },
+      "front_label": {
+        "elements": [
+          "logo",
+          "product_name",
+          "lifestyle_image",
+          "100_natural",
+          "net_weight",
+          "origin_egypt",
+          "qr_small"
+        ],
+        "accent_usage": "Product name + frame"
+      },
+      "back_label": {
+        "ingredients": [
+          "100% Pure Cold-Pressed Black Seed Oil",
+          "No Additives",
+          "No Preservatives"
+        ],
+        "nutrition_facts": {
+          "serving_size": "15ml",
+          "calories": 120,
+          "sugars": "0g"
+        },
+        "description": {
+          "ar": "زيت حبة البركة النقي 100% بارد الضغط، غني بالثيموكينون.",
+          "en": "100% Pure Cold-Pressed Black Seed Oil, rich in Thymoquinone."
+        },
+        "storage": "Store in a cool, dark place away from direct sunlight.",
+        "warnings": [
+          "Consult a healthcare professional before use.",
+          "Keep away from children."
+        ],
+        "certifications": [
+          "HACCP",
+          "ISO 22000",
+          "GMP"
+        ],
+        "sustainability_claims": [
+          "Supports Local Farmers",
+          "Eco-Friendly Packaging"
+        ]
+      },
+      "side_panel": {
+        "usage": "Use as a dietary supplement or for cooking.",
+        "extraction_method": "Cold Pressed",
+        "bottle_protection": "Store in dark place."
+      }
+    }
+  ],
+  "legacy_products": [],
+  "missing_from_canonical": [],
+  "missing_from_legacy": [],
+  "duplicates": [
+    {
+      "product_id": "H001",
+      "sources": [
+        "intelligence\\certificate-validation-report.json",
+        "data\\product-master-v7\\GELS-product-links-v1.json",
+        "canonical\\analytics\\inventory-summary.json",
+        "canonical\\analytics\\top-products.json",
+        "canonical\\data\\master_products.json",
+        "canonical\\data\\product-master-v7\\GELS-product-links-v1.json"
+      ]
+    },
+    {
+      "product_id": "H002",
+      "sources": [
+        "intelligence\\certificate-validation-report.json",
+        "data\\product-master-v7\\GELS-product-links-v1.json",
+        "canonical\\analytics\\inventory-summary.json",
+        "canonical\\analytics\\top-products.json",
+        "canonical\\data\\master_products.json",
+        "canonical\\data\\product-master-v7\\GELS-product-links-v1.json"
+      ]
+    },
+    {
+      "product_id": "H003",
+      "sources": [
+        "intelligence\\certificate-validation-report.json",
+        "data\\product-master-v7\\GELS-product-links-v1.json",
+        "canonical\\analytics\\inventory-summary.json",
+        "canonical\\analytics\\top-products.json",
+        "canonical\\data\\master_products.json",
+        "canonical\\data\\product-master-v7\\GELS-product-links-v1.json"
+      ]
+    },
+    {
+      "product_id": "B001",
+      "sources": [
+        "intelligence\\certificate-validation-report.json",
+        "data\\product-master-v7\\GELS-product-links-v1.json",
+        "canonical\\analytics\\inventory-summary.json",
+        "canonical\\analytics\\top-products.json",
+        "canonical\\data\\master_products.json",
+        "canonical\\data\\product-master-v7\\GELS-product-links-v1.json"
+      ]
+    },
+    {
+      "product_id": "B002",
+      "sources": [
+        "intelligence\\certificate-validation-report.json",
+        "data\\product-master-v7\\GELS-product-links-v1.json",
+        "canonical\\analytics\\inventory-summary.json",
+        "canonical\\analytics\\top-products.json",
+        "canonical\\data\\master_products.json",
+        "canonical\\data\\product-master-v7\\GELS-product-links-v1.json"
+      ]
+    },
+    {
+      "product_id": "B003",
+      "sources": [
+        "intelligence\\certificate-validation-report.json",
+        "data\\product-master-v7\\GELS-product-links-v1.json",
+        "canonical\\data\\master_products.json",
+        "canonical\\data\\product-master-v7\\GELS-product-links-v1.json"
+      ]
+    },
+    {
+      "product_id": "B004",
+      "sources": [
+        "intelligence\\certificate-validation-report.json",
+        "data\\product-master-v7\\GELS-product-links-v1.json",
+        "canonical\\data\\master_products.json",
+        "canonical\\data\\product-master-v7\\GELS-product-links-v1.json"
+      ]
+    },
+    {
+      "product_id": "S001",
+      "sources": [
+        "intelligence\\certificate-validation-report.json",
+        "data\\product-master-v7\\GELS-product-links-v1.json",
+        "canonical\\data\\master_products.json",
+        "canonical\\data\\product-master-v7\\GELS-product-links-v1.json"
+      ]
+    },
+    {
+      "product_id": "S002",
+      "sources": [
+        "intelligence\\certificate-validation-report.json",
+        "data\\product-master-v7\\GELS-product-links-v1.json",
+        "canonical\\analytics\\inventory-summary.json",
+        "canonical\\analytics\\top-products.json",
+        "canonical\\data\\master_products.json",
+        "canonical\\data\\product-master-v7\\GELS-product-links-v1.json"
+      ]
+    },
+    {
+      "product_id": "S003",
+      "sources": [
+        "intelligence\\certificate-validation-report.json",
+        "data\\product-master-v7\\GELS-product-links-v1.json",
+        "canonical\\analytics\\inventory-summary.json",
+        "canonical\\analytics\\top-products.json",
+        "canonical\\data\\master_products.json",
+        "canonical\\data\\product-master-v7\\GELS-product-links-v1.json"
+      ]
+    },
+    {
+      "product_id": "S004",
+      "sources": [
+        "intelligence\\certificate-validation-report.json",
+        "data\\product-master-v7\\GELS-product-links-v1.json",
+        "canonical\\analytics\\inventory-summary.json",
+        "canonical\\analytics\\top-products.json",
+        "canonical\\data\\master_products.json",
+        "canonical\\data\\product-master-v7\\GELS-product-links-v1.json"
+      ]
+    },
+    {
+      "product_id": "S005",
+      "sources": [
+        "intelligence\\certificate-validation-report.json",
+        "data\\product-master-v7\\GELS-product-links-v1.json",
+        "canonical\\data\\master_products.json",
+        "canonical\\data\\product-master-v7\\GELS-product-links-v1.json"
+      ]
+    },
+    {
+      "product_id": "S006",
+      "sources": [
+        "intelligence\\certificate-validation-report.json",
+        "data\\product-master-v7\\GELS-product-links-v1.json",
+        "canonical\\data\\master_products.json",
+        "canonical\\data\\product-master-v7\\GELS-product-links-v1.json"
+      ]
+    },
+    {
+      "product_id": "H004",
+      "sources": [
+        "intelligence\\certificate-validation-report.json",
+        "data\\product-master-v7\\GELS-product-links-v1.json",
+        "canonical\\analytics\\inventory-summary.json",
+        "canonical\\analytics\\top-products.json",
+        "canonical\\data\\master_products.json",
+        "canonical\\data\\product-master-v7\\GELS-product-links-v1.json"
+      ]
+    },
+    {
+      "product_id": "O001",
+      "sources": [
+        "intelligence\\certificate-validation-report.json",
+        "data\\product-master-v7\\GELS-product-links-v1.json",
+        "canonical\\analytics\\inventory-summary.json",
+        "canonical\\analytics\\top-products.json",
+        "canonical\\data\\master_products.json",
+        "canonical\\data\\product-master-v7\\GELS-product-links-v1.json"
+      ]
+    }
+  ],
+  "summary": "Audited 6 product sources. Canonical products: 15. Legacy products (total unique): 15. Missing from Canonical: 0. Missing from Legacy: 0. Duplicates found: 15.",
+  "report_path": "intelligence\\master-data-integrity-report.json"
+}

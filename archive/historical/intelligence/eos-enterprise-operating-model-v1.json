@@ -1,0 +1,102 @@
+[
+    {
+        "Domain":  "SALES_ORDER",
+        "Owner":  "SALES_OPERATIONS",
+        "ServiceBoundary":  "EOS-SALES_ORDER-SERVICE",
+        "DatabaseBoundary":  "EOS_SALES_ORDER_MODEL",
+        "APIEndpoint":  "/api/eos/sales_order",
+        "Workflow":  "SALES_ORDER_LIFECYCLE_WORKFLOW",
+        "ImplementationPhase":  "PHASE_2_ORDER_MANAGEMENT",
+        "TargetState":  "ENTERPRISE_READY"
+    },
+    {
+        "Domain":  "MASTER_DATA",
+        "Owner":  "ENTERPRISE_ARCHITECTURE",
+        "ServiceBoundary":  "EOS-MASTER_DATA-SERVICE",
+        "DatabaseBoundary":  "EOS_MASTER_DATA_MODEL",
+        "APIEndpoint":  "/api/eos/master_data",
+        "Workflow":  "MASTER_DATA_LIFECYCLE_WORKFLOW",
+        "ImplementationPhase":  "PHASE_1_ENTERPRISE_FOUNDATION",
+        "TargetState":  "ENTERPRISE_READY"
+    },
+    {
+        "Domain":  "FINANCE",
+        "Owner":  "FINANCE_CONTROL",
+        "ServiceBoundary":  "EOS-FINANCE-SERVICE",
+        "DatabaseBoundary":  "EOS_FINANCE_MODEL",
+        "APIEndpoint":  "/api/eos/finance",
+        "Workflow":  "FINANCE_LIFECYCLE_WORKFLOW",
+        "ImplementationPhase":  "PHASE_4_FINANCIAL_CONTROL",
+        "TargetState":  "ENTERPRISE_READY"
+    },
+    {
+        "Domain":  "WORKFLOW",
+        "Owner":  "EOS_AUTOMATION_ENGINE",
+        "ServiceBoundary":  "EOS-WORKFLOW-SERVICE",
+        "DatabaseBoundary":  "EOS_WORKFLOW_MODEL",
+        "APIEndpoint":  "/api/eos/workflow",
+        "Workflow":  "WORKFLOW_LIFECYCLE_WORKFLOW",
+        "ImplementationPhase":  "PHASE_3_AUTOMATION_ENGINE",
+        "TargetState":  "ENTERPRISE_READY"
+    },
+    {
+        "Domain":  "QUALITY",
+        "Owner":  "QUALITY_ASSURANCE",
+        "ServiceBoundary":  "EOS-QUALITY-SERVICE",
+        "DatabaseBoundary":  "EOS_QUALITY_MODEL",
+        "APIEndpoint":  "/api/eos/quality",
+        "Workflow":  "QUALITY_LIFECYCLE_WORKFLOW",
+        "ImplementationPhase":  "PHASE_3_COMPLIANCE",
+        "TargetState":  "ENTERPRISE_READY"
+    },
+    {
+        "Domain":  "LOGISTICS",
+        "Owner":  "EXPORT_LOGISTICS",
+        "ServiceBoundary":  "EOS-LOGISTICS-SERVICE",
+        "DatabaseBoundary":  "EOS_LOGISTICS_MODEL",
+        "APIEndpoint":  "/api/eos/logistics",
+        "Workflow":  "LOGISTICS_LIFECYCLE_WORKFLOW",
+        "ImplementationPhase":  "PHASE_4_EXPORT_EXECUTION",
+        "TargetState":  "ENTERPRISE_READY"
+    },
+    {
+        "Domain":  "CUSTOMER",
+        "Owner":  "CRM",
+        "ServiceBoundary":  "EOS-CUSTOMER-SERVICE",
+        "DatabaseBoundary":  "EOS_CUSTOMER_MODEL",
+        "APIEndpoint":  "/api/eos/customer",
+        "Workflow":  "CUSTOMER_LIFECYCLE_WORKFLOW",
+        "ImplementationPhase":  "PHASE_5_CRM",
+        "TargetState":  "ENTERPRISE_READY"
+    },
+    {
+        "Domain":  "INVENTORY",
+        "Owner":  "OPERATIONS",
+        "ServiceBoundary":  "EOS-INVENTORY-SERVICE",
+        "DatabaseBoundary":  "EOS_INVENTORY_MODEL",
+        "APIEndpoint":  "/api/eos/inventory",
+        "Workflow":  "INVENTORY_LIFECYCLE_WORKFLOW",
+        "ImplementationPhase":  "PHASE_2_OPERATIONS",
+        "TargetState":  "ENTERPRISE_READY"
+    },
+    {
+        "Domain":  "PRODUCT",
+        "Owner":  "PRODUCT_MANAGEMENT",
+        "ServiceBoundary":  "EOS-PRODUCT-SERVICE",
+        "DatabaseBoundary":  "EOS_PRODUCT_MODEL",
+        "APIEndpoint":  "/api/eos/product",
+        "Workflow":  "PRODUCT_LIFECYCLE_WORKFLOW",
+        "ImplementationPhase":  "PHASE_1_CORE_PRODUCT_MASTER",
+        "TargetState":  "ENTERPRISE_READY"
+    },
+    {
+        "Domain":  "SUPPLIER",
+        "Owner":  "SUPPLY_CHAIN",
+        "ServiceBoundary":  "EOS-SUPPLIER-SERVICE",
+        "DatabaseBoundary":  "EOS_SUPPLIER_MODEL",
+        "APIEndpoint":  "/api/eos/supplier",
+        "Workflow":  "SUPPLIER_LIFECYCLE_WORKFLOW",
+        "ImplementationPhase":  "PHASE_1_SUPPLY_CHAIN",
+        "TargetState":  "ENTERPRISE_READY"
+    }
+]

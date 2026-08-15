@@ -1,0 +1,591 @@
+{
+  "source_file": "brain.py",
+  "entities": [
+    {
+      "name": "Product",
+      "type": "ENTITY",
+      "source_file": "brain.py",
+      "confidence": "HIGH",
+      "legacy_origin": "brain.py"
+    },
+    {
+      "name": "Supplier",
+      "type": "ENTITY",
+      "source_file": "brain.py",
+      "confidence": "HIGH",
+      "legacy_origin": "brain.py"
+    },
+    {
+      "name": "Customer",
+      "type": "ENTITY",
+      "source_file": "brain.py",
+      "confidence": "HIGH",
+      "legacy_origin": "brain.py"
+    },
+    {
+      "name": "Order",
+      "type": "ENTITY",
+      "source_file": "brain.py",
+      "confidence": "HIGH",
+      "legacy_origin": "brain.py"
+    },
+    {
+      "name": "Certificate",
+      "type": "ENTITY",
+      "source_file": "brain.py",
+      "confidence": "HIGH",
+      "legacy_origin": "brain.py"
+    },
+    {
+      "name": "Invoice",
+      "type": "ENTITY",
+      "source_file": "brain.py",
+      "confidence": "HIGH",
+      "legacy_origin": "brain.py"
+    }
+  ],
+  "relationships": [
+    {
+      "source_type": "supplier",
+      "relation": "iterates_over_supplier",
+      "target_type": "supplier",
+      "comment": "supplier_categories = supplier.get(\"category\", [])",
+      "source_line": 1345,
+      "type": "ITERATION",
+      "confidence": "MEDIUM",
+      "legacy_origin": "brain.py:1345"
+    },
+    {
+      "source_type": "product",
+      "relation": "iterates_over_product",
+      "target_type": "product",
+      "comment": "product_category = product.get(\"category\")",
+      "source_line": 1347,
+      "type": "ITERATION",
+      "confidence": "MEDIUM",
+      "legacy_origin": "brain.py:1347"
+    },
+    {
+      "source_type": "product",
+      "relation": "iterates_over_product",
+      "target_type": "product",
+      "comment": "product_id = product.get(\"id\") or product.get(\"ProductID\")",
+      "source_line": 1550,
+      "type": "ITERATION",
+      "confidence": "MEDIUM",
+      "legacy_origin": "brain.py:1550"
+    },
+    {
+      "source_type": "product",
+      "relation": "iterates_over_product",
+      "target_type": "product",
+      "comment": "product_id = product.get(\"id\") or product.get(\"ProductID\")",
+      "source_line": 1634,
+      "type": "ITERATION",
+      "confidence": "MEDIUM",
+      "legacy_origin": "brain.py:1634"
+    },
+    {
+      "source_type": "product",
+      "relation": "iterates_over_product",
+      "target_type": "product",
+      "comment": "product_id = product.get(\"id\") or product.get(\"ProductID\")",
+      "source_line": 1772,
+      "type": "ITERATION",
+      "confidence": "MEDIUM",
+      "legacy_origin": "brain.py:1772"
+    },
+    {
+      "source_type": "product",
+      "relation": "iterates_over_p",
+      "target_type": "p",
+      "comment": "pid = p.get(\"id\") or p.get(\"ProductID\") or p.get(\"product_id\") or p.get(\"code\")",
+      "source_line": 3149,
+      "type": "ITERATION",
+      "confidence": "MEDIUM",
+      "legacy_origin": "brain.py:3149"
+    },
+    {
+      "source_type": "product",
+      "relation": "iterates_over_p",
+      "target_type": "p",
+      "comment": "pid = p.get(\"id\") or p.get(\"ProductID\") or p.get(\"product_id\") or p.get(\"code\")",
+      "source_line": 3178,
+      "type": "ITERATION",
+      "confidence": "MEDIUM",
+      "legacy_origin": "brain.py:3178"
+    },
+    {
+      "source_type": "product",
+      "relation": "iterates_over_product",
+      "target_type": "product",
+      "comment": "category = product.get(\"category\", \"Honey\")",
+      "source_line": 3579,
+      "type": "ITERATION",
+      "confidence": "MEDIUM",
+      "legacy_origin": "brain.py:3579"
+    },
+    {
+      "source_type": "product",
+      "relation": "iterates_over_product",
+      "target_type": "product",
+      "comment": "specs = product.get(\"global_specs\", {})",
+      "source_line": 3662,
+      "type": "ITERATION",
+      "confidence": "MEDIUM",
+      "legacy_origin": "brain.py:3662"
+    },
+    {
+      "source_type": "product",
+      "relation": "iterates_over_product",
+      "target_type": "product",
+      "comment": "product_id = product.get(\"id\")",
+      "source_line": 3828,
+      "type": "ITERATION",
+      "confidence": "MEDIUM",
+      "legacy_origin": "brain.py:3828"
+    },
+    {
+      "source_type": "product",
+      "relation": "iterates_over_product",
+      "target_type": "product",
+      "comment": "product_id = product.get(\"product_id\")",
+      "source_line": 3912,
+      "type": "ITERATION",
+      "confidence": "MEDIUM",
+      "legacy_origin": "brain.py:3912"
+    },
+    {
+      "source_type": "product",
+      "relation": "iterates_over_p",
+      "target_type": "p",
+      "comment": "pid = p.get(\"id\")",
+      "source_line": 4093,
+      "type": "ITERATION",
+      "confidence": "MEDIUM",
+      "legacy_origin": "brain.py:4093"
+    },
+    {
+      "source_type": "product",
+      "relation": "iterates_over_product",
+      "target_type": "product",
+      "comment": "category = product.get(\"category\", \"Honey\")",
+      "source_line": 4343,
+      "type": "ITERATION",
+      "confidence": "MEDIUM",
+      "legacy_origin": "brain.py:4343"
+    }
+  ],
+  "business_rules": [
+    {
+      "condition": "any(p in rel_path for p in [\"GREENY-LIFE-EOS\", \"EOS-FINAL\", \"EOS-PRODUCTION\", \"unified-intelligence\"])",
+      "comment": "Only penalize if not in treasure list (already handled)",
+      "source_line": 474,
+      "type": "BUSINESS_RULE",
+      "confidence": "MEDIUM",
+      "legacy_origin": "brain.py:474"
+    },
+    {
+      "condition": "product_category in cert.get(\"applicable_to\", [])",
+      "comment": "Check if this is an export-specific certificate",
+      "source_line": 1560,
+      "type": "BUSINESS_RULE",
+      "confidence": "MEDIUM",
+      "legacy_origin": "brain.py:1560"
+    },
+    {
+      "condition": "the product is marked for that market\n                    markets = product.get(\"markets\", {})\n                    if is_export and markets",
+      "comment": "Only assign if the market is active",
+      "source_line": 1563,
+      "type": "BUSINESS_RULE",
+      "confidence": "MEDIUM",
+      "legacy_origin": "brain.py:1563"
+    },
+    {
+      "condition": "not is_export",
+      "comment": "General certificates apply to all products in that category",
+      "source_line": 1581,
+      "type": "BUSINESS_RULE",
+      "confidence": "MEDIUM",
+      "legacy_origin": "brain.py:1581"
+    },
+    {
+      "condition": "link.get(\"product_id\") == product_id",
+      "comment": "In a real implementation, we would look up the certificate name from certificates.json",
+      "source_line": 2883,
+      "type": "BUSINESS_RULE",
+      "confidence": "MEDIUM",
+      "legacy_origin": "brain.py:2883"
+    }
+  ],
+  "master_data": [
+    {
+      "name": "suppliers",
+      "content": "suppliers = []\n        ",
+      "source_line": 1259,
+      "type": "MASTER_DATA",
+      "confidence": "HIGH",
+      "legacy_origin": "brain.py:1259"
+    },
+    {
+      "name": "suppliers",
+      "content": "suppliers = [\n                {\n                    \"supplier_id\": \"SUP-EGY-HONEY-001\",\n                    \"name\": \"Nile Valley Honey Co.\",\n                    \"category\": [\"Honey\"],\n                    \"country\": \"Egypt\",\n                    \"city\": \"Cairo\",\n                    \"contact\": {\"email\": \"info@nilevalleyhoney.com\", \"phone\": \"+20 2 1234 5678\", \"website\": \"https://nilevalleyhoney.com\"},\n                    \"capabilities\": {\"production\": True, \"private_label\": True, \"export_ready\": Tru...",
+      "source_line": 1278,
+      "type": "MASTER_DATA",
+      "confidence": "HIGH",
+      "legacy_origin": "brain.py:1278"
+    },
+    {
+      "name": "master_certificates",
+      "content": "master_certificates = [\n            {\n                \"certificate_id\": \"CERT-HALAL-001\",\n                \"name\": \"Halal\",\n                \"category\": \"Religious\",\n                \"description\": \"Certifies that the product is permissible under Islamic law.\",\n                \"applicable_to\": [\"Honey\", \"Bee Products\", \"Spices\", \"Herbs\", \"Natural Oils\", \"Premium Spices\", \"Herbal Products\"]\n            },\n            {\n                \"certificate_id\": \"CERT-HACCP-001\",\n                \"name\": \"HACC...",
+      "source_line": 1470,
+      "type": "MASTER_DATA",
+      "confidence": "HIGH",
+      "legacy_origin": "brain.py:1470"
+    },
+    {
+      "name": "ports",
+      "content": "ports = [\n            {\"id\": \"PORT-EG-ALEX\", \"name\": \"Alexandria Port\", \"country\": \"Egypt\", \"type\": \"sea\"},\n            {\"id\": \"PORT-EG-DAM\", \"name\": \"Damietta Port\", \"country\": \"Egypt\", \"type\": \"sea\"},\n            {\"id\": \"PORT-EG-CAI\", \"name\": \"Cairo Airport\", \"country\": \"Egypt\", \"type\": \"air\"},\n            {\"id\": \"PORT-EU-ROT\", \"name\": \"Rotterdam Port\", \"country\": \"Netherlands\", \"type\": \"sea\"},\n            {\"id\": \"PORT-EU-HAM\", \"name\": \"Hamburg Port\", \"country\": \"Germany\", \"type\": \"sea\"},\n    ...",
+      "source_line": 2642,
+      "type": "MASTER_DATA",
+      "confidence": "HIGH",
+      "legacy_origin": "brain.py:2642"
+    },
+    {
+      "name": "carriers",
+      "content": "carriers = [\n            {\"id\": \"CAR-001\", \"name\": \"Maersk\", \"type\": \"sea\"},\n            {\"id\": \"CAR-002\", \"name\": \"MSC\", \"type\": \"sea\"},\n            {\"id\": \"CAR-003\", \"name\": \"CMA CGM\", \"type\": \"sea\"},\n            {\"id\": \"CAR-004\", \"name\": \"DHL\", \"type\": \"air\"},\n            {\"id\": \"CAR-005\", \"name\": \"FedEx\", \"type\": \"air\"},\n            {\"id\": \"CAR-006\", \"name\": \"UPS\", \"type\": \"air\"}\n        ]",
+      "source_line": 2653,
+      "type": "MASTER_DATA",
+      "confidence": "HIGH",
+      "legacy_origin": "brain.py:2653"
+    },
+    {
+      "name": "markets",
+      "content": "markets = {\n            \"gcc\": {\"countries\": [\"UAE\", \"Saudi Arabia\", \"Kuwait\", \"Qatar\", \"Bahrain\", \"Oman\"], \"segment\": \"GCC Distributor\"},\n            \"eu\": {\"countries\": [\"Germany\", \"France\", \"UK\", \"Netherlands\", \"Italy\", \"Spain\"], \"segment\": \"European Distributor\"},\n            \"usa\": {\"countries\": [\"USA\"], \"segment\": \"North American Importer\"},\n            \"asia\": {\"countries\": [\"Singapore\", \"Malaysia\", \"Japan\", \"South Korea\", \"China\"], \"segment\": \"Asian Distributor\"}\n        }",
+      "source_line": 2035,
+      "type": "MASTER_DATA",
+      "confidence": "HIGH",
+      "legacy_origin": "brain.py:2035"
+    },
+    {
+      "name": "ports",
+      "content": "ports = {\n                \"eu\": [p for p in ports if p[\"country\"] in [\"Netherlands\", \"Germany\"]],\n                \"usa\": [p for p in ports if p[\"country\"] == \"USA\"],\n                \"gcc\": [p for p in ports if p[\"country\"] == \"UAE\"],\n                \"asia\": [p for p in ports if p[\"country\"] == \"Singapore\"]\n            }",
+      "source_line": 2693,
+      "type": "MASTER_DATA",
+      "confidence": "HIGH",
+      "legacy_origin": "brain.py:2693"
+    },
+    {
+      "name": "packaging_profiles",
+      "content": "packaging_profiles = {\n            \"Honey\": {\n                \"b2c\": {\"material\": \"Glass Jar\", \"sizes\": [\"250g\", \"500g\", \"750g\", \"1kg\"]},\n                \"refill\": {\"material\": \"Stand-up Pouch\", \"sizes\": [\"500g\", \"1kg\"]},\n                \"food_service\": {\"material\": \"Food Grade Bucket\", \"sizes\": [\"3kg\", \"5kg\", \"10kg\"]},\n                \"wholesale\": {\"material\": \"Food Grade Drum\", \"sizes\": [\"25kg\", \"50kg\", \"300kg\"]},\n                \"private_label\": {\"available\": True, \"services\": [\"Custom Packag...",
+      "source_line": 3754,
+      "type": "MASTER_DATA",
+      "confidence": "HIGH",
+      "legacy_origin": "brain.py:3754"
+    },
+    {
+      "name": "visual_identity",
+      "content": "visual_identity = {\n            \"fixed\": {\n                \"brand\": \"GREENY LIFE\",\n                \"tagline\": \"From Nature, For Life\",\n                \"primary_color\": \"#51A51C\",\n                \"primary_white\": \"#FFFFFF\",\n                \"typography\": {\n                    \"headings\": \"Cinzel Bold\",\n                    \"body\": \"Montserrat Regular\"\n                }\n            },\n            \"accent_colors\": {\n                \"Wildflower Honey\": \"#C9A227\",\n                \"Clover Honey\": \"#D798...",
+      "source_line": 3788,
+      "type": "MASTER_DATA",
+      "confidence": "HIGH",
+      "legacy_origin": "brain.py:3788"
+    },
+    {
+      "name": "packaging_profiles",
+      "content": "packaging_profiles = {}\n                for p in products:",
+      "source_line": 4092,
+      "type": "MASTER_DATA",
+      "confidence": "HIGH",
+      "legacy_origin": "brain.py:4092"
+    }
+  ],
+  "capabilities": [
+    {
+      "name": "run_asset_classifier",
+      "type": "EXECUTION",
+      "source_line": 291,
+      "confidence": "MEDIUM",
+      "legacy_origin": "brain.py:291"
+    },
+    {
+      "name": "run_consolidation",
+      "type": "EXECUTION",
+      "source_line": 895,
+      "confidence": "MEDIUM",
+      "legacy_origin": "brain.py:895"
+    },
+    {
+      "name": "run_canonical_validation",
+      "type": "EXECUTION",
+      "source_line": 1031,
+      "confidence": "MEDIUM",
+      "legacy_origin": "brain.py:1031"
+    },
+    {
+      "name": "run_deep_clean",
+      "type": "EXECUTION",
+      "source_line": 2930,
+      "confidence": "MEDIUM",
+      "legacy_origin": "brain.py:2930"
+    },
+    {
+      "name": "run_master_data_audit",
+      "type": "EXECUTION",
+      "source_line": 3091,
+      "confidence": "MEDIUM",
+      "legacy_origin": "brain.py:3091"
+    },
+    {
+      "name": "run_deep_packaging_audit",
+      "type": "EXECUTION",
+      "source_line": 3989,
+      "confidence": "MEDIUM",
+      "legacy_origin": "brain.py:3989"
+    },
+    {
+      "name": "run_integrity_analysis",
+      "type": "EXECUTION",
+      "source_line": 4538,
+      "confidence": "MEDIUM",
+      "legacy_origin": "brain.py:4538"
+    },
+    {
+      "name": "run_continuous_evolution_cycle",
+      "type": "EXECUTION",
+      "source_line": 4697,
+      "confidence": "MEDIUM",
+      "legacy_origin": "brain.py:4697"
+    },
+    {
+      "name": "run_arch_guard",
+      "type": "EXECUTION",
+      "source_line": 4742,
+      "confidence": "MEDIUM",
+      "legacy_origin": "brain.py:4742"
+    },
+    {
+      "name": "run_govern_kit",
+      "type": "EXECUTION",
+      "source_line": 4794,
+      "confidence": "MEDIUM",
+      "legacy_origin": "brain.py:4794"
+    },
+    {
+      "name": "run_ouro_loop",
+      "type": "EXECUTION",
+      "source_line": 4825,
+      "confidence": "MEDIUM",
+      "legacy_origin": "brain.py:4825"
+    },
+    {
+      "name": "run_sonarqube_scan",
+      "type": "EXECUTION",
+      "source_line": 4868,
+      "confidence": "MEDIUM",
+      "legacy_origin": "brain.py:4868"
+    },
+    {
+      "name": "run_security_scan",
+      "type": "EXECUTION",
+      "source_line": 4929,
+      "confidence": "MEDIUM",
+      "legacy_origin": "brain.py:4929"
+    },
+    {
+      "name": "run_performance_test",
+      "type": "EXECUTION",
+      "source_line": 4980,
+      "confidence": "MEDIUM",
+      "legacy_origin": "brain.py:4980"
+    },
+    {
+      "name": "run_documentation_agent",
+      "type": "EXECUTION",
+      "source_line": 5075,
+      "confidence": "MEDIUM",
+      "legacy_origin": "brain.py:5075"
+    },
+    {
+      "name": "run_unified_cleanup",
+      "type": "EXECUTION",
+      "source_line": 5796,
+      "confidence": "MEDIUM",
+      "legacy_origin": "brain.py:5796"
+    },
+    {
+      "name": "run_daily_audit",
+      "type": "EXECUTION",
+      "source_line": 5967,
+      "confidence": "MEDIUM",
+      "legacy_origin": "brain.py:5967"
+    },
+    {
+      "name": "run_periodic_monitoring",
+      "type": "EXECUTION",
+      "source_line": 6043,
+      "confidence": "MEDIUM",
+      "legacy_origin": "brain.py:6043"
+    },
+    {
+      "name": "run_scheduler_mode",
+      "type": "EXECUTION",
+      "source_line": 6062,
+      "confidence": "MEDIUM",
+      "legacy_origin": "brain.py:6062"
+    },
+    {
+      "name": "build_supplier_master",
+      "type": "BUILD",
+      "source_line": 1220,
+      "confidence": "MEDIUM",
+      "legacy_origin": "brain.py:1220"
+    },
+    {
+      "name": "build_certificate_master",
+      "type": "BUILD",
+      "source_line": 1428,
+      "confidence": "MEDIUM",
+      "legacy_origin": "brain.py:1428"
+    },
+    {
+      "name": "build_els",
+      "type": "BUILD",
+      "source_line": 1694,
+      "confidence": "MEDIUM",
+      "legacy_origin": "brain.py:1694"
+    },
+    {
+      "name": "build_customer_domain",
+      "type": "BUILD",
+      "source_line": 1961,
+      "confidence": "MEDIUM",
+      "legacy_origin": "brain.py:1961"
+    },
+    {
+      "name": "build_analytics_layer",
+      "type": "BUILD",
+      "source_line": 2367,
+      "confidence": "MEDIUM",
+      "legacy_origin": "brain.py:2367"
+    },
+    {
+      "name": "build_logistics_system",
+      "type": "BUILD",
+      "source_line": 2594,
+      "confidence": "MEDIUM",
+      "legacy_origin": "brain.py:2594"
+    },
+    {
+      "name": "build_finance_system",
+      "type": "BUILD",
+      "source_line": 3223,
+      "confidence": "MEDIUM",
+      "legacy_origin": "brain.py:3223"
+    },
+    {
+      "name": "build_inventory_system",
+      "type": "BUILD",
+      "source_line": 3338,
+      "confidence": "MEDIUM",
+      "legacy_origin": "brain.py:3338"
+    },
+    {
+      "name": "build_crm_system",
+      "type": "BUILD",
+      "source_line": 3431,
+      "confidence": "MEDIUM",
+      "legacy_origin": "brain.py:3431"
+    },
+    {
+      "name": "build_packaging_visual_engine",
+      "type": "BUILD",
+      "source_line": 3728,
+      "confidence": "MEDIUM",
+      "legacy_origin": "brain.py:3728"
+    },
+    {
+      "name": "analyze_visual_brand",
+      "type": "ANALYSIS",
+      "source_line": 5425,
+      "confidence": "MEDIUM",
+      "legacy_origin": "brain.py:5425"
+    },
+    {
+      "name": "analyze_packaging_policies",
+      "type": "ANALYSIS",
+      "source_line": 5486,
+      "confidence": "MEDIUM",
+      "legacy_origin": "brain.py:5486"
+    },
+    {
+      "name": "analyze_ui_structure",
+      "type": "ANALYSIS",
+      "source_line": 5517,
+      "confidence": "MEDIUM",
+      "legacy_origin": "brain.py:5517"
+    },
+    {
+      "name": "analyze_inventory",
+      "type": "ANALYSIS",
+      "source_line": 5563,
+      "confidence": "MEDIUM",
+      "legacy_origin": "brain.py:5563"
+    },
+    {
+      "name": "analyze_duplication_reason",
+      "type": "ANALYSIS",
+      "source_line": 5618,
+      "confidence": "MEDIUM",
+      "legacy_origin": "brain.py:5618"
+    },
+    {
+      "name": "generate_dynamic_packaging",
+      "type": "GENERATION",
+      "source_line": 3677,
+      "confidence": "MEDIUM",
+      "legacy_origin": "brain.py:3677"
+    },
+    {
+      "name": "generate_gels_labels_with_visuals",
+      "type": "GENERATION",
+      "source_line": 3889,
+      "confidence": "MEDIUM",
+      "legacy_origin": "brain.py:3889"
+    },
+    {
+      "name": "integrate_business_assets",
+      "type": "INTEGRATION",
+      "source_line": 4198,
+      "confidence": "MEDIUM",
+      "legacy_origin": "brain.py:4198"
+    },
+    {
+      "name": "validate_global_specs",
+      "type": "VALIDATION",
+      "source_line": 3647,
+      "confidence": "MEDIUM",
+      "legacy_origin": "brain.py:3647"
+    },
+    {
+      "name": "execute_full_pipeline",
+      "type": "EXECUTION",
+      "source_line": 6092,
+      "confidence": "MEDIUM",
+      "legacy_origin": "brain.py:6092"
+    }
+  ],
+  "workflows": [],
+  "evidence": [
+    {
+      "source": "brain.py",
+      "extracted_at": "2026-08-09",
+      "total_lines": 6608,
+      "extraction_rules": [
+        "regex_based",
+        "pattern_matching"
+      ],
+      "confidence": "HIGH"
+    }
+  ]
+}

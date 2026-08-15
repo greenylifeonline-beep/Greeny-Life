@@ -1,0 +1,19 @@
+{
+    "OrderID":  "GL-EXP-0001",
+    "Status":  "READY_TO_EXECUTE",
+    "Workflow":  [
+                     "Supplier Verified",
+                     "Product Approved",
+                     "Quality Checked",
+                     "Inventory Reserved",
+                     "Shipment Created",
+                     "Invoice Created"
+                 ],
+    "Items":  [
+                  {
+                      "SKU":  "GL-HONEY-001",
+                      "Quantity":  "500 KG"
+                  }
+              ],
+    "CustomerCountry":  "Norway"
+}

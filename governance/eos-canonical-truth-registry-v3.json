@@ -1,0 +1,141 @@
+{
+  "system": "GREENY-LIFE-EOS",
+  "version": "3.0.0",
+  "canonical_root": "canonical",
+  "domains": [
+    {
+      "name": "product",
+      "owner": "Product Domain",
+      "master_data": [
+        "canonical/data/master_products.json"
+      ],
+      "optional_files_found": [],
+      "optional_files_missing": [
+        "canonical/data/product-workflow.json",
+        "canonical/data/product-schema.json"
+      ],
+      "status": "VALID"
+    },
+    {
+      "name": "supplier",
+      "owner": "Supplier Domain",
+      "master_data": [
+        "canonical/data/suppliers.json"
+      ],
+      "optional_files_found": [],
+      "optional_files_missing": [
+        "canonical/data/supplier-workflow.json",
+        "canonical/data/supplier-schema.json"
+      ],
+      "status": "VALID"
+    },
+    {
+      "name": "certificate",
+      "owner": "Certificate Domain",
+      "master_data": [
+        "canonical/data/certificates.json"
+      ],
+      "optional_files_found": [],
+      "optional_files_missing": [
+        "canonical/data/certificate-documents.json"
+      ],
+      "status": "VALID"
+    },
+    {
+      "name": "customer",
+      "owner": "Customer Domain",
+      "master_data": [
+        "canonical/data/customer-domain/customers.json"
+      ],
+      "optional_files_found": [],
+      "optional_files_missing": [
+        "canonical/data/customer-domain/customer-workflow.json"
+      ],
+      "status": "VALID"
+    },
+    {
+      "name": "analytics",
+      "owner": "Analytics Domain",
+      "master_data": [
+        "canonical/analytics/sales-summary.json"
+      ],
+      "optional_files_found": [
+        "canonical/analytics/inventory-summary.json"
+      ],
+      "optional_files_missing": [
+        "canonical/analytics/analytics-workflow.json"
+      ],
+      "status": "VALID"
+    },
+    {
+      "name": "finance",
+      "owner": "Finance Domain",
+      "master_data": [
+        "canonical/finance/finance-master.json"
+      ],
+      "optional_files_found": [
+        "canonical/finance/workflows.json"
+      ],
+      "optional_files_missing": [
+        "canonical/finance/transactions.json"
+      ],
+      "status": "VALID"
+    },
+    {
+      "name": "inventory",
+      "owner": "Inventory Domain",
+      "master_data": [
+        "canonical/inventory/inventory-master-v1.json"
+      ],
+      "optional_files_found": [
+        "canonical/inventory/stock-levels.json"
+      ],
+      "optional_files_missing": [
+        "canonical/inventory/inventory-workflow.json"
+      ],
+      "status": "VALID"
+    },
+    {
+      "name": "logistics",
+      "owner": "Logistics Domain",
+      "master_data": [
+        "canonical/logistics/shipments.json"
+      ],
+      "optional_files_found": [],
+      "optional_files_missing": [
+        "canonical/logistics/tracking.json",
+        "canonical/logistics/logistics-workflow.json"
+      ],
+      "status": "VALID"
+    },
+    {
+      "name": "compliance",
+      "owner": "Compliance Domain",
+      "master_data": [
+        "canonical/data/compliance-master.json"
+      ],
+      "optional_files_found": [],
+      "optional_files_missing": [
+        "canonical/data/compliance-documents.json"
+      ],
+      "status": "VALID"
+    },
+    {
+      "name": "administration",
+      "owner": "Administration Domain",
+      "master_data": [
+        "canonical/data/administration-master.json"
+      ],
+      "optional_files_found": [],
+      "optional_files_missing": [
+        "canonical/data/users.json",
+        "canonical/data/roles.json",
+        "canonical/data/permissions.json"
+      ],
+      "status": "VALID"
+    }
+  ],
+  "validation_status": "PASSED",
+  "validated_at": "2026-08-05T18:02:25.625585",
+  "note": "Optional files (workflow, database, schema) are not required for VALID status."
+}

@@ -1,0 +1,254 @@
+[
+    {
+        "File":  "\\app\\api\\products\\route.ts",
+        "Size":  1679,
+        "Lines":  58,
+        "ExecutionSignals":  "API_ENTRY,ASYNC_EXECUTION,BUSINESS_FUNCTION,DATABASE_CREATE,PRODUCT,SUPPLIER,STATE_WORKFLOW"
+    },
+    {
+        "File":  "\\app\\api\\sales-orders\\route.ts",
+        "Size":  1879,
+        "Lines":  67,
+        "ExecutionSignals":  "API_ENTRY,ASYNC_EXECUTION,BUSINESS_FUNCTION,PRODUCT,CUSTOMER_SALES,STATE_WORKFLOW"
+    },
+    {
+        "File":  "\\app\\api\\suppliers\\route.ts",
+        "Size":  1471,
+        "Lines":  48,
+        "ExecutionSignals":  "API_ENTRY,ASYNC_EXECUTION,BUSINESS_FUNCTION,DATABASE_CREATE,PRODUCT,SUPPLIER,STATE_WORKFLOW"
+    },
+    {
+        "File":  "\\app\\api\\workflow\\route.ts",
+        "Size":  1971,
+        "Lines":  55,
+        "ExecutionSignals":  "API_ENTRY,ASYNC_EXECUTION,BUSINESS_FUNCTION,STATE_WORKFLOW,AUDIT_TRACE"
+    },
+    {
+        "File":  "\\app\\layout.tsx",
+        "Size":  316,
+        "Lines":  18,
+        "ExecutionSignals":  "BUSINESS_FUNCTION,PRODUCT"
+    },
+    {
+        "File":  "\\app\\page.tsx",
+        "Size":  4746,
+        "Lines":  152,
+        "ExecutionSignals":  "ASYNC_EXECUTION,BUSINESS_FUNCTION,PRODUCT,STATE_WORKFLOW"
+    },
+    {
+        "File":  "\\eos-core\\intelligence\\intelligence\\core\\confidence.ts",
+        "Size":  259,
+        "Lines":  20,
+        "ExecutionSignals":  "BUSINESS_FUNCTION"
+    },
+    {
+        "File":  "\\eos-core\\intelligence\\intelligence\\core\\engine-registry.ts",
+        "Size":  1217,
+        "Lines":  99,
+        "ExecutionSignals":  "API_ENTRY,BUSINESS_FUNCTION,PRODUCT,QUALITY,STATE_WORKFLOW,AUDIT_TRACE"
+    },
+    {
+        "File":  "\\eos-core\\intelligence\\intelligence\\core\\report-writer.ts",
+        "Size":  6607,
+        "Lines":  473,
+        "ExecutionSignals":  "BUSINESS_FUNCTION,PRODUCT,STATE_WORKFLOW"
+    },
+    {
+        "File":  "\\eos-core\\intelligence\\intelligence\\engines\\audit-engine.ts",
+        "Size":  4836,
+        "Lines":  399,
+        "ExecutionSignals":  "BUSINESS_FUNCTION,PRODUCT,QUALITY,STATE_WORKFLOW,AUDIT_TRACE"
+    },
+    {
+        "File":  "\\eos-core\\intelligence\\intelligence\\engines\\cleanup-engine.ts",
+        "Size":  3579,
+        "Lines":  308,
+        "ExecutionSignals":  "BUSINESS_FUNCTION"
+    },
+    {
+        "File":  "\\eos-core\\intelligence\\intelligence\\engines\\data-integrity-engine.ts",
+        "Size":  11442,
+        "Lines":  623,
+        "ExecutionSignals":  "BUSINESS_FUNCTION,PRODUCT,STATE_WORKFLOW"
+    },
+    {
+        "File":  "\\eos-core\\intelligence\\intelligence\\engines\\duplicate-engine-v2.ts",
+        "Size":  2886,
+        "Lines":  311,
+        "ExecutionSignals":  "BUSINESS_FUNCTION,PRODUCT"
+    },
+    {
+        "File":  "\\eos-core\\intelligence\\intelligence\\health\\health-reporter.ts",
+        "Size":  1235,
+        "Lines":  94,
+        "ExecutionSignals":  "BUSINESS_FUNCTION,STATE_WORKFLOW"
+    },
+    {
+        "File":  "\\eos-core\\intelligence\\intelligence\\memory\\project-memory.ts",
+        "Size":  1979,
+        "Lines":  168,
+        "ExecutionSignals":  "API_ENTRY,BUSINESS_FUNCTION,STATE_WORKFLOW,AUDIT_TRACE"
+    },
+    {
+        "File":  "\\eos-core\\intelligence\\intelligence\\rules\\duplicate-rules.ts",
+        "Size":  667,
+        "Lines":  61,
+        "ExecutionSignals":  "PRODUCT"
+    },
+    {
+        "File":  "\\eos-core\\intelligence\\intelligence\\scanners\\duplicate-scanner.ts",
+        "Size":  298,
+        "Lines":  24,
+        "ExecutionSignals":  "BUSINESS_FUNCTION"
+    },
+    {
+        "File":  "\\eos-core\\intelligence\\intelligence\\scanners\\json-scanner.ts",
+        "Size":  747,
+        "Lines":  58,
+        "ExecutionSignals":  "BUSINESS_FUNCTION,STATE_WORKFLOW"
+    },
+    {
+        "File":  "\\eos-core\\intelligence\\intelligence\\schemas\\product-schema-map.ts",
+        "Size":  5349,
+        "Lines":  478,
+        "ExecutionSignals":  "BUSINESS_FUNCTION,PRODUCT,QUALITY,STATE_WORKFLOW,AUDIT_TRACE"
+    },
+    {
+        "File":  "\\eos-core\\intelligence\\intelligence\\test\\test-audit.ts",
+        "Size":  172,
+        "Lines":  17,
+        "ExecutionSignals":  "QUALITY,AUDIT_TRACE"
+    },
+    {
+        "File":  "\\eos-core\\intelligence\\intelligence\\test\\test-cleanup.ts",
+        "Size":  141,
+        "Lines":  15,
+        "ExecutionSignals":  "AUDIT_TRACE"
+    },
+    {
+        "File":  "\\eos-core\\intelligence\\intelligence\\test\\test-duplicate-v2.ts",
+        "Size":  703,
+        "Lines":  66,
+        "ExecutionSignals":  "AUDIT_TRACE"
+    },
+    {
+        "File":  "\\eos-core\\intelligence\\intelligence\\test\\test-health.ts",
+        "Size":  149,
+        "Lines":  15,
+        "ExecutionSignals":  "AUDIT_TRACE"
+    },
+    {
+        "File":  "\\eos-core\\intelligence\\intelligence\\test\\test-integrity.ts",
+        "Size":  173,
+        "Lines":  9,
+        "ExecutionSignals":  "AUDIT_TRACE"
+    },
+    {
+        "File":  "\\eos-core\\intelligence\\intelligence\\test\\test-registry.ts",
+        "Size":  131,
+        "Lines":  13,
+        "ExecutionSignals":  "AUDIT_TRACE"
+    },
+    {
+        "File":  "\\eos-core\\intelligence\\intelligence\\duplicate-engine.ts",
+        "Size":  8880,
+        "Lines":  766,
+        "ExecutionSignals":  "BUSINESS_FUNCTION,PRODUCT"
+    },
+    {
+        "File":  "\\eos-core\\intelligence\\intelligence\\gl-dos.ts",
+        "Size":  712,
+        "Lines":  62,
+        "ExecutionSignals":  "BUSINESS_FUNCTION,QUALITY,AUDIT_TRACE"
+    },
+    {
+        "File":  "\\eos-core\\intelligence\\intelligence\\index.ts",
+        "Size":  3134,
+        "Lines":  219,
+        "ExecutionSignals":  "BUSINESS_FUNCTION,PRODUCT,STATE_WORKFLOW,AUDIT_TRACE"
+    },
+    {
+        "File":  "\\eos-core\\intelligence\\intelligence\\intelligence-test.ts",
+        "Size":  1741,
+        "Lines":  187,
+        "ExecutionSignals":  "BUSINESS_FUNCTION,PRODUCT,STATE_WORKFLOW,AUDIT_TRACE"
+    },
+    {
+        "File":  "\\eos-core\\intelligence\\intelligence\\product-audit.ts",
+        "Size":  1100,
+        "Lines":  109,
+        "ExecutionSignals":  "BUSINESS_FUNCTION,PRODUCT,QUALITY,STATE_WORKFLOW,AUDIT_TRACE"
+    },
+    {
+        "File":  "\\eos-core\\intelligence\\intelligence\\project-scan.ts",
+        "Size":  1535,
+        "Lines":  127,
+        "ExecutionSignals":  "BUSINESS_FUNCTION,AUDIT_TRACE"
+    },
+    {
+        "File":  "\\lib\\data\\collections.ts",
+        "Size":  283,
+        "Lines":  11,
+        "ExecutionSignals":  "API_ENTRY,BUSINESS_FUNCTION"
+    },
+    {
+        "File":  "\\lib\\data\\documents.ts",
+        "Size":  1095,
+        "Lines":  33,
+        "ExecutionSignals":  "API_ENTRY,ASYNC_EXECUTION,BUSINESS_FUNCTION"
+    },
+    {
+        "File":  "\\lib\\data\\global.ts",
+        "Size":  668,
+        "Lines":  43,
+        "ExecutionSignals":  "API_ENTRY,BUSINESS_FUNCTION"
+    },
+    {
+        "File":  "\\lib\\data\\markets.ts",
+        "Size":  1031,
+        "Lines":  32,
+        "ExecutionSignals":  "API_ENTRY,ASYNC_EXECUTION,BUSINESS_FUNCTION,STATE_WORKFLOW"
+    },
+    {
+        "File":  "\\lib\\data\\media.ts",
+        "Size":  2380,
+        "Lines":  126,
+        "ExecutionSignals":  "API_ENTRY,BUSINESS_FUNCTION,PRODUCT,AUDIT_TRACE"
+    },
+    {
+        "File":  "\\lib\\data\\packaging-profiles.ts",
+        "Size":  736,
+        "Lines":  33,
+        "ExecutionSignals":  "API_ENTRY,BUSINESS_FUNCTION,PRODUCT"
+    },
+    {
+        "File":  "\\lib\\data\\packaging.ts",
+        "Size":  1231,
+        "Lines":  63,
+        "ExecutionSignals":  "API_ENTRY,BUSINESS_FUNCTION"
+    },
+    {
+        "File":  "\\lib\\data\\products.ts",
+        "Size":  3564,
+        "Lines":  121,
+        "ExecutionSignals":  "API_ENTRY,ASYNC_EXECUTION,BUSINESS_FUNCTION,PRODUCT,STATE_WORKFLOW"
+    },
+    {
+        "File":  "\\lib\\workflowEngine.ts",
+        "Size":  3212,
+        "Lines":  83,
+        "ExecutionSignals":  "ASYNC_EXECUTION,BUSINESS_FUNCTION,PRODUCT,SUPPLIER,INVENTORY,QUALITY,CUSTOMER_SALES,STATE_WORKFLOW,AUDIT_TRACE"
+    },
+    {
+        "File":  "\\services\\api.ts",
+        "Size":  532,
+        "Lines":  17,
+        "ExecutionSignals":  "API_ENTRY,ASYNC_EXECUTION,BUSINESS_FUNCTION,PRODUCT"
+    },
+    {
+        "File":  "\\prisma\\schema.prisma",
+        "Size":  6863,
+        "Lines":  229,
+        "ExecutionSignals":  "PRODUCT,SUPPLIER,INVENTORY,LOGISTICS,QUALITY,CUSTOMER_SALES,STATE_WORKFLOW,AUDIT_TRACE"
+    }
+]

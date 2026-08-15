@@ -1,0 +1,71 @@
+﻿{
+    "reportType":  "E3_LEGACY_BRAIN_WAVE_2_V1",
+    "generatedAtUtc":  "2026-08-13T13:47:16.7545845Z",
+    "scope":  "Disposable isolated test of InstitutionalMemory and SemanticReasoningEngine using temporary in-memory/repository inputs only. No old knowledge/data file, network, database, brain.py, or external service.",
+    "results":  [
+                    {
+                        "test":  "InstitutionalMemoryLifecycle",
+                        "status":  "PASS",
+                        "detail":  "create/store/retrieve/overwrite/search preserves current source/timestamp/confidence in memory only"
+                    },
+                    {
+                        "test":  "InstitutionalMemoryGovernance",
+                        "status":  "PARTIAL",
+                        "detail":  "PARTIAL: no lifecycle/provenance fields for version, expiry, invalidated, evidence_type, audit_id"
+                    },
+                    {
+                        "test":  "SemanticRuleParserExplicitRule",
+                        "status":  "PASS",
+                        "detail":  {
+                                       "emptyKnowledgeFallback":  [
+                                                                      [
+                                                                          "egypt",
+                                                                          "exports",
+                                                                          "honey"
+                                                                      ],
+                                                                      [
+                                                                          "egypt",
+                                                                          "exports",
+                                                                          "spices"
+                                                                      ],
+                                                                      [
+                                                                          "honey",
+                                                                          "export_to",
+                                                                          "norway"
+                                                                      ],
+                                                                      [
+                                                                          "spices",
+                                                                          "export_to",
+                                                                          "eu"
+                                                                      ],
+                                                                      [
+                                                                          "norway",
+                                                                          "requires",
+                                                                          "organic_certification"
+                                                                      ]
+                                                                  ],
+                                       "explicitRuleRelations":  [
+                                                                     [
+                                                                         "honey",
+                                                                         "requires",
+                                                                         "organic",
+                                                                         0.8
+                                                                     ]
+                                                                 ],
+                                       "explicitRuleConclusions":  [
+                                                                       "⚖️ علاقة: honey → requires → organic (المقدمة: honey)"
+                                                                   ]
+                                   }
+                    },
+                    {
+                        "test":  "SemanticRuleParserConflictStaleness",
+                        "status":  "PARTIAL",
+                        "detail":  "PARTIAL: parser includes conflicting/stale rules without status, time or authority filtering: [(\u0027honey\u0027, \u0027requires\u0027, \u0027organic\u0027), (\u0027honey\u0027, \u0027requires\u0027, \u0027halal\u0027), (\u0027honey\u0027, \u0027requires\u0027, \u0027obsolete\u0027)]"
+                    }
+                ],
+    "failClosedInvariant":  "TEST-FAIL-CLOSED-001 remains failed for the legacy engine because empty knowledge produces default trade relations.",
+    "decisions":  {
+                      "SemanticRuleParser":  "EXTRACT_DESIGN_ONLY: explicit parsing works, but fallback fabrication and lack of conflict/staleness filtering block reuse.",
+                      "InstitutionalMemory":  "EXTRACT_FOR_HARDENING: bounded storage works but lifecycle, version, invalidation, evidence type and audit are absent."
+                  }
+}

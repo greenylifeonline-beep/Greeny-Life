@@ -1,0 +1,44 @@
+[
+    {
+        "Flow":  "FLOW_02_PRODUCT_TO_INVENTORY",
+        "EvidenceFiles":  22,
+        "Files":  "\\app\\api\\products\\route.ts;\\app\\api\\sales-orders\\route.ts;\\app\\api\\suppliers\\route.ts;\\app\\layout.tsx;\\app\\page.tsx;\\eos-core\\intelligence\\intelligence\\core\\engine-registry.ts;\\eos-core\\intelligence\\intelligence\\core\\report-writer.ts;\\eos-core\\intelligence\\intelligence\\engines\\audit-engine.ts;\\eos-core\\intelligence\\intelligence\\engines\\data-integrity-engine.ts;\\eos-core\\intelligence\\intelligence\\engines\\duplicate-engine-v2.ts;\\eos-core\\intelligence\\intelligence\\rules\\duplicate-rules.ts;\\eos-core\\intelligence\\intelligence\\schemas\\product-schema-map.ts;\\eos-core\\intelligence\\intelligence\\duplicate-engine.ts;\\eos-core\\intelligence\\intelligence\\index.ts;\\eos-core\\intelligence\\intelligence\\intelligence-test.ts;\\eos-core\\intelligence\\intelligence\\product-audit.ts;\\lib\\data\\media.ts;\\lib\\data\\packaging-profiles.ts;\\lib\\data\\products.ts;\\lib\\workflowEngine.ts;\\services\\api.ts;\\prisma\\schema.prisma",
+        "Signals":  "route.ts:2|route.ts:2|route.ts:1|layout.tsx:1|page.tsx:1|engine-registry.ts:1|report-writer.ts:1|audit-engine.ts:1|data-integrity-engine.ts:1|duplicate-engine-v2.ts:1|duplicate-rules.ts:1|product-schema-map.ts:1|duplicate-engine.ts:1|index.ts:1|intelligence-test.ts:1|product-audit.ts:1|media.ts:1|packaging-profiles.ts:1|products.ts:1|workflowEngine.ts:3|api.ts:1|schema.prisma:5",
+        "Status":  "DISCOVERED"
+    },
+    {
+        "Flow":  "FLOW_06_QUALITY_TO_BATCH_AUDIT",
+        "EvidenceFiles":  2,
+        "Files":  "\\lib\\workflowEngine.ts;\\prisma\\schema.prisma",
+        "Signals":  "workflowEngine.ts:1|schema.prisma:4",
+        "Status":  "DISCOVERED"
+    },
+    {
+        "Flow":  "FLOW_05_INVOICE_TO_PAYMENT",
+        "EvidenceFiles":  1,
+        "Files":  "\\prisma\\schema.prisma",
+        "Signals":  "schema.prisma:4",
+        "Status":  "DISCOVERED"
+    },
+    {
+        "Flow":  "FLOW_03_CUSTOMER_TO_SALES_ORDER",
+        "EvidenceFiles":  7,
+        "Files":  "\\app\\api\\products\\route.ts;\\app\\api\\sales-orders\\route.ts;\\app\\api\\suppliers\\route.ts;\\app\\api\\workflow\\route.ts;\\app\\page.tsx;\\lib\\workflowEngine.ts;\\prisma\\schema.prisma",
+        "Signals":  "route.ts:1|route.ts:3|route.ts:1|route.ts:1|page.tsx:1|workflowEngine.ts:2|schema.prisma:4",
+        "Status":  "DISCOVERED"
+    },
+    {
+        "Flow":  "FLOW_01_SUPPLIER_TO_PRODUCT",
+        "EvidenceFiles":  22,
+        "Files":  "\\app\\api\\products\\route.ts;\\app\\api\\sales-orders\\route.ts;\\app\\api\\suppliers\\route.ts;\\app\\layout.tsx;\\app\\page.tsx;\\eos-core\\intelligence\\intelligence\\core\\engine-registry.ts;\\eos-core\\intelligence\\intelligence\\core\\report-writer.ts;\\eos-core\\intelligence\\intelligence\\engines\\audit-engine.ts;\\eos-core\\intelligence\\intelligence\\engines\\data-integrity-engine.ts;\\eos-core\\intelligence\\intelligence\\engines\\duplicate-engine-v2.ts;\\eos-core\\intelligence\\intelligence\\rules\\duplicate-rules.ts;\\eos-core\\intelligence\\intelligence\\schemas\\product-schema-map.ts;\\eos-core\\intelligence\\intelligence\\duplicate-engine.ts;\\eos-core\\intelligence\\intelligence\\index.ts;\\eos-core\\intelligence\\intelligence\\intelligence-test.ts;\\eos-core\\intelligence\\intelligence\\product-audit.ts;\\lib\\data\\media.ts;\\lib\\data\\packaging-profiles.ts;\\lib\\data\\products.ts;\\lib\\workflowEngine.ts;\\services\\api.ts;\\prisma\\schema.prisma",
+        "Signals":  "route.ts:4|route.ts:1|route.ts:3|layout.tsx:1|page.tsx:1|engine-registry.ts:1|report-writer.ts:1|audit-engine.ts:1|data-integrity-engine.ts:1|duplicate-engine-v2.ts:1|duplicate-rules.ts:1|product-schema-map.ts:1|duplicate-engine.ts:1|index.ts:1|intelligence-test.ts:1|product-audit.ts:1|media.ts:1|packaging-profiles.ts:1|products.ts:1|workflowEngine.ts:3|api.ts:1|schema.prisma:4",
+        "Status":  "DISCOVERED"
+    },
+    {
+        "Flow":  "FLOW_04_ORDER_TO_SHIPMENT",
+        "EvidenceFiles":  5,
+        "Files":  "\\app\\api\\sales-orders\\route.ts;\\lib\\data\\documents.ts;\\lib\\data\\media.ts;\\lib\\workflowEngine.ts;\\prisma\\schema.prisma",
+        "Signals":  "route.ts:1|documents.ts:1|media.ts:1|workflowEngine.ts:1|schema.prisma:4",
+        "Status":  "DISCOVERED"
+    }
+]

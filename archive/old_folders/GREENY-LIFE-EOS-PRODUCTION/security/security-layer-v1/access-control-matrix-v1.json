@@ -1,0 +1,34 @@
+[
+    {
+        "Warehouse":  "VIEW",
+        "Customer":  "PUBLIC",
+        "Module":  "PRODUCT MASTER",
+        "Supplier":  "LIMITED",
+        "Executive":  "FULL",
+        "Sales":  "VIEW"
+    },
+    {
+        "Warehouse":  "FULL",
+        "Customer":  "NONE",
+        "Module":  "INVENTORY",
+        "Supplier":  "LIMITED",
+        "Executive":  "FULL",
+        "Sales":  "VIEW"
+    },
+    {
+        "Warehouse":  "NONE",
+        "Customer":  "SELF",
+        "Module":  "CRM",
+        "Supplier":  "NONE",
+        "Executive":  "FULL",
+        "Sales":  "FULL"
+    },
+    {
+        "Warehouse":  "VIEW",
+        "Customer":  "TRACK",
+        "Module":  "EXPORT OPERATIONS",
+        "Supplier":  "VIEW",
+        "Executive":  "FULL",
+        "Sales":  "FULL"
+    }
+]

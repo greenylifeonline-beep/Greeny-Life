@@ -1,0 +1,56 @@
+{
+    "Navigation":  [
+                       {
+                           "Module":  "EXECUTIVE DASHBOARD",
+                           "Access":  "EXECUTIVE",
+                           "Route":  "/dashboard"
+                       },
+                       {
+                           "Module":  "PRODUCT MANAGEMENT",
+                           "Access":  "ADMIN,EXECUTIVE,SALES",
+                           "Route":  "/products"
+                       },
+                       {
+                           "Module":  "SUPPLIER PORTAL",
+                           "Access":  "SUPPLIER,ADMIN",
+                           "Route":  "/suppliers"
+                       },
+                       {
+                           "Module":  "INVENTORY",
+                           "Access":  "WAREHOUSE,ADMIN",
+                           "Route":  "/inventory"
+                       },
+                       {
+                           "Module":  "BATCH TRACEABILITY",
+                           "Access":  "QUALITY,ADMIN",
+                           "Route":  "/traceability"
+                       },
+                       {
+                           "Module":  "EXPORT ORDERS",
+                           "Access":  "SALES,EXECUTIVE",
+                           "Route":  "/orders"
+                       },
+                       {
+                           "Module":  "SHIPPING",
+                           "Access":  "LOGISTICS,EXECUTIVE",
+                           "Route":  "/shipping"
+                       },
+                       {
+                           "Module":  "CRM CENTER",
+                           "Access":  "SALES,EXECUTIVE",
+                           "Route":  "/crm"
+                       },
+                       {
+                           "Module":  "CUSTOMER PORTAL",
+                           "Access":  "CUSTOMER",
+                           "Route":  "/customer"
+                       },
+                       {
+                           "Module":  "AI DECISION CENTER",
+                           "Access":  "EXECUTIVE",
+                           "Route":  "/ai-decisions"
+                       }
+                   ],
+    "Version":  "FRONTEND_APPLICATION_CORE_V1",
+    "System":  "GREENY LIFE EOS"
+}

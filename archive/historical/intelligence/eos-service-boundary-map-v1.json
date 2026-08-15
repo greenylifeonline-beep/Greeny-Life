@@ -1,0 +1,112 @@
+[
+    {
+        "Domain":  "SALES_ORDER",
+        "Service":  "EOS-SALES_ORDER-SERVICE",
+        "BoundaryType":  "BUSINESS_DOMAIN_SERVICE",
+        "Owner":  "SALES_OPERATIONS",
+        "Database":  "EOS_SALES_ORDER_MODEL",
+        "API":  "/api/eos/sales_order",
+        "Dependencies":  "CUSTOMER,PRODUCT,INVENTORY",
+        "ArchitectureLayer":  "BUSINESS_SERVICES",
+        "Target":  "EOS_ENTERPRISE_ARCHITECTURE"
+    },
+    {
+        "Domain":  "MASTER_DATA",
+        "Service":  "EOS-MASTER_DATA-SERVICE",
+        "BoundaryType":  "SHARED_PLATFORM_SERVICE",
+        "Owner":  "ENTERPRISE_ARCHITECTURE",
+        "Database":  "EOS_MASTER_DATA_MODEL",
+        "API":  "/api/eos/master_data",
+        "Dependencies":  "ALL_DOMAINS",
+        "ArchitectureLayer":  "EOS_CORE",
+        "Target":  "EOS_ENTERPRISE_ARCHITECTURE"
+    },
+    {
+        "Domain":  "FINANCE",
+        "Service":  "EOS-FINANCE-SERVICE",
+        "BoundaryType":  "BUSINESS_DOMAIN_SERVICE",
+        "Owner":  "FINANCE_CONTROL",
+        "Database":  "EOS_FINANCE_MODEL",
+        "API":  "/api/eos/finance",
+        "Dependencies":  "SALES_ORDER,CUSTOMER",
+        "ArchitectureLayer":  "BUSINESS_SERVICES",
+        "Target":  "EOS_ENTERPRISE_ARCHITECTURE"
+    },
+    {
+        "Domain":  "WORKFLOW",
+        "Service":  "EOS-WORKFLOW-SERVICE",
+        "BoundaryType":  "SHARED_PLATFORM_SERVICE",
+        "Owner":  "EOS_AUTOMATION_ENGINE",
+        "Database":  "EOS_WORKFLOW_MODEL",
+        "API":  "/api/eos/workflow",
+        "Dependencies":  "ALL_DOMAINS",
+        "ArchitectureLayer":  "EOS_CORE",
+        "Target":  "EOS_ENTERPRISE_ARCHITECTURE"
+    },
+    {
+        "Domain":  "QUALITY",
+        "Service":  "EOS-QUALITY-SERVICE",
+        "BoundaryType":  "BUSINESS_DOMAIN_SERVICE",
+        "Owner":  "QUALITY_ASSURANCE",
+        "Database":  "EOS_QUALITY_MODEL",
+        "API":  "/api/eos/quality",
+        "Dependencies":  "PRODUCT,SUPPLIER",
+        "ArchitectureLayer":  "BUSINESS_SERVICES",
+        "Target":  "EOS_ENTERPRISE_ARCHITECTURE"
+    },
+    {
+        "Domain":  "LOGISTICS",
+        "Service":  "EOS-LOGISTICS-SERVICE",
+        "BoundaryType":  "BUSINESS_DOMAIN_SERVICE",
+        "Owner":  "EXPORT_LOGISTICS",
+        "Database":  "EOS_LOGISTICS_MODEL",
+        "API":  "/api/eos/logistics",
+        "Dependencies":  "SALES_ORDER,DOCUMENT",
+        "ArchitectureLayer":  "BUSINESS_SERVICES",
+        "Target":  "EOS_ENTERPRISE_ARCHITECTURE"
+    },
+    {
+        "Domain":  "CUSTOMER",
+        "Service":  "EOS-CUSTOMER-SERVICE",
+        "BoundaryType":  "BUSINESS_DOMAIN_SERVICE",
+        "Owner":  "CRM",
+        "Database":  "EOS_CUSTOMER_MODEL",
+        "API":  "/api/eos/customer",
+        "Dependencies":  "SALES_ORDER,CRM",
+        "ArchitectureLayer":  "BUSINESS_SERVICES",
+        "Target":  "EOS_ENTERPRISE_ARCHITECTURE"
+    },
+    {
+        "Domain":  "INVENTORY",
+        "Service":  "EOS-INVENTORY-SERVICE",
+        "BoundaryType":  "BUSINESS_DOMAIN_SERVICE",
+        "Owner":  "OPERATIONS",
+        "Database":  "EOS_INVENTORY_MODEL",
+        "API":  "/api/eos/inventory",
+        "Dependencies":  "PRODUCT,LOGISTICS",
+        "ArchitectureLayer":  "BUSINESS_SERVICES",
+        "Target":  "EOS_ENTERPRISE_ARCHITECTURE"
+    },
+    {
+        "Domain":  "PRODUCT",
+        "Service":  "EOS-PRODUCT-SERVICE",
+        "BoundaryType":  "BUSINESS_DOMAIN_SERVICE",
+        "Owner":  "PRODUCT_MANAGEMENT",
+        "Database":  "EOS_PRODUCT_MODEL",
+        "API":  "/api/eos/product",
+        "Dependencies":  "MASTER_DATA,SUPPLIER,INVENTORY",
+        "ArchitectureLayer":  "BUSINESS_SERVICES",
+        "Target":  "EOS_ENTERPRISE_ARCHITECTURE"
+    },
+    {
+        "Domain":  "SUPPLIER",
+        "Service":  "EOS-SUPPLIER-SERVICE",
+        "BoundaryType":  "BUSINESS_DOMAIN_SERVICE",
+        "Owner":  "SUPPLY_CHAIN",
+        "Database":  "EOS_SUPPLIER_MODEL",
+        "API":  "/api/eos/supplier",
+        "Dependencies":  "MASTER_DATA,PRODUCT",
+        "ArchitectureLayer":  "BUSINESS_SERVICES",
+        "Target":  "EOS_ENTERPRISE_ARCHITECTURE"
+    }
+]

@@ -1,0 +1,205 @@
+﻿{
+    "reportType":  "E3_WAVE_5_P0_RUNTIME_OPERATIONAL_PROOF_V1",
+    "generatedAtUtc":  "2026-08-13T15:42:44.6554661Z",
+    "mode":  "CURRENT_TESTS_PLUS_READ_ONLY_RUNTIME_CHECKS",
+    "scope":  "Existing current-project tests plus GET-only localhost checks. No legacy code was executed. No source, database, API write, external call, Git state, archive asset, or project configuration was changed except this report.",
+    "limitations":  [
+                        "A PASS test proves only the test contract it exercised; it does not automatically prove operational state effects.",
+                        "A PARTIAL result preserves explicitly pending checks reported by an existing test; it is not silently converted to PASS.",
+                        "UNKNOWN runtime means the local application was not available and is not counted as a failure.",
+                        "No execution/action transition is attempted because Wave 5 remains read-only."
+                    ],
+    "summary":  {
+                    "pass":  14,
+                    "partial":  1,
+                    "fail":  0,
+                    "unknown":  0,
+                    "total":  15
+                },
+    "results":  [
+                    {
+                        "kind":  "EXISTING_TEST",
+                        "capability":  "EVIDENCE",
+                        "target":  "test:official-evidence-gate",
+                        "purpose":  "Official evidence state machine: missing, stale, conflicting, partial, and supported evidence.",
+                        "status":  "PASS",
+                        "exitCode":  0,
+                        "detail":  "\r\n\u003e greeny-life@1.0.0 test:official-evidence-gate\r\n\u003e tsx tests/official_evidence_gate_check.ts\r\n\r\nofficial_evidence_gate_check: PASS",
+                        "evidenceLevel":  "TEST_EVIDENCE"
+                    },
+                    {
+                        "kind":  "EXISTING_TEST",
+                        "capability":  "EVIDENCE_DECISION_BOUNDARY",
+                        "target":  "test:decision-safety-adversarial",
+                        "purpose":  "Adversarial fail-closed cases and read-only decision boundary.",
+                        "status":  "PARTIAL",
+                        "exitCode":  0,
+                        "detail":  "Ôöé 10      Ôöé \u002719_HIGH_MODEL_CONFIDENCE_WITHOUT_EVIDENCE\u0027 Ôöé \u0027PASS\u0027    Ôöé \u0027Untrusted confidence metadata is ignored by the evidence gate.\u0027                                  Ôöé\r\nÔöé 11      Ôöé \u0027NO_DECISION_SIDE_EFFECT\u0027                   Ôöé \u0027PASS\u0027    Ôöé \u0027MasterMind package is read-only and automaticExecution is false.\u0027                                Ôöé\r\nÔöé 12      Ôöé \u0027AUTHORIZED_ACTOR_BOUNDARY\u0027                 Ôöé \u0027PASS\u0027    Ôöé \u0027The signed session, not request body, supplies the actor.\u0027                                       Ôöé\r\nÔöé 13      Ôöé \u002706_INSUFFICIENT_CONFIDENCE\u0027                Ôöé \u0027UNKNOWN\u0027 Ôöé \u0027No shared confidence policy is enforced at the decision/action boundary yet.\u0027                    Ôöé\r\nÔöé 14      Ôöé \u002707_MISSING_POLICY\u0027                         Ôöé \u0027UNKNOWN\u0027 Ôöé \u0027No versioned policy registry is evaluated by the read-only package yet.\u0027                         Ôöé\r\nÔöé 15      Ôöé \u002708_INVALID_POLICY\u0027                         Ôöé \u0027UNKNOWN\u0027 Ôöé \u0027No invalid-policy rejection path exists yet.\u0027                                                    Ôöé\r\nÔöé 16      Ôöé \u002711_MISSING_AUDIT\u0027                          Ôöé \u0027UNKNOWN\u0027 Ôöé \u0027Authorization audit exists, but audit persistence is not yet fail-closed at an action boundary.\u0027 Ôöé\r\nÔöé 17      Ôöé \u002712_INVALID_STATE_TRANSITION\u0027               Ôöé \u0027UNKNOWN\u0027 Ôöé \u0027MasterMind has no verified execution transition to test yet.\u0027                                    Ôöé\r\nÔöé 18      Ôöé \u002716_EXPIRED_POLICY\u0027                         Ôöé \u0027UNKNOWN\u0027 Ôöé \u0027Policies have no effective-period enforcement at this boundary yet.\u0027                             Ôöé\r\nÔöé 19      Ôöé \u002720_FAILED_STATE_TRANSITION\u0027                Ôöé \u0027UNKNOWN\u0027 Ôöé \u0027The endpoint is read-only; controlled executor and rollback proof remain required.\u0027              Ôöé\r\nÔööÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔö┤ÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔö┤ÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔö┤ÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÿ\r\ndecision_safety_adversarial_check: PASS 13 | UNKNOWN 7",
+                        "evidenceLevel":  "TEST_EVIDENCE_PARTIAL"
+                    },
+                    {
+                        "kind":  "EXISTING_TEST",
+                        "capability":  "EVIDENCE_ROUTE",
+                        "target":  "test:official-evidence-review",
+                        "purpose":  "Official evidence review route contract.",
+                        "status":  "PASS",
+                        "exitCode":  0,
+                        "detail":  "\r\n\u003e greeny-life@1.0.0 test:official-evidence-review\r\n\u003e tsx tests/official_evidence_review_route_check.ts\r\n\r\nofficial_evidence_review_route_check: PASS",
+                        "evidenceLevel":  "TEST_EVIDENCE"
+                    },
+                    {
+                        "kind":  "EXISTING_TEST",
+                        "capability":  "DECISION",
+                        "target":  "test:mastermind-evidence-authority",
+                        "purpose":  "Persisted evidence and signed-actor authority contract.",
+                        "status":  "PASS",
+                        "exitCode":  0,
+                        "detail":  "\r\n\u003e greeny-life@1.0.0 test:mastermind-evidence-authority\r\n\u003e tsx tests/mastermind_evidence_authority_check.ts\r\n\r\nmastermind_evidence_authority_check: PASS",
+                        "evidenceLevel":  "TEST_EVIDENCE"
+                    },
+                    {
+                        "kind":  "EXISTING_TEST",
+                        "capability":  "DECISION",
+                        "target":  "test:mastermind",
+                        "purpose":  "MasterMind read-only decision package behavior.",
+                        "status":  "PASS",
+                        "exitCode":  0,
+                        "detail":  "\r\n\u003e greeny-life@1.0.0 test:mastermind\r\n\u003e tsx tests/mastermind_agents_check.ts\r\n\r\nMasterMind agents: PASS",
+                        "evidenceLevel":  "TEST_EVIDENCE"
+                    },
+                    {
+                        "kind":  "EXISTING_TEST",
+                        "capability":  "GOVERNANCE",
+                        "target":  "test:workflow-governance",
+                        "purpose":  "Workflow transitions require durable review and do not auto-execute.",
+                        "status":  "PASS",
+                        "exitCode":  0,
+                        "detail":  "\r\n\u003e greeny-life@1.0.0 test:workflow-governance\r\n\u003e tsx tests/workflow_governance_check.ts\r\n\r\nWorkflow governance: PASS",
+                        "evidenceLevel":  "TEST_EVIDENCE"
+                    },
+                    {
+                        "kind":  "EXISTING_TEST",
+                        "capability":  "GOVERNANCE",
+                        "target":  "test:gldos-governance",
+                        "purpose":  "GL-DOS governance gate requires review.",
+                        "status":  "PASS",
+                        "exitCode":  0,
+                        "detail":  "\r\n\u003e greeny-life@1.0.0 test:gldos-governance\r\n\u003e tsx tests/gldos_governance_gate_check.ts\r\n\r\nGL-DOS governance gate: PASS",
+                        "evidenceLevel":  "TEST_EVIDENCE"
+                    },
+                    {
+                        "kind":  "EXISTING_TEST",
+                        "capability":  "AUTHORIZATION",
+                        "target":  "test:auth-security",
+                        "purpose":  "Authentication and security boundary.",
+                        "status":  "PASS",
+                        "exitCode":  0,
+                        "detail":  "\r\n\u003e greeny-life@1.0.0 test:auth-security\r\n\u003e tsx tests/auth_security_check.ts\r\n\r\nAuthentication security: PASS",
+                        "evidenceLevel":  "TEST_EVIDENCE"
+                    },
+                    {
+                        "kind":  "EXISTING_TEST",
+                        "capability":  "AUTHORIZATION",
+                        "target":  "test:api-authorization",
+                        "purpose":  "Protected API authorization boundary.",
+                        "status":  "PASS",
+                        "exitCode":  0,
+                        "detail":  "\r\n\u003e greeny-life@1.0.0 test:api-authorization\r\n\u003e tsx tests/api_authorization_check.ts\r\n\r\nAPI authorization policy: PASS",
+                        "evidenceLevel":  "TEST_EVIDENCE"
+                    },
+                    {
+                        "kind":  "EXISTING_TEST",
+                        "capability":  "KNOWLEDGE",
+                        "target":  "test:canonical-intelligence",
+                        "purpose":  "Canonical audit/integrity engines remain read-only and healthy.",
+                        "status":  "PASS",
+                        "exitCode":  0,
+                        "detail":  "\r\n\u003e greeny-life@1.0.0 test:canonical-intelligence\r\n\u003e tsx tests/canonical_intelligence_check.ts\r\n\r\nCanonical intelligence engines: PASS",
+                        "evidenceLevel":  "TEST_EVIDENCE"
+                    },
+                    {
+                        "kind":  "EXISTING_TEST",
+                        "capability":  "LEARNING",
+                        "target":  "test:controlled-learning",
+                        "purpose":  "Learning proposals remain review-required and prohibit automatic model update.",
+                        "status":  "PASS",
+                        "exitCode":  0,
+                        "detail":  "\r\n\u003e greeny-life@1.0.0 test:controlled-learning\r\n\u003e tsx tests/controlled_learning_check.ts\r\n\r\nControlled learning: PASS",
+                        "evidenceLevel":  "TEST_EVIDENCE"
+                    },
+                    {
+                        "kind":  "READ_ONLY_RUNTIME",
+                        "capability":  "RUNTIME_BOUNDARY",
+                        "target":  "http://localhost:3000/api/mastermind/operating-model",
+                        "purpose":  "Public operating-model read boundary.",
+                        "status":  "PASS",
+                        "exitCode":  null,
+                        "detail":  "HTTP 200",
+                        "evidenceLevel":  "RUNTIME_PROVEN_READ_ONLY"
+                    },
+                    {
+                        "kind":  "READ_ONLY_RUNTIME",
+                        "capability":  "RUNTIME_BOUNDARY",
+                        "target":  "http://localhost:3000/api/mastermind/tools",
+                        "purpose":  "Public tool-registry read boundary.",
+                        "status":  "PASS",
+                        "exitCode":  null,
+                        "detail":  "HTTP 200",
+                        "evidenceLevel":  "RUNTIME_PROVEN_READ_ONLY"
+                    },
+                    {
+                        "kind":  "READ_ONLY_RUNTIME",
+                        "capability":  "RUNTIME_BOUNDARY",
+                        "target":  "http://localhost:3000/api/evidence/official",
+                        "purpose":  "Anonymous official-evidence read must be denied.",
+                        "status":  "PASS",
+                        "exitCode":  null,
+                        "detail":  "HTTP 401",
+                        "evidenceLevel":  "RUNTIME_PROVEN_READ_ONLY"
+                    },
+                    {
+                        "kind":  "READ_ONLY_RUNTIME",
+                        "capability":  "RUNTIME_BOUNDARY",
+                        "target":  "http://localhost:3000/api/mastermind/decision-package",
+                        "purpose":  "GET must be rejected because the decision package is POST-only; no request body or side effect is possible.",
+                        "status":  "PASS",
+                        "exitCode":  null,
+                        "detail":  "HTTP 405",
+                        "evidenceLevel":  "RUNTIME_PROVEN_READ_ONLY"
+                    }
+                ],
+    "capabilityConclusions":  [
+                                  {
+                                      "capability":  "EVIDENCE",
+                                      "maximumProvenLevel":  "TEST_EVIDENCE_PARTIAL",
+                                      "decision":  "HARDEN_CANDIDATE",
+                                      "next":  "Operational persistence/audit trace only after an approved sandbox protocol."
+                                  },
+                                  {
+                                      "capability":  "DECISION",
+                                      "maximumProvenLevel":  "RUNTIME_PROVEN_READ_ONLY_PARTIAL",
+                                      "decision":  "TRACE_REQUIRED",
+                                      "next":  "Do not promote until authority, policy, confidence, audit, and controlled state-transition evidence exist."
+                                  },
+                                  {
+                                      "capability":  "GOVERNANCE",
+                                      "maximumProvenLevel":  "TEST_EVIDENCE_PARTIAL",
+                                      "decision":  "TRACE_REQUIRED",
+                                      "next":  "Prove a controlled transition in an isolated test database before any operational claim."
+                                  },
+                                  {
+                                      "capability":  "KNOWLEDGE",
+                                      "maximumProvenLevel":  "TEST_EVIDENCE_PARTIAL_CURRENT_AND_PARTIAL_LEGACY",
+                                      "decision":  "EXTRACT_CANDIDATE",
+                                      "next":  "Select and validate a bounded extraction contract; no direct legacy reuse."
+                                  }
+                              ],
+    "prohibitedDecisions":  [
+                                "SYSTEM_OF_RECORD",
+                                "DELETE",
+                                "ARCHIVE",
+                                "MERGE",
+                                "PROMOTE",
+                                "AUTOMATIC_EXECUTION"
+                            ]
+}

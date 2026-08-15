@@ -1,0 +1,37 @@
+﻿{
+    "phase":  "PHASE_6",
+    "name":  "Integration Adapters and Controlled Runtime Wiring",
+    "generatedAt":  "2026-07-26T15:49:40.1574994+02:00",
+    "system":  "Greeny-Life",
+    "adapters":  [
+                     {
+                         "path":  "C:\\Users\\Ghanam\\OneDrive\\projects\\Greeny-Life\\unified-intelligence\\adapters\\master-data-adapter.ts",
+                         "authority":  "AUTHORITATIVE_READ_ONLY",
+                         "name":  "MasterDataAdapter"
+                     },
+                     {
+                         "path":  "C:\\Users\\Ghanam\\OneDrive\\projects\\Greeny-Life\\unified-intelligence\\adapters\\intelligence-adapter.ts",
+                         "authority":  "DERIVED_CAPABILITIES",
+                         "name":  "IntelligenceAdapter"
+                     },
+                     {
+                         "path":  "C:\\Users\\Ghanam\\OneDrive\\projects\\Greeny-Life\\unified-intelligence\\adapters\\gl-dos-governance-gate.ts",
+                         "authority":  "CONTROL",
+                         "name":  "GLDOSGovernanceGate"
+                     },
+                     {
+                         "path":  "C:\\Users\\Ghanam\\OneDrive\\projects\\Greeny-Life\\unified-intelligence\\adapters\\traceable-report-adapter.ts",
+                         "authority":  "TRACEABLE_OUTPUT",
+                         "name":  "TraceableReportAdapter"
+                     }
+                 ],
+    "runtime":  {
+                    "executionModel":  "CONTROLLED_PIPELINE",
+                    "orchestrator":  "C:\\Users\\Ghanam\\OneDrive\\projects\\Greeny-Life\\unified-intelligence\\runtime\\controlled-runtime-orchestrator.ts",
+                    "traceabilityRequired":  true,
+                    "masterDataMutation":  "PROHIBITED_DIRECTLY",
+                    "governanceRequired":  true
+                },
+    "wiringStatus":  "IMPLEMENTED_BASELINE",
+    "nextPhase":  "Integration Validation and Runtime Contract Testing"
+}

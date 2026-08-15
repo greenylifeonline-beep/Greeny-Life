@@ -1,0 +1,51 @@
+{
+    "System":  "Greeny-Life",
+    "Architecture":  "Enterprise Operating System (EOS)",
+    "Component":  "GELS",
+    "Version":  "GELS v1.0",
+    "FullName":  "Global Export Label Standard",
+    "Location":  "eos-core\\products",
+    "Layers":  [
+                   "GLOBAL_LABEL_STANDARD",
+                   "PRODUCT_LABEL_STRUCTURE",
+                   "EXPORT_COMPLIANCE_LAYER",
+                   "COUNTRY_CUSTOMIZATION_LAYER",
+                   "QR_TRACEABILITY_LAYER"
+               ],
+    "LabelStructure":  [
+                           "FRONT_LABEL",
+                           "BACK_LABEL",
+                           "SIDE_PANEL"
+                       ],
+    "CoreData":  [
+                     "PRODUCT_NAME",
+                     "PRODUCT_IMAGE",
+                     "COUNTRY_OF_ORIGIN",
+                     "NET_WEIGHT",
+                     "INGREDIENTS",
+                     "PRODUCT_DESCRIPTION",
+                     "QR_CODE",
+                     "EXPORT_INFORMATION"
+                 ],
+    "Rules":  [
+                  "GLOBAL_STANDARD_FIRST",
+                  "COUNTRY_CUSTOMIZATION_SECOND",
+                  "PRODUCT_DATA_SOURCE_REQUIRED",
+                  "COMPLIANCE_VALIDATION_REQUIRED",
+                  "TRACEABILITY_REQUIRED"
+              ],
+    "ConnectedDomains":  [
+                             "PRODUCT",
+                             "MASTER_DATA",
+                             "QUALITY",
+                             "COMPLIANCE",
+                             "LOGISTICS",
+                             "CRM"
+                         ],
+    "Restrictions":  [
+                         "NO_LABEL_GENERATION",
+                         "NO_PRODUCT_MODIFICATION",
+                         "STANDARD_ALIGNMENT_ONLY"
+                     ],
+    "Status":  "EOS_GELS_ARCHITECTURE_ALIGNMENT_COMPLETED"
+}

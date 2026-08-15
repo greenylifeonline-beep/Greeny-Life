@@ -1,0 +1,40 @@
+﻿{
+    "test":  "LOCAL_PUBLIC_ENDPOINT_BASELINE_V1",
+    "executedAtUtc":  "2026-08-13T12:27:20.4460021Z",
+    "iterations":  20,
+    "results":  [
+                    {
+                        "path":  "/",
+                        "samples":  20,
+                        "averageMs":  279.07,
+                        "medianMs":  137.99,
+                        "p95Ms":  405.68,
+                        "localBaselineStatus":  "PASS"
+                    },
+                    {
+                        "path":  "/api/mastermind/operating-model",
+                        "samples":  20,
+                        "averageMs":  41.65,
+                        "medianMs":  34.05,
+                        "p95Ms":  45.55,
+                        "localBaselineStatus":  "PASS"
+                    },
+                    {
+                        "path":  "/api/mastermind/tools",
+                        "samples":  20,
+                        "averageMs":  82.55,
+                        "medianMs":  58.73,
+                        "p95Ms":  200.56,
+                        "localBaselineStatus":  "PASS"
+                    },
+                    {
+                        "path":  "/api/portfolio/egyptian-exports",
+                        "samples":  20,
+                        "averageMs":  72.07,
+                        "medianMs":  27.58,
+                        "p95Ms":  40.38,
+                        "localBaselineStatus":  "PASS"
+                    }
+                ],
+    "note":  "Local development baseline only. No data was created."
+}

@@ -1,0 +1,50 @@
+[
+    {
+        "Role":  "EXECUTIVE",
+        "Permissions":  [
+                            "ALL_MODULES",
+                            "REPORTS",
+                            "KPI",
+                            "DECISIONS"
+                        ]
+    },
+    {
+        "Role":  "SALES",
+        "Permissions":  [
+                            "CRM",
+                            "LEADS",
+                            "EXPORT_ORDERS"
+                        ]
+    },
+    {
+        "Role":  "WAREHOUSE",
+        "Permissions":  [
+                            "INVENTORY",
+                            "BATCH",
+                            "STOCK"
+                        ]
+    },
+    {
+        "Role":  "QUALITY",
+        "Permissions":  [
+                            "QUALITY",
+                            "COMPLIANCE",
+                            "TRACEABILITY"
+                        ]
+    },
+    {
+        "Role":  "SUPPLIER",
+        "Permissions":  [
+                            "PRODUCT_SUPPLY",
+                            "BATCH_UPLOAD"
+                        ]
+    },
+    {
+        "Role":  "CUSTOMER",
+        "Permissions":  [
+                            "VIEW_PRODUCTS",
+                            "PLACE_ORDER",
+                            "TRACK_SHIPMENT"
+                        ]
+    }
+]

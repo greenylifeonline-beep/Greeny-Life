@@ -1,0 +1,69 @@
+﻿{
+    "recordType":  "E3_REPAIR_CLOSURE_DD_006_V1",
+    "id":  "DD-006",
+    "generatedAtUtc":  "2026-08-13T16:02:07.2995284Z",
+    "status":  "IMPLEMENTED_AND_VERIFIED",
+    "diagnosis":  "Authorized write requests could proceed if SecurityAuditEvent persistence failed.",
+    "existingComponent":  [
+                              "lib/authz.ts",
+                              "SecurityAuditEvent"
+                          ],
+    "action":  "EXTEND_EXISTING_FAIL_CLOSED",
+    "changeApplied":  "The existing authorization boundary now blocks an otherwise authorized write with HTTP 503 when durable authorization-audit persistence fails.",
+    "successBehavior":  "Authorized request plus successful durable audit returns the existing allowed path.",
+    "failureBehavior":  "Authorized request plus failed durable audit returns 503 before an application write route can continue.",
+    "unchanged":  [
+                      "Legacy",
+                      "Prisma schema",
+                      "PostgreSQL data",
+                      "business domains",
+                      "runtime configuration"
+                  ],
+    "files":  [
+                  {
+                      "path":  "lib\\authz.ts",
+                      "sha256":  "033bb2a53ddb1e4bc000249f23a8dac1585477b27f12b471a0a3eecb5cfe4a3a"
+                  },
+                  {
+                      "path":  "tests\\authorization_audit_fail_closed_check.ts",
+                      "sha256":  "7fd26d87bd750c8d490a3a3750cb11863b1343f5c1c36fa581506071adbf9ea6"
+                  },
+                  {
+                      "path":  "package.json",
+                      "sha256":  "f5630e26650e6ccaab46a28f1ecf6453e33763a08d26f1c5ad7fbc2ce02c77dd"
+                  }
+              ],
+    "verification":  [
+                         {
+                             "evidence":  "Successful audit allows; failed audit blocks; missing authentication remains 401.",
+                             "result":  "PASS",
+                             "check":  "test:authorization-audit-fail-closed"
+                         },
+                         {
+                             "result":  "PASS",
+                             "check":  "test:auth-security"
+                         },
+                         {
+                             "result":  "PASS",
+                             "check":  "test:api-authorization"
+                         },
+                         {
+                             "result":  "PASS",
+                             "check":  "type-check"
+                         },
+                         {
+                             "result":  "PASS",
+                             "check":  "production build"
+                         }
+                     ],
+    "evidenceLevel":  "TEST_EVIDENCE_PLUS_BUILD_VERIFIED",
+    "nextGate":  "Independent runtime/operational trace of a controlled write in an isolated database; no production action is authorized by this record.",
+    "prohibited":  [
+                       "Automatic execution",
+                       "System-of-Record assignment",
+                       "Delete",
+                       "Archive",
+                       "Merge",
+                       "Promotion"
+                   ]
+}

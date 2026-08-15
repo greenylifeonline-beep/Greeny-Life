@@ -1,0 +1,534 @@
+﻿{
+    "reportType":  "E3_SAFE_DERIVED_REPORT_ARCHIVE_PLAN_V1",
+    "generatedAtUtc":  "2026-08-13T17:22:55.5784258Z",
+    "mode":  "COPY_ONLY_EXECUTION",
+    "protections":  [
+                        "NO_DELETE",
+                        "NO_MOVE",
+                        "NO_OVERWRITE_SOURCE",
+                        "NO_GIT_STAGE",
+                        "NO_LEGACY_EXECUTION",
+                        "NO_DATABASE_ACCESS"
+                    ],
+    "sourceCount":  42,
+    "entries":  [
+                    {
+                        "source":  "E3-GIT-HEAD.txt",
+                        "sha256":  "7e0a292b9814172474c4384911336405e8360062f0cb6d89986603f970681803",
+                        "bytes":  86,
+                        "disposition":  "COPY_ONLY_DERIVED_REPORT"
+                    },
+                    {
+                        "source":  "E3-GIT-STATUS.txt",
+                        "sha256":  "d803f8e2b546069ae6aa1c33ae437d59f2ddc7e5f494d1ea977dd796866c3f41",
+                        "bytes":  110,
+                        "disposition":  "COPY_ONLY_DERIVED_REPORT"
+                    },
+                    {
+                        "source":  "E3-GIT-TRACKED.txt",
+                        "sha256":  "1011760e20161b9900f27ac8ce34d1a5482ea141dd426144ed243adeec91623c",
+                        "bytes":  521116,
+                        "disposition":  "COPY_ONLY_DERIVED_REPORT"
+                    },
+                    {
+                        "source":  "E3-REPOSITORY-MANIFEST.json",
+                        "sha256":  "dcfc008d471a009eccd09903d253f7566af7620044cd7d9f08265ae86587c315",
+                        "bytes":  9967674,
+                        "disposition":  "COPY_ONLY_DERIVED_REPORT"
+                    },
+                    {
+                        "source":  "_GREENY_DIAGNOSTIC_20260809_233236/FILES.txt",
+                        "sha256":  "5203c69847abb4e268d41bbb7588d1b685a12607b2be3462869777c286cb977d",
+                        "bytes":  4486490,
+                        "disposition":  "COPY_ONLY_DERIVED_REPORT"
+                    },
+                    {
+                        "source":  "_GREENY_DIAGNOSTIC_20260809_233236/GIT_STATUS.txt",
+                        "sha256":  "6968b236037eeb446f1b573761567471f05abda53053701e09a8923896e60b4c",
+                        "bytes":  5815,
+                        "disposition":  "COPY_ONLY_DERIVED_REPORT"
+                    },
+                    {
+                        "source":  "_GREENY_DIAGNOSTIC_20260809_233236/KEY_SEARCH.txt",
+                        "sha256":  "3fc517015d31cea8bd6359123d75a5632f466608669c5a5a389f7c8314dd4ab1",
+                        "bytes":  6028,
+                        "disposition":  "COPY_ONLY_DERIVED_REPORT"
+                    },
+                    {
+                        "source":  "_GREENY_DIAGNOSTIC_20260809_233236/PROJECT_DIAGNOSTIC.txt",
+                        "sha256":  "977a99643c7be3029bbb1d549e2801cb4f765b0aeb2f53d14abfa864756930cd",
+                        "bytes":  3563898,
+                        "disposition":  "COPY_ONLY_DERIVED_REPORT"
+                    },
+                    {
+                        "source":  "canonical/classification_report_v2.json",
+                        "sha256":  "71aba269be1b344e2af532597e67891e81dd7acb2fb0c05713bf23f93318ea25",
+                        "bytes":  160790,
+                        "disposition":  "COPY_ONLY_DERIVED_REPORT"
+                    },
+                    {
+                        "source":  "canonical/cleanup_report.json",
+                        "sha256":  "30d5766039b0cf36e0c898487388207f4df1c8216a21a829800396a98c8bbb67",
+                        "bytes":  5246,
+                        "disposition":  "COPY_ONLY_DERIVED_REPORT"
+                    },
+                    {
+                        "source":  "canonical/final_audit.json",
+                        "sha256":  "a232bce1adbd40309940d1f753a53bbbd93dd39d7780e20e792efc62b274a778",
+                        "bytes":  83941,
+                        "disposition":  "COPY_ONLY_DERIVED_REPORT"
+                    },
+                    {
+                        "source":  "canonical/intelligence/asset_classification_report_v2.json",
+                        "sha256":  "77a9a4ceccfaa4ebb6416ecba043ecd9d80e2211af06d73e1e6957e6d5fbe460",
+                        "bytes":  80585,
+                        "disposition":  "COPY_ONLY_DERIVED_REPORT"
+                    },
+                    {
+                        "source":  "canonical/intelligence/cleanup_report.json",
+                        "sha256":  "30d5766039b0cf36e0c898487388207f4df1c8216a21a829800396a98c8bbb67",
+                        "bytes":  5246,
+                        "disposition":  "COPY_ONLY_DERIVED_REPORT"
+                    },
+                    {
+                        "source":  "canonical/intelligence/comprehensive_report.json",
+                        "sha256":  "b2331d28f45987c9904713d4e41f066636b1a843a0f9c165d64635f4ba9a1248",
+                        "bytes":  83770,
+                        "disposition":  "COPY_ONLY_DERIVED_REPORT"
+                    },
+                    {
+                        "source":  "canonical/intelligence/eos-enterprise-architecture-final.json",
+                        "sha256":  "7b8c738457a9b4a84729285e0201db2107c4fe2bbe255cd185d8b328a1d85e5f",
+                        "bytes":  2469,
+                        "disposition":  "COPY_ONLY_DERIVED_REPORT"
+                    },
+                    {
+                        "source":  "canonical/intelligence/foundation-closure-report-final.json",
+                        "sha256":  "84533595b3248022a663fc26fc35ed88e6f9c9516b2b938688becbef003b3865",
+                        "bytes":  1870,
+                        "disposition":  "COPY_ONLY_DERIVED_REPORT"
+                    },
+                    {
+                        "source":  "els_final.json",
+                        "sha256":  "8cd94c0b163218968cad82f7c4c11ac307d2ecc7f805b2b00c76d27606b57765",
+                        "bytes":  1005,
+                        "disposition":  "COPY_ONLY_DERIVED_REPORT"
+                    },
+                    {
+                        "source":  "els_final_v2.json",
+                        "sha256":  "27b0b86105698a91c5398498f47060c27addfe42b7fd7e08fbfe0d53321eb071",
+                        "bytes":  1005,
+                        "disposition":  "COPY_ONLY_DERIVED_REPORT"
+                    },
+                    {
+                        "source":  "els_final_with_business.json",
+                        "sha256":  "27b0b86105698a91c5398498f47060c27addfe42b7fd7e08fbfe0d53321eb071",
+                        "bytes":  1005,
+                        "disposition":  "COPY_ONLY_DERIVED_REPORT"
+                    },
+                    {
+                        "source":  "intelligence/analytics-validation-report.json",
+                        "sha256":  "de88161f040479f10509b72ae3849efdef4809f1162e130c40f4633a16e10992",
+                        "bytes":  295,
+                        "disposition":  "COPY_ONLY_DERIVED_REPORT"
+                    },
+                    {
+                        "source":  "intelligence/archive-intelligence-report.json",
+                        "sha256":  "17f2b2bb48e4a14b554dd5c9fb53d9a0f26aa11735e06d37ca6bf8aaa9b785c2",
+                        "bytes":  42941,
+                        "disposition":  "COPY_ONLY_DERIVED_REPORT"
+                    },
+                    {
+                        "source":  "intelligence/asset_classification_report_v3.json",
+                        "sha256":  "e8bcca4bb176c0b10f6a9f8be9cd8d901fd5765e589a8266a19cbd8acebd31f6",
+                        "bytes":  93838,
+                        "disposition":  "COPY_ONLY_DERIVED_REPORT"
+                    },
+                    {
+                        "source":  "intelligence/ast_extraction_audit_report.json",
+                        "sha256":  "7639ee0c922ee7d83462d1135040b283117897fbd1e6c7fc4349e6f9890bd868",
+                        "bytes":  7942,
+                        "disposition":  "COPY_ONLY_DERIVED_REPORT"
+                    },
+                    {
+                        "source":  "intelligence/ast_raw_findings_report.json",
+                        "sha256":  "abcae14e3a87386923492cdc34125820577503b3be1f3fc07573a774f1048ccd",
+                        "bytes":  4531499,
+                        "disposition":  "COPY_ONLY_DERIVED_REPORT"
+                    },
+                    {
+                        "source":  "intelligence/brain_intelligence_audit_v2.json",
+                        "sha256":  "ef58656b8136a05de8820cabd7a71522f3e16a1de19caa8ade7ad8602ce0e9e9",
+                        "bytes":  3302,
+                        "disposition":  "COPY_ONLY_DERIVED_REPORT"
+                    },
+                    {
+                        "source":  "intelligence/brain_intelligence_audit_v2_final.json",
+                        "sha256":  "b676e5bde3836ad355f8d2254a5243ec3d5622d2cf6798b37c6d26fa0c545003",
+                        "bytes":  3259,
+                        "disposition":  "COPY_ONLY_DERIVED_REPORT"
+                    },
+                    {
+                        "source":  "intelligence/certificate-validation-report.json",
+                        "sha256":  "a69580412b907dc375a097c2c494e035067f59aeb85649387260db41c7023316",
+                        "bytes":  7181,
+                        "disposition":  "COPY_ONLY_DERIVED_REPORT"
+                    },
+                    {
+                        "source":  "intelligence/cleanup_report.json",
+                        "sha256":  "eb46aa007c956d30cd2c63b1abde86560ec0cf4ffe19c8a6b4fa9e4ff0ce0dd1",
+                        "bytes":  19356,
+                        "disposition":  "COPY_ONLY_DERIVED_REPORT"
+                    },
+                    {
+                        "source":  "intelligence/comprehensive_report.json",
+                        "sha256":  "cd829fb597c4c4784d1b8a6747825ea4ff64dbca0ad141b34a5d16ea109b0646",
+                        "bytes":  86711,
+                        "disposition":  "COPY_ONLY_DERIVED_REPORT"
+                    },
+                    {
+                        "source":  "intelligence/comprehensive_report.md",
+                        "sha256":  "48fb08f036060bfb0d6a4edaca7f9809cd71737020f65171ded8c63fe70f9aae",
+                        "bytes":  5929,
+                        "disposition":  "COPY_ONLY_DERIVED_REPORT"
+                    },
+                    {
+                        "source":  "intelligence/crm-validation-report.json",
+                        "sha256":  "7042d22511dbc676f63f24bbc0efe0565fbecae40282f7c2fab292388159844a",
+                        "bytes":  202,
+                        "disposition":  "COPY_ONLY_DERIVED_REPORT"
+                    },
+                    {
+                        "source":  "intelligence/customer-validation-report.json",
+                        "sha256":  "dcdcab13ddc4048139d6d2220b2b92a93dd8d48e178b992d10295ebd70ec8230",
+                        "bytes":  267,
+                        "disposition":  "COPY_ONLY_DERIVED_REPORT"
+                    },
+                    {
+                        "source":  "intelligence/daily_reports/daily_audit_20260805.json",
+                        "sha256":  "8c14c8438c7cfb44a0eeeebb5c228ee1e3f9dc0cb7bacdbd768488f6321e347d",
+                        "bytes":  91648,
+                        "disposition":  "COPY_ONLY_DERIVED_REPORT"
+                    },
+                    {
+                        "source":  "intelligence/deep_clean_report.json",
+                        "sha256":  "e77eef24d7b033b0e44250bf10b7f3c21d8706268f7dbaa116ce70da24d32d95",
+                        "bytes":  265,
+                        "disposition":  "COPY_ONLY_DERIVED_REPORT"
+                    },
+                    {
+                        "source":  "intelligence/deep_packaging_audit_report.json",
+                        "sha256":  "382f738f420d1b2a5afbb4851f12516e69acdf564020848ed8fb42de27421904",
+                        "bytes":  24912,
+                        "disposition":  "COPY_ONLY_DERIVED_REPORT"
+                    },
+                    {
+                        "source":  "intelligence/eos-final-enterprise-blueprint-package-v1.json",
+                        "sha256":  "6ac9c84a715e557dc76a485c9e76729921d4483cfd04378da5e6ccac9987ea94",
+                        "bytes":  942,
+                        "disposition":  "COPY_ONLY_DERIVED_REPORT"
+                    },
+                    {
+                        "source":  "intelligence/finance-validation-report.json",
+                        "sha256":  "78b2a419894f0c04460ea80ca83ce1e11352cabc53c7a057d57c7161cdd5013b",
+                        "bytes":  170,
+                        "disposition":  "COPY_ONLY_DERIVED_REPORT"
+                    },
+                    {
+                        "source":  "intelligence/gels-validation-report.json",
+                        "sha256":  "7f1ad4fc090d59521e8211f4fbbe9e4b69334d54eca337553ce45049d3ecfcff",
+                        "bytes":  10678,
+                        "disposition":  "COPY_ONLY_DERIVED_REPORT"
+                    },
+                    {
+                        "source":  "intelligence/inventory-validation-report.json",
+                        "sha256":  "65f79fbfdb346bf0111ed72d49d75cd20df6bf82c774f155867056c5d862481c",
+                        "bytes":  203,
+                        "disposition":  "COPY_ONLY_DERIVED_REPORT"
+                    },
+                    {
+                        "source":  "intelligence/logistics-validation-report.json",
+                        "sha256":  "ffd34b552d3776e6bff338e01f5488f376465e56ab0d76db3fc06e6bd83fd6a1",
+                        "bytes":  254,
+                        "disposition":  "COPY_ONLY_DERIVED_REPORT"
+                    },
+                    {
+                        "source":  "intelligence/master-data-integrity-report.json",
+                        "sha256":  "a3bec40a73ed04bc29c5f56a4363a6fc2a35e11fd3358dbf5704d0e65599ef8f",
+                        "bytes":  91339,
+                        "disposition":  "COPY_ONLY_DERIVED_REPORT"
+                    },
+                    {
+                        "source":  "intelligence/supplier-validation-report.json",
+                        "sha256":  "97acd099e0a5e0520170e86923bb0371fded8a3069a191b22bd37eca43ff6f3a",
+                        "bytes":  194,
+                        "disposition":  "COPY_ONLY_DERIVED_REPORT"
+                    }
+                ],
+    "recovery":  "Each copied artifact has a source-relative destination and source/copy SHA-256 comparison. Originals remain in place.",
+    "excluded":  [
+                     "Code files",
+                     "architecture manifests",
+                     "contracts",
+                     "knowledge registries",
+                     "tool manifests",
+                     "scripts",
+                     "tests",
+                     "runtime candidates",
+                     "Legacy/reference folders"
+                 ],
+    "copyResults":  [
+                        {
+                            "source":  "E3-GIT-HEAD.txt",
+                            "archivedCopy":  "archive/derived-report-preservation/2026-08-13_192255/E3-GIT-HEAD.txt",
+                            "sha256":  "7e0a292b9814172474c4384911336405e8360062f0cb6d89986603f970681803",
+                            "verified":  true
+                        },
+                        {
+                            "source":  "E3-GIT-STATUS.txt",
+                            "archivedCopy":  "archive/derived-report-preservation/2026-08-13_192255/E3-GIT-STATUS.txt",
+                            "sha256":  "d803f8e2b546069ae6aa1c33ae437d59f2ddc7e5f494d1ea977dd796866c3f41",
+                            "verified":  true
+                        },
+                        {
+                            "source":  "E3-GIT-TRACKED.txt",
+                            "archivedCopy":  "archive/derived-report-preservation/2026-08-13_192255/E3-GIT-TRACKED.txt",
+                            "sha256":  "1011760e20161b9900f27ac8ce34d1a5482ea141dd426144ed243adeec91623c",
+                            "verified":  true
+                        },
+                        {
+                            "source":  "E3-REPOSITORY-MANIFEST.json",
+                            "archivedCopy":  "archive/derived-report-preservation/2026-08-13_192255/E3-REPOSITORY-MANIFEST.json",
+                            "sha256":  "dcfc008d471a009eccd09903d253f7566af7620044cd7d9f08265ae86587c315",
+                            "verified":  true
+                        },
+                        {
+                            "source":  "_GREENY_DIAGNOSTIC_20260809_233236/FILES.txt",
+                            "archivedCopy":  "archive/derived-report-preservation/2026-08-13_192255/_GREENY_DIAGNOSTIC_20260809_233236/FILES.txt",
+                            "sha256":  "5203c69847abb4e268d41bbb7588d1b685a12607b2be3462869777c286cb977d",
+                            "verified":  true
+                        },
+                        {
+                            "source":  "_GREENY_DIAGNOSTIC_20260809_233236/GIT_STATUS.txt",
+                            "archivedCopy":  "archive/derived-report-preservation/2026-08-13_192255/_GREENY_DIAGNOSTIC_20260809_233236/GIT_STATUS.txt",
+                            "sha256":  "6968b236037eeb446f1b573761567471f05abda53053701e09a8923896e60b4c",
+                            "verified":  true
+                        },
+                        {
+                            "source":  "_GREENY_DIAGNOSTIC_20260809_233236/KEY_SEARCH.txt",
+                            "archivedCopy":  "archive/derived-report-preservation/2026-08-13_192255/_GREENY_DIAGNOSTIC_20260809_233236/KEY_SEARCH.txt",
+                            "sha256":  "3fc517015d31cea8bd6359123d75a5632f466608669c5a5a389f7c8314dd4ab1",
+                            "verified":  true
+                        },
+                        {
+                            "source":  "_GREENY_DIAGNOSTIC_20260809_233236/PROJECT_DIAGNOSTIC.txt",
+                            "archivedCopy":  "archive/derived-report-preservation/2026-08-13_192255/_GREENY_DIAGNOSTIC_20260809_233236/PROJECT_DIAGNOSTIC.txt",
+                            "sha256":  "977a99643c7be3029bbb1d549e2801cb4f765b0aeb2f53d14abfa864756930cd",
+                            "verified":  true
+                        },
+                        {
+                            "source":  "canonical/classification_report_v2.json",
+                            "archivedCopy":  "archive/derived-report-preservation/2026-08-13_192255/canonical/classification_report_v2.json",
+                            "sha256":  "71aba269be1b344e2af532597e67891e81dd7acb2fb0c05713bf23f93318ea25",
+                            "verified":  true
+                        },
+                        {
+                            "source":  "canonical/cleanup_report.json",
+                            "archivedCopy":  "archive/derived-report-preservation/2026-08-13_192255/canonical/cleanup_report.json",
+                            "sha256":  "30d5766039b0cf36e0c898487388207f4df1c8216a21a829800396a98c8bbb67",
+                            "verified":  true
+                        },
+                        {
+                            "source":  "canonical/final_audit.json",
+                            "archivedCopy":  "archive/derived-report-preservation/2026-08-13_192255/canonical/final_audit.json",
+                            "sha256":  "a232bce1adbd40309940d1f753a53bbbd93dd39d7780e20e792efc62b274a778",
+                            "verified":  true
+                        },
+                        {
+                            "source":  "canonical/intelligence/asset_classification_report_v2.json",
+                            "archivedCopy":  "archive/derived-report-preservation/2026-08-13_192255/canonical/intelligence/asset_classification_report_v2.json",
+                            "sha256":  "77a9a4ceccfaa4ebb6416ecba043ecd9d80e2211af06d73e1e6957e6d5fbe460",
+                            "verified":  true
+                        },
+                        {
+                            "source":  "canonical/intelligence/cleanup_report.json",
+                            "archivedCopy":  "archive/derived-report-preservation/2026-08-13_192255/canonical/intelligence/cleanup_report.json",
+                            "sha256":  "30d5766039b0cf36e0c898487388207f4df1c8216a21a829800396a98c8bbb67",
+                            "verified":  true
+                        },
+                        {
+                            "source":  "canonical/intelligence/comprehensive_report.json",
+                            "archivedCopy":  "archive/derived-report-preservation/2026-08-13_192255/canonical/intelligence/comprehensive_report.json",
+                            "sha256":  "b2331d28f45987c9904713d4e41f066636b1a843a0f9c165d64635f4ba9a1248",
+                            "verified":  true
+                        },
+                        {
+                            "source":  "canonical/intelligence/eos-enterprise-architecture-final.json",
+                            "archivedCopy":  "archive/derived-report-preservation/2026-08-13_192255/canonical/intelligence/eos-enterprise-architecture-final.json",
+                            "sha256":  "7b8c738457a9b4a84729285e0201db2107c4fe2bbe255cd185d8b328a1d85e5f",
+                            "verified":  true
+                        },
+                        {
+                            "source":  "canonical/intelligence/foundation-closure-report-final.json",
+                            "archivedCopy":  "archive/derived-report-preservation/2026-08-13_192255/canonical/intelligence/foundation-closure-report-final.json",
+                            "sha256":  "84533595b3248022a663fc26fc35ed88e6f9c9516b2b938688becbef003b3865",
+                            "verified":  true
+                        },
+                        {
+                            "source":  "els_final.json",
+                            "archivedCopy":  "archive/derived-report-preservation/2026-08-13_192255/els_final.json",
+                            "sha256":  "8cd94c0b163218968cad82f7c4c11ac307d2ecc7f805b2b00c76d27606b57765",
+                            "verified":  true
+                        },
+                        {
+                            "source":  "els_final_v2.json",
+                            "archivedCopy":  "archive/derived-report-preservation/2026-08-13_192255/els_final_v2.json",
+                            "sha256":  "27b0b86105698a91c5398498f47060c27addfe42b7fd7e08fbfe0d53321eb071",
+                            "verified":  true
+                        },
+                        {
+                            "source":  "els_final_with_business.json",
+                            "archivedCopy":  "archive/derived-report-preservation/2026-08-13_192255/els_final_with_business.json",
+                            "sha256":  "27b0b86105698a91c5398498f47060c27addfe42b7fd7e08fbfe0d53321eb071",
+                            "verified":  true
+                        },
+                        {
+                            "source":  "intelligence/analytics-validation-report.json",
+                            "archivedCopy":  "archive/derived-report-preservation/2026-08-13_192255/intelligence/analytics-validation-report.json",
+                            "sha256":  "de88161f040479f10509b72ae3849efdef4809f1162e130c40f4633a16e10992",
+                            "verified":  true
+                        },
+                        {
+                            "source":  "intelligence/archive-intelligence-report.json",
+                            "archivedCopy":  "archive/derived-report-preservation/2026-08-13_192255/intelligence/archive-intelligence-report.json",
+                            "sha256":  "17f2b2bb48e4a14b554dd5c9fb53d9a0f26aa11735e06d37ca6bf8aaa9b785c2",
+                            "verified":  true
+                        },
+                        {
+                            "source":  "intelligence/asset_classification_report_v3.json",
+                            "archivedCopy":  "archive/derived-report-preservation/2026-08-13_192255/intelligence/asset_classification_report_v3.json",
+                            "sha256":  "e8bcca4bb176c0b10f6a9f8be9cd8d901fd5765e589a8266a19cbd8acebd31f6",
+                            "verified":  true
+                        },
+                        {
+                            "source":  "intelligence/ast_extraction_audit_report.json",
+                            "archivedCopy":  "archive/derived-report-preservation/2026-08-13_192255/intelligence/ast_extraction_audit_report.json",
+                            "sha256":  "7639ee0c922ee7d83462d1135040b283117897fbd1e6c7fc4349e6f9890bd868",
+                            "verified":  true
+                        },
+                        {
+                            "source":  "intelligence/ast_raw_findings_report.json",
+                            "archivedCopy":  "archive/derived-report-preservation/2026-08-13_192255/intelligence/ast_raw_findings_report.json",
+                            "sha256":  "abcae14e3a87386923492cdc34125820577503b3be1f3fc07573a774f1048ccd",
+                            "verified":  true
+                        },
+                        {
+                            "source":  "intelligence/brain_intelligence_audit_v2.json",
+                            "archivedCopy":  "archive/derived-report-preservation/2026-08-13_192255/intelligence/brain_intelligence_audit_v2.json",
+                            "sha256":  "ef58656b8136a05de8820cabd7a71522f3e16a1de19caa8ade7ad8602ce0e9e9",
+                            "verified":  true
+                        },
+                        {
+                            "source":  "intelligence/brain_intelligence_audit_v2_final.json",
+                            "archivedCopy":  "archive/derived-report-preservation/2026-08-13_192255/intelligence/brain_intelligence_audit_v2_final.json",
+                            "sha256":  "b676e5bde3836ad355f8d2254a5243ec3d5622d2cf6798b37c6d26fa0c545003",
+                            "verified":  true
+                        },
+                        {
+                            "source":  "intelligence/certificate-validation-report.json",
+                            "archivedCopy":  "archive/derived-report-preservation/2026-08-13_192255/intelligence/certificate-validation-report.json",
+                            "sha256":  "a69580412b907dc375a097c2c494e035067f59aeb85649387260db41c7023316",
+                            "verified":  true
+                        },
+                        {
+                            "source":  "intelligence/cleanup_report.json",
+                            "archivedCopy":  "archive/derived-report-preservation/2026-08-13_192255/intelligence/cleanup_report.json",
+                            "sha256":  "eb46aa007c956d30cd2c63b1abde86560ec0cf4ffe19c8a6b4fa9e4ff0ce0dd1",
+                            "verified":  true
+                        },
+                        {
+                            "source":  "intelligence/comprehensive_report.json",
+                            "archivedCopy":  "archive/derived-report-preservation/2026-08-13_192255/intelligence/comprehensive_report.json",
+                            "sha256":  "cd829fb597c4c4784d1b8a6747825ea4ff64dbca0ad141b34a5d16ea109b0646",
+                            "verified":  true
+                        },
+                        {
+                            "source":  "intelligence/comprehensive_report.md",
+                            "archivedCopy":  "archive/derived-report-preservation/2026-08-13_192255/intelligence/comprehensive_report.md",
+                            "sha256":  "48fb08f036060bfb0d6a4edaca7f9809cd71737020f65171ded8c63fe70f9aae",
+                            "verified":  true
+                        },
+                        {
+                            "source":  "intelligence/crm-validation-report.json",
+                            "archivedCopy":  "archive/derived-report-preservation/2026-08-13_192255/intelligence/crm-validation-report.json",
+                            "sha256":  "7042d22511dbc676f63f24bbc0efe0565fbecae40282f7c2fab292388159844a",
+                            "verified":  true
+                        },
+                        {
+                            "source":  "intelligence/customer-validation-report.json",
+                            "archivedCopy":  "archive/derived-report-preservation/2026-08-13_192255/intelligence/customer-validation-report.json",
+                            "sha256":  "dcdcab13ddc4048139d6d2220b2b92a93dd8d48e178b992d10295ebd70ec8230",
+                            "verified":  true
+                        },
+                        {
+                            "source":  "intelligence/daily_reports/daily_audit_20260805.json",
+                            "archivedCopy":  "archive/derived-report-preservation/2026-08-13_192255/intelligence/daily_reports/daily_audit_20260805.json",
+                            "sha256":  "8c14c8438c7cfb44a0eeeebb5c228ee1e3f9dc0cb7bacdbd768488f6321e347d",
+                            "verified":  true
+                        },
+                        {
+                            "source":  "intelligence/deep_clean_report.json",
+                            "archivedCopy":  "archive/derived-report-preservation/2026-08-13_192255/intelligence/deep_clean_report.json",
+                            "sha256":  "e77eef24d7b033b0e44250bf10b7f3c21d8706268f7dbaa116ce70da24d32d95",
+                            "verified":  true
+                        },
+                        {
+                            "source":  "intelligence/deep_packaging_audit_report.json",
+                            "archivedCopy":  "archive/derived-report-preservation/2026-08-13_192255/intelligence/deep_packaging_audit_report.json",
+                            "sha256":  "382f738f420d1b2a5afbb4851f12516e69acdf564020848ed8fb42de27421904",
+                            "verified":  true
+                        },
+                        {
+                            "source":  "intelligence/eos-final-enterprise-blueprint-package-v1.json",
+                            "archivedCopy":  "archive/derived-report-preservation/2026-08-13_192255/intelligence/eos-final-enterprise-blueprint-package-v1.json",
+                            "sha256":  "6ac9c84a715e557dc76a485c9e76729921d4483cfd04378da5e6ccac9987ea94",
+                            "verified":  true
+                        },
+                        {
+                            "source":  "intelligence/finance-validation-report.json",
+                            "archivedCopy":  "archive/derived-report-preservation/2026-08-13_192255/intelligence/finance-validation-report.json",
+                            "sha256":  "78b2a419894f0c04460ea80ca83ce1e11352cabc53c7a057d57c7161cdd5013b",
+                            "verified":  true
+                        },
+                        {
+                            "source":  "intelligence/gels-validation-report.json",
+                            "archivedCopy":  "archive/derived-report-preservation/2026-08-13_192255/intelligence/gels-validation-report.json",
+                            "sha256":  "7f1ad4fc090d59521e8211f4fbbe9e4b69334d54eca337553ce45049d3ecfcff",
+                            "verified":  true
+                        },
+                        {
+                            "source":  "intelligence/inventory-validation-report.json",
+                            "archivedCopy":  "archive/derived-report-preservation/2026-08-13_192255/intelligence/inventory-validation-report.json",
+                            "sha256":  "65f79fbfdb346bf0111ed72d49d75cd20df6bf82c774f155867056c5d862481c",
+                            "verified":  true
+                        },
+                        {
+                            "source":  "intelligence/logistics-validation-report.json",
+                            "archivedCopy":  "archive/derived-report-preservation/2026-08-13_192255/intelligence/logistics-validation-report.json",
+                            "sha256":  "ffd34b552d3776e6bff338e01f5488f376465e56ab0d76db3fc06e6bd83fd6a1",
+                            "verified":  true
+                        },
+                        {
+                            "source":  "intelligence/master-data-integrity-report.json",
+                            "archivedCopy":  "archive/derived-report-preservation/2026-08-13_192255/intelligence/master-data-integrity-report.json",
+                            "sha256":  "a3bec40a73ed04bc29c5f56a4363a6fc2a35e11fd3358dbf5704d0e65599ef8f",
+                            "verified":  true
+                        },
+                        {
+                            "source":  "intelligence/supplier-validation-report.json",
+                            "archivedCopy":  "archive/derived-report-preservation/2026-08-13_192255/intelligence/supplier-validation-report.json",
+                            "sha256":  "97acd099e0a5e0520170e86923bb0371fded8a3069a191b22bd37eca43ff6f3a",
+                            "verified":  true
+                        }
+                    ]
+}

@@ -1,0 +1,154 @@
+﻿{
+    "reportType":  "E3_P0_CURRENT_RUNTIME_EVIDENCE_V1",
+    "generatedAtUtc":  "2026-08-13T13:16:21.2287587Z",
+    "scope":  "Current replacement system only. Selected tests plus GET-only local endpoint requests. No legacy candidate was executed; no database-mutating HTTP request was sent.",
+    "baseUrl":  "http://127.0.0.1:3000",
+    "results":  [
+                    {
+                        "kind":  "TEST",
+                        "name":  "TypeScript compilation",
+                        "status":  "PASS",
+                        "exitCode":  0,
+                        "evidence":  "\u003e greeny-life@1.0.0 type-check\r\n\u003e tsc --noEmit"
+                    },
+                    {
+                        "kind":  "TEST",
+                        "name":  "Product/Supplier/Order domain workflow",
+                        "status":  "PASS",
+                        "exitCode":  0,
+                        "evidence":  "\u003e greeny-life@1.0.0 test:domain\r\n\u003e tsx tests/domain_workflow_check.ts\r\n\r\nDomain workflow rules: PASS"
+                    },
+                    {
+                        "kind":  "TEST",
+                        "name":  "Trade traceability",
+                        "status":  "PASS",
+                        "exitCode":  0,
+                        "evidence":  "\u003e greeny-life@1.0.0 test:traceability\r\n\u003e tsx tests/trade_traceability_check.ts\r\n\r\nTrade traceability rules: PASS"
+                    },
+                    {
+                        "kind":  "TEST",
+                        "name":  "Supplier and quality review",
+                        "status":  "PASS",
+                        "exitCode":  0,
+                        "evidence":  "\u003e greeny-life@1.0.0 test:supplier-quality\r\n\u003e tsx tests/supplier_quality_review_check.ts\r\n\r\nSupplier quality review: PASS"
+                    },
+                    {
+                        "kind":  "TEST",
+                        "name":  "Evidence gate",
+                        "status":  "PASS",
+                        "exitCode":  0,
+                        "evidence":  "\u003e greeny-life@1.0.0 test:official-evidence-gate\r\n\u003e tsx tests/official_evidence_gate_check.ts\r\n\r\nofficial_evidence_gate_check: PASS"
+                    },
+                    {
+                        "kind":  "TEST",
+                        "name":  "Evidence review route",
+                        "status":  "PASS",
+                        "exitCode":  0,
+                        "evidence":  "\u003e greeny-life@1.0.0 test:official-evidence-review\r\n\u003e tsx tests/official_evidence_review_route_check.ts\r\n\r\nofficial_evidence_review_route_check: PASS"
+                    },
+                    {
+                        "kind":  "TEST",
+                        "name":  "Greeny Life Egypt operating brain",
+                        "status":  "PASS",
+                        "exitCode":  0,
+                        "evidence":  "\u003e greeny-life@1.0.0 test:greeny-life-egypt\r\n\u003e tsx tests/greeny_life_egypt_brain_check.ts\r\n\r\nGreeny-Life Egypt Brain: PASS"
+                    },
+                    {
+                        "kind":  "TEST",
+                        "name":  "Workflow governance",
+                        "status":  "PASS",
+                        "exitCode":  0,
+                        "evidence":  "\u003e greeny-life@1.0.0 test:workflow-governance\r\n\u003e tsx tests/workflow_governance_check.ts\r\n\r\nWorkflow governance: PASS"
+                    },
+                    {
+                        "kind":  "TEST",
+                        "name":  "Authorization boundary",
+                        "status":  "PASS",
+                        "exitCode":  0,
+                        "evidence":  "\u003e greeny-life@1.0.0 test:api-authorization\r\n\u003e tsx tests/api_authorization_check.ts\r\n\r\nAPI authorization policy: PASS"
+                    },
+                    {
+                        "kind":  "TEST",
+                        "name":  "MasterMind evidence authority",
+                        "status":  "PASS",
+                        "exitCode":  0,
+                        "evidence":  "\u003e greeny-life@1.0.0 test:mastermind-evidence-authority\r\n\u003e tsx tests/mastermind_evidence_authority_check.ts\r\n\r\nmastermind_evidence_authority_check: PASS"
+                    },
+                    {
+                        "kind":  "READ_RUNTIME",
+                        "name":  "/",
+                        "status":  "PASS",
+                        "httpStatus":  200,
+                        "evidence":  "\u003c!DOCTYPE html\u003e\u003chtml lang=\"en\"\u003e\u003chead\u003e\u003cmeta charSet=\"utf-8\"/\u003e\u003cmeta name=\"viewport\" content=\"width=device-width, initial-scale=1\"/\u003e\u003clink rel=\"preload\" as=\"script\" fetchPriority=\"low\" href=\"/_next/static/chunks/%5Bturbopack%5D_browser_dev_hmr-client_hmr-client_ts_1xx01vv._.js\"/\u003e\u003cscript src=\"/_next/static/chunks/node_modules_next_dist_compiled_next-devtools_index_090k2jm.js\" async=\"\"\u003e\u003c/script\u003e\u003cscript src=\"/_next/static/chunks/node_modules_next_dist_compiled_react-dom_096_9a-._.js\" async=\"\"\u003e\u003c/script\u003e"
+                    },
+                    {
+                        "kind":  "READ_RUNTIME",
+                        "name":  "/api/products",
+                        "status":  "PASS",
+                        "httpStatus":  200,
+                        "evidence":  "{\"success\":true,\"count\":14,\"data\":[{\"id\":\"1191c90a-8607-4565-b368-0a7c4158f779\",\"supplierId\":\"41ebc90f-c30d-4341-a77a-481baf1cc4a6\",\"productId\":\"O001\",\"nameAr\":\"Ø²ÙØª Ø­Ø¨Ø© Ø§ÙØ¨Ø±ÙØ©\",\"nameEn\":\"Black Seed Oil\",\"category\":\"Natural Oils\",\"marketRules\":{\"source\":\"canonical/data/master_products.json\",\"markets\":{\"eu\":true,\"gcc\":true,\"usa\":true,\"asia\":true},\"documents\":{\"coa\":true,\"gmp\":true,\"msds\":false,\"haccp\":true,\"halal\":true,\"iso22000\":true,\"nutrition\":true,\"specification\":true,\"origin_certi"
+                    },
+                    {
+                        "kind":  "READ_RUNTIME",
+                        "name":  "/api/suppliers",
+                        "status":  "PASS",
+                        "httpStatus":  200,
+                        "evidence":  "{\"success\":true,\"count\":4,\"data\":[{\"id\":\"41ebc90f-c30d-4341-a77a-481baf1cc4a6\",\"entityId\":\"51ea3d9b-ca31-4e78-9abb-ecc80826014f\",\"supplierId\":\"SUP-EGY-OIL-001\",\"nameAr\":\"Green Valley Herbs \u0026 Oils\",\"nameEn\":\"Green Valley Herbs \u0026 Oils\",\"contactPerson\":null,\"email\":\"info@greenvalleyoil.com\",\"phone\":\"+20 4 5678 9013\",\"country\":\"Egypt\",\"createdAt\":\"2026-08-12T20:13:50.891Z\",\"updatedAt\":\"2026-08-12T20:13:50.891Z\",\"entity\":{\"id\":\"51ea3d9b-ca31-4e78-9abb-ecc80826014f\",\"orgId\":\"a7211101-7499-4586-b828-c3"
+                    },
+                    {
+                        "kind":  "READ_RUNTIME",
+                        "name":  "/api/sales-orders",
+                        "status":  "PASS",
+                        "httpStatus":  200,
+                        "evidence":  "{\"success\":true,\"count\":0,\"data\":[]}"
+                    },
+                    {
+                        "kind":  "READ_RUNTIME",
+                        "name":  "/api/mastermind/operating-model",
+                        "status":  "PASS",
+                        "httpStatus":  200,
+                        "evidence":  "{\"success\":true,\"data\":{\"primaryAuthority\":{\"name\":\"MasterMind AI\",\"role\":\"Primary decision intelligence and command authority\",\"duties\":[\"route local-brain findings\",\"separate company/customer/option context\",\"compare alternatives\",\"request evidence\",\"create approval notification\",\"issue controlled command only after user approval\"],\"prohibited\":[\"unapproved commercial execution\",\"payment execution\",\"customs filing\",\"legal title transfer\",\"self-modification\"]},\"operatingBrains\":{\"GREENY_LIFE_EG"
+                    },
+                    {
+                        "kind":  "READ_RUNTIME",
+                        "name":  "/api/mastermind/tools",
+                        "status":  "PASS",
+                        "httpStatus":  200,
+                        "evidence":  "{\"success\":true,\"data\":{\"system\":\"MasterMind AI Tool Registry\",\"source\":\"greenlines_brain/dna/extracted_knowledge.json\",\"total\":39,\"counts\":{\"READ_ONLY_READY\":6,\"ADAPTER_REQUIRED\":25,\"BLOCKED_DIRECT_EXECUTION\":8},\"rules\":[\"MasterMind AI routes and combines tools; it does not let tools override approval requirements.\",\"Local operating brains may request a tool only inside their company context.\",\"All tools are read-only until an explicit tested adapter and user-approved operational workflow exist"
+                    },
+                    {
+                        "kind":  "READ_RUNTIME",
+                        "name":  "/api/portfolio/egyptian-exports",
+                        "status":  "PASS",
+                        "httpStatus":  200,
+                        "evidence":  "{\"success\":true,\"data\":{\"source\":\"canonical/data/master_products.json\",\"status\":\"REFERENCE_PORTFOLIO_NOT_AUTOMATICALLY_EXPORTABLE\",\"owner\":\"GREENY_LIFE_EGYPT\",\"count\":15,\"products\":[{\"id\":\"H001\",\"code\":\"HON001\",\"name\":\"Wildflower Honey\",\"category\":\"Honey\",\"origin\":\"Egypt\",\"hsCode\":\"040900\",\"targetMarkets\":[\"GCC\",\"EU\",\"USA\",\"ASIA\"],\"requiredCertificates\":[\"Halal\",\"HACCP\",\"ISO 22000\",\"GMP\",\"COA\",\"Origin Certificate\"],\"routes\":[{\"destinationOwner\":\"GREEN_LINES_NORWAY_EU\",\"markets\":[\"NORWAY\",\"EU\"],\""
+                    },
+                    {
+                        "kind":  "READ_RUNTIME",
+                        "name":  "/api/evidence/official",
+                        "status":  "PASS_EXPECTED_AUTH_GATE",
+                        "httpStatus":  401,
+                        "evidence":  "The remote server returned an error: (401) Unauthorized."
+                    },
+                    {
+                        "kind":  "READ_RUNTIME",
+                        "name":  "/api/decisions/official-evidence-review",
+                        "status":  "FAIL",
+                        "httpStatus":  405,
+                        "evidence":  "The remote server returned an error: (405) Method Not Allowed."
+                    },
+                    {
+                        "kind":  "READ_RUNTIME",
+                        "name":  "/api/mastermind/decision-package",
+                        "status":  "FAIL",
+                        "httpStatus":  405,
+                        "evidence":  "The remote server returned an error: (405) Method Not Allowed."
+                    }
+                ],
+    "ladderInterpretation":  {
+                                 "test":  "PASS test result is TEST_EVIDENCE only when linked to the named P0 capability.",
+                                 "runtime":  "A successful GET is read-runtime evidence only; it does not prove state mutation.",
+                                 "operational":  "No OPERATIONAL_PROVEN claim is made by this batch because it sends no mutating request.",
+                                 "legacy":  "Legacy candidates remain UNKNOWN/UNPROVEN until separately tested in a disposable isolated environment."
+                             }
+}

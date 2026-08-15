@@ -1,0 +1,22 @@
+
+{
+"name":"Export Shipment Flow",
+
+"steps":[
+
+"CREATE_SHIPMENT",
+
+"ASSIGN_CARRIER",
+
+"GENERATE_TRACKING",
+
+"CUSTOMS_CLEARANCE",
+
+"DELIVERY_CONFIRMATION"
+
+],
+
+"event":"ShipmentCreated"
+
+}
+

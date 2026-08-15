@@ -1,5 +1,8 @@
 import fs from "fs";
 import path from "path";
+import { prisma } from "@/lib/prisma";
+import { assessOfficialExportEvidence, type EvidenceGateAssessment } from "@/lib/intelligence/official-evidence-gate";
+import { mapPersistedOfficialEvidence, type PersistedOfficialEvidenceRow } from "@/lib/intelligence/persisted-official-evidence";
 
 type EvidenceState = "SUPPORTED" | "MISSING" | "SELF_DECLARED";
 type DecisionStatus = "REQUIRES_HUMAN_REVIEW" | "NOT_READY";
@@ -24,6 +27,62 @@ interface Finding {
   state: EvidenceState;
   message: string;
   source: string;
+}
+
+type CommercialChangeForReadiness = {
+  domain: string;
+  status: string;
+  effectiveFrom: Date | null;
+  effectiveTo: Date | null;
+  payload: unknown;
+};
+
+type CommercialReadiness = {
+  supported: boolean;
+  missingDomains: string[];
+  conflictingDomains: string[];
+  reasons: string[];
+};
+
+const requiredCommercialDomains = ["PRICE", "SHIPMENT", "OFFER"] as const;
+
+function commercialRecordMatchesDestination(payload: unknown, destinationKey: string): boolean {
+  if (typeof payload !== "object" || payload === null || Array.isArray(payload)) return false;
+  const destination = (payload as Record<string, unknown>).destination;
+  return typeof destination === "string" && destination.trim().toLowerCase() === destinationKey;
+}
+
+// Pure, fail-closed evaluator for records that already exist in CommercialChange.
+// It does not approve a price, quote, shipment, or offer, and it never writes data.
+export function assessCommercialReadiness(
+  changes: CommercialChangeForReadiness[],
+  destination: string,
+  now = new Date(),
+): CommercialReadiness {
+  const destinationKey = destination.trim().toLowerCase();
+  const currentApprovedDomains = changes
+    .filter((change) =>
+      change.status === "APPROVED" &&
+      (!change.effectiveFrom || change.effectiveFrom <= now) &&
+      (!change.effectiveTo || change.effectiveTo >= now) &&
+      commercialRecordMatchesDestination(change.payload, destinationKey),
+    )
+    .map((change) => change.domain.trim().toUpperCase());
+  const activeDomainCounts = new Map<string, number>();
+  for (const domain of currentApprovedDomains) activeDomainCounts.set(domain, (activeDomainCounts.get(domain) ?? 0) + 1);
+  const supportedDomains = new Set(currentApprovedDomains);
+  const missingDomains = requiredCommercialDomains.filter((domain) => !supportedDomains.has(domain));
+  const conflictingDomains = requiredCommercialDomains.filter((domain) => (activeDomainCounts.get(domain) ?? 0) > 1);
+  const reasons = [
+    ...missingDomains.map((domain) => `No current approved ${domain} commercial record is attached to this product.`),
+    ...conflictingDomains.map((domain) => `More than one current approved ${domain} commercial record is attached to this product; a human must resolve the canonical record.`),
+  ];
+  return {
+    supported: missingDomains.length === 0 && conflictingDomains.length === 0,
+    missingDomains,
+    conflictingDomains,
+    reasons,
+  };
 }
 
 function readJson<T>(relativePath: string): T {
@@ -78,5 +137,71 @@ export function buildExportDecision(productId: string, destination: string) {
     },
     findings,
     nextEvidence: missing.map((finding) => ({ code: finding.code, required: finding.message })),
+  };
+}
+
+// Current-system integration only. Legacy code is neither imported nor executed.
+// The returned package remains review-only even when every read gate is satisfied.
+export async function buildPersistedExportDecision(productId: string, destination: string) {
+  const baseline = buildExportDecision(productId, destination);
+  const [storedEvidence, commercialChanges] = await Promise.all([
+    prisma.officialEvidenceRegistry.findMany({ where: { product: productId.trim(), destination: destination.trim() }, orderBy: { updatedAt: "desc" } }),
+    prisma.commercialChange.findMany({
+      where: {
+        subjectId: productId.trim(),
+        status: "APPROVED",
+        domain: { in: [...requiredCommercialDomains] },
+      },
+      orderBy: { updatedAt: "desc" },
+    }),
+  ]);
+  const officialEvidence: EvidenceGateAssessment = assessOfficialExportEvidence(
+    storedEvidence.map((row) => mapPersistedOfficialEvidence(row as PersistedOfficialEvidenceRow)),
+    productId,
+    destination,
+  );
+  const commercial = assessCommercialReadiness(commercialChanges, destination);
+  const findings = baseline.findings.filter((finding) =>
+    finding.code !== "OFFICIAL_REGULATORY_EVIDENCE" && finding.code !== "COMMERCIAL_TERMS",
+  );
+  findings.push({
+    code: "OFFICIAL_REGULATORY_EVIDENCE",
+    state: officialEvidence.state === "SUPPORTED_BY_OFFICIAL_SOURCE" ? "SUPPORTED" : "MISSING",
+    message: officialEvidence.reasons.join(" "),
+    source: "OfficialEvidenceRegistry",
+  });
+  findings.push({
+    code: "COMMERCIAL_TERMS",
+    state: commercial.supported ? "SUPPORTED" : "MISSING",
+    message: commercial.supported
+      ? "Current approved PRICE, SHIPMENT and OFFER records exist for this product and destination."
+      : commercial.reasons.join(" "),
+    source: "CommercialChange",
+  });
+  const missing = findings.filter((finding) => finding.state === "MISSING");
+  const status: DecisionStatus = missing.length ? "NOT_READY" : "REQUIRES_HUMAN_REVIEW";
+  const confidence = Math.max(0, 100 - missing.length * 20 - findings.filter((finding) => finding.state === "SELF_DECLARED").length * 8);
+  return {
+    ...baseline,
+    decision: {
+      status,
+      confidence,
+      automaticExecution: false,
+      recommendedAction: status === "NOT_READY"
+        ? "Do not execute export; resolve missing official evidence, commercial approvals, quality and operational requirements."
+        : "Submit the complete package to an authorized human reviewer. No export is executed by this decision.",
+    },
+    findings,
+    nextEvidence: missing.map((finding) => ({ code: finding.code, required: finding.message })),
+    persistedEvidence: {
+      source: "OfficialEvidenceRegistry",
+      recordCount: storedEvidence.length,
+      assessment: officialEvidence,
+    },
+    commercialReadiness: {
+      source: "CommercialChange",
+      approvedRecordCount: commercialChanges.length,
+      ...commercial,
+    },
   };
 }

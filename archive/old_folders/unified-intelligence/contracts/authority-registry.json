@@ -1,0 +1,38 @@
+﻿{
+  "version": "1.0.0",
+  "canonical_sources": {
+    "products": {
+      "authority": "master-data",
+      "status": "canonical"
+    },
+    "suppliers": {
+      "authority": "master-data",
+      "status": "canonical"
+    },
+    "markets": {
+      "authority": "master-data",
+      "status": "canonical"
+    },
+    "packaging": {
+      "authority": "master-data",
+      "status": "canonical"
+    }
+  },
+  "historical_sources": {
+    "legacy": {
+      "authority": "historical",
+      "status": "read-only",
+      "must_not_override_master": true
+    }
+  },
+  "derived_sources": {
+    "reports": {
+      "authority": "derived",
+      "must_not_be_used_as_source_of_truth": true
+    },
+    "logs": {
+      "authority": "observational",
+      "must_not_be_used_as_source_of_truth": true
+    }
+  }
+}

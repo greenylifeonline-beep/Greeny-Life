@@ -9,7 +9,7 @@ const nonEmptyText = (value: unknown): value is string =>
   typeof value === "string" && value.trim().length > 0;
 
 const riskLevels = new Set(["LOW", "MEDIUM", "HIGH", "CRITICAL"]);
-const reviewDomains = new Set(["PRICE", "SUPPLIER", "SHIPMENT"]);
+const reviewDomains = new Set(["PRODUCT", "CUSTOMER", "PRICE", "SUPPLIER", "SHIPMENT", "OFFER", "INVENTORY", "PACKAGING", "MARKET"]);
 
 interface CommercialChangeRow {
   id: string;
@@ -73,7 +73,7 @@ export async function POST(request: NextRequest) {
   const actorEmail = authorization.session!.email;
   try {
     const body = (await request.json()) as Record<string, unknown>;
-    const { domain, subjectType, subjectId, changeType, source, payload, requestedBy } = body;
+    const { domain, subjectType, subjectId, changeType, source, payload } = body;
     const submittedRisk = typeof body.riskLevel === "string" ? body.riskLevel.trim().toUpperCase() : "MEDIUM";
 
     if (
@@ -81,10 +81,9 @@ export async function POST(request: NextRequest) {
       !nonEmptyText(subjectType) ||
       !nonEmptyText(subjectId) ||
       !nonEmptyText(changeType) ||
-      !nonEmptyText(source) ||
-      !nonEmptyText(requestedBy)
+      !nonEmptyText(source)
     ) {
-      return jsonError("domain, subjectType, subjectId, changeType, source, and requestedBy are required.");
+      return jsonError("domain, subjectType, subjectId, changeType, and source are required. The signed session supplies the requester identity.");
     }
     if (!riskLevels.has(submittedRisk)) return jsonError("riskLevel must be LOW, MEDIUM, HIGH, or CRITICAL.");
     if (payload === null || Array.isArray(payload) || typeof payload !== "object") {
@@ -118,7 +117,7 @@ export async function POST(request: NextRequest) {
       ) VALUES (
         ${id}, ${normalizedDomain}, ${subjectType.trim().toUpperCase()}, ${subjectId.trim()},
         ${changeType.trim().toUpperCase()}, ${status}, ${riskLevel}, ${source.trim()},
-        ${JSON.stringify(payload)}::jsonb, ${rationale}, ${effectiveFrom}, ${effectiveTo}, ${requestedBy.trim()},
+        ${JSON.stringify(payload)}::jsonb, ${rationale}, ${effectiveFrom}, ${effectiveTo}, ${actorEmail},
         ${reviewedBy}, ${reviewedAt}, ${governance.correlationId}, NOW(), NOW()
       )
     `;

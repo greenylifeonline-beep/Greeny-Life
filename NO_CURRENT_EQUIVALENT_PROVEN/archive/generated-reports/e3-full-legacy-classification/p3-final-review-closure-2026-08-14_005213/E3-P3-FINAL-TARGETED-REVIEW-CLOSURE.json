@@ -1,0 +1,107 @@
+{
+    "report":  "E3 P3 Final Targeted Review Closure",
+    "generatedAt":  "2026-08-14T00:52:13.5662464+02:00",
+    "mode":  "READ_ONLY_EVIDENCE_SYNTHESIS",
+    "coverage":  {
+                     "p3Total":  50104,
+                     "targetedRecords":  4,
+                     "resolved":  0,
+                     "review":  4,
+                     "unknown":  0,
+                     "statement":  "P3 role coverage is complete. This final closure records the four residual assets conservatively; REVIEW is explicit and does not block P4 dependency/caller trace."
+                 },
+    "assets":  [
+                   {
+                       "assetId":  "LEGACY-PRIMARY:E3-SOURCE-TRACE-PACKAGE.zip",
+                       "path":  "E3-SOURCE-TRACE-PACKAGE.zip",
+                       "bytes":  59654,
+                       "role":  "DERIVED_REPORT_OR_BUNDLE",
+                       "dependencyCaller":  "STATIC_REFERENCE_ONLY; NO_ACTIVE_CALLER_PROVEN",
+                       "dataBusinessLineage":  "PACKAGE_CONTENT_NOT_OPENED_BY_POLICY",
+                       "currentEquivalent":  "UNTRACKED_REFERENCE_OR_CURRENT; NO_CANONICAL_REPLACEMENT_PROVEN",
+                       "uniqueCapabilityValue":  "UNPROVEN_WITHOUT_PACKAGE_INSPECTION",
+                       "owner":  "UNPROVEN",
+                       "systemOfRecord":  "UNPROVEN",
+                       "status":  "REVIEW",
+                       "reason":  "Existing E3 evidence identifies this as a derived report/bundle, but the package is intentionally unopened. Owner, SOR, content value and replacement cannot be asserted.",
+                       "evidence":  [
+                                        "C:\\Users\\Ghanam\\Documents\\Codex\\Greeny-Life-Repair\\archive\\generated-reports\\e3-full-legacy-classification\\p3-role-resolution-2026-08-14_004731\\E3-P3-TARGETED-ROLE-RESOLUTION.json",
+                                        "C:\\Users\\Ghanam\\Documents\\Codex\\Greeny-Life-Repair\\archive\\generated-reports\\e3-deep-command-archive-proof\\2026-08-13_224919\\E3-DEEP-COMMAND-AND-ARCHIVE-PROOF.json",
+                                        "C:\\Users\\Ghanam\\Documents\\Codex\\Greeny-Life-Repair\\archive\\generated-reports\\e3-closure\\2026-08-13_220334\\E3-CURRENT-ASSET-CODE-CLOSURE.json",
+                                        "C:\\Users\\Ghanam\\Documents\\Codex\\Greeny-Life-Repair\\archive\\generated-reports\\e3-phase-2-primary-classification\\2026-08-14_003259\\E3-PHASE-2-PRIMARY-LEGACY-CLASSIFICATION.json"
+                                    ]
+                   },
+                   {
+                       "assetId":  "LEGACY-PRIMARY:GreenyLifeEOS_Review.zip",
+                       "path":  "GreenyLifeEOS_Review.zip",
+                       "bytes":  21265973,
+                       "role":  "DERIVED_REPORT_OR_BUNDLE",
+                       "dependencyCaller":  "STATIC_REFERENCE_ONLY; NO_ACTIVE_CALLER_PROVEN",
+                       "dataBusinessLineage":  "PACKAGE_CONTENT_NOT_OPENED_BY_POLICY",
+                       "currentEquivalent":  "UNTRACKED_REFERENCE_OR_CURRENT; NO_CANONICAL_REPLACEMENT_PROVEN",
+                       "uniqueCapabilityValue":  "UNPROVEN_WITHOUT_PACKAGE_INSPECTION",
+                       "owner":  "UNPROVEN",
+                       "systemOfRecord":  "UNPROVEN",
+                       "status":  "REVIEW",
+                       "reason":  "Existing E3 evidence identifies this as a derived report/bundle, but the package is intentionally unopened. Owner, SOR, content value and replacement cannot be asserted.",
+                       "evidence":  [
+                                        "C:\\Users\\Ghanam\\Documents\\Codex\\Greeny-Life-Repair\\archive\\generated-reports\\e3-full-legacy-classification\\p3-role-resolution-2026-08-14_004731\\E3-P3-TARGETED-ROLE-RESOLUTION.json",
+                                        "C:\\Users\\Ghanam\\Documents\\Codex\\Greeny-Life-Repair\\archive\\generated-reports\\e3-deep-command-archive-proof\\2026-08-13_224919\\E3-DEEP-COMMAND-AND-ARCHIVE-PROOF.json",
+                                        "C:\\Users\\Ghanam\\Documents\\Codex\\Greeny-Life-Repair\\archive\\generated-reports\\e3-closure\\2026-08-13_220334\\E3-CURRENT-ASSET-CODE-CLOSURE.json",
+                                        "C:\\Users\\Ghanam\\Documents\\Codex\\Greeny-Life-Repair\\archive\\generated-reports\\e3-phase-2-primary-classification\\2026-08-14_003259\\E3-PHASE-2-PRIMARY-LEGACY-CLASSIFICATION.json"
+                                    ]
+                   },
+                   {
+                       "assetId":  "LEGACY-PRIMARY:canonical\\__pycache__\\fix_indent.cpython-314.pyc",
+                       "path":  "canonical\\__pycache__\\fix_indent.cpython-314.pyc",
+                       "bytes":  1778,
+                       "role":  "GENERATED_PYTHON_BYTECODE",
+                       "dependencyCaller":  "SOURCE_SIBLING_EXISTS: canonical\\\\fix_indent.py; NO_ACTIVE_CALLER_PROVEN",
+                       "dataBusinessLineage":  "NO_BUSINESS_DATA_ROLE_PROVEN",
+                       "currentEquivalent":  "NO_CURRENT_EQUIVALENT_PROVEN",
+                       "uniqueCapabilityValue":  "NO_UNIQUE_CAPABILITY_PROVEN",
+                       "owner":  "UNPROVEN",
+                       "systemOfRecord":  "UNPROVEN",
+                       "status":  "REVIEW",
+                       "reason":  "Bytecode has a named Legacy source sibling, but neither active caller nor owner/SOR is proven. It remains retained for recovery/context only.",
+                       "evidence":  [
+                                        "C:\\Users\\Ghanam\\Documents\\Codex\\Greeny-Life-Repair\\archive\\generated-reports\\e3-full-legacy-classification\\p3-role-resolution-2026-08-14_004731\\E3-P3-TARGETED-ROLE-RESOLUTION.json",
+                                        "C:\\Users\\Ghanam\\Documents\\Codex\\Greeny-Life-Repair\\archive\\generated-reports\\e3-deep-command-archive-proof\\2026-08-13_224919\\E3-DEEP-COMMAND-AND-ARCHIVE-PROOF.json",
+                                        "C:\\Users\\Ghanam\\Documents\\Codex\\Greeny-Life-Repair\\archive\\generated-reports\\e3-closure\\2026-08-13_220334\\E3-CURRENT-ASSET-CODE-CLOSURE.json",
+                                        "C:\\Users\\Ghanam\\Documents\\Codex\\Greeny-Life-Repair\\archive\\generated-reports\\e3-phase-2-primary-classification\\2026-08-14_003259\\E3-PHASE-2-PRIMARY-LEGACY-CLASSIFICATION.json"
+                                    ]
+                   },
+                   {
+                       "assetId":  "LEGACY-PRIMARY:tests\\performance\\__pycache__\\__init__.cpython-314.pyc",
+                       "path":  "tests\\performance\\__pycache__\\__init__.cpython-314.pyc",
+                       "bytes":  174,
+                       "role":  "GENERATED_TEST_BYTECODE",
+                       "dependencyCaller":  "SOURCE_SIBLING_EXISTS: tests\\\\performance\\\\__init__.py; NO_ACTIVE_CALLER_PROVEN",
+                       "dataBusinessLineage":  "NO_BUSINESS_DATA_ROLE_PROVEN",
+                       "currentEquivalent":  "NO_CURRENT_EQUIVALENT_PROVEN",
+                       "uniqueCapabilityValue":  "NO_UNIQUE_CAPABILITY_PROVEN",
+                       "owner":  "UNPROVEN",
+                       "systemOfRecord":  "UNPROVEN",
+                       "status":  "REVIEW",
+                       "reason":  "Generated bytecode corresponds to an empty Legacy test-package source. No active caller, owner/SOR or unique capability is proven.",
+                       "evidence":  [
+                                        "C:\\Users\\Ghanam\\Documents\\Codex\\Greeny-Life-Repair\\archive\\generated-reports\\e3-full-legacy-classification\\p3-role-resolution-2026-08-14_004731\\E3-P3-TARGETED-ROLE-RESOLUTION.json",
+                                        "C:\\Users\\Ghanam\\Documents\\Codex\\Greeny-Life-Repair\\archive\\generated-reports\\e3-deep-command-archive-proof\\2026-08-13_224919\\E3-DEEP-COMMAND-AND-ARCHIVE-PROOF.json",
+                                        "C:\\Users\\Ghanam\\Documents\\Codex\\Greeny-Life-Repair\\archive\\generated-reports\\e3-closure\\2026-08-13_220334\\E3-CURRENT-ASSET-CODE-CLOSURE.json",
+                                        "C:\\Users\\Ghanam\\Documents\\Codex\\Greeny-Life-Repair\\archive\\generated-reports\\e3-phase-2-primary-classification\\2026-08-14_003259\\E3-PHASE-2-PRIMARY-LEGACY-CLASSIFICATION.json"
+                                    ]
+                   }
+               ],
+    "nextGate":  "P4 Dependency/Caller Trace. Do not archive, retire, delete, merge, copy, or execute any REVIEW asset.",
+    "prohibitions":  [
+                         "NO_LEGACY_EXECUTION",
+                         "NO_PACKAGE_OPENING",
+                         "NO_MOVE",
+                         "NO_MERGE",
+                         "NO_ARCHIVE_ACTION",
+                         "NO_DELETE",
+                         "NO_DATABASE_CHANGE",
+                         "NO_GIT_CHANGE",
+                         "NO_CURRENT_CHANGE"
+                     ]
+}

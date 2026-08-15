@@ -1,0 +1,87 @@
+{
+    "report":  "E3 Archive and Historical Package System Truth",
+    "generatedAt":  "2026-08-14T02:17:00.6006030+02:00",
+    "mode":  "READ_ONLY_METADATA_AND_SAFE_TEXT_INSPECTION",
+    "coverage":  {
+                     "registeredPackages":  106,
+                     "packagesInspected":  106,
+                     "historicalRoots":  4,
+                     "historicalFilesInspected":  147,
+                     "status":  "PASS",
+                     "statement":  "This closes metadata and bounded safe-text inspection for registered archive/package candidates. It does not declare package contents a System of Record or authorize treatment."
+                 },
+    "packageClassifications":  [
+                                   {
+                                       "classification":  "ENVIRONMENT_PACKAGE_GROUPED",
+                                       "assets":  99
+                                   },
+                                   {
+                                       "classification":  "REVIEW_ARCHIVE_UNREADABLE",
+                                       "assets":  6
+                                   },
+                                   {
+                                       "classification":  "TEXT_BACKUP_METADATA_INSPECTED",
+                                       "assets":  1
+                                   }
+                               ],
+    "historicalClassifications":  [
+                                      {
+                                          "classification":  "HISTORICAL_FILE_METADATA",
+                                          "assets":  124
+                                      },
+                                      {
+                                          "classification":  "HISTORICAL_SAFE_TEXT_CLASSIFIED",
+                                          "assets":  23
+                                      }
+                                  ],
+    "duplicatePackageHashGroups":  [
+                                       {
+                                           "sha256":  "B3F84A2D24085CCBA6BD260BE39CA79DBE5EE4EFEA34072F318EB06517390B88",
+                                           "registeredLocations":  2,
+                                           "decision":  "KEEP",
+                                           "reason":  "Duplicate physical package locations are evidence of preservation lineage, not a deletion or archival decision."
+                                       },
+                                       {
+                                           "sha256":  "34BB43AEFA365C81F42AF51402F84EA8C7A85C48C65B422E4E4FE8B2EE57883C",
+                                           "registeredLocations":  2,
+                                           "decision":  "KEEP",
+                                           "reason":  "Duplicate physical package locations are evidence of preservation lineage, not a deletion or archival decision."
+                                       },
+                                       {
+                                           "sha256":  "255C16F33ED2967FE100CD8011A7E69F789603724B1EC2ECF91DFEB72067C190",
+                                           "registeredLocations":  2,
+                                           "decision":  "KEEP",
+                                           "reason":  "Duplicate physical package locations are evidence of preservation lineage, not a deletion or archival decision."
+                                       },
+                                       {
+                                           "sha256":  "AC2A7562954707BD5E1A19D8912D09CD0B5CE0854DDBBA5D3F2A11AB75919172",
+                                           "registeredLocations":  2,
+                                           "decision":  "KEEP",
+                                           "reason":  "Duplicate physical package locations are evidence of preservation lineage, not a deletion or archival decision."
+                                       },
+                                       {
+                                           "sha256":  "9F33BD8A21A41B729B05DAC5DEEB0E868F218A092B0E3FE5988094CF167217F6",
+                                           "registeredLocations":  2,
+                                           "decision":  "KEEP",
+                                           "reason":  "Duplicate physical package locations are evidence of preservation lineage, not a deletion or archival decision."
+                                       }
+                                   ],
+    "output":  {
+                   "packagesCsv":  "C:\\Users\\Ghanam\\Documents\\Codex\\Greeny-Life-Repair\\archive\\generated-reports\\e3-archive-historical-inspection\\2026-08-14_021659\\E3-ARCHIVE-PACKAGE-INSPECTION.csv",
+                   "packagesSha256":  "494FA7BF778731D14FEFB8DB4F409FB4733B72780B27953D20D4A6F72AD929B9",
+                   "historicalCsv":  "C:\\Users\\Ghanam\\Documents\\Codex\\Greeny-Life-Repair\\archive\\generated-reports\\e3-archive-historical-inspection\\2026-08-14_021659\\E3-HISTORICAL-ROOT-INSPECTION.csv",
+                   "historicalSha256":  "993B6E921A9DF9C5AD9033EB2761DF8501A6D2E35B4472147441A5A02DD1F876"
+               },
+    "prohibitions":  [
+                         "NO_LEGACY_EXECUTION",
+                         "NO_ZIP_EXTRACTION_TO_DISK",
+                         "NO_PACKAGE_IMPORT",
+                         "NO_MOVE",
+                         "NO_MERGE",
+                         "NO_ARCHIVE_ACTION",
+                         "NO_DELETE",
+                         "NO_DATABASE_CHANGE",
+                         "NO_GIT_CHANGE"
+                     ],
+    "nextGate":  "Capability-level value and Current comparison for individually selected safe candidates only. No package is a System of Record or treatment-approved solely from this inspection."
+}

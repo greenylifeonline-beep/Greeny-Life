@@ -1,0 +1,152 @@
+{
+  "schema_version": "finance-master-v1",
+  "generated_at": "2026-08-07T23:57:22.371892",
+  "total_invoices": 10,
+  "total_payments": 5,
+  "currencies": [
+    "USD",
+    "EUR",
+    "EGP"
+  ],
+  "accounts": [
+    {
+      "id": "ACC-001",
+      "name": "Revenue",
+      "type": "income"
+    },
+    {
+      "id": "ACC-002",
+      "name": "Cost of Goods Sold",
+      "type": "expense"
+    },
+    {
+      "id": "ACC-003",
+      "name": "Accounts Receivable",
+      "type": "asset"
+    },
+    {
+      "id": "ACC-004",
+      "name": "Cash",
+      "type": "asset"
+    }
+  ],
+  "invoices": [
+    {
+      "invoice_id": "INV-0001",
+      "order_id": "ORD-CUS-GCC-001",
+      "customer_id": "CUS-GCC-001",
+      "amount": 2584,
+      "status": "paid",
+      "issue_date": "2026-08-07T23:57:22.372442"
+    },
+    {
+      "invoice_id": "INV-0002",
+      "order_id": "ORD-CUS-GCC-002",
+      "customer_id": "CUS-GCC-002",
+      "amount": 3209,
+      "status": "pending",
+      "issue_date": "2026-08-02T23:57:22.372457"
+    },
+    {
+      "invoice_id": "INV-0003",
+      "order_id": "ORD-CUS-GCC-003",
+      "customer_id": "CUS-GCC-003",
+      "amount": 2160,
+      "status": "paid",
+      "issue_date": "2026-07-28T23:57:22.372462"
+    },
+    {
+      "invoice_id": "INV-0004",
+      "order_id": "ORD-CUS-GCC-004",
+      "customer_id": "CUS-GCC-004",
+      "amount": 636,
+      "status": "pending",
+      "issue_date": "2026-07-23T23:57:22.372465"
+    },
+    {
+      "invoice_id": "INV-0005",
+      "order_id": "ORD-CUS-GCC-005",
+      "customer_id": "CUS-GCC-005",
+      "amount": 838,
+      "status": "paid",
+      "issue_date": "2026-07-18T23:57:22.372468"
+    },
+    {
+      "invoice_id": "INV-0006",
+      "order_id": "ORD-CUS-GCC-006",
+      "customer_id": "CUS-GCC-006",
+      "amount": 2140,
+      "status": "pending",
+      "issue_date": "2026-07-13T23:57:22.372470"
+    },
+    {
+      "invoice_id": "INV-0007",
+      "order_id": "ORD-CUS-GCC-007",
+      "customer_id": "CUS-GCC-007",
+      "amount": 1292,
+      "status": "paid",
+      "issue_date": "2026-07-08T23:57:22.372473"
+    },
+    {
+      "invoice_id": "INV-0008",
+      "order_id": "ORD-CUS-GCC-008",
+      "customer_id": "CUS-GCC-008",
+      "amount": 871,
+      "status": "pending",
+      "issue_date": "2026-07-03T23:57:22.372475"
+    },
+    {
+      "invoice_id": "INV-0009",
+      "order_id": "ORD-CUS-GCC-009",
+      "customer_id": "CUS-GCC-009",
+      "amount": 797,
+      "status": "paid",
+      "issue_date": "2026-06-28T23:57:22.372477"
+    },
+    {
+      "invoice_id": "INV-0010",
+      "order_id": "ORD-CUS-GCC-010",
+      "customer_id": "CUS-GCC-010",
+      "amount": 2871,
+      "status": "pending",
+      "issue_date": "2026-06-23T23:57:22.372479"
+    }
+  ],
+  "payments": [
+    {
+      "payment_id": "PAY-INV-0001",
+      "invoice_id": "INV-0001",
+      "amount": 2584,
+      "date": "2026-08-05T23:57:22.372484",
+      "method": "bank_transfer"
+    },
+    {
+      "payment_id": "PAY-INV-0003",
+      "invoice_id": "INV-0003",
+      "amount": 2160,
+      "date": "2026-08-05T23:57:22.372487",
+      "method": "bank_transfer"
+    },
+    {
+      "payment_id": "PAY-INV-0005",
+      "invoice_id": "INV-0005",
+      "amount": 838,
+      "date": "2026-08-05T23:57:22.372490",
+      "method": "bank_transfer"
+    },
+    {
+      "payment_id": "PAY-INV-0007",
+      "invoice_id": "INV-0007",
+      "amount": 1292,
+      "date": "2026-08-05T23:57:22.372492",
+      "method": "bank_transfer"
+    },
+    {
+      "payment_id": "PAY-INV-0009",
+      "invoice_id": "INV-0009",
+      "amount": 797,
+      "date": "2026-08-05T23:57:22.372494",
+      "method": "bank_transfer"
+    }
+  ]
+}

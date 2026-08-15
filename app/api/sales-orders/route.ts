@@ -1,13 +1,8 @@
 import { authorizeRequest, writeRolePolicy } from "@/lib/authz";
 import { NextRequest, NextResponse } from "next/server";
 import { prisma } from "@/lib/prisma";
-const text = (value: unknown): value is string => typeof value === "string" && value.trim().length > 0;
-const numeric = (value: unknown): number | null => {
-  if (typeof value === "number" && Number.isFinite(value)) return value;
-  if (typeof value === "string" && value.trim() !== "" && Number.isFinite(Number(value))) return Number(value);
-  return null;
-};
-const invalid = (error: string) => NextResponse.json({ success: false, error }, { status: 400 });
+import { finiteNumber as numeric, hasText as text, invalidRequest as invalid } from "@/lib/http-input";
+
 
 export async function GET() {
   try {

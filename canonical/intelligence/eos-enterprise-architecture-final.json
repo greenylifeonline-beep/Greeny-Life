@@ -1,0 +1,58 @@
+{
+    "System":  "Greeny-Life",
+    "Architecture":  "Enterprise Operating System (EOS)",
+    "Version":  "Enterprise Blueprint v1.0",
+    "CoreArchitecture":  {
+                             "DomainOperatingSystem":  "GL-DOS",
+                             "MasterData":  "eos-core\\master-data",
+                             "ExportStandard":  "GELS v1.0",
+                             "Intelligence":  "eos-core\\intelligence",
+                             "Database":  "database + prisma",
+                             "Foundation":  "eos-core"
+                         },
+    "BusinessDomains":  [
+                            "PRODUCT",
+                            "SUPPLIER",
+                            "INVENTORY",
+                            "QUALITY",
+                            "LOGISTICS",
+                            "CRM",
+                            "FINANCE",
+                            "COMPLIANCE"
+                        ],
+    "OperationalLayers":  [
+                              "APPLICATION",
+                              "SERVICES",
+                              "WORKFLOWS",
+                              "REPORTING",
+                              "ANALYTICS"
+                          ],
+    "Governance":  [
+                       "DOMAIN_BOUNDARIES_DEFINED",
+                       "MASTER_DATA_CONTROLLED",
+                       "DATABASE_SEPARATED",
+                       "DOCUMENTATION_SEPARATED",
+                       "RUNTIME_PROTECTED"
+                   ],
+    "ProtectedRuntime":  [
+                             "src",
+                             "app",
+                             "application",
+                             "services",
+                             "database",
+                             "prisma"
+                         ],
+    "ArchitectureRules":  [
+                              "EOS_CORE_IS_BLUEPRINT_LAYER",
+                              "GL_DOS_ORCHESTRATES_DOMAINS",
+                              "GELS_STANDARDIZES_EXPORT_LABELS",
+                              "MASTER_DATA_IS_SINGLE_SOURCE",
+                              "DATABASE_IS_DATA_LAYER"
+                          ],
+    "Restrictions":  [
+                         "NO_IMPLEMENTATION",
+                         "NO_DEPLOYMENT",
+                         "ARCHITECTURE_FINALIZATION_ONLY"
+                     ],
+    "Status":  "GREENY_LIFE_EOS_ENTERPRISE_ARCHITECTURE_FINALIZED"
+}

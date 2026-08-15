@@ -1,0 +1,76 @@
+﻿{
+    "reportType":  "E3_LEGACY_ALGORITHM_CONSOLIDATION_DECISION_V1",
+    "generatedAtUtc":  "2026-08-13T17:45:54.5067103Z",
+    "mode":  "READ_ONLY_ARCHITECTURAL_DECISION",
+    "protections":  [
+                        "NO_LEGACY_EXECUTION",
+                        "NO_IMPORT",
+                        "NO_COPY",
+                        "NO_SOURCE_CHANGE",
+                        "NO_DATABASE",
+                        "NO_NETWORK",
+                        "NO_GIT_CHANGE",
+                        "NO_MOVE",
+                        "NO_DELETE"
+                    ],
+    "inputExtractionProof":  "C:\\Users\\Ghanam\\Documents\\Codex\\Greeny-Life-Repair\\archive\\generated-reports\\e3-legacy-analysis-algorithm-proof\\proof-2026-08-13_194404\\E3-LEGACY-ANALYSIS-ALGORITHM-EXTRACTION-PROOF.json",
+    "decisionUnits":  [
+                          {
+                              "capabilityId":  "E3_AST_OBSERVABILITY",
+                              "responsibility":  "Read source text, enumerate AST findings, and report coverage gaps without modifying the inspected source.",
+                              "legacySources":  [
+                                                    "standalone_ast_analysis.py",
+                                                    "audit_ast_extraction.py"
+                                                ],
+                              "relationship":  "COMPLEMENTARY: extractor plus coverage auditor; not duplicate engines.",
+                              "currentDecision":  "EXTRACT_DESIGN_CANDIDATE",
+                              "futureCanonicalShape":  "One small read-only adapter with separate analyze() and auditCoverage() functions; no runner, no auto-write, no cleanup action.",
+                              "prohibited":  [
+                                                 "Copy legacy files verbatim",
+                                                 "Run legacy script in project",
+                                                 "Auto-repair missing AST coverage",
+                                                 "Write reports outside E3 archive",
+                                                 "Automatic deletion"
+                                             ],
+                              "requiredBeforeImplementation":  [
+                                                                   "Define input/output contract",
+                                                                   "Use temporary fixture sources",
+                                                                   "Unit tests for valid Python, invalid Python, missing coverage, complete coverage",
+                                                                   "Human approval"
+                                                               ]
+                          },
+                          {
+                              "capabilityId":  "E3_SOURCE_PROVENANCE_CONTEXT",
+                              "responsibility":  "Attach lexical location, normalized source, bounded context and deterministic fingerprint to a finding for evidence traceability.",
+                              "legacySources":  [
+                                                    "enrich_context.py",
+                                                    "enrich_context_fixed.py"
+                                                ],
+                              "relationship":  "VERSIONED_OVERLAP: both implement the same responsibility. V2 is a semantic reference candidate because it distinguishes inherently unlocated nodes and includes lexical context in the fingerprint; it is not yet a System of Record.",
+                              "currentDecision":  "CONSOLIDATE_TO_ONE_FUTURE_EXTRACT_CANDIDATE",
+                              "futureCanonicalShape":  "One read-only provenance adapter. Fingerprint contract must be versioned; Git metadata optional and never required for decision validity.",
+                              "prohibited":  [
+                                                 "Adopt both versions",
+                                                 "Use timestamp as evidence identity",
+                                                 "Depend on Git availability for correctness",
+                                                 "Direct legacy execution",
+                                                 "Auto-promotion to evidence authority"
+                                             ],
+                              "requiredBeforeImplementation":  [
+                                                                   "Define fingerprint-version contract",
+                                                                   "Determinism tests",
+                                                                   "Collision/semantic-change tests",
+                                                                   "Tests for missing location and unavailable Git",
+                                                                   "Human approval"
+                                                               ]
+                          }
+                      ],
+    "summary":  {
+                    "legacyExtractCandidates":  4,
+                    "distinctCapabilities":  2,
+                    "directAdoptionsApproved":  0,
+                    "directExecutionsApproved":  0,
+                    "futureImplementationRequiresApproval":  true
+                },
+    "rule":  "This decision removes duplication at design level. It approves neither source copying nor implementation. Any later adapter must be built only once, inside the current E3 boundary, after tests and explicit approval."
+}

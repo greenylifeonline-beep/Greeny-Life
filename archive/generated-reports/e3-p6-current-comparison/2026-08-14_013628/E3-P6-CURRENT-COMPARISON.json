@@ -1,0 +1,54 @@
+{
+    "report":  "E3 P6 Legacy Current Evidence Comparison",
+    "generatedAt":  "2026-08-14T01:36:31.0713931+02:00",
+    "mode":  "READ_ONLY_PATH_AND_HASH_COMPARISON",
+    "coverage":  {
+                     "p5InputRecords":  50104,
+                     "p6CoveredRecords":  50104,
+                     "eligibleDataBusinessCandidates":  415,
+                     "currentCandidatesIndexed":  547,
+                     "exactHashCandidates":  415,
+                     "samePathCandidates":  0,
+                     "noCurrentEquivalentProven":  0,
+                     "status":  "PASS",
+                     "statement":  "Every P5 record received a P6 comparison state. Exact hash and same-path are lineage candidates only; neither proves semantic equivalence, System of Record, owner, replacement, or treatment."
+                 },
+    "comparisonCounts":  [
+                             {
+                                 "comparison":  "EXACT_CONTENT_MATCH_CANDIDATE_NOT_SOR_PROOF",
+                                 "assets":  415
+                             },
+                             {
+                                 "comparison":  "NOT_ELIGIBLE_GROUPED_OR_NON_BUSINESS",
+                                 "assets":  49689
+                             }
+                         ],
+    "input":  [
+                  "C:\\Users\\Ghanam\\Documents\\Codex\\Greeny-Life-Repair\\archive\\generated-reports\\e3-p5-data-business-lineage\\2026-08-14_012933\\E3-P5-DATA-BUSINESS-LINEAGE.json",
+                  "C:\\Users\\Ghanam\\Documents\\Codex\\Greeny-Life-Repair\\archive\\generated-reports\\e3-p5-data-business-lineage\\2026-08-14_012933\\E3-P5-DATA-BUSINESS-LINEAGE.csv"
+              ],
+    "output":  {
+                   "csv":  "C:\\Users\\Ghanam\\Documents\\Codex\\Greeny-Life-Repair\\archive\\generated-reports\\e3-p6-current-comparison\\2026-08-14_013628\\E3-P6-CURRENT-COMPARISON.csv",
+                   "sha256":  "EB62A1E0EA8AC88A152C35B64DABB486D88C5259B379837130318D792B392070",
+                   "records":  50104
+               },
+    "deferred":  [
+                     "SEMANTIC_EQUIVALENCE",
+                     "RUNTIME_EQUIVALENCE",
+                     "UNIQUE_VALUE_PROOF",
+                     "OWNER_SOR",
+                     "REPLACEMENT_RECOVERY",
+                     "FINAL_TREATMENT"
+                 ],
+    "prohibitions":  [
+                         "NO_LEGACY_EXECUTION",
+                         "NO_PACKAGE_OPENING",
+                         "NO_MOVE",
+                         "NO_MERGE",
+                         "NO_ARCHIVE_ACTION",
+                         "NO_DELETE",
+                         "NO_DATABASE_CHANGE",
+                         "NO_GIT_CHANGE",
+                         "NO_CURRENT_CHANGE"
+                     ]
+}

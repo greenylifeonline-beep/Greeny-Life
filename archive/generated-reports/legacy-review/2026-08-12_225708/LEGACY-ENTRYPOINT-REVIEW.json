@@ -1,0 +1,91 @@
+﻿{
+    "reportType":  "GREENY-LIFE_LEGACY_ENTRYPOINT_REVIEW_V1",
+    "generatedAtUtc":  "2026-08-12T20:57:08.1914975Z",
+    "scope":  "Read-only static inspection. No candidate was executed, edited, moved, or deleted.",
+    "candidates":  [
+                       {
+                           "path":  "brain.py",
+                           "lines":  6638,
+                           "signals":  [
+                                           "DESTRUCTIVE_OPERATION_CANDIDATE",
+                                           "EXTERNAL_NETWORK_CANDIDATE",
+                                           "DATABASE_CANDIDATE",
+                                           "PROCESS_LAUNCH_CANDIDATE",
+                                           "INTELLIGENCE_CAPABILITY_CANDIDATE",
+                                           "AUDIT_OR_HYGIENE_CAPABILITY_CANDIDATE"
+                                       ],
+                           "provisionalClassification":  "QUARANTINE",
+                           "execution":  "NOT_EXECUTED"
+                       },
+                       {
+                           "path":  "run_brain.ps1",
+                           "lines":  38,
+                           "signals":  [
+                                           "INTELLIGENCE_CAPABILITY_CANDIDATE",
+                                           "AUDIT_OR_HYGIENE_CAPABILITY_CANDIDATE"
+                                       ],
+                           "provisionalClassification":  "CAPABILITY_REVIEW",
+                           "execution":  "NOT_EXECUTED"
+                       },
+                       {
+                           "path":  "run_brain_cli.py",
+                           "lines":  2,
+                           "signals":  [
+
+                                       ],
+                           "provisionalClassification":  "CAPABILITY_REVIEW",
+                           "execution":  "NOT_EXECUTED"
+                       },
+                       {
+                           "path":  "run_brain_cli_backup.py",
+                           "lines":  263,
+                           "signals":  [
+                                           "INTELLIGENCE_CAPABILITY_CANDIDATE",
+                                           "AUDIT_OR_HYGIENE_CAPABILITY_CANDIDATE",
+                                           "BACKUP_OR_DUPLICATE_NAME"
+                                       ],
+                           "provisionalClassification":  "CAPABILITY_REVIEW",
+                           "execution":  "NOT_EXECUTED"
+                       },
+                       {
+                           "path":  "run_full_audit.ps1",
+                           "lines":  44,
+                           "signals":  [
+                                           "INTELLIGENCE_CAPABILITY_CANDIDATE",
+                                           "AUDIT_OR_HYGIENE_CAPABILITY_CANDIDATE"
+                                       ],
+                           "provisionalClassification":  "CAPABILITY_REVIEW",
+                           "execution":  "NOT_EXECUTED"
+                       },
+                       {
+                           "path":  "run_all.ps1",
+                           "lines":  32,
+                           "signals":  [
+                                           "INTELLIGENCE_CAPABILITY_CANDIDATE",
+                                           "AUDIT_OR_HYGIENE_CAPABILITY_CANDIDATE"
+                                       ],
+                           "provisionalClassification":  "CAPABILITY_REVIEW",
+                           "execution":  "NOT_EXECUTED"
+                       },
+                       {
+                           "path":  "canonical/run_all.ps1",
+                           "lines":  59,
+                           "signals":  [
+                                           "INTELLIGENCE_CAPABILITY_CANDIDATE",
+                                           "AUDIT_OR_HYGIENE_CAPABILITY_CANDIDATE"
+                                       ],
+                           "provisionalClassification":  "CAPABILITY_REVIEW",
+                           "execution":  "NOT_EXECUTED"
+                       },
+                       {
+                           "path":  "intelligence/scripts/phase-2-capability-discovery.ps1",
+                           "lines":  1,
+                           "signals":  [
+
+                                       ],
+                           "provisionalClassification":  "CAPABILITY_REVIEW",
+                           "execution":  "NOT_EXECUTED"
+                       }
+                   ],
+    "safety":  "All candidates remain blocked from production and live-data execution pending isolated runtime proof."
+}

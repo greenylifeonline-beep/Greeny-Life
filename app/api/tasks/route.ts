@@ -7,7 +7,7 @@ import { prisma } from "@/lib/prisma";
 
 interface TaskRow { id: string; taskType: string; ownerCompany: string; subjectId: string; requestedBy: string; executor: string; status: string; priority: string; evidenceIds: unknown; dependsOn: unknown; payload: unknown; outputContract: string; idempotencyKey: string; correlationId: string; createdAt: Date; updatedAt: Date; }
 const text = (value: unknown) => typeof value === "string" ? value.trim() : "";
-const taskTypes = new Set(["PRODUCT_CONTEXT", "INVENTORY_REVIEW", "SUPPLIER_REVIEW", "SHIPMENT_REVIEW", "EXPORT_EVIDENCE_REVIEW", "OUTCOME_CAPTURE"]);
+const taskTypes = new Set(["PRODUCT_CONTEXT", "INVENTORY_REVIEW", "SUPPLIER_REVIEW", "SHIPMENT_REVIEW", "EXPORT_EVIDENCE_REVIEW", "OUTCOME_CAPTURE", "SYSTEM_MAINTENANCE_REVIEW"]);
 const companies = new Set(["GREENY_LIFE_EGYPT", "GREENS_NATURE_UAE", "GREEN_LINES_NORWAY_EU", "MASTERMIND"]);
 
 export async function GET(request: NextRequest) {

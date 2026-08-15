@@ -1,0 +1,69 @@
+{
+    "report":  "E3 P5 Data and Business Lineage",
+    "generatedAt":  "2026-08-14T01:29:35.1315843+02:00",
+    "mode":  "READ_ONLY_STATIC_LINEAGE",
+    "coverage":  {
+                     "p3InputRecords":  50104,
+                     "p5CoveredRecords":  50104,
+                     "staticDataOrBusinessCandidates":  415,
+                     "schemaOrDataConfigCandidates":  90,
+                     "status":  "PASS",
+                     "statement":  "Every P3 record receives a P5 lineage state. Static candidate status is not validated business truth, a Current equivalent, owner/SOR, or a treatment decision."
+                 },
+    "lineageFamilies":  [
+                            {
+                                "family":  "BUSINESS_OPERATION_CANDIDATE",
+                                "assets":  113
+                            },
+                            {
+                                "family":  "DATA_CONFIG_REFERENCE_CANDIDATE",
+                                "assets":  75
+                            },
+                            {
+                                "family":  "DECISION_OR_KNOWLEDGE_CANDIDATE",
+                                "assets":  121
+                            },
+                            {
+                                "family":  "EVIDENCE_OR_COMPLIANCE_CANDIDATE",
+                                "assets":  91
+                            },
+                            {
+                                "family":  "NO_DATA_BUSINESS_ROLE_PROVEN",
+                                "assets":  49689
+                            },
+                            {
+                                "family":  "SCHEMA_OR_PERSISTENCE_CANDIDATE",
+                                "assets":  15
+                            }
+                        ],
+    "inputs":  [
+                   "C:\\Users\\Ghanam\\Documents\\Codex\\Greeny-Life-Repair\\archive\\generated-reports\\e3-full-legacy-classification\\2026-08-14_004314\\E3-P3-LEGACY-UNDERSTANDING-LINEAGE.csv",
+                   "C:\\Users\\Ghanam\\Documents\\Codex\\Greeny-Life-Repair\\archive\\generated-reports\\e3-p4-dependency-caller-trace\\2026-08-14_011451\\E3-P4-DEPENDENCY-CALLER-TRACE.json",
+                   "C:\\Users\\Ghanam\\Documents\\Codex\\Greeny-Life-Repair\\archive\\generated-reports\\e3-p4-dependency-caller-trace\\p4-local-resolution-2026-08-14_012300\\E3-P4-TARGETED-LOCAL-PATH-RESOLUTION.json"
+               ],
+    "output":  {
+                   "csv":  "C:\\Users\\Ghanam\\Documents\\Codex\\Greeny-Life-Repair\\archive\\generated-reports\\e3-p5-data-business-lineage\\2026-08-14_012933\\E3-P5-DATA-BUSINESS-LINEAGE.csv",
+                   "sha256":  "1735FB676CC723B950026989598137FC4B742094648C8105859CE8B4106AC690",
+                   "records":  50104
+               },
+    "deferred":  [
+                     "DATA_CONTENT_VALIDATION",
+                     "BUSINESS_PROVENANCE",
+                     "CURRENT_EQUIVALENCE_PROOF",
+                     "UNIQUE_VALUE_PROOF",
+                     "OWNER_SOR",
+                     "REPLACEMENT_RECOVERY",
+                     "FINAL_TREATMENT"
+                 ],
+    "prohibitions":  [
+                         "NO_LEGACY_EXECUTION",
+                         "NO_PACKAGE_OPENING",
+                         "NO_MOVE",
+                         "NO_MERGE",
+                         "NO_ARCHIVE_ACTION",
+                         "NO_DELETE",
+                         "NO_DATABASE_CHANGE",
+                         "NO_GIT_CHANGE",
+                         "NO_CURRENT_CHANGE"
+                     ]
+}

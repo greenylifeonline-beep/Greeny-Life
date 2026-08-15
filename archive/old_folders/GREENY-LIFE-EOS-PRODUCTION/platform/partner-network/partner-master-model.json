@@ -1,0 +1,46 @@
+
+{
+ "system":"GREENY-LIFE EOS",
+
+ "module":"GLOBAL_PARTNER_NETWORK",
+
+ "entities":[
+
+ {
+  "type":"SUPPLIER",
+  "fields":[
+   "partner_id",
+   "company_name",
+   "country",
+   "products",
+   "quality_score",
+   "compliance_status"
+  ]
+ },
+
+
+ {
+  "type":"DISTRIBUTOR",
+  "fields":[
+   "partner_id",
+   "market",
+   "coverage",
+   "sales_capacity"
+  ]
+ },
+
+
+ {
+  "type":"IMPORTER",
+  "fields":[
+   "partner_id",
+   "country",
+   "license",
+   "import_capacity"
+  ]
+ }
+
+ ]
+
+}
+

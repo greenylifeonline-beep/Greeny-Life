@@ -1,0 +1,81 @@
+﻿{
+    "recordType":  "E3_DD_004_EXISTING_KNOWLEDGE_TRACE_V1",
+    "id":  "DD-004",
+    "generatedAtUtc":  "2026-08-13T16:42:37.7967683Z",
+    "mode":  "READ_ONLY_STATIC_DIAGNOSIS",
+    "scope":  "Current replacement only. No database read, API request, legacy execution, or file mutation.",
+    "activeOperationalKnowledge":  [
+                                       {
+                                           "authority":  "DECISION_EVIDENCE_ONLY",
+                                           "component":  "OfficialEvidenceRegistry plus official-evidence-gate",
+                                           "execution":  "NEVER_AUTHORIZES_EXECUTION",
+                                           "role":  "Persisted scoped regulatory evidence with source URL, status, validity, gate coverage, and fail-closed assessment"
+                                       },
+                                       {
+                                           "authority":  "INTERNAL_REFERENCE_CONTEXT",
+                                           "component":  "data-intelligence-fabric",
+                                           "execution":  "NEVER_AUTHORIZES_EXECUTION",
+                                           "role":  "Read-only canonical product, supplier, inventory, and shipment context with ownership and freshness boundary"
+                                       },
+                                       {
+                                           "authority":  "MASTER_DATA",
+                                           "component":  "canonical data master files",
+                                           "execution":  "NOT_REGULATORY_EVIDENCE",
+                                           "role":  "Canonical business master data"
+                                       }
+                                   ],
+    "referenceOnly":  [
+                          {
+                              "rule":  "Candidate reference or historical material; cannot override canonical master data or persisted current official evidence.",
+                              "component":  "Knowledge folders"
+                          },
+                          {
+                              "rule":  "Derived traceable reports; never a source of truth.",
+                              "component":  "Generated reports"
+                          },
+                          {
+                              "rule":  "Historical candidate only; no direct authority or execution.",
+                              "component":  "Legacy knowledge"
+                          }
+                      ],
+    "knowledgeInventory":  [
+                               {
+                                   "path":  "KNOWLEDGE-BASE",
+                                   "fileCount":  1,
+                                   "totalBytes":  43761,
+                                   "classification":  "REFERENCE_OR_HISTORICAL_CANDIDATE_ONLY"
+                               },
+                               {
+                                   "path":  "GREENY-LIFE-EOS-KNOWLEDGE-BASE-V1",
+                                   "fileCount":  0,
+                                   "totalBytes":  null,
+                                   "classification":  "REFERENCE_OR_HISTORICAL_CANDIDATE_ONLY"
+                               },
+                               {
+                                   "path":  "canonical\\KNOWLEDGE-BASE",
+                                   "fileCount":  4,
+                                   "totalBytes":  7524817,
+                                   "classification":  "REFERENCE_OR_HISTORICAL_CANDIDATE_ONLY"
+                               }
+                           ],
+    "proven":  [
+                   "Current evidence review reads persisted registry records, not caller-supplied evidence.",
+                   "Missing, stale, contradictory, unverified, non-official, or provenance-invalid evidence remains fail-closed.",
+                   "Data fabric declares its output read-only and non-authorizing.",
+                   "Canonical architecture separates master data, reference knowledge, historical legacy, and derived reports."
+               ],
+    "gaps":  [
+                 "The persisted evidence mapper is duplicated between the evidence-review route and MasterMind agents; one canonical adapter should be extracted from the existing code.",
+                 "Reference knowledge folders have not received record-level provenance/freshness classification and must not become an operational source automatically.",
+                 "No semantic retrieval result carries a uniform source, authority, and freshness contract across every knowledge folder."
+             ],
+    "recommendation":  "HARDEN_AND_EXTRACT_EXISTING: reuse OfficialEvidenceRegistry and data-intelligence-fabric; extract the duplicated persisted-evidence mapper into one small shared adapter; preserve knowledge folders as reference or historical until record-level ingestion and verification are approved.",
+    "prohibited":  [
+                       "New knowledge engine",
+                       "Legacy knowledge execution",
+                       "Automatic knowledge promotion",
+                       "Use reports as truth",
+                       "Archive or deletion decision",
+                       "Automatic execution"
+                   ]
+}

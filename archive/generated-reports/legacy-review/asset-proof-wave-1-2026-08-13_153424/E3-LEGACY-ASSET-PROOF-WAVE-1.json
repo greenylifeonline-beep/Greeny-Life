@@ -1,0 +1,42 @@
+﻿{
+    "reportType":  "E3_LEGACY_ASSET_PROOF_WAVE_1_V1",
+    "generatedAtUtc":  "2026-08-13T13:34:25.5610757Z",
+    "scope":  "Disposable isolated Python harness against selected pure assets from the old project. No brain.py, Node/Next runtime, legacy writing, database, network or external service.",
+    "results":  [
+                    {
+                        "asset":  "KnowledgeGraph",
+                        "status":  "PARTIAL",
+                        "evidence":  "entity/relation/path/serialization behavior executed successfully in memory",
+                        "finding":  "find_node_by_name returns duplicate entity references when `name` is also indexed again during attribute iteration."
+                    },
+                    {
+                        "asset":  "ImplementationEvidenceLayer",
+                        "status":  "FAIL",
+                        "evidence":  "TypeError: non-default argument \u0027raw\u0027 follows default argument",
+                        "finding":  "Import fails before conversion: dataclass field ordering has a default field before required raw/normalized/source_snippet fields."
+                    },
+                    {
+                        "asset":  "JSONKnowledgeRepository",
+                        "status":  "PASS",
+                        "evidence":  "temporary JSON load/entity/rule/relationship/evidence retrieval executed; no legacy data was written",
+                        "finding":  null
+                    },
+                    {
+                        "asset":  "BrainContractDataStructures",
+                        "status":  "PASS",
+                        "evidence":  "Evidence and Decision contracts instantiate and preserve typed data",
+                        "finding":  null
+                    }
+                ],
+    "ladder":  {
+                   "PASS":  "RUNTIME_PROVEN only for the explicitly tested, bounded behavior.",
+                   "FAIL":  "The asset cannot currently be imported/executed for its claimed behavior.",
+                   "PARTIAL":  "Some bounded behavior ran; the documented defect blocks promotion as-is."
+               },
+    "decisions":  {
+                      "JSONKnowledgeRepository":  "REUSE_CANDIDATE: bounded JSON read/retrieval behavior proven; compare against current repository contract before promotion.",
+                      "BrainContractDataStructures":  "REUSE_CANDIDATE: data contracts proven; not a reasoning engine.",
+                      "ImplementationEvidenceLayer":  "REJECT_AS_IS: preserve source and extract design only; its code is not importable.",
+                      "KnowledgeGraph":  "HARDEN_CANDIDATE: retain as a knowledge-graph asset; repair duplicate indexing only in a promoted copy after approval."
+                  }
+}

@@ -1,0 +1,110 @@
+﻿[
+    {
+        "domain":  "product",
+        "fileCount":  13,
+        "runtimeCandidateCount":  2,
+        "files":  "application\\product\\commands\\product-command.ts;application\\product\\queries\\product-query.ts;application\\product\\workflows\\product-workflow.ts;archive\\duplicates\\product-schema-map.ts;archive\\duplicates\\seed_master_products.ts;archive\\historical\\scripts\\extract_product_master.py;archive\\old_folders\\GREENY-LIFE-EOS-PRODUCTION\\database\\schema\\product.sql;archive\\old_folders\\GREENY-LIFE-EOS-PRODUCTION\\services\\product-service\\src\\domain\\Product.js;canonical\\intelligence\\intelligence\\schemas\\product-schema-map.ts;canonical\\scripts\\seed_master_products.ts;domain\\product\\entities\\product-entity.ts;domain\\product\\rules\\product-rules.ts;domain\\product\\services\\product-service.ts"
+    },
+    {
+        "domain":  "supplier",
+        "fileCount":  8,
+        "runtimeCandidateCount":  0,
+        "files":  "application\\supplier\\commands\\supplier-command.ts;application\\supplier\\queries\\supplier-query.ts;application\\supplier\\workflows\\supplier-workflow.ts;archive\\old_folders\\GREENY-LIFE-EOS-PRODUCTION\\database\\schema\\supplier.sql;archive\\old_folders\\GREENY-LIFE-EOS-PRODUCTION\\services\\supplier-service\\src\\domain\\Supplier.js;domain\\supplier\\entities\\supplier-entity.ts;domain\\supplier\\rules\\supplier-rules.ts;domain\\supplier\\services\\supplier-service.ts"
+    },
+    {
+        "domain":  "inventory",
+        "fileCount":  10,
+        "runtimeCandidateCount":  0,
+        "files":  "application\\inventory\\commands\\inventory-command.ts;application\\inventory\\queries\\inventory-query.ts;application\\inventory\\workflows\\inventory-workflow.ts;archive\\old_folders\\GREENY-LIFE-EOS-PRODUCTION\\database\\schema\\inventory.sql;archive\\old_folders\\GREENY-LIFE-EOS-PRODUCTION\\services\\inventory-service\\src\\domain\\Inventory.js;canonical\\inventory\\Inventory.js;canonical\\inventory\\inventory.sql;domain\\inventory\\entities\\inventory-entity.ts;domain\\inventory\\rules\\inventory-rules.ts;domain\\inventory\\services\\inventory-service.ts"
+    },
+    {
+        "domain":  "customer",
+        "fileCount":  6,
+        "runtimeCandidateCount":  0,
+        "files":  "application\\customer\\commands\\customer-command.ts;application\\customer\\queries\\customer-query.ts;application\\customer\\workflows\\customer-workflow.ts;domain\\customer\\entities\\customer-entity.ts;domain\\customer\\rules\\customer-rules.ts;domain\\customer\\services\\customer-service.ts"
+    },
+    {
+        "domain":  "crm",
+        "fileCount":  0,
+        "runtimeCandidateCount":  0,
+        "files":  ""
+    },
+    {
+        "domain":  "logistics",
+        "fileCount":  8,
+        "runtimeCandidateCount":  0,
+        "files":  "application\\logistics\\commands\\logistics-command.ts;application\\logistics\\queries\\logistics-query.ts;application\\logistics\\workflows\\logistics-workflow.ts;archive\\old_folders\\GREENY-LIFE-EOS-PRODUCTION\\database\\schema\\logistics.sql;canonical\\logistics\\logistics.sql;domain\\logistics\\entities\\logistics-entity.ts;domain\\logistics\\rules\\logistics-rules.ts;domain\\logistics\\services\\logistics-service.ts"
+    },
+    {
+        "domain":  "quality",
+        "fileCount":  7,
+        "runtimeCandidateCount":  0,
+        "files":  "application\\quality\\commands\\quality-command.ts;application\\quality\\queries\\quality-query.ts;application\\quality\\workflows\\quality-workflow.ts;archive\\old_folders\\GREENY-LIFE-EOS-PRODUCTION\\database\\schema\\quality.sql;domain\\quality\\entities\\quality-entity.ts;domain\\quality\\rules\\quality-rules.ts;domain\\quality\\services\\quality-service.ts"
+    },
+    {
+        "domain":  "finance",
+        "fileCount":  2,
+        "runtimeCandidateCount":  0,
+        "files":  "archive\\old_folders\\GREENY-LIFE-EOS-PRODUCTION\\database\\schema\\finance.sql;canonical\\finance\\finance.sql"
+    },
+    {
+        "domain":  "export",
+        "fileCount":  0,
+        "runtimeCandidateCount":  0,
+        "files":  ""
+    },
+    {
+        "domain":  "customs",
+        "fileCount":  0,
+        "runtimeCandidateCount":  0,
+        "files":  ""
+    },
+    {
+        "domain":  "tax",
+        "fileCount":  0,
+        "runtimeCandidateCount":  0,
+        "files":  ""
+    },
+    {
+        "domain":  "document",
+        "fileCount":  0,
+        "runtimeCandidateCount":  0,
+        "files":  ""
+    },
+    {
+        "domain":  "compliance",
+        "fileCount":  0,
+        "runtimeCandidateCount":  0,
+        "files":  ""
+    },
+    {
+        "domain":  "intelligence",
+        "fileCount":  19,
+        "runtimeCandidateCount":  3,
+        "files":  "archive\\duplicates\\intelligence-test.ts;archive\\historical\\intelligence\\intelligence\\core\\engine-registry.ts;audit_brain_intelligence.py;audit_brain_intelligence_v2.py;canonical\\intelligence\\adapters\\gl-dos-governance-gate.ts;canonical\\intelligence\\intelligence\\core\\report-writer.ts;canonical\\intelligence\\intelligence\\engines\\audit-engine.ts;canonical\\intelligence\\intelligence\\engines\\data-integrity-engine.ts;canonical\\intelligence\\intelligence\\gl-dos.ts;canonical\\intelligence\\intelligence\\health\\health-reporter.ts;canonical\\intelligence\\intelligence\\intelligence-test.ts;canonical\\intelligence\\intelligence\\schemas\\product-schema-map.ts;canonical\\intelligence\\runtime\\controlled-runtime-orchestrator.ts;intelligence\\intelligence\\analytics\\index.ts;intelligence\\intelligence\\decision-support\\index.ts;intelligence\\intelligence\\metrics\\index.ts;intelligence\\intelligence\\recommendations\\index.ts;intelligence\\intelligence\\reporting\\index.ts;intelligence\\intelligence\\scanners\\system-scanner.ts"
+    },
+    {
+        "domain":  "evidence",
+        "fileCount":  6,
+        "runtimeCandidateCount":  null,
+        "files":  "build_evidence_layer.py;greenlines_brain\\evidence.py;greenlines_brain\\evidence\\__init__.py;greenlines_brain\\evidence\\models.py;greenlines_brain\\evidence_layer\\__init__.py;greenlines_brain\\evidence_layer\\models.py"
+    },
+    {
+        "domain":  "knowledge",
+        "fileCount":  2,
+        "runtimeCandidateCount":  2,
+        "files":  "greenlines_brain\\knowledge\\__init__.py;greenlines_brain\\knowledge\\models.py"
+    },
+    {
+        "domain":  "governance",
+        "fileCount":  2,
+        "runtimeCandidateCount":  0,
+        "files":  "archive\\duplicates\\gl-dos-governance-gate.ts;canonical\\intelligence\\adapters\\gl-dos-governance-gate.ts"
+    },
+    {
+        "domain":  "brain",
+        "fileCount":  35,
+        "runtimeCandidateCount":  8,
+        "files":  "audit_brain_intelligence.py;audit_brain_intelligence_v2.py;brain.py;canonical\\fix_brain.py;fix_brain.py;greenlines_brain\\__init__.py;greenlines_brain\\capability.py;greenlines_brain\\contract.py;greenlines_brain\\decision.py;greenlines_brain\\dna\\__init__.py;greenlines_brain\\dna\\ast_analyzer.py;greenlines_brain\\dna\\classifiers\\__init__.py;greenlines_brain\\dna\\extract_dna.py;greenlines_brain\\dna\\extractor.py;greenlines_brain\\evidence.py;greenlines_brain\\evidence\\__init__.py;greenlines_brain\\evidence\\models.py;greenlines_brain\\evidence_layer\\__init__.py;greenlines_brain\\evidence_layer\\models.py;greenlines_brain\\graph.py;greenlines_brain\\identity.py;greenlines_brain\\kernel.py;greenlines_brain\\knowledge\\__init__.py;greenlines_brain\\knowledge\\models.py;greenlines_brain\\memory.py;greenlines_brain\\ontology.py;greenlines_brain\\reasoning.py;greenlines_brain\\repository\\__init__.py;greenlines_brain\\repository\\interface.py;greenlines_brain\\repository\\json_repo.py;run_brain_cli.py;run_brain_cli_backup.py;test_brain.py;test_brain_v2.py;test_brain_v3.py"
+    }
+]

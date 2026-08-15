@@ -1,0 +1,38 @@
+{
+    "report":  "E3 P8 Value, Replacement and Recovery Evidence",
+    "generatedAt":  "2026-08-14T02:00:55.2309542+02:00",
+    "mode":  "READ_ONLY_SYNTHESIS_FROM_P5_P6_P7",
+    "coverage":  {
+                     "expected":  50104,
+                     "covered":  50104,
+                     "status":  "PASS",
+                     "statement":  "Every scoped Legacy asset received an explicit value/replacement/recovery readiness state. REVIEW is evidence of an unresolved decision, not a negative value judgement."
+                 },
+    "readinessCounts":  [
+                            {
+                                "state":  "QUARANTINE",
+                                "assets":  1
+                            },
+                            {
+                                "state":  "REVIEW",
+                                "assets":  50103
+                            }
+                        ],
+    "inputs":  {
+                   "p5":  "C:\\Users\\Ghanam\\Documents\\Codex\\Greeny-Life-Repair\\archive\\generated-reports\\e3-p5-data-business-lineage\\2026-08-14_012933\\E3-P5-DATA-BUSINESS-LINEAGE.json",
+                   "p6Refined":  "C:\\Users\\Ghanam\\Documents\\Codex\\Greeny-Life-Repair\\archive\\generated-reports\\e3-p6-current-comparison\\p6-tracked-baseline-2026-08-14_015153\\E3-P6-REFINED-TRACKED-CURRENT-COMPARISON.json",
+                   "p7":  "C:\\Users\\Ghanam\\Documents\\Codex\\Greeny-Life-Repair\\archive\\generated-reports\\e3-p7-owner-sor\\2026-08-14_015305\\E3-P7-OWNER-SOR-EVIDENCE.json"
+               },
+    "output":  {
+                   "csv":  "C:\\Users\\Ghanam\\Documents\\Codex\\Greeny-Life-Repair\\archive\\generated-reports\\e3-p8-value-replacement-recovery\\2026-08-14_015942\\E3-P8-VALUE-REPLACEMENT-RECOVERY-MATRIX.csv",
+                   "sha256":  "547C00C0435E41DB2D3B4AE038148B29A2565C53DF688ADEC2A2E67004E976A0",
+                   "records":  50104
+               },
+    "boundary":  [
+                     "TRACKED_EXACT_CONTENT_IS_NOT_SEMANTIC_OR_SOR_PROOF",
+                     "UNTRACKED_COPY_IS_NOT_CURRENT_REPLACEMENT",
+                     "NO_PACKAGE_CONTENT_OPENING",
+                     "NO_LEGACY_EXECUTION",
+                     "NO_TREATMENT_ACTION"
+                 ]
+}

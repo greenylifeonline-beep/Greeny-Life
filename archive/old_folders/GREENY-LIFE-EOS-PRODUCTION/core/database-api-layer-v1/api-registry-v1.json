@@ -1,0 +1,83 @@
+{
+    "Status":  "READY",
+    "Version":  "API_BACKEND_V1",
+    "System":  "GREENY LIFE EOS",
+    "APIs":  [
+                 {
+                     "Endpoint":  "/api/products",
+                     "Name":  "Product API",
+                     "Methods":  [
+                                     "GET",
+                                     "POST",
+                                     "PUT",
+                                     "DELETE"
+                                 ]
+                 },
+                 {
+                     "Endpoint":  "/api/suppliers",
+                     "Name":  "Supplier API",
+                     "Methods":  [
+                                     "GET",
+                                     "POST"
+                                 ]
+                 },
+                 {
+                     "Endpoint":  "/api/inventory",
+                     "Name":  "Inventory API",
+                     "Methods":  [
+                                     "GET",
+                                     "UPDATE"
+                                 ]
+                 },
+                 {
+                     "Endpoint":  "/api/batches",
+                     "Name":  "Batch API",
+                     "Methods":  [
+                                     "GET",
+                                     "TRACE"
+                                 ]
+                 },
+                 {
+                     "Endpoint":  "/api/export-orders",
+                     "Name":  "Export Order API",
+                     "Methods":  [
+                                     "GET",
+                                     "POST",
+                                     "STATUS"
+                                 ]
+                 },
+                 {
+                     "Endpoint":  "/api/customers",
+                     "Name":  "CRM API",
+                     "Methods":  [
+                                     "GET",
+                                     "POST",
+                                     "SEGMENT"
+                                 ]
+                 },
+                 {
+                     "Endpoint":  "/api/shipping",
+                     "Name":  "Shipping API",
+                     "Methods":  [
+                                     "CREATE",
+                                     "TRACK"
+                                 ]
+                 },
+                 {
+                     "Endpoint":  "/api/finance",
+                     "Name":  "Finance API",
+                     "Methods":  [
+                                     "GET",
+                                     "REPORT"
+                                 ]
+                 },
+                 {
+                     "Endpoint":  "/api/executive",
+                     "Name":  "Executive Dashboard API",
+                     "Methods":  [
+                                     "GET",
+                                     "ANALYTICS"
+                                 ]
+                 }
+             ]
+}

@@ -1,0 +1,207 @@
+﻿{
+    "reportType":  "E3_LEGACY_ANALYSIS_ALGORITHM_EXTRACTION_PROOF_V1",
+    "generatedAtUtc":  "2026-08-13T17:44:04.5670695Z",
+    "mode":  "STATIC_READ_ONLY",
+    "protections":  [
+                        "NO_LEGACY_EXECUTION",
+                        "NO_IMPORT",
+                        "NO_COPY",
+                        "NO_FILE_WRITE",
+                        "NO_DATABASE",
+                        "NO_NETWORK",
+                        "NO_GIT_CHANGE",
+                        "NO_MOVE",
+                        "NO_DELETE"
+                    ],
+    "inputReusabilityProof":  "C:\\Users\\Ghanam\\Documents\\Codex\\Greeny-Life-Repair\\archive\\generated-reports\\e3-legacy-tool-reusability\\proof-2026-08-13_194128\\E3-LEGACY-TOOL-REUSABILITY-PROOF.json",
+    "records":  [
+                    {
+                        "asset":  "audit_ast_extraction.py",
+                        "declaredSymbols":  [
+                                                "__init__",
+                                                "ASTExtractionAudit",
+                                                "audit",
+                                                "count_ast_nodes",
+                                                "load_report",
+                                                "main",
+                                                "parse_source"
+                                            ],
+                        "inferredCapability":  "AST_COVERAGE_AUDIT",
+                        "astParsing":  true,
+                        "stableProvenance":  false,
+                        "contextExtraction":  false,
+                        "auditLogic":  true,
+                        "currentExactResponsibilityMatches":  [
+
+                                                              ],
+                        "currentExactResponsibilityMatchCount":  0,
+                        "directExecutionProhibited":  true,
+                        "decision":  "EXTRACT_CANDIDATE",
+                        "nextAction":  "DESIGN_READ_ONLY_CURRENT_ADAPTER_FROM_PROVEN_ALGORITHM; REQUIRE_TESTS_AND_HUMAN_APPROVAL",
+                        "limitation":  "Static source analysis. EXTRACT_CANDIDATE means the algorithmic idea is identifiable; it does not authorize copying legacy code or direct execution."
+                    },
+                    {
+                        "asset":  "audit_brain_intelligence.py",
+                        "declaredSymbols":  [
+                                                "audit"
+                                            ],
+                        "inferredCapability":  "INTELLIGENCE_REPORT_AUDIT",
+                        "astParsing":  false,
+                        "stableProvenance":  false,
+                        "contextExtraction":  false,
+                        "auditLogic":  true,
+                        "currentExactResponsibilityMatches":  [
+
+                                                              ],
+                        "currentExactResponsibilityMatchCount":  0,
+                        "directExecutionProhibited":  true,
+                        "decision":  "REFERENCE_ONLY",
+                        "nextAction":  "PRESERVE_AS_REFERENCE; NO_DIRECT_EXECUTION",
+                        "limitation":  "Static source analysis. EXTRACT_CANDIDATE means the algorithmic idea is identifiable; it does not authorize copying legacy code or direct execution."
+                    },
+                    {
+                        "asset":  "audit_brain_intelligence_v2.py",
+                        "declaredSymbols":  [
+                                                "__init__",
+                                                "analyze",
+                                                "BrainIntelligenceAudit",
+                                                "load_enriched",
+                                                "main"
+                                            ],
+                        "inferredCapability":  "INTELLIGENCE_REPORT_AUDIT",
+                        "astParsing":  false,
+                        "stableProvenance":  true,
+                        "contextExtraction":  false,
+                        "auditLogic":  true,
+                        "currentExactResponsibilityMatches":  [
+
+                                                              ],
+                        "currentExactResponsibilityMatchCount":  0,
+                        "directExecutionProhibited":  true,
+                        "decision":  "REFERENCE_ONLY",
+                        "nextAction":  "PRESERVE_AS_REFERENCE; NO_DIRECT_EXECUTION",
+                        "limitation":  "Static source analysis. EXTRACT_CANDIDATE means the algorithmic idea is identifiable; it does not authorize copying legacy code or direct execution."
+                    },
+                    {
+                        "asset":  "enrich_context.py",
+                        "declaredSymbols":  [
+                                                "__init__",
+                                                "_get_ast_path",
+                                                "_get_context",
+                                                "_get_git_info",
+                                                "_get_node_location",
+                                                "_get_normalized_source",
+                                                "_get_stable_fingerprint",
+                                                "ContextEnricher",
+                                                "enrich",
+                                                "main"
+                                            ],
+                        "inferredCapability":  "AST_CONTEXT_AND_STABLE_PROVENANCE",
+                        "astParsing":  true,
+                        "stableProvenance":  true,
+                        "contextExtraction":  true,
+                        "auditLogic":  false,
+                        "currentExactResponsibilityMatches":  [
+
+                                                              ],
+                        "currentExactResponsibilityMatchCount":  0,
+                        "directExecutionProhibited":  true,
+                        "decision":  "EXTRACT_CANDIDATE",
+                        "nextAction":  "DESIGN_READ_ONLY_CURRENT_ADAPTER_FROM_PROVEN_ALGORITHM; REQUIRE_TESTS_AND_HUMAN_APPROVAL",
+                        "limitation":  "Static source analysis. EXTRACT_CANDIDATE means the algorithmic idea is identifiable; it does not authorize copying legacy code or direct execution."
+                    },
+                    {
+                        "asset":  "enrich_context_fixed.py",
+                        "declaredSymbols":  [
+                                                "__init__",
+                                                "_get_ast_path",
+                                                "_get_context",
+                                                "_get_git_info",
+                                                "_get_node_location",
+                                                "_get_normalized_source",
+                                                "_get_stable_fingerprint",
+                                                "ContextEnricherV2",
+                                                "enrich",
+                                                "main"
+                                            ],
+                        "inferredCapability":  "AST_CONTEXT_AND_STABLE_PROVENANCE",
+                        "astParsing":  true,
+                        "stableProvenance":  true,
+                        "contextExtraction":  true,
+                        "auditLogic":  false,
+                        "currentExactResponsibilityMatches":  [
+
+                                                              ],
+                        "currentExactResponsibilityMatchCount":  0,
+                        "directExecutionProhibited":  true,
+                        "decision":  "EXTRACT_CANDIDATE",
+                        "nextAction":  "DESIGN_READ_ONLY_CURRENT_ADAPTER_FROM_PROVEN_ALGORITHM; REQUIRE_TESTS_AND_HUMAN_APPROVAL",
+                        "limitation":  "Static source analysis. EXTRACT_CANDIDATE means the algorithmic idea is identifiable; it does not authorize copying legacy code or direct execution."
+                    },
+                    {
+                        "asset":  "run_ast_analysis.py",
+                        "declaredSymbols":  [
+                                                "main"
+                                            ],
+                        "inferredCapability":  "INTELLIGENCE_REPORT_AUDIT",
+                        "astParsing":  false,
+                        "stableProvenance":  false,
+                        "contextExtraction":  false,
+                        "auditLogic":  true,
+                        "currentExactResponsibilityMatches":  [
+
+                                                              ],
+                        "currentExactResponsibilityMatchCount":  0,
+                        "directExecutionProhibited":  false,
+                        "decision":  "REFERENCE_ONLY",
+                        "nextAction":  "PRESERVE_AS_REFERENCE; NO_DIRECT_EXECUTION",
+                        "limitation":  "Static source analysis. EXTRACT_CANDIDATE means the algorithmic idea is identifiable; it does not authorize copying legacy code or direct execution."
+                    },
+                    {
+                        "asset":  "run_audit_v2.py",
+                        "declaredSymbols":  [
+
+                                            ],
+                        "inferredCapability":  "INTELLIGENCE_REPORT_AUDIT",
+                        "astParsing":  false,
+                        "stableProvenance":  false,
+                        "contextExtraction":  false,
+                        "auditLogic":  true,
+                        "currentExactResponsibilityMatches":  [
+
+                                                              ],
+                        "currentExactResponsibilityMatchCount":  0,
+                        "directExecutionProhibited":  true,
+                        "decision":  "REFERENCE_ONLY",
+                        "nextAction":  "PRESERVE_AS_REFERENCE; NO_DIRECT_EXECUTION",
+                        "limitation":  "Static source analysis. EXTRACT_CANDIDATE means the algorithmic idea is identifiable; it does not authorize copying legacy code or direct execution."
+                    },
+                    {
+                        "asset":  "standalone_ast_analysis.py",
+                        "declaredSymbols":  [
+                                                "analyze_ast",
+                                                "main"
+                                            ],
+                        "inferredCapability":  "AST_EXTRACTION",
+                        "astParsing":  true,
+                        "stableProvenance":  false,
+                        "contextExtraction":  false,
+                        "auditLogic":  false,
+                        "currentExactResponsibilityMatches":  [
+
+                                                              ],
+                        "currentExactResponsibilityMatchCount":  0,
+                        "directExecutionProhibited":  true,
+                        "decision":  "EXTRACT_CANDIDATE",
+                        "nextAction":  "DESIGN_READ_ONLY_CURRENT_ADAPTER_FROM_PROVEN_ALGORITHM; REQUIRE_TESTS_AND_HUMAN_APPROVAL",
+                        "limitation":  "Static source analysis. EXTRACT_CANDIDATE means the algorithmic idea is identifiable; it does not authorize copying legacy code or direct execution."
+                    }
+                ],
+    "summary":  {
+                    "analysed":  8,
+                    "extractCandidates":  4,
+                    "compareCandidates":  0,
+                    "referenceOnly":  4
+                },
+    "rule":  "The safe value identified here is algorithm design, not legacy runtime. Any new current adapter must be small, read-only, tested, reviewed, and created only after explicit approval."
+}

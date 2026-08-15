@@ -42,3 +42,9 @@ export function learningProposal(input: OutcomeInput) {
     prohibited: ["automatic model update", "automatic policy update", "automatic master-data update", "automatic commercial execution"],
   };
 }
+export type LearningGovernanceStatus = "AUTHORIZED" | "DENIED" | "REVIEW_REQUIRED";
+
+// REVIEW_REQUIRED may create a review record; DENIED must never persist learning material.
+export function learningGovernanceAllowsPersistence(status: LearningGovernanceStatus) {
+  return status !== "DENIED";
+}

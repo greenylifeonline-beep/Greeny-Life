@@ -1,6 +1,6 @@
 import crypto from "node:crypto";
 
-export type TaskType = "PRODUCT_CONTEXT" | "INVENTORY_REVIEW" | "SUPPLIER_REVIEW" | "SHIPMENT_REVIEW" | "EXPORT_EVIDENCE_REVIEW" | "OUTCOME_CAPTURE";
+export type TaskType = "PRODUCT_CONTEXT" | "INVENTORY_REVIEW" | "SUPPLIER_REVIEW" | "SHIPMENT_REVIEW" | "EXPORT_EVIDENCE_REVIEW" | "OUTCOME_CAPTURE" | "SYSTEM_MAINTENANCE_REVIEW";
 export type TaskStatus = "RECEIVED" | "VALIDATING" | "BLOCKED" | "REVIEW_REQUIRED" | "COMPLETED" | "FAILED" | "CANCELLED";
 
 export interface TaskInput {
@@ -21,6 +21,7 @@ const routing: Record<TaskType, { executor: string; outputContract: string; exec
   SHIPMENT_REVIEW: { executor: "SHIPMENT_TRACKING", outputContract: "Historical shipment finding; not a release or reroute instruction.", execution: false },
   EXPORT_EVIDENCE_REVIEW: { executor: "EVIDENCE_COMPLIANCE", outputContract: "Evidence status: SUPPORTED, UNKNOWN, or NOT_READY.", execution: false },
   OUTCOME_CAPTURE: { executor: "CONTROLLED_LEARNING", outputContract: "Review-only outcome capture proposal.", execution: false },
+  SYSTEM_MAINTENANCE_REVIEW: { executor: "E5_CONTINUOUS_ASSURANCE_CONTROL_PLANE", outputContract: "Evidence-backed maintenance cycle: observation, diagnosis, existing-component plan, verification requirements, blockers and required approvals.", execution: false },
 };
 
 export function validateTaskInput(input: TaskInput) {
@@ -46,6 +47,63 @@ export function createTaskContract(input: TaskInput) {
   };
 }
 
+
+export interface TaskConflictRecord {
+  id: string;
+  taskType: TaskType;
+  ownerCompany: TaskInput["ownerCompany"];
+  subjectId: string;
+  requestedBy: string;
+  idempotencyKey: string;
+  status: TaskStatus;
+  dependsOn: string[];
+}
+
+export type TaskConflictFinding = {
+  kind: "DUPLICATE_TASK" | "PARALLEL_TASK_REVIEW" | "SELF_DEPENDENCY" | "DEPENDENCY_CYCLE";
+  taskIds: string[];
+  status: "BLOCKED" | "REVIEW_REQUIRED";
+  reason: string;
+};
+
+const activeTask = (status: TaskStatus) => ["RECEIVED", "VALIDATING", "REVIEW_REQUIRED"].includes(status);
+const normalized = (value: string) => value.trim().toLowerCase();
+
+/** Finds task-level collisions without altering tasks or choosing a winner. */
+export function detectTaskConflicts(tasks: TaskConflictRecord[]): TaskConflictFinding[] {
+  const findings: TaskConflictFinding[] = [];
+  const byIdempotency = new Map<string, TaskConflictRecord[]>();
+  const byActiveSubject = new Map<string, TaskConflictRecord[]>();
+  const byId = new Map(tasks.map((task) => [task.id, task]));
+  for (const task of tasks) {
+    const same = byIdempotency.get(task.idempotencyKey) ?? []; same.push(task); byIdempotency.set(task.idempotencyKey, same);
+    if (activeTask(task.status)) {
+      const key = `${task.taskType}:${task.ownerCompany}:${task.subjectId.trim().toUpperCase()}`;
+      const parallel = byActiveSubject.get(key) ?? []; parallel.push(task); byActiveSubject.set(key, parallel);
+    }
+    if (task.dependsOn.includes(task.id)) findings.push({ kind: "SELF_DEPENDENCY", taskIds: [task.id], status: "BLOCKED", reason: "A task cannot depend on itself." });
+  }
+  for (const group of byIdempotency.values()) if (group.length > 1) findings.push({ kind: "DUPLICATE_TASK", taskIds: group.map((task) => task.id).sort(), status: "BLOCKED", reason: "Multiple tasks share one idempotency key." });
+  for (const group of byActiveSubject.values()) if (group.length > 1) findings.push({ kind: "PARALLEL_TASK_REVIEW", taskIds: group.map((task) => task.id).sort(), status: "REVIEW_REQUIRED", reason: "Multiple active tasks address the same subject and capability; retain one only after owner review." });
+  const visiting = new Set<string>(); const visited = new Set<string>();
+  const visit = (id: string, trail: string[]): void => {
+    if (visiting.has(id)) { findings.push({ kind: "DEPENDENCY_CYCLE", taskIds: [...trail, id], status: "BLOCKED", reason: "A dependency cycle prevents controlled completion." }); return; }
+    if (visited.has(id)) return;
+    visiting.add(id);
+    const task = byId.get(id); for (const dependency of task?.dependsOn ?? []) if (byId.has(dependency)) visit(dependency, [...trail, id]);
+    visiting.delete(id); visited.add(id);
+  };
+  for (const task of tasks) visit(task.id, []);
+  return findings;
+}
+
+export function assessTaskInterestConflict(input: { requestedBy: string; proposedApprover: string | null | undefined }) {
+  const requester = normalized(input.requestedBy);
+  const approver = normalized(input.proposedApprover ?? "");
+  if (!requester || !approver) return { status: "REVIEW_REQUIRED" as const, reason: "A distinct named approver is required before any maintenance treatment may be approved." };
+  if (requester === approver) return { status: "BLOCKED_SELF_APPROVAL" as const, reason: "The requester cannot approve the same maintenance treatment." };
+  return { status: "DISTINCT_APPROVER_REQUIRED" as const, reason: "Identity separation is satisfied; evidence and authority approval are still required." };
+}
 export function validateTaskTransition(input: { current: TaskStatus; target: TaskStatus; dependenciesComplete: boolean; hasValidatedOutput: boolean }) {
   if (["COMPLETED", "FAILED", "CANCELLED"].includes(input.current)) return { allowed: false, reason: "Terminal tasks cannot transition." };
   if (input.target === "COMPLETED" && (!input.dependenciesComplete || !input.hasValidatedOutput)) return { allowed: false, reason: "Completion requires completed dependencies and a validated output contract." };

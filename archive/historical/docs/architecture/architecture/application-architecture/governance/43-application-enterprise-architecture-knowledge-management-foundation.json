@@ -1,0 +1,53 @@
+{
+    "System":  "Greeny-Life",
+    "Phase":  "PHASE_31",
+    "Step":  "STEP_43_APPLICATION_ENTERPRISE_ARCHITECTURE_KNOWLEDGE_MANAGEMENT_FOUNDATION",
+    "Framework":  "ENTERPRISE_APPLICATION_ARCHITECTURE_KNOWLEDGE_MODEL",
+    "KnowledgeAssets":  [
+                            {
+                                "Asset":  "APPLICATION_ARCHITECTURE_DECISIONS",
+                                "Owner":  "ENTERPRISE_ARCHITECTURE",
+                                "Purpose":  "Maintain architecture decision knowledge"
+                            },
+                            {
+                                "Asset":  "APPLICATION_ARCHITECTURE_PATTERNS",
+                                "Owner":  "APPLICATION_ARCHITECTURE",
+                                "Purpose":  "Maintain reusable architecture patterns"
+                            },
+                            {
+                                "Asset":  "APPLICATION_BOUNDARY_DOCUMENTATION",
+                                "Owner":  "DOMAIN_ARCHITECTURE",
+                                "Purpose":  "Maintain application boundary knowledge"
+                            },
+                            {
+                                "Asset":  "APPLICATION_EVOLUTION_HISTORY",
+                                "Owner":  "ARCHITECTURE_GOVERNANCE",
+                                "Purpose":  "Maintain architecture evolution records"
+                            },
+                            {
+                                "Asset":  "APPLICATION_REFERENCE_KNOWLEDGE",
+                                "Owner":  "ENTERPRISE_ARCHITECTURE",
+                                "Purpose":  "Maintain enterprise reference knowledge"
+                            }
+                        ],
+    "KnowledgeRules":  [
+                           "KNOWLEDGE_OWNER_REQUIRED",
+                           "ARCHITECTURE_DECISION_HISTORY_REQUIRED",
+                           "KNOWLEDGE_CHANGE_TRACEABLE",
+                           "REFERENCE_INFORMATION_MUST_BE_CONTROLLED",
+                           "ARCHITECTURE_KNOWLEDGE_MUST_BE_AVAILABLE"
+                       ],
+    "KnowledgeLifecycle":  [
+                               "CREATE_ARCHITECTURE_KNOWLEDGE",
+                               "REVIEW_KNOWLEDGE_VALIDITY",
+                               "UPDATE_ARCHITECTURE_INFORMATION",
+                               "ARCHIVE_OBSOLETE_KNOWLEDGE",
+                               "MAINTAIN_KNOWLEDGE_CONTINUITY"
+                           ],
+    "Restrictions":  [
+                         "NO_KNOWLEDGE_PLATFORM",
+                         "NO_DOCUMENTATION_TOOL_IMPLEMENTATION",
+                         "BLUEPRINT_ONLY"
+                     ],
+    "Status":  "APPLICATION_ENTERPRISE_ARCHITECTURE_KNOWLEDGE_MANAGEMENT_FOUNDATION_CREATED"
+}

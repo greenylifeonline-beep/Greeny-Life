@@ -1,0 +1,50 @@
+[
+    {
+        "Domain":  "SUPPLIER",
+        "ExistingPath":  "application\\supplier",
+        "Command":  "supplier-command.ts",
+        "Query":  "supplier-query.ts",
+        "Workflow":  "supplier-workflow.ts",
+        "ConnectsTo":  "PRODUCT"
+    },
+    {
+        "Domain":  "PRODUCT",
+        "ExistingPath":  "application\\product",
+        "Command":  "product-command.ts",
+        "Query":  "product-query.ts",
+        "Workflow":  "product-workflow.ts",
+        "ConnectsTo":  "INVENTORY,QUALITY"
+    },
+    {
+        "Domain":  "INVENTORY",
+        "ExistingPath":  "application\\inventory",
+        "Command":  "inventory-command.ts",
+        "Query":  "inventory-query.ts",
+        "Workflow":  "inventory-workflow.ts",
+        "ConnectsTo":  "LOGISTICS"
+    },
+    {
+        "Domain":  "QUALITY",
+        "ExistingPath":  "application\\quality",
+        "Command":  "quality-command.ts",
+        "Query":  "quality-query.ts",
+        "Workflow":  "quality-workflow.ts",
+        "ConnectsTo":  "PRODUCT"
+    },
+    {
+        "Domain":  "LOGISTICS",
+        "ExistingPath":  "application\\logistics",
+        "Command":  "logistics-command.ts",
+        "Query":  "logistics-query.ts",
+        "Workflow":  "logistics-workflow.ts",
+        "ConnectsTo":  "CUSTOMER"
+    },
+    {
+        "Domain":  "CUSTOMER_CRM",
+        "ExistingPath":  "application\\customer",
+        "Command":  "customer-command.ts",
+        "Query":  "customer-query.ts",
+        "Workflow":  "customer-workflow.ts",
+        "ConnectsTo":  "LOGISTICS"
+    }
+]

@@ -1,0 +1,32 @@
+﻿{
+    "reportType":  "GREENY-LIFE_LEGACY_DEEP_REVIEW_BATCH_V1",
+    "generatedAtUtc":  "2026-08-13T12:39:37.5185180Z",
+    "scope":  "Read-only deep review of legacy assets. No legacy source, database record, application file, archive item, or external service was changed.",
+    "results":  [
+                    {
+                        "stage":  "Repository inventory and exact duplicate scan",
+                        "script":  "legacy-inventory.ps1",
+                        "status":  "PASS",
+                        "detail":  "Completed read-only inspection."
+                    },
+                    {
+                        "stage":  "Legacy entrypoint and risk review",
+                        "script":  "review-legacy-entrypoints.ps1",
+                        "status":  "PASS",
+                        "detail":  "Completed read-only inspection."
+                    },
+                    {
+                        "stage":  "brain.py extraction and safety map",
+                        "script":  "extract-legacy-brain-map.ps1",
+                        "status":  "PASS",
+                        "detail":  "Completed read-only inspection."
+                    },
+                    {
+                        "stage":  "Capability conservation comparison",
+                        "script":  "legacy-capability-conservation.ps1",
+                        "status":  "PASS",
+                        "detail":  "Completed read-only inspection."
+                    }
+                ],
+    "nextGate":  "Use the reports to assign each capability one of KEEP / RECONNECT / CONSOLIDATE / QUARANTINE / ARCHIVE / RETIRE. RETIRE remains prohibited until an owner, consumers, migration destination, and runtime proof are recorded."
+}

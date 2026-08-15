@@ -1,0 +1,2574 @@
+﻿{
+    "reportType":  "E3_LEGACY_SOURCE_OF_TRUTH_ANALYSIS_V1",
+    "generatedAtUtc":  "2026-08-13T12:56:13.7236604Z",
+    "scope":  "READ-ONLY ANALYSIS OF THE ACTUAL OLD PROJECT at C:\\Users\\Ghanam\\OneDrive\\projects\\Greeny-Life. The replacement source, application runtime, and database are excluded.",
+    "counts":  {
+                   "legacySourceFiles":  149,
+                   "apiRoutes":  4,
+                   "engineCandidates":  11,
+                   "eventImplementationCandidates":  1,
+                   "persistenceCandidates":  8,
+                   "quarantineRisks":  1,
+                   "exactDuplicateGroups":  2,
+                   "readFailures":  0
+               },
+    "classification":  [
+                           {
+                               "path":  "audit_ast_extraction.py",
+                               "bytes":  8487,
+                               "readStatus":  "READ_ONLY_ANALYZED",
+                               "classification":  "COMPONENT_OR_TOOL_CANDIDATE",
+                               "signals":  "TRADE_LOGISTICS",
+                               "apiRoute":  false,
+                               "engineCandidate":  false,
+                               "eventImplementationCandidate":  false,
+                               "persistenceCandidate":  false,
+                               "risk":  "NONE_STATIC",
+                               "runtime":  "UNPROVEN",
+                               "decision":  "SYSTEM_OF_RECORD_REVIEW_REQUIRED"
+                           },
+                           {
+                               "path":  "audit_brain_intelligence.py",
+                               "bytes":  4724,
+                               "readStatus":  "READ_ONLY_ANALYZED",
+                               "classification":  "COMPONENT_OR_TOOL_CANDIDATE",
+                               "signals":  [
+                                               "DECISION_EVIDENCE",
+                                               "PRODUCT_MASTER",
+                                               "SECURITY_GOVERNANCE",
+                                               "SUPPLIER_QUALITY",
+                                               "TRADE_LOGISTICS",
+                                               "WORKFLOW"
+                                           ],
+                               "apiRoute":  false,
+                               "engineCandidate":  false,
+                               "eventImplementationCandidate":  false,
+                               "persistenceCandidate":  false,
+                               "risk":  "NONE_STATIC",
+                               "runtime":  "UNPROVEN",
+                               "decision":  "SYSTEM_OF_RECORD_REVIEW_REQUIRED"
+                           },
+                           {
+                               "path":  "audit_brain_intelligence_v2.py",
+                               "bytes":  12832,
+                               "readStatus":  "READ_ONLY_ANALYZED",
+                               "classification":  "COMPONENT_OR_TOOL_CANDIDATE",
+                               "signals":  [
+                                               "DECISION_EVIDENCE",
+                                               "TRADE_LOGISTICS"
+                                           ],
+                               "apiRoute":  false,
+                               "engineCandidate":  false,
+                               "eventImplementationCandidate":  false,
+                               "persistenceCandidate":  false,
+                               "risk":  "NONE_STATIC",
+                               "runtime":  "UNPROVEN",
+                               "decision":  "SYSTEM_OF_RECORD_REVIEW_REQUIRED"
+                           },
+                           {
+                               "path":  "brain.py",
+                               "bytes":  318472,
+                               "readStatus":  "READ_ONLY_ANALYZED",
+                               "classification":  "MIXED_LEGACY_TOOLBOX",
+                               "signals":  [
+                                               "DECISION_EVIDENCE",
+                                               "DESTRUCTIVE_OPERATION_RISK",
+                                               "EXTERNAL_NETWORK_CANDIDATE",
+                                               "LEARNING",
+                                               "PERSISTENCE_CANDIDATE",
+                                               "PRODUCT_MASTER",
+                                               "SECURITY_GOVERNANCE",
+                                               "SUPPLIER_QUALITY",
+                                               "TRADE_LOGISTICS",
+                                               "WORKFLOW"
+                                           ],
+                               "apiRoute":  false,
+                               "engineCandidate":  false,
+                               "eventImplementationCandidate":  false,
+                               "persistenceCandidate":  true,
+                               "risk":  "QUARANTINE",
+                               "runtime":  "UNPROVEN",
+                               "decision":  "SYSTEM_OF_RECORD_REVIEW_REQUIRED"
+                           },
+                           {
+                               "path":  "build_evidence_layer.py",
+                               "bytes":  1889,
+                               "readStatus":  "READ_ONLY_ANALYZED",
+                               "classification":  "COMPONENT_OR_TOOL_CANDIDATE",
+                               "signals":  [
+                                               "DECISION_EVIDENCE",
+                                               "TRADE_LOGISTICS"
+                                           ],
+                               "apiRoute":  false,
+                               "engineCandidate":  false,
+                               "eventImplementationCandidate":  false,
+                               "persistenceCandidate":  false,
+                               "risk":  "NONE_STATIC",
+                               "runtime":  "UNPROVEN",
+                               "decision":  "SYSTEM_OF_RECORD_REVIEW_REQUIRED"
+                           },
+                           {
+                               "path":  "enrich_context.py",
+                               "bytes":  10327,
+                               "readStatus":  "READ_ONLY_ANALYZED",
+                               "classification":  "COMPONENT_OR_TOOL_CANDIDATE",
+                               "signals":  "TRADE_LOGISTICS",
+                               "apiRoute":  false,
+                               "engineCandidate":  false,
+                               "eventImplementationCandidate":  false,
+                               "persistenceCandidate":  false,
+                               "risk":  "NONE_STATIC",
+                               "runtime":  "UNPROVEN",
+                               "decision":  "SYSTEM_OF_RECORD_REVIEW_REQUIRED"
+                           },
+                           {
+                               "path":  "enrich_context_fixed.py",
+                               "bytes":  9778,
+                               "readStatus":  "READ_ONLY_ANALYZED",
+                               "classification":  "COMPONENT_OR_TOOL_CANDIDATE",
+                               "signals":  "TRADE_LOGISTICS",
+                               "apiRoute":  false,
+                               "engineCandidate":  false,
+                               "eventImplementationCandidate":  false,
+                               "persistenceCandidate":  false,
+                               "risk":  "NONE_STATIC",
+                               "runtime":  "UNPROVEN",
+                               "decision":  "SYSTEM_OF_RECORD_REVIEW_REQUIRED"
+                           },
+                           {
+                               "path":  "extract_dna.py",
+                               "bytes":  1741,
+                               "readStatus":  "READ_ONLY_ANALYZED",
+                               "classification":  "COMPONENT_OR_TOOL_CANDIDATE",
+                               "signals":  [
+                                               "PRODUCT_MASTER",
+                                               "TRADE_LOGISTICS"
+                                           ],
+                               "apiRoute":  false,
+                               "engineCandidate":  false,
+                               "eventImplementationCandidate":  false,
+                               "persistenceCandidate":  false,
+                               "risk":  "NONE_STATIC",
+                               "runtime":  "UNPROVEN",
+                               "decision":  "SYSTEM_OF_RECORD_REVIEW_REQUIRED"
+                           },
+                           {
+                               "path":  "fix_brain.py",
+                               "bytes":  1036,
+                               "readStatus":  "READ_ONLY_ANALYZED",
+                               "classification":  "COMPONENT_OR_TOOL_CANDIDATE",
+                               "signals":  [
+                                               "TRADE_LOGISTICS",
+                                               "WORKFLOW"
+                                           ],
+                               "apiRoute":  false,
+                               "engineCandidate":  false,
+                               "eventImplementationCandidate":  false,
+                               "persistenceCandidate":  false,
+                               "risk":  "NONE_STATIC",
+                               "runtime":  "UNPROVEN",
+                               "decision":  "SYSTEM_OF_RECORD_REVIEW_REQUIRED"
+                           },
+                           {
+                               "path":  "run_all.ps1",
+                               "bytes":  893,
+                               "readStatus":  "READ_ONLY_ANALYZED",
+                               "classification":  "COMPONENT_OR_TOOL_CANDIDATE",
+                               "signals":  [
+                                               "PRODUCT_MASTER",
+                                               "SUPPLIER_QUALITY",
+                                               "TRADE_LOGISTICS"
+                                           ],
+                               "apiRoute":  false,
+                               "engineCandidate":  false,
+                               "eventImplementationCandidate":  false,
+                               "persistenceCandidate":  false,
+                               "risk":  "NONE_STATIC",
+                               "runtime":  "UNPROVEN",
+                               "decision":  "SYSTEM_OF_RECORD_REVIEW_REQUIRED"
+                           },
+                           {
+                               "path":  "run_ast_analysis.py",
+                               "bytes":  1515,
+                               "readStatus":  "READ_ONLY_ANALYZED",
+                               "classification":  "COMPONENT_OR_TOOL_CANDIDATE",
+                               "signals":  "TRADE_LOGISTICS",
+                               "apiRoute":  false,
+                               "engineCandidate":  false,
+                               "eventImplementationCandidate":  false,
+                               "persistenceCandidate":  false,
+                               "risk":  "NONE_STATIC",
+                               "runtime":  "UNPROVEN",
+                               "decision":  "SYSTEM_OF_RECORD_REVIEW_REQUIRED"
+                           },
+                           {
+                               "path":  "run_audit_hack.py",
+                               "bytes":  189,
+                               "readStatus":  "READ_ONLY_ANALYZED",
+                               "classification":  "COMPONENT_OR_TOOL_CANDIDATE",
+                               "signals":  "TRADE_LOGISTICS",
+                               "apiRoute":  false,
+                               "engineCandidate":  false,
+                               "eventImplementationCandidate":  false,
+                               "persistenceCandidate":  false,
+                               "risk":  "NONE_STATIC",
+                               "runtime":  "UNPROVEN",
+                               "decision":  "SYSTEM_OF_RECORD_REVIEW_REQUIRED"
+                           },
+                           {
+                               "path":  "run_audit_v2.py",
+                               "bytes":  2716,
+                               "readStatus":  "READ_ONLY_ANALYZED",
+                               "classification":  "COMPONENT_OR_TOOL_CANDIDATE",
+                               "signals":  [
+                                               "DECISION_EVIDENCE",
+                                               "TRADE_LOGISTICS"
+                                           ],
+                               "apiRoute":  false,
+                               "engineCandidate":  false,
+                               "eventImplementationCandidate":  false,
+                               "persistenceCandidate":  false,
+                               "risk":  "NONE_STATIC",
+                               "runtime":  "UNPROVEN",
+                               "decision":  "SYSTEM_OF_RECORD_REVIEW_REQUIRED"
+                           },
+                           {
+                               "path":  "run_brain.ps1",
+                               "bytes":  1492,
+                               "readStatus":  "READ_ONLY_ANALYZED",
+                               "classification":  "COMPONENT_OR_TOOL_CANDIDATE",
+                               "signals":  {
+
+                                           },
+                               "apiRoute":  false,
+                               "engineCandidate":  false,
+                               "eventImplementationCandidate":  false,
+                               "persistenceCandidate":  false,
+                               "risk":  "NONE_STATIC",
+                               "runtime":  "UNPROVEN",
+                               "decision":  "SYSTEM_OF_RECORD_REVIEW_REQUIRED"
+                           },
+                           {
+                               "path":  "run_brain_cli.py",
+                               "bytes":  5,
+                               "readStatus":  "READ_ONLY_ANALYZED",
+                               "classification":  "COMPONENT_OR_TOOL_CANDIDATE",
+                               "signals":  {
+
+                                           },
+                               "apiRoute":  false,
+                               "engineCandidate":  false,
+                               "eventImplementationCandidate":  false,
+                               "persistenceCandidate":  false,
+                               "risk":  "NONE_STATIC",
+                               "runtime":  "UNPROVEN",
+                               "decision":  "SYSTEM_OF_RECORD_REVIEW_REQUIRED"
+                           },
+                           {
+                               "path":  "run_brain_cli_backup.py",
+                               "bytes":  13726,
+                               "readStatus":  "READ_ONLY_ANALYZED",
+                               "classification":  "COMPONENT_OR_TOOL_CANDIDATE",
+                               "signals":  [
+                                               "PRODUCT_MASTER",
+                                               "SUPPLIER_QUALITY",
+                                               "TRADE_LOGISTICS"
+                                           ],
+                               "apiRoute":  false,
+                               "engineCandidate":  false,
+                               "eventImplementationCandidate":  false,
+                               "persistenceCandidate":  false,
+                               "risk":  "NONE_STATIC",
+                               "runtime":  "UNPROVEN",
+                               "decision":  "SYSTEM_OF_RECORD_REVIEW_REQUIRED"
+                           },
+                           {
+                               "path":  "run_full_audit.ps1",
+                               "bytes":  1340,
+                               "readStatus":  "READ_ONLY_ANALYZED",
+                               "classification":  "COMPONENT_OR_TOOL_CANDIDATE",
+                               "signals":  [
+                                               "PRODUCT_MASTER",
+                                               "SUPPLIER_QUALITY",
+                                               "TRADE_LOGISTICS"
+                                           ],
+                               "apiRoute":  false,
+                               "engineCandidate":  false,
+                               "eventImplementationCandidate":  false,
+                               "persistenceCandidate":  false,
+                               "risk":  "NONE_STATIC",
+                               "runtime":  "UNPROVEN",
+                               "decision":  "SYSTEM_OF_RECORD_REVIEW_REQUIRED"
+                           },
+                           {
+                               "path":  "standalone_ast_analysis.py",
+                               "bytes":  2412,
+                               "readStatus":  "READ_ONLY_ANALYZED",
+                               "classification":  "COMPONENT_OR_TOOL_CANDIDATE",
+                               "signals":  "TRADE_LOGISTICS",
+                               "apiRoute":  false,
+                               "engineCandidate":  false,
+                               "eventImplementationCandidate":  false,
+                               "persistenceCandidate":  false,
+                               "risk":  "NONE_STATIC",
+                               "runtime":  "UNPROVEN",
+                               "decision":  "SYSTEM_OF_RECORD_REVIEW_REQUIRED"
+                           },
+                           {
+                               "path":  "test_brain.py",
+                               "bytes":  1783,
+                               "readStatus":  "READ_ONLY_ANALYZED",
+                               "classification":  "COMPONENT_OR_TOOL_CANDIDATE",
+                               "signals":  [
+                                               "DECISION_EVIDENCE",
+                                               "PRODUCT_MASTER",
+                                               "SUPPLIER_QUALITY",
+                                               "TRADE_LOGISTICS"
+                                           ],
+                               "apiRoute":  false,
+                               "engineCandidate":  false,
+                               "eventImplementationCandidate":  false,
+                               "persistenceCandidate":  false,
+                               "risk":  "NONE_STATIC",
+                               "runtime":  "UNPROVEN",
+                               "decision":  "SYSTEM_OF_RECORD_REVIEW_REQUIRED"
+                           },
+                           {
+                               "path":  "test_brain_v2.py",
+                               "bytes":  5656,
+                               "readStatus":  "READ_ONLY_ANALYZED",
+                               "classification":  "COMPONENT_OR_TOOL_CANDIDATE",
+                               "signals":  [
+                                               "DECISION_EVIDENCE",
+                                               "PRODUCT_MASTER",
+                                               "SUPPLIER_QUALITY",
+                                               "TRADE_LOGISTICS"
+                                           ],
+                               "apiRoute":  false,
+                               "engineCandidate":  false,
+                               "eventImplementationCandidate":  false,
+                               "persistenceCandidate":  false,
+                               "risk":  "NONE_STATIC",
+                               "runtime":  "UNPROVEN",
+                               "decision":  "SYSTEM_OF_RECORD_REVIEW_REQUIRED"
+                           },
+                           {
+                               "path":  "test_brain_v3.py",
+                               "bytes":  6079,
+                               "readStatus":  "READ_ONLY_ANALYZED",
+                               "classification":  "COMPONENT_OR_TOOL_CANDIDATE",
+                               "signals":  [
+                                               "DECISION_EVIDENCE",
+                                               "PRODUCT_MASTER",
+                                               "SUPPLIER_QUALITY",
+                                               "TRADE_LOGISTICS"
+                                           ],
+                               "apiRoute":  false,
+                               "engineCandidate":  false,
+                               "eventImplementationCandidate":  false,
+                               "persistenceCandidate":  false,
+                               "risk":  "NONE_STATIC",
+                               "runtime":  "UNPROVEN",
+                               "decision":  "SYSTEM_OF_RECORD_REVIEW_REQUIRED"
+                           },
+                           {
+                               "path":  "app/api/products/route.ts",
+                               "bytes":  1679,
+                               "readStatus":  "READ_ONLY_ANALYZED",
+                               "classification":  "API_ROUTE",
+                               "signals":  [
+                                               "PERSISTENCE_CANDIDATE",
+                                               "PRODUCT_MASTER",
+                                               "SUPPLIER_QUALITY",
+                                               "TRADE_LOGISTICS"
+                                           ],
+                               "apiRoute":  true,
+                               "engineCandidate":  false,
+                               "eventImplementationCandidate":  false,
+                               "persistenceCandidate":  true,
+                               "risk":  "NONE_STATIC",
+                               "runtime":  "UNPROVEN",
+                               "decision":  "SYSTEM_OF_RECORD_REVIEW_REQUIRED"
+                           },
+                           {
+                               "path":  "app/api/sales-orders/route.ts",
+                               "bytes":  1879,
+                               "readStatus":  "READ_ONLY_ANALYZED",
+                               "classification":  "API_ROUTE",
+                               "signals":  [
+                                               "PERSISTENCE_CANDIDATE",
+                                               "PRODUCT_MASTER",
+                                               "TRADE_LOGISTICS"
+                                           ],
+                               "apiRoute":  true,
+                               "engineCandidate":  false,
+                               "eventImplementationCandidate":  false,
+                               "persistenceCandidate":  true,
+                               "risk":  "NONE_STATIC",
+                               "runtime":  "UNPROVEN",
+                               "decision":  "SYSTEM_OF_RECORD_REVIEW_REQUIRED"
+                           },
+                           {
+                               "path":  "app/api/suppliers/route.ts",
+                               "bytes":  1471,
+                               "readStatus":  "READ_ONLY_ANALYZED",
+                               "classification":  "API_ROUTE",
+                               "signals":  [
+                                               "PERSISTENCE_CANDIDATE",
+                                               "PRODUCT_MASTER",
+                                               "SUPPLIER_QUALITY",
+                                               "TRADE_LOGISTICS"
+                                           ],
+                               "apiRoute":  true,
+                               "engineCandidate":  false,
+                               "eventImplementationCandidate":  false,
+                               "persistenceCandidate":  true,
+                               "risk":  "NONE_STATIC",
+                               "runtime":  "UNPROVEN",
+                               "decision":  "SYSTEM_OF_RECORD_REVIEW_REQUIRED"
+                           },
+                           {
+                               "path":  "app/api/workflow/route.ts",
+                               "bytes":  1971,
+                               "readStatus":  "READ_ONLY_ANALYZED",
+                               "classification":  "API_ROUTE",
+                               "signals":  [
+                                               "TRADE_LOGISTICS",
+                                               "WORKFLOW"
+                                           ],
+                               "apiRoute":  true,
+                               "engineCandidate":  false,
+                               "eventImplementationCandidate":  false,
+                               "persistenceCandidate":  false,
+                               "risk":  "NONE_STATIC",
+                               "runtime":  "UNPROVEN",
+                               "decision":  "SYSTEM_OF_RECORD_REVIEW_REQUIRED"
+                           },
+                           {
+                               "path":  "app/js/script.js",
+                               "bytes":  0,
+                               "readStatus":  "READ_ONLY_ANALYZED",
+                               "classification":  "COMPONENT_OR_TOOL_CANDIDATE",
+                               "signals":  {
+
+                                           },
+                               "apiRoute":  false,
+                               "engineCandidate":  false,
+                               "eventImplementationCandidate":  false,
+                               "persistenceCandidate":  false,
+                               "risk":  "NONE_STATIC",
+                               "runtime":  "UNPROVEN",
+                               "decision":  "SYSTEM_OF_RECORD_REVIEW_REQUIRED"
+                           },
+                           {
+                               "path":  "application/customer/commands/customer-command.ts",
+                               "bytes":  0,
+                               "readStatus":  "READ_ONLY_ANALYZED",
+                               "classification":  "COMPONENT_OR_TOOL_CANDIDATE",
+                               "signals":  {
+
+                                           },
+                               "apiRoute":  false,
+                               "engineCandidate":  false,
+                               "eventImplementationCandidate":  false,
+                               "persistenceCandidate":  false,
+                               "risk":  "NONE_STATIC",
+                               "runtime":  "UNPROVEN",
+                               "decision":  "SYSTEM_OF_RECORD_REVIEW_REQUIRED"
+                           },
+                           {
+                               "path":  "application/customer/queries/customer-query.ts",
+                               "bytes":  0,
+                               "readStatus":  "READ_ONLY_ANALYZED",
+                               "classification":  "COMPONENT_OR_TOOL_CANDIDATE",
+                               "signals":  {
+
+                                           },
+                               "apiRoute":  false,
+                               "engineCandidate":  false,
+                               "eventImplementationCandidate":  false,
+                               "persistenceCandidate":  false,
+                               "risk":  "NONE_STATIC",
+                               "runtime":  "UNPROVEN",
+                               "decision":  "SYSTEM_OF_RECORD_REVIEW_REQUIRED"
+                           },
+                           {
+                               "path":  "application/customer/workflows/customer-workflow.ts",
+                               "bytes":  0,
+                               "readStatus":  "READ_ONLY_ANALYZED",
+                               "classification":  "ENGINE_OR_SERVICE_CANDIDATE",
+                               "signals":  {
+
+                                           },
+                               "apiRoute":  false,
+                               "engineCandidate":  true,
+                               "eventImplementationCandidate":  false,
+                               "persistenceCandidate":  false,
+                               "risk":  "NONE_STATIC",
+                               "runtime":  "UNPROVEN",
+                               "decision":  "SYSTEM_OF_RECORD_REVIEW_REQUIRED"
+                           },
+                           {
+                               "path":  "application/inventory/commands/inventory-command.ts",
+                               "bytes":  0,
+                               "readStatus":  "READ_ONLY_ANALYZED",
+                               "classification":  "COMPONENT_OR_TOOL_CANDIDATE",
+                               "signals":  {
+
+                                           },
+                               "apiRoute":  false,
+                               "engineCandidate":  false,
+                               "eventImplementationCandidate":  false,
+                               "persistenceCandidate":  false,
+                               "risk":  "NONE_STATIC",
+                               "runtime":  "UNPROVEN",
+                               "decision":  "SYSTEM_OF_RECORD_REVIEW_REQUIRED"
+                           },
+                           {
+                               "path":  "application/inventory/queries/inventory-query.ts",
+                               "bytes":  0,
+                               "readStatus":  "READ_ONLY_ANALYZED",
+                               "classification":  "COMPONENT_OR_TOOL_CANDIDATE",
+                               "signals":  {
+
+                                           },
+                               "apiRoute":  false,
+                               "engineCandidate":  false,
+                               "eventImplementationCandidate":  false,
+                               "persistenceCandidate":  false,
+                               "risk":  "NONE_STATIC",
+                               "runtime":  "UNPROVEN",
+                               "decision":  "SYSTEM_OF_RECORD_REVIEW_REQUIRED"
+                           },
+                           {
+                               "path":  "application/inventory/workflows/inventory-workflow.ts",
+                               "bytes":  0,
+                               "readStatus":  "READ_ONLY_ANALYZED",
+                               "classification":  "ENGINE_OR_SERVICE_CANDIDATE",
+                               "signals":  {
+
+                                           },
+                               "apiRoute":  false,
+                               "engineCandidate":  true,
+                               "eventImplementationCandidate":  false,
+                               "persistenceCandidate":  false,
+                               "risk":  "NONE_STATIC",
+                               "runtime":  "UNPROVEN",
+                               "decision":  "SYSTEM_OF_RECORD_REVIEW_REQUIRED"
+                           },
+                           {
+                               "path":  "application/logistics/commands/logistics-command.ts",
+                               "bytes":  0,
+                               "readStatus":  "READ_ONLY_ANALYZED",
+                               "classification":  "COMPONENT_OR_TOOL_CANDIDATE",
+                               "signals":  {
+
+                                           },
+                               "apiRoute":  false,
+                               "engineCandidate":  false,
+                               "eventImplementationCandidate":  false,
+                               "persistenceCandidate":  false,
+                               "risk":  "NONE_STATIC",
+                               "runtime":  "UNPROVEN",
+                               "decision":  "SYSTEM_OF_RECORD_REVIEW_REQUIRED"
+                           },
+                           {
+                               "path":  "application/logistics/queries/logistics-query.ts",
+                               "bytes":  0,
+                               "readStatus":  "READ_ONLY_ANALYZED",
+                               "classification":  "COMPONENT_OR_TOOL_CANDIDATE",
+                               "signals":  {
+
+                                           },
+                               "apiRoute":  false,
+                               "engineCandidate":  false,
+                               "eventImplementationCandidate":  false,
+                               "persistenceCandidate":  false,
+                               "risk":  "NONE_STATIC",
+                               "runtime":  "UNPROVEN",
+                               "decision":  "SYSTEM_OF_RECORD_REVIEW_REQUIRED"
+                           },
+                           {
+                               "path":  "application/logistics/workflows/logistics-workflow.ts",
+                               "bytes":  0,
+                               "readStatus":  "READ_ONLY_ANALYZED",
+                               "classification":  "ENGINE_OR_SERVICE_CANDIDATE",
+                               "signals":  {
+
+                                           },
+                               "apiRoute":  false,
+                               "engineCandidate":  true,
+                               "eventImplementationCandidate":  false,
+                               "persistenceCandidate":  false,
+                               "risk":  "NONE_STATIC",
+                               "runtime":  "UNPROVEN",
+                               "decision":  "SYSTEM_OF_RECORD_REVIEW_REQUIRED"
+                           },
+                           {
+                               "path":  "application/product/commands/product-command.ts",
+                               "bytes":  0,
+                               "readStatus":  "READ_ONLY_ANALYZED",
+                               "classification":  "COMPONENT_OR_TOOL_CANDIDATE",
+                               "signals":  {
+
+                                           },
+                               "apiRoute":  false,
+                               "engineCandidate":  false,
+                               "eventImplementationCandidate":  false,
+                               "persistenceCandidate":  false,
+                               "risk":  "NONE_STATIC",
+                               "runtime":  "UNPROVEN",
+                               "decision":  "SYSTEM_OF_RECORD_REVIEW_REQUIRED"
+                           },
+                           {
+                               "path":  "application/product/queries/product-query.ts",
+                               "bytes":  0,
+                               "readStatus":  "READ_ONLY_ANALYZED",
+                               "classification":  "COMPONENT_OR_TOOL_CANDIDATE",
+                               "signals":  {
+
+                                           },
+                               "apiRoute":  false,
+                               "engineCandidate":  false,
+                               "eventImplementationCandidate":  false,
+                               "persistenceCandidate":  false,
+                               "risk":  "NONE_STATIC",
+                               "runtime":  "UNPROVEN",
+                               "decision":  "SYSTEM_OF_RECORD_REVIEW_REQUIRED"
+                           },
+                           {
+                               "path":  "application/product/workflows/product-workflow.ts",
+                               "bytes":  0,
+                               "readStatus":  "READ_ONLY_ANALYZED",
+                               "classification":  "ENGINE_OR_SERVICE_CANDIDATE",
+                               "signals":  {
+
+                                           },
+                               "apiRoute":  false,
+                               "engineCandidate":  true,
+                               "eventImplementationCandidate":  false,
+                               "persistenceCandidate":  false,
+                               "risk":  "NONE_STATIC",
+                               "runtime":  "UNPROVEN",
+                               "decision":  "SYSTEM_OF_RECORD_REVIEW_REQUIRED"
+                           },
+                           {
+                               "path":  "application/quality/commands/quality-command.ts",
+                               "bytes":  0,
+                               "readStatus":  "READ_ONLY_ANALYZED",
+                               "classification":  "COMPONENT_OR_TOOL_CANDIDATE",
+                               "signals":  {
+
+                                           },
+                               "apiRoute":  false,
+                               "engineCandidate":  false,
+                               "eventImplementationCandidate":  false,
+                               "persistenceCandidate":  false,
+                               "risk":  "NONE_STATIC",
+                               "runtime":  "UNPROVEN",
+                               "decision":  "SYSTEM_OF_RECORD_REVIEW_REQUIRED"
+                           },
+                           {
+                               "path":  "application/quality/queries/quality-query.ts",
+                               "bytes":  0,
+                               "readStatus":  "READ_ONLY_ANALYZED",
+                               "classification":  "COMPONENT_OR_TOOL_CANDIDATE",
+                               "signals":  {
+
+                                           },
+                               "apiRoute":  false,
+                               "engineCandidate":  false,
+                               "eventImplementationCandidate":  false,
+                               "persistenceCandidate":  false,
+                               "risk":  "NONE_STATIC",
+                               "runtime":  "UNPROVEN",
+                               "decision":  "SYSTEM_OF_RECORD_REVIEW_REQUIRED"
+                           },
+                           {
+                               "path":  "application/quality/workflows/quality-workflow.ts",
+                               "bytes":  0,
+                               "readStatus":  "READ_ONLY_ANALYZED",
+                               "classification":  "ENGINE_OR_SERVICE_CANDIDATE",
+                               "signals":  {
+
+                                           },
+                               "apiRoute":  false,
+                               "engineCandidate":  true,
+                               "eventImplementationCandidate":  false,
+                               "persistenceCandidate":  false,
+                               "risk":  "NONE_STATIC",
+                               "runtime":  "UNPROVEN",
+                               "decision":  "SYSTEM_OF_RECORD_REVIEW_REQUIRED"
+                           },
+                           {
+                               "path":  "application/supplier/commands/supplier-command.ts",
+                               "bytes":  0,
+                               "readStatus":  "READ_ONLY_ANALYZED",
+                               "classification":  "COMPONENT_OR_TOOL_CANDIDATE",
+                               "signals":  {
+
+                                           },
+                               "apiRoute":  false,
+                               "engineCandidate":  false,
+                               "eventImplementationCandidate":  false,
+                               "persistenceCandidate":  false,
+                               "risk":  "NONE_STATIC",
+                               "runtime":  "UNPROVEN",
+                               "decision":  "SYSTEM_OF_RECORD_REVIEW_REQUIRED"
+                           },
+                           {
+                               "path":  "application/supplier/queries/supplier-query.ts",
+                               "bytes":  0,
+                               "readStatus":  "READ_ONLY_ANALYZED",
+                               "classification":  "COMPONENT_OR_TOOL_CANDIDATE",
+                               "signals":  {
+
+                                           },
+                               "apiRoute":  false,
+                               "engineCandidate":  false,
+                               "eventImplementationCandidate":  false,
+                               "persistenceCandidate":  false,
+                               "risk":  "NONE_STATIC",
+                               "runtime":  "UNPROVEN",
+                               "decision":  "SYSTEM_OF_RECORD_REVIEW_REQUIRED"
+                           },
+                           {
+                               "path":  "application/supplier/workflows/supplier-workflow.ts",
+                               "bytes":  0,
+                               "readStatus":  "READ_ONLY_ANALYZED",
+                               "classification":  "ENGINE_OR_SERVICE_CANDIDATE",
+                               "signals":  {
+
+                                           },
+                               "apiRoute":  false,
+                               "engineCandidate":  true,
+                               "eventImplementationCandidate":  false,
+                               "persistenceCandidate":  false,
+                               "risk":  "NONE_STATIC",
+                               "runtime":  "UNPROVEN",
+                               "decision":  "SYSTEM_OF_RECORD_REVIEW_REQUIRED"
+                           },
+                           {
+                               "path":  "archive/duplicates/route.ts",
+                               "bytes":  1971,
+                               "readStatus":  "READ_ONLY_ANALYZED",
+                               "classification":  "HISTORICAL_OR_ARCHIVED",
+                               "signals":  [
+                                               "TRADE_LOGISTICS",
+                                               "WORKFLOW"
+                                           ],
+                               "apiRoute":  false,
+                               "engineCandidate":  false,
+                               "eventImplementationCandidate":  false,
+                               "persistenceCandidate":  false,
+                               "risk":  "NONE_STATIC",
+                               "runtime":  "UNPROVEN",
+                               "decision":  "SYSTEM_OF_RECORD_REVIEW_REQUIRED"
+                           },
+                           {
+                               "path":  "archive/historical/intelligence/intelligence/core/engine-registry.ts",
+                               "bytes":  1217,
+                               "readStatus":  "READ_ONLY_ANALYZED",
+                               "classification":  "HISTORICAL_OR_ARCHIVED",
+                               "signals":  [
+                                               "PRODUCT_MASTER",
+                                               "TRADE_LOGISTICS"
+                                           ],
+                               "apiRoute":  false,
+                               "engineCandidate":  false,
+                               "eventImplementationCandidate":  false,
+                               "persistenceCandidate":  false,
+                               "risk":  "NONE_STATIC",
+                               "runtime":  "UNPROVEN",
+                               "decision":  "SYSTEM_OF_RECORD_REVIEW_REQUIRED"
+                           },
+                           {
+                               "path":  "archive/historical/scripts/extract_product_master.py",
+                               "bytes":  1978,
+                               "readStatus":  "READ_ONLY_ANALYZED",
+                               "classification":  "HISTORICAL_OR_ARCHIVED",
+                               "signals":  [
+                                               "PRODUCT_MASTER",
+                                               "TRADE_LOGISTICS"
+                                           ],
+                               "apiRoute":  false,
+                               "engineCandidate":  false,
+                               "eventImplementationCandidate":  false,
+                               "persistenceCandidate":  false,
+                               "risk":  "NONE_STATIC",
+                               "runtime":  "UNPROVEN",
+                               "decision":  "SYSTEM_OF_RECORD_REVIEW_REQUIRED"
+                           },
+                           {
+                               "path":  "archive/historical/scripts/integrity-check.js",
+                               "bytes":  973,
+                               "readStatus":  "READ_ONLY_ANALYZED",
+                               "classification":  "HISTORICAL_OR_ARCHIVED",
+                               "signals":  [
+                                               "PRODUCT_MASTER",
+                                               "SUPPLIER_QUALITY"
+                                           ],
+                               "apiRoute":  false,
+                               "engineCandidate":  false,
+                               "eventImplementationCandidate":  false,
+                               "persistenceCandidate":  false,
+                               "risk":  "NONE_STATIC",
+                               "runtime":  "UNPROVEN",
+                               "decision":  "SYSTEM_OF_RECORD_REVIEW_REQUIRED"
+                           },
+                           {
+                               "path":  "archive/historical/scripts/migrate-schema.js",
+                               "bytes":  4733,
+                               "readStatus":  "READ_ONLY_ANALYZED",
+                               "classification":  "HISTORICAL_OR_ARCHIVED",
+                               "signals":  "PRODUCT_MASTER",
+                               "apiRoute":  false,
+                               "engineCandidate":  false,
+                               "eventImplementationCandidate":  false,
+                               "persistenceCandidate":  false,
+                               "risk":  "NONE_STATIC",
+                               "runtime":  "UNPROVEN",
+                               "decision":  "SYSTEM_OF_RECORD_REVIEW_REQUIRED"
+                           },
+                           {
+                               "path":  "archive/historical/scripts/system_analyzer.py",
+                               "bytes":  2835,
+                               "readStatus":  "READ_ONLY_ANALYZED",
+                               "classification":  "HISTORICAL_OR_ARCHIVED",
+                               "signals":  [
+                                               "PERSISTENCE_CANDIDATE",
+                                               "PRODUCT_MASTER",
+                                               "TRADE_LOGISTICS"
+                                           ],
+                               "apiRoute":  false,
+                               "engineCandidate":  false,
+                               "eventImplementationCandidate":  false,
+                               "persistenceCandidate":  true,
+                               "risk":  "NONE_STATIC",
+                               "runtime":  "UNPROVEN",
+                               "decision":  "SYSTEM_OF_RECORD_REVIEW_REQUIRED"
+                           },
+                           {
+                               "path":  "archive/historical/scripts/validate-schema.js",
+                               "bytes":  2928,
+                               "readStatus":  "READ_ONLY_ANALYZED",
+                               "classification":  "HISTORICAL_OR_ARCHIVED",
+                               "signals":  "PRODUCT_MASTER",
+                               "apiRoute":  false,
+                               "engineCandidate":  false,
+                               "eventImplementationCandidate":  false,
+                               "persistenceCandidate":  false,
+                               "risk":  "NONE_STATIC",
+                               "runtime":  "UNPROVEN",
+                               "decision":  "SYSTEM_OF_RECORD_REVIEW_REQUIRED"
+                           },
+                           {
+                               "path":  "archive/historical/__tests__/workflowEngine.test.ts",
+                               "bytes":  2287,
+                               "readStatus":  "READ_ONLY_ANALYZED",
+                               "classification":  "HISTORICAL_OR_ARCHIVED",
+                               "signals":  [
+                                               "PERSISTENCE_CANDIDATE",
+                                               "PRODUCT_MASTER",
+                                               "SECURITY_GOVERNANCE",
+                                               "TRADE_LOGISTICS",
+                                               "WORKFLOW"
+                                           ],
+                               "apiRoute":  false,
+                               "engineCandidate":  false,
+                               "eventImplementationCandidate":  false,
+                               "persistenceCandidate":  true,
+                               "risk":  "NONE_STATIC",
+                               "runtime":  "UNPROVEN",
+                               "decision":  "SYSTEM_OF_RECORD_REVIEW_REQUIRED"
+                           },
+                           {
+                               "path":  "archive/old_folders/GREENY-LIFE-EOS-PRODUCTION/database/schema/audit.sql",
+                               "bytes":  136,
+                               "readStatus":  "READ_ONLY_ANALYZED",
+                               "classification":  "HISTORICAL_OR_ARCHIVED",
+                               "signals":  "SECURITY_GOVERNANCE",
+                               "apiRoute":  false,
+                               "engineCandidate":  false,
+                               "eventImplementationCandidate":  false,
+                               "persistenceCandidate":  false,
+                               "risk":  "NONE_STATIC",
+                               "runtime":  "UNPROVEN",
+                               "decision":  "SYSTEM_OF_RECORD_REVIEW_REQUIRED"
+                           },
+                           {
+                               "path":  "archive/old_folders/GREENY-LIFE-EOS-PRODUCTION/database/schema/master-data-schema.sql",
+                               "bytes":  480,
+                               "readStatus":  "READ_ONLY_ANALYZED",
+                               "classification":  "HISTORICAL_OR_ARCHIVED",
+                               "signals":  [
+                                               "PRODUCT_MASTER",
+                                               "SUPPLIER_QUALITY"
+                                           ],
+                               "apiRoute":  false,
+                               "engineCandidate":  false,
+                               "eventImplementationCandidate":  false,
+                               "persistenceCandidate":  false,
+                               "risk":  "NONE_STATIC",
+                               "runtime":  "UNPROVEN",
+                               "decision":  "SYSTEM_OF_RECORD_REVIEW_REQUIRED"
+                           },
+                           {
+                               "path":  "archive/old_folders/GREENY-LIFE-EOS-PRODUCTION/database/schema/master-data.sql",
+                               "bytes":  256,
+                               "readStatus":  "READ_ONLY_ANALYZED",
+                               "classification":  "HISTORICAL_OR_ARCHIVED",
+                               "signals":  {
+
+                                           },
+                               "apiRoute":  false,
+                               "engineCandidate":  false,
+                               "eventImplementationCandidate":  false,
+                               "persistenceCandidate":  false,
+                               "risk":  "NONE_STATIC",
+                               "runtime":  "UNPROVEN",
+                               "decision":  "SYSTEM_OF_RECORD_REVIEW_REQUIRED"
+                           },
+                           {
+                               "path":  "archive/old_folders/GREENY-LIFE-EOS-PRODUCTION/database/schema/orders.sql",
+                               "bytes":  306,
+                               "readStatus":  "READ_ONLY_ANALYZED",
+                               "classification":  "HISTORICAL_OR_ARCHIVED",
+                               "signals":  "PRODUCT_MASTER",
+                               "apiRoute":  false,
+                               "engineCandidate":  false,
+                               "eventImplementationCandidate":  false,
+                               "persistenceCandidate":  false,
+                               "risk":  "NONE_STATIC",
+                               "runtime":  "UNPROVEN",
+                               "decision":  "SYSTEM_OF_RECORD_REVIEW_REQUIRED"
+                           },
+                           {
+                               "path":  "archive/old_folders/GREENY-LIFE-EOS-PRODUCTION/database/schema/product.sql",
+                               "bytes":  395,
+                               "readStatus":  "READ_ONLY_ANALYZED",
+                               "classification":  "HISTORICAL_OR_ARCHIVED",
+                               "signals":  "PRODUCT_MASTER",
+                               "apiRoute":  false,
+                               "engineCandidate":  false,
+                               "eventImplementationCandidate":  false,
+                               "persistenceCandidate":  false,
+                               "risk":  "NONE_STATIC",
+                               "runtime":  "UNPROVEN",
+                               "decision":  "SYSTEM_OF_RECORD_REVIEW_REQUIRED"
+                           },
+                           {
+                               "path":  "archive/old_folders/GREENY-LIFE-EOS-PRODUCTION/database/schema/quality.sql",
+                               "bytes":  152,
+                               "readStatus":  "READ_ONLY_ANALYZED",
+                               "classification":  "HISTORICAL_OR_ARCHIVED",
+                               "signals":  [
+                                               "PRODUCT_MASTER",
+                                               "SUPPLIER_QUALITY"
+                                           ],
+                               "apiRoute":  false,
+                               "engineCandidate":  false,
+                               "eventImplementationCandidate":  false,
+                               "persistenceCandidate":  false,
+                               "risk":  "NONE_STATIC",
+                               "runtime":  "UNPROVEN",
+                               "decision":  "SYSTEM_OF_RECORD_REVIEW_REQUIRED"
+                           },
+                           {
+                               "path":  "archive/old_folders/GREENY-LIFE-EOS-PRODUCTION/database/schema/supplier.sql",
+                               "bytes":  264,
+                               "readStatus":  "READ_ONLY_ANALYZED",
+                               "classification":  "HISTORICAL_OR_ARCHIVED",
+                               "signals":  [
+                                               "PRODUCT_MASTER",
+                                               "SUPPLIER_QUALITY"
+                                           ],
+                               "apiRoute":  false,
+                               "engineCandidate":  false,
+                               "eventImplementationCandidate":  false,
+                               "persistenceCandidate":  false,
+                               "risk":  "NONE_STATIC",
+                               "runtime":  "UNPROVEN",
+                               "decision":  "SYSTEM_OF_RECORD_REVIEW_REQUIRED"
+                           },
+                           {
+                               "path":  "archive/old_folders/GREENY-LIFE-EOS-PRODUCTION/database/seeds/initial-data.sql",
+                               "bytes":  295,
+                               "readStatus":  "READ_ONLY_ANALYZED",
+                               "classification":  "HISTORICAL_OR_ARCHIVED",
+                               "signals":  {
+
+                                           },
+                               "apiRoute":  false,
+                               "engineCandidate":  false,
+                               "eventImplementationCandidate":  false,
+                               "persistenceCandidate":  false,
+                               "risk":  "NONE_STATIC",
+                               "runtime":  "UNPROVEN",
+                               "decision":  "SYSTEM_OF_RECORD_REVIEW_REQUIRED"
+                           },
+                           {
+                               "path":  "archive/old_folders/GREENY-LIFE-EOS-PRODUCTION/services/product-service/src/domain/Product.js",
+                               "bytes":  207,
+                               "readStatus":  "READ_ONLY_ANALYZED",
+                               "classification":  "HISTORICAL_OR_ARCHIVED",
+                               "signals":  [
+                                               "PRODUCT_MASTER",
+                                               "TRADE_LOGISTICS"
+                                           ],
+                               "apiRoute":  false,
+                               "engineCandidate":  false,
+                               "eventImplementationCandidate":  false,
+                               "persistenceCandidate":  false,
+                               "risk":  "NONE_STATIC",
+                               "runtime":  "UNPROVEN",
+                               "decision":  "SYSTEM_OF_RECORD_REVIEW_REQUIRED"
+                           },
+                           {
+                               "path":  "archive/old_folders/GREENY-LIFE-EOS-PRODUCTION/services/supplier-service/src/domain/Supplier.js",
+                               "bytes":  169,
+                               "readStatus":  "READ_ONLY_ANALYZED",
+                               "classification":  "HISTORICAL_OR_ARCHIVED",
+                               "signals":  [
+                                               "SUPPLIER_QUALITY",
+                                               "TRADE_LOGISTICS"
+                                           ],
+                               "apiRoute":  false,
+                               "engineCandidate":  false,
+                               "eventImplementationCandidate":  false,
+                               "persistenceCandidate":  false,
+                               "risk":  "NONE_STATIC",
+                               "runtime":  "UNPROVEN",
+                               "decision":  "SYSTEM_OF_RECORD_REVIEW_REQUIRED"
+                           },
+                           {
+                               "path":  "canonical/fix_brain.py",
+                               "bytes":  1210,
+                               "readStatus":  "READ_ONLY_ANALYZED",
+                               "classification":  "COMPONENT_OR_TOOL_CANDIDATE",
+                               "signals":  [
+                                               "TRADE_LOGISTICS",
+                                               "WORKFLOW"
+                                           ],
+                               "apiRoute":  false,
+                               "engineCandidate":  false,
+                               "eventImplementationCandidate":  false,
+                               "persistenceCandidate":  false,
+                               "risk":  "NONE_STATIC",
+                               "runtime":  "UNPROVEN",
+                               "decision":  "SYSTEM_OF_RECORD_REVIEW_REQUIRED"
+                           },
+                           {
+                               "path":  "canonical/fix_indent.py",
+                               "bytes":  1483,
+                               "readStatus":  "READ_ONLY_ANALYZED",
+                               "classification":  "COMPONENT_OR_TOOL_CANDIDATE",
+                               "signals":  [
+                                               "TRADE_LOGISTICS",
+                                               "WORKFLOW"
+                                           ],
+                               "apiRoute":  false,
+                               "engineCandidate":  false,
+                               "eventImplementationCandidate":  false,
+                               "persistenceCandidate":  false,
+                               "risk":  "NONE_STATIC",
+                               "runtime":  "UNPROVEN",
+                               "decision":  "SYSTEM_OF_RECORD_REVIEW_REQUIRED"
+                           },
+                           {
+                               "path":  "canonical/run_all.ps1",
+                               "bytes":  1984,
+                               "readStatus":  "READ_ONLY_ANALYZED",
+                               "classification":  "COMPONENT_OR_TOOL_CANDIDATE",
+                               "signals":  [
+                                               "PRODUCT_MASTER",
+                                               "SUPPLIER_QUALITY",
+                                               "TRADE_LOGISTICS"
+                                           ],
+                               "apiRoute":  false,
+                               "engineCandidate":  false,
+                               "eventImplementationCandidate":  false,
+                               "persistenceCandidate":  false,
+                               "risk":  "NONE_STATIC",
+                               "runtime":  "UNPROVEN",
+                               "decision":  "SYSTEM_OF_RECORD_REVIEW_REQUIRED"
+                           },
+                           {
+                               "path":  "canonical/app/layout.tsx",
+                               "bytes":  316,
+                               "readStatus":  "READ_ONLY_ANALYZED",
+                               "classification":  "COMPONENT_OR_TOOL_CANDIDATE",
+                               "signals":  [
+                                               "PRODUCT_MASTER",
+                                               "TRADE_LOGISTICS"
+                                           ],
+                               "apiRoute":  false,
+                               "engineCandidate":  false,
+                               "eventImplementationCandidate":  false,
+                               "persistenceCandidate":  false,
+                               "risk":  "NONE_STATIC",
+                               "runtime":  "UNPROVEN",
+                               "decision":  "SYSTEM_OF_RECORD_REVIEW_REQUIRED"
+                           },
+                           {
+                               "path":  "canonical/app/page.tsx",
+                               "bytes":  4746,
+                               "readStatus":  "READ_ONLY_ANALYZED",
+                               "classification":  "COMPONENT_OR_TOOL_CANDIDATE",
+                               "signals":  [
+                                               "PRODUCT_MASTER",
+                                               "TRADE_LOGISTICS",
+                                               "WORKFLOW"
+                                           ],
+                               "apiRoute":  false,
+                               "engineCandidate":  false,
+                               "eventImplementationCandidate":  false,
+                               "persistenceCandidate":  false,
+                               "risk":  "NONE_STATIC",
+                               "runtime":  "UNPROVEN",
+                               "decision":  "SYSTEM_OF_RECORD_REVIEW_REQUIRED"
+                           },
+                           {
+                               "path":  "canonical/finance/finance.sql",
+                               "bytes":  237,
+                               "readStatus":  "READ_ONLY_ANALYZED",
+                               "classification":  "COMPONENT_OR_TOOL_CANDIDATE",
+                               "signals":  {
+
+                                           },
+                               "apiRoute":  false,
+                               "engineCandidate":  false,
+                               "eventImplementationCandidate":  false,
+                               "persistenceCandidate":  false,
+                               "risk":  "NONE_STATIC",
+                               "runtime":  "UNPROVEN",
+                               "decision":  "SYSTEM_OF_RECORD_REVIEW_REQUIRED"
+                           },
+                           {
+                               "path":  "canonical/intelligence/adapters/gl-dos-governance-gate.ts",
+                               "bytes":  1746,
+                               "readStatus":  "READ_ONLY_ANALYZED",
+                               "classification":  "COMPONENT_OR_TOOL_CANDIDATE",
+                               "signals":  [
+                                               "SECURITY_GOVERNANCE",
+                                               "TRADE_LOGISTICS"
+                                           ],
+                               "apiRoute":  false,
+                               "engineCandidate":  false,
+                               "eventImplementationCandidate":  false,
+                               "persistenceCandidate":  false,
+                               "risk":  "NONE_STATIC",
+                               "runtime":  "UNPROVEN",
+                               "decision":  "SYSTEM_OF_RECORD_REVIEW_REQUIRED"
+                           },
+                           {
+                               "path":  "canonical/intelligence/intelligence/gl-dos.ts",
+                               "bytes":  712,
+                               "readStatus":  "READ_ONLY_ANALYZED",
+                               "classification":  "COMPONENT_OR_TOOL_CANDIDATE",
+                               "signals":  "TRADE_LOGISTICS",
+                               "apiRoute":  false,
+                               "engineCandidate":  false,
+                               "eventImplementationCandidate":  false,
+                               "persistenceCandidate":  false,
+                               "risk":  "NONE_STATIC",
+                               "runtime":  "UNPROVEN",
+                               "decision":  "SYSTEM_OF_RECORD_REVIEW_REQUIRED"
+                           },
+                           {
+                               "path":  "canonical/intelligence/intelligence/intelligence-test.ts",
+                               "bytes":  1741,
+                               "readStatus":  "READ_ONLY_ANALYZED",
+                               "classification":  "COMPONENT_OR_TOOL_CANDIDATE",
+                               "signals":  [
+                                               "PRODUCT_MASTER",
+                                               "TRADE_LOGISTICS"
+                                           ],
+                               "apiRoute":  false,
+                               "engineCandidate":  false,
+                               "eventImplementationCandidate":  false,
+                               "persistenceCandidate":  false,
+                               "risk":  "NONE_STATIC",
+                               "runtime":  "UNPROVEN",
+                               "decision":  "SYSTEM_OF_RECORD_REVIEW_REQUIRED"
+                           },
+                           {
+                               "path":  "canonical/intelligence/intelligence/core/report-writer.ts",
+                               "bytes":  6607,
+                               "readStatus":  "READ_ONLY_ANALYZED",
+                               "classification":  "COMPONENT_OR_TOOL_CANDIDATE",
+                               "signals":  [
+                                               "PRODUCT_MASTER",
+                                               "SECURITY_GOVERNANCE",
+                                               "TRADE_LOGISTICS"
+                                           ],
+                               "apiRoute":  false,
+                               "engineCandidate":  false,
+                               "eventImplementationCandidate":  false,
+                               "persistenceCandidate":  false,
+                               "risk":  "NONE_STATIC",
+                               "runtime":  "UNPROVEN",
+                               "decision":  "SYSTEM_OF_RECORD_REVIEW_REQUIRED"
+                           },
+                           {
+                               "path":  "canonical/intelligence/intelligence/engines/audit-engine.ts",
+                               "bytes":  4836,
+                               "readStatus":  "READ_ONLY_ANALYZED",
+                               "classification":  "ENGINE_OR_SERVICE_CANDIDATE",
+                               "signals":  [
+                                               "PRODUCT_MASTER",
+                                               "TRADE_LOGISTICS"
+                                           ],
+                               "apiRoute":  false,
+                               "engineCandidate":  true,
+                               "eventImplementationCandidate":  false,
+                               "persistenceCandidate":  false,
+                               "risk":  "NONE_STATIC",
+                               "runtime":  "UNPROVEN",
+                               "decision":  "SYSTEM_OF_RECORD_REVIEW_REQUIRED"
+                           },
+                           {
+                               "path":  "canonical/intelligence/intelligence/engines/data-integrity-engine.ts",
+                               "bytes":  11442,
+                               "readStatus":  "READ_ONLY_ANALYZED",
+                               "classification":  "ENGINE_OR_SERVICE_CANDIDATE",
+                               "signals":  [
+                                               "DECISION_EVIDENCE",
+                                               "PRODUCT_MASTER",
+                                               "TRADE_LOGISTICS"
+                                           ],
+                               "apiRoute":  false,
+                               "engineCandidate":  true,
+                               "eventImplementationCandidate":  false,
+                               "persistenceCandidate":  false,
+                               "risk":  "NONE_STATIC",
+                               "runtime":  "UNPROVEN",
+                               "decision":  "SYSTEM_OF_RECORD_REVIEW_REQUIRED"
+                           },
+                           {
+                               "path":  "canonical/intelligence/intelligence/health/health-reporter.ts",
+                               "bytes":  1235,
+                               "readStatus":  "READ_ONLY_ANALYZED",
+                               "classification":  "ENGINE_OR_SERVICE_CANDIDATE",
+                               "signals":  "TRADE_LOGISTICS",
+                               "apiRoute":  false,
+                               "engineCandidate":  true,
+                               "eventImplementationCandidate":  false,
+                               "persistenceCandidate":  false,
+                               "risk":  "NONE_STATIC",
+                               "runtime":  "UNPROVEN",
+                               "decision":  "SYSTEM_OF_RECORD_REVIEW_REQUIRED"
+                           },
+                           {
+                               "path":  "canonical/intelligence/intelligence/schemas/product-schema-map.ts",
+                               "bytes":  5349,
+                               "readStatus":  "READ_ONLY_ANALYZED",
+                               "classification":  "COMPONENT_OR_TOOL_CANDIDATE",
+                               "signals":  [
+                                               "PRODUCT_MASTER",
+                                               "TRADE_LOGISTICS"
+                                           ],
+                               "apiRoute":  false,
+                               "engineCandidate":  false,
+                               "eventImplementationCandidate":  false,
+                               "persistenceCandidate":  false,
+                               "risk":  "NONE_STATIC",
+                               "runtime":  "UNPROVEN",
+                               "decision":  "SYSTEM_OF_RECORD_REVIEW_REQUIRED"
+                           },
+                           {
+                               "path":  "canonical/intelligence/runtime/controlled-runtime-orchestrator.ts",
+                               "bytes":  1767,
+                               "readStatus":  "READ_ONLY_ANALYZED",
+                               "classification":  "ENGINE_OR_SERVICE_CANDIDATE",
+                               "signals":  [
+                                               "PRODUCT_MASTER",
+                                               "SECURITY_GOVERNANCE",
+                                               "TRADE_LOGISTICS",
+                                               "WORKFLOW"
+                                           ],
+                               "apiRoute":  false,
+                               "engineCandidate":  true,
+                               "eventImplementationCandidate":  false,
+                               "persistenceCandidate":  false,
+                               "risk":  "NONE_STATIC",
+                               "runtime":  "UNPROVEN",
+                               "decision":  "SYSTEM_OF_RECORD_REVIEW_REQUIRED"
+                           },
+                           {
+                               "path":  "canonical/inventory/Inventory.js",
+                               "bytes":  189,
+                               "readStatus":  "READ_ONLY_ANALYZED",
+                               "classification":  "COMPONENT_OR_TOOL_CANDIDATE",
+                               "signals":  [
+                                               "PRODUCT_MASTER",
+                                               "TRADE_LOGISTICS"
+                                           ],
+                               "apiRoute":  false,
+                               "engineCandidate":  false,
+                               "eventImplementationCandidate":  false,
+                               "persistenceCandidate":  false,
+                               "risk":  "NONE_STATIC",
+                               "runtime":  "UNPROVEN",
+                               "decision":  "SYSTEM_OF_RECORD_REVIEW_REQUIRED"
+                           },
+                           {
+                               "path":  "canonical/inventory/inventory.sql",
+                               "bytes":  246,
+                               "readStatus":  "READ_ONLY_ANALYZED",
+                               "classification":  "COMPONENT_OR_TOOL_CANDIDATE",
+                               "signals":  "PRODUCT_MASTER",
+                               "apiRoute":  false,
+                               "engineCandidate":  false,
+                               "eventImplementationCandidate":  false,
+                               "persistenceCandidate":  false,
+                               "risk":  "NONE_STATIC",
+                               "runtime":  "UNPROVEN",
+                               "decision":  "SYSTEM_OF_RECORD_REVIEW_REQUIRED"
+                           },
+                           {
+                               "path":  "canonical/lib/workflowEngine.ts",
+                               "bytes":  3212,
+                               "readStatus":  "READ_ONLY_ANALYZED",
+                               "classification":  "ENGINE_OR_SERVICE_CANDIDATE",
+                               "signals":  [
+                                               "PERSISTENCE_CANDIDATE",
+                                               "PRODUCT_MASTER",
+                                               "SECURITY_GOVERNANCE",
+                                               "SUPPLIER_QUALITY",
+                                               "TRADE_LOGISTICS",
+                                               "WORKFLOW"
+                                           ],
+                               "apiRoute":  false,
+                               "engineCandidate":  true,
+                               "eventImplementationCandidate":  false,
+                               "persistenceCandidate":  true,
+                               "risk":  "NONE_STATIC",
+                               "runtime":  "UNPROVEN",
+                               "decision":  "SYSTEM_OF_RECORD_REVIEW_REQUIRED"
+                           },
+                           {
+                               "path":  "canonical/logistics/logistics.sql",
+                               "bytes":  183,
+                               "readStatus":  "READ_ONLY_ANALYZED",
+                               "classification":  "COMPONENT_OR_TOOL_CANDIDATE",
+                               "signals":  "TRADE_LOGISTICS",
+                               "apiRoute":  false,
+                               "engineCandidate":  false,
+                               "eventImplementationCandidate":  false,
+                               "persistenceCandidate":  false,
+                               "risk":  "NONE_STATIC",
+                               "runtime":  "UNPROVEN",
+                               "decision":  "SYSTEM_OF_RECORD_REVIEW_REQUIRED"
+                           },
+                           {
+                               "path":  "canonical/scripts/seed_master_products.ts",
+                               "bytes":  3062,
+                               "readStatus":  "READ_ONLY_ANALYZED",
+                               "classification":  "COMPONENT_OR_TOOL_CANDIDATE",
+                               "signals":  [
+                                               "PERSISTENCE_CANDIDATE",
+                                               "PRODUCT_MASTER",
+                                               "TRADE_LOGISTICS"
+                                           ],
+                               "apiRoute":  false,
+                               "engineCandidate":  false,
+                               "eventImplementationCandidate":  false,
+                               "persistenceCandidate":  true,
+                               "risk":  "NONE_STATIC",
+                               "runtime":  "UNPROVEN",
+                               "decision":  "SYSTEM_OF_RECORD_REVIEW_REQUIRED"
+                           },
+                           {
+                               "path":  "database/connections/index.ts",
+                               "bytes":  0,
+                               "readStatus":  "READ_ONLY_ANALYZED",
+                               "classification":  "COMPONENT_OR_TOOL_CANDIDATE",
+                               "signals":  {
+
+                                           },
+                               "apiRoute":  false,
+                               "engineCandidate":  false,
+                               "eventImplementationCandidate":  false,
+                               "persistenceCandidate":  false,
+                               "risk":  "NONE_STATIC",
+                               "runtime":  "UNPROVEN",
+                               "decision":  "SYSTEM_OF_RECORD_REVIEW_REQUIRED"
+                           },
+                           {
+                               "path":  "database/models/entities.ts",
+                               "bytes":  0,
+                               "readStatus":  "READ_ONLY_ANALYZED",
+                               "classification":  "COMPONENT_OR_TOOL_CANDIDATE",
+                               "signals":  {
+
+                                           },
+                               "apiRoute":  false,
+                               "engineCandidate":  false,
+                               "eventImplementationCandidate":  false,
+                               "persistenceCandidate":  false,
+                               "risk":  "NONE_STATIC",
+                               "runtime":  "UNPROVEN",
+                               "decision":  "SYSTEM_OF_RECORD_REVIEW_REQUIRED"
+                           },
+                           {
+                               "path":  "database/models/index.ts",
+                               "bytes":  0,
+                               "readStatus":  "READ_ONLY_ANALYZED",
+                               "classification":  "COMPONENT_OR_TOOL_CANDIDATE",
+                               "signals":  {
+
+                                           },
+                               "apiRoute":  false,
+                               "engineCandidate":  false,
+                               "eventImplementationCandidate":  false,
+                               "persistenceCandidate":  false,
+                               "risk":  "NONE_STATIC",
+                               "runtime":  "UNPROVEN",
+                               "decision":  "SYSTEM_OF_RECORD_REVIEW_REQUIRED"
+                           },
+                           {
+                               "path":  "database/repositories/index.ts",
+                               "bytes":  0,
+                               "readStatus":  "READ_ONLY_ANALYZED",
+                               "classification":  "COMPONENT_OR_TOOL_CANDIDATE",
+                               "signals":  {
+
+                                           },
+                               "apiRoute":  false,
+                               "engineCandidate":  false,
+                               "eventImplementationCandidate":  false,
+                               "persistenceCandidate":  false,
+                               "risk":  "NONE_STATIC",
+                               "runtime":  "UNPROVEN",
+                               "decision":  "SYSTEM_OF_RECORD_REVIEW_REQUIRED"
+                           },
+                           {
+                               "path":  "database/repositories/repository-contracts.ts",
+                               "bytes":  0,
+                               "readStatus":  "READ_ONLY_ANALYZED",
+                               "classification":  "COMPONENT_OR_TOOL_CANDIDATE",
+                               "signals":  {
+
+                                           },
+                               "apiRoute":  false,
+                               "engineCandidate":  false,
+                               "eventImplementationCandidate":  false,
+                               "persistenceCandidate":  false,
+                               "risk":  "NONE_STATIC",
+                               "runtime":  "UNPROVEN",
+                               "decision":  "SYSTEM_OF_RECORD_REVIEW_REQUIRED"
+                           },
+                           {
+                               "path":  "database/schemas/index.ts",
+                               "bytes":  0,
+                               "readStatus":  "READ_ONLY_ANALYZED",
+                               "classification":  "COMPONENT_OR_TOOL_CANDIDATE",
+                               "signals":  {
+
+                                           },
+                               "apiRoute":  false,
+                               "engineCandidate":  false,
+                               "eventImplementationCandidate":  false,
+                               "persistenceCandidate":  false,
+                               "risk":  "NONE_STATIC",
+                               "runtime":  "UNPROVEN",
+                               "decision":  "SYSTEM_OF_RECORD_REVIEW_REQUIRED"
+                           },
+                           {
+                               "path":  "database/schemas/core/enterprise-schema.ts",
+                               "bytes":  0,
+                               "readStatus":  "READ_ONLY_ANALYZED",
+                               "classification":  "COMPONENT_OR_TOOL_CANDIDATE",
+                               "signals":  {
+
+                                           },
+                               "apiRoute":  false,
+                               "engineCandidate":  false,
+                               "eventImplementationCandidate":  false,
+                               "persistenceCandidate":  false,
+                               "risk":  "NONE_STATIC",
+                               "runtime":  "UNPROVEN",
+                               "decision":  "SYSTEM_OF_RECORD_REVIEW_REQUIRED"
+                           },
+                           {
+                               "path":  "database/schemas/domain/domain-schema.ts",
+                               "bytes":  0,
+                               "readStatus":  "READ_ONLY_ANALYZED",
+                               "classification":  "COMPONENT_OR_TOOL_CANDIDATE",
+                               "signals":  {
+
+                                           },
+                               "apiRoute":  false,
+                               "engineCandidate":  false,
+                               "eventImplementationCandidate":  false,
+                               "persistenceCandidate":  false,
+                               "risk":  "NONE_STATIC",
+                               "runtime":  "UNPROVEN",
+                               "decision":  "SYSTEM_OF_RECORD_REVIEW_REQUIRED"
+                           },
+                           {
+                               "path":  "domain/customer/entities/customer-entity.ts",
+                               "bytes":  0,
+                               "readStatus":  "READ_ONLY_ANALYZED",
+                               "classification":  "COMPONENT_OR_TOOL_CANDIDATE",
+                               "signals":  {
+
+                                           },
+                               "apiRoute":  false,
+                               "engineCandidate":  false,
+                               "eventImplementationCandidate":  false,
+                               "persistenceCandidate":  false,
+                               "risk":  "NONE_STATIC",
+                               "runtime":  "UNPROVEN",
+                               "decision":  "SYSTEM_OF_RECORD_REVIEW_REQUIRED"
+                           },
+                           {
+                               "path":  "domain/customer/rules/customer-rules.ts",
+                               "bytes":  0,
+                               "readStatus":  "READ_ONLY_ANALYZED",
+                               "classification":  "COMPONENT_OR_TOOL_CANDIDATE",
+                               "signals":  {
+
+                                           },
+                               "apiRoute":  false,
+                               "engineCandidate":  false,
+                               "eventImplementationCandidate":  false,
+                               "persistenceCandidate":  false,
+                               "risk":  "NONE_STATIC",
+                               "runtime":  "UNPROVEN",
+                               "decision":  "SYSTEM_OF_RECORD_REVIEW_REQUIRED"
+                           },
+                           {
+                               "path":  "domain/customer/services/customer-service.ts",
+                               "bytes":  0,
+                               "readStatus":  "READ_ONLY_ANALYZED",
+                               "classification":  "COMPONENT_OR_TOOL_CANDIDATE",
+                               "signals":  {
+
+                                           },
+                               "apiRoute":  false,
+                               "engineCandidate":  false,
+                               "eventImplementationCandidate":  false,
+                               "persistenceCandidate":  false,
+                               "risk":  "NONE_STATIC",
+                               "runtime":  "UNPROVEN",
+                               "decision":  "SYSTEM_OF_RECORD_REVIEW_REQUIRED"
+                           },
+                           {
+                               "path":  "domain/inventory/entities/inventory-entity.ts",
+                               "bytes":  0,
+                               "readStatus":  "READ_ONLY_ANALYZED",
+                               "classification":  "COMPONENT_OR_TOOL_CANDIDATE",
+                               "signals":  {
+
+                                           },
+                               "apiRoute":  false,
+                               "engineCandidate":  false,
+                               "eventImplementationCandidate":  false,
+                               "persistenceCandidate":  false,
+                               "risk":  "NONE_STATIC",
+                               "runtime":  "UNPROVEN",
+                               "decision":  "SYSTEM_OF_RECORD_REVIEW_REQUIRED"
+                           },
+                           {
+                               "path":  "domain/inventory/rules/inventory-rules.ts",
+                               "bytes":  0,
+                               "readStatus":  "READ_ONLY_ANALYZED",
+                               "classification":  "COMPONENT_OR_TOOL_CANDIDATE",
+                               "signals":  {
+
+                                           },
+                               "apiRoute":  false,
+                               "engineCandidate":  false,
+                               "eventImplementationCandidate":  false,
+                               "persistenceCandidate":  false,
+                               "risk":  "NONE_STATIC",
+                               "runtime":  "UNPROVEN",
+                               "decision":  "SYSTEM_OF_RECORD_REVIEW_REQUIRED"
+                           },
+                           {
+                               "path":  "domain/inventory/services/inventory-service.ts",
+                               "bytes":  0,
+                               "readStatus":  "READ_ONLY_ANALYZED",
+                               "classification":  "COMPONENT_OR_TOOL_CANDIDATE",
+                               "signals":  {
+
+                                           },
+                               "apiRoute":  false,
+                               "engineCandidate":  false,
+                               "eventImplementationCandidate":  false,
+                               "persistenceCandidate":  false,
+                               "risk":  "NONE_STATIC",
+                               "runtime":  "UNPROVEN",
+                               "decision":  "SYSTEM_OF_RECORD_REVIEW_REQUIRED"
+                           },
+                           {
+                               "path":  "domain/logistics/entities/logistics-entity.ts",
+                               "bytes":  0,
+                               "readStatus":  "READ_ONLY_ANALYZED",
+                               "classification":  "COMPONENT_OR_TOOL_CANDIDATE",
+                               "signals":  {
+
+                                           },
+                               "apiRoute":  false,
+                               "engineCandidate":  false,
+                               "eventImplementationCandidate":  false,
+                               "persistenceCandidate":  false,
+                               "risk":  "NONE_STATIC",
+                               "runtime":  "UNPROVEN",
+                               "decision":  "SYSTEM_OF_RECORD_REVIEW_REQUIRED"
+                           },
+                           {
+                               "path":  "domain/logistics/rules/logistics-rules.ts",
+                               "bytes":  0,
+                               "readStatus":  "READ_ONLY_ANALYZED",
+                               "classification":  "COMPONENT_OR_TOOL_CANDIDATE",
+                               "signals":  {
+
+                                           },
+                               "apiRoute":  false,
+                               "engineCandidate":  false,
+                               "eventImplementationCandidate":  false,
+                               "persistenceCandidate":  false,
+                               "risk":  "NONE_STATIC",
+                               "runtime":  "UNPROVEN",
+                               "decision":  "SYSTEM_OF_RECORD_REVIEW_REQUIRED"
+                           },
+                           {
+                               "path":  "domain/logistics/services/logistics-service.ts",
+                               "bytes":  0,
+                               "readStatus":  "READ_ONLY_ANALYZED",
+                               "classification":  "COMPONENT_OR_TOOL_CANDIDATE",
+                               "signals":  {
+
+                                           },
+                               "apiRoute":  false,
+                               "engineCandidate":  false,
+                               "eventImplementationCandidate":  false,
+                               "persistenceCandidate":  false,
+                               "risk":  "NONE_STATIC",
+                               "runtime":  "UNPROVEN",
+                               "decision":  "SYSTEM_OF_RECORD_REVIEW_REQUIRED"
+                           },
+                           {
+                               "path":  "domain/product/entities/product-entity.ts",
+                               "bytes":  0,
+                               "readStatus":  "READ_ONLY_ANALYZED",
+                               "classification":  "COMPONENT_OR_TOOL_CANDIDATE",
+                               "signals":  {
+
+                                           },
+                               "apiRoute":  false,
+                               "engineCandidate":  false,
+                               "eventImplementationCandidate":  false,
+                               "persistenceCandidate":  false,
+                               "risk":  "NONE_STATIC",
+                               "runtime":  "UNPROVEN",
+                               "decision":  "SYSTEM_OF_RECORD_REVIEW_REQUIRED"
+                           },
+                           {
+                               "path":  "domain/product/rules/product-rules.ts",
+                               "bytes":  0,
+                               "readStatus":  "READ_ONLY_ANALYZED",
+                               "classification":  "COMPONENT_OR_TOOL_CANDIDATE",
+                               "signals":  {
+
+                                           },
+                               "apiRoute":  false,
+                               "engineCandidate":  false,
+                               "eventImplementationCandidate":  false,
+                               "persistenceCandidate":  false,
+                               "risk":  "NONE_STATIC",
+                               "runtime":  "UNPROVEN",
+                               "decision":  "SYSTEM_OF_RECORD_REVIEW_REQUIRED"
+                           },
+                           {
+                               "path":  "domain/product/services/product-service.ts",
+                               "bytes":  0,
+                               "readStatus":  "READ_ONLY_ANALYZED",
+                               "classification":  "COMPONENT_OR_TOOL_CANDIDATE",
+                               "signals":  {
+
+                                           },
+                               "apiRoute":  false,
+                               "engineCandidate":  false,
+                               "eventImplementationCandidate":  false,
+                               "persistenceCandidate":  false,
+                               "risk":  "NONE_STATIC",
+                               "runtime":  "UNPROVEN",
+                               "decision":  "SYSTEM_OF_RECORD_REVIEW_REQUIRED"
+                           },
+                           {
+                               "path":  "domain/quality/entities/quality-entity.ts",
+                               "bytes":  0,
+                               "readStatus":  "READ_ONLY_ANALYZED",
+                               "classification":  "COMPONENT_OR_TOOL_CANDIDATE",
+                               "signals":  {
+
+                                           },
+                               "apiRoute":  false,
+                               "engineCandidate":  false,
+                               "eventImplementationCandidate":  false,
+                               "persistenceCandidate":  false,
+                               "risk":  "NONE_STATIC",
+                               "runtime":  "UNPROVEN",
+                               "decision":  "SYSTEM_OF_RECORD_REVIEW_REQUIRED"
+                           },
+                           {
+                               "path":  "domain/quality/rules/quality-rules.ts",
+                               "bytes":  0,
+                               "readStatus":  "READ_ONLY_ANALYZED",
+                               "classification":  "COMPONENT_OR_TOOL_CANDIDATE",
+                               "signals":  {
+
+                                           },
+                               "apiRoute":  false,
+                               "engineCandidate":  false,
+                               "eventImplementationCandidate":  false,
+                               "persistenceCandidate":  false,
+                               "risk":  "NONE_STATIC",
+                               "runtime":  "UNPROVEN",
+                               "decision":  "SYSTEM_OF_RECORD_REVIEW_REQUIRED"
+                           },
+                           {
+                               "path":  "domain/quality/services/quality-service.ts",
+                               "bytes":  0,
+                               "readStatus":  "READ_ONLY_ANALYZED",
+                               "classification":  "COMPONENT_OR_TOOL_CANDIDATE",
+                               "signals":  {
+
+                                           },
+                               "apiRoute":  false,
+                               "engineCandidate":  false,
+                               "eventImplementationCandidate":  false,
+                               "persistenceCandidate":  false,
+                               "risk":  "NONE_STATIC",
+                               "runtime":  "UNPROVEN",
+                               "decision":  "SYSTEM_OF_RECORD_REVIEW_REQUIRED"
+                           },
+                           {
+                               "path":  "domain/supplier/entities/supplier-entity.ts",
+                               "bytes":  0,
+                               "readStatus":  "READ_ONLY_ANALYZED",
+                               "classification":  "COMPONENT_OR_TOOL_CANDIDATE",
+                               "signals":  {
+
+                                           },
+                               "apiRoute":  false,
+                               "engineCandidate":  false,
+                               "eventImplementationCandidate":  false,
+                               "persistenceCandidate":  false,
+                               "risk":  "NONE_STATIC",
+                               "runtime":  "UNPROVEN",
+                               "decision":  "SYSTEM_OF_RECORD_REVIEW_REQUIRED"
+                           },
+                           {
+                               "path":  "domain/supplier/rules/supplier-rules.ts",
+                               "bytes":  0,
+                               "readStatus":  "READ_ONLY_ANALYZED",
+                               "classification":  "COMPONENT_OR_TOOL_CANDIDATE",
+                               "signals":  {
+
+                                           },
+                               "apiRoute":  false,
+                               "engineCandidate":  false,
+                               "eventImplementationCandidate":  false,
+                               "persistenceCandidate":  false,
+                               "risk":  "NONE_STATIC",
+                               "runtime":  "UNPROVEN",
+                               "decision":  "SYSTEM_OF_RECORD_REVIEW_REQUIRED"
+                           },
+                           {
+                               "path":  "domain/supplier/services/supplier-service.ts",
+                               "bytes":  0,
+                               "readStatus":  "READ_ONLY_ANALYZED",
+                               "classification":  "COMPONENT_OR_TOOL_CANDIDATE",
+                               "signals":  {
+
+                                           },
+                               "apiRoute":  false,
+                               "engineCandidate":  false,
+                               "eventImplementationCandidate":  false,
+                               "persistenceCandidate":  false,
+                               "risk":  "NONE_STATIC",
+                               "runtime":  "UNPROVEN",
+                               "decision":  "SYSTEM_OF_RECORD_REVIEW_REQUIRED"
+                           },
+                           {
+                               "path":  "eos-core/master-data/master-data/contracts/master-data-contracts.ts",
+                               "bytes":  0,
+                               "readStatus":  "READ_ONLY_ANALYZED",
+                               "classification":  "COMPONENT_OR_TOOL_CANDIDATE",
+                               "signals":  {
+
+                                           },
+                               "apiRoute":  false,
+                               "engineCandidate":  false,
+                               "eventImplementationCandidate":  false,
+                               "persistenceCandidate":  false,
+                               "risk":  "NONE_STATIC",
+                               "runtime":  "UNPROVEN",
+                               "decision":  "SYSTEM_OF_RECORD_REVIEW_REQUIRED"
+                           },
+                           {
+                               "path":  "eos-core/master-data/master-data/events/master-data-events.ts",
+                               "bytes":  0,
+                               "readStatus":  "READ_ONLY_ANALYZED",
+                               "classification":  "COMPONENT_OR_TOOL_CANDIDATE",
+                               "signals":  {
+
+                                           },
+                               "apiRoute":  false,
+                               "engineCandidate":  false,
+                               "eventImplementationCandidate":  false,
+                               "persistenceCandidate":  false,
+                               "risk":  "NONE_STATIC",
+                               "runtime":  "UNPROVEN",
+                               "decision":  "SYSTEM_OF_RECORD_REVIEW_REQUIRED"
+                           },
+                           {
+                               "path":  "eos-core/master-data/master-data/mapping/entity-mapping.ts",
+                               "bytes":  0,
+                               "readStatus":  "READ_ONLY_ANALYZED",
+                               "classification":  "COMPONENT_OR_TOOL_CANDIDATE",
+                               "signals":  {
+
+                                           },
+                               "apiRoute":  false,
+                               "engineCandidate":  false,
+                               "eventImplementationCandidate":  false,
+                               "persistenceCandidate":  false,
+                               "risk":  "NONE_STATIC",
+                               "runtime":  "UNPROVEN",
+                               "decision":  "SYSTEM_OF_RECORD_REVIEW_REQUIRED"
+                           },
+                           {
+                               "path":  "eos-core/master-data/master-data/schemas/master-data-schema.ts",
+                               "bytes":  0,
+                               "readStatus":  "READ_ONLY_ANALYZED",
+                               "classification":  "COMPONENT_OR_TOOL_CANDIDATE",
+                               "signals":  {
+
+                                           },
+                               "apiRoute":  false,
+                               "engineCandidate":  false,
+                               "eventImplementationCandidate":  false,
+                               "persistenceCandidate":  false,
+                               "risk":  "NONE_STATIC",
+                               "runtime":  "UNPROVEN",
+                               "decision":  "SYSTEM_OF_RECORD_REVIEW_REQUIRED"
+                           },
+                           {
+                               "path":  "eos-core/master-data/master-data/validation/master-data-rules.ts",
+                               "bytes":  0,
+                               "readStatus":  "READ_ONLY_ANALYZED",
+                               "classification":  "COMPONENT_OR_TOOL_CANDIDATE",
+                               "signals":  {
+
+                                           },
+                               "apiRoute":  false,
+                               "engineCandidate":  false,
+                               "eventImplementationCandidate":  false,
+                               "persistenceCandidate":  false,
+                               "risk":  "NONE_STATIC",
+                               "runtime":  "UNPROVEN",
+                               "decision":  "SYSTEM_OF_RECORD_REVIEW_REQUIRED"
+                           },
+                           {
+                               "path":  "governance/Audit-Packaging.ps1",
+                               "bytes":  7195,
+                               "readStatus":  "READ_ONLY_ANALYZED",
+                               "classification":  "COMPONENT_OR_TOOL_CANDIDATE",
+                               "signals":  "PRODUCT_MASTER",
+                               "apiRoute":  false,
+                               "engineCandidate":  false,
+                               "eventImplementationCandidate":  false,
+                               "persistenceCandidate":  false,
+                               "risk":  "NONE_STATIC",
+                               "runtime":  "UNPROVEN",
+                               "decision":  "SYSTEM_OF_RECORD_REVIEW_REQUIRED"
+                           },
+                           {
+                               "path":  "greenlines_brain/capability.py",
+                               "bytes":  0,
+                               "readStatus":  "READ_ONLY_ANALYZED",
+                               "classification":  "BRAIN_EVIDENCE_KNOWLEDGE",
+                               "signals":  {
+
+                                           },
+                               "apiRoute":  false,
+                               "engineCandidate":  false,
+                               "eventImplementationCandidate":  false,
+                               "persistenceCandidate":  false,
+                               "risk":  "NONE_STATIC",
+                               "runtime":  "UNPROVEN",
+                               "decision":  "SYSTEM_OF_RECORD_REVIEW_REQUIRED"
+                           },
+                           {
+                               "path":  "greenlines_brain/contract.py",
+                               "bytes":  2659,
+                               "readStatus":  "READ_ONLY_ANALYZED",
+                               "classification":  "BRAIN_EVIDENCE_KNOWLEDGE",
+                               "signals":  [
+                                               "DECISION_EVIDENCE",
+                                               "LEARNING",
+                                               "PRODUCT_MASTER",
+                                               "TRADE_LOGISTICS"
+                                           ],
+                               "apiRoute":  false,
+                               "engineCandidate":  false,
+                               "eventImplementationCandidate":  false,
+                               "persistenceCandidate":  false,
+                               "risk":  "NONE_STATIC",
+                               "runtime":  "UNPROVEN",
+                               "decision":  "SYSTEM_OF_RECORD_REVIEW_REQUIRED"
+                           },
+                           {
+                               "path":  "greenlines_brain/decision.py",
+                               "bytes":  0,
+                               "readStatus":  "READ_ONLY_ANALYZED",
+                               "classification":  "BRAIN_EVIDENCE_KNOWLEDGE",
+                               "signals":  {
+
+                                           },
+                               "apiRoute":  false,
+                               "engineCandidate":  false,
+                               "eventImplementationCandidate":  false,
+                               "persistenceCandidate":  false,
+                               "risk":  "NONE_STATIC",
+                               "runtime":  "UNPROVEN",
+                               "decision":  "SYSTEM_OF_RECORD_REVIEW_REQUIRED"
+                           },
+                           {
+                               "path":  "greenlines_brain/evidence.py",
+                               "bytes":  0,
+                               "readStatus":  "READ_ONLY_ANALYZED",
+                               "classification":  "BRAIN_EVIDENCE_KNOWLEDGE",
+                               "signals":  {
+
+                                           },
+                               "apiRoute":  false,
+                               "engineCandidate":  false,
+                               "eventImplementationCandidate":  false,
+                               "persistenceCandidate":  false,
+                               "risk":  "NONE_STATIC",
+                               "runtime":  "UNPROVEN",
+                               "decision":  "SYSTEM_OF_RECORD_REVIEW_REQUIRED"
+                           },
+                           {
+                               "path":  "greenlines_brain/graph.py",
+                               "bytes":  6341,
+                               "readStatus":  "READ_ONLY_ANALYZED",
+                               "classification":  "BRAIN_EVIDENCE_KNOWLEDGE",
+                               "signals":  [
+                                               "EVENT_IMPLEMENTATION_CANDIDATE",
+                                               "TRADE_LOGISTICS"
+                                           ],
+                               "apiRoute":  false,
+                               "engineCandidate":  false,
+                               "eventImplementationCandidate":  true,
+                               "persistenceCandidate":  false,
+                               "risk":  "NONE_STATIC",
+                               "runtime":  "UNPROVEN",
+                               "decision":  "SYSTEM_OF_RECORD_REVIEW_REQUIRED"
+                           },
+                           {
+                               "path":  "greenlines_brain/identity.py",
+                               "bytes":  1534,
+                               "readStatus":  "READ_ONLY_ANALYZED",
+                               "classification":  "BRAIN_EVIDENCE_KNOWLEDGE",
+                               "signals":  [
+                                               "PRODUCT_MASTER",
+                                               "SUPPLIER_QUALITY",
+                                               "TRADE_LOGISTICS"
+                                           ],
+                               "apiRoute":  false,
+                               "engineCandidate":  false,
+                               "eventImplementationCandidate":  false,
+                               "persistenceCandidate":  false,
+                               "risk":  "NONE_STATIC",
+                               "runtime":  "UNPROVEN",
+                               "decision":  "SYSTEM_OF_RECORD_REVIEW_REQUIRED"
+                           },
+                           {
+                               "path":  "greenlines_brain/kernel.py",
+                               "bytes":  42536,
+                               "readStatus":  "READ_ONLY_ANALYZED",
+                               "classification":  "BRAIN_EVIDENCE_KNOWLEDGE",
+                               "signals":  [
+                                               "DECISION_EVIDENCE",
+                                               "LEARNING",
+                                               "PRODUCT_MASTER",
+                                               "SECURITY_GOVERNANCE",
+                                               "SUPPLIER_QUALITY",
+                                               "TRADE_LOGISTICS"
+                                           ],
+                               "apiRoute":  false,
+                               "engineCandidate":  false,
+                               "eventImplementationCandidate":  false,
+                               "persistenceCandidate":  false,
+                               "risk":  "NONE_STATIC",
+                               "runtime":  "UNPROVEN",
+                               "decision":  "SYSTEM_OF_RECORD_REVIEW_REQUIRED"
+                           },
+                           {
+                               "path":  "greenlines_brain/memory.py",
+                               "bytes":  0,
+                               "readStatus":  "READ_ONLY_ANALYZED",
+                               "classification":  "BRAIN_EVIDENCE_KNOWLEDGE",
+                               "signals":  {
+
+                                           },
+                               "apiRoute":  false,
+                               "engineCandidate":  false,
+                               "eventImplementationCandidate":  false,
+                               "persistenceCandidate":  false,
+                               "risk":  "NONE_STATIC",
+                               "runtime":  "UNPROVEN",
+                               "decision":  "SYSTEM_OF_RECORD_REVIEW_REQUIRED"
+                           },
+                           {
+                               "path":  "greenlines_brain/ontology.py",
+                               "bytes":  1274,
+                               "readStatus":  "READ_ONLY_ANALYZED",
+                               "classification":  "BRAIN_EVIDENCE_KNOWLEDGE",
+                               "signals":  [
+                                               "PRODUCT_MASTER",
+                                               "SUPPLIER_QUALITY",
+                                               "TRADE_LOGISTICS"
+                                           ],
+                               "apiRoute":  false,
+                               "engineCandidate":  false,
+                               "eventImplementationCandidate":  false,
+                               "persistenceCandidate":  false,
+                               "risk":  "NONE_STATIC",
+                               "runtime":  "UNPROVEN",
+                               "decision":  "SYSTEM_OF_RECORD_REVIEW_REQUIRED"
+                           },
+                           {
+                               "path":  "greenlines_brain/reasoning.py",
+                               "bytes":  0,
+                               "readStatus":  "READ_ONLY_ANALYZED",
+                               "classification":  "BRAIN_EVIDENCE_KNOWLEDGE",
+                               "signals":  {
+
+                                           },
+                               "apiRoute":  false,
+                               "engineCandidate":  false,
+                               "eventImplementationCandidate":  false,
+                               "persistenceCandidate":  false,
+                               "risk":  "NONE_STATIC",
+                               "runtime":  "UNPROVEN",
+                               "decision":  "SYSTEM_OF_RECORD_REVIEW_REQUIRED"
+                           },
+                           {
+                               "path":  "greenlines_brain/__init__.py",
+                               "bytes":  0,
+                               "readStatus":  "READ_ONLY_ANALYZED",
+                               "classification":  "BRAIN_EVIDENCE_KNOWLEDGE",
+                               "signals":  {
+
+                                           },
+                               "apiRoute":  false,
+                               "engineCandidate":  false,
+                               "eventImplementationCandidate":  false,
+                               "persistenceCandidate":  false,
+                               "risk":  "NONE_STATIC",
+                               "runtime":  "UNPROVEN",
+                               "decision":  "SYSTEM_OF_RECORD_REVIEW_REQUIRED"
+                           },
+                           {
+                               "path":  "greenlines_brain/dna/ast_analyzer.py",
+                               "bytes":  7085,
+                               "readStatus":  "READ_ONLY_ANALYZED",
+                               "classification":  "BRAIN_EVIDENCE_KNOWLEDGE",
+                               "signals":  [
+                                               "DECISION_EVIDENCE",
+                                               "SECURITY_GOVERNANCE",
+                                               "TRADE_LOGISTICS"
+                                           ],
+                               "apiRoute":  false,
+                               "engineCandidate":  false,
+                               "eventImplementationCandidate":  false,
+                               "persistenceCandidate":  false,
+                               "risk":  "NONE_STATIC",
+                               "runtime":  "UNPROVEN",
+                               "decision":  "SYSTEM_OF_RECORD_REVIEW_REQUIRED"
+                           },
+                           {
+                               "path":  "greenlines_brain/dna/extractor.py",
+                               "bytes":  13275,
+                               "readStatus":  "READ_ONLY_ANALYZED",
+                               "classification":  "BRAIN_EVIDENCE_KNOWLEDGE",
+                               "signals":  [
+                                               "DECISION_EVIDENCE",
+                                               "PRODUCT_MASTER",
+                                               "SUPPLIER_QUALITY",
+                                               "TRADE_LOGISTICS",
+                                               "WORKFLOW"
+                                           ],
+                               "apiRoute":  false,
+                               "engineCandidate":  false,
+                               "eventImplementationCandidate":  false,
+                               "persistenceCandidate":  false,
+                               "risk":  "NONE_STATIC",
+                               "runtime":  "UNPROVEN",
+                               "decision":  "SYSTEM_OF_RECORD_REVIEW_REQUIRED"
+                           },
+                           {
+                               "path":  "greenlines_brain/dna/extract_dna.py",
+                               "bytes":  1441,
+                               "readStatus":  "READ_ONLY_ANALYZED",
+                               "classification":  "BRAIN_EVIDENCE_KNOWLEDGE",
+                               "signals":  [
+                                               "PRODUCT_MASTER",
+                                               "TRADE_LOGISTICS"
+                                           ],
+                               "apiRoute":  false,
+                               "engineCandidate":  false,
+                               "eventImplementationCandidate":  false,
+                               "persistenceCandidate":  false,
+                               "risk":  "NONE_STATIC",
+                               "runtime":  "UNPROVEN",
+                               "decision":  "SYSTEM_OF_RECORD_REVIEW_REQUIRED"
+                           },
+                           {
+                               "path":  "greenlines_brain/dna/__init__.py",
+                               "bytes":  104,
+                               "readStatus":  "READ_ONLY_ANALYZED",
+                               "classification":  "BRAIN_EVIDENCE_KNOWLEDGE",
+                               "signals":  "TRADE_LOGISTICS",
+                               "apiRoute":  false,
+                               "engineCandidate":  false,
+                               "eventImplementationCandidate":  false,
+                               "persistenceCandidate":  false,
+                               "risk":  "NONE_STATIC",
+                               "runtime":  "UNPROVEN",
+                               "decision":  "SYSTEM_OF_RECORD_REVIEW_REQUIRED"
+                           },
+                           {
+                               "path":  "greenlines_brain/dna/classifiers/__init__.py",
+                               "bytes":  81,
+                               "readStatus":  "READ_ONLY_ANALYZED",
+                               "classification":  "BRAIN_EVIDENCE_KNOWLEDGE",
+                               "signals":  {
+
+                                           },
+                               "apiRoute":  false,
+                               "engineCandidate":  false,
+                               "eventImplementationCandidate":  false,
+                               "persistenceCandidate":  false,
+                               "risk":  "NONE_STATIC",
+                               "runtime":  "UNPROVEN",
+                               "decision":  "SYSTEM_OF_RECORD_REVIEW_REQUIRED"
+                           },
+                           {
+                               "path":  "greenlines_brain/evidence/models.py",
+                               "bytes":  4977,
+                               "readStatus":  "READ_ONLY_ANALYZED",
+                               "classification":  "BRAIN_EVIDENCE_KNOWLEDGE",
+                               "signals":  [
+                                               "DECISION_EVIDENCE",
+                                               "PRODUCT_MASTER",
+                                               "SECURITY_GOVERNANCE",
+                                               "TRADE_LOGISTICS"
+                                           ],
+                               "apiRoute":  false,
+                               "engineCandidate":  false,
+                               "eventImplementationCandidate":  false,
+                               "persistenceCandidate":  false,
+                               "risk":  "NONE_STATIC",
+                               "runtime":  "UNPROVEN",
+                               "decision":  "SYSTEM_OF_RECORD_REVIEW_REQUIRED"
+                           },
+                           {
+                               "path":  "greenlines_brain/evidence/__init__.py",
+                               "bytes":  112,
+                               "readStatus":  "READ_ONLY_ANALYZED",
+                               "classification":  "BRAIN_EVIDENCE_KNOWLEDGE",
+                               "signals":  [
+                                               "DECISION_EVIDENCE",
+                                               "TRADE_LOGISTICS"
+                                           ],
+                               "apiRoute":  false,
+                               "engineCandidate":  false,
+                               "eventImplementationCandidate":  false,
+                               "persistenceCandidate":  false,
+                               "risk":  "NONE_STATIC",
+                               "runtime":  "UNPROVEN",
+                               "decision":  "SYSTEM_OF_RECORD_REVIEW_REQUIRED"
+                           },
+                           {
+                               "path":  "greenlines_brain/evidence_layer/models.py",
+                               "bytes":  5982,
+                               "readStatus":  "READ_ONLY_ANALYZED",
+                               "classification":  "BRAIN_EVIDENCE_KNOWLEDGE",
+                               "signals":  [
+                                               "DECISION_EVIDENCE",
+                                               "TRADE_LOGISTICS",
+                                               "WORKFLOW"
+                                           ],
+                               "apiRoute":  false,
+                               "engineCandidate":  false,
+                               "eventImplementationCandidate":  false,
+                               "persistenceCandidate":  false,
+                               "risk":  "NONE_STATIC",
+                               "runtime":  "UNPROVEN",
+                               "decision":  "SYSTEM_OF_RECORD_REVIEW_REQUIRED"
+                           },
+                           {
+                               "path":  "greenlines_brain/evidence_layer/__init__.py",
+                               "bytes":  153,
+                               "readStatus":  "READ_ONLY_ANALYZED",
+                               "classification":  "BRAIN_EVIDENCE_KNOWLEDGE",
+                               "signals":  [
+                                               "DECISION_EVIDENCE",
+                                               "TRADE_LOGISTICS"
+                                           ],
+                               "apiRoute":  false,
+                               "engineCandidate":  false,
+                               "eventImplementationCandidate":  false,
+                               "persistenceCandidate":  false,
+                               "risk":  "NONE_STATIC",
+                               "runtime":  "UNPROVEN",
+                               "decision":  "SYSTEM_OF_RECORD_REVIEW_REQUIRED"
+                           },
+                           {
+                               "path":  "greenlines_brain/knowledge/models.py",
+                               "bytes":  9732,
+                               "readStatus":  "READ_ONLY_ANALYZED",
+                               "classification":  "BRAIN_EVIDENCE_KNOWLEDGE",
+                               "signals":  [
+                                               "DECISION_EVIDENCE",
+                                               "LEARNING",
+                                               "PRODUCT_MASTER",
+                                               "SECURITY_GOVERNANCE",
+                                               "SUPPLIER_QUALITY",
+                                               "TRADE_LOGISTICS",
+                                               "WORKFLOW"
+                                           ],
+                               "apiRoute":  false,
+                               "engineCandidate":  false,
+                               "eventImplementationCandidate":  false,
+                               "persistenceCandidate":  false,
+                               "risk":  "NONE_STATIC",
+                               "runtime":  "UNPROVEN",
+                               "decision":  "SYSTEM_OF_RECORD_REVIEW_REQUIRED"
+                           },
+                           {
+                               "path":  "greenlines_brain/knowledge/__init__.py",
+                               "bytes":  368,
+                               "readStatus":  "READ_ONLY_ANALYZED",
+                               "classification":  "BRAIN_EVIDENCE_KNOWLEDGE",
+                               "signals":  [
+                                               "SECURITY_GOVERNANCE",
+                                               "TRADE_LOGISTICS",
+                                               "WORKFLOW"
+                                           ],
+                               "apiRoute":  false,
+                               "engineCandidate":  false,
+                               "eventImplementationCandidate":  false,
+                               "persistenceCandidate":  false,
+                               "risk":  "NONE_STATIC",
+                               "runtime":  "UNPROVEN",
+                               "decision":  "SYSTEM_OF_RECORD_REVIEW_REQUIRED"
+                           },
+                           {
+                               "path":  "greenlines_brain/repository/interface.py",
+                               "bytes":  1364,
+                               "readStatus":  "READ_ONLY_ANALYZED",
+                               "classification":  "BRAIN_EVIDENCE_KNOWLEDGE",
+                               "signals":  [
+                                               "DECISION_EVIDENCE",
+                                               "TRADE_LOGISTICS"
+                                           ],
+                               "apiRoute":  false,
+                               "engineCandidate":  false,
+                               "eventImplementationCandidate":  false,
+                               "persistenceCandidate":  false,
+                               "risk":  "NONE_STATIC",
+                               "runtime":  "UNPROVEN",
+                               "decision":  "SYSTEM_OF_RECORD_REVIEW_REQUIRED"
+                           },
+                           {
+                               "path":  "greenlines_brain/repository/json_repo.py",
+                               "bytes":  3163,
+                               "readStatus":  "READ_ONLY_ANALYZED",
+                               "classification":  "BRAIN_EVIDENCE_KNOWLEDGE",
+                               "signals":  [
+                                               "DECISION_EVIDENCE",
+                                               "PRODUCT_MASTER",
+                                               "TRADE_LOGISTICS",
+                                               "WORKFLOW"
+                                           ],
+                               "apiRoute":  false,
+                               "engineCandidate":  false,
+                               "eventImplementationCandidate":  false,
+                               "persistenceCandidate":  false,
+                               "risk":  "NONE_STATIC",
+                               "runtime":  "UNPROVEN",
+                               "decision":  "SYSTEM_OF_RECORD_REVIEW_REQUIRED"
+                           },
+                           {
+                               "path":  "greenlines_brain/repository/__init__.py",
+                               "bytes":  0,
+                               "readStatus":  "READ_ONLY_ANALYZED",
+                               "classification":  "BRAIN_EVIDENCE_KNOWLEDGE",
+                               "signals":  {
+
+                                           },
+                               "apiRoute":  false,
+                               "engineCandidate":  false,
+                               "eventImplementationCandidate":  false,
+                               "persistenceCandidate":  false,
+                               "risk":  "NONE_STATIC",
+                               "runtime":  "UNPROVEN",
+                               "decision":  "SYSTEM_OF_RECORD_REVIEW_REQUIRED"
+                           },
+                           {
+                               "path":  "intelligence/intelligence/analytics/index.ts",
+                               "bytes":  0,
+                               "readStatus":  "READ_ONLY_ANALYZED",
+                               "classification":  "COMPONENT_OR_TOOL_CANDIDATE",
+                               "signals":  {
+
+                                           },
+                               "apiRoute":  false,
+                               "engineCandidate":  false,
+                               "eventImplementationCandidate":  false,
+                               "persistenceCandidate":  false,
+                               "risk":  "NONE_STATIC",
+                               "runtime":  "UNPROVEN",
+                               "decision":  "SYSTEM_OF_RECORD_REVIEW_REQUIRED"
+                           },
+                           {
+                               "path":  "intelligence/intelligence/decision-support/index.ts",
+                               "bytes":  0,
+                               "readStatus":  "READ_ONLY_ANALYZED",
+                               "classification":  "COMPONENT_OR_TOOL_CANDIDATE",
+                               "signals":  {
+
+                                           },
+                               "apiRoute":  false,
+                               "engineCandidate":  false,
+                               "eventImplementationCandidate":  false,
+                               "persistenceCandidate":  false,
+                               "risk":  "NONE_STATIC",
+                               "runtime":  "UNPROVEN",
+                               "decision":  "SYSTEM_OF_RECORD_REVIEW_REQUIRED"
+                           },
+                           {
+                               "path":  "intelligence/intelligence/metrics/index.ts",
+                               "bytes":  0,
+                               "readStatus":  "READ_ONLY_ANALYZED",
+                               "classification":  "COMPONENT_OR_TOOL_CANDIDATE",
+                               "signals":  {
+
+                                           },
+                               "apiRoute":  false,
+                               "engineCandidate":  false,
+                               "eventImplementationCandidate":  false,
+                               "persistenceCandidate":  false,
+                               "risk":  "NONE_STATIC",
+                               "runtime":  "UNPROVEN",
+                               "decision":  "SYSTEM_OF_RECORD_REVIEW_REQUIRED"
+                           },
+                           {
+                               "path":  "intelligence/intelligence/recommendations/index.ts",
+                               "bytes":  0,
+                               "readStatus":  "READ_ONLY_ANALYZED",
+                               "classification":  "COMPONENT_OR_TOOL_CANDIDATE",
+                               "signals":  {
+
+                                           },
+                               "apiRoute":  false,
+                               "engineCandidate":  false,
+                               "eventImplementationCandidate":  false,
+                               "persistenceCandidate":  false,
+                               "risk":  "NONE_STATIC",
+                               "runtime":  "UNPROVEN",
+                               "decision":  "SYSTEM_OF_RECORD_REVIEW_REQUIRED"
+                           },
+                           {
+                               "path":  "intelligence/intelligence/reporting/index.ts",
+                               "bytes":  0,
+                               "readStatus":  "READ_ONLY_ANALYZED",
+                               "classification":  "COMPONENT_OR_TOOL_CANDIDATE",
+                               "signals":  {
+
+                                           },
+                               "apiRoute":  false,
+                               "engineCandidate":  false,
+                               "eventImplementationCandidate":  false,
+                               "persistenceCandidate":  false,
+                               "risk":  "NONE_STATIC",
+                               "runtime":  "UNPROVEN",
+                               "decision":  "SYSTEM_OF_RECORD_REVIEW_REQUIRED"
+                           },
+                           {
+                               "path":  "intelligence/intelligence/scanners/system-scanner.ts",
+                               "bytes":  0,
+                               "readStatus":  "READ_ONLY_ANALYZED",
+                               "classification":  "COMPONENT_OR_TOOL_CANDIDATE",
+                               "signals":  {
+
+                                           },
+                               "apiRoute":  false,
+                               "engineCandidate":  false,
+                               "eventImplementationCandidate":  false,
+                               "persistenceCandidate":  false,
+                               "risk":  "NONE_STATIC",
+                               "runtime":  "UNPROVEN",
+                               "decision":  "SYSTEM_OF_RECORD_REVIEW_REQUIRED"
+                           },
+                           {
+                               "path":  "intelligence/scripts/phase-2-capability-discovery.ps1",
+                               "bytes":  0,
+                               "readStatus":  "READ_ONLY_ANALYZED",
+                               "classification":  "COMPONENT_OR_TOOL_CANDIDATE",
+                               "signals":  {
+
+                                           },
+                               "apiRoute":  false,
+                               "engineCandidate":  false,
+                               "eventImplementationCandidate":  false,
+                               "persistenceCandidate":  false,
+                               "risk":  "NONE_STATIC",
+                               "runtime":  "UNPROVEN",
+                               "decision":  "SYSTEM_OF_RECORD_REVIEW_REQUIRED"
+                           },
+                           {
+                               "path":  "scripts/repair-canonical-products.ps1",
+                               "bytes":  0,
+                               "readStatus":  "READ_ONLY_ANALYZED",
+                               "classification":  "COMPONENT_OR_TOOL_CANDIDATE",
+                               "signals":  {
+
+                                           },
+                               "apiRoute":  false,
+                               "engineCandidate":  false,
+                               "eventImplementationCandidate":  false,
+                               "persistenceCandidate":  false,
+                               "risk":  "NONE_STATIC",
+                               "runtime":  "UNPROVEN",
+                               "decision":  "SYSTEM_OF_RECORD_REVIEW_REQUIRED"
+                           },
+                           {
+                               "path":  "tests/performance/smoke_test.js",
+                               "bytes":  435,
+                               "readStatus":  "READ_ONLY_ANALYZED",
+                               "classification":  "TEST_OR_FIXTURE",
+                               "signals":  "TRADE_LOGISTICS",
+                               "apiRoute":  false,
+                               "engineCandidate":  false,
+                               "eventImplementationCandidate":  false,
+                               "persistenceCandidate":  false,
+                               "risk":  "NONE_STATIC",
+                               "runtime":  "UNPROVEN",
+                               "decision":  "SYSTEM_OF_RECORD_REVIEW_REQUIRED"
+                           },
+                           {
+                               "path":  "tests/performance/__init__.py",
+                               "bytes":  0,
+                               "readStatus":  "READ_ONLY_ANALYZED",
+                               "classification":  "TEST_OR_FIXTURE",
+                               "signals":  {
+
+                                           },
+                               "apiRoute":  false,
+                               "engineCandidate":  false,
+                               "eventImplementationCandidate":  false,
+                               "persistenceCandidate":  false,
+                               "risk":  "NONE_STATIC",
+                               "runtime":  "UNPROVEN",
+                               "decision":  "SYSTEM_OF_RECORD_REVIEW_REQUIRED"
+                           }
+                       ],
+    "exactDuplicateGroups":  [
+                                 {
+                                     "sha256":  "E3B0C44298FC1C149AFBF4C8996FB92427AE41E4649B934CA495991B7852B855",
+                                     "occurrences":  66,
+                                     "paths":  [
+                                                   "app/js/script.js",
+                                                   "application/customer/commands/customer-command.ts",
+                                                   "application/customer/queries/customer-query.ts",
+                                                   "application/customer/workflows/customer-workflow.ts",
+                                                   "application/inventory/commands/inventory-command.ts",
+                                                   "application/inventory/queries/inventory-query.ts",
+                                                   "application/inventory/workflows/inventory-workflow.ts",
+                                                   "application/logistics/commands/logistics-command.ts",
+                                                   "application/logistics/queries/logistics-query.ts",
+                                                   "application/logistics/workflows/logistics-workflow.ts",
+                                                   "application/product/commands/product-command.ts",
+                                                   "application/product/queries/product-query.ts",
+                                                   "application/product/workflows/product-workflow.ts",
+                                                   "application/quality/commands/quality-command.ts",
+                                                   "application/quality/queries/quality-query.ts",
+                                                   "application/quality/workflows/quality-workflow.ts",
+                                                   "application/supplier/commands/supplier-command.ts",
+                                                   "application/supplier/queries/supplier-query.ts",
+                                                   "application/supplier/workflows/supplier-workflow.ts",
+                                                   "database/connections/index.ts",
+                                                   "database/models/entities.ts",
+                                                   "database/models/index.ts",
+                                                   "database/repositories/index.ts",
+                                                   "database/repositories/repository-contracts.ts",
+                                                   "database/schemas/core/enterprise-schema.ts",
+                                                   "database/schemas/domain/domain-schema.ts",
+                                                   "database/schemas/index.ts",
+                                                   "domain/customer/entities/customer-entity.ts",
+                                                   "domain/customer/rules/customer-rules.ts",
+                                                   "domain/customer/services/customer-service.ts",
+                                                   "domain/inventory/entities/inventory-entity.ts",
+                                                   "domain/inventory/rules/inventory-rules.ts",
+                                                   "domain/inventory/services/inventory-service.ts",
+                                                   "domain/logistics/entities/logistics-entity.ts",
+                                                   "domain/logistics/rules/logistics-rules.ts",
+                                                   "domain/logistics/services/logistics-service.ts",
+                                                   "domain/product/entities/product-entity.ts",
+                                                   "domain/product/rules/product-rules.ts",
+                                                   "domain/product/services/product-service.ts",
+                                                   "domain/quality/entities/quality-entity.ts",
+                                                   "domain/quality/rules/quality-rules.ts",
+                                                   "domain/quality/services/quality-service.ts",
+                                                   "domain/supplier/entities/supplier-entity.ts",
+                                                   "domain/supplier/rules/supplier-rules.ts",
+                                                   "domain/supplier/services/supplier-service.ts",
+                                                   "eos-core/master-data/master-data/contracts/master-data-contracts.ts",
+                                                   "eos-core/master-data/master-data/events/master-data-events.ts",
+                                                   "eos-core/master-data/master-data/mapping/entity-mapping.ts",
+                                                   "eos-core/master-data/master-data/schemas/master-data-schema.ts",
+                                                   "eos-core/master-data/master-data/validation/master-data-rules.ts",
+                                                   "greenlines_brain/__init__.py",
+                                                   "greenlines_brain/capability.py",
+                                                   "greenlines_brain/decision.py",
+                                                   "greenlines_brain/evidence.py",
+                                                   "greenlines_brain/memory.py",
+                                                   "greenlines_brain/reasoning.py",
+                                                   "greenlines_brain/repository/__init__.py",
+                                                   "intelligence/intelligence/analytics/index.ts",
+                                                   "intelligence/intelligence/decision-support/index.ts",
+                                                   "intelligence/intelligence/metrics/index.ts",
+                                                   "intelligence/intelligence/recommendations/index.ts",
+                                                   "intelligence/intelligence/reporting/index.ts",
+                                                   "intelligence/intelligence/scanners/system-scanner.ts",
+                                                   "intelligence/scripts/phase-2-capability-discovery.ps1",
+                                                   "scripts/repair-canonical-products.ps1",
+                                                   "tests/performance/__init__.py"
+                                               ],
+                                     "decision":  "DO_NOT_DELETE_UNTIL_SYSTEM_OF_RECORD_AND_CONSUMERS_ARE_PROVEN"
+                                 },
+                                 {
+                                     "sha256":  "ED5975194BA4C88280E7F3984B9BC493F53BD26B5E054F9F37C252AB8DF1F721",
+                                     "occurrences":  2,
+                                     "paths":  [
+                                                   "app/api/workflow/route.ts",
+                                                   "archive/duplicates/route.ts"
+                                               ],
+                                     "decision":  "DO_NOT_DELETE_UNTIL_SYSTEM_OF_RECORD_AND_CONSUMERS_ARE_PROVEN"
+                                 }
+                             ],
+    "verdict":  "DISCOVERY_AND_CLASSIFICATION_ONLY. No candidate is an approved runtime engine. No deletion, merge, rename, or execution is authorized.",
+    "nextGate":  "Create the System of Record map for P0 capabilities, then isolated trace each selected old runtime path before reuse or retirement."
+}

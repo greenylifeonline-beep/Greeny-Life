@@ -1,0 +1,281 @@
+﻿{
+    "report":  "E5-BRAIN-STATIC-REVIEW",
+    "createdAt":  "2026-08-14T05:58:53.7046069+02:00",
+    "mode":  "READ_ONLY_STATIC",
+    "projectRoot":  "C:\\Users\\Ghanam\\Documents\\Codex\\Greeny-Life-Repair",
+    "asset":  {
+                  "path":  "C:\\Users\\Ghanam\\Documents\\Codex\\Greeny-Life-Repair\\brain.py",
+                  "sha256":  "C24344D87EA1D83DB1DA232C6A962855E179FB607CF5AA93FF5C2A6AE99905A2",
+                  "lines":  6637,
+                  "bytes":  320268
+              },
+    "evidence":  {
+                     "imports":  36,
+                     "classes":  4,
+                     "functions":  83,
+                     "fileWriteSignals":  228,
+                     "executionSignals":  3,
+                     "networkSignals":  12,
+                     "schedulerSignals":  11
+                 },
+    "risk":  "HIGH",
+    "decision":  "QUARANTINE_STATIC_REVIEW",
+    "prohibited":  [
+                       "NO_IMPORT",
+                       "NO_EXECUTION",
+                       "NO_AUTOMATIC_MIGRATION",
+                       "NO_AUTOMATIC_DELETE",
+                       "NO_SYSTEM_OF_RECORD_STATUS"
+                   ],
+    "permittedNextStep":  "EXTRACT_REVIEW_ONLY",
+    "recommendation":  "Do not import or execute brain.py. Trace any candidate function separately, extract only proven pure logic into Current components, and require tests plus human approval before promotion.",
+    "samples":  {
+                    "functions":  [
+                                      {
+                                          "line":  75,
+                                          "text":  "def to_dict(self) -\u003e Dict[str, Any]:"
+                                      },
+                                      {
+                                          "line":  78,
+                                          "text":  "def add_finding(self, finding: Dict[str, Any]) -\u003e None:"
+                                      },
+                                      {
+                                          "line":  82,
+                                          "text":  "def mark_failed(self, summary: str, score: float = 0.0) -\u003e None:"
+                                      },
+                                      {
+                                          "line":  87,
+                                          "text":  "def is_success(self) -\u003e bool:"
+                                      },
+                                      {
+                                          "line":  98,
+                                          "text":  "def to_dict(self) -\u003e Dict[str, Any]:"
+                                      },
+                                      {
+                                          "line":  101,
+                                          "text":  "def mark_success(self, message: str = \"\", pr_url: Optional[str] = None, commit_hash: Optional[str] = None) -\u003e None:"
+                                      },
+                                      {
+                                          "line":  107,
+                                          "text":  "def mark_failure(self, message: str = \"\") -\u003e None:"
+                                      },
+                                      {
+                                          "line":  127,
+                                          "text":  "def to_dict(self) -\u003e Dict[str, Any]:"
+                                      },
+                                      {
+                                          "line":  130,
+                                          "text":  "def summarize(self) -\u003e str:"
+                                      },
+                                      {
+                                          "line":  157,
+                                          "text":  "def __init__(self, repo_path: str, config_path: Optional[str] = None):"
+                                      },
+                                      {
+                                          "line":  178,
+                                          "text":  "def _should_ignore(self, path: Path) -\u003e bool:"
+                                      },
+                                      {
+                                          "line":  186,
+                                          "text":  "def _load_config(self, config_path: Optional[str]) -\u003e Dict:"
+                                      },
+                                      {
+                                          "line":  237,
+                                          "text":  "def _deep_update(self, base: Dict, update: Dict) -\u003e None:"
+                                      },
+                                      {
+                                          "line":  244,
+                                          "text":  "def _setup_logging(self) -\u003e logging.Logger:"
+                                      },
+                                      {
+                                          "line":  264,
+                                          "text":  "def _check_prerequisites(self) -\u003e None:"
+                                      },
+                                      {
+                                          "line":  288,
+                                          "text":  "def _which(self, cmd: str) -\u003e bool:"
+                                      },
+                                      {
+                                          "line":  291,
+                                          "text":  "def run_asset_classifier(self, mode: str = \"FORENSIC_DISCOVERY_ONLY\") -\u003e Dict:"
+                                      },
+                                      {
+                                          "line":  578,
+                                          "text":  "def _ensure_directories(self) -\u003e None:"
+                                      },
+                                      {
+                                          "line":  588,
+                                          "text":  "def _ensure_manifest_exists(self) -\u003e None:"
+                                      },
+                                      {
+                                          "line":  593,
+                                          "text":  "def _run_command("
+                                      }
+                                  ],
+                    "classes":  [
+                                    {
+                                        "line":  67,
+                                        "text":  "class ScanResult:"
+                                    },
+                                    {
+                                        "line":  91,
+                                        "text":  "class RemediationResult:"
+                                    },
+                                    {
+                                        "line":  112,
+                                        "text":  "class FileInsight:"
+                                    },
+                                    {
+                                        "line":  141,
+                                        "text":  "class GreenyLifeBrain:"
+                                    }
+                                ],
+                    "executionSignals":  [
+                                             {
+                                                 "line":  29,
+                                                 "text":  "import subprocess"
+                                             },
+                                             {
+                                                 "line":  609,
+                                                 "text":  "proc = subprocess.run("
+                                             },
+                                             {
+                                                 "line":  620,
+                                                 "text":  "except subprocess.TimeoutExpired:"
+                                             }
+                                         ],
+                    "writeSignals":  [
+                                         {
+                                             "line":  255,
+                                             "text":  "log_dir.mkdir(exist_ok=True)"
+                                         },
+                                         {
+                                             "line":  551,
+                                             "text":  "report_path.parent.mkdir(parents=True, exist_ok=True)"
+                                         },
+                                         {
+                                             "line":  568,
+                                             "text":  "with open(report_path, \u0027w\u0027, encoding=\u0027utf-8\u0027) as f:"
+                                         },
+                                         {
+                                             "line":  569,
+                                             "text":  "json.dump(final_result, f, indent=2, ensure_ascii=False)"
+                                         },
+                                         {
+                                             "line":  586,
+                                             "text":  "(self.repo_path / d).mkdir(parents=True, exist_ok=True)"
+                                         },
+                                         {
+                                             "line":  865,
+                                             "text":  "report_path.parent.mkdir(parents=True, exist_ok=True)"
+                                         },
+                                         {
+                                             "line":  881,
+                                             "text":  "with open(report_path, \u0027w\u0027, encoding=\u0027utf-8\u0027) as f:"
+                                         },
+                                         {
+                                             "line":  882,
+                                             "text":  "json.dump(final_result, f, indent=2, ensure_ascii=False)"
+                                         },
+                                         {
+                                             "line":  936,
+                                             "text":  "canonical_dir.mkdir(parents=True, exist_ok=True)"
+                                         },
+                                         {
+                                             "line":  937,
+                                             "text":  "archive_dir.mkdir(parents=True, exist_ok=True)"
+                                         },
+                                         {
+                                             "line":  938,
+                                             "text":  "staging_dir.mkdir(parents=True, exist_ok=True)"
+                                         },
+                                         {
+                                             "line":  952,
+                                             "text":  "dest.parent.mkdir(parents=True, exist_ok=True)"
+                                         },
+                                         {
+                                             "line":  976,
+                                             "text":  "dest.parent.mkdir(parents=True, exist_ok=True)"
+                                         },
+                                         {
+                                             "line":  1000,
+                                             "text":  "dest.parent.mkdir(parents=True, exist_ok=True)"
+                                         },
+                                         {
+                                             "line":  1192,
+                                             "text":  "registry_path.parent.mkdir(parents=True, exist_ok=True)"
+                                         },
+                                         {
+                                             "line":  1193,
+                                             "text":  "with open(registry_path, \u0027w\u0027, encoding=\u0027utf-8\u0027) as f:"
+                                         },
+                                         {
+                                             "line":  1194,
+                                             "text":  "json.dump(registry, f, indent=2, ensure_ascii=False)"
+                                         },
+                                         {
+                                             "line":  1361,
+                                             "text":  "canonical_data_dir.mkdir(parents=True, exist_ok=True)"
+                                         },
+                                         {
+                                             "line":  1371,
+                                             "text":  "with open(suppliers_path, \u0027w\u0027, encoding=\u0027utf-8\u0027) as f:"
+                                         },
+                                         {
+                                             "line":  1372,
+                                             "text":  "json.dump(suppliers_data, f, indent=2, ensure_ascii=False)"
+                                         }
+                                     ],
+                    "networkSignals":  [
+                                           {
+                                               "line":  189,
+                                               "text":  "\"url\": os.getenv(\"SONARQUBE_URL\", \"http://localhost:9000\"),"
+                                           },
+                                           {
+                                               "line":  1285,
+                                               "text":  "\"contact\": {\"email\": \"info@nilevalleyhoney.com\", \"phone\": \"+20 2 1234 5678\", \"website\": \"https://nilevalleyhoney.com\"},"
+                                           },
+                                           {
+                                               "line":  1297,
+                                               "text":  "\"contact\": {\"email\": \"info@sinaispice.com\", \"phone\": \"+20 3 9876 5432\", \"website\": \"https://sinaispice.com\"},"
+                                           },
+                                           {
+                                               "line":  1309,
+                                               "text":  "\"contact\": {\"email\": \"info@greenvalleybee.com\", \"phone\": \"+20 4 5678 9012\", \"website\": \"https://greenvalleybee.com\"},"
+                                           },
+                                           {
+                                               "line":  1321,
+                                               "text":  "\"contact\": {\"email\": \"info@greenvalleyoil.com\", \"phone\": \"+20 4 5678 9013\", \"website\": \"https://greenvalleyoil.com\"},"
+                                           },
+                                           {
+                                               "line":  1333,
+                                               "text":  "\"contact\": {\"email\": \"info@egyptianherbs.com\", \"phone\": \"+20 2 5678 9012\", \"website\": \"https://egyptianherbs.com\"},"
+                                           },
+                                           {
+                                               "line":  1830,
+                                               "text":  "\"website\": \"https://greeny-life.com\","
+                                           },
+                                           {
+                                               "line":  4881,
+                                               "text":  "resp = requests.get(f\"{url}/api/system/status\", auth=(token, \"\"), timeout=5)"
+                                           },
+                                           {
+                                               "line":  4908,
+                                               "text":  "resp = requests.get("
+                                           },
+                                           {
+                                               "line":  5001,
+                                               "text":  "const res = http.get(__ENV.TARGET_URL || \u0027http://localhost:3000/health\u0027);"
+                                           },
+                                           {
+                                               "line":  5008,
+                                               "text":  "target_url = \"http://localhost:3000/health\""
+                                           },
+                                           {
+                                               "line":  5010,
+                                               "text":  "target_url = \"http://localhost:3000/api/health\""
+                                           }
+                                       ]
+                },
+    "noProjectAssetChanged":  true
+}

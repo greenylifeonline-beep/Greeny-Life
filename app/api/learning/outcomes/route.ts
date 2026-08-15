@@ -46,6 +46,9 @@ export async function POST(request: NextRequest) {
     const errors = validateOutcomeInput(input);
     if (errors.length) return NextResponse.json({ success: false, errors }, { status: 400 });
     const governance = await new ControlledRuntimeOrchestrator().execute({ operation: "learning:record-outcome", actor: actorEmail, riskLevel: "MEDIUM", input });
+    if (governance.status === "DENIED") {
+      return NextResponse.json({ success: false, error: "Learning governance denied persistence.", governance: { status: governance.status, reason: governance.governanceReason } }, { status: 403 });
+    }
     const proposal = learningProposal(input);
     const id = crypto.randomUUID();
     await prisma.$executeRaw`

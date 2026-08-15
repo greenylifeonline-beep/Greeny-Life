@@ -1,0 +1,132 @@
+﻿{
+    "schema_version":  "1.0.0",
+    "last_updated":  "2026-08-04T20:13:20.476609",
+    "project":  {
+                    "name":  "Greeny-Life EOS",
+                    "version":  "5.0.0",
+                    "description":  "Enterprise Operating System for Natural Products"
+                },
+    "modules":  {
+                    "master_data":  {
+                                        "path":  "src/master_data",
+                                        "dependencies":  [
+
+                                                         ]
+                                    },
+                    "gl_dos":  {
+                                   "path":  "src/gl_dos",
+                                   "dependencies":  [
+                                                        "master_data"
+                                                    ]
+                               },
+                    "operations":  {
+                                       "path":  "src/operations",
+                                       "dependencies":  [
+                                                            "master_data",
+                                                            "gl_dos"
+                                                        ]
+                                   },
+                    "crm":  {
+                                "path":  "src/crm",
+                                "dependencies":  [
+                                                     "master_data"
+                                                 ]
+                            },
+                    "logistics":  {
+                                      "path":  "src/logistics",
+                                      "dependencies":  [
+                                                           "operations",
+                                                           "master_data"
+                                                       ]
+                                  },
+                    "compliance":  {
+                                       "path":  "src/compliance",
+                                       "dependencies":  [
+                                                            "master_data",
+                                                            "logistics"
+                                                        ]
+                                   },
+                    "finance":  {
+                                    "path":  "src/finance",
+                                    "dependencies":  [
+                                                         "operations",
+                                                         "crm"
+                                                     ]
+                                },
+                    "analytics":  {
+                                      "path":  "src/analytics",
+                                      "dependencies":  [
+                                                           "master_data",
+                                                           "finance"
+                                                       ]
+                                  },
+                    "administration":  {
+                                           "path":  "src/administration",
+                                           "dependencies":  [
+
+                                                            ]
+                                       }
+                },
+    "critical_data":  {
+                          "products":  "data/master_products.json",
+                          "products_extended":  "data/product_master_extended.json",
+                          "customers":  "data/customers.json",
+                          "suppliers":  "data/suppliers.json",
+                          "opportunities":  "data/opportunities.json",
+                          "tracking":  "data/tracking_data.json",
+                          "certificates":  "data/certificate_report.json",
+                          "packaging_policy":  "data/packaging_visual_integration_report.json"
+                      },
+    "intelligence_assets":  {
+                                "knowledge_base":  "intelligence/knowledge_base",
+                                "daily_reports":  "intelligence/daily_reports",
+                                "generated_labels":  "intelligence/generated_labels",
+                                "generated_specs":  "intelligence/generated_specs",
+                                "comprehensive_report":  "intelligence/comprehensive_report.md"
+                            },
+    "system_files":  {
+                         "brain":  "brain.py",
+                         "config":  "config.yaml",
+                         "env":  ".env",
+                         "bound":  "BOUND.md",
+                         "archguard":  ".archguard.yml",
+                         "govern":  ".govern.toml",
+                         "requirements":  "requirements.txt",
+                         "package":  "package.json"
+                     },
+    "relationships":  {
+                          "product_to_label":  {
+                                                   "source":  "data/master_products.json",
+                                                   "target":  "intelligence/generated_labels"
+                                               },
+                          "product_to_spec":  {
+                                                  "source":  "data/master_products.json",
+                                                  "target":  "intelligence/generated_specs"
+                                              },
+                          "product_to_customer":  {
+                                                      "source":  "data/master_products.json",
+                                                      "target":  "data/customers.json"
+                                                  },
+                          "product_to_supplier":  {
+                                                      "source":  "data/master_products.json",
+                                                      "target":  "data/suppliers.json"
+                                                  },
+                          "order_to_tracking":  {
+                                                    "source":  "data/opportunities.json",
+                                                    "target":  "data/tracking_data.json"
+                                                }
+                      },
+    "cleanup_rules":  {
+                          "keep_last_n_logs":  5,
+                          "keep_last_n_alerts":  5,
+                          "keep_last_n_reports":  5,
+                          "archive_duplicates":  false,
+                          "auto_merge_conflicts":  false
+                      },
+    "evolution":  {
+                      "auto_propose_updates":  true,
+                      "require_approval":  true,
+                      "pr_branch_prefix":  "ai-evolution-",
+                      "test_before_merge":  true
+                  }
+}

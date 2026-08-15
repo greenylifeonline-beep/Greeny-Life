@@ -1,0 +1,37 @@
+[
+    {
+        "Engine":  "lib\\workflowEngine.ts",
+        "Purpose":  "WORKFLOW_ORCHESTRATION",
+        "Status":  "EXISTING"
+    },
+    {
+        "Flow":  "PRODUCT",
+        "Workflow":  "application\\product\\workflows",
+        "Status":  "CONNECTED_CANDIDATE"
+    },
+    {
+        "Flow":  "SUPPLIER",
+        "Workflow":  "application\\supplier\\workflows",
+        "Status":  "CONNECTED_CANDIDATE"
+    },
+    {
+        "Flow":  "INVENTORY",
+        "Workflow":  "application\\inventory\\workflows",
+        "Status":  "CONNECTED_CANDIDATE"
+    },
+    {
+        "Flow":  "LOGISTICS",
+        "Workflow":  "application\\logistics\\workflows",
+        "Status":  "CONNECTED_CANDIDATE"
+    },
+    {
+        "Flow":  "QUALITY",
+        "Workflow":  "application\\quality\\workflows",
+        "Status":  "CONNECTED_CANDIDATE"
+    },
+    {
+        "Flow":  "CUSTOMER",
+        "Workflow":  "application\\customer\\workflows",
+        "Status":  "CONNECTED_CANDIDATE"
+    }
+]

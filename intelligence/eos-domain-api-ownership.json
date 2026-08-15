@@ -1,0 +1,47 @@
+[
+    {
+        "Domain":  "PRODUCT",
+        "API":  "app/api/products/route.ts",
+        "Status":  "EXISTING"
+    },
+    {
+        "Domain":  "SUPPLIER",
+        "API":  "app/api/suppliers/route.ts",
+        "Status":  "EXISTING"
+    },
+    {
+        "Domain":  "SALES_ORDER",
+        "API":  "app/api/sales-orders/route.ts",
+        "Status":  "EXISTING"
+    },
+    {
+        "Domain":  "WORKFLOW",
+        "API":  "app/api/workflow/route.ts",
+        "Status":  "EXISTING"
+    },
+    {
+        "Domain":  "CORE_SERVICES",
+        "API":  "services/api.ts",
+        "Status":  "EXISTING"
+    },
+    {
+        "Domain":  "INVENTORY",
+        "API":  "MISSING_OR_EMBEDDED",
+        "Status":  "REVIEW"
+    },
+    {
+        "Domain":  "LOGISTICS",
+        "API":  "MISSING_OR_EMBEDDED",
+        "Status":  "REVIEW"
+    },
+    {
+        "Domain":  "QUALITY",
+        "API":  "MISSING_OR_EMBEDDED",
+        "Status":  "REVIEW"
+    },
+    {
+        "Domain":  "CUSTOMER_CRM",
+        "API":  "MISSING_OR_EMBEDDED",
+        "Status":  "REVIEW"
+    }
+]

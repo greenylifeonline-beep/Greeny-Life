@@ -1,0 +1,1035 @@
+﻿{
+    "reportType":  "E3_P0_ISOLATED_ACCEPTANCE_TRACE_V1",
+    "generatedAtUtc":  "2026-08-13T13:07:14.3702767Z",
+    "scope":  "P0 candidates only. Read-only source tracing; archived/historical paths, dependencies and build output excluded. No legacy or current source was executed or changed.",
+    "legacySourceFiles":  132,
+    "currentActiveSourceFiles":  226,
+    "capabilities":  [
+                         {
+                             "capability":  "Product",
+                             "legacyCandidate":  "app/api/products/route.ts",
+                             "currentCandidate":  "app/api/products/route.ts",
+                             "entryPoint":  [
+                                                "LEGACY:app/api/products/route.ts",
+                                                "CURRENT:app/api/products/route.ts"
+                                            ],
+                             "legacyCallPath":  {
+                                                    "imports":  [
+                                                                    "next/server",
+                                                                    "@prisma/client"
+                                                                ],
+                                                    "consumers":  "brain.py"
+                                                },
+                             "currentCallPath":  {
+                                                     "imports":  [
+                                                                     "@/lib/authz",
+                                                                     "next/server",
+                                                                     "@/lib/prisma"
+                                                                 ],
+                                                     "consumers":  [
+                                                                       "app/page.tsx",
+                                                                       "brain.py",
+                                                                       "lib/authz.ts",
+                                                                       "lib/intelligence/greeny-life-verification.ts",
+                                                                       "lib/intelligence/mastermind-agents.ts",
+                                                                       "lib/intelligence/portfolio-and-assets.ts",
+                                                                       "lib/intelligence/production-readiness.ts",
+                                                                       "lib/intelligence/shipment-tracking-review.ts",
+                                                                       "lib/intelligence/task-orchestration.ts",
+                                                                       "lib/intelligence/three-operating-brains.ts",
+                                                                       "lib/intelligence/tool-registry.ts",
+                                                                       "lib/intelligence/trade-corridors.ts",
+                                                                       "next-env.d.ts",
+                                                                       "prisma/schema.prisma",
+                                                                       "scripts/legacy-health.cjs",
+                                                                       "tests/mastermind_evidence_authority_check.ts",
+                                                                       "tests/official_evidence_review_route_check.ts"
+                                                                   ]
+                                                 },
+                             "persistence":  [
+                                                 "LEGACY:app/api/products/route.ts",
+                                                 "CURRENT:app/api/products/route.ts"
+                                             ],
+                             "legacyTests":  {
+
+                                             },
+                             "currentTests":  [
+                                                  "tests/mastermind_evidence_authority_check.ts",
+                                                  "tests/official_evidence_review_route_check.ts",
+                                                  "tests/production_readiness_check.ts"
+                                              ],
+                             "events":  [
+
+                                        ],
+                             "runtime":  {
+                                             "legacy":  "UNPROVEN_NOT_EXECUTED",
+                                             "current":  "CURRENT_ROUTE_INCLUDED_IN_SUCCESSFUL_NEXT_BUILD; endpoint-specific acceptance must still be recorded"
+                                         },
+                             "owner":  "UNKNOWN",
+                             "authority":  "UNKNOWN",
+                             "systemOfRecord":  "PENDING_ACCEPTANCE_TRACE",
+                             "gap":  [
+                                         "Legacy candidate has no linked test by static convention."
+                                     ],
+                             "decision":  "NO_REUSE_OR_BUILD_DECISION_YET"
+                         },
+                         {
+                             "capability":  "Supplier",
+                             "legacyCandidate":  "app/api/suppliers/route.ts",
+                             "currentCandidate":  "app/api/suppliers/route.ts",
+                             "entryPoint":  [
+                                                "LEGACY:app/api/suppliers/route.ts",
+                                                "CURRENT:app/api/suppliers/route.ts"
+                                            ],
+                             "legacyCallPath":  {
+                                                    "imports":  [
+                                                                    "next/server",
+                                                                    "@prisma/client"
+                                                                ],
+                                                    "consumers":  "brain.py"
+                                                },
+                             "currentCallPath":  {
+                                                     "imports":  [
+                                                                     "@/lib/authz",
+                                                                     "next/server",
+                                                                     "@/lib/prisma"
+                                                                 ],
+                                                     "consumers":  [
+                                                                       "app/page.tsx",
+                                                                       "brain.py",
+                                                                       "lib/authz.ts",
+                                                                       "lib/intelligence/greeny-life-verification.ts",
+                                                                       "lib/intelligence/mastermind-agents.ts",
+                                                                       "lib/intelligence/portfolio-and-assets.ts",
+                                                                       "lib/intelligence/production-readiness.ts",
+                                                                       "lib/intelligence/shipment-tracking-review.ts",
+                                                                       "lib/intelligence/task-orchestration.ts",
+                                                                       "lib/intelligence/three-operating-brains.ts",
+                                                                       "lib/intelligence/tool-registry.ts",
+                                                                       "lib/intelligence/trade-corridors.ts",
+                                                                       "next-env.d.ts",
+                                                                       "prisma/schema.prisma",
+                                                                       "scripts/legacy-health.cjs",
+                                                                       "tests/mastermind_evidence_authority_check.ts",
+                                                                       "tests/official_evidence_review_route_check.ts"
+                                                                   ]
+                                                 },
+                             "persistence":  [
+                                                 "LEGACY:app/api/suppliers/route.ts",
+                                                 "CURRENT:app/api/suppliers/route.ts"
+                                             ],
+                             "legacyTests":  {
+
+                                             },
+                             "currentTests":  [
+                                                  "tests/mastermind_evidence_authority_check.ts",
+                                                  "tests/official_evidence_review_route_check.ts",
+                                                  "tests/supplier_quality_review_check.ts"
+                                              ],
+                             "events":  [
+
+                                        ],
+                             "runtime":  {
+                                             "legacy":  "UNPROVEN_NOT_EXECUTED",
+                                             "current":  "CURRENT_ROUTE_INCLUDED_IN_SUCCESSFUL_NEXT_BUILD; endpoint-specific acceptance must still be recorded"
+                                         },
+                             "owner":  "UNKNOWN",
+                             "authority":  "UNKNOWN",
+                             "systemOfRecord":  "PENDING_ACCEPTANCE_TRACE",
+                             "gap":  [
+                                         "Legacy candidate has no linked test by static convention."
+                                     ],
+                             "decision":  "NO_REUSE_OR_BUILD_DECISION_YET"
+                         },
+                         {
+                             "capability":  "Inventory",
+                             "legacyCandidate":  "canonical/lib/workflowEngine.ts",
+                             "currentCandidate":  "app/api/tasks/route.ts",
+                             "entryPoint":  [
+                                                "CURRENT:app/api/tasks/route.ts"
+                                            ],
+                             "legacyCallPath":  {
+                                                    "imports":  "@prisma/client",
+                                                    "consumers":  [
+                                                                      "app/api/workflow/route.ts",
+                                                                      "brain.py"
+                                                                  ]
+                                                },
+                             "currentCallPath":  {
+                                                     "imports":  [
+                                                                     "@/lib/authz",
+                                                                     "@prisma/client",
+                                                                     "node:crypto",
+                                                                     "next/server",
+                                                                     "@/lib/intelligence/task-orchestration",
+                                                                     "@/lib/prisma"
+                                                                 ],
+                                                     "consumers":  [
+                                                                       "app/page.tsx",
+                                                                       "brain.py",
+                                                                       "lib/authz.ts",
+                                                                       "lib/intelligence/greeny-life-verification.ts",
+                                                                       "lib/intelligence/mastermind-agents.ts",
+                                                                       "lib/intelligence/portfolio-and-assets.ts",
+                                                                       "lib/intelligence/production-readiness.ts",
+                                                                       "lib/intelligence/shipment-tracking-review.ts",
+                                                                       "lib/intelligence/task-orchestration.ts",
+                                                                       "lib/intelligence/three-operating-brains.ts",
+                                                                       "lib/intelligence/tool-registry.ts",
+                                                                       "lib/intelligence/trade-corridors.ts",
+                                                                       "next-env.d.ts",
+                                                                       "prisma/schema.prisma",
+                                                                       "scripts/legacy-health.cjs",
+                                                                       "tests/mastermind_evidence_authority_check.ts",
+                                                                       "tests/official_evidence_review_route_check.ts"
+                                                                   ]
+                                                 },
+                             "persistence":  [
+                                                 "LEGACY:canonical/lib/workflowEngine.ts",
+                                                 "CURRENT:app/api/tasks/route.ts"
+                                             ],
+                             "legacyTests":  {
+
+                                             },
+                             "currentTests":  [
+                                                  "tests/mastermind_evidence_authority_check.ts",
+                                                  "tests/official_evidence_review_route_check.ts"
+                                              ],
+                             "events":  [
+
+                                        ],
+                             "runtime":  {
+                                             "legacy":  "UNPROVEN_NOT_EXECUTED",
+                                             "current":  "NO_RUNTIME_EVIDENCE_ATTACHED_TO_THIS_CANDIDATE"
+                                         },
+                             "owner":  "UNKNOWN",
+                             "authority":  "UNKNOWN",
+                             "systemOfRecord":  "PENDING_ACCEPTANCE_TRACE",
+                             "gap":  [
+                                         "Legacy candidate has no linked test by static convention."
+                                     ],
+                             "decision":  "NO_REUSE_OR_BUILD_DECISION_YET"
+                         },
+                         {
+                             "capability":  "Customer",
+                             "legacyCandidate":  "app/api/sales-orders/route.ts",
+                             "currentCandidate":  "app/api/sales-orders/route.ts",
+                             "entryPoint":  [
+                                                "LEGACY:app/api/sales-orders/route.ts",
+                                                "CURRENT:app/api/sales-orders/route.ts"
+                                            ],
+                             "legacyCallPath":  {
+                                                    "imports":  [
+                                                                    "next/server",
+                                                                    "@prisma/client"
+                                                                ],
+                                                    "consumers":  "brain.py"
+                                                },
+                             "currentCallPath":  {
+                                                     "imports":  [
+                                                                     "@/lib/authz",
+                                                                     "next/server",
+                                                                     "@/lib/prisma"
+                                                                 ],
+                                                     "consumers":  [
+                                                                       "app/page.tsx",
+                                                                       "brain.py",
+                                                                       "lib/authz.ts",
+                                                                       "lib/intelligence/greeny-life-verification.ts",
+                                                                       "lib/intelligence/mastermind-agents.ts",
+                                                                       "lib/intelligence/portfolio-and-assets.ts",
+                                                                       "lib/intelligence/production-readiness.ts",
+                                                                       "lib/intelligence/shipment-tracking-review.ts",
+                                                                       "lib/intelligence/task-orchestration.ts",
+                                                                       "lib/intelligence/three-operating-brains.ts",
+                                                                       "lib/intelligence/tool-registry.ts",
+                                                                       "lib/intelligence/trade-corridors.ts",
+                                                                       "next-env.d.ts",
+                                                                       "prisma/schema.prisma",
+                                                                       "scripts/legacy-health.cjs",
+                                                                       "tests/mastermind_evidence_authority_check.ts",
+                                                                       "tests/official_evidence_review_route_check.ts"
+                                                                   ]
+                                                 },
+                             "persistence":  [
+                                                 "LEGACY:app/api/sales-orders/route.ts",
+                                                 "CURRENT:app/api/sales-orders/route.ts"
+                                             ],
+                             "legacyTests":  {
+
+                                             },
+                             "currentTests":  [
+                                                  "tests/mastermind_evidence_authority_check.ts",
+                                                  "tests/official_evidence_review_route_check.ts"
+                                              ],
+                             "events":  [
+
+                                        ],
+                             "runtime":  {
+                                             "legacy":  "UNPROVEN_NOT_EXECUTED",
+                                             "current":  "CURRENT_ROUTE_INCLUDED_IN_SUCCESSFUL_NEXT_BUILD; endpoint-specific acceptance must still be recorded"
+                                         },
+                             "owner":  "UNKNOWN",
+                             "authority":  "UNKNOWN",
+                             "systemOfRecord":  "PENDING_ACCEPTANCE_TRACE",
+                             "gap":  [
+                                         "Legacy candidate has no linked test by static convention."
+                                     ],
+                             "decision":  "NO_REUSE_OR_BUILD_DECISION_YET"
+                         },
+                         {
+                             "capability":  "Logistics",
+                             "legacyCandidate":  "app/api/workflow/route.ts",
+                             "currentCandidate":  "app/api/traceability/route.ts",
+                             "entryPoint":  [
+                                                "LEGACY:app/api/workflow/route.ts",
+                                                "CURRENT:app/api/traceability/route.ts"
+                                            ],
+                             "legacyCallPath":  {
+                                                    "imports":  [
+                                                                    "next/server",
+                                                                    "@/lib/workflowEngine"
+                                                                ],
+                                                    "consumers":  "brain.py"
+                                                },
+                             "currentCallPath":  {
+                                                     "imports":  [
+                                                                     "@/lib/authz",
+                                                                     "crypto",
+                                                                     "next/server",
+                                                                     "@/canonical/intelligence/runtime/controlled-runtime-orchestrator",
+                                                                     "@/lib/domain/trade-traceability",
+                                                                     "@/lib/intelligence/legacy-batch-traceability",
+                                                                     "@/lib/prisma"
+                                                                 ],
+                                                     "consumers":  [
+                                                                       "app/page.tsx",
+                                                                       "brain.py",
+                                                                       "lib/authz.ts",
+                                                                       "lib/intelligence/greeny-life-verification.ts",
+                                                                       "lib/intelligence/mastermind-agents.ts",
+                                                                       "lib/intelligence/portfolio-and-assets.ts",
+                                                                       "lib/intelligence/production-readiness.ts",
+                                                                       "lib/intelligence/shipment-tracking-review.ts",
+                                                                       "lib/intelligence/task-orchestration.ts",
+                                                                       "lib/intelligence/three-operating-brains.ts",
+                                                                       "lib/intelligence/tool-registry.ts",
+                                                                       "lib/intelligence/trade-corridors.ts",
+                                                                       "next-env.d.ts",
+                                                                       "prisma/schema.prisma",
+                                                                       "scripts/legacy-health.cjs",
+                                                                       "tests/mastermind_evidence_authority_check.ts",
+                                                                       "tests/official_evidence_review_route_check.ts"
+                                                                   ]
+                                                 },
+                             "persistence":  [
+                                                 "CURRENT:app/api/traceability/route.ts"
+                                             ],
+                             "legacyTests":  {
+
+                                             },
+                             "currentTests":  [
+                                                  "tests/mastermind_evidence_authority_check.ts",
+                                                  "tests/official_evidence_review_route_check.ts",
+                                                  "tests/shipment_tracking_review_check.ts",
+                                                  "tests/trade_traceability_check.ts"
+                                              ],
+                             "events":  [
+
+                                        ],
+                             "runtime":  {
+                                             "legacy":  "UNPROVEN_NOT_EXECUTED",
+                                             "current":  "NO_RUNTIME_EVIDENCE_ATTACHED_TO_THIS_CANDIDATE"
+                                         },
+                             "owner":  "UNKNOWN",
+                             "authority":  "UNKNOWN",
+                             "systemOfRecord":  "PENDING_ACCEPTANCE_TRACE",
+                             "gap":  [
+                                         "Legacy candidate has no linked test by static convention."
+                                     ],
+                             "decision":  "NO_REUSE_OR_BUILD_DECISION_YET"
+                         },
+                         {
+                             "capability":  "Quality",
+                             "legacyCandidate":  "brain.py",
+                             "currentCandidate":  "app/api/auth/login/route.ts",
+                             "entryPoint":  [
+                                                "CURRENT:app/api/auth/login/route.ts"
+                                            ],
+                             "legacyCallPath":  {
+                                                    "imports":  [
+                                                                    "email.mime.text",
+                                                                    "pathlib",
+                                                                    "typing",
+                                                                    "dataclasses",
+                                                                    "datetime",
+                                                                    "PIL",
+                                                                    "k6/http",
+                                                                    "k6"
+                                                                ],
+                                                    "consumers":  [
+                                                                      "audit_ast_extraction.py",
+                                                                      "audit_brain_intelligence.py",
+                                                                      "audit_brain_intelligence_v2.py",
+                                                                      "build_evidence_layer.py",
+                                                                      "canonical/fix_brain.py",
+                                                                      "canonical/fix_indent.py",
+                                                                      "canonical/intelligence/runtime/controlled-runtime-orchestrator.ts",
+                                                                      "canonical/run_all.ps1",
+                                                                      "enrich_context.py",
+                                                                      "enrich_context_fixed.py",
+                                                                      "extract_dna.py",
+                                                                      "fix_brain.py",
+                                                                      "greenlines_brain/contract.py",
+                                                                      "greenlines_brain/dna/__init__.py",
+                                                                      "greenlines_brain/dna/ast_analyzer.py",
+                                                                      "greenlines_brain/dna/classifiers/__init__.py",
+                                                                      "greenlines_brain/dna/extract_dna.py",
+                                                                      "greenlines_brain/dna/extractor.py",
+                                                                      "greenlines_brain/evidence/__init__.py",
+                                                                      "greenlines_brain/evidence/models.py"
+                                                                  ]
+                                                },
+                             "currentCallPath":  {
+                                                     "imports":  [
+                                                                     "next/server",
+                                                                     "@/lib/auth",
+                                                                     "@/lib/prisma"
+                                                                 ],
+                                                     "consumers":  [
+                                                                       "app/page.tsx",
+                                                                       "brain.py",
+                                                                       "lib/authz.ts",
+                                                                       "lib/intelligence/greeny-life-verification.ts",
+                                                                       "lib/intelligence/mastermind-agents.ts",
+                                                                       "lib/intelligence/portfolio-and-assets.ts",
+                                                                       "lib/intelligence/production-readiness.ts",
+                                                                       "lib/intelligence/shipment-tracking-review.ts",
+                                                                       "lib/intelligence/task-orchestration.ts",
+                                                                       "lib/intelligence/three-operating-brains.ts",
+                                                                       "lib/intelligence/tool-registry.ts",
+                                                                       "lib/intelligence/trade-corridors.ts",
+                                                                       "next-env.d.ts",
+                                                                       "prisma/schema.prisma",
+                                                                       "scripts/legacy-health.cjs",
+                                                                       "tests/mastermind_evidence_authority_check.ts",
+                                                                       "tests/official_evidence_review_route_check.ts"
+                                                                   ]
+                                                 },
+                             "persistence":  [
+                                                 "LEGACY:brain.py",
+                                                 "CURRENT:app/api/auth/login/route.ts"
+                                             ],
+                             "legacyTests":  {
+
+                                             },
+                             "currentTests":  [
+                                                  "tests/gels_label_readiness_check.ts",
+                                                  "tests/mastermind_evidence_authority_check.ts",
+                                                  "tests/official_evidence_review_route_check.ts",
+                                                  "tests/supplier_quality_review_check.ts"
+                                              ],
+                             "events":  [
+
+                                        ],
+                             "runtime":  {
+                                             "legacy":  "UNPROVEN_NOT_EXECUTED",
+                                             "current":  "NO_RUNTIME_EVIDENCE_ATTACHED_TO_THIS_CANDIDATE"
+                                         },
+                             "owner":  "UNKNOWN",
+                             "authority":  "UNKNOWN",
+                             "systemOfRecord":  "PENDING_ACCEPTANCE_TRACE",
+                             "gap":  [
+                                         "Legacy candidate has no linked test by static convention."
+                                     ],
+                             "decision":  "NO_REUSE_OR_BUILD_DECISION_YET"
+                         },
+                         {
+                             "capability":  "Orders",
+                             "legacyCandidate":  "app/api/sales-orders/route.ts",
+                             "currentCandidate":  "app/api/sales-orders/route.ts",
+                             "entryPoint":  [
+                                                "LEGACY:app/api/sales-orders/route.ts",
+                                                "CURRENT:app/api/sales-orders/route.ts"
+                                            ],
+                             "legacyCallPath":  {
+                                                    "imports":  [
+                                                                    "next/server",
+                                                                    "@prisma/client"
+                                                                ],
+                                                    "consumers":  "brain.py"
+                                                },
+                             "currentCallPath":  {
+                                                     "imports":  [
+                                                                     "@/lib/authz",
+                                                                     "next/server",
+                                                                     "@/lib/prisma"
+                                                                 ],
+                                                     "consumers":  [
+                                                                       "app/page.tsx",
+                                                                       "brain.py",
+                                                                       "lib/authz.ts",
+                                                                       "lib/intelligence/greeny-life-verification.ts",
+                                                                       "lib/intelligence/mastermind-agents.ts",
+                                                                       "lib/intelligence/portfolio-and-assets.ts",
+                                                                       "lib/intelligence/production-readiness.ts",
+                                                                       "lib/intelligence/shipment-tracking-review.ts",
+                                                                       "lib/intelligence/task-orchestration.ts",
+                                                                       "lib/intelligence/three-operating-brains.ts",
+                                                                       "lib/intelligence/tool-registry.ts",
+                                                                       "lib/intelligence/trade-corridors.ts",
+                                                                       "next-env.d.ts",
+                                                                       "prisma/schema.prisma",
+                                                                       "scripts/legacy-health.cjs",
+                                                                       "tests/mastermind_evidence_authority_check.ts",
+                                                                       "tests/official_evidence_review_route_check.ts"
+                                                                   ]
+                                                 },
+                             "persistence":  [
+                                                 "LEGACY:app/api/sales-orders/route.ts",
+                                                 "CURRENT:app/api/sales-orders/route.ts"
+                                             ],
+                             "legacyTests":  {
+
+                                             },
+                             "currentTests":  [
+                                                  "tests/mastermind_evidence_authority_check.ts",
+                                                  "tests/official_evidence_review_route_check.ts"
+                                              ],
+                             "events":  [
+
+                                        ],
+                             "runtime":  {
+                                             "legacy":  "UNPROVEN_NOT_EXECUTED",
+                                             "current":  "CURRENT_ROUTE_INCLUDED_IN_SUCCESSFUL_NEXT_BUILD; endpoint-specific acceptance must still be recorded"
+                                         },
+                             "owner":  "UNKNOWN",
+                             "authority":  "UNKNOWN",
+                             "systemOfRecord":  "PENDING_ACCEPTANCE_TRACE",
+                             "gap":  [
+                                         "Legacy candidate has no linked test by static convention."
+                                     ],
+                             "decision":  "NO_REUSE_OR_BUILD_DECISION_YET"
+                         },
+                         {
+                             "capability":  "Export",
+                             "legacyCandidate":  "app/api/products/route.ts",
+                             "currentCandidate":  "app/api/tasks/route.ts",
+                             "entryPoint":  [
+                                                "LEGACY:app/api/products/route.ts",
+                                                "CURRENT:app/api/tasks/route.ts"
+                                            ],
+                             "legacyCallPath":  {
+                                                    "imports":  [
+                                                                    "next/server",
+                                                                    "@prisma/client"
+                                                                ],
+                                                    "consumers":  "brain.py"
+                                                },
+                             "currentCallPath":  {
+                                                     "imports":  [
+                                                                     "@/lib/authz",
+                                                                     "@prisma/client",
+                                                                     "node:crypto",
+                                                                     "next/server",
+                                                                     "@/lib/intelligence/task-orchestration",
+                                                                     "@/lib/prisma"
+                                                                 ],
+                                                     "consumers":  [
+                                                                       "app/page.tsx",
+                                                                       "brain.py",
+                                                                       "lib/authz.ts",
+                                                                       "lib/intelligence/greeny-life-verification.ts",
+                                                                       "lib/intelligence/mastermind-agents.ts",
+                                                                       "lib/intelligence/portfolio-and-assets.ts",
+                                                                       "lib/intelligence/production-readiness.ts",
+                                                                       "lib/intelligence/shipment-tracking-review.ts",
+                                                                       "lib/intelligence/task-orchestration.ts",
+                                                                       "lib/intelligence/three-operating-brains.ts",
+                                                                       "lib/intelligence/tool-registry.ts",
+                                                                       "lib/intelligence/trade-corridors.ts",
+                                                                       "next-env.d.ts",
+                                                                       "prisma/schema.prisma",
+                                                                       "scripts/legacy-health.cjs",
+                                                                       "tests/mastermind_evidence_authority_check.ts",
+                                                                       "tests/official_evidence_review_route_check.ts"
+                                                                   ]
+                                                 },
+                             "persistence":  [
+                                                 "LEGACY:app/api/products/route.ts",
+                                                 "CURRENT:app/api/tasks/route.ts"
+                                             ],
+                             "legacyTests":  {
+
+                                             },
+                             "currentTests":  [
+                                                  "tests/mastermind_evidence_authority_check.ts",
+                                                  "tests/official_evidence_review_route_check.ts"
+                                              ],
+                             "events":  [
+
+                                        ],
+                             "runtime":  {
+                                             "legacy":  "UNPROVEN_NOT_EXECUTED",
+                                             "current":  "NO_RUNTIME_EVIDENCE_ATTACHED_TO_THIS_CANDIDATE"
+                                         },
+                             "owner":  "UNKNOWN",
+                             "authority":  "UNKNOWN",
+                             "systemOfRecord":  "PENDING_ACCEPTANCE_TRACE",
+                             "gap":  [
+                                         "Legacy candidate has no linked test by static convention."
+                                     ],
+                             "decision":  "NO_REUSE_OR_BUILD_DECISION_YET"
+                         },
+                         {
+                             "capability":  "Compliance",
+                             "legacyCandidate":  "app/api/products/route.ts",
+                             "currentCandidate":  "app/api/products/route.ts",
+                             "entryPoint":  [
+                                                "LEGACY:app/api/products/route.ts",
+                                                "CURRENT:app/api/products/route.ts"
+                                            ],
+                             "legacyCallPath":  {
+                                                    "imports":  [
+                                                                    "next/server",
+                                                                    "@prisma/client"
+                                                                ],
+                                                    "consumers":  "brain.py"
+                                                },
+                             "currentCallPath":  {
+                                                     "imports":  [
+                                                                     "@/lib/authz",
+                                                                     "next/server",
+                                                                     "@/lib/prisma"
+                                                                 ],
+                                                     "consumers":  [
+                                                                       "app/page.tsx",
+                                                                       "brain.py",
+                                                                       "lib/authz.ts",
+                                                                       "lib/intelligence/greeny-life-verification.ts",
+                                                                       "lib/intelligence/mastermind-agents.ts",
+                                                                       "lib/intelligence/portfolio-and-assets.ts",
+                                                                       "lib/intelligence/production-readiness.ts",
+                                                                       "lib/intelligence/shipment-tracking-review.ts",
+                                                                       "lib/intelligence/task-orchestration.ts",
+                                                                       "lib/intelligence/three-operating-brains.ts",
+                                                                       "lib/intelligence/tool-registry.ts",
+                                                                       "lib/intelligence/trade-corridors.ts",
+                                                                       "next-env.d.ts",
+                                                                       "prisma/schema.prisma",
+                                                                       "scripts/legacy-health.cjs",
+                                                                       "tests/mastermind_evidence_authority_check.ts",
+                                                                       "tests/official_evidence_review_route_check.ts"
+                                                                   ]
+                                                 },
+                             "persistence":  [
+                                                 "LEGACY:app/api/products/route.ts",
+                                                 "CURRENT:app/api/products/route.ts"
+                                             ],
+                             "legacyTests":  {
+
+                                             },
+                             "currentTests":  [
+                                                  "tests/gels_label_readiness_check.ts",
+                                                  "tests/gldos_governance_gate_check.ts",
+                                                  "tests/mastermind_evidence_authority_check.ts",
+                                                  "tests/official_evidence_review_route_check.ts"
+                                              ],
+                             "events":  [
+
+                                        ],
+                             "runtime":  {
+                                             "legacy":  "UNPROVEN_NOT_EXECUTED",
+                                             "current":  "CURRENT_ROUTE_INCLUDED_IN_SUCCESSFUL_NEXT_BUILD; endpoint-specific acceptance must still be recorded"
+                                         },
+                             "owner":  "UNKNOWN",
+                             "authority":  "UNKNOWN",
+                             "systemOfRecord":  "PENDING_ACCEPTANCE_TRACE",
+                             "gap":  [
+                                         "Legacy candidate has no linked test by static convention."
+                                     ],
+                             "decision":  "NO_REUSE_OR_BUILD_DECISION_YET"
+                         },
+                         {
+                             "capability":  "Evidence",
+                             "legacyCandidate":  "brain.py",
+                             "currentCandidate":  "app/api/evidence/official/route.ts",
+                             "entryPoint":  [
+                                                "CURRENT:app/api/evidence/official/route.ts"
+                                            ],
+                             "legacyCallPath":  {
+                                                    "imports":  [
+                                                                    "email.mime.text",
+                                                                    "pathlib",
+                                                                    "typing",
+                                                                    "dataclasses",
+                                                                    "datetime",
+                                                                    "PIL",
+                                                                    "k6/http",
+                                                                    "k6"
+                                                                ],
+                                                    "consumers":  [
+                                                                      "audit_ast_extraction.py",
+                                                                      "audit_brain_intelligence.py",
+                                                                      "audit_brain_intelligence_v2.py",
+                                                                      "build_evidence_layer.py",
+                                                                      "canonical/fix_brain.py",
+                                                                      "canonical/fix_indent.py",
+                                                                      "canonical/intelligence/runtime/controlled-runtime-orchestrator.ts",
+                                                                      "canonical/run_all.ps1",
+                                                                      "enrich_context.py",
+                                                                      "enrich_context_fixed.py",
+                                                                      "extract_dna.py",
+                                                                      "fix_brain.py",
+                                                                      "greenlines_brain/contract.py",
+                                                                      "greenlines_brain/dna/__init__.py",
+                                                                      "greenlines_brain/dna/ast_analyzer.py",
+                                                                      "greenlines_brain/dna/classifiers/__init__.py",
+                                                                      "greenlines_brain/dna/extract_dna.py",
+                                                                      "greenlines_brain/dna/extractor.py",
+                                                                      "greenlines_brain/evidence/__init__.py",
+                                                                      "greenlines_brain/evidence/models.py"
+                                                                  ]
+                                                },
+                             "currentCallPath":  {
+                                                     "imports":  [
+                                                                     "node:crypto",
+                                                                     "next/server",
+                                                                     "@/lib/authz",
+                                                                     "@/lib/prisma"
+                                                                 ],
+                                                     "consumers":  [
+                                                                       "app/page.tsx",
+                                                                       "brain.py",
+                                                                       "lib/authz.ts",
+                                                                       "lib/intelligence/greeny-life-verification.ts",
+                                                                       "lib/intelligence/mastermind-agents.ts",
+                                                                       "lib/intelligence/portfolio-and-assets.ts",
+                                                                       "lib/intelligence/production-readiness.ts",
+                                                                       "lib/intelligence/shipment-tracking-review.ts",
+                                                                       "lib/intelligence/task-orchestration.ts",
+                                                                       "lib/intelligence/three-operating-brains.ts",
+                                                                       "lib/intelligence/tool-registry.ts",
+                                                                       "lib/intelligence/trade-corridors.ts",
+                                                                       "next-env.d.ts",
+                                                                       "prisma/schema.prisma",
+                                                                       "scripts/legacy-health.cjs",
+                                                                       "tests/mastermind_evidence_authority_check.ts",
+                                                                       "tests/official_evidence_review_route_check.ts"
+                                                                   ]
+                                                 },
+                             "persistence":  [
+                                                 "LEGACY:brain.py",
+                                                 "CURRENT:app/api/evidence/official/route.ts"
+                                             ],
+                             "legacyTests":  {
+
+                                             },
+                             "currentTests":  [
+                                                  "tests/greeny_life_verification_check.ts",
+                                                  "tests/mastermind_evidence_authority_check.ts",
+                                                  "tests/official_evidence_gate_check.ts",
+                                                  "tests/official_evidence_review_route_check.ts",
+                                                  "tests/test_evidence_gate.py",
+                                                  "tests/test_evidence_registry.py"
+                                              ],
+                             "events":  [
+
+                                        ],
+                             "runtime":  {
+                                             "legacy":  "UNPROVEN_NOT_EXECUTED",
+                                             "current":  "CURRENT_ROUTE_INCLUDED_IN_SUCCESSFUL_NEXT_BUILD; selected protected endpoints have prior authenticated smoke evidence, not full capability acceptance"
+                                         },
+                             "owner":  "UNKNOWN",
+                             "authority":  "UNKNOWN",
+                             "systemOfRecord":  "PENDING_ACCEPTANCE_TRACE",
+                             "gap":  [
+                                         "Legacy candidate has no linked test by static convention."
+                                     ],
+                             "decision":  "NO_REUSE_OR_BUILD_DECISION_YET"
+                         },
+                         {
+                             "capability":  "Knowledge",
+                             "legacyCandidate":  "brain.py",
+                             "currentCandidate":  "brain.py",
+                             "entryPoint":  [
+                                                "NO_SELECTED_API_ENTRYPOINT"
+                                            ],
+                             "legacyCallPath":  {
+                                                    "imports":  [
+                                                                    "email.mime.text",
+                                                                    "pathlib",
+                                                                    "typing",
+                                                                    "dataclasses",
+                                                                    "datetime",
+                                                                    "PIL",
+                                                                    "k6/http",
+                                                                    "k6"
+                                                                ],
+                                                    "consumers":  [
+                                                                      "audit_ast_extraction.py",
+                                                                      "audit_brain_intelligence.py",
+                                                                      "audit_brain_intelligence_v2.py",
+                                                                      "build_evidence_layer.py",
+                                                                      "canonical/fix_brain.py",
+                                                                      "canonical/fix_indent.py",
+                                                                      "canonical/intelligence/runtime/controlled-runtime-orchestrator.ts",
+                                                                      "canonical/run_all.ps1",
+                                                                      "enrich_context.py",
+                                                                      "enrich_context_fixed.py",
+                                                                      "extract_dna.py",
+                                                                      "fix_brain.py",
+                                                                      "greenlines_brain/contract.py",
+                                                                      "greenlines_brain/dna/__init__.py",
+                                                                      "greenlines_brain/dna/ast_analyzer.py",
+                                                                      "greenlines_brain/dna/classifiers/__init__.py",
+                                                                      "greenlines_brain/dna/extract_dna.py",
+                                                                      "greenlines_brain/dna/extractor.py",
+                                                                      "greenlines_brain/evidence/__init__.py",
+                                                                      "greenlines_brain/evidence/models.py"
+                                                                  ]
+                                                },
+                             "currentCallPath":  {
+                                                     "imports":  [
+                                                                     "email.mime.text",
+                                                                     "pathlib",
+                                                                     "typing",
+                                                                     "dataclasses",
+                                                                     "datetime",
+                                                                     "PIL",
+                                                                     "k6/http",
+                                                                     "k6"
+                                                                 ],
+                                                     "consumers":  [
+                                                                       "app/api/brains/greeny-life-egypt/route.ts",
+                                                                       "app/api/intelligence/data-fabric/route.ts",
+                                                                       "app/api/mastermind/operating-model/route.ts",
+                                                                       "audit_ast_extraction.py",
+                                                                       "audit_brain_intelligence.py",
+                                                                       "audit_brain_intelligence_v2.py",
+                                                                       "build_evidence_layer.py",
+                                                                       "canonical/fix_brain.py",
+                                                                       "canonical/fix_indent.py",
+                                                                       "canonical/intelligence/runtime/controlled-runtime-orchestrator.ts",
+                                                                       "canonical/run_all.ps1",
+                                                                       "enrich_context.py",
+                                                                       "enrich_context_fixed.py",
+                                                                       "extract_dna.py",
+                                                                       "fix_brain.py",
+                                                                       "greenlines_brain/contract.py",
+                                                                       "greenlines_brain/dna/__init__.py",
+                                                                       "greenlines_brain/dna/ast_analyzer.py",
+                                                                       "greenlines_brain/dna/classifiers/__init__.py",
+                                                                       "greenlines_brain/dna/extract_dna.py"
+                                                                   ]
+                                                 },
+                             "persistence":  [
+                                                 "LEGACY:brain.py",
+                                                 "CURRENT:brain.py"
+                                             ],
+                             "legacyTests":  {
+
+                                             },
+                             "currentTests":  [
+                                                  "tests/data_intelligence_fabric_check.ts",
+                                                  "tests/greeny_life_egypt_brain_check.ts",
+                                                  "tests/test_evidence_gate.py",
+                                                  "tests/test_evidence_registry.py",
+                                                  "tests/test_legacy_brain_runtime.py",
+                                                  "tests/three_operating_brains_check.ts"
+                                              ],
+                             "events":  [
+
+                                        ],
+                             "runtime":  {
+                                             "legacy":  "UNPROVEN_NOT_EXECUTED",
+                                             "current":  "NO_RUNTIME_EVIDENCE_ATTACHED_TO_THIS_CANDIDATE"
+                                         },
+                             "owner":  "UNKNOWN",
+                             "authority":  "UNKNOWN",
+                             "systemOfRecord":  "PENDING_ACCEPTANCE_TRACE",
+                             "gap":  [
+                                         "Legacy candidate has no linked test by static convention."
+                                     ],
+                             "decision":  "NO_REUSE_OR_BUILD_DECISION_YET"
+                         },
+                         {
+                             "capability":  "Brain",
+                             "legacyCandidate":  "brain.py",
+                             "currentCandidate":  "app/api/tasks/route.ts",
+                             "entryPoint":  [
+                                                "CURRENT:app/api/tasks/route.ts"
+                                            ],
+                             "legacyCallPath":  {
+                                                    "imports":  [
+                                                                    "email.mime.text",
+                                                                    "pathlib",
+                                                                    "typing",
+                                                                    "dataclasses",
+                                                                    "datetime",
+                                                                    "PIL",
+                                                                    "k6/http",
+                                                                    "k6"
+                                                                ],
+                                                    "consumers":  [
+                                                                      "audit_ast_extraction.py",
+                                                                      "audit_brain_intelligence.py",
+                                                                      "audit_brain_intelligence_v2.py",
+                                                                      "build_evidence_layer.py",
+                                                                      "canonical/fix_brain.py",
+                                                                      "canonical/fix_indent.py",
+                                                                      "canonical/intelligence/runtime/controlled-runtime-orchestrator.ts",
+                                                                      "canonical/run_all.ps1",
+                                                                      "enrich_context.py",
+                                                                      "enrich_context_fixed.py",
+                                                                      "extract_dna.py",
+                                                                      "fix_brain.py",
+                                                                      "greenlines_brain/contract.py",
+                                                                      "greenlines_brain/dna/__init__.py",
+                                                                      "greenlines_brain/dna/ast_analyzer.py",
+                                                                      "greenlines_brain/dna/classifiers/__init__.py",
+                                                                      "greenlines_brain/dna/extract_dna.py",
+                                                                      "greenlines_brain/dna/extractor.py",
+                                                                      "greenlines_brain/evidence/__init__.py",
+                                                                      "greenlines_brain/evidence/models.py"
+                                                                  ]
+                                                },
+                             "currentCallPath":  {
+                                                     "imports":  [
+                                                                     "@/lib/authz",
+                                                                     "@prisma/client",
+                                                                     "node:crypto",
+                                                                     "next/server",
+                                                                     "@/lib/intelligence/task-orchestration",
+                                                                     "@/lib/prisma"
+                                                                 ],
+                                                     "consumers":  [
+                                                                       "app/page.tsx",
+                                                                       "brain.py",
+                                                                       "lib/authz.ts",
+                                                                       "lib/intelligence/greeny-life-verification.ts",
+                                                                       "lib/intelligence/mastermind-agents.ts",
+                                                                       "lib/intelligence/portfolio-and-assets.ts",
+                                                                       "lib/intelligence/production-readiness.ts",
+                                                                       "lib/intelligence/shipment-tracking-review.ts",
+                                                                       "lib/intelligence/task-orchestration.ts",
+                                                                       "lib/intelligence/three-operating-brains.ts",
+                                                                       "lib/intelligence/tool-registry.ts",
+                                                                       "lib/intelligence/trade-corridors.ts",
+                                                                       "next-env.d.ts",
+                                                                       "prisma/schema.prisma",
+                                                                       "scripts/legacy-health.cjs",
+                                                                       "tests/mastermind_evidence_authority_check.ts",
+                                                                       "tests/official_evidence_review_route_check.ts"
+                                                                   ]
+                                                 },
+                             "persistence":  [
+                                                 "LEGACY:brain.py",
+                                                 "CURRENT:app/api/tasks/route.ts"
+                                             ],
+                             "legacyTests":  {
+
+                                             },
+                             "currentTests":  [
+                                                  "tests/commercial_context_fabric_check.ts",
+                                                  "tests/greeny_life_egypt_brain_check.ts",
+                                                  "tests/mastermind_agents_check.ts",
+                                                  "tests/mastermind_evidence_authority_check.ts",
+                                                  "tests/official_evidence_review_route_check.ts",
+                                                  "tests/test_legacy_brain_runtime.py",
+                                                  "tests/three_operating_brains_check.ts"
+                                              ],
+                             "events":  [
+
+                                        ],
+                             "runtime":  {
+                                             "legacy":  "UNPROVEN_NOT_EXECUTED",
+                                             "current":  "NO_RUNTIME_EVIDENCE_ATTACHED_TO_THIS_CANDIDATE"
+                                         },
+                             "owner":  "UNKNOWN",
+                             "authority":  "UNKNOWN",
+                             "systemOfRecord":  "PENDING_ACCEPTANCE_TRACE",
+                             "gap":  [
+                                         "Legacy candidate has no linked test by static convention."
+                                     ],
+                             "decision":  "NO_REUSE_OR_BUILD_DECISION_YET"
+                         },
+                         {
+                             "capability":  "Governance",
+                             "legacyCandidate":  "canonical/lib/workflowEngine.ts",
+                             "currentCandidate":  "app/api/auth/login/route.ts",
+                             "entryPoint":  [
+                                                "CURRENT:app/api/auth/login/route.ts"
+                                            ],
+                             "legacyCallPath":  {
+                                                    "imports":  "@prisma/client",
+                                                    "consumers":  [
+                                                                      "app/api/workflow/route.ts",
+                                                                      "brain.py"
+                                                                  ]
+                                                },
+                             "currentCallPath":  {
+                                                     "imports":  [
+                                                                     "next/server",
+                                                                     "@/lib/auth",
+                                                                     "@/lib/prisma"
+                                                                 ],
+                                                     "consumers":  [
+                                                                       "app/page.tsx",
+                                                                       "brain.py",
+                                                                       "lib/authz.ts",
+                                                                       "lib/intelligence/greeny-life-verification.ts",
+                                                                       "lib/intelligence/mastermind-agents.ts",
+                                                                       "lib/intelligence/portfolio-and-assets.ts",
+                                                                       "lib/intelligence/production-readiness.ts",
+                                                                       "lib/intelligence/shipment-tracking-review.ts",
+                                                                       "lib/intelligence/task-orchestration.ts",
+                                                                       "lib/intelligence/three-operating-brains.ts",
+                                                                       "lib/intelligence/tool-registry.ts",
+                                                                       "lib/intelligence/trade-corridors.ts",
+                                                                       "next-env.d.ts",
+                                                                       "prisma/schema.prisma",
+                                                                       "scripts/legacy-health.cjs",
+                                                                       "tests/mastermind_evidence_authority_check.ts",
+                                                                       "tests/official_evidence_review_route_check.ts"
+                                                                   ]
+                                                 },
+                             "persistence":  [
+                                                 "LEGACY:canonical/lib/workflowEngine.ts",
+                                                 "CURRENT:app/api/auth/login/route.ts"
+                                             ],
+                             "legacyTests":  {
+
+                                             },
+                             "currentTests":  [
+                                                  "tests/api_authorization_check.ts",
+                                                  "tests/auth_security_check.ts",
+                                                  "tests/evaluation_governance_check.ts",
+                                                  "tests/gldos_governance_gate_check.ts",
+                                                  "tests/mastermind_evidence_authority_check.ts",
+                                                  "tests/official_evidence_review_route_check.ts",
+                                                  "tests/workflow_governance_check.ts"
+                                              ],
+                             "events":  [
+
+                                        ],
+                             "runtime":  {
+                                             "legacy":  "UNPROVEN_NOT_EXECUTED",
+                                             "current":  "NO_RUNTIME_EVIDENCE_ATTACHED_TO_THIS_CANDIDATE"
+                                         },
+                             "owner":  "UNKNOWN",
+                             "authority":  "UNKNOWN",
+                             "systemOfRecord":  "PENDING_ACCEPTANCE_TRACE",
+                             "gap":  [
+                                         "Legacy candidate has no linked test by static convention."
+                                     ],
+                             "decision":  "NO_REUSE_OR_BUILD_DECISION_YET"
+                         }
+                     ],
+    "limitations":  [
+                        "Candidate selection is deterministic and static; it does not declare authority.",
+                        "Runtime statement is limited to documented build/smoke evidence and does not replace acceptance execution.",
+                        "Events are evaluated per workflow, not required for all CRUD capabilities."
+                    ],
+    "nextGate":  "For each P0 capability, run only the selected CURRENT candidate through an acceptance test; run the selected LEGACY candidate only in a disposable isolated environment after reviewing side effects. Then assign owner, authority, System of Record, and reuse decision."
+}

@@ -1,0 +1,123 @@
+{
+    "report":  "E3 Current Capability Priority Decision",
+    "generatedAt":  "2026-08-13T23:10:54.7082080+02:00",
+    "mode":  "READ_ONLY_DECISION_FROM_EXISTING_EVIDENCE",
+    "selectedCapability":  {
+                               "id":  "CAP-GL-EGYPT-EXPORT-READINESS",
+                               "name":  "Greeny-Life Egypt export-readiness decision package",
+                               "businessPriority":  "P0",
+                               "reason":  "It is the shortest high-value path from product/supplier/inventory context to a safe export decision. It supports Egypt production/export while preserving the MasterMind approval boundary.",
+                               "currentStatus":  "READ_ONLY_FAIL_CLOSED_NOT_READY_WHEN_EVIDENCE_OR_COMMERCIAL_TERMS_ARE_MISSING",
+                               "owner":  "GREENY_LIFE_EGYPT_BRAIN proposes; MasterMind assembles; authorized human approves; no current System of Record decision is claimed."
+                           },
+    "existingComponents":  [
+                               {
+                                   "path":  "app/api/decisions/export-readiness/route.ts",
+                                   "role":  "Existing read-only export-readiness API entry point",
+                                   "action":  "REUSE"
+                               },
+                               {
+                                   "path":  "lib/intelligence/export-decision.ts",
+                                   "role":  "Existing canonical product/supplier/market decision assembler",
+                                   "action":  "EXTEND"
+                               },
+                               {
+                                   "path":  "lib/intelligence/greeny-life-egypt-brain.ts",
+                                   "role":  "Egypt production, inventory, supplier and shipment observation context",
+                                   "action":  "REUSE"
+                               },
+                               {
+                                   "path":  "lib/intelligence/supplier-quality-review.ts",
+                                   "role":  "Existing supplier quality/certificate reference review",
+                                   "action":  "REUSE"
+                               },
+                               {
+                                   "path":  "lib/intelligence/official-evidence-gate.ts",
+                                   "role":  "Existing official-evidence state machine",
+                                   "action":  "REUSE"
+                               },
+                               {
+                                   "path":  "app/api/evidence/official/route.ts",
+                                   "role":  "Existing persisted official-evidence registry access boundary",
+                                   "action":  "REUSE"
+                               },
+                               {
+                                   "path":  "app/api/commercial-changes/route.ts",
+                                   "role":  "Existing governed time-bound commercial facts registry",
+                                   "action":  "REUSE"
+                               }
+                           ],
+    "provenTests":  [
+                        {
+                            "command":  "npm run test:greeny-life-egypt",
+                            "result":  "PASS",
+                            "purpose":  "Egypt brain context"
+                        },
+                        {
+                            "command":  "npm run test:supplier-quality",
+                            "result":  "PASS",
+                            "purpose":  "Supplier/quality blockers"
+                        },
+                        {
+                            "command":  "npm run test:traceability",
+                            "result":  "PASS",
+                            "purpose":  "Cross-border chain rules"
+                        },
+                        {
+                            "command":  "npm run test:official-evidence-gate",
+                            "result":  "PASS",
+                            "purpose":  "Official evidence fail-closed gate"
+                        }
+                    ],
+    "gap":  {
+                "statement":  "The existing export-decision assembler reads canonical reference files but does not yet consume persisted, scoped official evidence and approved time-bound commercial facts as one governed package.",
+                "consequence":  "It correctly remains NOT_READY. No export, price, shipment, customs filing, payment, supplier activation or automatic execution is permitted.",
+                "doNotBuild":  [
+                                   "Do not create an export engine",
+                                   "Do not create a second evidence registry",
+                                   "Do not copy a Legacy brain engine",
+                                   "Do not promote a legacy component to System of Record"
+                               ]
+            },
+    "controlledImprovement":  {
+                                  "recommendation":  "EXTEND_EXISTING",
+                                  "minimalBoundary":  "Extend the existing lib/intelligence/export-decision.ts contract so it can evaluate existing persisted official evidence and approved, in-date commercial changes through existing adapters; retain NEEDS_VERIFICATION/NOT_READY unless every required condition is proven.",
+                                  "noSchemaChange":  true,
+                                  "noLegacyExecution":  true,
+                                  "noAutomaticExecution":  true,
+                                  "requiredTests":  [
+                                                        "Evidence record absent -\u003e NOT_READY with no side effect",
+                                                        "Evidence stale/conflicting/prohibited -\u003e block",
+                                                        "Commercial price/shipping/offer missing or expired -\u003e NOT_READY",
+                                                        "Approved scoped evidence plus valid commercial facts -\u003e REQUIRES_HUMAN_REVIEW only",
+                                                        "Existing regression tests remain PASS"
+                                                    ],
+                                  "runtimeProof":  "Use an isolated test database and authorized read-only decision package; do not submit an export or change order/shipment state.",
+                                  "promotionGate":  [
+                                                        "TypeScript",
+                                                        "Targeted tests",
+                                                        "Production build",
+                                                        "Isolated runtime proof",
+                                                        "Owner/SOR and human approval recorded"
+                                                    ]
+                              },
+    "explicitlyNotSelected":  [
+                                  {
+                                      "capability":  "Legacy brain kernel",
+                                      "reason":  "QUARANTINED_UNSAFE; direct execution prohibited"
+                                  },
+                                  {
+                                      "capability":  "Autonomous learning",
+                                      "reason":  "Commercial value is lower than an export decision boundary and promotion/rollback remains unproven"
+                                  },
+                                  {
+                                      "capability":  "Archive consolidation",
+                                      "reason":  "Does not improve the operating business path and stays blocked on owner/SOR evidence"
+                                  }
+                              ],
+    "evidenceInputs":  [
+                           "C:\\Users\\Ghanam\\Documents\\Codex\\Greeny-Life-Repair\\archive\\generated-reports\\e3-wave-5\\p0-runtime-operational-2026-08-13_174230\\E3-WAVE-5-P0-RUNTIME-OPERATIONAL-PROOF.json",
+                           "C:\\Users\\Ghanam\\Documents\\Codex\\Greeny-Life-Repair\\archive\\generated-reports\\e3-development-diagnosis\\backlog-2026-08-13_174948\\E3-DEVELOPMENT-DIAGNOSIS-BACKLOG.json"
+                       ],
+    "decision":  "APPROVED_FOR_CONTROLLED_IMPROVEMENT_PLANNING_ONLY"
+}

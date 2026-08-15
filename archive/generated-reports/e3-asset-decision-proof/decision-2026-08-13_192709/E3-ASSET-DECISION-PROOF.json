@@ -1,0 +1,515 @@
+﻿{
+    "reportType":  "E3_ASSET_DECISION_PROOF_V1",
+    "generatedAtUtc":  "2026-08-13T17:27:09.2623896Z",
+    "mode":  "READ_ONLY_EVIDENCE_SYNTHESIS",
+    "protections":  [
+                        "NO_DELETE",
+                        "NO_MOVE",
+                        "NO_ARCHIVE_MOVE",
+                        "NO_EXECUTION",
+                        "NO_DATABASE_ACCESS",
+                        "NO_GIT_STAGE"
+                    ],
+    "inputs":  {
+                   "classification":  "C:\\Users\\Ghanam\\Documents\\Codex\\Greeny-Life-Repair\\archive\\generated-reports\\e3-post-repair-classification\\inventory-2026-08-13_191416\\E3-POST-REPAIR-ASSET-CLASSIFICATION.json",
+                   "preservationManifest":  "C:\\Users\\Ghanam\\Documents\\Codex\\Greeny-Life-Repair\\archive\\derived-report-preservation\\2026-08-13_192255\\E3-SAFE-DERIVED-REPORT-ARCHIVE-MANIFEST.json",
+                   "deepTrace":  "C:\\Users\\Ghanam\\Documents\\Codex\\Greeny-Life-Repair\\archive\\generated-reports\\e3-unclassified-deep-trace\\trace-2026-08-13_191647\\E3-UNCLASSIFIED-ASSET-DEEP-TRACE.json"
+               },
+    "decisions":  {
+                      "legacyToolCandidates":  [
+                                                   {
+                                                       "asset":  "audit_ast_extraction.py",
+                                                       "evidence":  {
+                                                                        "classification":  "LEGACY_TOOL_CANDIDATE",
+                                                                        "limitation":  "Static filename mentions only; zero does not prove unused.",
+                                                                        "staticFilenameMentions":  0
+                                                                    },
+                                                       "decision":  "TRACE_REQUIRED",
+                                                       "allowedNextAction":  "ISOLATED_ACCEPTANCE_PROOF_OR_STATIC_DEPENDENCY_TRACE",
+                                                       "prohibited":  [
+                                                                          "Direct execution",
+                                                                          "Merge",
+                                                                          "Archive move",
+                                                                          "Delete",
+                                                                          "Promotion"
+                                                                      ],
+                                                       "reason":  "A legacy tool may contain unique business logic or unsafe behavior. Static filename reference evidence alone cannot establish runtime value or retirement."
+                                                   },
+                                                   {
+                                                       "asset":  "audit_brain_intelligence.py",
+                                                       "evidence":  {
+                                                                        "classification":  "LEGACY_TOOL_CANDIDATE",
+                                                                        "limitation":  "Static filename mentions only; zero does not prove unused.",
+                                                                        "staticFilenameMentions":  0
+                                                                    },
+                                                       "decision":  "TRACE_REQUIRED",
+                                                       "allowedNextAction":  "ISOLATED_ACCEPTANCE_PROOF_OR_STATIC_DEPENDENCY_TRACE",
+                                                       "prohibited":  [
+                                                                          "Direct execution",
+                                                                          "Merge",
+                                                                          "Archive move",
+                                                                          "Delete",
+                                                                          "Promotion"
+                                                                      ],
+                                                       "reason":  "A legacy tool may contain unique business logic or unsafe behavior. Static filename reference evidence alone cannot establish runtime value or retirement."
+                                                   },
+                                                   {
+                                                       "asset":  "audit_brain_intelligence_v2.py",
+                                                       "evidence":  {
+                                                                        "classification":  "LEGACY_TOOL_CANDIDATE",
+                                                                        "limitation":  "Static filename mentions only; zero does not prove unused.",
+                                                                        "staticFilenameMentions":  0
+                                                                    },
+                                                       "decision":  "TRACE_REQUIRED",
+                                                       "allowedNextAction":  "ISOLATED_ACCEPTANCE_PROOF_OR_STATIC_DEPENDENCY_TRACE",
+                                                       "prohibited":  [
+                                                                          "Direct execution",
+                                                                          "Merge",
+                                                                          "Archive move",
+                                                                          "Delete",
+                                                                          "Promotion"
+                                                                      ],
+                                                       "reason":  "A legacy tool may contain unique business logic or unsafe behavior. Static filename reference evidence alone cannot establish runtime value or retirement."
+                                                   },
+                                                   {
+                                                       "asset":  "canonical/fix_brain.py",
+                                                       "evidence":  {
+                                                                        "classification":  "LEGACY_TOOL_CANDIDATE",
+                                                                        "limitation":  "Static filename mentions only; zero does not prove unused.",
+                                                                        "staticFilenameMentions":  1
+                                                                    },
+                                                       "decision":  "TRACE_REQUIRED",
+                                                       "allowedNextAction":  "ISOLATED_ACCEPTANCE_PROOF_OR_STATIC_DEPENDENCY_TRACE",
+                                                       "prohibited":  [
+                                                                          "Direct execution",
+                                                                          "Merge",
+                                                                          "Archive move",
+                                                                          "Delete",
+                                                                          "Promotion"
+                                                                      ],
+                                                       "reason":  "A legacy tool may contain unique business logic or unsafe behavior. Static filename reference evidence alone cannot establish runtime value or retirement."
+                                                   },
+                                                   {
+                                                       "asset":  "canonical/fix_indent.py",
+                                                       "evidence":  {
+                                                                        "classification":  "LEGACY_TOOL_CANDIDATE",
+                                                                        "limitation":  "Static filename mentions only; zero does not prove unused.",
+                                                                        "staticFilenameMentions":  0
+                                                                    },
+                                                       "decision":  "TRACE_REQUIRED",
+                                                       "allowedNextAction":  "ISOLATED_ACCEPTANCE_PROOF_OR_STATIC_DEPENDENCY_TRACE",
+                                                       "prohibited":  [
+                                                                          "Direct execution",
+                                                                          "Merge",
+                                                                          "Archive move",
+                                                                          "Delete",
+                                                                          "Promotion"
+                                                                      ],
+                                                       "reason":  "A legacy tool may contain unique business logic or unsafe behavior. Static filename reference evidence alone cannot establish runtime value or retirement."
+                                                   },
+                                                   {
+                                                       "asset":  "canonical/run_all.ps1",
+                                                       "evidence":  {
+                                                                        "classification":  "LEGACY_TOOL_CANDIDATE",
+                                                                        "limitation":  "Static filename mentions only; zero does not prove unused.",
+                                                                        "staticFilenameMentions":  0
+                                                                    },
+                                                       "decision":  "TRACE_REQUIRED",
+                                                       "allowedNextAction":  "ISOLATED_ACCEPTANCE_PROOF_OR_STATIC_DEPENDENCY_TRACE",
+                                                       "prohibited":  [
+                                                                          "Direct execution",
+                                                                          "Merge",
+                                                                          "Archive move",
+                                                                          "Delete",
+                                                                          "Promotion"
+                                                                      ],
+                                                       "reason":  "A legacy tool may contain unique business logic or unsafe behavior. Static filename reference evidence alone cannot establish runtime value or retirement."
+                                                   },
+                                                   {
+                                                       "asset":  "config.yaml",
+                                                       "evidence":  {
+                                                                        "classification":  "LEGACY_TOOL_CANDIDATE",
+                                                                        "limitation":  "Static filename mentions only; zero does not prove unused.",
+                                                                        "staticFilenameMentions":  4
+                                                                    },
+                                                       "decision":  "TRACE_REQUIRED",
+                                                       "allowedNextAction":  "ISOLATED_ACCEPTANCE_PROOF_OR_STATIC_DEPENDENCY_TRACE",
+                                                       "prohibited":  [
+                                                                          "Direct execution",
+                                                                          "Merge",
+                                                                          "Archive move",
+                                                                          "Delete",
+                                                                          "Promotion"
+                                                                      ],
+                                                       "reason":  "A legacy tool may contain unique business logic or unsafe behavior. Static filename reference evidence alone cannot establish runtime value or retirement."
+                                                   },
+                                                   {
+                                                       "asset":  "enrich_context.py",
+                                                       "evidence":  {
+                                                                        "classification":  "LEGACY_TOOL_CANDIDATE",
+                                                                        "limitation":  "Static filename mentions only; zero does not prove unused.",
+                                                                        "staticFilenameMentions":  0
+                                                                    },
+                                                       "decision":  "TRACE_REQUIRED",
+                                                       "allowedNextAction":  "ISOLATED_ACCEPTANCE_PROOF_OR_STATIC_DEPENDENCY_TRACE",
+                                                       "prohibited":  [
+                                                                          "Direct execution",
+                                                                          "Merge",
+                                                                          "Archive move",
+                                                                          "Delete",
+                                                                          "Promotion"
+                                                                      ],
+                                                       "reason":  "A legacy tool may contain unique business logic or unsafe behavior. Static filename reference evidence alone cannot establish runtime value or retirement."
+                                                   },
+                                                   {
+                                                       "asset":  "enrich_context_fixed.py",
+                                                       "evidence":  {
+                                                                        "classification":  "LEGACY_TOOL_CANDIDATE",
+                                                                        "limitation":  "Static filename mentions only; zero does not prove unused.",
+                                                                        "staticFilenameMentions":  0
+                                                                    },
+                                                       "decision":  "TRACE_REQUIRED",
+                                                       "allowedNextAction":  "ISOLATED_ACCEPTANCE_PROOF_OR_STATIC_DEPENDENCY_TRACE",
+                                                       "prohibited":  [
+                                                                          "Direct execution",
+                                                                          "Merge",
+                                                                          "Archive move",
+                                                                          "Delete",
+                                                                          "Promotion"
+                                                                      ],
+                                                       "reason":  "A legacy tool may contain unique business logic or unsafe behavior. Static filename reference evidence alone cannot establish runtime value or retirement."
+                                                   },
+                                                   {
+                                                       "asset":  "fix_brain.py",
+                                                       "evidence":  {
+                                                                        "classification":  "LEGACY_TOOL_CANDIDATE",
+                                                                        "limitation":  "Static filename mentions only; zero does not prove unused.",
+                                                                        "staticFilenameMentions":  1
+                                                                    },
+                                                       "decision":  "TRACE_REQUIRED",
+                                                       "allowedNextAction":  "ISOLATED_ACCEPTANCE_PROOF_OR_STATIC_DEPENDENCY_TRACE",
+                                                       "prohibited":  [
+                                                                          "Direct execution",
+                                                                          "Merge",
+                                                                          "Archive move",
+                                                                          "Delete",
+                                                                          "Promotion"
+                                                                      ],
+                                                       "reason":  "A legacy tool may contain unique business logic or unsafe behavior. Static filename reference evidence alone cannot establish runtime value or retirement."
+                                                   },
+                                                   {
+                                                       "asset":  "phase1_repair.py",
+                                                       "evidence":  {
+                                                                        "classification":  "LEGACY_TOOL_CANDIDATE",
+                                                                        "limitation":  "Static filename mentions only; zero does not prove unused.",
+                                                                        "staticFilenameMentions":  0
+                                                                    },
+                                                       "decision":  "TRACE_REQUIRED",
+                                                       "allowedNextAction":  "ISOLATED_ACCEPTANCE_PROOF_OR_STATIC_DEPENDENCY_TRACE",
+                                                       "prohibited":  [
+                                                                          "Direct execution",
+                                                                          "Merge",
+                                                                          "Archive move",
+                                                                          "Delete",
+                                                                          "Promotion"
+                                                                      ],
+                                                       "reason":  "A legacy tool may contain unique business logic or unsafe behavior. Static filename reference evidence alone cannot establish runtime value or retirement."
+                                                   },
+                                                   {
+                                                       "asset":  "requirements.txt",
+                                                       "evidence":  {
+                                                                        "classification":  "LEGACY_TOOL_CANDIDATE",
+                                                                        "limitation":  "Static filename mentions only; zero does not prove unused.",
+                                                                        "staticFilenameMentions":  9
+                                                                    },
+                                                       "decision":  "TRACE_REQUIRED",
+                                                       "allowedNextAction":  "ISOLATED_ACCEPTANCE_PROOF_OR_STATIC_DEPENDENCY_TRACE",
+                                                       "prohibited":  [
+                                                                          "Direct execution",
+                                                                          "Merge",
+                                                                          "Archive move",
+                                                                          "Delete",
+                                                                          "Promotion"
+                                                                      ],
+                                                       "reason":  "A legacy tool may contain unique business logic or unsafe behavior. Static filename reference evidence alone cannot establish runtime value or retirement."
+                                                   },
+                                                   {
+                                                       "asset":  "run_all.ps1",
+                                                       "evidence":  {
+                                                                        "classification":  "LEGACY_TOOL_CANDIDATE",
+                                                                        "limitation":  "Static filename mentions only; zero does not prove unused.",
+                                                                        "staticFilenameMentions":  0
+                                                                    },
+                                                       "decision":  "TRACE_REQUIRED",
+                                                       "allowedNextAction":  "ISOLATED_ACCEPTANCE_PROOF_OR_STATIC_DEPENDENCY_TRACE",
+                                                       "prohibited":  [
+                                                                          "Direct execution",
+                                                                          "Merge",
+                                                                          "Archive move",
+                                                                          "Delete",
+                                                                          "Promotion"
+                                                                      ],
+                                                       "reason":  "A legacy tool may contain unique business logic or unsafe behavior. Static filename reference evidence alone cannot establish runtime value or retirement."
+                                                   },
+                                                   {
+                                                       "asset":  "run_ast_analysis.py",
+                                                       "evidence":  {
+                                                                        "classification":  "LEGACY_TOOL_CANDIDATE",
+                                                                        "limitation":  "Static filename mentions only; zero does not prove unused.",
+                                                                        "staticFilenameMentions":  0
+                                                                    },
+                                                       "decision":  "TRACE_REQUIRED",
+                                                       "allowedNextAction":  "ISOLATED_ACCEPTANCE_PROOF_OR_STATIC_DEPENDENCY_TRACE",
+                                                       "prohibited":  [
+                                                                          "Direct execution",
+                                                                          "Merge",
+                                                                          "Archive move",
+                                                                          "Delete",
+                                                                          "Promotion"
+                                                                      ],
+                                                       "reason":  "A legacy tool may contain unique business logic or unsafe behavior. Static filename reference evidence alone cannot establish runtime value or retirement."
+                                                   },
+                                                   {
+                                                       "asset":  "run_audit_hack.py",
+                                                       "evidence":  {
+                                                                        "classification":  "LEGACY_TOOL_CANDIDATE",
+                                                                        "limitation":  "Static filename mentions only; zero does not prove unused.",
+                                                                        "staticFilenameMentions":  0
+                                                                    },
+                                                       "decision":  "TRACE_REQUIRED",
+                                                       "allowedNextAction":  "ISOLATED_ACCEPTANCE_PROOF_OR_STATIC_DEPENDENCY_TRACE",
+                                                       "prohibited":  [
+                                                                          "Direct execution",
+                                                                          "Merge",
+                                                                          "Archive move",
+                                                                          "Delete",
+                                                                          "Promotion"
+                                                                      ],
+                                                       "reason":  "A legacy tool may contain unique business logic or unsafe behavior. Static filename reference evidence alone cannot establish runtime value or retirement."
+                                                   },
+                                                   {
+                                                       "asset":  "run_audit_v2.py",
+                                                       "evidence":  {
+                                                                        "classification":  "LEGACY_TOOL_CANDIDATE",
+                                                                        "limitation":  "Static filename mentions only; zero does not prove unused.",
+                                                                        "staticFilenameMentions":  0
+                                                                    },
+                                                       "decision":  "TRACE_REQUIRED",
+                                                       "allowedNextAction":  "ISOLATED_ACCEPTANCE_PROOF_OR_STATIC_DEPENDENCY_TRACE",
+                                                       "prohibited":  [
+                                                                          "Direct execution",
+                                                                          "Merge",
+                                                                          "Archive move",
+                                                                          "Delete",
+                                                                          "Promotion"
+                                                                      ],
+                                                       "reason":  "A legacy tool may contain unique business logic or unsafe behavior. Static filename reference evidence alone cannot establish runtime value or retirement."
+                                                   },
+                                                   {
+                                                       "asset":  "run_brain.ps1",
+                                                       "evidence":  {
+                                                                        "classification":  "LEGACY_TOOL_CANDIDATE",
+                                                                        "limitation":  "Static filename mentions only; zero does not prove unused.",
+                                                                        "staticFilenameMentions":  0
+                                                                    },
+                                                       "decision":  "TRACE_REQUIRED",
+                                                       "allowedNextAction":  "ISOLATED_ACCEPTANCE_PROOF_OR_STATIC_DEPENDENCY_TRACE",
+                                                       "prohibited":  [
+                                                                          "Direct execution",
+                                                                          "Merge",
+                                                                          "Archive move",
+                                                                          "Delete",
+                                                                          "Promotion"
+                                                                      ],
+                                                       "reason":  "A legacy tool may contain unique business logic or unsafe behavior. Static filename reference evidence alone cannot establish runtime value or retirement."
+                                                   },
+                                                   {
+                                                       "asset":  "run_brain_cli.py",
+                                                       "evidence":  {
+                                                                        "classification":  "LEGACY_TOOL_CANDIDATE",
+                                                                        "limitation":  "Static filename mentions only; zero does not prove unused.",
+                                                                        "staticFilenameMentions":  0
+                                                                    },
+                                                       "decision":  "TRACE_REQUIRED",
+                                                       "allowedNextAction":  "ISOLATED_ACCEPTANCE_PROOF_OR_STATIC_DEPENDENCY_TRACE",
+                                                       "prohibited":  [
+                                                                          "Direct execution",
+                                                                          "Merge",
+                                                                          "Archive move",
+                                                                          "Delete",
+                                                                          "Promotion"
+                                                                      ],
+                                                       "reason":  "A legacy tool may contain unique business logic or unsafe behavior. Static filename reference evidence alone cannot establish runtime value or retirement."
+                                                   },
+                                                   {
+                                                       "asset":  "run_brain_cli_backup.py",
+                                                       "evidence":  {
+                                                                        "classification":  "LEGACY_TOOL_CANDIDATE",
+                                                                        "limitation":  "Static filename mentions only; zero does not prove unused.",
+                                                                        "staticFilenameMentions":  0
+                                                                    },
+                                                       "decision":  "TRACE_REQUIRED",
+                                                       "allowedNextAction":  "ISOLATED_ACCEPTANCE_PROOF_OR_STATIC_DEPENDENCY_TRACE",
+                                                       "prohibited":  [
+                                                                          "Direct execution",
+                                                                          "Merge",
+                                                                          "Archive move",
+                                                                          "Delete",
+                                                                          "Promotion"
+                                                                      ],
+                                                       "reason":  "A legacy tool may contain unique business logic or unsafe behavior. Static filename reference evidence alone cannot establish runtime value or retirement."
+                                                   },
+                                                   {
+                                                       "asset":  "standalone_ast_analysis.py",
+                                                       "evidence":  {
+                                                                        "classification":  "LEGACY_TOOL_CANDIDATE",
+                                                                        "limitation":  "Static filename mentions only; zero does not prove unused.",
+                                                                        "staticFilenameMentions":  0
+                                                                    },
+                                                       "decision":  "TRACE_REQUIRED",
+                                                       "allowedNextAction":  "ISOLATED_ACCEPTANCE_PROOF_OR_STATIC_DEPENDENCY_TRACE",
+                                                       "prohibited":  [
+                                                                          "Direct execution",
+                                                                          "Merge",
+                                                                          "Archive move",
+                                                                          "Delete",
+                                                                          "Promotion"
+                                                                      ],
+                                                       "reason":  "A legacy tool may contain unique business logic or unsafe behavior. Static filename reference evidence alone cannot establish runtime value or retirement."
+                                                   },
+                                                   {
+                                                       "asset":  "test_brain.py",
+                                                       "evidence":  {
+                                                                        "classification":  "LEGACY_TOOL_CANDIDATE",
+                                                                        "limitation":  "Static filename mentions only; zero does not prove unused.",
+                                                                        "staticFilenameMentions":  0
+                                                                    },
+                                                       "decision":  "TRACE_REQUIRED",
+                                                       "allowedNextAction":  "ISOLATED_ACCEPTANCE_PROOF_OR_STATIC_DEPENDENCY_TRACE",
+                                                       "prohibited":  [
+                                                                          "Direct execution",
+                                                                          "Merge",
+                                                                          "Archive move",
+                                                                          "Delete",
+                                                                          "Promotion"
+                                                                      ],
+                                                       "reason":  "A legacy tool may contain unique business logic or unsafe behavior. Static filename reference evidence alone cannot establish runtime value or retirement."
+                                                   },
+                                                   {
+                                                       "asset":  "test_brain_v2.py",
+                                                       "evidence":  {
+                                                                        "classification":  "LEGACY_TOOL_CANDIDATE",
+                                                                        "limitation":  "Static filename mentions only; zero does not prove unused.",
+                                                                        "staticFilenameMentions":  0
+                                                                    },
+                                                       "decision":  "TRACE_REQUIRED",
+                                                       "allowedNextAction":  "ISOLATED_ACCEPTANCE_PROOF_OR_STATIC_DEPENDENCY_TRACE",
+                                                       "prohibited":  [
+                                                                          "Direct execution",
+                                                                          "Merge",
+                                                                          "Archive move",
+                                                                          "Delete",
+                                                                          "Promotion"
+                                                                      ],
+                                                       "reason":  "A legacy tool may contain unique business logic or unsafe behavior. Static filename reference evidence alone cannot establish runtime value or retirement."
+                                                   },
+                                                   {
+                                                       "asset":  "test_brain_v3.py",
+                                                       "evidence":  {
+                                                                        "classification":  "LEGACY_TOOL_CANDIDATE",
+                                                                        "limitation":  "Static filename mentions only; zero does not prove unused.",
+                                                                        "staticFilenameMentions":  0
+                                                                    },
+                                                       "decision":  "TRACE_REQUIRED",
+                                                       "allowedNextAction":  "ISOLATED_ACCEPTANCE_PROOF_OR_STATIC_DEPENDENCY_TRACE",
+                                                       "prohibited":  [
+                                                                          "Direct execution",
+                                                                          "Merge",
+                                                                          "Archive move",
+                                                                          "Delete",
+                                                                          "Promotion"
+                                                                      ],
+                                                       "reason":  "A legacy tool may contain unique business logic or unsafe behavior. Static filename reference evidence alone cannot establish runtime value or retirement."
+                                                   }
+                                               ],
+                      "checksumArchivedDerivedReports":  42,
+                      "quarantine":  [
+                                         {
+                                             "asset":  "\"how HEAD\\357\\200\\272.env \\357\\201\\274 Select-Object -First 20\"",
+                                             "decision":  "QUARANTINE",
+                                             "allowedNextAction":  "MANUAL_WINDOWS_NAME_REVIEW",
+                                             "reason":  "Git reports an escaped or malformed Windows filename.",
+                                             "prohibited":  [
+                                                                "Execution",
+                                                                "Rename by script",
+                                                                "Archive move",
+                                                                "Delete"
+                                                            ]
+                                         }
+                                     ],
+                      "exactDuplicateGroups":  [
+                                                   {
+                                                       "sha256":  "30d5766039b0cf36e0c898487388207f4df1c8216a21a829800396a98c8bbb67",
+                                                       "assets":  [
+                                                                      "canonical/cleanup_report.json",
+                                                                      "canonical/intelligence/cleanup_report.json"
+                                                                  ],
+                                                       "exactHashMatch":  true,
+                                                       "decision":  "ARCHIVE_CANDIDATE",
+                                                       "allowedNextAction":  "PRESERVE_ORIGINALS_AND_USE_CHECKSUM_VERIFIED_ARCHIVE_COPIES",
+                                                       "reason":  "These are derived report copies. A verified preservation archive exists; originals are intentionally retained pending formal cutover.",
+                                                       "prohibited":  [
+                                                                          "Delete",
+                                                                          "Auto-merge",
+                                                                          "Auto-promote"
+                                                                      ]
+                                                   },
+                                                   {
+                                                       "sha256":  "27b0b86105698a91c5398498f47060c27addfe42b7fd7e08fbfe0d53321eb071",
+                                                       "assets":  [
+                                                                      "els_final_v2.json",
+                                                                      "els_final_with_business.json"
+                                                                  ],
+                                                       "exactHashMatch":  true,
+                                                       "decision":  "ARCHIVE_CANDIDATE",
+                                                       "allowedNextAction":  "PRESERVE_ORIGINALS_AND_USE_CHECKSUM_VERIFIED_ARCHIVE_COPIES",
+                                                       "reason":  "These are derived report copies. A verified preservation archive exists; originals are intentionally retained pending formal cutover.",
+                                                       "prohibited":  [
+                                                                          "Delete",
+                                                                          "Auto-merge",
+                                                                          "Auto-promote"
+                                                                      ]
+                                                   },
+                                                   {
+                                                       "sha256":  "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+                                                       "assets":  [
+                                                                      "intelligence/intelligence/analytics/index.ts",
+                                                                      "intelligence/intelligence/decision-support/index.ts",
+                                                                      "intelligence/intelligence/metrics/index.ts",
+                                                                      "intelligence/intelligence/recommendations/index.ts",
+                                                                      "intelligence/intelligence/reporting/index.ts",
+                                                                      "intelligence/intelligence/scanners/system-scanner.ts",
+                                                                      "intelligence/scripts/phase-2-capability-discovery.ps1",
+                                                                      "scripts/repair-canonical-products.ps1"
+                                                                  ],
+                                                       "exactHashMatch":  true,
+                                                       "decision":  "QUARANTINE",
+                                                       "allowedNextAction":  "PRESERVE_WITHOUT_EXECUTION_AND_TRACE_CALLERS",
+                                                       "reason":  "The files are exactly empty. Empty code/scripts are not auto-deleted; their callers and intended ownership remain unresolved.",
+                                                       "prohibited":  [
+                                                                          "Delete",
+                                                                          "Auto-merge",
+                                                                          "Auto-promote"
+                                                                      ]
+                                                   }
+                                               ]
+                  },
+    "summary":  {
+                    "quarantine":  2,
+                    "archiveCandidates":  2,
+                    "traceRequired":  23,
+                    "reuseOrExtractReady":  0,
+                    "retireCandidates":  0
+                },
+    "systemRule":  "No decision in this report grants deletion. REUSE, EXTEND, HARDEN, EXTRACT, ARCHIVE MOVE, RETIRE, MERGE, and PROMOTE require the next evidence level stated on each asset."
+}

@@ -1,0 +1,225 @@
+﻿{
+    "reportType":  "GREENY-LIFE_FINAL_ENGINEERING_VERIFICATION_V1",
+    "generatedAtUtc":  "2026-08-13T12:16:31.5125704Z",
+    "gateStatus":  "BLOCKED",
+    "totals":  {
+                   "checks":  21,
+                   "pass":  16,
+                   "fail":  1,
+                   "unknown":  4,
+                   "criticalNotPass":  3
+               },
+    "checks":  [
+                   {
+                       "layer":  "Repository Integrity",
+                       "name":  "TypeScript type check",
+                       "status":  "PASS",
+                       "critical":  true,
+                       "actual":  "\u003e greeny-life@1.0.0 type-check\r\n\u003e tsc --noEmit",
+                       "severity":  "HIGH",
+                       "recommendation":  "No action required.",
+                       "elapsedSeconds":  4.73
+                   },
+                   {
+                       "layer":  "Runtime / Integration",
+                       "name":  "Production build",
+                       "status":  "PASS",
+                       "critical":  true,
+                       "actual":  "\u003e greeny-life@1.0.0 build\r\n\u003e next build\r\n\r\nÔû▓ Next.js 16.2.10 (Turbopack)\r\n- Environments: .env\r\n\r\n  Creating an optimized production build ...\r\nÔ£ô Compiled successfully in 6.4s\r\n  Running TypeScript ...\r\n  Finished TypeScript in 4.7s ...\r\n  Collecting page data using 3 workers ...\r\n  Generating static pages using 3 workers (0/30) ...\r\n  Generating static pages using 3 workers (7/30) \r\n  Generating static pages using 3 workers (14/30) \r\n  Generating static pages using 3 workers (22/30) \r\nÔ£ô Generating static pages using 3 workers (30/30) in 289ms\r\n  Finalizing page optimization ...\r\n\r\nRoute (app)\r\nÔöî Ôùï /\r\nÔö£ Ôùï /_not-found\r\nÔö£ ãÆ /api/auth/login\r\nÔö£ ãÆ /api/auth/logout\r\nÔö£ ãÆ /api/auth/session\r\nÔö£ ãÆ /api/brains/greeny-life-egypt\r\nÔö£ ãÆ /api/commercial-changes\r\nÔö£ ãÆ /api/decisions/export-readiness\r\nÔö£ ãÆ /api/decisions/official-evidence-review\r\nÔö£ ãÆ /api/evidence/official\r\nÔö£ ãÆ /api/intelligence/asset-registry\r\nÔö£ ãÆ /api/intelligence/data-fabric\r\nÔö£ ãÆ /api/intelligence/gels-label-readiness\r\nÔö£ ãÆ /api/intelligence/production-readiness\r\nÔö£ ãÆ /api/learning/evaluations\r\nÔö£ ãÆ /api/learning/outcomes\r\nÔö£ ãÆ /api/learning/training-cases\r\nÔö£ ãÆ /api/mastermind/commercial-context\r\nÔö£ ãÆ /api/mastermind/decision-package\r\nÔö£ ãÆ /api/mastermind/operating-model\r\nÔö£ ãÆ /api/mastermind/tools\r\nÔö£ ãÆ /api/portfolio/egyptian-exports\r\nÔö£ ãÆ /api/products\r\nÔö£ ãÆ /api/sales-orders\r\nÔö£ ãÆ /api/suppliers\r\nÔö£ ãÆ /api/tasks\r\nÔö£ ãÆ /api/traceability\r\nÔö£ ãÆ /api/trade-corridors\r\nÔöö ãÆ /api/workflow\r\n\r\n\r\nÔùï  (Static)   prerendered as static content\r\nãÆ  (Dynamic)  server-rendered on demand",
+                       "severity":  "HIGH",
+                       "recommendation":  "No action required.",
+                       "elapsedSeconds":  15.8
+                   },
+                   {
+                       "layer":  "Evidence / Provenance",
+                       "name":  "Official evidence gate",
+                       "status":  "PASS",
+                       "critical":  true,
+                       "actual":  "\u003e greeny-life@1.0.0 test:official-evidence-gate\r\n\u003e tsx tests/official_evidence_gate_check.ts\r\n\r\nofficial_evidence_gate_check: PASS",
+                       "severity":  "HIGH",
+                       "recommendation":  "No action required.",
+                       "elapsedSeconds":  0.98
+                   },
+                   {
+                       "layer":  "Security / Safety",
+                       "name":  "Authentication security checks",
+                       "status":  "PASS",
+                       "critical":  true,
+                       "actual":  "\u003e greeny-life@1.0.0 test:auth-security\r\n\u003e tsx tests/auth_security_check.ts\r\n\r\nAuthentication security: PASS",
+                       "severity":  "HIGH",
+                       "recommendation":  "No action required.",
+                       "elapsedSeconds":  1.19
+                   },
+                   {
+                       "layer":  "Security / Safety",
+                       "name":  "API authorization checks",
+                       "status":  "PASS",
+                       "critical":  true,
+                       "actual":  "\u003e greeny-life@1.0.0 test:api-authorization\r\n\u003e tsx tests/api_authorization_check.ts\r\n\r\nAPI authorization policy: PASS",
+                       "severity":  "HIGH",
+                       "recommendation":  "No action required.",
+                       "elapsedSeconds":  1.09
+                   },
+                   {
+                       "layer":  "Authority / Decision",
+                       "name":  "MasterMind evidence authority checks",
+                       "status":  "PASS",
+                       "critical":  true,
+                       "actual":  "\u003e greeny-life@1.0.0 test:mastermind-evidence-authority\r\n\u003e tsx tests/mastermind_evidence_authority_check.ts\r\n\r\nmastermind_evidence_authority_check: PASS",
+                       "severity":  "HIGH",
+                       "recommendation":  "No action required.",
+                       "elapsedSeconds":  0.79
+                   },
+                   {
+                       "layer":  "Data Integrity",
+                       "name":  "Canonical integrity checks",
+                       "status":  "PASS",
+                       "critical":  true,
+                       "actual":  "\u003e greeny-life@1.0.0 test:canonical-intelligence\r\n\u003e tsx tests/canonical_intelligence_check.ts\r\n\r\nCanonical intelligence engines: PASS",
+                       "severity":  "HIGH",
+                       "recommendation":  "No action required.",
+                       "elapsedSeconds":  1.15
+                   },
+                   {
+                       "layer":  "Brain Boundary",
+                       "name":  "Legacy brain evidence gate",
+                       "status":  "PASS",
+                       "critical":  true,
+                       "actual":  "\u003e greeny-life@1.0.0 test:legacy-brain\r\n\u003e python -B -m unittest tests.test_legacy_brain_runtime -v",
+                       "severity":  "HIGH",
+                       "recommendation":  "No action required.",
+                       "elapsedSeconds":  1.92
+                   },
+                   {
+                       "layer":  "Execution / Workflow",
+                       "name":  "Workflow governance checks",
+                       "status":  "PASS",
+                       "critical":  true,
+                       "actual":  "\u003e greeny-life@1.0.0 test:workflow-governance\r\n\u003e tsx tests/workflow_governance_check.ts\r\n\r\nWorkflow governance: PASS",
+                       "severity":  "HIGH",
+                       "recommendation":  "No action required.",
+                       "elapsedSeconds":  0.83
+                   },
+                   {
+                       "layer":  "Learning / Training",
+                       "name":  "Controlled learning checks",
+                       "status":  "PASS",
+                       "critical":  false,
+                       "actual":  "\u003e greeny-life@1.0.0 test:controlled-learning\r\n\u003e tsx tests/controlled_learning_check.ts\r\n\r\nControlled learning: PASS",
+                       "severity":  "MEDIUM",
+                       "recommendation":  "No action required.",
+                       "elapsedSeconds":  0.79
+                   },
+                   {
+                       "layer":  "Learning / Training",
+                       "name":  "Training factory checks",
+                       "status":  "PASS",
+                       "critical":  false,
+                       "actual":  "\u003e greeny-life@1.0.0 test:training-factory\r\n\u003e tsx tests/training_factory_check.ts\r\n\r\nTraining factory: PASS",
+                       "severity":  "MEDIUM",
+                       "recommendation":  "No action required.",
+                       "elapsedSeconds":  0.77
+                   },
+                   {
+                       "layer":  "Learning / Training",
+                       "name":  "Evaluation governance checks",
+                       "status":  "PASS",
+                       "critical":  false,
+                       "actual":  "\u003e greeny-life@1.0.0 test:evaluation-governance\r\n\u003e tsx tests/evaluation_governance_check.ts\r\n\r\nEvaluation governance: PASS",
+                       "severity":  "MEDIUM",
+                       "recommendation":  "No action required.",
+                       "elapsedSeconds":  0.79
+                   },
+                   {
+                       "layer":  "Cognitive Hygiene",
+                       "name":  "GELS label readiness checks",
+                       "status":  "PASS",
+                       "critical":  false,
+                       "actual":  "\u003e greeny-life@1.0.0 test:gels-label-readiness\r\n\u003e tsx tests/gels_label_readiness_check.ts\r\n\r\nGELS label readiness: PASS",
+                       "severity":  "MEDIUM",
+                       "recommendation":  "No action required.",
+                       "elapsedSeconds":  0.8
+                   },
+                   {
+                       "layer":  "Production Readiness",
+                       "name":  "Production readiness checks",
+                       "status":  "FAIL",
+                       "critical":  false,
+                       "actual":  "\u003e greeny-life@1.0.0 test:production-readiness\r\n\u003e tsx tests/production_readiness_check.ts",
+                       "severity":  "MEDIUM",
+                       "recommendation":  "Investigate this failure before changing final gate status.",
+                       "elapsedSeconds":  0.81
+                   },
+                   {
+                       "layer":  "Brain Boundary",
+                       "name":  "Legacy brain is not a package runtime entrypoint",
+                       "status":  "PASS",
+                       "critical":  true,
+                       "actual":  "Direct brain.py package entrypoint scan completed.",
+                       "severity":  "HIGH",
+                       "recommendation":  "Keep legacy brain quarantined; extract only independently tested capabilities.",
+                       "elapsedSeconds":  0
+                   },
+                   {
+                       "layer":  "Authority / Decision",
+                       "name":  "MasterMind actor is server-signed identity",
+                       "status":  "PASS",
+                       "critical":  true,
+                       "actual":  "MasterMind API actor binding scan completed.",
+                       "severity":  "HIGH",
+                       "recommendation":  "Accept actor identity only from the signed session.",
+                       "elapsedSeconds":  0
+                   },
+                   {
+                       "layer":  "Repository Integrity",
+                       "name":  "Legacy estate retained for review",
+                       "status":  "PASS",
+                       "critical":  false,
+                       "actual":  "Untracked legacy entries: 105",
+                       "severity":  "MEDIUM",
+                       "recommendation":  "Do not bulk-add, delete, or clean legacy material before capability review.",
+                       "elapsedSeconds":  0
+                   },
+                   {
+                       "layer":  "Capability Integrity",
+                       "name":  "Legacy capability conservation",
+                       "status":  "UNKNOWN",
+                       "critical":  true,
+                       "actual":  "Capability-by-capability runtime proof is not complete.",
+                       "severity":  "HIGH",
+                       "recommendation":  "Finish KEEP / RECONNECT / CONSOLIDATE / QUARANTINE / ARCHIVE / RETIRE decisions.",
+                       "elapsedSeconds":  0
+                   },
+                   {
+                       "layer":  "Recovery",
+                       "name":  "Database restore drill",
+                       "status":  "UNKNOWN",
+                       "critical":  true,
+                       "actual":  "No isolated backup and restore drill was executed in this run.",
+                       "severity":  "HIGH",
+                       "recommendation":  "Restore a fresh database backup into an isolated database and reconcile counts.",
+                       "elapsedSeconds":  0
+                   },
+                   {
+                       "layer":  "External Compliance",
+                       "name":  "Current official regulatory source verification",
+                       "status":  "UNKNOWN",
+                       "critical":  true,
+                       "actual":  "No official source package was submitted and ADMIN-reviewed in this run.",
+                       "severity":  "HIGH",
+                       "recommendation":  "Submit official evidence per product and destination, then complete authorized review.",
+                       "elapsedSeconds":  0
+                   },
+                   {
+                       "layer":  "Performance",
+                       "name":  "Load and endurance test",
+                       "status":  "UNKNOWN",
+                       "critical":  false,
+                       "actual":  "No defined workload, SLO, or load test has been run.",
+                       "severity":  "MEDIUM",
+                       "recommendation":  "Define workload and SLOs, then run controlled performance tests.",
+                       "elapsedSeconds":  0
+                   }
+               ],
+    "rule":  "No unknown or failed condition can be hidden by average success. Any non-PASS blocks final approval."
+}

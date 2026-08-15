@@ -1,0 +1,359 @@
+﻿{
+    "reportType":  "E3_LEGACY_TOOL_SAFETY_TRIAGE_V1",
+    "generatedAtUtc":  "2026-08-13T17:30:22.5294814Z",
+    "mode":  "STATIC_READ_ONLY",
+    "protections":  [
+                        "NO_LEGACY_EXECUTION",
+                        "NO_IMPORT",
+                        "NO_FILE_WRITE",
+                        "NO_DATABASE",
+                        "NO_NETWORK",
+                        "NO_GIT_CHANGE",
+                        "NO_MOVE",
+                        "NO_DELETE"
+                    ],
+    "inputDecisionProof":  "C:\\Users\\Ghanam\\Documents\\Codex\\Greeny-Life-Repair\\archive\\generated-reports\\e3-asset-decision-proof\\decision-2026-08-13_192709\\E3-ASSET-DECISION-PROOF.json",
+    "records":  [
+                    {
+                        "asset":  "audit_ast_extraction.py",
+                        "fileExists":  true,
+                        "kind":  "PYTHON_TOOL",
+                        "risk":  "HIGH",
+                        "executionDecision":  "QUARANTINE_FROM_DIRECT_EXECUTION",
+                        "nextAction":  "QUARANTINE_FROM_DIRECT_EXECUTION; EXTRACT_READ_ONLY_LOGIC_ONLY_AFTER_REVIEW",
+                        "flags":  [
+                                      "POTENTIAL_FILE_WRITE",
+                                      "ANALYSIS_OR_AUDIT"
+                                  ],
+                        "reason":  "Static triage only. No runtime value, correctness, or ownership is implied."
+                    },
+                    {
+                        "asset":  "audit_brain_intelligence.py",
+                        "fileExists":  true,
+                        "kind":  "PYTHON_TOOL",
+                        "risk":  "HIGH",
+                        "executionDecision":  "QUARANTINE_FROM_DIRECT_EXECUTION",
+                        "nextAction":  "QUARANTINE_FROM_DIRECT_EXECUTION; EXTRACT_READ_ONLY_LOGIC_ONLY_AFTER_REVIEW",
+                        "flags":  [
+                                      "POTENTIAL_FILE_WRITE",
+                                      "EXTERNAL_OR_PROCESS_ACCESS",
+                                      "ANALYSIS_OR_AUDIT"
+                                  ],
+                        "reason":  "Static triage only. No runtime value, correctness, or ownership is implied."
+                    },
+                    {
+                        "asset":  "audit_brain_intelligence_v2.py",
+                        "fileExists":  true,
+                        "kind":  "PYTHON_TOOL",
+                        "risk":  "HIGH",
+                        "executionDecision":  "QUARANTINE_FROM_DIRECT_EXECUTION",
+                        "nextAction":  "QUARANTINE_FROM_DIRECT_EXECUTION; EXTRACT_READ_ONLY_LOGIC_ONLY_AFTER_REVIEW",
+                        "flags":  [
+                                      "POTENTIAL_FILE_WRITE",
+                                      "EXTERNAL_OR_PROCESS_ACCESS",
+                                      "ANALYSIS_OR_AUDIT"
+                                  ],
+                        "reason":  "Static triage only. No runtime value, correctness, or ownership is implied."
+                    },
+                    {
+                        "asset":  "canonical/fix_brain.py",
+                        "fileExists":  true,
+                        "kind":  "PYTHON_TOOL",
+                        "risk":  "HIGH",
+                        "executionDecision":  "QUARANTINE_FROM_DIRECT_EXECUTION",
+                        "nextAction":  "QUARANTINE_FROM_DIRECT_EXECUTION; EXTRACT_READ_ONLY_LOGIC_ONLY_AFTER_REVIEW",
+                        "flags":  [
+                                      "POTENTIAL_FILE_WRITE",
+                                      "PIPELINE_ORCHESTRATION",
+                                      "REPAIR_INTENT"
+                                  ],
+                        "reason":  "Static triage only. No runtime value, correctness, or ownership is implied."
+                    },
+                    {
+                        "asset":  "canonical/fix_indent.py",
+                        "fileExists":  true,
+                        "kind":  "PYTHON_TOOL",
+                        "risk":  "HIGH",
+                        "executionDecision":  "QUARANTINE_FROM_DIRECT_EXECUTION",
+                        "nextAction":  "QUARANTINE_FROM_DIRECT_EXECUTION; EXTRACT_READ_ONLY_LOGIC_ONLY_AFTER_REVIEW",
+                        "flags":  [
+                                      "POTENTIAL_FILE_WRITE",
+                                      "PIPELINE_ORCHESTRATION"
+                                  ],
+                        "reason":  "Static triage only. No runtime value, correctness, or ownership is implied."
+                    },
+                    {
+                        "asset":  "canonical/run_all.ps1",
+                        "fileExists":  true,
+                        "kind":  "POWERSHELL_TOOL",
+                        "risk":  "HIGH",
+                        "executionDecision":  "QUARANTINE_FROM_DIRECT_EXECUTION",
+                        "nextAction":  "QUARANTINE_FROM_DIRECT_EXECUTION; EXTRACT_READ_ONLY_LOGIC_ONLY_AFTER_REVIEW",
+                        "flags":  [
+                                      "PIPELINE_ORCHESTRATION"
+                                  ],
+                        "reason":  "Static triage only. No runtime value, correctness, or ownership is implied."
+                    },
+                    {
+                        "asset":  "config.yaml",
+                        "fileExists":  true,
+                        "kind":  "CONFIG_OR_DEPENDENCY",
+                        "risk":  "LOW",
+                        "executionDecision":  "TRACE_REQUIRED",
+                        "nextAction":  "STATIC_DEPENDENCY_AND_IO_CONTRACT_TRACE",
+                        "flags":  [
+
+                                  ],
+                        "reason":  "Static triage only. No runtime value, correctness, or ownership is implied."
+                    },
+                    {
+                        "asset":  "enrich_context.py",
+                        "fileExists":  true,
+                        "kind":  "PYTHON_TOOL",
+                        "risk":  "HIGH",
+                        "executionDecision":  "QUARANTINE_FROM_DIRECT_EXECUTION",
+                        "nextAction":  "QUARANTINE_FROM_DIRECT_EXECUTION; EXTRACT_READ_ONLY_LOGIC_ONLY_AFTER_REVIEW",
+                        "flags":  [
+                                      "POTENTIAL_FILE_WRITE",
+                                      "EXTERNAL_OR_PROCESS_ACCESS",
+                                      "ANALYSIS_OR_AUDIT"
+                                  ],
+                        "reason":  "Static triage only. No runtime value, correctness, or ownership is implied."
+                    },
+                    {
+                        "asset":  "enrich_context_fixed.py",
+                        "fileExists":  true,
+                        "kind":  "PYTHON_TOOL",
+                        "risk":  "HIGH",
+                        "executionDecision":  "QUARANTINE_FROM_DIRECT_EXECUTION",
+                        "nextAction":  "QUARANTINE_FROM_DIRECT_EXECUTION; EXTRACT_READ_ONLY_LOGIC_ONLY_AFTER_REVIEW",
+                        "flags":  [
+                                      "POTENTIAL_FILE_WRITE",
+                                      "EXTERNAL_OR_PROCESS_ACCESS",
+                                      "ANALYSIS_OR_AUDIT"
+                                  ],
+                        "reason":  "Static triage only. No runtime value, correctness, or ownership is implied."
+                    },
+                    {
+                        "asset":  "fix_brain.py",
+                        "fileExists":  true,
+                        "kind":  "PYTHON_TOOL",
+                        "risk":  "HIGH",
+                        "executionDecision":  "QUARANTINE_FROM_DIRECT_EXECUTION",
+                        "nextAction":  "QUARANTINE_FROM_DIRECT_EXECUTION; EXTRACT_READ_ONLY_LOGIC_ONLY_AFTER_REVIEW",
+                        "flags":  [
+                                      "POTENTIAL_FILE_WRITE",
+                                      "PIPELINE_ORCHESTRATION",
+                                      "REPAIR_INTENT"
+                                  ],
+                        "reason":  "Static triage only. No runtime value, correctness, or ownership is implied."
+                    },
+                    {
+                        "asset":  "phase1_repair.py",
+                        "fileExists":  true,
+                        "kind":  "PYTHON_TOOL",
+                        "risk":  "HIGH",
+                        "executionDecision":  "QUARANTINE_FROM_DIRECT_EXECUTION",
+                        "nextAction":  "QUARANTINE_FROM_DIRECT_EXECUTION; EXTRACT_READ_ONLY_LOGIC_ONLY_AFTER_REVIEW",
+                        "flags":  [
+                                      "POTENTIAL_FILE_WRITE",
+                                      "BRAIN_KERNEL_DEPENDENCY"
+                                  ],
+                        "reason":  "Static triage only. No runtime value, correctness, or ownership is implied."
+                    },
+                    {
+                        "asset":  "requirements.txt",
+                        "fileExists":  true,
+                        "kind":  "CONFIG_OR_DEPENDENCY",
+                        "risk":  "LOW",
+                        "executionDecision":  "TRACE_REQUIRED",
+                        "nextAction":  "STATIC_DEPENDENCY_AND_IO_CONTRACT_TRACE",
+                        "flags":  [
+
+                                  ],
+                        "reason":  "Static triage only. No runtime value, correctness, or ownership is implied."
+                    },
+                    {
+                        "asset":  "run_all.ps1",
+                        "fileExists":  true,
+                        "kind":  "POWERSHELL_TOOL",
+                        "risk":  "HIGH",
+                        "executionDecision":  "QUARANTINE_FROM_DIRECT_EXECUTION",
+                        "nextAction":  "QUARANTINE_FROM_DIRECT_EXECUTION; EXTRACT_READ_ONLY_LOGIC_ONLY_AFTER_REVIEW",
+                        "flags":  [
+                                      "PIPELINE_ORCHESTRATION"
+                                  ],
+                        "reason":  "Static triage only. No runtime value, correctness, or ownership is implied."
+                    },
+                    {
+                        "asset":  "run_ast_analysis.py",
+                        "fileExists":  true,
+                        "kind":  "PYTHON_TOOL",
+                        "risk":  "LOW",
+                        "executionDecision":  "TRACE_REQUIRED",
+                        "nextAction":  "READ_ONLY_INPUT_OUTPUT_CONTRACT_PROOF_IN_TEMPORARY_COPY",
+                        "flags":  [
+                                      "ANALYSIS_OR_AUDIT"
+                                  ],
+                        "reason":  "Static triage only. No runtime value, correctness, or ownership is implied."
+                    },
+                    {
+                        "asset":  "run_audit_hack.py",
+                        "fileExists":  true,
+                        "kind":  "PYTHON_TOOL",
+                        "risk":  "HIGH",
+                        "executionDecision":  "QUARANTINE_FROM_DIRECT_EXECUTION",
+                        "nextAction":  "QUARANTINE_FROM_DIRECT_EXECUTION; EXTRACT_READ_ONLY_LOGIC_ONLY_AFTER_REVIEW",
+                        "flags":  [
+                                      "PIPELINE_ORCHESTRATION",
+                                      "BRAIN_KERNEL_DEPENDENCY",
+                                      "ANALYSIS_OR_AUDIT"
+                                  ],
+                        "reason":  "Static triage only. No runtime value, correctness, or ownership is implied."
+                    },
+                    {
+                        "asset":  "run_audit_v2.py",
+                        "fileExists":  true,
+                        "kind":  "PYTHON_TOOL",
+                        "risk":  "HIGH",
+                        "executionDecision":  "QUARANTINE_FROM_DIRECT_EXECUTION",
+                        "nextAction":  "QUARANTINE_FROM_DIRECT_EXECUTION; EXTRACT_READ_ONLY_LOGIC_ONLY_AFTER_REVIEW",
+                        "flags":  [
+                                      "POTENTIAL_FILE_WRITE",
+                                      "BRAIN_KERNEL_DEPENDENCY",
+                                      "ANALYSIS_OR_AUDIT"
+                                  ],
+                        "reason":  "Static triage only. No runtime value, correctness, or ownership is implied."
+                    },
+                    {
+                        "asset":  "run_brain.ps1",
+                        "fileExists":  true,
+                        "kind":  "POWERSHELL_TOOL",
+                        "risk":  "HIGH",
+                        "executionDecision":  "QUARANTINE_FROM_DIRECT_EXECUTION",
+                        "nextAction":  "QUARANTINE_FROM_DIRECT_EXECUTION; EXTRACT_READ_ONLY_LOGIC_ONLY_AFTER_REVIEW",
+                        "flags":  [
+                                      "PIPELINE_ORCHESTRATION"
+                                  ],
+                        "reason":  "Static triage only. No runtime value, correctness, or ownership is implied."
+                    },
+                    {
+                        "asset":  "run_brain_cli.py",
+                        "fileExists":  true,
+                        "kind":  "PYTHON_TOOL",
+                        "risk":  "LOW",
+                        "executionDecision":  "TRACE_REQUIRED",
+                        "nextAction":  "STATIC_DEPENDENCY_AND_IO_CONTRACT_TRACE",
+                        "flags":  [
+
+                                  ],
+                        "reason":  "Static triage only. No runtime value, correctness, or ownership is implied."
+                    },
+                    {
+                        "asset":  "run_brain_cli_backup.py",
+                        "fileExists":  true,
+                        "kind":  "PYTHON_TOOL",
+                        "risk":  "HIGH",
+                        "executionDecision":  "QUARANTINE_FROM_DIRECT_EXECUTION",
+                        "nextAction":  "QUARANTINE_FROM_DIRECT_EXECUTION; EXTRACT_READ_ONLY_LOGIC_ONLY_AFTER_REVIEW",
+                        "flags":  [
+                                      "POTENTIAL_FILE_WRITE",
+                                      "PIPELINE_ORCHESTRATION",
+                                      "BRAIN_KERNEL_DEPENDENCY"
+                                  ],
+                        "reason":  "Static triage only. No runtime value, correctness, or ownership is implied."
+                    },
+                    {
+                        "asset":  "standalone_ast_analysis.py",
+                        "fileExists":  true,
+                        "kind":  "PYTHON_TOOL",
+                        "risk":  "HIGH",
+                        "executionDecision":  "QUARANTINE_FROM_DIRECT_EXECUTION",
+                        "nextAction":  "QUARANTINE_FROM_DIRECT_EXECUTION; EXTRACT_READ_ONLY_LOGIC_ONLY_AFTER_REVIEW",
+                        "flags":  [
+                                      "POTENTIAL_FILE_WRITE",
+                                      "ANALYSIS_OR_AUDIT"
+                                  ],
+                        "reason":  "Static triage only. No runtime value, correctness, or ownership is implied."
+                    },
+                    {
+                        "asset":  "test_brain.py",
+                        "fileExists":  true,
+                        "kind":  "PYTHON_TOOL",
+                        "risk":  "MEDIUM",
+                        "executionDecision":  "TRACE_REQUIRED",
+                        "nextAction":  "ISOLATED_NEGATIVE_OR_ACCEPTANCE_HARNESS_ONLY; DO_NOT_IMPORT_UNSAFE_KERNEL_IN_PROJECT",
+                        "flags":  [
+                                      "BRAIN_KERNEL_DEPENDENCY",
+                                      "TEST_HARNESS"
+                                  ],
+                        "reason":  "Static triage only. No runtime value, correctness, or ownership is implied."
+                    },
+                    {
+                        "asset":  "test_brain_v2.py",
+                        "fileExists":  true,
+                        "kind":  "PYTHON_TOOL",
+                        "risk":  "MEDIUM",
+                        "executionDecision":  "TRACE_REQUIRED",
+                        "nextAction":  "ISOLATED_NEGATIVE_OR_ACCEPTANCE_HARNESS_ONLY; DO_NOT_IMPORT_UNSAFE_KERNEL_IN_PROJECT",
+                        "flags":  [
+                                      "BRAIN_KERNEL_DEPENDENCY",
+                                      "TEST_HARNESS"
+                                  ],
+                        "reason":  "Static triage only. No runtime value, correctness, or ownership is implied."
+                    },
+                    {
+                        "asset":  "test_brain_v3.py",
+                        "fileExists":  true,
+                        "kind":  "PYTHON_TOOL",
+                        "risk":  "MEDIUM",
+                        "executionDecision":  "TRACE_REQUIRED",
+                        "nextAction":  "ISOLATED_NEGATIVE_OR_ACCEPTANCE_HARNESS_ONLY; DO_NOT_IMPORT_UNSAFE_KERNEL_IN_PROJECT",
+                        "flags":  [
+                                      "BRAIN_KERNEL_DEPENDENCY",
+                                      "TEST_HARNESS"
+                                  ],
+                        "reason":  "Static triage only. No runtime value, correctness, or ownership is implied."
+                    }
+                ],
+    "batches":  {
+                    "BATCH_A_READ_ONLY_ANALYSIS_CANDIDATES":  [
+                                                                  "run_ast_analysis.py"
+                                                              ],
+                    "BATCH_B_TEST_HARNESSES":  [
+                                                   "test_brain.py",
+                                                   "test_brain_v2.py",
+                                                   "test_brain_v3.py"
+                                               ],
+                    "BATCH_C_DIRECT_EXECUTION_QUARANTINED":  [
+                                                                 "audit_ast_extraction.py",
+                                                                 "audit_brain_intelligence.py",
+                                                                 "audit_brain_intelligence_v2.py",
+                                                                 "canonical/fix_brain.py",
+                                                                 "canonical/fix_indent.py",
+                                                                 "canonical/run_all.ps1",
+                                                                 "enrich_context.py",
+                                                                 "enrich_context_fixed.py",
+                                                                 "fix_brain.py",
+                                                                 "phase1_repair.py",
+                                                                 "run_all.ps1",
+                                                                 "run_audit_hack.py",
+                                                                 "run_audit_v2.py",
+                                                                 "run_brain.ps1",
+                                                                 "run_brain_cli_backup.py",
+                                                                 "standalone_ast_analysis.py"
+                                                             ],
+                    "BATCH_D_CONFIG_AND_OTHER_TRACE":  [
+                                                           "config.yaml",
+                                                           "requirements.txt"
+                                                       ]
+                },
+    "summary":  {
+                    "total":  23,
+                    "directExecutionQuarantined":  16,
+                    "analysisCandidates":  1,
+                    "testHarnesses":  3,
+                    "missing":  0
+                },
+    "rule":  "No tool is approved for direct execution by this report. A subsequent isolated proof must use a temporary copy and explicit input/output contract."
+}

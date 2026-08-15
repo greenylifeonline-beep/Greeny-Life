@@ -1,0 +1,63 @@
+{
+    "schema_version":  "2.0",
+    "generated_at":  "2026-08-15T21:58:03.8220065+02:00",
+    "policy":  {
+                   "cloud_fallback_for_confidential":  false,
+                   "human_approval_for_secret_cloud":  true,
+                   "zero_cost_required":  true,
+                   "private_data_default":  "LOCAL_ONLY"
+               },
+    "compute_nodes":  {
+                          "local_windows":  {
+                                                "cpu":  "11th Gen Intel(R) Core(TM) i3-1115G4 @ 3.00GHz",
+                                                "total_ram_gb":  7.8,
+                                                "id":  "local-windows",
+                                                "role":  "CONTROL_NODE_AND_LIGHT_INFERENCE"
+                                            }
+                      },
+    "models":  {
+                   "deepseek-local-deep":  {
+                                               "roles":  [
+                                                             "background-reasoning",
+                                                             "deep-analysis",
+                                                             "batch-review"
+                                                         ],
+                                               "class":  "NOT_TESTED",
+                                               "provider":  "ollama",
+                                               "privacy":  "LOCAL_ONLY",
+                                               "model":  "deepseek-r1:7b",
+                                               "availability":  "DEFERRED_BY_RESOURCE_GATE"
+                                           },
+                   "deepseek-local-fast":  {
+                                               "class":  "INTERACTIVE_FAST",
+                                               "model":  "deepseek-r1:1.5b",
+                                               "measured_tokens_per_second":  24.1,
+                                               "privacy":  "LOCAL_ONLY",
+                                               "forbidden_roles":  [
+                                                                       "unvalidated-destructive-change",
+                                                                       "final-security-decision",
+                                                                       "final-database-migration-decision",
+                                                                       "sole-architecture-authority"
+                                                                   ],
+                                               "provider":  "ollama",
+                                               "roles":  [
+                                                             "classification",
+                                                             "summarization",
+                                                             "handoff-analysis",
+                                                             "task-routing",
+                                                             "knowledge-extraction",
+                                                             "light-code-analysis",
+                                                             "dataset-curation-assistance"
+                                                         ],
+                                               "endpoint":  "http://localhost:11434"
+                                           }
+               },
+    "routing":  {
+                    "confidential":  "deepseek-local-fast",
+                    "summarization":  "deepseek-local-fast",
+                    "deep_reasoning":  "QUEUE_UNTIL_STRONG_LOCAL_MODEL_AVAILABLE",
+                    "classification":  "deepseek-local-fast",
+                    "interactive":  "deepseek-local-fast",
+                    "critical_decision":  "MULTI_AGENT_VALIDATION_REQUIRED"
+                }
+}

@@ -1,0 +1,43 @@
+{
+    "Status":  "EXECUTION_READY",
+    "Route":  {
+                  "Destination":  "Norway",
+                  "Origin":  "Egypt"
+              },
+    "Product":  {
+                    "Category":  "Natural Honey",
+                    "Name":  "Wildflower Honey",
+                    "SKU":  "GL-HONEY-001"
+                },
+    "Quality":  {
+                    "Certification":  "AVAILABLE",
+                    "Inspection":  "PASSED"
+                },
+    "Logistics":  {
+                      "ShipmentStatus":  "READY",
+                      "Mode":  "EXPORT"
+                  },
+    "Engine":  "REAL_EXPORT_TRANSACTION_ENGINE_V1",
+    "Workflow":  [
+                     "Supplier Confirmed",
+                     "Product Verified",
+                     "Packaging Verified",
+                     "Quality Approved",
+                     "Inventory Reserved",
+                     "Shipment Prepared",
+                     "Invoice Prepared"
+                 ],
+    "Commercial":  {
+                       "Invoice":  "READY",
+                       "Currency":  "EUR"
+                   },
+    "System":  "GREENY-LIFE EOS",
+    "Packaging":  {
+                      "Status":  "APPROVED",
+                      "Standard":  "GELS v1.0"
+                  },
+    "TransactionID":  "GL-EXP-2026-0001",
+    "Supplier":  {
+                     "Status":  "VALIDATED"
+                 }
+}

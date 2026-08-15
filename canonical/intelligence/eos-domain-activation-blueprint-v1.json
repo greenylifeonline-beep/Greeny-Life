@@ -1,0 +1,92 @@
+[
+    {
+        "Domain":  "SALES_ORDER",
+        "Status":  "ACTIVE_DOMAIN",
+        "EvidenceCount":  7,
+        "RuntimeOwners":  "\\app\\api\\products\\route.ts;\\app\\api\\sales-orders\\route.ts;\\app\\api\\suppliers\\route.ts;\\app\\api\\workflow\\route.ts;\\app\\page.tsx",
+        "Commands":  "CREATE,UPDATE",
+        "Queries":  "READ",
+        "Events":  "SALES_ORDEREvent"
+    },
+    {
+        "Domain":  "MASTER_DATA",
+        "Status":  "ACTIVE_DOMAIN",
+        "EvidenceCount":  11,
+        "RuntimeOwners":  "\\eos-core\\intelligence\\intelligence\\core\\engine-registry.ts;\\eos-core\\intelligence\\intelligence\\core\\report-writer.ts;\\eos-core\\intelligence\\intelligence\\engines\\audit-engine.ts;\\eos-core\\intelligence\\intelligence\\engines\\data-integrity-engine.ts;\\eos-core\\intelligence\\intelligence\\engines\\duplicate-engine-v2.ts",
+        "Commands":  "CREATE,DELETE,UPDATE",
+        "Queries":  "READ",
+        "Events":  "MASTER_DATAEvent"
+    },
+    {
+        "Domain":  "FINANCE",
+        "Status":  "PARTIAL_DOMAIN",
+        "EvidenceCount":  1,
+        "RuntimeOwners":  "\\prisma\\schema.prisma",
+        "Commands":  "CREATE,UPDATE",
+        "Queries":  "READ",
+        "Events":  ""
+    },
+    {
+        "Domain":  "WORKFLOW",
+        "Status":  "ACTIVE_DOMAIN",
+        "EvidenceCount":  20,
+        "RuntimeOwners":  "\\app\\api\\products\\route.ts;\\app\\api\\sales-orders\\route.ts;\\app\\api\\suppliers\\route.ts;\\app\\api\\workflow\\route.ts;\\app\\page.tsx",
+        "Commands":  "CREATE,DELETE,UPDATE",
+        "Queries":  "READ",
+        "Events":  "WORKFLOWEvent"
+    },
+    {
+        "Domain":  "QUALITY",
+        "Status":  "ACTIVE_DOMAIN",
+        "EvidenceCount":  8,
+        "RuntimeOwners":  "\\eos-core\\intelligence\\intelligence\\core\\engine-registry.ts;\\eos-core\\intelligence\\intelligence\\engines\\audit-engine.ts;\\eos-core\\intelligence\\intelligence\\schemas\\product-schema-map.ts;\\eos-core\\intelligence\\intelligence\\test\\test-audit.ts;\\eos-core\\intelligence\\intelligence\\gl-dos.ts",
+        "Commands":  "CREATE,UPDATE",
+        "Queries":  "READ",
+        "Events":  "QUALITYEvent"
+    },
+    {
+        "Domain":  "LOGISTICS",
+        "Status":  "PARTIAL_DOMAIN",
+        "EvidenceCount":  1,
+        "RuntimeOwners":  "\\prisma\\schema.prisma",
+        "Commands":  "CREATE,UPDATE",
+        "Queries":  "READ",
+        "Events":  ""
+    },
+    {
+        "Domain":  "CUSTOMER",
+        "Status":  "PARTIAL_DOMAIN",
+        "EvidenceCount":  2,
+        "RuntimeOwners":  "\\app\\api\\sales-orders\\route.ts;\\prisma\\schema.prisma",
+        "Commands":  "CREATE,UPDATE",
+        "Queries":  "READ",
+        "Events":  ""
+    },
+    {
+        "Domain":  "INVENTORY",
+        "Status":  "PARTIAL_DOMAIN",
+        "EvidenceCount":  3,
+        "RuntimeOwners":  "\\app\\api\\sales-orders\\route.ts;\\lib\\workflowEngine.ts;\\prisma\\schema.prisma",
+        "Commands":  "CREATE,UPDATE",
+        "Queries":  "READ",
+        "Events":  "INVENTORYEvent"
+    },
+    {
+        "Domain":  "PRODUCT",
+        "Status":  "ACTIVE_DOMAIN",
+        "EvidenceCount":  23,
+        "RuntimeOwners":  "\\app\\api\\products\\route.ts;\\app\\api\\sales-orders\\route.ts;\\app\\api\\suppliers\\route.ts;\\app\\layout.tsx;\\app\\page.tsx",
+        "Commands":  "CREATE,DELETE,UPDATE",
+        "Queries":  "READ",
+        "Events":  "PRODUCTEvent"
+    },
+    {
+        "Domain":  "SUPPLIER",
+        "Status":  "PARTIAL_DOMAIN",
+        "EvidenceCount":  4,
+        "RuntimeOwners":  "\\app\\api\\products\\route.ts;\\app\\api\\suppliers\\route.ts;\\lib\\workflowEngine.ts;\\prisma\\schema.prisma",
+        "Commands":  "CREATE,UPDATE",
+        "Queries":  "READ",
+        "Events":  "SUPPLIEREvent"
+    }
+]

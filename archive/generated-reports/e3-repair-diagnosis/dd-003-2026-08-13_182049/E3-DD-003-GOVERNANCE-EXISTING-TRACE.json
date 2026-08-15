@@ -1,0 +1,63 @@
+﻿{
+    "recordType":  "E3_DD_003_EXISTING_GOVERNANCE_TRACE_V1",
+    "id":  "DD-003",
+    "generatedAtUtc":  "2026-08-13T16:20:49.1806349Z",
+    "mode":  "READ_ONLY_STATIC_DIAGNOSIS",
+    "scope":  "Current replacement only; Legacy excluded; no endpoint, workflow engine, or database execution.",
+    "existingComponents":  [
+                               "app/api/workflow/route.ts",
+                               "lib/intelligence/workflow-governance.ts",
+                               "canonical/intelligence/runtime/controlled-runtime-orchestrator.ts",
+                               "canonical/intelligence/adapters/gl-dos-governance-gate.ts",
+                               "canonical/lib/workflowEngine.ts",
+                               "tests/workflow_governance_check.ts"
+                           ],
+    "proven":  [
+                   "Workflow POST authenticates and authorizes before governance review.",
+                   "Workflow write is classified as HIGH risk.",
+                   "Any governance state other than AUTHORIZED returns before EOSWorkflowEngine.transitionOrderState.",
+                   "The existing GL-DOS gate returns REVIEW_REQUIRED for HIGH risk and does not automatically authorize an operational write.",
+                   "The state engine uses a database transaction and writes an AuditLog in the same transaction when it is reached."
+               ],
+    "gap":  [
+                "No durable approval record is modeled or verified at the action boundary.",
+                "No operational proof has shown an approved transition together with durable approval and audit persistence.",
+                "No rollback/recovery semantics for a completed workflow transition are proven."
+            ],
+    "recommendation":  "HARDEN_EXISTING_ONLY: extend the current governance/approval boundary after an explicit data-model and failure-mode review. Do not create a second workflow, audit, or governance engine.",
+    "currentSafetyVerdict":  "FAIL_CLOSED_FOR_UNAPPROVED_WORKFLOW_WRITES",
+    "promotion":  "NOT_AUTHORIZED: DD-003 remains diagnosis-only until the existing approval/audit/state path has targeted regression and operational evidence.",
+    "prohibited":  [
+                       "Automatic execution",
+                       "Legacy modification",
+                       "New workflow engine",
+                       "New audit engine",
+                       "Database mutation by this diagnosis"
+                   ],
+    "fileHashes":  [
+                       {
+                           "path":  "app\\api\\workflow\\route.ts",
+                           "sha256":  "fa9fba2691d1d3ed1a898d8ea5d74e52543f801289e2b59ad9f307a846b43d0a"
+                       },
+                       {
+                           "path":  "lib\\intelligence\\workflow-governance.ts",
+                           "sha256":  "7360e82dda5effeb0a6d7e88b0aa797c70f3828bae389c523c8fe763c4bf3fe7"
+                       },
+                       {
+                           "path":  "canonical\\intelligence\\runtime\\controlled-runtime-orchestrator.ts",
+                           "sha256":  "f0a00afa92a9f82d52110b313bda3be96ddb2f252b3e641f4d38d4c464944b6a"
+                       },
+                       {
+                           "path":  "canonical\\intelligence\\adapters\\gl-dos-governance-gate.ts",
+                           "sha256":  "011d06eda90d471771d7336f2eaa713f88dc2f8d6466e7018a085d5b14845924"
+                       },
+                       {
+                           "path":  "canonical\\lib\\workflowEngine.ts",
+                           "sha256":  "3f2607cf490e08a1abe0feef105921ebd9fd994e96c2eec1c6d63acacc09b39f"
+                       },
+                       {
+                           "path":  "tests\\workflow_governance_check.ts",
+                           "sha256":  "d2548a8d89757f21420cca423e190f5c17368f6f1e42b08de8821ff183265eb6"
+                       }
+                   ]
+}

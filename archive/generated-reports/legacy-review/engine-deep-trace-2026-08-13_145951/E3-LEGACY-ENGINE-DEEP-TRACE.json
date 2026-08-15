@@ -1,0 +1,324 @@
+﻿{
+    "reportType":  "E3_LEGACY_ENGINE_DEEP_TRACE_V1",
+    "generatedAtUtc":  "2026-08-13T13:00:09.2494871Z",
+    "scope":  "Actual old project only. Static/read-only call and dependency trace. No legacy code was executed; replacement runtime and database excluded.",
+    "sourceAnalysis":  "C:\\Users\\Ghanam\\Documents\\Codex\\Greeny-Life-Repair\\archive\\generated-reports\\legacy-review\\source-of-truth-2026-08-13_145600\\E3-LEGACY-SOURCE-OF-TRUTH-ANALYSIS.json",
+    "engineCount":  11,
+    "engines":  [
+                    {
+                        "path":  "application/customer/workflows/customer-workflow.ts",
+                        "kind":  "APPLICATION_WORKFLOW",
+                        "definitions":  {
+
+                                        },
+                        "staticConsumers":  "brain.py",
+                        "consumerCount":  1,
+                        "imports":  [
+
+                                    ],
+                        "inputSignatures":  [
+
+                                            ],
+                        "persistence":  false,
+                        "eventImplementation":  false,
+                        "external":  false,
+                        "destructive":  false,
+                        "processLaunch":  false,
+                        "testInFile":  false,
+                        "risk":  "NO_HIGH_RISK_STATIC_SIGNAL",
+                        "runtime":  "STATIC_CONSUMERS_FOUND_NOT_EXECUTED",
+                        "verdict":  "EXTRACT_OR_REUSE_CANDIDATE_AFTER_TEST"
+                    },
+                    {
+                        "path":  "application/inventory/workflows/inventory-workflow.ts",
+                        "kind":  "APPLICATION_WORKFLOW",
+                        "definitions":  {
+
+                                        },
+                        "staticConsumers":  "brain.py",
+                        "consumerCount":  1,
+                        "imports":  [
+
+                                    ],
+                        "inputSignatures":  [
+
+                                            ],
+                        "persistence":  false,
+                        "eventImplementation":  false,
+                        "external":  false,
+                        "destructive":  false,
+                        "processLaunch":  false,
+                        "testInFile":  false,
+                        "risk":  "NO_HIGH_RISK_STATIC_SIGNAL",
+                        "runtime":  "STATIC_CONSUMERS_FOUND_NOT_EXECUTED",
+                        "verdict":  "EXTRACT_OR_REUSE_CANDIDATE_AFTER_TEST"
+                    },
+                    {
+                        "path":  "application/logistics/workflows/logistics-workflow.ts",
+                        "kind":  "APPLICATION_WORKFLOW",
+                        "definitions":  {
+
+                                        },
+                        "staticConsumers":  "brain.py",
+                        "consumerCount":  1,
+                        "imports":  [
+
+                                    ],
+                        "inputSignatures":  [
+
+                                            ],
+                        "persistence":  false,
+                        "eventImplementation":  false,
+                        "external":  false,
+                        "destructive":  false,
+                        "processLaunch":  false,
+                        "testInFile":  false,
+                        "risk":  "NO_HIGH_RISK_STATIC_SIGNAL",
+                        "runtime":  "STATIC_CONSUMERS_FOUND_NOT_EXECUTED",
+                        "verdict":  "EXTRACT_OR_REUSE_CANDIDATE_AFTER_TEST"
+                    },
+                    {
+                        "path":  "application/product/workflows/product-workflow.ts",
+                        "kind":  "APPLICATION_WORKFLOW",
+                        "definitions":  {
+
+                                        },
+                        "staticConsumers":  "brain.py",
+                        "consumerCount":  1,
+                        "imports":  [
+
+                                    ],
+                        "inputSignatures":  [
+
+                                            ],
+                        "persistence":  false,
+                        "eventImplementation":  false,
+                        "external":  false,
+                        "destructive":  false,
+                        "processLaunch":  false,
+                        "testInFile":  false,
+                        "risk":  "NO_HIGH_RISK_STATIC_SIGNAL",
+                        "runtime":  "STATIC_CONSUMERS_FOUND_NOT_EXECUTED",
+                        "verdict":  "EXTRACT_OR_REUSE_CANDIDATE_AFTER_TEST"
+                    },
+                    {
+                        "path":  "application/quality/workflows/quality-workflow.ts",
+                        "kind":  "APPLICATION_WORKFLOW",
+                        "definitions":  {
+
+                                        },
+                        "staticConsumers":  {
+
+                                            },
+                        "consumerCount":  0,
+                        "imports":  [
+
+                                    ],
+                        "inputSignatures":  [
+
+                                            ],
+                        "persistence":  false,
+                        "eventImplementation":  false,
+                        "external":  false,
+                        "destructive":  false,
+                        "processLaunch":  false,
+                        "testInFile":  false,
+                        "risk":  "NO_HIGH_RISK_STATIC_SIGNAL",
+                        "runtime":  "NO_STATIC_CONSUMER_FOUND",
+                        "verdict":  "EXTRACT_OR_REUSE_CANDIDATE_AFTER_TEST"
+                    },
+                    {
+                        "path":  "application/supplier/workflows/supplier-workflow.ts",
+                        "kind":  "APPLICATION_WORKFLOW",
+                        "definitions":  {
+
+                                        },
+                        "staticConsumers":  "brain.py",
+                        "consumerCount":  1,
+                        "imports":  [
+
+                                    ],
+                        "inputSignatures":  [
+
+                                            ],
+                        "persistence":  false,
+                        "eventImplementation":  false,
+                        "external":  false,
+                        "destructive":  false,
+                        "processLaunch":  false,
+                        "testInFile":  false,
+                        "risk":  "NO_HIGH_RISK_STATIC_SIGNAL",
+                        "runtime":  "STATIC_CONSUMERS_FOUND_NOT_EXECUTED",
+                        "verdict":  "EXTRACT_OR_REUSE_CANDIDATE_AFTER_TEST"
+                    },
+                    {
+                        "path":  "canonical/intelligence/intelligence/engines/audit-engine.ts",
+                        "kind":  "AUDIT_ENGINE",
+                        "definitions":  [
+                                            "checkDuplicates",
+                                            "load",
+                                            "runAuditEngine",
+                                            "validateProduct"
+                                        ],
+                        "staticConsumers":  [
+                                                "archive/historical/intelligence/intelligence/core/engine-registry.ts",
+                                                "archive/historical/scripts/extract_product_master.py",
+                                                "archive/historical/scripts/system_analyzer.py",
+                                                "audit_ast_extraction.py",
+                                                "audit_brain_intelligence.py",
+                                                "audit_brain_intelligence_v2.py",
+                                                "brain.py",
+                                                "build_evidence_layer.py",
+                                                "enrich_context.py",
+                                                "enrich_context_fixed.py",
+                                                "greenlines_brain/repository/json_repo.py"
+                                            ],
+                        "consumerCount":  11,
+                        "imports":  [
+                                        "import fs from \"fs\";",
+                                        "import path from \"path\";",
+                                        "import {normalizeProduct, ProductSource} from \"../schemas/product-schema-map\";"
+                                    ],
+                        "inputSignatures":  [
+                                                "file:string",
+                                                "\r\n\r\n    product:any,\r\n\r\n    source:string\r\n\r\n",
+                                                "\r\n\r\n    products:any[],\r\n\r\n    source:string\r\n\r\n"
+                                            ],
+                        "persistence":  false,
+                        "eventImplementation":  false,
+                        "external":  false,
+                        "destructive":  false,
+                        "processLaunch":  false,
+                        "testInFile":  false,
+                        "risk":  "NO_HIGH_RISK_STATIC_SIGNAL",
+                        "runtime":  "STATIC_CONSUMERS_FOUND_NOT_EXECUTED",
+                        "verdict":  "EXTRACT_OR_REUSE_CANDIDATE_AFTER_TEST"
+                    },
+                    {
+                        "path":  "canonical/intelligence/intelligence/engines/data-integrity-engine.ts",
+                        "kind":  "DATA_INTEGRITY_ENGINE",
+                        "definitions":  [
+                                            "buildIdentityMap",
+                                            "compareProvenance",
+                                            "detectDuplicates",
+                                            "getSlug",
+                                            "normalize",
+                                            "normalizeValue",
+                                            "readJSON",
+                                            "runIntegrityEngine"
+                                        ],
+                        "staticConsumers":  "brain.py",
+                        "consumerCount":  1,
+                        "imports":  [
+                                        "import fs from \"fs\";",
+                                        "import path from \"path\";"
+                                    ],
+                        "inputSignatures":  [
+                                                "\r\n    file: string,\r\n    findings: IntegrityFinding[]\r\n",
+                                                "\r\n    data: any\r\n",
+                                                "\r\n    value: any\r\n",
+                                                "\r\n    product: any\r\n",
+                                                "\r\n    products: any[],\r\n    file: string,\r\n    findings: IntegrityFinding[]\r\n",
+                                                "\r\n    products: any[]\r\n",
+                                                "\r\n    canonical: any[],\r\n    source: any[],\r\n    sourceType:\r\n        \"MIGRATION\" |\r\n        \"LEGACY\",\r\n    findings:\r\n        IntegrityFinding[]\r\n"
+                                            ],
+                        "persistence":  false,
+                        "eventImplementation":  false,
+                        "external":  false,
+                        "destructive":  false,
+                        "processLaunch":  false,
+                        "testInFile":  false,
+                        "risk":  "NO_HIGH_RISK_STATIC_SIGNAL",
+                        "runtime":  "STATIC_CONSUMERS_FOUND_NOT_EXECUTED",
+                        "verdict":  "EXTRACT_OR_REUSE_CANDIDATE_AFTER_TEST"
+                    },
+                    {
+                        "path":  "canonical/intelligence/intelligence/health/health-reporter.ts",
+                        "kind":  "HEALTH_REPORTER",
+                        "definitions":  [
+                                            "checkEngineFiles",
+                                            "generateHealthReport"
+                                        ],
+                        "staticConsumers":  {
+
+                                            },
+                        "consumerCount":  0,
+                        "imports":  [
+                                        "import fs from \"fs\";",
+                                        "import path from \"path\";",
+                                        "import {",
+                                        "from \"../core/engine-registry\";"
+                                    ],
+                        "inputSignatures":  [
+
+                                            ],
+                        "persistence":  false,
+                        "eventImplementation":  false,
+                        "external":  false,
+                        "destructive":  false,
+                        "processLaunch":  false,
+                        "testInFile":  false,
+                        "risk":  "NO_HIGH_RISK_STATIC_SIGNAL",
+                        "runtime":  "NO_STATIC_CONSUMER_FOUND",
+                        "verdict":  "TRACE_AND_TEST_BEFORE_DECISION"
+                    },
+                    {
+                        "path":  "canonical/intelligence/runtime/controlled-runtime-orchestrator.ts",
+                        "kind":  "RUNTIME_ORCHESTRATOR",
+                        "definitions":  "ControlledRuntimeOrchestrator",
+                        "staticConsumers":  {
+
+                                            },
+                        "consumerCount":  0,
+                        "imports":  [
+                                        "import crypto from \"crypto\";",
+                                        "import {"
+                                    ],
+                        "inputSignatures":  [
+
+                                            ],
+                        "persistence":  false,
+                        "eventImplementation":  false,
+                        "external":  false,
+                        "destructive":  false,
+                        "processLaunch":  false,
+                        "testInFile":  false,
+                        "risk":  "NO_HIGH_RISK_STATIC_SIGNAL",
+                        "runtime":  "NO_STATIC_CONSUMER_FOUND",
+                        "verdict":  "TRACE_AND_TEST_BEFORE_DECISION"
+                    },
+                    {
+                        "path":  "canonical/lib/workflowEngine.ts",
+                        "kind":  "PERSISTED_WORKFLOW_ENGINE",
+                        "definitions":  "EOSWorkflowEngine",
+                        "staticConsumers":  [
+                                                "app/api/workflow/route.ts",
+                                                "archive/duplicates/route.ts",
+                                                "archive/historical/__tests__/workflowEngine.test.ts",
+                                                "brain.py"
+                                            ],
+                        "consumerCount":  4,
+                        "imports":  [
+                                        "import { PrismaClient } from \"@prisma/client\";"
+                                    ],
+                        "inputSignatures":  [
+
+                                            ],
+                        "persistence":  true,
+                        "eventImplementation":  false,
+                        "external":  false,
+                        "destructive":  false,
+                        "processLaunch":  false,
+                        "testInFile":  false,
+                        "risk":  "NO_HIGH_RISK_STATIC_SIGNAL",
+                        "runtime":  "STATIC_CONSUMERS_FOUND_NOT_EXECUTED",
+                        "verdict":  "RECONNECT_CANDIDATE_AFTER_ISOLATED_TEST"
+                    }
+                ],
+    "conclusions":  [
+                        "Static consumers do not prove a live runtime path.",
+                        "No event architecture may be inferred until producer, transport, consumer, state change and audit are traced.",
+                        "No candidate may be deleted or auto-connected to the replacement system from this report alone."
+                    ],
+    "nextGate":  "Isolated tests for selected P0 candidates only: persisted workflow engine, controlled runtime orchestrator, data integrity engine, audit engine, then the six application workflows."
+}

@@ -1,0 +1,53 @@
+{
+    "System":  "Greeny-Life",
+    "Phase":  "PHASE_31",
+    "Step":  "STEP_41_APPLICATION_ENTERPRISE_ARCHITECTURE_METRICS_FOUNDATION",
+    "Framework":  "ENTERPRISE_APPLICATION_ARCHITECTURE_METRICS_MODEL",
+    "ArchitectureMetrics":  [
+                                {
+                                    "MetricArea":  "APPLICATION_ALIGNMENT_METRICS",
+                                    "Owner":  "ENTERPRISE_ARCHITECTURE",
+                                    "Purpose":  "Measure application alignment with enterprise direction"
+                                },
+                                {
+                                    "MetricArea":  "DOMAIN_BOUNDARY_METRICS",
+                                    "Owner":  "DOMAIN_ARCHITECTURE",
+                                    "Purpose":  "Measure domain separation quality"
+                                },
+                                {
+                                    "MetricArea":  "INTEGRATION_COMPLEXITY_METRICS",
+                                    "Owner":  "INTEGRATION_ARCHITECTURE",
+                                    "Purpose":  "Measure integration effectiveness"
+                                },
+                                {
+                                    "MetricArea":  "APPLICATION_CAPABILITY_METRICS",
+                                    "Owner":  "CAPABILITY_MANAGEMENT",
+                                    "Purpose":  "Measure capability support"
+                                },
+                                {
+                                    "MetricArea":  "ARCHITECTURE_EVOLUTION_METRICS",
+                                    "Owner":  "ARCHITECTURE_GOVERNANCE",
+                                    "Purpose":  "Measure architecture evolution progress"
+                                }
+                            ],
+    "MetricRules":  [
+                        "METRIC_OWNER_REQUIRED",
+                        "MEASUREMENT_DEFINITION_REQUIRED",
+                        "METRIC_PURPOSE_REQUIRED",
+                        "MEASUREMENT_HISTORY_REQUIRED",
+                        "METRIC_CHANGE_GOVERNANCE_REQUIRED"
+                    ],
+    "MetricLifecycle":  [
+                            "DEFINE_ARCHITECTURE_METRIC",
+                            "ASSIGN_METRIC_OWNER",
+                            "REVIEW_MEASUREMENT_VALUE",
+                            "ANALYZE_ARCHITECTURE_DIRECTION",
+                            "IMPROVE_METRIC_MODEL"
+                        ],
+    "Restrictions":  [
+                         "NO_METRIC_COLLECTION",
+                         "NO_MONITORING_IMPLEMENTATION",
+                         "BLUEPRINT_ONLY"
+                     ],
+    "Status":  "APPLICATION_ENTERPRISE_ARCHITECTURE_METRICS_FOUNDATION_CREATED"
+}

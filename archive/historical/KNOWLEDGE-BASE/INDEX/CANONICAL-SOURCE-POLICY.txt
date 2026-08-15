@@ -1,0 +1,53 @@
+﻿GREENY-LIFE CANONICAL SOURCE POLICY
+===================================
+
+PRODUCT
+-------
+Primary candidate:
+GREENY-LIFE-EOS-PRODUCTION\master-data\canonical-product-master-v1.json
+
+Secondary candidate requiring reconciliation:
+GREENY-LIFE-EOS-PRODUCTION\master-data\product-master-v7\final-product-master-v7.json
+
+
+GELS
+----
+Primary candidate:
+GREENY-LIFE-EOS-PRODUCTION\master-data\gels-normalized-registry-v1.json
+
+Implementation candidate:
+GREENY-LIFE-EOS-PRODUCTION\platform\export-os\gels\global-export-label-standard\gels-v1.json
+
+
+ACTIVATION
+----------
+Primary candidate:
+GREENY-LIFE-EOS-PRODUCTION\master-data\export-operations-runtime-activation-registry-v1.json
+
+
+RELEASE
+-------
+Primary candidate:
+GREENY-LIFE-EOS-PRODUCTION\master-data\export-production-release-certificate-v1.json
+
+
+SUPPLIER
+--------
+Current candidate:
+GREENY-LIFE-EOS-PRODUCTION\master-data\supplier-master-remediation-v1.json
+
+
+RULE
+----
+No file becomes canonical merely because its filename contains:
+final
+latest
+v7
+v2
+production
+reconciliation
+report
+
+Canonical status must be explicitly established after reconciliation.
+
+No deletion is authorized by this file.

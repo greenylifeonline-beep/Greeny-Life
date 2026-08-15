@@ -39,6 +39,9 @@ export async function POST(request: NextRequest) {
     if (existing) return NextResponse.json({ success: false, error: "A training case already exists for this outcome; it cannot be duplicated.", trainingCaseId: existing.id }, { status: 409 });
     const training = buildTrainingCase({ outcome, expectedDecision: text(body.expectedDecision), actualDecision: text(body.actualDecision), rootCause: text(body.rootCause) || undefined, actor: actorEmail });
     const governance = await new ControlledRuntimeOrchestrator().execute({ operation: "learning:create-training-case", actor: actorEmail, riskLevel: "MEDIUM", input: training });
+    if (governance.status === "DENIED") {
+      return NextResponse.json({ success: false, error: "Learning governance denied persistence.", governance: { status: governance.status, reason: governance.governanceReason } }, { status: 403 });
+    }
     const id = crypto.randomUUID();
     await prisma.$executeRaw`
       INSERT INTO "TrainingCase" (

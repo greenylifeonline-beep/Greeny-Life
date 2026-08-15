@@ -1,0 +1,62 @@
+{
+    "System":  "Greeny-Life",
+    "Architecture":  "Enterprise Operating System (EOS)",
+    "RoadmapVersion":  "v1.0",
+    "Phase1":  {
+                   "Status":  "COMPLETED",
+                   "Name":  "FOUNDATION",
+                   "Items":  [
+                                 "EOS Core Created",
+                                 "Architecture Consolidated",
+                                 "GL-DOS Defined",
+                                 "GELS Defined",
+                                 "Master Data Aligned"
+                             ]
+               },
+    "Phase2":  {
+                   "Status":  "READY",
+                   "Name":  "CORE DOMAINS",
+                   "Items":  [
+                                 "Product Domain",
+                                 "Supplier Domain",
+                                 "Inventory Domain",
+                                 "Quality Domain",
+                                 "Logistics Domain"
+                             ]
+               },
+    "Phase3":  {
+                   "Status":  "READY_AFTER_DOMAIN_MODEL",
+                   "Name":  "OPERATIONAL SYSTEMS",
+                   "Items":  [
+                                 "Workflow Engine",
+                                 "CRM",
+                                 "Finance",
+                                 "Compliance",
+                                 "Analytics"
+                             ]
+               },
+    "Phase4":  {
+                   "Status":  "PENDING",
+                   "Name":  "IMPLEMENTATION",
+                   "Items":  [
+                                 "Database Implementation",
+                                 "Service Development",
+                                 "Application Integration",
+                                 "Testing"
+                             ]
+               },
+    "ReadinessChecks":  [
+                            "ARCHITECTURE_READY",
+                            "DOMAIN_BOUNDARIES_READY",
+                            "MASTER_DATA_READY",
+                            "DATABASE_STRATEGY_READY",
+                            "IMPLEMENTATION_CAN_START"
+                        ],
+    "ExecutionRules":  [
+                           "NO_CODING_BEFORE_DOMAIN_APPROVAL",
+                           "NO_DATABASE_MIGRATION_BEFORE_MODEL_APPROVAL",
+                           "NO_DUPLICATE_MODULES",
+                           "TRACEABLE_IMPLEMENTATION"
+                       ],
+    "Status":  "EOS_ROADMAP_IMPLEMENTATION_READINESS_COMPLETED"
+}

@@ -53,6 +53,9 @@ export async function POST(request: NextRequest) {
     const [existing] = await prisma.$queryRaw<Pick<EvaluationRow, "id">[]>`SELECT "id" FROM "EvaluationRun" WHERE "evaluationKey" = ${evaluationKey}`;
     if (existing) return NextResponse.json({ success: false, error: "This exact evaluation already exists; duplicate benchmark runs are blocked.", evaluationId: existing.id }, { status: 409 });
     const governance = await new ControlledRuntimeOrchestrator().execute({ operation: "learning:record-benchmark", actor: actorEmail, riskLevel: "HIGH", input });
+    if (governance.status === "DENIED") {
+      return NextResponse.json({ success: false, error: "Learning governance denied persistence.", governance: { status: governance.status, reason: governance.governanceReason } }, { status: 403 });
+    }
     const id = crypto.randomUUID();
     await prisma.$executeRaw`
       INSERT INTO "EvaluationRun" (

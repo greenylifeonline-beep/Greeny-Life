@@ -1,0 +1,78 @@
+﻿{
+    "reportType":  "E3_LEGACY_BRAIN_RECOVERY_DECISION_V1",
+    "generatedAtUtc":  "2026-08-13T13:42:45.2979396Z",
+    "sourceProof":  "C:\\Users\\Ghanam\\Documents\\Codex\\Greeny-Life-Repair\\archive\\generated-reports\\legacy-review\\brain-kernel-proof-2026-08-13_154110\\E3-LEGACY-BRAIN-KERNEL-ISOLATED-PROOF.json",
+    "finding":  "P1: semantic engine fabricates trade/export relations when repository rules are empty. This violates fail-closed evidence governance.",
+    "status":  "P1_DECISION_ENGINE_QUARANTINED",
+    "components":  [
+                       {
+                           "component":  "GreenlinesBrain.decide / SemanticReasoningEngine",
+                           "legacyStatus":  "RUNTIME_PROVEN_UNSAFE",
+                           "decision":  "QUARANTINE",
+                           "reason":  "Empty knowledge creates five trade relations and returns a medium-confidence export recommendation with fabricated evidence.",
+                           "promotionRequirements":  [
+                                                         "Remove every default/fallback business relation.",
+                                                         "Require persisted evidence with provenance before any relation is used.",
+                                                         "Return NEEDS_VERIFICATION / UNKNOWN when evidence is absent.",
+                                                         "Unit-test empty, contradictory, expired and unsupported evidence.",
+                                                         "Bind output to signed actor, audit record and human approval before execution."
+                                                     ]
+                       },
+                       {
+                           "component":  "InstitutionalMemory",
+                           "legacyStatus":  "STATIC_COMPONENT; NOT_INDEPENDENTLY_PROVEN",
+                           "decision":  "EXTRACT_FOR_ISOLATED_TEST",
+                           "reason":  "In-memory storage is separable from unsafe decision fallback; must be tested for lifecycle and provenance independently.",
+                           "promotionRequirements":  [
+                                                         "No implicit decision authority.",
+                                                         "Store source, timestamp, confidence and expiry.",
+                                                         "No production persistence without retention/audit policy."
+                                                     ]
+                       },
+                       {
+                           "component":  "JSONKnowledgeRepository",
+                           "legacyStatus":  "RUNTIME_PROVEN_BOUNDED",
+                           "decision":  "REUSE_CANDIDATE",
+                           "reason":  "Temporary JSON load/search/retrieval passed; it is a repository adapter, not verified production persistence.",
+                           "promotionRequirements":  [
+                                                         "Compare with current data/evidence contract.",
+                                                         "Enforce schema validation and immutable provenance.",
+                                                         "Add tests for missing, malformed and conflicting knowledge."
+                                                     ]
+                       },
+                       {
+                           "component":  "KnowledgeGraph",
+                           "legacyStatus":  "RUNTIME_PROVEN_PARTIAL",
+                           "decision":  "HARDEN_CANDIDATE",
+                           "reason":  "Graph operations passed in memory, but name lookup duplicates entity references.",
+                           "promotionRequirements":  [
+                                                         "Deduplicate indexes.",
+                                                         "Validate relationship provenance.",
+                                                         "No inferred relationship may be used as official evidence."
+                                                     ]
+                       },
+                       {
+                           "component":  "BrainContract data classes",
+                           "legacyStatus":  "RUNTIME_PROVEN_BOUNDED",
+                           "decision":  "REUSE_CANDIDATE",
+                           "reason":  "Typed Evidence and Decision data structures instantiate correctly; no reasoning behavior is proven.",
+                           "promotionRequirements":  [
+                                                         "Align confidence and evidence-status fields with official Evidence Ladder.",
+                                                         "Require provenance and temporal validity."
+                                                     ]
+                       },
+                       {
+                           "component":  "ImplementationEvidenceLayer",
+                           "legacyStatus":  "IMPORT_FAILURE",
+                           "decision":  "REJECT_AS_IS; EXTRACT_DESIGN_ONLY",
+                           "reason":  "Python dataclass cannot import because a default argument precedes required fields.",
+                           "promotionRequirements":  [
+                                                         "Repair only in a promoted copy after design review.",
+                                                         "Add import and conversion tests.",
+                                                         "Do not treat AST extraction as business evidence."
+                                                     ]
+                       }
+                   ],
+    "nonNegotiablePolicy":  "No legacy brain component may issue an actionable commercial recommendation, create assumed relationships, or execute an operation until it passes the Evidence Ladder through OPERATIONAL_PROVEN, TEST_EVIDENCE, OWNER_PROVEN, and SYSTEM_OF_RECORD.",
+    "nextGate":  "Isolated proof Wave 2: InstitutionalMemory, semantic rule parser with explicit evidence only, and candidate business workflows. No promotion yet."
+}

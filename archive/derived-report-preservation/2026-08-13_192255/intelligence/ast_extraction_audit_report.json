@@ -1,0 +1,325 @@
+{
+  "required_types": {
+    "Module": {
+      "description": "الملف بأكمله",
+      "in_source": 1,
+      "extracted": 1,
+      "status": "✅"
+    },
+    "FunctionDef": {
+      "description": "تعريف دالة",
+      "in_source": 83,
+      "extracted": 83,
+      "status": "✅"
+    },
+    "AsyncFunctionDef": {
+      "description": "دالة غير متزامنة",
+      "in_source": 0,
+      "extracted": 0,
+      "status": "✅"
+    },
+    "ClassDef": {
+      "description": "تعريف كلاس",
+      "in_source": 4,
+      "extracted": 4,
+      "status": "✅"
+    },
+    "Return": {
+      "description": "عبارة return",
+      "in_source": 118,
+      "extracted": 118,
+      "status": "✅"
+    },
+    "Delete": {
+      "description": "حذف",
+      "in_source": 0,
+      "extracted": 0,
+      "status": "✅"
+    },
+    "Assign": {
+      "description": "تعيين قيمة",
+      "in_source": 1158,
+      "extracted": 1158,
+      "status": "✅"
+    },
+    "AugAssign": {
+      "description": "تعيين مع عملية",
+      "in_source": 60,
+      "extracted": 60,
+      "status": "✅"
+    },
+    "AnnAssign": {
+      "description": "تعيين مع نوع",
+      "in_source": 24,
+      "extracted": 24,
+      "status": "✅"
+    },
+    "For": {
+      "description": "حلقة for",
+      "in_source": 125,
+      "extracted": 125,
+      "status": "✅"
+    },
+    "AsyncFor": {
+      "description": "حلقة for غير متزامنة",
+      "in_source": 0,
+      "extracted": 0,
+      "status": "✅"
+    },
+    "While": {
+      "description": "حلقة while",
+      "in_source": 2,
+      "extracted": 2,
+      "status": "✅"
+    },
+    "If": {
+      "description": "شرط if",
+      "in_source": 433,
+      "extracted": 433,
+      "status": "✅"
+    },
+    "With": {
+      "description": "مدير سياق with",
+      "in_source": 129,
+      "extracted": 129,
+      "status": "✅"
+    },
+    "AsyncWith": {
+      "description": "مدير سياق غير متزامن",
+      "in_source": 0,
+      "extracted": 0,
+      "status": "✅"
+    },
+    "Match": {
+      "description": "مطابقة النمط (Python 3.10+)",
+      "in_source": 0,
+      "extracted": 0,
+      "status": "✅"
+    },
+    "Raise": {
+      "description": "رفع استثناء",
+      "in_source": 0,
+      "extracted": 0,
+      "status": "✅"
+    },
+    "Try": {
+      "description": "محاولة try",
+      "in_source": 47,
+      "extracted": 47,
+      "status": "✅"
+    },
+    "Assert": {
+      "description": "تأكيد assert",
+      "in_source": 0,
+      "extracted": 0,
+      "status": "✅"
+    },
+    "Import": {
+      "description": "استيراد import",
+      "in_source": 28,
+      "extracted": 28,
+      "status": "✅"
+    },
+    "ImportFrom": {
+      "description": "استيراد from ... import",
+      "in_source": 6,
+      "extracted": 6,
+      "status": "✅"
+    },
+    "Global": {
+      "description": "تعريف متغير عام",
+      "in_source": 0,
+      "extracted": 0,
+      "status": "✅"
+    },
+    "Nonlocal": {
+      "description": "تعريف متغير nonlocal",
+      "in_source": 0,
+      "extracted": 0,
+      "status": "✅"
+    },
+    "Expr": {
+      "description": "تعبير",
+      "in_source": 906,
+      "extracted": 906,
+      "status": "✅"
+    },
+    "Pass": {
+      "description": "pass",
+      "in_source": 8,
+      "extracted": 8,
+      "status": "✅"
+    },
+    "Break": {
+      "description": "break",
+      "in_source": 3,
+      "extracted": 3,
+      "status": "✅"
+    },
+    "Continue": {
+      "description": "continue",
+      "in_source": 57,
+      "extracted": 57,
+      "status": "✅"
+    },
+    "Call": {
+      "description": "استدعاء دالة",
+      "in_source": 2516,
+      "extracted": 2516,
+      "status": "✅"
+    },
+    "Attribute": {
+      "description": "وصول إلى سمة",
+      "in_source": 2704,
+      "extracted": 2704,
+      "status": "✅"
+    },
+    "Subscript": {
+      "description": "فهرسة",
+      "in_source": 931,
+      "extracted": 931,
+      "status": "✅"
+    },
+    "Starred": {
+      "description": "توسيع قائمة",
+      "in_source": 0,
+      "extracted": 0,
+      "status": "✅"
+    },
+    "Name": {
+      "description": "اسم متغير",
+      "in_source": 6815,
+      "extracted": 6815,
+      "status": "✅"
+    },
+    "List": {
+      "description": "قائمة",
+      "in_source": 445,
+      "extracted": 445,
+      "status": "✅"
+    },
+    "Tuple": {
+      "description": "صف",
+      "in_source": 55,
+      "extracted": 55,
+      "status": "✅"
+    },
+    "Dict": {
+      "description": "قاموس",
+      "in_source": 533,
+      "extracted": 533,
+      "status": "✅"
+    },
+    "Set": {
+      "description": "مجموعة",
+      "in_source": 0,
+      "extracted": 0,
+      "status": "✅"
+    },
+    "Constant": {
+      "description": "ثابت",
+      "in_source": 7131,
+      "extracted": 7131,
+      "status": "✅"
+    },
+    "JoinedStr": {
+      "description": "سلسلة منسقة (f-string)",
+      "in_source": 400,
+      "extracted": 400,
+      "status": "✅"
+    },
+    "FormattedValue": {
+      "description": "قيمة منسقة",
+      "in_source": 515,
+      "extracted": 515,
+      "status": "✅"
+    },
+    "ListComp": {
+      "description": "فهم قائمة",
+      "in_source": 25,
+      "extracted": 25,
+      "status": "✅"
+    },
+    "SetComp": {
+      "description": "فهم مجموعة",
+      "in_source": 0,
+      "extracted": 0,
+      "status": "✅"
+    },
+    "DictComp": {
+      "description": "فهم قاموس",
+      "in_source": 6,
+      "extracted": 6,
+      "status": "✅"
+    },
+    "GeneratorExp": {
+      "description": "تعبير مولد",
+      "in_source": 34,
+      "extracted": 34,
+      "status": "✅"
+    },
+    "Await": {
+      "description": "انتظار await",
+      "in_source": 0,
+      "extracted": 0,
+      "status": "✅"
+    },
+    "Yield": {
+      "description": "yield",
+      "in_source": 0,
+      "extracted": 0,
+      "status": "✅"
+    },
+    "YieldFrom": {
+      "description": "yield from",
+      "in_source": 0,
+      "extracted": 0,
+      "status": "✅"
+    },
+    "Lambda": {
+      "description": "دالة لامدا",
+      "in_source": 9,
+      "extracted": 9,
+      "status": "✅"
+    },
+    "BoolOp": {
+      "description": "عملية منطقية",
+      "in_source": 107,
+      "extracted": 107,
+      "status": "✅"
+    },
+    "BinOp": {
+      "description": "عملية ثنائية",
+      "in_source": 394,
+      "extracted": 394,
+      "status": "✅"
+    },
+    "UnaryOp": {
+      "description": "عملية أحادية",
+      "in_source": 96,
+      "extracted": 96,
+      "status": "✅"
+    },
+    "Compare": {
+      "description": "مقارنة",
+      "in_source": 274,
+      "extracted": 274,
+      "status": "✅"
+    },
+    "IfExp": {
+      "description": "تعبير شرطي",
+      "in_source": 27,
+      "extracted": 27,
+      "status": "✅"
+    }
+  },
+  "missing_types": [],
+  "coverage_percentage": 100.0,
+  "recommendations": [
+    "تم استخراج أنواع إضافية: Add, And, BitAnd, Div, Eq, ExceptHandler, Gt, GtE, In, Is, IsNot, Load, Lt, Mod, Mult, Not, NotEq, NotIn, Or, Slice, Store, Sub, USub, alias, arg, arguments, comprehension, keyword, withitem",
+    "⚠️ 12168 نتيجة بدون موقع (line). حسّن استخراج الموقع.",
+    "✅ التغطية جيدة. يمكن البدء في بناء المصنفات."
+  ],
+  "total_findings": 39307,
+  "findings_without_location": 12168
+}

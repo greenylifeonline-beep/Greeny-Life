@@ -1,0 +1,908 @@
+﻿{
+    "reportType":  "GREENY-LIFE_LEGACY_BRAIN_EXTRACTION_MAP_V1",
+    "generatedAtUtc":  "2026-08-13T12:39:33.8623056Z",
+    "source":  {
+                   "path":  "brain.py",
+                   "lines":  6637,
+                   "executed":  false
+               },
+    "conclusion":  "brain.py is a mixed legacy toolbox, not an approved runtime brain. Direct integration is prohibited.",
+    "globalRisks":  {
+                        "deleteCalls":  [
+                                            3033,
+                                            3625,
+                                            4645
+                                        ],
+                        "networkCalls":  [
+                                             4881,
+                                             4908
+                                         ],
+                        "processCalls":  [
+                                             29,
+                                             609,
+                                             620
+                                         ],
+                        "directCleanupFlags":  [
+                                                   6233,
+                                                   6247,
+                                                   6264
+                                               ]
+                    },
+    "definitions":  [
+                        {
+                            "line":  67,
+                            "kind":  "class",
+                            "name":  "ScanResult",
+                            "capability":  "ANALYSIS_CANDIDATE",
+                            "risk":  [
+
+                                     ],
+                            "recommendation":  "EXTRACT_ONLY_AFTER_INDEPENDENT_TEST"
+                        },
+                        {
+                            "line":  75,
+                            "kind":  "def",
+                            "name":  "to_dict",
+                            "capability":  "UNCLASSIFIED",
+                            "risk":  [
+
+                                     ],
+                            "recommendation":  "REVIEW_REQUIRED"
+                        },
+                        {
+                            "line":  78,
+                            "kind":  "def",
+                            "name":  "add_finding",
+                            "capability":  "UNCLASSIFIED",
+                            "risk":  [
+
+                                     ],
+                            "recommendation":  "REVIEW_REQUIRED"
+                        },
+                        {
+                            "line":  82,
+                            "kind":  "def",
+                            "name":  "mark_failed",
+                            "capability":  "UNCLASSIFIED",
+                            "risk":  [
+
+                                     ],
+                            "recommendation":  "REVIEW_REQUIRED"
+                        },
+                        {
+                            "line":  87,
+                            "kind":  "def",
+                            "name":  "is_success",
+                            "capability":  "UNCLASSIFIED",
+                            "risk":  [
+
+                                     ],
+                            "recommendation":  "REVIEW_REQUIRED"
+                        },
+                        {
+                            "line":  91,
+                            "kind":  "class",
+                            "name":  "RemediationResult",
+                            "capability":  "UNCLASSIFIED",
+                            "risk":  [
+
+                                     ],
+                            "recommendation":  "REVIEW_REQUIRED"
+                        },
+                        {
+                            "line":  98,
+                            "kind":  "def",
+                            "name":  "to_dict",
+                            "capability":  "UNCLASSIFIED",
+                            "risk":  [
+
+                                     ],
+                            "recommendation":  "REVIEW_REQUIRED"
+                        },
+                        {
+                            "line":  101,
+                            "kind":  "def",
+                            "name":  "mark_success",
+                            "capability":  "UNCLASSIFIED",
+                            "risk":  [
+
+                                     ],
+                            "recommendation":  "REVIEW_REQUIRED"
+                        },
+                        {
+                            "line":  107,
+                            "kind":  "def",
+                            "name":  "mark_failure",
+                            "capability":  "UNCLASSIFIED",
+                            "risk":  [
+
+                                     ],
+                            "recommendation":  "REVIEW_REQUIRED"
+                        },
+                        {
+                            "line":  112,
+                            "kind":  "class",
+                            "name":  "FileInsight",
+                            "capability":  "UNCLASSIFIED",
+                            "risk":  [
+
+                                     ],
+                            "recommendation":  "REVIEW_REQUIRED"
+                        },
+                        {
+                            "line":  127,
+                            "kind":  "def",
+                            "name":  "to_dict",
+                            "capability":  "UNCLASSIFIED",
+                            "risk":  [
+
+                                     ],
+                            "recommendation":  "REVIEW_REQUIRED"
+                        },
+                        {
+                            "line":  130,
+                            "kind":  "def",
+                            "name":  "summarize",
+                            "capability":  "UNCLASSIFIED",
+                            "risk":  [
+
+                                     ],
+                            "recommendation":  "REVIEW_REQUIRED"
+                        },
+                        {
+                            "line":  141,
+                            "kind":  "class",
+                            "name":  "GreenyLifeBrain",
+                            "capability":  "UNCLASSIFIED",
+                            "risk":  [
+
+                                     ],
+                            "recommendation":  "REVIEW_REQUIRED"
+                        },
+                        {
+                            "line":  157,
+                            "kind":  "def",
+                            "name":  "__init__",
+                            "capability":  "UNCLASSIFIED",
+                            "risk":  [
+
+                                     ],
+                            "recommendation":  "REVIEW_REQUIRED"
+                        },
+                        {
+                            "line":  178,
+                            "kind":  "def",
+                            "name":  "_should_ignore",
+                            "capability":  "UNCLASSIFIED",
+                            "risk":  [
+
+                                     ],
+                            "recommendation":  "REVIEW_REQUIRED"
+                        },
+                        {
+                            "line":  186,
+                            "kind":  "def",
+                            "name":  "_load_config",
+                            "capability":  "UNCLASSIFIED",
+                            "risk":  [
+
+                                     ],
+                            "recommendation":  "REVIEW_REQUIRED"
+                        },
+                        {
+                            "line":  237,
+                            "kind":  "def",
+                            "name":  "_deep_update",
+                            "capability":  "UNCLASSIFIED",
+                            "risk":  [
+
+                                     ],
+                            "recommendation":  "REVIEW_REQUIRED"
+                        },
+                        {
+                            "line":  244,
+                            "kind":  "def",
+                            "name":  "_setup_logging",
+                            "capability":  "UNCLASSIFIED",
+                            "risk":  [
+
+                                     ],
+                            "recommendation":  "REVIEW_REQUIRED"
+                        },
+                        {
+                            "line":  264,
+                            "kind":  "def",
+                            "name":  "_check_prerequisites",
+                            "capability":  "UNCLASSIFIED",
+                            "risk":  [
+
+                                     ],
+                            "recommendation":  "REVIEW_REQUIRED"
+                        },
+                        {
+                            "line":  288,
+                            "kind":  "def",
+                            "name":  "_which",
+                            "capability":  "UNCLASSIFIED",
+                            "risk":  [
+
+                                     ],
+                            "recommendation":  "REVIEW_REQUIRED"
+                        },
+                        {
+                            "line":  291,
+                            "kind":  "def",
+                            "name":  "run_asset_classifier",
+                            "capability":  "ANALYSIS_CANDIDATE",
+                            "risk":  [
+
+                                     ],
+                            "recommendation":  "EXTRACT_ONLY_AFTER_INDEPENDENT_TEST"
+                        },
+                        {
+                            "line":  578,
+                            "kind":  "def",
+                            "name":  "_ensure_directories",
+                            "capability":  "UNCLASSIFIED",
+                            "risk":  [
+
+                                     ],
+                            "recommendation":  "REVIEW_REQUIRED"
+                        },
+                        {
+                            "line":  588,
+                            "kind":  "def",
+                            "name":  "_ensure_manifest_exists",
+                            "capability":  "REPORTING_CANDIDATE",
+                            "risk":  [
+
+                                     ],
+                            "recommendation":  "EXTRACT_ONLY_AFTER_INDEPENDENT_TEST"
+                        },
+                        {
+                            "line":  593,
+                            "kind":  "def",
+                            "name":  "_run_command",
+                            "capability":  "UNCLASSIFIED",
+                            "risk":  [
+                                         "PROCESS"
+                                     ],
+                            "recommendation":  "QUARANTINE_DO_NOT_REUSE_DIRECTLY"
+                        },
+                        {
+                            "line":  631,
+                            "kind":  "def",
+                            "name":  "classify_assets",
+                            "capability":  "ANALYSIS_CANDIDATE",
+                            "risk":  [
+
+                                     ],
+                            "recommendation":  "EXTRACT_ONLY_AFTER_INDEPENDENT_TEST"
+                        },
+                        {
+                            "line":  895,
+                            "kind":  "def",
+                            "name":  "run_consolidation",
+                            "capability":  "UNCLASSIFIED",
+                            "risk":  [
+
+                                     ],
+                            "recommendation":  "REVIEW_REQUIRED"
+                        },
+                        {
+                            "line":  1031,
+                            "kind":  "def",
+                            "name":  "run_canonical_validation",
+                            "capability":  "ANALYSIS_CANDIDATE",
+                            "risk":  [
+
+                                     ],
+                            "recommendation":  "EXTRACT_ONLY_AFTER_INDEPENDENT_TEST"
+                        },
+                        {
+                            "line":  1220,
+                            "kind":  "def",
+                            "name":  "build_supplier_master",
+                            "capability":  "UNCLASSIFIED",
+                            "risk":  [
+
+                                     ],
+                            "recommendation":  "REVIEW_REQUIRED"
+                        },
+                        {
+                            "line":  1428,
+                            "kind":  "def",
+                            "name":  "build_certificate_master",
+                            "capability":  "UNCLASSIFIED",
+                            "risk":  [
+
+                                     ],
+                            "recommendation":  "REVIEW_REQUIRED"
+                        },
+                        {
+                            "line":  1694,
+                            "kind":  "def",
+                            "name":  "build_els",
+                            "capability":  "UNCLASSIFIED",
+                            "risk":  [
+
+                                     ],
+                            "recommendation":  "REVIEW_REQUIRED"
+                        },
+                        {
+                            "line":  1961,
+                            "kind":  "def",
+                            "name":  "build_customer_domain",
+                            "capability":  "UNCLASSIFIED",
+                            "risk":  [
+
+                                     ],
+                            "recommendation":  "REVIEW_REQUIRED"
+                        },
+                        {
+                            "line":  2367,
+                            "kind":  "def",
+                            "name":  "build_analytics_layer",
+                            "capability":  "ANALYSIS_CANDIDATE",
+                            "risk":  [
+
+                                     ],
+                            "recommendation":  "EXTRACT_ONLY_AFTER_INDEPENDENT_TEST"
+                        },
+                        {
+                            "line":  2594,
+                            "kind":  "def",
+                            "name":  "build_logistics_system",
+                            "capability":  "UNCLASSIFIED",
+                            "risk":  [
+
+                                     ],
+                            "recommendation":  "REVIEW_REQUIRED"
+                        },
+                        {
+                            "line":  2853,
+                            "kind":  "def",
+                            "name":  "_get_net_weights",
+                            "capability":  "UNCLASSIFIED",
+                            "risk":  [
+
+                                     ],
+                            "recommendation":  "REVIEW_REQUIRED"
+                        },
+                        {
+                            "line":  2866,
+                            "kind":  "def",
+                            "name":  "_get_nutrition_facts",
+                            "capability":  "UNCLASSIFIED",
+                            "risk":  [
+
+                                     ],
+                            "recommendation":  "REVIEW_REQUIRED"
+                        },
+                        {
+                            "line":  2879,
+                            "kind":  "def",
+                            "name":  "_get_certifications_for_product",
+                            "capability":  "UNCLASSIFIED",
+                            "risk":  [
+
+                                     ],
+                            "recommendation":  "REVIEW_REQUIRED"
+                        },
+                        {
+                            "line":  2888,
+                            "kind":  "def",
+                            "name":  "_get_side_panel",
+                            "capability":  "UNCLASSIFIED",
+                            "risk":  [
+
+                                     ],
+                            "recommendation":  "REVIEW_REQUIRED"
+                        },
+                        {
+                            "line":  2930,
+                            "kind":  "def",
+                            "name":  "run_deep_clean",
+                            "capability":  "MAINTENANCE_RISK",
+                            "risk":  [
+
+                                     ],
+                            "recommendation":  "REVIEW_REQUIRED"
+                        },
+                        {
+                            "line":  3077,
+                            "kind":  "def",
+                            "name":  "_extract_domain",
+                            "capability":  "ANALYSIS_CANDIDATE",
+                            "risk":  [
+
+                                     ],
+                            "recommendation":  "EXTRACT_ONLY_AFTER_INDEPENDENT_TEST"
+                        },
+                        {
+                            "line":  3091,
+                            "kind":  "def",
+                            "name":  "run_master_data_audit",
+                            "capability":  "ANALYSIS_CANDIDATE",
+                            "risk":  [
+
+                                     ],
+                            "recommendation":  "EXTRACT_ONLY_AFTER_INDEPENDENT_TEST"
+                        },
+                        {
+                            "line":  3223,
+                            "kind":  "def",
+                            "name":  "build_finance_system",
+                            "capability":  "UNCLASSIFIED",
+                            "risk":  [
+
+                                     ],
+                            "recommendation":  "REVIEW_REQUIRED"
+                        },
+                        {
+                            "line":  3338,
+                            "kind":  "def",
+                            "name":  "build_inventory_system",
+                            "capability":  "REPORTING_CANDIDATE",
+                            "risk":  [
+
+                                     ],
+                            "recommendation":  "EXTRACT_ONLY_AFTER_INDEPENDENT_TEST"
+                        },
+                        {
+                            "line":  3431,
+                            "kind":  "def",
+                            "name":  "build_crm_system",
+                            "capability":  "UNCLASSIFIED",
+                            "risk":  [
+
+                                     ],
+                            "recommendation":  "REVIEW_REQUIRED"
+                        },
+                        {
+                            "line":  3541,
+                            "kind":  "def",
+                            "name":  "enrich_product_details",
+                            "capability":  "UNCLASSIFIED",
+                            "risk":  [
+
+                                     ],
+                            "recommendation":  "REVIEW_REQUIRED"
+                        },
+                        {
+                            "line":  3612,
+                            "kind":  "def",
+                            "name":  "self_clean_reports_and_logs",
+                            "capability":  "REPORTING_CANDIDATE",
+                            "risk":  [
+                                         "DELETE"
+                                     ],
+                            "recommendation":  "QUARANTINE_DO_NOT_REUSE_DIRECTLY"
+                        },
+                        {
+                            "line":  3647,
+                            "kind":  "def",
+                            "name":  "validate_global_specs",
+                            "capability":  "ANALYSIS_CANDIDATE",
+                            "risk":  [
+
+                                     ],
+                            "recommendation":  "EXTRACT_ONLY_AFTER_INDEPENDENT_TEST"
+                        },
+                        {
+                            "line":  3677,
+                            "kind":  "def",
+                            "name":  "generate_dynamic_packaging",
+                            "capability":  "UNCLASSIFIED",
+                            "risk":  [
+
+                                     ],
+                            "recommendation":  "REVIEW_REQUIRED"
+                        },
+                        {
+                            "line":  3728,
+                            "kind":  "def",
+                            "name":  "build_packaging_visual_engine",
+                            "capability":  "UNCLASSIFIED",
+                            "risk":  [
+
+                                     ],
+                            "recommendation":  "REVIEW_REQUIRED"
+                        },
+                        {
+                            "line":  3889,
+                            "kind":  "def",
+                            "name":  "generate_gels_labels_with_visuals",
+                            "capability":  "UNCLASSIFIED",
+                            "risk":  [
+
+                                     ],
+                            "recommendation":  "REVIEW_REQUIRED"
+                        },
+                        {
+                            "line":  3989,
+                            "kind":  "def",
+                            "name":  "run_deep_packaging_audit",
+                            "capability":  "ANALYSIS_CANDIDATE",
+                            "risk":  [
+
+                                     ],
+                            "recommendation":  "EXTRACT_ONLY_AFTER_INDEPENDENT_TEST"
+                        },
+                        {
+                            "line":  4198,
+                            "kind":  "def",
+                            "name":  "integrate_business_assets",
+                            "capability":  "UNCLASSIFIED",
+                            "risk":  [
+
+                                     ],
+                            "recommendation":  "REVIEW_REQUIRED"
+                        },
+                        {
+                            "line":  4456,
+                            "kind":  "def",
+                            "name":  "_get_manifest_path",
+                            "capability":  "REPORTING_CANDIDATE",
+                            "risk":  [
+
+                                     ],
+                            "recommendation":  "EXTRACT_ONLY_AFTER_INDEPENDENT_TEST"
+                        },
+                        {
+                            "line":  4459,
+                            "kind":  "def",
+                            "name":  "initialize_system_manifest",
+                            "capability":  "REPORTING_CANDIDATE",
+                            "risk":  [
+
+                                     ],
+                            "recommendation":  "EXTRACT_ONLY_AFTER_INDEPENDENT_TEST"
+                        },
+                        {
+                            "line":  4538,
+                            "kind":  "def",
+                            "name":  "run_integrity_analysis",
+                            "capability":  "ANALYSIS_CANDIDATE",
+                            "risk":  [
+
+                                     ],
+                            "recommendation":  "EXTRACT_ONLY_AFTER_INDEPENDENT_TEST"
+                        },
+                        {
+                            "line":  4628,
+                            "kind":  "def",
+                            "name":  "propose_system_evolution",
+                            "capability":  "UNCLASSIFIED",
+                            "risk":  [
+                                         "DELETE"
+                                     ],
+                            "recommendation":  "QUARANTINE_DO_NOT_REUSE_DIRECTLY"
+                        },
+                        {
+                            "line":  4697,
+                            "kind":  "def",
+                            "name":  "run_continuous_evolution_cycle",
+                            "capability":  "UNCLASSIFIED",
+                            "risk":  [
+
+                                     ],
+                            "recommendation":  "REVIEW_REQUIRED"
+                        },
+                        {
+                            "line":  4742,
+                            "kind":  "def",
+                            "name":  "run_arch_guard",
+                            "capability":  "UNCLASSIFIED",
+                            "risk":  [
+
+                                     ],
+                            "recommendation":  "REVIEW_REQUIRED"
+                        },
+                        {
+                            "line":  4794,
+                            "kind":  "def",
+                            "name":  "run_govern_kit",
+                            "capability":  "UNCLASSIFIED",
+                            "risk":  [
+
+                                     ],
+                            "recommendation":  "REVIEW_REQUIRED"
+                        },
+                        {
+                            "line":  4825,
+                            "kind":  "def",
+                            "name":  "run_ouro_loop",
+                            "capability":  "UNCLASSIFIED",
+                            "risk":  [
+
+                                     ],
+                            "recommendation":  "REVIEW_REQUIRED"
+                        },
+                        {
+                            "line":  4868,
+                            "kind":  "def",
+                            "name":  "run_sonarqube_scan",
+                            "capability":  "ANALYSIS_CANDIDATE",
+                            "risk":  [
+                                         "NETWORK"
+                                     ],
+                            "recommendation":  "QUARANTINE_DO_NOT_REUSE_DIRECTLY"
+                        },
+                        {
+                            "line":  4929,
+                            "kind":  "def",
+                            "name":  "run_security_scan",
+                            "capability":  "ANALYSIS_CANDIDATE",
+                            "risk":  [
+
+                                     ],
+                            "recommendation":  "EXTRACT_ONLY_AFTER_INDEPENDENT_TEST"
+                        },
+                        {
+                            "line":  4980,
+                            "kind":  "def",
+                            "name":  "run_performance_test",
+                            "capability":  "UNCLASSIFIED",
+                            "risk":  [
+
+                                     ],
+                            "recommendation":  "REVIEW_REQUIRED"
+                        },
+                        {
+                            "line":  5075,
+                            "kind":  "def",
+                            "name":  "run_documentation_agent",
+                            "capability":  "UNCLASSIFIED",
+                            "risk":  [
+
+                                     ],
+                            "recommendation":  "REVIEW_REQUIRED"
+                        },
+                        {
+                            "line":  5142,
+                            "kind":  "def",
+                            "name":  "_generate_tree_structure",
+                            "capability":  "UNCLASSIFIED",
+                            "risk":  [
+
+                                     ],
+                            "recommendation":  "REVIEW_REQUIRED"
+                        },
+                        {
+                            "line":  5160,
+                            "kind":  "def",
+                            "name":  "_extract_classes_from_file",
+                            "capability":  "ANALYSIS_CANDIDATE",
+                            "risk":  [
+
+                                     ],
+                            "recommendation":  "EXTRACT_ONLY_AFTER_INDEPENDENT_TEST"
+                        },
+                        {
+                            "line":  5169,
+                            "kind":  "def",
+                            "name":  "discover_and_merge_intelligence",
+                            "capability":  "UNCLASSIFIED",
+                            "risk":  [
+
+                                     ],
+                            "recommendation":  "REVIEW_REQUIRED"
+                        },
+                        {
+                            "line":  5199,
+                            "kind":  "def",
+                            "name":  "scan_project_metadata",
+                            "capability":  "ANALYSIS_CANDIDATE",
+                            "risk":  [
+
+                                     ],
+                            "recommendation":  "EXTRACT_ONLY_AFTER_INDEPENDENT_TEST"
+                        },
+                        {
+                            "line":  5274,
+                            "kind":  "def",
+                            "name":  "deep_scan_files",
+                            "capability":  "ANALYSIS_CANDIDATE",
+                            "risk":  [
+
+                                     ],
+                            "recommendation":  "EXTRACT_ONLY_AFTER_INDEPENDENT_TEST"
+                        },
+                        {
+                            "line":  5302,
+                            "kind":  "def",
+                            "name":  "_deep_scan_single_file",
+                            "capability":  "ANALYSIS_CANDIDATE",
+                            "risk":  [
+
+                                     ],
+                            "recommendation":  "EXTRACT_ONLY_AFTER_INDEPENDENT_TEST"
+                        },
+                        {
+                            "line":  5411,
+                            "kind":  "def",
+                            "name":  "_extract_business_value",
+                            "capability":  "ANALYSIS_CANDIDATE",
+                            "risk":  [
+
+                                     ],
+                            "recommendation":  "EXTRACT_ONLY_AFTER_INDEPENDENT_TEST"
+                        },
+                        {
+                            "line":  5425,
+                            "kind":  "def",
+                            "name":  "analyze_visual_brand",
+                            "capability":  "ANALYSIS_CANDIDATE",
+                            "risk":  [
+
+                                     ],
+                            "recommendation":  "EXTRACT_ONLY_AFTER_INDEPENDENT_TEST"
+                        },
+                        {
+                            "line":  5486,
+                            "kind":  "def",
+                            "name":  "analyze_packaging_policies",
+                            "capability":  "ANALYSIS_CANDIDATE",
+                            "risk":  [
+
+                                     ],
+                            "recommendation":  "EXTRACT_ONLY_AFTER_INDEPENDENT_TEST"
+                        },
+                        {
+                            "line":  5517,
+                            "kind":  "def",
+                            "name":  "analyze_ui_structure",
+                            "capability":  "ANALYSIS_CANDIDATE",
+                            "risk":  [
+
+                                     ],
+                            "recommendation":  "EXTRACT_ONLY_AFTER_INDEPENDENT_TEST"
+                        },
+                        {
+                            "line":  5563,
+                            "kind":  "def",
+                            "name":  "analyze_inventory",
+                            "capability":  "ANALYSIS_CANDIDATE",
+                            "risk":  [
+
+                                     ],
+                            "recommendation":  "EXTRACT_ONLY_AFTER_INDEPENDENT_TEST"
+                        },
+                        {
+                            "line":  5618,
+                            "kind":  "def",
+                            "name":  "analyze_duplication_reason",
+                            "capability":  "ANALYSIS_CANDIDATE",
+                            "risk":  [
+
+                                     ],
+                            "recommendation":  "EXTRACT_ONLY_AFTER_INDEPENDENT_TEST"
+                        },
+                        {
+                            "line":  5649,
+                            "kind":  "def",
+                            "name":  "create_remediation_pr",
+                            "capability":  "UNCLASSIFIED",
+                            "risk":  [
+
+                                     ],
+                            "recommendation":  "REVIEW_REQUIRED"
+                        },
+                        {
+                            "line":  5703,
+                            "kind":  "def",
+                            "name":  "_generate_comprehensive_report",
+                            "capability":  "REPORTING_CANDIDATE",
+                            "risk":  [
+
+                                     ],
+                            "recommendation":  "EXTRACT_ONLY_AFTER_INDEPENDENT_TEST"
+                        },
+                        {
+                            "line":  5796,
+                            "kind":  "def",
+                            "name":  "run_unified_cleanup",
+                            "capability":  "MAINTENANCE_RISK",
+                            "risk":  [
+
+                                     ],
+                            "recommendation":  "REVIEW_REQUIRED"
+                        },
+                        {
+                            "line":  5918,
+                            "kind":  "def",
+                            "name":  "_send_alert",
+                            "capability":  "UNCLASSIFIED",
+                            "risk":  [
+
+                                     ],
+                            "recommendation":  "REVIEW_REQUIRED"
+                        },
+                        {
+                            "line":  5946,
+                            "kind":  "def",
+                            "name":  "auto_correct_issues",
+                            "capability":  "UNCLASSIFIED",
+                            "risk":  [
+
+                                     ],
+                            "recommendation":  "REVIEW_REQUIRED"
+                        },
+                        {
+                            "line":  5967,
+                            "kind":  "def",
+                            "name":  "run_daily_audit",
+                            "capability":  "ANALYSIS_CANDIDATE",
+                            "risk":  [
+
+                                     ],
+                            "recommendation":  "EXTRACT_ONLY_AFTER_INDEPENDENT_TEST"
+                        },
+                        {
+                            "line":  5995,
+                            "kind":  "def",
+                            "name":  "check_system_health",
+                            "capability":  "UNCLASSIFIED",
+                            "risk":  [
+
+                                     ],
+                            "recommendation":  "REVIEW_REQUIRED"
+                        },
+                        {
+                            "line":  6017,
+                            "kind":  "def",
+                            "name":  "continuous_log_analyzer",
+                            "capability":  "ANALYSIS_CANDIDATE",
+                            "risk":  [
+
+                                     ],
+                            "recommendation":  "EXTRACT_ONLY_AFTER_INDEPENDENT_TEST"
+                        },
+                        {
+                            "line":  6043,
+                            "kind":  "def",
+                            "name":  "run_periodic_monitoring",
+                            "capability":  "UNCLASSIFIED",
+                            "risk":  [
+
+                                     ],
+                            "recommendation":  "REVIEW_REQUIRED"
+                        },
+                        {
+                            "line":  6062,
+                            "kind":  "def",
+                            "name":  "run_scheduler_mode",
+                            "capability":  "UNCLASSIFIED",
+                            "risk":  [
+
+                                     ],
+                            "recommendation":  "REVIEW_REQUIRED"
+                        },
+                        {
+                            "line":  6092,
+                            "kind":  "def",
+                            "name":  "execute_full_pipeline",
+                            "capability":  "UNCLASSIFIED",
+                            "risk":  [
+
+                                     ],
+                            "recommendation":  "REVIEW_REQUIRED"
+                        },
+                        {
+                            "line":  6223,
+                            "kind":  "def",
+                            "name":  "cli",
+                            "capability":  "UNCLASSIFIED",
+                            "risk":  [
+
+                                     ],
+                            "recommendation":  "REVIEW_REQUIRED"
+                        }
+                    ],
+    "decisions":  {
+                      "keep":  "No component is kept merely by being inside brain.py.",
+                      "extract":  "Only analysis, classification, reporting, and knowledge-extraction functions may be copied after isolated tests.",
+                      "block":  "Cleanup, delete, staging, process-launch, network, and autonomous decision paths remain quarantined."
+                  }
+}

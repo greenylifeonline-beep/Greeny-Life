@@ -1,0 +1,74 @@
+﻿{
+    "recordType":  "E3_REPAIR_CLOSURE_DD_003_V1",
+    "id":  "DD-003",
+    "generatedAtUtc":  "2026-08-13T16:38:29.4758147Z",
+    "status":  "IMPLEMENTED_AND_BUILD_VERIFIED",
+    "diagnosis":  "The existing workflow route was fail-closed for unapproved writes but had no durable, request-specific human-approval record capable of authorizing a controlled transition.",
+    "existingComponents":  [
+                               "app/api/workflow/route.ts",
+                               "lib/intelligence/workflow-governance.ts",
+                               "canonical/intelligence/adapters/gl-dos-governance-gate.ts",
+                               "canonical/lib/workflowEngine.ts",
+                               "AuditLog"
+                           ],
+    "action":  "EXTEND_EXISTING_GOVERNANCE_AND_WORKFLOW_PATH",
+    "changeApplied":  "A durable WorkflowApproval record now binds order, target state, requester, distinct ADMIN approver, expiry, one-time consumption, and correlation ID. The existing workflow engine consumes an eligible approval in the same database transaction as state mutation and AuditLog creation.",
+    "verified":  [
+                     "Prisma schema validation and synchronization passed.",
+                     "Prisma client generation passed after releasing the Windows file lock.",
+                     "Workflow approval contract test passed.",
+                     "Existing workflow governance regression test passed.",
+                     "Authorization/audit fail-closed regression passed.",
+                     "TypeScript passed.",
+                     "Production build passed."
+                 ],
+    "safety":  [
+                   "No automatic execution.",
+                   "Requesters cannot self-approve.",
+                   "Approvals expire after 30 minutes.",
+                   "Approval must match the order and target state.",
+                   "Approval is consumed once inside the state/audit transaction.",
+                   "No Legacy asset changed."
+               ],
+    "pending":  [
+                    "A deliberate UAT scenario with two authorized users and a disposable test order is required for OPERATIONAL_PROVEN.",
+                    "Rollback/recovery behavior after a deliberately failed operational transition remains unproven.",
+                    "No System-of-Record or retirement decision is granted by this closure."
+                ],
+    "evidenceLevel":  "TEST_EVIDENCE_PLUS_BUILD_VERIFIED",
+    "nextGate":  "DD-004 knowledge: trace and harden existing retrieval/provenance components; do not create a second knowledge engine.",
+    "files":  [
+                  {
+                      "path":  "prisma\\schema.prisma",
+                      "sha256":  "4f811fe5b6e3fd54e9795bcb194940b4a5ef1ab862e18361a264d6834f5f7a76"
+                  },
+                  {
+                      "path":  "lib\\intelligence\\workflow-approval.ts",
+                      "sha256":  "72df8d799fd7aef4e58f62f75a68c5254ecbb9830f8a53515daa3feba1c4833a"
+                  },
+                  {
+                      "path":  "app\\api\\workflow\\approvals\\route.ts",
+                      "sha256":  "8510d9015acdc57e67739b3c5428c4e82ade1865ed2158fa9a57b9d0ff05fbbc"
+                  },
+                  {
+                      "path":  "app\\api\\workflow\\route.ts",
+                      "sha256":  "5a36f0863a04a987b19db6dbee52530346f0f2ba291a2c5766274dffb3722a25"
+                  },
+                  {
+                      "path":  "canonical\\lib\\workflowEngine.ts",
+                      "sha256":  "51637007342ae10687f5282b3d7562ec1e886e767e8e44f41163b4a00e7fe10b"
+                  },
+                  {
+                      "path":  "tests\\workflow_approval_contract_check.ts",
+                      "sha256":  "e95780f25dd41d0f4676b9078ff1557d1f8ff2c14467cdcde269ae14835aa424"
+                  },
+                  {
+                      "path":  "tests\\workflow_governance_check.ts",
+                      "sha256":  "d2548a8d89757f21420cca423e190f5c17368f6f1e42b08de8821ff183265eb6"
+                  },
+                  {
+                      "path":  "package.json",
+                      "sha256":  "afb4e3258c04b1ab77c70eec7317968e65a0c131083972c4fb2412a520c9454f"
+                  }
+              ]
+}

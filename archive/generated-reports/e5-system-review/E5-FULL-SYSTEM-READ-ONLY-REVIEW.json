@@ -1,0 +1,89 @@
+﻿{
+    "report":  "E5 Full System Read-Only Review",
+    "generatedAt":  "2026-08-14T03:49:28.2977742Z",
+    "scope":  {
+                  "current":  [
+                                  "app",
+                                  "lib",
+                                  "scripts",
+                                  "tests",
+                                  "package.json",
+                                  "canonical/system_manifest.json"
+                              ],
+                  "legacy":  {
+                                 "mode":  "E3_EVIDENCE_REUSE_NO_RAW_LEGACY_EXECUTION",
+                                 "inventoryEvidence":  "C:\\Users\\Ghanam\\Documents\\Codex\\Greeny-Life-Repair\\archive\\generated-reports\\e3-phase-1-primary-full-inventory\\2026-08-14_002855\\E3-PHASE-1-PRIMARY-LEGACY-FULL-INVENTORY.json",
+                                 "classificationEvidence":  "C:\\Users\\Ghanam\\Documents\\Codex\\Greeny-Life-Repair\\archive\\generated-reports\\e3-phase-2-primary-classification\\2026-08-14_003259\\E3-PHASE-2-PRIMARY-LEGACY-CLASSIFICATION.json",
+                                 "statement":  "Legacy is represented through completed E3 evidence and remains protected from direct execution by this E5 review."
+                             },
+                  "exclusions":  [
+                                     "NO_RAW_LEGACY_EXECUTION",
+                                     "NO_DATABASE_QUERY_OR_CHANGE",
+                                     "NO_MOVE",
+                                     "NO_MERGE",
+                                     "NO_ARCHIVE_ACTION",
+                                     "NO_QUARANTINE_ACTION",
+                                     "NO_RETIREMENT_ACTION",
+                                     "NO_DELETE",
+                                     "NO_BUILD_WHILE_DEV_SERVER_MAY_LOCK_OUTPUT"
+                                 ]
+              },
+    "checks":  [
+                   {
+                       "name":  "E5 tool registry and treatment guards",
+                       "command":  "npm.cmd run test:tool-registry",
+                       "passed":  true,
+                       "exitCode":  0
+                   },
+                   {
+                       "name":  "Task and interest conflict guards",
+                       "command":  "npm.cmd run test:task-orchestration",
+                       "passed":  true,
+                       "exitCode":  0
+                   },
+                   {
+                       "name":  "Evidence, authority and version conflict safety",
+                       "command":  "npm.cmd run test:decision-safety-adversarial",
+                       "passed":  true,
+                       "exitCode":  0
+                   },
+                   {
+                       "name":  "Commercial import conflict safety",
+                       "command":  "npm.cmd run test:data-import-preflight",
+                       "passed":  true,
+                       "exitCode":  0
+                   },
+                   {
+                       "name":  "Current code near-duplicate review",
+                       "command":  "npm.cmd run e5:duplicate-review",
+                       "passed":  true,
+                       "exitCode":  0
+                   },
+                   {
+                       "name":  "Current TypeScript integrity",
+                       "command":  "npm.cmd run type-check",
+                       "passed":  true,
+                       "exitCode":  0
+                   }
+               ],
+    "duplicateAndConflict":  {
+                                 "code":  {
+                                              "clones":  0,
+                                              "duplicatedLines":  0,
+                                              "duplicatedTokens":  0,
+                                              "lines":  4643,
+                                              "newClones":  0,
+                                              "newDuplicatedLines":  0,
+                                              "percentage":  0.0,
+                                              "percentageTokens":  0.0,
+                                              "sources":  93,
+                                              "tokens":  48612
+                                          },
+                                 "automaticArchiveDuplicates":  false,
+                                 "automaticMergeConflicts":  false,
+                                 "taskConflictGuard":  "STATIC_CONTRACT_TESTED; live task ledger requires an authenticated read-only operational query and is not inferred here.",
+                                 "interestConflictGuard":  "DISTINCT_APPROVER_REQUIRED; self-approval is blocked by the static contract."
+                             },
+    "outcome":  "PASS_READ_ONLY_ASSURANCE",
+    "nextStep":  "Use an explicit E5 maintenance request for each finding. A separate checksum-backed approval package is required before consolidation, archive, quarantine, retirement, or deletion."
+}

@@ -1,0 +1,168 @@
+﻿{
+    "drill":  "POSTGRESQL_COMPLETE_ISOLATED_RECOVERY_DRILL_V2",
+    "executedAtUtc":  "2026-08-13T12:36:37.2203535Z",
+    "sourceDatabase":  "greeny_life_dev",
+    "isolatedRestoreDatabase":  "greeny_life_restore_20260813143629",
+    "backupFile":  "C:\\Users\\Ghanam\\Documents\\Codex\\Greeny-Life-Repair\\archive\\backups\\postgres\\2026-08-13_142741\\greeny_life_dev.dump",
+    "publicTableCount":  26,
+    "reconciliation":  [
+                           {
+                               "table":  "AuditLog",
+                               "source":  "0",
+                               "restored":  "0",
+                               "match":  true
+                           },
+                           {
+                               "table":  "Batch",
+                               "source":  "0",
+                               "restored":  "0",
+                               "match":  true
+                           },
+                           {
+                               "table":  "CommercialChange",
+                               "source":  "0",
+                               "restored":  "0",
+                               "match":  true
+                           },
+                           {
+                               "table":  "Customer",
+                               "source":  "20",
+                               "restored":  "20",
+                               "match":  true
+                           },
+                           {
+                               "table":  "DecisionOutcome",
+                               "source":  "0",
+                               "restored":  "0",
+                               "match":  true
+                           },
+                           {
+                               "table":  "Document",
+                               "source":  "0",
+                               "restored":  "0",
+                               "match":  true
+                           },
+                           {
+                               "table":  "Entity",
+                               "source":  "3",
+                               "restored":  "3",
+                               "match":  true
+                           },
+                           {
+                               "table":  "EvaluationRun",
+                               "source":  "0",
+                               "restored":  "0",
+                               "match":  true
+                           },
+                           {
+                               "table":  "Inventory",
+                               "source":  "0",
+                               "restored":  "0",
+                               "match":  true
+                           },
+                           {
+                               "table":  "Invoice",
+                               "source":  "0",
+                               "restored":  "0",
+                               "match":  true
+                           },
+                           {
+                               "table":  "OfficialEvidenceRegistry",
+                               "source":  "0",
+                               "restored":  "0",
+                               "match":  true
+                           },
+                           {
+                               "table":  "OrchestrationTask",
+                               "source":  "0",
+                               "restored":  "0",
+                               "match":  true
+                           },
+                           {
+                               "table":  "Organization",
+                               "source":  "1",
+                               "restored":  "1",
+                               "match":  true
+                           },
+                           {
+                               "table":  "Packaging",
+                               "source":  "0",
+                               "restored":  "0",
+                               "match":  true
+                           },
+                           {
+                               "table":  "Payment",
+                               "source":  "0",
+                               "restored":  "0",
+                               "match":  true
+                           },
+                           {
+                               "table":  "Product",
+                               "source":  "14",
+                               "restored":  "14",
+                               "match":  true
+                           },
+                           {
+                               "table":  "SKU",
+                               "source":  "0",
+                               "restored":  "0",
+                               "match":  true
+                           },
+                           {
+                               "table":  "SalesOrder",
+                               "source":  "0",
+                               "restored":  "0",
+                               "match":  true
+                           },
+                           {
+                               "table":  "SalesOrderItem",
+                               "source":  "0",
+                               "restored":  "0",
+                               "match":  true
+                           },
+                           {
+                               "table":  "SecurityAuditEvent",
+                               "source":  "14",
+                               "restored":  "14",
+                               "match":  true
+                           },
+                           {
+                               "table":  "Shipment",
+                               "source":  "0",
+                               "restored":  "0",
+                               "match":  true
+                           },
+                           {
+                               "table":  "Supplier",
+                               "source":  "4",
+                               "restored":  "4",
+                               "match":  true
+                           },
+                           {
+                               "table":  "TradeTraceRecord",
+                               "source":  "0",
+                               "restored":  "0",
+                               "match":  true
+                           },
+                           {
+                               "table":  "TrainingCase",
+                               "source":  "0",
+                               "restored":  "0",
+                               "match":  true
+                           },
+                           {
+                               "table":  "User",
+                               "source":  "1",
+                               "restored":  "1",
+                               "match":  true
+                           },
+                           {
+                               "table":  "Warehouse",
+                               "source":  "2",
+                               "restored":  "2",
+                               "match":  true
+                           }
+                       ],
+    "passed":  true,
+    "retention":  "Source database, backup file, and isolated restored database were retained. No data was deleted."
+}

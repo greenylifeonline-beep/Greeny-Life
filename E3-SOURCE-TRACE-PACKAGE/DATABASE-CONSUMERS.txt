@@ -1,0 +1,69 @@
+﻿app/api/products/route.ts:2:import { PrismaClient } from "@prisma/client";
+app/api/products/route.ts:4:const prisma = new PrismaClient();
+app/api/products/route.ts:12:    const products = await prisma.product.findMany({
+app/api/products/route.ts:37:    const newProduct = await prisma.product.create({
+app/api/sales-orders/route.ts:2:import { PrismaClient } from "@prisma/client";
+app/api/sales-orders/route.ts:4:const prisma = new PrismaClient();
+app/api/sales-orders/route.ts:9:    const orders = await prisma.salesOrder.findMany({
+app/api/sales-orders/route.ts:45:    const newOrder = await prisma.$transaction(async (tx) => {
+app/api/suppliers/route.ts:2:import { PrismaClient } from "@prisma/client";
+app/api/suppliers/route.ts:4:const prisma = new PrismaClient();
+app/api/suppliers/route.ts:9:    const suppliers = await prisma.supplier.findMany({
+app/api/suppliers/route.ts:29:    const newSupplier = await prisma.supplier.create({
+archive/duplicates/seed_master_products.ts:1:// Dynamically require @prisma/client to avoid TS/IDE errors when the package
+archive/duplicates/seed_master_products.ts:4:let PrismaClient: any;
+archive/duplicates/seed_master_products.ts:7:  PrismaClient = require('@prisma/client').PrismaClient;
+archive/duplicates/seed_master_products.ts:9:  console.warn("Warning: '@prisma/client' not found. Using a minimal stub PrismaClient.");
+archive/duplicates/seed_master_products.ts:10:  PrismaClient = class {
+archive/duplicates/seed_master_products.ts:19:const prisma = new PrismaClient();
+archive/duplicates/seed_master_products.ts:40:      // ┘é┘à Ï¿Ï¬Ï╣Ï»┘è┘ä ÏºÏ│┘à Ïº┘äÏ¼Ï»┘ê┘ä (┘àÏ½┘ä prisma.product) Ï¡Ï│Ï¿ ┘àÏº ┘ç┘ê ┘à┘âÏ¬┘êÏ¿ ┘ü┘è ┘à┘ä┘ü schema.prisma ┘äÏ»┘è┘â
+archive/duplicates/seed_master_products.ts:41:      await prisma.product.upsert({
+archive/duplicates/seed_master_products.ts:82:    await prisma.$disconnect();
+archive/duplicates/workflowEngine.ts:1:´╗┐import { PrismaClient } from "@prisma/client";
+archive/duplicates/workflowEngine.ts:3:const prisma = new PrismaClient();
+archive/duplicates/workflowEngine.ts:30:    const order = await prisma.salesOrder.findUnique({
+archive/duplicates/workflowEngine.ts:40:    const updatedOrder = await prisma.$transaction(async (tx) => {
+archive/historical/__tests__/workflowEngine.test.ts:14:vi.mock("@prisma/client", () => {
+archive/historical/__tests__/workflowEngine.test.ts:16:    PrismaClient: class {
+brain.py:339:            "database/schemas/domain/domain-schema.ts",
+brain.py:671:            "database/schemas/domain/domain-schema.ts",
+brain.py:6238:        parser.add_argument("--repo", required=True, help="Path to the project repository root.")
+brain.py:6577:        parser.add_argument("--repo", default=".", help="Path to repository")
+canonical/lib/workflowEngine.ts:1:´╗┐import { PrismaClient } from "@prisma/client";
+canonical/lib/workflowEngine.ts:3:const prisma = new PrismaClient();
+canonical/lib/workflowEngine.ts:30:    const order = await prisma.salesOrder.findUnique({
+canonical/lib/workflowEngine.ts:40:    const updatedOrder = await prisma.$transaction(async (tx) => {
+canonical/scripts/seed_master_products.ts:1:// Dynamically require @prisma/client to avoid TS/IDE errors when the package
+canonical/scripts/seed_master_products.ts:4:let PrismaClient: any;
+canonical/scripts/seed_master_products.ts:7:  PrismaClient = require('@prisma/client').PrismaClient;
+canonical/scripts/seed_master_products.ts:9:  console.warn("Warning: '@prisma/client' not found. Using a minimal stub PrismaClient.");
+canonical/scripts/seed_master_products.ts:10:  PrismaClient = class {
+canonical/scripts/seed_master_products.ts:19:const prisma = new PrismaClient();
+canonical/scripts/seed_master_products.ts:40:      // ┘é┘à Ï¿Ï¬Ï╣Ï»┘è┘ä ÏºÏ│┘à Ïº┘äÏ¼Ï»┘ê┘ä (┘àÏ½┘ä prisma.product) Ï¡Ï│Ï¿ ┘àÏº ┘ç┘ê ┘à┘âÏ¬┘êÏ¿ ┘ü┘è ┘à┘ä┘ü schema.prisma ┘äÏ»┘è┘â
+canonical/scripts/seed_master_products.ts:41:      await prisma.product.upsert({
+canonical/scripts/seed_master_products.ts:82:    await prisma.$disconnect();
+greenlines_brain/kernel.py:19:from .repository.interface import KnowledgeRepository
+greenlines_brain/kernel.py:127:    def __init__(self, repository: KnowledgeRepository, graph: KnowledgeGraph):
+greenlines_brain/kernel.py:128:        self.repository = repository
+greenlines_brain/kernel.py:134:        rules = self.repository.get_rules()
+greenlines_brain/kernel.py:247:            rules = self.repository.get_rules()
+greenlines_brain/kernel.py:375:    def __init__(self, identity: Identity, repository: KnowledgeRepository):
+greenlines_brain/kernel.py:377:        self.repository = repository
+greenlines_brain/kernel.py:381:        self.knowledge = repository.load_knowledge()
+greenlines_brain/kernel.py:391:        self.semantic_engine = SemanticReasoningEngine(repository, self.graph)
+greenlines_brain/kernel.py:552:        rules = self.repository.get_rules()
+greenlines_brain/kernel.py:592:            for rule in self.repository.get_rules():
+greenlines_brain/kernel.py:818:            repo_rules = self.repository.get_rules()
+greenlines_brain/repository/interface.py:1:# greenlines_brain/repository/interface.py
+greenlines_brain/repository/json_repo.py:1:´╗┐# greenlines_brain/repository/json_repo.py
+run_brain_cli_backup.py:14:    parser.add_argument("--repo", required=True, help="Path to the project repository root.")
+test_brain.py:3:from greenlines_brain.repository.json_repo import JSONKnowledgeRepository
+test_brain.py:26:repository = JSONKnowledgeRepository(knowledge_path)
+test_brain.py:29:brain = GreenlinesBrain(egypt_identity, repository)
+test_brain_v2.py:16:from greenlines_brain.repository.json_repo import JSONKnowledgeRepository
+test_brain_v2.py:49:    repository = JSONKnowledgeRepository(knowledge_path)
+test_brain_v2.py:54:    brain = GreenlinesBrain(egypt_identity, repository)
+test_brain_v3.py:12:from greenlines_brain.repository.json_repo import JSONKnowledgeRepository
+test_brain_v3.py:49:    repository = JSONKnowledgeRepository(knowledge_path)
+test_brain_v3.py:50:    knowledge = repository.load_knowledge()
+test_brain_v3.py:57:    brain = GreenlinesBrain(egypt_identity, repository)

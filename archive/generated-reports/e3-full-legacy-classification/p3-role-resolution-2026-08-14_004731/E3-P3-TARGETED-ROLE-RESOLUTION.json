@@ -1,0 +1,445 @@
+{
+    "report":  "E3 P3 Targeted Role Resolution",
+    "generatedAt":  "2026-08-14T00:47:31.6178393+02:00",
+    "mode":  "READ_ONLY_REPORT_CONTINUATION",
+    "input":  {
+                  "p3":  "C:\\Users\\Ghanam\\Documents\\Codex\\Greeny-Life-Repair\\archive\\generated-reports\\e3-full-legacy-classification\\2026-08-14_004314\\E3-P3-LEGACY-UNDERSTANDING-LINEAGE.csv",
+                  "targets":  31
+              },
+    "resolved":  [
+                     {
+                         "assetId":  "LEGACY-PRIMARY:E3-SOURCE-TRACE-PACKAGE.zip",
+                         "path":  "E3-SOURCE-TRACE-PACKAGE.zip",
+                         "phase2Classification":  "BINARY_OR_SPECIAL_FORMAT",
+                         "priorRole":  "UNRESOLVED_ROLE",
+                         "resolvedRole":  "UNRESOLVED_ROLE",
+                         "decision":  "UNKNOWN",
+                         "reason":  "No safe category rule matched.",
+                         "evidence":  [
+                                          "C:\\Users\\Ghanam\\Documents\\Codex\\Greeny-Life-Repair\\archive\\generated-reports\\e3-full-legacy-classification\\2026-08-14_004314\\E3-P3-LEGACY-UNDERSTANDING-LINEAGE.csv",
+                                          "C:\\Users\\Ghanam\\Documents\\Codex\\Greeny-Life-Repair\\archive\\generated-reports\\e3-phase-2-primary-classification\\2026-08-14_003259\\E3-PHASE-2-PRIMARY-LEGACY-CLASSIFICATION.json"
+                                      ]
+                     },
+                     {
+                         "assetId":  "LEGACY-PRIMARY:GreenyLifeEOS_Review.zip",
+                         "path":  "GreenyLifeEOS_Review.zip",
+                         "phase2Classification":  "BINARY_OR_SPECIAL_FORMAT",
+                         "priorRole":  "UNRESOLVED_ROLE",
+                         "resolvedRole":  "UNRESOLVED_ROLE",
+                         "decision":  "UNKNOWN",
+                         "reason":  "No safe category rule matched.",
+                         "evidence":  [
+                                          "C:\\Users\\Ghanam\\Documents\\Codex\\Greeny-Life-Repair\\archive\\generated-reports\\e3-full-legacy-classification\\2026-08-14_004314\\E3-P3-LEGACY-UNDERSTANDING-LINEAGE.csv",
+                                          "C:\\Users\\Ghanam\\Documents\\Codex\\Greeny-Life-Repair\\archive\\generated-reports\\e3-phase-2-primary-classification\\2026-08-14_003259\\E3-PHASE-2-PRIMARY-LEGACY-CLASSIFICATION.json"
+                                      ]
+                     },
+                     {
+                         "assetId":  "LEGACY-PRIMARY:how HEAD.env  Select-Object -First 20",
+                         "path":  "how HEAD.env  Select-Object -First 20",
+                         "phase2Classification":  "BINARY_OR_SPECIAL_FORMAT",
+                         "priorRole":  "UNRESOLVED_ROLE",
+                         "resolvedRole":  "MALFORMED_COMMAND_ARTIFACT",
+                         "decision":  "QUARANTINE",
+                         "reason":  "Malformed command-output artifact is not a project implementation; retained for evidence and safe later review.",
+                         "evidence":  [
+                                          "C:\\Users\\Ghanam\\Documents\\Codex\\Greeny-Life-Repair\\archive\\generated-reports\\e3-full-legacy-classification\\2026-08-14_004314\\E3-P3-LEGACY-UNDERSTANDING-LINEAGE.csv",
+                                          "C:\\Users\\Ghanam\\Documents\\Codex\\Greeny-Life-Repair\\archive\\generated-reports\\e3-phase-2-primary-classification\\2026-08-14_003259\\E3-PHASE-2-PRIMARY-LEGACY-CLASSIFICATION.json"
+                                      ]
+                     },
+                     {
+                         "assetId":  "LEGACY-PRIMARY:package.json",
+                         "path":  "package.json",
+                         "phase2Classification":  "EMPTY_FILE_REVIEW",
+                         "priorRole":  "UNRESOLVED_ROLE",
+                         "resolvedRole":  "EMPTY_REFERENCE_OR_PLACEHOLDER",
+                         "decision":  "REVIEW",
+                         "reason":  "Empty file; retained until dependency, owner and intended role are proven.",
+                         "evidence":  [
+                                          "C:\\Users\\Ghanam\\Documents\\Codex\\Greeny-Life-Repair\\archive\\generated-reports\\e3-full-legacy-classification\\2026-08-14_004314\\E3-P3-LEGACY-UNDERSTANDING-LINEAGE.csv",
+                                          "C:\\Users\\Ghanam\\Documents\\Codex\\Greeny-Life-Repair\\archive\\generated-reports\\e3-phase-2-primary-classification\\2026-08-14_003259\\E3-PHASE-2-PRIMARY-LEGACY-CLASSIFICATION.json"
+                                      ]
+                     },
+                     {
+                         "assetId":  "LEGACY-PRIMARY:alerts\\alerts_20260804.log",
+                         "path":  "alerts\\alerts_20260804.log",
+                         "phase2Classification":  "BINARY_OR_SPECIAL_FORMAT",
+                         "priorRole":  "UNRESOLVED_ROLE",
+                         "resolvedRole":  "DERIVED_OPERATIONAL_LOG",
+                         "decision":  "REVIEW",
+                         "reason":  "Operational log is historical/derived evidence; owner, retention and recovery remain unproven.",
+                         "evidence":  [
+                                          "C:\\Users\\Ghanam\\Documents\\Codex\\Greeny-Life-Repair\\archive\\generated-reports\\e3-full-legacy-classification\\2026-08-14_004314\\E3-P3-LEGACY-UNDERSTANDING-LINEAGE.csv",
+                                          "C:\\Users\\Ghanam\\Documents\\Codex\\Greeny-Life-Repair\\archive\\generated-reports\\e3-phase-2-primary-classification\\2026-08-14_003259\\E3-PHASE-2-PRIMARY-LEGACY-CLASSIFICATION.json"
+                                      ]
+                     },
+                     {
+                         "assetId":  "LEGACY-PRIMARY:alerts\\alerts_20260805.log",
+                         "path":  "alerts\\alerts_20260805.log",
+                         "phase2Classification":  "BINARY_OR_SPECIAL_FORMAT",
+                         "priorRole":  "UNRESOLVED_ROLE",
+                         "resolvedRole":  "DERIVED_OPERATIONAL_LOG",
+                         "decision":  "REVIEW",
+                         "reason":  "Operational log is historical/derived evidence; owner, retention and recovery remain unproven.",
+                         "evidence":  [
+                                          "C:\\Users\\Ghanam\\Documents\\Codex\\Greeny-Life-Repair\\archive\\generated-reports\\e3-full-legacy-classification\\2026-08-14_004314\\E3-P3-LEGACY-UNDERSTANDING-LINEAGE.csv",
+                                          "C:\\Users\\Ghanam\\Documents\\Codex\\Greeny-Life-Repair\\archive\\generated-reports\\e3-phase-2-primary-classification\\2026-08-14_003259\\E3-PHASE-2-PRIMARY-LEGACY-CLASSIFICATION.json"
+                                      ]
+                     },
+                     {
+                         "assetId":  "LEGACY-PRIMARY:app\\js\\script.js",
+                         "path":  "app\\js\\script.js",
+                         "phase2Classification":  "EMPTY_FILE_REVIEW",
+                         "priorRole":  "UNRESOLVED_ROLE",
+                         "resolvedRole":  "EMPTY_REFERENCE_OR_PLACEHOLDER",
+                         "decision":  "REVIEW",
+                         "reason":  "Empty file; retained until dependency, owner and intended role are proven.",
+                         "evidence":  [
+                                          "C:\\Users\\Ghanam\\Documents\\Codex\\Greeny-Life-Repair\\archive\\generated-reports\\e3-full-legacy-classification\\2026-08-14_004314\\E3-P3-LEGACY-UNDERSTANDING-LINEAGE.csv",
+                                          "C:\\Users\\Ghanam\\Documents\\Codex\\Greeny-Life-Repair\\archive\\generated-reports\\e3-phase-2-primary-classification\\2026-08-14_003259\\E3-PHASE-2-PRIMARY-LEGACY-CLASSIFICATION.json"
+                                      ]
+                     },
+                     {
+                         "assetId":  "LEGACY-PRIMARY:application\\logistics\\commands\\logistics-command.ts",
+                         "path":  "application\\logistics\\commands\\logistics-command.ts",
+                         "phase2Classification":  "EMPTY_FILE_REVIEW",
+                         "priorRole":  "UNRESOLVED_ROLE",
+                         "resolvedRole":  "EMPTY_REFERENCE_OR_PLACEHOLDER",
+                         "decision":  "REVIEW",
+                         "reason":  "Empty file; retained until dependency, owner and intended role are proven.",
+                         "evidence":  [
+                                          "C:\\Users\\Ghanam\\Documents\\Codex\\Greeny-Life-Repair\\archive\\generated-reports\\e3-full-legacy-classification\\2026-08-14_004314\\E3-P3-LEGACY-UNDERSTANDING-LINEAGE.csv",
+                                          "C:\\Users\\Ghanam\\Documents\\Codex\\Greeny-Life-Repair\\archive\\generated-reports\\e3-phase-2-primary-classification\\2026-08-14_003259\\E3-PHASE-2-PRIMARY-LEGACY-CLASSIFICATION.json"
+                                      ]
+                     },
+                     {
+                         "assetId":  "LEGACY-PRIMARY:application\\logistics\\queries\\logistics-query.ts",
+                         "path":  "application\\logistics\\queries\\logistics-query.ts",
+                         "phase2Classification":  "EMPTY_FILE_REVIEW",
+                         "priorRole":  "UNRESOLVED_ROLE",
+                         "resolvedRole":  "EMPTY_REFERENCE_OR_PLACEHOLDER",
+                         "decision":  "REVIEW",
+                         "reason":  "Empty file; retained until dependency, owner and intended role are proven.",
+                         "evidence":  [
+                                          "C:\\Users\\Ghanam\\Documents\\Codex\\Greeny-Life-Repair\\archive\\generated-reports\\e3-full-legacy-classification\\2026-08-14_004314\\E3-P3-LEGACY-UNDERSTANDING-LINEAGE.csv",
+                                          "C:\\Users\\Ghanam\\Documents\\Codex\\Greeny-Life-Repair\\archive\\generated-reports\\e3-phase-2-primary-classification\\2026-08-14_003259\\E3-PHASE-2-PRIMARY-LEGACY-CLASSIFICATION.json"
+                                      ]
+                     },
+                     {
+                         "assetId":  "LEGACY-PRIMARY:application\\quality\\commands\\quality-command.ts",
+                         "path":  "application\\quality\\commands\\quality-command.ts",
+                         "phase2Classification":  "EMPTY_FILE_REVIEW",
+                         "priorRole":  "UNRESOLVED_ROLE",
+                         "resolvedRole":  "EMPTY_REFERENCE_OR_PLACEHOLDER",
+                         "decision":  "REVIEW",
+                         "reason":  "Empty file; retained until dependency, owner and intended role are proven.",
+                         "evidence":  [
+                                          "C:\\Users\\Ghanam\\Documents\\Codex\\Greeny-Life-Repair\\archive\\generated-reports\\e3-full-legacy-classification\\2026-08-14_004314\\E3-P3-LEGACY-UNDERSTANDING-LINEAGE.csv",
+                                          "C:\\Users\\Ghanam\\Documents\\Codex\\Greeny-Life-Repair\\archive\\generated-reports\\e3-phase-2-primary-classification\\2026-08-14_003259\\E3-PHASE-2-PRIMARY-LEGACY-CLASSIFICATION.json"
+                                      ]
+                     },
+                     {
+                         "assetId":  "LEGACY-PRIMARY:application\\quality\\queries\\quality-query.ts",
+                         "path":  "application\\quality\\queries\\quality-query.ts",
+                         "phase2Classification":  "EMPTY_FILE_REVIEW",
+                         "priorRole":  "UNRESOLVED_ROLE",
+                         "resolvedRole":  "EMPTY_REFERENCE_OR_PLACEHOLDER",
+                         "decision":  "REVIEW",
+                         "reason":  "Empty file; retained until dependency, owner and intended role are proven.",
+                         "evidence":  [
+                                          "C:\\Users\\Ghanam\\Documents\\Codex\\Greeny-Life-Repair\\archive\\generated-reports\\e3-full-legacy-classification\\2026-08-14_004314\\E3-P3-LEGACY-UNDERSTANDING-LINEAGE.csv",
+                                          "C:\\Users\\Ghanam\\Documents\\Codex\\Greeny-Life-Repair\\archive\\generated-reports\\e3-phase-2-primary-classification\\2026-08-14_003259\\E3-PHASE-2-PRIMARY-LEGACY-CLASSIFICATION.json"
+                                      ]
+                     },
+                     {
+                         "assetId":  "LEGACY-PRIMARY:canonical\\data\\administration-master.json",
+                         "path":  "canonical\\data\\administration-master.json",
+                         "phase2Classification":  "EMPTY_FILE_REVIEW",
+                         "priorRole":  "UNRESOLVED_ROLE",
+                         "resolvedRole":  "EMPTY_REFERENCE_OR_PLACEHOLDER",
+                         "decision":  "REVIEW",
+                         "reason":  "Empty file; retained until dependency, owner and intended role are proven.",
+                         "evidence":  [
+                                          "C:\\Users\\Ghanam\\Documents\\Codex\\Greeny-Life-Repair\\archive\\generated-reports\\e3-full-legacy-classification\\2026-08-14_004314\\E3-P3-LEGACY-UNDERSTANDING-LINEAGE.csv",
+                                          "C:\\Users\\Ghanam\\Documents\\Codex\\Greeny-Life-Repair\\archive\\generated-reports\\e3-phase-2-primary-classification\\2026-08-14_003259\\E3-PHASE-2-PRIMARY-LEGACY-CLASSIFICATION.json"
+                                      ]
+                     },
+                     {
+                         "assetId":  "LEGACY-PRIMARY:canonical\\__pycache__\\fix_indent.cpython-314.pyc",
+                         "path":  "canonical\\__pycache__\\fix_indent.cpython-314.pyc",
+                         "phase2Classification":  "BINARY_OR_SPECIAL_FORMAT",
+                         "priorRole":  "UNRESOLVED_ROLE",
+                         "resolvedRole":  "UNRESOLVED_ROLE",
+                         "decision":  "UNKNOWN",
+                         "reason":  "No safe category rule matched.",
+                         "evidence":  [
+                                          "C:\\Users\\Ghanam\\Documents\\Codex\\Greeny-Life-Repair\\archive\\generated-reports\\e3-full-legacy-classification\\2026-08-14_004314\\E3-P3-LEGACY-UNDERSTANDING-LINEAGE.csv",
+                                          "C:\\Users\\Ghanam\\Documents\\Codex\\Greeny-Life-Repair\\archive\\generated-reports\\e3-phase-2-primary-classification\\2026-08-14_003259\\E3-PHASE-2-PRIMARY-LEGACY-CLASSIFICATION.json"
+                                      ]
+                     },
+                     {
+                         "assetId":  "LEGACY-PRIMARY:data\\03_packaging_system.json",
+                         "path":  "data\\03_packaging_system.json",
+                         "phase2Classification":  "EMPTY_FILE_REVIEW",
+                         "priorRole":  "UNRESOLVED_ROLE",
+                         "resolvedRole":  "EMPTY_REFERENCE_OR_PLACEHOLDER",
+                         "decision":  "REVIEW",
+                         "reason":  "Empty file; retained until dependency, owner and intended role are proven.",
+                         "evidence":  [
+                                          "C:\\Users\\Ghanam\\Documents\\Codex\\Greeny-Life-Repair\\archive\\generated-reports\\e3-full-legacy-classification\\2026-08-14_004314\\E3-P3-LEGACY-UNDERSTANDING-LINEAGE.csv",
+                                          "C:\\Users\\Ghanam\\Documents\\Codex\\Greeny-Life-Repair\\archive\\generated-reports\\e3-phase-2-primary-classification\\2026-08-14_003259\\E3-PHASE-2-PRIMARY-LEGACY-CLASSIFICATION.json"
+                                      ]
+                     },
+                     {
+                         "assetId":  "LEGACY-PRIMARY:data\\legacy\\packaging.json",
+                         "path":  "data\\legacy\\packaging.json",
+                         "phase2Classification":  "EMPTY_FILE_REVIEW",
+                         "priorRole":  "UNRESOLVED_ROLE",
+                         "resolvedRole":  "EMPTY_REFERENCE_OR_PLACEHOLDER",
+                         "decision":  "REVIEW",
+                         "reason":  "Empty file; retained until dependency, owner and intended role are proven.",
+                         "evidence":  [
+                                          "C:\\Users\\Ghanam\\Documents\\Codex\\Greeny-Life-Repair\\archive\\generated-reports\\e3-full-legacy-classification\\2026-08-14_004314\\E3-P3-LEGACY-UNDERSTANDING-LINEAGE.csv",
+                                          "C:\\Users\\Ghanam\\Documents\\Codex\\Greeny-Life-Repair\\archive\\generated-reports\\e3-phase-2-primary-classification\\2026-08-14_003259\\E3-PHASE-2-PRIMARY-LEGACY-CLASSIFICATION.json"
+                                      ]
+                     },
+                     {
+                         "assetId":  "LEGACY-PRIMARY:docs\\calibration\\improvement_claim_ledger.jsonl",
+                         "path":  "docs\\calibration\\improvement_claim_ledger.jsonl",
+                         "phase2Classification":  "EMPTY_FILE_REVIEW",
+                         "priorRole":  "UNRESOLVED_ROLE",
+                         "resolvedRole":  "EMPTY_REFERENCE_OR_PLACEHOLDER",
+                         "decision":  "REVIEW",
+                         "reason":  "Empty file; retained until dependency, owner and intended role are proven.",
+                         "evidence":  [
+                                          "C:\\Users\\Ghanam\\Documents\\Codex\\Greeny-Life-Repair\\archive\\generated-reports\\e3-full-legacy-classification\\2026-08-14_004314\\E3-P3-LEGACY-UNDERSTANDING-LINEAGE.csv",
+                                          "C:\\Users\\Ghanam\\Documents\\Codex\\Greeny-Life-Repair\\archive\\generated-reports\\e3-phase-2-primary-classification\\2026-08-14_003259\\E3-PHASE-2-PRIMARY-LEGACY-CLASSIFICATION.json"
+                                      ]
+                     },
+                     {
+                         "assetId":  "LEGACY-PRIMARY:domain\\logistics\\entities\\logistics-entity.ts",
+                         "path":  "domain\\logistics\\entities\\logistics-entity.ts",
+                         "phase2Classification":  "EMPTY_FILE_REVIEW",
+                         "priorRole":  "UNRESOLVED_ROLE",
+                         "resolvedRole":  "EMPTY_REFERENCE_OR_PLACEHOLDER",
+                         "decision":  "REVIEW",
+                         "reason":  "Empty file; retained until dependency, owner and intended role are proven.",
+                         "evidence":  [
+                                          "C:\\Users\\Ghanam\\Documents\\Codex\\Greeny-Life-Repair\\archive\\generated-reports\\e3-full-legacy-classification\\2026-08-14_004314\\E3-P3-LEGACY-UNDERSTANDING-LINEAGE.csv",
+                                          "C:\\Users\\Ghanam\\Documents\\Codex\\Greeny-Life-Repair\\archive\\generated-reports\\e3-phase-2-primary-classification\\2026-08-14_003259\\E3-PHASE-2-PRIMARY-LEGACY-CLASSIFICATION.json"
+                                      ]
+                     },
+                     {
+                         "assetId":  "LEGACY-PRIMARY:domain\\logistics\\rules\\logistics-rules.ts",
+                         "path":  "domain\\logistics\\rules\\logistics-rules.ts",
+                         "phase2Classification":  "EMPTY_FILE_REVIEW",
+                         "priorRole":  "UNRESOLVED_ROLE",
+                         "resolvedRole":  "EMPTY_REFERENCE_OR_PLACEHOLDER",
+                         "decision":  "REVIEW",
+                         "reason":  "Empty file; retained until dependency, owner and intended role are proven.",
+                         "evidence":  [
+                                          "C:\\Users\\Ghanam\\Documents\\Codex\\Greeny-Life-Repair\\archive\\generated-reports\\e3-full-legacy-classification\\2026-08-14_004314\\E3-P3-LEGACY-UNDERSTANDING-LINEAGE.csv",
+                                          "C:\\Users\\Ghanam\\Documents\\Codex\\Greeny-Life-Repair\\archive\\generated-reports\\e3-phase-2-primary-classification\\2026-08-14_003259\\E3-PHASE-2-PRIMARY-LEGACY-CLASSIFICATION.json"
+                                      ]
+                     },
+                     {
+                         "assetId":  "LEGACY-PRIMARY:domain\\logistics\\services\\logistics-service.ts",
+                         "path":  "domain\\logistics\\services\\logistics-service.ts",
+                         "phase2Classification":  "EMPTY_FILE_REVIEW",
+                         "priorRole":  "UNRESOLVED_ROLE",
+                         "resolvedRole":  "EMPTY_REFERENCE_OR_PLACEHOLDER",
+                         "decision":  "REVIEW",
+                         "reason":  "Empty file; retained until dependency, owner and intended role are proven.",
+                         "evidence":  [
+                                          "C:\\Users\\Ghanam\\Documents\\Codex\\Greeny-Life-Repair\\archive\\generated-reports\\e3-full-legacy-classification\\2026-08-14_004314\\E3-P3-LEGACY-UNDERSTANDING-LINEAGE.csv",
+                                          "C:\\Users\\Ghanam\\Documents\\Codex\\Greeny-Life-Repair\\archive\\generated-reports\\e3-phase-2-primary-classification\\2026-08-14_003259\\E3-PHASE-2-PRIMARY-LEGACY-CLASSIFICATION.json"
+                                      ]
+                     },
+                     {
+                         "assetId":  "LEGACY-PRIMARY:domain\\quality\\entities\\quality-entity.ts",
+                         "path":  "domain\\quality\\entities\\quality-entity.ts",
+                         "phase2Classification":  "EMPTY_FILE_REVIEW",
+                         "priorRole":  "UNRESOLVED_ROLE",
+                         "resolvedRole":  "EMPTY_REFERENCE_OR_PLACEHOLDER",
+                         "decision":  "REVIEW",
+                         "reason":  "Empty file; retained until dependency, owner and intended role are proven.",
+                         "evidence":  [
+                                          "C:\\Users\\Ghanam\\Documents\\Codex\\Greeny-Life-Repair\\archive\\generated-reports\\e3-full-legacy-classification\\2026-08-14_004314\\E3-P3-LEGACY-UNDERSTANDING-LINEAGE.csv",
+                                          "C:\\Users\\Ghanam\\Documents\\Codex\\Greeny-Life-Repair\\archive\\generated-reports\\e3-phase-2-primary-classification\\2026-08-14_003259\\E3-PHASE-2-PRIMARY-LEGACY-CLASSIFICATION.json"
+                                      ]
+                     },
+                     {
+                         "assetId":  "LEGACY-PRIMARY:domain\\quality\\rules\\quality-rules.ts",
+                         "path":  "domain\\quality\\rules\\quality-rules.ts",
+                         "phase2Classification":  "EMPTY_FILE_REVIEW",
+                         "priorRole":  "UNRESOLVED_ROLE",
+                         "resolvedRole":  "EMPTY_REFERENCE_OR_PLACEHOLDER",
+                         "decision":  "REVIEW",
+                         "reason":  "Empty file; retained until dependency, owner and intended role are proven.",
+                         "evidence":  [
+                                          "C:\\Users\\Ghanam\\Documents\\Codex\\Greeny-Life-Repair\\archive\\generated-reports\\e3-full-legacy-classification\\2026-08-14_004314\\E3-P3-LEGACY-UNDERSTANDING-LINEAGE.csv",
+                                          "C:\\Users\\Ghanam\\Documents\\Codex\\Greeny-Life-Repair\\archive\\generated-reports\\e3-phase-2-primary-classification\\2026-08-14_003259\\E3-PHASE-2-PRIMARY-LEGACY-CLASSIFICATION.json"
+                                      ]
+                     },
+                     {
+                         "assetId":  "LEGACY-PRIMARY:domain\\quality\\services\\quality-service.ts",
+                         "path":  "domain\\quality\\services\\quality-service.ts",
+                         "phase2Classification":  "EMPTY_FILE_REVIEW",
+                         "priorRole":  "UNRESOLVED_ROLE",
+                         "resolvedRole":  "EMPTY_REFERENCE_OR_PLACEHOLDER",
+                         "decision":  "REVIEW",
+                         "reason":  "Empty file; retained until dependency, owner and intended role are proven.",
+                         "evidence":  [
+                                          "C:\\Users\\Ghanam\\Documents\\Codex\\Greeny-Life-Repair\\archive\\generated-reports\\e3-full-legacy-classification\\2026-08-14_004314\\E3-P3-LEGACY-UNDERSTANDING-LINEAGE.csv",
+                                          "C:\\Users\\Ghanam\\Documents\\Codex\\Greeny-Life-Repair\\archive\\generated-reports\\e3-phase-2-primary-classification\\2026-08-14_003259\\E3-PHASE-2-PRIMARY-LEGACY-CLASSIFICATION.json"
+                                      ]
+                     },
+                     {
+                         "assetId":  "LEGACY-PRIMARY:eos-core\\master-data\\master-data\\contracts\\master-data-contracts.ts",
+                         "path":  "eos-core\\master-data\\master-data\\contracts\\master-data-contracts.ts",
+                         "phase2Classification":  "EMPTY_FILE_REVIEW",
+                         "priorRole":  "UNRESOLVED_ROLE",
+                         "resolvedRole":  "EMPTY_REFERENCE_OR_PLACEHOLDER",
+                         "decision":  "REVIEW",
+                         "reason":  "Empty file; retained until dependency, owner and intended role are proven.",
+                         "evidence":  [
+                                          "C:\\Users\\Ghanam\\Documents\\Codex\\Greeny-Life-Repair\\archive\\generated-reports\\e3-full-legacy-classification\\2026-08-14_004314\\E3-P3-LEGACY-UNDERSTANDING-LINEAGE.csv",
+                                          "C:\\Users\\Ghanam\\Documents\\Codex\\Greeny-Life-Repair\\archive\\generated-reports\\e3-phase-2-primary-classification\\2026-08-14_003259\\E3-PHASE-2-PRIMARY-LEGACY-CLASSIFICATION.json"
+                                      ]
+                     },
+                     {
+                         "assetId":  "LEGACY-PRIMARY:eos-core\\master-data\\master-data\\events\\master-data-events.ts",
+                         "path":  "eos-core\\master-data\\master-data\\events\\master-data-events.ts",
+                         "phase2Classification":  "EMPTY_FILE_REVIEW",
+                         "priorRole":  "UNRESOLVED_ROLE",
+                         "resolvedRole":  "EMPTY_REFERENCE_OR_PLACEHOLDER",
+                         "decision":  "REVIEW",
+                         "reason":  "Empty file; retained until dependency, owner and intended role are proven.",
+                         "evidence":  [
+                                          "C:\\Users\\Ghanam\\Documents\\Codex\\Greeny-Life-Repair\\archive\\generated-reports\\e3-full-legacy-classification\\2026-08-14_004314\\E3-P3-LEGACY-UNDERSTANDING-LINEAGE.csv",
+                                          "C:\\Users\\Ghanam\\Documents\\Codex\\Greeny-Life-Repair\\archive\\generated-reports\\e3-phase-2-primary-classification\\2026-08-14_003259\\E3-PHASE-2-PRIMARY-LEGACY-CLASSIFICATION.json"
+                                      ]
+                     },
+                     {
+                         "assetId":  "LEGACY-PRIMARY:eos-core\\master-data\\master-data\\mapping\\entity-mapping.ts",
+                         "path":  "eos-core\\master-data\\master-data\\mapping\\entity-mapping.ts",
+                         "phase2Classification":  "EMPTY_FILE_REVIEW",
+                         "priorRole":  "UNRESOLVED_ROLE",
+                         "resolvedRole":  "EMPTY_REFERENCE_OR_PLACEHOLDER",
+                         "decision":  "REVIEW",
+                         "reason":  "Empty file; retained until dependency, owner and intended role are proven.",
+                         "evidence":  [
+                                          "C:\\Users\\Ghanam\\Documents\\Codex\\Greeny-Life-Repair\\archive\\generated-reports\\e3-full-legacy-classification\\2026-08-14_004314\\E3-P3-LEGACY-UNDERSTANDING-LINEAGE.csv",
+                                          "C:\\Users\\Ghanam\\Documents\\Codex\\Greeny-Life-Repair\\archive\\generated-reports\\e3-phase-2-primary-classification\\2026-08-14_003259\\E3-PHASE-2-PRIMARY-LEGACY-CLASSIFICATION.json"
+                                      ]
+                     },
+                     {
+                         "assetId":  "LEGACY-PRIMARY:eos-core\\master-data\\master-data\\validation\\master-data-rules.ts",
+                         "path":  "eos-core\\master-data\\master-data\\validation\\master-data-rules.ts",
+                         "phase2Classification":  "EMPTY_FILE_REVIEW",
+                         "priorRole":  "UNRESOLVED_ROLE",
+                         "resolvedRole":  "EMPTY_REFERENCE_OR_PLACEHOLDER",
+                         "decision":  "REVIEW",
+                         "reason":  "Empty file; retained until dependency, owner and intended role are proven.",
+                         "evidence":  [
+                                          "C:\\Users\\Ghanam\\Documents\\Codex\\Greeny-Life-Repair\\archive\\generated-reports\\e3-full-legacy-classification\\2026-08-14_004314\\E3-P3-LEGACY-UNDERSTANDING-LINEAGE.csv",
+                                          "C:\\Users\\Ghanam\\Documents\\Codex\\Greeny-Life-Repair\\archive\\generated-reports\\e3-phase-2-primary-classification\\2026-08-14_003259\\E3-PHASE-2-PRIMARY-LEGACY-CLASSIFICATION.json"
+                                      ]
+                     },
+                     {
+                         "assetId":  "LEGACY-PRIMARY:guardrails\\guardrails.jsonl",
+                         "path":  "guardrails\\guardrails.jsonl",
+                         "phase2Classification":  "EMPTY_FILE_REVIEW",
+                         "priorRole":  "UNRESOLVED_ROLE",
+                         "resolvedRole":  "EMPTY_REFERENCE_OR_PLACEHOLDER",
+                         "decision":  "REVIEW",
+                         "reason":  "Empty file; retained until dependency, owner and intended role are proven.",
+                         "evidence":  [
+                                          "C:\\Users\\Ghanam\\Documents\\Codex\\Greeny-Life-Repair\\archive\\generated-reports\\e3-full-legacy-classification\\2026-08-14_004314\\E3-P3-LEGACY-UNDERSTANDING-LINEAGE.csv",
+                                          "C:\\Users\\Ghanam\\Documents\\Codex\\Greeny-Life-Repair\\archive\\generated-reports\\e3-phase-2-primary-classification\\2026-08-14_003259\\E3-PHASE-2-PRIMARY-LEGACY-CLASSIFICATION.json"
+                                      ]
+                     },
+                     {
+                         "assetId":  "LEGACY-PRIMARY:guardrails\\links.jsonl",
+                         "path":  "guardrails\\links.jsonl",
+                         "phase2Classification":  "EMPTY_FILE_REVIEW",
+                         "priorRole":  "UNRESOLVED_ROLE",
+                         "resolvedRole":  "EMPTY_REFERENCE_OR_PLACEHOLDER",
+                         "decision":  "REVIEW",
+                         "reason":  "Empty file; retained until dependency, owner and intended role are proven.",
+                         "evidence":  [
+                                          "C:\\Users\\Ghanam\\Documents\\Codex\\Greeny-Life-Repair\\archive\\generated-reports\\e3-full-legacy-classification\\2026-08-14_004314\\E3-P3-LEGACY-UNDERSTANDING-LINEAGE.csv",
+                                          "C:\\Users\\Ghanam\\Documents\\Codex\\Greeny-Life-Repair\\archive\\generated-reports\\e3-phase-2-primary-classification\\2026-08-14_003259\\E3-PHASE-2-PRIMARY-LEGACY-CLASSIFICATION.json"
+                                      ]
+                     },
+                     {
+                         "assetId":  "LEGACY-PRIMARY:guardrails\\references.jsonl",
+                         "path":  "guardrails\\references.jsonl",
+                         "phase2Classification":  "EMPTY_FILE_REVIEW",
+                         "priorRole":  "UNRESOLVED_ROLE",
+                         "resolvedRole":  "EMPTY_REFERENCE_OR_PLACEHOLDER",
+                         "decision":  "REVIEW",
+                         "reason":  "Empty file; retained until dependency, owner and intended role are proven.",
+                         "evidence":  [
+                                          "C:\\Users\\Ghanam\\Documents\\Codex\\Greeny-Life-Repair\\archive\\generated-reports\\e3-full-legacy-classification\\2026-08-14_004314\\E3-P3-LEGACY-UNDERSTANDING-LINEAGE.csv",
+                                          "C:\\Users\\Ghanam\\Documents\\Codex\\Greeny-Life-Repair\\archive\\generated-reports\\e3-phase-2-primary-classification\\2026-08-14_003259\\E3-PHASE-2-PRIMARY-LEGACY-CLASSIFICATION.json"
+                                      ]
+                     },
+                     {
+                         "assetId":  "LEGACY-PRIMARY:tests\\performance\\__init__.py",
+                         "path":  "tests\\performance\\__init__.py",
+                         "phase2Classification":  "EMPTY_FILE_REVIEW",
+                         "priorRole":  "UNRESOLVED_ROLE",
+                         "resolvedRole":  "EMPTY_REFERENCE_OR_PLACEHOLDER",
+                         "decision":  "REVIEW",
+                         "reason":  "Empty file; retained until dependency, owner and intended role are proven.",
+                         "evidence":  [
+                                          "C:\\Users\\Ghanam\\Documents\\Codex\\Greeny-Life-Repair\\archive\\generated-reports\\e3-full-legacy-classification\\2026-08-14_004314\\E3-P3-LEGACY-UNDERSTANDING-LINEAGE.csv",
+                                          "C:\\Users\\Ghanam\\Documents\\Codex\\Greeny-Life-Repair\\archive\\generated-reports\\e3-phase-2-primary-classification\\2026-08-14_003259\\E3-PHASE-2-PRIMARY-LEGACY-CLASSIFICATION.json"
+                                      ]
+                     },
+                     {
+                         "assetId":  "LEGACY-PRIMARY:tests\\performance\\__pycache__\\__init__.cpython-314.pyc",
+                         "path":  "tests\\performance\\__pycache__\\__init__.cpython-314.pyc",
+                         "phase2Classification":  "BINARY_OR_SPECIAL_FORMAT",
+                         "priorRole":  "UNRESOLVED_ROLE",
+                         "resolvedRole":  "UNRESOLVED_ROLE",
+                         "decision":  "UNKNOWN",
+                         "reason":  "No safe category rule matched.",
+                         "evidence":  [
+                                          "C:\\Users\\Ghanam\\Documents\\Codex\\Greeny-Life-Repair\\archive\\generated-reports\\e3-full-legacy-classification\\2026-08-14_004314\\E3-P3-LEGACY-UNDERSTANDING-LINEAGE.csv",
+                                          "C:\\Users\\Ghanam\\Documents\\Codex\\Greeny-Life-Repair\\archive\\generated-reports\\e3-phase-2-primary-classification\\2026-08-14_003259\\E3-PHASE-2-PRIMARY-LEGACY-CLASSIFICATION.json"
+                                      ]
+                     }
+                 ],
+    "counts":  [
+                   {
+                       "role":  "DERIVED_OPERATIONAL_LOG",
+                       "assets":  2
+                   },
+                   {
+                       "role":  "EMPTY_REFERENCE_OR_PLACEHOLDER",
+                       "assets":  24
+                   },
+                   {
+                       "role":  "MALFORMED_COMMAND_ARTIFACT",
+                       "assets":  1
+                   },
+                   {
+                       "role":  "UNRESOLVED_ROLE",
+                       "assets":  4
+                   }
+               ],
+    "unresolvedRolesRemaining":  4,
+    "status":  "PARTIAL",
+    "boundary":  "This closes category-level role ambiguity only. It does not prove callers, dependencies, business value, Current equivalence, owner/SOR, archive eligibility, retirement, or deletion.",
+    "prohibitions":  [
+                         "NO_LEGACY_EXECUTION",
+                         "NO_PACKAGE_OPENING",
+                         "NO_MOVE",
+                         "NO_DELETE",
+                         "NO_ARCHIVE_ACTION",
+                         "NO_CURRENT_CHANGE",
+                         "NO_DATABASE_CHANGE",
+                         "NO_GIT_CHANGE"
+                     ]
+}

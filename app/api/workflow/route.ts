@@ -3,6 +3,12 @@ import { NextRequest, NextResponse } from "next/server";
 import { EOSWorkflowEngine, OrderWorkflowState } from "../../../canonical/lib/workflowEngine";
 import { reviewWorkflowTransition } from "@/lib/intelligence/workflow-governance";
 import { findExecutableWorkflowApproval } from "@/lib/intelligence/workflow-approval";
+function finiteQueryNumber(searchParams: URLSearchParams, key: string): number | null {
+  const raw = searchParams.get(key);
+  if (raw === null || !raw.trim()) return null;
+  const value = Number(raw);
+  return Number.isFinite(value) ? value : null;
+}
 
 // POST: تغيير حالة الطلب وسير العمل
 export async function POST(request: NextRequest) {
@@ -57,15 +63,16 @@ export async function POST(request: NextRequest) {
 
 // GET: حساب التكاليف اللوجستية والجمركية لعنصر أو شحنة
 export async function GET(request: NextRequest) {
+  const authorization = await authorizeRequest(request, writeRolePolicy.workflow, "/api/workflow", "CALCULATE_LOGISTICS_COST");
+  if (authorization.response) return authorization.response;
   const { searchParams } = new URL(request.url);
-  const required = ["qty", "price", "tariff", "shipping"] as const;
-  if (required.some((key) => searchParams.get(key) === null)) {
-    return NextResponse.json({ success: false, error: "qty, price, tariff, and shipping are required. No assumed tariff or shipping quote is used." }, { status: 400 });
+  const qty = finiteQueryNumber(searchParams, "qty");
+  const price = finiteQueryNumber(searchParams, "price");
+  const tariff = finiteQueryNumber(searchParams, "tariff");
+  const shipping = finiteQueryNumber(searchParams, "shipping");
+  if (qty === null || price === null || tariff === null || shipping === null) {
+    return NextResponse.json({ success: false, error: "qty, price, tariff, and shipping must be explicit finite numbers. No assumed tariff or shipping quote is used." }, { status: 400 });
   }
-  const qty = parseFloat(searchParams.get("qty")!);
-  const price = parseFloat(searchParams.get("price")!);
-  const tariff = parseFloat(searchParams.get("tariff")!);
-  const shipping = parseFloat(searchParams.get("shipping")!);
 
   try {
     const calculation = EOSWorkflowEngine.calculateLogisticsCost(qty, price, tariff, shipping);

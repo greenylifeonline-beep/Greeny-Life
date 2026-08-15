@@ -1,0 +1,238 @@
+{
+  "canonical_domains": {
+    "product": {
+      "capabilities": [
+        "master_data",
+        "workflow",
+        "schema",
+        "intelligence"
+      ],
+      "files": [
+        "system_manifest.json",
+        "data\\gels-governance-gate-report-v1.json",
+        "intelligence\\eos-domain-activation-blueprint-v1.json",
+        "intelligence\\eos-intelligent-domain-ownership-graph.json",
+        "docs\\architecture\\eos_architecture\\01.Master_Data\\honey_reference.json",
+        "intelligence\\eos-domain-activation-blueprint-v1.json",
+        "intelligence\\eos-execution-truth-map.json",
+        "intelligence\\eos-intelligent-domain-ownership-graph.json",
+        "intelligence\\eos-real-execution-path-map.json",
+        "lib\\workflowEngine.ts",
+        "docs\\auto-generated\\INDEX.md",
+        "system_manifest.json",
+        "intelligence\\intelligence\\engines\\audit-engine.ts",
+        "intelligence\\intelligence\\schemas\\product-schema-map.ts",
+        "governance\\eos-assets-registry-v1.json",
+        "governance\\keep-assets-files-v1.json",
+        "governance\\keep-core-files-v1.json",
+        "intelligence\\eos-domain-activation-blueprint-v1.json",
+        "intelligence\\eos-execution-truth-map.json",
+        "intelligence\\eos-gels-architecture-alignment.json",
+        "intelligence\\eos-intelligent-domain-ownership-graph.json",
+        "intelligence\\eos-real-execution-path-map.json",
+        "intelligence\\intelligence\\intelligence-test.ts",
+        "intelligence\\intelligence\\engines\\audit-engine.ts",
+        "intelligence\\intelligence\\engines\\data-integrity-engine.ts",
+        "intelligence\\intelligence\\schemas\\product-schema-map.ts",
+        "data\\product-cleaning-v2\\removed-products.json",
+        "data\\product-cleaning-v4\\review-products.json"
+      ]
+    },
+    "customer": {
+      "capabilities": [
+        "workflow"
+      ],
+      "files": [
+        "intelligence\\eos-execution-truth-map.json",
+        "intelligence\\eos-real-execution-path-map.json"
+      ]
+    },
+    "supplier": {
+      "capabilities": [
+        "master_data",
+        "workflow"
+      ],
+      "files": [
+        "intelligence\\eos-domain-activation-blueprint-v1.json",
+        "intelligence\\eos-domain-activation-blueprint-v1.json",
+        "intelligence\\eos-execution-truth-map.json",
+        "intelligence\\eos-real-execution-path-map.json",
+        "lib\\workflowEngine.ts",
+        "docs\\auto-generated\\INDEX.md"
+      ]
+    },
+    "logistics": {
+      "capabilities": [],
+      "files": []
+    },
+    "compliance": {
+      "capabilities": [],
+      "files": []
+    },
+    "analytics": {
+      "capabilities": [],
+      "files": []
+    },
+    "finance": {
+      "capabilities": [],
+      "files": []
+    },
+    "administration": {
+      "capabilities": [],
+      "files": []
+    }
+  },
+  "missing_capabilities": [
+    {
+      "domain": "customer",
+      "missing": [
+        "master_data",
+        "schema"
+      ]
+    },
+    {
+      "domain": "supplier",
+      "missing": [
+        "schema"
+      ]
+    },
+    {
+      "domain": "logistics",
+      "missing": [
+        "workflow",
+        "intelligence"
+      ]
+    },
+    {
+      "domain": "compliance",
+      "missing": [
+        "master_data",
+        "documents",
+        "certificates"
+      ]
+    },
+    {
+      "domain": "analytics",
+      "missing": [
+        "kpi",
+        "bi",
+        "forecasting"
+      ]
+    },
+    {
+      "domain": "finance",
+      "missing": [
+        "invoices",
+        "payments",
+        "costing"
+      ]
+    },
+    {
+      "domain": "administration",
+      "missing": [
+        "users",
+        "roles",
+        "permissions"
+      ]
+    }
+  ],
+  "deleted_staging_analysis": {
+    "total_files": 0,
+    "unique_content": [],
+    "referenced_by_canonical": [],
+    "safe_to_delete": []
+  },
+  "canonical_truth_registry": {
+    "system": "GREENY-LIFE-EOS",
+    "version": "1.0.0",
+    "canonical_root": "canonical",
+    "domains": [
+      {
+        "name": "product",
+        "owner": "Product Domain",
+        "master_data": [
+          "docs\\architecture\\eos_architecture\\01.Master_Data\\honey_reference.json"
+        ],
+        "workflow": [
+          "lib\\workflowEngine.ts"
+        ],
+        "database": [
+          "intelligence\\eos-domain-activation-blueprint-v1.json",
+          "intelligence\\eos-intelligent-domain-ownership-graph.json",
+          "intelligence\\eos-domain-activation-blueprint-v1.json",
+          "intelligence\\eos-intelligent-domain-ownership-graph.json",
+          "intelligence\\intelligence\\schemas\\product-schema-map.ts",
+          "intelligence\\eos-domain-activation-blueprint-v1.json",
+          "intelligence\\eos-intelligent-domain-ownership-graph.json",
+          "intelligence\\intelligence\\schemas\\product-schema-map.ts"
+        ],
+        "status": "VALID"
+      },
+      {
+        "name": "customer",
+        "owner": "Customer Domain",
+        "master_data": [],
+        "workflow": [],
+        "database": [],
+        "status": "INCOMPLETE"
+      },
+      {
+        "name": "supplier",
+        "owner": "Supplier Domain",
+        "master_data": [],
+        "workflow": [
+          "lib\\workflowEngine.ts"
+        ],
+        "database": [
+          "intelligence\\eos-domain-activation-blueprint-v1.json",
+          "intelligence\\eos-domain-activation-blueprint-v1.json"
+        ],
+        "status": "INCOMPLETE"
+      },
+      {
+        "name": "logistics",
+        "owner": "Logistics Domain",
+        "master_data": [],
+        "workflow": [],
+        "database": [],
+        "status": "INCOMPLETE"
+      },
+      {
+        "name": "compliance",
+        "owner": "Compliance Domain",
+        "master_data": [],
+        "workflow": [],
+        "database": [],
+        "status": "INCOMPLETE"
+      },
+      {
+        "name": "analytics",
+        "owner": "Analytics Domain",
+        "master_data": [],
+        "workflow": [],
+        "database": [],
+        "status": "INCOMPLETE"
+      },
+      {
+        "name": "finance",
+        "owner": "Finance Domain",
+        "master_data": [],
+        "workflow": [],
+        "database": [],
+        "status": "INCOMPLETE"
+      },
+      {
+        "name": "administration",
+        "owner": "Administration Domain",
+        "master_data": [],
+        "workflow": [],
+        "database": [],
+        "status": "INCOMPLETE"
+      }
+    ],
+    "validation_status": "FAILED",
+    "validated_at": "2026-08-04T23:24:18.711260"
+  },
+  "validation_status": "FAILED",
+  "summary": "Canonical Validation: FAILED. Domains checked: 8. Missing capabilities: 7. Deleted staging: 0 files reviewed."
+}

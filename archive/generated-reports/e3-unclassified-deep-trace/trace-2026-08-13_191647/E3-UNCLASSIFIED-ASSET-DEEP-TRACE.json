@@ -1,0 +1,1140 @@
+﻿{
+    "reportType":  "E3_UNCLASSIFIED_ASSET_DEEP_TRACE_V1",
+    "generatedAtUtc":  "2026-08-13T17:16:47.1393237Z",
+    "mode":  "READ_ONLY_STATIC_TRACE",
+    "protections":  [
+                        "NO_DELETE",
+                        "NO_MOVE",
+                        "NO_ARCHIVE_MOVE",
+                        "NO_EXECUTION",
+                        "NO_DATABASE_ACCESS",
+                        "NO_GIT_STAGE"
+                    ],
+    "targetCount":  87,
+    "summary":  [
+                    {
+                        "classification":  "CI_GOVERNANCE_CANDIDATE",
+                        "count":  1
+                    },
+                    {
+                        "classification":  "CURRENT_APP_CANDIDATE",
+                        "count":  2
+                    },
+                    {
+                        "classification":  "DERIVED_REPORT_CANDIDATE",
+                        "count":  47
+                    },
+                    {
+                        "classification":  "INTELLIGENCE_OR_REFERENCE_CANDIDATE",
+                        "count":  12
+                    },
+                    {
+                        "classification":  "QUARANTINE_CANDIDATE",
+                        "count":  1
+                    },
+                    {
+                        "classification":  "REFERENCE_OR_TOOL_CANDIDATE",
+                        "count":  23
+                    },
+                    {
+                        "classification":  "TEST_CANDIDATE",
+                        "count":  1
+                    }
+                ],
+    "exactHashGroups":  [
+                            {
+                                "sha256":  "30d5766039b0cf36e0c898487388207f4df1c8216a21a829800396a98c8bbb67",
+                                "paths":  [
+                                              "canonical/cleanup_report.json",
+                                              "canonical/intelligence/cleanup_report.json"
+                                          ],
+                                "count":  2
+                            },
+                            {
+                                "sha256":  "27b0b86105698a91c5398498f47060c27addfe42b7fd7e08fbfe0d53321eb071",
+                                "paths":  [
+                                              "els_final_v2.json",
+                                              "els_final_with_business.json"
+                                          ],
+                                "count":  2
+                            },
+                            {
+                                "sha256":  "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+                                "paths":  [
+                                              "intelligence/intelligence/analytics/index.ts",
+                                              "intelligence/intelligence/decision-support/index.ts",
+                                              "intelligence/intelligence/metrics/index.ts",
+                                              "intelligence/intelligence/recommendations/index.ts",
+                                              "intelligence/intelligence/reporting/index.ts",
+                                              "intelligence/intelligence/scanners/system-scanner.ts",
+                                              "intelligence/scripts/phase-2-capability-discovery.ps1",
+                                              "scripts/repair-canonical-products.ps1"
+                                          ],
+                                "count":  8
+                            }
+                        ],
+    "records":  [
+                    {
+                        "path":  ".github/workflows/govern.yml",
+                        "readable":  true,
+                        "sha256":  "f576ad4f6538459a76832031e673aefb53f28ce16645d9ef8329df6f2687f628",
+                        "family":  ".github",
+                        "staticImports":  [
+
+                                          ],
+                        "classification":  "CI_GOVERNANCE_CANDIDATE",
+                        "action":  "REVIEW_FOR_ADOPTION",
+                        "reason":  "Potential CI governance configuration; inspect before tracking."
+                    },
+                    {
+                        "path":  ".govern.toml",
+                        "readable":  true,
+                        "sha256":  "cd9a6c17c4cb85f2cc6661196f326d249885fec4fe0715a3d0af6db5cb9d9761",
+                        "family":  ".govern.toml",
+                        "staticImports":  [
+
+                                          ],
+                        "classification":  "REFERENCE_OR_TOOL_CANDIDATE",
+                        "action":  "PRESERVE_AND_TRACE",
+                        "reason":  "Requires static trace before any disposition."
+                    },
+                    {
+                        "path":  "CLEANUP-AND-RETENTION-POLICY.md",
+                        "readable":  true,
+                        "sha256":  "ab24735d3836cfb8e08a7ef97aa2dcd9e25ac281934980413592daa28b185a91",
+                        "family":  "CLEANUP-AND-RETENTION-POLICY.md",
+                        "staticImports":  [
+
+                                          ],
+                        "classification":  "REFERENCE_OR_TOOL_CANDIDATE",
+                        "action":  "PRESERVE_AND_TRACE",
+                        "reason":  "Requires static trace before any disposition."
+                    },
+                    {
+                        "path":  "E3-GIT-HEAD.txt",
+                        "readable":  true,
+                        "sha256":  "7e0a292b9814172474c4384911336405e8360062f0cb6d89986603f970681803",
+                        "family":  "E3-GIT-HEAD.txt",
+                        "staticImports":  [
+
+                                          ],
+                        "classification":  "DERIVED_REPORT_CANDIDATE",
+                        "action":  "ARCHIVE_PLAN_CANDIDATE",
+                        "reason":  "Derived analysis/report candidate; needs checksum manifest and restore target before a move."
+                    },
+                    {
+                        "path":  "E3-GIT-STATUS.txt",
+                        "readable":  true,
+                        "sha256":  "d803f8e2b546069ae6aa1c33ae437d59f2ddc7e5f494d1ea977dd796866c3f41",
+                        "family":  "E3-GIT-STATUS.txt",
+                        "staticImports":  [
+
+                                          ],
+                        "classification":  "DERIVED_REPORT_CANDIDATE",
+                        "action":  "ARCHIVE_PLAN_CANDIDATE",
+                        "reason":  "Derived analysis/report candidate; needs checksum manifest and restore target before a move."
+                    },
+                    {
+                        "path":  "E3-GIT-TRACKED.txt",
+                        "readable":  true,
+                        "sha256":  "1011760e20161b9900f27ac8ce34d1a5482ea141dd426144ed243adeec91623c",
+                        "family":  "E3-GIT-TRACKED.txt",
+                        "staticImports":  [
+
+                                          ],
+                        "classification":  "DERIVED_REPORT_CANDIDATE",
+                        "action":  "ARCHIVE_PLAN_CANDIDATE",
+                        "reason":  "Derived analysis/report candidate; needs checksum manifest and restore target before a move."
+                    },
+                    {
+                        "path":  "E3-REPOSITORY-MANIFEST.json",
+                        "readable":  true,
+                        "sha256":  "dcfc008d471a009eccd09903d253f7566af7620044cd7d9f08265ae86587c315",
+                        "family":  "E3-REPOSITORY-MANIFEST.json",
+                        "staticImports":  [
+
+                                          ],
+                        "classification":  "DERIVED_REPORT_CANDIDATE",
+                        "action":  "ARCHIVE_PLAN_CANDIDATE",
+                        "reason":  "Derived analysis/report candidate; needs checksum manifest and restore target before a move."
+                    },
+                    {
+                        "path":  "NUCLEUS_FILES.txt",
+                        "readable":  true,
+                        "sha256":  "0875b268bacc6b3b3e87e1baa941ce2ecfe395623e1498abb2f391ad3071d9f8",
+                        "family":  "NUCLEUS_FILES.txt",
+                        "staticImports":  [
+                                              "@prisma/client",
+                                              "next/server",
+                                              "@/lib/workflowEngine"
+                                          ],
+                        "classification":  "REFERENCE_OR_TOOL_CANDIDATE",
+                        "action":  "PRESERVE_AND_TRACE",
+                        "reason":  "Requires static trace before any disposition."
+                    },
+                    {
+                        "path":  "_GREENY_DIAGNOSTIC_20260809_233236/FILES.txt",
+                        "readable":  true,
+                        "sha256":  "5203c69847abb4e268d41bbb7588d1b685a12607b2be3462869777c286cb977d",
+                        "family":  "_GREENY_DIAGNOSTIC_20260809_233236",
+                        "staticImports":  [
+
+                                          ],
+                        "classification":  "DERIVED_REPORT_CANDIDATE",
+                        "action":  "ARCHIVE_PLAN_CANDIDATE",
+                        "reason":  "Derived analysis/report candidate; needs checksum manifest and restore target before a move."
+                    },
+                    {
+                        "path":  "_GREENY_DIAGNOSTIC_20260809_233236/GIT_STATUS.txt",
+                        "readable":  true,
+                        "sha256":  "6968b236037eeb446f1b573761567471f05abda53053701e09a8923896e60b4c",
+                        "family":  "_GREENY_DIAGNOSTIC_20260809_233236",
+                        "staticImports":  [
+
+                                          ],
+                        "classification":  "DERIVED_REPORT_CANDIDATE",
+                        "action":  "ARCHIVE_PLAN_CANDIDATE",
+                        "reason":  "Derived analysis/report candidate; needs checksum manifest and restore target before a move."
+                    },
+                    {
+                        "path":  "_GREENY_DIAGNOSTIC_20260809_233236/KEY_SEARCH.txt",
+                        "readable":  true,
+                        "sha256":  "3fc517015d31cea8bd6359123d75a5632f466608669c5a5a389f7c8314dd4ab1",
+                        "family":  "_GREENY_DIAGNOSTIC_20260809_233236",
+                        "staticImports":  [
+
+                                          ],
+                        "classification":  "DERIVED_REPORT_CANDIDATE",
+                        "action":  "ARCHIVE_PLAN_CANDIDATE",
+                        "reason":  "Derived analysis/report candidate; needs checksum manifest and restore target before a move."
+                    },
+                    {
+                        "path":  "_GREENY_DIAGNOSTIC_20260809_233236/PROJECT_DIAGNOSTIC.txt",
+                        "readable":  true,
+                        "sha256":  "977a99643c7be3029bbb1d549e2801cb4f765b0aeb2f53d14abfa864756930cd",
+                        "family":  "_GREENY_DIAGNOSTIC_20260809_233236",
+                        "staticImports":  [
+
+                                          ],
+                        "classification":  "DERIVED_REPORT_CANDIDATE",
+                        "action":  "ARCHIVE_PLAN_CANDIDATE",
+                        "reason":  "Derived analysis/report candidate; needs checksum manifest and restore target before a move."
+                    },
+                    {
+                        "path":  "build_evidence_layer.py",
+                        "readable":  true,
+                        "sha256":  "a0f744c2f52f2117589c19de129f1806f18e53e5d51c10ae0e360224c5b71be8",
+                        "family":  "build_evidence_layer.py",
+                        "staticImports":  [
+
+                                          ],
+                        "classification":  "REFERENCE_OR_TOOL_CANDIDATE",
+                        "action":  "PRESERVE_AND_TRACE",
+                        "reason":  "Requires static trace before any disposition."
+                    },
+                    {
+                        "path":  "canonical/app/layout.tsx",
+                        "readable":  true,
+                        "sha256":  "226978f2ec66013be077cbbf49b1486a9eefbd38bad99206fde1b8e92c384734",
+                        "family":  "canonical",
+                        "staticImports":  [
+                                              "./globals.css"
+                                          ],
+                        "classification":  "CURRENT_APP_CANDIDATE",
+                        "action":  "STATIC_TRACE_REQUIRED",
+                        "reason":  "Potential alternate app implementation; compare entry points and imports before merge/archive."
+                    },
+                    {
+                        "path":  "canonical/app/page.tsx",
+                        "readable":  true,
+                        "sha256":  "25698220d0ee92427ebdbf603678ab498fcd5aeef4250355f3c20d5d14cee839",
+                        "family":  "canonical",
+                        "staticImports":  [
+                                              "@/lib/data/global",
+                                              "@/lib/data/products"
+                                          ],
+                        "classification":  "CURRENT_APP_CANDIDATE",
+                        "action":  "STATIC_TRACE_REQUIRED",
+                        "reason":  "Potential alternate app implementation; compare entry points and imports before merge/archive."
+                    },
+                    {
+                        "path":  "canonical/classification_report_v2.json",
+                        "readable":  true,
+                        "sha256":  "71aba269be1b344e2af532597e67891e81dd7acb2fb0c05713bf23f93318ea25",
+                        "family":  "canonical",
+                        "staticImports":  [
+
+                                          ],
+                        "classification":  "DERIVED_REPORT_CANDIDATE",
+                        "action":  "ARCHIVE_PLAN_CANDIDATE",
+                        "reason":  "Derived analysis/report candidate; needs checksum manifest and restore target before a move."
+                    },
+                    {
+                        "path":  "canonical/cleanup_report.json",
+                        "readable":  true,
+                        "sha256":  "30d5766039b0cf36e0c898487388207f4df1c8216a21a829800396a98c8bbb67",
+                        "family":  "canonical",
+                        "staticImports":  [
+
+                                          ],
+                        "classification":  "DERIVED_REPORT_CANDIDATE",
+                        "action":  "ARCHIVE_PLAN_CANDIDATE",
+                        "reason":  "Derived analysis/report candidate; needs checksum manifest and restore target before a move."
+                    },
+                    {
+                        "path":  "canonical/final_audit.json",
+                        "readable":  true,
+                        "sha256":  "a232bce1adbd40309940d1f753a53bbbd93dd39d7780e20e792efc62b274a778",
+                        "family":  "canonical",
+                        "staticImports":  [
+
+                                          ],
+                        "classification":  "DERIVED_REPORT_CANDIDATE",
+                        "action":  "ARCHIVE_PLAN_CANDIDATE",
+                        "reason":  "Derived analysis/report candidate; needs checksum manifest and restore target before a move."
+                    },
+                    {
+                        "path":  "canonical/intelligence/README.md",
+                        "readable":  true,
+                        "sha256":  "2a3c758c23f1d2be170b4e27351955d1b06b68aa1e7ba9a4205e19327fca57e0",
+                        "family":  "canonical",
+                        "staticImports":  [
+
+                                          ],
+                        "classification":  "REFERENCE_OR_TOOL_CANDIDATE",
+                        "action":  "PRESERVE_AND_TRACE",
+                        "reason":  "Requires static trace before any disposition."
+                    },
+                    {
+                        "path":  "canonical/intelligence/architecture.manifest.json",
+                        "readable":  true,
+                        "sha256":  "b42842c5a0e8292165913f55d5385d1b864c9232b4b16cd87b907fd0aebf8dac",
+                        "family":  "canonical",
+                        "staticImports":  [
+
+                                          ],
+                        "classification":  "DERIVED_REPORT_CANDIDATE",
+                        "action":  "ARCHIVE_PLAN_CANDIDATE",
+                        "reason":  "Derived analysis/report candidate; needs checksum manifest and restore target before a move."
+                    },
+                    {
+                        "path":  "canonical/intelligence/asset_classification_report_v2.json",
+                        "readable":  true,
+                        "sha256":  "77a9a4ceccfaa4ebb6416ecba043ecd9d80e2211af06d73e1e6957e6d5fbe460",
+                        "family":  "canonical",
+                        "staticImports":  [
+
+                                          ],
+                        "classification":  "DERIVED_REPORT_CANDIDATE",
+                        "action":  "ARCHIVE_PLAN_CANDIDATE",
+                        "reason":  "Derived analysis/report candidate; needs checksum manifest and restore target before a move."
+                    },
+                    {
+                        "path":  "canonical/intelligence/cleanup_report.json",
+                        "readable":  true,
+                        "sha256":  "30d5766039b0cf36e0c898487388207f4df1c8216a21a829800396a98c8bbb67",
+                        "family":  "canonical",
+                        "staticImports":  [
+
+                                          ],
+                        "classification":  "DERIVED_REPORT_CANDIDATE",
+                        "action":  "ARCHIVE_PLAN_CANDIDATE",
+                        "reason":  "Derived analysis/report candidate; needs checksum manifest and restore target before a move."
+                    },
+                    {
+                        "path":  "canonical/intelligence/comprehensive_report.json",
+                        "readable":  true,
+                        "sha256":  "b2331d28f45987c9904713d4e41f066636b1a843a0f9c165d64635f4ba9a1248",
+                        "family":  "canonical",
+                        "staticImports":  [
+
+                                          ],
+                        "classification":  "DERIVED_REPORT_CANDIDATE",
+                        "action":  "ARCHIVE_PLAN_CANDIDATE",
+                        "reason":  "Derived analysis/report candidate; needs checksum manifest and restore target before a move."
+                    },
+                    {
+                        "path":  "canonical/intelligence/contracts/execution-contract.json",
+                        "readable":  true,
+                        "sha256":  "eef34207d04635d09aeb7a857b2da027220b71b18b94ee69809ddfcc221d18b6",
+                        "family":  "canonical",
+                        "staticImports":  [
+
+                                          ],
+                        "classification":  "REFERENCE_OR_TOOL_CANDIDATE",
+                        "action":  "PRESERVE_AND_TRACE",
+                        "reason":  "Requires static trace before any disposition."
+                    },
+                    {
+                        "path":  "canonical/intelligence/eos-business-contract-discovery.json",
+                        "readable":  true,
+                        "sha256":  "fcfb5d382d2b7ddff4bbefb65fd235412e1d0eb544a50bfdc7f4ac59347ae555",
+                        "family":  "canonical",
+                        "staticImports":  [
+
+                                          ],
+                        "classification":  "REFERENCE_OR_TOOL_CANDIDATE",
+                        "action":  "PRESERVE_AND_TRACE",
+                        "reason":  "Requires static trace before any disposition."
+                    },
+                    {
+                        "path":  "canonical/intelligence/eos-domain-activation-blueprint-v1.json",
+                        "readable":  true,
+                        "sha256":  "44c2c2bba717837daa03565065e50955efd7ab2e05b2185053fc0eceb8dcacdb",
+                        "family":  "canonical",
+                        "staticImports":  [
+
+                                          ],
+                        "classification":  "REFERENCE_OR_TOOL_CANDIDATE",
+                        "action":  "PRESERVE_AND_TRACE",
+                        "reason":  "Requires static trace before any disposition."
+                    },
+                    {
+                        "path":  "canonical/intelligence/eos-enterprise-architecture-final.json",
+                        "readable":  true,
+                        "sha256":  "7b8c738457a9b4a84729285e0201db2107c4fe2bbe255cd185d8b328a1d85e5f",
+                        "family":  "canonical",
+                        "staticImports":  [
+
+                                          ],
+                        "classification":  "DERIVED_REPORT_CANDIDATE",
+                        "action":  "ARCHIVE_PLAN_CANDIDATE",
+                        "reason":  "Derived analysis/report candidate; needs checksum manifest and restore target before a move."
+                    },
+                    {
+                        "path":  "canonical/intelligence/eos-execution-truth-map.json",
+                        "readable":  true,
+                        "sha256":  "2be0441304608ee12e9603e924d95d2c7c64aa3c7dafc29a5369b6533a65d597",
+                        "family":  "canonical",
+                        "staticImports":  [
+
+                                          ],
+                        "classification":  "REFERENCE_OR_TOOL_CANDIDATE",
+                        "action":  "PRESERVE_AND_TRACE",
+                        "reason":  "Requires static trace before any disposition."
+                    },
+                    {
+                        "path":  "canonical/intelligence/eos-gels-architecture-alignment.json",
+                        "readable":  true,
+                        "sha256":  "d49e3cc870f48f4733a020c6450e2b128ee1ef877ddbe42c07323cebbcf9b781",
+                        "family":  "canonical",
+                        "staticImports":  [
+
+                                          ],
+                        "classification":  "REFERENCE_OR_TOOL_CANDIDATE",
+                        "action":  "PRESERVE_AND_TRACE",
+                        "reason":  "Requires static trace before any disposition."
+                    },
+                    {
+                        "path":  "canonical/intelligence/eos-gldos-architecture-alignment.json",
+                        "readable":  true,
+                        "sha256":  "8f0dcba2a5a33f56fea55d71e4731c61c5b13347ff327b390d6645ac06228501",
+                        "family":  "canonical",
+                        "staticImports":  [
+
+                                          ],
+                        "classification":  "REFERENCE_OR_TOOL_CANDIDATE",
+                        "action":  "PRESERVE_AND_TRACE",
+                        "reason":  "Requires static trace before any disposition."
+                    },
+                    {
+                        "path":  "canonical/intelligence/eos-intelligent-domain-ownership-graph.json",
+                        "readable":  true,
+                        "sha256":  "fa1d3c519af3c7369d36b0b7291f5cb8af751dcededd9c73959a57f6207a5ba2",
+                        "family":  "canonical",
+                        "staticImports":  [
+
+                                          ],
+                        "classification":  "REFERENCE_OR_TOOL_CANDIDATE",
+                        "action":  "PRESERVE_AND_TRACE",
+                        "reason":  "Requires static trace before any disposition."
+                    },
+                    {
+                        "path":  "canonical/intelligence/eos-real-execution-path-map.json",
+                        "readable":  true,
+                        "sha256":  "22b15d99e2252760a9946d67a070271935071168bf3e657e38898babc3c9bfac",
+                        "family":  "canonical",
+                        "staticImports":  [
+
+                                          ],
+                        "classification":  "REFERENCE_OR_TOOL_CANDIDATE",
+                        "action":  "PRESERVE_AND_TRACE",
+                        "reason":  "Requires static trace before any disposition."
+                    },
+                    {
+                        "path":  "canonical/intelligence/eos-roadmap-readiness.json",
+                        "readable":  true,
+                        "sha256":  "a1f6603e2b92c3825ed1fbe08bbffb4498ff49feec7d1575d17c6d756e174f87",
+                        "family":  "canonical",
+                        "staticImports":  [
+
+                                          ],
+                        "classification":  "REFERENCE_OR_TOOL_CANDIDATE",
+                        "action":  "PRESERVE_AND_TRACE",
+                        "reason":  "Requires static trace before any disposition."
+                    },
+                    {
+                        "path":  "canonical/intelligence/foundation-closure-report-final.json",
+                        "readable":  true,
+                        "sha256":  "84533595b3248022a663fc26fc35ed88e6f9c9516b2b938688becbef003b3865",
+                        "family":  "canonical",
+                        "staticImports":  [
+
+                                          ],
+                        "classification":  "DERIVED_REPORT_CANDIDATE",
+                        "action":  "ARCHIVE_PLAN_CANDIDATE",
+                        "reason":  "Derived analysis/report candidate; needs checksum manifest and restore target before a move."
+                    },
+                    {
+                        "path":  "canonical/intelligence/intelligence/gl-dos.ts",
+                        "readable":  true,
+                        "sha256":  "9a1a7f0b31b3bc3b0052d35bde8f174c9c5f5d65e5f78952e69b84dd01b1c5b6",
+                        "family":  "canonical",
+                        "staticImports":  [
+                                              "child_process"
+                                          ],
+                        "classification":  "REFERENCE_OR_TOOL_CANDIDATE",
+                        "action":  "PRESERVE_AND_TRACE",
+                        "reason":  "Requires static trace before any disposition."
+                    },
+                    {
+                        "path":  "canonical/intelligence/intelligence/health/health-reporter.ts",
+                        "readable":  true,
+                        "sha256":  "aecd572ddfec0eda31bb5471f11718821b51ac4305266ef1d717ed696c5df6c3",
+                        "family":  "canonical",
+                        "staticImports":  [
+                                              "fs",
+                                              "path",
+                                              "../core/engine-registry"
+                                          ],
+                        "classification":  "DERIVED_REPORT_CANDIDATE",
+                        "action":  "ARCHIVE_PLAN_CANDIDATE",
+                        "reason":  "Derived analysis/report candidate; needs checksum manifest and restore target before a move."
+                    },
+                    {
+                        "path":  "canonical/intelligence/intelligence/intelligence-test.ts",
+                        "readable":  true,
+                        "sha256":  "877b6f92e84183fe52a1fe5591eb680adeb6addbb51b2491a948e3f373123d42",
+                        "family":  "canonical",
+                        "staticImports":  [
+                                              "fs",
+                                              "path",
+                                              "./engines/duplicate-engine-v2",
+                                              "./memory/project-memory"
+                                          ],
+                        "classification":  "REFERENCE_OR_TOOL_CANDIDATE",
+                        "action":  "PRESERVE_AND_TRACE",
+                        "reason":  "Requires static trace before any disposition."
+                    },
+                    {
+                        "path":  "canonical/intelligence/intelligence/schemas/product-schema-map.ts",
+                        "readable":  true,
+                        "sha256":  "2e8845e34ae093839493d28c37a8907951f1811a1d7aa4bc1691e9a6c5f01664",
+                        "family":  "canonical",
+                        "staticImports":  [
+
+                                          ],
+                        "classification":  "REFERENCE_OR_TOOL_CANDIDATE",
+                        "action":  "PRESERVE_AND_TRACE",
+                        "reason":  "Requires static trace before any disposition."
+                    },
+                    {
+                        "path":  "canonical/intelligence/runtime/controlled-runtime-orchestrator.ts",
+                        "readable":  true,
+                        "sha256":  "f0a00afa92a9f82d52110b313bda3be96ddb2f252b3e641f4d38d4c464944b6a",
+                        "family":  "canonical",
+                        "staticImports":  [
+                                              "crypto",
+                                              "../adapters/gl-dos-governance-gate"
+                                          ],
+                        "classification":  "REFERENCE_OR_TOOL_CANDIDATE",
+                        "action":  "PRESERVE_AND_TRACE",
+                        "reason":  "Requires static trace before any disposition."
+                    },
+                    {
+                        "path":  "canonical/scripts/seed_master_products.ts",
+                        "readable":  true,
+                        "sha256":  "045ded1e386753accaac1bf7b2cabcb5ae826a20d3344e8fdb2b1c872ed7a39d",
+                        "family":  "canonical",
+                        "staticImports":  [
+                                              "@prisma/client",
+                                              "fs",
+                                              "path"
+                                          ],
+                        "classification":  "REFERENCE_OR_TOOL_CANDIDATE",
+                        "action":  "PRESERVE_AND_TRACE",
+                        "reason":  "Requires static trace before any disposition."
+                    },
+                    {
+                        "path":  "els_final.json",
+                        "readable":  true,
+                        "sha256":  "8cd94c0b163218968cad82f7c4c11ac307d2ecc7f805b2b00c76d27606b57765",
+                        "family":  "els_final.json",
+                        "staticImports":  [
+
+                                          ],
+                        "classification":  "DERIVED_REPORT_CANDIDATE",
+                        "action":  "ARCHIVE_PLAN_CANDIDATE",
+                        "reason":  "Derived analysis/report candidate; needs checksum manifest and restore target before a move."
+                    },
+                    {
+                        "path":  "els_final_v2.json",
+                        "readable":  true,
+                        "sha256":  "27b0b86105698a91c5398498f47060c27addfe42b7fd7e08fbfe0d53321eb071",
+                        "family":  "els_final_v2.json",
+                        "staticImports":  [
+
+                                          ],
+                        "classification":  "DERIVED_REPORT_CANDIDATE",
+                        "action":  "ARCHIVE_PLAN_CANDIDATE",
+                        "reason":  "Derived analysis/report candidate; needs checksum manifest and restore target before a move."
+                    },
+                    {
+                        "path":  "els_final_with_business.json",
+                        "readable":  true,
+                        "sha256":  "27b0b86105698a91c5398498f47060c27addfe42b7fd7e08fbfe0d53321eb071",
+                        "family":  "els_final_with_business.json",
+                        "staticImports":  [
+
+                                          ],
+                        "classification":  "DERIVED_REPORT_CANDIDATE",
+                        "action":  "ARCHIVE_PLAN_CANDIDATE",
+                        "reason":  "Derived analysis/report candidate; needs checksum manifest and restore target before a move."
+                    },
+                    {
+                        "path":  "extract_dna.py",
+                        "readable":  true,
+                        "sha256":  "f28918132c3ff121d15e803e6a2f72ac2a3c78c8ad948680c964815a36378929",
+                        "family":  "extract_dna.py",
+                        "staticImports":  [
+
+                                          ],
+                        "classification":  "REFERENCE_OR_TOOL_CANDIDATE",
+                        "action":  "PRESERVE_AND_TRACE",
+                        "reason":  "Requires static trace before any disposition."
+                    },
+                    {
+                        "path":  "\"how HEAD\\357\\200\\272.env \\357\\201\\274 Select-Object -First 20\"",
+                        "readable":  false,
+                        "sha256":  null,
+                        "family":  "MALFORMED_GIT_ENTRY",
+                        "staticImports":  [
+
+                                          ],
+                        "classification":  "QUARANTINE_CANDIDATE",
+                        "action":  "MANUAL_WINDOWS_NAME_REVIEW",
+                        "reason":  "Git reports an escaped or malformed Windows filename."
+                    },
+                    {
+                        "path":  "intelligence/analytics-validation-report.json",
+                        "readable":  true,
+                        "sha256":  "de88161f040479f10509b72ae3849efdef4809f1162e130c40f4633a16e10992",
+                        "family":  "intelligence",
+                        "staticImports":  [
+
+                                          ],
+                        "classification":  "DERIVED_REPORT_CANDIDATE",
+                        "action":  "ARCHIVE_PLAN_CANDIDATE",
+                        "reason":  "Derived analysis/report candidate; needs checksum manifest and restore target before a move."
+                    },
+                    {
+                        "path":  "intelligence/archive-intelligence-report.json",
+                        "readable":  true,
+                        "sha256":  "17f2b2bb48e4a14b554dd5c9fb53d9a0f26aa11735e06d37ca6bf8aaa9b785c2",
+                        "family":  "intelligence",
+                        "staticImports":  [
+
+                                          ],
+                        "classification":  "DERIVED_REPORT_CANDIDATE",
+                        "action":  "ARCHIVE_PLAN_CANDIDATE",
+                        "reason":  "Derived analysis/report candidate; needs checksum manifest and restore target before a move."
+                    },
+                    {
+                        "path":  "intelligence/asset_classification_report_v3.json",
+                        "readable":  true,
+                        "sha256":  "e8bcca4bb176c0b10f6a9f8be9cd8d901fd5765e589a8266a19cbd8acebd31f6",
+                        "family":  "intelligence",
+                        "staticImports":  [
+
+                                          ],
+                        "classification":  "DERIVED_REPORT_CANDIDATE",
+                        "action":  "ARCHIVE_PLAN_CANDIDATE",
+                        "reason":  "Derived analysis/report candidate; needs checksum manifest and restore target before a move."
+                    },
+                    {
+                        "path":  "intelligence/ast_enriched_findings.json",
+                        "readable":  true,
+                        "sha256":  "f8c8832e666b997e6b57f21816902748efbf78a9e54b63bf7dda2fd4010d56e0",
+                        "family":  "intelligence",
+                        "staticImports":  [
+                                              "k6/http",
+                                              "k6"
+                                          ],
+                        "classification":  "INTELLIGENCE_OR_REFERENCE_CANDIDATE",
+                        "action":  "FUNCTIONAL_FAMILY_TRACE_REQUIRED",
+                        "reason":  "Potential engine/reference/report mix; compare with active lib and canonical implementations."
+                    },
+                    {
+                        "path":  "intelligence/ast_enriched_findings_v2.json",
+                        "readable":  true,
+                        "sha256":  "6e209b3dad88bd8af30236981e588f4876a271e99afde2a49761a775df9588e8",
+                        "family":  "intelligence",
+                        "staticImports":  [
+                                              "k6/http",
+                                              "k6"
+                                          ],
+                        "classification":  "INTELLIGENCE_OR_REFERENCE_CANDIDATE",
+                        "action":  "FUNCTIONAL_FAMILY_TRACE_REQUIRED",
+                        "reason":  "Potential engine/reference/report mix; compare with active lib and canonical implementations."
+                    },
+                    {
+                        "path":  "intelligence/ast_extraction_audit_report.json",
+                        "readable":  true,
+                        "sha256":  "7639ee0c922ee7d83462d1135040b283117897fbd1e6c7fc4349e6f9890bd868",
+                        "family":  "intelligence",
+                        "staticImports":  [
+
+                                          ],
+                        "classification":  "DERIVED_REPORT_CANDIDATE",
+                        "action":  "ARCHIVE_PLAN_CANDIDATE",
+                        "reason":  "Derived analysis/report candidate; needs checksum manifest and restore target before a move."
+                    },
+                    {
+                        "path":  "intelligence/ast_raw_findings_report.json",
+                        "readable":  true,
+                        "sha256":  "abcae14e3a87386923492cdc34125820577503b3be1f3fc07573a774f1048ccd",
+                        "family":  "intelligence",
+                        "staticImports":  [
+                                              "k6/http",
+                                              "k6"
+                                          ],
+                        "classification":  "DERIVED_REPORT_CANDIDATE",
+                        "action":  "ARCHIVE_PLAN_CANDIDATE",
+                        "reason":  "Derived analysis/report candidate; needs checksum manifest and restore target before a move."
+                    },
+                    {
+                        "path":  "intelligence/brain_intelligence_audit_v2.json",
+                        "readable":  true,
+                        "sha256":  "ef58656b8136a05de8820cabd7a71522f3e16a1de19caa8ade7ad8602ce0e9e9",
+                        "family":  "intelligence",
+                        "staticImports":  [
+
+                                          ],
+                        "classification":  "DERIVED_REPORT_CANDIDATE",
+                        "action":  "ARCHIVE_PLAN_CANDIDATE",
+                        "reason":  "Derived analysis/report candidate; needs checksum manifest and restore target before a move."
+                    },
+                    {
+                        "path":  "intelligence/brain_intelligence_audit_v2_final.json",
+                        "readable":  true,
+                        "sha256":  "b676e5bde3836ad355f8d2254a5243ec3d5622d2cf6798b37c6d26fa0c545003",
+                        "family":  "intelligence",
+                        "staticImports":  [
+
+                                          ],
+                        "classification":  "DERIVED_REPORT_CANDIDATE",
+                        "action":  "ARCHIVE_PLAN_CANDIDATE",
+                        "reason":  "Derived analysis/report candidate; needs checksum manifest and restore target before a move."
+                    },
+                    {
+                        "path":  "intelligence/certificate-validation-report.json",
+                        "readable":  true,
+                        "sha256":  "a69580412b907dc375a097c2c494e035067f59aeb85649387260db41c7023316",
+                        "family":  "intelligence",
+                        "staticImports":  [
+
+                                          ],
+                        "classification":  "DERIVED_REPORT_CANDIDATE",
+                        "action":  "ARCHIVE_PLAN_CANDIDATE",
+                        "reason":  "Derived analysis/report candidate; needs checksum manifest and restore target before a move."
+                    },
+                    {
+                        "path":  "intelligence/cleanup_report.json",
+                        "readable":  true,
+                        "sha256":  "eb46aa007c956d30cd2c63b1abde86560ec0cf4ffe19c8a6b4fa9e4ff0ce0dd1",
+                        "family":  "intelligence",
+                        "staticImports":  [
+
+                                          ],
+                        "classification":  "DERIVED_REPORT_CANDIDATE",
+                        "action":  "ARCHIVE_PLAN_CANDIDATE",
+                        "reason":  "Derived analysis/report candidate; needs checksum manifest and restore target before a move."
+                    },
+                    {
+                        "path":  "intelligence/comprehensive_report.json",
+                        "readable":  true,
+                        "sha256":  "cd829fb597c4c4784d1b8a6747825ea4ff64dbca0ad141b34a5d16ea109b0646",
+                        "family":  "intelligence",
+                        "staticImports":  [
+
+                                          ],
+                        "classification":  "DERIVED_REPORT_CANDIDATE",
+                        "action":  "ARCHIVE_PLAN_CANDIDATE",
+                        "reason":  "Derived analysis/report candidate; needs checksum manifest and restore target before a move."
+                    },
+                    {
+                        "path":  "intelligence/comprehensive_report.md",
+                        "readable":  true,
+                        "sha256":  "48fb08f036060bfb0d6a4edaca7f9809cd71737020f65171ded8c63fe70f9aae",
+                        "family":  "intelligence",
+                        "staticImports":  [
+
+                                          ],
+                        "classification":  "DERIVED_REPORT_CANDIDATE",
+                        "action":  "ARCHIVE_PLAN_CANDIDATE",
+                        "reason":  "Derived analysis/report candidate; needs checksum manifest and restore target before a move."
+                    },
+                    {
+                        "path":  "intelligence/crm-validation-report.json",
+                        "readable":  true,
+                        "sha256":  "7042d22511dbc676f63f24bbc0efe0565fbecae40282f7c2fab292388159844a",
+                        "family":  "intelligence",
+                        "staticImports":  [
+
+                                          ],
+                        "classification":  "DERIVED_REPORT_CANDIDATE",
+                        "action":  "ARCHIVE_PLAN_CANDIDATE",
+                        "reason":  "Derived analysis/report candidate; needs checksum manifest and restore target before a move."
+                    },
+                    {
+                        "path":  "intelligence/customer-validation-report.json",
+                        "readable":  true,
+                        "sha256":  "dcdcab13ddc4048139d6d2220b2b92a93dd8d48e178b992d10295ebd70ec8230",
+                        "family":  "intelligence",
+                        "staticImports":  [
+
+                                          ],
+                        "classification":  "DERIVED_REPORT_CANDIDATE",
+                        "action":  "ARCHIVE_PLAN_CANDIDATE",
+                        "reason":  "Derived analysis/report candidate; needs checksum manifest and restore target before a move."
+                    },
+                    {
+                        "path":  "intelligence/daily_reports/daily_audit_20260805.json",
+                        "readable":  true,
+                        "sha256":  "8c14c8438c7cfb44a0eeeebb5c228ee1e3f9dc0cb7bacdbd768488f6321e347d",
+                        "family":  "intelligence",
+                        "staticImports":  [
+
+                                          ],
+                        "classification":  "DERIVED_REPORT_CANDIDATE",
+                        "action":  "ARCHIVE_PLAN_CANDIDATE",
+                        "reason":  "Derived analysis/report candidate; needs checksum manifest and restore target before a move."
+                    },
+                    {
+                        "path":  "intelligence/deep_clean_report.json",
+                        "readable":  true,
+                        "sha256":  "e77eef24d7b033b0e44250bf10b7f3c21d8706268f7dbaa116ce70da24d32d95",
+                        "family":  "intelligence",
+                        "staticImports":  [
+
+                                          ],
+                        "classification":  "DERIVED_REPORT_CANDIDATE",
+                        "action":  "ARCHIVE_PLAN_CANDIDATE",
+                        "reason":  "Derived analysis/report candidate; needs checksum manifest and restore target before a move."
+                    },
+                    {
+                        "path":  "intelligence/deep_packaging_audit_report.json",
+                        "readable":  true,
+                        "sha256":  "382f738f420d1b2a5afbb4851f12516e69acdf564020848ed8fb42de27421904",
+                        "family":  "intelligence",
+                        "staticImports":  [
+
+                                          ],
+                        "classification":  "DERIVED_REPORT_CANDIDATE",
+                        "action":  "ARCHIVE_PLAN_CANDIDATE",
+                        "reason":  "Derived analysis/report candidate; needs checksum manifest and restore target before a move."
+                    },
+                    {
+                        "path":  "intelligence/eos-domain-api-ownership.json",
+                        "readable":  true,
+                        "sha256":  "6c5c10af7fb5143eca5298955496295381f2573523cce5c32cff5bfd884f12fa",
+                        "family":  "intelligence",
+                        "staticImports":  [
+
+                                          ],
+                        "classification":  "INTELLIGENCE_OR_REFERENCE_CANDIDATE",
+                        "action":  "FUNCTIONAL_FAMILY_TRACE_REQUIRED",
+                        "reason":  "Potential engine/reference/report mix; compare with active lib and canonical implementations."
+                    },
+                    {
+                        "path":  "intelligence/eos-domain-connection-matrix.json",
+                        "readable":  true,
+                        "sha256":  "62beec7ea8eea1fb1af9cdc89b923dae8798f5b8d1018b63542103e011fb043c",
+                        "family":  "intelligence",
+                        "staticImports":  [
+
+                                          ],
+                        "classification":  "INTELLIGENCE_OR_REFERENCE_CANDIDATE",
+                        "action":  "FUNCTIONAL_FAMILY_TRACE_REQUIRED",
+                        "reason":  "Potential engine/reference/report mix; compare with active lib and canonical implementations."
+                    },
+                    {
+                        "path":  "intelligence/eos-domain-runtime-ownership-map.json",
+                        "readable":  true,
+                        "sha256":  "c2d4b999a7bbb5203acf37a31b11160ad36b5ddd02dc49544785d311e54497bc",
+                        "family":  "intelligence",
+                        "staticImports":  [
+
+                                          ],
+                        "classification":  "INTELLIGENCE_OR_REFERENCE_CANDIDATE",
+                        "action":  "FUNCTIONAL_FAMILY_TRACE_REQUIRED",
+                        "reason":  "Potential engine/reference/report mix; compare with active lib and canonical implementations."
+                    },
+                    {
+                        "path":  "intelligence/eos-final-enterprise-blueprint-package-v1.json",
+                        "readable":  true,
+                        "sha256":  "6ac9c84a715e557dc76a485c9e76729921d4483cfd04378da5e6ccac9987ea94",
+                        "family":  "intelligence",
+                        "staticImports":  [
+
+                                          ],
+                        "classification":  "DERIVED_REPORT_CANDIDATE",
+                        "action":  "ARCHIVE_PLAN_CANDIDATE",
+                        "reason":  "Derived analysis/report candidate; needs checksum manifest and restore target before a move."
+                    },
+                    {
+                        "path":  "intelligence/finance-validation-report.json",
+                        "readable":  true,
+                        "sha256":  "78b2a419894f0c04460ea80ca83ce1e11352cabc53c7a057d57c7161cdd5013b",
+                        "family":  "intelligence",
+                        "staticImports":  [
+
+                                          ],
+                        "classification":  "DERIVED_REPORT_CANDIDATE",
+                        "action":  "ARCHIVE_PLAN_CANDIDATE",
+                        "reason":  "Derived analysis/report candidate; needs checksum manifest and restore target before a move."
+                    },
+                    {
+                        "path":  "intelligence/gels-validation-report.json",
+                        "readable":  true,
+                        "sha256":  "7f1ad4fc090d59521e8211f4fbbe9e4b69334d54eca337553ce45049d3ecfcff",
+                        "family":  "intelligence",
+                        "staticImports":  [
+
+                                          ],
+                        "classification":  "DERIVED_REPORT_CANDIDATE",
+                        "action":  "ARCHIVE_PLAN_CANDIDATE",
+                        "reason":  "Derived analysis/report candidate; needs checksum manifest and restore target before a move."
+                    },
+                    {
+                        "path":  "intelligence/intelligence/analytics/index.ts",
+                        "readable":  true,
+                        "sha256":  "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+                        "family":  "intelligence",
+                        "staticImports":  [
+
+                                          ],
+                        "classification":  "INTELLIGENCE_OR_REFERENCE_CANDIDATE",
+                        "action":  "FUNCTIONAL_FAMILY_TRACE_REQUIRED",
+                        "reason":  "Potential engine/reference/report mix; compare with active lib and canonical implementations."
+                    },
+                    {
+                        "path":  "intelligence/intelligence/decision-support/index.ts",
+                        "readable":  true,
+                        "sha256":  "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+                        "family":  "intelligence",
+                        "staticImports":  [
+
+                                          ],
+                        "classification":  "INTELLIGENCE_OR_REFERENCE_CANDIDATE",
+                        "action":  "FUNCTIONAL_FAMILY_TRACE_REQUIRED",
+                        "reason":  "Potential engine/reference/report mix; compare with active lib and canonical implementations."
+                    },
+                    {
+                        "path":  "intelligence/intelligence/metrics/index.ts",
+                        "readable":  true,
+                        "sha256":  "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+                        "family":  "intelligence",
+                        "staticImports":  [
+
+                                          ],
+                        "classification":  "INTELLIGENCE_OR_REFERENCE_CANDIDATE",
+                        "action":  "FUNCTIONAL_FAMILY_TRACE_REQUIRED",
+                        "reason":  "Potential engine/reference/report mix; compare with active lib and canonical implementations."
+                    },
+                    {
+                        "path":  "intelligence/intelligence/recommendations/index.ts",
+                        "readable":  true,
+                        "sha256":  "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+                        "family":  "intelligence",
+                        "staticImports":  [
+
+                                          ],
+                        "classification":  "INTELLIGENCE_OR_REFERENCE_CANDIDATE",
+                        "action":  "FUNCTIONAL_FAMILY_TRACE_REQUIRED",
+                        "reason":  "Potential engine/reference/report mix; compare with active lib and canonical implementations."
+                    },
+                    {
+                        "path":  "intelligence/intelligence/reporting/index.ts",
+                        "readable":  true,
+                        "sha256":  "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+                        "family":  "intelligence",
+                        "staticImports":  [
+
+                                          ],
+                        "classification":  "DERIVED_REPORT_CANDIDATE",
+                        "action":  "ARCHIVE_PLAN_CANDIDATE",
+                        "reason":  "Derived analysis/report candidate; needs checksum manifest and restore target before a move."
+                    },
+                    {
+                        "path":  "intelligence/intelligence/scanners/system-scanner.ts",
+                        "readable":  true,
+                        "sha256":  "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+                        "family":  "intelligence",
+                        "staticImports":  [
+
+                                          ],
+                        "classification":  "INTELLIGENCE_OR_REFERENCE_CANDIDATE",
+                        "action":  "FUNCTIONAL_FAMILY_TRACE_REQUIRED",
+                        "reason":  "Potential engine/reference/report mix; compare with active lib and canonical implementations."
+                    },
+                    {
+                        "path":  "intelligence/inventory-validation-report.json",
+                        "readable":  true,
+                        "sha256":  "65f79fbfdb346bf0111ed72d49d75cd20df6bf82c774f155867056c5d862481c",
+                        "family":  "intelligence",
+                        "staticImports":  [
+
+                                          ],
+                        "classification":  "DERIVED_REPORT_CANDIDATE",
+                        "action":  "ARCHIVE_PLAN_CANDIDATE",
+                        "reason":  "Derived analysis/report candidate; needs checksum manifest and restore target before a move."
+                    },
+                    {
+                        "path":  "intelligence/knowledge_base/project_metadata.json",
+                        "readable":  true,
+                        "sha256":  "0fe6e8cad460d03ac5c980dd90c924faed293490eef706d553a0f407789b9408",
+                        "family":  "intelligence",
+                        "staticImports":  [
+
+                                          ],
+                        "classification":  "INTELLIGENCE_OR_REFERENCE_CANDIDATE",
+                        "action":  "FUNCTIONAL_FAMILY_TRACE_REQUIRED",
+                        "reason":  "Potential engine/reference/report mix; compare with active lib and canonical implementations."
+                    },
+                    {
+                        "path":  "intelligence/knowledge_base/tools_manifest.json",
+                        "readable":  true,
+                        "sha256":  "4fc5069bc4a460cb64ee82390c0923aed0ed4f297c6a450d17a0e322f55dd58a",
+                        "family":  "intelligence",
+                        "staticImports":  [
+
+                                          ],
+                        "classification":  "DERIVED_REPORT_CANDIDATE",
+                        "action":  "ARCHIVE_PLAN_CANDIDATE",
+                        "reason":  "Derived analysis/report candidate; needs checksum manifest and restore target before a move."
+                    },
+                    {
+                        "path":  "intelligence/logistics-validation-report.json",
+                        "readable":  true,
+                        "sha256":  "ffd34b552d3776e6bff338e01f5488f376465e56ab0d76db3fc06e6bd83fd6a1",
+                        "family":  "intelligence",
+                        "staticImports":  [
+
+                                          ],
+                        "classification":  "DERIVED_REPORT_CANDIDATE",
+                        "action":  "ARCHIVE_PLAN_CANDIDATE",
+                        "reason":  "Derived analysis/report candidate; needs checksum manifest and restore target before a move."
+                    },
+                    {
+                        "path":  "intelligence/master-data-integrity-report.json",
+                        "readable":  true,
+                        "sha256":  "a3bec40a73ed04bc29c5f56a4363a6fc2a35e11fd3358dbf5704d0e65599ef8f",
+                        "family":  "intelligence",
+                        "staticImports":  [
+
+                                          ],
+                        "classification":  "DERIVED_REPORT_CANDIDATE",
+                        "action":  "ARCHIVE_PLAN_CANDIDATE",
+                        "reason":  "Derived analysis/report candidate; needs checksum manifest and restore target before a move."
+                    },
+                    {
+                        "path":  "intelligence/scripts/phase-2-capability-discovery.ps1",
+                        "readable":  true,
+                        "sha256":  "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+                        "family":  "intelligence",
+                        "staticImports":  [
+
+                                          ],
+                        "classification":  "INTELLIGENCE_OR_REFERENCE_CANDIDATE",
+                        "action":  "FUNCTIONAL_FAMILY_TRACE_REQUIRED",
+                        "reason":  "Potential engine/reference/report mix; compare with active lib and canonical implementations."
+                    },
+                    {
+                        "path":  "intelligence/supplier-validation-report.json",
+                        "readable":  true,
+                        "sha256":  "97acd099e0a5e0520170e86923bb0371fded8a3069a191b22bd37eca43ff6f3a",
+                        "family":  "intelligence",
+                        "staticImports":  [
+
+                                          ],
+                        "classification":  "DERIVED_REPORT_CANDIDATE",
+                        "action":  "ARCHIVE_PLAN_CANDIDATE",
+                        "reason":  "Derived analysis/report candidate; needs checksum manifest and restore target before a move."
+                    },
+                    {
+                        "path":  "next-env.d.ts",
+                        "readable":  true,
+                        "sha256":  "4e4da12aa061aac172fb1bcb48e9b6e4b293080d2f494327925fdba8f39632ac",
+                        "family":  "next-env.d.ts",
+                        "staticImports":  [
+                                              "./.next/types/routes.d.ts"
+                                          ],
+                        "classification":  "REFERENCE_OR_TOOL_CANDIDATE",
+                        "action":  "PRESERVE_AND_TRACE",
+                        "reason":  "Requires static trace before any disposition."
+                    },
+                    {
+                        "path":  "phase2_evidence.py",
+                        "readable":  true,
+                        "sha256":  "be790b6ca341b1ee583771d3389bbed46bf4d1230005f5f7913af0e39bd12ba4",
+                        "family":  "phase2_evidence.py",
+                        "staticImports":  [
+
+                                          ],
+                        "classification":  "REFERENCE_OR_TOOL_CANDIDATE",
+                        "action":  "PRESERVE_AND_TRACE",
+                        "reason":  "Requires static trace before any disposition."
+                    },
+                    {
+                        "path":  "run_full_audit.ps1",
+                        "readable":  true,
+                        "sha256":  "2db2aecfd6456eb328a51c0b5168fbf4d10272e5ddcf8507bde22f75d728f3ea",
+                        "family":  "run_full_audit.ps1",
+                        "staticImports":  [
+
+                                          ],
+                        "classification":  "DERIVED_REPORT_CANDIDATE",
+                        "action":  "ARCHIVE_PLAN_CANDIDATE",
+                        "reason":  "Derived analysis/report candidate; needs checksum manifest and restore target before a move."
+                    },
+                    {
+                        "path":  "scripts/repair-canonical-products.ps1",
+                        "readable":  true,
+                        "sha256":  "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+                        "family":  "scripts",
+                        "staticImports":  [
+
+                                          ],
+                        "classification":  "REFERENCE_OR_TOOL_CANDIDATE",
+                        "action":  "PRESERVE_AND_TRACE",
+                        "reason":  "Requires static trace before any disposition."
+                    },
+                    {
+                        "path":  "tests/decision_safety_adversarial_check.ts",
+                        "readable":  true,
+                        "sha256":  "2e907325c55dc0ac3de21822f4820ced59ca1053b1795f63a45febb3db0cf011",
+                        "family":  "tests",
+                        "staticImports":  [
+                                              "node:assert/strict",
+                                              "node:fs",
+                                              "../lib/intelligence/official-evidence-gate",
+                                              "../lib/intelligence/mastermind-agents"
+                                          ],
+                        "classification":  "TEST_CANDIDATE",
+                        "action":  "TRACE_AND_ADOPT_OR_ARCHIVE",
+                        "reason":  "Potential regression test not yet tracked."
+                    }
+                ],
+    "rule":  "Exact hash match, a report label, or no static import is not permission to delete, merge, or archive."
+}

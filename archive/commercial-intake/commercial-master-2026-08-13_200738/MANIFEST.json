@@ -1,0 +1,34 @@
+﻿{
+    "packType":  "GREENY_LIFE_CONTROLLED_COMMERCIAL_INTAKE_V1",
+    "createdAtUtc":  "2026-08-13T18:07:38.6613639Z",
+    "mode":  "DRAFT_INPUT_ONLY",
+    "protections":  [
+                        "NO_CANONICAL_DATA_CHANGE",
+                        "NO_DATABASE_CHANGE",
+                        "NO_PRICE_APPROVAL",
+                        "NO_SUPPLIER_APPROVAL",
+                        "NO_ORDER_OR_SHIPMENT_CHANGE",
+                        "NO_GIT_CHANGE"
+                    ],
+    "sources":  [
+                    "canonical/data/master_products.json",
+                    "canonical/data/suppliers.json",
+                    "canonical/data/supplier-product-links.json"
+                ],
+    "productRows":  15,
+    "knownData":  {
+                      "suppliers":  4,
+                      "products":  15,
+                      "primarySupplierLinks":  14
+                  },
+    "unknowns":  [
+                     "Commercial prices",
+                     "Price validity",
+                     "Supplier verification evidence",
+                     "Market-specific availability",
+                     "Freight quotes",
+                     "Route-specific lead times",
+                     "Owner approvals"
+                 ],
+    "nextGate":  "VALIDATE_FILLED_INTAKE_AGAINST_EVIDENCE_POLICY_AND_SIGNED_OWNER_APPROVAL"
+}

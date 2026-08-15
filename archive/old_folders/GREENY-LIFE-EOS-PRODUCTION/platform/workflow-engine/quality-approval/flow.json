@@ -1,0 +1,20 @@
+
+{
+"name":"Quality Approval Flow",
+
+"steps":[
+
+"REQUEST_INSPECTION",
+
+"CHECK_CERTIFICATE",
+
+"QUALITY_DECISION"
+
+],
+
+"success_event":"QualityApproved",
+
+"failure_event":"QualityRejected"
+
+}
+

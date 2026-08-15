@@ -1,0 +1,14 @@
+﻿app/api/sales-orders/route.ts:9:    const orders = await prisma.salesOrder.findMany({
+app/api/sales-orders/route.ts:45:    const newOrder = await prisma.$transaction(async (tx) => {
+app/api/sales-orders/route.ts:46:      return await tx.salesOrder.create({
+app/api/workflow/route.ts:2:import { EOSWorkflowEngine, OrderWorkflowState } from "@/lib/workflowEngine";
+app/api/workflow/route.ts:20:        { success: false, error: "Invalid target workflow state" },
+canonical/intelligence/intelligence/gl-dos.ts:5:    command:string
+canonical/intelligence/intelligence/gl-dos.ts:10:        command
+canonical/intelligence/intelligence/gl-dos.ts:15:        command,
+canonical/intelligence/runtime/controlled-runtime-orchestrator.ts:52:    executedAt: string;
+canonical/intelligence/runtime/controlled-runtime-orchestrator.ts:66:    async execute(
+canonical/intelligence/runtime/controlled-runtime-orchestrator.ts:98:            executedAt:
+canonical/lib/workflowEngine.ts:30:    const order = await prisma.salesOrder.findUnique({
+canonical/lib/workflowEngine.ts:40:    const updatedOrder = await prisma.$transaction(async (tx) => {
+canonical/lib/workflowEngine.ts:42:      const currentOrder = await tx.salesOrder.update({

@@ -1,0 +1,1083 @@
+{
+    "report":  "E3 Phase 0 Legacy Scope Manifest",
+    "generatedAt":  "2026-08-13T23:53:09.6158026+02:00",
+    "mode":  "READ_ONLY_SCOPE_DECLARATION",
+    "scopeRule":  "Only roots explicitly marked APPROVED_INCLUDED in a later manifest become the denominator for 100-percent Legacy coverage.",
+    "roots":  [
+                  {
+                      "path":  "C:\\Users\\Ghanam\\OneDrive\\projects\\Greeny-Life",
+                      "available":  true,
+                      "relationship":  "PRIMARY",
+                      "scopeStatus":  "PROPOSED_INCLUDED",
+                      "note":  "Declared main Legacy root; 503-file inventory already exists for this root only.",
+                      "fileCount":  50104,
+                      "directoryCount":  5161,
+                      "bytes":  1887308599,
+                      "sizeMiB":  1799.88,
+                      "structuralManifestFingerprint":  "ea540eeda9a6fb804aaa53f1973f5e8988255ce95e94ade10fe6d55c39ad8de5",
+                      "fingerprintMeaning":  "SHA-256 over relative path, byte length and UTC modification time; content hash is intentionally deferred to inventory/classification.",
+                      "unreadableErrors":  [
+
+                                           ]
+                  },
+                  {
+                      "path":  "C:\\Users\\Ghanam\\Documents\\Codex\\Greeny-Life-Repair",
+                      "available":  true,
+                      "relationship":  "CURRENT_BASELINE_NOT_LEGACY",
+                      "scopeStatus":  "EXCLUDED_FROM_LEGACY_SCOPE",
+                      "note":  "Current operational replacement. It is comparison target, not Legacy scope.",
+                      "fileCount":  16868,
+                      "directoryCount":  2506,
+                      "bytes":  1280491857,
+                      "sizeMiB":  1221.17,
+                      "structuralManifestFingerprint":  "b02407243c8b5d8bd385d2df885acc81a3108cbcaeb6429361b284ccfb27fbd3",
+                      "fingerprintMeaning":  "SHA-256 over relative path, byte length and UTC modification time; content hash is intentionally deferred to inventory/classification.",
+                      "unreadableErrors":  [
+
+                                           ]
+                  },
+                  {
+                      "path":  "C:\\Users\\Ghanam\\Documents\\Codex\\2026-07-18",
+                      "available":  true,
+                      "relationship":  "HISTORICAL_CANDIDATE",
+                      "scopeStatus":  "PROPOSED_REVIEW_REQUIRED",
+                      "note":  "Date-stamped Codex workspace. It is not automatically classified as Legacy or included in the final denominator.",
+                      "fileCount":  6,
+                      "directoryCount":  6,
+                      "bytes":  47089,
+                      "sizeMiB":  0.04,
+                      "structuralManifestFingerprint":  "42e2dc7a0f123e20aa034e0f20cf3ff2981b0f83046d3dac66c7ee30b64a14d9",
+                      "fingerprintMeaning":  "SHA-256 over relative path, byte length and UTC modification time; content hash is intentionally deferred to inventory/classification.",
+                      "unreadableErrors":  [
+
+                                           ]
+                  },
+                  {
+                      "path":  "C:\\Users\\Ghanam\\Documents\\Codex\\2026-07-21",
+                      "available":  true,
+                      "relationship":  "HISTORICAL_CANDIDATE",
+                      "scopeStatus":  "PROPOSED_REVIEW_REQUIRED",
+                      "note":  "Date-stamped Codex workspace. It is not automatically classified as Legacy or included in the final denominator.",
+                      "fileCount":  0,
+                      "directoryCount":  3,
+                      "bytes":  0,
+                      "sizeMiB":  0,
+                      "structuralManifestFingerprint":  "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+                      "fingerprintMeaning":  "SHA-256 over relative path, byte length and UTC modification time; content hash is intentionally deferred to inventory/classification.",
+                      "unreadableErrors":  [
+
+                                           ]
+                  },
+                  {
+                      "path":  "C:\\Users\\Ghanam\\Documents\\Codex\\2026-08-09",
+                      "available":  true,
+                      "relationship":  "HISTORICAL_CANDIDATE",
+                      "scopeStatus":  "PROPOSED_REVIEW_REQUIRED",
+                      "note":  "Date-stamped Codex workspace. It is not automatically classified as Legacy or included in the final denominator.",
+                      "fileCount":  0,
+                      "directoryCount":  3,
+                      "bytes":  0,
+                      "sizeMiB":  0,
+                      "structuralManifestFingerprint":  "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+                      "fingerprintMeaning":  "SHA-256 over relative path, byte length and UTC modification time; content hash is intentionally deferred to inventory/classification.",
+                      "unreadableErrors":  [
+
+                                           ]
+                  },
+                  {
+                      "path":  "C:\\Users\\Ghanam\\Documents\\Codex\\2026-08-11",
+                      "available":  true,
+                      "relationship":  "HISTORICAL_CANDIDATE",
+                      "scopeStatus":  "PROPOSED_REVIEW_REQUIRED",
+                      "note":  "Date-stamped Codex workspace. It is not automatically classified as Legacy or included in the final denominator.",
+                      "fileCount":  138,
+                      "directoryCount":  6,
+                      "bytes":  887722,
+                      "sizeMiB":  0.85,
+                      "structuralManifestFingerprint":  "692ccc8e854c7cb06b1a9f1fa4746708a0f967a5e1594f01fe44d0d7d3c590da",
+                      "fingerprintMeaning":  "SHA-256 over relative path, byte length and UTC modification time; content hash is intentionally deferred to inventory/classification.",
+                      "unreadableErrors":  [
+
+                                           ]
+                  }
+              ],
+    "packages":  [
+                     {
+                         "path":  "C:\\Users\\Ghanam\\Documents\\Codex\\2026-08-11\\referenced-chatgpt-conversation-this-is-an\\outputs\\runtime-config-source-5946c6bc.zip",
+                         "extension":  ".zip",
+                         "bytes":  13143,
+                         "sha256":  "E4650A0388D964CFB4ED41E6C361234850A336336B2FC83DCA6BBB6BF495DE5E",
+                         "relationship":  "ARCHIVE_OR_BACKUP_CANDIDATE",
+                         "scopeStatus":  "PROPOSED_REVIEW_REQUIRED",
+                         "note":  "Package is registered for Phase 0 only. It is not extracted or included in content coverage until approved."
+                     },
+                     {
+                         "path":  "C:\\Users\\Ghanam\\Documents\\Codex\\Greeny-Life-Repair\\E3-SOURCE-TRACE-PACKAGE.zip",
+                         "extension":  ".zip",
+                         "bytes":  59654,
+                         "sha256":  "B3F84A2D24085CCBA6BD260BE39CA79DBE5EE4EFEA34072F318EB06517390B88",
+                         "relationship":  "ARCHIVE_OR_BACKUP_CANDIDATE",
+                         "scopeStatus":  "PROPOSED_REVIEW_REQUIRED",
+                         "note":  "Package is registered for Phase 0 only. It is not extracted or included in content coverage until approved."
+                     },
+                     {
+                         "path":  "C:\\Users\\Ghanam\\Documents\\Codex\\Greeny-Life-Repair\\GreenyLifeEOS_Review.zip",
+                         "extension":  ".zip",
+                         "bytes":  21265973,
+                         "sha256":  "AC2A7562954707BD5E1A19D8912D09CD0B5CE0854DDBBA5D3F2A11AB75919172",
+                         "relationship":  "ARCHIVE_OR_BACKUP_CANDIDATE",
+                         "scopeStatus":  "PROPOSED_REVIEW_REQUIRED",
+                         "note":  "Package is registered for Phase 0 only. It is not extracted or included in content coverage until approved."
+                     },
+                     {
+                         "path":  "C:\\Users\\Ghanam\\Documents\\Codex\\Greeny-Life-Repair\\package.json.bak",
+                         "extension":  ".bak",
+                         "bytes":  7657,
+                         "sha256":  "2F328BB82B5D5349D98749AA9115417FEEB1D1BDAE26A36A1BE3F1739C9ABFA9",
+                         "relationship":  "ARCHIVE_OR_BACKUP_CANDIDATE",
+                         "scopeStatus":  "PROPOSED_REVIEW_REQUIRED",
+                         "note":  "Package is registered for Phase 0 only. It is not extracted or included in content coverage until approved."
+                     },
+                     {
+                         "path":  "C:\\Users\\Ghanam\\Documents\\Codex\\Greeny-Life-Repair\\unified-intelligence-restore-5946c6bc.zip",
+                         "extension":  ".zip",
+                         "bytes":  3355639,
+                         "sha256":  "354461E14DB4DDD092338CB167288A30C54700914D88127EC21CB7BEA3A59D2A",
+                         "relationship":  "ARCHIVE_OR_BACKUP_CANDIDATE",
+                         "scopeStatus":  "PROPOSED_REVIEW_REQUIRED",
+                         "note":  "Package is registered for Phase 0 only. It is not extracted or included in content coverage until approved."
+                     },
+                     {
+                         "path":  "C:\\Users\\Ghanam\\OneDrive\\projects\\Greeny-Life\\.venv\\Lib\\site-packages\\dateutil\\zoneinfo\\dateutil-zoneinfo.tar.gz",
+                         "extension":  ".gz",
+                         "bytes":  156400,
+                         "sha256":  "D3EA52E7B6E968DE0D884DF1288193596FA95B803DB4F92A18279A7398004475",
+                         "relationship":  "ARCHIVE_OR_BACKUP_CANDIDATE",
+                         "scopeStatus":  "PROPOSED_REVIEW_REQUIRED",
+                         "note":  "Package is registered for Phase 0 only. It is not extracted or included in content coverage until approved."
+                     },
+                     {
+                         "path":  "C:\\Users\\Ghanam\\OneDrive\\projects\\Greeny-Life\\.venv\\Lib\\site-packages\\joblib\\test\\data\\joblib_0.10.0_compressed_pickle_py27_np16.gz",
+                         "extension":  ".gz",
+                         "bytes":  769,
+                         "sha256":  "418447E90D83486568AE3092A960B18D358230E24AC9EC38365DAA99F415BD0F",
+                         "relationship":  "ARCHIVE_OR_BACKUP_CANDIDATE",
+                         "scopeStatus":  "PROPOSED_REVIEW_REQUIRED",
+                         "note":  "Package is registered for Phase 0 only. It is not extracted or included in content coverage until approved."
+                     },
+                     {
+                         "path":  "C:\\Users\\Ghanam\\OneDrive\\projects\\Greeny-Life\\.venv\\Lib\\site-packages\\joblib\\test\\data\\joblib_0.10.0_compressed_pickle_py27_np17.gz",
+                         "extension":  ".gz",
+                         "bytes":  757,
+                         "sha256":  "A1F4E8CCCFCA94F25AE744D1F050B0734F663263BA38ED0642181404B348B17B",
+                         "relationship":  "ARCHIVE_OR_BACKUP_CANDIDATE",
+                         "scopeStatus":  "PROPOSED_REVIEW_REQUIRED",
+                         "note":  "Package is registered for Phase 0 only. It is not extracted or included in content coverage until approved."
+                     },
+                     {
+                         "path":  "C:\\Users\\Ghanam\\OneDrive\\projects\\Greeny-Life\\.venv\\Lib\\site-packages\\joblib\\test\\data\\joblib_0.10.0_compressed_pickle_py33_np18.gz",
+                         "extension":  ".gz",
+                         "bytes":  792,
+                         "sha256":  "D9E215780F978CE693E48110EAD23652E1C6DE1C2189172232690198F7088788",
+                         "relationship":  "ARCHIVE_OR_BACKUP_CANDIDATE",
+                         "scopeStatus":  "PROPOSED_REVIEW_REQUIRED",
+                         "note":  "Package is registered for Phase 0 only. It is not extracted or included in content coverage until approved."
+                     },
+                     {
+                         "path":  "C:\\Users\\Ghanam\\OneDrive\\projects\\Greeny-Life\\.venv\\Lib\\site-packages\\joblib\\test\\data\\joblib_0.10.0_compressed_pickle_py34_np19.gz",
+                         "extension":  ".gz",
+                         "bytes":  794,
+                         "sha256":  "1ABDB3FF5B555831F51F7FF00951E66A49277FC2AA787293F18CF8775BE65023",
+                         "relationship":  "ARCHIVE_OR_BACKUP_CANDIDATE",
+                         "scopeStatus":  "PROPOSED_REVIEW_REQUIRED",
+                         "note":  "Package is registered for Phase 0 only. It is not extracted or included in content coverage until approved."
+                     },
+                     {
+                         "path":  "C:\\Users\\Ghanam\\OneDrive\\projects\\Greeny-Life\\.venv\\Lib\\site-packages\\joblib\\test\\data\\joblib_0.10.0_compressed_pickle_py35_np19.gz",
+                         "extension":  ".gz",
+                         "bytes":  790,
+                         "sha256":  "A56C3FC6E0DB3A4102AAED4A19FD4E154EECD956F30B6BF9179897844ED3C01E",
+                         "relationship":  "ARCHIVE_OR_BACKUP_CANDIDATE",
+                         "scopeStatus":  "PROPOSED_REVIEW_REQUIRED",
+                         "note":  "Package is registered for Phase 0 only. It is not extracted or included in content coverage until approved."
+                     },
+                     {
+                         "path":  "C:\\Users\\Ghanam\\OneDrive\\projects\\Greeny-Life\\.venv\\Lib\\site-packages\\joblib\\test\\data\\joblib_0.11.0_compressed_pickle_py36_np111.gz",
+                         "extension":  ".gz",
+                         "bytes":  800,
+                         "sha256":  "D56AE75C3A83A0D10F60E657D50E56AF6E3ADDBF2F555E9FC385A6E52E1B32DE",
+                         "relationship":  "ARCHIVE_OR_BACKUP_CANDIDATE",
+                         "scopeStatus":  "PROPOSED_REVIEW_REQUIRED",
+                         "note":  "Package is registered for Phase 0 only. It is not extracted or included in content coverage until approved."
+                     },
+                     {
+                         "path":  "C:\\Users\\Ghanam\\OneDrive\\projects\\Greeny-Life\\.venv\\Lib\\site-packages\\joblib\\test\\data\\joblib_0.8.4_compressed_pickle_py27_np17.gz",
+                         "extension":  ".gz",
+                         "bytes":  659,
+                         "sha256":  "4A9F994FB8BAA63E689F681BA6DB33BBB45AAF32693A61C9EBB50A3A608F40C8",
+                         "relationship":  "ARCHIVE_OR_BACKUP_CANDIDATE",
+                         "scopeStatus":  "PROPOSED_REVIEW_REQUIRED",
+                         "note":  "Package is registered for Phase 0 only. It is not extracted or included in content coverage until approved."
+                     },
+                     {
+                         "path":  "C:\\Users\\Ghanam\\OneDrive\\projects\\Greeny-Life\\.venv\\Lib\\site-packages\\joblib\\test\\data\\joblib_0.9.2_compressed_pickle_py27_np16.gz",
+                         "extension":  ".gz",
+                         "bytes":  658,
+                         "sha256":  "34BB43AEFA365C81F42AF51402F84EA8C7A85C48C65B422E4E4FE8B2EE57883C",
+                         "relationship":  "ARCHIVE_OR_BACKUP_CANDIDATE",
+                         "scopeStatus":  "PROPOSED_REVIEW_REQUIRED",
+                         "note":  "Package is registered for Phase 0 only. It is not extracted or included in content coverage until approved."
+                     },
+                     {
+                         "path":  "C:\\Users\\Ghanam\\OneDrive\\projects\\Greeny-Life\\.venv\\Lib\\site-packages\\joblib\\test\\data\\joblib_0.9.2_compressed_pickle_py27_np17.gz",
+                         "extension":  ".gz",
+                         "bytes":  658,
+                         "sha256":  "34BB43AEFA365C81F42AF51402F84EA8C7A85C48C65B422E4E4FE8B2EE57883C",
+                         "relationship":  "ARCHIVE_OR_BACKUP_CANDIDATE",
+                         "scopeStatus":  "PROPOSED_REVIEW_REQUIRED",
+                         "note":  "Package is registered for Phase 0 only. It is not extracted or included in content coverage until approved."
+                     },
+                     {
+                         "path":  "C:\\Users\\Ghanam\\OneDrive\\projects\\Greeny-Life\\.venv\\Lib\\site-packages\\joblib\\test\\data\\joblib_0.9.2_compressed_pickle_py34_np19.gz",
+                         "extension":  ".gz",
+                         "bytes":  673,
+                         "sha256":  "9F33BD8A21A41B729B05DAC5DEEB0E868F218A092B0E3FE5988094CF167217F6",
+                         "relationship":  "ARCHIVE_OR_BACKUP_CANDIDATE",
+                         "scopeStatus":  "PROPOSED_REVIEW_REQUIRED",
+                         "note":  "Package is registered for Phase 0 only. It is not extracted or included in content coverage until approved."
+                     },
+                     {
+                         "path":  "C:\\Users\\Ghanam\\OneDrive\\projects\\Greeny-Life\\.venv\\Lib\\site-packages\\joblib\\test\\data\\joblib_0.9.2_compressed_pickle_py35_np19.gz",
+                         "extension":  ".gz",
+                         "bytes":  673,
+                         "sha256":  "9F33BD8A21A41B729B05DAC5DEEB0E868F218A092B0E3FE5988094CF167217F6",
+                         "relationship":  "ARCHIVE_OR_BACKUP_CANDIDATE",
+                         "scopeStatus":  "PROPOSED_REVIEW_REQUIRED",
+                         "note":  "Package is registered for Phase 0 only. It is not extracted or included in content coverage until approved."
+                     },
+                     {
+                         "path":  "C:\\Users\\Ghanam\\OneDrive\\projects\\Greeny-Life\\.venv\\Lib\\site-packages\\joblib\\test\\data\\joblib_0.9.4.dev0_compressed_cache_size_pickle_py35_np19.gz",
+                         "extension":  ".gz",
+                         "bytes":  802,
+                         "sha256":  "F2361F589B31D2863627EDCB96612280AE5C0A59C9496D89DAB7DE493670F93B",
+                         "relationship":  "ARCHIVE_OR_BACKUP_CANDIDATE",
+                         "scopeStatus":  "PROPOSED_REVIEW_REQUIRED",
+                         "note":  "Package is registered for Phase 0 only. It is not extracted or included in content coverage until approved."
+                     },
+                     {
+                         "path":  "C:\\Users\\Ghanam\\OneDrive\\projects\\Greeny-Life\\.venv\\Lib\\site-packages\\networkx\\generators\\atlas.dat.gz",
+                         "extension":  ".gz",
+                         "bytes":  8887,
+                         "sha256":  "73FC416DF0164923607751CB759F4AE81DEB5F6550BF25BE59C86DE3B747E41D",
+                         "relationship":  "ARCHIVE_OR_BACKUP_CANDIDATE",
+                         "scopeStatus":  "PROPOSED_REVIEW_REQUIRED",
+                         "note":  "Package is registered for Phase 0 only. It is not extracted or included in content coverage until approved."
+                     },
+                     {
+                         "path":  "C:\\Users\\Ghanam\\OneDrive\\projects\\Greeny-Life\\.venv\\Lib\\site-packages\\numpy\\random\\tests\\data\\generator_pcg64_np121.pkl.gz",
+                         "extension":  ".gz",
+                         "bytes":  203,
+                         "sha256":  "11F43E5FBD0A9078010055F6A483DC09497830D3F564D44E697394EF9BDD8AA3",
+                         "relationship":  "ARCHIVE_OR_BACKUP_CANDIDATE",
+                         "scopeStatus":  "PROPOSED_REVIEW_REQUIRED",
+                         "note":  "Package is registered for Phase 0 only. It is not extracted or included in content coverage until approved."
+                     },
+                     {
+                         "path":  "C:\\Users\\Ghanam\\OneDrive\\projects\\Greeny-Life\\.venv\\Lib\\site-packages\\numpy\\random\\tests\\data\\generator_pcg64_np126.pkl.gz",
+                         "extension":  ".gz",
+                         "bytes":  208,
+                         "sha256":  "7CDF1D78D5715FE1C42C0D5E219DF691DB58BDCE21C0AC9AEB0BF4D0625E1F46",
+                         "relationship":  "ARCHIVE_OR_BACKUP_CANDIDATE",
+                         "scopeStatus":  "PROPOSED_REVIEW_REQUIRED",
+                         "note":  "Package is registered for Phase 0 only. It is not extracted or included in content coverage until approved."
+                     },
+                     {
+                         "path":  "C:\\Users\\Ghanam\\OneDrive\\projects\\Greeny-Life\\.venv\\Lib\\site-packages\\numpy\\random\\tests\\data\\sfc64_np126.pkl.gz",
+                         "extension":  ".gz",
+                         "bytes":  290,
+                         "sha256":  "3156B5CA5172EC350F81404AFA821E292755978518122377019EC6DEC773CDAC",
+                         "relationship":  "ARCHIVE_OR_BACKUP_CANDIDATE",
+                         "scopeStatus":  "PROPOSED_REVIEW_REQUIRED",
+                         "note":  "Package is registered for Phase 0 only. It is not extracted or included in content coverage until approved."
+                     },
+                     {
+                         "path":  "C:\\Users\\Ghanam\\OneDrive\\projects\\Greeny-Life\\.venv\\Lib\\site-packages\\sklearn\\datasets\\data\\diabetes_data_raw.csv.gz",
+                         "extension":  ".gz",
+                         "bytes":  7073,
+                         "sha256":  "7FC0DED571454B1982210D3BB43F0ACA44EAE01A0B8654A3B24022BDB6B38009",
+                         "relationship":  "ARCHIVE_OR_BACKUP_CANDIDATE",
+                         "scopeStatus":  "PROPOSED_REVIEW_REQUIRED",
+                         "note":  "Package is registered for Phase 0 only. It is not extracted or included in content coverage until approved."
+                     },
+                     {
+                         "path":  "C:\\Users\\Ghanam\\OneDrive\\projects\\Greeny-Life\\.venv\\Lib\\site-packages\\sklearn\\datasets\\data\\diabetes_target.csv.gz",
+                         "extension":  ".gz",
+                         "bytes":  1050,
+                         "sha256":  "8E53F65EB811DF43C206F3534BB3AF0E5FED213BC37ED6BA36310157D6023803",
+                         "relationship":  "ARCHIVE_OR_BACKUP_CANDIDATE",
+                         "scopeStatus":  "PROPOSED_REVIEW_REQUIRED",
+                         "note":  "Package is registered for Phase 0 only. It is not extracted or included in content coverage until approved."
+                     },
+                     {
+                         "path":  "C:\\Users\\Ghanam\\OneDrive\\projects\\Greeny-Life\\.venv\\Lib\\site-packages\\sklearn\\datasets\\data\\digits.csv.gz",
+                         "extension":  ".gz",
+                         "bytes":  57523,
+                         "sha256":  "09F66E6DEBDEE2CD2B5AE59E0D6ABBB73FC2B0E0185D2E1957E9EBB51E23AA22",
+                         "relationship":  "ARCHIVE_OR_BACKUP_CANDIDATE",
+                         "scopeStatus":  "PROPOSED_REVIEW_REQUIRED",
+                         "note":  "Package is registered for Phase 0 only. It is not extracted or included in content coverage until approved."
+                     },
+                     {
+                         "path":  "C:\\Users\\Ghanam\\OneDrive\\projects\\Greeny-Life\\.venv\\Lib\\site-packages\\sklearn\\datasets\\tests\\data\\openml\\id_1\\api-v1-jd-1.json.gz",
+                         "extension":  ".gz",
+                         "bytes":  1786,
+                         "sha256":  "862E08520A2433A495A3BD3AE9FD9E6C7C540A9C632DB29BB8252784CBDAD779",
+                         "relationship":  "ARCHIVE_OR_BACKUP_CANDIDATE",
+                         "scopeStatus":  "PROPOSED_REVIEW_REQUIRED",
+                         "note":  "Package is registered for Phase 0 only. It is not extracted or included in content coverage until approved."
+                     },
+                     {
+                         "path":  "C:\\Users\\Ghanam\\OneDrive\\projects\\Greeny-Life\\.venv\\Lib\\site-packages\\sklearn\\datasets\\tests\\data\\openml\\id_1\\api-v1-jdf-1.json.gz",
+                         "extension":  ".gz",
+                         "bytes":  889,
+                         "sha256":  "A966DAD58CF5FBC914A374AD5556C0414F5ED962237ED55A379FE96E308D00DE",
+                         "relationship":  "ARCHIVE_OR_BACKUP_CANDIDATE",
+                         "scopeStatus":  "PROPOSED_REVIEW_REQUIRED",
+                         "note":  "Package is registered for Phase 0 only. It is not extracted or included in content coverage until approved."
+                     },
+                     {
+                         "path":  "C:\\Users\\Ghanam\\OneDrive\\projects\\Greeny-Life\\.venv\\Lib\\site-packages\\sklearn\\datasets\\tests\\data\\openml\\id_1\\api-v1-jdq-1.json.gz",
+                         "extension":  ".gz",
+                         "bytes":  145,
+                         "sha256":  "84A8726D2C3F8BBCA79D54D8B191158744B1993146F8F083B111A8EA78536057",
+                         "relationship":  "ARCHIVE_OR_BACKUP_CANDIDATE",
+                         "scopeStatus":  "PROPOSED_REVIEW_REQUIRED",
+                         "note":  "Package is registered for Phase 0 only. It is not extracted or included in content coverage until approved."
+                     },
+                     {
+                         "path":  "C:\\Users\\Ghanam\\OneDrive\\projects\\Greeny-Life\\.venv\\Lib\\site-packages\\sklearn\\datasets\\tests\\data\\openml\\id_1\\data-v1-dl-1.arff.gz",
+                         "extension":  ".gz",
+                         "bytes":  1841,
+                         "sha256":  "CFE8945B949770B0DA42DAF58CE67D1C5FEE25CF7B4FD145161837C2ABC09429",
+                         "relationship":  "ARCHIVE_OR_BACKUP_CANDIDATE",
+                         "scopeStatus":  "PROPOSED_REVIEW_REQUIRED",
+                         "note":  "Package is registered for Phase 0 only. It is not extracted or included in content coverage until approved."
+                     },
+                     {
+                         "path":  "C:\\Users\\Ghanam\\OneDrive\\projects\\Greeny-Life\\.venv\\Lib\\site-packages\\sklearn\\datasets\\tests\\data\\openml\\id_1119\\api-v1-jd-1119.json.gz",
+                         "extension":  ".gz",
+                         "bytes":  711,
+                         "sha256":  "C41E5FBB3E59CD4DE881ED7C8F88F9B03A750D537BA63581CAFDE6AAFD77ADC1",
+                         "relationship":  "ARCHIVE_OR_BACKUP_CANDIDATE",
+                         "scopeStatus":  "PROPOSED_REVIEW_REQUIRED",
+                         "note":  "Package is registered for Phase 0 only. It is not extracted or included in content coverage until approved."
+                     },
+                     {
+                         "path":  "C:\\Users\\Ghanam\\OneDrive\\projects\\Greeny-Life\\.venv\\Lib\\site-packages\\sklearn\\datasets\\tests\\data\\openml\\id_1119\\api-v1-jdf-1119.json.gz",
+                         "extension":  ".gz",
+                         "bytes":  1108,
+                         "sha256":  "82F899EDC59CB41FDD671B256A228E5E06DFC5E24C92712E75005B251B000865",
+                         "relationship":  "ARCHIVE_OR_BACKUP_CANDIDATE",
+                         "scopeStatus":  "PROPOSED_REVIEW_REQUIRED",
+                         "note":  "Package is registered for Phase 0 only. It is not extracted or included in content coverage until approved."
+                     },
+                     {
+                         "path":  "C:\\Users\\Ghanam\\OneDrive\\projects\\Greeny-Life\\.venv\\Lib\\site-packages\\sklearn\\datasets\\tests\\data\\openml\\id_1119\\api-v1-jdl-dn-adult-census-l-2-dv-1.json.gz",
+                         "extension":  ".gz",
+                         "bytes":  364,
+                         "sha256":  "4A5DC36CA9758313978B2A9D79CCE763C6F84D5D95F15AC557B3D7482F22EE21",
+                         "relationship":  "ARCHIVE_OR_BACKUP_CANDIDATE",
+                         "scopeStatus":  "PROPOSED_REVIEW_REQUIRED",
+                         "note":  "Package is registered for Phase 0 only. It is not extracted or included in content coverage until approved."
+                     },
+                     {
+                         "path":  "C:\\Users\\Ghanam\\OneDrive\\projects\\Greeny-Life\\.venv\\Lib\\site-packages\\sklearn\\datasets\\tests\\data\\openml\\id_1119\\api-v1-jdl-dn-adult-census-l-2-s-act-.json.gz",
+                         "extension":  ".gz",
+                         "bytes":  363,
+                         "sha256":  "6EC0955788914FA81F698E97A4D1AFF773D7A125ED6E769C6271A0B48FC4011D",
+                         "relationship":  "ARCHIVE_OR_BACKUP_CANDIDATE",
+                         "scopeStatus":  "PROPOSED_REVIEW_REQUIRED",
+                         "note":  "Package is registered for Phase 0 only. It is not extracted or included in content coverage until approved."
+                     },
+                     {
+                         "path":  "C:\\Users\\Ghanam\\OneDrive\\projects\\Greeny-Life\\.venv\\Lib\\site-packages\\sklearn\\datasets\\tests\\data\\openml\\id_1119\\api-v1-jdq-1119.json.gz",
+                         "extension":  ".gz",
+                         "bytes":  1549,
+                         "sha256":  "EF7CBCB58C2EDCFEA45C058B751FAF7783E710462A924E9AACAD8D47A7E9F94B",
+                         "relationship":  "ARCHIVE_OR_BACKUP_CANDIDATE",
+                         "scopeStatus":  "PROPOSED_REVIEW_REQUIRED",
+                         "note":  "Package is registered for Phase 0 only. It is not extracted or included in content coverage until approved."
+                     },
+                     {
+                         "path":  "C:\\Users\\Ghanam\\OneDrive\\projects\\Greeny-Life\\.venv\\Lib\\site-packages\\sklearn\\datasets\\tests\\data\\openml\\id_1119\\data-v1-dl-54002.arff.gz",
+                         "extension":  ".gz",
+                         "bytes":  1190,
+                         "sha256":  "6931AF256195FCDD2E47DD8B0F9EDF16FBF03B198E77B70E3DFD9877CDF09515",
+                         "relationship":  "ARCHIVE_OR_BACKUP_CANDIDATE",
+                         "scopeStatus":  "PROPOSED_REVIEW_REQUIRED",
+                         "note":  "Package is registered for Phase 0 only. It is not extracted or included in content coverage until approved."
+                     },
+                     {
+                         "path":  "C:\\Users\\Ghanam\\OneDrive\\projects\\Greeny-Life\\.venv\\Lib\\site-packages\\sklearn\\datasets\\tests\\data\\openml\\id_1590\\api-v1-jd-1590.json.gz",
+                         "extension":  ".gz",
+                         "bytes":  1544,
+                         "sha256":  "9B105ADFEDC6B6B82F4695CA9BFE232393034CDF79803523F397A6DC5BF824D1",
+                         "relationship":  "ARCHIVE_OR_BACKUP_CANDIDATE",
+                         "scopeStatus":  "PROPOSED_REVIEW_REQUIRED",
+                         "note":  "Package is registered for Phase 0 only. It is not extracted or included in content coverage until approved."
+                     },
+                     {
+                         "path":  "C:\\Users\\Ghanam\\OneDrive\\projects\\Greeny-Life\\.venv\\Lib\\site-packages\\sklearn\\datasets\\tests\\data\\openml\\id_1590\\api-v1-jdf-1590.json.gz",
+                         "extension":  ".gz",
+                         "bytes":  1032,
+                         "sha256":  "046F5E60564693F0F3B8E382725C8012C3E058647139C24685CEC984E40FCD00",
+                         "relationship":  "ARCHIVE_OR_BACKUP_CANDIDATE",
+                         "scopeStatus":  "PROPOSED_REVIEW_REQUIRED",
+                         "note":  "Package is registered for Phase 0 only. It is not extracted or included in content coverage until approved."
+                     },
+                     {
+                         "path":  "C:\\Users\\Ghanam\\OneDrive\\projects\\Greeny-Life\\.venv\\Lib\\site-packages\\sklearn\\datasets\\tests\\data\\openml\\id_1590\\api-v1-jdq-1590.json.gz",
+                         "extension":  ".gz",
+                         "bytes":  1507,
+                         "sha256":  "44B9B0D290A1E339695A431438F84080071C5635161C3977DD17F4C27B00A34A",
+                         "relationship":  "ARCHIVE_OR_BACKUP_CANDIDATE",
+                         "scopeStatus":  "PROPOSED_REVIEW_REQUIRED",
+                         "note":  "Package is registered for Phase 0 only. It is not extracted or included in content coverage until approved."
+                     },
+                     {
+                         "path":  "C:\\Users\\Ghanam\\OneDrive\\projects\\Greeny-Life\\.venv\\Lib\\site-packages\\sklearn\\datasets\\tests\\data\\openml\\id_1590\\data-v1-dl-1595261.arff.gz",
+                         "extension":  ".gz",
+                         "bytes":  1152,
+                         "sha256":  "EE1DCDF58F2F1072F7DD1B43388969C51BC6CFE776E3E9465AE6A756E5DDB10A",
+                         "relationship":  "ARCHIVE_OR_BACKUP_CANDIDATE",
+                         "scopeStatus":  "PROPOSED_REVIEW_REQUIRED",
+                         "note":  "Package is registered for Phase 0 only. It is not extracted or included in content coverage until approved."
+                     },
+                     {
+                         "path":  "C:\\Users\\Ghanam\\OneDrive\\projects\\Greeny-Life\\.venv\\Lib\\site-packages\\sklearn\\datasets\\tests\\data\\openml\\id_2\\api-v1-jd-2.json.gz",
+                         "extension":  ".gz",
+                         "bytes":  1363,
+                         "sha256":  "A672D435B97A6033DFD1D2A5C823D237AD1865101BD5E403CD99B5BE0BA4E03B",
+                         "relationship":  "ARCHIVE_OR_BACKUP_CANDIDATE",
+                         "scopeStatus":  "PROPOSED_REVIEW_REQUIRED",
+                         "note":  "Package is registered for Phase 0 only. It is not extracted or included in content coverage until approved."
+                     },
+                     {
+                         "path":  "C:\\Users\\Ghanam\\OneDrive\\projects\\Greeny-Life\\.venv\\Lib\\site-packages\\sklearn\\datasets\\tests\\data\\openml\\id_2\\api-v1-jdf-2.json.gz",
+                         "extension":  ".gz",
+                         "bytes":  866,
+                         "sha256":  "C1B8387A7D08014A1C09807AE458CA7666AB8A3C579CBFB189E09C6D7DE892A6",
+                         "relationship":  "ARCHIVE_OR_BACKUP_CANDIDATE",
+                         "scopeStatus":  "PROPOSED_REVIEW_REQUIRED",
+                         "note":  "Package is registered for Phase 0 only. It is not extracted or included in content coverage until approved."
+                     },
+                     {
+                         "path":  "C:\\Users\\Ghanam\\OneDrive\\projects\\Greeny-Life\\.venv\\Lib\\site-packages\\sklearn\\datasets\\tests\\data\\openml\\id_2\\api-v1-jdl-dn-anneal-l-2-dv-1.json.gz",
+                         "extension":  ".gz",
+                         "bytes":  309,
+                         "sha256":  "E900B190795224FF48E46A1C02B10020D4C986BA142880C02C86F0B472DED3C9",
+                         "relationship":  "ARCHIVE_OR_BACKUP_CANDIDATE",
+                         "scopeStatus":  "PROPOSED_REVIEW_REQUIRED",
+                         "note":  "Package is registered for Phase 0 only. It is not extracted or included in content coverage until approved."
+                     },
+                     {
+                         "path":  "C:\\Users\\Ghanam\\OneDrive\\projects\\Greeny-Life\\.venv\\Lib\\site-packages\\sklearn\\datasets\\tests\\data\\openml\\id_2\\api-v1-jdl-dn-anneal-l-2-s-act-.json.gz",
+                         "extension":  ".gz",
+                         "bytes":  346,
+                         "sha256":  "FF6225CB98260CA4EBEC015A1A2754F2A7B0DBFB4D0F17DCF6727542154E2A10",
+                         "relationship":  "ARCHIVE_OR_BACKUP_CANDIDATE",
+                         "scopeStatus":  "PROPOSED_REVIEW_REQUIRED",
+                         "note":  "Package is registered for Phase 0 only. It is not extracted or included in content coverage until approved."
+                     },
+                     {
+                         "path":  "C:\\Users\\Ghanam\\OneDrive\\projects\\Greeny-Life\\.venv\\Lib\\site-packages\\sklearn\\datasets\\tests\\data\\openml\\id_2\\api-v1-jdq-2.json.gz",
+                         "extension":  ".gz",
+                         "bytes":  1501,
+                         "sha256":  "C46F6C5F221D877DE604B906403B20CBDF674F1225BCDBB3E15BD1882A69A471",
+                         "relationship":  "ARCHIVE_OR_BACKUP_CANDIDATE",
+                         "scopeStatus":  "PROPOSED_REVIEW_REQUIRED",
+                         "note":  "Package is registered for Phase 0 only. It is not extracted or included in content coverage until approved."
+                     },
+                     {
+                         "path":  "C:\\Users\\Ghanam\\OneDrive\\projects\\Greeny-Life\\.venv\\Lib\\site-packages\\sklearn\\datasets\\tests\\data\\openml\\id_2\\data-v1-dl-1666876.arff.gz",
+                         "extension":  ".gz",
+                         "bytes":  1855,
+                         "sha256":  "D57B2B04CAE526306670E3516989DCA32C88C155781325DDAC42E43DC2322C30",
+                         "relationship":  "ARCHIVE_OR_BACKUP_CANDIDATE",
+                         "scopeStatus":  "PROPOSED_REVIEW_REQUIRED",
+                         "note":  "Package is registered for Phase 0 only. It is not extracted or included in content coverage until approved."
+                     },
+                     {
+                         "path":  "C:\\Users\\Ghanam\\OneDrive\\projects\\Greeny-Life\\.venv\\Lib\\site-packages\\sklearn\\datasets\\tests\\data\\openml\\id_292\\api-v1-jd-292.json.gz",
+                         "extension":  ".gz",
+                         "bytes":  551,
+                         "sha256":  "1E6A38D79D8F9E53A2CE11B68B4153062D4E96EC0B368D02B2E64F1B33C51693",
+                         "relationship":  "ARCHIVE_OR_BACKUP_CANDIDATE",
+                         "scopeStatus":  "PROPOSED_REVIEW_REQUIRED",
+                         "note":  "Package is registered for Phase 0 only. It is not extracted or included in content coverage until approved."
+                     },
+                     {
+                         "path":  "C:\\Users\\Ghanam\\OneDrive\\projects\\Greeny-Life\\.venv\\Lib\\site-packages\\sklearn\\datasets\\tests\\data\\openml\\id_292\\api-v1-jd-40981.json.gz",
+                         "extension":  ".gz",
+                         "bytes":  553,
+                         "sha256":  "C26DCBE30CFB39161F305B2B3D43A9B50ADC8B368D0749568C47106CBDB20897",
+                         "relationship":  "ARCHIVE_OR_BACKUP_CANDIDATE",
+                         "scopeStatus":  "PROPOSED_REVIEW_REQUIRED",
+                         "note":  "Package is registered for Phase 0 only. It is not extracted or included in content coverage until approved."
+                     },
+                     {
+                         "path":  "C:\\Users\\Ghanam\\OneDrive\\projects\\Greeny-Life\\.venv\\Lib\\site-packages\\sklearn\\datasets\\tests\\data\\openml\\id_292\\api-v1-jdf-292.json.gz",
+                         "extension":  ".gz",
+                         "bytes":  306,
+                         "sha256":  "255C16F33ED2967FE100CD8011A7E69F789603724B1EC2ECF91DFEB72067C190",
+                         "relationship":  "ARCHIVE_OR_BACKUP_CANDIDATE",
+                         "scopeStatus":  "PROPOSED_REVIEW_REQUIRED",
+                         "note":  "Package is registered for Phase 0 only. It is not extracted or included in content coverage until approved."
+                     },
+                     {
+                         "path":  "C:\\Users\\Ghanam\\OneDrive\\projects\\Greeny-Life\\.venv\\Lib\\site-packages\\sklearn\\datasets\\tests\\data\\openml\\id_292\\api-v1-jdf-40981.json.gz",
+                         "extension":  ".gz",
+                         "bytes":  306,
+                         "sha256":  "255C16F33ED2967FE100CD8011A7E69F789603724B1EC2ECF91DFEB72067C190",
+                         "relationship":  "ARCHIVE_OR_BACKUP_CANDIDATE",
+                         "scopeStatus":  "PROPOSED_REVIEW_REQUIRED",
+                         "note":  "Package is registered for Phase 0 only. It is not extracted or included in content coverage until approved."
+                     },
+                     {
+                         "path":  "C:\\Users\\Ghanam\\OneDrive\\projects\\Greeny-Life\\.venv\\Lib\\site-packages\\sklearn\\datasets\\tests\\data\\openml\\id_292\\api-v1-jdl-dn-australian-l-2-dv-1.json.gz",
+                         "extension":  ".gz",
+                         "bytes":  99,
+                         "sha256":  "9DA09E9A6031D060EC416F639A6BF34989E6C88CE641D10621EB906BA1D8C293",
+                         "relationship":  "ARCHIVE_OR_BACKUP_CANDIDATE",
+                         "scopeStatus":  "PROPOSED_REVIEW_REQUIRED",
+                         "note":  "Package is registered for Phase 0 only. It is not extracted or included in content coverage until approved."
+                     },
+                     {
+                         "path":  "C:\\Users\\Ghanam\\OneDrive\\projects\\Greeny-Life\\.venv\\Lib\\site-packages\\sklearn\\datasets\\tests\\data\\openml\\id_292\\api-v1-jdl-dn-australian-l-2-dv-1-s-dact.json.gz",
+                         "extension":  ".gz",
+                         "bytes":  327,
+                         "sha256":  "8EF6025425FDFC5F736555EA385252AF5BCBF62383615DB82489366D4F96A0A7",
+                         "relationship":  "ARCHIVE_OR_BACKUP_CANDIDATE",
+                         "scopeStatus":  "PROPOSED_REVIEW_REQUIRED",
+                         "note":  "Package is registered for Phase 0 only. It is not extracted or included in content coverage until approved."
+                     },
+                     {
+                         "path":  "C:\\Users\\Ghanam\\OneDrive\\projects\\Greeny-Life\\.venv\\Lib\\site-packages\\sklearn\\datasets\\tests\\data\\openml\\id_292\\api-v1-jdl-dn-australian-l-2-s-act-.json.gz",
+                         "extension":  ".gz",
+                         "bytes":  319,
+                         "sha256":  "35890D08165C804526B48AAD462D7CCC09E808BD7975BA604BD612B9608797AC",
+                         "relationship":  "ARCHIVE_OR_BACKUP_CANDIDATE",
+                         "scopeStatus":  "PROPOSED_REVIEW_REQUIRED",
+                         "note":  "Package is registered for Phase 0 only. It is not extracted or included in content coverage until approved."
+                     },
+                     {
+                         "path":  "C:\\Users\\Ghanam\\OneDrive\\projects\\Greeny-Life\\.venv\\Lib\\site-packages\\sklearn\\datasets\\tests\\data\\openml\\id_292\\data-v1-dl-49822.arff.gz",
+                         "extension":  ".gz",
+                         "bytes":  2532,
+                         "sha256":  "B7EE24ADABD4AAED6419B43FE9D3F86D55FCF4BEE0F1698AE21D86C2701314E3",
+                         "relationship":  "ARCHIVE_OR_BACKUP_CANDIDATE",
+                         "scopeStatus":  "PROPOSED_REVIEW_REQUIRED",
+                         "note":  "Package is registered for Phase 0 only. It is not extracted or included in content coverage until approved."
+                     },
+                     {
+                         "path":  "C:\\Users\\Ghanam\\OneDrive\\projects\\Greeny-Life\\.venv\\Lib\\site-packages\\sklearn\\datasets\\tests\\data\\openml\\id_3\\api-v1-jd-3.json.gz",
+                         "extension":  ".gz",
+                         "bytes":  2473,
+                         "sha256":  "066A216679B197CC51946E17EE9A2E28215425991B0CEB7F10988C14F7F3F869",
+                         "relationship":  "ARCHIVE_OR_BACKUP_CANDIDATE",
+                         "scopeStatus":  "PROPOSED_REVIEW_REQUIRED",
+                         "note":  "Package is registered for Phase 0 only. It is not extracted or included in content coverage until approved."
+                     },
+                     {
+                         "path":  "C:\\Users\\Ghanam\\OneDrive\\projects\\Greeny-Life\\.venv\\Lib\\site-packages\\sklearn\\datasets\\tests\\data\\openml\\id_3\\api-v1-jdf-3.json.gz",
+                         "extension":  ".gz",
+                         "bytes":  535,
+                         "sha256":  "EC4F2D6BC4DF3882B08BBA01571E0792A56F79E0A922D984897773ACD284B426",
+                         "relationship":  "ARCHIVE_OR_BACKUP_CANDIDATE",
+                         "scopeStatus":  "PROPOSED_REVIEW_REQUIRED",
+                         "note":  "Package is registered for Phase 0 only. It is not extracted or included in content coverage until approved."
+                     },
+                     {
+                         "path":  "C:\\Users\\Ghanam\\OneDrive\\projects\\Greeny-Life\\.venv\\Lib\\site-packages\\sklearn\\datasets\\tests\\data\\openml\\id_3\\api-v1-jdq-3.json.gz",
+                         "extension":  ".gz",
+                         "bytes":  1407,
+                         "sha256":  "09EF19CFAD25C5DE487DDBAEF3C4D068CA3063777730A288DFD6F5096A0C6F46",
+                         "relationship":  "ARCHIVE_OR_BACKUP_CANDIDATE",
+                         "scopeStatus":  "PROPOSED_REVIEW_REQUIRED",
+                         "note":  "Package is registered for Phase 0 only. It is not extracted or included in content coverage until approved."
+                     },
+                     {
+                         "path":  "C:\\Users\\Ghanam\\OneDrive\\projects\\Greeny-Life\\.venv\\Lib\\site-packages\\sklearn\\datasets\\tests\\data\\openml\\id_3\\data-v1-dl-3.arff.gz",
+                         "extension":  ".gz",
+                         "bytes":  19485,
+                         "sha256":  "C63FDF8861761F1CA70509F7D2D169A7CC053988C7B7C09C09A6DB6124E208BE",
+                         "relationship":  "ARCHIVE_OR_BACKUP_CANDIDATE",
+                         "scopeStatus":  "PROPOSED_REVIEW_REQUIRED",
+                         "note":  "Package is registered for Phase 0 only. It is not extracted or included in content coverage until approved."
+                     },
+                     {
+                         "path":  "C:\\Users\\Ghanam\\OneDrive\\projects\\Greeny-Life\\.venv\\Lib\\site-packages\\sklearn\\datasets\\tests\\data\\openml\\id_40589\\api-v1-jd-40589.json.gz",
+                         "extension":  ".gz",
+                         "bytes":  598,
+                         "sha256":  "59D1AA6B02D2358C16FA9E4FBEFF523A3BD10EBD38C7C371911FA8335E7BDCBF",
+                         "relationship":  "ARCHIVE_OR_BACKUP_CANDIDATE",
+                         "scopeStatus":  "PROPOSED_REVIEW_REQUIRED",
+                         "note":  "Package is registered for Phase 0 only. It is not extracted or included in content coverage until approved."
+                     },
+                     {
+                         "path":  "C:\\Users\\Ghanam\\OneDrive\\projects\\Greeny-Life\\.venv\\Lib\\site-packages\\sklearn\\datasets\\tests\\data\\openml\\id_40589\\api-v1-jdf-40589.json.gz",
+                         "extension":  ".gz",
+                         "bytes":  856,
+                         "sha256":  "826BAB057A3929F41189BC51AFA0A1752695E63CCF20E128CA6129E9E3321FC2",
+                         "relationship":  "ARCHIVE_OR_BACKUP_CANDIDATE",
+                         "scopeStatus":  "PROPOSED_REVIEW_REQUIRED",
+                         "note":  "Package is registered for Phase 0 only. It is not extracted or included in content coverage until approved."
+                     },
+                     {
+                         "path":  "C:\\Users\\Ghanam\\OneDrive\\projects\\Greeny-Life\\.venv\\Lib\\site-packages\\sklearn\\datasets\\tests\\data\\openml\\id_40589\\api-v1-jdl-dn-emotions-l-2-dv-3.json.gz",
+                         "extension":  ".gz",
+                         "bytes":  315,
+                         "sha256":  "19E6B2A2A8FEC5403C146642A4DC2E077D66A3A1AC87E8239BD1DD31C928AB9C",
+                         "relationship":  "ARCHIVE_OR_BACKUP_CANDIDATE",
+                         "scopeStatus":  "PROPOSED_REVIEW_REQUIRED",
+                         "note":  "Package is registered for Phase 0 only. It is not extracted or included in content coverage until approved."
+                     },
+                     {
+                         "path":  "C:\\Users\\Ghanam\\OneDrive\\projects\\Greeny-Life\\.venv\\Lib\\site-packages\\sklearn\\datasets\\tests\\data\\openml\\id_40589\\api-v1-jdl-dn-emotions-l-2-s-act-.json.gz",
+                         "extension":  ".gz",
+                         "bytes":  318,
+                         "sha256":  "4DA63A60163340B6E18922ABFE7F1F2A7A7DA23DA63C269324985D61FFAA6075",
+                         "relationship":  "ARCHIVE_OR_BACKUP_CANDIDATE",
+                         "scopeStatus":  "PROPOSED_REVIEW_REQUIRED",
+                         "note":  "Package is registered for Phase 0 only. It is not extracted or included in content coverage until approved."
+                     },
+                     {
+                         "path":  "C:\\Users\\Ghanam\\OneDrive\\projects\\Greeny-Life\\.venv\\Lib\\site-packages\\sklearn\\datasets\\tests\\data\\openml\\id_40589\\api-v1-jdq-40589.json.gz",
+                         "extension":  ".gz",
+                         "bytes":  913,
+                         "sha256":  "D0F7973193EB35D19E99D1D8BCA3C7F3A8B8D0410508AF34AD571AEE8EC5AB05",
+                         "relationship":  "ARCHIVE_OR_BACKUP_CANDIDATE",
+                         "scopeStatus":  "PROPOSED_REVIEW_REQUIRED",
+                         "note":  "Package is registered for Phase 0 only. It is not extracted or included in content coverage until approved."
+                     },
+                     {
+                         "path":  "C:\\Users\\Ghanam\\OneDrive\\projects\\Greeny-Life\\.venv\\Lib\\site-packages\\sklearn\\datasets\\tests\\data\\openml\\id_40589\\data-v1-dl-4644182.arff.gz",
+                         "extension":  ".gz",
+                         "bytes":  4344,
+                         "sha256":  "2C4226550827CEFF3509C67179C473E14385CEE206536362E57C5E0DFC7751BF",
+                         "relationship":  "ARCHIVE_OR_BACKUP_CANDIDATE",
+                         "scopeStatus":  "PROPOSED_REVIEW_REQUIRED",
+                         "note":  "Package is registered for Phase 0 only. It is not extracted or included in content coverage until approved."
+                     },
+                     {
+                         "path":  "C:\\Users\\Ghanam\\OneDrive\\projects\\Greeny-Life\\.venv\\Lib\\site-packages\\sklearn\\datasets\\tests\\data\\openml\\id_40675\\api-v1-jd-40675.json.gz",
+                         "extension":  ".gz",
+                         "bytes":  323,
+                         "sha256":  "A787772D60FBFCC21A0E96FD81906F03542E0B942D19DCC95DAE47498953A4FD",
+                         "relationship":  "ARCHIVE_OR_BACKUP_CANDIDATE",
+                         "scopeStatus":  "PROPOSED_REVIEW_REQUIRED",
+                         "note":  "Package is registered for Phase 0 only. It is not extracted or included in content coverage until approved."
+                     },
+                     {
+                         "path":  "C:\\Users\\Ghanam\\OneDrive\\projects\\Greeny-Life\\.venv\\Lib\\site-packages\\sklearn\\datasets\\tests\\data\\openml\\id_40675\\api-v1-jdf-40675.json.gz",
+                         "extension":  ".gz",
+                         "bytes":  307,
+                         "sha256":  "D48D9679789D6BAF7D0D3C346E3576D7589B663C3640942F9C1DBA76E355FAAA",
+                         "relationship":  "ARCHIVE_OR_BACKUP_CANDIDATE",
+                         "scopeStatus":  "PROPOSED_REVIEW_REQUIRED",
+                         "note":  "Package is registered for Phase 0 only. It is not extracted or included in content coverage until approved."
+                     },
+                     {
+                         "path":  "C:\\Users\\Ghanam\\OneDrive\\projects\\Greeny-Life\\.venv\\Lib\\site-packages\\sklearn\\datasets\\tests\\data\\openml\\id_40675\\api-v1-jdl-dn-glass2-l-2-dv-1.json.gz",
+                         "extension":  ".gz",
+                         "bytes":  85,
+                         "sha256":  "AD0A4A5477605380F8819CE840DBB928A3D084267C512F6CB50D5BE2F7C76BC2",
+                         "relationship":  "ARCHIVE_OR_BACKUP_CANDIDATE",
+                         "scopeStatus":  "PROPOSED_REVIEW_REQUIRED",
+                         "note":  "Package is registered for Phase 0 only. It is not extracted or included in content coverage until approved."
+                     },
+                     {
+                         "path":  "C:\\Users\\Ghanam\\OneDrive\\projects\\Greeny-Life\\.venv\\Lib\\site-packages\\sklearn\\datasets\\tests\\data\\openml\\id_40675\\api-v1-jdl-dn-glass2-l-2-dv-1-s-dact.json.gz",
+                         "extension":  ".gz",
+                         "bytes":  317,
+                         "sha256":  "21ED1ECC5D874956E951A9361F251AFB2165ADDA92798C89CA5E2F97AE80DD8F",
+                         "relationship":  "ARCHIVE_OR_BACKUP_CANDIDATE",
+                         "scopeStatus":  "PROPOSED_REVIEW_REQUIRED",
+                         "note":  "Package is registered for Phase 0 only. It is not extracted or included in content coverage until approved."
+                     },
+                     {
+                         "path":  "C:\\Users\\Ghanam\\OneDrive\\projects\\Greeny-Life\\.venv\\Lib\\site-packages\\sklearn\\datasets\\tests\\data\\openml\\id_40675\\api-v1-jdl-dn-glass2-l-2-s-act-.json.gz",
+                         "extension":  ".gz",
+                         "bytes":  88,
+                         "sha256":  "141BA630E039EA44BBAEF92A288E2D964FC3AA2EF805A9723B4AAC738A26A627",
+                         "relationship":  "ARCHIVE_OR_BACKUP_CANDIDATE",
+                         "scopeStatus":  "PROPOSED_REVIEW_REQUIRED",
+                         "note":  "Package is registered for Phase 0 only. It is not extracted or included in content coverage until approved."
+                     },
+                     {
+                         "path":  "C:\\Users\\Ghanam\\OneDrive\\projects\\Greeny-Life\\.venv\\Lib\\site-packages\\sklearn\\datasets\\tests\\data\\openml\\id_40675\\api-v1-jdq-40675.json.gz",
+                         "extension":  ".gz",
+                         "bytes":  886,
+                         "sha256":  "88FCDC3A6FED5697F36DC262F69BFFFB814767CE336FF28A21DEF3AAC937B08C",
+                         "relationship":  "ARCHIVE_OR_BACKUP_CANDIDATE",
+                         "scopeStatus":  "PROPOSED_REVIEW_REQUIRED",
+                         "note":  "Package is registered for Phase 0 only. It is not extracted or included in content coverage until approved."
+                     },
+                     {
+                         "path":  "C:\\Users\\Ghanam\\OneDrive\\projects\\Greeny-Life\\.venv\\Lib\\site-packages\\sklearn\\datasets\\tests\\data\\openml\\id_40675\\data-v1-dl-4965250.arff.gz",
+                         "extension":  ".gz",
+                         "bytes":  3000,
+                         "sha256":  "543D0887312F43D9F65A7E1D08BE78A2436369F632D7382B4134CEBB525A48A3",
+                         "relationship":  "ARCHIVE_OR_BACKUP_CANDIDATE",
+                         "scopeStatus":  "PROPOSED_REVIEW_REQUIRED",
+                         "note":  "Package is registered for Phase 0 only. It is not extracted or included in content coverage until approved."
+                     },
+                     {
+                         "path":  "C:\\Users\\Ghanam\\OneDrive\\projects\\Greeny-Life\\.venv\\Lib\\site-packages\\sklearn\\datasets\\tests\\data\\openml\\id_40945\\api-v1-jd-40945.json.gz",
+                         "extension":  ".gz",
+                         "bytes":  437,
+                         "sha256":  "02882C6B02C4E068EF2B16F37F33AE3D5E9DD17CA29D01662C6924E16427EB5D",
+                         "relationship":  "ARCHIVE_OR_BACKUP_CANDIDATE",
+                         "scopeStatus":  "PROPOSED_REVIEW_REQUIRED",
+                         "note":  "Package is registered for Phase 0 only. It is not extracted or included in content coverage until approved."
+                     },
+                     {
+                         "path":  "C:\\Users\\Ghanam\\OneDrive\\projects\\Greeny-Life\\.venv\\Lib\\site-packages\\sklearn\\datasets\\tests\\data\\openml\\id_40945\\api-v1-jdf-40945.json.gz",
+                         "extension":  ".gz",
+                         "bytes":  320,
+                         "sha256":  "95F0938DFDF1B87D0FFC4D526F2C91E097EF7689480B693970126D908F291030",
+                         "relationship":  "ARCHIVE_OR_BACKUP_CANDIDATE",
+                         "scopeStatus":  "PROPOSED_REVIEW_REQUIRED",
+                         "note":  "Package is registered for Phase 0 only. It is not extracted or included in content coverage until approved."
+                     },
+                     {
+                         "path":  "C:\\Users\\Ghanam\\OneDrive\\projects\\Greeny-Life\\.venv\\Lib\\site-packages\\sklearn\\datasets\\tests\\data\\openml\\id_40945\\api-v1-jdq-40945.json.gz",
+                         "extension":  ".gz",
+                         "bytes":  1042,
+                         "sha256":  "9C7E5A46554AB6A8121832DC0CD9F7A60F5034CEF1A5A7D61346BBD912516B54",
+                         "relationship":  "ARCHIVE_OR_BACKUP_CANDIDATE",
+                         "scopeStatus":  "PROPOSED_REVIEW_REQUIRED",
+                         "note":  "Package is registered for Phase 0 only. It is not extracted or included in content coverage until approved."
+                     },
+                     {
+                         "path":  "C:\\Users\\Ghanam\\OneDrive\\projects\\Greeny-Life\\.venv\\Lib\\site-packages\\sklearn\\datasets\\tests\\data\\openml\\id_40945\\data-v1-dl-16826755.arff.gz",
+                         "extension":  ".gz",
+                         "bytes":  32243,
+                         "sha256":  "516E961F519876E5F89B339A0364A08DD64160AC3A4D76D5EC62955BFD6D6CE5",
+                         "relationship":  "ARCHIVE_OR_BACKUP_CANDIDATE",
+                         "scopeStatus":  "PROPOSED_REVIEW_REQUIRED",
+                         "note":  "Package is registered for Phase 0 only. It is not extracted or included in content coverage until approved."
+                     },
+                     {
+                         "path":  "C:\\Users\\Ghanam\\OneDrive\\projects\\Greeny-Life\\.venv\\Lib\\site-packages\\sklearn\\datasets\\tests\\data\\openml\\id_40966\\api-v1-jd-40966.json.gz",
+                         "extension":  ".gz",
+                         "bytes":  1660,
+                         "sha256":  "36C63C3AC8C9DB59910ACBF4C772CD53040CCD0EAC0B0452611DD7AD8DA50474",
+                         "relationship":  "ARCHIVE_OR_BACKUP_CANDIDATE",
+                         "scopeStatus":  "PROPOSED_REVIEW_REQUIRED",
+                         "note":  "Package is registered for Phase 0 only. It is not extracted or included in content coverage until approved."
+                     },
+                     {
+                         "path":  "C:\\Users\\Ghanam\\OneDrive\\projects\\Greeny-Life\\.venv\\Lib\\site-packages\\sklearn\\datasets\\tests\\data\\openml\\id_40966\\api-v1-jdf-40966.json.gz",
+                         "extension":  ".gz",
+                         "bytes":  3690,
+                         "sha256":  "8ADAC8E2F8CBCBFA9677ACDD4927A961430465D2C99401832160BE455CFACED8",
+                         "relationship":  "ARCHIVE_OR_BACKUP_CANDIDATE",
+                         "scopeStatus":  "PROPOSED_REVIEW_REQUIRED",
+                         "note":  "Package is registered for Phase 0 only. It is not extracted or included in content coverage until approved."
+                     },
+                     {
+                         "path":  "C:\\Users\\Ghanam\\OneDrive\\projects\\Greeny-Life\\.venv\\Lib\\site-packages\\sklearn\\datasets\\tests\\data\\openml\\id_40966\\api-v1-jdl-dn-miceprotein-l-2-dv-4.json.gz",
+                         "extension":  ".gz",
+                         "bytes":  325,
+                         "sha256":  "F0C203B4627175CEBBF527D81917A499911AF915F6F2F46EE7248428A948D603",
+                         "relationship":  "ARCHIVE_OR_BACKUP_CANDIDATE",
+                         "scopeStatus":  "PROPOSED_REVIEW_REQUIRED",
+                         "note":  "Package is registered for Phase 0 only. It is not extracted or included in content coverage until approved."
+                     },
+                     {
+                         "path":  "C:\\Users\\Ghanam\\OneDrive\\projects\\Greeny-Life\\.venv\\Lib\\site-packages\\sklearn\\datasets\\tests\\data\\openml\\id_40966\\api-v1-jdl-dn-miceprotein-l-2-s-act-.json.gz",
+                         "extension":  ".gz",
+                         "bytes":  328,
+                         "sha256":  "301396B4A42C814B1A15038DDFCBCF5C8590501231747D0DC2A500B84B2FD0DF",
+                         "relationship":  "ARCHIVE_OR_BACKUP_CANDIDATE",
+                         "scopeStatus":  "PROPOSED_REVIEW_REQUIRED",
+                         "note":  "Package is registered for Phase 0 only. It is not extracted or included in content coverage until approved."
+                     },
+                     {
+                         "path":  "C:\\Users\\Ghanam\\OneDrive\\projects\\Greeny-Life\\.venv\\Lib\\site-packages\\sklearn\\datasets\\tests\\data\\openml\\id_40966\\api-v1-jdq-40966.json.gz",
+                         "extension":  ".gz",
+                         "bytes":  934,
+                         "sha256":  "3DEE83987FFFA8EC20E23B3CABC00D42BEB7A469AF6BD803909998C1687FA634",
+                         "relationship":  "ARCHIVE_OR_BACKUP_CANDIDATE",
+                         "scopeStatus":  "PROPOSED_REVIEW_REQUIRED",
+                         "note":  "Package is registered for Phase 0 only. It is not extracted or included in content coverage until approved."
+                     },
+                     {
+                         "path":  "C:\\Users\\Ghanam\\OneDrive\\projects\\Greeny-Life\\.venv\\Lib\\site-packages\\sklearn\\datasets\\tests\\data\\openml\\id_40966\\data-v1-dl-17928620.arff.gz",
+                         "extension":  ".gz",
+                         "bytes":  6471,
+                         "sha256":  "1C5FD93FFEC7DEB63A940FD698534DD7EBB7DB349FC183930041CBF17E60E2CC",
+                         "relationship":  "ARCHIVE_OR_BACKUP_CANDIDATE",
+                         "scopeStatus":  "PROPOSED_REVIEW_REQUIRED",
+                         "note":  "Package is registered for Phase 0 only. It is not extracted or included in content coverage until approved."
+                     },
+                     {
+                         "path":  "C:\\Users\\Ghanam\\OneDrive\\projects\\Greeny-Life\\.venv\\Lib\\site-packages\\sklearn\\datasets\\tests\\data\\openml\\id_42074\\api-v1-jd-42074.json.gz",
+                         "extension":  ".gz",
+                         "bytes":  595,
+                         "sha256":  "4FCB215595BB8223321943F0DF50F5A5013445BF1819D53D3CB5BFA90D9E79C0",
+                         "relationship":  "ARCHIVE_OR_BACKUP_CANDIDATE",
+                         "scopeStatus":  "PROPOSED_REVIEW_REQUIRED",
+                         "note":  "Package is registered for Phase 0 only. It is not extracted or included in content coverage until approved."
+                     },
+                     {
+                         "path":  "C:\\Users\\Ghanam\\OneDrive\\projects\\Greeny-Life\\.venv\\Lib\\site-packages\\sklearn\\datasets\\tests\\data\\openml\\id_42074\\api-v1-jdf-42074.json.gz",
+                         "extension":  ".gz",
+                         "bytes":  272,
+                         "sha256":  "38B74E7F02A61FF55BCFAC4D87103D5BFFC43FEBB0C019D9AAA162F8F7693068",
+                         "relationship":  "ARCHIVE_OR_BACKUP_CANDIDATE",
+                         "scopeStatus":  "PROPOSED_REVIEW_REQUIRED",
+                         "note":  "Package is registered for Phase 0 only. It is not extracted or included in content coverage until approved."
+                     },
+                     {
+                         "path":  "C:\\Users\\Ghanam\\OneDrive\\projects\\Greeny-Life\\.venv\\Lib\\site-packages\\sklearn\\datasets\\tests\\data\\openml\\id_42074\\api-v1-jdq-42074.json.gz",
+                         "extension":  ".gz",
+                         "bytes":  722,
+                         "sha256":  "8742A74BD5BC120ACD9186C8A8737CB420ED9B009FADE00B24E7CE5217797F2C",
+                         "relationship":  "ARCHIVE_OR_BACKUP_CANDIDATE",
+                         "scopeStatus":  "PROPOSED_REVIEW_REQUIRED",
+                         "note":  "Package is registered for Phase 0 only. It is not extracted or included in content coverage until approved."
+                     },
+                     {
+                         "path":  "C:\\Users\\Ghanam\\OneDrive\\projects\\Greeny-Life\\.venv\\Lib\\site-packages\\sklearn\\datasets\\tests\\data\\openml\\id_42074\\data-v1-dl-21552912.arff.gz",
+                         "extension":  ".gz",
+                         "bytes":  2326,
+                         "sha256":  "F623E777C0A36AE6C82FAE10A7C2088CB383298EA244595BF8DC95449C9BE4C4",
+                         "relationship":  "ARCHIVE_OR_BACKUP_CANDIDATE",
+                         "scopeStatus":  "PROPOSED_REVIEW_REQUIRED",
+                         "note":  "Package is registered for Phase 0 only. It is not extracted or included in content coverage until approved."
+                     },
+                     {
+                         "path":  "C:\\Users\\Ghanam\\OneDrive\\projects\\Greeny-Life\\.venv\\Lib\\site-packages\\sklearn\\datasets\\tests\\data\\openml\\id_42585\\api-v1-jd-42585.json.gz",
+                         "extension":  ".gz",
+                         "bytes":  1492,
+                         "sha256":  "7CCBF138E0663895F9CF511136BC6395C153F6238AF2EACB6A367E86E15D1A71",
+                         "relationship":  "ARCHIVE_OR_BACKUP_CANDIDATE",
+                         "scopeStatus":  "PROPOSED_REVIEW_REQUIRED",
+                         "note":  "Package is registered for Phase 0 only. It is not extracted or included in content coverage until approved."
+                     },
+                     {
+                         "path":  "C:\\Users\\Ghanam\\OneDrive\\projects\\Greeny-Life\\.venv\\Lib\\site-packages\\sklearn\\datasets\\tests\\data\\openml\\id_42585\\api-v1-jdf-42585.json.gz",
+                         "extension":  ".gz",
+                         "bytes":  312,
+                         "sha256":  "0985045A454C8186B4E690EBEFB6CEA1EF7C13292C98D50ABDA470A0FF3AD425",
+                         "relationship":  "ARCHIVE_OR_BACKUP_CANDIDATE",
+                         "scopeStatus":  "PROPOSED_REVIEW_REQUIRED",
+                         "note":  "Package is registered for Phase 0 only. It is not extracted or included in content coverage until approved."
+                     },
+                     {
+                         "path":  "C:\\Users\\Ghanam\\OneDrive\\projects\\Greeny-Life\\.venv\\Lib\\site-packages\\sklearn\\datasets\\tests\\data\\openml\\id_42585\\api-v1-jdq-42585.json.gz",
+                         "extension":  ".gz",
+                         "bytes":  348,
+                         "sha256":  "3736E7FEB7AD30C68675C2C4E48A9FB262E80308C9083B100DDD0339DA1FC282",
+                         "relationship":  "ARCHIVE_OR_BACKUP_CANDIDATE",
+                         "scopeStatus":  "PROPOSED_REVIEW_REQUIRED",
+                         "note":  "Package is registered for Phase 0 only. It is not extracted or included in content coverage until approved."
+                     },
+                     {
+                         "path":  "C:\\Users\\Ghanam\\OneDrive\\projects\\Greeny-Life\\.venv\\Lib\\site-packages\\sklearn\\datasets\\tests\\data\\openml\\id_42585\\data-v1-dl-21854866.arff.gz",
+                         "extension":  ".gz",
+                         "bytes":  4519,
+                         "sha256":  "C8D00C6690576A9EC39E1CB77054E13296BE0FDEBAB0FB35A64A0E8627B6E6F3",
+                         "relationship":  "ARCHIVE_OR_BACKUP_CANDIDATE",
+                         "scopeStatus":  "PROPOSED_REVIEW_REQUIRED",
+                         "note":  "Package is registered for Phase 0 only. It is not extracted or included in content coverage until approved."
+                     },
+                     {
+                         "path":  "C:\\Users\\Ghanam\\OneDrive\\projects\\Greeny-Life\\.venv\\Lib\\site-packages\\sklearn\\datasets\\tests\\data\\openml\\id_561\\api-v1-jd-561.json.gz",
+                         "extension":  ".gz",
+                         "bytes":  1798,
+                         "sha256":  "A1D38FDD601B67BB9C6D16152F53DDF166A0CFCFEF4FA86438E899BFE449226C",
+                         "relationship":  "ARCHIVE_OR_BACKUP_CANDIDATE",
+                         "scopeStatus":  "PROPOSED_REVIEW_REQUIRED",
+                         "note":  "Package is registered for Phase 0 only. It is not extracted or included in content coverage until approved."
+                     },
+                     {
+                         "path":  "C:\\Users\\Ghanam\\OneDrive\\projects\\Greeny-Life\\.venv\\Lib\\site-packages\\sklearn\\datasets\\tests\\data\\openml\\id_561\\api-v1-jdf-561.json.gz",
+                         "extension":  ".gz",
+                         "bytes":  425,
+                         "sha256":  "407424FB79CC30B8E9FF90900B3BF29244AC7F3797F278B5BE602843F959B4EE",
+                         "relationship":  "ARCHIVE_OR_BACKUP_CANDIDATE",
+                         "scopeStatus":  "PROPOSED_REVIEW_REQUIRED",
+                         "note":  "Package is registered for Phase 0 only. It is not extracted or included in content coverage until approved."
+                     },
+                     {
+                         "path":  "C:\\Users\\Ghanam\\OneDrive\\projects\\Greeny-Life\\.venv\\Lib\\site-packages\\sklearn\\datasets\\tests\\data\\openml\\id_561\\api-v1-jdl-dn-cpu-l-2-dv-1.json.gz",
+                         "extension":  ".gz",
+                         "bytes":  301,
+                         "sha256":  "0703B0AE20B9FF75087DC601640EE58F1C2AD6768858EA21A245151DA9BA8E4C",
+                         "relationship":  "ARCHIVE_OR_BACKUP_CANDIDATE",
+                         "scopeStatus":  "PROPOSED_REVIEW_REQUIRED",
+                         "note":  "Package is registered for Phase 0 only. It is not extracted or included in content coverage until approved."
+                     },
+                     {
+                         "path":  "C:\\Users\\Ghanam\\OneDrive\\projects\\Greeny-Life\\.venv\\Lib\\site-packages\\sklearn\\datasets\\tests\\data\\openml\\id_561\\api-v1-jdl-dn-cpu-l-2-s-act-.json.gz",
+                         "extension":  ".gz",
+                         "bytes":  347,
+                         "sha256":  "70D4596AD879547863109DA8675C2B789D07DF66B526D7EBCBCE9616C4C9B94C",
+                         "relationship":  "ARCHIVE_OR_BACKUP_CANDIDATE",
+                         "scopeStatus":  "PROPOSED_REVIEW_REQUIRED",
+                         "note":  "Package is registered for Phase 0 only. It is not extracted or included in content coverage until approved."
+                     },
+                     {
+                         "path":  "C:\\Users\\Ghanam\\OneDrive\\projects\\Greeny-Life\\.venv\\Lib\\site-packages\\sklearn\\datasets\\tests\\data\\openml\\id_561\\api-v1-jdq-561.json.gz",
+                         "extension":  ".gz",
+                         "bytes":  1074,
+                         "sha256":  "8743B2D93D2C62A82FB47E1FBC002B97E25ADCFB5BF1FCB26B58AD0BED15BD48",
+                         "relationship":  "ARCHIVE_OR_BACKUP_CANDIDATE",
+                         "scopeStatus":  "PROPOSED_REVIEW_REQUIRED",
+                         "note":  "Package is registered for Phase 0 only. It is not extracted or included in content coverage until approved."
+                     },
+                     {
+                         "path":  "C:\\Users\\Ghanam\\OneDrive\\projects\\Greeny-Life\\.venv\\Lib\\site-packages\\sklearn\\datasets\\tests\\data\\openml\\id_561\\data-v1-dl-52739.arff.gz",
+                         "extension":  ".gz",
+                         "bytes":  3303,
+                         "sha256":  "E96142B5E00DFEC2617B0C22D7192B340AE2C28EC3FFC3A894C5BE746B970A59",
+                         "relationship":  "ARCHIVE_OR_BACKUP_CANDIDATE",
+                         "scopeStatus":  "PROPOSED_REVIEW_REQUIRED",
+                         "note":  "Package is registered for Phase 0 only. It is not extracted or included in content coverage until approved."
+                     },
+                     {
+                         "path":  "C:\\Users\\Ghanam\\OneDrive\\projects\\Greeny-Life\\.venv\\Lib\\site-packages\\sklearn\\datasets\\tests\\data\\openml\\id_61\\api-v1-jd-61.json.gz",
+                         "extension":  ".gz",
+                         "bytes":  898,
+                         "sha256":  "A5C7E79AA41EF580838FB9FC1906280F076C47BE1741FDDD5004DDB500EB57FE",
+                         "relationship":  "ARCHIVE_OR_BACKUP_CANDIDATE",
+                         "scopeStatus":  "PROPOSED_REVIEW_REQUIRED",
+                         "note":  "Package is registered for Phase 0 only. It is not extracted or included in content coverage until approved."
+                     },
+                     {
+                         "path":  "C:\\Users\\Ghanam\\OneDrive\\projects\\Greeny-Life\\.venv\\Lib\\site-packages\\sklearn\\datasets\\tests\\data\\openml\\id_61\\api-v1-jdf-61.json.gz",
+                         "extension":  ".gz",
+                         "bytes":  268,
+                         "sha256":  "33CBD6AE945BA04969370AB35604E9363C87256393493382B5118A89D59386D6",
+                         "relationship":  "ARCHIVE_OR_BACKUP_CANDIDATE",
+                         "scopeStatus":  "PROPOSED_REVIEW_REQUIRED",
+                         "note":  "Package is registered for Phase 0 only. It is not extracted or included in content coverage until approved."
+                     },
+                     {
+                         "path":  "C:\\Users\\Ghanam\\OneDrive\\projects\\Greeny-Life\\.venv\\Lib\\site-packages\\sklearn\\datasets\\tests\\data\\openml\\id_61\\api-v1-jdl-dn-iris-l-2-dv-1.json.gz",
+                         "extension":  ".gz",
+                         "bytes":  293,
+                         "sha256":  "0BCE20AAE7FD903796D96D5B3A3677B7058FBC5F3FE0996EE9D491E4EE23D132",
+                         "relationship":  "ARCHIVE_OR_BACKUP_CANDIDATE",
+                         "scopeStatus":  "PROPOSED_REVIEW_REQUIRED",
+                         "note":  "Package is registered for Phase 0 only. It is not extracted or included in content coverage until approved."
+                     },
+                     {
+                         "path":  "C:\\Users\\Ghanam\\OneDrive\\projects\\Greeny-Life\\.venv\\Lib\\site-packages\\sklearn\\datasets\\tests\\data\\openml\\id_61\\api-v1-jdl-dn-iris-l-2-s-act-.json.gz",
+                         "extension":  ".gz",
+                         "bytes":  330,
+                         "sha256":  "A9F4B9317997DF63ED8D2BB073A3906344C0E0BE017FD384EAEC36CED8B94BAE",
+                         "relationship":  "ARCHIVE_OR_BACKUP_CANDIDATE",
+                         "scopeStatus":  "PROPOSED_REVIEW_REQUIRED",
+                         "note":  "Package is registered for Phase 0 only. It is not extracted or included in content coverage until approved."
+                     },
+                     {
+                         "path":  "C:\\Users\\Ghanam\\OneDrive\\projects\\Greeny-Life\\.venv\\Lib\\site-packages\\sklearn\\datasets\\tests\\data\\openml\\id_61\\api-v1-jdq-61.json.gz",
+                         "extension":  ".gz",
+                         "bytes":  1121,
+                         "sha256":  "424CD47C12A51C7BB8D8169FAC80FB5601F152BD78468B241D4B115BF7D22F20",
+                         "relationship":  "ARCHIVE_OR_BACKUP_CANDIDATE",
+                         "scopeStatus":  "PROPOSED_REVIEW_REQUIRED",
+                         "note":  "Package is registered for Phase 0 only. It is not extracted or included in content coverage until approved."
+                     },
+                     {
+                         "path":  "C:\\Users\\Ghanam\\OneDrive\\projects\\Greeny-Life\\.venv\\Lib\\site-packages\\sklearn\\datasets\\tests\\data\\openml\\id_61\\data-v1-dl-61.arff.gz",
+                         "extension":  ".gz",
+                         "bytes":  2342,
+                         "sha256":  "AFE4736924606638984E573235191025D419C545D31DC8874C96B72F5EC5DB73",
+                         "relationship":  "ARCHIVE_OR_BACKUP_CANDIDATE",
+                         "scopeStatus":  "PROPOSED_REVIEW_REQUIRED",
+                         "note":  "Package is registered for Phase 0 only. It is not extracted or included in content coverage until approved."
+                     },
+                     {
+                         "path":  "C:\\Users\\Ghanam\\OneDrive\\projects\\Greeny-Life\\.venv\\Lib\\site-packages\\sklearn\\datasets\\tests\\data\\openml\\id_62\\api-v1-jd-62.json.gz",
+                         "extension":  ".gz",
+                         "bytes":  656,
+                         "sha256":  "7EF3551AD47D48023C5A1F1CF077047A9A4B95544BB91D4A86097F8B574F8D07",
+                         "relationship":  "ARCHIVE_OR_BACKUP_CANDIDATE",
+                         "scopeStatus":  "PROPOSED_REVIEW_REQUIRED",
+                         "note":  "Package is registered for Phase 0 only. It is not extracted or included in content coverage until approved."
+                     },
+                     {
+                         "path":  "C:\\Users\\Ghanam\\OneDrive\\projects\\Greeny-Life\\.venv\\Lib\\site-packages\\sklearn\\datasets\\tests\\data\\openml\\id_62\\api-v1-jdf-62.json.gz",
+                         "extension":  ".gz",
+                         "bytes":  817,
+                         "sha256":  "489B177126CB7F335CB220709233B946D3A0AD71D38BBA6D48B79187146E585A",
+                         "relationship":  "ARCHIVE_OR_BACKUP_CANDIDATE",
+                         "scopeStatus":  "PROPOSED_REVIEW_REQUIRED",
+                         "note":  "Package is registered for Phase 0 only. It is not extracted or included in content coverage until approved."
+                     },
+                     {
+                         "path":  "C:\\Users\\Ghanam\\OneDrive\\projects\\Greeny-Life\\.venv\\Lib\\site-packages\\sklearn\\datasets\\tests\\data\\openml\\id_62\\api-v1-jdq-62.json.gz",
+                         "extension":  ".gz",
+                         "bytes":  805,
+                         "sha256":  "278A52A52D569F07D14C6A7877B104762C77DAAC429FB1FD9817A0378D6EC634",
+                         "relationship":  "ARCHIVE_OR_BACKUP_CANDIDATE",
+                         "scopeStatus":  "PROPOSED_REVIEW_REQUIRED",
+                         "note":  "Package is registered for Phase 0 only. It is not extracted or included in content coverage until approved."
+                     },
+                     {
+                         "path":  "C:\\Users\\Ghanam\\OneDrive\\projects\\Greeny-Life\\.venv\\Lib\\site-packages\\sklearn\\datasets\\tests\\data\\openml\\id_62\\data-v1-dl-52352.arff.gz",
+                         "extension":  ".gz",
+                         "bytes":  1625,
+                         "sha256":  "FB5830C82112F62A400C82AC1F1B5EB61C29C0A7CC72BA56D2AEFF0FAE8A60F9",
+                         "relationship":  "ARCHIVE_OR_BACKUP_CANDIDATE",
+                         "scopeStatus":  "PROPOSED_REVIEW_REQUIRED",
+                         "note":  "Package is registered for Phase 0 only. It is not extracted or included in content coverage until approved."
+                     },
+                     {
+                         "path":  "C:\\Users\\Ghanam\\OneDrive\\projects\\Greeny-Life\\E3-SOURCE-TRACE-PACKAGE.zip",
+                         "extension":  ".zip",
+                         "bytes":  59654,
+                         "sha256":  "B3F84A2D24085CCBA6BD260BE39CA79DBE5EE4EFEA34072F318EB06517390B88",
+                         "relationship":  "ARCHIVE_OR_BACKUP_CANDIDATE",
+                         "scopeStatus":  "PROPOSED_REVIEW_REQUIRED",
+                         "note":  "Package is registered for Phase 0 only. It is not extracted or included in content coverage until approved."
+                     },
+                     {
+                         "path":  "C:\\Users\\Ghanam\\OneDrive\\projects\\Greeny-Life\\GreenyLifeEOS_Review.zip",
+                         "extension":  ".zip",
+                         "bytes":  21265973,
+                         "sha256":  "AC2A7562954707BD5E1A19D8912D09CD0B5CE0854DDBBA5D3F2A11AB75919172",
+                         "relationship":  "ARCHIVE_OR_BACKUP_CANDIDATE",
+                         "scopeStatus":  "PROPOSED_REVIEW_REQUIRED",
+                         "note":  "Package is registered for Phase 0 only. It is not extracted or included in content coverage until approved."
+                     }
+                 ],
+    "summary":  {
+                    "primaryLegacyRoots":  1,
+                    "historicalCandidates":  4,
+                    "archivesOrBackups":  106,
+                    "approvedLegacyRoots":  0,
+                    "proposedLegacyRoots":  1,
+                    "coverageStatement":  "503/503 remains valid only for the PRIMARY root. Scope is not closed until candidate roots/packages are accepted or explicitly excluded."
+                },
+    "requiredNextDecision":  [
+                                 "Accept or exclude every HISTORICAL_CANDIDATE root",
+                                 "Accept, defer or exclude every ARCHIVE_OR_BACKUP_CANDIDATE",
+                                 "Record an owner for the Legacy scope decision",
+                                 "Create the approved-scope manifest before rerunning any full inventory/classification phase"
+                             ],
+    "prohibitions":  [
+                         "NO_CONTENT_SCAN_BEYOND_COUNTS",
+                         "NO_ARCHIVE_EXTRACTION",
+                         "NO_LEGACY_EXECUTION",
+                         "NO_MOVE",
+                         "NO_DELETE",
+                         "NO_DATABASE_CHANGE",
+                         "NO_GIT_CHANGE"
+                     ]
+}

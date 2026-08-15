@@ -1,0 +1,142 @@
+{
+  "system": "GREENY-LIFE-EOS",
+  "version": "2.0.0",
+  "canonical_root": "canonical",
+  "domains": [
+    {
+      "name": "product",
+      "owner": "Product Domain",
+      "master_data": [
+        "canonical/data/master_products.json"
+      ],
+      "workflow": [],
+      "database": [],
+      "status": "INCOMPLETE",
+      "missing_files": [
+        "canonical/data/product-workflow.json",
+        "canonical/data/product-schema.json",
+        "canonical/intelligence/product-intelligence.json"
+      ]
+    },
+    {
+      "name": "supplier",
+      "owner": "Supplier Domain",
+      "master_data": [
+        "canonical/data/suppliers.json"
+      ],
+      "workflow": [],
+      "database": [],
+      "status": "INCOMPLETE",
+      "missing_files": [
+        "canonical/data/supplier-workflow.json",
+        "canonical/data/supplier-schema.json"
+      ]
+    },
+    {
+      "name": "certificate",
+      "owner": "Certificate Domain",
+      "master_data": [
+        "canonical/data/certificates.json"
+      ],
+      "workflow": [],
+      "database": [],
+      "status": "INCOMPLETE",
+      "missing_files": [
+        "canonical/data/certificate-documents.json"
+      ]
+    },
+    {
+      "name": "customer",
+      "owner": "Customer Domain",
+      "master_data": [
+        "canonical/data/customer-domain/customers.json"
+      ],
+      "workflow": [],
+      "database": [],
+      "status": "INCOMPLETE",
+      "missing_files": [
+        "canonical/data/customer-domain/customer-workflow.json",
+        "canonical/data/customer-domain/customer-schema.json"
+      ]
+    },
+    {
+      "name": "analytics",
+      "owner": "Analytics Domain",
+      "master_data": [],
+      "workflow": [],
+      "database": [],
+      "status": "INCOMPLETE",
+      "missing_files": [
+        "canonical/analytics/analytics-workflow.json"
+      ]
+    },
+    {
+      "name": "finance",
+      "owner": "Finance Domain",
+      "master_data": [
+        "canonical/finance/finance-master.json"
+      ],
+      "workflow": [
+        "canonical/finance/workflows.json"
+      ],
+      "database": [],
+      "status": "INCOMPLETE",
+      "missing_files": [
+        "canonical/finance/transactions.json"
+      ]
+    },
+    {
+      "name": "inventory",
+      "owner": "Inventory Domain",
+      "master_data": [
+        "canonical/inventory/inventory-master-v1.json"
+      ],
+      "workflow": [],
+      "database": [],
+      "status": "INCOMPLETE",
+      "missing_files": [
+        "canonical/inventory/inventory-workflow.json"
+      ]
+    },
+    {
+      "name": "logistics",
+      "owner": "Logistics Domain",
+      "master_data": [],
+      "workflow": [],
+      "database": [],
+      "status": "INCOMPLETE",
+      "missing_files": [
+        "canonical/logistics/logistics-workflow.json",
+        "canonical/logistics/tracking.json"
+      ]
+    },
+    {
+      "name": "compliance",
+      "owner": "Compliance Domain",
+      "master_data": [],
+      "workflow": [],
+      "database": [],
+      "status": "INCOMPLETE",
+      "missing_files": [
+        "canonical/data/compliance-master.json",
+        "canonical/data/compliance-documents.json"
+      ]
+    },
+    {
+      "name": "administration",
+      "owner": "Administration Domain",
+      "master_data": [],
+      "workflow": [],
+      "database": [],
+      "status": "INCOMPLETE",
+      "missing_files": [
+        "canonical/data/administration-master.json",
+        "canonical/data/users.json",
+        "canonical/data/roles.json",
+        "canonical/data/permissions.json"
+      ]
+    }
+  ],
+  "validation_status": "FAILED",
+  "validated_at": "2026-08-05T17:57:30.103766"
+}

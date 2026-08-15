@@ -1,0 +1,63 @@
+{
+    "report":  "E3 P6 Refined Legacy Current Comparison",
+    "generatedAt":  "2026-08-14T01:52:00.3438618+02:00",
+    "mode":  "READ_ONLY_TRACKED_CURRENT_BASELINE_COMPARISON",
+    "supersedes":  "The prior P6 claim that 415 exact-hash matches constitute Current candidates. Untracked/co-located copies are not treated as Current equivalents.",
+    "coverage":  {
+                     "p5InputRecords":  50104,
+                     "p6CoveredRecords":  50104,
+                     "eligibleDataBusinessCandidates":  415,
+                     "gitTrackedCurrentFilesHashed":  133,
+                     "trackedExactCandidates":  52,
+                     "untrackedOrCoLocatedCopies":  275,
+                     "noTrackedCurrentEquivalentProven":  88,
+                     "status":  "PASS",
+                     "statement":  "Every P5 record has a refined P6 state. A tracked exact hash is lineage evidence only; no semantic/running/SOR/replacement conclusion follows."
+                 },
+    "comparisonCounts":  [
+                             {
+                                 "comparison":  "NO_TRACKED_CURRENT_EQUIVALENT_PROVEN",
+                                 "assets":  88
+                             },
+                             {
+                                 "comparison":  "NOT_ELIGIBLE_GROUPED_OR_NON_BUSINESS",
+                                 "assets":  49689
+                             },
+                             {
+                                 "comparison":  "TRACKED_CURRENT_EXACT_CONTENT_CANDIDATE_NOT_SOR_PROOF",
+                                 "assets":  52
+                             },
+                             {
+                                 "comparison":  "UNTRACKED_OR_COLOCATED_EXACT_COPY_NOT_CURRENT_EQUIVALENT",
+                                 "assets":  275
+                             }
+                         ],
+    "input":  [
+                  "C:\\Users\\Ghanam\\Documents\\Codex\\Greeny-Life-Repair\\archive\\generated-reports\\e3-p5-data-business-lineage\\2026-08-14_012933\\E3-P5-DATA-BUSINESS-LINEAGE.json",
+                  "C:\\Users\\Ghanam\\Documents\\Codex\\Greeny-Life-Repair\\archive\\generated-reports\\e3-p5-data-business-lineage\\2026-08-14_012933\\E3-P5-DATA-BUSINESS-LINEAGE.csv"
+              ],
+    "output":  {
+                   "csv":  "C:\\Users\\Ghanam\\Documents\\Codex\\Greeny-Life-Repair\\archive\\generated-reports\\e3-p6-current-comparison\\p6-tracked-baseline-2026-08-14_015153\\E3-P6-TRACKED-CURRENT-COMPARISON.csv",
+                   "sha256":  "ECF59DB70A95F7CA8F32E3905CC5550F24F3328B04657F7AC16EBA926C14D3EF",
+                   "records":  50104
+               },
+    "deferred":  [
+                     "SEMANTIC_EQUIVALENCE",
+                     "RUNTIME_EQUIVALENCE",
+                     "UNIQUE_VALUE_PROOF",
+                     "OWNER_SOR",
+                     "REPLACEMENT_RECOVERY",
+                     "FINAL_TREATMENT"
+                 ],
+    "prohibitions":  [
+                         "NO_LEGACY_EXECUTION",
+                         "NO_PACKAGE_OPENING",
+                         "NO_MOVE",
+                         "NO_MERGE",
+                         "NO_ARCHIVE_ACTION",
+                         "NO_DELETE",
+                         "NO_DATABASE_CHANGE",
+                         "NO_GIT_CHANGE",
+                         "NO_CURRENT_CHANGE"
+                     ]
+}

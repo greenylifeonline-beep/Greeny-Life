@@ -1,0 +1,53 @@
+{
+  "target_markets": [
+    {
+      "country": "Norway",
+      "region": "Europe",
+      "priority": 1,
+      "status": "active"
+    },
+    {
+      "country": "UAE",
+      "region": "GCC",
+      "priority": 1,
+      "status": "active"
+    },
+    {
+      "country": "Saudi Arabia",
+      "region": "GCC",
+      "priority": 2,
+      "status": "active"
+    },
+    {
+      "country": "Germany",
+      "region": "Europe",
+      "priority": 2,
+      "status": "active"
+    },
+    {
+      "country": "USA",
+      "region": "North America",
+      "priority": 3,
+      "status": "pending"
+    }
+  ],
+  "export_requirements": {
+    "eu": [
+      "EU Organic",
+      "EU Pesticide Compliance",
+      "Traceability"
+    ],
+    "gcc": [
+      "GCC Halal",
+      "GCC Import License"
+    ],
+    "usa": [
+      "USDA Organic",
+      "FDA Registration"
+    ],
+    "norway": [
+      "Norwegian Food Safety Authority",
+      "EU Standards"
+    ]
+  }
+}

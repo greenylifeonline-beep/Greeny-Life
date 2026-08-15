@@ -1,0 +1,305 @@
+{
+    "report":  "E3 Canonical Command Ownership and Safe Consolidation Gate",
+    "generatedAt":  "2026-08-13T22:44:06.5004114+02:00",
+    "mode":  "READ_ONLY_PROOF_NO_PACKAGE_CHANGE",
+    "package":  {
+                    "path":  "package.json",
+                    "scriptCount":  63,
+                    "author":  "GREENY LIFE"
+                },
+    "sourceEvidence":  [
+                           "C:\\Users\\Ghanam\\Documents\\Codex\\Greeny-Life-Repair\\archive\\generated-reports\\e3-consolidation-archive-proof\\2026-08-13_223729\\E3-CONSOLIDATION-ARCHIVE-PROOF.json",
+                           "C:\\Users\\Ghanam\\Documents\\Codex\\Greeny-Life-Repair\\archive\\generated-reports\\e3-closure\\2026-08-13_220334\\E3-CURRENT-ASSET-CODE-CLOSURE.json",
+                           "C:\\Users\\Ghanam\\Documents\\Codex\\Greeny-Life-Repair\\scripts\\legacy-health.cjs",
+                           "C:\\Users\\Ghanam\\Documents\\Codex\\Greeny-Life-Repair\\canonical\\intelligence\\intelligence\\gl-dos.ts"
+                       ],
+    "aliasGroups":  [
+                        {
+                            "ALIAS_GROUP":  "E3-CMD-01-LEGACY-HEALTH",
+                            "OWNER":  "UNPROVEN (package author GREENY LIFE is not operational-owner evidence)",
+                            "CANONICAL_COMMAND":  "intelligence",
+                            "DEPRECATED_ALIASES":  [
+                                                       "gl-dos"
+                                                   ],
+                            "COMMANDS":  [
+                                             {
+                                                 "alias":  "intelligence",
+                                                 "command":  "node scripts/legacy-health.cjs",
+                                                 "targetExists":  true,
+                                                 "packageCallers":  [
+                                                                        "diagnose",
+                                                                        "health",
+                                                                        "verify"
+                                                                    ]
+                                             },
+                                             {
+                                                 "alias":  "gl-dos",
+                                                 "command":  "node scripts/legacy-health.cjs",
+                                                 "targetExists":  true,
+                                                 "packageCallers":  [
+
+                                                                    ]
+                                             }
+                                         ],
+                            "CALLERS":  [
+                                            "diagnose",
+                                            "health",
+                                            "verify"
+                                        ],
+                            "TESTS":  "No distinct test per alias proven; legacy-health treats --test and --audit as the same health output.",
+                            "EXTERNAL_OPERATIONAL_POTENTIAL":  [
+                                                                   "canonical/intelligence/intelligence/gl-dos.ts references npm run intelligence; no external consumer registry was found."
+                                                               ],
+                            "COMMON_FUNCTION":  "Read-only legacy/current health report through scripts/legacy-health.cjs.",
+                            "DIFFERENCES":  "Commands are byte-for-byte equivalent in package.json; names have different historical meaning.",
+                            "COMPATIBILITY_EVIDENCE":  "All targets exist. Static package callers were traced. External callers and accountable owner remain unproven.",
+                            "RISK":  "MEDIUM: gl-dos has a static reference in canonical/intelligence/intelligence/gl-dos.ts; not runtime-proven as a safe rename.",
+                            "DECISION":  "REVIEW",
+                            "REASON":  "E3 rule: no owner or caller proof means no alias consolidation and no package.json change."
+                        },
+                        {
+                            "ALIAS_GROUP":  "E3-CMD-02-BLOCKED-MIGRATION",
+                            "OWNER":  "UNPROVEN (package author GREENY LIFE is not operational-owner evidence)",
+                            "CANONICAL_COMMAND":  "migration",
+                            "DEPRECATED_ALIASES":  [
+                                                       "migration:verify",
+                                                       "migration:decision",
+                                                       "migration:executor",
+                                                       "migration:all"
+                                                   ],
+                            "COMMANDS":  [
+                                             {
+                                                 "alias":  "migration",
+                                                 "command":  "node scripts/legacy-health.cjs --blocked-migration",
+                                                 "targetExists":  true,
+                                                 "packageCallers":  [
+
+                                                                    ]
+                                             },
+                                             {
+                                                 "alias":  "migration:verify",
+                                                 "command":  "node scripts/legacy-health.cjs --blocked-migration",
+                                                 "targetExists":  true,
+                                                 "packageCallers":  [
+
+                                                                    ]
+                                             },
+                                             {
+                                                 "alias":  "migration:decision",
+                                                 "command":  "node scripts/legacy-health.cjs --blocked-migration",
+                                                 "targetExists":  true,
+                                                 "packageCallers":  [
+
+                                                                    ]
+                                             },
+                                             {
+                                                 "alias":  "migration:executor",
+                                                 "command":  "node scripts/legacy-health.cjs --blocked-migration",
+                                                 "targetExists":  true,
+                                                 "packageCallers":  [
+
+                                                                    ]
+                                             },
+                                             {
+                                                 "alias":  "migration:all",
+                                                 "command":  "node scripts/legacy-health.cjs --blocked-migration",
+                                                 "targetExists":  true,
+                                                 "packageCallers":  [
+
+                                                                    ]
+                                             }
+                                         ],
+                            "CALLERS":  [
+
+                                        ],
+                            "TESTS":  "No distinct test per alias proven; legacy-health treats --test and --audit as the same health output.",
+                            "EXTERNAL_OPERATIONAL_POTENTIAL":  [
+                                                                   "No in-repository package caller found. External CI/operator use cannot be ruled out."
+                                                               ],
+                            "COMMON_FUNCTION":  "Intentional fail-closed migration block through scripts/legacy-health.cjs --blocked-migration.",
+                            "DIFFERENCES":  "All commands have identical implementation and intentional exit code 2; their names express distinct historical stages.",
+                            "COMPATIBILITY_EVIDENCE":  "All targets exist. Static package callers were traced. External callers and accountable owner remain unproven.",
+                            "RISK":  "HIGH: aliases imply different operational stages while all intentionally block; external/automation callers are unproven.",
+                            "DECISION":  "REVIEW",
+                            "REASON":  "E3 rule: no owner or caller proof means no alias consolidation and no package.json change."
+                        },
+                        {
+                            "ALIAS_GROUP":  "E3-CMD-03-LEGACY-HEALTH-TEST",
+                            "OWNER":  "UNPROVEN (package author GREENY LIFE is not operational-owner evidence)",
+                            "CANONICAL_COMMAND":  "test:intelligence",
+                            "DEPRECATED_ALIASES":  [
+                                                       "test:registry",
+                                                       "test:health",
+                                                       "test:cleanup",
+                                                       "test:duplicate-v2",
+                                                       "test:audit",
+                                                       "test:integrity"
+                                                   ],
+                            "COMMANDS":  [
+                                             {
+                                                 "alias":  "test:intelligence",
+                                                 "command":  "node scripts/legacy-health.cjs --test",
+                                                 "targetExists":  true,
+                                                 "packageCallers":  [
+                                                                        "test:all"
+                                                                    ]
+                                             },
+                                             {
+                                                 "alias":  "test:registry",
+                                                 "command":  "node scripts/legacy-health.cjs --test",
+                                                 "targetExists":  true,
+                                                 "packageCallers":  [
+                                                                        "test:all"
+                                                                    ]
+                                             },
+                                             {
+                                                 "alias":  "test:health",
+                                                 "command":  "node scripts/legacy-health.cjs --test",
+                                                 "targetExists":  true,
+                                                 "packageCallers":  [
+                                                                        "test:all"
+                                                                    ]
+                                             },
+                                             {
+                                                 "alias":  "test:cleanup",
+                                                 "command":  "node scripts/legacy-health.cjs --test",
+                                                 "targetExists":  true,
+                                                 "packageCallers":  [
+                                                                        "test:all"
+                                                                    ]
+                                             },
+                                             {
+                                                 "alias":  "test:duplicate-v2",
+                                                 "command":  "node scripts/legacy-health.cjs --test",
+                                                 "targetExists":  true,
+                                                 "packageCallers":  [
+                                                                        "test:all"
+                                                                    ]
+                                             },
+                                             {
+                                                 "alias":  "test:audit",
+                                                 "command":  "node scripts/legacy-health.cjs --test",
+                                                 "targetExists":  true,
+                                                 "packageCallers":  [
+
+                                                                    ]
+                                             },
+                                             {
+                                                 "alias":  "test:integrity",
+                                                 "command":  "node scripts/legacy-health.cjs --test",
+                                                 "targetExists":  true,
+                                                 "packageCallers":  [
+
+                                                                    ]
+                                             }
+                                         ],
+                            "CALLERS":  [
+                                            "test:all"
+                                        ],
+                            "TESTS":  "No distinct test per alias proven; legacy-health treats --test and --audit as the same health output.",
+                            "EXTERNAL_OPERATIONAL_POTENTIAL":  [
+                                                                   "canonical/intelligence/intelligence/gl-dos.ts statically references test:intelligence and test:health; external CI/operator use remains unproven."
+                                                               ],
+                            "COMMON_FUNCTION":  "Legacy health snapshot through scripts/legacy-health.cjs --test.",
+                            "DIFFERENCES":  "All seven commands are identical. Only five are direct package dependencies of test:all; audit and integrity have no package caller.",
+                            "COMPATIBILITY_EVIDENCE":  "All targets exist. Static package callers were traced. External callers and accountable owner remain unproven.",
+                            "RISK":  "HIGH: five aliases are used by test:all; canonical/intelligence/intelligence/gl-dos.ts statically references test:intelligence and test:health. The implementation does not create distinct test modes.",
+                            "DECISION":  "REVIEW",
+                            "REASON":  "E3 rule: no owner or caller proof means no alias consolidation and no package.json change."
+                        },
+                        {
+                            "ALIAS_GROUP":  "E3-CMD-04-OFFICIAL-EVIDENCE",
+                            "OWNER":  "UNPROVEN (package author GREENY LIFE is not operational-owner evidence)",
+                            "CANONICAL_COMMAND":  "test:official-evidence-gate",
+                            "DEPRECATED_ALIASES":  [
+                                                       "test:evidence-fail-closed"
+                                                   ],
+                            "COMMANDS":  [
+                                             {
+                                                 "alias":  "test:official-evidence-gate",
+                                                 "command":  "tsx tests/official_evidence_gate_check.ts",
+                                                 "targetExists":  true,
+                                                 "packageCallers":  [
+
+                                                                    ]
+                                             },
+                                             {
+                                                 "alias":  "test:evidence-fail-closed",
+                                                 "command":  "tsx tests/official_evidence_gate_check.ts",
+                                                 "targetExists":  true,
+                                                 "packageCallers":  [
+
+                                                                    ]
+                                             }
+                                         ],
+                            "CALLERS":  [
+
+                                        ],
+                            "TESTS":  "tests/official_evidence_gate_check.ts (runtime/test evidence: PASS in Wave 5)",
+                            "EXTERNAL_OPERATIONAL_POTENTIAL":  [
+                                                                   "Wave 5 and repair ledger cite test:official-evidence-gate; external CI/operator use remains unproven."
+                                                               ],
+                            "COMMON_FUNCTION":  "Current official-evidence fail-closed test through tests/official_evidence_gate_check.ts.",
+                            "DIFFERENCES":  "Commands are byte-for-byte equivalent; the first matches the test file name and is cited by Wave 5.",
+                            "COMPATIBILITY_EVIDENCE":  "All targets exist. Static package callers were traced. External callers and accountable owner remain unproven.",
+                            "RISK":  "LOW: exact target equivalence and Wave 5 PASS exist, but no accountable command owner or external caller inventory is proven.",
+                            "DECISION":  "REVIEW",
+                            "REASON":  "E3 rule: no owner or caller proof means no alias consolidation and no package.json change."
+                        }
+                    ],
+    "archiveGroups":  [
+                          {
+                              "GROUP":  "DERIVED_ARCHIVE",
+                              "ASSETS":  497,
+                              "DECISION":  "KEEP",
+                              "REASON":  "Already located in the project archive tree; no removal or new archive action is justified by this gate.",
+                              "CANONICAL_REPLACEMENT":  "Existing checksum-preservation archive/manifests",
+                              "OWNER":  "UNPROVEN",
+                              "SOR":  "Archive manifests",
+                              "ACTIVE_DEPENDENCY":  "UNPROVEN",
+                              "RECOVERY_PATH":  "Original project archive path plus preservation manifests",
+                              "CHECKSUM":  "Partial preservation manifest exists; no group-wide revalidation was run here."
+                          },
+                          {
+                              "GROUP":  "DERIVED_REPORT_CANDIDATE",
+                              "ASSETS":  47,
+                              "DECISION":  "REVIEW",
+                              "REASON":  "Derived status is known, but per-family owner, active-dependency and canonical-replacement proof are incomplete.",
+                              "CANONICAL_REPLACEMENT":  "UNPROVEN",
+                              "OWNER":  "UNPROVEN",
+                              "SOR":  "UNPROVEN",
+                              "ACTIVE_DEPENDENCY":  "UNPROVEN",
+                              "RECOVERY_PATH":  "Not approved until a checksum-verified archive manifest is made",
+                              "CHECKSUM":  "UNPROVEN"
+                          },
+                          {
+                              "GROUP":  "DERIVED_REPORT_OR_BUNDLE",
+                              "ASSETS":  10,
+                              "DECISION":  "REVIEW",
+                              "REASON":  "Bundle/report grouping requires owner, dependency and recovery proof before physical archive.",
+                              "CANONICAL_REPLACEMENT":  "UNPROVEN",
+                              "OWNER":  "UNPROVEN",
+                              "SOR":  "UNPROVEN",
+                              "ACTIVE_DEPENDENCY":  "UNPROVEN",
+                              "RECOVERY_PATH":  "Not approved until a checksum-verified archive manifest is made",
+                              "CHECKSUM":  "UNPROVEN"
+                          }
+                      ],
+    "summary":  {
+                    "aliasesUnified":  0,
+                    "aliasGroupsReview":  4,
+                    "archiveGroupsApproved":  0,
+                    "archiveCandidateAssetsStillReview":  57,
+                    "archiveAssetsKeptInExistingArchive":  497,
+                    "globalReviewAssetsFromClosure":  299,
+                    "globalUnknownAssetsFromClosure":  36,
+                    "unresolved":  [
+                                       "Operational owner for all four alias groups",
+                                       "External/CI callers for all four alias groups",
+                                       "Per-group active dependency and canonical replacement for 57 report/bundle candidates"
+                                   ],
+                    "packageChanged":  false,
+                    "assetsMoved":  0,
+                    "assetsDeleted":  0
+                }
+}

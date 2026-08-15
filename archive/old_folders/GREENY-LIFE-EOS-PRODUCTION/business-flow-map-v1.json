@@ -1,0 +1,15 @@
+{
+    "NextStage":  "API_IMPLEMENTATION_ENGINE_V1",
+    "Status":  "OPERATIONAL_READY",
+    "Engine":  "BUSINESS_FLOW_ENGINE_V1",
+    "Flows":  [
+                  "Supplier -\u003e Product",
+                  "Product -\u003e Quality",
+                  "Quality -\u003e Inventory",
+                  "Inventory -\u003e Order",
+                  "Order -\u003e Shipment",
+                  "Shipment -\u003e Customer",
+                  "Invoice -\u003e Payment"
+              ],
+    "System":  "GREENY-LIFE EOS"
+}

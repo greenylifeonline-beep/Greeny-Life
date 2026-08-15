@@ -1,0 +1,1003 @@
+﻿{
+    "reportType":  "E3_P0_STRUCTURAL_CANDIDATE_TRACE_V1",
+    "generatedAtUtc":  "2026-08-13T13:09:23.2976731Z",
+    "scope":  "Read-only structural P0 candidate selection. Old/current archives, dependencies and build output excluded. A candidate is selected only from its domain path/name, not broad keywords.",
+    "legacyActiveSourceFiles":  132,
+    "currentActiveSourceFiles":  226,
+    "capabilities":  [
+                         {
+                             "capability":  "Product",
+                             "domainTokens":  [
+                                                  "product"
+                                              ],
+                             "legacyCandidate":  "app/api/products/route.ts",
+                             "currentCandidate":  "app/api/products/route.ts",
+                             "legacyAlternatives":  [
+                                                        "app/api/products/route.ts",
+                                                        "canonical/scripts/seed_master_products.ts",
+                                                        "application/product/commands/product-command.ts",
+                                                        "application/product/queries/product-query.ts",
+                                                        "application/product/workflows/product-workflow.ts",
+                                                        "canonical/intelligence/intelligence/schemas/product-schema-map.ts",
+                                                        "domain/product/entities/product-entity.ts",
+                                                        "domain/product/rules/product-rules.ts"
+                                                    ],
+                             "currentAlternatives":  [
+                                                         "app/api/products/route.ts",
+                                                         "app/api/intelligence/production-readiness/route.ts",
+                                                         "canonical/scripts/seed_master_products.ts",
+                                                         "lib/intelligence/production-readiness.ts",
+                                                         "tests/production_readiness_check.ts",
+                                                         "application/product/commands/product-command.ts",
+                                                         "application/product/queries/product-query.ts",
+                                                         "application/product/workflows/product-workflow.ts"
+                                                     ],
+                             "entryPoint":  [
+                                                "LEGACY:app/api/products/route.ts",
+                                                "CURRENT:app/api/products/route.ts"
+                                            ],
+                             "persistence":  [
+                                                 "LEGACY:app/api/products/route.ts",
+                                                 "CURRENT:app/api/products/route.ts"
+                                             ],
+                             "events":  [
+                                            {
+
+                                            },
+                                            {
+
+                                            }
+                                        ],
+                             "legacyTests":  {
+
+                                             },
+                             "currentTests":  [
+                                                  "tests/mastermind_evidence_authority_check.ts",
+                                                  "tests/official_evidence_review_route_check.ts"
+                                              ],
+                             "legacyConsumers":  "brain.py",
+                             "currentConsumers":  [
+                                                      "app/page.tsx",
+                                                      "brain.py",
+                                                      "lib/authz.ts",
+                                                      "lib/intelligence/greeny-life-verification.ts",
+                                                      "lib/intelligence/mastermind-agents.ts",
+                                                      "lib/intelligence/portfolio-and-assets.ts",
+                                                      "lib/intelligence/production-readiness.ts",
+                                                      "lib/intelligence/shipment-tracking-review.ts",
+                                                      "lib/intelligence/task-orchestration.ts",
+                                                      "lib/intelligence/three-operating-brains.ts",
+                                                      "lib/intelligence/tool-registry.ts",
+                                                      "lib/intelligence/trade-corridors.ts",
+                                                      "next-env.d.ts",
+                                                      "prisma/schema.prisma",
+                                                      "scripts/legacy-health.cjs"
+                                                  ],
+                             "runtime":  "UNPROVEN",
+                             "owner":  "UNKNOWN",
+                             "authority":  "UNKNOWN",
+                             "systemOfRecord":  "UNKNOWN",
+                             "decision":  "PENDING_ISOLATED_ACCEPTANCE",
+                             "caveats":  [
+
+                                         ]
+                         },
+                         {
+                             "capability":  "Supplier",
+                             "domainTokens":  [
+                                                  "supplier"
+                                              ],
+                             "legacyCandidate":  "app/api/suppliers/route.ts",
+                             "currentCandidate":  "app/api/suppliers/route.ts",
+                             "legacyAlternatives":  [
+                                                        "app/api/suppliers/route.ts",
+                                                        "application/supplier/commands/supplier-command.ts",
+                                                        "application/supplier/queries/supplier-query.ts",
+                                                        "application/supplier/workflows/supplier-workflow.ts",
+                                                        "domain/supplier/entities/supplier-entity.ts",
+                                                        "domain/supplier/rules/supplier-rules.ts",
+                                                        "domain/supplier/services/supplier-service.ts"
+                                                    ],
+                             "currentAlternatives":  [
+                                                         "app/api/suppliers/route.ts",
+                                                         "tests/supplier_quality_review_check.ts",
+                                                         "application/supplier/commands/supplier-command.ts",
+                                                         "application/supplier/queries/supplier-query.ts",
+                                                         "application/supplier/workflows/supplier-workflow.ts",
+                                                         "domain/supplier/entities/supplier-entity.ts",
+                                                         "domain/supplier/rules/supplier-rules.ts",
+                                                         "domain/supplier/services/supplier-service.ts"
+                                                     ],
+                             "entryPoint":  [
+                                                "LEGACY:app/api/suppliers/route.ts",
+                                                "CURRENT:app/api/suppliers/route.ts"
+                                            ],
+                             "persistence":  [
+                                                 "LEGACY:app/api/suppliers/route.ts",
+                                                 "CURRENT:app/api/suppliers/route.ts"
+                                             ],
+                             "events":  [
+                                            {
+
+                                            },
+                                            {
+
+                                            }
+                                        ],
+                             "legacyTests":  {
+
+                                             },
+                             "currentTests":  [
+                                                  "tests/mastermind_evidence_authority_check.ts",
+                                                  "tests/official_evidence_review_route_check.ts"
+                                              ],
+                             "legacyConsumers":  "brain.py",
+                             "currentConsumers":  [
+                                                      "app/page.tsx",
+                                                      "brain.py",
+                                                      "lib/authz.ts",
+                                                      "lib/intelligence/greeny-life-verification.ts",
+                                                      "lib/intelligence/mastermind-agents.ts",
+                                                      "lib/intelligence/portfolio-and-assets.ts",
+                                                      "lib/intelligence/production-readiness.ts",
+                                                      "lib/intelligence/shipment-tracking-review.ts",
+                                                      "lib/intelligence/task-orchestration.ts",
+                                                      "lib/intelligence/three-operating-brains.ts",
+                                                      "lib/intelligence/tool-registry.ts",
+                                                      "lib/intelligence/trade-corridors.ts",
+                                                      "next-env.d.ts",
+                                                      "prisma/schema.prisma",
+                                                      "scripts/legacy-health.cjs"
+                                                  ],
+                             "runtime":  "UNPROVEN",
+                             "owner":  "UNKNOWN",
+                             "authority":  "UNKNOWN",
+                             "systemOfRecord":  "UNKNOWN",
+                             "decision":  "PENDING_ISOLATED_ACCEPTANCE",
+                             "caveats":  [
+
+                                         ]
+                         },
+                         {
+                             "capability":  "Inventory",
+                             "domainTokens":  [
+                                                  "inventory"
+                                              ],
+                             "legacyCandidate":  "application/inventory/commands/inventory-command.ts",
+                             "currentCandidate":  "application/inventory/commands/inventory-command.ts",
+                             "legacyAlternatives":  [
+                                                        "application/inventory/commands/inventory-command.ts",
+                                                        "application/inventory/queries/inventory-query.ts",
+                                                        "application/inventory/workflows/inventory-workflow.ts",
+                                                        "canonical/inventory/Inventory.js",
+                                                        "canonical/inventory/inventory.sql",
+                                                        "domain/inventory/entities/inventory-entity.ts",
+                                                        "domain/inventory/rules/inventory-rules.ts",
+                                                        "domain/inventory/services/inventory-service.ts"
+                                                    ],
+                             "currentAlternatives":  [
+                                                         "application/inventory/commands/inventory-command.ts",
+                                                         "application/inventory/queries/inventory-query.ts",
+                                                         "application/inventory/workflows/inventory-workflow.ts",
+                                                         "canonical/inventory/Inventory.js",
+                                                         "canonical/inventory/inventory.sql",
+                                                         "domain/inventory/entities/inventory-entity.ts",
+                                                         "domain/inventory/rules/inventory-rules.ts",
+                                                         "domain/inventory/services/inventory-service.ts"
+                                                     ],
+                             "entryPoint":  [
+                                                {
+
+                                                },
+                                                {
+
+                                                }
+                                            ],
+                             "persistence":  [
+                                                 {
+
+                                                 },
+                                                 {
+
+                                                 }
+                                             ],
+                             "events":  [
+                                            {
+
+                                            },
+                                            {
+
+                                            }
+                                        ],
+                             "legacyTests":  {
+
+                                             },
+                             "currentTests":  {
+
+                                              },
+                             "legacyConsumers":  {
+
+                                                 },
+                             "currentConsumers":  {
+
+                                                  },
+                             "runtime":  "UNPROVEN",
+                             "owner":  "UNKNOWN",
+                             "authority":  "UNKNOWN",
+                             "systemOfRecord":  "UNKNOWN",
+                             "decision":  "PENDING_ISOLATED_ACCEPTANCE",
+                             "caveats":  [
+
+                                         ]
+                         },
+                         {
+                             "capability":  "Customer",
+                             "domainTokens":  [
+                                                  "customer"
+                                              ],
+                             "legacyCandidate":  "application/customer/commands/customer-command.ts",
+                             "currentCandidate":  "application/customer/commands/customer-command.ts",
+                             "legacyAlternatives":  [
+                                                        "application/customer/commands/customer-command.ts",
+                                                        "application/customer/queries/customer-query.ts",
+                                                        "application/customer/workflows/customer-workflow.ts",
+                                                        "domain/customer/entities/customer-entity.ts",
+                                                        "domain/customer/rules/customer-rules.ts",
+                                                        "domain/customer/services/customer-service.ts"
+                                                    ],
+                             "currentAlternatives":  [
+                                                         "application/customer/commands/customer-command.ts",
+                                                         "application/customer/queries/customer-query.ts",
+                                                         "application/customer/workflows/customer-workflow.ts",
+                                                         "domain/customer/entities/customer-entity.ts",
+                                                         "domain/customer/rules/customer-rules.ts",
+                                                         "domain/customer/services/customer-service.ts"
+                                                     ],
+                             "entryPoint":  [
+                                                {
+
+                                                },
+                                                {
+
+                                                }
+                                            ],
+                             "persistence":  [
+                                                 {
+
+                                                 },
+                                                 {
+
+                                                 }
+                                             ],
+                             "events":  [
+                                            {
+
+                                            },
+                                            {
+
+                                            }
+                                        ],
+                             "legacyTests":  {
+
+                                             },
+                             "currentTests":  {
+
+                                              },
+                             "legacyConsumers":  {
+
+                                                 },
+                             "currentConsumers":  {
+
+                                                  },
+                             "runtime":  "UNPROVEN",
+                             "owner":  "UNKNOWN",
+                             "authority":  "UNKNOWN",
+                             "systemOfRecord":  "UNKNOWN",
+                             "decision":  "PENDING_ISOLATED_ACCEPTANCE",
+                             "caveats":  [
+
+                                         ]
+                         },
+                         {
+                             "capability":  "Logistics",
+                             "domainTokens":  [
+                                                  "logistics"
+                                              ],
+                             "legacyCandidate":  "application/logistics/commands/logistics-command.ts",
+                             "currentCandidate":  "application/logistics/commands/logistics-command.ts",
+                             "legacyAlternatives":  [
+                                                        "application/logistics/commands/logistics-command.ts",
+                                                        "application/logistics/queries/logistics-query.ts",
+                                                        "application/logistics/workflows/logistics-workflow.ts",
+                                                        "canonical/logistics/logistics.sql",
+                                                        "domain/logistics/entities/logistics-entity.ts",
+                                                        "domain/logistics/rules/logistics-rules.ts",
+                                                        "domain/logistics/services/logistics-service.ts"
+                                                    ],
+                             "currentAlternatives":  [
+                                                         "application/logistics/commands/logistics-command.ts",
+                                                         "application/logistics/queries/logistics-query.ts",
+                                                         "application/logistics/workflows/logistics-workflow.ts",
+                                                         "canonical/logistics/logistics.sql",
+                                                         "domain/logistics/entities/logistics-entity.ts",
+                                                         "domain/logistics/rules/logistics-rules.ts",
+                                                         "domain/logistics/services/logistics-service.ts"
+                                                     ],
+                             "entryPoint":  [
+                                                {
+
+                                                },
+                                                {
+
+                                                }
+                                            ],
+                             "persistence":  [
+                                                 {
+
+                                                 },
+                                                 {
+
+                                                 }
+                                             ],
+                             "events":  [
+                                            {
+
+                                            },
+                                            {
+
+                                            }
+                                        ],
+                             "legacyTests":  {
+
+                                             },
+                             "currentTests":  {
+
+                                              },
+                             "legacyConsumers":  {
+
+                                                 },
+                             "currentConsumers":  {
+
+                                                  },
+                             "runtime":  "UNPROVEN",
+                             "owner":  "UNKNOWN",
+                             "authority":  "UNKNOWN",
+                             "systemOfRecord":  "UNKNOWN",
+                             "decision":  "PENDING_ISOLATED_ACCEPTANCE",
+                             "caveats":  [
+
+                                         ]
+                         },
+                         {
+                             "capability":  "Quality",
+                             "domainTokens":  [
+                                                  "quality"
+                                              ],
+                             "legacyCandidate":  "application/quality/commands/quality-command.ts",
+                             "currentCandidate":  "tests/supplier_quality_review_check.ts",
+                             "legacyAlternatives":  [
+                                                        "application/quality/commands/quality-command.ts",
+                                                        "application/quality/queries/quality-query.ts",
+                                                        "application/quality/workflows/quality-workflow.ts",
+                                                        "domain/quality/entities/quality-entity.ts",
+                                                        "domain/quality/rules/quality-rules.ts",
+                                                        "domain/quality/services/quality-service.ts"
+                                                    ],
+                             "currentAlternatives":  [
+                                                         "tests/supplier_quality_review_check.ts",
+                                                         "application/quality/commands/quality-command.ts",
+                                                         "application/quality/queries/quality-query.ts",
+                                                         "application/quality/workflows/quality-workflow.ts",
+                                                         "domain/quality/entities/quality-entity.ts",
+                                                         "domain/quality/rules/quality-rules.ts",
+                                                         "domain/quality/services/quality-service.ts",
+                                                         "lib/intelligence/supplier-quality-review.ts"
+                                                     ],
+                             "entryPoint":  [
+                                                {
+
+                                                },
+                                                {
+
+                                                }
+                                            ],
+                             "persistence":  [
+                                                 {
+
+                                                 },
+                                                 {
+
+                                                 }
+                                             ],
+                             "events":  [
+                                            {
+
+                                            },
+                                            {
+
+                                            }
+                                        ],
+                             "legacyTests":  {
+
+                                             },
+                             "currentTests":  {
+
+                                              },
+                             "legacyConsumers":  {
+
+                                                 },
+                             "currentConsumers":  {
+
+                                                  },
+                             "runtime":  "UNPROVEN",
+                             "owner":  "UNKNOWN",
+                             "authority":  "UNKNOWN",
+                             "systemOfRecord":  "UNKNOWN",
+                             "decision":  "PENDING_ISOLATED_ACCEPTANCE",
+                             "caveats":  [
+
+                                         ]
+                         },
+                         {
+                             "capability":  "Orders",
+                             "domainTokens":  [
+                                                  "sales-order",
+                                                  "sales-orders",
+                                                  "order"
+                                              ],
+                             "legacyCandidate":  null,
+                             "currentCandidate":  "app/api/sales-orders/route.ts",
+                             "legacyAlternatives":  [
+                                                        "app/api/sales-orders/route.ts"
+                                                    ],
+                             "currentAlternatives":  [
+                                                         "app/api/sales-orders/route.ts",
+                                                         "lib/domain/order-workflow.ts"
+                                                     ],
+                             "entryPoint":  [
+                                                {
+
+                                                },
+                                                "CURRENT:app/api/sales-orders/route.ts"
+                                            ],
+                             "persistence":  [
+                                                 {
+
+                                                 },
+                                                 "CURRENT:app/api/sales-orders/route.ts"
+                                             ],
+                             "events":  [
+                                            {
+
+                                            },
+                                            {
+
+                                            }
+                                        ],
+                             "legacyTests":  {
+
+                                             },
+                             "currentTests":  [
+                                                  "tests/mastermind_evidence_authority_check.ts",
+                                                  "tests/official_evidence_review_route_check.ts"
+                                              ],
+                             "legacyConsumers":  {
+
+                                                 },
+                             "currentConsumers":  [
+                                                      "app/page.tsx",
+                                                      "brain.py",
+                                                      "lib/authz.ts",
+                                                      "lib/intelligence/greeny-life-verification.ts",
+                                                      "lib/intelligence/mastermind-agents.ts",
+                                                      "lib/intelligence/portfolio-and-assets.ts",
+                                                      "lib/intelligence/production-readiness.ts",
+                                                      "lib/intelligence/shipment-tracking-review.ts",
+                                                      "lib/intelligence/task-orchestration.ts",
+                                                      "lib/intelligence/three-operating-brains.ts",
+                                                      "lib/intelligence/tool-registry.ts",
+                                                      "lib/intelligence/trade-corridors.ts",
+                                                      "next-env.d.ts",
+                                                      "prisma/schema.prisma",
+                                                      "scripts/legacy-health.cjs"
+                                                  ],
+                             "runtime":  "UNPROVEN",
+                             "owner":  "UNKNOWN",
+                             "authority":  "UNKNOWN",
+                             "systemOfRecord":  "UNKNOWN",
+                             "decision":  "PENDING_ISOLATED_ACCEPTANCE",
+                             "caveats":  [
+                                             "No legacy candidate selected by structural domain match."
+                                         ]
+                         },
+                         {
+                             "capability":  "Export",
+                             "domainTokens":  [
+                                                  "export",
+                                                  "trade-corridor",
+                                                  "corridor"
+                                              ],
+                             "legacyCandidate":  null,
+                             "currentCandidate":  "app/api/decisions/export-readiness/route.ts",
+                             "legacyAlternatives":  [
+
+                                                    ],
+                             "currentAlternatives":  [
+                                                         "app/api/decisions/export-readiness/route.ts",
+                                                         "app/api/portfolio/egyptian-exports/route.ts",
+                                                         "app/api/trade-corridors/route.ts",
+                                                         "lib/intelligence/export-decision.ts",
+                                                         "lib/intelligence/trade-corridors.ts"
+                                                     ],
+                             "entryPoint":  [
+                                                {
+
+                                                },
+                                                "CURRENT:app/api/decisions/export-readiness/route.ts"
+                                            ],
+                             "persistence":  [
+                                                 {
+
+                                                 },
+                                                 {
+
+                                                 }
+                                             ],
+                             "events":  [
+                                            {
+
+                                            },
+                                            {
+
+                                            }
+                                        ],
+                             "legacyTests":  {
+
+                                             },
+                             "currentTests":  [
+                                                  "tests/mastermind_evidence_authority_check.ts",
+                                                  "tests/official_evidence_review_route_check.ts"
+                                              ],
+                             "legacyConsumers":  {
+
+                                                 },
+                             "currentConsumers":  [
+                                                      "app/page.tsx",
+                                                      "brain.py",
+                                                      "lib/authz.ts",
+                                                      "lib/intelligence/greeny-life-verification.ts",
+                                                      "lib/intelligence/mastermind-agents.ts",
+                                                      "lib/intelligence/portfolio-and-assets.ts",
+                                                      "lib/intelligence/production-readiness.ts",
+                                                      "lib/intelligence/shipment-tracking-review.ts",
+                                                      "lib/intelligence/task-orchestration.ts",
+                                                      "lib/intelligence/three-operating-brains.ts",
+                                                      "lib/intelligence/tool-registry.ts",
+                                                      "lib/intelligence/trade-corridors.ts",
+                                                      "next-env.d.ts",
+                                                      "prisma/schema.prisma",
+                                                      "scripts/legacy-health.cjs"
+                                                  ],
+                             "runtime":  "UNPROVEN",
+                             "owner":  "UNKNOWN",
+                             "authority":  "UNKNOWN",
+                             "systemOfRecord":  "UNKNOWN",
+                             "decision":  "PENDING_ISOLATED_ACCEPTANCE",
+                             "caveats":  [
+                                             "No legacy candidate selected by structural domain match."
+                                         ]
+                         },
+                         {
+                             "capability":  "Compliance",
+                             "domainTokens":  [
+                                                  "compliance",
+                                                  "gels",
+                                                  "gldos",
+                                                  "label",
+                                                  "official-evidence"
+                                              ],
+                             "legacyCandidate":  null,
+                             "currentCandidate":  "app/api/decisions/official-evidence-review/route.ts",
+                             "legacyAlternatives":  [
+
+                                                    ],
+                             "currentAlternatives":  [
+                                                         "app/api/decisions/official-evidence-review/route.ts",
+                                                         "app/api/intelligence/gels-label-readiness/route.ts",
+                                                         "tests/gels_label_readiness_check.ts",
+                                                         "tests/gldos_governance_gate_check.ts",
+                                                         "lib/intelligence/gels-label-readiness.ts",
+                                                         "lib/intelligence/official-evidence-gate.ts"
+                                                     ],
+                             "entryPoint":  [
+                                                {
+
+                                                },
+                                                "CURRENT:app/api/decisions/official-evidence-review/route.ts"
+                                            ],
+                             "persistence":  [
+                                                 {
+
+                                                 },
+                                                 "CURRENT:app/api/decisions/official-evidence-review/route.ts"
+                                             ],
+                             "events":  [
+                                            {
+
+                                            },
+                                            {
+
+                                            }
+                                        ],
+                             "legacyTests":  {
+
+                                             },
+                             "currentTests":  [
+                                                  "tests/mastermind_evidence_authority_check.ts",
+                                                  "tests/official_evidence_review_route_check.ts"
+                                              ],
+                             "legacyConsumers":  {
+
+                                                 },
+                             "currentConsumers":  [
+                                                      "app/page.tsx",
+                                                      "brain.py",
+                                                      "lib/authz.ts",
+                                                      "lib/intelligence/greeny-life-verification.ts",
+                                                      "lib/intelligence/mastermind-agents.ts",
+                                                      "lib/intelligence/portfolio-and-assets.ts",
+                                                      "lib/intelligence/production-readiness.ts",
+                                                      "lib/intelligence/shipment-tracking-review.ts",
+                                                      "lib/intelligence/task-orchestration.ts",
+                                                      "lib/intelligence/three-operating-brains.ts",
+                                                      "lib/intelligence/tool-registry.ts",
+                                                      "lib/intelligence/trade-corridors.ts",
+                                                      "next-env.d.ts",
+                                                      "prisma/schema.prisma",
+                                                      "scripts/legacy-health.cjs"
+                                                  ],
+                             "runtime":  "UNPROVEN",
+                             "owner":  "UNKNOWN",
+                             "authority":  "UNKNOWN",
+                             "systemOfRecord":  "UNKNOWN",
+                             "decision":  "PENDING_ISOLATED_ACCEPTANCE",
+                             "caveats":  [
+                                             "No legacy candidate selected by structural domain match."
+                                         ]
+                         },
+                         {
+                             "capability":  "Evidence",
+                             "domainTokens":  [
+                                                  "evidence"
+                                              ],
+                             "legacyCandidate":  "build_evidence_layer.py",
+                             "currentCandidate":  "app/api/decisions/official-evidence-review/route.ts",
+                             "legacyAlternatives":  [
+                                                        "build_evidence_layer.py",
+                                                        "greenlines_brain/evidence.py",
+                                                        "greenlines_brain/evidence/__init__.py",
+                                                        "greenlines_brain/evidence/models.py",
+                                                        "greenlines_brain/evidence_layer/__init__.py",
+                                                        "greenlines_brain/evidence_layer/models.py"
+                                                    ],
+                             "currentAlternatives":  [
+                                                         "app/api/decisions/official-evidence-review/route.ts",
+                                                         "app/api/evidence/official/route.ts",
+                                                         "tests/mastermind_evidence_authority_check.ts",
+                                                         "tests/official_evidence_review_route_check.ts",
+                                                         "tests/official_evidence_gate_check.ts",
+                                                         "tests/test_evidence_gate.py",
+                                                         "tests/test_evidence_registry.py",
+                                                         "build_evidence_layer.py"
+                                                     ],
+                             "entryPoint":  [
+                                                {
+
+                                                },
+                                                "CURRENT:app/api/decisions/official-evidence-review/route.ts"
+                                            ],
+                             "persistence":  [
+                                                 {
+
+                                                 },
+                                                 "CURRENT:app/api/decisions/official-evidence-review/route.ts"
+                                             ],
+                             "events":  [
+                                            {
+
+                                            },
+                                            {
+
+                                            }
+                                        ],
+                             "legacyTests":  {
+
+                                             },
+                             "currentTests":  [
+                                                  "tests/mastermind_evidence_authority_check.ts",
+                                                  "tests/official_evidence_review_route_check.ts"
+                                              ],
+                             "legacyConsumers":  {
+
+                                                 },
+                             "currentConsumers":  [
+                                                      "app/page.tsx",
+                                                      "brain.py",
+                                                      "lib/authz.ts",
+                                                      "lib/intelligence/greeny-life-verification.ts",
+                                                      "lib/intelligence/mastermind-agents.ts",
+                                                      "lib/intelligence/portfolio-and-assets.ts",
+                                                      "lib/intelligence/production-readiness.ts",
+                                                      "lib/intelligence/shipment-tracking-review.ts",
+                                                      "lib/intelligence/task-orchestration.ts",
+                                                      "lib/intelligence/three-operating-brains.ts",
+                                                      "lib/intelligence/tool-registry.ts",
+                                                      "lib/intelligence/trade-corridors.ts",
+                                                      "next-env.d.ts",
+                                                      "prisma/schema.prisma",
+                                                      "scripts/legacy-health.cjs"
+                                                  ],
+                             "runtime":  "UNPROVEN",
+                             "owner":  "UNKNOWN",
+                             "authority":  "UNKNOWN",
+                             "systemOfRecord":  "UNKNOWN",
+                             "decision":  "PENDING_ISOLATED_ACCEPTANCE",
+                             "caveats":  [
+
+                                         ]
+                         },
+                         {
+                             "capability":  "Knowledge",
+                             "domainTokens":  [
+                                                  "knowledge",
+                                                  "graph",
+                                                  "ontology",
+                                                  "memory"
+                                              ],
+                             "legacyCandidate":  "greenlines_brain/graph.py",
+                             "currentCandidate":  "greenlines_brain/graph.py",
+                             "legacyAlternatives":  [
+                                                        "greenlines_brain/graph.py",
+                                                        "greenlines_brain/knowledge/__init__.py",
+                                                        "greenlines_brain/knowledge/models.py",
+                                                        "greenlines_brain/memory.py",
+                                                        "greenlines_brain/ontology.py"
+                                                    ],
+                             "currentAlternatives":  [
+                                                         "greenlines_brain/graph.py",
+                                                         "greenlines_brain/knowledge/__init__.py",
+                                                         "greenlines_brain/knowledge/models.py",
+                                                         "greenlines_brain/memory.py",
+                                                         "greenlines_brain/ontology.py"
+                                                     ],
+                             "entryPoint":  [
+                                                {
+
+                                                },
+                                                {
+
+                                                }
+                                            ],
+                             "persistence":  [
+                                                 {
+
+                                                 },
+                                                 {
+
+                                                 }
+                                             ],
+                             "events":  [
+                                            "LEGACY:greenlines_brain/graph.py",
+                                            "CURRENT:greenlines_brain/graph.py"
+                                        ],
+                             "legacyTests":  {
+
+                                             },
+                             "currentTests":  {
+
+                                              },
+                             "legacyConsumers":  [
+                                                     "brain.py",
+                                                     "greenlines_brain/kernel.py",
+                                                     "test_brain_v3.py"
+                                                 ],
+                             "currentConsumers":  [
+                                                      "brain.py",
+                                                      "greenlines_brain/kernel.py",
+                                                      "test_brain_v3.py"
+                                                  ],
+                             "runtime":  "UNPROVEN",
+                             "owner":  "UNKNOWN",
+                             "authority":  "UNKNOWN",
+                             "systemOfRecord":  "UNKNOWN",
+                             "decision":  "PENDING_ISOLATED_ACCEPTANCE",
+                             "caveats":  [
+
+                                         ]
+                         },
+                         {
+                             "capability":  "Brain",
+                             "domainTokens":  [
+                                                  "greenlines_brain",
+                                                  "brain",
+                                                  "mastermind"
+                                              ],
+                             "legacyCandidate":  "brain.py",
+                             "currentCandidate":  "app/api/brains/greeny-life-egypt/route.ts",
+                             "legacyAlternatives":  [
+                                                        "brain.py",
+                                                        "audit_brain_intelligence.py",
+                                                        "audit_brain_intelligence_v2.py",
+                                                        "canonical/fix_brain.py",
+                                                        "fix_brain.py",
+                                                        "greenlines_brain/__init__.py",
+                                                        "greenlines_brain/capability.py",
+                                                        "greenlines_brain/contract.py"
+                                                    ],
+                             "currentAlternatives":  [
+                                                         "app/api/brains/greeny-life-egypt/route.ts",
+                                                         "app/api/mastermind/commercial-context/route.ts",
+                                                         "app/api/mastermind/decision-package/route.ts",
+                                                         "app/api/mastermind/operating-model/route.ts",
+                                                         "app/api/mastermind/tools/route.ts",
+                                                         "tests/mastermind_evidence_authority_check.ts",
+                                                         "brain.py",
+                                                         "lib/intelligence/mastermind-agents.ts"
+                                                     ],
+                             "entryPoint":  [
+                                                {
+
+                                                },
+                                                "CURRENT:app/api/brains/greeny-life-egypt/route.ts"
+                                            ],
+                             "persistence":  [
+                                                 "LEGACY:brain.py",
+                                                 {
+
+                                                 }
+                                             ],
+                             "events":  [
+                                            {
+
+                                            },
+                                            {
+
+                                            }
+                                        ],
+                             "legacyTests":  {
+
+                                             },
+                             "currentTests":  [
+                                                  "tests/mastermind_evidence_authority_check.ts",
+                                                  "tests/official_evidence_review_route_check.ts"
+                                              ],
+                             "legacyConsumers":  [
+                                                     "audit_ast_extraction.py",
+                                                     "audit_brain_intelligence.py",
+                                                     "audit_brain_intelligence_v2.py",
+                                                     "build_evidence_layer.py",
+                                                     "canonical/fix_brain.py",
+                                                     "canonical/fix_indent.py",
+                                                     "canonical/intelligence/runtime/controlled-runtime-orchestrator.ts",
+                                                     "canonical/run_all.ps1",
+                                                     "enrich_context.py",
+                                                     "enrich_context_fixed.py",
+                                                     "extract_dna.py",
+                                                     "fix_brain.py",
+                                                     "greenlines_brain/contract.py",
+                                                     "greenlines_brain/dna/__init__.py",
+                                                     "greenlines_brain/dna/ast_analyzer.py"
+                                                 ],
+                             "currentConsumers":  [
+                                                      "app/page.tsx",
+                                                      "brain.py",
+                                                      "lib/authz.ts",
+                                                      "lib/intelligence/greeny-life-verification.ts",
+                                                      "lib/intelligence/mastermind-agents.ts",
+                                                      "lib/intelligence/portfolio-and-assets.ts",
+                                                      "lib/intelligence/production-readiness.ts",
+                                                      "lib/intelligence/shipment-tracking-review.ts",
+                                                      "lib/intelligence/task-orchestration.ts",
+                                                      "lib/intelligence/three-operating-brains.ts",
+                                                      "lib/intelligence/tool-registry.ts",
+                                                      "lib/intelligence/trade-corridors.ts",
+                                                      "next-env.d.ts",
+                                                      "prisma/schema.prisma",
+                                                      "scripts/legacy-health.cjs"
+                                                  ],
+                             "runtime":  "UNPROVEN",
+                             "owner":  "UNKNOWN",
+                             "authority":  "UNKNOWN",
+                             "systemOfRecord":  "UNKNOWN",
+                             "decision":  "PENDING_ISOLATED_ACCEPTANCE",
+                             "caveats":  [
+
+                                         ]
+                         },
+                         {
+                             "capability":  "Governance",
+                             "domainTokens":  [
+                                                  "governance",
+                                                  "authorization",
+                                                  "auth",
+                                                  "security",
+                                                  "workflow"
+                                              ],
+                             "legacyCandidate":  "app/api/workflow/route.ts",
+                             "currentCandidate":  "app/api/auth/login/route.ts",
+                             "legacyAlternatives":  [
+                                                        "app/api/workflow/route.ts",
+                                                        "canonical/lib/workflowEngine.ts",
+                                                        "application/customer/workflows/customer-workflow.ts",
+                                                        "application/inventory/workflows/inventory-workflow.ts",
+                                                        "application/logistics/workflows/logistics-workflow.ts",
+                                                        "application/product/workflows/product-workflow.ts",
+                                                        "application/quality/workflows/quality-workflow.ts",
+                                                        "application/supplier/workflows/supplier-workflow.ts"
+                                                    ],
+                             "currentAlternatives":  [
+                                                         "app/api/auth/login/route.ts",
+                                                         "app/api/auth/logout/route.ts",
+                                                         "app/api/auth/session/route.ts",
+                                                         "app/api/workflow/route.ts",
+                                                         "tests/mastermind_evidence_authority_check.ts",
+                                                         "canonical/lib/workflowEngine.ts",
+                                                         "lib/authz.ts",
+                                                         "tests/api_authorization_check.ts"
+                                                     ],
+                             "entryPoint":  [
+                                                "LEGACY:app/api/workflow/route.ts",
+                                                "CURRENT:app/api/auth/login/route.ts"
+                                            ],
+                             "persistence":  [
+                                                 {
+
+                                                 },
+                                                 "CURRENT:app/api/auth/login/route.ts"
+                                             ],
+                             "events":  [
+                                            {
+
+                                            },
+                                            {
+
+                                            }
+                                        ],
+                             "legacyTests":  {
+
+                                             },
+                             "currentTests":  [
+                                                  "tests/mastermind_evidence_authority_check.ts",
+                                                  "tests/official_evidence_review_route_check.ts"
+                                              ],
+                             "legacyConsumers":  "brain.py",
+                             "currentConsumers":  [
+                                                      "app/page.tsx",
+                                                      "brain.py",
+                                                      "lib/authz.ts",
+                                                      "lib/intelligence/greeny-life-verification.ts",
+                                                      "lib/intelligence/mastermind-agents.ts",
+                                                      "lib/intelligence/portfolio-and-assets.ts",
+                                                      "lib/intelligence/production-readiness.ts",
+                                                      "lib/intelligence/shipment-tracking-review.ts",
+                                                      "lib/intelligence/task-orchestration.ts",
+                                                      "lib/intelligence/three-operating-brains.ts",
+                                                      "lib/intelligence/tool-registry.ts",
+                                                      "lib/intelligence/trade-corridors.ts",
+                                                      "next-env.d.ts",
+                                                      "prisma/schema.prisma",
+                                                      "scripts/legacy-health.cjs"
+                                                  ],
+                             "runtime":  "UNPROVEN",
+                             "owner":  "UNKNOWN",
+                             "authority":  "UNKNOWN",
+                             "systemOfRecord":  "UNKNOWN",
+                             "decision":  "PENDING_ISOLATED_ACCEPTANCE",
+                             "caveats":  [
+
+                                         ]
+                         }
+                     ],
+    "decisionRule":  "UNKNOWN is preferred over a false candidate. No candidate is authoritative until isolated acceptance evidence is attached.",
+    "nextGate":  "Run acceptance traces only for non-null selected candidates, beginning Evidence, Governance, Product, Supplier, Orders, Inventory, Logistics, Export, Compliance, Knowledge, Brain."
+}

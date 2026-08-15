@@ -1,0 +1,66 @@
+﻿{
+    "reportType":  "E3_REPAIR_CLOSURE_VERIFICATION_V1",
+    "generatedAtUtc":  "2026-08-13T17:01:41.4666680Z",
+    "status":  "PASS",
+    "completedItems":  [
+                           "DD-001 Evidence",
+                           "DD-002 Decision",
+                           "DD-003 Governance",
+                           "DD-004 Knowledge",
+                           "DD-005 Learning",
+                           "DD-006 Authorization/Audit"
+                       ],
+    "results":  [
+                    {
+                        "id":  "DD-006",
+                        "check":  "Authorization/audit fail-closed",
+                        "status":  "PASS"
+                    },
+                    {
+                        "id":  "DD-001",
+                        "check":  "Evidence provenance fail-closed",
+                        "status":  "PASS"
+                    },
+                    {
+                        "id":  "DD-002",
+                        "check":  "Decision confidence/policy fail-closed",
+                        "status":  "PASS"
+                    },
+                    {
+                        "id":  "DD-003",
+                        "check":  "Durable workflow approval contract",
+                        "status":  "PASS"
+                    },
+                    {
+                        "id":  "DD-004",
+                        "check":  "Shared persisted evidence adapter",
+                        "status":  "PASS"
+                    },
+                    {
+                        "id":  "DD-005",
+                        "check":  "Signed actor and controlled learning access",
+                        "status":  "PASS"
+                    },
+                    {
+                        "id":  "REGRESSION",
+                        "check":  "Adversarial decision safety",
+                        "status":  "PASS"
+                    },
+                    {
+                        "id":  "TYPESCRIPT",
+                        "check":  "TypeScript compilation",
+                        "status":  "PASS"
+                    },
+                    {
+                        "id":  "BUILD",
+                        "check":  "Production build",
+                        "status":  "PASS"
+                    }
+                ],
+    "scope":  "Tests, TypeScript, production build, and whitespace validation only. No API write, workflow transition, database record, or Legacy asset was changed.",
+    "pending":  [
+                    "Operational UAT needs explicit disposable records and authorized users.",
+                    "Legacy extraction/consolidation remains evidence-gated.",
+                    "Retirement/deletion remains blocked until alternatives, owners, dependencies, archive, and restore proof exist."
+                ]
+}

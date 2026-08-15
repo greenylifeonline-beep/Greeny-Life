@@ -1,0 +1,147 @@
+{
+    "report":  "E3 P4 Targeted Local Path Resolution",
+    "generatedAt":  "2026-08-14T01:23:00.9135773+02:00",
+    "mode":  "READ_ONLY_TARGETED_EVIDENCE_SYNTHESIS",
+    "coverage":  {
+                     "p4CoveredRecords":  50104,
+                     "targetedLocalPaths":  10,
+                     "resolved":  6,
+                     "review":  4,
+                     "unknown":  0,
+                     "statement":  "All ten unresolved local paths from P4 received an explicit result. RESOLVED here means reference kind established, not runtime dependency proof."
+                 },
+    "results":  [
+                    {
+                        "assetPath":  "ALL_SOURCE_CODE.txt",
+                        "localToken":  "../adapters/gl-dos-governance-gate",
+                        "status":  "RESOLVED",
+                        "referenceKind":  "EMBEDDED_SOURCE_REFERENCE",
+                        "resolution":  "NOT_A_RUNTIME_CALLER",
+                        "reason":  "ALL_SOURCE_CODE.txt is an aggregate/source-trace text artifact. Embedded import-like tokens are documentary references, not executable dependencies of this text file.",
+                        "evidence":  [
+                                         "C:\\Users\\Ghanam\\Documents\\Codex\\Greeny-Life-Repair\\archive\\generated-reports\\e3-p4-dependency-caller-trace\\2026-08-14_011451\\E3-P4-DEPENDENCY-CALLER-TRACE.json",
+                                         "C:\\Users\\Ghanam\\Documents\\Codex\\Greeny-Life-Repair\\archive\\generated-reports\\e3-phase-2-primary-classification\\2026-08-14_003259\\E3-PHASE-2-PRIMARY-LEGACY-CLASSIFICATION.json"
+                                     ]
+                    },
+                    {
+                        "assetPath":  "ALL_SOURCE_CODE.txt",
+                        "localToken":  "../core/engine-registry",
+                        "status":  "RESOLVED",
+                        "referenceKind":  "EMBEDDED_SOURCE_REFERENCE",
+                        "resolution":  "NOT_A_RUNTIME_CALLER",
+                        "reason":  "ALL_SOURCE_CODE.txt is an aggregate/source-trace text artifact. Embedded import-like tokens are documentary references, not executable dependencies of this text file.",
+                        "evidence":  [
+                                         "C:\\Users\\Ghanam\\Documents\\Codex\\Greeny-Life-Repair\\archive\\generated-reports\\e3-p4-dependency-caller-trace\\2026-08-14_011451\\E3-P4-DEPENDENCY-CALLER-TRACE.json",
+                                         "C:\\Users\\Ghanam\\Documents\\Codex\\Greeny-Life-Repair\\archive\\generated-reports\\e3-phase-2-primary-classification\\2026-08-14_003259\\E3-PHASE-2-PRIMARY-LEGACY-CLASSIFICATION.json"
+                                     ]
+                    },
+                    {
+                        "assetPath":  "ALL_SOURCE_CODE.txt",
+                        "localToken":  "../schemas/product-schema-map",
+                        "status":  "RESOLVED",
+                        "referenceKind":  "EMBEDDED_SOURCE_REFERENCE",
+                        "resolution":  "NOT_A_RUNTIME_CALLER",
+                        "reason":  "ALL_SOURCE_CODE.txt is an aggregate/source-trace text artifact. Embedded import-like tokens are documentary references, not executable dependencies of this text file.",
+                        "evidence":  [
+                                         "C:\\Users\\Ghanam\\Documents\\Codex\\Greeny-Life-Repair\\archive\\generated-reports\\e3-p4-dependency-caller-trace\\2026-08-14_011451\\E3-P4-DEPENDENCY-CALLER-TRACE.json",
+                                         "C:\\Users\\Ghanam\\Documents\\Codex\\Greeny-Life-Repair\\archive\\generated-reports\\e3-phase-2-primary-classification\\2026-08-14_003259\\E3-PHASE-2-PRIMARY-LEGACY-CLASSIFICATION.json"
+                                     ]
+                    },
+                    {
+                        "assetPath":  "ALL_SOURCE_CODE.txt",
+                        "localToken":  "./engines/duplicate-engine-v2",
+                        "status":  "RESOLVED",
+                        "referenceKind":  "EMBEDDED_SOURCE_REFERENCE",
+                        "resolution":  "NOT_A_RUNTIME_CALLER",
+                        "reason":  "ALL_SOURCE_CODE.txt is an aggregate/source-trace text artifact. Embedded import-like tokens are documentary references, not executable dependencies of this text file.",
+                        "evidence":  [
+                                         "C:\\Users\\Ghanam\\Documents\\Codex\\Greeny-Life-Repair\\archive\\generated-reports\\e3-p4-dependency-caller-trace\\2026-08-14_011451\\E3-P4-DEPENDENCY-CALLER-TRACE.json",
+                                         "C:\\Users\\Ghanam\\Documents\\Codex\\Greeny-Life-Repair\\archive\\generated-reports\\e3-phase-2-primary-classification\\2026-08-14_003259\\E3-PHASE-2-PRIMARY-LEGACY-CLASSIFICATION.json"
+                                     ]
+                    },
+                    {
+                        "assetPath":  "ALL_SOURCE_CODE.txt",
+                        "localToken":  "./globals.css",
+                        "status":  "RESOLVED",
+                        "referenceKind":  "EMBEDDED_SOURCE_REFERENCE",
+                        "resolution":  "NOT_A_RUNTIME_CALLER",
+                        "reason":  "ALL_SOURCE_CODE.txt is an aggregate/source-trace text artifact. Embedded import-like tokens are documentary references, not executable dependencies of this text file.",
+                        "evidence":  [
+                                         "C:\\Users\\Ghanam\\Documents\\Codex\\Greeny-Life-Repair\\archive\\generated-reports\\e3-p4-dependency-caller-trace\\2026-08-14_011451\\E3-P4-DEPENDENCY-CALLER-TRACE.json",
+                                         "C:\\Users\\Ghanam\\Documents\\Codex\\Greeny-Life-Repair\\archive\\generated-reports\\e3-phase-2-primary-classification\\2026-08-14_003259\\E3-PHASE-2-PRIMARY-LEGACY-CLASSIFICATION.json"
+                                     ]
+                    },
+                    {
+                        "assetPath":  "ALL_SOURCE_CODE.txt",
+                        "localToken":  "./memory/project-memory",
+                        "status":  "RESOLVED",
+                        "referenceKind":  "EMBEDDED_SOURCE_REFERENCE",
+                        "resolution":  "NOT_A_RUNTIME_CALLER",
+                        "reason":  "ALL_SOURCE_CODE.txt is an aggregate/source-trace text artifact. Embedded import-like tokens are documentary references, not executable dependencies of this text file.",
+                        "evidence":  [
+                                         "C:\\Users\\Ghanam\\Documents\\Codex\\Greeny-Life-Repair\\archive\\generated-reports\\e3-p4-dependency-caller-trace\\2026-08-14_011451\\E3-P4-DEPENDENCY-CALLER-TRACE.json",
+                                         "C:\\Users\\Ghanam\\Documents\\Codex\\Greeny-Life-Repair\\archive\\generated-reports\\e3-phase-2-primary-classification\\2026-08-14_003259\\E3-PHASE-2-PRIMARY-LEGACY-CLASSIFICATION.json"
+                                     ]
+                    },
+                    {
+                        "assetPath":  "canonical\\app\\layout.tsx",
+                        "localToken":  "./globals.css",
+                        "status":  "REVIEW",
+                        "referenceKind":  "MISSING_LOCAL_ASSET_REFERENCE",
+                        "resolution":  "NO_LEGACY_TARGET_PROVEN",
+                        "reason":  "The relative stylesheet path is not present in the Legacy tree at the expected location. It may be a missing historical build asset or an incomplete snapshot; no substitution is inferred.",
+                        "evidence":  [
+                                         "C:\\Users\\Ghanam\\Documents\\Codex\\Greeny-Life-Repair\\archive\\generated-reports\\e3-p4-dependency-caller-trace\\2026-08-14_011451\\E3-P4-DEPENDENCY-CALLER-TRACE.json",
+                                         "C:\\Users\\Ghanam\\Documents\\Codex\\Greeny-Life-Repair\\archive\\generated-reports\\e3-phase-2-primary-classification\\2026-08-14_003259\\E3-PHASE-2-PRIMARY-LEGACY-CLASSIFICATION.json"
+                                     ]
+                    },
+                    {
+                        "assetPath":  "canonical\\intelligence\\intelligence\\intelligence-test.ts",
+                        "localToken":  "./engines/duplicate-engine-v2",
+                        "status":  "REVIEW",
+                        "referenceKind":  "MISSING_LOCAL_IMPLEMENTATION_REFERENCE",
+                        "resolution":  "NO_LEGACY_TARGET_PROVEN",
+                        "reason":  "The referenced duplicate-engine/project-memory modules are not present at the declared relative locations. Existing historical/reference paths do not establish an executable dependency or replacement.",
+                        "evidence":  [
+                                         "C:\\Users\\Ghanam\\Documents\\Codex\\Greeny-Life-Repair\\archive\\generated-reports\\e3-p4-dependency-caller-trace\\2026-08-14_011451\\E3-P4-DEPENDENCY-CALLER-TRACE.json",
+                                         "C:\\Users\\Ghanam\\Documents\\Codex\\Greeny-Life-Repair\\archive\\generated-reports\\e3-phase-2-primary-classification\\2026-08-14_003259\\E3-PHASE-2-PRIMARY-LEGACY-CLASSIFICATION.json"
+                                     ]
+                    },
+                    {
+                        "assetPath":  "canonical\\intelligence\\intelligence\\intelligence-test.ts",
+                        "localToken":  "./memory/project-memory",
+                        "status":  "REVIEW",
+                        "referenceKind":  "MISSING_LOCAL_IMPLEMENTATION_REFERENCE",
+                        "resolution":  "NO_LEGACY_TARGET_PROVEN",
+                        "reason":  "The referenced duplicate-engine/project-memory modules are not present at the declared relative locations. Existing historical/reference paths do not establish an executable dependency or replacement.",
+                        "evidence":  [
+                                         "C:\\Users\\Ghanam\\Documents\\Codex\\Greeny-Life-Repair\\archive\\generated-reports\\e3-p4-dependency-caller-trace\\2026-08-14_011451\\E3-P4-DEPENDENCY-CALLER-TRACE.json",
+                                         "C:\\Users\\Ghanam\\Documents\\Codex\\Greeny-Life-Repair\\archive\\generated-reports\\e3-phase-2-primary-classification\\2026-08-14_003259\\E3-PHASE-2-PRIMARY-LEGACY-CLASSIFICATION.json"
+                                     ]
+                    },
+                    {
+                        "assetPath":  "canonical\\intelligence\\intelligence\\health\\health-reporter.ts",
+                        "localToken":  "../core/engine-registry",
+                        "status":  "REVIEW",
+                        "referenceKind":  "HISTORICAL_PATH_REFERENCE",
+                        "resolution":  "HISTORICAL_COUNTERPART_FOUND_NOT_STATIC_PROVEN",
+                        "reason":  "A similarly named engine-registry exists only under archive/historical, not at the declared relative path. Historical presence is not proof that it was the active dependency.",
+                        "evidence":  [
+                                         "C:\\Users\\Ghanam\\Documents\\Codex\\Greeny-Life-Repair\\archive\\generated-reports\\e3-p4-dependency-caller-trace\\2026-08-14_011451\\E3-P4-DEPENDENCY-CALLER-TRACE.json",
+                                         "C:\\Users\\Ghanam\\Documents\\Codex\\Greeny-Life-Repair\\archive\\generated-reports\\e3-phase-2-primary-classification\\2026-08-14_003259\\E3-PHASE-2-PRIMARY-LEGACY-CLASSIFICATION.json"
+                                     ]
+                    }
+                ],
+    "nextGate":  "P5 Data and Business Lineage. REVIEW references remain protected and are not substituted, archived, retired or deleted.",
+    "prohibitions":  [
+                         "NO_LEGACY_EXECUTION",
+                         "NO_PACKAGE_OPENING",
+                         "NO_MOVE",
+                         "NO_MERGE",
+                         "NO_ARCHIVE_ACTION",
+                         "NO_DELETE",
+                         "NO_DATABASE_CHANGE",
+                         "NO_GIT_CHANGE",
+                         "NO_CURRENT_CHANGE"
+                     ]
+}

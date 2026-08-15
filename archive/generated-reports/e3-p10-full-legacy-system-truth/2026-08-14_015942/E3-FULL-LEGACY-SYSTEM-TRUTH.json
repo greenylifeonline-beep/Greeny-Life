@@ -1,0 +1,58 @@
+{
+    "report":  "E3 P10 Full Legacy System Truth and Coverage Proof",
+    "generatedAt":  "2026-08-14T02:00:56.0810363+02:00",
+    "mode":  "READ_ONLY_FINAL_TRUTH_MATRIX",
+    "coverage":  {
+                     "scope":  50104,
+                     "inventory":  50104,
+                     "classification":  50104,
+                     "understanding":  50104,
+                     "dependencyCaller":  50104,
+                     "dataBusinessLineage":  50104,
+                     "currentComparison":  50104,
+                     "ownerSor":  50104,
+                     "valueReplacementRecovery":  50104,
+                     "treatmentDecision":  50104,
+                     "status":  "PASS",
+                     "statement":  "Coverage is complete for the officially scoped 50,104 physical Legacy assets. A complete matrix may contain REVIEW: that records an evidence gap rather than inventing a treatment decision."
+                 },
+    "decisions":  {
+                      "keep":  260,
+                      "extend":  0,
+                      "harden":  0,
+                      "extract":  0,
+                      "consolidate":  0,
+                      "archiveApproved":  0,
+                      "retirementCandidate":  0,
+                      "quarantine":  1,
+                      "review":  49843,
+                      "unknown":  0
+                  },
+    "inputs":  {
+                   "phase0Scope":  "C:\\Users\\Ghanam\\Documents\\Codex\\Greeny-Life-Repair\\archive\\generated-reports\\e3-phase-0-scope-correction\\2026-08-14_002101\\E3-PHASE-0-SCOPE-CORRECTION.json",
+                   "phase1":  "C:\\Users\\Ghanam\\Documents\\Codex\\Greeny-Life-Repair\\archive\\generated-reports\\e3-phase-1-primary-full-inventory\\2026-08-14_002855\\E3-PHASE-1-PRIMARY-LEGACY-FULL-INVENTORY.json",
+                   "phase2":  "C:\\Users\\Ghanam\\Documents\\Codex\\Greeny-Life-Repair\\archive\\generated-reports\\e3-phase-2-primary-classification\\2026-08-14_003259\\E3-PHASE-2-PRIMARY-LEGACY-CLASSIFICATION.json",
+                   "p5":  "C:\\Users\\Ghanam\\Documents\\Codex\\Greeny-Life-Repair\\archive\\generated-reports\\e3-p5-data-business-lineage\\2026-08-14_012933\\E3-P5-DATA-BUSINESS-LINEAGE.json",
+                   "p6Refined":  "C:\\Users\\Ghanam\\Documents\\Codex\\Greeny-Life-Repair\\archive\\generated-reports\\e3-p6-current-comparison\\p6-tracked-baseline-2026-08-14_015153\\E3-P6-REFINED-TRACKED-CURRENT-COMPARISON.json",
+                   "p7":  "C:\\Users\\Ghanam\\Documents\\Codex\\Greeny-Life-Repair\\archive\\generated-reports\\e3-p7-owner-sor\\2026-08-14_015305\\E3-P7-OWNER-SOR-EVIDENCE.json",
+                   "p8":  "C:\\Users\\Ghanam\\Documents\\Codex\\Greeny-Life-Repair\\archive\\generated-reports\\e3-p8-value-replacement-recovery\\2026-08-14_015942\\E3-P8-VALUE-REPLACEMENT-RECOVERY.json",
+                   "p9":  "C:\\Users\\Ghanam\\Documents\\Codex\\Greeny-Life-Repair\\archive\\generated-reports\\e3-p9-treatment-decision\\2026-08-14_015942\\E3-P9-TREATMENT-DECISION.json"
+               },
+    "output":  {
+                   "truthMatrixCsv":  "C:\\Users\\Ghanam\\Documents\\Codex\\Greeny-Life-Repair\\archive\\generated-reports\\e3-p10-full-legacy-system-truth\\2026-08-14_015942\\E3-FULL-LEGACY-SYSTEM-TRUTH-MATRIX.csv",
+                   "sha256":  "17055DC4C61C552CA8115F81B5FDD722861AD9551EDED8CFBB244F2EB7C1E56C",
+                   "records":  50104
+               },
+    "unresolved":  {
+                       "ownerSor":  "Legacy owner and System of Record remain unproven for all non-preservation Legacy project/domain candidates.",
+                       "currentEquivalence":  "52 tracked exact-content candidates are lineage only; 275 untracked/co-located copies are not Current equivalence; 88 eligible candidates have no tracked Current equivalent proven.",
+                       "dependency":  "Four P4 local references remain REVIEW.",
+                       "p3Role":  "Four P3 role cases remain REVIEW; preservation packages were not opened."
+                   },
+    "nextExecutionGate":  [
+                              "Choose a business priority from a Current capability already runtime-proven.",
+                              "Trace its specific Current component, caller, authority and tests.",
+                              "Only then evaluate any named Legacy asset for extraction or reuse; do not copy or execute Legacy by default.",
+                              "Archive, retirement and deletion remain blocked until per-asset owner/SOR, dependency, replacement, value and recovery proof exist."
+                          ]
+}

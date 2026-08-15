@@ -1,0 +1,220 @@
+﻿{
+    "reportType":  "E3_LEGACY_SAFE_CANDIDATE_CONTRACTS_V1",
+    "generatedAtUtc":  "2026-08-13T17:33:22.4096549Z",
+    "mode":  "STATIC_READ_ONLY",
+    "protections":  [
+                        "NO_LEGACY_EXECUTION",
+                        "NO_IMPORT",
+                        "NO_FILE_WRITE",
+                        "NO_DATABASE",
+                        "NO_NETWORK",
+                        "NO_GIT_CHANGE",
+                        "NO_MOVE",
+                        "NO_DELETE"
+                    ],
+    "inputTriage":  "C:\\Users\\Ghanam\\Documents\\Codex\\Greeny-Life-Repair\\archive\\generated-reports\\e3-legacy-tool-triage\\triage-2026-08-13_193022\\E3-LEGACY-TOOL-SAFETY-TRIAGE.json",
+    "records":  [
+                    {
+                        "asset":  "config.yaml",
+                        "fileType":  ".yaml",
+                        "imports":  [
+
+                                    ],
+                        "pathSignals":  [
+                                            ".yml"
+                                        ],
+                        "potentialWrites":  [
+
+                                            ],
+                        "networkSignals":  [
+
+                                           ],
+                        "processSignals":  [
+
+                                           ],
+                        "brainDependencySignals":  [
+
+                                                   ],
+                        "isolatedTemporaryRunEligibility":  false,
+                        "nextAction":  "REFERENCE_ONLY; MAP_CURRENT_EQUIVALENT_BEFORE_ANY_ADOPTION",
+                        "limitation":  "Static source inspection only; absence of a pattern is not proof of absence of side effects."
+                    },
+                    {
+                        "asset":  "requirements.txt",
+                        "fileType":  ".txt",
+                        "imports":  [
+
+                                    ],
+                        "pathSignals":  [
+
+                                        ],
+                        "potentialWrites":  [
+
+                                            ],
+                        "networkSignals":  [
+
+                                           ],
+                        "processSignals":  [
+
+                                           ],
+                        "brainDependencySignals":  [
+
+                                                   ],
+                        "isolatedTemporaryRunEligibility":  false,
+                        "nextAction":  "REFERENCE_ONLY; MAP_CURRENT_EQUIVALENT_BEFORE_ANY_ADOPTION",
+                        "limitation":  "Static source inspection only; absence of a pattern is not proof of absence of side effects."
+                    },
+                    {
+                        "asset":  "run_ast_analysis.py",
+                        "fileType":  ".py",
+                        "imports":  [
+                                        "\nimport sys",
+                                        "from pathlib import Path",
+                                        "\nfrom greenlines_brain.dna.ast_analyzer import ASTAnalyzer"
+                                    ],
+                        "pathSignals":  [
+                                            "Path(",
+                                            ".json"
+                                        ],
+                        "potentialWrites":  [
+
+                                            ],
+                        "networkSignals":  [
+
+                                           ],
+                        "processSignals":  [
+
+                                           ],
+                        "brainDependencySignals":  [
+                                                       "greenlines_brain"
+                                                   ],
+                        "isolatedTemporaryRunEligibility":  false,
+                        "nextAction":  "STATIC_TRACE_REQUIRED; NOT_APPROVED_FOR_EXECUTION",
+                        "limitation":  "Static source inspection only; absence of a pattern is not proof of absence of side effects."
+                    },
+                    {
+                        "asset":  "run_brain_cli.py",
+                        "fileType":  ".py",
+                        "imports":  [
+
+                                    ],
+                        "pathSignals":  [
+
+                                        ],
+                        "potentialWrites":  [
+
+                                            ],
+                        "networkSignals":  [
+
+                                           ],
+                        "processSignals":  [
+
+                                           ],
+                        "brainDependencySignals":  [
+
+                                                   ],
+                        "isolatedTemporaryRunEligibility":  true,
+                        "nextAction":  "ELIGIBLE_FOR_TEMPORARY_COPY_ACCEPTANCE_PROOF",
+                        "limitation":  "Static source inspection only; absence of a pattern is not proof of absence of side effects."
+                    },
+                    {
+                        "asset":  "test_brain.py",
+                        "fileType":  ".py",
+                        "imports":  [
+                                        "from pathlib import Path",
+                                        "from greenlines_brain.identity import Identity, EntityScope",
+                                        "from greenlines_brain.repository.json_repo import JSONKnowledgeRepository",
+                                        "from greenlines_brain.kernel import GreenlinesBrain"
+                                    ],
+                        "pathSignals":  [
+                                            ".json",
+                                            "Path("
+                                        ],
+                        "potentialWrites":  [
+
+                                            ],
+                        "networkSignals":  [
+
+                                           ],
+                        "processSignals":  [
+
+                                           ],
+                        "brainDependencySignals":  [
+                                                       "greenlines_brain",
+                                                       "GreenlinesBrain"
+                                                   ],
+                        "isolatedTemporaryRunEligibility":  false,
+                        "nextAction":  "STATIC_TRACE_REQUIRED; NOT_APPROVED_FOR_EXECUTION",
+                        "limitation":  "Static source inspection only; absence of a pattern is not proof of absence of side effects."
+                    },
+                    {
+                        "asset":  "test_brain_v2.py",
+                        "fileType":  ".py",
+                        "imports":  [
+                                        "\nimport sys",
+                                        "from pathlib import Path",
+                                        "\nfrom greenlines_brain.identity import Identity, EntityScope",
+                                        "from greenlines_brain.repository.json_repo import JSONKnowledgeRepository",
+                                        "from greenlines_brain.kernel import GreenlinesBrain"
+                                    ],
+                        "pathSignals":  [
+                                            "Path(",
+                                            ".json"
+                                        ],
+                        "potentialWrites":  [
+
+                                            ],
+                        "networkSignals":  [
+
+                                           ],
+                        "processSignals":  [
+
+                                           ],
+                        "brainDependencySignals":  [
+                                                       "greenlines_brain",
+                                                       "GreenlinesBrain"
+                                                   ],
+                        "isolatedTemporaryRunEligibility":  false,
+                        "nextAction":  "STATIC_TRACE_REQUIRED; NOT_APPROVED_FOR_EXECUTION",
+                        "limitation":  "Static source inspection only; absence of a pattern is not proof of absence of side effects."
+                    },
+                    {
+                        "asset":  "test_brain_v3.py",
+                        "fileType":  ".py",
+                        "imports":  [
+                                        "\r\nimport sys",
+                                        "import json",
+                                        "from pathlib import Path",
+                                        "\r\nfrom greenlines_brain.identity import Identity, EntityScope",
+                                        "from greenlines_brain.repository.json_repo import JSONKnowledgeRepository",
+                                        "from greenlines_brain.kernel import GreenlinesBrain"
+                                    ],
+                        "pathSignals":  [
+                                            ".json",
+                                            "Path("
+                                        ],
+                        "potentialWrites":  [
+
+                                            ],
+                        "networkSignals":  [
+
+                                           ],
+                        "processSignals":  [
+
+                                           ],
+                        "brainDependencySignals":  [
+                                                       "greenlines_brain",
+                                                       "GreenlinesBrain"
+                                                   ],
+                        "isolatedTemporaryRunEligibility":  false,
+                        "nextAction":  "STATIC_TRACE_REQUIRED; NOT_APPROVED_FOR_EXECUTION",
+                        "limitation":  "Static source inspection only; absence of a pattern is not proof of absence of side effects."
+                    }
+                ],
+    "summary":  {
+                    "candidates":  7,
+                    "temporaryProofEligible":  1,
+                    "staticTraceOnly":  6
+                },
+    "rule":  "Only a candidate explicitly marked eligible may be copied to a temporary directory for a later isolated acceptance proof. It still may not run in the project or change project assets."
+}

@@ -37,12 +37,14 @@ export default function HomePage() {
         {endpoints.map(([label, endpoint]) => (
           <article key={endpoint} style={{ background: "#fff", border: "1px solid #dce6dd", borderRadius: 12, padding: 22, minWidth: 210 }}>
             <p style={{ color: "#58705f", margin: 0 }}>{label}</p>
-            <p style={{ fontSize: 38, fontWeight: 700, margin: "10px 0" }}>{error ? "—" : (counts[label] ?? "…")}</p>
+            <p style={{ fontSize: 38, fontWeight: 700, margin: "10px 0" }}>{error ? "â€”" : (counts[label] ?? "â€¦")}</p>
             <code style={{ color: "#3f7d4b" }}>{endpoint}</code>
           </article>
         ))}
       </section>
 
+      <p><a href="/data-control" style={{ color: "#3f7d4b", fontWeight: 700 }}>Open Data Control Center</a></p>
+      <p><a href="/login" style={{ color: "#3f7d4b", fontWeight: 700 }}>Sign in</a></p>
       <section style={{ background: "#fff", border: "1px solid #dce6dd", borderRadius: 12, padding: 22, marginTop: 24 }}>
         <h2>Execution truth</h2>
         <p>{error || "Application, API routes, Prisma, and PostgreSQL are live. Zero counts mean approved operational data has not been loaded yet."}</p>

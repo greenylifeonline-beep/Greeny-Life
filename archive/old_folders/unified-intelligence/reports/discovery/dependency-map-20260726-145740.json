@@ -1,0 +1,73 @@
+﻿{
+    "Architecture":  "Greeny-Life Unified Intelligence Architecture",
+    "Phase":  "Dependency Mapping",
+    "GeneratedAt":  "2026-07-26T12:58:36.9614912Z",
+    "TotalEdges":  13,
+    "Dependencies":  [
+                         {
+                             "Source":  "brain.py",
+                             "Dependency":  "brain",
+                             "Type":  "LAYER_REFERENCE"
+                         },
+                         {
+                             "Source":  "brain.py",
+                             "Dependency":  "dataclasses",
+                             "Type":  "IMPORT_OR_REQUIRE"
+                         },
+                         {
+                             "Source":  "brain.py",
+                             "Dependency":  "datetime",
+                             "Type":  "IMPORT_OR_REQUIRE"
+                         },
+                         {
+                             "Source":  "brain.py",
+                             "Dependency":  "governance",
+                             "Type":  "LAYER_REFERENCE"
+                         },
+                         {
+                             "Source":  "brain.py",
+                             "Dependency":  "intelligence",
+                             "Type":  "LAYER_REFERENCE"
+                         },
+                         {
+                             "Source":  "brain.py",
+                             "Dependency":  "k6",
+                             "Type":  "IMPORT_OR_REQUIRE"
+                         },
+                         {
+                             "Source":  "brain.py",
+                             "Dependency":  "k6/http",
+                             "Type":  "IMPORT_OR_REQUIRE"
+                         },
+                         {
+                             "Source":  "brain.py",
+                             "Dependency":  "knowledge",
+                             "Type":  "LAYER_REFERENCE"
+                         },
+                         {
+                             "Source":  "brain.py",
+                             "Dependency":  "pathlib",
+                             "Type":  "IMPORT_OR_REQUIRE"
+                         },
+                         {
+                             "Source":  "brain.py",
+                             "Dependency":  "PIL",
+                             "Type":  "IMPORT_OR_REQUIRE"
+                         },
+                         {
+                             "Source":  "brain.py",
+                             "Dependency":  "typing",
+                             "Type":  "IMPORT_OR_REQUIRE"
+                         },
+                         {
+                             "Source":  "EOS-Connect-Brain.ps1",
+                             "Dependency":  "brain",
+                             "Type":  "LAYER_REFERENCE"
+                         },
+                         {
+                             "Source":  "EOS-Connect-Brain.ps1",
+                             "Dependency":  "reports",
+                             "Type":  "LAYER_REFERENCE"
+                         }
+                     ]
+}

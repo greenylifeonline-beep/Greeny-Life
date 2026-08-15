@@ -1,0 +1,36 @@
+﻿{
+  "name": "Greeny-Life Unified Intelligence Architecture",
+  "version": "1.0.0",
+  "status": "foundation",
+  "principles": {
+    "brain": "Central intelligence coordinator and orchestration layer",
+    "intelligence": "Capabilities, engines, scanners, analyzers and validators",
+    "gl_dos": "Governance, integrity, policy enforcement and operational control",
+    "memory": "Persistent project and runtime memory",
+    "knowledge": "Structured knowledge, schemas, references and taxonomy",
+    "master_data": "Single source of truth for canonical business data",
+    "reports": "Traceable, auditable and reproducible outputs"
+  },
+  "authority": {
+    "master_data": "canonical",
+    "legacy_data": "historical_only",
+    "generated_reports": "derived",
+    "memory": "contextual",
+    "knowledge": "reference"
+  },
+  "execution_flow": [
+    "brain",
+    "intelligence",
+    "governance",
+    "master_data",
+    "memory",
+    "knowledge",
+    "reports"
+  ],
+  "migration_policy": {
+    "delete_legacy_immediately": false,
+    "preserve_existing_capabilities": true,
+    "require_validation_before_cutover": true,
+    "require_backup_before_migration": true
+  }
+}

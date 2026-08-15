@@ -1,0 +1,403 @@
+﻿{
+    "reportType":  "E3_DEVELOPMENT_DIAGNOSIS_BACKLOG_V1",
+    "generatedAtUtc":  "2026-08-13T15:49:48.8343984Z",
+    "mode":  "READ_ONLY_EVIDENCE_SYNTHESIS",
+    "inputs":  {
+                   "wave4":  "C:\\Users\\Ghanam\\Documents\\Codex\\Greeny-Life-Repair\\archive\\generated-reports\\e3-wave-4\\ownership-sor-2026-08-13_172219\\E3-WAVE-4-OWNERSHIP-AND-SOR-PROOF.json",
+                   "wave5":  "C:\\Users\\Ghanam\\Documents\\Codex\\Greeny-Life-Repair\\archive\\generated-reports\\e3-wave-5\\p0-runtime-operational-2026-08-13_174230\\E3-WAVE-5-P0-RUNTIME-OPERATIONAL-PROOF.json"
+               },
+    "scope":  "No scanner was run. No project code, database, Legacy asset, API, Git state, or configuration was changed. This report maps proven gaps to existing components and tests only.",
+    "mandatoryBuildGate":  [
+                               "No viable existing implementation proven",
+                               "No viable Legacy extraction candidate",
+                               "Owner identified",
+                               "Gap and architecture location documented",
+                               "Tests defined",
+                               "Approval recorded"
+                           ],
+    "items":  [
+                  {
+                      "id":  "DD-001",
+                      "priority":  "P0",
+                      "capability":  "EVIDENCE",
+                      "gap":  "Evidence state machine is tested but has not yet proven persistence/audit behavior at a controlled action boundary.",
+                      "recommendation":  "HARDEN_EXISTING",
+                      "doNotBuild":  "Do not create another evidence engine or registry.",
+                      "existingComponents":  [
+                                                 {
+                                                     "scope":  "CURRENT",
+                                                     "path":  "lib/intelligence/official-evidence-gate.ts",
+                                                     "exists":  true
+                                                 },
+                                                 {
+                                                     "scope":  "CURRENT",
+                                                     "path":  "app/api/evidence/official/route.ts",
+                                                     "exists":  true
+                                                 },
+                                                 {
+                                                     "scope":  "CURRENT",
+                                                     "path":  "lib/authz.ts",
+                                                     "exists":  true
+                                                 }
+                                             ],
+                      "existingTests":  [
+                                            {
+                                                "scope":  "CURRENT",
+                                                "path":  "tests/official_evidence_gate_check.ts",
+                                                "exists":  true
+                                            },
+                                            {
+                                                "scope":  "CURRENT",
+                                                "path":  "tests/official_evidence_review_route_check.ts",
+                                                "exists":  true
+                                            },
+                                            {
+                                                "scope":  "CURRENT",
+                                                "path":  "tests/decision_safety_adversarial_check.ts",
+                                                "exists":  true
+                                            }
+                                        ],
+                      "currentProof":  {
+                                           "status":  "PASS",
+                                           "evidenceLevel":  "TEST_EVIDENCE",
+                                           "detail":  "\r\n\u003e greeny-life@1.0.0 test:official-evidence-gate\r\n\u003e tsx tests/official_evidence_gate_check.ts\r\n\r\nofficial_evidence_gate_check: PASS"
+                                       },
+                      "requiredProof":  [
+                                            "Controlled sandbox persistence trace",
+                                            "Fail-closed audit failure test",
+                                            "Signed-reviewer authorization trace"
+                                        ],
+                      "promotionGate":  [
+                                            "TEST_EVIDENCE",
+                                            "RUNTIME_PROVEN",
+                                            "OPERATIONAL_PROVEN"
+                                        ]
+                  },
+                  {
+                      "id":  "DD-002",
+                      "priority":  "P0",
+                      "capability":  "DECISION",
+                      "gap":  "Decision package is authorized and read-only; executable decision/action boundary, confidence enforcement, and policy evaluation are not proven.",
+                      "recommendation":  "EXTEND_EXISTING",
+                      "doNotBuild":  "Do not create another decision engine or decision-package route.",
+                      "existingComponents":  [
+                                                 {
+                                                     "scope":  "CURRENT",
+                                                     "path":  "lib/intelligence/mastermind-agents.ts",
+                                                     "exists":  true
+                                                 },
+                                                 {
+                                                     "scope":  "CURRENT",
+                                                     "path":  "app/api/mastermind/decision-package/route.ts",
+                                                     "exists":  true
+                                                 },
+                                                 {
+                                                     "scope":  "CURRENT",
+                                                     "path":  "lib/intelligence/export-decision.ts",
+                                                     "exists":  true
+                                                 },
+                                                 {
+                                                     "scope":  "CURRENT",
+                                                     "path":  "lib/authz.ts",
+                                                     "exists":  true
+                                                 }
+                                             ],
+                      "existingTests":  [
+                                            {
+                                                "scope":  "CURRENT",
+                                                "path":  "tests/mastermind_agents_check.ts",
+                                                "exists":  true
+                                            },
+                                            {
+                                                "scope":  "CURRENT",
+                                                "path":  "tests/mastermind_evidence_authority_check.ts",
+                                                "exists":  true
+                                            },
+                                            {
+                                                "scope":  "CURRENT",
+                                                "path":  "tests/decision_safety_adversarial_check.ts",
+                                                "exists":  true
+                                            }
+                                        ],
+                      "currentProof":  {
+                                           "status":  "PASS",
+                                           "evidenceLevel":  "TEST_EVIDENCE",
+                                           "detail":  "\r\n\u003e greeny-life@1.0.0 test:mastermind\r\n\u003e tsx tests/mastermind_agents_check.ts\r\n\r\nMasterMind agents: PASS"
+                                       },
+                      "requiredProof":  [
+                                            "Missing/low confidence must fail closed",
+                                            "Versioned policy lookup/rejection",
+                                            "No execution before audit and approved transition"
+                                        ],
+                      "promotionGate":  [
+                                            "TEST_EVIDENCE",
+                                            "RUNTIME_PROVEN_READ_ONLY",
+                                            "OPERATIONAL_PROVEN"
+                                        ]
+                  },
+                  {
+                      "id":  "DD-003",
+                      "priority":  "P0",
+                      "capability":  "GOVERNANCE",
+                      "gap":  "Review-required workflow rule is tested; durable audit persistence and isolated state-transition/rollback behavior are unproven.",
+                      "recommendation":  "HARDEN_EXISTING",
+                      "doNotBuild":  "Do not create another workflow or governance engine.",
+                      "existingComponents":  [
+                                                 {
+                                                     "scope":  "CURRENT",
+                                                     "path":  "lib/intelligence/workflow-governance.ts",
+                                                     "exists":  true
+                                                 },
+                                                 {
+                                                     "scope":  "CURRENT",
+                                                     "path":  "app/api/workflow/route.ts",
+                                                     "exists":  true
+                                                 },
+                                                 {
+                                                     "scope":  "CURRENT",
+                                                     "path":  "lib/authz.ts",
+                                                     "exists":  true
+                                                 },
+                                                 {
+                                                     "scope":  "CURRENT",
+                                                     "path":  "canonical/intelligence/adapters/gl-dos-governance-gate.ts",
+                                                     "exists":  true
+                                                 }
+                                             ],
+                      "existingTests":  [
+                                            {
+                                                "scope":  "CURRENT",
+                                                "path":  "tests/workflow_governance_check.ts",
+                                                "exists":  true
+                                            },
+                                            {
+                                                "scope":  "CURRENT",
+                                                "path":  "tests/gldos_governance_gate_check.ts",
+                                                "exists":  true
+                                            },
+                                            {
+                                                "scope":  "CURRENT",
+                                                "path":  "tests/api_authorization_check.ts",
+                                                "exists":  true
+                                            }
+                                        ],
+                      "currentProof":  {
+                                           "status":  "PASS",
+                                           "evidenceLevel":  "TEST_EVIDENCE",
+                                           "detail":  "\r\n\u003e greeny-life@1.0.0 test:workflow-governance\r\n\u003e tsx tests/workflow_governance_check.ts\r\n\r\nWorkflow governance: PASS"
+                                       },
+                      "requiredProof":  [
+                                            "Isolated valid transition",
+                                            "Invalid transition blocks without state change",
+                                            "Audit write failure blocks execution",
+                                            "Rollback/recovery trace"
+                                        ],
+                      "promotionGate":  [
+                                            "TEST_EVIDENCE",
+                                            "RUNTIME_PROVEN",
+                                            "OPERATIONAL_PROVEN"
+                                        ]
+                  },
+                  {
+                      "id":  "DD-004",
+                      "priority":  "P0",
+                      "capability":  "KNOWLEDGE",
+                      "gap":  "Legacy knowledge repository and graph are partial extraction candidates; direct reuse is unsafe until a bounded, governed contract is proven.",
+                      "recommendation":  "EXTRACT_EXISTING",
+                      "doNotBuild":  "Do not create a replacement knowledge engine before evaluating bounded extraction.",
+                      "existingComponents":  [
+                                                 {
+                                                     "scope":  "LEGACY",
+                                                     "path":  "greenlines_brain/repository/json_repo.py",
+                                                     "exists":  true
+                                                 },
+                                                 {
+                                                     "scope":  "LEGACY",
+                                                     "path":  "greenlines_brain/graph.py",
+                                                     "exists":  true
+                                                 },
+                                                 {
+                                                     "scope":  "CURRENT",
+                                                     "path":  "greenlines_brain/repository/json_repo.py",
+                                                     "exists":  true
+                                                 },
+                                                 {
+                                                     "scope":  "CURRENT",
+                                                     "path":  "greenlines_brain/graph.py",
+                                                     "exists":  true
+                                                 },
+                                                 {
+                                                     "scope":  "CURRENT",
+                                                     "path":  "canonical/intelligence/intelligence/engines/audit-engine.ts",
+                                                     "exists":  true
+                                                 },
+                                                 {
+                                                     "scope":  "CURRENT",
+                                                     "path":  "canonical/intelligence/intelligence/engines/data-integrity-engine.ts",
+                                                     "exists":  true
+                                                 }
+                                             ],
+                      "existingTests":  [
+                                            {
+                                                "scope":  "CURRENT",
+                                                "path":  "tests/canonical_intelligence_check.ts",
+                                                "exists":  true
+                                            },
+                                            {
+                                                "scope":  "CURRENT",
+                                                "path":  "tests/test_legacy_brain_runtime.py",
+                                                "exists":  true
+                                            }
+                                        ],
+                      "currentProof":  {
+                                           "status":  "PASS",
+                                           "evidenceLevel":  "TEST_EVIDENCE",
+                                           "detail":  "\r\n\u003e greeny-life@1.0.0 test:canonical-intelligence\r\n\u003e tsx tests/canonical_intelligence_check.ts\r\n\r\nCanonical intelligence engines: PASS"
+                                       },
+                      "requiredProof":  [
+                                            "Separate immutable source from extracted representation",
+                                            "Duplicate-name and stale-record regression tests",
+                                            "Evidence/provenance contract"
+                                        ],
+                      "promotionGate":  [
+                                            "RUNTIME_PROVEN_PARTIAL",
+                                            "TEST_EVIDENCE",
+                                            "OWNER_PROVEN"
+                                        ]
+                  },
+                  {
+                      "id":  "DD-005",
+                      "priority":  "P0",
+                      "capability":  "LEARNING",
+                      "gap":  "Learning proposal is review-required; outcome persistence, evaluation versioning, and promotion/rollback are not proven.",
+                      "recommendation":  "EXTEND_EXISTING",
+                      "doNotBuild":  "Do not create an autonomous learning engine.",
+                      "existingComponents":  [
+                                                 {
+                                                     "scope":  "CURRENT",
+                                                     "path":  "lib/intelligence/controlled-learning.ts",
+                                                     "exists":  true
+                                                 },
+                                                 {
+                                                     "scope":  "CURRENT",
+                                                     "path":  "lib/intelligence/evaluation-governance.ts",
+                                                     "exists":  true
+                                                 },
+                                                 {
+                                                     "scope":  "CURRENT",
+                                                     "path":  "app/api/learning/outcomes/route.ts",
+                                                     "exists":  true
+                                                 },
+                                                 {
+                                                     "scope":  "CURRENT",
+                                                     "path":  "app/api/learning/evaluations/route.ts",
+                                                     "exists":  true
+                                                 }
+                                             ],
+                      "existingTests":  [
+                                            {
+                                                "scope":  "CURRENT",
+                                                "path":  "tests/controlled_learning_check.ts",
+                                                "exists":  true
+                                            },
+                                            {
+                                                "scope":  "CURRENT",
+                                                "path":  "tests/evaluation_governance_check.ts",
+                                                "exists":  true
+                                            },
+                                            {
+                                                "scope":  "CURRENT",
+                                                "path":  "tests/training_factory_check.ts",
+                                                "exists":  true
+                                            }
+                                        ],
+                      "currentProof":  {
+                                           "status":  "PASS",
+                                           "evidenceLevel":  "TEST_EVIDENCE",
+                                           "detail":  "\r\n\u003e greeny-life@1.0.0 test:controlled-learning\r\n\u003e tsx tests/controlled_learning_check.ts\r\n\r\nControlled learning: PASS"
+                                       },
+                      "requiredProof":  [
+                                            "Outcome persistence in isolated database",
+                                            "Evaluation version/audit trace",
+                                            "Rejected promotion causes no model/configuration change"
+                                        ],
+                      "promotionGate":  [
+                                            "TEST_EVIDENCE",
+                                            "RUNTIME_PROVEN",
+                                            "OPERATIONAL_PROVEN"
+                                        ]
+                  },
+                  {
+                      "id":  "DD-006",
+                      "priority":  "P0",
+                      "capability":  "AUTHORIZATION_AUDIT",
+                      "gap":  "Authentication and authorization tests pass; fail-closed durable audit behavior must be traced at any future write/action boundary.",
+                      "recommendation":  "TRACE_THEN_EXTEND",
+                      "doNotBuild":  "Do not create a second authorization or audit mechanism.",
+                      "existingComponents":  [
+                                                 {
+                                                     "scope":  "CURRENT",
+                                                     "path":  "lib/authz.ts",
+                                                     "exists":  true
+                                                 },
+                                                 {
+                                                     "scope":  "CURRENT",
+                                                     "path":  "app/api/commercial-changes/route.ts",
+                                                     "exists":  true
+                                                 },
+                                                 {
+                                                     "scope":  "CURRENT",
+                                                     "path":  "app/api/tasks/route.ts",
+                                                     "exists":  true
+                                                 },
+                                                 {
+                                                     "scope":  "CURRENT",
+                                                     "path":  "prisma/schema.prisma",
+                                                     "exists":  true
+                                                 }
+                                             ],
+                      "existingTests":  [
+                                            {
+                                                "scope":  "CURRENT",
+                                                "path":  "tests/auth_security_check.ts",
+                                                "exists":  true
+                                            },
+                                            {
+                                                "scope":  "CURRENT",
+                                                "path":  "tests/api_authorization_check.ts",
+                                                "exists":  true
+                                            }
+                                        ],
+                      "currentProof":  {
+                                           "status":  "PASS",
+                                           "evidenceLevel":  "TEST_EVIDENCE",
+                                           "detail":  "\r\n\u003e greeny-life@1.0.0 test:auth-security\r\n\u003e tsx tests/auth_security_check.ts\r\n\r\nAuthentication security: PASS"
+                                       },
+                      "requiredProof":  [
+                                            "Locate current SecurityAuditEvent/AuditLog writer",
+                                            "Audit persistence failure blocks action",
+                                            "Signed identity cannot be replaced by request body"
+                                        ],
+                      "promotionGate":  [
+                                            "TEST_EVIDENCE",
+                                            "RUNTIME_PROVEN",
+                                            "OPERATIONAL_PROVEN"
+                                        ]
+                  }
+              ],
+    "citationStatus":  {
+                           "status":  "PASS",
+                           "missing":  [
+
+                                       ]
+                       },
+    "prohibitedDecisions":  [
+                                "BUILD_NOW",
+                                "DELETE",
+                                "ARCHIVE",
+                                "MERGE",
+                                "PROMOTE",
+                                "SYSTEM_OF_RECORD",
+                                "AUTOMATIC_EXECUTION"
+                            ]
+}

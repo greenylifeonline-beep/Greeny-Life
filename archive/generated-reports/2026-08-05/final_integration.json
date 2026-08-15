@@ -1,0 +1,1800 @@
+{
+  "timestamp": "2026-08-05T13:54:27.782369",
+  "project_path": "C:\\Users\\Ghanam\\OneDrive\\projects\\Greeny-Life",
+  "status": "RUNNING",
+  "scans": {
+    "archguard": {
+      "tool": "ArchGuard",
+      "passed": false,
+      "score": 100.0,
+      "findings": [],
+      "summary": "Scan failed: Timeout",
+      "raw_output": ""
+    },
+    "govern_kit": {
+      "tool": "govern-kit",
+      "passed": false,
+      "score": 50,
+      "findings": [],
+      "summary": "Trust gate failed. Human review required.",
+      "raw_output": "{\n  \"overall\": {\n    \"claims\": 0,\n    \"high_confidence_claims\": 0,\n    \"high_confidence_hit_rate\": 0.0,\n    \"min_hit_rate\": 0.95,\n    \"verdict\": \"GATE\",\n    \"reason\": \"no claims in scope\",\n    \"require_measured\": true,\n    \"window\": 10,\n    \"change_class\": null,\n    \"exclude_goodhart\": true\n  },\n  \"per_class\": {}\n}\n"
+    },
+    "ouro_loop": {
+      "tool": "Ouro Loop",
+      "passed": true,
+      "score": 100,
+      "findings": [],
+      "summary": "Ouro Loop is not installed. Skipping.",
+      "raw_output": ""
+    },
+    "sonarqube": {
+      "tool": "SonarQube",
+      "passed": false,
+      "score": 100.0,
+      "findings": [],
+      "summary": "SONAR_TOKEN environment variable is not set.",
+      "raw_output": ""
+    },
+    "security": {
+      "tool": "SecurityAgent",
+      "passed": true,
+      "score": 100,
+      "findings": [],
+      "summary": "Bandit: No security issues found.",
+      "raw_output": ""
+    },
+    "performance": {
+      "tool": "PerformanceAgent",
+      "passed": true,
+      "score": 100,
+      "findings": [],
+      "summary": "Performance metrics could not be extracted.",
+      "raw_output": "\n         /\\      Grafana   /‾‾/  \n    /\\  /  \\     |\\  __   /  /   \n   /  \\/    \\    | |/ /  /   ‾‾\\ \n  /          \\   |   (  |  (‾)  |\n / __________ \\  |_|\\_\\  \\_____/ \n\n\n     execution: local\n        script: C:\\Users\\Ghanam\\OneDrive\\projects\\Greeny-Life\\tests\\performance\\smoke_test.js\n        output: json (C:\\Users\\Ghanam\\OneDrive\\projects\\Greeny-Life\\tests\\performance\\results.json)\n\n     scenarios: (100.00%) 1 scenario, 10 max VUs, 40s max duration (incl. graceful stop):\n              * default: 10 looping VUs for 10s (gracefulStop: 30s)\n\n\nrunning (01.0s), 10/10 VUs, 0 complete and 0 interrupted iterations\ndefault   [  10% ] 10 VUs  01.0s/10s\n\nrunning (02.0s), 10/10 VUs, 10 complete and 0 interrupted iterations\ndefault   [  20% ] 10 VUs  02.0s/10s\n\nrunning (03.0s), 10/10 VUs, 20 complete and 0 interrupted iterations\ndefault   [  30% ] 10 VUs  03.0s/10s\n\nrunning (04.0s), 10/10 VUs, 30 complete and 0 interrupted iterations\ndefault   [  40% ] 10 VUs  04.0s/10s\n\nrunning (05.0s), 10/10 VUs, 40 complete and 0 interrupted iterations\ndefault   [  50% ] 10 VUs  05.0s/10s\n\nrunning (06.0s), 10/10 VUs, 50 complete and 0 interrupted iterations\ndefault   [  60% ] 10 VUs  06.0s/10s\n\nrunning (07.0s), 10/10 VUs, 60 complete and 0 interrupted iterations\ndefault   [  70% ] 10 VUs  07.0s/10s\n\nrunning (08.0s), 10/10 VUs, 70 complete and 0 interrupted iterations\ndefault   [  80% ] 10 VUs  08.0s/10s\n\nrunning (09.0s), 10/10 VUs, 80 complete and 0 interrupted iterations\ndefault   [  90% ] 10 VUs  09.0s/10s\n\nrunning (10.0s), 10/10 VUs, 90 complete and 0 interrupted iterations\ndefault   [ 100% ] 10 VUs  10.0s/10s\n\n\n  █ THRESHOLDS \n\n    http_req_duration\n    ✓ 'p(95)<500' p(95)=0s\n\n    http_req_failed\n    ✗ 'rate<0.05' rate=100.00%\n\n\n  █ TOTAL RESULTS \n\n    checks_total.......: 100     9.931035/s\n    checks_succeeded...: 0.00%   0 out of 100\n    checks_failed......: 100.00% 100 out of 100\n\n    ✗ status is 200\n      ↳  0% — ✓ 0 / ✗ 100\n\n    HTTP\n    http_req_duration....: avg=0s min=0s med=0s max=0s    p(90)=0s    p(95)=0s   \n    http_req_failed......: 100.00% 100 out of 100\n    http_reqs............: 100     9.931035/s\n\n    EXECUTION\n    iteration_duration...: avg=1s min=1s med=1s max=1.04s p(90)=1.01s p(95)=1.04s\n    iterations...........: 100     9.931035/s\n    vus..................: 10      min=10         max=10\n    vus_max..............: 10      min=10         max=10\n\n    NETWORK\n    data_received........: 0 B     0 B/s\n    data_sent............: 0 B     0 B/s\n\n\n\n\nrunning (10.1s), 00/10 VUs, 100 complete and 0 interrupted iterations\ndefault ✓ [ 100% ] 10 VUs  10s\ntime=\"2026-08-05T13:59:31+02:00\" level=warning msg=\"Request Failed\" error=\"Get \\\"http://localhost:3000/health\\\": dial tcp 127.0.0.1:3000: connectex: No connection could be made because the target machine actively refused it.\"\ntime=\"2026-08-05T13:59:31+02:00\" level=warning msg=\"Request Failed\" error=\"Get \\\"http://localhost:3000/health\\\": dial tcp 127.0.0.1:3000: connectex: No connection could be made because the target machine actively refused it.\"\ntime=\"2026-08-05T13:59:31+02:00\" level=warning msg=\"Request Failed\" error=\"Get \\\"http://localhost:3000/health\\\": dial tcp 127.0.0.1:3000: connectex: No connection could be made because the target machine actively refused it.\"\ntime=\"2026-08-05T13:59:31+02:00\" level=warning msg=\"Request Failed\" error=\"Get \\\"http://localhost:3000/health\\\": dial tcp 127.0.0.1:3000: connectex: No connection could be made because the target machine actively refused it.\"\ntime=\"2026-08-05T13:59:31+02:00\" level=warning msg=\"Request Failed\" error=\"Get \\\"http://localhost:3000/health\\\": dial tcp 127.0.0.1:3000: connectex: No connection could be made because the target machine actively refused it.\"\ntime=\"2026-08-05T13:59:31+02:00\" level=warning msg=\"Request Failed\" error=\"Get \\\"http://localhost:3000/health\\\": dial tcp 127.0.0.1:3000: connectex: No connection could be made because the target machine actively refused it.\"\ntime=\"2026-08-05T13:59:31+02:00\" level=warning msg=\"Request Failed\" error=\"Get \\\"http://localhost:3000/health\\\": dial tcp 127.0.0.1:3000: connectex: No connection could be made because the target machine actively refused it.\"\ntime=\"2026-08-05T13:59:31+02:00\" level=warning msg=\"Request Failed\" error=\"Get \\\"http://localhost:3000/health\\\": dial tcp 127.0.0.1:3000: connectex: No connection could be made because the target machine actively refused it.\"\ntime=\"2026-08-05T13:59:31+02:00\" level=warning msg=\"Request Failed\" error=\"Get \\\"http://localhost:3000/health\\\": dial tcp 127.0.0.1:3000: connectex: No connection could be made because the target machine actively refused it.\"\ntime=\"2026-08-05T13:59:31+02:00\" level=warning msg=\"Request Failed\" error=\"Get \\\"http://localhost:3000/health\\\": dial tcp 127.0.0.1:3000: connectex: No connection could be made because the target machine actively refused it.\"\ntime=\"2026-08-05T13:59:32+02:00\" level=warning msg=\"Request Failed\" error=\"Get \\\"http://localhost:3000/health\\\": dial tcp 127.0.0.1:3000: connectex: No connection could be made because the target machine actively refused it.\"\ntime=\"2026-08-05T13:59:32+02:00\" level=warning msg=\"Request Failed\" error=\"Get \\\"http://localhost:3000/health\\\": dial tcp 127.0.0.1:3000: connectex: No connection could be made because the target machine actively refused it.\"\ntime=\"2026-08-05T13:59:32+02:00\" level=warning msg=\"Request Failed\" error=\"Get \\\"http://localhost:3000/health\\\": dial tcp 127.0.0.1:3000: connectex: No connection could be made because the target machine actively refused it.\"\ntime=\"2026-08-05T13:59:32+02:00\" level=warning msg=\"Request Failed\" error=\"Get \\\"http://localhost:3000/health\\\": dial tcp 127.0.0.1:3000: connectex: No connection could be made because the target machine actively refused it.\"\ntime=\"2026-08-05T13:59:32+02:00\" level=warning msg=\"Request Failed\" error=\"Get \\\"http://localhost:3000/health\\\": dial tcp 127.0.0.1:3000: connectex: No connection could be made because the target machine actively refused it.\"\ntime=\"2026-08-05T13:59:32+02:00\" level=warning msg=\"Request Failed\" error=\"Get \\\"http://localhost:3000/health\\\": dial tcp 127.0.0.1:3000: connectex: No connection could be made because the target machine actively refused it.\"\ntime=\"2026-08-05T13:59:32+02:00\" level=warning msg=\"Request Failed\" error=\"Get \\\"http://localhost:3000/health\\\": dial tcp 127.0.0.1:3000: connectex: No connection could be made because the target machine actively refused it.\"\ntime=\"2026-08-05T13:59:32+02:00\" level=warning msg=\"Request Failed\" error=\"Get \\\"http://localhost:3000/health\\\": dial tcp 127.0.0.1:3000: connectex: No connection could be made because the target machine actively refused it.\"\ntime=\"2026-08-05T13:59:32+02:00\" level=warning msg=\"Request Failed\" error=\"Get \\\"http://localhost:3000/health\\\": dial tcp 127.0.0.1:3000: connectex: No connection could be made because the target machine actively refused it.\"\ntime=\"2026-08-05T13:59:32+02:00\" level=warning msg=\"Request Failed\" error=\"Get \\\"http://localhost:3000/health\\\": dial tcp 127.0.0.1:3000: connectex: No connection could be made because the target machine actively refused it.\"\ntime=\"2026-08-05T13:59:33+02:00\" level=warning msg=\"Request Failed\" error=\"Get \\\"http://localhost:3000/health\\\": dial tcp 127.0.0.1:3000: connectex: No connection could be made because the target machine actively refused it.\"\ntime=\"2026-08-05T13:59:33+02:00\" level=warning msg=\"Request Failed\" error=\"Get \\\"http://localhost:3000/health\\\": dial tcp 127.0.0.1:3000: connectex: No connection could be made because the target machine actively refused it.\"\ntime=\"2026-08-05T13:59:33+02:00\" level=warning msg=\"Request Failed\" error=\"Get \\\"http://localhost:3000/health\\\": dial tcp 127.0.0.1:3000: connectex: No connection could be made because the target machine actively refused it.\"\ntime=\"2026-08-05T13:59:33+02:00\" level=warning msg=\"Request Failed\" error=\"Get \\\"http://localhost:3000/health\\\": dial tcp 127.0.0.1:3000: connectex: No connection could be made because the target machine actively refused it.\"\ntime=\"2026-08-05T13:59:33+02:00\" level=warning msg=\"Request Failed\" error=\"Get \\\"http://localhost:3000/health\\\": dial tcp 127.0.0.1:3000: connectex: No connection could be made because the target machine actively refused it.\"\ntime=\"2026-08-05T13:59:33+02:00\" level=warning msg=\"Request Failed\" error=\"Get \\\"http://localhost:3000/health\\\": dial tcp 127.0.0.1:3000: connectex: No connection could be made because the target machine actively refused it.\"\ntime=\"2026-08-05T13:59:33+02:00\" level=warning msg=\"Request Failed\" error=\"Get \\\"http://localhost:3000/health\\\": dial tcp 127.0.0.1:3000: connectex: No connection could be made because the target machine actively refused it.\"\ntime=\"2026-08-05T13:59:33+02:00\" level=warning msg=\"Request Failed\" error=\"Get \\\"http://localhost:3000/health\\\": dial tcp 127.0.0.1:3000: connectex: No connection could be made because the target machine actively refused it.\"\ntime=\"2026-08-05T13:59:33+02:00\" level=warning msg=\"Request Failed\" error=\"Get \\\"http://localhost:3000/health\\\": dial tcp 127.0.0.1:3000: connectex: No connection could be made because the target machine actively refused it.\"\ntime=\"2026-08-05T13:59:33+02:00\" level=warning msg=\"Request Failed\" error=\"Get \\\"http://localhost:3000/health\\\": dial tcp 127.0.0.1:3000: connectex: No connection could be made because the target machine actively refused it.\"\ntime=\"2026-08-05T13:59:34+02:00\" level=warning msg=\"Request Failed\" error=\"Get \\\"http://localhost:3000/health\\\": dial tcp 127.0.0.1:3000: connectex: No connection could be made because the target machine actively refused it.\"\ntime=\"2026-08-05T13:59:34+02:00\" level=warning msg=\"Request Failed\" error=\"Get \\\"http://localhost:3000/health\\\": dial tcp 127.0.0.1:3000: connectex: No connection could be made because the target machine actively refused it.\"\ntime=\"2026-08-05T13:59:34+02:00\" level=warning msg=\"Request Failed\" error=\"Get \\\"http://localhost:3000/health\\\": dial tcp 127.0.0.1:3000: connectex: No connection could be made because the target machine actively refused it.\"\ntime=\"2026-08-05T13:59:34+02:00\" level=warning msg=\"Request Failed\" error=\"Get \\\"http://localhost:3000/health\\\": dial tcp 127.0.0.1:3000: connectex: No connection could be made because the target machine actively refused it.\"\ntime=\"2026-08-05T13:59:34+02:00\" level=warning msg=\"Request Failed\" error=\"Get \\\"http://localhost:3000/health\\\": dial tcp 127.0.0.1:3000: connectex: No connection could be made because the target machine actively refused it.\"\ntime=\"2026-08-05T13:59:34+02:00\" level=warning msg=\"Request Failed\" error=\"Get \\\"http://localhost:3000/health\\\": dial tcp 127.0.0.1:3000: connectex: No connection could be made because the target machine actively refused it.\"\ntime=\"2026-08-05T13:59:34+02:00\" level=warning msg=\"Request Failed\" error=\"Get \\\"http://localhost:3000/health\\\": dial tcp 127.0.0.1:3000: connectex: No connection could be made because the target machine actively refused it.\"\ntime=\"2026-08-05T13:59:34+02:00\" level=warning msg=\"Request Failed\" error=\"Get \\\"http://localhost:3000/health\\\": dial tcp 127.0.0.1:3000: connectex: No connection could be made because the target machine actively refused it.\"\ntime=\"2026-08-05T13:59:34+02:00\" level=warning msg=\"Request Failed\" error=\"Get \\\"http://localhost:3000/health\\\": dial tcp 127.0.0.1:3000: connectex: No connection could be made because the target machine actively refused it.\"\ntime=\"2026-08-05T13:59:34+02:00\" level=warning msg=\"Request Failed\" error=\"Get \\\"http://localhost:3000/health\\\": dial tcp 127.0.0.1:3000: connectex: No connection could be made because the target machine actively refused it.\"\ntime=\"2026-08-05T13:59:35+02:00\" level=warning msg=\"Request Failed\" error=\"Get \\\"http://localhost:3000/health\\\": dial tcp 127.0.0.1:3000: connectex: No connection could be made because the target machine actively refused it.\"\ntime=\"2026-08-05T13:59:35+02:00\" level=warning msg=\"Request Failed\" error=\"Get \\\"http://localhost:3000/health\\\": dial tcp 127.0.0.1:3000: connectex: No connection could be made because the target machine actively refused it.\"\ntime=\"2026-08-05T13:59:35+02:00\" level=warning msg=\"Request Failed\" error=\"Get \\\"http://localhost:3000/health\\\": dial tcp 127.0.0.1:3000: connectex: No connection could be made because the target machine actively refused it.\"\ntime=\"2026-08-05T13:59:35+02:00\" level=warning msg=\"Request Failed\" error=\"Get \\\"http://localhost:3000/health\\\": dial tcp 127.0.0.1:3000: connectex: No connection could be made because the target machine actively refused it.\"\ntime=\"2026-08-05T13:59:35+02:00\" level=warning msg=\"Request Failed\" error=\"Get \\\"http://localhost:3000/health\\\": dial tcp 127.0.0.1:3000: connectex: No connection could be made because the target machine actively refused it.\"\ntime=\"2026-08-05T13:59:35+02:00\" level=warning msg=\"Request Failed\" error=\"Get \\\"http://localhost:3000/health\\\": dial tcp 127.0.0.1:3000: connectex: No connection could be made because the target machine actively refused it.\"\ntime=\"2026-08-05T13:59:35+02:00\" level=warning msg=\"Request Failed\" error=\"Get \\\"http://localhost:3000/health\\\": dial tcp 127.0.0.1:3000: connectex: No connection could be made because the target machine actively refused it.\"\ntime=\"2026-08-05T13:59:35+02:00\" level=warning msg=\"Request Failed\" error=\"Get \\\"http://localhost:3000/health\\\": dial tcp 127.0.0.1:3000: connectex: No connection could be made because the target machine actively refused it.\"\ntime=\"2026-08-05T13:59:35+02:00\" level=warning msg=\"Request Failed\" error=\"Get \\\"http://localhost:3000/health\\\": dial tcp 127.0.0.1:3000: connectex: No connection could be made because the target machine actively refused it.\"\ntime=\"2026-08-05T13:59:35+02:00\" level=warning msg=\"Request Failed\" error=\"Get \\\"http://localhost:3000/health\\\": dial tcp 127.0.0.1:3000: connectex: No connection could be made because the target machine actively refused it.\"\ntime=\"2026-08-05T13:59:36+02:00\" level=warning msg=\"Request Failed\" error=\"Get \\\"http://localhost:3000/health\\\": dial tcp 127.0.0.1:3000: connectex: No connection could be made because the target machine actively refused it.\"\ntime=\"2026-08-05T13:59:36+02:00\" level=warning msg=\"Request Failed\" error=\"Get \\\"http://localhost:3000/health\\\": dial tcp 127.0.0.1:3000: connectex: No connection could be made because the target machine actively refused it.\"\ntime=\"2026-08-05T13:59:36+02:00\" level=warning msg=\"Request Failed\" error=\"Get \\\"http://localhost:3000/health\\\": dial tcp 127.0.0.1:3000: connectex: No connection could be made because the target machine actively refused it.\"\ntime=\"2026-08-05T13:59:36+02:00\" level=warning msg=\"Request Failed\" error=\"Get \\\"http://localhost:3000/health\\\": dial tcp 127.0.0.1:3000: connectex: No connection could be made because the target machine actively refused it.\"\ntime=\"2026-08-05T13:59:36+02:00\" level=warning msg=\"Request Failed\" error=\"Get \\\"http://localhost:3000/health\\\": dial tcp 127.0.0.1:3000: connectex: No connection could be made because the target machine actively refused it.\"\ntime=\"2026-08-05T13:59:36+02:00\" level=warning msg=\"Request Failed\" error=\"Get \\\"http://localhost:3000/health\\\": dial tcp 127.0.0.1:3000: connectex: No connection could be made because the target machine actively refused it.\"\ntime=\"2026-08-05T13:59:36+02:00\" level=warning msg=\"Request Failed\" error=\"Get \\\"http://localhost:3000/health\\\": dial tcp 127.0.0.1:3000: connectex: No connection could be made because the target machine actively refused it.\"\ntime=\"2026-08-05T13:59:36+02:00\" level=warning msg=\"Request Failed\" error=\"Get \\\"http://localhost:3000/health\\\": dial tcp 127.0.0.1:3000: connectex: No connection could be made because the target machine actively refused it.\"\ntime=\"2026-08-05T13:59:36+02:00\" level=warning msg=\"Request Failed\" error=\"Get \\\"http://localhost:3000/health\\\": dial tcp 127.0.0.1:3000: connectex: No connection could be made because the target machine actively refused it.\"\ntime=\"2026-08-05T13:59:36+02:00\" level=warning msg=\"Request Failed\" error=\"Get \\\"http://localhost:3000/health\\\": dial tcp 127.0.0.1:3000: connectex: No connection could be made because the target machine actively refused it.\"\ntime=\"2026-08-05T13:59:37+02:00\" level=warning msg=\"Request Failed\" error=\"Get \\\"http://localhost:3000/health\\\": dial tcp 127.0.0.1:3000: connectex: No connection could be made because the target machine actively refused it.\"\ntime=\"2026-08-05T13:59:37+02:00\" level=warning msg=\"Request Failed\" error=\"Get \\\"http://localhost:3000/health\\\": dial tcp 127.0.0.1:3000: connectex: No connection could be made because the target machine actively refused it.\"\ntime=\"2026-08-05T13:59:37+02:00\" level=warning msg=\"Request Failed\" error=\"Get \\\"http://localhost:3000/health\\\": dial tcp 127.0.0.1:3000: connectex: No connection could be made because the target machine actively refused it.\"\ntime=\"2026-08-05T13:59:37+02:00\" level=warning msg=\"Request Failed\" error=\"Get \\\"http://localhost:3000/health\\\": dial tcp 127.0.0.1:3000: connectex: No connection could be made because the target machine actively refused it.\"\ntime=\"2026-08-05T13:59:37+02:00\" level=warning msg=\"Request Failed\" error=\"Get \\\"http://localhost:3000/health\\\": dial tcp 127.0.0.1:3000: connectex: No connection could be made because the target machine actively refused it.\"\ntime=\"2026-08-05T13:59:37+02:00\" level=warning msg=\"Request Failed\" error=\"Get \\\"http://localhost:3000/health\\\": dial tcp 127.0.0.1:3000: connectex: No connection could be made because the target machine actively refused it.\"\ntime=\"2026-08-05T13:59:37+02:00\" level=warning msg=\"Request Failed\" error=\"Get \\\"http://localhost:3000/health\\\": dial tcp 127.0.0.1:3000: connectex: No connection could be made because the target machine actively refused it.\"\ntime=\"2026-08-05T13:59:37+02:00\" level=warning msg=\"Request Failed\" error=\"Get \\\"http://localhost:3000/health\\\": dial tcp 127.0.0.1:3000: connectex: No connection could be made because the target machine actively refused it.\"\ntime=\"2026-08-05T13:59:37+02:00\" level=warning msg=\"Request Failed\" error=\"Get \\\"http://localhost:3000/health\\\": dial tcp 127.0.0.1:3000: connectex: No connection could be made because the target machine actively refused it.\"\ntime=\"2026-08-05T13:59:37+02:00\" level=warning msg=\"Request Failed\" error=\"Get \\\"http://localhost:3000/health\\\": dial tcp 127.0.0.1:3000: connectex: No connection could be made because the target machine actively refused it.\"\ntime=\"2026-08-05T13:59:38+02:00\" level=warning msg=\"Request Failed\" error=\"Get \\\"http://localhost:3000/health\\\": dial tcp 127.0.0.1:3000: connectex: No connection could be made because the target machine actively refused it.\"\ntime=\"2026-08-05T13:59:38+02:00\" level=warning msg=\"Request Failed\" error=\"Get \\\"http://localhost:3000/health\\\": dial tcp 127.0.0.1:3000: connectex: No connection could be made because the target machine actively refused it.\"\ntime=\"2026-08-05T13:59:38+02:00\" level=warning msg=\"Request Failed\" error=\"Get \\\"http://localhost:3000/health\\\": dial tcp 127.0.0.1:3000: connectex: No connection could be made because the target machine actively refused it.\"\ntime=\"2026-08-05T13:59:38+02:00\" level=warning msg=\"Request Failed\" error=\"Get \\\"http://localhost:3000/health\\\": dial tcp 127.0.0.1:3000: connectex: No connection could be made because the target machine actively refused it.\"\ntime=\"2026-08-05T13:59:38+02:00\" level=warning msg=\"Request Failed\" error=\"Get \\\"http://localhost:3000/health\\\": dial tcp 127.0.0.1:3000: connectex: No connection could be made because the target machine actively refused it.\"\ntime=\"2026-08-05T13:59:38+02:00\" level=warning msg=\"Request Failed\" error=\"Get \\\"http://localhost:3000/health\\\": dial tcp 127.0.0.1:3000: connectex: No connection could be made because the target machine actively refused it.\"\ntime=\"2026-08-05T13:59:38+02:00\" level=warning msg=\"Request Failed\" error=\"Get \\\"http://localhost:3000/health\\\": dial tcp 127.0.0.1:3000: connectex: No connection could be made because the target machine actively refused it.\"\ntime=\"2026-08-05T13:59:38+02:00\" level=warning msg=\"Request Failed\" error=\"Get \\\"http://localhost:3000/health\\\": dial tcp 127.0.0.1:3000: connectex: No connection could be made because the target machine actively refused it.\"\ntime=\"2026-08-05T13:59:38+02:00\" level=warning msg=\"Request Failed\" error=\"Get \\\"http://localhost:3000/health\\\": dial tcp 127.0.0.1:3000: connectex: No connection could be made because the target machine actively refused it.\"\ntime=\"2026-08-05T13:59:38+02:00\" level=warning msg=\"Request Failed\" error=\"Get \\\"http://localhost:3000/health\\\": dial tcp 127.0.0.1:3000: connectex: No connection could be made because the target machine actively refused it.\"\ntime=\"2026-08-05T13:59:39+02:00\" level=warning msg=\"Request Failed\" error=\"Get \\\"http://localhost:3000/health\\\": dial tcp 127.0.0.1:3000: connectex: No connection could be made because the target machine actively refused it.\"\ntime=\"2026-08-05T13:59:39+02:00\" level=warning msg=\"Request Failed\" error=\"Get \\\"http://localhost:3000/health\\\": dial tcp 127.0.0.1:3000: connectex: No connection could be made because the target machine actively refused it.\"\ntime=\"2026-08-05T13:59:39+02:00\" level=warning msg=\"Request Failed\" error=\"Get \\\"http://localhost:3000/health\\\": dial tcp 127.0.0.1:3000: connectex: No connection could be made because the target machine actively refused it.\"\ntime=\"2026-08-05T13:59:39+02:00\" level=warning msg=\"Request Failed\" error=\"Get \\\"http://localhost:3000/health\\\": dial tcp 127.0.0.1:3000: connectex: No connection could be made because the target machine actively refused it.\"\ntime=\"2026-08-05T13:59:39+02:00\" level=warning msg=\"Request Failed\" error=\"Get \\\"http://localhost:3000/health\\\": dial tcp 127.0.0.1:3000: connectex: No connection could be made because the target machine actively refused it.\"\ntime=\"2026-08-05T13:59:39+02:00\" level=warning msg=\"Request Failed\" error=\"Get \\\"http://localhost:3000/health\\\": dial tcp 127.0.0.1:3000: connectex: No connection could be made because the target machine actively refused it.\"\ntime=\"2026-08-05T13:59:39+02:00\" level=warning msg=\"Request Failed\" error=\"Get \\\"http://localhost:3000/health\\\": dial tcp 127.0.0.1:3000: connectex: No connection could be made because the target machine actively refused it.\"\ntime=\"2026-08-05T13:59:39+02:00\" level=warning msg=\"Request Failed\" error=\"Get \\\"http://localhost:3000/health\\\": dial tcp 127.0.0.1:3000: connectex: No connection could be made because the target machine actively refused it.\"\ntime=\"2026-08-05T13:59:39+02:00\" level=warning msg=\"Request Failed\" error=\"Get \\\"http://localhost:3000/health\\\": dial tcp 127.0.0.1:3000: connectex: No connection could be made because the target machine actively refused it.\"\ntime=\"2026-08-05T13:59:39+02:00\" level=warning msg=\"Request Failed\" error=\"Get \\\"http://localhost:3000/health\\\": dial tcp 127.0.0.1:3000: connectex: No connection could be made because the target machine actively refused it.\"\ntime=\"2026-08-05T13:59:40+02:00\" level=warning msg=\"Request Failed\" error=\"Get \\\"http://localhost:3000/health\\\": dial tcp 127.0.0.1:3000: connectex: No connection could be made because the target machine actively refused it.\"\ntime=\"2026-08-05T13:59:40+02:00\" level=warning msg=\"Request Failed\" error=\"Get \\\"http://localhost:3000/health\\\": dial tcp 127.0.0.1:3000: connectex: No connection could be made because the target machine actively refused it.\"\ntime=\"2026-08-05T13:59:40+02:00\" level=warning msg=\"Request Failed\" error=\"Get \\\"http://localhost:3000/health\\\": dial tcp 127.0.0.1:3000: connectex: No connection could be made because the target machine actively refused it.\"\ntime=\"2026-08-05T13:59:40+02:00\" level=warning msg=\"Request Failed\" error=\"Get \\\"http://localhost:3000/health\\\": dial tcp 127.0.0.1:3000: connectex: No connection could be made because the target machine actively refused it.\"\ntime=\"2026-08-05T13:59:40+02:00\" level=warning msg=\"Request Failed\" error=\"Get \\\"http://localhost:3000/health\\\": dial tcp 127.0.0.1:3000: connectex: No connection could be made because the target machine actively refused it.\"\ntime=\"2026-08-05T13:59:40+02:00\" level=warning msg=\"Request Failed\" error=\"Get \\\"http://localhost:3000/health\\\": dial tcp 127.0.0.1:3000: connectex: No connection could be made because the target machine actively refused it.\"\ntime=\"2026-08-05T13:59:40+02:00\" level=warning msg=\"Request Failed\" error=\"Get \\\"http://localhost:3000/health\\\": dial tcp 127.0.0.1:3000: connectex: No connection could be made because the target machine actively refused it.\"\ntime=\"2026-08-05T13:59:40+02:00\" level=warning msg=\"Request Failed\" error=\"Get \\\"http://localhost:3000/health\\\": dial tcp 127.0.0.1:3000: connectex: No connection could be made because the target machine actively refused it.\"\ntime=\"2026-08-05T13:59:40+02:00\" level=warning msg=\"Request Failed\" error=\"Get \\\"http://localhost:3000/health\\\": dial tcp 127.0.0.1:3000: connectex: No connection could be made because the target machine actively refused it.\"\ntime=\"2026-08-05T13:59:40+02:00\" level=warning msg=\"Request Failed\" error=\"Get \\\"http://localhost:3000/health\\\": dial tcp 127.0.0.1:3000: connectex: No connection could be made because the target machine actively refused it.\"\ntime=\"2026-08-05T13:59:42+02:00\" level=error msg=\"thresholds on metrics 'http_req_failed' have been crossed\"\n"
+    }
+  },
+  "remediations": [
+    {
+      "tool": "DocumentationAgent",
+      "success": true,
+      "pr_url": null,
+      "commit_hash": null,
+      "message": "Structural documentation generated (no AI)."
+    }
+  ],
+  "insights": [
+    {
+      "path": "tests\\performance\\__init__.py",
+      "extension": ".py",
+      "size_kb": 0.0,
+      "last_modified": "2026-07-24T21:04:18.438244",
+      "content_type": "text",
+      "purpose": "Not specified",
+      "key_entities": [],
+      "business_rules": [],
+      "related_modules": [],
+      "duplication_reason": "",
+      "recommendation": "Normal file. No specific recommendations.",
+      "raw_preview": "",
+      "business_value": {
+        "products": [],
+        "packaging_rules": [],
+        "export_regulations": [],
+        "api_endpoints": [],
+        "workflows": []
+      }
+    },
+    {
+      "path": "shared\\utilities\\index.ts",
+      "extension": ".ts",
+      "size_kb": 0.0,
+      "last_modified": "2026-07-30T13:30:39.004714",
+      "content_type": "source_code",
+      "purpose": "UI component or logic module",
+      "key_entities": [],
+      "business_rules": [],
+      "related_modules": [],
+      "duplication_reason": "",
+      "recommendation": "Normal file. No specific recommendations.",
+      "raw_preview": "",
+      "business_value": {
+        "products": [],
+        "packaging_rules": [],
+        "export_regulations": [],
+        "api_endpoints": [],
+        "workflows": []
+      }
+    },
+    {
+      "path": "shared\\validators\\index.ts",
+      "extension": ".ts",
+      "size_kb": 0.0,
+      "last_modified": "2026-07-30T13:30:38.995884",
+      "content_type": "source_code",
+      "purpose": "UI component or logic module",
+      "key_entities": [],
+      "business_rules": [],
+      "related_modules": [],
+      "duplication_reason": "",
+      "recommendation": "Normal file. No specific recommendations.",
+      "raw_preview": "",
+      "business_value": {
+        "products": [],
+        "packaging_rules": [],
+        "export_regulations": [],
+        "api_endpoints": [],
+        "workflows": []
+      }
+    },
+    {
+      "path": "intelligence\\intelligence\\analytics\\index.ts",
+      "extension": ".ts",
+      "size_kb": 0.0,
+      "last_modified": "2026-07-30T13:31:29.896238",
+      "content_type": "source_code",
+      "purpose": "UI component or logic module",
+      "key_entities": [],
+      "business_rules": [],
+      "related_modules": [],
+      "duplication_reason": "",
+      "recommendation": "Normal file. No specific recommendations.",
+      "raw_preview": "",
+      "business_value": {
+        "products": [],
+        "packaging_rules": [],
+        "export_regulations": [],
+        "api_endpoints": [],
+        "workflows": []
+      }
+    },
+    {
+      "path": "intelligence\\intelligence\\decision-support\\index.ts",
+      "extension": ".ts",
+      "size_kb": 0.0,
+      "last_modified": "2026-07-30T13:31:29.903542",
+      "content_type": "source_code",
+      "purpose": "UI component or logic module",
+      "key_entities": [],
+      "business_rules": [],
+      "related_modules": [],
+      "duplication_reason": "",
+      "recommendation": "Normal file. No specific recommendations.",
+      "raw_preview": "",
+      "business_value": {
+        "products": [],
+        "packaging_rules": [],
+        "export_regulations": [],
+        "api_endpoints": [],
+        "workflows": []
+      }
+    },
+    {
+      "path": "intelligence\\intelligence\\metrics\\index.ts",
+      "extension": ".ts",
+      "size_kb": 0.0,
+      "last_modified": "2026-07-30T13:31:29.900906",
+      "content_type": "source_code",
+      "purpose": "UI component or logic module",
+      "key_entities": [],
+      "business_rules": [],
+      "related_modules": [],
+      "duplication_reason": "",
+      "recommendation": "Normal file. No specific recommendations.",
+      "raw_preview": "",
+      "business_value": {
+        "products": [],
+        "packaging_rules": [],
+        "export_regulations": [],
+        "api_endpoints": [],
+        "workflows": []
+      }
+    },
+    {
+      "path": "intelligence\\intelligence\\recommendations\\index.ts",
+      "extension": ".ts",
+      "size_kb": 0.0,
+      "last_modified": "2026-07-30T13:31:29.902361",
+      "content_type": "source_code",
+      "purpose": "UI component or logic module",
+      "key_entities": [],
+      "business_rules": [],
+      "related_modules": [],
+      "duplication_reason": "",
+      "recommendation": "Normal file. No specific recommendations.",
+      "raw_preview": "",
+      "business_value": {
+        "products": [],
+        "packaging_rules": [],
+        "export_regulations": [],
+        "api_endpoints": [],
+        "workflows": []
+      }
+    },
+    {
+      "path": "intelligence\\intelligence\\reporting\\index.ts",
+      "extension": ".ts",
+      "size_kb": 0.0,
+      "last_modified": "2026-07-30T13:31:29.898350",
+      "content_type": "source_code",
+      "purpose": "UI component or logic module",
+      "key_entities": [],
+      "business_rules": [],
+      "related_modules": [],
+      "duplication_reason": "",
+      "recommendation": "Normal file. No specific recommendations.",
+      "raw_preview": "",
+      "business_value": {
+        "products": [],
+        "packaging_rules": [],
+        "export_regulations": [],
+        "api_endpoints": [],
+        "workflows": []
+      }
+    },
+    {
+      "path": "intelligence\\intelligence\\scanners\\system-scanner.ts",
+      "extension": ".ts",
+      "size_kb": 0.0,
+      "last_modified": "2026-07-23T15:52:41.481882",
+      "content_type": "source_code",
+      "purpose": "UI component or logic module",
+      "key_entities": [],
+      "business_rules": [],
+      "related_modules": [],
+      "duplication_reason": "",
+      "recommendation": "Normal file. No specific recommendations.",
+      "raw_preview": "",
+      "business_value": {
+        "products": [],
+        "packaging_rules": [],
+        "export_regulations": [],
+        "api_endpoints": [],
+        "workflows": []
+      }
+    },
+    {
+      "path": "eos-core\\master-data\\master-data\\contracts\\master-data-contracts.ts",
+      "extension": ".ts",
+      "size_kb": 0.0,
+      "last_modified": "2026-07-30T13:34:19.047084",
+      "content_type": "source_code",
+      "purpose": "UI component or logic module",
+      "key_entities": [],
+      "business_rules": [],
+      "related_modules": [],
+      "duplication_reason": "",
+      "recommendation": "Normal file. No specific recommendations.",
+      "raw_preview": "",
+      "business_value": {
+        "products": [],
+        "packaging_rules": [],
+        "export_regulations": [],
+        "api_endpoints": [],
+        "workflows": []
+      }
+    },
+    {
+      "path": "eos-core\\master-data\\master-data\\events\\master-data-events.ts",
+      "extension": ".ts",
+      "size_kb": 0.0,
+      "last_modified": "2026-07-30T13:34:19.048429",
+      "content_type": "source_code",
+      "purpose": "UI component or logic module",
+      "key_entities": [],
+      "business_rules": [],
+      "related_modules": [],
+      "duplication_reason": "",
+      "recommendation": "Normal file. No specific recommendations.",
+      "raw_preview": "",
+      "business_value": {
+        "products": [],
+        "packaging_rules": [],
+        "export_regulations": [],
+        "api_endpoints": [],
+        "workflows": []
+      }
+    },
+    {
+      "path": "eos-core\\master-data\\master-data\\mapping\\entity-mapping.ts",
+      "extension": ".ts",
+      "size_kb": 0.0,
+      "last_modified": "2026-07-30T13:34:19.053947",
+      "content_type": "source_code",
+      "purpose": "UI component or logic module",
+      "key_entities": [],
+      "business_rules": [],
+      "related_modules": [],
+      "duplication_reason": "",
+      "recommendation": "Normal file. No specific recommendations.",
+      "raw_preview": "",
+      "business_value": {
+        "products": [],
+        "packaging_rules": [],
+        "export_regulations": [],
+        "api_endpoints": [],
+        "workflows": []
+      }
+    },
+    {
+      "path": "eos-core\\master-data\\master-data\\schemas\\master-data-schema.ts",
+      "extension": ".ts",
+      "size_kb": 0.0,
+      "last_modified": "2026-07-30T13:34:19.048429",
+      "content_type": "source_code",
+      "purpose": "UI component or logic module",
+      "key_entities": [],
+      "business_rules": [],
+      "related_modules": [],
+      "duplication_reason": "",
+      "recommendation": "Normal file. No specific recommendations.",
+      "raw_preview": "",
+      "business_value": {
+        "products": [],
+        "packaging_rules": [],
+        "export_regulations": [],
+        "api_endpoints": [],
+        "workflows": []
+      }
+    },
+    {
+      "path": "eos-core\\master-data\\master-data\\validation\\master-data-rules.ts",
+      "extension": ".ts",
+      "size_kb": 0.0,
+      "last_modified": "2026-07-30T13:34:19.050438",
+      "content_type": "source_code",
+      "purpose": "UI component or logic module",
+      "key_entities": [],
+      "business_rules": [],
+      "related_modules": [],
+      "duplication_reason": "",
+      "recommendation": "Normal file. No specific recommendations.",
+      "raw_preview": "",
+      "business_value": {
+        "products": [],
+        "packaging_rules": [],
+        "export_regulations": [],
+        "api_endpoints": [],
+        "workflows": []
+      }
+    },
+    {
+      "path": "domain\\supplier\\entities\\supplier-entity.ts",
+      "extension": ".ts",
+      "size_kb": 0.0,
+      "last_modified": "2026-07-30T13:29:00.553926",
+      "content_type": "source_code",
+      "purpose": "UI component or logic module",
+      "key_entities": [],
+      "business_rules": [],
+      "related_modules": [],
+      "duplication_reason": "",
+      "recommendation": "Normal file. No specific recommendations.",
+      "raw_preview": "",
+      "business_value": {
+        "products": [],
+        "packaging_rules": [],
+        "export_regulations": [],
+        "api_endpoints": [],
+        "workflows": []
+      }
+    },
+    {
+      "path": "domain\\supplier\\rules\\supplier-rules.ts",
+      "extension": ".ts",
+      "size_kb": 0.0,
+      "last_modified": "2026-07-30T13:29:00.554889",
+      "content_type": "source_code",
+      "purpose": "UI component or logic module",
+      "key_entities": [],
+      "business_rules": [],
+      "related_modules": [],
+      "duplication_reason": "",
+      "recommendation": "Normal file. No specific recommendations.",
+      "raw_preview": "",
+      "business_value": {
+        "products": [],
+        "packaging_rules": [],
+        "export_regulations": [],
+        "api_endpoints": [],
+        "workflows": []
+      }
+    },
+    {
+      "path": "domain\\supplier\\services\\supplier-service.ts",
+      "extension": ".ts",
+      "size_kb": 0.0,
+      "last_modified": "2026-07-30T13:29:00.554889",
+      "content_type": "source_code",
+      "purpose": "UI component or logic module",
+      "key_entities": [],
+      "business_rules": [],
+      "related_modules": [],
+      "duplication_reason": "",
+      "recommendation": "Normal file. No specific recommendations.",
+      "raw_preview": "",
+      "business_value": {
+        "products": [],
+        "packaging_rules": [],
+        "export_regulations": [],
+        "api_endpoints": [],
+        "workflows": []
+      }
+    },
+    {
+      "path": "domain\\quality\\entities\\quality-entity.ts",
+      "extension": ".ts",
+      "size_kb": 0.0,
+      "last_modified": "2026-07-30T13:29:00.566469",
+      "content_type": "source_code",
+      "purpose": "UI component or logic module",
+      "key_entities": [],
+      "business_rules": [],
+      "related_modules": [],
+      "duplication_reason": "",
+      "recommendation": "Normal file. No specific recommendations.",
+      "raw_preview": "",
+      "business_value": {
+        "products": [],
+        "packaging_rules": [],
+        "export_regulations": [],
+        "api_endpoints": [],
+        "workflows": []
+      }
+    },
+    {
+      "path": "domain\\quality\\rules\\quality-rules.ts",
+      "extension": ".ts",
+      "size_kb": 0.0,
+      "last_modified": "2026-07-30T13:29:00.570587",
+      "content_type": "source_code",
+      "purpose": "UI component or logic module",
+      "key_entities": [],
+      "business_rules": [],
+      "related_modules": [],
+      "duplication_reason": "",
+      "recommendation": "Normal file. No specific recommendations.",
+      "raw_preview": "",
+      "business_value": {
+        "products": [],
+        "packaging_rules": [],
+        "export_regulations": [],
+        "api_endpoints": [],
+        "workflows": []
+      }
+    },
+    {
+      "path": "domain\\quality\\services\\quality-service.ts",
+      "extension": ".ts",
+      "size_kb": 0.0,
+      "last_modified": "2026-07-30T13:29:00.567287",
+      "content_type": "source_code",
+      "purpose": "UI component or logic module",
+      "key_entities": [],
+      "business_rules": [],
+      "related_modules": [],
+      "duplication_reason": "",
+      "recommendation": "Normal file. No specific recommendations.",
+      "raw_preview": "",
+      "business_value": {
+        "products": [],
+        "packaging_rules": [],
+        "export_regulations": [],
+        "api_endpoints": [],
+        "workflows": []
+      }
+    },
+    {
+      "path": "domain\\product\\entities\\product-entity.ts",
+      "extension": ".ts",
+      "size_kb": 0.0,
+      "last_modified": "2026-07-30T13:29:00.535422",
+      "content_type": "source_code",
+      "purpose": "UI component or logic module",
+      "key_entities": [],
+      "business_rules": [],
+      "related_modules": [],
+      "duplication_reason": "",
+      "recommendation": "Normal file. No specific recommendations.",
+      "raw_preview": "",
+      "business_value": {
+        "products": [],
+        "packaging_rules": [],
+        "export_regulations": [],
+        "api_endpoints": [],
+        "workflows": []
+      }
+    },
+    {
+      "path": "domain\\product\\rules\\product-rules.ts",
+      "extension": ".ts",
+      "size_kb": 0.0,
+      "last_modified": "2026-07-30T13:29:00.539478",
+      "content_type": "source_code",
+      "purpose": "UI component or logic module",
+      "key_entities": [],
+      "business_rules": [],
+      "related_modules": [],
+      "duplication_reason": "",
+      "recommendation": "Normal file. No specific recommendations.",
+      "raw_preview": "",
+      "business_value": {
+        "products": [],
+        "packaging_rules": [],
+        "export_regulations": [],
+        "api_endpoints": [],
+        "workflows": []
+      }
+    },
+    {
+      "path": "domain\\product\\services\\product-service.ts",
+      "extension": ".ts",
+      "size_kb": 0.0,
+      "last_modified": "2026-07-30T13:29:00.538127",
+      "content_type": "source_code",
+      "purpose": "UI component or logic module",
+      "key_entities": [],
+      "business_rules": [],
+      "related_modules": [],
+      "duplication_reason": "",
+      "recommendation": "Normal file. No specific recommendations.",
+      "raw_preview": "",
+      "business_value": {
+        "products": [],
+        "packaging_rules": [],
+        "export_regulations": [],
+        "api_endpoints": [],
+        "workflows": []
+      }
+    },
+    {
+      "path": "domain\\logistics\\entities\\logistics-entity.ts",
+      "extension": ".ts",
+      "size_kb": 0.0,
+      "last_modified": "2026-07-30T13:29:00.560748",
+      "content_type": "source_code",
+      "purpose": "UI component or logic module",
+      "key_entities": [],
+      "business_rules": [],
+      "related_modules": [],
+      "duplication_reason": "",
+      "recommendation": "Normal file. No specific recommendations.",
+      "raw_preview": "",
+      "business_value": {
+        "products": [],
+        "packaging_rules": [],
+        "export_regulations": [],
+        "api_endpoints": [],
+        "workflows": []
+      }
+    },
+    {
+      "path": "domain\\logistics\\rules\\logistics-rules.ts",
+      "extension": ".ts",
+      "size_kb": 0.0,
+      "last_modified": "2026-07-30T13:29:00.562539",
+      "content_type": "source_code",
+      "purpose": "UI component or logic module",
+      "key_entities": [],
+      "business_rules": [],
+      "related_modules": [],
+      "duplication_reason": "",
+      "recommendation": "Normal file. No specific recommendations.",
+      "raw_preview": "",
+      "business_value": {
+        "products": [],
+        "packaging_rules": [],
+        "export_regulations": [],
+        "api_endpoints": [],
+        "workflows": []
+      }
+    },
+    {
+      "path": "domain\\logistics\\services\\logistics-service.ts",
+      "extension": ".ts",
+      "size_kb": 0.0,
+      "last_modified": "2026-07-30T13:29:00.561701",
+      "content_type": "source_code",
+      "purpose": "UI component or logic module",
+      "key_entities": [],
+      "business_rules": [],
+      "related_modules": [],
+      "duplication_reason": "",
+      "recommendation": "Normal file. No specific recommendations.",
+      "raw_preview": "",
+      "business_value": {
+        "products": [],
+        "packaging_rules": [],
+        "export_regulations": [],
+        "api_endpoints": [],
+        "workflows": []
+      }
+    },
+    {
+      "path": "domain\\inventory\\entities\\inventory-entity.ts",
+      "extension": ".ts",
+      "size_kb": 0.0,
+      "last_modified": "2026-07-30T13:29:00.557553",
+      "content_type": "source_code",
+      "purpose": "UI component or logic module",
+      "key_entities": [],
+      "business_rules": [],
+      "related_modules": [],
+      "duplication_reason": "",
+      "recommendation": "Normal file. No specific recommendations.",
+      "raw_preview": "",
+      "business_value": {
+        "products": [],
+        "packaging_rules": [],
+        "export_regulations": [],
+        "api_endpoints": [],
+        "workflows": []
+      }
+    },
+    {
+      "path": "domain\\inventory\\rules\\inventory-rules.ts",
+      "extension": ".ts",
+      "size_kb": 0.0,
+      "last_modified": "2026-07-30T13:29:00.560013",
+      "content_type": "source_code",
+      "purpose": "UI component or logic module",
+      "key_entities": [],
+      "business_rules": [],
+      "related_modules": [],
+      "duplication_reason": "",
+      "recommendation": "Normal file. No specific recommendations.",
+      "raw_preview": "",
+      "business_value": {
+        "products": [],
+        "packaging_rules": [],
+        "export_regulations": [],
+        "api_endpoints": [],
+        "workflows": []
+      }
+    },
+    {
+      "path": "domain\\inventory\\services\\inventory-service.ts",
+      "extension": ".ts",
+      "size_kb": 0.0,
+      "last_modified": "2026-07-30T13:29:00.558650",
+      "content_type": "source_code",
+      "purpose": "UI component or logic module",
+      "key_entities": [],
+      "business_rules": [],
+      "related_modules": [],
+      "duplication_reason": "",
+      "recommendation": "Normal file. No specific recommendations.",
+      "raw_preview": "",
+      "business_value": {
+        "products": [],
+        "packaging_rules": [],
+        "export_regulations": [],
+        "api_endpoints": [],
+        "workflows": []
+      }
+    },
+    {
+      "path": "domain\\customer\\entities\\customer-entity.ts",
+      "extension": ".ts",
+      "size_kb": 0.0,
+      "last_modified": "2026-07-30T13:29:00.563565",
+      "content_type": "source_code",
+      "purpose": "UI component or logic module",
+      "key_entities": [],
+      "business_rules": [],
+      "related_modules": [],
+      "duplication_reason": "",
+      "recommendation": "Normal file. No specific recommendations.",
+      "raw_preview": "",
+      "business_value": {
+        "products": [],
+        "packaging_rules": [],
+        "export_regulations": [],
+        "api_endpoints": [],
+        "workflows": []
+      }
+    },
+    {
+      "path": "domain\\customer\\rules\\customer-rules.ts",
+      "extension": ".ts",
+      "size_kb": 0.0,
+      "last_modified": "2026-07-30T13:29:00.565617",
+      "content_type": "source_code",
+      "purpose": "UI component or logic module",
+      "key_entities": [],
+      "business_rules": [],
+      "related_modules": [],
+      "duplication_reason": "",
+      "recommendation": "Normal file. No specific recommendations.",
+      "raw_preview": "",
+      "business_value": {
+        "products": [],
+        "packaging_rules": [],
+        "export_regulations": [],
+        "api_endpoints": [],
+        "workflows": []
+      }
+    },
+    {
+      "path": "domain\\customer\\services\\customer-service.ts",
+      "extension": ".ts",
+      "size_kb": 0.0,
+      "last_modified": "2026-07-30T13:29:00.564696",
+      "content_type": "source_code",
+      "purpose": "UI component or logic module",
+      "key_entities": [],
+      "business_rules": [],
+      "related_modules": [],
+      "duplication_reason": "",
+      "recommendation": "Normal file. No specific recommendations.",
+      "raw_preview": "",
+      "business_value": {
+        "products": [],
+        "packaging_rules": [],
+        "export_regulations": [],
+        "api_endpoints": [],
+        "workflows": []
+      }
+    },
+    {
+      "path": "database\\connections\\index.ts",
+      "extension": ".ts",
+      "size_kb": 0.0,
+      "last_modified": "2026-07-30T13:31:04.602943",
+      "content_type": "source_code",
+      "purpose": "UI component or logic module",
+      "key_entities": [],
+      "business_rules": [],
+      "related_modules": [],
+      "duplication_reason": "",
+      "recommendation": "Normal file. No specific recommendations.",
+      "raw_preview": "",
+      "business_value": {
+        "products": [],
+        "packaging_rules": [],
+        "export_regulations": [],
+        "api_endpoints": [],
+        "workflows": []
+      }
+    },
+    {
+      "path": "database\\indexes\\README.md",
+      "extension": ".md",
+      "size_kb": 0.0,
+      "last_modified": "2026-07-30T13:33:36.924375",
+      "content_type": "text",
+      "purpose": "Not specified",
+      "key_entities": [],
+      "business_rules": [],
+      "related_modules": [],
+      "duplication_reason": "",
+      "recommendation": "Normal file. No specific recommendations.",
+      "raw_preview": "",
+      "business_value": {
+        "products": [],
+        "packaging_rules": [],
+        "export_regulations": [],
+        "api_endpoints": [],
+        "workflows": []
+      }
+    },
+    {
+      "path": "database\\models\\entities.ts",
+      "extension": ".ts",
+      "size_kb": 0.0,
+      "last_modified": "2026-07-30T13:33:36.919365",
+      "content_type": "source_code",
+      "purpose": "UI component or logic module",
+      "key_entities": [],
+      "business_rules": [],
+      "related_modules": [],
+      "duplication_reason": "",
+      "recommendation": "Normal file. No specific recommendations.",
+      "raw_preview": "",
+      "business_value": {
+        "products": [],
+        "packaging_rules": [],
+        "export_regulations": [],
+        "api_endpoints": [],
+        "workflows": []
+      }
+    },
+    {
+      "path": "database\\models\\index.ts",
+      "extension": ".ts",
+      "size_kb": 0.0,
+      "last_modified": "2026-07-30T13:31:04.593810",
+      "content_type": "source_code",
+      "purpose": "UI component or logic module",
+      "key_entities": [],
+      "business_rules": [],
+      "related_modules": [],
+      "duplication_reason": "",
+      "recommendation": "Normal file. No specific recommendations.",
+      "raw_preview": "",
+      "business_value": {
+        "products": [],
+        "packaging_rules": [],
+        "export_regulations": [],
+        "api_endpoints": [],
+        "workflows": []
+      }
+    },
+    {
+      "path": "database\\repositories\\index.ts",
+      "extension": ".ts",
+      "size_kb": 0.0,
+      "last_modified": "2026-07-30T13:31:04.596700",
+      "content_type": "source_code",
+      "purpose": "UI component or logic module",
+      "key_entities": [],
+      "business_rules": [],
+      "related_modules": [],
+      "duplication_reason": "",
+      "recommendation": "Normal file. No specific recommendations.",
+      "raw_preview": "",
+      "business_value": {
+        "products": [],
+        "packaging_rules": [],
+        "export_regulations": [],
+        "api_endpoints": [],
+        "workflows": []
+      }
+    },
+    {
+      "path": "database\\repositories\\repository-contracts.ts",
+      "extension": ".ts",
+      "size_kb": 0.0,
+      "last_modified": "2026-07-30T13:33:36.920357",
+      "content_type": "source_code",
+      "purpose": "UI component or logic module",
+      "key_entities": [],
+      "business_rules": [],
+      "related_modules": [],
+      "duplication_reason": "",
+      "recommendation": "Normal file. No specific recommendations.",
+      "raw_preview": "",
+      "business_value": {
+        "products": [],
+        "packaging_rules": [],
+        "export_regulations": [],
+        "api_endpoints": [],
+        "workflows": []
+      }
+    },
+    {
+      "path": "database\\schemas\\index.ts",
+      "extension": ".ts",
+      "size_kb": 0.0,
+      "last_modified": "2026-07-30T13:31:04.591802",
+      "content_type": "source_code",
+      "purpose": "UI component or logic module",
+      "key_entities": [],
+      "business_rules": [],
+      "related_modules": [],
+      "duplication_reason": "",
+      "recommendation": "Normal file. No specific recommendations.",
+      "raw_preview": "",
+      "business_value": {
+        "products": [],
+        "packaging_rules": [],
+        "export_regulations": [],
+        "api_endpoints": [],
+        "workflows": []
+      }
+    },
+    {
+      "path": "database\\schemas\\core\\enterprise-schema.ts",
+      "extension": ".ts",
+      "size_kb": 0.0,
+      "last_modified": "2026-07-30T13:33:36.909020",
+      "content_type": "source_code",
+      "purpose": "UI component or logic module",
+      "key_entities": [],
+      "business_rules": [],
+      "related_modules": [],
+      "duplication_reason": "",
+      "recommendation": "Normal file. No specific recommendations.",
+      "raw_preview": "",
+      "business_value": {
+        "products": [],
+        "packaging_rules": [],
+        "export_regulations": [],
+        "api_endpoints": [],
+        "workflows": []
+      }
+    },
+    {
+      "path": "database\\schemas\\domain\\domain-schema.ts",
+      "extension": ".ts",
+      "size_kb": 0.0,
+      "last_modified": "2026-07-30T13:33:36.909020",
+      "content_type": "source_code",
+      "purpose": "UI component or logic module",
+      "key_entities": [],
+      "business_rules": [],
+      "related_modules": [],
+      "duplication_reason": "",
+      "recommendation": "Normal file. No specific recommendations.",
+      "raw_preview": "",
+      "business_value": {
+        "products": [],
+        "packaging_rules": [],
+        "export_regulations": [],
+        "api_endpoints": [],
+        "workflows": []
+      }
+    },
+    {
+      "path": "application\\supplier\\commands\\supplier-command.ts",
+      "extension": ".ts",
+      "size_kb": 0.0,
+      "last_modified": "2026-07-30T13:30:14.057599",
+      "content_type": "source_code",
+      "purpose": "UI component or logic module",
+      "key_entities": [],
+      "business_rules": [],
+      "related_modules": [],
+      "duplication_reason": "",
+      "recommendation": "Normal file. No specific recommendations.",
+      "raw_preview": "",
+      "business_value": {
+        "products": [],
+        "packaging_rules": [],
+        "export_regulations": [],
+        "api_endpoints": [],
+        "workflows": []
+      }
+    },
+    {
+      "path": "application\\supplier\\queries\\supplier-query.ts",
+      "extension": ".ts",
+      "size_kb": 0.0,
+      "last_modified": "2026-07-30T13:30:14.057599",
+      "content_type": "source_code",
+      "purpose": "UI component or logic module",
+      "key_entities": [],
+      "business_rules": [],
+      "related_modules": [],
+      "duplication_reason": "",
+      "recommendation": "Normal file. No specific recommendations.",
+      "raw_preview": "",
+      "business_value": {
+        "products": [],
+        "packaging_rules": [],
+        "export_regulations": [],
+        "api_endpoints": [],
+        "workflows": []
+      }
+    },
+    {
+      "path": "application\\supplier\\workflows\\supplier-workflow.ts",
+      "extension": ".ts",
+      "size_kb": 0.0,
+      "last_modified": "2026-07-30T13:30:14.057599",
+      "content_type": "source_code",
+      "purpose": "UI component or logic module",
+      "key_entities": [],
+      "business_rules": [],
+      "related_modules": [],
+      "duplication_reason": "",
+      "recommendation": "Normal file. No specific recommendations.",
+      "raw_preview": "",
+      "business_value": {
+        "products": [],
+        "packaging_rules": [],
+        "export_regulations": [],
+        "api_endpoints": [],
+        "workflows": []
+      }
+    },
+    {
+      "path": "application\\quality\\commands\\quality-command.ts",
+      "extension": ".ts",
+      "size_kb": 0.0,
+      "last_modified": "2026-07-30T13:30:14.068007",
+      "content_type": "source_code",
+      "purpose": "UI component or logic module",
+      "key_entities": [],
+      "business_rules": [],
+      "related_modules": [],
+      "duplication_reason": "",
+      "recommendation": "Normal file. No specific recommendations.",
+      "raw_preview": "",
+      "business_value": {
+        "products": [],
+        "packaging_rules": [],
+        "export_regulations": [],
+        "api_endpoints": [],
+        "workflows": []
+      }
+    },
+    {
+      "path": "application\\quality\\queries\\quality-query.ts",
+      "extension": ".ts",
+      "size_kb": 0.0,
+      "last_modified": "2026-07-30T13:30:14.069764",
+      "content_type": "source_code",
+      "purpose": "UI component or logic module",
+      "key_entities": [],
+      "business_rules": [],
+      "related_modules": [],
+      "duplication_reason": "",
+      "recommendation": "Normal file. No specific recommendations.",
+      "raw_preview": "",
+      "business_value": {
+        "products": [],
+        "packaging_rules": [],
+        "export_regulations": [],
+        "api_endpoints": [],
+        "workflows": []
+      }
+    },
+    {
+      "path": "application\\quality\\workflows\\quality-workflow.ts",
+      "extension": ".ts",
+      "size_kb": 0.0,
+      "last_modified": "2026-07-30T13:30:14.069764",
+      "content_type": "source_code",
+      "purpose": "UI component or logic module",
+      "key_entities": [],
+      "business_rules": [],
+      "related_modules": [],
+      "duplication_reason": "",
+      "recommendation": "Normal file. No specific recommendations.",
+      "raw_preview": "",
+      "business_value": {
+        "products": [],
+        "packaging_rules": [],
+        "export_regulations": [],
+        "api_endpoints": [],
+        "workflows": []
+      }
+    },
+    {
+      "path": "application\\product\\commands\\product-command.ts",
+      "extension": ".ts",
+      "size_kb": 0.0,
+      "last_modified": "2026-07-30T13:30:13.974100",
+      "content_type": "source_code",
+      "purpose": "UI component or logic module",
+      "key_entities": [],
+      "business_rules": [],
+      "related_modules": [],
+      "duplication_reason": "",
+      "recommendation": "Normal file. No specific recommendations.",
+      "raw_preview": "",
+      "business_value": {
+        "products": [],
+        "packaging_rules": [],
+        "export_regulations": [],
+        "api_endpoints": [],
+        "workflows": []
+      }
+    },
+    {
+      "path": "application\\product\\queries\\product-query.ts",
+      "extension": ".ts",
+      "size_kb": 0.0,
+      "last_modified": "2026-07-30T13:30:14.054118",
+      "content_type": "source_code",
+      "purpose": "UI component or logic module",
+      "key_entities": [],
+      "business_rules": [],
+      "related_modules": [],
+      "duplication_reason": "",
+      "recommendation": "Normal file. No specific recommendations.",
+      "raw_preview": "",
+      "business_value": {
+        "products": [],
+        "packaging_rules": [],
+        "export_regulations": [],
+        "api_endpoints": [],
+        "workflows": []
+      }
+    },
+    {
+      "path": "application\\product\\workflows\\product-workflow.ts",
+      "extension": ".ts",
+      "size_kb": 0.0,
+      "last_modified": "2026-07-30T13:30:14.056482",
+      "content_type": "source_code",
+      "purpose": "UI component or logic module",
+      "key_entities": [],
+      "business_rules": [],
+      "related_modules": [],
+      "duplication_reason": "",
+      "recommendation": "Normal file. No specific recommendations.",
+      "raw_preview": "",
+      "business_value": {
+        "products": [],
+        "packaging_rules": [],
+        "export_regulations": [],
+        "api_endpoints": [],
+        "workflows": []
+      }
+    }
+  ],
+  "knowledge_base": {
+    "intelligence_tools": {
+      "tools_found": [
+        "intelligence\\scripts\\phase-2-capability-discovery.ps1"
+      ],
+      "execution_results": [],
+      "merged_skills": []
+    },
+    "project_metadata": {
+      "project_name": "Greeny-Life",
+      "total_files": 311,
+      "total_size_mb": 27.257657051086426,
+      "file_types": {
+        ".toml": 1,
+        ".json": 181,
+        ".py": 3,
+        ".csv": 3,
+        ".tsx": 4,
+        ".md": 20,
+        ".ps1": 3,
+        ".jsonl": 4,
+        ".ts": 87,
+        ".prisma": 2,
+        ".js": 2,
+        ".html": 1
+      },
+      "duplicates": [
+        {
+          "file1": "certificate_report_v2.json",
+          "file2": "certificate_report_v4.json",
+          "hash": "099a10a14261bef98a3aae445bc28eb8"
+        },
+        {
+          "file1": "els_report.json",
+          "file2": "els_report_final.json",
+          "hash": "a9331ce77e379d5d0919523a193fc05b"
+        },
+        {
+          "file1": "els_report_final_v2.json",
+          "file2": "els_report_final_v4.json",
+          "hash": "92cfad3654c27ffaf638adcf3c95be70"
+        },
+        {
+          "file1": "els_report_final_v5.json",
+          "file2": "els_report_new.json",
+          "hash": "9e87ffd504379fe03e428cae0bf73934"
+        },
+        {
+          "file1": "supplier_report_v2.json",
+          "file2": "supplier_report_v3.json",
+          "hash": "1b5e1ec25eab30e14880f9ad1b0b4efb"
+        },
+        {
+          "file1": "classification_report_v2.json",
+          "file2": "canonical\\classification_report_v2.json",
+          "hash": "fdde28751845a470213495cf9a889150"
+        },
+        {
+          "file1": "cleanup_report.json",
+          "file2": "canonical\\cleanup_report.json",
+          "hash": "43ac1cd68b0e748dc9250bc7d6410e7e"
+        },
+        {
+          "file1": "final_audit.json",
+          "file2": "canonical\\final_audit.json",
+          "hash": "bb71bb8131057d624656dcbc1af422b9"
+        },
+        {
+          "file1": "system_manifest.json",
+          "file2": "canonical\\system_manifest.json",
+          "hash": "912df4be5e077cd22d21cef34205fd35"
+        },
+        {
+          "file1": "docs\\legacy_brand.md",
+          "file2": "docs\\migrated_brand.md",
+          "hash": "38f396e2d4e8c099e52b69d5cb3e4614"
+        },
+        {
+          "file1": "cleanup_report.json",
+          "file2": "intelligence\\cleanup_report.json",
+          "hash": "43ac1cd68b0e748dc9250bc7d6410e7e"
+        },
+        {
+          "file1": "docs\\legacy_brand.md",
+          "file2": "docs\\architecture\\SYSTEM_ARCHITECTURE.md",
+          "hash": "38f396e2d4e8c099e52b69d5cb3e4614"
+        },
+        {
+          "file1": "data\\product-cleaning-v2\\removed-products.json",
+          "file2": "data\\product-cleaning-v4\\review-products.json",
+          "hash": "be61c3d4740fdd9c369165791640f265"
+        },
+        {
+          "file1": "app\\layout.tsx",
+          "file2": "canonical\\app\\layout.tsx",
+          "hash": "a7a6f668818ea8a6140bba5cb77f6f90"
+        },
+        {
+          "file1": "app\\page.tsx",
+          "file2": "canonical\\app\\page.tsx",
+          "hash": "4167d7c88a9e8125802b11d80910425f"
+        },
+        {
+          "file1": "data\\customer-specification-registry-v1.json",
+          "file2": "canonical\\data\\customer-specification-registry-v1.json",
+          "hash": "a43287d0d87070487be65a27a5029fb9"
+        },
+        {
+          "file1": "data\\enterprise-master-data-freeze-v1.json",
+          "file2": "canonical\\data\\enterprise-master-data-freeze-v1.json",
+          "hash": "4bfcb943b3e52de5443da265299adae1"
+        },
+        {
+          "file1": "data\\export-catalog-master-v1.json",
+          "file2": "canonical\\data\\export-catalog-master-v1.json",
+          "hash": "eee5295cf7217a6f01ac1ce5f71b09c0"
+        },
+        {
+          "file1": "data\\export-compliance-gap-analysis-v1.json",
+          "file2": "canonical\\data\\export-compliance-gap-analysis-v1.json",
+          "hash": "a042f2c88c72dc2197522104125d2bb9"
+        },
+        {
+          "file1": "data\\export-compliance-remediation-report-v1.json",
+          "file2": "canonical\\data\\export-compliance-remediation-report-v1.json",
+          "hash": "d7d07b29831ac51ed830a0426ba497bc"
+        },
+        {
+          "file1": "data\\export-go-live-gate-report-v1.json",
+          "file2": "canonical\\data\\export-go-live-gate-report-v1.json",
+          "hash": "a445bc712e1667a05df73018ba062e71"
+        },
+        {
+          "file1": "data\\export-master-data-final-integrity-report-v1.json",
+          "file2": "canonical\\data\\export-master-data-final-integrity-report-v1.json",
+          "hash": "bcb7f9fee33978739c15dfd62c212ab8"
+        },
+        {
+          "file1": "data\\export-operations-process-map-v1.json",
+          "file2": "canonical\\data\\export-operations-process-map-v1.json",
+          "hash": "ec3cf94a38816bb3202bbfdb3c1c7586"
+        },
+        {
+          "file1": "data\\export-product-release-manifest-v1.json",
+          "file2": "canonical\\data\\export-product-release-manifest-v1.json",
+          "hash": "4150e5ad52824d820650a18ca73709f3"
+        },
+        {
+          "file1": "data\\export-readiness-remediation-plan-v1.json",
+          "file2": "canonical\\data\\export-readiness-remediation-plan-v1.json",
+          "hash": "a6b107ac64c25287872e390c07da710a"
+        },
+        {
+          "file1": "data\\export-readiness-report-v1.json",
+          "file2": "canonical\\data\\export-readiness-report-v1.json",
+          "hash": "e146452e1e39057747d6f8cdbe0b8d8c"
+        },
+        {
+          "file1": "data\\gels-compliance-remediation-v1.json",
+          "file2": "canonical\\data\\gels-compliance-remediation-v1.json",
+          "hash": "a64909f1e600361a6bfa45e9c9d13a1d"
+        },
+        {
+          "file1": "data\\gels-governance-gate-report-v1.json",
+          "file2": "canonical\\data\\gels-governance-gate-report-v1.json",
+          "hash": "34293899d5e0e2d26e0269780761a44b"
+        },
+        {
+          "file1": "data\\gels-intelligent-match-report-v1.json",
+          "file2": "canonical\\data\\gels-intelligent-match-report-v1.json",
+          "hash": "0178a4a6ee7a3b4e03f147958ecf44c7"
+        },
+        {
+          "file1": "data\\master-data-cleaning-report-v1.json",
+          "file2": "canonical\\data\\master-data-cleaning-report-v1.json",
+          "hash": "181a61112169715b96f2c3c14219ab82"
+        },
+        {
+          "file1": "data\\master-data-key-alignment-report-v1.json",
+          "file2": "canonical\\data\\master-data-key-alignment-report-v1.json",
+          "hash": "b175bbdc8ee9b083b146d74a8c03509a"
+        },
+        {
+          "file1": "data\\packaging-gels-registry-v1.json",
+          "file2": "canonical\\data\\packaging-gels-registry-v1.json",
+          "hash": "d7671ded82ff8391fc48375a95ee23c4"
+        },
+        {
+          "file1": "data\\product-id-reconciliation-report-v1.json",
+          "file2": "canonical\\data\\product-id-reconciliation-report-v1.json",
+          "hash": "762070a2e09d30559a271260ad7bbb9a"
+        },
+        {
+          "file1": "docs\\legacy_brand.md",
+          "file2": "canonical\\docs\\legacy_brand.md",
+          "hash": "38f396e2d4e8c099e52b69d5cb3e4614"
+        },
+        {
+          "file1": "docs\\legacy_brand.md",
+          "file2": "canonical\\docs\\migrated_brand.md",
+          "hash": "38f396e2d4e8c099e52b69d5cb3e4614"
+        },
+        {
+          "file1": "docs\\README.md",
+          "file2": "canonical\\docs\\README.md",
+          "hash": "73fcb97cc0d43909aaeb1372e5cb2c1e"
+        },
+        {
+          "file1": "governance\\eos-assets-registry-v1.json",
+          "file2": "canonical\\governance\\eos-assets-registry-v1.json",
+          "hash": "67679cec8dedc3287b3a050cd8d49937"
+        },
+        {
+          "file1": "governance\\eos-deep-asset-discovery-v1.json",
+          "file2": "canonical\\governance\\eos-deep-asset-discovery-v1.json",
+          "hash": "de1c7dfc4bfa019e5cde455785379418"
+        },
+        {
+          "file1": "governance\\eos-knowledge-registry-v1.json",
+          "file2": "canonical\\governance\\eos-knowledge-registry-v1.json",
+          "hash": "499a4e187552deb62b0f327c5278a436"
+        },
+        {
+          "file1": "governance\\keep-assets-files-v1.json",
+          "file2": "canonical\\governance\\keep-assets-files-v1.json",
+          "hash": "379db2c85714d8afed2b40d1ba5efeca"
+        },
+        {
+          "file1": "governance\\keep-core-files-v1.json",
+          "file2": "canonical\\governance\\keep-core-files-v1.json",
+          "hash": "399c70d6b2a2237e2f68a9305f81ea65"
+        },
+        {
+          "file1": "intelligence\\architecture.manifest.json",
+          "file2": "canonical\\intelligence\\architecture.manifest.json",
+          "hash": "c57ba1fbfda14d28d11e617acdd851ed"
+        },
+        {
+          "file1": "intelligence\\asset_classification_report_v2.json",
+          "file2": "canonical\\intelligence\\asset_classification_report_v2.json",
+          "hash": "45b7044f057a9b6871374c3531ce5807"
+        },
+        {
+          "file1": "cleanup_report.json",
+          "file2": "canonical\\intelligence\\cleanup_report.json",
+          "hash": "43ac1cd68b0e748dc9250bc7d6410e7e"
+        },
+        {
+          "file1": "intelligence\\eos-business-contract-discovery.json",
+          "file2": "canonical\\intelligence\\eos-business-contract-discovery.json",
+          "hash": "30314ff9b9b35e0e8b2f9a05df1a0374"
+        },
+        {
+          "file1": "intelligence\\eos-domain-activation-blueprint-v1.json",
+          "file2": "canonical\\intelligence\\eos-domain-activation-blueprint-v1.json",
+          "hash": "4cdec0a7e07bd9c61d14e3705bbda652"
+        },
+        {
+          "file1": "intelligence\\eos-enterprise-architecture-final.json",
+          "file2": "canonical\\intelligence\\eos-enterprise-architecture-final.json",
+          "hash": "f75ffdba49af0595f28ed4e633fbbf09"
+        },
+        {
+          "file1": "intelligence\\eos-execution-truth-map.json",
+          "file2": "canonical\\intelligence\\eos-execution-truth-map.json",
+          "hash": "07d2ced0570aa0c70c40cb69acdef762"
+        },
+        {
+          "file1": "intelligence\\eos-gels-architecture-alignment.json",
+          "file2": "canonical\\intelligence\\eos-gels-architecture-alignment.json",
+          "hash": "9b155e701b090c4e59b8e1c9b48d47f7"
+        },
+        {
+          "file1": "intelligence\\eos-gldos-architecture-alignment.json",
+          "file2": "canonical\\intelligence\\eos-gldos-architecture-alignment.json",
+          "hash": "0863e8296b1fc76de0f9a9b88b5c2144"
+        },
+        {
+          "file1": "intelligence\\eos-intelligent-domain-ownership-graph.json",
+          "file2": "canonical\\intelligence\\eos-intelligent-domain-ownership-graph.json",
+          "hash": "f4ff2d968dfbf10c47050ae9b00ac88a"
+        },
+        {
+          "file1": "intelligence\\eos-real-execution-path-map.json",
+          "file2": "canonical\\intelligence\\eos-real-execution-path-map.json",
+          "hash": "e11265811a5a5d3eac8726545acd34b1"
+        },
+        {
+          "file1": "intelligence\\eos-roadmap-readiness.json",
+          "file2": "canonical\\intelligence\\eos-roadmap-readiness.json",
+          "hash": "ee0fbf1da0d622cfda05be49c35487f9"
+        },
+        {
+          "file1": "intelligence\\foundation-closure-report-final.json",
+          "file2": "canonical\\intelligence\\foundation-closure-report-final.json",
+          "hash": "435953a5c54ac16e2ecaea62b044ea81"
+        },
+        {
+          "file1": "intelligence\\README.md",
+          "file2": "canonical\\intelligence\\README.md",
+          "hash": "2f167f0c01e99f9761e09eeccb485b70"
+        },
+        {
+          "file1": "lib\\workflowEngine.ts",
+          "file2": "canonical\\lib\\workflowEngine.ts",
+          "hash": "218ab7b8ddb0f523eb6471cf6172c737"
+        },
+        {
+          "file1": "prisma\\schema.prisma",
+          "file2": "canonical\\prisma\\schema.prisma",
+          "hash": "230647449a34ea9cba9c15cd4d9d8cc0"
+        },
+        {
+          "file1": "scripts\\seed_master_products.ts",
+          "file2": "canonical\\scripts\\seed_master_products.ts",
+          "hash": "7b762969d3e3e8dd25063d9a4fb72501"
+        },
+        {
+          "file1": "KNOWLEDGE-BASE\\MASTER-SOURCE\\MASTER-TRUTH-v1.json",
+          "file2": "canonical\\KNOWLEDGE-BASE\\MASTER-SOURCE\\MASTER-TRUTH-v1.json",
+          "hash": "317a01949d5dad4976b060fb2b9a2e8d"
+        },
+        {
+          "file1": "KNOWLEDGE-BASE\\KEEP-PACKAGE\\GELS\\gels-normalized-registry-v1.json",
+          "file2": "canonical\\KNOWLEDGE-BASE\\KEEP-PACKAGE\\GELS\\gels-normalized-registry-v1.json",
+          "hash": "389f8ca89cfe8ccdf9fe6b69083a62b6"
+        },
+        {
+          "file1": "KNOWLEDGE-BASE\\INDEX\\reconciliation\\RECONCILIATION-SUMMARY.json",
+          "file2": "canonical\\KNOWLEDGE-BASE\\INDEX\\reconciliation\\RECONCILIATION-SUMMARY.json",
+          "hash": "be3d63be71e9d71df689feb2f9b89a39"
+        },
+        {
+          "file1": "intelligence\\adapters\\gl-dos-governance-gate.ts",
+          "file2": "canonical\\intelligence\\adapters\\gl-dos-governance-gate.ts",
+          "hash": "a3a5ad8363299dfefdb61f65ada91fd9"
+        },
+        {
+          "file1": "intelligence\\contracts\\execution-contract.json",
+          "file2": "canonical\\intelligence\\contracts\\execution-contract.json",
+          "hash": "a8f811687ac9a4fb461bc4900df8ba7a"
+        },
+        {
+          "file1": "intelligence\\intelligence\\gl-dos.ts",
+          "file2": "canonical\\intelligence\\intelligence\\gl-dos.ts",
+          "hash": "ad73500bd014bc4891caf7fda4063d95"
+        },
+        {
+          "file1": "intelligence\\intelligence\\intelligence-test.ts",
+          "file2": "canonical\\intelligence\\intelligence\\intelligence-test.ts",
+          "hash": "7c0cdba8f3307fd7b745497884d84467"
+        },
+        {
+          "file1": "intelligence\\runtime\\controlled-runtime-orchestrator.ts",
+          "file2": "canonical\\intelligence\\runtime\\controlled-runtime-orchestrator.ts",
+          "hash": "6f3b416cf578a654f0d40338d21a3360"
+        },
+        {
+          "file1": "intelligence\\intelligence\\core\\report-writer.ts",
+          "file2": "canonical\\intelligence\\intelligence\\core\\report-writer.ts",
+          "hash": "ec20fbbac2bb3c1bb6f0e4ada6ff8f04"
+        },
+        {
+          "file1": "intelligence\\intelligence\\engines\\audit-engine.ts",
+          "file2": "canonical\\intelligence\\intelligence\\engines\\audit-engine.ts",
+          "hash": "20b979d025fbc0e50f55da36fb2c2a68"
+        },
+        {
+          "file1": "intelligence\\intelligence\\engines\\data-integrity-engine.ts",
+          "file2": "canonical\\intelligence\\intelligence\\engines\\data-integrity-engine.ts",
+          "hash": "2cffa7d1bcf3ce7e42dcf73a9088f6fb"
+        },
+        {
+          "file1": "intelligence\\intelligence\\health\\health-reporter.ts",
+          "file2": "canonical\\intelligence\\intelligence\\health\\health-reporter.ts",
+          "hash": "565f5dcf226a101a6a1e2c2f0b7694c5"
+        },
+        {
+          "file1": "intelligence\\intelligence\\schemas\\product-schema-map.ts",
+          "file2": "canonical\\intelligence\\intelligence\\schemas\\product-schema-map.ts",
+          "hash": "950cd23704cc753124fb3cdbfbecd879"
+        },
+        {
+          "file1": "docs\\legacy_brand.md",
+          "file2": "canonical\\docs\\architecture\\SYSTEM_ARCHITECTURE.md",
+          "hash": "38f396e2d4e8c099e52b69d5cb3e4614"
+        },
+        {
+          "file1": "docs\\products\\PRODUCT_MASTER.md",
+          "file2": "canonical\\docs\\products\\PRODUCT_MASTER.md",
+          "hash": "153e9fc8fed5dfb5f96bbc7533d155cc"
+        },
+        {
+          "file1": "docs\\standards\\01_BRAND_STANDARD.md",
+          "file2": "canonical\\docs\\standards\\01_BRAND_STANDARD.md",
+          "hash": "b7867ab59ab371e2a44170ae6cd70bd7"
+        },
+        {
+          "file1": "docs\\architecture\\eos_architecture\\01.Master_Data\\honey_reference.json",
+          "file2": "canonical\\docs\\architecture\\eos_architecture\\01.Master_Data\\honey_reference.json",
+          "hash": "5c0be0d848c8d4b8708ba4acbe60b1c9"
+        },
+        {
+          "file1": "data\\global-export-visual-system-v1\\final-visual-system-report-v1.json",
+          "file2": "canonical\\data\\global-export-visual-system-v1\\final-visual-system-report-v1.json",
+          "hash": "6dfd81bab1dac4f7f17eaaa42a398ae9"
+        },
+        {
+          "file1": "data\\live-normalized-v1\\normalized-business-registry.json",
+          "file2": "canonical\\data\\live-normalized-v1\\normalized-business-registry.json",
+          "hash": "fa4b571080bbea180d5a9533df099e1c"
+        },
+        {
+          "file1": "data\\product-cleaning-v2\\removed-products.json",
+          "file2": "canonical\\data\\product-cleaning-v2\\removed-products.json",
+          "hash": "be61c3d4740fdd9c369165791640f265"
+        },
+        {
+          "file1": "data\\product-cleaning-v2\\removed-products.json",
+          "file2": "canonical\\data\\product-cleaning-v4\\review-products.json",
+          "hash": "be61c3d4740fdd9c369165791640f265"
+        },
+        {
+          "file1": "data\\product-master-v7\\GELS-product-links-v1.json",
+          "file2": "canonical\\data\\product-master-v7\\GELS-product-links-v1.json",
+          "hash": "5b52681af793001c28a51b26c1ec4cb9"
+        },
+        {
+          "file1": "data\\reconciliation-v1\\master-registry-v1.json",
+          "file2": "canonical\\data\\reconciliation-v1\\master-registry-v1.json",
+          "hash": "0d86abf131a3d50aa04978dd6c59cffd"
+        },
+        {
+          "file1": "canonical\\app\\api\\products\\route.ts",
+          "file2": "app\\api\\products\\route.ts",
+          "hash": "7998e4f1573ad81b2c91607f517d812d"
+        },
+        {
+          "file1": "canonical\\app\\api\\sales-orders\\route.ts",
+          "file2": "app\\api\\sales-orders\\route.ts",
+          "hash": "9b16481f5e419ad20fa8f35dc2da3424"
+        },
+        {
+          "file1": "canonical\\app\\api\\suppliers\\route.ts",
+          "file2": "app\\api\\suppliers\\route.ts",
+          "hash": "07572228b68c0fe6267cd4ea258f08b3"
+        },
+        {
+          "file1": "canonical\\app\\api\\workflow\\route.ts",
+          "file2": "app\\api\\workflow\\route.ts",
+          "hash": "e0251c9a91850accb56a39c43e7aab81"
+        }
+      ],
+      "old_files": [],
+      "corrupted_files": [],
+      "unique_extensions": "{'.ps1', '.tsx', '.js', '.py', '.csv', '.md', '.jsonl', '.html', '.ts', '.json', '.toml', '.prisma'}",
+      "ignored_files": 36765,
+      "ignored_size_mb": 1339.7865581512451
+    }
+  },
+  "overall_status": "FAILED",
+  "pr_url": null,
+  "summary": "Pipeline complete. Status: FAILED. Scanned 311 files.",
+  "advanced_analysis": {
+    "brand": {
+      "colors": {
+        "primary": [],
+        "secondary": [],
+        "background": [],
+        "accent": []
+      },
+      "fonts": [],
+      "images": [],
+      "violations": []
+    },
+    "packaging": {
+      "packaging_rules": [
+        "10\\\\\\\\n    vus_max..............: 10      min=10         max=10\\\\\\\\n\\\\\\\\n    NETWORK\\\\\\\\n    data_received........: 0 B     0 B/s\\\\\\\\n    data_sent............: 0 B     0 B/s\\\\\\\\n\\\\\\\\n\\\\\\\\n\\\\\\\\n\\\\\\\\nrunning (10.7s)",
+        "1.71s p(90)=1.08s p(95)=1.71s\\\\n    iterations...........: 100     9.303894/s\\\\n    vus..................: 10      min=10         max=10\\\\n    vus_max..............: 10      min=10         max=10\\\\n\\\\n    NETWORK\\\\n    data_received........: 0 B     0 B/s\\\\n    data_sent............: 0 B     0 B/s\\\\n\\\\n\\\\n\\\\n\\\\nrunning (10.7s)",
+        "0s    p(90)=0s p(95)=0s   \\n    http_req_failed......: 100.00% 100 out of 100\\n    http_reqs............: 100     9.948789/s\\n\\n    EXECUTION\\n    iteration_duration...: avg=1s min=1s med=1s max=1.01s p(90)=1s p(95)=1.01s\\n    iterations...........: 100     9.948789/s\\n    vus..................: 10      min=10         max=10\\n    vus_max..............: 10      min=10         max=10\\n\\n    NETWORK\\n    data_received........: 0 B     0 B/s\\n    data_sent............: 0 B     0 B/s\\n\\n\\n\\n\\nrunning (10.1s)",
+        "10\\\\\\\\n    vus_max..............: 10      min=10         max=10\\\\\\\\n\\\\\\\\n    NETWORK\\\\\\\\n    data_received........: 0 B     0 B/s\\\\\\\\n    data_sent............: 0 B     0 B/s\\\\\\\\n\\\\\\\\n\\\\\\\\n\\\\\\\\n\\\\\\\\nrunning (10.0s)",
+        "10\\\\n    vus_max..............: 10      min=10         max=10\\\\n\\\\n    NETWORK\\\\n    data_received........: 0 B     0 B/s\\\\n    data_sent............: 0 B     0 B/s\\\\n\\\\n\\\\n\\\\n\\\\nrunning (10.7s)`",
+        "0s    p(90)=0s    p(95)=0s   \\n    http_req_failed......: 100.00% 100 out of 100\\n    http_reqs............: 100     9.939732/s\\n\\n    EXECUTION\\n    iteration_duration...: avg=1s min=1s med=1s max=1.02s p(90)=1.01s p(95)=1.02s\\n    iterations...........: 100     9.939732/s\\n    vus..................: 10      min=10         max=10\\n    vus_max..............: 10      min=10         max=10\\n\\n    NETWORK\\n    data_received........: 0 B     0 B/s\\n    data_sent............: 0 B     0 B/s\\n\\n\\n\\n\\nrunning (10.1s)",
+        "1.01s p(90)=1s p(95)=1.01s\\\\n    iterations...........: 100     9.957007/s\\\\n    vus..................: 10      min=10         max=10\\\\n    vus_max..............: 10      min=10         max=10\\\\n\\\\n    NETWORK\\\\n    data_received........: 0 B     0 B/s\\\\n    data_sent............: 0 B     0 B/s\\\\n\\\\n\\\\n\\\\n\\\\nrunning (10.0s)",
+        "1.02s p(90)=1.01s p(95)=1.02s\\\\n    iterations...........: 100     9.939732/s\\\\n    vus..................: 10      min=10         max=10\\\\n    vus_max..............: 10      min=10         max=10\\\\n\\\\n    NETWORK\\\\n    data_received........: 0 B     0 B/s\\\\n    data_sent............: 0 B     0 B/s\\\\n\\\\n\\\\n\\\\n\\\\nrunning (10.1s)",
+        "10\\\\n    vus_max..............: 10      min=10         max=10\\\\n\\\\n    NETWORK\\\\n    data_received........: 0 B     0 B/s\\\\n    data_sent............: 0 B     0 B/s\\\\n\\\\n\\\\n\\\\n\\\\nrunning (10.0s)`",
+        "10\\\\\\\\n\\\\\\\\n    NETWORK\\\\\\\\n    data_received........: 0 B     0 B/s\\\\\\\\n    data_sent............: 0 B     0 B/s\\\\\\\\n\\\\\\\\n\\\\\\\\n\\\\\\\\n\\\\\\\\nrunning (10.7s)`",
+        "10\\\\\\\\\\\\\\\\n\\\\\\\\\\\\\\\\n    NETWORK\\\\\\\\\\\\\\\\n    data_received........: 0 B     0 B/s\\\\\\\\\\\\\\\\n    data_sent............: 0 B     0 B/s\\\\\\\\\\\\\\\\n\\\\\\\\\\\\\\\\n\\\\\\\\\\\\\\\\n\\\\\\\\\\\\\\\\n\\\\\\\\\\\\\\\\nrunning (10.7s)",
+        "1.02s p(90)=1.01s p(95)=1.02s\\n    iterations...........: 100     9.939732/s\\n    vus..................: 10      min=10         max=10\\n    vus_max..............: 10      min=10         max=10\\n\\n    NETWORK\\n    data_received........: 0 B     0 B/s\\n    data_sent............: 0 B     0 B/s\\n\\n\\n\\n\\nrunning (10.1s)`"
+      ],
+      "display_rules": [],
+      "policy_files": [
+        "classification_report_v2.json",
+        "consolidation_report_final.json",
+        "consolidation_report_full.json",
+        "final_audit.json",
+        "system_manifest.json",
+        "canonical\\classification_report_v2.json",
+        "canonical\\final_audit.json",
+        "canonical\\system_manifest.json",
+        "data\\customer-specification-registry-v1.json",
+        "data\\enterprise-master-data-freeze-v1.json",
+        "data\\export-compliance-gap-analysis-v1.json",
+        "data\\export-compliance-remediation-report-v1.json",
+        "data\\export-go-live-gate-report-v1.json",
+        "data\\export-master-data-final-integrity-report-v1.json",
+        "data\\export-operations-process-map-v1.json",
+        "data\\export-product-release-manifest-v1.json",
+        "data\\export-readiness-remediation-plan-v1.json",
+        "data\\export-readiness-report-v1.json",
+        "data\\master-data-cleaning-report-v1.json",
+        "data\\packaging-gels-registry-v1.json",
+        "docs\\legacy_brand.md",
+        "docs\\migrated_brand.md",
+        "docs\\README.md",
+        "governance\\eos-assets-registry-v1.json",
+        "governance\\eos-deep-asset-discovery-v1.json",
+        "governance\\eos-knowledge-registry-v1.json",
+        "governance\\keep-assets-files-v1.json",
+        "governance\\keep-core-files-v1.json",
+        "intelligence\\asset_classification_report_v2.json",
+        "intelligence\\comprehensive_report.json",
+        "intelligence\\comprehensive_report.md",
+        "intelligence\\eos-execution-truth-map.json",
+        "intelligence\\eos-gels-architecture-alignment.json",
+        "intelligence\\eos-intelligent-domain-ownership-graph.json",
+        "intelligence\\eos-real-execution-path-map.json",
+        "KNOWLEDGE-BASE\\MASTER-SOURCE\\MASTER-TRUTH-v1.json",
+        "KNOWLEDGE-BASE\\KEEP-PACKAGE\\GELS\\gels-normalized-registry-v1.json",
+        "intelligence\\knowledge_base\\project_metadata.json",
+        "docs\\architecture\\SYSTEM_ARCHITECTURE.md",
+        "docs\\auto-generated\\INDEX.md",
+        "docs\\products\\PRODUCT_MASTER.md",
+        "docs\\standards\\01_BRAND_STANDARD.md",
+        "docs\\architecture\\eos_architecture\\01.Master_Data\\honey_reference.json",
+        "data\\live-normalized-v1\\normalized-business-registry.json",
+        "data\\product-master-v7\\GELS-product-links-v1.json",
+        "data\\reconciliation-v1\\master-registry-v1.json",
+        "canonical\\data\\customer-specification-registry-v1.json",
+        "canonical\\data\\enterprise-master-data-freeze-v1.json",
+        "canonical\\data\\export-compliance-gap-analysis-v1.json",
+        "canonical\\data\\export-compliance-remediation-report-v1.json",
+        "canonical\\data\\export-go-live-gate-report-v1.json",
+        "canonical\\data\\export-master-data-final-integrity-report-v1.json",
+        "canonical\\data\\export-operations-process-map-v1.json",
+        "canonical\\data\\export-product-release-manifest-v1.json",
+        "canonical\\data\\export-readiness-remediation-plan-v1.json",
+        "canonical\\data\\export-readiness-report-v1.json",
+        "canonical\\data\\master-data-cleaning-report-v1.json",
+        "canonical\\data\\master_products.json",
+        "canonical\\data\\packaging-gels-registry-v1.json",
+        "canonical\\docs\\legacy_brand.md",
+        "canonical\\docs\\migrated_brand.md",
+        "canonical\\docs\\README.md",
+        "canonical\\governance\\eos-assets-registry-v1.json",
+        "canonical\\governance\\eos-deep-asset-discovery-v1.json",
+        "canonical\\governance\\eos-knowledge-registry-v1.json",
+        "canonical\\governance\\keep-assets-files-v1.json",
+        "canonical\\governance\\keep-core-files-v1.json",
+        "canonical\\intelligence\\asset_classification_report_v2.json",
+        "canonical\\intelligence\\comprehensive_report.json",
+        "canonical\\intelligence\\eos-execution-truth-map.json",
+        "canonical\\intelligence\\eos-gels-architecture-alignment.json",
+        "canonical\\intelligence\\eos-intelligent-domain-ownership-graph.json",
+        "canonical\\intelligence\\eos-real-execution-path-map.json",
+        "canonical\\labels\\GL-LBL-BEE-004.json",
+        "canonical\\labels\\GL-LBL-BEE-005.json",
+        "canonical\\labels\\GL-LBL-BEE-006.json",
+        "canonical\\labels\\GL-LBL-BEE-007.json",
+        "canonical\\labels\\GL-LBL-HON-001.json",
+        "canonical\\labels\\GL-LBL-HON-002.json",
+        "canonical\\labels\\GL-LBL-HON-003.json",
+        "canonical\\labels\\GL-LBL-HRB-014.json",
+        "canonical\\labels\\GL-LBL-OIL-015.json",
+        "canonical\\labels\\GL-LBL-SPC-008.json",
+        "canonical\\labels\\GL-LBL-SPC-009.json",
+        "canonical\\labels\\GL-LBL-SPC-010.json",
+        "canonical\\labels\\GL-LBL-SPC-011.json",
+        "canonical\\labels\\GL-LBL-SPC-012.json",
+        "canonical\\labels\\GL-LBL-SPC-013.json",
+        "canonical\\KNOWLEDGE-BASE\\MASTER-SOURCE\\MASTER-TRUTH-v1.json",
+        "canonical\\KNOWLEDGE-BASE\\KEEP-PACKAGE\\GELS\\gels-normalized-registry-v1.json",
+        "canonical\\docs\\architecture\\SYSTEM_ARCHITECTURE.md",
+        "canonical\\docs\\auto-generated\\INDEX.md",
+        "canonical\\docs\\products\\PRODUCT_MASTER.md",
+        "canonical\\docs\\standards\\01_BRAND_STANDARD.md",
+        "canonical\\docs\\architecture\\eos_architecture\\01.Master_Data\\honey_reference.json",
+        "canonical\\data\\live-normalized-v1\\normalized-business-registry.json",
+        "canonical\\data\\product-master-v7\\GELS-product-links-v1.json",
+        "canonical\\data\\reconciliation-v1\\master-registry-v1.json"
+      ],
+      "violations": []
+    },
+    "ui": {
+      "pages": [],
+      "components": [],
+      "api_routes": [],
+      "layouts": [],
+      "middleware": null,
+      "framework": "Unknown"
+    },
+    "inventory": {
+      "total_items": 148,
+      "categories": {
+        "Unknown": 30
+      },
+      "out_of_stock": 30,
+      "low_stock": 0,
+      "in_stock": 0,
+      "files_analyzed": [
+        "data\\export-catalog-master-v1.json",
+        "data\\product-cleaning-v2\\removed-products.json",
+        "data\\product-cleaning-v4\\review-products.json",
+        "canonical\\data\\export-catalog-master-v1.json",
+        "canonical\\data\\product-cleaning-v2\\removed-products.json",
+        "canonical\\data\\product-cleaning-v4\\review-products.json"
+      ],
+      "top_products": []
+    }
+  },
+  "duplication_analysis": [
+    {
+      "file1": "certificate_report_v2.json",
+      "file2": "certificate_report_v4.json",
+      "reason": "Exact duplicate (backup or copy-paste error).",
+      "recommendation": "Delete the older file based on modification date."
+    },
+    {
+      "file1": "els_report.json",
+      "file2": "els_report_final.json",
+      "reason": "Exact duplicate (backup or copy-paste error).",
+      "recommendation": "Delete the older file based on modification date."
+    },
+    {
+      "file1": "els_report_final_v2.json",
+      "file2": "els_report_final_v4.json",
+      "reason": "Exact duplicate (backup or copy-paste error).",
+      "recommendation": "Delete the older file based on modification date."
+    },
+    {
+      "file1": "els_report_final_v5.json",
+      "file2": "els_report_new.json",
+      "reason": "Exact duplicate (backup or copy-paste error).",
+      "recommendation": "Delete the older file based on modification date."
+    },
+    {
+      "file1": "supplier_report_v2.json",
+      "file2": "supplier_report_v3.json",
+      "reason": "Exact duplicate (backup or copy-paste error).",
+      "recommendation": "Delete the older file based on modification date."
+    },
+    {
+      "file1": "classification_report_v2.json",
+      "file2": "canonical\\classification_report_v2.json",
+      "reason": "Exact duplicate (backup or copy-paste error).",
+      "recommendation": "Delete the older file based on modification date."
+    },
+    {
+      "file1": "cleanup_report.json",
+      "file2": "canonical\\cleanup_report.json",
+      "reason": "Exact duplicate (backup or copy-paste error).",
+      "recommendation": "Delete the older file based on modification date."
+    },
+    {
+      "file1": "final_audit.json",
+      "file2": "canonical\\final_audit.json",
+      "reason": "Exact duplicate (backup or copy-paste error).",
+      "recommendation": "Delete the older file based on modification date."
+    },
+    {
+      "file1": "system_manifest.json",
+      "file2": "canonical\\system_manifest.json",
+      "reason": "Exact duplicate (backup or copy-paste error).",
+      "recommendation": "Delete the older file based on modification date."
+    },
+    {
+      "file1": "docs\\legacy_brand.md",
+      "file2": "docs\\migrated_brand.md",
+      "reason": "Exact duplicate (backup or copy-paste error).",
+      "recommendation": "Delete the older file based on modification date."
+    }
+  ],
+  "report_path": "C:\\Users\\Ghanam\\OneDrive\\projects\\Greeny-Life\\intelligence\\comprehensive_report.md",
+  "json_report_path": "C:\\Users\\Ghanam\\OneDrive\\projects\\Greeny-Life\\intelligence\\comprehensive_report.json"
+}

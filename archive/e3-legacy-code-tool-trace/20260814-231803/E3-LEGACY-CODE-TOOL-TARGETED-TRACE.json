@@ -1,0 +1,588 @@
+{
+  "report": "E3 Legacy Code/Tool Targeted Static Trace",
+  "generatedAt": "2026-08-14T23:18:03.3790199+02:00",
+  "scope": {
+    "targets": 21,
+    "sourceExecution": false,
+    "projectChanged": false
+  },
+  "summary": {
+    "EXTEND_OR_HARDEN_CURRENT": 18,
+    "QUARANTINE_STATIC": 1,
+    "REVIEW_FOR_EXTRACT": 2
+  },
+  "records": [
+    {
+      "relativePath": "app\\api\\products\\route.ts",
+      "sha256": "EB96B47B642B06A00B34544604CC793783F12AE8687DC14D7ADA44220881CB9C",
+      "symbols": [
+        "GET",
+        "POST",
+        "legacyBoundary"
+      ],
+      "staticReferences": "next/server",
+      "unsafePatterns": [],
+      "currentSameRelative": "app\\api\\products\\route.ts",
+      "currentSameNameCandidates": [
+        "app\\api\\auth\\login\\route.ts",
+        "app\\api\\auth\\logout\\route.ts",
+        "app\\api\\auth\\session\\route.ts",
+        "app\\api\\brains\\greeny-life-egypt\\route.ts",
+        "app\\api\\commercial-changes\\route.ts",
+        "app\\api\\data-control\\route.ts",
+        "app\\api\\decisions\\export-readiness\\route.ts",
+        "app\\api\\decisions\\official-evidence-review\\route.ts",
+        "app\\api\\evidence\\official\\route.ts",
+        "app\\api\\intelligence\\asset-registry\\route.ts",
+        "app\\api\\intelligence\\data-fabric\\route.ts",
+        "app\\api\\intelligence\\gels-label-readiness\\route.ts",
+        "app\\api\\intelligence\\production-readiness\\route.ts",
+        "app\\api\\learning\\evaluations\\route.ts",
+        "app\\api\\learning\\outcomes\\route.ts",
+        "app\\api\\learning\\training-cases\\route.ts",
+        "app\\api\\mastermind\\commercial-context\\route.ts",
+        "app\\api\\mastermind\\decision-package\\route.ts",
+        "app\\api\\mastermind\\operating-model\\route.ts",
+        "app\\api\\mastermind\\tools\\route.ts",
+        "app\\api\\portfolio\\egyptian-exports\\route.ts",
+        "app\\api\\products\\route.ts",
+        "app\\api\\sales-orders\\route.ts",
+        "app\\api\\suppliers\\route.ts",
+        "app\\api\\tasks\\route.ts",
+        "app\\api\\traceability\\route.ts",
+        "app\\api\\trade-corridors\\route.ts",
+        "app\\api\\workflow\\route.ts",
+        "app\\api\\workflow\\approvals\\route.ts"
+      ],
+      "recommendation": "EXTEND_OR_HARDEN_CURRENT",
+      "evidence": "A Current component occupies the same functional path; improve Current rather than copy Legacy."
+    },
+    {
+      "relativePath": "app\\api\\sales-orders\\route.ts",
+      "sha256": "EB96B47B642B06A00B34544604CC793783F12AE8687DC14D7ADA44220881CB9C",
+      "symbols": [
+        "GET",
+        "POST",
+        "legacyBoundary"
+      ],
+      "staticReferences": "next/server",
+      "unsafePatterns": [],
+      "currentSameRelative": "app\\api\\sales-orders\\route.ts",
+      "currentSameNameCandidates": [
+        "app\\api\\auth\\login\\route.ts",
+        "app\\api\\auth\\logout\\route.ts",
+        "app\\api\\auth\\session\\route.ts",
+        "app\\api\\brains\\greeny-life-egypt\\route.ts",
+        "app\\api\\commercial-changes\\route.ts",
+        "app\\api\\data-control\\route.ts",
+        "app\\api\\decisions\\export-readiness\\route.ts",
+        "app\\api\\decisions\\official-evidence-review\\route.ts",
+        "app\\api\\evidence\\official\\route.ts",
+        "app\\api\\intelligence\\asset-registry\\route.ts",
+        "app\\api\\intelligence\\data-fabric\\route.ts",
+        "app\\api\\intelligence\\gels-label-readiness\\route.ts",
+        "app\\api\\intelligence\\production-readiness\\route.ts",
+        "app\\api\\learning\\evaluations\\route.ts",
+        "app\\api\\learning\\outcomes\\route.ts",
+        "app\\api\\learning\\training-cases\\route.ts",
+        "app\\api\\mastermind\\commercial-context\\route.ts",
+        "app\\api\\mastermind\\decision-package\\route.ts",
+        "app\\api\\mastermind\\operating-model\\route.ts",
+        "app\\api\\mastermind\\tools\\route.ts",
+        "app\\api\\portfolio\\egyptian-exports\\route.ts",
+        "app\\api\\products\\route.ts",
+        "app\\api\\sales-orders\\route.ts",
+        "app\\api\\suppliers\\route.ts",
+        "app\\api\\tasks\\route.ts",
+        "app\\api\\traceability\\route.ts",
+        "app\\api\\trade-corridors\\route.ts",
+        "app\\api\\workflow\\route.ts",
+        "app\\api\\workflow\\approvals\\route.ts"
+      ],
+      "recommendation": "EXTEND_OR_HARDEN_CURRENT",
+      "evidence": "A Current component occupies the same functional path; improve Current rather than copy Legacy."
+    },
+    {
+      "relativePath": "app\\api\\suppliers\\route.ts",
+      "sha256": "EB96B47B642B06A00B34544604CC793783F12AE8687DC14D7ADA44220881CB9C",
+      "symbols": [
+        "GET",
+        "POST",
+        "legacyBoundary"
+      ],
+      "staticReferences": "next/server",
+      "unsafePatterns": [],
+      "currentSameRelative": "app\\api\\suppliers\\route.ts",
+      "currentSameNameCandidates": [
+        "app\\api\\auth\\login\\route.ts",
+        "app\\api\\auth\\logout\\route.ts",
+        "app\\api\\auth\\session\\route.ts",
+        "app\\api\\brains\\greeny-life-egypt\\route.ts",
+        "app\\api\\commercial-changes\\route.ts",
+        "app\\api\\data-control\\route.ts",
+        "app\\api\\decisions\\export-readiness\\route.ts",
+        "app\\api\\decisions\\official-evidence-review\\route.ts",
+        "app\\api\\evidence\\official\\route.ts",
+        "app\\api\\intelligence\\asset-registry\\route.ts",
+        "app\\api\\intelligence\\data-fabric\\route.ts",
+        "app\\api\\intelligence\\gels-label-readiness\\route.ts",
+        "app\\api\\intelligence\\production-readiness\\route.ts",
+        "app\\api\\learning\\evaluations\\route.ts",
+        "app\\api\\learning\\outcomes\\route.ts",
+        "app\\api\\learning\\training-cases\\route.ts",
+        "app\\api\\mastermind\\commercial-context\\route.ts",
+        "app\\api\\mastermind\\decision-package\\route.ts",
+        "app\\api\\mastermind\\operating-model\\route.ts",
+        "app\\api\\mastermind\\tools\\route.ts",
+        "app\\api\\portfolio\\egyptian-exports\\route.ts",
+        "app\\api\\products\\route.ts",
+        "app\\api\\sales-orders\\route.ts",
+        "app\\api\\suppliers\\route.ts",
+        "app\\api\\tasks\\route.ts",
+        "app\\api\\traceability\\route.ts",
+        "app\\api\\trade-corridors\\route.ts",
+        "app\\api\\workflow\\route.ts",
+        "app\\api\\workflow\\approvals\\route.ts"
+      ],
+      "recommendation": "EXTEND_OR_HARDEN_CURRENT",
+      "evidence": "A Current component occupies the same functional path; improve Current rather than copy Legacy."
+    },
+    {
+      "relativePath": "app\\api\\workflow\\route.ts",
+      "sha256": "6140D795794A3519A4B3D4F701EDB4FA04485C019122B8C1AE5A28CB453FCE90",
+      "symbols": [
+        "numberInput",
+        "POST",
+        "GET",
+        "parsed",
+        "params",
+        "qty",
+        "price",
+        "tariff",
+        "shipping",
+        "subtotalUSD",
+        "customsDutyUSD"
+      ],
+      "staticReferences": "next/server",
+      "unsafePatterns": [],
+      "currentSameRelative": "app\\api\\workflow\\route.ts",
+      "currentSameNameCandidates": [
+        "app\\api\\auth\\login\\route.ts",
+        "app\\api\\auth\\logout\\route.ts",
+        "app\\api\\auth\\session\\route.ts",
+        "app\\api\\brains\\greeny-life-egypt\\route.ts",
+        "app\\api\\commercial-changes\\route.ts",
+        "app\\api\\data-control\\route.ts",
+        "app\\api\\decisions\\export-readiness\\route.ts",
+        "app\\api\\decisions\\official-evidence-review\\route.ts",
+        "app\\api\\evidence\\official\\route.ts",
+        "app\\api\\intelligence\\asset-registry\\route.ts",
+        "app\\api\\intelligence\\data-fabric\\route.ts",
+        "app\\api\\intelligence\\gels-label-readiness\\route.ts",
+        "app\\api\\intelligence\\production-readiness\\route.ts",
+        "app\\api\\learning\\evaluations\\route.ts",
+        "app\\api\\learning\\outcomes\\route.ts",
+        "app\\api\\learning\\training-cases\\route.ts",
+        "app\\api\\mastermind\\commercial-context\\route.ts",
+        "app\\api\\mastermind\\decision-package\\route.ts",
+        "app\\api\\mastermind\\operating-model\\route.ts",
+        "app\\api\\mastermind\\tools\\route.ts",
+        "app\\api\\portfolio\\egyptian-exports\\route.ts",
+        "app\\api\\products\\route.ts",
+        "app\\api\\sales-orders\\route.ts",
+        "app\\api\\suppliers\\route.ts",
+        "app\\api\\tasks\\route.ts",
+        "app\\api\\traceability\\route.ts",
+        "app\\api\\trade-corridors\\route.ts",
+        "app\\api\\workflow\\route.ts",
+        "app\\api\\workflow\\approvals\\route.ts"
+      ],
+      "recommendation": "EXTEND_OR_HARDEN_CURRENT",
+      "evidence": "A Current component occupies the same functional path; improve Current rather than copy Legacy."
+    },
+    {
+      "relativePath": "archive\\duplicates\\route.ts",
+      "sha256": "ED5975194BA4C88280E7F3984B9BC493F53BD26B5E054F9F37C252AB8DF1F721",
+      "symbols": [
+        "POST",
+        "GET",
+        "body",
+        "result",
+        "qty",
+        "price",
+        "tariff",
+        "shipping",
+        "calculation"
+      ],
+      "staticReferences": [
+        "next/server",
+        "@/lib/workflowEngine"
+      ],
+      "unsafePatterns": [],
+      "currentSameRelative": "archive\\duplicates\\route.ts",
+      "currentSameNameCandidates": [
+        "app\\api\\auth\\login\\route.ts",
+        "app\\api\\auth\\logout\\route.ts",
+        "app\\api\\auth\\session\\route.ts",
+        "app\\api\\brains\\greeny-life-egypt\\route.ts",
+        "app\\api\\commercial-changes\\route.ts",
+        "app\\api\\data-control\\route.ts",
+        "app\\api\\decisions\\export-readiness\\route.ts",
+        "app\\api\\decisions\\official-evidence-review\\route.ts",
+        "app\\api\\evidence\\official\\route.ts",
+        "app\\api\\intelligence\\asset-registry\\route.ts",
+        "app\\api\\intelligence\\data-fabric\\route.ts",
+        "app\\api\\intelligence\\gels-label-readiness\\route.ts",
+        "app\\api\\intelligence\\production-readiness\\route.ts",
+        "app\\api\\learning\\evaluations\\route.ts",
+        "app\\api\\learning\\outcomes\\route.ts",
+        "app\\api\\learning\\training-cases\\route.ts",
+        "app\\api\\mastermind\\commercial-context\\route.ts",
+        "app\\api\\mastermind\\decision-package\\route.ts",
+        "app\\api\\mastermind\\operating-model\\route.ts",
+        "app\\api\\mastermind\\tools\\route.ts",
+        "app\\api\\portfolio\\egyptian-exports\\route.ts",
+        "app\\api\\products\\route.ts",
+        "app\\api\\sales-orders\\route.ts",
+        "app\\api\\suppliers\\route.ts",
+        "app\\api\\tasks\\route.ts",
+        "app\\api\\traceability\\route.ts",
+        "app\\api\\trade-corridors\\route.ts",
+        "app\\api\\workflow\\route.ts",
+        "app\\api\\workflow\\approvals\\route.ts"
+      ],
+      "recommendation": "EXTEND_OR_HARDEN_CURRENT",
+      "evidence": "A Current component occupies the same functional path; improve Current rather than copy Legacy."
+    },
+    {
+      "relativePath": "archive\\historical\\intelligence\\intelligence\\core\\engine-registry.ts",
+      "sha256": "A667EEF6C100050D7837A0959482722D4C3BDA6D868F47FF36232FB6F69BF9D6",
+      "symbols": [
+        "getActiveEngines",
+        "findEngine"
+      ],
+      "staticReferences": null,
+      "unsafePatterns": [],
+      "currentSameRelative": "archive\\historical\\intelligence\\intelligence\\core\\engine-registry.ts",
+      "currentSameNameCandidates": [],
+      "recommendation": "EXTEND_OR_HARDEN_CURRENT",
+      "evidence": "A Current component occupies the same functional path; improve Current rather than copy Legacy."
+    },
+    {
+      "relativePath": "archive\\historical\\scripts\\extract_product_master.py",
+      "sha256": "8E0098AADC2C80E25CFAA3C112E887C4BD57AE9B346612AC64633D5C05066A0B",
+      "symbols": "extract_products",
+      "staticReferences": [
+        "json",
+        "pathlib"
+      ],
+      "unsafePatterns": [],
+      "currentSameRelative": "archive\\historical\\scripts\\extract_product_master.py",
+      "currentSameNameCandidates": [],
+      "recommendation": "EXTEND_OR_HARDEN_CURRENT",
+      "evidence": "A Current component occupies the same functional path; improve Current rather than copy Legacy."
+    },
+    {
+      "relativePath": "archive\\historical\\scripts\\integrity-check.js",
+      "sha256": "F02362DA68EAE71E67E193E3C72569FBCA16832A0563AFF93D660E857D2C11E0",
+      "symbols": [
+        "checkIntegrity",
+        "fs",
+        "path",
+        "requiredFiles"
+      ],
+      "staticReferences": [
+        "fs",
+        "path"
+      ],
+      "unsafePatterns": [],
+      "currentSameRelative": "archive\\historical\\scripts\\integrity-check.js",
+      "currentSameNameCandidates": [],
+      "recommendation": "EXTEND_OR_HARDEN_CURRENT",
+      "evidence": "A Current component occupies the same functional path; improve Current rather than copy Legacy."
+    },
+    {
+      "relativePath": "archive\\historical\\scripts\\migrate-schema.js",
+      "sha256": "C88665691082D9F2B6FF32E8BE2C52AEBCD3B4C5008CC0E1738D4353057813DD",
+      "symbols": [
+        "save",
+        "addSortOrder",
+        "addFlags",
+        "migrateCollections",
+        "addStatus",
+        "migratePackaging",
+        "migrateProfiles",
+        "migrateProducts",
+        "migrateMarkets",
+        "migrateDocuments",
+        "fs",
+        "path",
+        "ROOT",
+        "DATA",
+        "REPORTS",
+        "APPLY",
+        "REPORT",
+        "file",
+        "json"
+      ],
+      "staticReferences": [
+        "fs",
+        "path",
+        "child_process"
+      ],
+      "unsafePatterns": [
+        "process execution"
+      ],
+      "currentSameRelative": "archive\\historical\\scripts\\migrate-schema.js",
+      "currentSameNameCandidates": [],
+      "recommendation": "QUARANTINE_STATIC",
+      "evidence": "Unsafe execution/deletion/network mutation pattern found; retain only as reference."
+    },
+    {
+      "relativePath": "archive\\historical\\scripts\\system_analyzer.py",
+      "sha256": "A586A5716D9C35949167CEACB40A0977CB68D6E4C2A118069CB9A5201B507402",
+      "symbols": "analyze_system",
+      "staticReferences": [
+        "json",
+        "pathlib"
+      ],
+      "unsafePatterns": [],
+      "currentSameRelative": "archive\\historical\\scripts\\system_analyzer.py",
+      "currentSameNameCandidates": [],
+      "recommendation": "EXTEND_OR_HARDEN_CURRENT",
+      "evidence": "A Current component occupies the same functional path; improve Current rather than copy Legacy."
+    },
+    {
+      "relativePath": "archive\\historical\\scripts\\validate-schema.js",
+      "sha256": "BD7B127CC243FF08A6E032887E8B1758E6C06F1B86E34C9840C8B79620500A82",
+      "symbols": [
+        "validateEntity",
+        "fs",
+        "path",
+        "ROOT",
+        "DATA_DIR",
+        "FILES",
+        "filePath",
+        "json"
+      ],
+      "staticReferences": [
+        "fs",
+        "path"
+      ],
+      "unsafePatterns": [],
+      "currentSameRelative": "archive\\historical\\scripts\\validate-schema.js",
+      "currentSameNameCandidates": [],
+      "recommendation": "EXTEND_OR_HARDEN_CURRENT",
+      "evidence": "A Current component occupies the same functional path; improve Current rather than copy Legacy."
+    },
+    {
+      "relativePath": "archive\\historical\\__tests__\\workflowEngine.test.ts",
+      "sha256": "5ADDB773CEBF94BA57D2B40EBD30A355A44934D8311047E370512B8B46AD93AF",
+      "symbols": [
+        "findUniqueMock",
+        "updateMock",
+        "auditCreateMock",
+        "transactionMock",
+        "result",
+        "updatedOrder"
+      ],
+      "staticReferences": [
+        "vitest",
+        "../lib/workflowEngine"
+      ],
+      "unsafePatterns": [],
+      "currentSameRelative": "archive\\historical\\__tests__\\workflowEngine.test.ts",
+      "currentSameNameCandidates": [],
+      "recommendation": "EXTEND_OR_HARDEN_CURRENT",
+      "evidence": "A Current component occupies the same functional path; improve Current rather than copy Legacy."
+    },
+    {
+      "relativePath": "archive\\old_folders\\GREENY-LIFE-EOS-PRODUCTION\\services\\product-service\\src\\domain\\Product.js",
+      "sha256": "34AC2BB2081AA30567A644B29D597C4C01D4F73488935C6BF200766E783476FB",
+      "symbols": "Product",
+      "staticReferences": null,
+      "unsafePatterns": [],
+      "currentSameRelative": "archive\\old_folders\\GREENY-LIFE-EOS-PRODUCTION\\services\\product-service\\src\\domain\\Product.js",
+      "currentSameNameCandidates": [],
+      "recommendation": "EXTEND_OR_HARDEN_CURRENT",
+      "evidence": "A Current component occupies the same functional path; improve Current rather than copy Legacy."
+    },
+    {
+      "relativePath": "archive\\old_folders\\GREENY-LIFE-EOS-PRODUCTION\\services\\supplier-service\\src\\domain\\Supplier.js",
+      "sha256": "39F2E4E21E2902EC886D18855FDAF4788E133D9CDD8FE2182D01EED65FCD5F41",
+      "symbols": "Supplier",
+      "staticReferences": null,
+      "unsafePatterns": [],
+      "currentSameRelative": "archive\\old_folders\\GREENY-LIFE-EOS-PRODUCTION\\services\\supplier-service\\src\\domain\\Supplier.js",
+      "currentSameNameCandidates": [],
+      "recommendation": "EXTEND_OR_HARDEN_CURRENT",
+      "evidence": "A Current component occupies the same functional path; improve Current rather than copy Legacy."
+    },
+    {
+      "relativePath": "canonical\\intelligence\\adapters\\gl-dos-governance-gate.ts",
+      "sha256": "810BBEFCB0E1A2E9D2C49D139F155993D2E9AF39FB0C06FCA44DCFCCEF34FF9C",
+      "symbols": "GLDOSGovernanceGate",
+      "staticReferences": null,
+      "unsafePatterns": [],
+      "currentSameRelative": "canonical\\intelligence\\adapters\\gl-dos-governance-gate.ts",
+      "currentSameNameCandidates": [
+        "canonical\\intelligence\\adapters\\gl-dos-governance-gate.ts"
+      ],
+      "recommendation": "EXTEND_OR_HARDEN_CURRENT",
+      "evidence": "A Current component occupies the same functional path; improve Current rather than copy Legacy."
+    },
+    {
+      "relativePath": "canonical\\intelligence\\intelligence\\core\\report-writer.ts",
+      "sha256": "79F0F01E641E892FCE29F1DCA310CB09BA20787CF92481595D4E4108BD99D231",
+      "symbols": [
+        "ensureReports",
+        "saveReport",
+        "summarize",
+        "generateDuplicateReport",
+        "generateCleanupPlan",
+        "generateMigrationDecision",
+        "generateAllReports",
+        "ROOT",
+        "REPORT_DIR",
+        "file"
+      ],
+      "staticReferences": [
+        "fs",
+        "path"
+      ],
+      "unsafePatterns": [],
+      "currentSameRelative": "canonical\\intelligence\\intelligence\\core\\report-writer.ts",
+      "currentSameNameCandidates": [
+        "canonical\\intelligence\\intelligence\\core\\report-writer.ts"
+      ],
+      "recommendation": "EXTEND_OR_HARDEN_CURRENT",
+      "evidence": "A Current component occupies the same functional path; improve Current rather than copy Legacy."
+    },
+    {
+      "relativePath": "canonical\\intelligence\\intelligence\\engines\\audit-engine.ts",
+      "sha256": "D23D474EB5B2672D7531C0F6011127DE8F9E2324540B9F554534791DDA286C81",
+      "symbols": [
+        "load",
+        "validateProduct",
+        "checkDuplicates",
+        "runAuditEngine",
+        "ROOT",
+        "SOURCES",
+        "target",
+        "json",
+        "normalized",
+        "required",
+        "ids",
+        "products"
+      ],
+      "staticReferences": [
+        "fs",
+        "path",
+        "../schemas/product-schema-map"
+      ],
+      "unsafePatterns": [],
+      "currentSameRelative": "canonical\\intelligence\\intelligence\\engines\\audit-engine.ts",
+      "currentSameNameCandidates": [
+        "canonical\\intelligence\\intelligence\\engines\\audit-engine.ts"
+      ],
+      "recommendation": "EXTEND_OR_HARDEN_CURRENT",
+      "evidence": "A Current component occupies the same functional path; improve Current rather than copy Legacy."
+    },
+    {
+      "relativePath": "canonical\\intelligence\\intelligence\\engines\\data-integrity-engine.ts",
+      "sha256": "78D5077A420F7CCF5F52CE2FEBFF1A736B93D5C0173B95F0C7ADB1D0E8154350",
+      "symbols": [
+        "readJSON",
+        "normalize",
+        "normalizeValue",
+        "getSlug",
+        "detectDuplicates",
+        "buildIdentityMap",
+        "compareProvenance",
+        "runIntegrityEngine",
+        "ROOT",
+        "FILES",
+        "target",
+        "content",
+        "ids",
+        "slugs",
+        "id",
+        "slug",
+        "map",
+        "sourceMap",
+        "found",
+        "fields",
+        "canonicalValue",
+        "sourceValue",
+        "canonicalRaw",
+        "canonical",
+        "migratedRaw",
+        "legacyRaw",
+        "migrated",
+        "legacy",
+        "errors",
+        "warnings"
+      ],
+      "staticReferences": [
+        "fs",
+        "path"
+      ],
+      "unsafePatterns": [],
+      "currentSameRelative": "canonical\\intelligence\\intelligence\\engines\\data-integrity-engine.ts",
+      "currentSameNameCandidates": [
+        "canonical\\intelligence\\intelligence\\engines\\data-integrity-engine.ts"
+      ],
+      "recommendation": "EXTEND_OR_HARDEN_CURRENT",
+      "evidence": "A Current component occupies the same functional path; improve Current rather than copy Legacy."
+    },
+    {
+      "relativePath": "canonical\\lib\\workflowEngine.ts",
+      "sha256": "293194FE8E99C803D8714EA50C943C4812D63A41D9151A93C24359EB5CF4E16C",
+      "symbols": [
+        "EOSWorkflowEngine",
+        "prisma",
+        "order",
+        "updatedOrder",
+        "currentOrder",
+        "subtotal",
+        "customsDuty",
+        "totalCost"
+      ],
+      "staticReferences": "@prisma/client",
+      "unsafePatterns": [],
+      "currentSameRelative": "canonical\\lib\\workflowEngine.ts",
+      "currentSameNameCandidates": [
+        "canonical\\lib\\workflowEngine.ts"
+      ],
+      "recommendation": "EXTEND_OR_HARDEN_CURRENT",
+      "evidence": "A Current component occupies the same functional path; improve Current rather than copy Legacy."
+    },
+    {
+      "relativePath": "scripts\\ai\\agent-context.ps1",
+      "sha256": "902DC54B6F15C41A98F3771DB3A675113B251C082A42B64E54EC3E10511E6C09",
+      "symbols": "Safe-Git",
+      "staticReferences": null,
+      "unsafePatterns": [],
+      "currentSameRelative": null,
+      "currentSameNameCandidates": [],
+      "recommendation": "REVIEW_FOR_EXTRACT",
+      "evidence": "No static proof yet permits direct adoption; assess symbols and current boundary before a change."
+    },
+    {
+      "relativePath": "scripts\\ai\\agent-handoff.ps1",
+      "sha256": "8E5F62FA24CEA01FA7C76EA0550B5853F734B66F5E1B6BC92A3C346135AE4B72",
+      "symbols": null,
+      "staticReferences": null,
+      "unsafePatterns": [],
+      "currentSameRelative": null,
+      "currentSameNameCandidates": [],
+      "recommendation": "REVIEW_FOR_EXTRACT",
+      "evidence": "No static proof yet permits direct adoption; assess symbols and current boundary before a change."
+    }
+  ],
+  "constraints": [
+    "No Legacy code was imported or executed.",
+    "Recommendations do not authorize copying, merging, quarantining, archiving, or deleting any asset.",
+    "BUILD is not a permitted recommendation in this trace."
+  ]
+}

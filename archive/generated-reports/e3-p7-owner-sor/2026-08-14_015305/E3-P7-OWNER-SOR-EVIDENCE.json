@@ -1,0 +1,66 @@
+{
+    "report":  "E3 P7 Owner and System of Record Evidence",
+    "generatedAt":  "2026-08-14T01:53:05.6016958+02:00",
+    "mode":  "READ_ONLY_OWNER_SOR_EVIDENCE",
+    "coverage":  {
+                     "p5InputRecords":  50104,
+                     "p7CoveredRecords":  50104,
+                     "status":  "PASS",
+                     "statement":  "Every P5 record is covered by an explicit owner/SOR state. REVIEW is a valid evidence outcome, not an ownership assignment."
+                 },
+    "legacyGroups":  [
+                         {
+                             "group":  "ENVIRONMENT_OR_GENERATED",
+                             "assets":  49340,
+                             "owner":  "ENVIRONMENT_OWNER_UNPROVEN",
+                             "sor":  "NOT_APPLICATION_CAPABILITY_SOR",
+                             "status":  "REVIEW",
+                             "reason":  "Dependencies, VCS metadata and generated output are physically covered but are not independent Legacy business capabilities."
+                         },
+                         {
+                             "group":  "PRESERVATION_OR_ARCHIVE",
+                             "assets":  260,
+                             "owner":  "PRESERVATION_OWNER_UNPROVEN",
+                             "sor":  "ARCHIVE_CONTENT_DEFERRED",
+                             "status":  "REVIEW",
+                             "reason":  "Preservation assets are protected. Package content, provenance, owner and SOR remain deferred by policy."
+                         },
+                         {
+                             "group":  "LEGACY_PROJECT_DOMAIN",
+                             "assets":  504,
+                             "owner":  "LEGACY_OWNER_UNPROVEN",
+                             "sor":  "NO_LEGACY_SYSTEM_OF_RECORD_PROVEN",
+                             "status":  "REVIEW",
+                             "reason":  "Static content and lineage exist, but no Legacy component is assigned SOR without runtime, authority, owner and replacement proof."
+                         }
+                     ],
+    "currentOperationalBaseline":  {
+                                       "owner":  "CURRENT_OPERATING_SYSTEM",
+                                       "sor":  "CURRENT_RUNTIME_BASELINE_FOR_PREVIOUSLY_PROVEN_CAPABILITIES_ONLY",
+                                       "evidence":  [
+                                                        "C:\\Users\\Ghanam\\Documents\\Codex\\Greeny-Life-Repair\\archive\\generated-reports\\e3-wave-5\\p0-runtime-operational-2026-08-13_174230\\E3-WAVE-5-P0-RUNTIME-OPERATIONAL-PROOF.json",
+                                                        "C:\\Users\\Ghanam\\Documents\\Codex\\Greeny-Life-Repair\\archive\\generated-reports\\e3-repair-verification\\closure-2026-08-13_190141\\E3-REPAIR-CLOSURE-VERIFICATION.json",
+                                                        "C:\\Users\\Ghanam\\Documents\\Codex\\Greeny-Life-Repair\\archive\\generated-reports\\e3-closure\\2026-08-13_220334\\E3-CURRENT-ASSET-CODE-CLOSURE.json"
+                                                    ],
+                                       "boundary":  "This is system-level evidence only. It does not make every file in the Current worktree a System of Record, and it does not resolve Legacy asset ownership."
+                                   },
+    "unproven":  [
+                     "PER_ASSET_LEGACY_OWNER",
+                     "PER_ASSET_LEGACY_SOR",
+                     "SEMANTIC_CURRENT_EQUIVALENCE",
+                     "REPLACEMENT",
+                     "RETIREMENT_ELIGIBILITY"
+                 ],
+    "nextGate":  "P8 Value, replacement and recovery proof. No group is authorized for treatment from P7.",
+    "prohibitions":  [
+                         "NO_LEGACY_EXECUTION",
+                         "NO_PACKAGE_OPENING",
+                         "NO_MOVE",
+                         "NO_MERGE",
+                         "NO_ARCHIVE_ACTION",
+                         "NO_DELETE",
+                         "NO_DATABASE_CHANGE",
+                         "NO_GIT_CHANGE",
+                         "NO_CURRENT_CHANGE"
+                     ]
+}

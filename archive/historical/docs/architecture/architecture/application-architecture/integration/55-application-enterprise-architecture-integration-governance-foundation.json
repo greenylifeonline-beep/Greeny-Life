@@ -1,0 +1,53 @@
+{
+    "System":  "Greeny-Life",
+    "Phase":  "PHASE_31",
+    "Step":  "STEP_55_APPLICATION_ENTERPRISE_ARCHITECTURE_INTEGRATION_GOVERNANCE_FOUNDATION",
+    "Framework":  "ENTERPRISE_APPLICATION_INTEGRATION_GOVERNANCE_MODEL",
+    "IntegrationGovernanceAreas":  [
+                                       {
+                                           "Area":  "INTEGRATION_OWNERSHIP",
+                                           "Owner":  "INTEGRATION_ARCHITECTURE",
+                                           "Purpose":  "Define integration accountability"
+                                       },
+                                       {
+                                           "Area":  "INTEGRATION_STANDARDS",
+                                           "Owner":  "ENTERPRISE_ARCHITECTURE",
+                                           "Purpose":  "Define integration design principles"
+                                       },
+                                       {
+                                           "Area":  "INTEGRATION_REVIEW_CONTROL",
+                                           "Owner":  "ARCHITECTURE_GOVERNANCE",
+                                           "Purpose":  "Review integration alignment"
+                                       },
+                                       {
+                                           "Area":  "INTEGRATION_DEPENDENCY_CONTROL",
+                                           "Owner":  "APPLICATION_ARCHITECTURE",
+                                           "Purpose":  "Control integration relationships"
+                                       },
+                                       {
+                                           "Area":  "INTEGRATION_EVOLUTION_MANAGEMENT",
+                                           "Owner":  "INTEGRATION_GOVERNANCE",
+                                           "Purpose":  "Guide integration evolution"
+                                       }
+                                   ],
+    "IntegrationRules":  [
+                             "INTEGRATION_OWNER_REQUIRED",
+                             "INTEGRATION_STANDARD_REQUIRED",
+                             "INTEGRATION_CHANGE_REVIEW_REQUIRED",
+                             "INTEGRATION_DEPENDENCY_TRACEABLE",
+                             "INTEGRATION_HISTORY_REQUIRED"
+                         ],
+    "IntegrationLifecycle":  [
+                                 "DEFINE_INTEGRATION_REQUIREMENT",
+                                 "DESIGN_INTEGRATION_APPROACH",
+                                 "REVIEW_INTEGRATION_ALIGNMENT",
+                                 "MANAGE_INTEGRATION_CHANGE",
+                                 "UPDATE_INTEGRATION_MODEL"
+                             ],
+    "Restrictions":  [
+                         "NO_INTEGRATION_IMPLEMENTATION",
+                         "NO_API_EXECUTION",
+                         "BLUEPRINT_ONLY"
+                     ],
+    "Status":  "APPLICATION_ENTERPRISE_ARCHITECTURE_INTEGRATION_GOVERNANCE_FOUNDATION_CREATED"
+}

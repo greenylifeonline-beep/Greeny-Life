@@ -1,0 +1,29 @@
+﻿{
+    "action":  "MOVE_LEGACY_COMMERCIAL_INTAKE_TO_CURRENT",
+    "movedAt":  "2026-08-15T00:12:01.1365889+02:00",
+    "reviewRoot":  "C:\\Users\\Ghanam\\Documents\\Codex\\Greeny-Life-Legacy-Review\\20260814-221919",
+    "currentRoot":  "C:\\Users\\Ghanam\\Documents\\Codex\\Greeny-Life-Repair",
+    "currentIntakeRoot":  "C:\\Users\\Ghanam\\Documents\\Codex\\Greeny-Life-Repair\\data\\controlled-intake\\legacy-commercial\\20260815-001201",
+    "movedCount":  2,
+    "moved":  [
+                  {
+                      "relativePath":  "canonical\\data\\suppliers.json",
+                      "sourcePath":  "C:\\Users\\Ghanam\\Documents\\Codex\\Greeny-Life-Legacy-Review\\20260814-221919\\canonical\\data\\suppliers.json",
+                      "currentIntakePath":  "C:\\Users\\Ghanam\\Documents\\Codex\\Greeny-Life-Repair\\data\\controlled-intake\\legacy-commercial\\20260815-001201\\suppliers.json",
+                      "sha256":  "426EE545611B0B323CFC2DFA80B1F85C43C4F00EA3189FAD1044E9C199AF01DC",
+                      "bytes":  2958,
+                      "status":  "PENDING_OWNER_PROVENANCE_ENTITY_AND_PRODUCT_MAPPING"
+                  },
+                  {
+                      "relativePath":  "canonical\\data\\supplier-product-links.json",
+                      "sourcePath":  "C:\\Users\\Ghanam\\Documents\\Codex\\Greeny-Life-Legacy-Review\\20260814-221919\\canonical\\data\\supplier-product-links.json",
+                      "currentIntakePath":  "C:\\Users\\Ghanam\\Documents\\Codex\\Greeny-Life-Repair\\data\\controlled-intake\\legacy-commercial\\20260815-001201\\supplier-product-links.json",
+                      "sha256":  "EC76619E1981C36D11F8DB67E2C45C7DF51ECC02B913901C0795A035B8E9859D",
+                      "bytes":  2261,
+                      "status":  "PENDING_OWNER_PROVENANCE_ENTITY_AND_PRODUCT_MAPPING"
+                  }
+              ],
+    "databaseWrite":  false,
+    "systemOfRecord":  "Current database remains SOR; these files are controlled intake inputs only.",
+    "nextGate":  "Assign owner, prove provenance/freshness, map entityId and product/SKU identifiers, then obtain explicit import approval."
+}

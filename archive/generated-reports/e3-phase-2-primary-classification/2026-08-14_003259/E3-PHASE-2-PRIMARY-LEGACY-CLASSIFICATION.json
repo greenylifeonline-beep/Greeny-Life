@@ -1,0 +1,132 @@
+{
+    "report":  "E3 Phase 2 Primary Legacy Classification and Coverage Proof",
+    "generatedAt":  "2026-08-14T00:33:36.2302137+02:00",
+    "mode":  "READ_ONLY_CLASSIFICATION",
+    "inputs":  {
+                   "phase1":  "C:\\Users\\Ghanam\\Documents\\Codex\\Greeny-Life-Repair\\archive\\generated-reports\\e3-phase-1-primary-full-inventory\\2026-08-14_002855\\E3-PHASE-1-PRIMARY-LEGACY-FULL-INVENTORY.json",
+                   "phase1Manifest":  "C:\\Users\\Ghanam\\Documents\\Codex\\Greeny-Life-Repair\\archive\\generated-reports\\e3-phase-1-primary-full-inventory\\2026-08-14_002855\\E3-PHASE-1-PRIMARY-LEGACY-FILES.csv",
+                   "expected":  50104
+               },
+    "coverageProof":  {
+                          "discovered":  50104,
+                          "classified":  50104,
+                          "unknown":  0,
+                          "readErrors":  0,
+                          "complete":  true,
+                          "status":  "PASS",
+                          "invariant":  "DISCOVERED must equal CLASSIFIED, with all unknown and read errors explicitly reported."
+                      },
+    "classificationCounts":  [
+                                 {
+                                     "classification":  "BINARY_OR_SPECIAL_FORMAT",
+                                     "files":  44
+                                 },
+                                 {
+                                     "classification":  "DATA_CONFIG_OR_SCHEMA_CANDIDATE",
+                                     "files":  250
+                                 },
+                                 {
+                                     "classification":  "DOCUMENTATION_DESIGN_OR_REFERENCE",
+                                     "files":  58
+                                 },
+                                 {
+                                     "classification":  "EMPTY_FILE_REVIEW",
+                                     "files":  80
+                                 },
+                                 {
+                                     "classification":  "EMPTY_OR_WHITESPACE_REVIEW",
+                                     "files":  1
+                                 },
+                                 {
+                                     "classification":  "GENERATED_BUILD_OUTPUT",
+                                     "files":  4254
+                                 },
+                                 {
+                                     "classification":  "LARGE_TEXT_OR_DATA_REVIEW",
+                                     "files":  7
+                                 },
+                                 {
+                                     "classification":  "PRESERVATION_REFERENCE",
+                                     "files":  22
+                                 },
+                                 {
+                                     "classification":  "PRESERVATION_REPORT_OR_MANIFEST",
+                                     "files":  238
+                                 },
+                                 {
+                                     "classification":  "PYTHON_ENVIRONMENT_DEPENDENCY",
+                                     "files":  39374
+                                 },
+                                 {
+                                     "classification":  "PYTHON_GENERATED_BYTECODE",
+                                     "files":  9
+                                 },
+                                 {
+                                     "classification":  "SOURCE_OR_TOOL_CANDIDATE",
+                                     "files":  61
+                                 },
+                                 {
+                                     "classification":  "TEXT_REFERENCE_REVIEW",
+                                     "files":  3
+                                 },
+                                 {
+                                     "classification":  "VCS_METADATA",
+                                     "files":  5703
+                                 }
+                             ],
+    "scopeCounts":  [
+                        {
+                            "scopeClass":  "ENVIRONMENT_OR_GENERATED",
+                            "files":  49340
+                        },
+                        {
+                            "scopeClass":  "PRESERVATION_OR_ARCHIVE",
+                            "files":  260
+                        },
+                        {
+                            "scopeClass":  "PROJECT_OR_DOMAIN_CANDIDATE",
+                            "files":  504
+                        }
+                    ],
+    "output":  {
+                   "csv":  "C:\\Users\\Ghanam\\Documents\\Codex\\Greeny-Life-Repair\\archive\\generated-reports\\e3-phase-2-primary-classification\\2026-08-14_003259\\E3-PHASE-2-PRIMARY-LEGACY-CLASSIFICATION.csv",
+                   "sha256":  "03B1B4E35129B03D78FB03A276902A99E32A1DFDCB6D2F7C7667983D0557B209",
+                   "records":  50104
+               },
+    "treatmentDecisionContract":  {
+                                      "status":  "NOT_STARTED",
+                                      "allowed":  [
+                                                      "REUSE",
+                                                      "EXTEND",
+                                                      "HARDEN",
+                                                      "EXTRACT",
+                                                      "ARCHIVE",
+                                                      "QUARANTINE",
+                                                      "RETIRE",
+                                                      "REVIEW",
+                                                      "UNKNOWN"
+                                                  ],
+                                      "execution":  "PROHIBITED",
+                                      "rule":  "Classification never authorizes execution, archival, deletion, movement, merging, or Legacy runtime."
+                                  },
+    "deferred":  [
+                     "CONTENT_UNDERSTANDING",
+                     "DEPENDENCY_CALLER_TRACE",
+                     "DATA_BUSINESS_LINEAGE",
+                     "DUPLICATE_VARIANT_ANALYSIS",
+                     "CURRENT_COMPARISON",
+                     "OWNER_SOR",
+                     "VALUE_REPLACEMENT_RECOVERY",
+                     "FINAL_TREATMENT"
+                 ],
+    "prohibitions":  [
+                         "NO_LEGACY_EXECUTION",
+                         "NO_ARCHIVE_EXTRACTION",
+                         "NO_MOVE",
+                         "NO_DELETE",
+                         "NO_ARCHIVE_ACTION",
+                         "NO_DATABASE_CHANGE",
+                         "NO_GIT_CHANGE",
+                         "NO_CURRENT_CHANGE"
+                     ]
+}

@@ -1,0 +1,1342 @@
+﻿{
+    "reportType":  "E3_BUSINESS_DOMAIN_FAMILY_DECISION_V1",
+    "generatedAtUtc":  "2026-08-13T17:58:32.6816323Z",
+    "mode":  "READ_ONLY",
+    "protections":  [
+                        "NO_EXECUTION",
+                        "NO_IMPORT",
+                        "NO_FILE_WRITE",
+                        "NO_DATABASE",
+                        "NO_NETWORK",
+                        "NO_GIT_CHANGE",
+                        "NO_MOVE",
+                        "NO_MERGE",
+                        "NO_DELETE"
+                    ],
+    "inputLineageCorrection":  "C:\\Users\\Ghanam\\Documents\\Codex\\Greeny-Life-Repair\\archive\\generated-reports\\e3-business-asset-recovery\\lineage-correction-2026-08-13_195616\\E3-BUSINESS-ASSET-RECOVERY-LINEAGE-CORRECTION.json",
+    "records":  [
+                    {
+                        "asset":  "KNOWLEDGE-BASE/Architecture/architecture-files.csv",
+                        "family":  "KNOWLEDGE_REFERENCE",
+                        "state":  "PRESENT",
+                        "decision":  "KNOWLEDGE_SOURCE_AND_FRESHNESS_REVIEW",
+                        "prohibited":  [
+                                           "Direct execution",
+                                           "Merge",
+                                           "Move",
+                                           "Delete",
+                                           "Automatic promotion"
+                                       ],
+                        "reason":  "Family and file-state evidence only; no content correctness or owner proof implied."
+                    },
+                    {
+                        "asset":  "application/customer/commands/customer-command.ts",
+                        "family":  "LEGACY_APPLICATION_LAYER",
+                        "state":  "EMPTY",
+                        "decision":  "QUARANTINE_EMPTY_IMPLEMENTATION_OR_DATA",
+                        "prohibited":  [
+                                           "Direct execution",
+                                           "Merge",
+                                           "Move",
+                                           "Delete",
+                                           "Automatic promotion"
+                                       ],
+                        "reason":  "Family and file-state evidence only; no content correctness or owner proof implied."
+                    },
+                    {
+                        "asset":  "application/customer/queries/customer-query.ts",
+                        "family":  "LEGACY_APPLICATION_LAYER",
+                        "state":  "EMPTY",
+                        "decision":  "QUARANTINE_EMPTY_IMPLEMENTATION_OR_DATA",
+                        "prohibited":  [
+                                           "Direct execution",
+                                           "Merge",
+                                           "Move",
+                                           "Delete",
+                                           "Automatic promotion"
+                                       ],
+                        "reason":  "Family and file-state evidence only; no content correctness or owner proof implied."
+                    },
+                    {
+                        "asset":  "application/customer/workflows/customer-workflow.ts",
+                        "family":  "LEGACY_APPLICATION_LAYER",
+                        "state":  "EMPTY",
+                        "decision":  "QUARANTINE_EMPTY_IMPLEMENTATION_OR_DATA",
+                        "prohibited":  [
+                                           "Direct execution",
+                                           "Merge",
+                                           "Move",
+                                           "Delete",
+                                           "Automatic promotion"
+                                       ],
+                        "reason":  "Family and file-state evidence only; no content correctness or owner proof implied."
+                    },
+                    {
+                        "asset":  "application/inventory/commands/inventory-command.ts",
+                        "family":  "LEGACY_APPLICATION_LAYER",
+                        "state":  "EMPTY",
+                        "decision":  "QUARANTINE_EMPTY_IMPLEMENTATION_OR_DATA",
+                        "prohibited":  [
+                                           "Direct execution",
+                                           "Merge",
+                                           "Move",
+                                           "Delete",
+                                           "Automatic promotion"
+                                       ],
+                        "reason":  "Family and file-state evidence only; no content correctness or owner proof implied."
+                    },
+                    {
+                        "asset":  "application/inventory/queries/inventory-query.ts",
+                        "family":  "LEGACY_APPLICATION_LAYER",
+                        "state":  "EMPTY",
+                        "decision":  "QUARANTINE_EMPTY_IMPLEMENTATION_OR_DATA",
+                        "prohibited":  [
+                                           "Direct execution",
+                                           "Merge",
+                                           "Move",
+                                           "Delete",
+                                           "Automatic promotion"
+                                       ],
+                        "reason":  "Family and file-state evidence only; no content correctness or owner proof implied."
+                    },
+                    {
+                        "asset":  "application/inventory/workflows/inventory-workflow.ts",
+                        "family":  "LEGACY_APPLICATION_LAYER",
+                        "state":  "EMPTY",
+                        "decision":  "QUARANTINE_EMPTY_IMPLEMENTATION_OR_DATA",
+                        "prohibited":  [
+                                           "Direct execution",
+                                           "Merge",
+                                           "Move",
+                                           "Delete",
+                                           "Automatic promotion"
+                                       ],
+                        "reason":  "Family and file-state evidence only; no content correctness or owner proof implied."
+                    },
+                    {
+                        "asset":  "application/logistics/commands/logistics-command.ts",
+                        "family":  "LEGACY_APPLICATION_LAYER",
+                        "state":  "EMPTY",
+                        "decision":  "QUARANTINE_EMPTY_IMPLEMENTATION_OR_DATA",
+                        "prohibited":  [
+                                           "Direct execution",
+                                           "Merge",
+                                           "Move",
+                                           "Delete",
+                                           "Automatic promotion"
+                                       ],
+                        "reason":  "Family and file-state evidence only; no content correctness or owner proof implied."
+                    },
+                    {
+                        "asset":  "application/logistics/queries/logistics-query.ts",
+                        "family":  "LEGACY_APPLICATION_LAYER",
+                        "state":  "EMPTY",
+                        "decision":  "QUARANTINE_EMPTY_IMPLEMENTATION_OR_DATA",
+                        "prohibited":  [
+                                           "Direct execution",
+                                           "Merge",
+                                           "Move",
+                                           "Delete",
+                                           "Automatic promotion"
+                                       ],
+                        "reason":  "Family and file-state evidence only; no content correctness or owner proof implied."
+                    },
+                    {
+                        "asset":  "application/logistics/workflows/logistics-workflow.ts",
+                        "family":  "LEGACY_APPLICATION_LAYER",
+                        "state":  "EMPTY",
+                        "decision":  "QUARANTINE_EMPTY_IMPLEMENTATION_OR_DATA",
+                        "prohibited":  [
+                                           "Direct execution",
+                                           "Merge",
+                                           "Move",
+                                           "Delete",
+                                           "Automatic promotion"
+                                       ],
+                        "reason":  "Family and file-state evidence only; no content correctness or owner proof implied."
+                    },
+                    {
+                        "asset":  "application/product/commands/product-command.ts",
+                        "family":  "LEGACY_APPLICATION_LAYER",
+                        "state":  "EMPTY",
+                        "decision":  "QUARANTINE_EMPTY_IMPLEMENTATION_OR_DATA",
+                        "prohibited":  [
+                                           "Direct execution",
+                                           "Merge",
+                                           "Move",
+                                           "Delete",
+                                           "Automatic promotion"
+                                       ],
+                        "reason":  "Family and file-state evidence only; no content correctness or owner proof implied."
+                    },
+                    {
+                        "asset":  "application/product/queries/product-query.ts",
+                        "family":  "LEGACY_APPLICATION_LAYER",
+                        "state":  "EMPTY",
+                        "decision":  "QUARANTINE_EMPTY_IMPLEMENTATION_OR_DATA",
+                        "prohibited":  [
+                                           "Direct execution",
+                                           "Merge",
+                                           "Move",
+                                           "Delete",
+                                           "Automatic promotion"
+                                       ],
+                        "reason":  "Family and file-state evidence only; no content correctness or owner proof implied."
+                    },
+                    {
+                        "asset":  "application/product/workflows/product-workflow.ts",
+                        "family":  "LEGACY_APPLICATION_LAYER",
+                        "state":  "EMPTY",
+                        "decision":  "QUARANTINE_EMPTY_IMPLEMENTATION_OR_DATA",
+                        "prohibited":  [
+                                           "Direct execution",
+                                           "Merge",
+                                           "Move",
+                                           "Delete",
+                                           "Automatic promotion"
+                                       ],
+                        "reason":  "Family and file-state evidence only; no content correctness or owner proof implied."
+                    },
+                    {
+                        "asset":  "application/quality/commands/quality-command.ts",
+                        "family":  "LEGACY_APPLICATION_LAYER",
+                        "state":  "EMPTY",
+                        "decision":  "QUARANTINE_EMPTY_IMPLEMENTATION_OR_DATA",
+                        "prohibited":  [
+                                           "Direct execution",
+                                           "Merge",
+                                           "Move",
+                                           "Delete",
+                                           "Automatic promotion"
+                                       ],
+                        "reason":  "Family and file-state evidence only; no content correctness or owner proof implied."
+                    },
+                    {
+                        "asset":  "application/quality/queries/quality-query.ts",
+                        "family":  "LEGACY_APPLICATION_LAYER",
+                        "state":  "EMPTY",
+                        "decision":  "QUARANTINE_EMPTY_IMPLEMENTATION_OR_DATA",
+                        "prohibited":  [
+                                           "Direct execution",
+                                           "Merge",
+                                           "Move",
+                                           "Delete",
+                                           "Automatic promotion"
+                                       ],
+                        "reason":  "Family and file-state evidence only; no content correctness or owner proof implied."
+                    },
+                    {
+                        "asset":  "application/quality/workflows/quality-workflow.ts",
+                        "family":  "LEGACY_APPLICATION_LAYER",
+                        "state":  "EMPTY",
+                        "decision":  "QUARANTINE_EMPTY_IMPLEMENTATION_OR_DATA",
+                        "prohibited":  [
+                                           "Direct execution",
+                                           "Merge",
+                                           "Move",
+                                           "Delete",
+                                           "Automatic promotion"
+                                       ],
+                        "reason":  "Family and file-state evidence only; no content correctness or owner proof implied."
+                    },
+                    {
+                        "asset":  "application/supplier/commands/supplier-command.ts",
+                        "family":  "LEGACY_APPLICATION_LAYER",
+                        "state":  "EMPTY",
+                        "decision":  "QUARANTINE_EMPTY_IMPLEMENTATION_OR_DATA",
+                        "prohibited":  [
+                                           "Direct execution",
+                                           "Merge",
+                                           "Move",
+                                           "Delete",
+                                           "Automatic promotion"
+                                       ],
+                        "reason":  "Family and file-state evidence only; no content correctness or owner proof implied."
+                    },
+                    {
+                        "asset":  "application/supplier/queries/supplier-query.ts",
+                        "family":  "LEGACY_APPLICATION_LAYER",
+                        "state":  "EMPTY",
+                        "decision":  "QUARANTINE_EMPTY_IMPLEMENTATION_OR_DATA",
+                        "prohibited":  [
+                                           "Direct execution",
+                                           "Merge",
+                                           "Move",
+                                           "Delete",
+                                           "Automatic promotion"
+                                       ],
+                        "reason":  "Family and file-state evidence only; no content correctness or owner proof implied."
+                    },
+                    {
+                        "asset":  "application/supplier/workflows/supplier-workflow.ts",
+                        "family":  "LEGACY_APPLICATION_LAYER",
+                        "state":  "EMPTY",
+                        "decision":  "QUARANTINE_EMPTY_IMPLEMENTATION_OR_DATA",
+                        "prohibited":  [
+                                           "Direct execution",
+                                           "Merge",
+                                           "Move",
+                                           "Delete",
+                                           "Automatic promotion"
+                                       ],
+                        "reason":  "Family and file-state evidence only; no content correctness or owner proof implied."
+                    },
+                    {
+                        "asset":  "data/03_packaging_system.json",
+                        "family":  "BUSINESS_DATA_CANDIDATE",
+                        "state":  "EMPTY",
+                        "decision":  "QUARANTINE_EMPTY_IMPLEMENTATION_OR_DATA",
+                        "prohibited":  [
+                                           "Direct execution",
+                                           "Merge",
+                                           "Move",
+                                           "Delete",
+                                           "Automatic promotion"
+                                       ],
+                        "reason":  "Family and file-state evidence only; no content correctness or owner proof implied."
+                    },
+                    {
+                        "asset":  "data/legacy/packaging.json",
+                        "family":  "BUSINESS_DATA_CANDIDATE",
+                        "state":  "EMPTY",
+                        "decision":  "QUARANTINE_EMPTY_IMPLEMENTATION_OR_DATA",
+                        "prohibited":  [
+                                           "Direct execution",
+                                           "Merge",
+                                           "Move",
+                                           "Delete",
+                                           "Automatic promotion"
+                                       ],
+                        "reason":  "Family and file-state evidence only; no content correctness or owner proof implied."
+                    },
+                    {
+                        "asset":  "data/migrated_products.json",
+                        "family":  "BUSINESS_DATA_CANDIDATE",
+                        "state":  "EMPTY",
+                        "decision":  "QUARANTINE_EMPTY_IMPLEMENTATION_OR_DATA",
+                        "prohibited":  [
+                                           "Direct execution",
+                                           "Merge",
+                                           "Move",
+                                           "Delete",
+                                           "Automatic promotion"
+                                       ],
+                        "reason":  "Family and file-state evidence only; no content correctness or owner proof implied."
+                    },
+                    {
+                        "asset":  "database/connections/index.ts",
+                        "family":  "LEGACY_DATA_ARCHITECTURE",
+                        "state":  "EMPTY",
+                        "decision":  "QUARANTINE_EMPTY_IMPLEMENTATION_OR_DATA",
+                        "prohibited":  [
+                                           "Direct execution",
+                                           "Merge",
+                                           "Move",
+                                           "Delete",
+                                           "Automatic promotion"
+                                       ],
+                        "reason":  "Family and file-state evidence only; no content correctness or owner proof implied."
+                    },
+                    {
+                        "asset":  "database/indexes/README.md",
+                        "family":  "LEGACY_DATA_ARCHITECTURE",
+                        "state":  "EMPTY",
+                        "decision":  "QUARANTINE_EMPTY_IMPLEMENTATION_OR_DATA",
+                        "prohibited":  [
+                                           "Direct execution",
+                                           "Merge",
+                                           "Move",
+                                           "Delete",
+                                           "Automatic promotion"
+                                       ],
+                        "reason":  "Family and file-state evidence only; no content correctness or owner proof implied."
+                    },
+                    {
+                        "asset":  "database/models/entities.ts",
+                        "family":  "LEGACY_DATA_ARCHITECTURE",
+                        "state":  "EMPTY",
+                        "decision":  "QUARANTINE_EMPTY_IMPLEMENTATION_OR_DATA",
+                        "prohibited":  [
+                                           "Direct execution",
+                                           "Merge",
+                                           "Move",
+                                           "Delete",
+                                           "Automatic promotion"
+                                       ],
+                        "reason":  "Family and file-state evidence only; no content correctness or owner proof implied."
+                    },
+                    {
+                        "asset":  "database/models/index.ts",
+                        "family":  "LEGACY_DATA_ARCHITECTURE",
+                        "state":  "EMPTY",
+                        "decision":  "QUARANTINE_EMPTY_IMPLEMENTATION_OR_DATA",
+                        "prohibited":  [
+                                           "Direct execution",
+                                           "Merge",
+                                           "Move",
+                                           "Delete",
+                                           "Automatic promotion"
+                                       ],
+                        "reason":  "Family and file-state evidence only; no content correctness or owner proof implied."
+                    },
+                    {
+                        "asset":  "database/repositories/index.ts",
+                        "family":  "LEGACY_DATA_ARCHITECTURE",
+                        "state":  "EMPTY",
+                        "decision":  "QUARANTINE_EMPTY_IMPLEMENTATION_OR_DATA",
+                        "prohibited":  [
+                                           "Direct execution",
+                                           "Merge",
+                                           "Move",
+                                           "Delete",
+                                           "Automatic promotion"
+                                       ],
+                        "reason":  "Family and file-state evidence only; no content correctness or owner proof implied."
+                    },
+                    {
+                        "asset":  "database/repositories/repository-contracts.ts",
+                        "family":  "LEGACY_DATA_ARCHITECTURE",
+                        "state":  "EMPTY",
+                        "decision":  "QUARANTINE_EMPTY_IMPLEMENTATION_OR_DATA",
+                        "prohibited":  [
+                                           "Direct execution",
+                                           "Merge",
+                                           "Move",
+                                           "Delete",
+                                           "Automatic promotion"
+                                       ],
+                        "reason":  "Family and file-state evidence only; no content correctness or owner proof implied."
+                    },
+                    {
+                        "asset":  "database/schemas/core/enterprise-schema.ts",
+                        "family":  "LEGACY_DATA_ARCHITECTURE",
+                        "state":  "EMPTY",
+                        "decision":  "QUARANTINE_EMPTY_IMPLEMENTATION_OR_DATA",
+                        "prohibited":  [
+                                           "Direct execution",
+                                           "Merge",
+                                           "Move",
+                                           "Delete",
+                                           "Automatic promotion"
+                                       ],
+                        "reason":  "Family and file-state evidence only; no content correctness or owner proof implied."
+                    },
+                    {
+                        "asset":  "database/schemas/domain/domain-schema.ts",
+                        "family":  "LEGACY_DATA_ARCHITECTURE",
+                        "state":  "EMPTY",
+                        "decision":  "QUARANTINE_EMPTY_IMPLEMENTATION_OR_DATA",
+                        "prohibited":  [
+                                           "Direct execution",
+                                           "Merge",
+                                           "Move",
+                                           "Delete",
+                                           "Automatic promotion"
+                                       ],
+                        "reason":  "Family and file-state evidence only; no content correctness or owner proof implied."
+                    },
+                    {
+                        "asset":  "database/schemas/index.ts",
+                        "family":  "LEGACY_DATA_ARCHITECTURE",
+                        "state":  "EMPTY",
+                        "decision":  "QUARANTINE_EMPTY_IMPLEMENTATION_OR_DATA",
+                        "prohibited":  [
+                                           "Direct execution",
+                                           "Merge",
+                                           "Move",
+                                           "Delete",
+                                           "Automatic promotion"
+                                       ],
+                        "reason":  "Family and file-state evidence only; no content correctness or owner proof implied."
+                    },
+                    {
+                        "asset":  "domain/customer/entities/customer-entity.ts",
+                        "family":  "LEGACY_DOMAIN_LAYER",
+                        "state":  "EMPTY",
+                        "decision":  "QUARANTINE_EMPTY_IMPLEMENTATION_OR_DATA",
+                        "prohibited":  [
+                                           "Direct execution",
+                                           "Merge",
+                                           "Move",
+                                           "Delete",
+                                           "Automatic promotion"
+                                       ],
+                        "reason":  "Family and file-state evidence only; no content correctness or owner proof implied."
+                    },
+                    {
+                        "asset":  "domain/customer/rules/customer-rules.ts",
+                        "family":  "LEGACY_DOMAIN_LAYER",
+                        "state":  "EMPTY",
+                        "decision":  "QUARANTINE_EMPTY_IMPLEMENTATION_OR_DATA",
+                        "prohibited":  [
+                                           "Direct execution",
+                                           "Merge",
+                                           "Move",
+                                           "Delete",
+                                           "Automatic promotion"
+                                       ],
+                        "reason":  "Family and file-state evidence only; no content correctness or owner proof implied."
+                    },
+                    {
+                        "asset":  "domain/customer/services/customer-service.ts",
+                        "family":  "LEGACY_DOMAIN_LAYER",
+                        "state":  "EMPTY",
+                        "decision":  "QUARANTINE_EMPTY_IMPLEMENTATION_OR_DATA",
+                        "prohibited":  [
+                                           "Direct execution",
+                                           "Merge",
+                                           "Move",
+                                           "Delete",
+                                           "Automatic promotion"
+                                       ],
+                        "reason":  "Family and file-state evidence only; no content correctness or owner proof implied."
+                    },
+                    {
+                        "asset":  "domain/inventory/entities/inventory-entity.ts",
+                        "family":  "LEGACY_DOMAIN_LAYER",
+                        "state":  "EMPTY",
+                        "decision":  "QUARANTINE_EMPTY_IMPLEMENTATION_OR_DATA",
+                        "prohibited":  [
+                                           "Direct execution",
+                                           "Merge",
+                                           "Move",
+                                           "Delete",
+                                           "Automatic promotion"
+                                       ],
+                        "reason":  "Family and file-state evidence only; no content correctness or owner proof implied."
+                    },
+                    {
+                        "asset":  "domain/inventory/rules/inventory-rules.ts",
+                        "family":  "LEGACY_DOMAIN_LAYER",
+                        "state":  "EMPTY",
+                        "decision":  "QUARANTINE_EMPTY_IMPLEMENTATION_OR_DATA",
+                        "prohibited":  [
+                                           "Direct execution",
+                                           "Merge",
+                                           "Move",
+                                           "Delete",
+                                           "Automatic promotion"
+                                       ],
+                        "reason":  "Family and file-state evidence only; no content correctness or owner proof implied."
+                    },
+                    {
+                        "asset":  "domain/inventory/services/inventory-service.ts",
+                        "family":  "LEGACY_DOMAIN_LAYER",
+                        "state":  "EMPTY",
+                        "decision":  "QUARANTINE_EMPTY_IMPLEMENTATION_OR_DATA",
+                        "prohibited":  [
+                                           "Direct execution",
+                                           "Merge",
+                                           "Move",
+                                           "Delete",
+                                           "Automatic promotion"
+                                       ],
+                        "reason":  "Family and file-state evidence only; no content correctness or owner proof implied."
+                    },
+                    {
+                        "asset":  "domain/logistics/entities/logistics-entity.ts",
+                        "family":  "LEGACY_DOMAIN_LAYER",
+                        "state":  "EMPTY",
+                        "decision":  "QUARANTINE_EMPTY_IMPLEMENTATION_OR_DATA",
+                        "prohibited":  [
+                                           "Direct execution",
+                                           "Merge",
+                                           "Move",
+                                           "Delete",
+                                           "Automatic promotion"
+                                       ],
+                        "reason":  "Family and file-state evidence only; no content correctness or owner proof implied."
+                    },
+                    {
+                        "asset":  "domain/logistics/rules/logistics-rules.ts",
+                        "family":  "LEGACY_DOMAIN_LAYER",
+                        "state":  "EMPTY",
+                        "decision":  "QUARANTINE_EMPTY_IMPLEMENTATION_OR_DATA",
+                        "prohibited":  [
+                                           "Direct execution",
+                                           "Merge",
+                                           "Move",
+                                           "Delete",
+                                           "Automatic promotion"
+                                       ],
+                        "reason":  "Family and file-state evidence only; no content correctness or owner proof implied."
+                    },
+                    {
+                        "asset":  "domain/logistics/services/logistics-service.ts",
+                        "family":  "LEGACY_DOMAIN_LAYER",
+                        "state":  "EMPTY",
+                        "decision":  "QUARANTINE_EMPTY_IMPLEMENTATION_OR_DATA",
+                        "prohibited":  [
+                                           "Direct execution",
+                                           "Merge",
+                                           "Move",
+                                           "Delete",
+                                           "Automatic promotion"
+                                       ],
+                        "reason":  "Family and file-state evidence only; no content correctness or owner proof implied."
+                    },
+                    {
+                        "asset":  "domain/product/entities/product-entity.ts",
+                        "family":  "LEGACY_DOMAIN_LAYER",
+                        "state":  "EMPTY",
+                        "decision":  "QUARANTINE_EMPTY_IMPLEMENTATION_OR_DATA",
+                        "prohibited":  [
+                                           "Direct execution",
+                                           "Merge",
+                                           "Move",
+                                           "Delete",
+                                           "Automatic promotion"
+                                       ],
+                        "reason":  "Family and file-state evidence only; no content correctness or owner proof implied."
+                    },
+                    {
+                        "asset":  "domain/product/rules/product-rules.ts",
+                        "family":  "LEGACY_DOMAIN_LAYER",
+                        "state":  "EMPTY",
+                        "decision":  "QUARANTINE_EMPTY_IMPLEMENTATION_OR_DATA",
+                        "prohibited":  [
+                                           "Direct execution",
+                                           "Merge",
+                                           "Move",
+                                           "Delete",
+                                           "Automatic promotion"
+                                       ],
+                        "reason":  "Family and file-state evidence only; no content correctness or owner proof implied."
+                    },
+                    {
+                        "asset":  "domain/product/services/product-service.ts",
+                        "family":  "LEGACY_DOMAIN_LAYER",
+                        "state":  "EMPTY",
+                        "decision":  "QUARANTINE_EMPTY_IMPLEMENTATION_OR_DATA",
+                        "prohibited":  [
+                                           "Direct execution",
+                                           "Merge",
+                                           "Move",
+                                           "Delete",
+                                           "Automatic promotion"
+                                       ],
+                        "reason":  "Family and file-state evidence only; no content correctness or owner proof implied."
+                    },
+                    {
+                        "asset":  "domain/quality/entities/quality-entity.ts",
+                        "family":  "LEGACY_DOMAIN_LAYER",
+                        "state":  "EMPTY",
+                        "decision":  "QUARANTINE_EMPTY_IMPLEMENTATION_OR_DATA",
+                        "prohibited":  [
+                                           "Direct execution",
+                                           "Merge",
+                                           "Move",
+                                           "Delete",
+                                           "Automatic promotion"
+                                       ],
+                        "reason":  "Family and file-state evidence only; no content correctness or owner proof implied."
+                    },
+                    {
+                        "asset":  "domain/quality/rules/quality-rules.ts",
+                        "family":  "LEGACY_DOMAIN_LAYER",
+                        "state":  "EMPTY",
+                        "decision":  "QUARANTINE_EMPTY_IMPLEMENTATION_OR_DATA",
+                        "prohibited":  [
+                                           "Direct execution",
+                                           "Merge",
+                                           "Move",
+                                           "Delete",
+                                           "Automatic promotion"
+                                       ],
+                        "reason":  "Family and file-state evidence only; no content correctness or owner proof implied."
+                    },
+                    {
+                        "asset":  "domain/quality/services/quality-service.ts",
+                        "family":  "LEGACY_DOMAIN_LAYER",
+                        "state":  "EMPTY",
+                        "decision":  "QUARANTINE_EMPTY_IMPLEMENTATION_OR_DATA",
+                        "prohibited":  [
+                                           "Direct execution",
+                                           "Merge",
+                                           "Move",
+                                           "Delete",
+                                           "Automatic promotion"
+                                       ],
+                        "reason":  "Family and file-state evidence only; no content correctness or owner proof implied."
+                    },
+                    {
+                        "asset":  "domain/supplier/entities/supplier-entity.ts",
+                        "family":  "LEGACY_DOMAIN_LAYER",
+                        "state":  "EMPTY",
+                        "decision":  "QUARANTINE_EMPTY_IMPLEMENTATION_OR_DATA",
+                        "prohibited":  [
+                                           "Direct execution",
+                                           "Merge",
+                                           "Move",
+                                           "Delete",
+                                           "Automatic promotion"
+                                       ],
+                        "reason":  "Family and file-state evidence only; no content correctness or owner proof implied."
+                    },
+                    {
+                        "asset":  "domain/supplier/rules/supplier-rules.ts",
+                        "family":  "LEGACY_DOMAIN_LAYER",
+                        "state":  "EMPTY",
+                        "decision":  "QUARANTINE_EMPTY_IMPLEMENTATION_OR_DATA",
+                        "prohibited":  [
+                                           "Direct execution",
+                                           "Merge",
+                                           "Move",
+                                           "Delete",
+                                           "Automatic promotion"
+                                       ],
+                        "reason":  "Family and file-state evidence only; no content correctness or owner proof implied."
+                    },
+                    {
+                        "asset":  "domain/supplier/services/supplier-service.ts",
+                        "family":  "LEGACY_DOMAIN_LAYER",
+                        "state":  "EMPTY",
+                        "decision":  "QUARANTINE_EMPTY_IMPLEMENTATION_OR_DATA",
+                        "prohibited":  [
+                                           "Direct execution",
+                                           "Merge",
+                                           "Move",
+                                           "Delete",
+                                           "Automatic promotion"
+                                       ],
+                        "reason":  "Family and file-state evidence only; no content correctness or owner proof implied."
+                    },
+                    {
+                        "asset":  "eos-core/governance/guardrails/.gitignore",
+                        "family":  "LEGACY_DATA_ARCHITECTURE",
+                        "state":  "PRESENT",
+                        "decision":  "SCHEMA_CONTRACT_COMPARISON_ONLY",
+                        "prohibited":  [
+                                           "Direct execution",
+                                           "Merge",
+                                           "Move",
+                                           "Delete",
+                                           "Automatic promotion"
+                                       ],
+                        "reason":  "Family and file-state evidence only; no content correctness or owner proof implied."
+                    },
+                    {
+                        "asset":  "eos-core/master-data/master-data/contracts/master-data-contracts.ts",
+                        "family":  "LEGACY_DATA_ARCHITECTURE",
+                        "state":  "EMPTY",
+                        "decision":  "QUARANTINE_EMPTY_IMPLEMENTATION_OR_DATA",
+                        "prohibited":  [
+                                           "Direct execution",
+                                           "Merge",
+                                           "Move",
+                                           "Delete",
+                                           "Automatic promotion"
+                                       ],
+                        "reason":  "Family and file-state evidence only; no content correctness or owner proof implied."
+                    },
+                    {
+                        "asset":  "eos-core/master-data/master-data/events/master-data-events.ts",
+                        "family":  "LEGACY_DATA_ARCHITECTURE",
+                        "state":  "EMPTY",
+                        "decision":  "QUARANTINE_EMPTY_IMPLEMENTATION_OR_DATA",
+                        "prohibited":  [
+                                           "Direct execution",
+                                           "Merge",
+                                           "Move",
+                                           "Delete",
+                                           "Automatic promotion"
+                                       ],
+                        "reason":  "Family and file-state evidence only; no content correctness or owner proof implied."
+                    },
+                    {
+                        "asset":  "eos-core/master-data/master-data/mapping/entity-mapping.ts",
+                        "family":  "LEGACY_DATA_ARCHITECTURE",
+                        "state":  "EMPTY",
+                        "decision":  "QUARANTINE_EMPTY_IMPLEMENTATION_OR_DATA",
+                        "prohibited":  [
+                                           "Direct execution",
+                                           "Merge",
+                                           "Move",
+                                           "Delete",
+                                           "Automatic promotion"
+                                       ],
+                        "reason":  "Family and file-state evidence only; no content correctness or owner proof implied."
+                    },
+                    {
+                        "asset":  "eos-core/master-data/master-data/schemas/master-data-schema.ts",
+                        "family":  "LEGACY_DATA_ARCHITECTURE",
+                        "state":  "EMPTY",
+                        "decision":  "QUARANTINE_EMPTY_IMPLEMENTATION_OR_DATA",
+                        "prohibited":  [
+                                           "Direct execution",
+                                           "Merge",
+                                           "Move",
+                                           "Delete",
+                                           "Automatic promotion"
+                                       ],
+                        "reason":  "Family and file-state evidence only; no content correctness or owner proof implied."
+                    },
+                    {
+                        "asset":  "eos-core/master-data/master-data/validation/master-data-rules.ts",
+                        "family":  "LEGACY_DATA_ARCHITECTURE",
+                        "state":  "EMPTY",
+                        "decision":  "QUARANTINE_EMPTY_IMPLEMENTATION_OR_DATA",
+                        "prohibited":  [
+                                           "Direct execution",
+                                           "Merge",
+                                           "Move",
+                                           "Delete",
+                                           "Automatic promotion"
+                                       ],
+                        "reason":  "Family and file-state evidence only; no content correctness or owner proof implied."
+                    },
+                    {
+                        "asset":  "governance/Audit-Packaging.ps1",
+                        "family":  "GOVERNANCE_REFERENCE",
+                        "state":  "PRESENT",
+                        "decision":  "COMPARE_WITH_CURRENT_GOVERNANCE_AND_OWNER",
+                        "prohibited":  [
+                                           "Direct execution",
+                                           "Merge",
+                                           "Move",
+                                           "Delete",
+                                           "Automatic promotion"
+                                       ],
+                        "reason":  "Family and file-state evidence only; no content correctness or owner proof implied."
+                    },
+                    {
+                        "asset":  "governance/eos-canonical-truth-registry-v1.json",
+                        "family":  "GOVERNANCE_REFERENCE",
+                        "state":  "PRESENT",
+                        "decision":  "COMPARE_WITH_CURRENT_GOVERNANCE_AND_OWNER",
+                        "prohibited":  [
+                                           "Direct execution",
+                                           "Merge",
+                                           "Move",
+                                           "Delete",
+                                           "Automatic promotion"
+                                       ],
+                        "reason":  "Family and file-state evidence only; no content correctness or owner proof implied."
+                    },
+                    {
+                        "asset":  "governance/eos-canonical-truth-registry-v2.json",
+                        "family":  "GOVERNANCE_REFERENCE",
+                        "state":  "PRESENT",
+                        "decision":  "COMPARE_WITH_CURRENT_GOVERNANCE_AND_OWNER",
+                        "prohibited":  [
+                                           "Direct execution",
+                                           "Merge",
+                                           "Move",
+                                           "Delete",
+                                           "Automatic promotion"
+                                       ],
+                        "reason":  "Family and file-state evidence only; no content correctness or owner proof implied."
+                    },
+                    {
+                        "asset":  "governance/eos-canonical-truth-registry-v3.json",
+                        "family":  "GOVERNANCE_REFERENCE",
+                        "state":  "PRESENT",
+                        "decision":  "COMPARE_WITH_CURRENT_GOVERNANCE_AND_OWNER",
+                        "prohibited":  [
+                                           "Direct execution",
+                                           "Merge",
+                                           "Move",
+                                           "Delete",
+                                           "Automatic promotion"
+                                       ],
+                        "reason":  "Family and file-state evidence only; no content correctness or owner proof implied."
+                    },
+                    {
+                        "asset":  "greenlines_brain/__init__.py",
+                        "family":  "LEGACY_BRAIN_CANDIDATE",
+                        "state":  "EMPTY",
+                        "decision":  "QUARANTINE_EMPTY_IMPLEMENTATION_OR_DATA",
+                        "prohibited":  [
+                                           "Direct execution",
+                                           "Merge",
+                                           "Move",
+                                           "Delete",
+                                           "Automatic promotion"
+                                       ],
+                        "reason":  "Family and file-state evidence only; no content correctness or owner proof implied."
+                    },
+                    {
+                        "asset":  "greenlines_brain/capability.py",
+                        "family":  "LEGACY_BRAIN_CANDIDATE",
+                        "state":  "EMPTY",
+                        "decision":  "QUARANTINE_EMPTY_IMPLEMENTATION_OR_DATA",
+                        "prohibited":  [
+                                           "Direct execution",
+                                           "Merge",
+                                           "Move",
+                                           "Delete",
+                                           "Automatic promotion"
+                                       ],
+                        "reason":  "Family and file-state evidence only; no content correctness or owner proof implied."
+                    },
+                    {
+                        "asset":  "greenlines_brain/contract.py",
+                        "family":  "LEGACY_BRAIN_CANDIDATE",
+                        "state":  "PRESENT",
+                        "decision":  "QUARANTINE_AND_SELECTIVE_CONTRACT_EXTRACTION",
+                        "prohibited":  [
+                                           "Direct execution",
+                                           "Merge",
+                                           "Move",
+                                           "Delete",
+                                           "Automatic promotion"
+                                       ],
+                        "reason":  "Family and file-state evidence only; no content correctness or owner proof implied."
+                    },
+                    {
+                        "asset":  "greenlines_brain/decision.py",
+                        "family":  "LEGACY_BRAIN_CANDIDATE",
+                        "state":  "EMPTY",
+                        "decision":  "QUARANTINE_EMPTY_IMPLEMENTATION_OR_DATA",
+                        "prohibited":  [
+                                           "Direct execution",
+                                           "Merge",
+                                           "Move",
+                                           "Delete",
+                                           "Automatic promotion"
+                                       ],
+                        "reason":  "Family and file-state evidence only; no content correctness or owner proof implied."
+                    },
+                    {
+                        "asset":  "greenlines_brain/dna/__init__.py",
+                        "family":  "LEGACY_BRAIN_CANDIDATE",
+                        "state":  "PRESENT",
+                        "decision":  "QUARANTINE_AND_SELECTIVE_CONTRACT_EXTRACTION",
+                        "prohibited":  [
+                                           "Direct execution",
+                                           "Merge",
+                                           "Move",
+                                           "Delete",
+                                           "Automatic promotion"
+                                       ],
+                        "reason":  "Family and file-state evidence only; no content correctness or owner proof implied."
+                    },
+                    {
+                        "asset":  "greenlines_brain/dna/ast_analyzer.py",
+                        "family":  "LEGACY_BRAIN_CANDIDATE",
+                        "state":  "PRESENT",
+                        "decision":  "QUARANTINE_AND_SELECTIVE_CONTRACT_EXTRACTION",
+                        "prohibited":  [
+                                           "Direct execution",
+                                           "Merge",
+                                           "Move",
+                                           "Delete",
+                                           "Automatic promotion"
+                                       ],
+                        "reason":  "Family and file-state evidence only; no content correctness or owner proof implied."
+                    },
+                    {
+                        "asset":  "greenlines_brain/dna/classifiers/__init__.py",
+                        "family":  "LEGACY_BRAIN_CANDIDATE",
+                        "state":  "PRESENT",
+                        "decision":  "QUARANTINE_AND_SELECTIVE_CONTRACT_EXTRACTION",
+                        "prohibited":  [
+                                           "Direct execution",
+                                           "Merge",
+                                           "Move",
+                                           "Delete",
+                                           "Automatic promotion"
+                                       ],
+                        "reason":  "Family and file-state evidence only; no content correctness or owner proof implied."
+                    },
+                    {
+                        "asset":  "greenlines_brain/dna/extract_dna.py",
+                        "family":  "LEGACY_BRAIN_CANDIDATE",
+                        "state":  "PRESENT",
+                        "decision":  "QUARANTINE_AND_SELECTIVE_CONTRACT_EXTRACTION",
+                        "prohibited":  [
+                                           "Direct execution",
+                                           "Merge",
+                                           "Move",
+                                           "Delete",
+                                           "Automatic promotion"
+                                       ],
+                        "reason":  "Family and file-state evidence only; no content correctness or owner proof implied."
+                    },
+                    {
+                        "asset":  "greenlines_brain/dna/extracted_knowledge.json",
+                        "family":  "LEGACY_BRAIN_CANDIDATE",
+                        "state":  "PRESENT",
+                        "decision":  "QUARANTINE_AND_SELECTIVE_CONTRACT_EXTRACTION",
+                        "prohibited":  [
+                                           "Direct execution",
+                                           "Merge",
+                                           "Move",
+                                           "Delete",
+                                           "Automatic promotion"
+                                       ],
+                        "reason":  "Family and file-state evidence only; no content correctness or owner proof implied."
+                    },
+                    {
+                        "asset":  "greenlines_brain/dna/extractor.py",
+                        "family":  "LEGACY_BRAIN_CANDIDATE",
+                        "state":  "PRESENT",
+                        "decision":  "QUARANTINE_AND_SELECTIVE_CONTRACT_EXTRACTION",
+                        "prohibited":  [
+                                           "Direct execution",
+                                           "Merge",
+                                           "Move",
+                                           "Delete",
+                                           "Automatic promotion"
+                                       ],
+                        "reason":  "Family and file-state evidence only; no content correctness or owner proof implied."
+                    },
+                    {
+                        "asset":  "greenlines_brain/dna/schema.json",
+                        "family":  "LEGACY_BRAIN_CANDIDATE",
+                        "state":  "EMPTY",
+                        "decision":  "QUARANTINE_EMPTY_IMPLEMENTATION_OR_DATA",
+                        "prohibited":  [
+                                           "Direct execution",
+                                           "Merge",
+                                           "Move",
+                                           "Delete",
+                                           "Automatic promotion"
+                                       ],
+                        "reason":  "Family and file-state evidence only; no content correctness or owner proof implied."
+                    },
+                    {
+                        "asset":  "greenlines_brain/evidence.py",
+                        "family":  "LEGACY_BRAIN_CANDIDATE",
+                        "state":  "EMPTY",
+                        "decision":  "QUARANTINE_EMPTY_IMPLEMENTATION_OR_DATA",
+                        "prohibited":  [
+                                           "Direct execution",
+                                           "Merge",
+                                           "Move",
+                                           "Delete",
+                                           "Automatic promotion"
+                                       ],
+                        "reason":  "Family and file-state evidence only; no content correctness or owner proof implied."
+                    },
+                    {
+                        "asset":  "greenlines_brain/evidence/__init__.py",
+                        "family":  "LEGACY_BRAIN_CANDIDATE",
+                        "state":  "PRESENT",
+                        "decision":  "QUARANTINE_AND_SELECTIVE_CONTRACT_EXTRACTION",
+                        "prohibited":  [
+                                           "Direct execution",
+                                           "Merge",
+                                           "Move",
+                                           "Delete",
+                                           "Automatic promotion"
+                                       ],
+                        "reason":  "Family and file-state evidence only; no content correctness or owner proof implied."
+                    },
+                    {
+                        "asset":  "greenlines_brain/evidence/models.py",
+                        "family":  "LEGACY_BRAIN_CANDIDATE",
+                        "state":  "PRESENT",
+                        "decision":  "QUARANTINE_AND_SELECTIVE_CONTRACT_EXTRACTION",
+                        "prohibited":  [
+                                           "Direct execution",
+                                           "Merge",
+                                           "Move",
+                                           "Delete",
+                                           "Automatic promotion"
+                                       ],
+                        "reason":  "Family and file-state evidence only; no content correctness or owner proof implied."
+                    },
+                    {
+                        "asset":  "greenlines_brain/evidence_gate.py",
+                        "family":  "LEGACY_BRAIN_CANDIDATE",
+                        "state":  "PRESENT",
+                        "decision":  "QUARANTINE_AND_SELECTIVE_CONTRACT_EXTRACTION",
+                        "prohibited":  [
+                                           "Direct execution",
+                                           "Merge",
+                                           "Move",
+                                           "Delete",
+                                           "Automatic promotion"
+                                       ],
+                        "reason":  "Family and file-state evidence only; no content correctness or owner proof implied."
+                    },
+                    {
+                        "asset":  "greenlines_brain/evidence_layer/__init__.py",
+                        "family":  "LEGACY_BRAIN_CANDIDATE",
+                        "state":  "PRESENT",
+                        "decision":  "QUARANTINE_AND_SELECTIVE_CONTRACT_EXTRACTION",
+                        "prohibited":  [
+                                           "Direct execution",
+                                           "Merge",
+                                           "Move",
+                                           "Delete",
+                                           "Automatic promotion"
+                                       ],
+                        "reason":  "Family and file-state evidence only; no content correctness or owner proof implied."
+                    },
+                    {
+                        "asset":  "greenlines_brain/evidence_layer/models.py",
+                        "family":  "LEGACY_BRAIN_CANDIDATE",
+                        "state":  "PRESENT",
+                        "decision":  "QUARANTINE_AND_SELECTIVE_CONTRACT_EXTRACTION",
+                        "prohibited":  [
+                                           "Direct execution",
+                                           "Merge",
+                                           "Move",
+                                           "Delete",
+                                           "Automatic promotion"
+                                       ],
+                        "reason":  "Family and file-state evidence only; no content correctness or owner proof implied."
+                    },
+                    {
+                        "asset":  "greenlines_brain/graph.py",
+                        "family":  "LEGACY_BRAIN_CANDIDATE",
+                        "state":  "PRESENT",
+                        "decision":  "QUARANTINE_AND_SELECTIVE_CONTRACT_EXTRACTION",
+                        "prohibited":  [
+                                           "Direct execution",
+                                           "Merge",
+                                           "Move",
+                                           "Delete",
+                                           "Automatic promotion"
+                                       ],
+                        "reason":  "Family and file-state evidence only; no content correctness or owner proof implied."
+                    },
+                    {
+                        "asset":  "greenlines_brain/identity.py",
+                        "family":  "LEGACY_BRAIN_CANDIDATE",
+                        "state":  "PRESENT",
+                        "decision":  "QUARANTINE_AND_SELECTIVE_CONTRACT_EXTRACTION",
+                        "prohibited":  [
+                                           "Direct execution",
+                                           "Merge",
+                                           "Move",
+                                           "Delete",
+                                           "Automatic promotion"
+                                       ],
+                        "reason":  "Family and file-state evidence only; no content correctness or owner proof implied."
+                    },
+                    {
+                        "asset":  "greenlines_brain/kernel.py",
+                        "family":  "LEGACY_BRAIN_CANDIDATE",
+                        "state":  "PRESENT",
+                        "decision":  "QUARANTINE_AND_SELECTIVE_CONTRACT_EXTRACTION",
+                        "prohibited":  [
+                                           "Direct execution",
+                                           "Merge",
+                                           "Move",
+                                           "Delete",
+                                           "Automatic promotion"
+                                       ],
+                        "reason":  "Family and file-state evidence only; no content correctness or owner proof implied."
+                    },
+                    {
+                        "asset":  "greenlines_brain/knowledge/__init__.py",
+                        "family":  "LEGACY_BRAIN_CANDIDATE",
+                        "state":  "PRESENT",
+                        "decision":  "QUARANTINE_AND_SELECTIVE_CONTRACT_EXTRACTION",
+                        "prohibited":  [
+                                           "Direct execution",
+                                           "Merge",
+                                           "Move",
+                                           "Delete",
+                                           "Automatic promotion"
+                                       ],
+                        "reason":  "Family and file-state evidence only; no content correctness or owner proof implied."
+                    },
+                    {
+                        "asset":  "greenlines_brain/knowledge/models.py",
+                        "family":  "LEGACY_BRAIN_CANDIDATE",
+                        "state":  "PRESENT",
+                        "decision":  "QUARANTINE_AND_SELECTIVE_CONTRACT_EXTRACTION",
+                        "prohibited":  [
+                                           "Direct execution",
+                                           "Merge",
+                                           "Move",
+                                           "Delete",
+                                           "Automatic promotion"
+                                       ],
+                        "reason":  "Family and file-state evidence only; no content correctness or owner proof implied."
+                    },
+                    {
+                        "asset":  "greenlines_brain/memory.py",
+                        "family":  "LEGACY_BRAIN_CANDIDATE",
+                        "state":  "EMPTY",
+                        "decision":  "QUARANTINE_EMPTY_IMPLEMENTATION_OR_DATA",
+                        "prohibited":  [
+                                           "Direct execution",
+                                           "Merge",
+                                           "Move",
+                                           "Delete",
+                                           "Automatic promotion"
+                                       ],
+                        "reason":  "Family and file-state evidence only; no content correctness or owner proof implied."
+                    },
+                    {
+                        "asset":  "greenlines_brain/ontology.py",
+                        "family":  "LEGACY_BRAIN_CANDIDATE",
+                        "state":  "PRESENT",
+                        "decision":  "QUARANTINE_AND_SELECTIVE_CONTRACT_EXTRACTION",
+                        "prohibited":  [
+                                           "Direct execution",
+                                           "Merge",
+                                           "Move",
+                                           "Delete",
+                                           "Automatic promotion"
+                                       ],
+                        "reason":  "Family and file-state evidence only; no content correctness or owner proof implied."
+                    },
+                    {
+                        "asset":  "greenlines_brain/reasoning.py",
+                        "family":  "LEGACY_BRAIN_CANDIDATE",
+                        "state":  "EMPTY",
+                        "decision":  "QUARANTINE_EMPTY_IMPLEMENTATION_OR_DATA",
+                        "prohibited":  [
+                                           "Direct execution",
+                                           "Merge",
+                                           "Move",
+                                           "Delete",
+                                           "Automatic promotion"
+                                       ],
+                        "reason":  "Family and file-state evidence only; no content correctness or owner proof implied."
+                    },
+                    {
+                        "asset":  "greenlines_brain/repository/__init__.py",
+                        "family":  "LEGACY_BRAIN_CANDIDATE",
+                        "state":  "EMPTY",
+                        "decision":  "QUARANTINE_EMPTY_IMPLEMENTATION_OR_DATA",
+                        "prohibited":  [
+                                           "Direct execution",
+                                           "Merge",
+                                           "Move",
+                                           "Delete",
+                                           "Automatic promotion"
+                                       ],
+                        "reason":  "Family and file-state evidence only; no content correctness or owner proof implied."
+                    },
+                    {
+                        "asset":  "greenlines_brain/repository/interface.py",
+                        "family":  "LEGACY_BRAIN_CANDIDATE",
+                        "state":  "PRESENT",
+                        "decision":  "QUARANTINE_AND_SELECTIVE_CONTRACT_EXTRACTION",
+                        "prohibited":  [
+                                           "Direct execution",
+                                           "Merge",
+                                           "Move",
+                                           "Delete",
+                                           "Automatic promotion"
+                                       ],
+                        "reason":  "Family and file-state evidence only; no content correctness or owner proof implied."
+                    },
+                    {
+                        "asset":  "greenlines_brain/repository/json_repo.py",
+                        "family":  "LEGACY_BRAIN_CANDIDATE",
+                        "state":  "PRESENT",
+                        "decision":  "QUARANTINE_AND_SELECTIVE_CONTRACT_EXTRACTION",
+                        "prohibited":  [
+                                           "Direct execution",
+                                           "Merge",
+                                           "Move",
+                                           "Delete",
+                                           "Automatic promotion"
+                                       ],
+                        "reason":  "Family and file-state evidence only; no content correctness or owner proof implied."
+                    },
+                    {
+                        "asset":  "guardrails/.gitignore",
+                        "family":  "GOVERNANCE_REFERENCE",
+                        "state":  "PRESENT",
+                        "decision":  "COMPARE_WITH_CURRENT_GOVERNANCE_AND_OWNER",
+                        "prohibited":  [
+                                           "Direct execution",
+                                           "Merge",
+                                           "Move",
+                                           "Delete",
+                                           "Automatic promotion"
+                                       ],
+                        "reason":  "Family and file-state evidence only; no content correctness or owner proof implied."
+                    },
+                    {
+                        "asset":  "guardrails/guardrails.jsonl",
+                        "family":  "GOVERNANCE_REFERENCE",
+                        "state":  "EMPTY",
+                        "decision":  "QUARANTINE_EMPTY_IMPLEMENTATION_OR_DATA",
+                        "prohibited":  [
+                                           "Direct execution",
+                                           "Merge",
+                                           "Move",
+                                           "Delete",
+                                           "Automatic promotion"
+                                       ],
+                        "reason":  "Family and file-state evidence only; no content correctness or owner proof implied."
+                    },
+                    {
+                        "asset":  "guardrails/links.jsonl",
+                        "family":  "GOVERNANCE_REFERENCE",
+                        "state":  "EMPTY",
+                        "decision":  "QUARANTINE_EMPTY_IMPLEMENTATION_OR_DATA",
+                        "prohibited":  [
+                                           "Direct execution",
+                                           "Merge",
+                                           "Move",
+                                           "Delete",
+                                           "Automatic promotion"
+                                       ],
+                        "reason":  "Family and file-state evidence only; no content correctness or owner proof implied."
+                    },
+                    {
+                        "asset":  "guardrails/references.jsonl",
+                        "family":  "GOVERNANCE_REFERENCE",
+                        "state":  "EMPTY",
+                        "decision":  "QUARANTINE_EMPTY_IMPLEMENTATION_OR_DATA",
+                        "prohibited":  [
+                                           "Direct execution",
+                                           "Merge",
+                                           "Move",
+                                           "Delete",
+                                           "Automatic promotion"
+                                       ],
+                        "reason":  "Family and file-state evidence only; no content correctness or owner proof implied."
+                    },
+                    {
+                        "asset":  "guardrails/taxonomy.json",
+                        "family":  "GOVERNANCE_REFERENCE",
+                        "state":  "PRESENT",
+                        "decision":  "COMPARE_WITH_CURRENT_GOVERNANCE_AND_OWNER",
+                        "prohibited":  [
+                                           "Direct execution",
+                                           "Merge",
+                                           "Move",
+                                           "Delete",
+                                           "Automatic promotion"
+                                       ],
+                        "reason":  "Family and file-state evidence only; no content correctness or owner proof implied."
+                    }
+                ],
+    "summary":  {
+                    "total":  92,
+                    "families":  [
+                                     {
+                                         "family":  "BUSINESS_DATA_CANDIDATE",
+                                         "count":  3
+                                     },
+                                     {
+                                         "family":  "GOVERNANCE_REFERENCE",
+                                         "count":  9
+                                     },
+                                     {
+                                         "family":  "KNOWLEDGE_REFERENCE",
+                                         "count":  1
+                                     },
+                                     {
+                                         "family":  "LEGACY_APPLICATION_LAYER",
+                                         "count":  18
+                                     },
+                                     {
+                                         "family":  "LEGACY_BRAIN_CANDIDATE",
+                                         "count":  28
+                                     },
+                                     {
+                                         "family":  "LEGACY_DATA_ARCHITECTURE",
+                                         "count":  15
+                                     },
+                                     {
+                                         "family":  "LEGACY_DOMAIN_LAYER",
+                                         "count":  18
+                                     }
+                                 ],
+                    "empty":  64
+                },
+    "rule":  "No family is a System of Record. Business data requires provenance and reconciliation; rules require a bounded current contract and tests; the Legacy brain remains quarantined."
+}

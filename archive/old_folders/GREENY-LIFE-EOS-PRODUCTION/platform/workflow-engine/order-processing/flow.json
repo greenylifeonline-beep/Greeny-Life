@@ -1,0 +1,20 @@
+
+{
+"name":"Sales Order Flow",
+
+"steps":[
+
+"CREATE_CUSTOMER_ORDER",
+
+"CHECK_AVAILABLE_STOCK",
+
+"RESERVE_ITEMS",
+
+"CONFIRM_ORDER"
+
+],
+
+"event":"OrderCreated"
+
+}
+

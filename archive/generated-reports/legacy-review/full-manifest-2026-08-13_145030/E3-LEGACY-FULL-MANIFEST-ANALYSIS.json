@@ -1,0 +1,34 @@
+﻿{
+    "reportType":  "E3_LEGACY_FULL_MANIFEST_ANALYSIS_V1",
+    "generatedAtUtc":  "2026-08-13T12:50:33.0337354Z",
+    "scope":  "OLD PROJECT AS REPRESENTED BY E3-REPOSITORY-MANIFEST.json. Read-only source inspection. Replacement runtime/database excluded from all measurements.",
+    "manifestEntries":  1,
+    "excludedNonSourceOrDependencyEntries":  1,
+    "eligibleLegacySourceFiles":  0,
+    "sourceReadResults":  {
+                              "analyzed":  0,
+                              "manifestOnly":  0,
+                              "readFailed":  0
+                          },
+    "counts":  {
+                   "apiRoutes":  0,
+                   "engineCandidates":  0,
+                   "eventImplementationCandidates":  0,
+                   "persistenceCandidates":  0,
+                   "quarantineRisks":  0,
+                   "exactDuplicateGroups":  0
+               },
+    "meaning":  [
+                    "A candidate is not proof of runtime behavior.",
+                    "Event implementation candidate is not proof of an event architecture.",
+                    "Exact duplicate is not deletion authority.",
+                    "The report distinguishes old-project files from dependency/build noise before any decision."
+                ],
+    "classification":  [
+
+                       ],
+    "exactDuplicateGroups":  [
+
+                             ],
+    "nextGate":  "Trace only the P0 groups first: evidence/decision, workflow, trade-logistics, data persistence, security and event candidates. Then assign owner, consumers, canonical version, isolated test, and KEEP/REUSE/RECONNECT/CONSOLIDATE/ARCHIVE/RETIRE decision."
+}

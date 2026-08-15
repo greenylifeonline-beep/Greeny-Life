@@ -1,0 +1,98 @@
+﻿{
+    "reportType":  "E3_LEGACY_BUSINESS_VALUE_DECISION_V1",
+    "generatedAtUtc":  "2026-08-13T18:02:39.3217698Z",
+    "mode":  "READ_ONLY_DECISION",
+    "protections":  [
+                        "NO_EXECUTION",
+                        "NO_IMPORT",
+                        "NO_FILE_WRITE",
+                        "NO_DATABASE",
+                        "NO_NETWORK",
+                        "NO_GIT_CHANGE",
+                        "NO_MOVE",
+                        "NO_MERGE",
+                        "NO_DELETE"
+                    ],
+    "inputFamilyDecision":  "C:\\Users\\Ghanam\\Documents\\Codex\\Greeny-Life-Repair\\archive\\generated-reports\\e3-business-domain-family\\decision-2026-08-13_195832\\E3-BUSINESS-DOMAIN-FAMILY-DECISION.json",
+    "presentAssets":  28,
+    "emptyAssets":  64,
+    "decisions":  [
+                      {
+                          "scope":  "LEGACY_PRODUCT_DATA_AND_PACKAGING",
+                          "evidence":  [
+                                           "data/03_packaging_system.json",
+                                           "data/legacy/packaging.json",
+                                           "data/migrated_products.json"
+                                       ],
+                          "finding":  "All three candidate data files are empty.",
+                          "decision":  "QUARANTINE_EMPTY; CURRENT_CANONICAL_REMAINS_ONLY_KNOWN_PRODUCT_SOURCE",
+                          "currentAuthority":  "canonical/data/master_products.json",
+                          "allowedNext":  "Accept new source data only through controlled import preflight and provenance review",
+                          "prohibited":  [
+                                             "Merge empty files",
+                                             "Create products from filenames",
+                                             "Overwrite canonical product data",
+                                             "Delete originals"
+                                         ]
+                      },
+                      {
+                          "scope":  "LEGACY_APPLICATION_DOMAIN_AND_DATA_ARCHITECTURE",
+                          "evidence":  [
+                                           "18 application assets",
+                                           "18 domain assets",
+                                           "15 data-architecture assets"
+                                       ],
+                          "finding":  "Application and domain assets are empty; data architecture has one non-business .gitignore and fourteen empty assets.",
+                          "decision":  "QUARANTINE_EMPTY_IMPLEMENTATIONS; NO_REUSE_OR_MERGE_VALUE_PROVEN",
+                          "currentAuthority":  "Current Next.js API/lib/Prisma contracts",
+                          "allowedNext":  "Retain as historical evidence only; reconsider only if a non-empty source is recovered with provenance",
+                          "prohibited":  [
+                                             "Generate replacement engines from empty filenames",
+                                             "Merge",
+                                             "Direct execution",
+                                             "Delete before retention decision"
+                                         ]
+                      },
+                      {
+                          "scope":  "LEGACY_BRAIN_CONTRACTS_EVIDENCE_IDENTITY_ONTOLOGY",
+                          "evidence":  [
+                                           "greenlines_brain/contract.py",
+                                           "greenlines_brain/evidence/models.py",
+                                           "greenlines_brain/evidence_gate.py",
+                                           "greenlines_brain/identity.py",
+                                           "greenlines_brain/ontology.py"
+                                       ],
+                          "finding":  "Non-empty conceptual contracts exist, but the Legacy kernel is already unsafe and the current system has authoritative evidence, policy, authorization, audit, and three-brain boundaries.",
+                          "decision":  "REFERENCE_COMPARE_ONLY; NO_SECOND_EVIDENCE_OR_DECISION_ENGINE",
+                          "currentAuthority":  "lib/intelligence/official-evidence-gate.ts; lib/authz.ts; lib/intelligence/mastermind-agents.ts; current Prisma audit/evidence models",
+                          "allowedNext":  "Field-by-field gap comparison only; extract a specific missing field or invariant only if current contract lacks it and a test is defined",
+                          "prohibited":  [
+                                             "Run kernel",
+                                             "Adopt decision behavior",
+                                             "Create parallel Evidence/Decision engine",
+                                             "Promote extracted knowledge without official provenance"
+                                         ]
+                      },
+                      {
+                          "scope":  "LEGACY_GOVERNANCE_AND_KNOWLEDGE_REFERENCES",
+                          "evidence":  [
+                                           "governance/eos-canonical-truth-registry-v1.json",
+                                           "governance/eos-canonical-truth-registry-v2.json",
+                                           "governance/eos-canonical-truth-registry-v3.json",
+                                           "KNOWLEDGE-BASE/Architecture/architecture-files.csv",
+                                           "guardrails/taxonomy.json"
+                                       ],
+                          "finding":  "Governance versions and reference inventory exist; taxonomy is tiny and not sufficient as authority.",
+                          "decision":  "COMPARE_VERSIONED_REFERENCE; CURRENT_E3_REPAIR_LEDGER_AND_CANONICAL_REGISTRY_CONTROL",
+                          "currentAuthority":  "Current committed repair ledger, current canonical data, current runtime tests",
+                          "allowedNext":  "Compare registry claims to current paths and runtime evidence; preserve historical versions; only promote a claim with source, freshness, owner, and test evidence",
+                          "prohibited":  [
+                                             "Treat historical registry as live truth",
+                                             "Overwrite current governance",
+                                             "Auto-merge versions",
+                                             "Delete versions"
+                                         ]
+                      }
+                  ],
+    "finalVerdict":  "No Legacy commercial data, application implementation, domain implementation, or packaging data is ready to merge. Retain non-empty Legacy contracts/governance as versioned references only; current verified system remains operational authority."
+}

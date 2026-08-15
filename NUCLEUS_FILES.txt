@@ -1,0 +1,1137 @@
+﻿
+
+=== FILE: database\schemas\domain\domain-schema.ts ===
+
+
+
+=== FILE: database\schemas\core\enterprise-schema.ts ===
+
+
+
+=== FILE: canonical\prisma\schema.prisma ===
+datasource db {
+  provider = "postgresql"
+}
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+model Organization {
+  id        String   @id @default(uuid())
+  code      String   @unique
+  nameAr    String
+  nameEn    String
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  entities  Entity[]
+}
+
+model Entity {
+  id             String         @id @default(uuid())
+  orgId          String
+  organization   Organization   @relation(fields: [orgId], references: [id])
+  code           String         @unique
+  nameAr         String
+  nameEn         String
+  country        String
+  warehouses     Warehouse[]
+  suppliers      Supplier[]
+  customers      Customer[]
+  salesOrders    SalesOrder[]
+  createdAt      DateTime       @default(now())
+  updatedAt      DateTime       @updatedAt
+}
+
+model Supplier {
+  id            String        @id @default(uuid())
+  entityId      String
+  entity        Entity        @relation(fields: [entityId], references: [id])
+  supplierId    String        @unique
+  nameAr        String
+  nameEn        String
+  contactPerson String?
+  email         String?
+  phone         String?
+  country       String        @default("Egypt")
+  products      Product[]
+  createdAt     DateTime      @default(now())
+  updatedAt     DateTime      @updatedAt
+}
+
+model Product {
+  id            String        @id @default(uuid())
+  supplierId    String
+  supplier      Supplier      @relation(fields: [supplierId], references: [id])
+  productId     String        @unique
+  nameAr        String
+  nameEn        String
+  category      String
+  marketRules   Json?
+  skus          SKU[]
+  batches       Batch[]
+  createdAt     DateTime      @default(now())
+  updatedAt     DateTime      @updatedAt
+}
+
+model SKU {
+  id            String           @id @default(uuid())
+  productId     String
+  product       Product          @relation(fields: [productId], references: [id])
+  skuCode       String           @unique
+  barcode       String?
+  unitPriceUSD  Float
+  weightKg      Float
+  packaging     Packaging[]
+  inventories   Inventory[]
+  orderItems    SalesOrderItem[]
+  createdAt     DateTime         @default(now())
+  updatedAt     DateTime         @updatedAt
+}
+
+model Batch {
+  id            String        @id @default(uuid())
+  productId     String
+  product       Product       @relation(fields: [productId], references: [id])
+  batchCode     String        @unique
+  productionDate DateTime
+  expiryDate    DateTime
+  qcPassed      Boolean       @default(false)
+  traceability  Json?
+  createdAt     DateTime      @default(now())
+}
+
+model Packaging {
+  id            String        @id @default(uuid())
+  skuId         String
+  sku           SKU           @relation(fields: [skuId], references: [id])
+  packageType   String
+  dimensions    String?
+  labelCode     String?
+  createdAt     DateTime      @default(now())
+}
+
+model Warehouse {
+  id            String        @id @default(uuid())
+  entityId      String
+  entity        Entity        @relation(fields: [entityId], references: [id])
+  warehouseCode String        @unique
+  nameAr        String
+  nameEn        String
+  location      String
+  inventories   Inventory[]
+  createdAt     DateTime      @default(now())
+}
+
+model Inventory {
+  id            String        @id @default(uuid())
+  warehouseId   String
+  warehouse     Warehouse     @relation(fields: [warehouseId], references: [id])
+  skuId         String
+  sku           SKU           @relation(fields: [skuId], references: [id])
+  quantity      Int           @default(0)
+  reservedQty   Int           @default(0)
+  updatedAt     DateTime      @updatedAt
+}
+
+model Customer {
+  id            String        @id @default(uuid())
+  entityId      String
+  entity        Entity        @relation(fields: [entityId], references: [id])
+  customerCode  String        @unique
+  name          String
+  country       String
+  email         String?
+  salesOrders   SalesOrder[]
+  createdAt     DateTime      @default(now())
+}
+
+model SalesOrder {
+  id            String           @id @default(uuid())
+  entityId      String
+  entity        Entity           @relation(fields: [entityId], references: [id])
+  orderCode     String           @unique
+  customerId    String
+  customer      Customer         @relation(fields: [customerId], references: [id])
+  status        String           @default("CREATED")
+  totalAmount   Float
+  currency      String           @default("USD")
+  items         SalesOrderItem[]
+  shipments     Shipment[]
+  invoices      Invoice[]
+  auditLogs     AuditLog[]
+  createdAt     DateTime         @default(now())
+  updatedAt     DateTime         @updatedAt
+}
+
+model SalesOrderItem {
+  id            String        @id @default(uuid())
+  orderId       String
+  salesOrder    SalesOrder    @relation(fields: [orderId], references: [id])
+  skuId         String
+  sku           SKU           @relation(fields: [skuId], references: [id])
+  quantity      Int
+  unitPriceUSD  Float
+  totalPriceUSD Float
+}
+
+model Shipment {
+  id            String        @id @default(uuid())
+  orderId       String
+  salesOrder    SalesOrder    @relation(fields: [orderId], references: [id])
+  trackingNo    String        @unique
+  carrier       String?
+  containerNo   String?
+  status        String        @default("PREPARING")
+  etd           DateTime?
+  eta           DateTime?
+  documents     Document[]
+  createdAt     DateTime      @default(now())
+}
+
+model Document {
+  id            String        @id @default(uuid())
+  shipmentId    String?
+  shipment      Shipment?     @relation(fields: [shipmentId], references: [id])
+  docType       String
+  fileUrl       String
+  issuedBy      String?
+  createdAt     DateTime      @default(now())
+}
+
+model Invoice {
+  id            String        @id @default(uuid())
+  orderId       String
+  salesOrder    SalesOrder    @relation(fields: [orderId], references: [id])
+  invoiceNo     String        @unique
+  amountUSD     Float
+  status        String        @default("PENDING")
+  payments      Payment[]
+  createdAt     DateTime      @default(now())
+}
+
+model Payment {
+  id            String        @id @default(uuid())
+  invoiceId     String
+  invoice       Invoice       @relation(fields: [invoiceId], references: [id])
+  amountUSD     Float
+  method        String
+  transactionRef String?
+  paidAt        DateTime      @default(now())
+}
+
+model User {
+  id            String        @id @default(uuid())
+  email         String        @unique
+  name          String
+  role          String        @default("EMPLOYEE")
+  department    String?
+  createdAt     DateTime      @default(now())
+}
+
+model AuditLog {
+  id            String        @id @default(uuid())
+  orderId       String?
+  salesOrder    SalesOrder?   @relation(fields: [orderId], references: [id])
+  action        String
+  actor         String
+  details       Json?
+  createdAt     DateTime      @default(now())
+}
+
+
+=== FILE: canonical\lib\workflowEngine.ts ===
+import { PrismaClient } from "@prisma/client";
+
+const prisma = new PrismaClient();
+
+// تعريف الحالات الأساسية لدورة حياة الطلب والشحن في النظام
+export enum OrderWorkflowState {
+  CREATED = "CREATED",                       // تم إنشاء الطلب
+  PENDING_SUPPLIER = "PENDING_SUPPLIER",     // بانتظار تأكيد المورد
+  IN_PRODUCTION = "IN_PRODUCTION",           // قيد التجهيز/التصنيع
+  SHIPPED_FROM_SUPPLIER = "SHIPPED_FROM_SUPPLIER", // تم الشحن من المصنع/المورد
+  CUSTOMS_CLEARANCE = "CUSTOMS_CLEARANCE",   // تحت الإجراءات الجمركية
+  IN_WAREHOUSE = "IN_WAREHOUSE",             // وصل المستودع المحلي
+  DELIVERED = "DELIVERED",                   // تم التسليم النهائي للعميل
+  CANCELLED = "CANCELLED"                    // ملغي
+}
+
+export class EOSWorkflowEngine {
+  
+  /**
+   * الانتقال بالحالة إلى المرحلة التالية مع التدقيق والتحجيل
+   */
+  public static async transitionOrderState(
+    orderId: string, 
+    targetState: OrderWorkflowState, 
+    userId: string
+  ) {
+    console.log(`⚙️ [Workflow Engine] Processing transition for Order ${orderId} -> ${targetState}`);
+
+    // 1. جلب الطلب والتحقق من وجوده
+    const order = await prisma.salesOrder.findUnique({
+      where: { id: orderId },
+      include: { items: true }
+    });
+
+    if (!order) {
+      throw new Error(`Order with ID ${orderId} not found.`);
+    }
+
+    // 2. تحديث الحالة في قاعدة البيانات ضمن معاملة (Transaction) لضمان نزاهة البيانات
+    const updatedOrder = await prisma.$transaction(async (tx) => {
+      // تحديث حالة الطلب
+      const currentOrder = await tx.salesOrder.update({
+        where: { id: orderId },
+        data: { 
+          // ملاحظة: يمكنك ربط حقل status مباشرة بحسب schema عندك
+          updatedAt: new Date()
+        }
+      });
+
+      // تسجيل الحدث في سجلات التدقيق (AuditLog) التابعة للنظام
+      await tx.auditLog.create({
+        data: {
+          action: `WORKFLOW_STATE_CHANGE_${targetState}`,
+          entity: "SalesOrder",
+          entityId: orderId,
+          userId: userId,
+          details: JSON.stringify({ previousState: order.status, newState: targetState })
+        }
+      });
+
+      return currentOrder;
+    });
+
+    console.log(`✅ [Workflow Engine] Order ${orderId} successfully transitioned to ${targetState}`);
+    return updatedOrder;
+  }
+
+  /**
+   * حساب التكاليف الإجمالية وتتبع الشحنات والجمرك
+   */
+  public static calculateLogisticsCost(itemsQuantity: number, basePrice: number, customsTariffRate: number, shippingFee: number) {
+    const subtotal = itemsQuantity * basePrice;
+    const customsDuty = subtotal * (customsTariffRate / 100);
+    const totalCost = subtotal + customsDuty + shippingFee;
+
+    return {
+      subtotalUSD: subtotal,
+      customsDutyUSD: customsDuty,
+      shippingFeeUSD: shippingFee,
+      totalCostUSD: totalCost
+    };
+  }
+}
+
+
+
+=== FILE: application\product\workflows\product-workflow.ts ===
+
+
+
+=== FILE: application\customer\workflows\customer-workflow.ts ===
+
+
+
+=== FILE: application\supplier\workflows\supplier-workflow.ts ===
+
+
+
+=== FILE: application\inventory\workflows\inventory-workflow.ts ===
+
+
+
+=== FILE: application\logistics\workflows\logistics-workflow.ts ===
+
+
+
+=== FILE: application\quality\workflows\quality-workflow.ts ===
+
+
+
+=== FILE: app\api\workflow\route.ts ===
+import { NextRequest, NextResponse } from "next/server";
+import { EOSWorkflowEngine, OrderWorkflowState } from "@/lib/workflowEngine";
+
+// POST: تغيير حالة الطلب وسير العمل
+export async function POST(request: NextRequest) {
+  try {
+    const body = await request.json();
+    const { orderId, targetState, userId } = body;
+
+    if (!orderId || !targetState || !userId) {
+      return NextResponse.json(
+        { success: false, error: "Missing required fields: orderId, targetState, userId" },
+        { status: 400 }
+      );
+    }
+
+    // التحقق من صحة الحالة المرسلة
+    if (!Object.values(OrderWorkflowState).includes(targetState)) {
+      return NextResponse.json(
+        { success: false, error: "Invalid target workflow state" },
+        { status: 400 }
+      );
+    }
+
+    const result = await EOSWorkflowEngine.transitionOrderState(
+      orderId, 
+      targetState as OrderWorkflowState, 
+      userId
+    );
+
+    return NextResponse.json({ success: true, data: result });
+  } catch (error) {
+    return NextResponse.json(
+      { success: false, error: "Workflow transition failed", details: (error as Error).message },
+      { status: 500 }
+    );
+  }
+}
+
+// GET: حساب التكاليف اللوجستية والجمركية لعنصر أو شحنة
+export async function GET(request: NextRequest) {
+  const { searchParams } = new URL(request.url);
+  const qty = parseFloat(searchParams.get("qty") || "0");
+  const price = parseFloat(searchParams.get("price") || "0");
+  const tariff = parseFloat(searchParams.get("tariff") || "5"); // نسبة الجمرك الافتراضية
+  const shipping = parseFloat(searchParams.get("shipping") || "50"); // رسوم الشحن الثابتة
+
+  const calculation = EOSWorkflowEngine.calculateLogisticsCost(qty, price, tariff, shipping);
+
+  return NextResponse.json({
+    success: true,
+    parameters: { qty, price, tariff, shipping },
+    calculation
+  });
+}
+
+
+
+=== FILE: app\api\products\route.ts ===
+import { NextRequest, NextResponse } from "next/server";
+import { PrismaClient } from "@prisma/client";
+
+const prisma = new PrismaClient();
+
+// GET: جلب قائمة المنتجات
+export async function GET(request: NextRequest) {
+  try {
+    const { searchParams } = new URL(request.url);
+    const categoryId = searchParams.get("categoryId");
+
+    const products = await prisma.product.findMany({
+      where: categoryId ? { categoryId } : {},
+      include: {
+        category: true,
+        supplier: true,
+        packagingProfile: true,
+      },
+      orderBy: { createdAt: "desc" },
+    });
+
+    return NextResponse.json({ success: true, count: products.length, data: products });
+  } catch (error) {
+    return NextResponse.json(
+      { success: false, error: "Failed to fetch products", details: (error as Error).message },
+      { status: 500 }
+    );
+  }
+}
+
+// POST: إنشاء منتج جديد
+export async function POST(request: NextRequest) {
+  try {
+    const body = await request.json();
+    const { productId, sku, nameAr, nameEn, hsCode, unitPriceUSD, categoryId, supplierId, packagingProfileId } = body;
+
+    const newProduct = await prisma.product.create({
+      data: {
+        productId,
+        sku,
+        nameAr,
+        nameEn,
+        hsCode,
+        unitPriceUSD: parseFloat(unitPriceUSD),
+        categoryId,
+        supplierId,
+        packagingProfileId,
+      },
+    });
+
+    return NextResponse.json({ success: true, data: newProduct }, { status: 201 });
+  } catch (error) {
+    return NextResponse.json(
+      { success: false, error: "Failed to create product", details: (error as Error).message },
+      { status: 400 }
+    );
+  }
+}
+
+
+
+=== FILE: app\api\sales-orders\route.ts ===
+import { NextRequest, NextResponse } from "next/server";
+import { PrismaClient } from "@prisma/client";
+
+const prisma = new PrismaClient();
+
+// GET: جلب أوامر البيع
+export async function GET() {
+  try {
+    const orders = await prisma.salesOrder.findMany({
+      include: {
+        customer: true,
+        market: true,
+        items: {
+          include: { product: true },
+        },
+      },
+      orderBy: { createdAt: "desc" },
+    });
+
+    return NextResponse.json({ success: true, count: orders.length, data: orders });
+  } catch (error) {
+    return NextResponse.json(
+      { success: false, error: "Failed to fetch sales orders", details: (error as Error).message },
+      { status: 500 }
+    );
+  }
+}
+
+// POST: إنشاء أمر بيع جديد
+export async function POST(request: NextRequest) {
+  try {
+    const body = await request.json();
+    const { orderId, customerId, marketId, items } = body;
+
+    let totalAmountUSD = 0;
+    const orderItemsData = items.map((item: { productId: string; quantity: number; unitPriceUSD: number }) => {
+      totalAmountUSD += item.quantity * item.unitPriceUSD;
+      return {
+        productId: item.productId,
+        quantity: item.quantity,
+        unitPriceUSD: item.unitPriceUSD,
+      };
+    });
+
+    const newOrder = await prisma.$transaction(async (tx) => {
+      return await tx.salesOrder.create({
+        data: {
+          orderId,
+          customerId,
+          marketId,
+          totalAmountUSD,
+          items: {
+            create: orderItemsData,
+          },
+        },
+        include: { items: true },
+      });
+    });
+
+    return NextResponse.json({ success: true, data: newOrder }, { status: 201 });
+  } catch (error) {
+    return NextResponse.json(
+      { success: false, error: "Failed to create sales order", details: (error as Error).message },
+      { status: 400 }
+    );
+  }
+}
+
+
+
+=== FILE: app\api\suppliers\route.ts ===
+import { NextRequest, NextResponse } from "next/server";
+import { PrismaClient } from "@prisma/client";
+
+const prisma = new PrismaClient();
+
+// GET: جلب قائمة الموردين
+export async function GET() {
+  try {
+    const suppliers = await prisma.supplier.findMany({
+      include: { products: true },
+      orderBy: { createdAt: "desc" },
+    });
+
+    return NextResponse.json({ success: true, count: suppliers.length, data: suppliers });
+  } catch (error) {
+    return NextResponse.json(
+      { success: false, error: "Failed to fetch suppliers", details: (error as Error).message },
+      { status: 500 }
+    );
+  }
+}
+
+// POST: إضافة مورد جديد لنظام التصدير
+export async function POST(request: NextRequest) {
+  try {
+    const body = await request.json();
+    const { supplierId, nameAr, nameEn, contactPerson, email, phone, country } = body;
+
+    const newSupplier = await prisma.supplier.create({
+      data: {
+        supplierId,
+        nameAr,
+        nameEn,
+        contactPerson,
+        email,
+        phone,
+        country: country || "Egypt", // المبدأ الأساسي: منتجات مصرية للأسواق العالمية
+      },
+    });
+
+    return NextResponse.json({ success: true, data: newSupplier }, { status: 201 });
+  } catch (error) {
+    return NextResponse.json(
+      { success: false, error: "Failed to create supplier", details: (error as Error).message },
+      { status: 400 }
+    );
+  }
+}
+
+
+
+=== FILE: intelligence\eos-final-enterprise-blueprint-packaging.json ===
+[MISSING]
+
+
+=== FILE: intelligence\eos-domain-connection-matrix.json ===
+[
+    {
+        "Domain":  "SUPPLIER",
+        "ExistingPath":  "application\\supplier",
+        "Command":  "supplier-command.ts",
+        "Query":  "supplier-query.ts",
+        "Workflow":  "supplier-workflow.ts",
+        "ConnectsTo":  "PRODUCT"
+    },
+    {
+        "Domain":  "PRODUCT",
+        "ExistingPath":  "application\\product",
+        "Command":  "product-command.ts",
+        "Query":  "product-query.ts",
+        "Workflow":  "product-workflow.ts",
+        "ConnectsTo":  "INVENTORY,QUALITY"
+    },
+    {
+        "Domain":  "INVENTORY",
+        "ExistingPath":  "application\\inventory",
+        "Command":  "inventory-command.ts",
+        "Query":  "inventory-query.ts",
+        "Workflow":  "inventory-workflow.ts",
+        "ConnectsTo":  "LOGISTICS"
+    },
+    {
+        "Domain":  "QUALITY",
+        "ExistingPath":  "application\\quality",
+        "Command":  "quality-command.ts",
+        "Query":  "quality-query.ts",
+        "Workflow":  "quality-workflow.ts",
+        "ConnectsTo":  "PRODUCT"
+    },
+    {
+        "Domain":  "LOGISTICS",
+        "ExistingPath":  "application\\logistics",
+        "Command":  "logistics-command.ts",
+        "Query":  "logistics-query.ts",
+        "Workflow":  "logistics-workflow.ts",
+        "ConnectsTo":  "CUSTOMER"
+    },
+    {
+        "Domain":  "CUSTOMER_CRM",
+        "ExistingPath":  "application\\customer",
+        "Command":  "customer-command.ts",
+        "Query":  "customer-query.ts",
+        "Workflow":  "customer-workflow.ts",
+        "ConnectsTo":  "LOGISTICS"
+    }
+]
+
+
+
+=== FILE: intelligence\eos-domain-api-ownership.json ===
+[
+    {
+        "Domain":  "PRODUCT",
+        "API":  "app/api/products/route.ts",
+        "Status":  "EXISTING"
+    },
+    {
+        "Domain":  "SUPPLIER",
+        "API":  "app/api/suppliers/route.ts",
+        "Status":  "EXISTING"
+    },
+    {
+        "Domain":  "SALES_ORDER",
+        "API":  "app/api/sales-orders/route.ts",
+        "Status":  "EXISTING"
+    },
+    {
+        "Domain":  "WORKFLOW",
+        "API":  "app/api/workflow/route.ts",
+        "Status":  "EXISTING"
+    },
+    {
+        "Domain":  "CORE_SERVICES",
+        "API":  "services/api.ts",
+        "Status":  "EXISTING"
+    },
+    {
+        "Domain":  "INVENTORY",
+        "API":  "MISSING_OR_EMBEDDED",
+        "Status":  "REVIEW"
+    },
+    {
+        "Domain":  "LOGISTICS",
+        "API":  "MISSING_OR_EMBEDDED",
+        "Status":  "REVIEW"
+    },
+    {
+        "Domain":  "QUALITY",
+        "API":  "MISSING_OR_EMBEDDED",
+        "Status":  "REVIEW"
+    },
+    {
+        "Domain":  "CUSTOMER_CRM",
+        "API":  "MISSING_OR_EMBEDDED",
+        "Status":  "REVIEW"
+    }
+]
+
+
+
+=== FILE: intelligence\eos-domain-runtime-ownership-map.json ===
+[
+    {
+        "File":  "\\app\\api\\products\\route.ts",
+        "Size":  1679,
+        "Lines":  58,
+        "RuntimeOwnership":  "API_ENTRY,DATABASE,WORKFLOW,COMMAND,QUERY"
+    },
+    {
+        "File":  "\\app\\api\\sales-orders\\route.ts",
+        "Size":  1879,
+        "Lines":  67,
+        "RuntimeOwnership":  "API_ENTRY,DATABASE,WORKFLOW,COMMAND,QUERY"
+    },
+    {
+        "File":  "\\app\\api\\suppliers\\route.ts",
+        "Size":  1471,
+        "Lines":  48,
+        "RuntimeOwnership":  "API_ENTRY,DATABASE,WORKFLOW,COMMAND,QUERY"
+    },
+    {
+        "File":  "\\app\\api\\workflow\\route.ts",
+        "Size":  1971,
+        "Lines":  55,
+        "RuntimeOwnership":  "API_ENTRY,DOMAIN_LOGIC,WORKFLOW,QUERY"
+    },
+    {
+        "File":  "\\app\\page.tsx",
+        "Size":  4746,
+        "Lines":  152,
+        "RuntimeOwnership":  "WORKFLOW,QUERY"
+    },
+    {
+        "File":  "\\eos-core\\intelligence\\intelligence\\core\\engine-registry.ts",
+        "Size":  1217,
+        "Lines":  99,
+        "RuntimeOwnership":  "DOMAIN_LOGIC,WORKFLOW,QUERY"
+    },
+    {
+        "File":  "\\eos-core\\intelligence\\intelligence\\core\\report-writer.ts",
+        "Size":  6607,
+        "Lines":  473,
+        "RuntimeOwnership":  "DOMAIN_LOGIC,WORKFLOW,COMMAND,QUERY"
+    },
+    {
+        "File":  "\\eos-core\\intelligence\\intelligence\\engines\\audit-engine.ts",
+        "Size":  4836,
+        "Lines":  399,
+        "RuntimeOwnership":  "DOMAIN_LOGIC,WORKFLOW,QUERY"
+    },
+    {
+        "File":  "\\eos-core\\intelligence\\intelligence\\engines\\cleanup-engine.ts",
+        "Size":  3579,
+        "Lines":  308,
+        "RuntimeOwnership":  "DOMAIN_LOGIC,QUERY"
+    },
+    {
+        "File":  "\\eos-core\\intelligence\\intelligence\\engines\\data-integrity-engine.ts",
+        "Size":  11442,
+        "Lines":  623,
+        "RuntimeOwnership":  "DOMAIN_LOGIC,WORKFLOW,QUERY"
+    },
+    {
+        "File":  "\\eos-core\\intelligence\\intelligence\\engines\\duplicate-engine-v2.ts",
+        "Size":  2886,
+        "Lines":  311,
+        "RuntimeOwnership":  "DOMAIN_LOGIC,QUERY"
+    },
+    {
+        "File":  "\\eos-core\\intelligence\\intelligence\\health\\health-reporter.ts",
+        "Size":  1235,
+        "Lines":  94,
+        "RuntimeOwnership":  "DOMAIN_LOGIC,WORKFLOW"
+    },
+    {
+        "File":  "\\eos-core\\intelligence\\intelligence\\memory\\project-memory.ts",
+        "Size":  1979,
+        "Lines":  168,
+        "RuntimeOwnership":  "DOMAIN_LOGIC,WORKFLOW,COMMAND,QUERY"
+    },
+    {
+        "File":  "\\eos-core\\intelligence\\intelligence\\schemas\\product-schema-map.ts",
+        "Size":  5349,
+        "Lines":  478,
+        "RuntimeOwnership":  "DOMAIN_LOGIC,WORKFLOW,QUERY"
+    },
+    {
+        "File":  "\\eos-core\\intelligence\\intelligence\\test\\test-duplicate-v2.ts",
+        "Size":  703,
+        "Lines":  66,
+        "RuntimeOwnership":  "DOMAIN_LOGIC,QUERY"
+    },
+    {
+        "File":  "\\eos-core\\intelligence\\intelligence\\duplicate-engine.ts",
+        "Size":  8880,
+        "Lines":  766,
+        "RuntimeOwnership":  "DOMAIN_LOGIC,QUERY"
+    },
+    {
+        "File":  "\\eos-core\\intelligence\\intelligence\\index.ts",
+        "Size":  3134,
+        "Lines":  219,
+        "RuntimeOwnership":  "DOMAIN_LOGIC,WORKFLOW,COMMAND,QUERY"
+    },
+    {
+        "File":  "\\eos-core\\intelligence\\intelligence\\intelligence-test.ts",
+        "Size":  1741,
+        "Lines":  187,
+        "RuntimeOwnership":  "DOMAIN_LOGIC,WORKFLOW,COMMAND,QUERY"
+    },
+    {
+        "File":  "\\lib\\data\\markets.ts",
+        "Size":  1031,
+        "Lines":  32,
+        "RuntimeOwnership":  "WORKFLOW,QUERY"
+    },
+    {
+        "File":  "\\lib\\data\\products.ts",
+        "Size":  3564,
+        "Lines":  121,
+        "RuntimeOwnership":  "WORKFLOW,QUERY"
+    },
+    {
+        "File":  "\\lib\\workflowEngine.ts",
+        "Size":  3212,
+        "Lines":  83,
+        "RuntimeOwnership":  "DOMAIN_LOGIC,DATABASE,WORKFLOW,COMMAND,QUERY"
+    },
+    {
+        "File":  "\\services\\api.ts",
+        "Size":  532,
+        "Lines":  17,
+        "RuntimeOwnership":  "DOMAIN_LOGIC,QUERY"
+    },
+    {
+        "File":  "\\prisma\\schema.prisma",
+        "Size":  6863,
+        "Lines":  229,
+        "RuntimeOwnership":  "DATABASE,WORKFLOW,COMMAND,QUERY"
+    }
+]
+
+
+
+=== FILE: governance\eos-canonical-truth-registry-v3.json ===
+{
+  "system": "GREENY-LIFE-EOS",
+  "version": "3.0.0",
+  "canonical_root": "canonical",
+  "domains": [
+    {
+      "name": "product",
+      "owner": "Product Domain",
+      "master_data": [
+        "canonical/data/master_products.json"
+      ],
+      "optional_files_found": [],
+      "optional_files_missing": [
+        "canonical/data/product-workflow.json",
+        "canonical/data/product-schema.json"
+      ],
+      "status": "VALID"
+    },
+    {
+      "name": "supplier",
+      "owner": "Supplier Domain",
+      "master_data": [
+        "canonical/data/suppliers.json"
+      ],
+      "optional_files_found": [],
+      "optional_files_missing": [
+        "canonical/data/supplier-workflow.json",
+        "canonical/data/supplier-schema.json"
+      ],
+      "status": "VALID"
+    },
+    {
+      "name": "certificate",
+      "owner": "Certificate Domain",
+      "master_data": [
+        "canonical/data/certificates.json"
+      ],
+      "optional_files_found": [],
+      "optional_files_missing": [
+        "canonical/data/certificate-documents.json"
+      ],
+      "status": "VALID"
+    },
+    {
+      "name": "customer",
+      "owner": "Customer Domain",
+      "master_data": [
+        "canonical/data/customer-domain/customers.json"
+      ],
+      "optional_files_found": [],
+      "optional_files_missing": [
+        "canonical/data/customer-domain/customer-workflow.json"
+      ],
+      "status": "VALID"
+    },
+    {
+      "name": "analytics",
+      "owner": "Analytics Domain",
+      "master_data": [
+        "canonical/analytics/sales-summary.json"
+      ],
+      "optional_files_found": [
+        "canonical/analytics/inventory-summary.json"
+      ],
+      "optional_files_missing": [
+        "canonical/analytics/analytics-workflow.json"
+      ],
+      "status": "VALID"
+    },
+    {
+      "name": "finance",
+      "owner": "Finance Domain",
+      "master_data": [
+        "canonical/finance/finance-master.json"
+      ],
+      "optional_files_found": [
+        "canonical/finance/workflows.json"
+      ],
+      "optional_files_missing": [
+        "canonical/finance/transactions.json"
+      ],
+      "status": "VALID"
+    },
+    {
+      "name": "inventory",
+      "owner": "Inventory Domain",
+      "master_data": [
+        "canonical/inventory/inventory-master-v1.json"
+      ],
+      "optional_files_found": [
+        "canonical/inventory/stock-levels.json"
+      ],
+      "optional_files_missing": [
+        "canonical/inventory/inventory-workflow.json"
+      ],
+      "status": "VALID"
+    },
+    {
+      "name": "logistics",
+      "owner": "Logistics Domain",
+      "master_data": [
+        "canonical/logistics/shipments.json"
+      ],
+      "optional_files_found": [],
+      "optional_files_missing": [
+        "canonical/logistics/tracking.json",
+        "canonical/logistics/logistics-workflow.json"
+      ],
+      "status": "VALID"
+    },
+    {
+      "name": "compliance",
+      "owner": "Compliance Domain",
+      "master_data": [
+        "canonical/data/compliance-master.json"
+      ],
+      "optional_files_found": [],
+      "optional_files_missing": [
+        "canonical/data/compliance-documents.json"
+      ],
+      "status": "VALID"
+    },
+    {
+      "name": "administration",
+      "owner": "Administration Domain",
+      "master_data": [
+        "canonical/data/administration-master.json"
+      ],
+      "optional_files_found": [],
+      "optional_files_missing": [
+        "canonical/data/users.json",
+        "canonical/data/roles.json",
+        "canonical/data/permissions.json"
+      ],
+      "status": "VALID"
+    }
+  ],
+  "validation_status": "PASSED",
+  "validated_at": "2026-08-05T18:02:25.625585",
+  "note": "Optional files (workflow, database, schema) are not required for VALID status."
+}
+
+
+=== FILE: system_manifest.json ===
+{
+  "schema_version": "1.0.0",
+  "last_updated": "2026-08-05T22:41:27.305939",
+  "project": {
+    "name": "Greeny-Life EOS",
+    "version": "5.0.0",
+    "description": "Enterprise Operating System for Natural Products"
+  },
+  "modules": {
+    "master_data": {
+      "path": "src/master_data",
+      "dependencies": []
+    },
+    "gl_dos": {
+      "path": "src/gl_dos",
+      "dependencies": [
+        "master_data"
+      ]
+    },
+    "operations": {
+      "path": "src/operations",
+      "dependencies": [
+        "master_data",
+        "gl_dos"
+      ]
+    },
+    "crm": {
+      "path": "src/crm",
+      "dependencies": [
+        "master_data"
+      ]
+    },
+    "logistics": {
+      "path": "src/logistics",
+      "dependencies": [
+        "operations",
+        "master_data"
+      ]
+    },
+    "compliance": {
+      "path": "src/compliance",
+      "dependencies": [
+        "master_data",
+        "logistics"
+      ]
+    },
+    "finance": {
+      "path": "src/finance",
+      "dependencies": [
+        "operations",
+        "crm"
+      ]
+    },
+    "analytics": {
+      "path": "src/analytics",
+      "dependencies": [
+        "master_data",
+        "finance"
+      ]
+    },
+    "administration": {
+      "path": "src/administration",
+      "dependencies": []
+    }
+  },
+  "critical_data": {
+    "products": "data/master_products.json",
+    "products_extended": "data/product_master_extended.json",
+    "customers": "data/customers.json",
+    "suppliers": "data/suppliers.json",
+    "opportunities": "data/opportunities.json",
+    "tracking": "data/tracking_data.json",
+    "certificates": "data/certificate_report.json",
+    "packaging_policy": "data/packaging_visual_integration_report.json"
+  },
+  "intelligence_assets": {
+    "knowledge_base": "intelligence/knowledge_base",
+    "daily_reports": "intelligence/daily_reports",
+    "generated_labels": "intelligence/generated_labels",
+    "generated_specs": "intelligence/generated_specs",
+    "comprehensive_report": "intelligence/comprehensive_report.md"
+  },
+  "system_files": {
+    "brain": "brain.py",
+    "config": "config.yaml",
+    "env": ".env",
+    "bound": "BOUND.md",
+    "archguard": ".archguard.yml",
+    "govern": ".govern.toml",
+    "requirements": "requirements.txt",
+    "package": "package.json"
+  },
+  "relationships": {
+    "product_to_label": {
+      "source": "data/master_products.json",
+      "target": "intelligence/generated_labels"
+    },
+    "product_to_spec": {
+      "source": "data/master_products.json",
+      "target": "intelligence/generated_specs"
+    },
+    "product_to_customer": {
+      "source": "data/master_products.json",
+      "target": "data/customers.json"
+    },
+    "product_to_supplier": {
+      "source": "data/master_products.json",
+      "target": "data/suppliers.json"
+    },
+    "order_to_tracking": {
+      "source": "data/opportunities.json",
+      "target": "data/tracking_data.json"
+    }
+  },
+  "cleanup_rules": {
+    "keep_last_n_logs": 5,
+    "keep_last_n_alerts": 5,
+    "keep_last_n_reports": 5,
+    "archive_duplicates": true,
+    "auto_merge_conflicts": true
+  },
+  "evolution": {
+    "auto_propose_updates": true,
+    "require_approval": true,
+    "pr_branch_prefix": "ai-evolution-",
+    "test_before_merge": true
+  }
+}
+
+
+=== FILE: .govern.toml ===
+[govern]
+receipts_dir = "docs/improvements"
+ledger = "docs/calibration/improvement_claim_ledger.jsonl"
+merged_ref = "origin/main"
+window = 10
+min_hit_rate = 0.95
+min_track_record = 10
+high_confidence_threshold = 0.8
+measure_timeout_s = 180
+kill_switch = "GOVERN_STOP"
+

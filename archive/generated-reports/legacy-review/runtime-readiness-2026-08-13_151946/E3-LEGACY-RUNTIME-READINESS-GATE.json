@@ -1,0 +1,88 @@
+﻿{
+    "reportType":  "E3_LEGACY_RUNTIME_READINESS_GATE_V1",
+    "generatedAtUtc":  "2026-08-13T13:19:46.7981186Z",
+    "scope":  "Read-only evaluation of whether the old project can be executed as a standalone runtime. No command from the old project was run.",
+    "checks":  [
+                   {
+                       "path":  "package.json",
+                       "exists":  true,
+                       "bytes":  0,
+                       "status":  "EMPTY"
+                   },
+                   {
+                       "path":  "package-lock.json",
+                       "exists":  false,
+                       "bytes":  0,
+                       "status":  "MISSING"
+                   },
+                   {
+                       "path":  "node_modules",
+                       "exists":  false,
+                       "bytes":  0,
+                       "status":  "MISSING"
+                   },
+                   {
+                       "path":  "prisma/schema.prisma",
+                       "exists":  false,
+                       "bytes":  0,
+                       "status":  "MISSING"
+                   },
+                   {
+                       "path":  "tsconfig.json",
+                       "exists":  false,
+                       "bytes":  0,
+                       "status":  "MISSING"
+                   },
+                   {
+                       "path":  "next.config.js",
+                       "exists":  false,
+                       "bytes":  0,
+                       "status":  "MISSING"
+                   },
+                   {
+                       "path":  "app/page.tsx",
+                       "exists":  false,
+                       "bytes":  0,
+                       "status":  "MISSING"
+                   },
+                   {
+                       "path":  "app/layout.tsx",
+                       "exists":  false,
+                       "bytes":  0,
+                       "status":  "MISSING"
+                   },
+                   {
+                       "path":  ".env",
+                       "exists":  true,
+                       "bytes":  836,
+                       "status":  "PRESENT"
+                   }
+               ],
+    "apiRouteFiles":  [
+                          {
+                              "path":  "app/api/products/route.ts",
+                              "bytes":  1679
+                          },
+                          {
+                              "path":  "app/api/sales-orders/route.ts",
+                              "bytes":  1879
+                          },
+                          {
+                              "path":  "app/api/suppliers/route.ts",
+                              "bytes":  1471
+                          },
+                          {
+                              "path":  "app/api/workflow/route.ts",
+                              "bytes":  1971
+                          }
+                      ],
+    "standaloneRuntimeReady":  false,
+    "verdict":  "NOT_READY_FOR_STANDALONE_RUNTIME",
+    "blockers":  [
+                     "package.json is empty or missing.",
+                     "Prisma schema is missing.",
+                     "TypeScript project configuration is missing.",
+                     "API route files exist but their original runtime contract is incomplete."
+                 ],
+    "safeDecision":  "Do not repair or run the old project in place. Treat it as an isolated source-asset repository. Extract and test selected components in a disposable harness only; promote only independently proven behavior into the single final replacement project."
+}

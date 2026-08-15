@@ -1,0 +1,31 @@
+﻿{
+    "reportType":  "E3_LEGACY_BRAIN_KERNEL_ISOLATED_PROOF_V1",
+    "generatedAtUtc":  "2026-08-13T13:41:11.2250215Z",
+    "scope":  "Disposable isolated run using empty temporary knowledge only. No legacy knowledge/data file was read or written; no network/database/external service; no brain.py.",
+    "result":  {
+                   "asset":  "GreenlinesBrainKernel",
+                   "status":  "FAIL",
+                   "tests":  [
+                                 {
+                                     "name":  "empty_knowledge_initialization",
+                                     "status":  "PASS",
+                                     "detail":  "Kernel instantiated with empty temporary knowledge; relations=5"
+                                 },
+                                 {
+                                     "name":  "absence_of_evidence_behavior",
+                                     "status":  "FAIL",
+                                     "detail":  "Kernel created default semantic relations: [(\u0027egypt\u0027, \u0027exports\u0027, \u0027honey\u0027, 0.5), (\u0027egypt\u0027, \u0027exports\u0027, \u0027spices\u0027, 0.5), (\u0027honey\u0027, \u0027export_to\u0027, \u0027norway\u0027, 0.5), (\u0027spices\u0027, \u0027export_to\u0027, \u0027eu\u0027, 0.5), (\u0027norway\u0027, \u0027requires\u0027, \u0027organic_certification\u0027, 0.5)]"
+                                 },
+                                 {
+                                     "name":  "decision_on_empty_knowledge",
+                                     "status":  "PARTIAL",
+                                     "detail":  "confidence=MEDIUM; recommendation=ÔÜá´©Å ┘äÏº ┘å┘êÏÁ┘è Ï¿Ï¬ÏÁÏ»┘èÏ▒ honey ÏÑ┘ä┘ë norway Ï¡Ïº┘ä┘èÏº┘ï; evidence_count=2"
+                                 }
+                             ],
+                   "finding":  "P1: semantic engine fabricates trade/export relations when repository rules are empty. This violates fail-closed evidence governance.",
+                   "recommendation":  "DO_NOT_REUSE_AS_DECISION_ENGINE. Extract memory, repository and explicit-rule parsing only after a promoted copy removes defaults and enforces NEEDS_VERIFICATION."
+               },
+    "exitCode":  0,
+    "rawOutput":  "­ƒôÜ Ï¬┘à Ï¬Ï¡┘à┘è┘ä Ïº┘ä┘àÏ╣Ï▒┘üÏ®: 0 ┘â┘èÏº┘åÏî 0 ┘éÏºÏ╣Ï»Ï®Ïî 0 ┘éÏ»Ï▒Ï®\n­ƒôè Ï¬┘à Ï¿┘åÏºÏí Ïº┘äÏ▒Ï│┘à Ïº┘äÏ¿┘èÏº┘å┘è: 0 Ï╣┘éÏ»Ï®Ïî 0 Ï╣┘äÏº┘éÏ®\n­ƒº® Ï¬┘à Ï¬Ï¡┘à┘è┘ä 5 Ï╣┘äÏº┘éÏ® Ï»┘äÏº┘ä┘èÏ®\n­ƒºá Ï¬┘à Ï¬┘ç┘èÏªÏ® Ïº┘äÏ╣┘é┘ä ┘ä┘åÏÀÏº┘é: egypt\n   Ïº┘ä┘â┘èÏº┘å Ïº┘ä┘éÏº┘å┘ê┘å┘è: Harness Entity\n   Ïº┘ä┘êÏ¼┘çÏºÏ¬ Ïº┘ä┘àÏ│┘à┘êÏ¡ Ï¿┘çÏº: []\n{\"asset\": \"GreenlinesBrainKernel\", \"status\": \"FAIL\", \"tests\": [{\"name\": \"empty_knowledge_initialization\", \"status\": \"PASS\", \"detail\": \"Kernel instantiated with empty temporary knowledge; relations=5\"}, {\"name\": \"absence_of_evidence_behavior\", \"status\": \"FAIL\", \"detail\": \"Kernel created default semantic relations: [(\u0027egypt\u0027, \u0027exports\u0027, \u0027honey\u0027, 0.5), (\u0027egypt\u0027, \u0027exports\u0027, \u0027spices\u0027, 0.5), (\u0027honey\u0027, \u0027export_to\u0027, \u0027norway\u0027, 0.5), (\u0027spices\u0027, \u0027export_to\u0027, \u0027eu\u0027, 0.5), (\u0027norway\u0027, \u0027requires\u0027, \u0027organic_certification\u0027, 0.5)]\"}, {\"name\": \"decision_on_empty_knowledge\", \"status\": \"PARTIAL\", \"detail\": \"confidence=MEDIUM; recommendation=ÔÜá´©Å ┘äÏº ┘å┘êÏÁ┘è Ï¿Ï¬ÏÁÏ»┘èÏ▒ honey ÏÑ┘ä┘ë norway Ï¡Ïº┘ä┘èÏº┘ï; evidence_count=2\"}], \"finding\": \"P1: semantic engine fabricates trade/export relations when repository rules are empty. This violates fail-closed evidence governance.\", \"recommendation\": \"DO_NOT_REUSE_AS_DECISION_ENGINE. Extract memory, repository and explicit-rule parsing only after a promoted copy removes defaults and enforces NEEDS_VERIFICATION.\"}",
+    "evidenceLadder":  "This is bounded RUNTIME_PROVEN evidence of the tested behavior. It is not proof of a safe decision engine or a System of Record."
+}

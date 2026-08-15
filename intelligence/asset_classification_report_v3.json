@@ -1,0 +1,3824 @@
+{
+  "mode": "FORENSIC_DISCOVERY_ONLY",
+  "generated_at": "2026-08-07T23:57:13.785995",
+  "total_assets": 265,
+  "tier_0_protected": [
+    "brain.py",
+    "system_manifest.json",
+    "config.yaml",
+    "BOUND.md",
+    "workflowEngine.ts",
+    "database/schemas/domain/domain-schema.ts",
+    "intelligence/eos-final-enterprise-blueprint.json",
+    "intelligence/eos-real-business-flow-reconstruction.json",
+    "intelligence/eos-real-execution-path-map.json",
+    "intelligence/eos-workflow-state-machine-map.json",
+    "intelligence/eos-prisma-domain-ownership.json",
+    "intelligence/eos-domain-boundary-validation.json",
+    "governance/eos-assets-registry-v1.json",
+    "governance/eos-deep-asset-discovery-v1.json"
+  ],
+  "treasure_list_loaded": false,
+  "canonical": [
+    {
+      "path": "brain.py",
+      "score": 100,
+      "tier": "Tier 0 - Absolute Core",
+      "reasons": [
+        "protected_tier_0"
+      ],
+      "decision": "KEEP_CANONICAL"
+    },
+    {
+      "path": "config.yaml",
+      "score": 100,
+      "tier": "Tier 0 - Absolute Core",
+      "reasons": [
+        "protected_tier_0"
+      ],
+      "decision": "KEEP_CANONICAL"
+    },
+    {
+      "path": "fix_brain.py",
+      "score": 100,
+      "tier": "Tier 0 - Absolute Core",
+      "reasons": [
+        "protected_tier_0"
+      ],
+      "decision": "KEEP_CANONICAL"
+    },
+    {
+      "path": "system_manifest.json",
+      "score": 100,
+      "tier": "Tier 0 - Absolute Core",
+      "reasons": [
+        "protected_tier_0"
+      ],
+      "decision": "KEEP_CANONICAL"
+    },
+    {
+      "path": "canonical\\fix_brain.py",
+      "score": 100,
+      "tier": "Tier 0 - Absolute Core",
+      "reasons": [
+        "protected_tier_0"
+      ],
+      "decision": "KEEP_CANONICAL"
+    },
+    {
+      "path": "canonical\\system_manifest.json",
+      "score": 100,
+      "tier": "Tier 0 - Absolute Core",
+      "reasons": [
+        "protected_tier_0"
+      ],
+      "decision": "KEEP_CANONICAL"
+    },
+    {
+      "path": "canonical\\intelligence\\architecture.manifest.json",
+      "score": 90,
+      "reasons": [
+        "business_truth",
+        "architecture_value",
+        "runtime_usage",
+        "governance_authority",
+        "recent"
+      ],
+      "decision": "KEEP_CANONICAL",
+      "tier": "Tier 1 - Core"
+    },
+    {
+      "path": "canonical\\lib\\workflowEngine.ts",
+      "score": 100,
+      "tier": "Tier 0 - Absolute Core",
+      "reasons": [
+        "protected_tier_0"
+      ],
+      "decision": "KEEP_CANONICAL"
+    }
+  ],
+  "merge": [
+    {
+      "path": "governance\\eos-canonical-truth-registry-v1.json",
+      "score": 70,
+      "reasons": [
+        "business_truth",
+        "runtime_usage",
+        "governance_authority",
+        "recent"
+      ],
+      "decision": "MERGE_CANDIDATE"
+    },
+    {
+      "path": "governance\\eos-canonical-truth-registry-v2.json",
+      "score": 70,
+      "reasons": [
+        "business_truth",
+        "runtime_usage",
+        "governance_authority",
+        "recent"
+      ],
+      "decision": "MERGE_CANDIDATE"
+    },
+    {
+      "path": "governance\\eos-canonical-truth-registry-v3.json",
+      "score": 70,
+      "reasons": [
+        "business_truth",
+        "runtime_usage",
+        "governance_authority",
+        "recent"
+      ],
+      "decision": "MERGE_CANDIDATE"
+    },
+    {
+      "path": "intelligence\\eos-domain-api-ownership.json",
+      "score": 75,
+      "reasons": [
+        "business_truth",
+        "architecture_value",
+        "runtime_usage",
+        "recent"
+      ],
+      "decision": "MERGE_CANDIDATE"
+    },
+    {
+      "path": "intelligence\\eos-domain-connection-matrix.json",
+      "score": 75,
+      "reasons": [
+        "business_truth",
+        "architecture_value",
+        "runtime_usage",
+        "recent"
+      ],
+      "decision": "MERGE_CANDIDATE"
+    },
+    {
+      "path": "intelligence\\eos-domain-runtime-ownership-map.json",
+      "score": 75,
+      "reasons": [
+        "business_truth",
+        "architecture_value",
+        "runtime_usage",
+        "recent"
+      ],
+      "decision": "MERGE_CANDIDATE"
+    },
+    {
+      "path": "intelligence\\eos-final-enterprise-blueprint-package-v1.json",
+      "score": 75,
+      "reasons": [
+        "business_truth",
+        "architecture_value",
+        "runtime_usage",
+        "recent"
+      ],
+      "decision": "MERGE_CANDIDATE"
+    },
+    {
+      "path": "KNOWLEDGE-BASE\\Architecture\\architecture-files.csv",
+      "score": 75,
+      "reasons": [
+        "business_truth",
+        "architecture_value",
+        "runtime_usage",
+        "recent"
+      ],
+      "decision": "MERGE_CANDIDATE"
+    },
+    {
+      "path": "canonical\\data\\master_products.json",
+      "score": 70,
+      "reasons": [
+        "business_truth",
+        "core_business_logic",
+        "runtime_usage",
+        "recent"
+      ],
+      "decision": "MERGE_CANDIDATE"
+    },
+    {
+      "path": "canonical\\governance\\keep-core-files-v1.json",
+      "score": 70,
+      "reasons": [
+        "business_truth",
+        "runtime_usage",
+        "governance_authority",
+        "recent"
+      ],
+      "decision": "MERGE_CANDIDATE"
+    },
+    {
+      "path": "canonical\\intelligence\\eos-domain-activation-blueprint-v1.json",
+      "score": 75,
+      "reasons": [
+        "business_truth",
+        "architecture_value",
+        "runtime_usage",
+        "recent"
+      ],
+      "decision": "MERGE_CANDIDATE"
+    },
+    {
+      "path": "canonical\\intelligence\\eos-enterprise-architecture-final.json",
+      "score": 70,
+      "reasons": [
+        "business_truth",
+        "core_business_logic",
+        "architecture_value",
+        "recent"
+      ],
+      "decision": "MERGE_CANDIDATE"
+    },
+    {
+      "path": "canonical\\intelligence\\eos-gels-architecture-alignment.json",
+      "score": 70,
+      "reasons": [
+        "business_truth",
+        "core_business_logic",
+        "architecture_value",
+        "recent"
+      ],
+      "decision": "MERGE_CANDIDATE"
+    },
+    {
+      "path": "canonical\\intelligence\\intelligence\\intelligence-test.ts",
+      "score": 60,
+      "reasons": [
+        "business_truth",
+        "core_business_logic",
+        "runtime_usage",
+        "recent",
+        "test_sample"
+      ],
+      "decision": "MERGE_CANDIDATE"
+    },
+    {
+      "path": "canonical\\intelligence\\intelligence\\schemas\\product-schema-map.ts",
+      "score": 70,
+      "reasons": [
+        "business_truth",
+        "core_business_logic",
+        "architecture_value",
+        "recent"
+      ],
+      "decision": "MERGE_CANDIDATE"
+    },
+    {
+      "path": "canonical\\docs\\architecture\\SYSTEM_ARCHITECTURE.md",
+      "score": 70,
+      "reasons": [
+        "business_truth",
+        "core_business_logic",
+        "architecture_value",
+        "recent"
+      ],
+      "decision": "MERGE_CANDIDATE"
+    },
+    {
+      "path": "canonical\\docs\\architecture\\eos_architecture\\01.Master_Data\\honey_reference.json",
+      "score": 70,
+      "reasons": [
+        "business_truth",
+        "core_business_logic",
+        "architecture_value",
+        "recent"
+      ],
+      "decision": "MERGE_CANDIDATE"
+    }
+  ],
+  "archive": [
+    {
+      "path": "GreenyLifeEOS_Review.zip",
+      "score": 55,
+      "reasons": [
+        "business_truth",
+        "runtime_usage",
+        "recent"
+      ],
+      "decision": "ARCHIVE_HISTORICAL"
+    },
+    {
+      "path": "validation_report.json",
+      "score": 55,
+      "reasons": [
+        "business_truth",
+        "runtime_usage",
+        "recent"
+      ],
+      "decision": "ARCHIVE_HISTORICAL"
+    },
+    {
+      "path": "validation_report_v2.json",
+      "score": 55,
+      "reasons": [
+        "business_truth",
+        "runtime_usage",
+        "recent"
+      ],
+      "decision": "ARCHIVE_HISTORICAL"
+    },
+    {
+      "path": "validation_report_v3.json",
+      "score": 55,
+      "reasons": [
+        "business_truth",
+        "runtime_usage",
+        "recent"
+      ],
+      "decision": "ARCHIVE_HISTORICAL"
+    },
+    {
+      "path": "validation_report_v4.json",
+      "score": 55,
+      "reasons": [
+        "business_truth",
+        "runtime_usage",
+        "recent"
+      ],
+      "decision": "ARCHIVE_HISTORICAL"
+    },
+    {
+      "path": "canonical\\cleanup_report.json",
+      "score": 50,
+      "reasons": [
+        "business_truth",
+        "core_business_logic",
+        "recent"
+      ],
+      "decision": "ARCHIVE_HISTORICAL"
+    },
+    {
+      "path": "docs\\INDEX.md",
+      "score": 55,
+      "reasons": [
+        "business_truth",
+        "runtime_usage",
+        "recent"
+      ],
+      "decision": "ARCHIVE_HISTORICAL"
+    },
+    {
+      "path": "governance\\Audit-Packaging.ps1",
+      "score": 50,
+      "reasons": [
+        "business_truth",
+        "governance_authority",
+        "recent"
+      ],
+      "decision": "ARCHIVE_HISTORICAL"
+    },
+    {
+      "path": "intelligence\\deep_packaging_audit_report.json",
+      "score": 50,
+      "reasons": [
+        "business_truth",
+        "governance_authority",
+        "recent"
+      ],
+      "decision": "ARCHIVE_HISTORICAL"
+    },
+    {
+      "path": "intelligence\\gels-validation-report.json",
+      "score": 50,
+      "reasons": [
+        "business_truth",
+        "core_business_logic",
+        "recent"
+      ],
+      "decision": "ARCHIVE_HISTORICAL"
+    },
+    {
+      "path": "docs\\auto-generated\\INDEX.md",
+      "score": 55,
+      "reasons": [
+        "business_truth",
+        "runtime_usage",
+        "recent"
+      ],
+      "decision": "ARCHIVE_HISTORICAL"
+    },
+    {
+      "path": "canonical\\data\\gels-governance-gate-report-v1.json",
+      "score": 40,
+      "reasons": [
+        "core_business_logic",
+        "governance_authority",
+        "recent"
+      ],
+      "decision": "ARCHIVE_HISTORICAL"
+    },
+    {
+      "path": "canonical\\docs\\legacy_brand.md",
+      "score": 50,
+      "reasons": [
+        "business_truth",
+        "core_business_logic",
+        "recent"
+      ],
+      "decision": "ARCHIVE_HISTORICAL"
+    },
+    {
+      "path": "canonical\\docs\\migrated_brand.md",
+      "score": 50,
+      "reasons": [
+        "business_truth",
+        "core_business_logic",
+        "recent"
+      ],
+      "decision": "ARCHIVE_HISTORICAL"
+    },
+    {
+      "path": "canonical\\governance\\eos-assets-registry-v1.json",
+      "score": 50,
+      "reasons": [
+        "business_truth",
+        "governance_authority",
+        "recent"
+      ],
+      "decision": "ARCHIVE_HISTORICAL"
+    },
+    {
+      "path": "canonical\\governance\\eos-deep-asset-discovery-v1.json",
+      "score": 50,
+      "reasons": [
+        "business_truth",
+        "governance_authority",
+        "recent"
+      ],
+      "decision": "ARCHIVE_HISTORICAL"
+    },
+    {
+      "path": "canonical\\governance\\eos-knowledge-registry-v1.json",
+      "score": 50,
+      "reasons": [
+        "business_truth",
+        "governance_authority",
+        "recent"
+      ],
+      "decision": "ARCHIVE_HISTORICAL"
+    },
+    {
+      "path": "canonical\\governance\\keep-assets-files-v1.json",
+      "score": 50,
+      "reasons": [
+        "business_truth",
+        "governance_authority",
+        "recent"
+      ],
+      "decision": "ARCHIVE_HISTORICAL"
+    },
+    {
+      "path": "canonical\\intelligence\\cleanup_report.json",
+      "score": 50,
+      "reasons": [
+        "business_truth",
+        "core_business_logic",
+        "recent"
+      ],
+      "decision": "ARCHIVE_HISTORICAL"
+    },
+    {
+      "path": "canonical\\intelligence\\eos-execution-truth-map.json",
+      "score": 55,
+      "reasons": [
+        "business_truth",
+        "runtime_usage",
+        "recent"
+      ],
+      "decision": "ARCHIVE_HISTORICAL"
+    },
+    {
+      "path": "canonical\\intelligence\\eos-gldos-architecture-alignment.json",
+      "score": 45,
+      "reasons": [
+        "core_business_logic",
+        "architecture_value",
+        "recent"
+      ],
+      "decision": "ARCHIVE_HISTORICAL"
+    },
+    {
+      "path": "canonical\\intelligence\\eos-intelligent-domain-ownership-graph.json",
+      "score": 50,
+      "reasons": [
+        "architecture_value",
+        "runtime_usage",
+        "recent"
+      ],
+      "decision": "ARCHIVE_HISTORICAL"
+    },
+    {
+      "path": "canonical\\intelligence\\eos-real-execution-path-map.json",
+      "score": 55,
+      "reasons": [
+        "business_truth",
+        "runtime_usage",
+        "recent"
+      ],
+      "decision": "ARCHIVE_HISTORICAL"
+    },
+    {
+      "path": "canonical\\intelligence\\foundation-closure-report-final.json",
+      "score": 50,
+      "reasons": [
+        "business_truth",
+        "core_business_logic",
+        "recent"
+      ],
+      "decision": "ARCHIVE_HISTORICAL"
+    },
+    {
+      "path": "canonical\\labels\\B001_label.json",
+      "score": 50,
+      "reasons": [
+        "business_truth",
+        "core_business_logic",
+        "recent"
+      ],
+      "decision": "ARCHIVE_HISTORICAL"
+    },
+    {
+      "path": "canonical\\labels\\B002_label.json",
+      "score": 50,
+      "reasons": [
+        "business_truth",
+        "core_business_logic",
+        "recent"
+      ],
+      "decision": "ARCHIVE_HISTORICAL"
+    },
+    {
+      "path": "canonical\\labels\\B003_label.json",
+      "score": 50,
+      "reasons": [
+        "business_truth",
+        "core_business_logic",
+        "recent"
+      ],
+      "decision": "ARCHIVE_HISTORICAL"
+    },
+    {
+      "path": "canonical\\labels\\B004_label.json",
+      "score": 50,
+      "reasons": [
+        "business_truth",
+        "core_business_logic",
+        "recent"
+      ],
+      "decision": "ARCHIVE_HISTORICAL"
+    },
+    {
+      "path": "canonical\\labels\\GL-LBL-BEE-004.json",
+      "score": 50,
+      "reasons": [
+        "business_truth",
+        "core_business_logic",
+        "recent"
+      ],
+      "decision": "ARCHIVE_HISTORICAL"
+    },
+    {
+      "path": "canonical\\labels\\GL-LBL-BEE-005.json",
+      "score": 50,
+      "reasons": [
+        "business_truth",
+        "core_business_logic",
+        "recent"
+      ],
+      "decision": "ARCHIVE_HISTORICAL"
+    },
+    {
+      "path": "canonical\\labels\\GL-LBL-BEE-006.json",
+      "score": 50,
+      "reasons": [
+        "business_truth",
+        "core_business_logic",
+        "recent"
+      ],
+      "decision": "ARCHIVE_HISTORICAL"
+    },
+    {
+      "path": "canonical\\labels\\GL-LBL-BEE-007.json",
+      "score": 50,
+      "reasons": [
+        "business_truth",
+        "core_business_logic",
+        "recent"
+      ],
+      "decision": "ARCHIVE_HISTORICAL"
+    },
+    {
+      "path": "canonical\\labels\\GL-LBL-HON-001.json",
+      "score": 50,
+      "reasons": [
+        "business_truth",
+        "core_business_logic",
+        "recent"
+      ],
+      "decision": "ARCHIVE_HISTORICAL"
+    },
+    {
+      "path": "canonical\\labels\\GL-LBL-HON-002.json",
+      "score": 50,
+      "reasons": [
+        "business_truth",
+        "core_business_logic",
+        "recent"
+      ],
+      "decision": "ARCHIVE_HISTORICAL"
+    },
+    {
+      "path": "canonical\\labels\\GL-LBL-HON-003.json",
+      "score": 50,
+      "reasons": [
+        "business_truth",
+        "core_business_logic",
+        "recent"
+      ],
+      "decision": "ARCHIVE_HISTORICAL"
+    },
+    {
+      "path": "canonical\\labels\\GL-LBL-HRB-014.json",
+      "score": 50,
+      "reasons": [
+        "business_truth",
+        "core_business_logic",
+        "recent"
+      ],
+      "decision": "ARCHIVE_HISTORICAL"
+    },
+    {
+      "path": "canonical\\labels\\GL-LBL-OIL-015.json",
+      "score": 50,
+      "reasons": [
+        "business_truth",
+        "core_business_logic",
+        "recent"
+      ],
+      "decision": "ARCHIVE_HISTORICAL"
+    },
+    {
+      "path": "canonical\\labels\\GL-LBL-SPC-008.json",
+      "score": 50,
+      "reasons": [
+        "business_truth",
+        "core_business_logic",
+        "recent"
+      ],
+      "decision": "ARCHIVE_HISTORICAL"
+    },
+    {
+      "path": "canonical\\labels\\GL-LBL-SPC-009.json",
+      "score": 50,
+      "reasons": [
+        "business_truth",
+        "core_business_logic",
+        "recent"
+      ],
+      "decision": "ARCHIVE_HISTORICAL"
+    },
+    {
+      "path": "canonical\\labels\\GL-LBL-SPC-010.json",
+      "score": 50,
+      "reasons": [
+        "business_truth",
+        "core_business_logic",
+        "recent"
+      ],
+      "decision": "ARCHIVE_HISTORICAL"
+    },
+    {
+      "path": "canonical\\labels\\GL-LBL-SPC-011.json",
+      "score": 50,
+      "reasons": [
+        "business_truth",
+        "core_business_logic",
+        "recent"
+      ],
+      "decision": "ARCHIVE_HISTORICAL"
+    },
+    {
+      "path": "canonical\\labels\\GL-LBL-SPC-012.json",
+      "score": 50,
+      "reasons": [
+        "business_truth",
+        "core_business_logic",
+        "recent"
+      ],
+      "decision": "ARCHIVE_HISTORICAL"
+    },
+    {
+      "path": "canonical\\labels\\GL-LBL-SPC-013.json",
+      "score": 50,
+      "reasons": [
+        "business_truth",
+        "core_business_logic",
+        "recent"
+      ],
+      "decision": "ARCHIVE_HISTORICAL"
+    },
+    {
+      "path": "canonical\\labels\\H001_label.json",
+      "score": 50,
+      "reasons": [
+        "business_truth",
+        "core_business_logic",
+        "recent"
+      ],
+      "decision": "ARCHIVE_HISTORICAL"
+    },
+    {
+      "path": "canonical\\labels\\H002_label.json",
+      "score": 50,
+      "reasons": [
+        "business_truth",
+        "core_business_logic",
+        "recent"
+      ],
+      "decision": "ARCHIVE_HISTORICAL"
+    },
+    {
+      "path": "canonical\\labels\\H003_label.json",
+      "score": 50,
+      "reasons": [
+        "business_truth",
+        "core_business_logic",
+        "recent"
+      ],
+      "decision": "ARCHIVE_HISTORICAL"
+    },
+    {
+      "path": "canonical\\labels\\H004_label.json",
+      "score": 50,
+      "reasons": [
+        "business_truth",
+        "core_business_logic",
+        "recent"
+      ],
+      "decision": "ARCHIVE_HISTORICAL"
+    },
+    {
+      "path": "canonical\\labels\\labels-index.json",
+      "score": 50,
+      "reasons": [
+        "business_truth",
+        "core_business_logic",
+        "recent"
+      ],
+      "decision": "ARCHIVE_HISTORICAL"
+    },
+    {
+      "path": "canonical\\labels\\O001_label.json",
+      "score": 50,
+      "reasons": [
+        "business_truth",
+        "core_business_logic",
+        "recent"
+      ],
+      "decision": "ARCHIVE_HISTORICAL"
+    },
+    {
+      "path": "canonical\\labels\\S001_label.json",
+      "score": 50,
+      "reasons": [
+        "business_truth",
+        "core_business_logic",
+        "recent"
+      ],
+      "decision": "ARCHIVE_HISTORICAL"
+    },
+    {
+      "path": "canonical\\labels\\S002_label.json",
+      "score": 50,
+      "reasons": [
+        "business_truth",
+        "core_business_logic",
+        "recent"
+      ],
+      "decision": "ARCHIVE_HISTORICAL"
+    },
+    {
+      "path": "canonical\\labels\\S003_label.json",
+      "score": 50,
+      "reasons": [
+        "business_truth",
+        "core_business_logic",
+        "recent"
+      ],
+      "decision": "ARCHIVE_HISTORICAL"
+    },
+    {
+      "path": "canonical\\labels\\S004_label.json",
+      "score": 50,
+      "reasons": [
+        "business_truth",
+        "core_business_logic",
+        "recent"
+      ],
+      "decision": "ARCHIVE_HISTORICAL"
+    },
+    {
+      "path": "canonical\\labels\\S005_label.json",
+      "score": 50,
+      "reasons": [
+        "business_truth",
+        "core_business_logic",
+        "recent"
+      ],
+      "decision": "ARCHIVE_HISTORICAL"
+    },
+    {
+      "path": "canonical\\labels\\S006_label.json",
+      "score": 50,
+      "reasons": [
+        "business_truth",
+        "core_business_logic",
+        "recent"
+      ],
+      "decision": "ARCHIVE_HISTORICAL"
+    },
+    {
+      "path": "canonical\\legacy-data\\typescript-asset-inventory.json",
+      "score": 55,
+      "reasons": [
+        "business_truth",
+        "runtime_usage",
+        "recent"
+      ],
+      "decision": "ARCHIVE_HISTORICAL"
+    },
+    {
+      "path": "canonical\\packaging_visual\\packaging_visual_registry.json",
+      "score": 50,
+      "reasons": [
+        "business_truth",
+        "core_business_logic",
+        "recent"
+      ],
+      "decision": "ARCHIVE_HISTORICAL"
+    },
+    {
+      "path": "canonical\\prisma\\schema.prisma",
+      "score": 55,
+      "reasons": [
+        "business_truth",
+        "architecture_value",
+        "recent"
+      ],
+      "decision": "ARCHIVE_HISTORICAL"
+    },
+    {
+      "path": "canonical\\intelligence\\adapters\\gl-dos-governance-gate.ts",
+      "score": 40,
+      "reasons": [
+        "core_business_logic",
+        "governance_authority",
+        "recent"
+      ],
+      "decision": "ARCHIVE_HISTORICAL"
+    },
+    {
+      "path": "canonical\\intelligence\\contracts\\execution-contract.json",
+      "score": 55,
+      "reasons": [
+        "business_truth",
+        "runtime_usage",
+        "recent"
+      ],
+      "decision": "ARCHIVE_HISTORICAL"
+    },
+    {
+      "path": "canonical\\intelligence\\runtime\\controlled-runtime-orchestrator.ts",
+      "score": 45,
+      "reasons": [
+        "core_business_logic",
+        "runtime_usage",
+        "recent"
+      ],
+      "decision": "ARCHIVE_HISTORICAL"
+    },
+    {
+      "path": "canonical\\intelligence\\intelligence\\health\\health-reporter.ts",
+      "score": 45,
+      "reasons": [
+        "core_business_logic",
+        "runtime_usage",
+        "recent"
+      ],
+      "decision": "ARCHIVE_HISTORICAL"
+    },
+    {
+      "path": "canonical\\docs\\auto-generated\\INDEX.md",
+      "score": 55,
+      "reasons": [
+        "business_truth",
+        "runtime_usage",
+        "recent"
+      ],
+      "decision": "ARCHIVE_HISTORICAL"
+    },
+    {
+      "path": "canonical\\data\\customer-domain\\customer-contacts.json",
+      "score": 55,
+      "reasons": [
+        "business_truth",
+        "architecture_value",
+        "recent"
+      ],
+      "decision": "ARCHIVE_HISTORICAL"
+    },
+    {
+      "path": "canonical\\data\\customer-domain\\customer-product-demand-map.json",
+      "score": 55,
+      "reasons": [
+        "business_truth",
+        "architecture_value",
+        "recent"
+      ],
+      "decision": "ARCHIVE_HISTORICAL"
+    },
+    {
+      "path": "canonical\\data\\customer-domain\\customer-product-preferences.json",
+      "score": 55,
+      "reasons": [
+        "business_truth",
+        "architecture_value",
+        "recent"
+      ],
+      "decision": "ARCHIVE_HISTORICAL"
+    },
+    {
+      "path": "canonical\\data\\customer-domain\\customer-segments.json",
+      "score": 55,
+      "reasons": [
+        "business_truth",
+        "architecture_value",
+        "recent"
+      ],
+      "decision": "ARCHIVE_HISTORICAL"
+    },
+    {
+      "path": "canonical\\data\\customer-domain\\customers.json",
+      "score": 55,
+      "reasons": [
+        "business_truth",
+        "architecture_value",
+        "recent"
+      ],
+      "decision": "ARCHIVE_HISTORICAL"
+    },
+    {
+      "path": "canonical\\data\\customer-domain\\opportunities.json",
+      "score": 55,
+      "reasons": [
+        "business_truth",
+        "architecture_value",
+        "recent"
+      ],
+      "decision": "ARCHIVE_HISTORICAL"
+    },
+    {
+      "path": "canonical\\data\\customer-domain\\orders.json",
+      "score": 55,
+      "reasons": [
+        "business_truth",
+        "architecture_value",
+        "recent"
+      ],
+      "decision": "ARCHIVE_HISTORICAL"
+    },
+    {
+      "path": "app\\api\\workflow\\route.ts",
+      "score": 55,
+      "reasons": [
+        "business_truth",
+        "runtime_usage",
+        "recent"
+      ],
+      "decision": "ARCHIVE_HISTORICAL"
+    }
+  ],
+  "delete": [
+    {
+      "path": ".env",
+      "score": 10,
+      "reasons": [
+        "recent"
+      ],
+      "decision": "DELETE_SAFE"
+    },
+    {
+      "path": ".govern.toml",
+      "score": 10,
+      "reasons": [
+        "recent"
+      ],
+      "decision": "DELETE_SAFE"
+    },
+    {
+      "path": "ALL_SOURCE_CODE.txt",
+      "score": 35,
+      "reasons": [
+        "business_truth",
+        "recent"
+      ],
+      "decision": "DELETE_SAFE"
+    },
+    {
+      "path": "analytics_report.json",
+      "score": 35,
+      "reasons": [
+        "business_truth",
+        "recent"
+      ],
+      "decision": "DELETE_SAFE"
+    },
+    {
+      "path": "analytics_with_business.json",
+      "score": 35,
+      "reasons": [
+        "business_truth",
+        "recent"
+      ],
+      "decision": "DELETE_SAFE"
+    },
+    {
+      "path": "audit_report.json",
+      "score": 35,
+      "reasons": [
+        "business_truth",
+        "recent"
+      ],
+      "decision": "DELETE_SAFE"
+    },
+    {
+      "path": "brain_working.py",
+      "score": 10,
+      "reasons": [
+        "recent"
+      ],
+      "decision": "DELETE_SAFE"
+    },
+    {
+      "path": "business_assets_report.json",
+      "score": 10,
+      "reasons": [
+        "recent"
+      ],
+      "decision": "DELETE_SAFE"
+    },
+    {
+      "path": "certificate_report.json",
+      "score": 35,
+      "reasons": [
+        "business_truth",
+        "recent"
+      ],
+      "decision": "DELETE_SAFE"
+    },
+    {
+      "path": "certificate_report_v2.json",
+      "score": 35,
+      "reasons": [
+        "business_truth",
+        "recent"
+      ],
+      "decision": "DELETE_SAFE"
+    },
+    {
+      "path": "certificate_report_v3.json",
+      "score": 35,
+      "reasons": [
+        "business_truth",
+        "recent"
+      ],
+      "decision": "DELETE_SAFE"
+    },
+    {
+      "path": "certificate_report_v4.json",
+      "score": 35,
+      "reasons": [
+        "business_truth",
+        "recent"
+      ],
+      "decision": "DELETE_SAFE"
+    },
+    {
+      "path": "certs_confirm.json",
+      "score": 35,
+      "reasons": [
+        "business_truth",
+        "recent"
+      ],
+      "decision": "DELETE_SAFE"
+    },
+    {
+      "path": "consolidation_report_final.json",
+      "score": 35,
+      "reasons": [
+        "business_truth",
+        "recent"
+      ],
+      "decision": "DELETE_SAFE"
+    },
+    {
+      "path": "consolidation_report_full.json",
+      "score": 35,
+      "reasons": [
+        "business_truth",
+        "recent"
+      ],
+      "decision": "DELETE_SAFE"
+    },
+    {
+      "path": "crm_report.json",
+      "score": 35,
+      "reasons": [
+        "business_truth",
+        "recent"
+      ],
+      "decision": "DELETE_SAFE"
+    },
+    {
+      "path": "customer_report.json",
+      "score": 35,
+      "reasons": [
+        "business_truth",
+        "recent"
+      ],
+      "decision": "DELETE_SAFE"
+    },
+    {
+      "path": "deep_clean_report.json",
+      "score": 10,
+      "reasons": [
+        "recent"
+      ],
+      "decision": "DELETE_SAFE"
+    },
+    {
+      "path": "deep_clean_report_v2.json",
+      "score": 10,
+      "reasons": [
+        "recent"
+      ],
+      "decision": "DELETE_SAFE"
+    },
+    {
+      "path": "els_final.json",
+      "score": 10,
+      "reasons": [
+        "recent"
+      ],
+      "decision": "DELETE_SAFE"
+    },
+    {
+      "path": "els_final_confirm.json",
+      "score": 10,
+      "reasons": [
+        "recent"
+      ],
+      "decision": "DELETE_SAFE"
+    },
+    {
+      "path": "els_final_v2.json",
+      "score": 10,
+      "reasons": [
+        "recent"
+      ],
+      "decision": "DELETE_SAFE"
+    },
+    {
+      "path": "els_final_with_business.json",
+      "score": 10,
+      "reasons": [
+        "recent"
+      ],
+      "decision": "DELETE_SAFE"
+    },
+    {
+      "path": "els_report.json",
+      "score": 10,
+      "reasons": [
+        "recent"
+      ],
+      "decision": "DELETE_SAFE"
+    },
+    {
+      "path": "els_report_final.json",
+      "score": 10,
+      "reasons": [
+        "recent"
+      ],
+      "decision": "DELETE_SAFE"
+    },
+    {
+      "path": "els_report_final_v2.json",
+      "score": 10,
+      "reasons": [
+        "recent"
+      ],
+      "decision": "DELETE_SAFE"
+    },
+    {
+      "path": "els_report_final_v4.json",
+      "score": 10,
+      "reasons": [
+        "recent"
+      ],
+      "decision": "DELETE_SAFE"
+    },
+    {
+      "path": "els_report_final_v5.json",
+      "score": 10,
+      "reasons": [
+        "recent"
+      ],
+      "decision": "DELETE_SAFE"
+    },
+    {
+      "path": "els_report_new.json",
+      "score": 10,
+      "reasons": [
+        "recent"
+      ],
+      "decision": "DELETE_SAFE"
+    },
+    {
+      "path": "Engine_Discovery_Report.csv",
+      "score": 10,
+      "reasons": [
+        "recent"
+      ],
+      "decision": "DELETE_SAFE"
+    },
+    {
+      "path": "FileSummary.csv",
+      "score": 10,
+      "reasons": [
+        "recent"
+      ],
+      "decision": "DELETE_SAFE"
+    },
+    {
+      "path": "final_audit.json",
+      "score": 10,
+      "reasons": [
+        "recent"
+      ],
+      "decision": "DELETE_SAFE"
+    },
+    {
+      "path": "final_clean_audit.json",
+      "score": 10,
+      "reasons": [
+        "recent"
+      ],
+      "decision": "DELETE_SAFE"
+    },
+    {
+      "path": "final_enterprise_audit.json",
+      "score": 10,
+      "reasons": [
+        "recent"
+      ],
+      "decision": "DELETE_SAFE"
+    },
+    {
+      "path": "final_eos_freeze.json",
+      "score": 10,
+      "reasons": [
+        "recent"
+      ],
+      "decision": "DELETE_SAFE"
+    },
+    {
+      "path": "final_integration.json",
+      "score": 10,
+      "reasons": [
+        "recent"
+      ],
+      "decision": "DELETE_SAFE"
+    },
+    {
+      "path": "final_integration_audit.json",
+      "score": 10,
+      "reasons": [
+        "recent"
+      ],
+      "decision": "DELETE_SAFE"
+    },
+    {
+      "path": "final_pass_audit.json",
+      "score": 10,
+      "reasons": [
+        "recent"
+      ],
+      "decision": "DELETE_SAFE"
+    },
+    {
+      "path": "finance_report.json",
+      "score": 35,
+      "reasons": [
+        "business_truth",
+        "recent"
+      ],
+      "decision": "DELETE_SAFE"
+    },
+    {
+      "path": "inventory_report.json",
+      "score": 10,
+      "reasons": [
+        "recent"
+      ],
+      "decision": "DELETE_SAFE"
+    },
+    {
+      "path": "labels_report.json",
+      "score": 10,
+      "reasons": [
+        "recent"
+      ],
+      "decision": "DELETE_SAFE"
+    },
+    {
+      "path": "logistics_report.json",
+      "score": 35,
+      "reasons": [
+        "business_truth",
+        "recent"
+      ],
+      "decision": "DELETE_SAFE"
+    },
+    {
+      "path": "NUCLEUS_FILES.txt",
+      "score": 35,
+      "reasons": [
+        "business_truth",
+        "recent"
+      ],
+      "decision": "DELETE_SAFE"
+    },
+    {
+      "path": "packaging_audit_report.json",
+      "score": 35,
+      "reasons": [
+        "business_truth",
+        "recent"
+      ],
+      "decision": "DELETE_SAFE"
+    },
+    {
+      "path": "packaging_report.json",
+      "score": 35,
+      "reasons": [
+        "business_truth",
+        "recent"
+      ],
+      "decision": "DELETE_SAFE"
+    },
+    {
+      "path": "PROJECT_FULL_AUDIT.txt",
+      "score": 30,
+      "reasons": [
+        "runtime_usage",
+        "recent"
+      ],
+      "decision": "DELETE_SAFE"
+    },
+    {
+      "path": "project_tree.txt",
+      "score": 35,
+      "reasons": [
+        "business_truth",
+        "recent"
+      ],
+      "decision": "DELETE_SAFE"
+    },
+    {
+      "path": "run_all.ps1",
+      "score": 35,
+      "reasons": [
+        "business_truth",
+        "recent"
+      ],
+      "decision": "DELETE_SAFE"
+    },
+    {
+      "path": "run_audit_hack.py",
+      "score": 10,
+      "reasons": [
+        "recent"
+      ],
+      "decision": "DELETE_SAFE"
+    },
+    {
+      "path": "run_brain.ps1",
+      "score": 10,
+      "reasons": [
+        "recent"
+      ],
+      "decision": "DELETE_SAFE"
+    },
+    {
+      "path": "run_brain_cli.py",
+      "score": 35,
+      "reasons": [
+        "business_truth",
+        "recent"
+      ],
+      "decision": "DELETE_SAFE"
+    },
+    {
+      "path": "run_full_audit.ps1",
+      "score": 35,
+      "reasons": [
+        "business_truth",
+        "recent"
+      ],
+      "decision": "DELETE_SAFE"
+    },
+    {
+      "path": "suppliers_confirm.json",
+      "score": 35,
+      "reasons": [
+        "business_truth",
+        "recent"
+      ],
+      "decision": "DELETE_SAFE"
+    },
+    {
+      "path": "supplier_report.json",
+      "score": 35,
+      "reasons": [
+        "business_truth",
+        "recent"
+      ],
+      "decision": "DELETE_SAFE"
+    },
+    {
+      "path": "supplier_report_v2.json",
+      "score": 35,
+      "reasons": [
+        "business_truth",
+        "recent"
+      ],
+      "decision": "DELETE_SAFE"
+    },
+    {
+      "path": "supplier_report_v3.json",
+      "score": 35,
+      "reasons": [
+        "business_truth",
+        "recent"
+      ],
+      "decision": "DELETE_SAFE"
+    },
+    {
+      "path": "supplier_report_v4.json",
+      "score": 35,
+      "reasons": [
+        "business_truth",
+        "recent"
+      ],
+      "decision": "DELETE_SAFE"
+    },
+    {
+      "path": ".vscode\\settings.json",
+      "score": 10,
+      "reasons": [
+        "recent"
+      ],
+      "decision": "DELETE_SAFE"
+    },
+    {
+      "path": "canonical\\classification_report_v2.json",
+      "score": 30,
+      "reasons": [
+        "runtime_usage",
+        "recent"
+      ],
+      "decision": "DELETE_SAFE"
+    },
+    {
+      "path": "canonical\\final_audit.json",
+      "score": 10,
+      "reasons": [
+        "recent"
+      ],
+      "decision": "DELETE_SAFE"
+    },
+    {
+      "path": "canonical\\fix_indent.py",
+      "score": 10,
+      "reasons": [
+        "recent"
+      ],
+      "decision": "DELETE_SAFE"
+    },
+    {
+      "path": "canonical\\run_all.ps1",
+      "score": 35,
+      "reasons": [
+        "business_truth",
+        "recent"
+      ],
+      "decision": "DELETE_SAFE"
+    },
+    {
+      "path": "docs\\GOVERN_STOP.md",
+      "score": 10,
+      "reasons": [
+        "recent"
+      ],
+      "decision": "DELETE_SAFE"
+    },
+    {
+      "path": "guardrails\\taxonomy.json",
+      "score": 10,
+      "reasons": [
+        "recent"
+      ],
+      "decision": "DELETE_SAFE"
+    },
+    {
+      "path": "intelligence\\analytics-validation-report.json",
+      "score": 35,
+      "reasons": [
+        "business_truth",
+        "recent"
+      ],
+      "decision": "DELETE_SAFE"
+    },
+    {
+      "path": "intelligence\\asset_classification_report_v3.json",
+      "score": 30,
+      "reasons": [
+        "runtime_usage",
+        "recent"
+      ],
+      "decision": "DELETE_SAFE"
+    },
+    {
+      "path": "intelligence\\certificate-validation-report.json",
+      "score": 35,
+      "reasons": [
+        "business_truth",
+        "recent"
+      ],
+      "decision": "DELETE_SAFE"
+    },
+    {
+      "path": "intelligence\\cleanup_report.json",
+      "score": 10,
+      "reasons": [
+        "recent"
+      ],
+      "decision": "DELETE_SAFE"
+    },
+    {
+      "path": "intelligence\\comprehensive_report.json",
+      "score": 10,
+      "reasons": [
+        "recent"
+      ],
+      "decision": "DELETE_SAFE"
+    },
+    {
+      "path": "intelligence\\comprehensive_report.md",
+      "score": 10,
+      "reasons": [
+        "recent"
+      ],
+      "decision": "DELETE_SAFE"
+    },
+    {
+      "path": "intelligence\\crm-validation-report.json",
+      "score": 35,
+      "reasons": [
+        "business_truth",
+        "recent"
+      ],
+      "decision": "DELETE_SAFE"
+    },
+    {
+      "path": "intelligence\\customer-validation-report.json",
+      "score": 35,
+      "reasons": [
+        "business_truth",
+        "recent"
+      ],
+      "decision": "DELETE_SAFE"
+    },
+    {
+      "path": "intelligence\\deep_clean_report.json",
+      "score": 10,
+      "reasons": [
+        "recent"
+      ],
+      "decision": "DELETE_SAFE"
+    },
+    {
+      "path": "intelligence\\finance-validation-report.json",
+      "score": 35,
+      "reasons": [
+        "business_truth",
+        "recent"
+      ],
+      "decision": "DELETE_SAFE"
+    },
+    {
+      "path": "intelligence\\inventory-validation-report.json",
+      "score": 10,
+      "reasons": [
+        "recent"
+      ],
+      "decision": "DELETE_SAFE"
+    },
+    {
+      "path": "intelligence\\logistics-validation-report.json",
+      "score": 35,
+      "reasons": [
+        "business_truth",
+        "recent"
+      ],
+      "decision": "DELETE_SAFE"
+    },
+    {
+      "path": "intelligence\\master-data-integrity-report.json",
+      "score": 35,
+      "reasons": [
+        "business_truth",
+        "recent"
+      ],
+      "decision": "DELETE_SAFE"
+    },
+    {
+      "path": "intelligence\\supplier-validation-report.json",
+      "score": 35,
+      "reasons": [
+        "business_truth",
+        "recent"
+      ],
+      "decision": "DELETE_SAFE"
+    },
+    {
+      "path": "tests\\performance\\results.json",
+      "score": 10,
+      "reasons": [
+        "recent"
+      ],
+      "decision": "DELETE_SAFE"
+    },
+    {
+      "path": "tests\\performance\\smoke_test.js",
+      "score": 0,
+      "reasons": [
+        "recent",
+        "test_sample"
+      ],
+      "decision": "DELETE_SAFE"
+    },
+    {
+      "path": "intelligence\\daily_reports\\daily_audit_20260805.json",
+      "score": 10,
+      "reasons": [
+        "recent"
+      ],
+      "decision": "DELETE_SAFE"
+    },
+    {
+      "path": "intelligence\\knowledge_base\\project_metadata.json",
+      "score": 10,
+      "reasons": [
+        "recent"
+      ],
+      "decision": "DELETE_SAFE"
+    },
+    {
+      "path": "intelligence\\knowledge_base\\tools_manifest.json",
+      "score": 10,
+      "reasons": [
+        "recent"
+      ],
+      "decision": "DELETE_SAFE"
+    },
+    {
+      "path": "docs\\improvements\\0000-template.md",
+      "score": 10,
+      "reasons": [
+        "recent"
+      ],
+      "decision": "DELETE_SAFE"
+    },
+    {
+      "path": "canonical\\analytics\\customer-lifetime-value.json",
+      "score": 35,
+      "reasons": [
+        "business_truth",
+        "recent"
+      ],
+      "decision": "DELETE_SAFE"
+    },
+    {
+      "path": "canonical\\analytics\\inventory-summary.json",
+      "score": 35,
+      "reasons": [
+        "business_truth",
+        "recent"
+      ],
+      "decision": "DELETE_SAFE"
+    },
+    {
+      "path": "canonical\\analytics\\revenue-by-market.json",
+      "score": 10,
+      "reasons": [
+        "recent"
+      ],
+      "decision": "DELETE_SAFE"
+    },
+    {
+      "path": "canonical\\analytics\\sales-summary.json",
+      "score": 35,
+      "reasons": [
+        "business_truth",
+        "recent"
+      ],
+      "decision": "DELETE_SAFE"
+    },
+    {
+      "path": "canonical\\analytics\\top-products.json",
+      "score": 35,
+      "reasons": [
+        "business_truth",
+        "recent"
+      ],
+      "decision": "DELETE_SAFE"
+    },
+    {
+      "path": "canonical\\app\\layout.tsx",
+      "score": 10,
+      "reasons": [
+        "recent"
+      ],
+      "decision": "DELETE_SAFE"
+    },
+    {
+      "path": "canonical\\app\\page.tsx",
+      "score": 35,
+      "reasons": [
+        "business_truth",
+        "recent"
+      ],
+      "decision": "DELETE_SAFE"
+    },
+    {
+      "path": "canonical\\business\\global_specs.json",
+      "score": 10,
+      "reasons": [
+        "recent"
+      ],
+      "decision": "DELETE_SAFE"
+    },
+    {
+      "path": "canonical\\business\\markets.json",
+      "score": 10,
+      "reasons": [
+        "recent"
+      ],
+      "decision": "DELETE_SAFE"
+    },
+    {
+      "path": "canonical\\business\\quality_specs.json",
+      "score": 35,
+      "reasons": [
+        "business_truth",
+        "recent"
+      ],
+      "decision": "DELETE_SAFE"
+    },
+    {
+      "path": "canonical\\crm\\crm-automation-v1.json",
+      "score": 10,
+      "reasons": [
+        "recent"
+      ],
+      "decision": "DELETE_SAFE"
+    },
+    {
+      "path": "canonical\\crm\\customer-analytics-v1.json",
+      "score": 10,
+      "reasons": [
+        "recent"
+      ],
+      "decision": "DELETE_SAFE"
+    },
+    {
+      "path": "canonical\\crm\\customer-flow-v1.json",
+      "score": 10,
+      "reasons": [
+        "recent"
+      ],
+      "decision": "DELETE_SAFE"
+    },
+    {
+      "path": "canonical\\crm\\customers.json",
+      "score": 35,
+      "reasons": [
+        "business_truth",
+        "recent"
+      ],
+      "decision": "DELETE_SAFE"
+    },
+    {
+      "path": "canonical\\crm\\interactions.json",
+      "score": 35,
+      "reasons": [
+        "business_truth",
+        "recent"
+      ],
+      "decision": "DELETE_SAFE"
+    },
+    {
+      "path": "canonical\\crm\\opportunities.json",
+      "score": 35,
+      "reasons": [
+        "business_truth",
+        "recent"
+      ],
+      "decision": "DELETE_SAFE"
+    },
+    {
+      "path": "canonical\\crm\\opportunity-model.json",
+      "score": 30,
+      "reasons": [
+        "runtime_usage",
+        "recent"
+      ],
+      "decision": "DELETE_SAFE"
+    },
+    {
+      "path": "canonical\\data\\certificates.json",
+      "score": 35,
+      "reasons": [
+        "business_truth",
+        "recent"
+      ],
+      "decision": "DELETE_SAFE"
+    },
+    {
+      "path": "canonical\\data\\customer-specification-registry-v1.json",
+      "score": 35,
+      "reasons": [
+        "business_truth",
+        "recent"
+      ],
+      "decision": "DELETE_SAFE"
+    },
+    {
+      "path": "canonical\\data\\export-compliance-gap-analysis-v1.json",
+      "score": 25,
+      "reasons": [
+        "core_business_logic",
+        "recent"
+      ],
+      "decision": "DELETE_SAFE"
+    },
+    {
+      "path": "canonical\\data\\export-compliance-remediation-report-v1.json",
+      "score": 25,
+      "reasons": [
+        "core_business_logic",
+        "recent"
+      ],
+      "decision": "DELETE_SAFE"
+    },
+    {
+      "path": "canonical\\data\\export-go-live-gate-report-v1.json",
+      "score": 25,
+      "reasons": [
+        "core_business_logic",
+        "recent"
+      ],
+      "decision": "DELETE_SAFE"
+    },
+    {
+      "path": "canonical\\data\\export-operations-process-map-v1.json",
+      "score": 25,
+      "reasons": [
+        "core_business_logic",
+        "recent"
+      ],
+      "decision": "DELETE_SAFE"
+    },
+    {
+      "path": "canonical\\data\\export-readiness-remediation-plan-v1.json",
+      "score": 25,
+      "reasons": [
+        "core_business_logic",
+        "recent"
+      ],
+      "decision": "DELETE_SAFE"
+    },
+    {
+      "path": "canonical\\data\\export-readiness-report-v1.json",
+      "score": 25,
+      "reasons": [
+        "core_business_logic",
+        "recent"
+      ],
+      "decision": "DELETE_SAFE"
+    },
+    {
+      "path": "canonical\\data\\gels-compliance-remediation-v1.json",
+      "score": 25,
+      "reasons": [
+        "core_business_logic",
+        "recent"
+      ],
+      "decision": "DELETE_SAFE"
+    },
+    {
+      "path": "canonical\\data\\gels-intelligent-match-report-v1.json",
+      "score": 25,
+      "reasons": [
+        "core_business_logic",
+        "recent"
+      ],
+      "decision": "DELETE_SAFE"
+    },
+    {
+      "path": "canonical\\data\\packaging-gels-registry-v1.json",
+      "score": 10,
+      "reasons": [
+        "recent"
+      ],
+      "decision": "DELETE_SAFE"
+    },
+    {
+      "path": "canonical\\data\\product-certificate-links.json",
+      "score": 35,
+      "reasons": [
+        "business_truth",
+        "recent"
+      ],
+      "decision": "DELETE_SAFE"
+    },
+    {
+      "path": "canonical\\data\\supplier-product-links.json",
+      "score": 35,
+      "reasons": [
+        "business_truth",
+        "recent"
+      ],
+      "decision": "DELETE_SAFE"
+    },
+    {
+      "path": "canonical\\data\\suppliers.json",
+      "score": 35,
+      "reasons": [
+        "business_truth",
+        "recent"
+      ],
+      "decision": "DELETE_SAFE"
+    },
+    {
+      "path": "canonical\\docs\\README.md",
+      "score": 10,
+      "reasons": [
+        "recent"
+      ],
+      "decision": "DELETE_SAFE"
+    },
+    {
+      "path": "canonical\\finance\\export-flows.json",
+      "score": 10,
+      "reasons": [
+        "recent"
+      ],
+      "decision": "DELETE_SAFE"
+    },
+    {
+      "path": "canonical\\finance\\finance-flow-v1.json",
+      "score": 10,
+      "reasons": [
+        "recent"
+      ],
+      "decision": "DELETE_SAFE"
+    },
+    {
+      "path": "canonical\\finance\\finance-master.json",
+      "score": 35,
+      "reasons": [
+        "business_truth",
+        "recent"
+      ],
+      "decision": "DELETE_SAFE"
+    },
+    {
+      "path": "canonical\\finance\\finance.sql",
+      "score": 35,
+      "reasons": [
+        "business_truth",
+        "recent"
+      ],
+      "decision": "DELETE_SAFE"
+    },
+    {
+      "path": "canonical\\finance\\invoices.json",
+      "score": 35,
+      "reasons": [
+        "business_truth",
+        "recent"
+      ],
+      "decision": "DELETE_SAFE"
+    },
+    {
+      "path": "canonical\\finance\\payments.json",
+      "score": 35,
+      "reasons": [
+        "business_truth",
+        "recent"
+      ],
+      "decision": "DELETE_SAFE"
+    },
+    {
+      "path": "canonical\\finance\\workflows.json",
+      "score": 30,
+      "reasons": [
+        "runtime_usage",
+        "recent"
+      ],
+      "decision": "DELETE_SAFE"
+    },
+    {
+      "path": "canonical\\governance\\review-required-files-v1.json",
+      "score": 25,
+      "reasons": [
+        "governance_authority",
+        "recent"
+      ],
+      "decision": "DELETE_SAFE"
+    },
+    {
+      "path": "canonical\\intelligence\\asset_classification_report_v2.json",
+      "score": 30,
+      "reasons": [
+        "runtime_usage",
+        "recent"
+      ],
+      "decision": "DELETE_SAFE"
+    },
+    {
+      "path": "canonical\\intelligence\\comprehensive_report.json",
+      "score": 10,
+      "reasons": [
+        "recent"
+      ],
+      "decision": "DELETE_SAFE"
+    },
+    {
+      "path": "canonical\\intelligence\\eos-business-contract-discovery.json",
+      "score": 10,
+      "reasons": [
+        "recent"
+      ],
+      "decision": "DELETE_SAFE"
+    },
+    {
+      "path": "canonical\\intelligence\\eos-roadmap-readiness.json",
+      "score": 25,
+      "reasons": [
+        "core_business_logic",
+        "recent"
+      ],
+      "decision": "DELETE_SAFE"
+    },
+    {
+      "path": "canonical\\intelligence\\README.md",
+      "score": 25,
+      "reasons": [
+        "core_business_logic",
+        "recent"
+      ],
+      "decision": "DELETE_SAFE"
+    },
+    {
+      "path": "canonical\\inventory\\inventory-analytics-v1.json",
+      "score": 10,
+      "reasons": [
+        "recent"
+      ],
+      "decision": "DELETE_SAFE"
+    },
+    {
+      "path": "canonical\\inventory\\inventory-automation-v1.json",
+      "score": 10,
+      "reasons": [
+        "recent"
+      ],
+      "decision": "DELETE_SAFE"
+    },
+    {
+      "path": "canonical\\inventory\\inventory-control-v1.json",
+      "score": 10,
+      "reasons": [
+        "recent"
+      ],
+      "decision": "DELETE_SAFE"
+    },
+    {
+      "path": "canonical\\inventory\\inventory-master-v1.json",
+      "score": 10,
+      "reasons": [
+        "recent"
+      ],
+      "decision": "DELETE_SAFE"
+    },
+    {
+      "path": "canonical\\inventory\\Inventory.js",
+      "score": 35,
+      "reasons": [
+        "business_truth",
+        "recent"
+      ],
+      "decision": "DELETE_SAFE"
+    },
+    {
+      "path": "canonical\\inventory\\inventory.sql",
+      "score": 35,
+      "reasons": [
+        "business_truth",
+        "recent"
+      ],
+      "decision": "DELETE_SAFE"
+    },
+    {
+      "path": "canonical\\inventory\\movements.json",
+      "score": 35,
+      "reasons": [
+        "business_truth",
+        "recent"
+      ],
+      "decision": "DELETE_SAFE"
+    },
+    {
+      "path": "canonical\\inventory\\stock-levels.json",
+      "score": 35,
+      "reasons": [
+        "business_truth",
+        "recent"
+      ],
+      "decision": "DELETE_SAFE"
+    },
+    {
+      "path": "canonical\\inventory\\warehouses.json",
+      "score": 10,
+      "reasons": [
+        "recent"
+      ],
+      "decision": "DELETE_SAFE"
+    },
+    {
+      "path": "canonical\\KNOWLEDGE-BASE\\AI-INTELLIGENCE-DISCOVERY-REPORT.json",
+      "score": 10,
+      "reasons": [
+        "recent"
+      ],
+      "decision": "DELETE_SAFE"
+    },
+    {
+      "path": "canonical\\labels\\labels_index_with_visuals.json",
+      "score": 35,
+      "reasons": [
+        "business_truth",
+        "recent"
+      ],
+      "decision": "DELETE_SAFE"
+    },
+    {
+      "path": "canonical\\legacy-data\\canonical-product-master-v1.json",
+      "score": 35,
+      "reasons": [
+        "business_truth",
+        "recent"
+      ],
+      "decision": "DELETE_SAFE"
+    },
+    {
+      "path": "canonical\\legacy-data\\eos-real-product-master-v2.json",
+      "score": 35,
+      "reasons": [
+        "business_truth",
+        "recent"
+      ],
+      "decision": "DELETE_SAFE"
+    },
+    {
+      "path": "canonical\\legacy-data\\gels-normalized-registry-v1.json",
+      "score": 25,
+      "reasons": [
+        "core_business_logic",
+        "recent"
+      ],
+      "decision": "DELETE_SAFE"
+    },
+    {
+      "path": "canonical\\legacy-data\\product-asset-link-map-v1.json",
+      "score": 10,
+      "reasons": [
+        "recent"
+      ],
+      "decision": "DELETE_SAFE"
+    },
+    {
+      "path": "canonical\\logistics\\logistics.sql",
+      "score": 35,
+      "reasons": [
+        "business_truth",
+        "recent"
+      ],
+      "decision": "DELETE_SAFE"
+    },
+    {
+      "path": "canonical\\logistics\\shipments.json",
+      "score": 35,
+      "reasons": [
+        "business_truth",
+        "recent"
+      ],
+      "decision": "DELETE_SAFE"
+    },
+    {
+      "path": "canonical\\logistics\\tracking-summary.json",
+      "score": 35,
+      "reasons": [
+        "business_truth",
+        "recent"
+      ],
+      "decision": "DELETE_SAFE"
+    },
+    {
+      "path": "canonical\\scripts\\seed_master_products.ts",
+      "score": 35,
+      "reasons": [
+        "business_truth",
+        "recent"
+      ],
+      "decision": "DELETE_SAFE"
+    },
+    {
+      "path": "canonical\\website\\about.json",
+      "score": 35,
+      "reasons": [
+        "business_truth",
+        "recent"
+      ],
+      "decision": "DELETE_SAFE"
+    },
+    {
+      "path": "canonical\\website\\home.json",
+      "score": 35,
+      "reasons": [
+        "business_truth",
+        "recent"
+      ],
+      "decision": "DELETE_SAFE"
+    },
+    {
+      "path": "canonical\\website\\mission.json",
+      "score": 35,
+      "reasons": [
+        "business_truth",
+        "recent"
+      ],
+      "decision": "DELETE_SAFE"
+    },
+    {
+      "path": "canonical\\website\\offers.json",
+      "score": 35,
+      "reasons": [
+        "business_truth",
+        "recent"
+      ],
+      "decision": "DELETE_SAFE"
+    },
+    {
+      "path": "canonical\\website\\policies.json",
+      "score": 35,
+      "reasons": [
+        "business_truth",
+        "recent"
+      ],
+      "decision": "DELETE_SAFE"
+    },
+    {
+      "path": "canonical\\website\\services.json",
+      "score": 35,
+      "reasons": [
+        "business_truth",
+        "recent"
+      ],
+      "decision": "DELETE_SAFE"
+    },
+    {
+      "path": "canonical\\website\\vision.json",
+      "score": 35,
+      "reasons": [
+        "business_truth",
+        "recent"
+      ],
+      "decision": "DELETE_SAFE"
+    },
+    {
+      "path": "canonical\\KNOWLEDGE-BASE\\MASTER-SOURCE\\MASTER-TRUTH-v1.json",
+      "score": 25,
+      "reasons": [
+        "core_business_logic",
+        "recent"
+      ],
+      "decision": "DELETE_SAFE"
+    },
+    {
+      "path": "canonical\\KNOWLEDGE-BASE\\KEEP-PACKAGE\\GELS\\gels-normalized-registry-v1.json",
+      "score": 25,
+      "reasons": [
+        "core_business_logic",
+        "recent"
+      ],
+      "decision": "DELETE_SAFE"
+    },
+    {
+      "path": "canonical\\KNOWLEDGE-BASE\\INDEX\\reconciliation\\RECONCILIATION-SUMMARY.json",
+      "score": 25,
+      "reasons": [
+        "core_business_logic",
+        "recent"
+      ],
+      "decision": "DELETE_SAFE"
+    },
+    {
+      "path": "canonical\\intelligence\\intelligence\\gl-dos.ts",
+      "score": 25,
+      "reasons": [
+        "core_business_logic",
+        "recent"
+      ],
+      "decision": "DELETE_SAFE"
+    },
+    {
+      "path": "canonical\\intelligence\\intelligence\\core\\report-writer.ts",
+      "score": 10,
+      "reasons": [
+        "recent"
+      ],
+      "decision": "DELETE_SAFE"
+    },
+    {
+      "path": "canonical\\intelligence\\intelligence\\engines\\audit-engine.ts",
+      "score": 35,
+      "reasons": [
+        "business_truth",
+        "recent"
+      ],
+      "decision": "DELETE_SAFE"
+    },
+    {
+      "path": "canonical\\intelligence\\intelligence\\engines\\data-integrity-engine.ts",
+      "score": 35,
+      "reasons": [
+        "business_truth",
+        "recent"
+      ],
+      "decision": "DELETE_SAFE"
+    },
+    {
+      "path": "canonical\\docs\\products\\PRODUCT_MASTER.md",
+      "score": 10,
+      "reasons": [
+        "recent"
+      ],
+      "decision": "DELETE_SAFE"
+    },
+    {
+      "path": "canonical\\docs\\standards\\01_BRAND_STANDARD.md",
+      "score": 35,
+      "reasons": [
+        "business_truth",
+        "recent"
+      ],
+      "decision": "DELETE_SAFE"
+    },
+    {
+      "path": "canonical\\data\\global-export-visual-system-v1\\final-visual-system-report-v1.json",
+      "score": 25,
+      "reasons": [
+        "core_business_logic",
+        "recent"
+      ],
+      "decision": "DELETE_SAFE"
+    },
+    {
+      "path": "canonical\\data\\live-normalized-v1\\normalized-business-registry.json",
+      "score": 10,
+      "reasons": [
+        "recent"
+      ],
+      "decision": "DELETE_SAFE"
+    },
+    {
+      "path": "app\\api\\products\\route.ts",
+      "score": 35,
+      "reasons": [
+        "business_truth",
+        "recent"
+      ],
+      "decision": "DELETE_SAFE"
+    },
+    {
+      "path": "app\\api\\sales-orders\\route.ts",
+      "score": 35,
+      "reasons": [
+        "business_truth",
+        "recent"
+      ],
+      "decision": "DELETE_SAFE"
+    },
+    {
+      "path": "app\\api\\suppliers\\route.ts",
+      "score": 35,
+      "reasons": [
+        "business_truth",
+        "recent"
+      ],
+      "decision": "DELETE_SAFE"
+    }
+  ],
+  "knowledge_graph": {
+    "unknown": [
+      {
+        "asset": ".env",
+        "decision": "DELETE_SAFE",
+        "score": 10
+      },
+      {
+        "asset": ".govern.toml",
+        "decision": "DELETE_SAFE",
+        "score": 10
+      },
+      {
+        "asset": "ALL_SOURCE_CODE.txt",
+        "decision": "DELETE_SAFE",
+        "score": 35
+      },
+      {
+        "asset": "audit_report.json",
+        "decision": "DELETE_SAFE",
+        "score": 35
+      },
+      {
+        "asset": "brain_working.py",
+        "decision": "DELETE_SAFE",
+        "score": 10
+      },
+      {
+        "asset": "business_assets_report.json",
+        "decision": "DELETE_SAFE",
+        "score": 10
+      },
+      {
+        "asset": "certificate_report.json",
+        "decision": "DELETE_SAFE",
+        "score": 35
+      },
+      {
+        "asset": "certificate_report_v2.json",
+        "decision": "DELETE_SAFE",
+        "score": 35
+      },
+      {
+        "asset": "certificate_report_v3.json",
+        "decision": "DELETE_SAFE",
+        "score": 35
+      },
+      {
+        "asset": "certificate_report_v4.json",
+        "decision": "DELETE_SAFE",
+        "score": 35
+      },
+      {
+        "asset": "certs_confirm.json",
+        "decision": "DELETE_SAFE",
+        "score": 35
+      },
+      {
+        "asset": "consolidation_report_final.json",
+        "decision": "DELETE_SAFE",
+        "score": 35
+      },
+      {
+        "asset": "consolidation_report_full.json",
+        "decision": "DELETE_SAFE",
+        "score": 35
+      },
+      {
+        "asset": "deep_clean_report.json",
+        "decision": "DELETE_SAFE",
+        "score": 10
+      },
+      {
+        "asset": "deep_clean_report_v2.json",
+        "decision": "DELETE_SAFE",
+        "score": 10
+      },
+      {
+        "asset": "els_final.json",
+        "decision": "DELETE_SAFE",
+        "score": 10
+      },
+      {
+        "asset": "els_final_confirm.json",
+        "decision": "DELETE_SAFE",
+        "score": 10
+      },
+      {
+        "asset": "els_final_v2.json",
+        "decision": "DELETE_SAFE",
+        "score": 10
+      },
+      {
+        "asset": "els_final_with_business.json",
+        "decision": "DELETE_SAFE",
+        "score": 10
+      },
+      {
+        "asset": "els_report.json",
+        "decision": "DELETE_SAFE",
+        "score": 10
+      },
+      {
+        "asset": "els_report_final.json",
+        "decision": "DELETE_SAFE",
+        "score": 10
+      },
+      {
+        "asset": "els_report_final_v2.json",
+        "decision": "DELETE_SAFE",
+        "score": 10
+      },
+      {
+        "asset": "els_report_final_v4.json",
+        "decision": "DELETE_SAFE",
+        "score": 10
+      },
+      {
+        "asset": "els_report_final_v5.json",
+        "decision": "DELETE_SAFE",
+        "score": 10
+      },
+      {
+        "asset": "els_report_new.json",
+        "decision": "DELETE_SAFE",
+        "score": 10
+      },
+      {
+        "asset": "Engine_Discovery_Report.csv",
+        "decision": "DELETE_SAFE",
+        "score": 10
+      },
+      {
+        "asset": "FileSummary.csv",
+        "decision": "DELETE_SAFE",
+        "score": 10
+      },
+      {
+        "asset": "final_audit.json",
+        "decision": "DELETE_SAFE",
+        "score": 10
+      },
+      {
+        "asset": "final_clean_audit.json",
+        "decision": "DELETE_SAFE",
+        "score": 10
+      },
+      {
+        "asset": "final_enterprise_audit.json",
+        "decision": "DELETE_SAFE",
+        "score": 10
+      },
+      {
+        "asset": "final_eos_freeze.json",
+        "decision": "DELETE_SAFE",
+        "score": 10
+      },
+      {
+        "asset": "final_integration.json",
+        "decision": "DELETE_SAFE",
+        "score": 10
+      },
+      {
+        "asset": "final_integration_audit.json",
+        "decision": "DELETE_SAFE",
+        "score": 10
+      },
+      {
+        "asset": "final_pass_audit.json",
+        "decision": "DELETE_SAFE",
+        "score": 10
+      },
+      {
+        "asset": "GreenyLifeEOS_Review.zip",
+        "decision": "ARCHIVE_HISTORICAL",
+        "score": 55
+      },
+      {
+        "asset": "labels_report.json",
+        "decision": "DELETE_SAFE",
+        "score": 10
+      },
+      {
+        "asset": "NUCLEUS_FILES.txt",
+        "decision": "DELETE_SAFE",
+        "score": 35
+      },
+      {
+        "asset": "packaging_audit_report.json",
+        "decision": "DELETE_SAFE",
+        "score": 35
+      },
+      {
+        "asset": "packaging_report.json",
+        "decision": "DELETE_SAFE",
+        "score": 35
+      },
+      {
+        "asset": "PROJECT_FULL_AUDIT.txt",
+        "decision": "DELETE_SAFE",
+        "score": 30
+      },
+      {
+        "asset": "project_tree.txt",
+        "decision": "DELETE_SAFE",
+        "score": 35
+      },
+      {
+        "asset": "run_all.ps1",
+        "decision": "DELETE_SAFE",
+        "score": 35
+      },
+      {
+        "asset": "run_audit_hack.py",
+        "decision": "DELETE_SAFE",
+        "score": 10
+      },
+      {
+        "asset": "run_brain.ps1",
+        "decision": "DELETE_SAFE",
+        "score": 10
+      },
+      {
+        "asset": "run_brain_cli.py",
+        "decision": "DELETE_SAFE",
+        "score": 35
+      },
+      {
+        "asset": "run_full_audit.ps1",
+        "decision": "DELETE_SAFE",
+        "score": 35
+      },
+      {
+        "asset": "validation_report.json",
+        "decision": "ARCHIVE_HISTORICAL",
+        "score": 55
+      },
+      {
+        "asset": "validation_report_v2.json",
+        "decision": "ARCHIVE_HISTORICAL",
+        "score": 55
+      },
+      {
+        "asset": "validation_report_v3.json",
+        "decision": "ARCHIVE_HISTORICAL",
+        "score": 55
+      },
+      {
+        "asset": "validation_report_v4.json",
+        "decision": "ARCHIVE_HISTORICAL",
+        "score": 55
+      },
+      {
+        "asset": ".vscode\\settings.json",
+        "decision": "DELETE_SAFE",
+        "score": 10
+      },
+      {
+        "asset": "canonical\\classification_report_v2.json",
+        "decision": "DELETE_SAFE",
+        "score": 30
+      },
+      {
+        "asset": "canonical\\cleanup_report.json",
+        "decision": "ARCHIVE_HISTORICAL",
+        "score": 50
+      },
+      {
+        "asset": "canonical\\final_audit.json",
+        "decision": "DELETE_SAFE",
+        "score": 10
+      },
+      {
+        "asset": "canonical\\fix_indent.py",
+        "decision": "DELETE_SAFE",
+        "score": 10
+      },
+      {
+        "asset": "canonical\\run_all.ps1",
+        "decision": "DELETE_SAFE",
+        "score": 35
+      },
+      {
+        "asset": "docs\\GOVERN_STOP.md",
+        "decision": "DELETE_SAFE",
+        "score": 10
+      },
+      {
+        "asset": "docs\\INDEX.md",
+        "decision": "ARCHIVE_HISTORICAL",
+        "score": 55
+      },
+      {
+        "asset": "governance\\Audit-Packaging.ps1",
+        "decision": "ARCHIVE_HISTORICAL",
+        "score": 50
+      },
+      {
+        "asset": "governance\\eos-canonical-truth-registry-v1.json",
+        "decision": "MERGE_CANDIDATE",
+        "score": 70
+      },
+      {
+        "asset": "governance\\eos-canonical-truth-registry-v2.json",
+        "decision": "MERGE_CANDIDATE",
+        "score": 70
+      },
+      {
+        "asset": "governance\\eos-canonical-truth-registry-v3.json",
+        "decision": "MERGE_CANDIDATE",
+        "score": 70
+      },
+      {
+        "asset": "guardrails\\taxonomy.json",
+        "decision": "DELETE_SAFE",
+        "score": 10
+      },
+      {
+        "asset": "intelligence\\asset_classification_report_v3.json",
+        "decision": "DELETE_SAFE",
+        "score": 30
+      },
+      {
+        "asset": "intelligence\\certificate-validation-report.json",
+        "decision": "DELETE_SAFE",
+        "score": 35
+      },
+      {
+        "asset": "intelligence\\cleanup_report.json",
+        "decision": "DELETE_SAFE",
+        "score": 10
+      },
+      {
+        "asset": "intelligence\\comprehensive_report.json",
+        "decision": "DELETE_SAFE",
+        "score": 10
+      },
+      {
+        "asset": "intelligence\\comprehensive_report.md",
+        "decision": "DELETE_SAFE",
+        "score": 10
+      },
+      {
+        "asset": "intelligence\\deep_clean_report.json",
+        "decision": "DELETE_SAFE",
+        "score": 10
+      },
+      {
+        "asset": "intelligence\\deep_packaging_audit_report.json",
+        "decision": "ARCHIVE_HISTORICAL",
+        "score": 50
+      },
+      {
+        "asset": "intelligence\\eos-domain-api-ownership.json",
+        "decision": "MERGE_CANDIDATE",
+        "score": 75
+      },
+      {
+        "asset": "intelligence\\eos-domain-connection-matrix.json",
+        "decision": "MERGE_CANDIDATE",
+        "score": 75
+      },
+      {
+        "asset": "intelligence\\eos-domain-runtime-ownership-map.json",
+        "decision": "MERGE_CANDIDATE",
+        "score": 75
+      },
+      {
+        "asset": "intelligence\\eos-final-enterprise-blueprint-package-v1.json",
+        "decision": "MERGE_CANDIDATE",
+        "score": 75
+      },
+      {
+        "asset": "intelligence\\gels-validation-report.json",
+        "decision": "ARCHIVE_HISTORICAL",
+        "score": 50
+      },
+      {
+        "asset": "intelligence\\master-data-integrity-report.json",
+        "decision": "DELETE_SAFE",
+        "score": 35
+      },
+      {
+        "asset": "tests\\performance\\results.json",
+        "decision": "DELETE_SAFE",
+        "score": 10
+      },
+      {
+        "asset": "tests\\performance\\smoke_test.js",
+        "decision": "DELETE_SAFE",
+        "score": 0
+      },
+      {
+        "asset": "KNOWLEDGE-BASE\\Architecture\\architecture-files.csv",
+        "decision": "MERGE_CANDIDATE",
+        "score": 75
+      },
+      {
+        "asset": "intelligence\\daily_reports\\daily_audit_20260805.json",
+        "decision": "DELETE_SAFE",
+        "score": 10
+      },
+      {
+        "asset": "intelligence\\knowledge_base\\project_metadata.json",
+        "decision": "DELETE_SAFE",
+        "score": 10
+      },
+      {
+        "asset": "intelligence\\knowledge_base\\tools_manifest.json",
+        "decision": "DELETE_SAFE",
+        "score": 10
+      },
+      {
+        "asset": "docs\\auto-generated\\INDEX.md",
+        "decision": "ARCHIVE_HISTORICAL",
+        "score": 55
+      },
+      {
+        "asset": "docs\\improvements\\0000-template.md",
+        "decision": "DELETE_SAFE",
+        "score": 10
+      },
+      {
+        "asset": "canonical\\app\\layout.tsx",
+        "decision": "DELETE_SAFE",
+        "score": 10
+      },
+      {
+        "asset": "canonical\\app\\page.tsx",
+        "decision": "DELETE_SAFE",
+        "score": 35
+      },
+      {
+        "asset": "canonical\\business\\global_specs.json",
+        "decision": "DELETE_SAFE",
+        "score": 10
+      },
+      {
+        "asset": "canonical\\business\\markets.json",
+        "decision": "DELETE_SAFE",
+        "score": 10
+      },
+      {
+        "asset": "canonical\\data\\certificates.json",
+        "decision": "DELETE_SAFE",
+        "score": 35
+      },
+      {
+        "asset": "canonical\\data\\export-go-live-gate-report-v1.json",
+        "decision": "DELETE_SAFE",
+        "score": 25
+      },
+      {
+        "asset": "canonical\\data\\export-operations-process-map-v1.json",
+        "decision": "DELETE_SAFE",
+        "score": 25
+      },
+      {
+        "asset": "canonical\\data\\export-readiness-remediation-plan-v1.json",
+        "decision": "DELETE_SAFE",
+        "score": 25
+      },
+      {
+        "asset": "canonical\\data\\export-readiness-report-v1.json",
+        "decision": "DELETE_SAFE",
+        "score": 25
+      },
+      {
+        "asset": "canonical\\data\\gels-governance-gate-report-v1.json",
+        "decision": "ARCHIVE_HISTORICAL",
+        "score": 40
+      },
+      {
+        "asset": "canonical\\data\\gels-intelligent-match-report-v1.json",
+        "decision": "DELETE_SAFE",
+        "score": 25
+      },
+      {
+        "asset": "canonical\\data\\packaging-gels-registry-v1.json",
+        "decision": "DELETE_SAFE",
+        "score": 10
+      },
+      {
+        "asset": "canonical\\docs\\legacy_brand.md",
+        "decision": "ARCHIVE_HISTORICAL",
+        "score": 50
+      },
+      {
+        "asset": "canonical\\docs\\migrated_brand.md",
+        "decision": "ARCHIVE_HISTORICAL",
+        "score": 50
+      },
+      {
+        "asset": "canonical\\docs\\README.md",
+        "decision": "DELETE_SAFE",
+        "score": 10
+      },
+      {
+        "asset": "canonical\\governance\\eos-assets-registry-v1.json",
+        "decision": "ARCHIVE_HISTORICAL",
+        "score": 50
+      },
+      {
+        "asset": "canonical\\governance\\eos-deep-asset-discovery-v1.json",
+        "decision": "ARCHIVE_HISTORICAL",
+        "score": 50
+      },
+      {
+        "asset": "canonical\\governance\\eos-knowledge-registry-v1.json",
+        "decision": "ARCHIVE_HISTORICAL",
+        "score": 50
+      },
+      {
+        "asset": "canonical\\governance\\keep-assets-files-v1.json",
+        "decision": "ARCHIVE_HISTORICAL",
+        "score": 50
+      },
+      {
+        "asset": "canonical\\governance\\keep-core-files-v1.json",
+        "decision": "MERGE_CANDIDATE",
+        "score": 70
+      },
+      {
+        "asset": "canonical\\governance\\review-required-files-v1.json",
+        "decision": "DELETE_SAFE",
+        "score": 25
+      },
+      {
+        "asset": "canonical\\intelligence\\architecture.manifest.json",
+        "decision": "KEEP_CANONICAL",
+        "score": 90
+      },
+      {
+        "asset": "canonical\\intelligence\\asset_classification_report_v2.json",
+        "decision": "DELETE_SAFE",
+        "score": 30
+      },
+      {
+        "asset": "canonical\\intelligence\\cleanup_report.json",
+        "decision": "ARCHIVE_HISTORICAL",
+        "score": 50
+      },
+      {
+        "asset": "canonical\\intelligence\\comprehensive_report.json",
+        "decision": "DELETE_SAFE",
+        "score": 10
+      },
+      {
+        "asset": "canonical\\intelligence\\eos-business-contract-discovery.json",
+        "decision": "DELETE_SAFE",
+        "score": 10
+      },
+      {
+        "asset": "canonical\\intelligence\\eos-domain-activation-blueprint-v1.json",
+        "decision": "MERGE_CANDIDATE",
+        "score": 75
+      },
+      {
+        "asset": "canonical\\intelligence\\eos-enterprise-architecture-final.json",
+        "decision": "MERGE_CANDIDATE",
+        "score": 70
+      },
+      {
+        "asset": "canonical\\intelligence\\eos-execution-truth-map.json",
+        "decision": "ARCHIVE_HISTORICAL",
+        "score": 55
+      },
+      {
+        "asset": "canonical\\intelligence\\eos-gels-architecture-alignment.json",
+        "decision": "MERGE_CANDIDATE",
+        "score": 70
+      },
+      {
+        "asset": "canonical\\intelligence\\eos-gldos-architecture-alignment.json",
+        "decision": "ARCHIVE_HISTORICAL",
+        "score": 45
+      },
+      {
+        "asset": "canonical\\intelligence\\eos-intelligent-domain-ownership-graph.json",
+        "decision": "ARCHIVE_HISTORICAL",
+        "score": 50
+      },
+      {
+        "asset": "canonical\\intelligence\\eos-real-execution-path-map.json",
+        "decision": "ARCHIVE_HISTORICAL",
+        "score": 55
+      },
+      {
+        "asset": "canonical\\intelligence\\eos-roadmap-readiness.json",
+        "decision": "DELETE_SAFE",
+        "score": 25
+      },
+      {
+        "asset": "canonical\\intelligence\\foundation-closure-report-final.json",
+        "decision": "ARCHIVE_HISTORICAL",
+        "score": 50
+      },
+      {
+        "asset": "canonical\\intelligence\\README.md",
+        "decision": "DELETE_SAFE",
+        "score": 25
+      },
+      {
+        "asset": "canonical\\KNOWLEDGE-BASE\\AI-INTELLIGENCE-DISCOVERY-REPORT.json",
+        "decision": "DELETE_SAFE",
+        "score": 10
+      },
+      {
+        "asset": "canonical\\labels\\B001_label.json",
+        "decision": "ARCHIVE_HISTORICAL",
+        "score": 50
+      },
+      {
+        "asset": "canonical\\labels\\B002_label.json",
+        "decision": "ARCHIVE_HISTORICAL",
+        "score": 50
+      },
+      {
+        "asset": "canonical\\labels\\B003_label.json",
+        "decision": "ARCHIVE_HISTORICAL",
+        "score": 50
+      },
+      {
+        "asset": "canonical\\labels\\B004_label.json",
+        "decision": "ARCHIVE_HISTORICAL",
+        "score": 50
+      },
+      {
+        "asset": "canonical\\labels\\GL-LBL-BEE-004.json",
+        "decision": "ARCHIVE_HISTORICAL",
+        "score": 50
+      },
+      {
+        "asset": "canonical\\labels\\GL-LBL-BEE-005.json",
+        "decision": "ARCHIVE_HISTORICAL",
+        "score": 50
+      },
+      {
+        "asset": "canonical\\labels\\GL-LBL-BEE-006.json",
+        "decision": "ARCHIVE_HISTORICAL",
+        "score": 50
+      },
+      {
+        "asset": "canonical\\labels\\GL-LBL-BEE-007.json",
+        "decision": "ARCHIVE_HISTORICAL",
+        "score": 50
+      },
+      {
+        "asset": "canonical\\labels\\GL-LBL-HON-001.json",
+        "decision": "ARCHIVE_HISTORICAL",
+        "score": 50
+      },
+      {
+        "asset": "canonical\\labels\\GL-LBL-HON-002.json",
+        "decision": "ARCHIVE_HISTORICAL",
+        "score": 50
+      },
+      {
+        "asset": "canonical\\labels\\GL-LBL-HON-003.json",
+        "decision": "ARCHIVE_HISTORICAL",
+        "score": 50
+      },
+      {
+        "asset": "canonical\\labels\\GL-LBL-HRB-014.json",
+        "decision": "ARCHIVE_HISTORICAL",
+        "score": 50
+      },
+      {
+        "asset": "canonical\\labels\\GL-LBL-OIL-015.json",
+        "decision": "ARCHIVE_HISTORICAL",
+        "score": 50
+      },
+      {
+        "asset": "canonical\\labels\\GL-LBL-SPC-008.json",
+        "decision": "ARCHIVE_HISTORICAL",
+        "score": 50
+      },
+      {
+        "asset": "canonical\\labels\\GL-LBL-SPC-009.json",
+        "decision": "ARCHIVE_HISTORICAL",
+        "score": 50
+      },
+      {
+        "asset": "canonical\\labels\\GL-LBL-SPC-010.json",
+        "decision": "ARCHIVE_HISTORICAL",
+        "score": 50
+      },
+      {
+        "asset": "canonical\\labels\\GL-LBL-SPC-011.json",
+        "decision": "ARCHIVE_HISTORICAL",
+        "score": 50
+      },
+      {
+        "asset": "canonical\\labels\\GL-LBL-SPC-012.json",
+        "decision": "ARCHIVE_HISTORICAL",
+        "score": 50
+      },
+      {
+        "asset": "canonical\\labels\\GL-LBL-SPC-013.json",
+        "decision": "ARCHIVE_HISTORICAL",
+        "score": 50
+      },
+      {
+        "asset": "canonical\\labels\\H001_label.json",
+        "decision": "ARCHIVE_HISTORICAL",
+        "score": 50
+      },
+      {
+        "asset": "canonical\\labels\\H002_label.json",
+        "decision": "ARCHIVE_HISTORICAL",
+        "score": 50
+      },
+      {
+        "asset": "canonical\\labels\\H003_label.json",
+        "decision": "ARCHIVE_HISTORICAL",
+        "score": 50
+      },
+      {
+        "asset": "canonical\\labels\\H004_label.json",
+        "decision": "ARCHIVE_HISTORICAL",
+        "score": 50
+      },
+      {
+        "asset": "canonical\\labels\\labels-index.json",
+        "decision": "ARCHIVE_HISTORICAL",
+        "score": 50
+      },
+      {
+        "asset": "canonical\\labels\\labels_index_with_visuals.json",
+        "decision": "DELETE_SAFE",
+        "score": 35
+      },
+      {
+        "asset": "canonical\\labels\\O001_label.json",
+        "decision": "ARCHIVE_HISTORICAL",
+        "score": 50
+      },
+      {
+        "asset": "canonical\\labels\\S001_label.json",
+        "decision": "ARCHIVE_HISTORICAL",
+        "score": 50
+      },
+      {
+        "asset": "canonical\\labels\\S002_label.json",
+        "decision": "ARCHIVE_HISTORICAL",
+        "score": 50
+      },
+      {
+        "asset": "canonical\\labels\\S003_label.json",
+        "decision": "ARCHIVE_HISTORICAL",
+        "score": 50
+      },
+      {
+        "asset": "canonical\\labels\\S004_label.json",
+        "decision": "ARCHIVE_HISTORICAL",
+        "score": 50
+      },
+      {
+        "asset": "canonical\\labels\\S005_label.json",
+        "decision": "ARCHIVE_HISTORICAL",
+        "score": 50
+      },
+      {
+        "asset": "canonical\\labels\\S006_label.json",
+        "decision": "ARCHIVE_HISTORICAL",
+        "score": 50
+      },
+      {
+        "asset": "canonical\\legacy-data\\gels-normalized-registry-v1.json",
+        "decision": "DELETE_SAFE",
+        "score": 25
+      },
+      {
+        "asset": "canonical\\packaging_visual\\packaging_visual_registry.json",
+        "decision": "ARCHIVE_HISTORICAL",
+        "score": 50
+      },
+      {
+        "asset": "canonical\\prisma\\schema.prisma",
+        "decision": "ARCHIVE_HISTORICAL",
+        "score": 55
+      },
+      {
+        "asset": "canonical\\website\\about.json",
+        "decision": "DELETE_SAFE",
+        "score": 35
+      },
+      {
+        "asset": "canonical\\website\\home.json",
+        "decision": "DELETE_SAFE",
+        "score": 35
+      },
+      {
+        "asset": "canonical\\website\\mission.json",
+        "decision": "DELETE_SAFE",
+        "score": 35
+      },
+      {
+        "asset": "canonical\\website\\offers.json",
+        "decision": "DELETE_SAFE",
+        "score": 35
+      },
+      {
+        "asset": "canonical\\website\\policies.json",
+        "decision": "DELETE_SAFE",
+        "score": 35
+      },
+      {
+        "asset": "canonical\\website\\services.json",
+        "decision": "DELETE_SAFE",
+        "score": 35
+      },
+      {
+        "asset": "canonical\\website\\vision.json",
+        "decision": "DELETE_SAFE",
+        "score": 35
+      },
+      {
+        "asset": "canonical\\KNOWLEDGE-BASE\\MASTER-SOURCE\\MASTER-TRUTH-v1.json",
+        "decision": "DELETE_SAFE",
+        "score": 25
+      },
+      {
+        "asset": "canonical\\KNOWLEDGE-BASE\\KEEP-PACKAGE\\GELS\\gels-normalized-registry-v1.json",
+        "decision": "DELETE_SAFE",
+        "score": 25
+      },
+      {
+        "asset": "canonical\\KNOWLEDGE-BASE\\INDEX\\reconciliation\\RECONCILIATION-SUMMARY.json",
+        "decision": "DELETE_SAFE",
+        "score": 25
+      },
+      {
+        "asset": "canonical\\intelligence\\adapters\\gl-dos-governance-gate.ts",
+        "decision": "ARCHIVE_HISTORICAL",
+        "score": 40
+      },
+      {
+        "asset": "canonical\\intelligence\\contracts\\execution-contract.json",
+        "decision": "ARCHIVE_HISTORICAL",
+        "score": 55
+      },
+      {
+        "asset": "canonical\\intelligence\\intelligence\\gl-dos.ts",
+        "decision": "DELETE_SAFE",
+        "score": 25
+      },
+      {
+        "asset": "canonical\\intelligence\\intelligence\\intelligence-test.ts",
+        "decision": "MERGE_CANDIDATE",
+        "score": 60
+      },
+      {
+        "asset": "canonical\\intelligence\\runtime\\controlled-runtime-orchestrator.ts",
+        "decision": "ARCHIVE_HISTORICAL",
+        "score": 45
+      },
+      {
+        "asset": "canonical\\intelligence\\intelligence\\core\\report-writer.ts",
+        "decision": "DELETE_SAFE",
+        "score": 10
+      },
+      {
+        "asset": "canonical\\intelligence\\intelligence\\engines\\audit-engine.ts",
+        "decision": "DELETE_SAFE",
+        "score": 35
+      },
+      {
+        "asset": "canonical\\intelligence\\intelligence\\engines\\data-integrity-engine.ts",
+        "decision": "DELETE_SAFE",
+        "score": 35
+      },
+      {
+        "asset": "canonical\\intelligence\\intelligence\\health\\health-reporter.ts",
+        "decision": "ARCHIVE_HISTORICAL",
+        "score": 45
+      },
+      {
+        "asset": "canonical\\docs\\architecture\\SYSTEM_ARCHITECTURE.md",
+        "decision": "MERGE_CANDIDATE",
+        "score": 70
+      },
+      {
+        "asset": "canonical\\docs\\auto-generated\\INDEX.md",
+        "decision": "ARCHIVE_HISTORICAL",
+        "score": 55
+      },
+      {
+        "asset": "canonical\\docs\\standards\\01_BRAND_STANDARD.md",
+        "decision": "DELETE_SAFE",
+        "score": 35
+      },
+      {
+        "asset": "canonical\\docs\\architecture\\eos_architecture\\01.Master_Data\\honey_reference.json",
+        "decision": "MERGE_CANDIDATE",
+        "score": 70
+      },
+      {
+        "asset": "canonical\\data\\global-export-visual-system-v1\\final-visual-system-report-v1.json",
+        "decision": "DELETE_SAFE",
+        "score": 25
+      },
+      {
+        "asset": "canonical\\data\\live-normalized-v1\\normalized-business-registry.json",
+        "decision": "DELETE_SAFE",
+        "score": 10
+      },
+      {
+        "asset": "app\\api\\workflow\\route.ts",
+        "decision": "ARCHIVE_HISTORICAL",
+        "score": 55
+      }
+    ],
+    "analytics": [
+      {
+        "asset": "analytics_report.json",
+        "decision": "DELETE_SAFE",
+        "score": 35
+      },
+      {
+        "asset": "analytics_with_business.json",
+        "decision": "DELETE_SAFE",
+        "score": 35
+      },
+      {
+        "asset": "intelligence\\analytics-validation-report.json",
+        "decision": "DELETE_SAFE",
+        "score": 35
+      },
+      {
+        "asset": "canonical\\analytics\\revenue-by-market.json",
+        "decision": "DELETE_SAFE",
+        "score": 10
+      },
+      {
+        "asset": "canonical\\analytics\\sales-summary.json",
+        "decision": "DELETE_SAFE",
+        "score": 35
+      }
+    ],
+    "brain.py": {
+      "domain": "unknown",
+      "type": "CANONICAL",
+      "dependencies": [],
+      "runtime_usage": "HIGH",
+      "owner": "EOS Core Team"
+    },
+    "config.yaml": {
+      "domain": "unknown",
+      "type": "CANONICAL",
+      "dependencies": [],
+      "runtime_usage": "HIGH",
+      "owner": "EOS Core Team"
+    },
+    "crm": [
+      {
+        "asset": "crm_report.json",
+        "decision": "DELETE_SAFE",
+        "score": 35
+      },
+      {
+        "asset": "intelligence\\crm-validation-report.json",
+        "decision": "DELETE_SAFE",
+        "score": 35
+      },
+      {
+        "asset": "canonical\\crm\\crm-automation-v1.json",
+        "decision": "DELETE_SAFE",
+        "score": 10
+      },
+      {
+        "asset": "canonical\\crm\\interactions.json",
+        "decision": "DELETE_SAFE",
+        "score": 35
+      },
+      {
+        "asset": "canonical\\crm\\opportunities.json",
+        "decision": "DELETE_SAFE",
+        "score": 35
+      },
+      {
+        "asset": "canonical\\crm\\opportunity-model.json",
+        "decision": "DELETE_SAFE",
+        "score": 30
+      }
+    ],
+    "customer": [
+      {
+        "asset": "customer_report.json",
+        "decision": "DELETE_SAFE",
+        "score": 35
+      },
+      {
+        "asset": "intelligence\\customer-validation-report.json",
+        "decision": "DELETE_SAFE",
+        "score": 35
+      },
+      {
+        "asset": "canonical\\analytics\\customer-lifetime-value.json",
+        "decision": "DELETE_SAFE",
+        "score": 35
+      },
+      {
+        "asset": "canonical\\crm\\customer-analytics-v1.json",
+        "decision": "DELETE_SAFE",
+        "score": 10
+      },
+      {
+        "asset": "canonical\\crm\\customer-flow-v1.json",
+        "decision": "DELETE_SAFE",
+        "score": 10
+      },
+      {
+        "asset": "canonical\\crm\\customers.json",
+        "decision": "DELETE_SAFE",
+        "score": 35
+      },
+      {
+        "asset": "canonical\\data\\customer-specification-registry-v1.json",
+        "decision": "DELETE_SAFE",
+        "score": 35
+      },
+      {
+        "asset": "canonical\\data\\customer-domain\\customer-contacts.json",
+        "decision": "ARCHIVE_HISTORICAL",
+        "score": 55
+      },
+      {
+        "asset": "canonical\\data\\customer-domain\\customer-segments.json",
+        "decision": "ARCHIVE_HISTORICAL",
+        "score": 55
+      },
+      {
+        "asset": "canonical\\data\\customer-domain\\customers.json",
+        "decision": "ARCHIVE_HISTORICAL",
+        "score": 55
+      },
+      {
+        "asset": "canonical\\data\\customer-domain\\opportunities.json",
+        "decision": "ARCHIVE_HISTORICAL",
+        "score": 55
+      },
+      {
+        "asset": "canonical\\data\\customer-domain\\orders.json",
+        "decision": "ARCHIVE_HISTORICAL",
+        "score": 55
+      }
+    ],
+    "finance": [
+      {
+        "asset": "finance_report.json",
+        "decision": "DELETE_SAFE",
+        "score": 35
+      },
+      {
+        "asset": "intelligence\\finance-validation-report.json",
+        "decision": "DELETE_SAFE",
+        "score": 35
+      },
+      {
+        "asset": "canonical\\finance\\export-flows.json",
+        "decision": "DELETE_SAFE",
+        "score": 10
+      },
+      {
+        "asset": "canonical\\finance\\finance-flow-v1.json",
+        "decision": "DELETE_SAFE",
+        "score": 10
+      },
+      {
+        "asset": "canonical\\finance\\finance-master.json",
+        "decision": "DELETE_SAFE",
+        "score": 35
+      },
+      {
+        "asset": "canonical\\finance\\finance.sql",
+        "decision": "DELETE_SAFE",
+        "score": 35
+      },
+      {
+        "asset": "canonical\\finance\\invoices.json",
+        "decision": "DELETE_SAFE",
+        "score": 35
+      },
+      {
+        "asset": "canonical\\finance\\payments.json",
+        "decision": "DELETE_SAFE",
+        "score": 35
+      },
+      {
+        "asset": "canonical\\finance\\workflows.json",
+        "decision": "DELETE_SAFE",
+        "score": 30
+      }
+    ],
+    "fix_brain.py": {
+      "domain": "unknown",
+      "type": "CANONICAL",
+      "dependencies": [],
+      "runtime_usage": "HIGH",
+      "owner": "EOS Core Team"
+    },
+    "inventory": [
+      {
+        "asset": "inventory_report.json",
+        "decision": "DELETE_SAFE",
+        "score": 10
+      },
+      {
+        "asset": "intelligence\\inventory-validation-report.json",
+        "decision": "DELETE_SAFE",
+        "score": 10
+      },
+      {
+        "asset": "canonical\\analytics\\inventory-summary.json",
+        "decision": "DELETE_SAFE",
+        "score": 35
+      },
+      {
+        "asset": "canonical\\inventory\\inventory-analytics-v1.json",
+        "decision": "DELETE_SAFE",
+        "score": 10
+      },
+      {
+        "asset": "canonical\\inventory\\inventory-automation-v1.json",
+        "decision": "DELETE_SAFE",
+        "score": 10
+      },
+      {
+        "asset": "canonical\\inventory\\inventory-control-v1.json",
+        "decision": "DELETE_SAFE",
+        "score": 10
+      },
+      {
+        "asset": "canonical\\inventory\\inventory-master-v1.json",
+        "decision": "DELETE_SAFE",
+        "score": 10
+      },
+      {
+        "asset": "canonical\\inventory\\Inventory.js",
+        "decision": "DELETE_SAFE",
+        "score": 35
+      },
+      {
+        "asset": "canonical\\inventory\\inventory.sql",
+        "decision": "DELETE_SAFE",
+        "score": 35
+      },
+      {
+        "asset": "canonical\\inventory\\movements.json",
+        "decision": "DELETE_SAFE",
+        "score": 35
+      },
+      {
+        "asset": "canonical\\inventory\\stock-levels.json",
+        "decision": "DELETE_SAFE",
+        "score": 35
+      },
+      {
+        "asset": "canonical\\inventory\\warehouses.json",
+        "decision": "DELETE_SAFE",
+        "score": 10
+      },
+      {
+        "asset": "canonical\\legacy-data\\typescript-asset-inventory.json",
+        "decision": "ARCHIVE_HISTORICAL",
+        "score": 55
+      }
+    ],
+    "logistics": [
+      {
+        "asset": "logistics_report.json",
+        "decision": "DELETE_SAFE",
+        "score": 35
+      },
+      {
+        "asset": "intelligence\\logistics-validation-report.json",
+        "decision": "DELETE_SAFE",
+        "score": 35
+      },
+      {
+        "asset": "canonical\\logistics\\logistics.sql",
+        "decision": "DELETE_SAFE",
+        "score": 35
+      },
+      {
+        "asset": "canonical\\logistics\\shipments.json",
+        "decision": "DELETE_SAFE",
+        "score": 35
+      },
+      {
+        "asset": "canonical\\logistics\\tracking-summary.json",
+        "decision": "DELETE_SAFE",
+        "score": 35
+      }
+    ],
+    "supplier": [
+      {
+        "asset": "suppliers_confirm.json",
+        "decision": "DELETE_SAFE",
+        "score": 35
+      },
+      {
+        "asset": "supplier_report.json",
+        "decision": "DELETE_SAFE",
+        "score": 35
+      },
+      {
+        "asset": "supplier_report_v2.json",
+        "decision": "DELETE_SAFE",
+        "score": 35
+      },
+      {
+        "asset": "supplier_report_v3.json",
+        "decision": "DELETE_SAFE",
+        "score": 35
+      },
+      {
+        "asset": "supplier_report_v4.json",
+        "decision": "DELETE_SAFE",
+        "score": 35
+      },
+      {
+        "asset": "intelligence\\supplier-validation-report.json",
+        "decision": "DELETE_SAFE",
+        "score": 35
+      },
+      {
+        "asset": "canonical\\data\\suppliers.json",
+        "decision": "DELETE_SAFE",
+        "score": 35
+      },
+      {
+        "asset": "app\\api\\suppliers\\route.ts",
+        "decision": "DELETE_SAFE",
+        "score": 35
+      }
+    ],
+    "system_manifest.json": {
+      "domain": "unknown",
+      "type": "CANONICAL",
+      "dependencies": [],
+      "runtime_usage": "HIGH",
+      "owner": "EOS Core Team"
+    },
+    "canonical\\fix_brain.py": {
+      "domain": "unknown",
+      "type": "CANONICAL",
+      "dependencies": [],
+      "runtime_usage": "HIGH",
+      "owner": "EOS Core Team"
+    },
+    "canonical\\system_manifest.json": {
+      "domain": "unknown",
+      "type": "CANONICAL",
+      "dependencies": [],
+      "runtime_usage": "HIGH",
+      "owner": "EOS Core Team"
+    },
+    "product": [
+      {
+        "asset": "canonical\\analytics\\top-products.json",
+        "decision": "DELETE_SAFE",
+        "score": 35
+      },
+      {
+        "asset": "canonical\\data\\master_products.json",
+        "decision": "MERGE_CANDIDATE",
+        "score": 70
+      },
+      {
+        "asset": "canonical\\data\\product-certificate-links.json",
+        "decision": "DELETE_SAFE",
+        "score": 35
+      },
+      {
+        "asset": "canonical\\data\\supplier-product-links.json",
+        "decision": "DELETE_SAFE",
+        "score": 35
+      },
+      {
+        "asset": "canonical\\legacy-data\\canonical-product-master-v1.json",
+        "decision": "DELETE_SAFE",
+        "score": 35
+      },
+      {
+        "asset": "canonical\\legacy-data\\eos-real-product-master-v2.json",
+        "decision": "DELETE_SAFE",
+        "score": 35
+      },
+      {
+        "asset": "canonical\\legacy-data\\product-asset-link-map-v1.json",
+        "decision": "DELETE_SAFE",
+        "score": 10
+      },
+      {
+        "asset": "canonical\\scripts\\seed_master_products.ts",
+        "decision": "DELETE_SAFE",
+        "score": 35
+      },
+      {
+        "asset": "canonical\\intelligence\\intelligence\\schemas\\product-schema-map.ts",
+        "decision": "MERGE_CANDIDATE",
+        "score": 70
+      },
+      {
+        "asset": "canonical\\docs\\products\\PRODUCT_MASTER.md",
+        "decision": "DELETE_SAFE",
+        "score": 10
+      },
+      {
+        "asset": "canonical\\data\\customer-domain\\customer-product-demand-map.json",
+        "decision": "ARCHIVE_HISTORICAL",
+        "score": 55
+      },
+      {
+        "asset": "canonical\\data\\customer-domain\\customer-product-preferences.json",
+        "decision": "ARCHIVE_HISTORICAL",
+        "score": 55
+      },
+      {
+        "asset": "app\\api\\products\\route.ts",
+        "decision": "DELETE_SAFE",
+        "score": 35
+      }
+    ],
+    "quality": [
+      {
+        "asset": "canonical\\business\\quality_specs.json",
+        "decision": "DELETE_SAFE",
+        "score": 35
+      }
+    ],
+    "compliance": [
+      {
+        "asset": "canonical\\data\\export-compliance-gap-analysis-v1.json",
+        "decision": "DELETE_SAFE",
+        "score": 25
+      },
+      {
+        "asset": "canonical\\data\\export-compliance-remediation-report-v1.json",
+        "decision": "DELETE_SAFE",
+        "score": 25
+      },
+      {
+        "asset": "canonical\\data\\gels-compliance-remediation-v1.json",
+        "decision": "DELETE_SAFE",
+        "score": 25
+      }
+    ],
+    "canonical\\lib\\workflowEngine.ts": {
+      "domain": "unknown",
+      "type": "CANONICAL",
+      "dependencies": [],
+      "runtime_usage": "HIGH",
+      "owner": "EOS Core Team"
+    },
+    "order": [
+      {
+        "asset": "app\\api\\sales-orders\\route.ts",
+        "decision": "DELETE_SAFE",
+        "score": 35
+      }
+    ]
+  },
+  "summary": "Classified 265 assets: 8 CANONICAL, 17 MERGE, 71 ARCHIVE, 169 DELETE. Tier 0 protected: 14 files. Treasure inventory: 0 files protected."
+}

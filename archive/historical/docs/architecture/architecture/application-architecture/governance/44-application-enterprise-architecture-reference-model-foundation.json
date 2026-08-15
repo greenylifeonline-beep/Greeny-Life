@@ -1,0 +1,48 @@
+{
+    "System":  "Greeny-Life",
+    "Phase":  "PHASE_31",
+    "Step":  "STEP_44_APPLICATION_ENTERPRISE_ARCHITECTURE_REFERENCE_MODEL_FOUNDATION",
+    "Framework":  "ENTERPRISE_APPLICATION_REFERENCE_ARCHITECTURE_MODEL",
+    "ReferenceModelComponents":  [
+                                     {
+                                         "Component":  "APPLICATION_LAYER_MODEL",
+                                         "Purpose":  "Define application structural reference"
+                                     },
+                                     {
+                                         "Component":  "APPLICATION_SERVICE_MODEL",
+                                         "Purpose":  "Define service reference boundaries"
+                                     },
+                                     {
+                                         "Component":  "INTEGRATION_REFERENCE_MODEL",
+                                         "Purpose":  "Define integration approach"
+                                     },
+                                     {
+                                         "Component":  "APPLICATION_GOVERNANCE_MODEL",
+                                         "Purpose":  "Define governance reference"
+                                     },
+                                     {
+                                         "Component":  "APPLICATION_EVOLUTION_MODEL",
+                                         "Purpose":  "Define future evolution direction"
+                                     }
+                                 ],
+    "ReferencePrinciples":  [
+                                "REFERENCE_MODEL_REQUIRED",
+                                "CONSISTENT_APPLICATION_STRUCTURE",
+                                "BOUNDARY_DRIVEN_DESIGN",
+                                "CAPABILITY_ALIGNMENT_REQUIRED",
+                                "ARCHITECTURE_REUSE_SUPPORTED"
+                            ],
+    "ReferenceLifecycle":  [
+                               "DEFINE_REFERENCE_COMPONENT",
+                               "ALIGN_WITH_ENTERPRISE_ARCHITECTURE",
+                               "REVIEW_REFERENCE_VALIDITY",
+                               "UPDATE_REFERENCE_MODEL",
+                               "MAINTAIN_REFERENCE_CONSISTENCY"
+                           ],
+    "Restrictions":  [
+                         "NO_FRAMEWORK_IMPLEMENTATION",
+                         "NO_LIBRARY_CREATION",
+                         "BLUEPRINT_ONLY"
+                     ],
+    "Status":  "APPLICATION_ENTERPRISE_ARCHITECTURE_REFERENCE_MODEL_FOUNDATION_CREATED"
+}

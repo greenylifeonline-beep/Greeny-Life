@@ -1,0 +1,111 @@
+{
+  "system": "GREENY-LIFE-EOS",
+  "version": "1.0.0",
+  "canonical_root": "canonical",
+  "domains": [
+    {
+      "name": "product",
+      "owner": "Product Domain",
+      "master_data": [
+        "docs\\architecture\\eos_architecture\\01.Master_Data\\honey_reference.json",
+        "data\\master_products.json",
+        "legacy-data\\eos-real-product-master-v2.json"
+      ],
+      "workflow": [
+        "finance\\workflows.json",
+        "lib\\workflowEngine.ts"
+      ],
+      "database": [
+        "intelligence\\eos-domain-activation-blueprint-v1.json",
+        "intelligence\\eos-intelligent-domain-ownership-graph.json",
+        "intelligence\\eos-domain-activation-blueprint-v1.json",
+        "intelligence\\eos-intelligent-domain-ownership-graph.json",
+        "intelligence\\intelligence\\schemas\\product-schema-map.ts",
+        "data\\customer-domain\\customer-product-demand-map.json",
+        "data\\customer-domain\\customer-product-preferences.json",
+        "data\\customer-domain\\customers.json",
+        "data\\customer-domain\\opportunities.json",
+        "data\\customer-domain\\orders.json",
+        "intelligence\\eos-domain-activation-blueprint-v1.json",
+        "intelligence\\eos-intelligent-domain-ownership-graph.json",
+        "intelligence\\intelligence\\schemas\\product-schema-map.ts"
+      ],
+      "status": "VALID"
+    },
+    {
+      "name": "customer",
+      "owner": "Customer Domain",
+      "master_data": [],
+      "workflow": [],
+      "database": [
+        "data\\customer-domain\\customer-contacts.json",
+        "data\\customer-domain\\customer-product-demand-map.json",
+        "data\\customer-domain\\customer-product-preferences.json",
+        "data\\customer-domain\\customer-segments.json",
+        "data\\customer-domain\\customers.json",
+        "data\\customer-domain\\opportunities.json",
+        "data\\customer-domain\\orders.json"
+      ],
+      "status": "INCOMPLETE"
+    },
+    {
+      "name": "supplier",
+      "owner": "Supplier Domain",
+      "master_data": [],
+      "workflow": [
+        "finance\\workflows.json",
+        "lib\\workflowEngine.ts"
+      ],
+      "database": [
+        "intelligence\\eos-domain-activation-blueprint-v1.json",
+        "intelligence\\eos-domain-activation-blueprint-v1.json"
+      ],
+      "status": "VALID"
+    },
+    {
+      "name": "logistics",
+      "owner": "Logistics Domain",
+      "master_data": [],
+      "workflow": [],
+      "database": [],
+      "status": "INCOMPLETE"
+    },
+    {
+      "name": "compliance",
+      "owner": "Compliance Domain",
+      "master_data": [],
+      "workflow": [],
+      "database": [],
+      "status": "INCOMPLETE"
+    },
+    {
+      "name": "analytics",
+      "owner": "Analytics Domain",
+      "master_data": [],
+      "workflow": [],
+      "database": [],
+      "status": "INCOMPLETE"
+    },
+    {
+      "name": "finance",
+      "owner": "Finance Domain",
+      "master_data": [
+        "finance\\finance-master.json",
+        "finance\\finance-master.json"
+      ],
+      "workflow": [],
+      "database": [],
+      "status": "INCOMPLETE"
+    },
+    {
+      "name": "administration",
+      "owner": "Administration Domain",
+      "master_data": [],
+      "workflow": [],
+      "database": [],
+      "status": "INCOMPLETE"
+    }
+  ],
+  "validation_status": "FAILED",
+  "validated_at": "2026-08-05T17:46:44.905538"
+}

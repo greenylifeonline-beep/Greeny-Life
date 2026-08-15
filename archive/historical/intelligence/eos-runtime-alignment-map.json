@@ -1,0 +1,44 @@
+[
+    {
+        "Domain":  "PRODUCT",
+        "Runtime":  "application\\product",
+        "Workflow":  "application\\product\\workflows",
+        "Data":  "database/prisma",
+        "Status":  "READY_FOR_CONNECTION"
+    },
+    {
+        "Domain":  "SUPPLIER",
+        "Runtime":  "application\\supplier",
+        "Workflow":  "application\\supplier\\workflows",
+        "Data":  "database/prisma",
+        "Status":  "READY_FOR_CONNECTION"
+    },
+    {
+        "Domain":  "INVENTORY",
+        "Runtime":  "application\\inventory",
+        "Workflow":  "application\\inventory\\workflows",
+        "Data":  "database/prisma",
+        "Status":  "READY_FOR_CONNECTION"
+    },
+    {
+        "Domain":  "LOGISTICS",
+        "Runtime":  "application\\logistics",
+        "Workflow":  "application\\logistics\\workflows",
+        "Data":  "database/prisma",
+        "Status":  "READY_FOR_CONNECTION"
+    },
+    {
+        "Domain":  "QUALITY",
+        "Runtime":  "application\\quality",
+        "Workflow":  "application\\quality\\workflows",
+        "Data":  "database/prisma",
+        "Status":  "READY_FOR_CONNECTION"
+    },
+    {
+        "Domain":  "CUSTOMER",
+        "Runtime":  "application\\customer",
+        "Workflow":  "application\\customer\\workflows",
+        "Data":  "database/prisma",
+        "Status":  "READY_FOR_CONNECTION"
+    }
+]

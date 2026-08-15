@@ -1,0 +1,37 @@
+{
+  "schema_version": "1.0",
+
+  "classifications": {
+
+    "PUBLIC": {
+      "local": true,
+      "cloud": true
+    },
+
+    "INTERNAL": {
+      "local": true,
+      "cloud": "approved_providers_only"
+    },
+
+    "CONFIDENTIAL": {
+      "local": true,
+      "cloud": false
+    },
+
+    "SECRET": {
+      "local": true,
+      "cloud": false,
+      "human_override_required": true
+    }
+  },
+
+  "default": "CONFIDENTIAL",
+
+  "rules": [
+    "Never place secrets in Git.",
+    "Never send CONFIDENTIAL or SECRET data to cloud models.",
+    "Local Ollama inference is preferred for private repository analysis.",
+    "Critical outputs require independent validation.",
+    "No model may widen its own permissions."
+  ]
+}

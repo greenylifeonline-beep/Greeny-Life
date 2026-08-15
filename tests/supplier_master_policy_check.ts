@@ -1,0 +1,12 @@
+import assert from "node:assert/strict";
+import { nullableText, supplierMasterAuthorityContract, validateSupplierTransition } from "@/lib/supplier-master-policy";
+const pending = { status: "PENDING_VERIFICATION", verificationStatus: "UNVERIFIED", sourceUrl: null, sourceReference: null };
+assert.equal(nullableText("  ", true, "email"), null);
+assert.equal(nullableText(undefined, false, "email"), undefined);
+assert.throws(() => validateSupplierTransition(pending, { status: "ACTIVE" }), /ACTIVE requires/);
+assert.throws(() => validateSupplierTransition({ ...pending, status: "ACTIVE", verificationStatus: "VERIFIED", sourceUrl: "https://example.test", sourceReference: null }, { status: "INACTIVE" }), /INACTIVE requires/);
+assert.equal(validateSupplierTransition(pending, { status: "ACTIVE", verificationStatus: "VERIFIED", sourceReference: "supplier audit #A-1" }).status, "ACTIVE");
+assert.equal(supplierMasterAuthorityContract.operationalSystemOfRecord, "CURRENT_PRISMA_SUPPLIER");
+assert.equal(supplierMasterAuthorityContract.referenceInputRule, "REFERENCE_ONLY_REQUIRES_CONTROLLED_IMPORT_REVIEW");
+assert.equal(supplierMasterAuthorityContract.businessOwner, "UNASSIGNED_REQUIRES_COMMERCIAL_OWNER_DECISION");
+console.log("supplier_master_policy_check: PASS");

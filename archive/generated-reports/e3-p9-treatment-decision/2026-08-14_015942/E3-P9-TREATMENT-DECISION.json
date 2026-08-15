@@ -1,0 +1,44 @@
+{
+    "report":  "E3 P9 Conservative Treatment Decision Matrix",
+    "generatedAt":  "2026-08-14T02:00:55.9143979+02:00",
+    "mode":  "READ_ONLY_DECISION_ONLY",
+    "coverage":  {
+                     "expected":  50104,
+                     "covered":  50104,
+                     "status":  "PASS",
+                     "statement":  "Every asset has a treatment state or an explicit REVIEW reason. No treatment action is authorized by this matrix."
+                 },
+    "treatmentCounts":  [
+                            {
+                                "state":  "KEEP",
+                                "assets":  260
+                            },
+                            {
+                                "state":  "QUARANTINE",
+                                "assets":  1
+                            },
+                            {
+                                "state":  "REVIEW",
+                                "assets":  49843
+                            }
+                        ],
+    "inputs":  {
+                   "p8":  "C:\\Users\\Ghanam\\Documents\\Codex\\Greeny-Life-Repair\\archive\\generated-reports\\e3-p8-value-replacement-recovery\\2026-08-14_015942\\E3-P8-VALUE-REPLACEMENT-RECOVERY.json",
+                   "p7":  "C:\\Users\\Ghanam\\Documents\\Codex\\Greeny-Life-Repair\\archive\\generated-reports\\e3-p7-owner-sor\\2026-08-14_015305\\E3-P7-OWNER-SOR-EVIDENCE.json"
+               },
+    "output":  {
+                   "csv":  "C:\\Users\\Ghanam\\Documents\\Codex\\Greeny-Life-Repair\\archive\\generated-reports\\e3-p9-treatment-decision\\2026-08-14_015942\\E3-P9-TREATMENT-DECISION-MATRIX.csv",
+                   "sha256":  "17055DC4C61C552CA8115F81B5FDD722861AD9551EDED8CFBB244F2EB7C1E56C",
+                   "records":  50104
+               },
+    "prohibitions":  [
+                         "NO_REUSE_OR_EXTRACT_ACTION",
+                         "NO_CONSOLIDATION_ACTION",
+                         "NO_ARCHIVE_ACTION",
+                         "NO_RETIREMENT",
+                         "NO_DELETE",
+                         "NO_LEGACY_EXECUTION",
+                         "NO_DATABASE_CHANGE",
+                         "NO_GIT_CHANGE"
+                     ]
+}

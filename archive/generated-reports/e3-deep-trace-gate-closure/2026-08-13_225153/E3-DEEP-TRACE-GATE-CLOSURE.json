@@ -1,0 +1,156 @@
+{
+    "report":  "E3 Deep Trace Gate Closure: Alias Ownership and Grouped Archive Resolution",
+    "generatedAt":  "2026-08-13T22:51:53.0429554+02:00",
+    "mode":  "TARGETED_PROOF_AND_MINIMAL_EXECUTION",
+    "sourceProof":  "C:\\Users\\Ghanam\\Documents\\Codex\\Greeny-Life-Repair\\archive\\generated-reports\\e3-deep-command-archive-proof\\2026-08-13_224915\\E3-DEEP-COMMAND-AND-ARCHIVE-PROOF.json",
+    "aliasGroups":  [
+                        {
+                            "group":  "E3-CMD-01-LEGACY-HEALTH",
+                            "decision":  "REVIEW",
+                            "canonicalProposal":  "intelligence",
+                            "aliases":  [
+                                            "intelligence",
+                                            "gl-dos"
+                                        ],
+                            "packageCallers":  [
+                                                   "diagnose",
+                                                   "health",
+                                                   "verify"
+                                               ],
+                            "staticCallers":  [
+                                                  "canonical\\intelligence\\intelligence\\gl-dos.ts"
+                                              ],
+                            "owner":  "UNPROVEN",
+                            "blockers":  [
+                                             "Accountable operational owner not proven",
+                                             "External caller inventory not proven"
+                                         ]
+                        },
+                        {
+                            "group":  "E3-CMD-02-BLOCKED-MIGRATION",
+                            "decision":  "REVIEW",
+                            "canonicalProposal":  "migration",
+                            "aliases":  [
+                                            "migration",
+                                            "migration:verify",
+                                            "migration:decision",
+                                            "migration:executor",
+                                            "migration:all"
+                                        ],
+                            "packageCallers":  [
+
+                                               ],
+                            "staticCallers":  [
+                                                  null
+                                              ],
+                            "owner":  "UNPROVEN",
+                            "blockers":  [
+                                             "Accountable operational owner not proven",
+                                             "External caller inventory not proven"
+                                         ]
+                        },
+                        {
+                            "group":  "E3-CMD-03-LEGACY-HEALTH-TEST",
+                            "decision":  "REVIEW",
+                            "canonicalProposal":  "test:intelligence",
+                            "aliases":  [
+                                            "test:intelligence",
+                                            "test:registry",
+                                            "test:health",
+                                            "test:cleanup",
+                                            "test:duplicate-v2",
+                                            "test:audit",
+                                            "test:integrity"
+                                        ],
+                            "packageCallers":  [
+                                                   "test:all"
+                                               ],
+                            "staticCallers":  [
+                                                  "canonical\\intelligence\\intelligence\\gl-dos.ts"
+                                              ],
+                            "owner":  "UNPROVEN",
+                            "blockers":  [
+                                             "Accountable operational owner not proven",
+                                             "External caller inventory not proven"
+                                         ]
+                        },
+                        {
+                            "group":  "E3-CMD-04-OFFICIAL-EVIDENCE",
+                            "decision":  "REVIEW",
+                            "canonicalProposal":  "test:official-evidence-gate",
+                            "aliases":  [
+                                            "test:official-evidence-gate",
+                                            "test:evidence-fail-closed"
+                                        ],
+                            "packageCallers":  [
+
+                                               ],
+                            "staticCallers":  [
+                                                  null
+                                              ],
+                            "owner":  "UNPROVEN",
+                            "blockers":  [
+                                             "Accountable operational owner not proven",
+                                             "External caller inventory not proven"
+                                         ]
+                        }
+                    ],
+    "archiveGroups":  [
+                          {
+                              "group":  "DERIVED_ARCHIVE",
+                              "assets":  497,
+                              "decision":  "KEEP",
+                              "executedArchive":  0,
+                              "reason":  "Already in archive tree; no move justified."
+                          },
+                          {
+                              "group":  "DERIVED_REPORT_CANDIDATE",
+                              "assets":  47,
+                              "decision":  "REVIEW",
+                              "executedArchive":  0,
+                              "reason":  "Owner/SOR/replacement/recovery proof incomplete."
+                          },
+                          {
+                              "group":  "DERIVED_REPORT_OR_BUNDLE",
+                              "assets":  10,
+                              "decision":  "REVIEW",
+                              "executedArchive":  0,
+                              "reason":  "Owner/SOR/replacement/recovery proof incomplete."
+                          }
+                      ],
+    "verification":  {
+                         "packageJson":  "PASS: 63 scripts parsed",
+                         "aliasTargetTest":  "PASS: npm run test:official-evidence-gate",
+                         "aliasTargetTestOutput":  [
+                                                       "",
+                                                       "\u003e greeny-life@1.0.0 test:official-evidence-gate",
+                                                       "\u003e tsx tests/official_evidence_gate_check.ts",
+                                                       "",
+                                                       "official_evidence_gate_check: PASS"
+                                                   ],
+                         "typeCheck":  "NOT_RERUN: no source or package change occurred in this gate",
+                         "build":  "NOT_RERUN: no source or package change occurred in this gate",
+                         "archiveChecksums":  "PASS: recorded in source deep-proof for 57 outside-archive candidates"
+                     },
+    "final":  {
+                  "projectFilesChanged":  0,
+                  "reportsCreated":  2,
+                  "aliasesUnified":  0,
+                  "aliasesDeprecated":  0,
+                  "aliasesReview":  4,
+                  "assetsActuallyArchived":  0,
+                  "archiveGroupsApproved":  0,
+                  "archiveAssetsReview":  57,
+                  "archiveAssetsKeep":  497,
+                  "retirementCandidates":  0,
+                  "ownerSorStillUnknown":  [
+                                               "Operational owner for all four alias groups",
+                                               "Owner/SOR for 57 outside-archive report/bundle candidates"
+                                           ],
+                  "dependenciesStillUnresolved":  [
+                                                      "External/CI/operator callers for all four alias groups",
+                                                      "Per-asset active-runtime dependency proof for 57 outside-archive candidates"
+                                                  ],
+                  "gateStatus":  "NOT_CLOSED_BY_DESIGN: all unresolved items have documented blockers; no unsafe action was taken."
+              }
+}

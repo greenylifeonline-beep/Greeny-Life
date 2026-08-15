@@ -1,0 +1,70 @@
+﻿{
+    "recordType":  "E3_REPAIR_CLOSURE_DD_001_V1",
+    "id":  "DD-001",
+    "generatedAtUtc":  "2026-08-13T16:09:12.1737036Z",
+    "status":  "IMPLEMENTED_AND_VERIFIED",
+    "diagnosis":  "An evidence record could previously appear supported even with missing/invalid source provenance or an invalid validity date.",
+    "existingComponent":  [
+                              "lib/intelligence/official-evidence-gate.ts",
+                              "app/api/evidence/official/route.ts",
+                              "OfficialEvidenceRegistry"
+                          ],
+    "action":  "HARDEN_EXISTING_FAIL_CLOSED",
+    "changeApplied":  "Existing evidence gate requires a valid HTTP(S) source URL and rejects invalid ISO validity dates; submission route rejects invalid source URLs.",
+    "successBehavior":  "Current official, supported, complete-gate evidence with valid provenance can remain reviewable.",
+    "failureBehavior":  "Invalid/missing source provenance or invalid validity date cannot authorize a decision and requires review.",
+    "files":  [
+                  {
+                      "path":  "lib\\intelligence\\official-evidence-gate.ts",
+                      "sha256":  "02790beb83f2bdc761a39baa000afe566e88fdde33e2ea10b6a76da661b74ab6"
+                  },
+                  {
+                      "path":  "app\\api\\evidence\\official\\route.ts",
+                      "sha256":  "fee16be1df1b994d30c5559fd321c9fbe0baab4467033a6f0344730ffce1d642"
+                  },
+                  {
+                      "path":  "tests\\official_evidence_gate_check.ts",
+                      "sha256":  "fcea5953529e108d5af3f6e6943a948464087045ea23fc9e6ab78c82d9a70afa"
+                  },
+                  {
+                      "path":  "tests\\decision_safety_adversarial_check.ts",
+                      "sha256":  "0e4dd8581e6a69bc569dea5207335c6201fb816e6a36ac72c36ac8955bbf13bc"
+                  }
+              ],
+    "verification":  [
+                         {
+                             "result":  "PASS",
+                             "check":  "test:official-evidence-gate"
+                         },
+                         {
+                             "result":  "PASS",
+                             "check":  "test:official-evidence-review"
+                         },
+                         {
+                             "result":  "PASS 13; UNKNOWN 7 preserved",
+                             "check":  "test:decision-safety-adversarial"
+                         },
+                         {
+                             "result":  "PASS",
+                             "check":  "type-check"
+                         },
+                         {
+                             "result":  "PASS",
+                             "check":  "production build"
+                         }
+                     ],
+    "evidenceLevel":  "TEST_EVIDENCE_PLUS_BUILD_VERIFIED",
+    "pending":  [
+                    "Confidence policy",
+                    "Versioned policy registry",
+                    "Execution audit/state-transition/rollback proof"
+                ],
+    "nextGate":  "DD-002 decision boundary extension; no execution promotion is authorized.",
+    "prohibited":  [
+                       "Automatic execution",
+                       "Delete",
+                       "Archive",
+                       "Merge",
+                       "System-of-Record assignment"
+                   ]
+}

@@ -1,0 +1,65 @@
+﻿{
+    "recordType":  "E3_REPAIR_CLOSURE_DD_005_V1",
+    "id":  "DD-005",
+    "generatedAtUtc":  "2026-08-13T17:00:51.3480368Z",
+    "status":  "IMPLEMENTED_AND_BUILD_VERIFIED",
+    "diagnosis":  "Learning record reads lacked route authorization and the training-case path retained a caller-controlled actor variable despite using signed-session identity for governance.",
+    "action":  "EXTEND_AND_HARDEN_EXISTING_LEARNING_PATH",
+    "changeApplied":  "Existing outcomes, training cases, and evaluation reads now enforce their role policies through authorizeRequest. Training governance and persisted recordedBy bind to actorEmail from the signed session only.",
+    "verified":  [
+                     "Learning access/control test passed.",
+                     "Controlled-learning regression passed.",
+                     "Training-factory regression passed.",
+                     "Evaluation-governance regression passed.",
+                     "Authorization/audit fail-closed regression passed.",
+                     "TypeScript passed.",
+                     "Production build passed."
+                 ],
+    "preserved":  [
+                      "No self-training.",
+                      "No model/prompt/policy deployment.",
+                      "No automatic promotion or rollback.",
+                      "No commercial execution.",
+                      "No database schema/data or Legacy asset changed."
+                  ],
+    "pending":  [
+                    "Operational UAT with authorized users and review-only learning records.",
+                    "Record-level evidence quality review before any benchmark reaches human promotion review.",
+                    "No promotion path is authorized by this closure."
+                ],
+    "evidenceLevel":  "TEST_EVIDENCE_PLUS_BUILD_VERIFIED",
+    "files":  [
+                  {
+                      "path":  "app\\api\\learning\\outcomes\\route.ts",
+                      "sha256":  "925f05e79fb48db22f9f3916af7dc6eee9d9a94284e33a572792f2589751e033"
+                  },
+                  {
+                      "path":  "app\\api\\learning\\training-cases\\route.ts",
+                      "sha256":  "298ab2bea9461328ca40087269a1f4d908ddcda6acd1f72995bfaab3698237b1"
+                  },
+                  {
+                      "path":  "app\\api\\learning\\evaluations\\route.ts",
+                      "sha256":  "7f3faacf767d27309f6fa630b0f257197153f69cfd6691a776d0a3aea216248b"
+                  },
+                  {
+                      "path":  "lib\\intelligence\\controlled-learning.ts",
+                      "sha256":  "f5e991494a22dff433d529d4ca564469bdc516b7fd66531060d3e4365a55def5"
+                  },
+                  {
+                      "path":  "lib\\intelligence\\training-factory.ts",
+                      "sha256":  "6e090fdb2d37abc170985e5c2c49b5d74b8f055ea0af1bad8184d2ea32410e8d"
+                  },
+                  {
+                      "path":  "lib\\intelligence\\evaluation-governance.ts",
+                      "sha256":  "75f95646e06ebcbf0e96a59f8a2e1fcf8d5e2119b5234769165cd00472d0223b"
+                  },
+                  {
+                      "path":  "tests\\learning_access_and_control_check.ts",
+                      "sha256":  "6a03ac97d34dd2bcc40b23bf4c5c50ff79459260ba49774c953b12df59d1ccb5"
+                  },
+                  {
+                      "path":  "package.json",
+                      "sha256":  "2f328bb82b5d5349d98749aa9115417feeb1d1bdae26a36a1be3f1739c9abfa9"
+                  }
+              ]
+}

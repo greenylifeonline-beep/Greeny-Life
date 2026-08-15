@@ -1,55 +1,76 @@
 {
-  "schema_version": "1.0",
-  "agents": {
-    "codex": {
-      "strengths": [
-        "repo-analysis",
-        "implementation",
-        "testing"
-      ]
-    },
-    "claude-code": {
-      "strengths": [
-        "deep-analysis",
-        "implementation",
-        "review"
-      ]
-    },
-    "gemini-cli": {
-      "strengths": [
-        "large-context",
-        "bulk-analysis",
-        "routine-edits"
-      ]
-    },
-    "cursor": {
-      "strengths": [
-        "interactive-editing",
-        "debugging",
-        "review"
-      ]
-    },
-    "github-agent": {
-      "strengths": [
-        "issues",
-        "pull-requests",
-        "ci"
-      ]
-    },
-    "deepseek": {
-      "strengths": [
-        "low-cost-reasoning",
-        "local-analysis",
-        "classification"
-      ]
-    },
-    "chatgpt-main-brain": {
-      "strengths": [
-        "architecture",
-        "planning",
-        "governance",
-        "cross-agent-review"
-      ]
-    }
-  }
+    "schema_version":  "1.0",
+    "agents":  {
+                   "codex":  {
+                                 "strengths":  [
+                                                   "repo-analysis",
+                                                   "implementation",
+                                                   "testing"
+                                               ]
+                             },
+                   "claude-code":  {
+                                       "strengths":  [
+                                                         "deep-analysis",
+                                                         "implementation",
+                                                         "review"
+                                                     ]
+                                   },
+                   "gemini-cli":  {
+                                      "strengths":  [
+                                                        "large-context",
+                                                        "bulk-analysis",
+                                                        "routine-edits"
+                                                    ]
+                                  },
+                   "cursor":  {
+                                  "strengths":  [
+                                                    "interactive-editing",
+                                                    "debugging",
+                                                    "review"
+                                                ]
+                              },
+                   "github-agent":  {
+                                        "strengths":  [
+                                                          "issues",
+                                                          "pull-requests",
+                                                          "ci"
+                                                      ]
+                                    },
+                   "deepseek":  {
+                                    "strengths":  [
+                                                      "low-cost-reasoning",
+                                                      "local-analysis",
+                                                      "classification"
+                                                  ]
+                                },
+                   "chatgpt-main-brain":  {
+                                              "strengths":  [
+                                                                "architecture",
+                                                                "planning",
+                                                                "governance",
+                                                                "cross-agent-review"
+                                                            ]
+                                          },
+                   "deepseek-local":  {
+                                          "class":  "local-reasoning-agent",
+                                          "provider":  "ollama",
+                                          "model":  "deepseek-r1:1.5b",
+                                          "endpoint":  "http://localhost:11434",
+                                          "privacy":  "LOCAL_ONLY",
+                                          "internet_required_for_inference":  false,
+                                          "strengths":  [
+                                                            "local-reasoning",
+                                                            "classification",
+                                                            "handoff-continuation",
+                                                            "migration-analysis",
+                                                            "private-project-analysis"
+                                                        ],
+                                          "limitations":  [
+                                                              "small-model-capacity",
+                                                              "must-not-be-trusted-with-final-critical-decisions-without-validation"
+                                                          ],
+                                          "fitness":  "UNKNOWN",
+                                          "measured_tokens_per_second":  24.1
+                                      }
+               }
 }

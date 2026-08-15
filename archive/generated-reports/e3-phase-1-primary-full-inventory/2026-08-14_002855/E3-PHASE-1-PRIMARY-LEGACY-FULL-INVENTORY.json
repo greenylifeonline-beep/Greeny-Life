@@ -1,0 +1,435 @@
+{
+    "report":  "E3 Phase 1 Primary Legacy Full Inventory and Coverage Proof",
+    "generatedAt":  "2026-08-14T00:29:45.0390891+02:00",
+    "mode":  "READ_ONLY_METADATA_INVENTORY",
+    "scope":  {
+                  "approvedRoot":  "C:\\Users\\Ghanam\\OneDrive\\projects\\Greeny-Life",
+                  "approvedRootOnly":  true,
+                  "phase0Evidence":  "C:\\Users\\Ghanam\\Documents\\Codex\\Greeny-Life-Repair\\archive\\generated-reports\\e3-phase-0-scope-correction\\2026-08-14_002101\\E3-PHASE-0-SCOPE-CORRECTION.json",
+                  "expectedPhysicalFiles":  50104,
+                  "inventoriedFiles":  50104,
+                  "unreadableFileErrors":  0,
+                  "coverageStatus":  "PASS",
+                  "statement":  "This is 100-percent physical metadata coverage only for the PRIMARY root. It does not claim content understanding, capability understanding, owner/SOR, treatment or total historical scope closure."
+              },
+    "coverageProof":  {
+                          "discovered":  50104,
+                          "scopeClassified":  50104,
+                          "unclassified":  0,
+                          "unreadable":  0,
+                          "invariant":  "DISCOVERED must equal GROUPED_SCOPE_CLASSIFIED plus explicitly unreadable records.",
+                          "completeForThisGate":  true,
+                          "notCompleteFor":  [
+                                                 "CONTENT_UNDERSTANDING",
+                                                 "DEPENDENCY_LINEAGE",
+                                                 "BUSINESS_LINEAGE",
+                                                 "CURRENT_COMPARISON",
+                                                 "OWNER_SOR",
+                                                 "FINAL_TREATMENT",
+                                                 "HISTORICAL_SCOPE"
+                                             ]
+                      },
+    "treatmentDecisionContract":  {
+                                      "allowed":  [
+                                                      "REUSE",
+                                                      "EXTEND",
+                                                      "HARDEN",
+                                                      "EXTRACT",
+                                                      "ARCHIVE",
+                                                      "QUARANTINE",
+                                                      "RETIRE",
+                                                      "REVIEW",
+                                                      "UNKNOWN"
+                                                  ],
+                                      "execution":  "DECISION_ONLY",
+                                      "rule":  "No treatment may be executed from this report. ARCHIVE/RETIRE require later proof of owner, SOR, dependency, replacement, business-value review, and recovery."
+                                  },
+    "classes":  [
+                    {
+                        "scopeClass":  "ENVIRONMENT_OR_GENERATED",
+                        "files":  49340
+                    },
+                    {
+                        "scopeClass":  "PRESERVATION_OR_ARCHIVE",
+                        "files":  260
+                    },
+                    {
+                        "scopeClass":  "PROJECT_OR_DOMAIN_CANDIDATE",
+                        "files":  504
+                    }
+                ],
+    "groupedAnalysis":  [
+                            {
+                                "scopeClass":  "ENVIRONMENT_OR_GENERATED",
+                                "topLevelGroup":  ".git",
+                                "files":  5703
+                            },
+                            {
+                                "scopeClass":  "ENVIRONMENT_OR_GENERATED",
+                                "topLevelGroup":  ".next",
+                                "files":  4254
+                            },
+                            {
+                                "scopeClass":  "ENVIRONMENT_OR_GENERATED",
+                                "topLevelGroup":  ".venv",
+                                "files":  39374
+                            },
+                            {
+                                "scopeClass":  "ENVIRONMENT_OR_GENERATED",
+                                "topLevelGroup":  "__pycache__",
+                                "files":  9
+                            },
+                            {
+                                "scopeClass":  "PRESERVATION_OR_ARCHIVE",
+                                "topLevelGroup":  "archive",
+                                "files":  260
+                            },
+                            {
+                                "scopeClass":  "PROJECT_OR_DOMAIN_CANDIDATE",
+                                "topLevelGroup":  ".github",
+                                "files":  1
+                            },
+                            {
+                                "scopeClass":  "PROJECT_OR_DOMAIN_CANDIDATE",
+                                "topLevelGroup":  ".vscode",
+                                "files":  1
+                            },
+                            {
+                                "scopeClass":  "PROJECT_OR_DOMAIN_CANDIDATE",
+                                "topLevelGroup":  "__ROOT_FILES__",
+                                "files":  88
+                            },
+                            {
+                                "scopeClass":  "PROJECT_OR_DOMAIN_CANDIDATE",
+                                "topLevelGroup":  "_GREENY_DIAGNOSTIC_20260809_233236",
+                                "files":  5
+                            },
+                            {
+                                "scopeClass":  "PROJECT_OR_DOMAIN_CANDIDATE",
+                                "topLevelGroup":  "alerts",
+                                "files":  2
+                            },
+                            {
+                                "scopeClass":  "PROJECT_OR_DOMAIN_CANDIDATE",
+                                "topLevelGroup":  "app",
+                                "files":  6
+                            },
+                            {
+                                "scopeClass":  "PROJECT_OR_DOMAIN_CANDIDATE",
+                                "topLevelGroup":  "application",
+                                "files":  18
+                            },
+                            {
+                                "scopeClass":  "PROJECT_OR_DOMAIN_CANDIDATE",
+                                "topLevelGroup":  "canonical",
+                                "files":  168
+                            },
+                            {
+                                "scopeClass":  "PROJECT_OR_DOMAIN_CANDIDATE",
+                                "topLevelGroup":  "data",
+                                "files":  3
+                            },
+                            {
+                                "scopeClass":  "PROJECT_OR_DOMAIN_CANDIDATE",
+                                "topLevelGroup":  "database",
+                                "files":  9
+                            },
+                            {
+                                "scopeClass":  "PROJECT_OR_DOMAIN_CANDIDATE",
+                                "topLevelGroup":  "docs",
+                                "files":  5
+                            },
+                            {
+                                "scopeClass":  "PROJECT_OR_DOMAIN_CANDIDATE",
+                                "topLevelGroup":  "domain",
+                                "files":  18
+                            },
+                            {
+                                "scopeClass":  "PROJECT_OR_DOMAIN_CANDIDATE",
+                                "topLevelGroup":  "E3-FINAL-AUDIT",
+                                "files":  12
+                            },
+                            {
+                                "scopeClass":  "PROJECT_OR_DOMAIN_CANDIDATE",
+                                "topLevelGroup":  "E3-RECON-OUTPUT",
+                                "files":  11
+                            },
+                            {
+                                "scopeClass":  "PROJECT_OR_DOMAIN_CANDIDATE",
+                                "topLevelGroup":  "E3-SOURCE-TRACE-PACKAGE",
+                                "files":  36
+                            },
+                            {
+                                "scopeClass":  "PROJECT_OR_DOMAIN_CANDIDATE",
+                                "topLevelGroup":  "eos-core",
+                                "files":  6
+                            },
+                            {
+                                "scopeClass":  "PROJECT_OR_DOMAIN_CANDIDATE",
+                                "topLevelGroup":  "governance",
+                                "files":  4
+                            },
+                            {
+                                "scopeClass":  "PROJECT_OR_DOMAIN_CANDIDATE",
+                                "topLevelGroup":  "greenlines_brain",
+                                "files":  58
+                            },
+                            {
+                                "scopeClass":  "PROJECT_OR_DOMAIN_CANDIDATE",
+                                "topLevelGroup":  "guardrails",
+                                "files":  5
+                            },
+                            {
+                                "scopeClass":  "PROJECT_OR_DOMAIN_CANDIDATE",
+                                "topLevelGroup":  "intelligence",
+                                "files":  37
+                            },
+                            {
+                                "scopeClass":  "PROJECT_OR_DOMAIN_CANDIDATE",
+                                "topLevelGroup":  "KNOWLEDGE-BASE",
+                                "files":  1
+                            },
+                            {
+                                "scopeClass":  "PROJECT_OR_DOMAIN_CANDIDATE",
+                                "topLevelGroup":  "logs",
+                                "files":  5
+                            },
+                            {
+                                "scopeClass":  "PROJECT_OR_DOMAIN_CANDIDATE",
+                                "topLevelGroup":  "scripts",
+                                "files":  1
+                            },
+                            {
+                                "scopeClass":  "PROJECT_OR_DOMAIN_CANDIDATE",
+                                "topLevelGroup":  "tests",
+                                "files":  4
+                            }
+                        ],
+    "topExtensions":  [
+                          {
+                              "extension":  ".py",
+                              "files":  13355
+                          },
+                          {
+                              "extension":  ".pyc",
+                              "files":  13352
+                          },
+                          {
+                              "extension":  ".h",
+                              "files":  9306
+                          },
+                          {
+                              "extension":  "",
+                              "files":  6794
+                          },
+                          {
+                              "extension":  ".sst",
+                              "files":  2006
+                          },
+                          {
+                              "extension":  ".meta",
+                              "files":  2006
+                          },
+                          {
+                              "extension":  ".json",
+                              "files":  549
+                          },
+                          {
+                              "extension":  ".pyi",
+                              "files":  400
+                          },
+                          {
+                              "extension":  ".pyd",
+                              "files":  259
+                          },
+                          {
+                              "extension":  ".txt",
+                              "files":  205
+                          },
+                          {
+                              "extension":  ".lib",
+                              "files":  144
+                          },
+                          {
+                              "extension":  ".js",
+                              "files":  118
+                          },
+                          {
+                              "extension":  ".mat",
+                              "files":  111
+                          },
+                          {
+                              "extension":  ".a",
+                              "files":  106
+                          },
+                          {
+                              "extension":  ".gz",
+                              "files":  99
+                          },
+                          {
+                              "extension":  ".map",
+                              "files":  82
+                          },
+                          {
+                              "extension":  ".hpp",
+                              "files":  80
+                          },
+                          {
+                              "extension":  ".ts",
+                              "files":  79
+                          },
+                          {
+                              "extension":  ".typed",
+                              "files":  62
+                          },
+                          {
+                              "extension":  ".f90",
+                              "files":  62
+                          },
+                          {
+                              "extension":  ".cuh",
+                              "files":  60
+                          },
+                          {
+                              "extension":  ".pyx",
+                              "files":  60
+                          },
+                          {
+                              "extension":  ".sav",
+                              "files":  48
+                          },
+                          {
+                              "extension":  ".md",
+                              "files":  46
+                          },
+                          {
+                              "extension":  ".exe",
+                              "files":  45
+                          },
+                          {
+                              "extension":  ".cpp",
+                              "files":  43
+                          },
+                          {
+                              "extension":  ".pxd",
+                              "files":  43
+                          },
+                          {
+                              "extension":  ".csv",
+                              "files":  43
+                          },
+                          {
+                              "extension":  ".npy",
+                              "files":  31
+                          },
+                          {
+                              "extension":  ".cmake",
+                              "files":  28
+                          },
+                          {
+                              "extension":  ".dat",
+                              "files":  26
+                          },
+                          {
+                              "extension":  ".build",
+                              "files":  26
+                          },
+                          {
+                              "extension":  ".rst",
+                              "files":  25
+                          },
+                          {
+                              "extension":  ".f",
+                              "files":  25
+                          },
+                          {
+                              "extension":  ".tp",
+                              "files":  24
+                          },
+                          {
+                              "extension":  ".wav",
+                              "files":  22
+                          },
+                          {
+                              "extension":  ".jinja",
+                              "files":  21
+                          },
+                          {
+                              "extension":  ".npz",
+                              "files":  20
+                          },
+                          {
+                              "extension":  ".al",
+                              "files":  16
+                          },
+                          {
+                              "extension":  ".arff",
+                              "files":  16
+                          },
+                          {
+                              "extension":  ".dll",
+                              "files":  15
+                          },
+                          {
+                              "extension":  ".sample",
+                              "files":  14
+                          },
+                          {
+                              "extension":  ".c",
+                              "files":  11
+                          },
+                          {
+                              "extension":  ".png",
+                              "files":  11
+                          },
+                          {
+                              "extension":  ".pkl",
+                              "files":  11
+                          },
+                          {
+                              "extension":  ".sql",
+                              "files":  11
+                          },
+                          {
+                              "extension":  ".template",
+                              "files":  10
+                          },
+                          {
+                              "extension":  ".bz2",
+                              "files":  9
+                          },
+                          {
+                              "extension":  ".ps1",
+                              "files":  8
+                          },
+                          {
+                              "extension":  ".pyf",
+                              "files":  8
+                          }
+                      ],
+    "manifest":  {
+                     "path":  "C:\\Users\\Ghanam\\Documents\\Codex\\Greeny-Life-Repair\\archive\\generated-reports\\e3-phase-1-primary-full-inventory\\2026-08-14_002855\\E3-PHASE-1-PRIMARY-LEGACY-FILES.csv",
+                     "records":  50104,
+                     "bytes":  1887308599,
+                     "sizeMiB":  1799.88,
+                     "sha256":  "EC22809FFA77D3B5FE6F646702EFB1E80AB95540C616DC0AB1285913C64FEB15"
+                 },
+    "unreadableErrors":  [
+
+                         ],
+    "excludedFromThisRun":  [
+                                "Historical candidate roots in Documents\\\\Codex",
+                                "Archive/package candidates registered in Phase 0",
+                                "Current replacement root"
+                            ],
+    "nextGate":  "Phase 2 may classify the complete Phase 1 manifest. Environment/generated files remain covered but receive category-level treatment; project/domain and preservation assets require content/lineage analysis.",
+    "prohibitions":  [
+                         "NO_CONTENT_READ",
+                         "NO_LEGACY_EXECUTION",
+                         "NO_ARCHIVE_EXTRACTION",
+                         "NO_MOVE",
+                         "NO_DELETE",
+                         "NO_DATABASE_CHANGE",
+                         "NO_GIT_CHANGE"
+                     ]
+}

@@ -1,0 +1,367 @@
+{
+    "report":  "E3 Phase 0 Scope Correction",
+    "generatedAt":  "2026-08-14T00:21:01.6930295+02:00",
+    "mode":  "READ_ONLY_SCOPE_INTERPRETATION",
+    "supersedes":  {
+                       "reason":  "Phase 0 physical manifest proved 50,104 files under the declared PRIMARY root.",
+                       "limitedInventory":  "E3-FULL-LEGACY-PROJECT-INVENTORY (503 files)",
+                       "statement":  "The earlier 503-file inventory is not full-tree coverage for the PRIMARY Legacy root and must not be used as a denominator for complete Legacy examination."
+                   },
+    "primaryRoot":  {
+                        "path":  "C:\\Users\\Ghanam\\OneDrive\\projects\\Greeny-Life",
+                        "physicalFiles":  50104,
+                        "directories":  5161,
+                        "sizeMiB":  1799.88,
+                        "accountedFiles":  50104
+                    },
+    "scopeBreakdown":  {
+                           "environmentOrGeneratedFiles":  49340,
+                           "preservationOrArchiveFiles":  260,
+                           "projectOrDomainCandidateFiles":  504,
+                           "topLevel":  [
+                                            {
+                                                "name":  ".venv",
+                                                "files":  39374,
+                                                "bytes":  1170385755,
+                                                "sizeMiB":  1116.17,
+                                                "scopeKind":  "ENVIRONMENT_OR_GENERATED",
+                                                "decision":  "KEEP_CLASSIFIED_NO_DEEP_BUSINESS_ANALYSIS"
+                                            },
+                                            {
+                                                "name":  ".git",
+                                                "files":  5703,
+                                                "bytes":  325056852,
+                                                "sizeMiB":  310,
+                                                "scopeKind":  "ENVIRONMENT_OR_GENERATED",
+                                                "decision":  "KEEP_CLASSIFIED_NO_DEEP_BUSINESS_ANALYSIS"
+                                            },
+                                            {
+                                                "name":  ".next",
+                                                "files":  4254,
+                                                "bytes":  109589361,
+                                                "sizeMiB":  104.51,
+                                                "scopeKind":  "ENVIRONMENT_OR_GENERATED",
+                                                "decision":  "KEEP_CLASSIFIED_NO_DEEP_BUSINESS_ANALYSIS"
+                                            },
+                                            {
+                                                "name":  "archive",
+                                                "files":  260,
+                                                "bytes":  109089208,
+                                                "sizeMiB":  104.04,
+                                                "scopeKind":  "PRESERVATION_OR_ARCHIVE",
+                                                "decision":  "KEEP_DEFERRED_ARCHIVE_REVIEW"
+                                            },
+                                            {
+                                                "name":  "canonical",
+                                                "files":  168,
+                                                "bytes":  13786399,
+                                                "sizeMiB":  13.15,
+                                                "scopeKind":  "PROJECT_OR_DOMAIN_CANDIDATE",
+                                                "decision":  "IN_SCOPE_FOR_FULL_EXAMINATION"
+                                            },
+                                            {
+                                                "name":  "ROOT_FILES",
+                                                "files":  88,
+                                                "bytes":  54936080,
+                                                "sizeMiB":  52.39,
+                                                "scopeKind":  "PROJECT_OR_DOMAIN_CANDIDATE",
+                                                "decision":  "IN_SCOPE_FOR_FULL_EXAMINATION"
+                                            },
+                                            {
+                                                "name":  "greenlines_brain",
+                                                "files":  58,
+                                                "bytes":  327788,
+                                                "sizeMiB":  0.31,
+                                                "scopeKind":  "PROJECT_OR_DOMAIN_CANDIDATE",
+                                                "decision":  "IN_SCOPE_FOR_FULL_EXAMINATION"
+                                            },
+                                            {
+                                                "name":  "intelligence",
+                                                "files":  37,
+                                                "bytes":  89740937,
+                                                "sizeMiB":  85.58,
+                                                "scopeKind":  "PROJECT_OR_DOMAIN_CANDIDATE",
+                                                "decision":  "IN_SCOPE_FOR_FULL_EXAMINATION"
+                                            },
+                                            {
+                                                "name":  "E3-SOURCE-TRACE-PACKAGE",
+                                                "files":  36,
+                                                "bytes":  480350,
+                                                "sizeMiB":  0.46,
+                                                "scopeKind":  "PROJECT_OR_DOMAIN_CANDIDATE",
+                                                "decision":  "IN_SCOPE_FOR_FULL_EXAMINATION"
+                                            },
+                                            {
+                                                "name":  "domain",
+                                                "files":  18,
+                                                "bytes":  0,
+                                                "sizeMiB":  0,
+                                                "scopeKind":  "PROJECT_OR_DOMAIN_CANDIDATE",
+                                                "decision":  "IN_SCOPE_FOR_FULL_EXAMINATION"
+                                            },
+                                            {
+                                                "name":  "application",
+                                                "files":  18,
+                                                "bytes":  0,
+                                                "sizeMiB":  0,
+                                                "scopeKind":  "PROJECT_OR_DOMAIN_CANDIDATE",
+                                                "decision":  "IN_SCOPE_FOR_FULL_EXAMINATION"
+                                            },
+                                            {
+                                                "name":  "E3-FINAL-AUDIT",
+                                                "files":  12,
+                                                "bytes":  782787,
+                                                "sizeMiB":  0.75,
+                                                "scopeKind":  "PROJECT_OR_DOMAIN_CANDIDATE",
+                                                "decision":  "IN_SCOPE_FOR_FULL_EXAMINATION"
+                                            },
+                                            {
+                                                "name":  "E3-RECON-OUTPUT",
+                                                "files":  11,
+                                                "bytes":  467311,
+                                                "sizeMiB":  0.45,
+                                                "scopeKind":  "PROJECT_OR_DOMAIN_CANDIDATE",
+                                                "decision":  "IN_SCOPE_FOR_FULL_EXAMINATION"
+                                            },
+                                            {
+                                                "name":  "database",
+                                                "files":  9,
+                                                "bytes":  0,
+                                                "sizeMiB":  0,
+                                                "scopeKind":  "PROJECT_OR_DOMAIN_CANDIDATE",
+                                                "decision":  "IN_SCOPE_FOR_FULL_EXAMINATION"
+                                            },
+                                            {
+                                                "name":  "__pycache__",
+                                                "files":  9,
+                                                "bytes":  719115,
+                                                "sizeMiB":  0.69,
+                                                "scopeKind":  "ENVIRONMENT_OR_GENERATED",
+                                                "decision":  "KEEP_CLASSIFIED_NO_DEEP_BUSINESS_ANALYSIS"
+                                            },
+                                            {
+                                                "name":  "eos-core",
+                                                "files":  6,
+                                                "bytes":  16,
+                                                "sizeMiB":  0,
+                                                "scopeKind":  "PROJECT_OR_DOMAIN_CANDIDATE",
+                                                "decision":  "IN_SCOPE_FOR_FULL_EXAMINATION"
+                                            },
+                                            {
+                                                "name":  "app",
+                                                "files":  6,
+                                                "bytes":  7000,
+                                                "sizeMiB":  0.01,
+                                                "scopeKind":  "PROJECT_OR_DOMAIN_CANDIDATE",
+                                                "decision":  "IN_SCOPE_FOR_FULL_EXAMINATION"
+                                            },
+                                            {
+                                                "name":  "logs",
+                                                "files":  5,
+                                                "bytes":  405341,
+                                                "sizeMiB":  0.39,
+                                                "scopeKind":  "PROJECT_OR_DOMAIN_CANDIDATE",
+                                                "decision":  "IN_SCOPE_FOR_FULL_EXAMINATION"
+                                            },
+                                            {
+                                                "name":  "_GREENY_DIAGNOSTIC_20260809_233236",
+                                                "files":  5,
+                                                "bytes":  11009155,
+                                                "sizeMiB":  10.5,
+                                                "scopeKind":  "PROJECT_OR_DOMAIN_CANDIDATE",
+                                                "decision":  "IN_SCOPE_FOR_FULL_EXAMINATION"
+                                            },
+                                            {
+                                                "name":  "guardrails",
+                                                "files":  5,
+                                                "bytes":  33,
+                                                "sizeMiB":  0,
+                                                "scopeKind":  "PROJECT_OR_DOMAIN_CANDIDATE",
+                                                "decision":  "IN_SCOPE_FOR_FULL_EXAMINATION"
+                                            },
+                                            {
+                                                "name":  "docs",
+                                                "files":  5,
+                                                "bytes":  67828,
+                                                "sizeMiB":  0.06,
+                                                "scopeKind":  "PROJECT_OR_DOMAIN_CANDIDATE",
+                                                "decision":  "IN_SCOPE_FOR_FULL_EXAMINATION"
+                                            },
+                                            {
+                                                "name":  "tests",
+                                                "files":  4,
+                                                "bytes":  381124,
+                                                "sizeMiB":  0.36,
+                                                "scopeKind":  "PROJECT_OR_DOMAIN_CANDIDATE",
+                                                "decision":  "IN_SCOPE_FOR_FULL_EXAMINATION"
+                                            },
+                                            {
+                                                "name":  "governance",
+                                                "files":  4,
+                                                "bytes":  18266,
+                                                "sizeMiB":  0.02,
+                                                "scopeKind":  "PROJECT_OR_DOMAIN_CANDIDATE",
+                                                "decision":  "IN_SCOPE_FOR_FULL_EXAMINATION"
+                                            },
+                                            {
+                                                "name":  "data",
+                                                "files":  3,
+                                                "bytes":  0,
+                                                "sizeMiB":  0,
+                                                "scopeKind":  "PROJECT_OR_DOMAIN_CANDIDATE",
+                                                "decision":  "IN_SCOPE_FOR_FULL_EXAMINATION"
+                                            },
+                                            {
+                                                "name":  "alerts",
+                                                "files":  2,
+                                                "bytes":  12854,
+                                                "sizeMiB":  0.01,
+                                                "scopeKind":  "PROJECT_OR_DOMAIN_CANDIDATE",
+                                                "decision":  "IN_SCOPE_FOR_FULL_EXAMINATION"
+                                            },
+                                            {
+                                                "name":  "KNOWLEDGE-BASE",
+                                                "files":  1,
+                                                "bytes":  43761,
+                                                "sizeMiB":  0.04,
+                                                "scopeKind":  "PROJECT_OR_DOMAIN_CANDIDATE",
+                                                "decision":  "IN_SCOPE_FOR_FULL_EXAMINATION"
+                                            },
+                                            {
+                                                "name":  "scripts",
+                                                "files":  1,
+                                                "bytes":  0,
+                                                "sizeMiB":  0,
+                                                "scopeKind":  "PROJECT_OR_DOMAIN_CANDIDATE",
+                                                "decision":  "IN_SCOPE_FOR_FULL_EXAMINATION"
+                                            },
+                                            {
+                                                "name":  ".github",
+                                                "files":  1,
+                                                "bytes":  1053,
+                                                "sizeMiB":  0,
+                                                "scopeKind":  "PROJECT_OR_DOMAIN_CANDIDATE",
+                                                "decision":  "IN_SCOPE_FOR_FULL_EXAMINATION"
+                                            },
+                                            {
+                                                "name":  ".vscode",
+                                                "files":  1,
+                                                "bytes":  225,
+                                                "sizeMiB":  0,
+                                                "scopeKind":  "PROJECT_OR_DOMAIN_CANDIDATE",
+                                                "decision":  "IN_SCOPE_FOR_FULL_EXAMINATION"
+                                            },
+                                            {
+                                                "name":  "services",
+                                                "files":  0,
+                                                "bytes":  0,
+                                                "sizeMiB":  0,
+                                                "scopeKind":  "PROJECT_OR_DOMAIN_CANDIDATE",
+                                                "decision":  "IN_SCOPE_FOR_FULL_EXAMINATION"
+                                            },
+                                            {
+                                                "name":  "__tests__",
+                                                "files":  0,
+                                                "bytes":  0,
+                                                "sizeMiB":  0,
+                                                "scopeKind":  "PROJECT_OR_DOMAIN_CANDIDATE",
+                                                "decision":  "IN_SCOPE_FOR_FULL_EXAMINATION"
+                                            },
+                                            {
+                                                "name":  "src",
+                                                "files":  0,
+                                                "bytes":  0,
+                                                "sizeMiB":  0,
+                                                "scopeKind":  "PROJECT_OR_DOMAIN_CANDIDATE",
+                                                "decision":  "IN_SCOPE_FOR_FULL_EXAMINATION"
+                                            },
+                                            {
+                                                "name":  "shared",
+                                                "files":  0,
+                                                "bytes":  0,
+                                                "sizeMiB":  0,
+                                                "scopeKind":  "PROJECT_OR_DOMAIN_CANDIDATE",
+                                                "decision":  "IN_SCOPE_FOR_FULL_EXAMINATION"
+                                            },
+                                            {
+                                                "name":  "GREENY-LIFE-EOS-KNOWLEDGE-BASE-V1",
+                                                "files":  0,
+                                                "bytes":  0,
+                                                "sizeMiB":  0,
+                                                "scopeKind":  "PROJECT_OR_DOMAIN_CANDIDATE",
+                                                "decision":  "IN_SCOPE_FOR_FULL_EXAMINATION"
+                                            },
+                                            {
+                                                "name":  "infrastructure",
+                                                "files":  0,
+                                                "bytes":  0,
+                                                "sizeMiB":  0,
+                                                "scopeKind":  "PROJECT_OR_DOMAIN_CANDIDATE",
+                                                "decision":  "IN_SCOPE_FOR_FULL_EXAMINATION"
+                                            },
+                                            {
+                                                "name":  "components",
+                                                "files":  0,
+                                                "bytes":  0,
+                                                "sizeMiB":  0,
+                                                "scopeKind":  "PROJECT_OR_DOMAIN_CANDIDATE",
+                                                "decision":  "IN_SCOPE_FOR_FULL_EXAMINATION"
+                                            },
+                                            {
+                                                "name":  "backup",
+                                                "files":  0,
+                                                "bytes":  0,
+                                                "sizeMiB":  0,
+                                                "scopeKind":  "PRESERVATION_OR_ARCHIVE",
+                                                "decision":  "KEEP_DEFERRED_ARCHIVE_REVIEW"
+                                            },
+                                            {
+                                                "name":  "prisma",
+                                                "files":  0,
+                                                "bytes":  0,
+                                                "sizeMiB":  0,
+                                                "scopeKind":  "PROJECT_OR_DOMAIN_CANDIDATE",
+                                                "decision":  "IN_SCOPE_FOR_FULL_EXAMINATION"
+                                            },
+                                            {
+                                                "name":  "public",
+                                                "files":  0,
+                                                "bytes":  0,
+                                                "sizeMiB":  0,
+                                                "scopeKind":  "PROJECT_OR_DOMAIN_CANDIDATE",
+                                                "decision":  "IN_SCOPE_FOR_FULL_EXAMINATION"
+                                            },
+                                            {
+                                                "name":  "lib",
+                                                "files":  0,
+                                                "bytes":  0,
+                                                "sizeMiB":  0,
+                                                "scopeKind":  "PROJECT_OR_DOMAIN_CANDIDATE",
+                                                "decision":  "IN_SCOPE_FOR_FULL_EXAMINATION"
+                                            },
+                                            {
+                                                "name":  "migration-engine",
+                                                "files":  0,
+                                                "bytes":  0,
+                                                "sizeMiB":  0,
+                                                "scopeKind":  "PROJECT_OR_DOMAIN_CANDIDATE",
+                                                "decision":  "IN_SCOPE_FOR_FULL_EXAMINATION"
+                                            }
+                                        ]
+                       },
+    "coverageRule":  "Full coverage means every one of 50,104 physical files receives an inventory record. Environment/generated files receive group-level classification and are not silently excluded. Project/domain candidates require Phases 2â€“10 of the full examination.",
+    "scopeStatus":  "OPEN: physical root confirmed; historical roots and package candidates still require explicit include/exclude decisions.",
+    "nextGate":  [
+                     "Approve/exclude historical candidate roots and package candidates",
+                     "Create a replacement full-tree inventory with denominator 50,104 plus any later approved roots",
+                     "Do not claim complete Legacy classification from the 503-file limited report"
+                 ],
+    "prohibitions":  [
+                         "NO_LEGACY_EXECUTION",
+                         "NO_ARCHIVE_EXTRACTION",
+                         "NO_MOVE",
+                         "NO_DELETE",
+                         "NO_DATABASE_CHANGE",
+                         "NO_GIT_CHANGE"
+                     ]
+}
