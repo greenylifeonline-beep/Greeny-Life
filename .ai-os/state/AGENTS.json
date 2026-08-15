@@ -1,0 +1,55 @@
+{
+  "schema_version": "1.0",
+  "agents": {
+    "codex": {
+      "strengths": [
+        "repo-analysis",
+        "implementation",
+        "testing"
+      ]
+    },
+    "claude-code": {
+      "strengths": [
+        "deep-analysis",
+        "implementation",
+        "review"
+      ]
+    },
+    "gemini-cli": {
+      "strengths": [
+        "large-context",
+        "bulk-analysis",
+        "routine-edits"
+      ]
+    },
+    "cursor": {
+      "strengths": [
+        "interactive-editing",
+        "debugging",
+        "review"
+      ]
+    },
+    "github-agent": {
+      "strengths": [
+        "issues",
+        "pull-requests",
+        "ci"
+      ]
+    },
+    "deepseek": {
+      "strengths": [
+        "low-cost-reasoning",
+        "local-analysis",
+        "classification"
+      ]
+    },
+    "chatgpt-main-brain": {
+      "strengths": [
+        "architecture",
+        "planning",
+        "governance",
+        "cross-agent-review"
+      ]
+    }
+  }
+}

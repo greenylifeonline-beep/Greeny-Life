@@ -1,0 +1,118 @@
+{
+    "schema_version":  "1.0",
+    "tasks":  [
+                  {
+                      "id":  "GL-001",
+                      "title":  "Old to Codex migration map",
+                      "objective":  "Map verified legacy capabilities into Codex repair repository.",
+                      "scope":  [
+                                    ".ai-os",
+                                    "migration",
+                                    "reports"
+                                ],
+                      "dependencies":  [
+
+                                       ],
+                      "allowed_agents":  [
+                                             "gemini-cli",
+                                             "codex",
+                                             "claude-code",
+                                             "chatgpt-main-brain"
+                                         ],
+                      "validation":  "KEEP/MERGE/MIGRATE/REPLACE/ARCHIVE/UNPROVEN map.",
+                      "status":  "DONE",
+                      "claimed_by":  "gemini-cli",
+                      "evidence":  "migration/GL-001-EVIDENCE.md; six required migration reports completed and Gemini handoff recorded."
+                  },
+                  {
+                      "id":  "GL-002",
+                      "title":  "Main intelligence brain",
+                      "objective":  "Recover verified main intelligence and governance without duplicate implementations.",
+                      "scope":  [
+                                    "intelligence",
+                                    "governance",
+                                    "canonical"
+                                ],
+                      "dependencies":  [
+                                           "GL-001"
+                                       ],
+                      "allowed_agents":  [
+                                             "codex",
+                                             "claude-code",
+                                             "gemini-cli"
+                                         ],
+                      "validation":  "One authoritative intelligence path.",
+                      "status":  "IN_PROGRESS",
+                      "claimed_by":  "claude-code"
+                  },
+                  {
+                      "id":  "GL-003",
+                      "title":  "Three project brains",
+                      "objective":  "Identify and migrate the three project brains under shared governance.",
+                      "scope":  [
+                                    "projects",
+                                    "brains",
+                                    "canonical",
+                                    "intelligence"
+                                ],
+                      "dependencies":  [
+                                           "GL-001"
+                                       ],
+                      "allowed_agents":  [
+                                             "gemini-cli",
+                                             "codex",
+                                             "claude-code"
+                                         ],
+                      "validation":  "Three verified brain inventories integrated.",
+                      "status":  "READY",
+                      "claimed_by":  null
+                  },
+                  {
+                      "id":  "GL-004",
+                      "title":  "Runtime and tests",
+                      "objective":  "Consolidate runtime APIs schemas and tests and prove execution truth.",
+                      "scope":  [
+                                    "app",
+                                    "prisma",
+                                    "tests",
+                                    "scripts"
+                                ],
+                      "dependencies":  [
+                                           "GL-001"
+                                       ],
+                      "allowed_agents":  [
+                                             "codex",
+                                             "cursor",
+                                             "github-agent"
+                                         ],
+                      "validation":  "Type-check build tests runtime trace.",
+                      "status":  "IN_PROGRESS",
+                      "claimed_by":  "cursor"
+                  },
+                  {
+                      "id":  "GL-005",
+                      "title":  "Unified orchestrator",
+                      "objective":  "Connect main brain, project brains, RAIOS, governance and agent adapters.",
+                      "scope":  [
+                                    ".ai-os",
+                                    "intelligence",
+                                    "governance",
+                                    "projects",
+                                    "brains"
+                                ],
+                      "dependencies":  [
+                                           "GL-002",
+                                           "GL-003",
+                                           "GL-004"
+                                       ],
+                      "allowed_agents":  [
+                                             "codex",
+                                             "claude-code",
+                                             "chatgpt-main-brain"
+                                         ],
+                      "validation":  "Shared task state locks handoff and orchestration demonstrated.",
+                      "status":  "READY",
+                      "claimed_by":  null
+                  }
+              ]
+}

@@ -1,0 +1,61 @@
+{
+    "schema_version":  "1.0",
+    "locks":  [
+                  {
+                      "id":  "LOCK-20260815154753",
+                      "task_id":  "GL-001",
+                      "agent":  "gemini-cli",
+                      "scope":  "migration",
+                      "status":  "RELEASED"
+                  },
+                  {
+                      "id":  "LOCK-20260815173207",
+                      "task_id":  "GL-002",
+                      "agent":  "codex",
+                      "scope":  "governance",
+                      "status":  "RELEASED"
+                  },
+                  {
+                      "id":  "LOCK-20260815173219",
+                      "task_id":  "GL-002",
+                      "agent":  "codex",
+                      "scope":  "intelligence/main",
+                      "status":  "RELEASED"
+                  },
+                  {
+                      "id":  "LOCK-20260815173943",
+                      "task_id":  "GL-002",
+                      "agent":  "claude-code",
+                      "scope":  "governance",
+                      "status":  "ACTIVE"
+                  },
+                  {
+                      "id":  "LOCK-20260815173955",
+                      "task_id":  "GL-002",
+                      "agent":  "claude-code",
+                      "scope":  "intelligence/main",
+                      "status":  "ACTIVE"
+                  },
+                  {
+                      "id":  "LOCK-20260815192837",
+                      "task_id":  "GL-004",
+                      "agent":  "cursor",
+                      "scope":  "app",
+                      "status":  "ACTIVE"
+                  },
+                  {
+                      "id":  "LOCK-20260815192838",
+                      "task_id":  "GL-004",
+                      "agent":  "cursor",
+                      "scope":  "prisma",
+                      "status":  "ACTIVE"
+                  },
+                  {
+                      "id":  "LOCK-20260815192840",
+                      "task_id":  "GL-004",
+                      "agent":  "cursor",
+                      "scope":  "tests",
+                      "status":  "ACTIVE"
+                  }
+              ]
+}
