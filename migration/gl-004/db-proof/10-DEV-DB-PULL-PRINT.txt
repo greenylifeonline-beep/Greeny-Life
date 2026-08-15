@@ -1,0 +1,438 @@
+﻿Loaded Prisma config from prisma.config.js.
+System.Management.Automation.RemoteException
+Prisma config detected, skipping environment variable loading.
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model Organization {
+  id        String   @id @default(uuid())
+  code      String   @unique
+  nameAr    String
+  nameEn    String
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  entities  Entity[]
+}
+
+model Entity {
+  id           String       @id @default(uuid())
+  orgId        String
+  code         String       @unique
+  nameAr       String
+  nameEn       String
+  country      String
+  createdAt    DateTime     @default(now())
+  updatedAt    DateTime     @updatedAt
+  customers    Customer[]
+  organization Organization @relation(fields: [orgId], references: [id])
+  salesOrders  SalesOrder[]
+  suppliers    Supplier[]
+  warehouses   Warehouse[]
+}
+
+model Supplier {
+  id                    String    @id @default(uuid())
+  entityId              String
+  supplierId            String    @unique
+  nameAr                String
+  nameEn                String
+  contactPerson         String?
+  email                 String?
+  phone                 String?
+  country               String    @default("Egypt")
+  createdAt             DateTime  @default(now())
+  updatedAt             DateTime  @updatedAt
+  deactivatedAt         DateTime?
+  deactivationReason    String?
+  sourceReference       String?
+  sourceUrl             String?
+  status                String    @default("PENDING_VERIFICATION")
+  verificationExpiresAt DateTime?
+  verificationStatus    String    @default("UNVERIFIED")
+  products              Product[]
+  entity                Entity    @relation(fields: [entityId], references: [id])
+}
+
+model Product {
+  id          String   @id @default(uuid())
+  supplierId  String
+  productId   String   @unique
+  nameAr      String
+  nameEn      String
+  category    String
+  marketRules Json?
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+  batches     Batch[]
+  supplier    Supplier @relation(fields: [supplierId], references: [id])
+  skus        SKU[]
+}
+
+model SKU {
+  id           String           @id @default(uuid())
+  productId    String
+  skuCode      String           @unique
+  barcode      String?
+  unitPriceUSD Float
+  weightKg     Float
+  createdAt    DateTime         @default(now())
+  updatedAt    DateTime         @updatedAt
+  inventories  Inventory[]
+  packaging    Packaging[]
+  product      Product          @relation(fields: [productId], references: [id])
+  orderItems   SalesOrderItem[]
+}
+
+model Batch {
+  id             String   @id @default(uuid())
+  productId      String
+  batchCode      String   @unique
+  productionDate DateTime
+  expiryDate     DateTime
+  qcPassed       Boolean  @default(false)
+  traceability   Json?
+  createdAt      DateTime @default(now())
+  product        Product  @relation(fields: [productId], references: [id])
+}
+
+model Packaging {
+  id          String   @id @default(uuid())
+  skuId       String
+  packageType String
+  dimensions  String?
+  labelCode   String?
+  createdAt   DateTime @default(now())
+  sku         SKU      @relation(fields: [skuId], references: [id])
+}
+
+model Warehouse {
+  id            String      @id @default(uuid())
+  entityId      String
+  warehouseCode String      @unique
+  nameAr        String
+  nameEn        String
+  location      String
+  createdAt     DateTime    @default(now())
+  inventories   Inventory[]
+  entity        Entity      @relation(fields: [entityId], references: [id])
+}
+
+model Inventory {
+  id          String    @id @default(uuid())
+  warehouseId String
+  skuId       String
+  quantity    Int       @default(0)
+  reservedQty Int       @default(0)
+  updatedAt   DateTime  @updatedAt
+  sku         SKU       @relation(fields: [skuId], references: [id])
+  warehouse   Warehouse @relation(fields: [warehouseId], references: [id])
+}
+
+model Customer {
+  id           String       @id @default(uuid())
+  entityId     String
+  customerCode String       @unique
+  name         String
+  country      String
+  email        String?
+  createdAt    DateTime     @default(now())
+  entity       Entity       @relation(fields: [entityId], references: [id])
+  salesOrders  SalesOrder[]
+}
+
+model SalesOrder {
+  id                String             @id @default(uuid())
+  entityId          String
+  orderCode         String             @unique
+  customerId        String
+  status            String             @default("CREATED")
+  totalAmount       Float
+  currency          String             @default("USD")
+  createdAt         DateTime           @default(now())
+  updatedAt         DateTime           @updatedAt
+  auditLogs         AuditLog[]
+  invoices          Invoice[]
+  customer          Customer           @relation(fields: [customerId], references: [id])
+  entity            Entity             @relation(fields: [entityId], references: [id])
+  items             SalesOrderItem[]
+  shipments         Shipment[]
+  workflowApprovals WorkflowApproval[]
+}
+
+model SalesOrderItem {
+  id            String     @id @default(uuid())
+  orderId       String
+  skuId         String
+  quantity      Int
+  unitPriceUSD  Float
+  totalPriceUSD Float
+  salesOrder    SalesOrder @relation(fields: [orderId], references: [id])
+  sku           SKU        @relation(fields: [skuId], references: [id])
+}
+
+model Shipment {
+  id          String     @id @default(uuid())
+  orderId     String
+  trackingNo  String     @unique
+  carrier     String?
+  containerNo String?
+  status      String     @default("PREPARING")
+  etd         DateTime?
+  eta         DateTime?
+  createdAt   DateTime   @default(now())
+  documents   Document[]
+  salesOrder  SalesOrder @relation(fields: [orderId], references: [id])
+}
+
+model Document {
+  id         String    @id @default(uuid())
+  shipmentId String?
+  docType    String
+  fileUrl    String
+  issuedBy   String?
+  createdAt  DateTime  @default(now())
+  shipment   Shipment? @relation(fields: [shipmentId], references: [id])
+}
+
+model Invoice {
+  id         String     @id @default(uuid())
+  orderId    String
+  invoiceNo  String     @unique
+  amountUSD  Float
+  status     String     @default("PENDING")
+  createdAt  DateTime   @default(now())
+  salesOrder SalesOrder @relation(fields: [orderId], references: [id])
+  payments   Payment[]
+}
+
+model Payment {
+  id             String   @id @default(uuid())
+  invoiceId      String
+  amountUSD      Float
+  method         String
+  transactionRef String?
+  paidAt         DateTime @default(now())
+  invoice        Invoice  @relation(fields: [invoiceId], references: [id])
+}
+
+model User {
+  id           String   @id @default(uuid())
+  email        String   @unique
+  name         String
+  role         String   @default("EMPLOYEE")
+  department   String?
+  createdAt    DateTime @default(now())
+  passwordHash String?
+}
+
+model AuditLog {
+  id         String      @id @default(uuid())
+  orderId    String?
+  action     String
+  actor      String
+  details    Json?
+  createdAt  DateTime    @default(now())
+  salesOrder SalesOrder? @relation(fields: [orderId], references: [id])
+}
+
+model WorkflowApproval {
+  id            String     @id @default(uuid())
+  orderId       String
+  targetState   String
+  requestedBy   String
+  approvedBy    String?
+  status        String     @default("PENDING_APPROVAL")
+  expiresAt     DateTime
+  approvedAt    DateTime?
+  executedAt    DateTime?
+  correlationId String     @unique
+  createdAt     DateTime   @default(now())
+  updatedAt     DateTime   @updatedAt
+  salesOrder    SalesOrder @relation(fields: [orderId], references: [id])
+
+  @@index([orderId, targetState, status])
+  @@index([expiresAt, status])
+  @@index([requestedBy, createdAt])
+}
+
+model CommercialChange {
+  id            String    @id @default(uuid())
+  domain        String
+  subjectType   String
+  subjectId     String
+  changeType    String
+  status        String    @default("PROPOSED")
+  riskLevel     String
+  source        String
+  payload       Json
+  rationale     String?
+  effectiveFrom DateTime?
+  effectiveTo   DateTime?
+  requestedBy   String
+  reviewedBy    String?
+  reviewedAt    DateTime?
+  correlationId String    @unique
+  createdAt     DateTime  @default(now())
+  updatedAt     DateTime  @updatedAt
+
+  @@index([domain, subjectType, subjectId, status])
+  @@index([effectiveFrom, effectiveTo])
+}
+
+model TradeTraceRecord {
+  id                String   @id @default(uuid())
+  traceCode         String   @unique
+  recordType        String
+  parentTraceCode   String?
+  sourceParty       String
+  holderCompany     String
+  destinationParty  String?
+  materialName      String
+  batchCode         String
+  quantity          Float
+  unit              String
+  originCountry     String
+  processingCountry String?
+  status            String   @default("REVIEW_REQUIRED")
+  ownershipHistory  Json
+  evidence          Json?
+  correlationId     String   @unique
+  createdAt         DateTime @default(now())
+  updatedAt         DateTime @updatedAt
+
+  @@index([parentTraceCode])
+  @@index([holderCompany, status])
+  @@index([batchCode])
+}
+
+model DecisionOutcome {
+  id              String   @id @default(uuid())
+  decisionId      String
+  contextId       String
+  metric          String
+  expectedValue   Float
+  actualValue     Float
+  variance        Float
+  variancePercent Float?
+  unit            String
+  status          String   @default("REVIEW_REQUIRED")
+  evidenceIds     Json
+  notes           String?
+  observedAt      DateTime
+  recordedBy      String
+  correlationId   String   @unique
+  createdAt       DateTime @default(now())
+
+  @@index([decisionId, createdAt])
+  @@index([contextId, metric, observedAt])
+  @@index([status])
+}
+
+model TrainingCase {
+  id               String   @id @default(uuid())
+  outcomeId        String   @unique
+  decisionId       String
+  contextId        String
+  metric           String
+  expectedDecision String
+  actualDecision   String
+  rootCause        String?
+  learningSignal   String
+  evidenceIds      Json
+  status           String   @default("REVIEW_REQUIRED")
+  recordedBy       String
+  correlationId    String   @unique
+  createdAt        DateTime @default(now())
+
+  @@index([decisionId, createdAt])
+  @@index([contextId, metric])
+  @@index([status])
+}
+
+model EvaluationRun {
+  id               String   @id @default(uuid())
+  evaluationKey    String   @unique
+  candidateVersion String
+  baselineVersion  String?
+  trainingCaseIds  Json
+  metricScores     Json
+  score            Float
+  status           String
+  notes            String?
+  recordedBy       String
+  correlationId    String   @unique
+  createdAt        DateTime @default(now())
+
+  @@index([candidateVersion, createdAt])
+  @@index([status])
+}
+
+model OrchestrationTask {
+  id             String   @id @default(uuid())
+  taskType       String
+  ownerCompany   String
+  subjectId      String
+  requestedBy    String
+  executor       String
+  status         String   @default("REVIEW_REQUIRED")
+  priority       String   @default("MEDIUM")
+  evidenceIds    Json
+  dependsOn      Json
+  payload        Json
+  outputContract String
+  idempotencyKey String   @unique
+  correlationId  String   @unique
+  createdAt      DateTime @default(now())
+  updatedAt      DateTime @updatedAt
+
+  @@index([ownerCompany, status, createdAt])
+  @@index([subjectId, taskType])
+  @@index([executor, status])
+}
+
+model SecurityAuditEvent {
+  id         String   @id @default(uuid())
+  route      String
+  action     String
+  actorEmail String?
+  role       String?
+  outcome    String
+  reason     String
+  createdAt  DateTime @default(now())
+
+  @@index([createdAt])
+  @@index([route, outcome])
+  @@index([actorEmail, createdAt])
+}
+
+model OfficialEvidenceRegistry {
+  id                 String    @id @default(uuid())
+  evidenceKey        String    @unique
+  product            String
+  destination        String
+  authority          String    @default("unknown")
+  verificationStatus String    @default("unverified")
+  claimStatus        String    @default("unknown")
+  validTo            DateTime?
+  gates              Json
+  sourceUrl          String?
+  sourceTitle        String
+  sourceExcerpt      String?
+  submittedBy        String
+  reviewedBy         String?
+  reviewedAt         DateTime?
+  reviewNotes        String?
+  createdAt          DateTime  @default(now())
+  updatedAt          DateTime  @updatedAt
+
+  @@index([product, destination, verificationStatus])
+  @@index([claimStatus])
+}
+
+
