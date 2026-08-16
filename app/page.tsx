@@ -4,9 +4,10 @@ import { useEffect, useState } from "react";
 
 type Result = { success: boolean; count?: number; error?: string };
 
+// Public homepage counters use unauthenticated GET routes only.
+// /api/suppliers requires ADMIN auth and is exposed from /data-control after sign-in.
 const endpoints = [
   ["Products", "/api/products"],
-  ["Suppliers", "/api/suppliers"],
   ["Sales Orders", "/api/sales-orders"],
 ] as const;
 
@@ -37,7 +38,7 @@ export default function HomePage() {
         {endpoints.map(([label, endpoint]) => (
           <article key={endpoint} style={{ background: "#fff", border: "1px solid #dce6dd", borderRadius: 12, padding: 22, minWidth: 210 }}>
             <p style={{ color: "#58705f", margin: 0 }}>{label}</p>
-            <p style={{ fontSize: 38, fontWeight: 700, margin: "10px 0" }}>{error ? "â€”" : (counts[label] ?? "â€¦")}</p>
+            <p style={{ fontSize: 38, fontWeight: 700, margin: "10px 0" }}>{error ? "—" : (counts[label] ?? "…")}</p>
             <code style={{ color: "#3f7d4b" }}>{endpoint}</code>
           </article>
         ))}

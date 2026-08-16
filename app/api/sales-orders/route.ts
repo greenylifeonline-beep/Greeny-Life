@@ -21,11 +21,11 @@ export async function POST(request: NextRequest) {
   if (authorization.response) return authorization.response;
   try {
     const body = (await request.json()) as Record<string, unknown>;
-    if (body.marketId !== undefined) return invalid("marketId Ù„Ø§ ÙŠÙ…Ù„Ùƒ Ù…Ù‚Ø§Ø¨Ù„Ø§Ù‹ ÙÙŠ Ø§Ù„Ù†Ù…ÙˆØ°Ø¬ Ø§Ù„Ù‚Ø§Ù†ÙˆÙ†ÙŠ Ø§Ù„Ø­Ø§Ù„ÙŠØ› Ù„Ø§ ÙŠÙ…ÙƒÙ† Ø­ÙØ¸Ù‡ Ø¨ØµÙ…Øª.");
+    if (body.marketId !== undefined) return invalid("marketId لا يملك مقابلاً في النموذج القانوني الحالي؛ لا يمكن حفظه بصمت.");
     const orderCode = body.orderCode ?? body.orderId;
     const { entityId, customerId } = body;
-    if (![orderCode, entityId, customerId].every(text)) return invalid("orderCode (Ø£Ùˆ orderId) ÙˆentityId ÙˆcustomerId Ø­Ù‚ÙˆÙ„ Ù…Ø·Ù„ÙˆØ¨Ø©.");
-    if (!Array.isArray(body.items) || body.items.length === 0) return invalid("items ÙŠØ¬Ø¨ Ø£Ù† ØªÙƒÙˆÙ† Ù‚Ø§Ø¦Ù…Ø© ØºÙŠØ± ÙØ§Ø±ØºØ© Ù…Ù† Ø¹Ù†Ø§ØµØ± SKU.");
+    if (![orderCode, entityId, customerId].every(text)) return invalid("orderCode (أو orderId) وentityId وcustomerId حقول مطلوبة.");
+    if (!Array.isArray(body.items) || body.items.length === 0) return invalid("items يجب أن تكون قائمة غير فارغة من عناصر SKU.");
 
     if (!text(orderCode) || !text(entityId) || !text(customerId)) {
       return invalid("Invalid sales order payload.");
@@ -34,10 +34,10 @@ export async function POST(request: NextRequest) {
     let totalAmount = 0;
     const lines: Array<{ skuId: string; quantity: number; unitPriceUSD: number; totalPriceUSD: number }> = [];
     for (const item of body.items as Array<Record<string, unknown>>) {
-      if (!text(item.skuId)) return invalid("ÙƒÙ„ Ø¹Ù†ØµØ± ÙŠØ­ØªØ§Ø¬ skuIdØ› productId ÙˆØ­Ø¯Ù‡ Ù„Ø§ ÙŠØ­Ø¯Ø¯ SKU Ø¨Ø£Ù…Ø§Ù†.");
+      if (!text(item.skuId)) return invalid("كل عنصر يحتاج skuId؛ productId وحده لا يحدد SKU بأمان.");
       const quantity = numeric(item.quantity);
       const unitPriceUSD = numeric(item.unitPriceUSD);
-      if (quantity === null || !Number.isInteger(quantity) || quantity <= 0 || unitPriceUSD === null || unitPriceUSD < 0) return invalid("ÙƒÙ„ Ø¹Ù†ØµØ± ÙŠØ­ØªØ§Ø¬ quantity ØµØ­ÙŠØ­Ø§Ù‹ Ù…ÙˆØ¬Ø¨Ø§Ù‹ ÙˆunitPriceUSD ØºÙŠØ± Ø³Ø§Ù„Ø¨.");
+      if (quantity === null || !Number.isInteger(quantity) || quantity <= 0 || unitPriceUSD === null || unitPriceUSD < 0) return invalid("كل عنصر يحتاج quantity صحيحاً موجباً وunitPriceUSD غير سالب.");
       const totalPriceUSD = quantity * unitPriceUSD;
       totalAmount += totalPriceUSD;
       lines.push({ skuId: item.skuId.trim(), quantity, unitPriceUSD, totalPriceUSD });

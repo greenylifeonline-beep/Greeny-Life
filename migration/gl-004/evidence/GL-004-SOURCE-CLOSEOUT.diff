@@ -1,0 +1,171 @@
+﻿diff --git a/app/api/products/route.ts b/app/api/products/route.ts
+index 38a6e54..39b08c8 100644
+--- a/app/api/products/route.ts
++++ b/app/api/products/route.ts
+@@ -8,7 +8,7 @@ import { finiteNumber as numeric, hasText as text, invalidRequest as invalid } f
+ export async function GET(request: NextRequest) {
+   try {
+     const { searchParams } = new URL(request.url);
+-    if (searchParams.get("categoryId")) return invalid("categoryId ├ÖÔÇ×├Ö┼á├ÿ┬│ ├ÿ┬¡├ÖÔÇÜ├ÖÔÇ×├ÿ┬º├ÖÔÇ╣ ├ÖÔÇÜ├ÿ┬º├ÖÔÇá├Ö╦å├ÖÔÇá├Ö┼á├ÿ┬º├ÖÔÇ╣├ÿÔÇ║ ├ÿ┬º├ÿ┬│├ÿ┬¬├ÿ┬«├ÿ┬»├ÖÔÇª category.");
++    if (searchParams.get("categoryId")) return invalid("categoryId ┘ä┘èÏ│ Ï¡┘é┘äÏº┘ï ┘éÏº┘å┘ê┘å┘èÏº┘ïÏø ÏºÏ│Ï¬Ï«Ï»┘à category.");
+     const category = searchParams.get("category");
+     const products = await prisma.product.findMany({
+       where: category ? { category } : {},
+@@ -27,16 +27,16 @@ export async function POST(request: NextRequest) {
+   try {
+     const body = (await request.json()) as Record<string, unknown>;
+     const unsupported = ["categoryId", "packagingProfileId", "hsCode"].filter((key) => body[key] !== undefined);
+-    if (unsupported.length) return invalid(`├ÿ┬¡├ÖÔÇÜ├Ö╦å├ÖÔÇ× ├ÖÔÇÜ├ÿ┬»├Ö┼á├ÖÔÇª├ÿ┬® ├ÿ┬¿├ÖÔÇ×├ÿ┬º ├ÖÔÇª├ÖÔÇÜ├ÿ┬º├ÿ┬¿├ÖÔÇ× ├ÖÔÇÜ├ÿ┬º├ÖÔÇá├Ö╦å├ÖÔÇá├Ö┼á: ${unsupported.join(", ")}.`);
++    if (unsupported.length) return invalid(`Ï¡┘é┘ê┘ä ┘éÏ»┘è┘àÏ® Ï¿┘äÏº ┘à┘éÏºÏ¿┘ä ┘éÏº┘å┘ê┘å┘è: ${unsupported.join(", ")}.`);
+ 
+     const { productId, nameAr, nameEn, category, supplierId, barcode, marketRules } = body;
+     const skuCode = body.skuCode ?? body.sku;
+-    if (![productId, nameAr, nameEn, category, supplierId].every(text)) return invalid("productId ├Ö╦ånameAr ├Ö╦ånameEn ├Ö╦åcategory ├Ö╦åsupplierId ├ÿ┬¡├ÖÔÇÜ├Ö╦å├ÖÔÇ× ├ÖÔÇª├ÿ┬À├ÖÔÇ×├Ö╦å├ÿ┬¿├ÿ┬®.");
++    if (![productId, nameAr, nameEn, category, supplierId].every(text)) return invalid("productId ┘ênameAr ┘ênameEn ┘êcategory ┘êsupplierId Ï¡┘é┘ê┘ä ┘àÏÀ┘ä┘êÏ¿Ï®.");
+     if (marketRules !== undefined && (marketRules === null || Array.isArray(marketRules) || typeof marketRules !== "object")) {
+-      return invalid("marketRules ├Ö┼á├ÿ┬¼├ÿ┬¿ ├ÿ┬ú├ÖÔÇá ├Ö┼á├ÖãÆ├Ö╦å├ÖÔÇá ├ÖãÆ├ÿ┬º├ÿ┬ª├ÖÔÇá├ÿ┬º├ÖÔÇ╣ JSON.");
++      return invalid("marketRules ┘èÏ¼Ï¿ Ïú┘å ┘è┘â┘ê┘å ┘âÏºÏª┘åÏº┘ï JSON.");
+     }
+     const canonicalMarketRules = marketRules === undefined ? undefined : JSON.parse(JSON.stringify(marketRules));
+-    if (skuCode !== undefined && !text(skuCode)) return invalid("skuCode (├ÿ┬ú├Ö╦å sku) ├Ö┼á├ÿ┬¼├ÿ┬¿ ├ÿ┬ú├ÖÔÇá ├Ö┼á├ÖãÆ├Ö╦å├ÖÔÇá ├ÖÔÇá├ÿ┬Á├ÿ┬º├ÖÔÇ╣ ├ÿ┬║├Ö┼á├ÿ┬▒ ├Ö┬ü├ÿ┬º├ÿ┬▒├ÿ┬║.");
++    if (skuCode !== undefined && !text(skuCode)) return invalid("skuCode (Ïú┘ê sku) ┘èÏ¼Ï¿ Ïú┘å ┘è┘â┘ê┘å ┘åÏÁÏº┘ï Ï║┘èÏ▒ ┘üÏºÏ▒Ï║.");
+ 
+     if (!text(productId) || !text(nameAr) || !text(nameEn) || !text(category) || !text(supplierId)) {
+       return invalid("Invalid product payload.");
+@@ -46,7 +46,7 @@ export async function POST(request: NextRequest) {
+     const unitPriceUSD = numeric(body.unitPriceUSD);
+     const weightKg = numeric(body.weightKg);
+     if (hasSku && (unitPriceUSD === null || unitPriceUSD < 0 || weightKg === null || weightKg <= 0)) {
+-      return invalid("├ÿ┬Ñ├ÖÔÇá├ÿ┬┤├ÿ┬º├ÿ┬í SKU ├Ö┼á├ÿ┬¬├ÿ┬À├ÖÔÇ×├ÿ┬¿ unitPriceUSD ├ÿ┬║├Ö┼á├ÿ┬▒ ├ÿ┬│├ÿ┬º├ÖÔÇ×├ÿ┬¿ ├Ö╦åweightKg ├ÖÔÇª├Ö╦å├ÿ┬¼├ÿ┬¿├ÿ┬º├ÖÔÇ╣.");
++      return invalid("ÏÑ┘åÏ┤ÏºÏí SKU ┘èÏ¬ÏÀ┘äÏ¿ unitPriceUSD Ï║┘èÏ▒ Ï│Ïº┘äÏ¿ ┘êweightKg ┘à┘êÏ¼Ï¿Ïº┘ï.");
+     }
+ 
+     const product = await prisma.product.create({
+diff --git a/app/api/sales-orders/route.ts b/app/api/sales-orders/route.ts
+index add8e6c..62717a2 100644
+--- a/app/api/sales-orders/route.ts
++++ b/app/api/sales-orders/route.ts
+@@ -21,11 +21,11 @@ export async function POST(request: NextRequest) {
+   if (authorization.response) return authorization.response;
+   try {
+     const body = (await request.json()) as Record<string, unknown>;
+-    if (body.marketId !== undefined) return invalid("marketId ├ÖÔÇ×├ÿ┬º ├Ö┼á├ÖÔÇª├ÖÔÇ×├ÖãÆ ├ÖÔÇª├ÖÔÇÜ├ÿ┬º├ÿ┬¿├ÖÔÇ×├ÿ┬º├ÖÔÇ╣ ├Ö┬ü├Ö┼á ├ÿ┬º├ÖÔÇ×├ÖÔÇá├ÖÔÇª├Ö╦å├ÿ┬░├ÿ┬¼ ├ÿ┬º├ÖÔÇ×├ÖÔÇÜ├ÿ┬º├ÖÔÇá├Ö╦å├ÖÔÇá├Ö┼á ├ÿ┬º├ÖÔÇ×├ÿ┬¡├ÿ┬º├ÖÔÇ×├Ö┼á├ÿÔÇ║ ├ÖÔÇ×├ÿ┬º ├Ö┼á├ÖÔÇª├ÖãÆ├ÖÔÇá ├ÿ┬¡├Ö┬ü├ÿ┬©├ÖÔÇí ├ÿ┬¿├ÿ┬Á├ÖÔÇª├ÿ┬¬.");
++    if (body.marketId !== undefined) return invalid("marketId ┘äÏº ┘è┘à┘ä┘â ┘à┘éÏºÏ¿┘äÏº┘ï ┘ü┘è Ïº┘ä┘å┘à┘êÏ░Ï¼ Ïº┘ä┘éÏº┘å┘ê┘å┘è Ïº┘äÏ¡Ïº┘ä┘èÏø ┘äÏº ┘è┘à┘â┘å Ï¡┘üÏ©┘ç Ï¿ÏÁ┘àÏ¬.");
+     const orderCode = body.orderCode ?? body.orderId;
+     const { entityId, customerId } = body;
+-    if (![orderCode, entityId, customerId].every(text)) return invalid("orderCode (├ÿ┬ú├Ö╦å orderId) ├Ö╦åentityId ├Ö╦åcustomerId ├ÿ┬¡├ÖÔÇÜ├Ö╦å├ÖÔÇ× ├ÖÔÇª├ÿ┬À├ÖÔÇ×├Ö╦å├ÿ┬¿├ÿ┬®.");
+-    if (!Array.isArray(body.items) || body.items.length === 0) return invalid("items ├Ö┼á├ÿ┬¼├ÿ┬¿ ├ÿ┬ú├ÖÔÇá ├ÿ┬¬├ÖãÆ├Ö╦å├ÖÔÇá ├ÖÔÇÜ├ÿ┬º├ÿ┬ª├ÖÔÇª├ÿ┬® ├ÿ┬║├Ö┼á├ÿ┬▒ ├Ö┬ü├ÿ┬º├ÿ┬▒├ÿ┬║├ÿ┬® ├ÖÔÇª├ÖÔÇá ├ÿ┬╣├ÖÔÇá├ÿ┬º├ÿ┬Á├ÿ┬▒ SKU.");
++    if (![orderCode, entityId, customerId].every(text)) return invalid("orderCode (Ïú┘ê orderId) ┘êentityId ┘êcustomerId Ï¡┘é┘ê┘ä ┘àÏÀ┘ä┘êÏ¿Ï®.");
++    if (!Array.isArray(body.items) || body.items.length === 0) return invalid("items ┘èÏ¼Ï¿ Ïú┘å Ï¬┘â┘ê┘å ┘éÏºÏª┘àÏ® Ï║┘èÏ▒ ┘üÏºÏ▒Ï║Ï® ┘à┘å Ï╣┘åÏºÏÁÏ▒ SKU.");
+ 
+     if (!text(orderCode) || !text(entityId) || !text(customerId)) {
+       return invalid("Invalid sales order payload.");
+@@ -34,10 +34,10 @@ export async function POST(request: NextRequest) {
+     let totalAmount = 0;
+     const lines: Array<{ skuId: string; quantity: number; unitPriceUSD: number; totalPriceUSD: number }> = [];
+     for (const item of body.items as Array<Record<string, unknown>>) {
+-      if (!text(item.skuId)) return invalid("├ÖãÆ├ÖÔÇ× ├ÿ┬╣├ÖÔÇá├ÿ┬Á├ÿ┬▒ ├Ö┼á├ÿ┬¡├ÿ┬¬├ÿ┬º├ÿ┬¼ skuId├ÿÔÇ║ productId ├Ö╦å├ÿ┬¡├ÿ┬»├ÖÔÇí ├ÖÔÇ×├ÿ┬º ├Ö┼á├ÿ┬¡├ÿ┬»├ÿ┬» SKU ├ÿ┬¿├ÿ┬ú├ÖÔÇª├ÿ┬º├ÖÔÇá.");
++      if (!text(item.skuId)) return invalid("┘â┘ä Ï╣┘åÏÁÏ▒ ┘èÏ¡Ï¬ÏºÏ¼ skuIdÏø productId ┘êÏ¡Ï»┘ç ┘äÏº ┘èÏ¡Ï»Ï» SKU Ï¿Ïú┘àÏº┘å.");
+       const quantity = numeric(item.quantity);
+       const unitPriceUSD = numeric(item.unitPriceUSD);
+-      if (quantity === null || !Number.isInteger(quantity) || quantity <= 0 || unitPriceUSD === null || unitPriceUSD < 0) return invalid("├ÖãÆ├ÖÔÇ× ├ÿ┬╣├ÖÔÇá├ÿ┬Á├ÿ┬▒ ├Ö┼á├ÿ┬¡├ÿ┬¬├ÿ┬º├ÿ┬¼ quantity ├ÿ┬Á├ÿ┬¡├Ö┼á├ÿ┬¡├ÿ┬º├ÖÔÇ╣ ├ÖÔÇª├Ö╦å├ÿ┬¼├ÿ┬¿├ÿ┬º├ÖÔÇ╣ ├Ö╦åunitPriceUSD ├ÿ┬║├Ö┼á├ÿ┬▒ ├ÿ┬│├ÿ┬º├ÖÔÇ×├ÿ┬¿.");
++      if (quantity === null || !Number.isInteger(quantity) || quantity <= 0 || unitPriceUSD === null || unitPriceUSD < 0) return invalid("┘â┘ä Ï╣┘åÏÁÏ▒ ┘èÏ¡Ï¬ÏºÏ¼ quantity ÏÁÏ¡┘èÏ¡Ïº┘ï ┘à┘êÏ¼Ï¿Ïº┘ï ┘êunitPriceUSD Ï║┘èÏ▒ Ï│Ïº┘äÏ¿.");
+       const totalPriceUSD = quantity * unitPriceUSD;
+       totalAmount += totalPriceUSD;
+       lines.push({ skuId: item.skuId.trim(), quantity, unitPriceUSD, totalPriceUSD });
+diff --git a/app/api/suppliers/route.ts b/app/api/suppliers/route.ts
+index ecc37c6..46c4a11 100644
+--- a/app/api/suppliers/route.ts
++++ b/app/api/suppliers/route.ts
+@@ -22,7 +22,7 @@ export async function POST(request: NextRequest) {
+     const body = (await request.json()) as Record<string, unknown>;
+     const { entityId, supplierId, nameAr, nameEn, contactPerson, email, phone, country } = body;
+     if (!text(entityId) || !text(supplierId) || !text(nameAr) || !text(nameEn)) {
+-      return NextResponse.json({ success: false, error: "entityId ├âÔäó├ïÔÇásupplierId ├âÔäó├ïÔÇánameAr ├âÔäó├ïÔÇánameEn ├â╦£├é┬¡├âÔäó├óÔé¼┼í├âÔäó├ïÔÇá├âÔäó├óÔé¼┼¥ ├âÔäó├óÔé¼┬ª├â╦£├é┬À├âÔäó├óÔé¼┼¥├âÔäó├ïÔÇá├â╦£├é┬¿├â╦£├é┬®." }, { status: 400 });
++      return NextResponse.json({ success: false, error: "entityId ┘êsupplierId ┘ênameAr ┘ênameEn Ï¡┘é┘ê┘ä ┘àÏÀ┘ä┘êÏ¿Ï®." }, { status: 400 });
+     }
+     const supplier = await prisma.supplier.create({
+       data: {
+diff --git a/app/api/workflow/route.ts b/app/api/workflow/route.ts
+index 9d1b146..a6fe9cc 100644
+--- a/app/api/workflow/route.ts
++++ b/app/api/workflow/route.ts
+@@ -1,6 +1,6 @@
+ import { authorizeRequest, writeRolePolicy } from "@/lib/authz";
+ import { NextRequest, NextResponse } from "next/server";
+-import { EOSWorkflowEngine, OrderWorkflowState } from "../../../canonical/lib/workflowEngine";
++import { EOSWorkflowEngine, OrderWorkflowState } from "@/canonical/lib/workflowEngine";
+ import { reviewWorkflowTransition } from "@/lib/intelligence/workflow-governance";
+ import { findExecutableWorkflowApproval } from "@/lib/intelligence/workflow-approval";
+ function finiteQueryNumber(searchParams: URLSearchParams, key: string): number | null {
+diff --git a/app/page.tsx b/app/page.tsx
+index 2093921..780f7ba 100644
+--- a/app/page.tsx
++++ b/app/page.tsx
+@@ -4,9 +4,10 @@ import { useEffect, useState } from "react";
+ 
+ type Result = { success: boolean; count?: number; error?: string };
+ 
++// Public homepage counters use unauthenticated GET routes only.
++// /api/suppliers requires ADMIN auth and is exposed from /data-control after sign-in.
+ const endpoints = [
+   ["Products", "/api/products"],
+-  ["Suppliers", "/api/suppliers"],
+   ["Sales Orders", "/api/sales-orders"],
+ ] as const;
+ 
+@@ -37,7 +38,7 @@ export default function HomePage() {
+         {endpoints.map(([label, endpoint]) => (
+           <article key={endpoint} style={{ background: "#fff", border: "1px solid #dce6dd", borderRadius: 12, padding: 22, minWidth: 210 }}>
+             <p style={{ color: "#58705f", margin: 0 }}>{label}</p>
+-            <p style={{ fontSize: 38, fontWeight: 700, margin: "10px 0" }}>{error ? "├óÔé¼ÔÇØ" : (counts[label] ?? "├óÔé¼┬ª")}</p>
++            <p style={{ fontSize: 38, fontWeight: 700, margin: "10px 0" }}>{error ? "ÔÇö" : (counts[label] ?? "ÔÇª")}</p>
+             <code style={{ color: "#3f7d4b" }}>{endpoint}</code>
+           </article>
+         ))}
+diff --git a/scripts/legacy-health.cjs b/scripts/legacy-health.cjs
+index 217837a..a1a18d1 100644
+--- a/scripts/legacy-health.cjs
++++ b/scripts/legacy-health.cjs
+@@ -40,10 +40,39 @@ function health() {
+     system: "GREENY-LIFE legacy repair",
+     status: legacyBrainFiles.every(exists) ? "REVIEW_REQUIRED" : "FAILED",
+     activeRuntime: [
+-      "/api/decisions/export-readiness",
++      "/api/auth/login",
++      "/api/auth/logout",
++      "/api/auth/session",
++      "/api/brains/greeny-life-egypt",
+       "/api/commercial-changes",
+-      "/api/trade-corridors",
++      "/api/data-control",
++      "/api/decisions/export-readiness",
++      "/api/decisions/official-evidence-review",
++      "/api/evidence/official",
++      "/api/intelligence/asset-registry",
++      "/api/intelligence/data-fabric",
++      "/api/intelligence/gels-label-readiness",
++      "/api/intelligence/production-readiness",
++      "/api/learning/evaluations",
++      "/api/learning/outcomes",
++      "/api/learning/training-cases",
++      "/api/mastermind/commercial-context",
++      "/api/mastermind/decision-package",
++      "/api/mastermind/operating-model",
++      "/api/mastermind/tools",
+       "/api/portfolio/egyptian-exports",
++      "/api/products",
++      "/api/sales-orders",
++      "/api/suppliers",
++      "/api/tasks",
++      "/api/traceability",
++      "/api/trade-corridors",
++      "/api/workflow",
++      "/api/workflow/approvals",
++    ],
++    missingBrainRoutes: [
++      "/api/brains/greens-nature-uae",
++      "/api/brains/greenlines-norway",
+     ],
+     legacyEvidenceBrain: {
+       status: "AVAILABLE_FAIL_CLOSED",

@@ -1,6 +1,6 @@
 import { authorizeRequest, writeRolePolicy } from "@/lib/authz";
 import { NextRequest, NextResponse } from "next/server";
-import { EOSWorkflowEngine, OrderWorkflowState } from "../../../canonical/lib/workflowEngine";
+import { EOSWorkflowEngine, OrderWorkflowState } from "@/canonical/lib/workflowEngine";
 import { reviewWorkflowTransition } from "@/lib/intelligence/workflow-governance";
 import { findExecutableWorkflowApproval } from "@/lib/intelligence/workflow-approval";
 function finiteQueryNumber(searchParams: URLSearchParams, key: string): number | null {

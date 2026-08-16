@@ -22,7 +22,7 @@ export async function POST(request: NextRequest) {
     const body = (await request.json()) as Record<string, unknown>;
     const { entityId, supplierId, nameAr, nameEn, contactPerson, email, phone, country } = body;
     if (!text(entityId) || !text(supplierId) || !text(nameAr) || !text(nameEn)) {
-      return NextResponse.json({ success: false, error: "entityId Ã™Ë†supplierId Ã™Ë†nameAr Ã™Ë†nameEn Ã˜Â­Ã™â€šÃ™Ë†Ã™â€ž Ã™â€¦Ã˜Â·Ã™â€žÃ™Ë†Ã˜Â¨Ã˜Â©." }, { status: 400 });
+      return NextResponse.json({ success: false, error: "entityId وsupplierId وnameAr وnameEn حقول مطلوبة." }, { status: 400 });
     }
     const supplier = await prisma.supplier.create({
       data: {

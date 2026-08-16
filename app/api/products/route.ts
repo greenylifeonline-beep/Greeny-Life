@@ -8,7 +8,7 @@ import { finiteNumber as numeric, hasText as text, invalidRequest as invalid } f
 export async function GET(request: NextRequest) {
   try {
     const { searchParams } = new URL(request.url);
-    if (searchParams.get("categoryId")) return invalid("categoryId Ù„ÙŠØ³ Ø­Ù‚Ù„Ø§Ù‹ Ù‚Ø§Ù†ÙˆÙ†ÙŠØ§Ù‹Ø› Ø§Ø³ØªØ®Ø¯Ù… category.");
+    if (searchParams.get("categoryId")) return invalid("categoryId ليس حقلاً قانونياً؛ استخدم category.");
     const category = searchParams.get("category");
     const products = await prisma.product.findMany({
       where: category ? { category } : {},
@@ -27,16 +27,16 @@ export async function POST(request: NextRequest) {
   try {
     const body = (await request.json()) as Record<string, unknown>;
     const unsupported = ["categoryId", "packagingProfileId", "hsCode"].filter((key) => body[key] !== undefined);
-    if (unsupported.length) return invalid(`Ø­Ù‚ÙˆÙ„ Ù‚Ø¯ÙŠÙ…Ø© Ø¨Ù„Ø§ Ù…Ù‚Ø§Ø¨Ù„ Ù‚Ø§Ù†ÙˆÙ†ÙŠ: ${unsupported.join(", ")}.`);
+    if (unsupported.length) return invalid(`حقول قديمة بلا مقابل قانوني: ${unsupported.join(", ")}.`);
 
     const { productId, nameAr, nameEn, category, supplierId, barcode, marketRules } = body;
     const skuCode = body.skuCode ?? body.sku;
-    if (![productId, nameAr, nameEn, category, supplierId].every(text)) return invalid("productId ÙˆnameAr ÙˆnameEn Ùˆcategory ÙˆsupplierId Ø­Ù‚ÙˆÙ„ Ù…Ø·Ù„ÙˆØ¨Ø©.");
+    if (![productId, nameAr, nameEn, category, supplierId].every(text)) return invalid("productId وnameAr وnameEn وcategory وsupplierId حقول مطلوبة.");
     if (marketRules !== undefined && (marketRules === null || Array.isArray(marketRules) || typeof marketRules !== "object")) {
-      return invalid("marketRules ÙŠØ¬Ø¨ Ø£Ù† ÙŠÙƒÙˆÙ† ÙƒØ§Ø¦Ù†Ø§Ù‹ JSON.");
+      return invalid("marketRules يجب أن يكون كائناً JSON.");
     }
     const canonicalMarketRules = marketRules === undefined ? undefined : JSON.parse(JSON.stringify(marketRules));
-    if (skuCode !== undefined && !text(skuCode)) return invalid("skuCode (Ø£Ùˆ sku) ÙŠØ¬Ø¨ Ø£Ù† ÙŠÙƒÙˆÙ† Ù†ØµØ§Ù‹ ØºÙŠØ± ÙØ§Ø±Øº.");
+    if (skuCode !== undefined && !text(skuCode)) return invalid("skuCode (أو sku) يجب أن يكون نصاً غير فارغ.");
 
     if (!text(productId) || !text(nameAr) || !text(nameEn) || !text(category) || !text(supplierId)) {
       return invalid("Invalid product payload.");
@@ -46,7 +46,7 @@ export async function POST(request: NextRequest) {
     const unitPriceUSD = numeric(body.unitPriceUSD);
     const weightKg = numeric(body.weightKg);
     if (hasSku && (unitPriceUSD === null || unitPriceUSD < 0 || weightKg === null || weightKg <= 0)) {
-      return invalid("Ø¥Ù†Ø´Ø§Ø¡ SKU ÙŠØªØ·Ù„Ø¨ unitPriceUSD ØºÙŠØ± Ø³Ø§Ù„Ø¨ ÙˆweightKg Ù…ÙˆØ¬Ø¨Ø§Ù‹.");
+      return invalid("إنشاء SKU يتطلب unitPriceUSD غير سالب وweightKg موجباً.");
     }
 
     const product = await prisma.product.create({
