@@ -1,0 +1,233 @@
+{
+  "package_name": "RAIOS-COGNITIVE-LEARNING-FABRIC-REFERENCE-V2",
+  "schema_version": "learning-fabric.v2",
+  "verdict": "REFERENCE_READY",
+  "file_tree": {
+    ".gitignore": "a3571d941831a75937ab774a3249abebaea4ae0e63026110a4bf5abb7e5ae794",
+    "CERTIFICATION.json": "9ede73fabea3060e8b8d1c6e14f0532d23222ca57200d929e29dc3e16a5143e9",
+    "README.md": "26d9a44256b943ed6f25f9352d387358b3052c5d094afdcf982ffa1a9d664472",
+    "learning_fabric/__init__.py": "b37577af365ea522026135441e751c35f760343ab91d40adc6a00aaa5fb63a8c",
+    "learning_fabric/identity.py": "5c7e3cf0ed104fe86c9c355c8835d59575c0c276b9ff83df8b128b761e15ac1e",
+    "learning_fabric/migrations/001_initial.sql": "8e240126ff7cf143679e267022582d75a11dda12733302eca0d70736701ea89f",
+    "learning_fabric/models.py": "f1636012d77b611dfd0b92fe6a89033dc2cfef6a40e5d641eb93caefe73e4156",
+    "learning_fabric/refs.py": "d9af94eb8a63ea0ee4efed3e4df356cede31c6e3831eedc33be1ee8863ebb91e",
+    "learning_fabric/services.py": "b9e245205f0c65fedab979a43af12dcc67373f85f84bb725d978723a48e7891d",
+    "learning_fabric/store.py": "3c649e551272e47895d1068557d84292453374bff2dda8146f1f9ac4d7c5854c",
+    "learning_fabric/transitions.py": "f09a35d6f39ad0ec489af9a688fddd4db06f5af56a5d8cba74c3c2bd5cbbb276",
+    "run_tests.py": "aa0c2233a51f6ce22ede6f860b17977e649af424079b6a6e834a9708df50cefd",
+    "tests/__init__.py": "735469839c842bc3fbc34792d87ecca2fb190d80bc5c631024bb850a07b5bbfb",
+    "tests/test_learning_fabric_v2.py": "1bd33db911fc0d13421196dc65bc69c41f7abc172c898b424f21c4d66026bd14"
+  },
+  "file_count": 14,
+  "package_sha256": "01efc64139a69c6dad3a6341cbd145073d952249cdb4e835984a37a160a6c203",
+  "package_sha256_method": "SHA-256 of sorted 'hex  relative_path\\n' listing of all package files except this manifest",
+  "architecture_summary": {
+    "role": "Standalone learning-fabric reference. Stores Shared Cognitive Exchange refs; does not host tasks/artifacts.",
+    "observable_fields": [
+      "decision_summary",
+      "evidence_basis",
+      "actions_taken",
+      "correction_summary",
+      "uncertainty"
+    ],
+    "forbidden_fields": [
+      "reasoning",
+      "chain_of_thought",
+      "private_cot"
+    ],
+    "identity": [
+      "trace_id",
+      "task_id",
+      "result_id",
+      "artifact_refs",
+      "evidence_refs",
+      "content_sha256",
+      "idempotency_key",
+      "schema_version"
+    ],
+    "trace_immutability": "INSERT-only traces; SQL UPDATE/DELETE abort; idempotent replay returns the original row",
+    "sqlite": {
+      "migrations": [
+        "learning_fabric/migrations/001_initial.sql"
+      ],
+      "pragma": [
+        "foreign_keys=ON",
+        "journal_mode=WAL"
+      ],
+      "transactions": "explicit BEGIN/COMMIT/ROLLBACK via Store.transaction()",
+      "sql_interpolation": "table/column allowlists only; values parameterized"
+    },
+    "services": [
+      "create_learning_trace",
+      "analyze_teacher_student_difference",
+      "create_learning_debt",
+      "plan_learning_debt_payment",
+      "validate_learning_debt_payment",
+      "propose_competency_update",
+      "validate_competency_update",
+      "ingest_knowledge_candidate",
+      "transition_knowledge_maturity",
+      "harvest_historical_learning",
+      "plan_curriculum",
+      "calculate_learning_yield",
+      "select_student_participation_mode"
+    ]
+  },
+  "schemas": {
+    "tables": [
+      "schema_meta",
+      "traces",
+      "audit_events",
+      "debts",
+      "knowledge_objects",
+      "competency_nodes",
+      "competency_proposals",
+      "teacher_dependencies",
+      "training_candidates",
+      "harvest_items",
+      "compression_nodes"
+    ],
+    "debt_states": [
+      "OPEN",
+      "ASSIGNED",
+      "STUDYING",
+      "PRACTICING",
+      "REPLAY_PENDING",
+      "VALIDATION_PENDING",
+      "PAID",
+      "DEFERRED",
+      "INVALIDATED"
+    ],
+    "knowledge_maturity": [
+      "SEEN",
+      "UNDERSTOOD",
+      "CONNECTED",
+      "PRACTICED",
+      "VALIDATED",
+      "TRANSFERABLE",
+      "MASTERED"
+    ],
+    "epistemic_states": [
+      "UNVERIFIED",
+      "EVIDENCE_BOUNDED",
+      "VERIFIED",
+      "CONTRADICTED",
+      "DEPRECATED",
+      "QUARANTINED"
+    ],
+    "origin_class": [
+      "REAL",
+      "SYNTHETIC",
+      "DERIVED"
+    ],
+    "harvest_kinds": [
+      "OBSERVED_FACT",
+      "DERIVED_INFERENCE",
+      "UNVERIFIED_HYPOTHESIS"
+    ],
+    "participation_modes": [
+      "OBSERVE",
+      "PREDICT",
+      "ASSISTED_SOLVE",
+      "CO_SOLVE",
+      "STUDENT_FIRST",
+      "STUDENT_EXECUTE_TEACHER_VERIFY",
+      "INDEPENDENT"
+    ],
+    "training_kinds": [
+      "SFT",
+      "PREFERENCE",
+      "DISTILLATION",
+      "TOOL_USE",
+      "FAILURE_RECOVERY",
+      "ARCHITECTURE_DECISION",
+      "TRANSFER"
+    ],
+    "audit_events": [
+      "TRACE_CREATED",
+      "DEBT_CREATED",
+      "DEBT_STATE_CHANGED",
+      "KNOWLEDGE_CREATED",
+      "KNOWLEDGE_MATURITY_CHANGED",
+      "COMPETENCY_UPDATE_PROPOSED",
+      "COMPETENCY_UPDATE_ACCEPTED",
+      "COMPETENCY_UPDATE_REJECTED",
+      "TEACHER_DEPENDENCY_CHANGED",
+      "TRAINING_CANDIDATE_CREATED"
+    ],
+    "exchange_ref_prefixes": [
+      "task://",
+      "result://",
+      "artifact://sha256/",
+      "evidence://",
+      "failure://",
+      "experience://",
+      "skill://"
+    ]
+  },
+  "test_command": "python3 run_tests.py",
+  "test_results": {
+    "tests_total": 28,
+    "tests_passed": 28,
+    "tests_failed": 0,
+    "required_named_tests": {
+      "MODULE_IMPORTS_PASS": "PASS",
+      "DATACLASS_CONSTRUCTION_PASS": "PASS",
+      "IMMUTABLE_TRACE_PASS": "PASS",
+      "TRACE_IDEMPOTENCY_PASS": "PASS",
+      "ILLEGAL_DEBT_TRANSITION_REJECTED": "PASS",
+      "DEBT_READING_ONLY_PAYMENT_REJECTED": "PASS",
+      "DEBT_TRANSFER_FAILURE_REJECTED": "PASS",
+      "COMPETENCY_WITHOUT_EVIDENCE_REJECTED": "PASS",
+      "TEACHER_WRONG_STUDENT_RIGHT": "PASS",
+      "TEACHER_RIGHT_STUDENT_WRONG": "PASS",
+      "BOTH_WRONG": "PASS",
+      "TEACHER_DISAGREEMENT": "PASS",
+      "SYNTHETIC_TRUTH_ESCALATION_REJECTED": "PASS",
+      "STALE_KNOWLEDGE_REVALIDATION_REQUIRED": "PASS",
+      "KNOWLEDGE_ILLEGAL_MATURITY_JUMP_REJECTED": "PASS",
+      "RETROSPECTIVE_FACT_INFERENCE_SEPARATION": "PASS",
+      "TEACHER_EARLY_RETIREMENT_REJECTED": "PASS",
+      "MULTI_CONTEXT_TRANSFER_REQUIRED": "PASS",
+      "COGNITIVE_COMPRESSION_PROVENANCE_PRESERVED": "PASS",
+      "DATABASE_TRANSACTION_ROLLBACK_PASS": "PASS",
+      "RESTART_PERSISTENCE_PASS": "PASS",
+      "IDEMPOTENT_REPLAY_PASS": "PASS"
+    },
+    "required_tests_missing": [],
+    "package_import_pass": true,
+    "database_migration_pass": true,
+    "learning_debt_gate_pass": true,
+    "competency_gate_pass": true,
+    "epistemic_gate_pass": true,
+    "synthetic_governance_pass": true,
+    "retrospective_harvest_pass": true,
+    "dependency_decay_pass": true,
+    "verdict": "REFERENCE_READY"
+  },
+  "known_limitations": [
+    "External Shared Cognitive Exchange is a contract only; this package stores references, not object bodies.",
+    "Not integrated into RAIOS runtime, CURRENT-STATE, or production activation.",
+    "Single-writer local SQLite; no networked multi-tenant service.",
+    "TeacherStudentDifferential is an observable API object, not a first-class SQLite table.",
+    "Epistemic transitions other than synthetic VERIFIED-escalation are not a full enumerated state machine."
+  ],
+  "integration_contract": {
+    "do_not": [
+      "create a competing task/artifact store",
+      "require private model chain-of-thought",
+      "raise competency from teacher answers, reading, synthetic repetition, or LLM claims",
+      "pay learning debt by reading/observing alone",
+      "retire a teacher after one successful task",
+      "promote unvalidated training material"
+    ],
+    "must": [
+      "pass exchange refs with the documented prefixes",
+      "treat teacher output as untrusted educational evidence",
+      "keep REAL/SYNTHETIC/DERIVED distinct",
+      "append audit events for cognitive state changes",
+      "fail closed on illegal lifecycle transitions"
+    ],
+    "entry_point": "learning_fabric.LearningFabric(db_path)"
+  }
+}
