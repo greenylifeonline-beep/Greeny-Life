@@ -1,0 +1,1016 @@
+{
+  "assumed_newer": false,
+  "counts": {
+    "a": 35,
+    "b": 120,
+    "modified": 0,
+    "shared": 0
+  },
+  "generated_at": "2026-08-18T19:44:38Z",
+  "merge_candidates": [
+    {
+      "assumed_newer_is_better": false,
+      "confidence": 0.55,
+      "decision": "REVIEW_REQUIRED",
+      "evidence": [
+        "only_in_a"
+      ],
+      "path_key": "api/commercial-changes/route.ts",
+      "reason": "present_only_in_a; not automatically discarded"
+    },
+    {
+      "assumed_newer_is_better": false,
+      "confidence": 0.55,
+      "decision": "REVIEW_REQUIRED",
+      "evidence": [
+        "only_in_a"
+      ],
+      "path_key": "api/data-control/route.ts",
+      "reason": "present_only_in_a; not automatically discarded"
+    },
+    {
+      "assumed_newer_is_better": false,
+      "confidence": 0.55,
+      "decision": "REVIEW_REQUIRED",
+      "evidence": [
+        "only_in_a"
+      ],
+      "path_key": "api/products/route.ts",
+      "reason": "present_only_in_a; not automatically discarded"
+    },
+    {
+      "assumed_newer_is_better": false,
+      "confidence": 0.55,
+      "decision": "REVIEW_REQUIRED",
+      "evidence": [
+        "only_in_a"
+      ],
+      "path_key": "api/sales-orders/route.ts",
+      "reason": "present_only_in_a; not automatically discarded"
+    },
+    {
+      "assumed_newer_is_better": false,
+      "confidence": 0.55,
+      "decision": "REVIEW_REQUIRED",
+      "evidence": [
+        "only_in_a"
+      ],
+      "path_key": "api/suppliers/route.ts",
+      "reason": "present_only_in_a; not automatically discarded"
+    },
+    {
+      "assumed_newer_is_better": false,
+      "confidence": 0.55,
+      "decision": "REVIEW_REQUIRED",
+      "evidence": [
+        "only_in_a"
+      ],
+      "path_key": "api/tasks/route.ts",
+      "reason": "present_only_in_a; not automatically discarded"
+    },
+    {
+      "assumed_newer_is_better": false,
+      "confidence": 0.55,
+      "decision": "REVIEW_REQUIRED",
+      "evidence": [
+        "only_in_a"
+      ],
+      "path_key": "api/traceability/route.ts",
+      "reason": "present_only_in_a; not automatically discarded"
+    },
+    {
+      "assumed_newer_is_better": false,
+      "confidence": 0.55,
+      "decision": "REVIEW_REQUIRED",
+      "evidence": [
+        "only_in_a"
+      ],
+      "path_key": "api/trade-corridors/route.ts",
+      "reason": "present_only_in_a; not automatically discarded"
+    },
+    {
+      "assumed_newer_is_better": false,
+      "confidence": 0.55,
+      "decision": "REVIEW_REQUIRED",
+      "evidence": [
+        "only_in_a"
+      ],
+      "path_key": "api/workflow/route.ts",
+      "reason": "present_only_in_a; not automatically discarded"
+    },
+    {
+      "assumed_newer_is_better": false,
+      "confidence": 0.55,
+      "decision": "REVIEW_REQUIRED",
+      "evidence": [
+        "only_in_a"
+      ],
+      "path_key": "auth/login/route.ts",
+      "reason": "present_only_in_a; not automatically discarded"
+    },
+    {
+      "assumed_newer_is_better": false,
+      "confidence": 0.55,
+      "decision": "REVIEW_REQUIRED",
+      "evidence": [
+        "only_in_a"
+      ],
+      "path_key": "auth/logout/route.ts",
+      "reason": "present_only_in_a; not automatically discarded"
+    },
+    {
+      "assumed_newer_is_better": false,
+      "confidence": 0.55,
+      "decision": "REVIEW_REQUIRED",
+      "evidence": [
+        "only_in_a"
+      ],
+      "path_key": "auth/session/route.ts",
+      "reason": "present_only_in_a; not automatically discarded"
+    },
+    {
+      "assumed_newer_is_better": false,
+      "confidence": 0.55,
+      "decision": "REVIEW_REQUIRED",
+      "evidence": [
+        "only_in_a"
+      ],
+      "path_key": "brains/greeny-life-egypt/route.ts",
+      "reason": "present_only_in_a; not automatically discarded"
+    },
+    {
+      "assumed_newer_is_better": false,
+      "confidence": 0.55,
+      "decision": "REVIEW_REQUIRED",
+      "evidence": [
+        "only_in_a"
+      ],
+      "path_key": "data-control/page.tsx",
+      "reason": "present_only_in_a; not automatically discarded"
+    },
+    {
+      "assumed_newer_is_better": false,
+      "confidence": 0.55,
+      "decision": "REVIEW_REQUIRED",
+      "evidence": [
+        "only_in_a"
+      ],
+      "path_key": "decisions/export-readiness/route.ts",
+      "reason": "present_only_in_a; not automatically discarded"
+    },
+    {
+      "assumed_newer_is_better": false,
+      "confidence": 0.55,
+      "decision": "REVIEW_REQUIRED",
+      "evidence": [
+        "only_in_a"
+      ],
+      "path_key": "decisions/official-evidence-review/route.ts",
+      "reason": "present_only_in_a; not automatically discarded"
+    },
+    {
+      "assumed_newer_is_better": false,
+      "confidence": 0.55,
+      "decision": "REVIEW_REQUIRED",
+      "evidence": [
+        "only_in_a"
+      ],
+      "path_key": "evidence/official/route.ts",
+      "reason": "present_only_in_a; not automatically discarded"
+    },
+    {
+      "assumed_newer_is_better": false,
+      "confidence": 0.55,
+      "decision": "REVIEW_REQUIRED",
+      "evidence": [
+        "only_in_a"
+      ],
+      "path_key": "intelligence/asset-registry/route.ts",
+      "reason": "present_only_in_a; not automatically discarded"
+    },
+    {
+      "assumed_newer_is_better": false,
+      "confidence": 0.55,
+      "decision": "REVIEW_REQUIRED",
+      "evidence": [
+        "only_in_a"
+      ],
+      "path_key": "intelligence/data-fabric/route.ts",
+      "reason": "present_only_in_a; not automatically discarded"
+    },
+    {
+      "assumed_newer_is_better": false,
+      "confidence": 0.55,
+      "decision": "REVIEW_REQUIRED",
+      "evidence": [
+        "only_in_a"
+      ],
+      "path_key": "intelligence/gels-label-readiness/route.ts",
+      "reason": "present_only_in_a; not automatically discarded"
+    },
+    {
+      "assumed_newer_is_better": false,
+      "confidence": 0.55,
+      "decision": "REVIEW_REQUIRED",
+      "evidence": [
+        "only_in_a"
+      ],
+      "path_key": "intelligence/production-readiness/route.ts",
+      "reason": "present_only_in_a; not automatically discarded"
+    },
+    {
+      "assumed_newer_is_better": false,
+      "confidence": 0.55,
+      "decision": "REVIEW_REQUIRED",
+      "evidence": [
+        "only_in_a"
+      ],
+      "path_key": "js/script.js",
+      "reason": "present_only_in_a; not automatically discarded"
+    },
+    {
+      "assumed_newer_is_better": false,
+      "confidence": 0.55,
+      "decision": "REVIEW_REQUIRED",
+      "evidence": [
+        "only_in_a"
+      ],
+      "path_key": "layout.tsx",
+      "reason": "present_only_in_a; not automatically discarded"
+    },
+    {
+      "assumed_newer_is_better": false,
+      "confidence": 0.55,
+      "decision": "REVIEW_REQUIRED",
+      "evidence": [
+        "only_in_a"
+      ],
+      "path_key": "learning/evaluations/route.ts",
+      "reason": "present_only_in_a; not automatically discarded"
+    },
+    {
+      "assumed_newer_is_better": false,
+      "confidence": 0.55,
+      "decision": "REVIEW_REQUIRED",
+      "evidence": [
+        "only_in_a"
+      ],
+      "path_key": "learning/outcomes/route.ts",
+      "reason": "present_only_in_a; not automatically discarded"
+    },
+    {
+      "assumed_newer_is_better": false,
+      "confidence": 0.55,
+      "decision": "REVIEW_REQUIRED",
+      "evidence": [
+        "only_in_a"
+      ],
+      "path_key": "learning/training-cases/route.ts",
+      "reason": "present_only_in_a; not automatically discarded"
+    },
+    {
+      "assumed_newer_is_better": false,
+      "confidence": 0.55,
+      "decision": "REVIEW_REQUIRED",
+      "evidence": [
+        "only_in_a"
+      ],
+      "path_key": "login/page.tsx",
+      "reason": "present_only_in_a; not automatically discarded"
+    },
+    {
+      "assumed_newer_is_better": false,
+      "confidence": 0.55,
+      "decision": "REVIEW_REQUIRED",
+      "evidence": [
+        "only_in_a"
+      ],
+      "path_key": "mastermind/commercial-context/route.ts",
+      "reason": "present_only_in_a; not automatically discarded"
+    },
+    {
+      "assumed_newer_is_better": false,
+      "confidence": 0.55,
+      "decision": "REVIEW_REQUIRED",
+      "evidence": [
+        "only_in_a"
+      ],
+      "path_key": "mastermind/decision-package/route.ts",
+      "reason": "present_only_in_a; not automatically discarded"
+    },
+    {
+      "assumed_newer_is_better": false,
+      "confidence": 0.55,
+      "decision": "REVIEW_REQUIRED",
+      "evidence": [
+        "only_in_a"
+      ],
+      "path_key": "mastermind/operating-model/route.ts",
+      "reason": "present_only_in_a; not automatically discarded"
+    },
+    {
+      "assumed_newer_is_better": false,
+      "confidence": 0.55,
+      "decision": "REVIEW_REQUIRED",
+      "evidence": [
+        "only_in_a"
+      ],
+      "path_key": "mastermind/tools/route.ts",
+      "reason": "present_only_in_a; not automatically discarded"
+    },
+    {
+      "assumed_newer_is_better": false,
+      "confidence": 0.55,
+      "decision": "REVIEW_REQUIRED",
+      "evidence": [
+        "only_in_a"
+      ],
+      "path_key": "page.tsx",
+      "reason": "present_only_in_a; not automatically discarded"
+    },
+    {
+      "assumed_newer_is_better": false,
+      "confidence": 0.55,
+      "decision": "REVIEW_REQUIRED",
+      "evidence": [
+        "only_in_a"
+      ],
+      "path_key": "portfolio/egyptian-exports/route.ts",
+      "reason": "present_only_in_a; not automatically discarded"
+    },
+    {
+      "assumed_newer_is_better": false,
+      "confidence": 0.55,
+      "decision": "REVIEW_REQUIRED",
+      "evidence": [
+        "only_in_a"
+      ],
+      "path_key": "views/products.html",
+      "reason": "present_only_in_a; not automatically discarded"
+    },
+    {
+      "assumed_newer_is_better": false,
+      "confidence": 0.55,
+      "decision": "REVIEW_REQUIRED",
+      "evidence": [
+        "only_in_a"
+      ],
+      "path_key": "workflow/approvals/route.ts",
+      "reason": "present_only_in_a; not automatically discarded"
+    },
+    {
+      "assumed_newer_is_better": false,
+      "confidence": 0.55,
+      "decision": "REVIEW_REQUIRED",
+      "evidence": [
+        "only_in_b"
+      ],
+      "path_key": "analytics/customer-lifetime-value.json",
+      "reason": "present_only_in_b; not automatically adopted"
+    },
+    {
+      "assumed_newer_is_better": false,
+      "confidence": 0.55,
+      "decision": "REVIEW_REQUIRED",
+      "evidence": [
+        "only_in_b"
+      ],
+      "path_key": "analytics/inventory-summary.json",
+      "reason": "present_only_in_b; not automatically adopted"
+    },
+    {
+      "assumed_newer_is_better": false,
+      "confidence": 0.55,
+      "decision": "REVIEW_REQUIRED",
+      "evidence": [
+        "only_in_b"
+      ],
+      "path_key": "analytics/revenue-by-market.json",
+      "reason": "present_only_in_b; not automatically adopted"
+    },
+    {
+      "assumed_newer_is_better": false,
+      "confidence": 0.55,
+      "decision": "REVIEW_REQUIRED",
+      "evidence": [
+        "only_in_b"
+      ],
+      "path_key": "analytics/sales-summary.json",
+      "reason": "present_only_in_b; not automatically adopted"
+    },
+    {
+      "assumed_newer_is_better": false,
+      "confidence": 0.55,
+      "decision": "REVIEW_REQUIRED",
+      "evidence": [
+        "only_in_b"
+      ],
+      "path_key": "analytics/top-products.json",
+      "reason": "present_only_in_b; not automatically adopted"
+    },
+    {
+      "assumed_newer_is_better": false,
+      "confidence": 0.55,
+      "decision": "REVIEW_REQUIRED",
+      "evidence": [
+        "only_in_b"
+      ],
+      "path_key": "app/layout.tsx",
+      "reason": "present_only_in_b; not automatically adopted"
+    },
+    {
+      "assumed_newer_is_better": false,
+      "confidence": 0.55,
+      "decision": "REVIEW_REQUIRED",
+      "evidence": [
+        "only_in_b"
+      ],
+      "path_key": "app/page.tsx",
+      "reason": "present_only_in_b; not automatically adopted"
+    },
+    {
+      "assumed_newer_is_better": false,
+      "confidence": 0.55,
+      "decision": "REVIEW_REQUIRED",
+      "evidence": [
+        "only_in_b"
+      ],
+      "path_key": "business/global_specs.json",
+      "reason": "present_only_in_b; not automatically adopted"
+    },
+    {
+      "assumed_newer_is_better": false,
+      "confidence": 0.55,
+      "decision": "REVIEW_REQUIRED",
+      "evidence": [
+        "only_in_b"
+      ],
+      "path_key": "business/markets.json",
+      "reason": "present_only_in_b; not automatically adopted"
+    },
+    {
+      "assumed_newer_is_better": false,
+      "confidence": 0.55,
+      "decision": "REVIEW_REQUIRED",
+      "evidence": [
+        "only_in_b"
+      ],
+      "path_key": "business/quality_specs.json",
+      "reason": "present_only_in_b; not automatically adopted"
+    },
+    {
+      "assumed_newer_is_better": false,
+      "confidence": 0.55,
+      "decision": "REVIEW_REQUIRED",
+      "evidence": [
+        "only_in_b"
+      ],
+      "path_key": "classification_report_v2.json",
+      "reason": "present_only_in_b; not automatically adopted"
+    },
+    {
+      "assumed_newer_is_better": false,
+      "confidence": 0.55,
+      "decision": "REVIEW_REQUIRED",
+      "evidence": [
+        "only_in_b"
+      ],
+      "path_key": "cleanup_report.json",
+      "reason": "present_only_in_b; not automatically adopted"
+    },
+    {
+      "assumed_newer_is_better": false,
+      "confidence": 0.55,
+      "decision": "REVIEW_REQUIRED",
+      "evidence": [
+        "only_in_b"
+      ],
+      "path_key": "crm/crm-automation-v1.json",
+      "reason": "present_only_in_b; not automatically adopted"
+    },
+    {
+      "assumed_newer_is_better": false,
+      "confidence": 0.55,
+      "decision": "REVIEW_REQUIRED",
+      "evidence": [
+        "only_in_b"
+      ],
+      "path_key": "crm/customer-analytics-v1.json",
+      "reason": "present_only_in_b; not automatically adopted"
+    },
+    {
+      "assumed_newer_is_better": false,
+      "confidence": 0.55,
+      "decision": "REVIEW_REQUIRED",
+      "evidence": [
+        "only_in_b"
+      ],
+      "path_key": "crm/customer-flow-v1.json",
+      "reason": "present_only_in_b; not automatically adopted"
+    },
+    {
+      "assumed_newer_is_better": false,
+      "confidence": 0.55,
+      "decision": "REVIEW_REQUIRED",
+      "evidence": [
+        "only_in_b"
+      ],
+      "path_key": "crm/customers.json",
+      "reason": "present_only_in_b; not automatically adopted"
+    },
+    {
+      "assumed_newer_is_better": false,
+      "confidence": 0.55,
+      "decision": "REVIEW_REQUIRED",
+      "evidence": [
+        "only_in_b"
+      ],
+      "path_key": "crm/interactions.json",
+      "reason": "present_only_in_b; not automatically adopted"
+    },
+    {
+      "assumed_newer_is_better": false,
+      "confidence": 0.55,
+      "decision": "REVIEW_REQUIRED",
+      "evidence": [
+        "only_in_b"
+      ],
+      "path_key": "crm/opportunities.json",
+      "reason": "present_only_in_b; not automatically adopted"
+    },
+    {
+      "assumed_newer_is_better": false,
+      "confidence": 0.55,
+      "decision": "REVIEW_REQUIRED",
+      "evidence": [
+        "only_in_b"
+      ],
+      "path_key": "crm/opportunity-model.json",
+      "reason": "present_only_in_b; not automatically adopted"
+    },
+    {
+      "assumed_newer_is_better": false,
+      "confidence": 0.55,
+      "decision": "REVIEW_REQUIRED",
+      "evidence": [
+        "only_in_b"
+      ],
+      "path_key": "docs/README.md",
+      "reason": "present_only_in_b; not automatically adopted"
+    },
+    {
+      "assumed_newer_is_better": false,
+      "confidence": 0.55,
+      "decision": "REVIEW_REQUIRED",
+      "evidence": [
+        "only_in_b"
+      ],
+      "path_key": "docs/architecture/SYSTEM_ARCHITECTURE.md",
+      "reason": "present_only_in_b; not automatically adopted"
+    },
+    {
+      "assumed_newer_is_better": false,
+      "confidence": 0.55,
+      "decision": "REVIEW_REQUIRED",
+      "evidence": [
+        "only_in_b"
+      ],
+      "path_key": "docs/auto-generated/INDEX.md",
+      "reason": "present_only_in_b; not automatically adopted"
+    },
+    {
+      "assumed_newer_is_better": false,
+      "confidence": 0.55,
+      "decision": "REVIEW_REQUIRED",
+      "evidence": [
+        "only_in_b"
+      ],
+      "path_key": "docs/legacy_brand.md",
+      "reason": "present_only_in_b; not automatically adopted"
+    },
+    {
+      "assumed_newer_is_better": false,
+      "confidence": 0.55,
+      "decision": "REVIEW_REQUIRED",
+      "evidence": [
+        "only_in_b"
+      ],
+      "path_key": "docs/migrated_brand.md",
+      "reason": "present_only_in_b; not automatically adopted"
+    },
+    {
+      "assumed_newer_is_better": false,
+      "confidence": 0.55,
+      "decision": "REVIEW_REQUIRED",
+      "evidence": [
+        "only_in_b"
+      ],
+      "path_key": "docs/products/PRODUCT_MASTER.md",
+      "reason": "present_only_in_b; not automatically adopted"
+    },
+    {
+      "assumed_newer_is_better": false,
+      "confidence": 0.55,
+      "decision": "REVIEW_REQUIRED",
+      "evidence": [
+        "only_in_b"
+      ],
+      "path_key": "docs/standards/01_BRAND_STANDARD.md",
+      "reason": "present_only_in_b; not automatically adopted"
+    },
+    {
+      "assumed_newer_is_better": false,
+      "confidence": 0.55,
+      "decision": "REVIEW_REQUIRED",
+      "evidence": [
+        "only_in_b"
+      ],
+      "path_key": "eos_architecture/01.Master_Data/honey_reference.json",
+      "reason": "present_only_in_b; not automatically adopted"
+    },
+    {
+      "assumed_newer_is_better": false,
+      "confidence": 0.55,
+      "decision": "REVIEW_REQUIRED",
+      "evidence": [
+        "only_in_b"
+      ],
+      "path_key": "final_audit.json",
+      "reason": "present_only_in_b; not automatically adopted"
+    },
+    {
+      "assumed_newer_is_better": false,
+      "confidence": 0.55,
+      "decision": "REVIEW_REQUIRED",
+      "evidence": [
+        "only_in_b"
+      ],
+      "path_key": "fix_brain.py",
+      "reason": "present_only_in_b; not automatically adopted"
+    },
+    {
+      "assumed_newer_is_better": false,
+      "confidence": 0.55,
+      "decision": "REVIEW_REQUIRED",
+      "evidence": [
+        "only_in_b"
+      ],
+      "path_key": "fix_indent.py",
+      "reason": "present_only_in_b; not automatically adopted"
+    },
+    {
+      "assumed_newer_is_better": false,
+      "confidence": 0.55,
+      "decision": "REVIEW_REQUIRED",
+      "evidence": [
+        "only_in_b"
+      ],
+      "path_key": "governance/eos-assets-registry-v1.json",
+      "reason": "present_only_in_b; not automatically adopted"
+    },
+    {
+      "assumed_newer_is_better": false,
+      "confidence": 0.55,
+      "decision": "REVIEW_REQUIRED",
+      "evidence": [
+        "only_in_b"
+      ],
+      "path_key": "governance/eos-deep-asset-discovery-v1.json",
+      "reason": "present_only_in_b; not automatically adopted"
+    },
+    {
+      "assumed_newer_is_better": false,
+      "confidence": 0.55,
+      "decision": "REVIEW_REQUIRED",
+      "evidence": [
+        "only_in_b"
+      ],
+      "path_key": "governance/eos-knowledge-registry-v1.json",
+      "reason": "present_only_in_b; not automatically adopted"
+    },
+    {
+      "assumed_newer_is_better": false,
+      "confidence": 0.55,
+      "decision": "REVIEW_REQUIRED",
+      "evidence": [
+        "only_in_b"
+      ],
+      "path_key": "governance/keep-assets-files-v1.json",
+      "reason": "present_only_in_b; not automatically adopted"
+    },
+    {
+      "assumed_newer_is_better": false,
+      "confidence": 0.55,
+      "decision": "REVIEW_REQUIRED",
+      "evidence": [
+        "only_in_b"
+      ],
+      "path_key": "governance/keep-core-files-v1.json",
+      "reason": "present_only_in_b; not automatically adopted"
+    },
+    {
+      "assumed_newer_is_better": false,
+      "confidence": 0.55,
+      "decision": "REVIEW_REQUIRED",
+      "evidence": [
+        "only_in_b"
+      ],
+      "path_key": "governance/review-required-files-v1.json",
+      "reason": "present_only_in_b; not automatically adopted"
+    },
+    {
+      "assumed_newer_is_better": false,
+      "confidence": 0.55,
+      "decision": "REVIEW_REQUIRED",
+      "evidence": [
+        "only_in_b"
+      ],
+      "path_key": "intelligence/README.md",
+      "reason": "present_only_in_b; not automatically adopted"
+    },
+    {
+      "assumed_newer_is_better": false,
+      "confidence": 0.55,
+      "decision": "REVIEW_REQUIRED",
+      "evidence": [
+        "only_in_b"
+      ],
+      "path_key": "intelligence/adapters/gl-dos-governance-gate.ts",
+      "reason": "present_only_in_b; not automatically adopted"
+    },
+    {
+      "assumed_newer_is_better": false,
+      "confidence": 0.55,
+      "decision": "REVIEW_REQUIRED",
+      "evidence": [
+        "only_in_b"
+      ],
+      "path_key": "intelligence/architecture.manifest.json",
+      "reason": "present_only_in_b; not automatically adopted"
+    },
+    {
+      "assumed_newer_is_better": false,
+      "confidence": 0.55,
+      "decision": "REVIEW_REQUIRED",
+      "evidence": [
+        "only_in_b"
+      ],
+      "path_key": "intelligence/asset_classification_report_v2.json",
+      "reason": "present_only_in_b; not automatically adopted"
+    },
+    {
+      "assumed_newer_is_better": false,
+      "confidence": 0.55,
+      "decision": "REVIEW_REQUIRED",
+      "evidence": [
+        "only_in_b"
+      ],
+      "path_key": "intelligence/cleanup_report.json",
+      "reason": "present_only_in_b; not automatically adopted"
+    },
+    {
+      "assumed_newer_is_better": false,
+      "confidence": 0.55,
+      "decision": "REVIEW_REQUIRED",
+      "evidence": [
+        "only_in_b"
+      ],
+      "path_key": "intelligence/comprehensive_report.json",
+      "reason": "present_only_in_b; not automatically adopted"
+    },
+    {
+      "assumed_newer_is_better": false,
+      "confidence": 0.55,
+      "decision": "REVIEW_REQUIRED",
+      "evidence": [
+        "only_in_b"
+      ],
+      "path_key": "intelligence/contracts/execution-contract.json",
+      "reason": "present_only_in_b; not automatically adopted"
+    },
+    {
+      "assumed_newer_is_better": false,
+      "confidence": 0.55,
+      "decision": "REVIEW_REQUIRED",
+      "evidence": [
+        "only_in_b"
+      ],
+      "path_key": "intelligence/core/report-writer.ts",
+      "reason": "present_only_in_b; not automatically adopted"
+    },
+    {
+      "assumed_newer_is_better": false,
+      "confidence": 0.55,
+      "decision": "REVIEW_REQUIRED",
+      "evidence": [
+        "only_in_b"
+      ],
+      "path_key": "intelligence/engines/audit-engine.ts",
+      "reason": "present_only_in_b; not automatically adopted"
+    }
+  ],
+  "modified": [],
+  "moved_candidate": [],
+  "note": "newer != better; labels not assigned without evidence",
+  "only_in_a": [
+    "api/commercial-changes/route.ts",
+    "api/data-control/route.ts",
+    "api/products/route.ts",
+    "api/sales-orders/route.ts",
+    "api/suppliers/route.ts",
+    "api/tasks/route.ts",
+    "api/traceability/route.ts",
+    "api/trade-corridors/route.ts",
+    "api/workflow/route.ts",
+    "auth/login/route.ts",
+    "auth/logout/route.ts",
+    "auth/session/route.ts",
+    "brains/greeny-life-egypt/route.ts",
+    "data-control/page.tsx",
+    "decisions/export-readiness/route.ts",
+    "decisions/official-evidence-review/route.ts",
+    "evidence/official/route.ts",
+    "intelligence/asset-registry/route.ts",
+    "intelligence/data-fabric/route.ts",
+    "intelligence/gels-label-readiness/route.ts",
+    "intelligence/production-readiness/route.ts",
+    "js/script.js",
+    "layout.tsx",
+    "learning/evaluations/route.ts",
+    "learning/outcomes/route.ts",
+    "learning/training-cases/route.ts",
+    "login/page.tsx",
+    "mastermind/commercial-context/route.ts",
+    "mastermind/decision-package/route.ts",
+    "mastermind/operating-model/route.ts",
+    "mastermind/tools/route.ts",
+    "page.tsx",
+    "portfolio/egyptian-exports/route.ts",
+    "views/products.html",
+    "workflow/approvals/route.ts"
+  ],
+  "only_in_b": [
+    "analytics/customer-lifetime-value.json",
+    "analytics/inventory-summary.json",
+    "analytics/revenue-by-market.json",
+    "analytics/sales-summary.json",
+    "analytics/top-products.json",
+    "app/layout.tsx",
+    "app/page.tsx",
+    "business/global_specs.json",
+    "business/markets.json",
+    "business/quality_specs.json",
+    "classification_report_v2.json",
+    "cleanup_report.json",
+    "crm/crm-automation-v1.json",
+    "crm/customer-analytics-v1.json",
+    "crm/customer-flow-v1.json",
+    "crm/customers.json",
+    "crm/interactions.json",
+    "crm/opportunities.json",
+    "crm/opportunity-model.json",
+    "docs/README.md",
+    "docs/architecture/SYSTEM_ARCHITECTURE.md",
+    "docs/auto-generated/INDEX.md",
+    "docs/legacy_brand.md",
+    "docs/migrated_brand.md",
+    "docs/products/PRODUCT_MASTER.md",
+    "docs/standards/01_BRAND_STANDARD.md",
+    "eos_architecture/01.Master_Data/honey_reference.json",
+    "final_audit.json",
+    "fix_brain.py",
+    "fix_indent.py",
+    "governance/eos-assets-registry-v1.json",
+    "governance/eos-deep-asset-discovery-v1.json",
+    "governance/eos-knowledge-registry-v1.json",
+    "governance/keep-assets-files-v1.json",
+    "governance/keep-core-files-v1.json",
+    "governance/review-required-files-v1.json",
+    "intelligence/README.md",
+    "intelligence/adapters/gl-dos-governance-gate.ts",
+    "intelligence/architecture.manifest.json",
+    "intelligence/asset_classification_report_v2.json",
+    "intelligence/cleanup_report.json",
+    "intelligence/comprehensive_report.json",
+    "intelligence/contracts/execution-contract.json",
+    "intelligence/core/report-writer.ts",
+    "intelligence/engines/audit-engine.ts",
+    "intelligence/engines/data-integrity-engine.ts",
+    "intelligence/eos-business-contract-discovery.json",
+    "intelligence/eos-domain-activation-blueprint-v1.json",
+    "intelligence/eos-enterprise-architecture-final.json",
+    "intelligence/eos-execution-truth-map.json",
+    "intelligence/eos-gels-architecture-alignment.json",
+    "intelligence/eos-gldos-architecture-alignment.json",
+    "intelligence/eos-intelligent-domain-ownership-graph.json",
+    "intelligence/eos-real-execution-path-map.json",
+    "intelligence/eos-roadmap-readiness.json",
+    "intelligence/foundation-closure-report-final.json",
+    "intelligence/health/health-reporter.ts",
+    "intelligence/intelligence/gl-dos.ts",
+    "intelligence/intelligence/intelligence-test.ts",
+    "intelligence/runtime/controlled-runtime-orchestrator.ts",
+    "intelligence/schemas/product-schema-map.ts",
+    "inventory/Inventory.js",
+    "inventory/inventory-analytics-v1.json",
+    "inventory/inventory-automation-v1.json",
+    "inventory/inventory-control-v1.json",
+    "inventory/inventory-master-v1.json",
+    "inventory/inventory.sql",
+    "inventory/movements.json",
+    "inventory/stock-levels.json",
+    "inventory/warehouses.json",
+    "labels/B001_label.json",
+    "labels/B002_label.json",
+    "labels/B003_label.json",
+    "labels/B004_label.json",
+    "labels/GL-LBL-BEE-004.json",
+    "labels/GL-LBL-BEE-005.json",
+    "labels/GL-LBL-BEE-006.json",
+    "labels/GL-LBL-BEE-007.json",
+    "labels/GL-LBL-HON-001.json",
+    "labels/GL-LBL-HON-002.json",
+    "labels/GL-LBL-HON-003.json",
+    "labels/GL-LBL-HRB-014.json",
+    "labels/GL-LBL-OIL-015.json",
+    "labels/GL-LBL-SPC-008.json",
+    "labels/GL-LBL-SPC-009.json",
+    "labels/GL-LBL-SPC-010.json",
+    "labels/GL-LBL-SPC-011.json",
+    "labels/GL-LBL-SPC-012.json",
+    "labels/GL-LBL-SPC-013.json",
+    "labels/H001_label.json",
+    "labels/H002_label.json",
+    "labels/H003_label.json",
+    "labels/H004_label.json",
+    "labels/O001_label.json",
+    "labels/S001_label.json",
+    "labels/S002_label.json",
+    "labels/S003_label.json",
+    "labels/S004_label.json",
+    "labels/S005_label.json",
+    "labels/S006_label.json",
+    "labels/labels-index.json",
+    "labels/labels_index_with_visuals.json",
+    "legacy-data/canonical-product-master-v1.json",
+    "legacy-data/eos-real-product-master-v2.json",
+    "legacy-data/gels-normalized-registry-v1.json",
+    "legacy-data/product-asset-link-map-v1.json",
+    "legacy-data/typescript-asset-inventory.json",
+    "lib/workflowEngine.ts",
+    "logistics/carriers.json",
+    "logistics/containers.json",
+    "logistics/customs-clearance.json",
+    "logistics/logistics.sql",
+    "logistics/ports.json",
+    "logistics/shipments.json",
+    "logistics/tracking-summary.json",
+    "logistics/tracking.json",
+    "packaging_visual/packaging_visual_registry.json",
+    "prisma/schema.prisma",
+    "run_all.ps1",
+    "system_manifest.json"
+  ],
+  "pair": [
+    {
+      "assumed_newer": false,
+      "assumed_older": false,
+      "evidence": [
+        "page.tsx",
+        "layout.tsx"
+      ],
+      "kind": "application",
+      "path": "/workspace/app",
+      "root_id": "root:54108c00e3a3777216bb21218ed1961b",
+      "score": 3
+    },
+    {
+      "assumed_newer": false,
+      "assumed_older": false,
+      "evidence": [
+        "system_manifest.json"
+      ],
+      "kind": "canonical-data",
+      "path": "/workspace/canonical",
+      "root_id": "root:df5e3792c3627b4bf94722d5417b977e",
+      "score": 3
+    }
+  ],
+  "renamed_candidate": [],
+  "renamed_or_moved": [],
+  "root_a": {
+    "files": 35,
+    "kind": "version-a",
+    "path": "/workspace/app",
+    "root_id": "root:54108c00e3a3777216bb21218ed1961b"
+  },
+  "root_b": {
+    "files": 120,
+    "kind": "version-b",
+    "path": "/workspace/canonical",
+    "root_id": "root:df5e3792c3627b4bf94722d5417b977e"
+  },
+  "same_hash": [],
+  "semantic_equivalent_candidates": [],
+  "shared_files": []
+}

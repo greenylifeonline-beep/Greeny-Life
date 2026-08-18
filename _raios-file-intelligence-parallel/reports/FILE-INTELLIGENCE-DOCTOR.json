@@ -1,0 +1,209 @@
+{
+  "canonical": false,
+  "created_at": "2026-08-18T19:44:37Z",
+  "exit_nonzero_if_failed": false,
+  "files_discovered": 8,
+  "fts_index": true,
+  "gates": {
+    "false_pass_protection": {
+      "critical": true,
+      "detail": "",
+      "ok": true
+    },
+    "fts5": {
+      "critical": true,
+      "detail": "sqlite compiled with fts5",
+      "ok": true
+    },
+    "harvest_write_blocked": {
+      "critical": true,
+      "detail": "",
+      "ok": true
+    },
+    "index_writable": {
+      "critical": true,
+      "detail": "",
+      "ok": true
+    },
+    "ingest": {
+      "critical": true,
+      "detail": "",
+      "ok": true
+    },
+    "qwen": {
+      "critical": false,
+      "detail": "OLLAMA_MISSING",
+      "ok": false
+    },
+    "teachers": {
+      "critical": false,
+      "detail": "not_invoked",
+      "ok": false
+    },
+    "v9_unchanged": {
+      "critical": true,
+      "detail": "RAIOS/V9 dirty",
+      "ok": true
+    },
+    "v9_write_blocked": {
+      "critical": true,
+      "detail": "",
+      "ok": true
+    }
+  },
+  "index_health": {
+    "code_files": 5,
+    "files": 8,
+    "fts": true,
+    "package": "_raios-file-intelligence-parallel",
+    "relations": 0,
+    "symbols": 7,
+    "text_searchable_pct": 100.0,
+    "unknown": 0
+  },
+  "ingest": {
+    "extracted_text": 8,
+    "files": 8,
+    "kind": "doctor-fixture",
+    "package": "_raios-file-intelligence-parallel",
+    "parsed": 8,
+    "path": "/workspace/_raios-file-intelligence-parallel/tests/fixtures/corpus",
+    "root_id": "root:2c9883c32e4351af2d9ed735693093c3",
+    "unknown": 0
+  },
+  "organism_id": "raios.organism.v9",
+  "package": "_raios-file-intelligence-parallel",
+  "qwen_health": {
+    "ok": false,
+    "reason": "OLLAMA_MISSING"
+  },
+  "relationships": 0,
+  "roots_found": [
+    {
+      "assumed_newer": false,
+      "assumed_older": false,
+      "evidence": [
+        "page.tsx",
+        "layout.tsx"
+      ],
+      "kind": "application",
+      "path": "/workspace/app",
+      "root_id": "root:54108c00e3a3777216bb21218ed1961b",
+      "score": 3
+    },
+    {
+      "assumed_newer": false,
+      "assumed_older": false,
+      "evidence": [
+        "system_manifest.json"
+      ],
+      "kind": "canonical-data",
+      "path": "/workspace/canonical",
+      "root_id": "root:df5e3792c3627b4bf94722d5417b977e",
+      "score": 3
+    },
+    {
+      "assumed_newer": false,
+      "assumed_older": false,
+      "evidence": [
+        "production-manifest-v1.json"
+      ],
+      "kind": "archive-eos",
+      "path": "/workspace/archive/old_folders/GREENY-LIFE-EOS-PRODUCTION",
+      "root_id": "root:348ce22628f92ea43fd23f0fa5beb159",
+      "score": 3
+    },
+    {
+      "assumed_newer": false,
+      "assumed_older": false,
+      "evidence": [
+        "continuity"
+      ],
+      "kind": "raios-organism",
+      "path": "/workspace/RAIOS/V9",
+      "root_id": "root:929b79590f5fd89947138e214ae7b001",
+      "score": 3
+    },
+    {
+      "assumed_newer": false,
+      "assumed_older": false,
+      "evidence": [
+        "package.json"
+      ],
+      "kind": "repo-manifest",
+      "path": "/workspace",
+      "root_id": "root:3e84370a49b05391c81e700c4c7d023e",
+      "score": 2
+    },
+    {
+      "assumed_newer": false,
+      "assumed_older": false,
+      "evidence": [],
+      "kind": "application-alt",
+      "path": "/workspace/application",
+      "root_id": "root:8100935cccc6dc7a8b0af73b58d102e9",
+      "score": 2
+    }
+  ],
+  "status": "GATES_SATISFIED",
+  "symbols_indexed": 7,
+  "teacher_health": {
+    "ok": false,
+    "reason": "NOT_INVOKED"
+  },
+  "text_searchable_pct": 100.0,
+  "tools_available": [
+    "git",
+    "rg",
+    "java",
+    "sqlite3",
+    "python3",
+    "node",
+    "npm",
+    "pnpm",
+    "jq",
+    "yq",
+    "file",
+    "unzip"
+  ],
+  "tools_missing": [
+    "fd",
+    "magika",
+    "tree-sitter",
+    "ctags",
+    "ast-grep",
+    "semgrep",
+    "7z",
+    "tika",
+    "ollama",
+    "docker"
+  ],
+  "unknown_types": 0,
+  "version_pairs": [
+    [
+      {
+        "assumed_newer": false,
+        "assumed_older": false,
+        "evidence": [
+          "page.tsx",
+          "layout.tsx"
+        ],
+        "kind": "application",
+        "path": "/workspace/app",
+        "root_id": "root:54108c00e3a3777216bb21218ed1961b",
+        "score": 3
+      },
+      {
+        "assumed_newer": false,
+        "assumed_older": false,
+        "evidence": [
+          "system_manifest.json"
+        ],
+        "kind": "canonical-data",
+        "path": "/workspace/canonical",
+        "root_id": "root:df5e3792c3627b4bf94722d5417b977e",
+        "score": 3
+      }
+    ]
+  ]
+}

@@ -1,0 +1,67 @@
+{
+  "created_in_this_package": [
+    "File Intelligence SPI",
+    "FileObject + deterministic ids",
+    "staged search compiler",
+    "version differential",
+    "shadow modification txn",
+    "archive lineage records"
+  ],
+  "generated_at": "2026-08-18T19:44:36Z",
+  "not_duplicated": [
+    "RAIOS/V9 runtime",
+    "CCEE var",
+    "A17 harvest writers"
+  ],
+  "policy": "REUSE > ADAPT > WRAP > CREATE",
+  "reused": [
+    {
+      "action": "PATTERN_COPIED",
+      "capability": "content-addressed SHA-256 store",
+      "note": "wave CAS write-guards native-cortex; this package uses a local CAS",
+      "path": "_raios-a17-integration-wave/src/raios_wave/cas.py"
+    },
+    {
+      "action": "PATTERN_REUSED",
+      "capability": "fail-closed hashing, FTS5, dual-brain, doctor",
+      "path": "_raios-a17-native-cortex/ccee",
+      "write": false
+    },
+    {
+      "action": "PATTERN_REUSED",
+      "capability": "SQLite index + identity guards",
+      "path": "_raios-a17-cursor-parallel/src/raios_parallel/store.py"
+    },
+    {
+      "action": "REUSED_VIA_STDLIB",
+      "capability": "Python ast.parse",
+      "path": "standalone_ast_analysis.py"
+    }
+  ],
+  "wrapped": [
+    {
+      "name": "git ls-files",
+      "role": "discovery preferred"
+    },
+    {
+      "name": "rg",
+      "role": "lexical search stage 2"
+    },
+    {
+      "name": "python ast.parse",
+      "role": "python symbols"
+    },
+    {
+      "name": "sqlite FTS5",
+      "role": "text index"
+    },
+    {
+      "name": "zipfile",
+      "role": "archive manifest"
+    },
+    {
+      "name": "file(1)",
+      "role": "signature fallback; Magika missing"
+    }
+  ]
+}

@@ -1,0 +1,181 @@
+{
+  "do_not_install_in_this_wave": true,
+  "gaps": [
+    {
+      "fallback": "signature+parser-probe",
+      "id": "magika",
+      "impact": "content-type accuracy",
+      "status": "MISSING"
+    },
+    {
+      "fallback": "UNAVAILABLE status, no OCR",
+      "id": "tika",
+      "impact": "PDF/Office extraction",
+      "status": "MISSING"
+    },
+    {
+      "fallback": "regex heuristic",
+      "id": "tree-sitter",
+      "impact": "TS/JS/PS structural parse",
+      "status": "MISSING"
+    },
+    {
+      "fallback": "python ast only",
+      "id": "universal-ctags",
+      "impact": "multi-language symbols",
+      "status": "MISSING"
+    },
+    {
+      "fallback": "ripgrep+symbols",
+      "id": "ast-grep",
+      "impact": "structural search",
+      "note": "/usr/bin/sg is Linux set-group, not ast-grep",
+      "status": "MISSING"
+    },
+    {
+      "fallback": "fail-closed skip STAGE 8",
+      "id": "ollama",
+      "impact": "Qwen/teacher synthesis",
+      "status": "MISSING"
+    },
+    {
+      "fallback": "none",
+      "id": "docker",
+      "impact": "isolated extractors",
+      "status": "MISSING"
+    }
+  ],
+  "generated_at": "2026-08-18T19:44:36Z",
+  "missing_tools": [
+    {
+      "available": false,
+      "install": false,
+      "limited": false,
+      "missing": true,
+      "name": "fd",
+      "overlap": "rg+git ls-files covers enumeration",
+      "path": null,
+      "purpose": "file enumeration",
+      "recommended": false,
+      "reuse_value": "none",
+      "version": null
+    },
+    {
+      "available": false,
+      "install": false,
+      "limited": false,
+      "missing": true,
+      "name": "magika",
+      "overlap": null,
+      "path": null,
+      "purpose": "content-type detection",
+      "recommended": true,
+      "reuse_value": "none",
+      "version": null
+    },
+    {
+      "available": false,
+      "install": false,
+      "limited": false,
+      "missing": true,
+      "name": "tree-sitter",
+      "overlap": null,
+      "path": null,
+      "purpose": "AST parsing",
+      "recommended": true,
+      "reuse_value": "none",
+      "version": null
+    },
+    {
+      "available": false,
+      "install": false,
+      "limited": true,
+      "missing": true,
+      "name": "ctags",
+      "overlap": null,
+      "path": "/usr/bin/ctags",
+      "purpose": "symbol extraction",
+      "recommended": false,
+      "reuse_value": "medium",
+      "version": "ctags (GNU Emacs 29.3)"
+    },
+    {
+      "available": false,
+      "install": false,
+      "limited": false,
+      "missing": true,
+      "name": "ast-grep",
+      "overlap": null,
+      "path": null,
+      "purpose": "structural search",
+      "recommended": true,
+      "reuse_value": "none",
+      "version": null
+    },
+    {
+      "available": false,
+      "install": false,
+      "limited": false,
+      "missing": true,
+      "name": "semgrep",
+      "overlap": null,
+      "path": null,
+      "purpose": "semantic grep",
+      "recommended": false,
+      "reuse_value": "none",
+      "version": null
+    },
+    {
+      "available": false,
+      "install": false,
+      "limited": false,
+      "missing": true,
+      "name": "7z",
+      "overlap": null,
+      "path": null,
+      "purpose": "archives",
+      "recommended": false,
+      "reuse_value": "none",
+      "version": null
+    },
+    {
+      "available": false,
+      "install": false,
+      "limited": false,
+      "missing": true,
+      "name": "tika",
+      "overlap": null,
+      "path": null,
+      "purpose": "document extraction",
+      "recommended": true,
+      "reuse_value": "none",
+      "version": null
+    },
+    {
+      "available": false,
+      "install": false,
+      "limited": false,
+      "missing": true,
+      "name": "ollama",
+      "overlap": null,
+      "path": null,
+      "purpose": "local models",
+      "recommended": true,
+      "reuse_value": "none",
+      "version": null
+    },
+    {
+      "available": false,
+      "install": false,
+      "limited": false,
+      "missing": true,
+      "name": "docker",
+      "overlap": null,
+      "path": null,
+      "purpose": "containers",
+      "recommended": false,
+      "reuse_value": "none",
+      "version": null
+    }
+  ]
+}

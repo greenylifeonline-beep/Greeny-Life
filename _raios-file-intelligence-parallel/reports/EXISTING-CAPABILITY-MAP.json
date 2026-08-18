@@ -1,0 +1,336 @@
+{
+  "generated_at": "2026-08-18T19:44:35Z",
+  "local_tools": [
+    {
+      "available": true,
+      "install": false,
+      "limited": false,
+      "missing": false,
+      "name": "git",
+      "overlap": null,
+      "path": "/usr/bin/git",
+      "purpose": "version control / ls-files discovery",
+      "recommended": false,
+      "reuse_value": "high",
+      "version": "git version 2.43.0"
+    },
+    {
+      "available": true,
+      "install": false,
+      "limited": false,
+      "missing": false,
+      "name": "rg",
+      "overlap": null,
+      "path": "/exec-daemon/rg",
+      "purpose": "lexical search",
+      "recommended": false,
+      "reuse_value": "high",
+      "version": "ripgrep 15.1.0-cursor5 (rev c3e3c2f7ec)"
+    },
+    {
+      "available": false,
+      "install": false,
+      "limited": false,
+      "missing": true,
+      "name": "fd",
+      "overlap": "rg+git ls-files covers enumeration",
+      "path": null,
+      "purpose": "file enumeration",
+      "recommended": false,
+      "reuse_value": "none",
+      "version": null
+    },
+    {
+      "available": false,
+      "install": false,
+      "limited": false,
+      "missing": true,
+      "name": "magika",
+      "overlap": null,
+      "path": null,
+      "purpose": "content-type detection",
+      "recommended": true,
+      "reuse_value": "none",
+      "version": null
+    },
+    {
+      "available": false,
+      "install": false,
+      "limited": false,
+      "missing": true,
+      "name": "tree-sitter",
+      "overlap": null,
+      "path": null,
+      "purpose": "AST parsing",
+      "recommended": true,
+      "reuse_value": "none",
+      "version": null
+    },
+    {
+      "available": false,
+      "install": false,
+      "limited": true,
+      "missing": true,
+      "name": "ctags",
+      "overlap": null,
+      "path": "/usr/bin/ctags",
+      "purpose": "symbol extraction",
+      "recommended": false,
+      "reuse_value": "medium",
+      "version": "ctags (GNU Emacs 29.3)"
+    },
+    {
+      "available": false,
+      "install": false,
+      "limited": false,
+      "missing": true,
+      "name": "ast-grep",
+      "overlap": null,
+      "path": null,
+      "purpose": "structural search",
+      "recommended": true,
+      "reuse_value": "none",
+      "version": null
+    },
+    {
+      "available": false,
+      "install": false,
+      "limited": false,
+      "missing": true,
+      "name": "semgrep",
+      "overlap": null,
+      "path": null,
+      "purpose": "semantic grep",
+      "recommended": false,
+      "reuse_value": "none",
+      "version": null
+    },
+    {
+      "available": false,
+      "install": false,
+      "limited": false,
+      "missing": true,
+      "name": "7z",
+      "overlap": null,
+      "path": null,
+      "purpose": "archives",
+      "recommended": false,
+      "reuse_value": "none",
+      "version": null
+    },
+    {
+      "available": false,
+      "install": false,
+      "limited": false,
+      "missing": true,
+      "name": "tika",
+      "overlap": null,
+      "path": null,
+      "purpose": "document extraction",
+      "recommended": true,
+      "reuse_value": "none",
+      "version": null
+    },
+    {
+      "available": true,
+      "install": false,
+      "limited": false,
+      "missing": false,
+      "name": "java",
+      "overlap": "Java present but Tika jar not installed; do not download",
+      "path": "/usr/bin/java",
+      "purpose": "tika runtime",
+      "recommended": false,
+      "reuse_value": "medium",
+      "version": "openjdk version \"21.0.10\" 2026-01-20"
+    },
+    {
+      "available": true,
+      "install": false,
+      "limited": false,
+      "missing": false,
+      "name": "sqlite3",
+      "overlap": null,
+      "path": "/usr/bin/sqlite3",
+      "purpose": "metadata + FTS5",
+      "recommended": false,
+      "reuse_value": "high",
+      "version": "3.45.1 2024-01-30 16:01:20 e876e51a0ed5c5b3126f52e532044363a014bc594cfefa87ffb5b82257ccalt1 (64-bit)"
+    },
+    {
+      "available": true,
+      "install": false,
+      "limited": false,
+      "missing": false,
+      "name": "python3",
+      "overlap": "ast.parse for Python; regex/heuristic for TS",
+      "path": "/usr/bin/python3",
+      "purpose": "runtime + ast",
+      "recommended": false,
+      "reuse_value": "high",
+      "version": "Python 3.12.3"
+    },
+    {
+      "available": true,
+      "install": false,
+      "limited": false,
+      "missing": false,
+      "name": "node",
+      "overlap": null,
+      "path": "/exec-daemon/node",
+      "purpose": "js/ts ecosystem",
+      "recommended": false,
+      "reuse_value": "medium",
+      "version": "v22.14.0"
+    },
+    {
+      "available": true,
+      "install": false,
+      "limited": false,
+      "missing": false,
+      "name": "npm",
+      "overlap": null,
+      "path": "/home/ubuntu/.nvm/versions/node/v22.22.2/bin/npm",
+      "purpose": "js packages",
+      "recommended": false,
+      "reuse_value": "low",
+      "version": "10.9.7"
+    },
+    {
+      "available": true,
+      "install": false,
+      "limited": false,
+      "missing": false,
+      "name": "pnpm",
+      "overlap": null,
+      "path": "/home/ubuntu/.nvm/versions/node/v22.22.2/bin/pnpm",
+      "purpose": "js packages",
+      "recommended": false,
+      "reuse_value": "low",
+      "version": "10.33.3"
+    },
+    {
+      "available": false,
+      "install": false,
+      "limited": false,
+      "missing": true,
+      "name": "ollama",
+      "overlap": null,
+      "path": null,
+      "purpose": "local models",
+      "recommended": true,
+      "reuse_value": "none",
+      "version": null
+    },
+    {
+      "available": false,
+      "install": false,
+      "limited": false,
+      "missing": true,
+      "name": "docker",
+      "overlap": null,
+      "path": null,
+      "purpose": "containers",
+      "recommended": false,
+      "reuse_value": "none",
+      "version": null
+    },
+    {
+      "available": true,
+      "install": false,
+      "limited": false,
+      "missing": false,
+      "name": "jq",
+      "overlap": null,
+      "path": "/usr/bin/jq",
+      "purpose": "json query",
+      "recommended": false,
+      "reuse_value": "medium",
+      "version": "jq-1.7"
+    },
+    {
+      "available": true,
+      "install": false,
+      "limited": false,
+      "missing": false,
+      "name": "yq",
+      "overlap": null,
+      "path": "/usr/bin/yq",
+      "purpose": "yaml query",
+      "recommended": false,
+      "reuse_value": "medium",
+      "version": "yq 0.0.0"
+    },
+    {
+      "available": true,
+      "install": false,
+      "limited": false,
+      "missing": false,
+      "name": "file",
+      "overlap": "signature fallback for Magika",
+      "path": "/usr/bin/file",
+      "purpose": "signature probe",
+      "recommended": false,
+      "reuse_value": "high",
+      "version": "file-5.45"
+    },
+    {
+      "available": true,
+      "install": false,
+      "limited": false,
+      "missing": false,
+      "name": "unzip",
+      "overlap": null,
+      "path": "/usr/bin/unzip",
+      "purpose": "zip archives",
+      "recommended": false,
+      "reuse_value": "medium",
+      "version": "UnZip 6.00 of 20 April 2009, by Debian. Original by Info-ZIP."
+    }
+  ],
+  "reuse": [
+    {
+      "action": "PATTERN_COPIED",
+      "capability": "content-addressed SHA-256 store",
+      "note": "wave CAS write-guards native-cortex; this package uses a local CAS",
+      "path": "_raios-a17-integration-wave/src/raios_wave/cas.py"
+    },
+    {
+      "action": "PATTERN_REUSED",
+      "capability": "fail-closed hashing, FTS5, dual-brain, doctor",
+      "path": "_raios-a17-native-cortex/ccee",
+      "write": false
+    },
+    {
+      "action": "PATTERN_REUSED",
+      "capability": "SQLite index + identity guards",
+      "path": "_raios-a17-cursor-parallel/src/raios_parallel/store.py"
+    },
+    {
+      "action": "REUSED_VIA_STDLIB",
+      "capability": "Python ast.parse",
+      "path": "standalone_ast_analysis.py"
+    },
+    {
+      "action": "AVAILABLE_NOT_IMPORTED",
+      "capability": "historical Python AST analyzer",
+      "path": "greenlines_brain/dna/ast_analyzer.py"
+    },
+    {
+      "action": "READ_ONLY_REFERENCE",
+      "capability": "historical tool manifest",
+      "path": "intelligence/knowledge_base/tools_manifest.json"
+    },
+    {
+      "action": "READ_ONLY_REFERENCE",
+      "capability": "39 historical capabilities READ_ONLY_READY vs BLOCKED",
+      "path": "MASTERMIND-TOOL-REGISTRY.md"
+    },
+    {
+      "action": "AVAILABLE_NOT_IMPORTED",
+      "capability": "scan_project_metadata",
+      "note": "stale metadata; not authoritative",
+      "path": "brain.py"
+    }
+  ]
+}

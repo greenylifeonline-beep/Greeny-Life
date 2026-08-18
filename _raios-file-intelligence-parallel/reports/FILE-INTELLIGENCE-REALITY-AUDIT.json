@@ -1,0 +1,48 @@
+{
+  "collision_guard": {
+    "RAIOS/V9": "read-only",
+    "native_cortex_var": "write-blocked",
+    "this_package_only": true
+  },
+  "doctor": "GATES_SATISFIED",
+  "generated_at": "2026-08-18T19:44:39Z",
+  "package": "_raios-file-intelligence-parallel",
+  "repo": "/workspace",
+  "tools_missing": [
+    "fd",
+    "magika",
+    "tree-sitter",
+    "ctags",
+    "ast-grep",
+    "semgrep",
+    "7z",
+    "tika",
+    "ollama",
+    "docker"
+  ],
+  "version_pair": [
+    {
+      "assumed_newer": false,
+      "assumed_older": false,
+      "evidence": [
+        "page.tsx",
+        "layout.tsx"
+      ],
+      "kind": "application",
+      "path": "/workspace/app",
+      "root_id": "root:54108c00e3a3777216bb21218ed1961b",
+      "score": 3
+    },
+    {
+      "assumed_newer": false,
+      "assumed_older": false,
+      "evidence": [
+        "system_manifest.json"
+      ],
+      "kind": "canonical-data",
+      "path": "/workspace/canonical",
+      "root_id": "root:df5e3792c3627b4bf94722d5417b977e",
+      "score": 3
+    }
+  ]
+}

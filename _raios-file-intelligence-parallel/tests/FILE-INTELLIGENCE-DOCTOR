@@ -1,0 +1,8 @@
+#!/usr/bin/env bash
+set -euo pipefail
+HERE="$(cd "$(dirname "$0")" && pwd)"
+PKG="$(cd "$HERE/.." && pwd)"
+REPO="$(cd "$PKG/.." && pwd)"
+export PYTHONPATH="$PKG/src"
+cd "$REPO"
+python3 -m raios_fi.doctor --report

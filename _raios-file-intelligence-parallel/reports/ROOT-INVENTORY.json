@@ -1,0 +1,276 @@
+{
+  "a17_a18_artifacts": [
+    "_raios-a17-integration-wave",
+    "_raios-a17-cursor-parallel",
+    "_raios-a17-native-cortex"
+  ],
+  "active_project_roots": [
+    {
+      "evidence": [
+        "app/",
+        "package.json name=greeny-life"
+      ],
+      "kind": "greeny-life-next-app",
+      "path": "app"
+    },
+    {
+      "evidence": [
+        "package.json"
+      ],
+      "kind": "repo-manifest",
+      "path": "."
+    }
+  ],
+  "databases": [
+    "database",
+    "prisma"
+  ],
+  "generated_at": "2026-08-18T19:44:35Z",
+  "generated_output_folders": [
+    "archive",
+    "E3-RECON-OUTPUT",
+    "intelligence"
+  ],
+  "older_or_reference_roots": [
+    {
+      "assumed_older": false,
+      "evidence": [
+        "production-manifest-v1.json",
+        "path contains old_folders"
+      ],
+      "kind": "archive-eos",
+      "path": "archive/old_folders/GREENY-LIFE-EOS-PRODUCTION"
+    },
+    {
+      "evidence": [
+        "system_manifest.json"
+      ],
+      "kind": "canonical-data",
+      "path": "canonical"
+    },
+    {
+      "evidence": [
+        "directory exists"
+      ],
+      "kind": "application-alt",
+      "path": "application"
+    }
+  ],
+  "raios_v9": {
+    "inspected": "read-only",
+    "path": "RAIOS/V9",
+    "write": false
+  },
+  "repo": "/workspace",
+  "reports_evidence": [
+    "docs",
+    "_GREENY_DIAGNOSTIC_20260809_233236",
+    "NO_CURRENT_EQUIVALENT_PROVEN"
+  ],
+  "source": "git ls-files",
+  "this_package": "_raios-file-intelligence-parallel",
+  "top_level_counts": {
+    ".ai-os": 27,
+    ".cursor": 1,
+    ".env.example": 1,
+    ".github": 2,
+    ".gitignore": 1,
+    ".govern.toml": 1,
+    "AGENTS.md": 1,
+    "ALL_SOURCE_CODE.txt": 1,
+    "ASSET-ASSIMILATION-POLICY.md": 1,
+    "CLAUDE.md": 1,
+    "CLEANUP-AND-RETENTION-POLICY.md": 1,
+    "COMMERCIAL-CHANGE-GOVERNANCE.md": 1,
+    "COMMERCIAL-CONTEXT-FABRIC.md": 1,
+    "E3-ENGINE-DECISION-LEDGER.md": 1,
+    "E3-GIT-HEAD.txt": 1,
+    "E3-GIT-STATUS.txt": 1,
+    "E3-GIT-TRACKED.txt": 1,
+    "E3-RECON-OUTPUT": 11,
+    "E3-REPOSITORY-MANIFEST.json": 1,
+    "E3-SOURCE-TRACE-PACKAGE": 36,
+    "FINAL-RUNTIME-BASELINE.md": 1,
+    "FileSummary.csv": 1,
+    "GEMINI.md": 1,
+    "GREENY-LIFE-EGYPT-BRAIN.md": 1,
+    "INTELLIGENCE-EXECUTION-TRUTH.md": 1,
+    "INTELLIGENCE-RUNTIME-POLICY.md": 1,
+    "ImageInventory.csv": 1,
+    "KNOWLEDGE-BASE": 1,
+    "LEGACY-REPAIR-REGISTER.md": 1,
+    "MASTERMIND-AGENTS.md": 1,
+    "MASTERMIND-TOOL-REGISTRY.md": 1,
+    "NO_CURRENT_EQUIVALENT_PROVEN": 5,
+    "NUCLEUS_FILES.txt": 1,
+    "RAIOS": 498,
+    "RAIOS-COGNITIVE-LEARNING-FABRIC-REFERENCE-V2": 15,
+    "RAIOS-SHARED-COGNITIVE-EXCHANGE-REFERENCE-V2": 18,
+    "THREE-OPERATING-BRAINS.md": 1,
+    "TRADE-GOVERNANCE.md": 1,
+    "TRADE-TRACEABILITY.md": 1,
+    "_GREENY_DIAGNOSTIC_20260809_233236": 5,
+    "_raios-a17-cursor-parallel": 53,
+    "_raios-a17-integration-wave": 43,
+    "_raios-a17-native-cortex": 54,
+    "app": 35,
+    "application": 18,
+    "archive": 678,
+    "audit_ast_extraction.py": 1,
+    "audit_brain_intelligence.py": 1,
+    "audit_brain_intelligence_v2.py": 1,
+    "brain.py": 1,
+    "build_evidence_layer.py": 1,
+    "canonical": 166,
+    "config.yaml": 1,
+    "data": 7,
+    "database": 9,
+    "docs": 6,
+    "domain": 18,
+    "els_final.json": 1,
+    "els_final_v2.json": 1,
+    "els_final_with_business.json": 1,
+    "enrich_context.py": 1,
+    "enrich_context_fixed.py": 1,
+    "eos-core": 6,
+    "extract_dna.py": 1,
+    "fix_brain.py": 1,
+    "governance": 4,
+    "greenlines_brain": 28,
+    "guardrails": 5,
+    "how HEAD\uf03a.env \uf07c Select-Object -First 20": 1,
+    "intelligence": 37,
+    "lib": 33,
+    "lib_list.txt": 1,
+    "migration": 6,
+    "new_tree.txt": 1,
+    "next-env.d.ts": 1,
+    "package-lock.json": 1,
+    "package.json": 1,
+    "phase1_repair.py": 1,
+    "phase2_evidence.py": 1,
+    "prisma": 1,
+    "prisma.config.js": 1,
+    "project_tree.txt": 1,
+    "requirements.txt": 1,
+    "run_all.ps1": 1,
+    "run_ast_analysis.py": 1,
+    "run_audit_hack.py": 1,
+    "run_audit_v2.py": 1,
+    "run_brain.ps1": 1,
+    "run_brain_cli.py": 1,
+    "run_brain_cli_backup.py": 1,
+    "run_full_audit.ps1": 1,
+    "s,.cursor,.github,migration,scriptsai-os `": 1,
+    "scripts": 7,
+    "standalone_ast_analysis.py": 1,
+    "system_manifest.json": 1,
+    "test_brain.py": 1,
+    "test_brain_v2.py": 1,
+    "test_brain_v3.py": 1,
+    "tests": 50,
+    "tsconfig.json": 1
+  },
+  "top_level_dirs": [
+    ".ai-os",
+    ".cursor",
+    ".github",
+    "E3-RECON-OUTPUT",
+    "E3-SOURCE-TRACE-PACKAGE",
+    "KNOWLEDGE-BASE",
+    "NO_CURRENT_EQUIVALENT_PROVEN",
+    "RAIOS",
+    "RAIOS-COGNITIVE-LEARNING-FABRIC-REFERENCE-V2",
+    "RAIOS-SHARED-COGNITIVE-EXCHANGE-REFERENCE-V2",
+    "_GREENY_DIAGNOSTIC_20260809_233236",
+    "_raios-a17-cursor-parallel",
+    "_raios-a17-integration-wave",
+    "_raios-a17-native-cortex",
+    "app",
+    "application",
+    "archive",
+    "canonical",
+    "data",
+    "database",
+    "docs",
+    "domain",
+    "eos-core",
+    "governance",
+    "greenlines_brain",
+    "guardrails",
+    "intelligence",
+    "lib",
+    "migration",
+    "prisma",
+    "scripts",
+    "tests"
+  ],
+  "tracked_files": 1951,
+  "version_candidates": [
+    {
+      "assumed_newer": false,
+      "assumed_older": false,
+      "evidence": [
+        "page.tsx",
+        "layout.tsx"
+      ],
+      "kind": "application",
+      "path": "/workspace/app",
+      "root_id": "root:54108c00e3a3777216bb21218ed1961b",
+      "score": 3
+    },
+    {
+      "assumed_newer": false,
+      "assumed_older": false,
+      "evidence": [
+        "system_manifest.json"
+      ],
+      "kind": "canonical-data",
+      "path": "/workspace/canonical",
+      "root_id": "root:df5e3792c3627b4bf94722d5417b977e",
+      "score": 3
+    },
+    {
+      "assumed_newer": false,
+      "assumed_older": false,
+      "evidence": [
+        "production-manifest-v1.json"
+      ],
+      "kind": "archive-eos",
+      "path": "/workspace/archive/old_folders/GREENY-LIFE-EOS-PRODUCTION",
+      "root_id": "root:348ce22628f92ea43fd23f0fa5beb159",
+      "score": 3
+    },
+    {
+      "assumed_newer": false,
+      "assumed_older": false,
+      "evidence": [
+        "continuity"
+      ],
+      "kind": "raios-organism",
+      "path": "/workspace/RAIOS/V9",
+      "root_id": "root:929b79590f5fd89947138e214ae7b001",
+      "score": 3
+    },
+    {
+      "assumed_newer": false,
+      "assumed_older": false,
+      "evidence": [
+        "package.json"
+      ],
+      "kind": "repo-manifest",
+      "path": "/workspace",
+      "root_id": "root:3e84370a49b05391c81e700c4c7d023e",
+      "score": 2
+    },
+    {
+      "assumed_newer": false,
+      "assumed_older": false,
+      "evidence": [],
+      "kind": "application-alt",
+      "path": "/workspace/application",
+      "root_id": "root:8100935cccc6dc7a8b0af73b58d102e9",
+      "score": 2
+    }
+  ]
+}
