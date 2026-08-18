@@ -2,12 +2,14 @@
   "created_in_this_package": [
     "File Intelligence SPI",
     "FileObject + deterministic ids",
+    "Magika/Tika detect-only adapters",
     "staged search compiler",
     "version differential",
     "shadow modification txn",
-    "archive lineage records"
+    "archive lineage records",
+    "shared cognitive state contract"
   ],
-  "generated_at": "2026-08-18T19:44:36Z",
+  "generated_at": "2026-08-18T20:11:48Z",
   "not_duplicated": [
     "RAIOS/V9 runtime",
     "CCEE var",
@@ -62,6 +64,24 @@
     {
       "name": "file(1)",
       "role": "signature fallback; Magika missing"
+    },
+    {
+      "action": "WRAP",
+      "name": "magika",
+      "role": "preferred type detector; WRAP present, binary missing"
+    },
+    {
+      "action": "WRAP",
+      "name": "tika",
+      "role": "document extract; WRAP present, jar missing, no OCR"
+    },
+    {
+      "name": "jq",
+      "role": "JSON config canonical diff when present"
+    },
+    {
+      "name": "yq",
+      "role": "YAML config canonical diff when present"
     }
   ]
 }

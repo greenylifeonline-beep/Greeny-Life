@@ -311,6 +311,9 @@ class FileIntelligenceTests(unittest.TestCase):
         report = run_doctor(self.root / "doctor", REPO, corpus)
         self.assertEqual(report["status"], "GATES_SATISFIED")
         self.assertNotEqual(report["status"], "PASS")
+        self.assertLessEqual(float(report.get("documents_extractable_pct") or 0), 100.0)
+        self.assertLessEqual(float(report.get("code_structurally_parsed_pct") or 0), 100.0)
+        self.assertFalse(report["cognition"]["ccee_wal_writes"])
 
 
 if __name__ == "__main__":

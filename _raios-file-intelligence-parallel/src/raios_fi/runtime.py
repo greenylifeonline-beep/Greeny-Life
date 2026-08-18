@@ -99,17 +99,20 @@ class FileIntelligenceRuntime:
         groups = duplicate_groups(self.store)
         cognition = shared_cognitive_state(self.repo, self.store)
         classes = sorted({str(f.get("class")) for f in files if f.get("class")})
-        docs = sum(1 for f in files if f.get("class") in {"DOCUMENT", "DATA"} or (f.get("language") or "") in {"pdf", "html", "xml", "markdown"})
-        extracted_ok = sum(1 for f in files if f.get("extract_status") in {"EXTRACTED", "MANIFEST"})
+        doc_files = [
+            f
+            for f in files
+            if f.get("class") in {"DOCUMENT", "DATA", "ARCHIVE"}
+            or (f.get("language") or "") in {"pdf", "html", "xml", "markdown"}
+        ]
+        extracted_docs = sum(1 for f in doc_files if f.get("extract_status") in {"EXTRACTED", "MANIFEST"})
         parsed_ok = sum(1 for f in files if f.get("class") == "CODE" and f.get("parser") and f.get("parser") != "unavailable")
-        code_denom = code_n or 1
-        doc_denom = docs or 1
         return {
             "files": len(files),
             "types_recognized": classes,
             "text_searchable_pct": round(100.0 * text_n / n, 2),
-            "code_structurally_parsed_pct": round(100.0 * parsed_ok / code_denom, 2) if code_n else 0.0,
-            "documents_extractable_pct": round(100.0 * extracted_ok / doc_denom, 2) if docs else 0.0,
+            "code_structurally_parsed_pct": round(100.0 * parsed_ok / code_n, 2) if code_n else 0.0,
+            "documents_extractable_pct": round(100.0 * extracted_docs / len(doc_files), 2) if doc_files else 0.0,
             "unknown": unknown_n,
             "code_files": code_n,
             "symbols": symbols,

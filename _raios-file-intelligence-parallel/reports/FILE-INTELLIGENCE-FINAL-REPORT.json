@@ -9,10 +9,6 @@
       "reason": "JS ecosystem present; not used as parser"
     },
     {
-      "name": "jq/yq",
-      "reason": "available for config diffs; not wired as default"
-    },
-    {
       "name": "greenlines_brain/dna/ast_analyzer.py",
       "reason": "historical; not imported to avoid collision"
     },
@@ -32,13 +28,14 @@
   ],
   "IMPLEMENTED": [
     "read-only git ls-files discovery + FileObject",
-    "signature+parser-probe type detection (extension never sole authority)",
-    "stdlib text extract + zip manifest",
-    "python ast symbols; heuristic TS/JS/PS1/SQL",
-    "SQLite+FTS5 index and parser cache keyed by sha256+parser_version",
+    "Magika adapter WRAP (detect-only); signature+parser-probe fallback; extension never sole authority",
+    "Tika adapter WRAP (detect-only, no OCR); stdlib decode + zip manifest fallback",
+    "python ast symbols; heuristic TS/JS/PS1/SQL; GNU Emacs ctags rejected as Universal Ctags",
+    "SQLite+FTS5 index and parser cache keyed by sha256+parser_version (type cache no longer clobbers parse cache)",
     "staged search plan (metadata, filename, rg, symbols, fts5); STAGE 8 fail-closed",
     "two-version detector without assuming newer",
-    "text/symbol/schema comparison",
+    "text/symbol/schema/config comparison (jq/yq structural when present)",
+    "proven duplicate groups by identical sha256",
     "rule-first classification",
     "evidence-based architecture edges PROVEN/INFERRED/UNKNOWN",
     "shadow modification txn + rollback; governed apply forbidden",
@@ -48,15 +45,16 @@
     "file knowledge graph",
     "query-plan JSON compiler",
     "tool economy (LLM not default parser)",
-    "idle loop without model calls",
+    "shared cognitive state contract (identity shared; CCEE WAL not merged)",
+    "idle loop without model calls; foreground preempts",
     "FILE-INTELLIGENCE-DOCTOR fail-closed"
   ],
   "MISSING": [
-    "magika",
-    "apache tika",
+    "magika binary/python package (adapter present)",
+    "apache tika jar/cli (adapter present; java is not tika)",
     "tree-sitter",
-    "universal ctags",
-    "ast-grep",
+    "universal ctags (GNU Emacs ctags present and rejected)",
+    "ast-grep (/usr/bin/sg is Linux set-group, not ast-grep)",
     "semgrep",
     "7z",
     "fd",
@@ -69,7 +67,8 @@
     "tree-sitter TS/TSX accuracy vs heuristic",
     "Ollama STAGE 8 synthesis over evidence bundle",
     "full-repo ingest beyond fixture/capped scan",
-    "Windows PowerShell A17 live harvest coexistence on operator machine"
+    "Windows PowerShell A17 live harvest coexistence on operator machine",
+    "shared storage merge with CCEE (intentionally not merged)"
   ],
   "REUSED": [
     "git",
@@ -78,16 +77,18 @@
     "sqlite3 FTS5",
     "zipfile",
     "file(1) as Magika fallback",
+    "jq structural JSON canonicalization when present",
+    "yq YAML canonicalization when present",
     "CAS pattern from _raios-a17-integration-wave",
     "fail-closed / doctor pattern from CCEE"
   ],
   "canonical": false,
   "doctor_status": "GATES_SATISFIED",
   "false_pass_token_emitted": false,
-  "generated_at": "2026-08-18T19:44:39Z",
+  "generated_at": "2026-08-18T20:11:50Z",
   "integrity": {
-    "doctor_sha256": "08f985e90676968338b36ed5f3cbca4908a643dd43d52bbe6bc5f43f1275f98f",
-    "version_sha256": "a7303af4aa90a65c2cda4d9e2abd6d5b965d9f016e886e35878a74b52bf6f49e"
+    "doctor_sha256": "e49fa1b4e1fea2984f075479b514ed051ff0556fed07be4e2beae965b34cb290",
+    "version_sha256": "83f7677c46e311a4d3e3d496e8d804c09031f2c03ad691646f6f79739caa5e0f"
   },
   "not_scaffolding": true,
   "organism_id": "raios.organism.v9",
