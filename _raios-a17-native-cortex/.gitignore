@@ -1,0 +1,14 @@
+ccee/var/
+runtime/certification/*.tmp
+__pycache__/
+*.pyc
+.pytest_cache/
+*.sqlite
+*.sqlite-wal
+*.sqlite-shm
+*.jsonl
+evidence/successes/success-*.json
+evidence/failures/failure-*.json
+evidence/lineage/*.json
+!evidence/failures/HISTORICAL-*.json
+
