@@ -161,6 +161,22 @@ class IndexStore:
         if not any("FTS5" in str(o).upper() for o in opts):
             raise FailClosed("FTS5_UNAVAILABLE")
         self.conn.executescript(DDL)
+        cols = {r[1] for r in self.conn.execute("PRAGMA table_info(parser_cache)")}
+        if "classifier_version" not in cols or "kind" not in cols:
+            self.conn.execute("DROP TABLE IF EXISTS parser_cache")
+            self.conn.executescript(
+                """
+                CREATE TABLE IF NOT EXISTS parser_cache (
+                    sha256 TEXT NOT NULL,
+                    parser_version TEXT NOT NULL,
+                    classifier_version TEXT NOT NULL,
+                    provider_version TEXT NOT NULL,
+                    kind TEXT NOT NULL,
+                    payload_json TEXT NOT NULL,
+                    PRIMARY KEY (sha256, parser_version, classifier_version, provider_version, kind)
+                );
+                """
+            )
         self.cache_hits = 0
         self.cache_misses = 0
 
