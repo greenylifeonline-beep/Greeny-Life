@@ -44,9 +44,9 @@ class RealityAuditor:
             "main_cortex_target": CORTEX_TARGET,
             "teacher_corps_constitution": list(TEMPORARY_TEACHERS),
             "teachers_still_present": (
-                Discovery.PENDING.value
-                if disc.get("A17.4") == Discovery.MISSING.value
-                else Discovery.FOUND.value
+                Discovery.FOUND.value
+                if disc.get("A17.4") == Discovery.FOUND.value
+                else Discovery.PENDING.value
             ),
             "teacher_delete_allowed": False,
             "mastered_capability_count": mastered,

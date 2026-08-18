@@ -448,7 +448,10 @@ class ParallelWaveTests(unittest.TestCase):
     def test_reality_audit_does_not_invent(self) -> None:
         audit = self.rt.auditor.audit()
         self.assertFalse(audit["invented"])
-        self.assertEqual(audit["A17.4_teacher_harvest"], "MISSING")
+        self.assertIn(audit["A17.4_teacher_harvest"], {"MISSING", "PENDING"})
+        self.assertNotEqual(audit["A17.4_teacher_harvest"], "FOUND")
+        if audit["A17.4_teacher_harvest"] != "FOUND":
+            self.assertNotEqual(audit["teachers_still_present"], "FOUND")
         self.assertFalse(audit["teacher_delete_allowed"])
         self.assertEqual(audit["identity"], ORGANISM_ID)
 

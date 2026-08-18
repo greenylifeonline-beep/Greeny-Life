@@ -66,6 +66,32 @@ def classify_hit(line: str) -> str:
     return "needs_review"
 
 
+def classify_hit_with_context(line: str) -> str:
+    """Same-line bucket plus a short look-ahead for multi-line negative controls."""
+    base = classify_hit(line)
+    if base != "reconnectable_d1":
+        return base
+    parts = line.split(":", 2)
+    if len(parts) < 2:
+        return base
+    path = Path(parts[0])
+    try:
+        lineno = int(parts[1])
+    except ValueError:
+        return base
+    if not path.is_file():
+        return base
+    try:
+        rows = path.read_text(encoding="utf-8", errors="replace").splitlines()
+    except OSError:
+        return base
+    start = max(0, lineno - 1)
+    window = "\n".join(rows[start : min(len(rows), start + 8)])
+    if "errors='strict'" in window or 'errors="strict"' in window:
+        return "negative_control"
+    return base
+
+
 class LiveCognitiveLoop:
     def __init__(self, ccee: Any, repo_root: Path | None = None) -> None:
         self.ccee = ccee
@@ -180,7 +206,7 @@ class LiveCognitiveLoop:
             lines = [ln for ln in lines if not _skip(ln)]
         buckets: dict[str, list[str]] = defaultdict(list)
         for line in lines:
-            buckets[classify_hit(line)].append(line)
+            buckets[classify_hit_with_context(line)].append(line)
         reconnectable = buckets.get("reconnectable_d1") or []
         family = classify_failure(
             {

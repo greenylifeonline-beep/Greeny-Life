@@ -14,7 +14,7 @@ from ccee.config import FailClosed  # noqa: E402
 from ccee.engine import CCEE  # noqa: E402
 from ccee.meta_learning import MetaLearning  # noqa: E402
 from ccee.schemas import CognitiveTurn  # noqa: E402
-from ccee.training_loop import LiveCognitiveLoop, classify_hit  # noqa: E402
+from ccee.training_loop import LiveCognitiveLoop, classify_hit, classify_hit_with_context  # noqa: E402
 
 
 class TrainingLoopTests(unittest.TestCase):
@@ -103,6 +103,11 @@ class TrainingLoopTests(unittest.TestCase):
             "reconnectable_d1",
         )
         self.assertEqual(classify_hit("_raios-a17-native-cortex/ccee/process_kernel.py:7:and forbids brain.py's errors='ignore'"), "comment")
+
+    def test_classify_hit_looks_ahead_for_strict_errors(self) -> None:
+        line = str(REPO / "_raios-a17-native-cortex" / "tests" / "test_nervous_system.py") + ":42:                text=True,"
+        self.assertEqual(classify_hit(line), "reconnectable_d1")
+        self.assertEqual(classify_hit_with_context(line), "negative_control")
 
     def test_taught_strategy_skips_naive_on_transfer_task(self) -> None:
         self.loop.ask_raios(task_id="GL-TEACH", intent="x")
