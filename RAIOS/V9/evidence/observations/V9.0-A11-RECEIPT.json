@@ -1,0 +1,54 @@
+{
+  "schema": "raios.v9.a11.receipt.v1",
+  "phase": "V9.0-A11",
+  "certification_status": "PASS",
+  "certification_mode": "FAIL_CLOSED",
+  "timestamp": "2026-08-18T08:06:17.745577+00:00",
+  "repository_sha": "fb130e232246a00b531835f529f25e4edfae2854",
+  "predecessor": {
+    "phase": "V9.0-A10",
+    "sha256": "5e84e1e6ceca02a88a1fc5a87309277c767e3b6e5400dcefb7349a792932b686",
+    "status": "PASS"
+  },
+  "runtime": {
+    "skill_id": "skill:ff:07ed310cc0410694d6e681287ad0b4d9",
+    "attempt_count": 12,
+    "wal_events": 12,
+    "experiences": 12,
+    "lease_renewals": 1,
+    "rollbacks": 1,
+    "remaining_action_budget": 0
+  },
+  "guardian": {
+    "low_confidence_abstention": true,
+    "scope_rejection": true,
+    "duplicate_rejection": true,
+    "idempotent_retry": true,
+    "failure_rollback": true,
+    "failure_rate_circuit_breaker": true,
+    "action_budget": true,
+    "authorization_lease": true,
+    "confidence_70_rejected": true
+  },
+  "safety": {
+    "lifecycle": "LIMITED_ACT_OBSERVED",
+    "active": false,
+    "production_active": false,
+    "production_mutation": false,
+    "canonical_mutation": false,
+    "automatic_promotion": false
+  },
+  "guardian_report": {
+    "path": "RAIOS\\V9\\runtime\\a11\\reports\\CONTINUOUS-GUARDIAN-REPORT.json",
+    "sha256": "28c1715b92c8f99dbffb7e0b0e601f0b706c29a9098d4a397cff493f299ace74"
+  },
+  "epistemic_limits": [
+    "A11 executed limited actions only against explicit sandbox fixtures.",
+    "A11 does not authorize unrestricted production execution.",
+    "Every attempted action was recorded as Experience.",
+    "A failed action was rolled back and emitted a Failure Signature and Recovery Skill Candidate.",
+    "A11 does not authorize canonical mutation.",
+    "A11 does not authorize automatic promotion.",
+    "Lifecycle remains below ACTIVE."
+  ]
+}

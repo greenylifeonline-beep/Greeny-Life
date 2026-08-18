@@ -1,0 +1,31 @@
+{
+  "schema": "raios.experience.v3",
+  "experience_id": "exp:1327ea0a-d38f-4155-8c16-db7aa33321fa",
+  "source_event_id": "1327ea0a-d38f-4155-8c16-db7aa33321fa",
+  "event_type": "FAILURE",
+  "correlation_id": "310152b5-1378-42d9-8b1d-4d677c4435c8",
+  "causation_id": null,
+  "actor": "RAIOS.A5.CERTIFIER",
+  "intent": "Read required architecture artifact",
+  "tool": "RAIOS.FILE.READER",
+  "model": null,
+  "input_ref": null,
+  "output_ref": {
+    "exception_type": "FileNotFoundError",
+    "message": "Required architecture file 202 was not found"
+  },
+  "success": false,
+  "evidence_refs": [
+    "RAIOS/V9/runtime/a5_certification.py"
+  ],
+  "pre_state": null,
+  "post_state": null,
+  "latency_ms": null,
+  "resource_usage": null,
+  "confidence": 1.0,
+  "unresolved_flags": [
+    "SOURCE_MISSING"
+  ],
+  "repository_sha": "fb130e232246a00b531835f529f25e4edfae2854",
+  "captured_at": "2026-08-18T07:12:29.613931+00:00"
+}

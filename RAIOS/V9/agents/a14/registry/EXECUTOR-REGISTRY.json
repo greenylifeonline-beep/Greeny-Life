@@ -1,0 +1,92 @@
+{
+  "schema": "raios.a14.executor-registry.v1",
+  "timestamp": "2026-08-18T09:13:21.454708+00:00",
+  "repository_sha": "fb130e232246a00b531835f529f25e4edfae2854",
+  "source_registry": "RAIOS\\V9\\agents\\a13\\registry\\UNIFIED-AGENT-CAPABILITY-REGISTRY.json",
+  "executors": {
+    "LOCAL_DETERMINISTIC": {
+      "executor_id": "LOCAL_DETERMINISTIC",
+      "kind": "LOCAL_TOOL",
+      "availability": "AVAILABLE",
+      "execution_mode": "DIRECT",
+      "capabilities": [
+        "read",
+        "search",
+        "inspect",
+        "test",
+        "git",
+        "powershell",
+        "python",
+        "deterministic_execution"
+      ],
+      "production_authorized": false
+    },
+    "CLINE": {
+      "executor_id": "CLINE",
+      "kind": "IDE_AGENT",
+      "availability": "IDE_EXTENSION_PRESENT",
+      "execution_mode": "EXTERNAL_AGENT",
+      "capabilities": [
+        "multi_file_edits",
+        "terminal_execution",
+        "debug",
+        "implementation"
+      ],
+      "production_authorized": false
+    },
+    "CLAUDE_CODE": {
+      "executor_id": "CLAUDE_CODE",
+      "kind": "AI_AGENT",
+      "availability": "CLI_AVAILABLE",
+      "execution_mode": "EXTERNAL_AGENT",
+      "capabilities": [
+        "deep_reasoning",
+        "debug",
+        "architecture_review",
+        "code_reasoning"
+      ],
+      "production_authorized": false
+    },
+    "GEMINI": {
+      "executor_id": "GEMINI",
+      "kind": "AI_AGENT",
+      "availability": "CLI_AVAILABLE",
+      "execution_mode": "EXTERNAL_AGENT",
+      "capabilities": [
+        "independent_review",
+        "alternative_analysis",
+        "execution_support"
+      ],
+      "production_authorized": false
+    },
+    "CURSOR": {
+      "executor_id": "CURSOR",
+      "kind": "OPTIONAL_AI_AGENT",
+      "availability": "IDE_EXTENSION_PRESENT",
+      "execution_mode": "OPTIONAL_EXTERNAL_AGENT",
+      "capabilities": [
+        "repository_execution",
+        "agentic_edit_test_loop"
+      ],
+      "production_authorized": false
+    },
+    "RAIOS_INTERNAL": {
+      "executor_id": "RAIOS_INTERNAL",
+      "kind": "COGNITIVE_CONTROL",
+      "availability": "AVAILABLE",
+      "execution_mode": "INTERNAL",
+      "capabilities": [
+        "continuity",
+        "governance",
+        "experience",
+        "evidence",
+        "failure_memory",
+        "routing"
+      ],
+      "production_authorized": false
+    }
+  },
+  "cursor_required": false,
+  "production_activation": false,
+  "canonical_mutation": false
+}

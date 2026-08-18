@@ -1,0 +1,22 @@
+{
+  "schema": "raios.a14.unified-agent-execution-report.v1",
+  "timestamp": "2026-08-18T09:13:22.267444+00:00",
+  "task_count": 30,
+  "completed_results": 30,
+  "fallbacks": 4,
+  "independent_verifications": 2,
+  "duplicate_rejections": 2,
+  "routing_abstentions": 1,
+  "scope_rejections": 1,
+  "task_experiences": 38,
+  "single_primary_executor": true,
+  "task_ownership_lock": true,
+  "result_normalization": true,
+  "handoff_preservation": true,
+  "idempotent_retry": true,
+  "external_credits_consumed": false,
+  "production_mutation": false,
+  "canonical_mutation": false,
+  "automatic_promotion": false,
+  "lifecycle": "GOVERNED_AGENT_EXECUTION_RUNTIME"
+}

@@ -1,0 +1,149 @@
+{
+  "schema": "raios.experience.v2",
+  "intent": "Verify capability using current and historical evidence",
+  "action": "CAPABILITY_VERIFY",
+  "tool": "RAIOS.V9.A3",
+  "environment": {
+    "timestamp": "2026-08-18T07:01:25.453770+00:00",
+    "repository": "C:\\Users\\Ghanam\\Documents\\Codex\\Greeny-Life-Repair",
+    "repository_sha": "fb130e232246a00b531835f529f25e4edfae2854",
+    "branch": "codex-clean",
+    "python": "3.14.7",
+    "platform": "win32",
+    "pid": 4880
+  },
+  "input": {
+    "query": "Migration Decision Engine",
+    "limit": 80
+  },
+  "expected_result": null,
+  "actual_result": {
+    "schema": "raios.capability-verification.v1",
+    "query": "Migration Decision Engine",
+    "evidence_count": 15,
+    "current_tree_evidence": 2,
+    "historical_evidence": 13,
+    "evidence": [
+      {
+        "source": "CURRENT_TREE",
+        "path": "ALL_SOURCE_CODE.txt",
+        "kind": "CONTENT",
+        "authority": "CURRENT_OBSERVATION"
+      },
+      {
+        "source": "CURRENT_TREE",
+        "path": "canonical\\intelligence\\intelligence\\core\\report-writer.ts",
+        "kind": "CONTENT",
+        "authority": "CURRENT_OBSERVATION"
+      },
+      {
+        "source": "GIT_HISTORY",
+        "path": "ALL_SOURCE_CODE.txt",
+        "commit": "d4ca29b8dfb42837bfb8869cea2929ba1d74b4a0",
+        "mechanism": "GIT_HISTORICAL_CONTENT",
+        "authority": "HISTORICAL_EVIDENCE"
+      },
+      {
+        "source": "GIT_HISTORY",
+        "path": "canonical/intelligence/intelligence/core/report-writer.ts",
+        "commit": "4fa5d22640315de2b547fa8a2d50855d01b4ed87",
+        "mechanism": "GIT_HISTORICAL_CONTENT",
+        "authority": "HISTORICAL_EVIDENCE"
+      },
+      {
+        "source": "GIT_HISTORY",
+        "path": ".architecture-backups/pre-unified-intelligence-20260726-145157/intelligence/intelligence/core/report-writer.ts",
+        "commit": "22436d7f34d90573c93d5ba04666a772c35a1aa6",
+        "mechanism": "GIT_HISTORICAL_CONTENT",
+        "authority": "HISTORICAL_EVIDENCE"
+      },
+      {
+        "source": "GIT_HISTORY",
+        "path": ".architecture-backups/pre-unified-intelligence-20260726-145157/intelligence/intelligence/reports/migration-decision.json",
+        "commit": "22436d7f34d90573c93d5ba04666a772c35a1aa6",
+        "mechanism": "GIT_HISTORICAL_CONTENT",
+        "authority": "HISTORICAL_EVIDENCE"
+      },
+      {
+        "source": "GIT_HISTORY",
+        "path": ".architecture-backups/pre-unified-intelligence-20260726-145157/scripts/scripts/migration/migration-decision-engine.js",
+        "commit": "22436d7f34d90573c93d5ba04666a772c35a1aa6",
+        "mechanism": "GIT_HISTORICAL_CONTENT",
+        "authority": "HISTORICAL_EVIDENCE"
+      },
+      {
+        "source": "GIT_HISTORY",
+        "path": "intelligence/core/report-writer.ts",
+        "commit": "879ed137290751643988444e526cc89c8ba7776c",
+        "mechanism": "GIT_HISTORICAL_CONTENT",
+        "authority": "HISTORICAL_EVIDENCE"
+      },
+      {
+        "source": "GIT_HISTORY",
+        "path": "intelligence/reports/migration-decision.json",
+        "commit": "879ed137290751643988444e526cc89c8ba7776c",
+        "mechanism": "GIT_HISTORICAL_CONTENT",
+        "authority": "HISTORICAL_EVIDENCE"
+      },
+      {
+        "source": "GIT_HISTORY",
+        "path": "reports/migration-decision.json",
+        "commit": "879ed137290751643988444e526cc89c8ba7776c",
+        "mechanism": "GIT_HISTORICAL_CONTENT",
+        "authority": "HISTORICAL_EVIDENCE"
+      },
+      {
+        "source": "GIT_HISTORY",
+        "path": "project-summary.txt",
+        "commit": "a253cd6d1be4da403235fddd1e8875ee5e9e7cb2",
+        "mechanism": "GIT_HISTORICAL_CONTENT",
+        "authority": "HISTORICAL_EVIDENCE"
+      },
+      {
+        "source": "GIT_HISTORY",
+        "path": "reports/cleanup-actions.json",
+        "commit": "a253cd6d1be4da403235fddd1e8875ee5e9e7cb2",
+        "mechanism": "GIT_HISTORICAL_CONTENT",
+        "authority": "HISTORICAL_EVIDENCE"
+      },
+      {
+        "source": "GIT_HISTORY",
+        "path": "reports/project-decisions.json",
+        "commit": "a253cd6d1be4da403235fddd1e8875ee5e9e7cb2",
+        "mechanism": "GIT_HISTORICAL_CONTENT",
+        "authority": "HISTORICAL_EVIDENCE"
+      },
+      {
+        "source": "GIT_HISTORY",
+        "path": "reports/project-roadmap.json",
+        "commit": "a253cd6d1be4da403235fddd1e8875ee5e9e7cb2",
+        "mechanism": "GIT_HISTORICAL_CONTENT",
+        "authority": "HISTORICAL_EVIDENCE"
+      },
+      {
+        "source": "GIT_HISTORY",
+        "path": "scripts/migration/migration-decision-engine.js",
+        "commit": "a253cd6d1be4da403235fddd1e8875ee5e9e7cb2",
+        "mechanism": "GIT_HISTORICAL_CONTENT",
+        "authority": "HISTORICAL_EVIDENCE"
+      }
+    ],
+    "confidence": 0.95,
+    "unresolved_flags": [],
+    "epistemic_status": "EVIDENCE_BOUNDED",
+    "canonical_promotion": false,
+    "decision": "SUPPORTED"
+  },
+  "success": true,
+  "failure_signature": null,
+  "evidence_refs": [],
+  "lessons": [],
+  "latency_ms": 8295.618,
+  "pre_state": null,
+  "post_state": null,
+  "unresolved_flags": [],
+  "confidence": 1.0,
+  "replayable": true,
+  "captured_at": "2026-08-18T07:01:25.586472+00:00",
+  "experience_id": "4fd2f23543c6f653a1fcbb7d71671724d08358d6e10d68b45e022e813919298e"
+}

@@ -1,0 +1,1201 @@
+{
+  "schema": "raios.a9.dataset-split.v1",
+  "name": "MINING_SET",
+  "count": 25,
+  "records": [
+    {
+      "artifact_id": "artifact:06fb157c5798c3ca04c87dd51a0d5c20",
+      "source_path": "RAIOS/V9/evolution/a5/failure-families/ff_a5ee759625987588a5b3ca05e0eb9c23.json",
+      "source_sha256": "06fb157c5798c3ca04c87dd51a0d5c20c038806697990852190649c9932fc2a6",
+      "artifact_class": "FAILURE",
+      "schema": "raios.failure-family.v1",
+      "failure_family": null,
+      "payload": {
+        "schema": "raios.failure-family.v1",
+        "family_id": "ff:a5ee759625987588a5b3ca05e0eb9c23",
+        "geometry": {
+          "event_type": "FAILURE",
+          "tool": "raios.json.parser",
+          "exception_type": "jsondecodeerror",
+          "message": "malformed json at line <n>",
+          "unresolved_flags": [
+            "parse_failed"
+          ]
+        },
+        "occurrence_count": 1,
+        "successful_recoveries": 0,
+        "failed_recoveries": 0,
+        "source_event_ids": [
+          "28898655-1ba0-4886-82ce-db32c7767cbd"
+        ],
+        "tools": [
+          "RAIOS.JSON.PARSER"
+        ],
+        "repository_shas": [
+          "fb130e232246a00b531835f529f25e4edfae2854"
+        ],
+        "first_seen": "2026-08-18T07:12:29.709559+00:00",
+        "last_seen": "2026-08-18T07:12:29.709559+00:00",
+        "status": "ACTIVE"
+      },
+      "observed_from_real_v9_artifact": true,
+      "record_sha256": "dd1c635ca8269a21ed26de36cea62964cf441af4372583e1ed89f17dc85d7f79"
+    },
+    {
+      "artifact_id": "artifact:0d7eb5a1c39f39fbe4e87acece91b2f1",
+      "source_path": "RAIOS/V9/experience/pending/7b521756b979b0711e95d68fedd39b6fc169dd30913cc28eb6b29747f272a7cd.json",
+      "source_sha256": "0d7eb5a1c39f39fbe4e87acece91b2f1bbfa0edfa1fbd5cddfa75e18cb3b08d9",
+      "artifact_class": "EXPERIENCE",
+      "schema": "raios.experience.v9",
+      "failure_family": null,
+      "payload": {
+        "schema": "raios.experience.v9",
+        "experience_id": "7b521756b979b0711e95d68fedd39b6fc169dd30913cc28eb6b29747f272a7cd",
+        "timestamp": "2026-08-18T06:16:15.766297+00:00",
+        "intent": "Repair V9 self-reading after UTF-8 BOM parsing failure",
+        "context": {
+          "repository": "C:\\Users\\Ghanam\\Documents\\Codex\\Greeny-Life-Repair",
+          "branch": "codex-clean",
+          "repository_sha": "fb130e232246a00b531835f529f25e4edfae2854",
+          "v9_phase": "V9.0-A"
+        },
+        "plan": [],
+        "tools": [
+          "RAIOS V9 Reader",
+          "PowerShell"
+        ],
+        "observations": [
+          "RAIOS self-read successfully opened the architecture artifact but JSON semantic parsing failed.",
+          "PowerShell-generated UTF-8 JSON contained a BOM."
+        ],
+        "failures": [],
+        "corrections": [],
+        "result": {
+          "status": "RECORDED"
+        },
+        "evidence": [
+          "RAIOS/V9/architecture/RAIOS-V9-ARCHITECTURE.json"
+        ],
+        "lesson": [
+          "Text decoding must be format-aware and tolerant of UTF-8 BOM.",
+          "Successful file access must not be promoted to successful semantic parsing."
+        ],
+        "reusability": {
+          "assessment": "UNASSESSED",
+          "repeat_count": 1,
+          "candidate_for_compilation": false
+        },
+        "skill_candidate": null,
+        "status": "PENDING_VALIDATION"
+      },
+      "observed_from_real_v9_artifact": true,
+      "record_sha256": "194d1251c0f4a7b5028bc453fb8c398f812804084b266dc3e21acc697f887e9b"
+    },
+    {
+      "artifact_id": "artifact:ea0f19f191b0b30d84a10fffc45179c2",
+      "source_path": "RAIOS/V9/experience/pending/63d4f334563b11e7ad3733adb8c6246caca78462ec52b7684d6577855315c675.json",
+      "source_sha256": "ea0f19f191b0b30d84a10fffc45179c267f998171750980ae68d946b556203eb",
+      "artifact_class": "EXPERIENCE",
+      "schema": "raios.experience.v9",
+      "failure_family": null,
+      "payload": {
+        "schema": "raios.experience.v9",
+        "experience_id": "63d4f334563b11e7ad3733adb8c6246caca78462ec52b7684d6577855315c675",
+        "timestamp": "2026-08-18T06:26:07.755234+00:00",
+        "intent": "Certify V9.0-A2 after repairing missing receipt",
+        "context": {
+          "repository": "C:\\Users\\Ghanam\\Documents\\Codex\\Greeny-Life-Repair",
+          "branch": "codex-clean",
+          "repository_sha": "fb130e232246a00b531835f529f25e4edfae2854",
+          "v9_phase": "V9.0-A"
+        },
+        "plan": [],
+        "tools": [
+          "RAIOS V9 CLI",
+          "PowerShell",
+          "Git"
+        ],
+        "observations": [
+          "Startup Gate was independently revalidated.",
+          "JSON self-reading passed with BOM-tolerant decoding.",
+          "Hybrid search proved Git historical retrieval.",
+          "Evolution remained candidate-only with canonical_mutation=false."
+        ],
+        "failures": [],
+        "corrections": [],
+        "result": {
+          "status": "RECORDED"
+        },
+        "evidence": [
+          "RAIOS/V9/evidence/observations/V9.0-A2-RECEIPT.json"
+        ],
+        "lesson": [
+          "Phase certification requires a durable machine-readable receipt and independent readback.",
+          "Console completion text is not certification evidence."
+        ],
+        "reusability": {
+          "assessment": "UNASSESSED",
+          "repeat_count": 1,
+          "candidate_for_compilation": false
+        },
+        "skill_candidate": null,
+        "status": "PENDING_VALIDATION"
+      },
+      "observed_from_real_v9_artifact": true,
+      "record_sha256": "4843cde51ebd2fe2dae3308be2a6e679af546b72a7cc9fbca70402718d32d1e2"
+    },
+    {
+      "artifact_id": "artifact:06d1a132786e5bfacfc7c9f033357c60",
+      "source_path": "RAIOS/V9/experience/pending/b4a12f022b79d783d0d5ca9d1f35670c847e35549f7f61d518781ec2e5a566f2.json",
+      "source_sha256": "06d1a132786e5bfacfc7c9f033357c60ea75bc5e92c72ca42d3dc8bd6d264a04",
+      "artifact_class": "EXPERIENCE",
+      "schema": "raios.experience.v9",
+      "failure_family": null,
+      "payload": {
+        "schema": "raios.experience.v9",
+        "experience_id": "b4a12f022b79d783d0d5ca9d1f35670c847e35549f7f61d518781ec2e5a566f2",
+        "timestamp": "2026-08-18T06:24:09.523784+00:00",
+        "intent": "Complete V9.0-A3 evidence-native semantic understanding bootstrap",
+        "context": {
+          "repository": "C:\\Users\\Ghanam\\Documents\\Codex\\Greeny-Life-Repair",
+          "branch": "codex-clean",
+          "repository_sha": "fb130e232246a00b531835f529f25e4edfae2854",
+          "v9_phase": "V9.0-A"
+        },
+        "plan": [],
+        "tools": [
+          "RAIOS.SemanticEngine.v1",
+          "RAIOS.CapabilityVerifier.v1",
+          "Git"
+        ],
+        "observations": [
+          "RAIOS can now represent claims separately from evidence and implementation.",
+          "Historical and current evidence are classified separately.",
+          "Contradictory claims become explicit unresolved contradiction objects.",
+          "Capability maturity is evidence-bounded and does not infer runtime or production success from artifact presence."
+        ],
+        "failures": [],
+        "corrections": [],
+        "result": {
+          "status": "RECORDED"
+        },
+        "evidence": [
+          "RAIOS/V9/evidence/observations/V9.0-A3-RECEIPT.json"
+        ],
+        "lesson": [
+          "Semantic understanding is the controlled transformation of observations into bounded claims and evidence relationships, not free-form inference.",
+          "RAIOS should abstain at the strongest maturity level that evidence actually supports."
+        ],
+        "reusability": {
+          "assessment": "UNASSESSED",
+          "repeat_count": 1,
+          "candidate_for_compilation": false
+        },
+        "skill_candidate": null,
+        "status": "PENDING_VALIDATION"
+      },
+      "observed_from_real_v9_artifact": true,
+      "record_sha256": "d8c477fe329d7fe3b155614e0a1dd38163388f8e6fe16d5a176444815419bb57"
+    },
+    {
+      "artifact_id": "artifact:170737bc53a38269cd0494f924ae8a1e",
+      "source_path": "RAIOS/V9/evolution/a5/experience-patterns/pattern_d368876f6747e128e7b5139dede58934.json",
+      "source_sha256": "170737bc53a38269cd0494f924ae8a1eb21248271f2bb5a6d962b773408742f2",
+      "artifact_class": "EXPERIENCE",
+      "schema": "raios.experience-pattern.v1",
+      "failure_family": null,
+      "payload": {
+        "schema": "raios.experience-pattern.v1",
+        "pattern_id": "pattern:d368876f6747e128e7b5139dede58934",
+        "event_type": "RESULT",
+        "normalized_intent": "validate event causality",
+        "tool": "",
+        "success": true,
+        "occurrence_count": 1,
+        "source_event_ids": [
+          "de4f2f30-c1b9-4562-b579-ef0ea1505278"
+        ],
+        "first_seen": "2026-08-18T07:08:14.456142+00:00",
+        "last_seen": "2026-08-18T07:08:14.456142+00:00",
+        "status": "OBSERVED"
+      },
+      "observed_from_real_v9_artifact": true,
+      "record_sha256": "5382e8cf1572537489730cc8eefd7f24b13df8a363c53c37900f30e622d29424"
+    },
+    {
+      "artifact_id": "artifact:f98a70c8079fee730f458c4df972e41a",
+      "source_path": "RAIOS/V9/experience/pending/83564ca671245c05a0647bd8ca25f874234a0b20d040b5369bb184bb0bf4f1ae.json",
+      "source_sha256": "f98a70c8079fee730f458c4df972e41a3cf5a7b6a6c56587d231ca5157ea25bc",
+      "artifact_class": "EXPERIENCE",
+      "schema": "raios.experience.v9",
+      "failure_family": null,
+      "payload": {
+        "schema": "raios.experience.v9",
+        "experience_id": "83564ca671245c05a0647bd8ca25f874234a0b20d040b5369bb184bb0bf4f1ae",
+        "timestamp": "2026-08-18T06:16:45.357287+00:00",
+        "intent": "Complete V9.0-A2 perception reading and hybrid search bootstrap",
+        "context": {
+          "repository": "C:\\Users\\Ghanam\\Documents\\Codex\\Greeny-Life-Repair",
+          "branch": "codex-clean",
+          "repository_sha": "fb130e232246a00b531835f529f25e4edfae2854",
+          "v9_phase": "V9.0-A"
+        },
+        "plan": [],
+        "tools": [
+          "RAIOS.Perception.Reader.v2",
+          "RAIOS.Search.Hybrid.v2",
+          "Git"
+        ],
+        "observations": [
+          "UTF-8 BOM is now handled explicitly with utf-8-sig.",
+          "Search now separates current-tree lexical evidence from Git historical evidence."
+        ],
+        "failures": [],
+        "corrections": [],
+        "result": {
+          "status": "RECORDED"
+        },
+        "evidence": [
+          "RAIOS/V9/evidence/observations/V9.0-A2-RECEIPT.json"
+        ],
+        "lesson": [
+          "Artifact accessibility, syntax parsing, semantic parsing and authority are separate evidence states.",
+          "Historical capability discovery requires Git-aware retrieval, not current-tree grep alone."
+        ],
+        "reusability": {
+          "assessment": "UNASSESSED",
+          "repeat_count": 1,
+          "candidate_for_compilation": false
+        },
+        "skill_candidate": null,
+        "status": "PENDING_VALIDATION"
+      },
+      "observed_from_real_v9_artifact": true,
+      "record_sha256": "3d1f1ab43d65f8d92b3a1fd61f8407bd362f88aa6ac14542e5f64ec22c839a05"
+    },
+    {
+      "artifact_id": "artifact:4d0c29490d508a37d2ede14c994207f1",
+      "source_path": "RAIOS/V9/experience/pending/c4bb70013b7770938185de530023e56396a1eb165b81471014910e09fb9b1910.json",
+      "source_sha256": "4d0c29490d508a37d2ede14c994207f1e77c9bd8c67f426fdc308d7fd8814492",
+      "artifact_class": "EXPERIENCE",
+      "schema": "raios.experience.v9",
+      "failure_family": null,
+      "payload": {
+        "schema": "raios.experience.v9",
+        "experience_id": "c4bb70013b7770938185de530023e56396a1eb165b81471014910e09fb9b1910",
+        "timestamp": "2026-08-18T06:23:20.362089+00:00",
+        "intent": "Build RAIOS V9 evidence-native semantic understanding kernel",
+        "context": {
+          "repository": "C:\\Users\\Ghanam\\Documents\\Codex\\Greeny-Life-Repair",
+          "branch": "codex-clean",
+          "repository_sha": "fb130e232246a00b531835f529f25e4edfae2854",
+          "v9_phase": "V9.0-A"
+        },
+        "plan": [],
+        "tools": [
+          "PowerShell",
+          "Python",
+          "Git"
+        ],
+        "observations": [
+          "A2 can read and search but must not confuse claims with implementation proof."
+        ],
+        "failures": [],
+        "corrections": [],
+        "result": {
+          "status": "RECORDED"
+        },
+        "evidence": [
+          "RAIOS/V9/evidence/observations/V9.0-A2-RECEIPT.json"
+        ],
+        "lesson": [
+          "Understanding requires explicit separation of claim, evidence, authority, temporal validity and contradiction.",
+          "RAIOS must abstain rather than infer implementation maturity from report language alone."
+        ],
+        "reusability": {
+          "assessment": "UNASSESSED",
+          "repeat_count": 1,
+          "candidate_for_compilation": false
+        },
+        "skill_candidate": null,
+        "status": "PENDING_VALIDATION"
+      },
+      "observed_from_real_v9_artifact": true,
+      "record_sha256": "3db7a1885044e5427945a324267adf90b46ca1eb315c006d0a3b625c7b5d1ef6"
+    },
+    {
+      "artifact_id": "artifact:fc61fe24743eaad55052d98a9ed8d2e6",
+      "source_path": "RAIOS/V9/experience/automatic-a4/6ccee732-d0fd-4f5f-aff8-41ffbf361740.json",
+      "source_sha256": "fc61fe24743eaad55052d98a9ed8d2e6741bfb357eb47fd0ee1ce916d9e4444e",
+      "artifact_class": "EXPERIENCE",
+      "schema": "raios.experience.v3",
+      "failure_family": null,
+      "payload": {
+        "schema": "raios.experience.v3",
+        "experience_id": "exp:6ccee732-d0fd-4f5f-aff8-41ffbf361740",
+        "source_event_id": "6ccee732-d0fd-4f5f-aff8-41ffbf361740",
+        "event_type": "RECOVERY",
+        "correlation_id": "40c8112d-a527-4d01-a467-fa18929b6575",
+        "causation_id": "bcb329d3-10b4-4652-9bbc-95268a556e39",
+        "actor": "RAIOS.A5.CERTIFIER",
+        "intent": "Recover missing architecture artifact",
+        "tool": "RAIOS.RECOVERY.TEST",
+        "model": null,
+        "input_ref": null,
+        "output_ref": {
+          "result": "RECOVERED"
+        },
+        "success": true,
+        "evidence_refs": [
+          "RAIOS/V9/runtime/a5_certification.py"
+        ],
+        "pre_state": null,
+        "post_state": null,
+        "latency_ms": null,
+        "resource_usage": null,
+        "confidence": 1.0,
+        "unresolved_flags": [],
+        "repository_sha": "fb130e232246a00b531835f529f25e4edfae2854",
+        "captured_at": "2026-08-18T07:12:29.900506+00:00"
+      },
+      "observed_from_real_v9_artifact": true,
+      "record_sha256": "029ed38b00d91ad3f01b7dd83908461bcbe1d0ff69b355a8e4a63b9f38d6e692"
+    },
+    {
+      "artifact_id": "artifact:4e77a2fd3ad575146b84a7e4dbf55203",
+      "source_path": "RAIOS/V9/experience/automatic-a4/e2be400b-bcc3-402a-bb7e-fceaae67bfb1.json",
+      "source_sha256": "4e77a2fd3ad575146b84a7e4dbf55203a2b69fa545d8b6c0e2333d5dd46a42a6",
+      "artifact_class": "EXPERIENCE",
+      "schema": "raios.experience.v3",
+      "failure_family": null,
+      "payload": {
+        "schema": "raios.experience.v3",
+        "experience_id": "exp:e2be400b-bcc3-402a-bb7e-fceaae67bfb1",
+        "source_event_id": "e2be400b-bcc3-402a-bb7e-fceaae67bfb1",
+        "event_type": "OBSERVATION",
+        "correlation_id": "740de35a-5339-4329-8b6f-ef756f380856",
+        "causation_id": null,
+        "actor": "RAIOS.A4.CERTIFIER",
+        "intent": "Certify synchronous Cognitive WAL append",
+        "tool": null,
+        "model": null,
+        "input_ref": {
+          "probe": "BASIC_WAL"
+        },
+        "output_ref": null,
+        "success": true,
+        "evidence_refs": [],
+        "pre_state": null,
+        "post_state": null,
+        "latency_ms": null,
+        "resource_usage": null,
+        "confidence": 1.0,
+        "unresolved_flags": [],
+        "repository_sha": "fb130e232246a00b531835f529f25e4edfae2854",
+        "captured_at": "2026-08-18T07:08:14.304069+00:00"
+      },
+      "observed_from_real_v9_artifact": true,
+      "record_sha256": "b83288a1dece4f319ca1cc21a8f8354ac5600e3b85abaf9048342d75fcd0a6d5"
+    },
+    {
+      "artifact_id": "artifact:331bf4b3c865bb7f7f85d4a7b4e13000",
+      "source_path": "RAIOS/V9/experience/pending/202acc8ef67e7278e0a09a172e3618392c298c9971aa9748ae90d5c718a3a9e0.json",
+      "source_sha256": "331bf4b3c865bb7f7f85d4a7b4e13000a262a3f3de8af0a0d3be13e39ad58d04",
+      "artifact_class": "EXPERIENCE",
+      "schema": "raios.experience.v9",
+      "failure_family": null,
+      "payload": {
+        "schema": "raios.experience.v9",
+        "experience_id": "202acc8ef67e7278e0a09a172e3618392c298c9971aa9748ae90d5c718a3a9e0",
+        "timestamp": "2026-08-18T06:11:00.356212+00:00",
+        "intent": "Bootstrap RAIOS V9 recursive cognitive architecture",
+        "context": {
+          "repository": "C:\\Users\\Ghanam\\Documents\\Codex\\Greeny-Life-Repair",
+          "branch": "codex-clean",
+          "repository_sha": "fb130e232246a00b531835f529f25e4edfae2854",
+          "v9_phase": "V9.0-A"
+        },
+        "plan": [],
+        "tools": [
+          "PowerShell",
+          "Git",
+          "Python"
+        ],
+        "observations": [
+          "V9 must learn from the process used to build V9 itself.",
+          "Current observed Kaggle runtime is CPU-only and T4 is not available."
+        ],
+        "failures": [],
+        "corrections": [],
+        "result": {
+          "status": "RECORDED"
+        },
+        "evidence": [
+          "RAIOS/V9/architecture/RAIOS-V9-ARCHITECTURE.md",
+          "RAIOS/V9/schemas/EXPERIENCE.schema.json"
+        ],
+        "lesson": [
+          "Meaningful operations must create structured Experience records rather than logs alone.",
+          "Background cognition may generate candidates but must not silently mutate canonical state."
+        ],
+        "reusability": {
+          "assessment": "UNASSESSED",
+          "repeat_count": 1,
+          "candidate_for_compilation": false
+        },
+        "skill_candidate": null,
+        "status": "PENDING_VALIDATION"
+      },
+      "observed_from_real_v9_artifact": true,
+      "record_sha256": "ee3ade8875ded471919f20a9d26708637a60e79ccbaecb0d183a5194af633012"
+    },
+    {
+      "artifact_id": "artifact:605822eba1c71b0c2fc0824eb363cea8",
+      "source_path": "RAIOS/V9/evolution/a5/experience-patterns/pattern_b32f027542e655ace0e86d706f33ebfb.json",
+      "source_sha256": "605822eba1c71b0c2fc0824eb363cea84385986635725a3e99e8a25ff74d1c8f",
+      "artifact_class": "EXPERIENCE",
+      "schema": "raios.experience-pattern.v1",
+      "failure_family": null,
+      "payload": {
+        "schema": "raios.experience-pattern.v1",
+        "pattern_id": "pattern:b32f027542e655ace0e86d706f33ebfb",
+        "event_type": "OBSERVATION",
+        "normalized_intent": "prove cognitive wal survives worker death before materialization",
+        "tool": "",
+        "success": true,
+        "occurrence_count": 1,
+        "source_event_ids": [
+          "f8785056-0cc1-4d4d-8471-d2231422a0cd"
+        ],
+        "first_seen": "2026-08-18T07:08:14.795231+00:00",
+        "last_seen": "2026-08-18T07:08:14.795231+00:00",
+        "status": "OBSERVED"
+      },
+      "observed_from_real_v9_artifact": true,
+      "record_sha256": "f052c68db288935b58922086734b700346caa3d67ac61936c78e97cd13775081"
+    },
+    {
+      "artifact_id": "artifact:de6a304297925f338bd52d4f9d78b125",
+      "source_path": "RAIOS/V9/experience/automatic-a4/28898655-1ba0-4886-82ce-db32c7767cbd.json",
+      "source_sha256": "de6a304297925f338bd52d4f9d78b1256b58fe3aa71cb0faebb08256e81429f7",
+      "artifact_class": "EXPERIENCE",
+      "schema": "raios.experience.v3",
+      "failure_family": null,
+      "payload": {
+        "schema": "raios.experience.v3",
+        "experience_id": "exp:28898655-1ba0-4886-82ce-db32c7767cbd",
+        "source_event_id": "28898655-1ba0-4886-82ce-db32c7767cbd",
+        "event_type": "FAILURE",
+        "correlation_id": "1bea353c-5f1c-4fb7-b370-e0ad5eb92f9e",
+        "causation_id": null,
+        "actor": "RAIOS.A5.CERTIFIER",
+        "intent": "Parse architecture contract",
+        "tool": "RAIOS.JSON.PARSER",
+        "model": null,
+        "input_ref": null,
+        "output_ref": {
+          "exception_type": "JSONDecodeError",
+          "message": "Malformed JSON at line 77"
+        },
+        "success": false,
+        "evidence_refs": [
+          "RAIOS/V9/runtime/a5_certification.py"
+        ],
+        "pre_state": null,
+        "post_state": null,
+        "latency_ms": null,
+        "resource_usage": null,
+        "confidence": 1.0,
+        "unresolved_flags": [
+          "PARSE_FAILED"
+        ],
+        "repository_sha": "fb130e232246a00b531835f529f25e4edfae2854",
+        "captured_at": "2026-08-18T07:12:29.760312+00:00"
+      },
+      "observed_from_real_v9_artifact": true,
+      "record_sha256": "6b7de6e43eb389ec88ce45ffe1d5afddb8c0543a3e2881c7f796362e17108b15"
+    },
+    {
+      "artifact_id": "artifact:26d9a1aee753e588c79978e1d8547408",
+      "source_path": "RAIOS/V9/experience/automatic-a4/1327ea0a-d38f-4155-8c16-db7aa33321fa.json",
+      "source_sha256": "26d9a1aee753e588c79978e1d8547408383c4a9c3c6e0e90a114949fb0b257eb",
+      "artifact_class": "EXPERIENCE",
+      "schema": "raios.experience.v3",
+      "failure_family": null,
+      "payload": {
+        "schema": "raios.experience.v3",
+        "experience_id": "exp:1327ea0a-d38f-4155-8c16-db7aa33321fa",
+        "source_event_id": "1327ea0a-d38f-4155-8c16-db7aa33321fa",
+        "event_type": "FAILURE",
+        "correlation_id": "310152b5-1378-42d9-8b1d-4d677c4435c8",
+        "causation_id": null,
+        "actor": "RAIOS.A5.CERTIFIER",
+        "intent": "Read required architecture artifact",
+        "tool": "RAIOS.FILE.READER",
+        "model": null,
+        "input_ref": null,
+        "output_ref": {
+          "exception_type": "FileNotFoundError",
+          "message": "Required architecture file 202 was not found"
+        },
+        "success": false,
+        "evidence_refs": [
+          "RAIOS/V9/runtime/a5_certification.py"
+        ],
+        "pre_state": null,
+        "post_state": null,
+        "latency_ms": null,
+        "resource_usage": null,
+        "confidence": 1.0,
+        "unresolved_flags": [
+          "SOURCE_MISSING"
+        ],
+        "repository_sha": "fb130e232246a00b531835f529f25e4edfae2854",
+        "captured_at": "2026-08-18T07:12:29.613931+00:00"
+      },
+      "observed_from_real_v9_artifact": true,
+      "record_sha256": "856f5363ce8e1d959c1d49a03b1f20808734667f2ceb1bdd169111d3caca54b1"
+    },
+    {
+      "artifact_id": "artifact:0ec19c578882f7d7732cf1e8317937b8",
+      "source_path": "RAIOS/V9/evolution/a8/failures/fs_c1f9c8e3543271c36c18926a1b787667.json",
+      "source_sha256": "0ec19c578882f7d7732cf1e8317937b8395e9852c61973477db64a0b30c60960",
+      "artifact_class": "FAILURE",
+      "schema": "raios.a8.failure-signature.v1",
+      "failure_family": "fs:c1f9c8e3543271c36c18926a1b787667",
+      "payload": {
+        "schema": "raios.a8.failure-signature.v1",
+        "failure_signature": "fs:c1f9c8e3543271c36c18926a1b787667",
+        "phase": "V9.0-A8",
+        "timestamp": "2026-08-18T07:28:41.116900+00:00",
+        "exception_type": "RuntimeError",
+        "message": "A8_GATE_FAILURE:production_mutation,canonical_mutation",
+        "traceback": "Traceback (most recent call last):\n  File \"C:\\Users\\Ghanam\\Documents\\Codex\\Greeny-Life-Repair\\RAIOS\\V9\\runtime\\a8_shadow_runtime_certification.py\", line 1503, in <module>\n    main()\n    ~~~~^^\n  File \"C:\\Users\\Ghanam\\Documents\\Codex\\Greeny-Life-Repair\\RAIOS\\V9\\runtime\\a8_shadow_runtime_certification.py\", line 978, in main\n    raise RuntimeError(\n    ...<2 lines>...\n    )\nRuntimeError: A8_GATE_FAILURE:production_mutation,canonical_mutation\n",
+        "canonical_mutation": false,
+        "production_mutation": false
+      },
+      "observed_from_real_v9_artifact": true,
+      "record_sha256": "875683a655e9000dbb1cb02cb1ec65b32050e1ac34aaf6d28b4b66fc856952e1"
+    },
+    {
+      "artifact_id": "artifact:5a8aa7b28869ca24a33e062d0e0a5d17",
+      "source_path": "RAIOS/V9/evolution/a8/recovery-skill-candidates/recovery_60596106433845eb84f84ee13844ca60.json",
+      "source_sha256": "5a8aa7b28869ca24a33e062d0e0a5d1799b4c3e463b85039e43ef39c942c3eca",
+      "artifact_class": "RECOVERY",
+      "schema": "raios.a8.recovery-skill-candidate.v1",
+      "failure_family": "fs:c1f9c8e3543271c36c18926a1b787667",
+      "payload": {
+        "schema": "raios.a8.recovery-skill-candidate.v1",
+        "candidate_id": "recovery:60596106433845eb84f84ee13844ca60",
+        "source_failure_signature": "fs:c1f9c8e3543271c36c18926a1b787667",
+        "status": "CANDIDATE",
+        "requires_validation": true,
+        "automatic_promotion": false,
+        "canonical_mutation": false,
+        "created_at": "2026-08-18T07:28:41.134017+00:00"
+      },
+      "observed_from_real_v9_artifact": true,
+      "record_sha256": "a669c0725c34e8bd92bd60339bab8ef74e56da25e33793af11dd4a4813f00033"
+    },
+    {
+      "artifact_id": "artifact:fa70df1edafa83f96f6a5c0b18add0ef",
+      "source_path": "RAIOS/V9/experience/automatic/67e5cb39c8c7d56c47218913418e1841766bd2f8cb12d0b8e55f90b06a83060c.json",
+      "source_sha256": "fa70df1edafa83f96f6a5c0b18add0ef241fc407214efe67e2b37ec70adc5733",
+      "artifact_class": "EXPERIENCE",
+      "schema": "raios.experience.v2",
+      "failure_family": null,
+      "payload": {
+        "schema": "raios.experience.v2",
+        "intent": "Recover critical RAIOS V9 CLI after zero-byte corruption",
+        "action": "FORENSIC_PREIMAGE_RESTORE",
+        "tool": "PowerShell+Python+Git",
+        "environment": {
+          "timestamp": "2026-08-18T06:56:57.917456+00:00",
+          "repository": "C:\\Users\\Ghanam\\Documents\\Codex\\Greeny-Life-Repair",
+          "repository_sha": "fb130e232246a00b531835f529f25e4edfae2854",
+          "branch": "codex-clean",
+          "python": "3.14.7",
+          "platform": "win32",
+          "pid": 9264
+        },
+        "input": {
+          "artifact": "RAIOS/V9/cli/raios_v9.py",
+          "observed_bytes": 0,
+          "observed_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "expected_result": {
+          "recovered_bytes": 15385,
+          "recovered_sha256": "bbd06a1f8567742221c80093cabd83d4c9eb24889fdd503567ed5aa2f9660c54",
+          "hash_match": true,
+          "runtime_contract_recovered": true
+        },
+        "actual_result": {
+          "recovered_bytes": 15385,
+          "recovered_sha256": "bbd06a1f8567742221c80093cabd83d4c9eb24889fdd503567ed5aa2f9660c54",
+          "hash_match": true,
+          "runtime_contract_recovered": true
+        },
+        "success": true,
+        "failure_signature": null,
+        "evidence_refs": [
+          "RAIOS/V9/cli/raios_v9.py.v9.0-a1.bak",
+          "RAIOS/V9/evidence/quarantined-certifications/"
+        ],
+        "lessons": [
+          "Critical artifact writes require transactional mutation.",
+          "Exit code zero is insufficient without output-contract validation.",
+          "Verified preimage recovery should precede reconstruction."
+        ],
+        "latency_ms": null,
+        "pre_state": null,
+        "post_state": null,
+        "unresolved_flags": [],
+        "confidence": 1.0,
+        "replayable": true,
+        "captured_at": "2026-08-18T06:56:58.012512+00:00",
+        "experience_id": "67e5cb39c8c7d56c47218913418e1841766bd2f8cb12d0b8e55f90b06a83060c"
+      },
+      "observed_from_real_v9_artifact": true,
+      "record_sha256": "086596ba4c0a61f6f62aedebd79a67f80c74b157b8592f65c02b605dc6b05dcb"
+    },
+    {
+      "artifact_id": "artifact:643e310c521093b92a07643e5eaa6618",
+      "source_path": "RAIOS/V9/evolution/a5/failure-families/ff_856d09b8f4f1f52cb67b492d691f9bfe.json",
+      "source_sha256": "643e310c521093b92a07643e5eaa6618faa85e018583a66c57dde5ee0a03e4d5",
+      "artifact_class": "FAILURE",
+      "schema": "raios.failure-family.v1",
+      "failure_family": null,
+      "payload": {
+        "schema": "raios.failure-family.v1",
+        "family_id": "ff:856d09b8f4f1f52cb67b492d691f9bfe",
+        "geometry": {
+          "event_type": "FAILURE",
+          "tool": "a4_certification",
+          "exception_type": "syntheticcertificationfailure",
+          "message": "controlled fail-path test",
+          "unresolved_flags": [
+            "controlled_test_failure"
+          ]
+        },
+        "occurrence_count": 1,
+        "successful_recoveries": 0,
+        "failed_recoveries": 0,
+        "source_event_ids": [
+          "b0da00f5-a6f4-4be8-bae9-6cc2d09c02c5"
+        ],
+        "tools": [
+          "A4_CERTIFICATION"
+        ],
+        "repository_shas": [
+          "fb130e232246a00b531835f529f25e4edfae2854"
+        ],
+        "first_seen": "2026-08-18T07:08:14.540047+00:00",
+        "last_seen": "2026-08-18T07:08:14.540047+00:00",
+        "status": "ACTIVE"
+      },
+      "observed_from_real_v9_artifact": true,
+      "record_sha256": "fb3e99e5d408e6a22946997188c23dea60166a743c4d1614d50b159bea24d6a1"
+    },
+    {
+      "artifact_id": "artifact:0566cc6d8e33b7d7430d2ec46fa7b151",
+      "source_path": "RAIOS/V9/experience/automatic/4fd2f23543c6f653a1fcbb7d71671724d08358d6e10d68b45e022e813919298e.json",
+      "source_sha256": "0566cc6d8e33b7d7430d2ec46fa7b151c4e113ef3d282e6e68b171390133abd6",
+      "artifact_class": "EXPERIENCE",
+      "schema": "raios.experience.v2",
+      "failure_family": null,
+      "payload": {
+        "schema": "raios.experience.v2",
+        "intent": "Verify capability using current and historical evidence",
+        "action": "CAPABILITY_VERIFY",
+        "tool": "RAIOS.V9.A3",
+        "environment": {
+          "timestamp": "2026-08-18T07:01:25.453770+00:00",
+          "repository": "C:\\Users\\Ghanam\\Documents\\Codex\\Greeny-Life-Repair",
+          "repository_sha": "fb130e232246a00b531835f529f25e4edfae2854",
+          "branch": "codex-clean",
+          "python": "3.14.7",
+          "platform": "win32",
+          "pid": 4880
+        },
+        "input": {
+          "query": "Migration Decision Engine",
+          "limit": 80
+        },
+        "expected_result": null,
+        "actual_result": {
+          "schema": "raios.capability-verification.v1",
+          "query": "Migration Decision Engine",
+          "evidence_count": 15,
+          "current_tree_evidence": 2,
+          "historical_evidence": 13,
+          "evidence": [
+            {
+              "source": "CURRENT_TREE",
+              "path": "ALL_SOURCE_CODE.txt",
+              "kind": "CONTENT",
+              "authority": "CURRENT_OBSERVATION"
+            },
+            {
+              "source": "CURRENT_TREE",
+              "path": "canonical\\intelligence\\intelligence\\core\\report-writer.ts",
+              "kind": "CONTENT",
+              "authority": "CURRENT_OBSERVATION"
+            },
+            {
+              "source": "GIT_HISTORY",
+              "path": "ALL_SOURCE_CODE.txt",
+              "commit": "d4ca29b8dfb42837bfb8869cea2929ba1d74b4a0",
+              "mechanism": "GIT_HISTORICAL_CONTENT",
+              "authority": "HISTORICAL_EVIDENCE"
+            },
+            {
+              "source": "GIT_HISTORY",
+              "path": "canonical/intelligence/intelligence/core/report-writer.ts",
+              "commit": "4fa5d22640315de2b547fa8a2d50855d01b4ed87",
+              "mechanism": "GIT_HISTORICAL_CONTENT",
+              "authority": "HISTORICAL_EVIDENCE"
+            },
+            {
+              "source": "GIT_HISTORY",
+              "path": ".architecture-backups/pre-unified-intelligence-20260726-145157/intelligence/intelligence/core/report-writer.ts",
+              "commit": "22436d7f34d90573c93d5ba04666a772c35a1aa6",
+              "mechanism": "GIT_HISTORICAL_CONTENT",
+              "authority": "HISTORICAL_EVIDENCE"
+            },
+            {
+              "source": "GIT_HISTORY",
+              "path": ".architecture-backups/pre-unified-intelligence-20260726-145157/intelligence/intelligence/reports/migration-decision.json",
+              "commit": "22436d7f34d90573c93d5ba04666a772c35a1aa6",
+              "mechanism": "GIT_HISTORICAL_CONTENT",
+              "authority": "HISTORICAL_EVIDENCE"
+            },
+            {
+              "source": "GIT_HISTORY",
+              "path": ".architecture-backups/pre-unified-intelligence-20260726-145157/scripts/scripts/migration/migration-decision-engine.js",
+              "commit": "22436d7f34d90573c93d5ba04666a772c35a1aa6",
+              "mechanism": "GIT_HISTORICAL_CONTENT",
+              "authority": "HISTORICAL_EVIDENCE"
+            },
+            {
+              "source": "GIT_HISTORY",
+              "path": "intelligence/core/report-writer.ts",
+              "commit": "879ed137290751643988444e526cc89c8ba7776c",
+              "mechanism": "GIT_HISTORICAL_CONTENT",
+              "authority": "HISTORICAL_EVIDENCE"
+            },
+            {
+              "source": "GIT_HISTORY",
+              "path": "intelligence/reports/migration-decision.json",
+              "commit": "879ed137290751643988444e526cc89c8ba7776c",
+              "mechanism": "GIT_HISTORICAL_CONTENT",
+              "authority": "HISTORICAL_EVIDENCE"
+            },
+            {
+              "source": "GIT_HISTORY",
+              "path": "reports/migration-decision.json",
+              "commit": "879ed137290751643988444e526cc89c8ba7776c",
+              "mechanism": "GIT_HISTORICAL_CONTENT",
+              "authority": "HISTORICAL_EVIDENCE"
+            },
+            {
+              "source": "GIT_HISTORY",
+              "path": "project-summary.txt",
+              "commit": "a253cd6d1be4da403235fddd1e8875ee5e9e7cb2",
+              "mechanism": "GIT_HISTORICAL_CONTENT",
+              "authority": "HISTORICAL_EVIDENCE"
+            },
+            {
+              "source": "GIT_HISTORY",
+              "path": "reports/cleanup-actions.json",
+              "commit": "a253cd6d1be4da403235fddd1e8875ee5e9e7cb2",
+              "mechanism": "GIT_HISTORICAL_CONTENT",
+              "authority": "HISTORICAL_EVIDENCE"
+            },
+            {
+              "source": "GIT_HISTORY",
+              "path": "reports/project-decisions.json",
+              "commit": "a253cd6d1be4da403235fddd1e8875ee5e9e7cb2",
+              "mechanism": "GIT_HISTORICAL_CONTENT",
+              "authority": "HISTORICAL_EVIDENCE"
+            },
+            {
+              "source": "GIT_HISTORY",
+              "path": "reports/project-roadmap.json",
+              "commit": "a253cd6d1be4da403235fddd1e8875ee5e9e7cb2",
+              "mechanism": "GIT_HISTORICAL_CONTENT",
+              "authority": "HISTORICAL_EVIDENCE"
+            },
+            {
+              "source": "GIT_HISTORY",
+              "path": "scripts/migration/migration-decision-engine.js",
+              "commit": "a253cd6d1be4da403235fddd1e8875ee5e9e7cb2",
+              "mechanism": "GIT_HISTORICAL_CONTENT",
+              "authority": "HISTORICAL_EVIDENCE"
+            }
+          ],
+          "confidence": 0.95,
+          "unresolved_flags": [],
+          "epistemic_status": "EVIDENCE_BOUNDED",
+          "canonical_promotion": false,
+          "decision": "SUPPORTED"
+        },
+        "success": true,
+        "failure_signature": null,
+        "evidence_refs": [],
+        "lessons": [],
+        "latency_ms": 8295.618,
+        "pre_state": null,
+        "post_state": null,
+        "unresolved_flags": [],
+        "confidence": 1.0,
+        "replayable": true,
+        "captured_at": "2026-08-18T07:01:25.586472+00:00",
+        "experience_id": "4fd2f23543c6f653a1fcbb7d71671724d08358d6e10d68b45e022e813919298e"
+      },
+      "observed_from_real_v9_artifact": true,
+      "record_sha256": "7785a8b79122aa8f90b72dc194503dfc472b8f9a70f699a61e4d391de8cce18c"
+    },
+    {
+      "artifact_id": "artifact:d699c31e04510ba3c3b04458061c98b4",
+      "source_path": "RAIOS/V9/evolution/a5/experience-patterns/pattern_c317962e88b658627f4d8eca02d5899b.json",
+      "source_sha256": "d699c31e04510ba3c3b04458061c98b407c58c49dbcf3e93a1af489dcaf13f5c",
+      "artifact_class": "EXPERIENCE",
+      "schema": "raios.experience-pattern.v1",
+      "failure_family": null,
+      "payload": {
+        "schema": "raios.experience-pattern.v1",
+        "pattern_id": "pattern:c317962e88b658627f4d8eca02d5899b",
+        "event_type": "OBSERVATION",
+        "normalized_intent": "certify synchronous cognitive wal append",
+        "tool": "",
+        "success": true,
+        "occurrence_count": 1,
+        "source_event_ids": [
+          "e2be400b-bcc3-402a-bb7e-fceaae67bfb1"
+        ],
+        "first_seen": "2026-08-18T07:08:14.237374+00:00",
+        "last_seen": "2026-08-18T07:08:14.237374+00:00",
+        "status": "OBSERVED"
+      },
+      "observed_from_real_v9_artifact": true,
+      "record_sha256": "f044a1ce6d898b66ee31f73245a85c3194c97ab099c11403fb697692001bb1f9"
+    },
+    {
+      "artifact_id": "artifact:2c21f583c40dd9a38505c5ffc873bdd4",
+      "source_path": "RAIOS/V9/experience/automatic-a4/bcb329d3-10b4-4652-9bbc-95268a556e39.json",
+      "source_sha256": "2c21f583c40dd9a38505c5ffc873bdd4c4612b27027fe74aac9e626d24c9df94",
+      "artifact_class": "EXPERIENCE",
+      "schema": "raios.experience.v3",
+      "failure_family": null,
+      "payload": {
+        "schema": "raios.experience.v3",
+        "experience_id": "exp:bcb329d3-10b4-4652-9bbc-95268a556e39",
+        "source_event_id": "bcb329d3-10b4-4652-9bbc-95268a556e39",
+        "event_type": "FAILURE",
+        "correlation_id": "40c8112d-a527-4d01-a467-fa18929b6575",
+        "causation_id": null,
+        "actor": "RAIOS.A5.CERTIFIER",
+        "intent": "Read required architecture artifact",
+        "tool": "RAIOS.FILE.READER",
+        "model": null,
+        "input_ref": null,
+        "output_ref": {
+          "exception_type": "FileNotFoundError",
+          "message": "Required architecture file 101 was not found"
+        },
+        "success": false,
+        "evidence_refs": [
+          "RAIOS/V9/runtime/a5_certification.py"
+        ],
+        "pre_state": null,
+        "post_state": null,
+        "latency_ms": null,
+        "resource_usage": null,
+        "confidence": 1.0,
+        "unresolved_flags": [
+          "SOURCE_MISSING"
+        ],
+        "repository_sha": "fb130e232246a00b531835f529f25e4edfae2854",
+        "captured_at": "2026-08-18T07:12:29.512096+00:00"
+      },
+      "observed_from_real_v9_artifact": true,
+      "record_sha256": "5cfddf8e0d8f3f65ee45ef6a8fdf6fe70bebfe2171236bee213e852337c78afa"
+    },
+    {
+      "artifact_id": "artifact:556e7883d6f573c51b951080902837cd",
+      "source_path": "RAIOS/V9/experience/automatic-a4/fee24c9e-265a-4153-a610-d14eecc11576.json",
+      "source_sha256": "556e7883d6f573c51b951080902837cd3ac2f349778f0d5e35f2236177835069",
+      "artifact_class": "EXPERIENCE",
+      "schema": "raios.experience.v3",
+      "failure_family": null,
+      "payload": {
+        "schema": "raios.experience.v3",
+        "experience_id": "exp:fee24c9e-265a-4153-a610-d14eecc11576",
+        "source_event_id": "fee24c9e-265a-4153-a610-d14eecc11576",
+        "event_type": "ACTION",
+        "correlation_id": "1b667603-fc86-4b1d-b360-53ca3279e7a5",
+        "causation_id": null,
+        "actor": "RAIOS.A4.CERTIFIER",
+        "intent": "Validate event causality",
+        "tool": null,
+        "model": null,
+        "input_ref": null,
+        "output_ref": null,
+        "success": null,
+        "evidence_refs": [],
+        "pre_state": null,
+        "post_state": null,
+        "latency_ms": null,
+        "resource_usage": null,
+        "confidence": 1.0,
+        "unresolved_flags": [],
+        "repository_sha": "fb130e232246a00b531835f529f25e4edfae2854",
+        "captured_at": "2026-08-18T07:08:14.425259+00:00"
+      },
+      "observed_from_real_v9_artifact": true,
+      "record_sha256": "0aa5d9d40533f18c4a2126561f916fb331846e676aee063d9b17125fae307426"
+    },
+    {
+      "artifact_id": "artifact:28b7bc3c870a3de15799aa9ff6998171",
+      "source_path": "RAIOS/V9/evolution/a8/experiences/exp_96fda0e752d316aab8b851c7b197a9c9.json",
+      "source_sha256": "28b7bc3c870a3de15799aa9ff6998171d6190d194b4ed1bcee922f546076f54d",
+      "artifact_class": "EXPERIENCE",
+      "schema": "raios.a8.experience.v1",
+      "failure_family": null,
+      "payload": {
+        "schema": "raios.a8.experience.v1",
+        "timestamp": "2026-08-18T07:28:41.145705+00:00",
+        "event": "A8_FAILURE",
+        "status": "FAILED",
+        "details": {
+          "failure_signature": "fs:c1f9c8e3543271c36c18926a1b787667",
+          "recovery_candidate": "recovery:60596106433845eb84f84ee13844ca60"
+        },
+        "experience_id": "exp:96fda0e752d316aab8b851c7b197a9c9"
+      },
+      "observed_from_real_v9_artifact": true,
+      "record_sha256": "a68d4ec14f06f07c8e2a4825cdbc9516715f030d7da08516fe09e7f65b886828"
+    },
+    {
+      "artifact_id": "artifact:18aa7d269916e11da18ef65b0b1b9600",
+      "source_path": "RAIOS/V9/evolution/a5/experience-patterns/pattern_6998ada54c20cf29f1e17a4d5747c1a8.json",
+      "source_sha256": "18aa7d269916e11da18ef65b0b1b9600932e9710fb8c6d9956867fb870ab1583",
+      "artifact_class": "EXPERIENCE",
+      "schema": "raios.experience-pattern.v1",
+      "failure_family": null,
+      "payload": {
+        "schema": "raios.experience-pattern.v1",
+        "pattern_id": "pattern:6998ada54c20cf29f1e17a4d5747c1a8",
+        "event_type": "FAILURE",
+        "normalized_intent": "read required architecture artifact",
+        "tool": "raios.file.reader",
+        "success": false,
+        "occurrence_count": 2,
+        "source_event_ids": [
+          "bcb329d3-10b4-4652-9bbc-95268a556e39",
+          "1327ea0a-d38f-4155-8c16-db7aa33321fa"
+        ],
+        "first_seen": "2026-08-18T07:12:29.463445+00:00",
+        "last_seen": "2026-08-18T07:12:29.559049+00:00",
+        "status": "REPEATED"
+      },
+      "observed_from_real_v9_artifact": true,
+      "record_sha256": "ab46a1eabb1a95cea344f66d4ff177b4f6dcfe021b48cbc51d9dbcfbcf24bf3a"
+    },
+    {
+      "artifact_id": "artifact:087860422ce1bfce8e0bbd83a0cc3938",
+      "source_path": "RAIOS/V9/experience/automatic/bc19ff59b92766eff4ee2ccff370d0876169b6b46a58266a88d87129a2e91de8.json",
+      "source_sha256": "087860422ce1bfce8e0bbd83a0cc39389b6204c1eff7fb92da44989d83db1c72",
+      "artifact_class": "EXPERIENCE",
+      "schema": "raios.experience.v2",
+      "failure_family": null,
+      "payload": {
+        "schema": "raios.experience.v2",
+        "intent": "Verify capability using current and historical evidence",
+        "action": "CAPABILITY_VERIFY",
+        "tool": "RAIOS.V9.A3",
+        "environment": {
+          "timestamp": "2026-08-18T07:03:12.021453+00:00",
+          "repository": "C:\\Users\\Ghanam\\Documents\\Codex\\Greeny-Life-Repair",
+          "repository_sha": "fb130e232246a00b531835f529f25e4edfae2854",
+          "branch": "codex-clean",
+          "python": "3.14.7",
+          "platform": "win32",
+          "pid": 13336
+        },
+        "input": {
+          "query": "Migration Decision Engine",
+          "limit": 80
+        },
+        "expected_result": null,
+        "actual_result": {
+          "schema": "raios.capability-verification.v1",
+          "query": "Migration Decision Engine",
+          "evidence_count": 17,
+          "current_tree_evidence": 4,
+          "historical_evidence": 13,
+          "evidence": [
+            {
+              "source": "CURRENT_TREE",
+              "path": "ALL_SOURCE_CODE.txt",
+              "kind": "CONTENT",
+              "authority": "CURRENT_OBSERVATION"
+            },
+            {
+              "source": "CURRENT_TREE",
+              "path": "canonical\\intelligence\\intelligence\\core\\report-writer.ts",
+              "kind": "CONTENT",
+              "authority": "CURRENT_OBSERVATION"
+            },
+            {
+              "source": "CURRENT_TREE",
+              "path": "RAIOS\\V9\\experience\\automatic\\4fd2f23543c6f653a1fcbb7d71671724d08358d6e10d68b45e022e813919298e.json",
+              "kind": "CONTENT",
+              "authority": "CURRENT_OBSERVATION"
+            },
+            {
+              "source": "CURRENT_TREE",
+              "path": "RAIOS\\V9\\runtime\\a3_1_certification.py",
+              "kind": "CONTENT",
+              "authority": "CURRENT_OBSERVATION"
+            },
+            {
+              "source": "GIT_HISTORY",
+              "path": "ALL_SOURCE_CODE.txt",
+              "commit": "d4ca29b8dfb42837bfb8869cea2929ba1d74b4a0",
+              "mechanism": "GIT_HISTORICAL_CONTENT",
+              "authority": "HISTORICAL_EVIDENCE"
+            },
+            {
+              "source": "GIT_HISTORY",
+              "path": "canonical/intelligence/intelligence/core/report-writer.ts",
+              "commit": "4fa5d22640315de2b547fa8a2d50855d01b4ed87",
+              "mechanism": "GIT_HISTORICAL_CONTENT",
+              "authority": "HISTORICAL_EVIDENCE"
+            },
+            {
+              "source": "GIT_HISTORY",
+              "path": ".architecture-backups/pre-unified-intelligence-20260726-145157/intelligence/intelligence/core/report-writer.ts",
+              "commit": "22436d7f34d90573c93d5ba04666a772c35a1aa6",
+              "mechanism": "GIT_HISTORICAL_CONTENT",
+              "authority": "HISTORICAL_EVIDENCE"
+            },
+            {
+              "source": "GIT_HISTORY",
+              "path": ".architecture-backups/pre-unified-intelligence-20260726-145157/intelligence/intelligence/reports/migration-decision.json",
+              "commit": "22436d7f34d90573c93d5ba04666a772c35a1aa6",
+              "mechanism": "GIT_HISTORICAL_CONTENT",
+              "authority": "HISTORICAL_EVIDENCE"
+            },
+            {
+              "source": "GIT_HISTORY",
+              "path": ".architecture-backups/pre-unified-intelligence-20260726-145157/scripts/scripts/migration/migration-decision-engine.js",
+              "commit": "22436d7f34d90573c93d5ba04666a772c35a1aa6",
+              "mechanism": "GIT_HISTORICAL_CONTENT",
+              "authority": "HISTORICAL_EVIDENCE"
+            },
+            {
+              "source": "GIT_HISTORY",
+              "path": "intelligence/core/report-writer.ts",
+              "commit": "879ed137290751643988444e526cc89c8ba7776c",
+              "mechanism": "GIT_HISTORICAL_CONTENT",
+              "authority": "HISTORICAL_EVIDENCE"
+            },
+            {
+              "source": "GIT_HISTORY",
+              "path": "intelligence/reports/migration-decision.json",
+              "commit": "879ed137290751643988444e526cc89c8ba7776c",
+              "mechanism": "GIT_HISTORICAL_CONTENT",
+              "authority": "HISTORICAL_EVIDENCE"
+            },
+            {
+              "source": "GIT_HISTORY",
+              "path": "reports/migration-decision.json",
+              "commit": "879ed137290751643988444e526cc89c8ba7776c",
+              "mechanism": "GIT_HISTORICAL_CONTENT",
+              "authority": "HISTORICAL_EVIDENCE"
+            },
+            {
+              "source": "GIT_HISTORY",
+              "path": "project-summary.txt",
+              "commit": "a253cd6d1be4da403235fddd1e8875ee5e9e7cb2",
+              "mechanism": "GIT_HISTORICAL_CONTENT",
+              "authority": "HISTORICAL_EVIDENCE"
+            },
+            {
+              "source": "GIT_HISTORY",
+              "path": "reports/cleanup-actions.json",
+              "commit": "a253cd6d1be4da403235fddd1e8875ee5e9e7cb2",
+              "mechanism": "GIT_HISTORICAL_CONTENT",
+              "authority": "HISTORICAL_EVIDENCE"
+            },
+            {
+              "source": "GIT_HISTORY",
+              "path": "reports/project-decisions.json",
+              "commit": "a253cd6d1be4da403235fddd1e8875ee5e9e7cb2",
+              "mechanism": "GIT_HISTORICAL_CONTENT",
+              "authority": "HISTORICAL_EVIDENCE"
+            },
+            {
+              "source": "GIT_HISTORY",
+              "path": "reports/project-roadmap.json",
+              "commit": "a253cd6d1be4da403235fddd1e8875ee5e9e7cb2",
+              "mechanism": "GIT_HISTORICAL_CONTENT",
+              "authority": "HISTORICAL_EVIDENCE"
+            },
+            {
+              "source": "GIT_HISTORY",
+              "path": "scripts/migration/migration-decision-engine.js",
+              "commit": "a253cd6d1be4da403235fddd1e8875ee5e9e7cb2",
+              "mechanism": "GIT_HISTORICAL_CONTENT",
+              "authority": "HISTORICAL_EVIDENCE"
+            }
+          ],
+          "confidence": 0.95,
+          "unresolved_flags": [],
+          "epistemic_status": "EVIDENCE_BOUNDED",
+          "canonical_promotion": false,
+          "decision": "SUPPORTED"
+        },
+        "success": true,
+        "failure_signature": null,
+        "evidence_refs": [],
+        "lessons": [],
+        "latency_ms": 7586.46,
+        "pre_state": null,
+        "post_state": null,
+        "unresolved_flags": [],
+        "confidence": 1.0,
+        "replayable": true,
+        "captured_at": "2026-08-18T07:03:12.106536+00:00",
+        "experience_id": "bc19ff59b92766eff4ee2ccff370d0876169b6b46a58266a88d87129a2e91de8"
+      },
+      "observed_from_real_v9_artifact": true,
+      "record_sha256": "6daa475bf1d05eb21b83adf9fd2ddcc239afb4cf2cd7bb0c9196a7e88aaba3ae"
+    },
+    {
+      "artifact_id": "artifact:5fd290ffb6bb0562a1da84b46eb257f8",
+      "source_path": "RAIOS/V9/evolution/a7/experiences/exp_6362770b1d73c10e32371e62623e5993.json",
+      "source_sha256": "5fd290ffb6bb0562a1da84b46eb257f8403aa9005138efcc8c79865da2f61159",
+      "artifact_class": "EXPERIENCE",
+      "schema": "raios.a7.experience.v1",
+      "failure_family": null,
+      "payload": {
+        "schema": "raios.a7.experience.v1",
+        "timestamp": "2026-08-18T07:24:42.359974+00:00",
+        "status": "SUCCESS",
+        "event": "A7_SHADOW_PROMOTION_TRANSACTION",
+        "details": {
+          "candidate_id": "skill:ff:07ed310cc0410694d6e681287ad0b4d9",
+          "proposal_id": "proposal:f05df969add7ce941bf15934c33ed01f",
+          "authorization_id": "auth:6b7d0de2e3bf4d1b978de478f2dda88d",
+          "lifecycle": "SHADOW",
+          "production_active": false
+        },
+        "experience_id": "exp:6362770b1d73c10e32371e62623e5993"
+      },
+      "observed_from_real_v9_artifact": true,
+      "record_sha256": "e587b5d07c6ee281dea024e0cb95ffe7c8ed4326a13e6126f7e89e8ee15145f5"
+    }
+  ]
+}

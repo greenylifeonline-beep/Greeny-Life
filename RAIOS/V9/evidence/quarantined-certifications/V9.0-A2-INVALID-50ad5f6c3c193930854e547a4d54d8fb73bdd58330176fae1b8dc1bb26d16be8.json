@@ -1,0 +1,51 @@
+{
+    "schema":  "raios.v9.a2.receipt.v3",
+    "phase":  "V9.0-A2",
+    "certification_status":  "PASS",
+    "certification_mode":  "FAIL_CLOSED",
+    "repository_sha":  "fb130e232246a00b531835f529f25e4edfae2854",
+    "timestamp":  "2026-08-18T06:29:46.5007052Z",
+    "validation":  {
+                       "startup_context":  {
+                                               "pass":  true
+                                           },
+                       "self_read":  {
+                                         "pass":  true,
+                                         "type":  null,
+                                         "semantic_parse":  null,
+                                         "sha256":  null,
+                                         "decoder":  null,
+                                         "bom_present":  null
+                                     },
+                       "lexical_search":  {
+                                              "pass":  false,
+                                              "results":  0,
+                                              "mechanisms":  [
+                                                                 null
+                                                             ]
+                                          },
+                       "git_historical_search":  {
+                                                     "pass":  false,
+                                                     "results":  0,
+                                                     "mechanisms":  [
+                                                                        null
+                                                                    ]
+                                                 },
+                       "experience_capture":  {
+                                                  "pass":  true,
+                                                  "records":  7
+                                              },
+                       "evolution":  {
+                                         "pass":  true,
+                                         "canonical_mutation":  false,
+                                         "reports":  4,
+                                         "latest_candidates":  null
+                                     }
+                   },
+    "invariants":  [
+                       "All mandatory checks passed before receipt creation.",
+                       "No unset validation variable may imply PASS.",
+                       "No console banner is accepted as certification evidence.",
+                       "Background evolution cannot mutate canonical truth."
+                   ]
+}

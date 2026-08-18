@@ -1,0 +1,362 @@
+{
+  "schema": "raios.a13.unified-agent-capability-registry.v1",
+  "timestamp": "2026-08-18T08:43:59.535080+00:00",
+  "repository_sha": "fb130e232246a00b531835f529f25e4edfae2854",
+  "asset_count": 14,
+  "canonical_owners": {
+    "GLOBAL_AGENT_CONTRACT": "AGENTS.md",
+    "CLAUDE_AGENT_CONTRACT": "CLAUDE.md",
+    "GEMINI_AGENT_CONTRACT": "GEMINI.md",
+    "CURSOR_RULES": ".cursor/rules/raios-core.mdc",
+    "CAPABILITY_BRIDGE": "RAIOS-CAPABILITY-BRIDGE/greeny-capabilities.json",
+    "CAPABILITY_BRIDGE_EXECUTOR": "RAIOS-CAPABILITY-BRIDGE.ps1",
+    "AGENT_STATE": ".ai-os/state/AGENTS.json",
+    "MASTERMIND_RUNTIME": "lib/intelligence/mastermind-agents.ts"
+  },
+  "assets": [
+    {
+      "asset_id": "asset:7cddbe1b60dc3c9af775672238c5ad09",
+      "path": ".ai-os/state/AGENTS.json",
+      "sha256": "7cddbe1b60dc3c9af775672238c5ad09b1d66001f301f2b842966780d19754ac",
+      "bytes": 4524,
+      "agent_family": "CLAUDE",
+      "authority": "CURRENT",
+      "capabilities": [
+        "agent",
+        "agents",
+        "analysis",
+        "claude",
+        "cursor",
+        "gemini",
+        "github",
+        "governance",
+        "model",
+        "testing"
+      ],
+      "canonical_owner": true,
+      "destructive_merge_allowed": false
+    },
+    {
+      "asset_id": "asset:f989c1f12cb7e3ac16d0f132d069acc7",
+      "path": ".cursor/rules/raios-core.mdc",
+      "sha256": "f989c1f12cb7e3ac16d0f132d069acc799f52d7393ca8fc6e234d657bd083edd",
+      "bytes": 208,
+      "agent_family": "CURSOR",
+      "authority": "CURRENT",
+      "capabilities": [
+        "agent",
+        "governance",
+        "read"
+      ],
+      "canonical_owner": true,
+      "destructive_merge_allowed": false
+    },
+    {
+      "asset_id": "asset:d3311ba7c4c7cf92b422a9f2c01c15a8",
+      "path": "AGENTS.md",
+      "sha256": "d3311ba7c4c7cf92b422a9f2c01c15a82d164c8b15a06a8d6e1d7e6ff551ff56",
+      "bytes": 197,
+      "agent_family": "GENERIC_AGENT_CONTROL",
+      "authority": "CURRENT",
+      "capabilities": [
+        "read"
+      ],
+      "canonical_owner": true,
+      "destructive_merge_allowed": false
+    },
+    {
+      "asset_id": "asset:ac3c6472e734412ec8d4a1b9f93677bc",
+      "path": "CLAUDE.md",
+      "sha256": "ac3c6472e734412ec8d4a1b9f93677bcb0ae6ebf1780fb67284057287bd5464a",
+      "bytes": 151,
+      "agent_family": "CLAUDE",
+      "authority": "CURRENT",
+      "capabilities": [
+        "claude",
+        "memory"
+      ],
+      "canonical_owner": true,
+      "destructive_merge_allowed": false
+    },
+    {
+      "asset_id": "asset:97bbc736509944bf1f1691478e080cb6",
+      "path": "GEMINI.md",
+      "sha256": "97bbc736509944bf1f1691478e080cb65ae66522ac8b53a0a387f1ccf7707143",
+      "bytes": 125,
+      "agent_family": "GEMINI",
+      "authority": "CURRENT",
+      "capabilities": [
+        "gemini",
+        "read"
+      ],
+      "canonical_owner": true,
+      "destructive_merge_allowed": false
+    },
+    {
+      "asset_id": "asset:1fd32a405ec59e59555f54e9d27b59f8",
+      "path": "MASTERMIND-AGENTS.md",
+      "sha256": "1fd32a405ec59e59555f54e9d27b59f81ec051a2fd8e9a98cff9bb0b69bc5a3e",
+      "bytes": 921,
+      "agent_family": "MASTERMIND",
+      "authority": "CURRENT",
+      "capabilities": [
+        "agent",
+        "agents",
+        "evidence",
+        "orchestrator",
+        "read"
+      ],
+      "canonical_owner": false,
+      "destructive_merge_allowed": false
+    },
+    {
+      "asset_id": "asset:458e20686ac303ca2f25dfd61813163b",
+      "path": "RAIOS-CAPABILITY-BRIDGE.ps1",
+      "sha256": "458e20686ac303ca2f25dfd61813163bc407c425ab26c8e69385436b8688319d",
+      "bytes": 5529,
+      "agent_family": "CURSOR",
+      "authority": "CURRENT",
+      "capabilities": [
+        "agent",
+        "bridge",
+        "capability",
+        "cursor",
+        "evidence",
+        "experience",
+        "git",
+        "governance",
+        "model",
+        "orchestration",
+        "promotion",
+        "repair",
+        "routing",
+        "test",
+        "tool"
+      ],
+      "canonical_owner": true,
+      "destructive_merge_allowed": false
+    },
+    {
+      "asset_id": "asset:10034511acbf791d88ecc5227f0a104e",
+      "path": "RAIOS-CAPABILITY-BRIDGE/greeny-capabilities.json",
+      "sha256": "10034511acbf791d88ecc5227f0a104eadafeb5cce865bc0f76762d67732b373",
+      "bytes": 44545,
+      "agent_family": "RAIOS_CAPABILITY_BRIDGE",
+      "authority": "CURRENT",
+      "capabilities": [
+        "agents",
+        "approval",
+        "capability",
+        "cursor",
+        "evidence",
+        "execution",
+        "experience",
+        "gemini",
+        "governance",
+        "model",
+        "orchestration",
+        "orchestrator",
+        "plan",
+        "read",
+        "repair",
+        "routing",
+        "runtime",
+        "tool",
+        "workflow"
+      ],
+      "canonical_owner": true,
+      "destructive_merge_allowed": false
+    },
+    {
+      "asset_id": "asset:9127c0c4511c82647758025f991a49d1",
+      "path": "RAIOS-CAPABILITY-BRIDGE/greeny-capabilities.md",
+      "sha256": "9127c0c4511c82647758025f991a49d1783dfb0677765453885ce5b6320843af",
+      "bytes": 7306,
+      "agent_family": "GEMINI",
+      "authority": "CURRENT",
+      "capabilities": [
+        "agents",
+        "approval",
+        "bridge",
+        "capability",
+        "cursor",
+        "evidence",
+        "execution",
+        "experience",
+        "gemini",
+        "governance",
+        "model",
+        "orchestration",
+        "orchestrator",
+        "plan",
+        "read",
+        "repair",
+        "routing",
+        "runtime",
+        "tool",
+        "workflow"
+      ],
+      "canonical_owner": false,
+      "destructive_merge_allowed": false
+    },
+    {
+      "asset_id": "asset:a4ce4571a152cfbad75da071049582fc",
+      "path": "RAIOS/V9/runtime/a13_agent_capability_dedup_certification.py",
+      "sha256": "a4ce4571a152cfbad75da071049582fc9340fdc14aca542e03fe4b4bfdd231a1",
+      "bytes": 32404,
+      "agent_family": "CLAUDE",
+      "authority": "CURRENT",
+      "capabilities": [
+        "agent",
+        "agents",
+        "analysis",
+        "analyze",
+        "approval",
+        "bridge",
+        "capability",
+        "claude",
+        "cline",
+        "cursor",
+        "debug",
+        "evidence",
+        "execute",
+        "execution",
+        "experience",
+        "failure",
+        "gemini",
+        "git",
+        "github",
+        "governance",
+        "inspect",
+        "memory",
+        "model",
+        "orchestration",
+        "orchestrator",
+        "plan",
+        "powershell",
+        "promotion",
+        "read",
+        "reason",
+        "recover",
+        "recovery",
+        "repair",
+        "router",
+        "routing",
+        "runtime",
+        "search",
+        "shell",
+        "skill",
+        "skills",
+        "terminal",
+        "test",
+        "testing",
+        "tool",
+        "tools",
+        "workflow"
+      ],
+      "canonical_owner": false,
+      "destructive_merge_allowed": false
+    },
+    {
+      "asset_id": "asset:3d60750b8fce3ed5adaef236c37e6aa5",
+      "path": "archive/old_folders/GREENY-LIFE-EOS-PRODUCTION/platform/intelligence/ai-assistant/executive-agent/agent-manifest.json",
+      "sha256": "3d60750b8fce3ed5adaef236c37e6aa5b28b7b85526a97171cc7eb1bb176e58a",
+      "bytes": 228,
+      "agent_family": "RAIOS_INTERNAL",
+      "authority": "ARCHIVED_EVIDENCE",
+      "capabilities": [
+        "analysis"
+      ],
+      "canonical_owner": false,
+      "destructive_merge_allowed": false
+    },
+    {
+      "asset_id": "asset:6f6bed953ba64bab9d285a96e15dfbee",
+      "path": "lib/intelligence/mastermind-agents.ts",
+      "sha256": "6f6bed953ba64bab9d285a96e15dfbee7ad122210b4730ebc60794839fcef2a2",
+      "bytes": 11965,
+      "agent_family": "MASTERMIND",
+      "authority": "CURRENT",
+      "capabilities": [
+        "agent",
+        "agents",
+        "approval",
+        "evidence",
+        "execution",
+        "governance",
+        "model",
+        "read",
+        "router",
+        "runtime",
+        "test"
+      ],
+      "canonical_owner": true,
+      "destructive_merge_allowed": false
+    },
+    {
+      "asset_id": "asset:d0bcbfaa912af9e1fbb3bbd925f92e21",
+      "path": "scripts/ai-os/local-agent.py",
+      "sha256": "d0bcbfaa912af9e1fbb3bbd925f92e21a2f0a413e59c6d6a2e5d4f011fb9c9b1",
+      "bytes": 3164,
+      "agent_family": "RAIOS_INTERNAL",
+      "authority": "CURRENT",
+      "capabilities": [
+        "analyze",
+        "capability",
+        "evidence",
+        "model",
+        "plan",
+        "read",
+        "runtime"
+      ],
+      "canonical_owner": false,
+      "destructive_merge_allowed": false
+    },
+    {
+      "asset_id": "asset:a678bcd678d0282de0b26805fee63cfd",
+      "path": "tests/mastermind_agents_check.ts",
+      "sha256": "a678bcd678d0282de0b26805fee63cfd3b6f569fb538f651d731bcb309717233",
+      "bytes": 1114,
+      "agent_family": "MASTERMIND",
+      "authority": "CURRENT",
+      "capabilities": [
+        "agent",
+        "agents",
+        "evidence",
+        "read",
+        "test"
+      ],
+      "canonical_owner": false,
+      "destructive_merge_allowed": false
+    }
+  ],
+  "exact_duplicate_groups": [],
+  "semantic_overlap_pairs": [
+    {
+      "left": "AGENTS.md",
+      "right": "GEMINI.md",
+      "capability_overlap": 0.5,
+      "status": "REVIEW_MERGE_CANDIDATE",
+      "automatic_merge": false
+    },
+    {
+      "left": "MASTERMIND-AGENTS.md",
+      "right": "tests/mastermind_agents_check.ts",
+      "capability_overlap": 0.666667,
+      "status": "REVIEW_MERGE_CANDIDATE",
+      "automatic_merge": false
+    },
+    {
+      "left": "RAIOS-CAPABILITY-BRIDGE/greeny-capabilities.json",
+      "right": "RAIOS-CAPABILITY-BRIDGE/greeny-capabilities.md",
+      "capability_overlap": 0.95,
+      "status": "REVIEW_MERGE_CANDIDATE",
+      "automatic_merge": false
+    }
+  ],
+  "anomalies": [],
+  "strategy": "DISCOVER_REUSE_EXTEND_CREATE_ONLY_IF_MISSING",
+  "automatic_merge": false,
+  "automatic_delete": false,
+  "canonical_mutation": false
+}

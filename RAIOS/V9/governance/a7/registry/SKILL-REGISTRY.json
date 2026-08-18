@@ -1,0 +1,41 @@
+{
+  "schema": "raios.skill-registry.v1",
+  "registry_version": 2,
+  "automatic_promotion": false,
+  "production_auto_activation": false,
+  "lifecycle": [
+    "CANDIDATE",
+    "BENCHMARKED",
+    "PROMOTION_ELIGIBLE",
+    "APPROVAL_REQUIRED",
+    "APPROVED",
+    "SHADOW",
+    "ACTIVE",
+    "DEGRADED",
+    "SUSPENDED",
+    "REVOKED",
+    "ROLLED_BACK"
+  ],
+  "skills": {
+    "skill:ff:07ed310cc0410694d6e681287ad0b4d9": {
+      "skill_id": "skill:ff:07ed310cc0410694d6e681287ad0b4d9",
+      "candidate_sha256": "d9926749e470f55df9b18c34305935524b32ef1a381e03e5ecc84277eb84afd7",
+      "lifecycle": "SHADOW",
+      "previous_lifecycle": "PROMOTION_ELIGIBLE",
+      "proposal_id": "proposal:f05df969add7ce941bf15934c33ed01f",
+      "authorization_id": "auth:6b7d0de2e3bf4d1b978de478f2dda88d",
+      "evidence_bundle_sha256": "0b2f1f8cb287f5899cb8817000e6686158b0d367e126071923fa6bdd6b3b29ca",
+      "a6_receipt_sha256": "43b11a841fe1174e48c0075b00c7011fa091118d10100ed0bbb07eb6e68a1ac7",
+      "benchmark_id": "benchmark:785e29a8a2878e58978731af2eaffc72",
+      "verdict_id": "verdict:34ac39c58eb5d3686f5f07d999cee555",
+      "rollback_pointer": "RAIOS\\V9\\governance\\a7\\rollback\\pre-shadow-24c3d836484ea7883d66fb9cd430bbab22c885e9050ce441413f6103dcfd98b6.json",
+      "rollback_sha256": "24c3d836484ea7883d66fb9cd430bbab22c885e9050ce441413f6103dcfd98b6",
+      "shadow_enabled": true,
+      "production_active": false,
+      "automatic_promotion": false,
+      "canonical_auto_promotion": false,
+      "registered_at": "2026-08-18T07:24:42.335880+00:00"
+    }
+  },
+  "updated_at": "2026-08-18T07:24:42.335899+00:00"
+}

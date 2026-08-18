@@ -1,0 +1,36 @@
+{
+    "schema":  "raios.current-task.v1",
+    "phase":  "V9.0-A",
+    "task":  "RECURSIVE_COGNITIVE_BOOTSTRAP",
+    "status":  "IN_PROGRESS",
+    "objective":  "Build the minimum recursive kernel that can read, search, observe, record experience and improve future RAIOS construction.",
+    "allowed_actions":  [
+                            "CREATE_V9_ISOLATED_FILES",
+                            "READ_REPOSITORY",
+                            "SEARCH_REPOSITORY",
+                            "CAPTURE_EXPERIENCE",
+                            "GENERATE_EVIDENCE",
+                            "GENERATE_CANDIDATES",
+                            "RUN_READ_ONLY_DIAGNOSTICS",
+                            "RUN_V9_TESTS"
+                        ],
+    "forbidden_actions":  [
+                              "DELETE_V8_STATE",
+                              "OVERWRITE_CANONICAL_V8_MEMORY",
+                              "PROMOTE_BACKGROUND_FINDINGS_WITHOUT_GATE",
+                              "AUTO_MODIFY_PRODUCTION_POLICY",
+                              "AUTO_DEPLOY_MODEL",
+                              "AUTO_FINE_TUNE_WITH_UNVALIDATED_DATA"
+                          ],
+    "success_conditions":  [
+                               "startup gate works",
+                               "context command works",
+                               "reader works",
+                               "search works",
+                               "experience capture works",
+                               "background evolution produces candidates only",
+                               "self-test passes"
+                           ],
+    "repository_sha_at_start":  "fb130e232246a00b531835f529f25e4edfae2854",
+    "started_at":  "2026-08-18T06:10:49.7681506Z"
+}

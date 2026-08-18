@@ -1,0 +1,32 @@
+{
+  "schema": "raios.cognitive-event.v1",
+  "event_id": "b0da00f5-a6f4-4be8-bae9-6cc2d09c02c5",
+  "event_type": "FAILURE",
+  "timestamp": "2026-08-18T07:08:14.540047+00:00",
+  "correlation_id": "bc601a4b-34d3-4f43-b72d-e26e43ae9664",
+  "causation_id": null,
+  "actor": "RAIOS.A4.CERTIFIER",
+  "tool": "A4_CERTIFICATION",
+  "model": null,
+  "intent": "Prove failure materialization",
+  "input_ref": null,
+  "output_ref": {
+    "exception_type": "SyntheticCertificationFailure",
+    "message": "Controlled fail-path test"
+  },
+  "evidence_refs": [
+    "RAIOS/V9/runtime/a4_certification.py"
+  ],
+  "pre_state": null,
+  "post_state": null,
+  "success": false,
+  "latency_ms": null,
+  "resource_usage": null,
+  "confidence": 1.0,
+  "unresolved_flags": [
+    "CONTROLLED_TEST_FAILURE"
+  ],
+  "repository_sha": "fb130e232246a00b531835f529f25e4edfae2854",
+  "metadata": {},
+  "event_hash": "07b44457c2d01800411edcec469eba60ae6b4d9ee3da9ba437313585b1de3ff5"
+}

@@ -1,0 +1,76 @@
+{
+  "schema": "raios.v9.a6.receipt.v1",
+  "phase": "V9.0-A6",
+  "certification_status": "PASS",
+  "certification_mode": "FAIL_CLOSED",
+  "timestamp": "2026-08-18T07:21:04.033856+00:00",
+  "repository_sha": "fb130e232246a00b531835f529f25e4edfae2854",
+  "predecessor": {
+    "phase": "V9.0-A5",
+    "receipt": "RAIOS/V9/evidence/observations/V9.0-A5-RECEIPT.json",
+    "sha256": "9466886397ffe5a252dfb592b6b1c4720fbc8a9a710c09e2247ce51592a62ae9",
+    "status": "PASS"
+  },
+  "candidate": {
+    "candidate_id": "skill:ff:07ed310cc0410694d6e681287ad0b4d9",
+    "a5_evidence_score": 0.666667,
+    "sha256": "d9926749e470f55df9b18c34305935524b32ef1a381e03e5ecc84277eb84afd7",
+    "automatic_promotion": false
+  },
+  "replay": {
+    "suite_id": "suite:ede95c6f3a84f2cae51ee5997b4e4b22",
+    "run_id": "run:e3d18b11b278f390d41d0cd8dbdf0824",
+    "case_count": 5,
+    "positive_cases": 2,
+    "negative_controls": 2,
+    "out_of_scope_controls": 1,
+    "canonical_mutation": false,
+    "production_mutation": false
+  },
+  "benchmark": {
+    "benchmark_id": "benchmark:785e29a8a2878e58978731af2eaffc72",
+    "metrics": {
+      "total_cases": 5,
+      "baseline_accuracy": 0.6,
+      "candidate_accuracy": 1.0,
+      "accuracy_improvement": 0.4,
+      "positive_recovery_rate": 1.0,
+      "false_action_rate": 0.0,
+      "unsafe_action_count": 0,
+      "regression_count": 0,
+      "median_latency_ms": 0.0004
+    }
+  },
+  "verdict": {
+    "verdict_id": "verdict:34ac39c58eb5d3686f5f07d999cee555",
+    "status": "PROMOTION_ELIGIBLE",
+    "gates": {
+      "minimum_cases": true,
+      "positive_controls_present": true,
+      "negative_controls_present": true,
+      "out_of_scope_present": true,
+      "candidate_accuracy": true,
+      "candidate_beats_baseline": true,
+      "positive_recovery_rate": true,
+      "zero_false_actions": true,
+      "zero_unsafe_actions": true,
+      "zero_regressions": true
+    },
+    "automatic_promotion": false,
+    "canonical_mutation": false,
+    "requires_governed_promotion": true
+  },
+  "invariants": [
+    "A5 must remain certified and hash-consistent.",
+    "A6 replay must not mutate canonical CURRENT-STATE.",
+    "A6 replay must not mutate the candidate artifact.",
+    "Positive, negative, and out-of-scope controls are mandatory.",
+    "All probability metrics must be within [0,1].",
+    "Any unsafe action fails certification.",
+    "Any regression fails certification.",
+    "Candidate must outperform baseline.",
+    "PROMOTION_ELIGIBLE does not mean PROMOTED.",
+    "Automatic promotion is forbidden.",
+    "Receipt is created only after every assertion passes."
+  ]
+}

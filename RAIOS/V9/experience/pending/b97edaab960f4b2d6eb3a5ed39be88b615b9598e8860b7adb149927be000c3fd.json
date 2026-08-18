@@ -1,0 +1,40 @@
+{
+  "schema": "raios.experience.v9",
+  "experience_id": "b97edaab960f4b2d6eb3a5ed39be88b615b9598e8860b7adb149927be000c3fd",
+  "timestamp": "2026-08-18T06:25:51.188790+00:00",
+  "intent": "Repair missing V9.0-A2 certification receipt",
+  "context": {
+    "repository": "C:\\Users\\Ghanam\\Documents\\Codex\\Greeny-Life-Repair",
+    "branch": "codex-clean",
+    "repository_sha": "fb130e232246a00b531835f529f25e4edfae2854",
+    "v9_phase": "V9.0-A"
+  },
+  "plan": [],
+  "tools": [
+    "PowerShell",
+    "RAIOS V9 CLI"
+  ],
+  "observations": [
+    "A2 functional operations completed and produced Experiences and Evolution reports.",
+    "The expected V9.0-A2-RECEIPT.json artifact was absent during final verification."
+  ],
+  "failures": [],
+  "corrections": [],
+  "result": {
+    "status": "RECORDED"
+  },
+  "evidence": [
+    "RAIOS/V9/"
+  ],
+  "lesson": [
+    "A completion banner must never be treated as certification evidence.",
+    "Phase completion requires an independently verifiable receipt artifact."
+  ],
+  "reusability": {
+    "assessment": "UNASSESSED",
+    "repeat_count": 1,
+    "candidate_for_compilation": false
+  },
+  "skill_candidate": null,
+  "status": "PENDING_VALIDATION"
+}

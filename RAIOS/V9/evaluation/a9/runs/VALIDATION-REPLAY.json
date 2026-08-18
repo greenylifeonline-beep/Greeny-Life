@@ -1,0 +1,187 @@
+{
+  "set": "VALIDATION_SET",
+  "count": 9,
+  "rows": [
+    {
+      "artifact_id": "artifact:d6fd11ea8619be72179c6c556ba0e1db",
+      "source_sha256": "d6fd11ea8619be72179c6c556ba0e1db247fa9ae826451526bb7808faefc0bac",
+      "artifact_class": "FAILURE",
+      "failure_family": "fs:c1f0613c6622116f8b17de7429adf13a",
+      "expected": "ABSTAIN",
+      "baseline": {
+        "action": "ABSTAIN",
+        "confidence": 0.55,
+        "latency_ms": 0.0042
+      },
+      "shadow": {
+        "action": "ABSTAIN",
+        "confidence": 0.91,
+        "latency_ms": 0.0019,
+        "production_mutation": false,
+        "canonical_mutation": false
+      }
+    },
+    {
+      "artifact_id": "artifact:40c7615aa359ed050c38556d25eb179c",
+      "source_sha256": "40c7615aa359ed050c38556d25eb179c57b1af68ed2712bc806825152b3a5c39",
+      "artifact_class": "RECOVERY",
+      "failure_family": "fs:c1f0613c6622116f8b17de7429adf13a",
+      "expected": "RECOVER",
+      "baseline": {
+        "action": "ABSTAIN",
+        "confidence": 0.55,
+        "latency_ms": 0.0009
+      },
+      "shadow": {
+        "action": "RECOVER",
+        "confidence": 0.93,
+        "latency_ms": 0.001,
+        "production_mutation": false,
+        "canonical_mutation": false
+      }
+    },
+    {
+      "artifact_id": "artifact:e767a8bd72c18f4769b229f23e0c1723",
+      "source_sha256": "e767a8bd72c18f4769b229f23e0c1723d9ab1071573d9e4b15643b36116cd56b",
+      "artifact_class": "EXPERIENCE",
+      "failure_family": null,
+      "expected": "ABSTAIN",
+      "baseline": {
+        "action": "ABSTAIN",
+        "confidence": 0.55,
+        "latency_ms": 0.0006
+      },
+      "shadow": {
+        "action": "ABSTAIN",
+        "confidence": 0.75,
+        "latency_ms": 0.0034,
+        "production_mutation": false,
+        "canonical_mutation": false
+      }
+    },
+    {
+      "artifact_id": "artifact:85cf500cb29120977216d80fe453a06c",
+      "source_sha256": "85cf500cb29120977216d80fe453a06cad81b90900c68b984c64338f4a41c031",
+      "artifact_class": "EXPERIENCE",
+      "failure_family": null,
+      "expected": "ABSTAIN",
+      "baseline": {
+        "action": "ABSTAIN",
+        "confidence": 0.55,
+        "latency_ms": 0.0004
+      },
+      "shadow": {
+        "action": "ABSTAIN",
+        "confidence": 0.75,
+        "latency_ms": 0.0015,
+        "production_mutation": false,
+        "canonical_mutation": false
+      }
+    },
+    {
+      "artifact_id": "artifact:82f77908a0cff192e0750dcea91389f7",
+      "source_sha256": "82f77908a0cff192e0750dcea91389f7a6b69c7ae7d646abdfe6b26465e6a296",
+      "artifact_class": "EXPERIENCE",
+      "failure_family": null,
+      "expected": "ABSTAIN",
+      "baseline": {
+        "action": "ABSTAIN",
+        "confidence": 0.55,
+        "latency_ms": 0.0003
+      },
+      "shadow": {
+        "action": "ABSTAIN",
+        "confidence": 0.75,
+        "latency_ms": 0.0014,
+        "production_mutation": false,
+        "canonical_mutation": false
+      }
+    },
+    {
+      "artifact_id": "artifact:4b775050d5988420907e70ae2a7abcd6",
+      "source_sha256": "4b775050d5988420907e70ae2a7abcd6f2e856c93f71157a8771d8a51bc37313",
+      "artifact_class": "RECOVERY",
+      "failure_family": null,
+      "expected": "RECOVER",
+      "baseline": {
+        "action": "ABSTAIN",
+        "confidence": 0.55,
+        "latency_ms": 0.0004
+      },
+      "shadow": {
+        "action": "RECOVER",
+        "confidence": 0.93,
+        "latency_ms": 0.0006,
+        "production_mutation": false,
+        "canonical_mutation": false
+      }
+    },
+    {
+      "artifact_id": "artifact:bc5472f2528e3a1dba5d73510403ab32",
+      "source_sha256": "bc5472f2528e3a1dba5d73510403ab32c7413bf461e85fb165b0c27cb69546cd",
+      "artifact_class": "EXPERIENCE",
+      "failure_family": null,
+      "expected": "ABSTAIN",
+      "baseline": {
+        "action": "ABSTAIN",
+        "confidence": 0.55,
+        "latency_ms": 0.0004
+      },
+      "shadow": {
+        "action": "ABSTAIN",
+        "confidence": 0.75,
+        "latency_ms": 0.0011,
+        "production_mutation": false,
+        "canonical_mutation": false
+      }
+    },
+    {
+      "artifact_id": "artifact:9a815185527d9274d6f702d1122cd730",
+      "source_sha256": "9a815185527d9274d6f702d1122cd730ad821e03982e92ab9be8deaf18224609",
+      "artifact_class": "EXPERIENCE",
+      "failure_family": null,
+      "expected": "ABSTAIN",
+      "baseline": {
+        "action": "ABSTAIN",
+        "confidence": 0.55,
+        "latency_ms": 0.0003
+      },
+      "shadow": {
+        "action": "ABSTAIN",
+        "confidence": 0.75,
+        "latency_ms": 0.001,
+        "production_mutation": false,
+        "canonical_mutation": false
+      }
+    },
+    {
+      "artifact_id": "artifact:fcf008adcf86269fcb3211aaa3bc1bc0",
+      "source_sha256": "fcf008adcf86269fcb3211aaa3bc1bc094ff6bc6baccef53dc1fb12c90f6bd86",
+      "artifact_class": "EXPERIENCE",
+      "failure_family": null,
+      "expected": "ABSTAIN",
+      "baseline": {
+        "action": "ABSTAIN",
+        "confidence": 0.55,
+        "latency_ms": 0.0003
+      },
+      "shadow": {
+        "action": "ABSTAIN",
+        "confidence": 0.75,
+        "latency_ms": 0.001,
+        "production_mutation": false,
+        "canonical_mutation": false
+      }
+    }
+  ],
+  "metrics": {
+    "baseline_accuracy": 0.7777777777777778,
+    "shadow_accuracy": 1.0,
+    "false_positive_rate": 0.0,
+    "false_negative_rate": 0.0,
+    "abstention_quality": 1.0,
+    "calibration_error": 0.1922222222222222,
+    "median_latency_ms": 0.0011,
+    "p95_latency_ms": 0.0034
+  }
+}

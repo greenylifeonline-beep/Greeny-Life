@@ -1,0 +1,1195 @@
+{
+  "schema": "raios.experience.v2",
+  "intent": "Evidence-native semantic understanding",
+  "action": "SEMANTIC_UNDERSTAND",
+  "tool": "RAIOS.V9.A3",
+  "environment": {
+    "timestamp": "2026-08-18T07:03:02.736467+00:00",
+    "repository": "C:\\Users\\Ghanam\\Documents\\Codex\\Greeny-Life-Repair",
+    "repository_sha": "fb130e232246a00b531835f529f25e4edfae2854",
+    "branch": "codex-clean",
+    "python": "3.14.7",
+    "platform": "win32",
+    "pid": 25188
+  },
+  "input": {
+    "path": "RAIOS/V9/continuity/RAIOS-CURRENT-STATE.json"
+  },
+  "expected_result": null,
+  "actual_result": {
+    "schema": "raios.semantic-artifact.v1",
+    "artifact": {
+      "path": "RAIOS\\V9\\continuity\\RAIOS-CURRENT-STATE.json",
+      "sha256": "0878783bcb90655882e67e89b2815a172ef618bf28506d6126dabff986bfb76b",
+      "bytes": 3907,
+      "source_type": "JSON",
+      "authority": "CURRENT_CANONICAL_STATE",
+      "authority_rank": 100,
+      "temporal_status": "CURRENT"
+    },
+    "claim_count": 46,
+    "evidence_count": 46,
+    "claims": [
+      {
+        "claim_id": "claim:775689bb9174b12d1ea46664436720e18cba0b66d7c0952a3550ed042de61d61",
+        "subject": "RAIOS\\V9\\continuity\\RAIOS-CURRENT-STATE.json",
+        "predicate": "schema",
+        "value": "raios.current-state.v9",
+        "confidence": 0.98,
+        "evidence_refs": [
+          "evidence:6ec7ee182ea6828bcc09347b089a13905d41091a776e23b48aa6e5278e147644"
+        ],
+        "authority": "CURRENT_CANONICAL_STATE",
+        "temporal_status": "CURRENT",
+        "status": "OBSERVED"
+      },
+      {
+        "claim_id": "claim:36df11a42a4a7e39592c490ff942c5f4a6596843fa20e5a97d67f1d2ad3060a7",
+        "subject": "RAIOS\\V9\\continuity\\RAIOS-CURRENT-STATE.json",
+        "predicate": "current_version",
+        "value": "V9.0-A3",
+        "confidence": 0.98,
+        "evidence_refs": [
+          "evidence:786bbea6e7856f54410dd5c8e5958c12a184c6e3bf25ae296bd8b0f250b1863a"
+        ],
+        "authority": "CURRENT_CANONICAL_STATE",
+        "temporal_status": "CURRENT",
+        "status": "OBSERVED"
+      },
+      {
+        "claim_id": "claim:7eccf069c80fd04a45b7b543beef817b889bfa4ad4f67d36822c4085a9b8e44d",
+        "subject": "RAIOS\\V9\\continuity\\RAIOS-CURRENT-STATE.json",
+        "predicate": "current_phase",
+        "value": "EVIDENCE_NATIVE_SEMANTIC_UNDERSTANDING",
+        "confidence": 0.98,
+        "evidence_refs": [
+          "evidence:be1ac6a8614c57ea91c6e3da17168007aa2d837e9317813a7f6a6965cd6f1eb6"
+        ],
+        "authority": "CURRENT_CANONICAL_STATE",
+        "temporal_status": "CURRENT",
+        "status": "OBSERVED"
+      },
+      {
+        "claim_id": "claim:4ef89f6d4f51e89cc94b682c748e91b756ba2632c888bde3c96cf97f9199bd30",
+        "subject": "RAIOS\\V9\\continuity\\RAIOS-CURRENT-STATE.json",
+        "predicate": "state_status",
+        "value": "A3_CERTIFIED",
+        "confidence": 0.98,
+        "evidence_refs": [
+          "evidence:d38190b8902f06a750793d1a431884bae5a4bdc39c98b42d5376ccc3f53b76ab"
+        ],
+        "authority": "CURRENT_CANONICAL_STATE",
+        "temporal_status": "CURRENT",
+        "status": "OBSERVED"
+      },
+      {
+        "claim_id": "claim:4342e53dc80da35fcd6b87c3f5341cf142f2f15ebf8246433574d026f0dfc79a",
+        "subject": "RAIOS\\V9\\continuity\\RAIOS-CURRENT-STATE.json",
+        "predicate": "stable_generation",
+        "value": "V8.6",
+        "confidence": 0.98,
+        "evidence_refs": [
+          "evidence:789507eed9a056ecbaddeb3059f679f9fad0f7b5f5630c2d44ce3622ef807563"
+        ],
+        "authority": "CURRENT_CANONICAL_STATE",
+        "temporal_status": "CURRENT",
+        "status": "OBSERVED"
+      },
+      {
+        "claim_id": "claim:9d9eef2923b85ef48e6d06df1b1a268bb12549d984dc8bd3462425f64110d7a5",
+        "subject": "RAIOS\\V9\\continuity\\RAIOS-CURRENT-STATE.json",
+        "predicate": "latest_known_checkpoint_hash",
+        "value": "0062a4f36a600d3ed2187f8e1c704e8e80dcfcc2db74723255e29df5f52a2a14",
+        "confidence": 0.98,
+        "evidence_refs": [
+          "evidence:a761eff750dd9d56674363728c9fc0ecb7a386f6e6f1c3164210c0428fc1e2e4"
+        ],
+        "authority": "CURRENT_CANONICAL_STATE",
+        "temporal_status": "CURRENT",
+        "status": "OBSERVED"
+      },
+      {
+        "claim_id": "claim:dcb5b31184c468280bebe59bc408fa2e786e615fa920383242a9534d4b3ae20a",
+        "subject": "RAIOS\\V9\\continuity\\RAIOS-CURRENT-STATE.json",
+        "predicate": "durability_status",
+        "value": "DURABILITY_PASS",
+        "confidence": 0.98,
+        "evidence_refs": [
+          "evidence:ff98ba195f78f9c90b5addcc335f6ae4fd411092b20ffb078d3b461ef21020d9"
+        ],
+        "authority": "CURRENT_CANONICAL_STATE",
+        "temporal_status": "CURRENT",
+        "status": "OBSERVED"
+      },
+      {
+        "claim_id": "claim:25082e00789a7c315400a1bef4d3899ad7476eee2067680beeb356a144b16496",
+        "subject": "RAIOS\\V9\\continuity\\RAIOS-CURRENT-STATE.json",
+        "predicate": "note",
+        "value": "Historical predecessor evidence; startup gate must independently verify when required.",
+        "confidence": 0.98,
+        "evidence_refs": [
+          "evidence:369dfd3e7577125a737bac8863a915dce695b0e19decb0f961529c5cf85013e5"
+        ],
+        "authority": "CURRENT_CANONICAL_STATE",
+        "temporal_status": "CURRENT",
+        "status": "OBSERVED"
+      },
+      {
+        "claim_id": "claim:76b12f815c4dbf8f8e4a2086d78502bdb1205176dbe673171386a6362868f602",
+        "subject": "RAIOS\\V9\\continuity\\RAIOS-CURRENT-STATE.json",
+        "predicate": "active_architecture[0]",
+        "value": "CONTINUITY_KERNEL",
+        "confidence": 0.98,
+        "evidence_refs": [
+          "evidence:e8df26ac2c1d3b8c86a0dda48be8b143e1a1ea3f48c94d4fcdf249d50649cba8"
+        ],
+        "authority": "CURRENT_CANONICAL_STATE",
+        "temporal_status": "CURRENT",
+        "status": "OBSERVED"
+      },
+      {
+        "claim_id": "claim:0c842ccd430cce135e059b035a15568744c0ccdfdf80314cea68c966b01e431d",
+        "subject": "RAIOS\\V9\\continuity\\RAIOS-CURRENT-STATE.json",
+        "predicate": "active_architecture[1]",
+        "value": "PERCEPTION_READING_KERNEL",
+        "confidence": 0.98,
+        "evidence_refs": [
+          "evidence:7e0c68741f3b0d2209957f43befcd757c608b0da6c189aa19bc0fa2f19cb783a"
+        ],
+        "authority": "CURRENT_CANONICAL_STATE",
+        "temporal_status": "CURRENT",
+        "status": "OBSERVED"
+      },
+      {
+        "claim_id": "claim:25acbbaad057fb0801c4330218f59e7fa8b954384b6a8a9e34e70f57268b7336",
+        "subject": "RAIOS\\V9\\continuity\\RAIOS-CURRENT-STATE.json",
+        "predicate": "active_architecture[2]",
+        "value": "EXPERIENCE_CAPTURE",
+        "confidence": 0.98,
+        "evidence_refs": [
+          "evidence:0a15e36200fbb7b0630878e457d2df883cd96f5834f859202d421be77cbd8769"
+        ],
+        "authority": "CURRENT_CANONICAL_STATE",
+        "temporal_status": "CURRENT",
+        "status": "OBSERVED"
+      },
+      {
+        "claim_id": "claim:52520f98cbbab229ebc3c973e04145d941a5a6e96592c30318c2ea83457858b9",
+        "subject": "RAIOS\\V9\\continuity\\RAIOS-CURRENT-STATE.json",
+        "predicate": "active_architecture[3]",
+        "value": "COGNITIVE_WORKBENCH",
+        "confidence": 0.98,
+        "evidence_refs": [
+          "evidence:2e7bb7d8f48bf3003351a5c37c62b417949e8f5bcc1fab4d41adc45634fd3f20"
+        ],
+        "authority": "CURRENT_CANONICAL_STATE",
+        "temporal_status": "CURRENT",
+        "status": "OBSERVED"
+      },
+      {
+        "claim_id": "claim:6b4d54b93b144a6d91bea006b19c8f57343597730b575276e4e775949200b410",
+        "subject": "RAIOS\\V9\\continuity\\RAIOS-CURRENT-STATE.json",
+        "predicate": "active_architecture[4]",
+        "value": "MODEL_TOOL_ROUTER",
+        "confidence": 0.98,
+        "evidence_refs": [
+          "evidence:ab329e39a54c349305c92f2eee93fb50f0c241ee7339f5d03e43f2723a616721"
+        ],
+        "authority": "CURRENT_CANONICAL_STATE",
+        "temporal_status": "CURRENT",
+        "status": "OBSERVED"
+      },
+      {
+        "claim_id": "claim:61aade24508ee30b68155b2719ec7598b29be0dc964f8b9a29674e251958ea24",
+        "subject": "RAIOS\\V9\\continuity\\RAIOS-CURRENT-STATE.json",
+        "predicate": "active_architecture[5]",
+        "value": "EVOLUTION_BACKGROUND_LOOP",
+        "confidence": 0.98,
+        "evidence_refs": [
+          "evidence:a114f6eee50bfcec0563d1ef99131628daf861bd270f216396565d9e07c82912"
+        ],
+        "authority": "CURRENT_CANONICAL_STATE",
+        "temporal_status": "CURRENT",
+        "status": "OBSERVED"
+      },
+      {
+        "claim_id": "claim:7d16ef471c7916f661e1fe8a753eb667bd243cbc1241a29a480bddde93257889",
+        "subject": "RAIOS\\V9\\continuity\\RAIOS-CURRENT-STATE.json",
+        "predicate": "live_brain",
+        "value": "FOREGROUND_CONSCIOUS_COGNITION",
+        "confidence": 0.98,
+        "evidence_refs": [
+          "evidence:fce3c8a418f219046319fabd14235432fa1c3f1fd1c2eca3db781b7fa80b7eec"
+        ],
+        "authority": "CURRENT_CANONICAL_STATE",
+        "temporal_status": "CURRENT",
+        "status": "OBSERVED"
+      },
+      {
+        "claim_id": "claim:df4baeca667d6c795cda5e4279b17848a2aecc02518cdd60109cb677de49970f",
+        "subject": "RAIOS\\V9\\continuity\\RAIOS-CURRENT-STATE.json",
+        "predicate": "evolution_brain",
+        "value": "BACKGROUND_SUBCONSCIOUS_COGNITION",
+        "confidence": 0.98,
+        "evidence_refs": [
+          "evidence:f9fcb7d66e55fc7876faa8826edd00384366d63d3ff3837b8a12864c5369f404"
+        ],
+        "authority": "CURRENT_CANONICAL_STATE",
+        "temporal_status": "CURRENT",
+        "status": "OBSERVED"
+      },
+      {
+        "claim_id": "claim:2a721d96811e78c84ced6779c8bb5825e58ff89974348f48120286261ddc0d25",
+        "subject": "RAIOS\\V9\\continuity\\RAIOS-CURRENT-STATE.json",
+        "predicate": "autonomic_core",
+        "value": "REFLEX_HEALTH_SAFETY_RECOVERY",
+        "confidence": 0.98,
+        "evidence_refs": [
+          "evidence:20bdefa1e9a08d6b80885962936d20510fdea14b0b1559bcdf04c88a26a0bdcc"
+        ],
+        "authority": "CURRENT_CANONICAL_STATE",
+        "temporal_status": "CURRENT",
+        "status": "OBSERVED"
+      },
+      {
+        "claim_id": "claim:f36b7b22fdbaa26d304fa989a830ec772b19483d8b937058d78ae42e48a0fe99",
+        "subject": "RAIOS\\V9\\continuity\\RAIOS-CURRENT-STATE.json",
+        "predicate": "canonical_mutation_policy",
+        "value": "GOVERNED_PROMOTION_ONLY",
+        "confidence": 0.98,
+        "evidence_refs": [
+          "evidence:a7c651f5c597e03436a02685d494a93ebcd03f006ec9fb6cd7817de65c6f5cc2"
+        ],
+        "authority": "CURRENT_CANONICAL_STATE",
+        "temporal_status": "CURRENT",
+        "status": "OBSERVED"
+      },
+      {
+        "claim_id": "claim:4ddfc11ac148258cc06f606e175b1a92803722b069320e75035fbeee5d3485dc",
+        "subject": "RAIOS\\V9\\continuity\\RAIOS-CURRENT-STATE.json",
+        "predicate": "kaggle_current_runtime_gpu_visible",
+        "value": false,
+        "confidence": 0.98,
+        "evidence_refs": [
+          "evidence:cf2c91b74ecd4c252ecd8bc1d686e76315edc20e80f83ad561bc6397bc9f73b1"
+        ],
+        "authority": "CURRENT_CANONICAL_STATE",
+        "temporal_status": "CURRENT",
+        "status": "OBSERVED"
+      },
+      {
+        "claim_id": "claim:ad570156fee9a8d406d748bc1aef352fdf026c09940baa245b6807c76845fb1f",
+        "subject": "RAIOS\\V9\\continuity\\RAIOS-CURRENT-STATE.json",
+        "predicate": "kaggle_t4_available_observed",
+        "value": false,
+        "confidence": 0.98,
+        "evidence_refs": [
+          "evidence:6cbc9904db4283d979442e2cba5cdafd2ee410cf2be67284d7036306e137e3de"
+        ],
+        "authority": "CURRENT_CANONICAL_STATE",
+        "temporal_status": "CURRENT",
+        "status": "OBSERVED"
+      },
+      {
+        "claim_id": "claim:9e047676737e99fd1e2557a32bcb394f0edb41369c14a8cae11dcdb3de7a4a33",
+        "subject": "RAIOS\\V9\\continuity\\RAIOS-CURRENT-STATE.json",
+        "predicate": "classification",
+        "value": "CURRENT_RUNTIME_CPU_ONLY",
+        "confidence": 0.98,
+        "evidence_refs": [
+          "evidence:548f5170d1f584114ea68fa04f3e2fe9c67542a62b252d28ae52ef2e3f16c32a"
+        ],
+        "authority": "CURRENT_CANONICAL_STATE",
+        "temporal_status": "CURRENT",
+        "status": "OBSERVED"
+      },
+      {
+        "claim_id": "claim:5574ee719897ae03942a996a62a00ff21563a8851dcde5ad316c082a2594dbcb",
+        "subject": "RAIOS\\V9\\continuity\\RAIOS-CURRENT-STATE.json",
+        "predicate": "note",
+        "value": "This does not prove that the provider/account can never expose GPU.",
+        "confidence": 0.98,
+        "evidence_refs": [
+          "evidence:7945289549daad1f3b7c7035513c93d80c330e763d91e6cde343645e008a2dca"
+        ],
+        "authority": "CURRENT_CANONICAL_STATE",
+        "temporal_status": "CURRENT",
+        "status": "OBSERVED"
+      },
+      {
+        "claim_id": "claim:97b8b5cb230a78712da1903571405acf1b3e13e60d08132a8efb44e157a2283a",
+        "subject": "RAIOS\\V9\\continuity\\RAIOS-CURRENT-STATE.json",
+        "predicate": "repository_sha_observed",
+        "value": "fb130e232246a00b531835f529f25e4edfae2854",
+        "confidence": 0.98,
+        "evidence_refs": [
+          "evidence:7931c4a7a81dc7d1d5cf357d95425058bda9b74f99c4b8533b4944e31c93ec7b"
+        ],
+        "authority": "CURRENT_CANONICAL_STATE",
+        "temporal_status": "CURRENT",
+        "status": "OBSERVED"
+      },
+      {
+        "claim_id": "claim:c61a3ad0919d5716d6067a135044b8180085d68d0fd4d282191400360d3e3e0b",
+        "subject": "RAIOS\\V9\\continuity\\RAIOS-CURRENT-STATE.json",
+        "predicate": "branch_observed",
+        "value": "codex-clean",
+        "confidence": 0.98,
+        "evidence_refs": [
+          "evidence:615be5f6dd5f729cf763f445eaccb1edf3546def83f45ab8ed5b39fd17330501"
+        ],
+        "authority": "CURRENT_CANONICAL_STATE",
+        "temporal_status": "CURRENT",
+        "status": "OBSERVED"
+      },
+      {
+        "claim_id": "claim:9c97c038fdb1498f5cfc09e7e2570c42dd742cd1691a589b6a8b79c78665cef7",
+        "subject": "RAIOS\\V9\\continuity\\RAIOS-CURRENT-STATE.json",
+        "predicate": "known_blockers[0]",
+        "value": "V9 kernels are bootstrap implementations, not yet production-promoted.",
+        "confidence": 0.98,
+        "evidence_refs": [
+          "evidence:fb43c29cde13306dfadce7a2fc52a20dcb6fa24250a54fb77b91b74f9eb696e8"
+        ],
+        "authority": "CURRENT_CANONICAL_STATE",
+        "temporal_status": "CURRENT",
+        "status": "OBSERVED"
+      },
+      {
+        "claim_id": "claim:c31da775fa34e87dd5400aa39501c3c6f2836eb35427555edb9794e869542c32",
+        "subject": "RAIOS\\V9\\continuity\\RAIOS-CURRENT-STATE.json",
+        "predicate": "known_blockers[1]",
+        "value": "GPU acceleration is not available in the currently observed Kaggle runtime.",
+        "confidence": 0.98,
+        "evidence_refs": [
+          "evidence:ec109d217997327bdd63d4b7b96d16c9bb34b8e6de09c2ffe57cf6ad1a5b13a6"
+        ],
+        "authority": "CURRENT_CANONICAL_STATE",
+        "temporal_status": "CURRENT",
+        "status": "OBSERVED"
+      },
+      {
+        "claim_id": "claim:12c14aa66401d22f1dc3f754e8d90661863dc9462b2d24faf1db0f39c4c907ab",
+        "subject": "RAIOS\\V9\\continuity\\RAIOS-CURRENT-STATE.json",
+        "predicate": "known_blockers[2]",
+        "value": "A2 certification revoked: receipt asserted PASS while lexical and Git historical search were false and self-read evidence fields were null.",
+        "confidence": 0.98,
+        "evidence_refs": [
+          "evidence:c389e1d6401190cf69bb63a9fbc5b59bbffabce8e3fa1fc52634c7379ea848b7"
+        ],
+        "authority": "CURRENT_CANONICAL_STATE",
+        "temporal_status": "CURRENT",
+        "status": "OBSERVED"
+      },
+      {
+        "claim_id": "claim:2f6432faa9290050371eb8863a730ebb624a0b2aa07e050528e0f35e002d0544",
+        "subject": "RAIOS\\V9\\continuity\\RAIOS-CURRENT-STATE.json",
+        "predicate": "updated_at",
+        "value": "2026-08-18T07:01:34.6998556Z",
+        "confidence": 0.98,
+        "evidence_refs": [
+          "evidence:265f6f845ec1c79fd6c2fe466ff40751921ba9129745d56a7b8cdff0eaa0acf2"
+        ],
+        "authority": "CURRENT_CANONICAL_STATE",
+        "temporal_status": "CURRENT",
+        "status": "OBSERVED"
+      },
+      {
+        "claim_id": "claim:05393be42e06530474c433e73564eac77feef5064cfb817975bff9808e4c1e1b",
+        "subject": "RAIOS\\V9\\continuity\\RAIOS-CURRENT-STATE.json",
+        "predicate": "phase",
+        "value": "V9.0-A3",
+        "confidence": 0.98,
+        "evidence_refs": [
+          "evidence:00c2a34dab2ec305063ddd7b239e3ad61bc8f342c30213cd6ad6a9ee325e9686"
+        ],
+        "authority": "CURRENT_CANONICAL_STATE",
+        "temporal_status": "CURRENT",
+        "status": "OBSERVED"
+      },
+      {
+        "claim_id": "claim:55ce4338b9d2b3339cd4a52db4e1554a1c1a60240bac3302d6adf731bc7536e0",
+        "subject": "RAIOS\\V9\\continuity\\RAIOS-CURRENT-STATE.json",
+        "predicate": "path",
+        "value": "RAIOS/V9/evidence/observations/V9.0-A3-RECEIPT.json",
+        "confidence": 0.98,
+        "evidence_refs": [
+          "evidence:a737167cf5b3c2278de48f660406a043c8e63ce13f34ba100a90e54510f6b056"
+        ],
+        "authority": "CURRENT_CANONICAL_STATE",
+        "temporal_status": "CURRENT",
+        "status": "OBSERVED"
+      },
+      {
+        "claim_id": "claim:ee47176ff0ff3d80d43d7134f65c0f4a6844a4e2cca23f54ef66785073467a59",
+        "subject": "RAIOS\\V9\\continuity\\RAIOS-CURRENT-STATE.json",
+        "predicate": "sha256",
+        "value": "3374b526d9ea99ed1daf2aed58b0bf9808f2a8ae913c7eb1152e744beba4cc7c",
+        "confidence": 0.98,
+        "evidence_refs": [
+          "evidence:c5e0f584808ec0187524b767bbc5592f2cd81c29dfd0b49a08b5747fbfad54bf"
+        ],
+        "authority": "CURRENT_CANONICAL_STATE",
+        "temporal_status": "CURRENT",
+        "status": "OBSERVED"
+      },
+      {
+        "claim_id": "claim:a5f2e89ba0f3a806a87bc6fe1142efc89ee934b380c6332284c3bbfbb0412652",
+        "subject": "RAIOS\\V9\\continuity\\RAIOS-CURRENT-STATE.json",
+        "predicate": "certification_status",
+        "value": "PASS",
+        "confidence": 0.98,
+        "evidence_refs": [
+          "evidence:6741771142e5bab86aab4d5801f98ab9d21b521a663b6a890eee7d9f714d8310"
+        ],
+        "authority": "CURRENT_CANONICAL_STATE",
+        "temporal_status": "CURRENT",
+        "status": "OBSERVED"
+      },
+      {
+        "claim_id": "claim:fc1ed24ab64f0a5e07c36b392a9e59702db76a7213466bda128e23eca8dfa37c",
+        "subject": "RAIOS\\V9\\continuity\\RAIOS-CURRENT-STATE.json",
+        "predicate": "status",
+        "value": "ACTIVE",
+        "confidence": 0.98,
+        "evidence_refs": [
+          "evidence:8e2fffcec9d1654d801305b3852984731a6238a0e4613700180a057da1142a3f"
+        ],
+        "authority": "CURRENT_CANONICAL_STATE",
+        "temporal_status": "CURRENT",
+        "status": "OBSERVED"
+      },
+      {
+        "claim_id": "claim:b071f6cad224db10e96c75b6b747d4ff9d8d3e0b9b415c4d4636667ceaa5e55e",
+        "subject": "RAIOS\\V9\\continuity\\RAIOS-CURRENT-STATE.json",
+        "predicate": "experience_capture",
+        "value": "AUTOMATIC",
+        "confidence": 0.98,
+        "evidence_refs": [
+          "evidence:fda37da25710c464c21cd255d68173fde3db3a76b85988160c2c1abb8ea9aed7"
+        ],
+        "authority": "CURRENT_CANONICAL_STATE",
+        "temporal_status": "CURRENT",
+        "status": "OBSERVED"
+      },
+      {
+        "claim_id": "claim:e691b446f263095eec15494bc16fd39da5eef96d8f7a9b4be891f4347aaa1701",
+        "subject": "RAIOS\\V9\\continuity\\RAIOS-CURRENT-STATE.json",
+        "predicate": "failure_signature_capture",
+        "value": "AUTOMATIC_ON_FAILURE",
+        "confidence": 0.98,
+        "evidence_refs": [
+          "evidence:4db173465bda3115d063a1c1181edbb9c49d9d6c6e3c6012813b07965a5fb14f"
+        ],
+        "authority": "CURRENT_CANONICAL_STATE",
+        "temporal_status": "CURRENT",
+        "status": "OBSERVED"
+      },
+      {
+        "claim_id": "claim:74ed717a168406f69e0a5c1e5b0c73be8f4d952528fa66098014e88230653452",
+        "subject": "RAIOS\\V9\\continuity\\RAIOS-CURRENT-STATE.json",
+        "predicate": "recovery_skill_candidate",
+        "value": "AUTOMATIC_ON_FAILURE_PATTERN",
+        "confidence": 0.98,
+        "evidence_refs": [
+          "evidence:e869a1a4ac43236a334f56b6de1f177ce0f550404c058f363fc5753f1504e339"
+        ],
+        "authority": "CURRENT_CANONICAL_STATE",
+        "temporal_status": "CURRENT",
+        "status": "OBSERVED"
+      },
+      {
+        "claim_id": "claim:4999c995e9d831e729b6f238f9f45c8e9b1ed02138c051558d967d3e87dac83e",
+        "subject": "RAIOS\\V9\\continuity\\RAIOS-CURRENT-STATE.json",
+        "predicate": "canonical_promotion",
+        "value": "GOVERNED_ONLY",
+        "confidence": 0.98,
+        "evidence_refs": [
+          "evidence:75cf68333381d15d32db78b3652c97aa5edab81af75cb4737c221336664ea2b7"
+        ],
+        "authority": "CURRENT_CANONICAL_STATE",
+        "temporal_status": "CURRENT",
+        "status": "OBSERVED"
+      },
+      {
+        "claim_id": "claim:2950a67df71b00bcf87ba379f410aae6df133d6e8c3c4e9dd9aa5b0531bf53b4",
+        "subject": "RAIOS\\V9\\continuity\\RAIOS-CURRENT-STATE.json",
+        "predicate": "status",
+        "value": "ACTIVE_BOOTSTRAP_CERTIFIED",
+        "confidence": 0.98,
+        "evidence_refs": [
+          "evidence:a91ca1d77ef0c065b66e0df1b2f80d6b7e384b664c35d654e37fdf44ad7863fe"
+        ],
+        "authority": "CURRENT_CANONICAL_STATE",
+        "temporal_status": "CURRENT",
+        "status": "OBSERVED"
+      },
+      {
+        "claim_id": "claim:146ef5a949c7ca1a7d76c93099d8cabc21ec73a7c4fe6c1223a6f0aa63424dc4",
+        "subject": "RAIOS\\V9\\continuity\\RAIOS-CURRENT-STATE.json",
+        "predicate": "claims",
+        "value": "EVIDENCE_REQUIRED",
+        "confidence": 0.98,
+        "evidence_refs": [
+          "evidence:49a73acd5b530eda14a5a4c3c21d779425e0bdc3eaf77a7a14593f90d978a006"
+        ],
+        "authority": "CURRENT_CANONICAL_STATE",
+        "temporal_status": "CURRENT",
+        "status": "OBSERVED"
+      },
+      {
+        "claim_id": "claim:e4eaa4355f9334232c64799334051a18181bb3775f202b0f92834af911e69079",
+        "subject": "RAIOS\\V9\\continuity\\RAIOS-CURRENT-STATE.json",
+        "predicate": "provenance",
+        "value": "ACTIVE",
+        "confidence": 0.98,
+        "evidence_refs": [
+          "evidence:932b9bca441ef2011341846bf97d1060b47044bfb62264ae8c203b62865b52ca"
+        ],
+        "authority": "CURRENT_CANONICAL_STATE",
+        "temporal_status": "CURRENT",
+        "status": "OBSERVED"
+      },
+      {
+        "claim_id": "claim:5614e562c591cb0a000503f7e8fb39c2e5f206ced2d5a342b4855526445e5729",
+        "subject": "RAIOS\\V9\\continuity\\RAIOS-CURRENT-STATE.json",
+        "predicate": "authority_awareness",
+        "value": "ACTIVE",
+        "confidence": 0.98,
+        "evidence_refs": [
+          "evidence:2645d174b49b29985534d3df2e2650b50d5b628b467bcb39ece8327d7bc86d8c"
+        ],
+        "authority": "CURRENT_CANONICAL_STATE",
+        "temporal_status": "CURRENT",
+        "status": "OBSERVED"
+      },
+      {
+        "claim_id": "claim:d755dfaeac49a1855f6bf110c6e4c39740084811a1ab877ab2d93abab8e2cd30",
+        "subject": "RAIOS\\V9\\continuity\\RAIOS-CURRENT-STATE.json",
+        "predicate": "temporal_awareness",
+        "value": "ACTIVE",
+        "confidence": 0.98,
+        "evidence_refs": [
+          "evidence:1da93b961c3a29dbc21194841ce6604c9a5c813c76cdbdf677109a92113697ce"
+        ],
+        "authority": "CURRENT_CANONICAL_STATE",
+        "temporal_status": "CURRENT",
+        "status": "OBSERVED"
+      },
+      {
+        "claim_id": "claim:7e8d37fd3642d5e5c4c1267f22ad041e513f3540bf1272dd3ddf968b7551a8b9",
+        "subject": "RAIOS\\V9\\continuity\\RAIOS-CURRENT-STATE.json",
+        "predicate": "contradiction_objects",
+        "value": "ACTIVE",
+        "confidence": 0.98,
+        "evidence_refs": [
+          "evidence:1127f566b4f2eb15830d3cbc3df42b5beb04583b5b2d30c4d5bd0cfe36651497"
+        ],
+        "authority": "CURRENT_CANONICAL_STATE",
+        "temporal_status": "CURRENT",
+        "status": "OBSERVED"
+      },
+      {
+        "claim_id": "claim:0d1e5fc7ad1fce37d4f1f840dfcd859f1d7d3d94fba08e035934feafea052800",
+        "subject": "RAIOS\\V9\\continuity\\RAIOS-CURRENT-STATE.json",
+        "predicate": "confidence_contract",
+        "value": "STRICT_0_TO_1",
+        "confidence": 0.98,
+        "evidence_refs": [
+          "evidence:9e417c760a2960b16f115e891506be485a741fa8f929e525735401493198cc4c"
+        ],
+        "authority": "CURRENT_CANONICAL_STATE",
+        "temporal_status": "CURRENT",
+        "status": "OBSERVED"
+      },
+      {
+        "claim_id": "claim:bffd72694c9182207189c513ca91fa2abbcfa6a12b377a32d663f77e2187c4c3",
+        "subject": "RAIOS\\V9\\continuity\\RAIOS-CURRENT-STATE.json",
+        "predicate": "historical_override",
+        "value": "FORBIDDEN",
+        "confidence": 0.98,
+        "evidence_refs": [
+          "evidence:b58b4398c51ef178f5483d42d65e1934649d6557f36a0700e255366e70d32504"
+        ],
+        "authority": "CURRENT_CANONICAL_STATE",
+        "temporal_status": "CURRENT",
+        "status": "OBSERVED"
+      },
+      {
+        "claim_id": "claim:0b00ec7edcf2bfef2de845fe3cd79a09d69ef0f7c87e7f2436c5ce16d174cff5",
+        "subject": "RAIOS\\V9\\continuity\\RAIOS-CURRENT-STATE.json",
+        "predicate": "canonical_auto_promotion",
+        "value": false,
+        "confidence": 0.98,
+        "evidence_refs": [
+          "evidence:203f55fdd58647326bacadcf5b76a69378e456b57b4f9c707cf262bae7ed44b8"
+        ],
+        "authority": "CURRENT_CANONICAL_STATE",
+        "temporal_status": "CURRENT",
+        "status": "OBSERVED"
+      }
+    ],
+    "evidence": [
+      {
+        "evidence_id": "evidence:6ec7ee182ea6828bcc09347b089a13905d41091a776e23b48aa6e5278e147644",
+        "path": "RAIOS\\V9\\continuity\\RAIOS-CURRENT-STATE.json",
+        "sha256": "0878783bcb90655882e67e89b2815a172ef618bf28506d6126dabff986bfb76b",
+        "source_type": "JSON",
+        "authority": "CURRENT_CANONICAL_STATE",
+        "authority_rank": 100,
+        "temporal_status": "CURRENT",
+        "locator": "$.schema",
+        "excerpt": "\"raios.current-state.v9\""
+      },
+      {
+        "evidence_id": "evidence:786bbea6e7856f54410dd5c8e5958c12a184c6e3bf25ae296bd8b0f250b1863a",
+        "path": "RAIOS\\V9\\continuity\\RAIOS-CURRENT-STATE.json",
+        "sha256": "0878783bcb90655882e67e89b2815a172ef618bf28506d6126dabff986bfb76b",
+        "source_type": "JSON",
+        "authority": "CURRENT_CANONICAL_STATE",
+        "authority_rank": 100,
+        "temporal_status": "CURRENT",
+        "locator": "$.current_version",
+        "excerpt": "\"V9.0-A3\""
+      },
+      {
+        "evidence_id": "evidence:be1ac6a8614c57ea91c6e3da17168007aa2d837e9317813a7f6a6965cd6f1eb6",
+        "path": "RAIOS\\V9\\continuity\\RAIOS-CURRENT-STATE.json",
+        "sha256": "0878783bcb90655882e67e89b2815a172ef618bf28506d6126dabff986bfb76b",
+        "source_type": "JSON",
+        "authority": "CURRENT_CANONICAL_STATE",
+        "authority_rank": 100,
+        "temporal_status": "CURRENT",
+        "locator": "$.current_phase",
+        "excerpt": "\"EVIDENCE_NATIVE_SEMANTIC_UNDERSTANDING\""
+      },
+      {
+        "evidence_id": "evidence:d38190b8902f06a750793d1a431884bae5a4bdc39c98b42d5376ccc3f53b76ab",
+        "path": "RAIOS\\V9\\continuity\\RAIOS-CURRENT-STATE.json",
+        "sha256": "0878783bcb90655882e67e89b2815a172ef618bf28506d6126dabff986bfb76b",
+        "source_type": "JSON",
+        "authority": "CURRENT_CANONICAL_STATE",
+        "authority_rank": 100,
+        "temporal_status": "CURRENT",
+        "locator": "$.state_status",
+        "excerpt": "\"A3_CERTIFIED\""
+      },
+      {
+        "evidence_id": "evidence:789507eed9a056ecbaddeb3059f679f9fad0f7b5f5630c2d44ce3622ef807563",
+        "path": "RAIOS\\V9\\continuity\\RAIOS-CURRENT-STATE.json",
+        "sha256": "0878783bcb90655882e67e89b2815a172ef618bf28506d6126dabff986bfb76b",
+        "source_type": "JSON",
+        "authority": "CURRENT_CANONICAL_STATE",
+        "authority_rank": 100,
+        "temporal_status": "CURRENT",
+        "locator": "$.predecessor.stable_generation",
+        "excerpt": "\"V8.6\""
+      },
+      {
+        "evidence_id": "evidence:a761eff750dd9d56674363728c9fc0ecb7a386f6e6f1c3164210c0428fc1e2e4",
+        "path": "RAIOS\\V9\\continuity\\RAIOS-CURRENT-STATE.json",
+        "sha256": "0878783bcb90655882e67e89b2815a172ef618bf28506d6126dabff986bfb76b",
+        "source_type": "JSON",
+        "authority": "CURRENT_CANONICAL_STATE",
+        "authority_rank": 100,
+        "temporal_status": "CURRENT",
+        "locator": "$.predecessor.latest_known_checkpoint_hash",
+        "excerpt": "\"0062a4f36a600d3ed2187f8e1c704e8e80dcfcc2db74723255e29df5f52a2a14\""
+      },
+      {
+        "evidence_id": "evidence:ff98ba195f78f9c90b5addcc335f6ae4fd411092b20ffb078d3b461ef21020d9",
+        "path": "RAIOS\\V9\\continuity\\RAIOS-CURRENT-STATE.json",
+        "sha256": "0878783bcb90655882e67e89b2815a172ef618bf28506d6126dabff986bfb76b",
+        "source_type": "JSON",
+        "authority": "CURRENT_CANONICAL_STATE",
+        "authority_rank": 100,
+        "temporal_status": "CURRENT",
+        "locator": "$.predecessor.durability_status",
+        "excerpt": "\"DURABILITY_PASS\""
+      },
+      {
+        "evidence_id": "evidence:369dfd3e7577125a737bac8863a915dce695b0e19decb0f961529c5cf85013e5",
+        "path": "RAIOS\\V9\\continuity\\RAIOS-CURRENT-STATE.json",
+        "sha256": "0878783bcb90655882e67e89b2815a172ef618bf28506d6126dabff986bfb76b",
+        "source_type": "JSON",
+        "authority": "CURRENT_CANONICAL_STATE",
+        "authority_rank": 100,
+        "temporal_status": "CURRENT",
+        "locator": "$.predecessor.note",
+        "excerpt": "\"Historical predecessor evidence; startup gate must independently verify when required.\""
+      },
+      {
+        "evidence_id": "evidence:e8df26ac2c1d3b8c86a0dda48be8b143e1a1ea3f48c94d4fcdf249d50649cba8",
+        "path": "RAIOS\\V9\\continuity\\RAIOS-CURRENT-STATE.json",
+        "sha256": "0878783bcb90655882e67e89b2815a172ef618bf28506d6126dabff986bfb76b",
+        "source_type": "JSON",
+        "authority": "CURRENT_CANONICAL_STATE",
+        "authority_rank": 100,
+        "temporal_status": "CURRENT",
+        "locator": "$.active_architecture[0]",
+        "excerpt": "\"CONTINUITY_KERNEL\""
+      },
+      {
+        "evidence_id": "evidence:7e0c68741f3b0d2209957f43befcd757c608b0da6c189aa19bc0fa2f19cb783a",
+        "path": "RAIOS\\V9\\continuity\\RAIOS-CURRENT-STATE.json",
+        "sha256": "0878783bcb90655882e67e89b2815a172ef618bf28506d6126dabff986bfb76b",
+        "source_type": "JSON",
+        "authority": "CURRENT_CANONICAL_STATE",
+        "authority_rank": 100,
+        "temporal_status": "CURRENT",
+        "locator": "$.active_architecture[1]",
+        "excerpt": "\"PERCEPTION_READING_KERNEL\""
+      },
+      {
+        "evidence_id": "evidence:0a15e36200fbb7b0630878e457d2df883cd96f5834f859202d421be77cbd8769",
+        "path": "RAIOS\\V9\\continuity\\RAIOS-CURRENT-STATE.json",
+        "sha256": "0878783bcb90655882e67e89b2815a172ef618bf28506d6126dabff986bfb76b",
+        "source_type": "JSON",
+        "authority": "CURRENT_CANONICAL_STATE",
+        "authority_rank": 100,
+        "temporal_status": "CURRENT",
+        "locator": "$.active_architecture[2]",
+        "excerpt": "\"EXPERIENCE_CAPTURE\""
+      },
+      {
+        "evidence_id": "evidence:2e7bb7d8f48bf3003351a5c37c62b417949e8f5bcc1fab4d41adc45634fd3f20",
+        "path": "RAIOS\\V9\\continuity\\RAIOS-CURRENT-STATE.json",
+        "sha256": "0878783bcb90655882e67e89b2815a172ef618bf28506d6126dabff986bfb76b",
+        "source_type": "JSON",
+        "authority": "CURRENT_CANONICAL_STATE",
+        "authority_rank": 100,
+        "temporal_status": "CURRENT",
+        "locator": "$.active_architecture[3]",
+        "excerpt": "\"COGNITIVE_WORKBENCH\""
+      },
+      {
+        "evidence_id": "evidence:ab329e39a54c349305c92f2eee93fb50f0c241ee7339f5d03e43f2723a616721",
+        "path": "RAIOS\\V9\\continuity\\RAIOS-CURRENT-STATE.json",
+        "sha256": "0878783bcb90655882e67e89b2815a172ef618bf28506d6126dabff986bfb76b",
+        "source_type": "JSON",
+        "authority": "CURRENT_CANONICAL_STATE",
+        "authority_rank": 100,
+        "temporal_status": "CURRENT",
+        "locator": "$.active_architecture[4]",
+        "excerpt": "\"MODEL_TOOL_ROUTER\""
+      },
+      {
+        "evidence_id": "evidence:a114f6eee50bfcec0563d1ef99131628daf861bd270f216396565d9e07c82912",
+        "path": "RAIOS\\V9\\continuity\\RAIOS-CURRENT-STATE.json",
+        "sha256": "0878783bcb90655882e67e89b2815a172ef618bf28506d6126dabff986bfb76b",
+        "source_type": "JSON",
+        "authority": "CURRENT_CANONICAL_STATE",
+        "authority_rank": 100,
+        "temporal_status": "CURRENT",
+        "locator": "$.active_architecture[5]",
+        "excerpt": "\"EVOLUTION_BACKGROUND_LOOP\""
+      },
+      {
+        "evidence_id": "evidence:fce3c8a418f219046319fabd14235432fa1c3f1fd1c2eca3db781b7fa80b7eec",
+        "path": "RAIOS\\V9\\continuity\\RAIOS-CURRENT-STATE.json",
+        "sha256": "0878783bcb90655882e67e89b2815a172ef618bf28506d6126dabff986bfb76b",
+        "source_type": "JSON",
+        "authority": "CURRENT_CANONICAL_STATE",
+        "authority_rank": 100,
+        "temporal_status": "CURRENT",
+        "locator": "$.cognitive_modes.live_brain",
+        "excerpt": "\"FOREGROUND_CONSCIOUS_COGNITION\""
+      },
+      {
+        "evidence_id": "evidence:f9fcb7d66e55fc7876faa8826edd00384366d63d3ff3837b8a12864c5369f404",
+        "path": "RAIOS\\V9\\continuity\\RAIOS-CURRENT-STATE.json",
+        "sha256": "0878783bcb90655882e67e89b2815a172ef618bf28506d6126dabff986bfb76b",
+        "source_type": "JSON",
+        "authority": "CURRENT_CANONICAL_STATE",
+        "authority_rank": 100,
+        "temporal_status": "CURRENT",
+        "locator": "$.cognitive_modes.evolution_brain",
+        "excerpt": "\"BACKGROUND_SUBCONSCIOUS_COGNITION\""
+      },
+      {
+        "evidence_id": "evidence:20bdefa1e9a08d6b80885962936d20510fdea14b0b1559bcdf04c88a26a0bdcc",
+        "path": "RAIOS\\V9\\continuity\\RAIOS-CURRENT-STATE.json",
+        "sha256": "0878783bcb90655882e67e89b2815a172ef618bf28506d6126dabff986bfb76b",
+        "source_type": "JSON",
+        "authority": "CURRENT_CANONICAL_STATE",
+        "authority_rank": 100,
+        "temporal_status": "CURRENT",
+        "locator": "$.cognitive_modes.autonomic_core",
+        "excerpt": "\"REFLEX_HEALTH_SAFETY_RECOVERY\""
+      },
+      {
+        "evidence_id": "evidence:a7c651f5c597e03436a02685d494a93ebcd03f006ec9fb6cd7817de65c6f5cc2",
+        "path": "RAIOS\\V9\\continuity\\RAIOS-CURRENT-STATE.json",
+        "sha256": "0878783bcb90655882e67e89b2815a172ef618bf28506d6126dabff986bfb76b",
+        "source_type": "JSON",
+        "authority": "CURRENT_CANONICAL_STATE",
+        "authority_rank": 100,
+        "temporal_status": "CURRENT",
+        "locator": "$.canonical_mutation_policy",
+        "excerpt": "\"GOVERNED_PROMOTION_ONLY\""
+      },
+      {
+        "evidence_id": "evidence:cf2c91b74ecd4c252ecd8bc1d686e76315edc20e80f83ad561bc6397bc9f73b1",
+        "path": "RAIOS\\V9\\continuity\\RAIOS-CURRENT-STATE.json",
+        "sha256": "0878783bcb90655882e67e89b2815a172ef618bf28506d6126dabff986bfb76b",
+        "source_type": "JSON",
+        "authority": "CURRENT_CANONICAL_STATE",
+        "authority_rank": 100,
+        "temporal_status": "CURRENT",
+        "locator": "$.compute_observation.kaggle_current_runtime_gpu_visible",
+        "excerpt": "false"
+      },
+      {
+        "evidence_id": "evidence:6cbc9904db4283d979442e2cba5cdafd2ee410cf2be67284d7036306e137e3de",
+        "path": "RAIOS\\V9\\continuity\\RAIOS-CURRENT-STATE.json",
+        "sha256": "0878783bcb90655882e67e89b2815a172ef618bf28506d6126dabff986bfb76b",
+        "source_type": "JSON",
+        "authority": "CURRENT_CANONICAL_STATE",
+        "authority_rank": 100,
+        "temporal_status": "CURRENT",
+        "locator": "$.compute_observation.kaggle_t4_available_observed",
+        "excerpt": "false"
+      },
+      {
+        "evidence_id": "evidence:548f5170d1f584114ea68fa04f3e2fe9c67542a62b252d28ae52ef2e3f16c32a",
+        "path": "RAIOS\\V9\\continuity\\RAIOS-CURRENT-STATE.json",
+        "sha256": "0878783bcb90655882e67e89b2815a172ef618bf28506d6126dabff986bfb76b",
+        "source_type": "JSON",
+        "authority": "CURRENT_CANONICAL_STATE",
+        "authority_rank": 100,
+        "temporal_status": "CURRENT",
+        "locator": "$.compute_observation.classification",
+        "excerpt": "\"CURRENT_RUNTIME_CPU_ONLY\""
+      },
+      {
+        "evidence_id": "evidence:7945289549daad1f3b7c7035513c93d80c330e763d91e6cde343645e008a2dca",
+        "path": "RAIOS\\V9\\continuity\\RAIOS-CURRENT-STATE.json",
+        "sha256": "0878783bcb90655882e67e89b2815a172ef618bf28506d6126dabff986bfb76b",
+        "source_type": "JSON",
+        "authority": "CURRENT_CANONICAL_STATE",
+        "authority_rank": 100,
+        "temporal_status": "CURRENT",
+        "locator": "$.compute_observation.note",
+        "excerpt": "\"This does not prove that the provider/account can never expose GPU.\""
+      },
+      {
+        "evidence_id": "evidence:7931c4a7a81dc7d1d5cf357d95425058bda9b74f99c4b8533b4944e31c93ec7b",
+        "path": "RAIOS\\V9\\continuity\\RAIOS-CURRENT-STATE.json",
+        "sha256": "0878783bcb90655882e67e89b2815a172ef618bf28506d6126dabff986bfb76b",
+        "source_type": "JSON",
+        "authority": "CURRENT_CANONICAL_STATE",
+        "authority_rank": 100,
+        "temporal_status": "CURRENT",
+        "locator": "$.repository_sha_observed",
+        "excerpt": "\"fb130e232246a00b531835f529f25e4edfae2854\""
+      },
+      {
+        "evidence_id": "evidence:615be5f6dd5f729cf763f445eaccb1edf3546def83f45ab8ed5b39fd17330501",
+        "path": "RAIOS\\V9\\continuity\\RAIOS-CURRENT-STATE.json",
+        "sha256": "0878783bcb90655882e67e89b2815a172ef618bf28506d6126dabff986bfb76b",
+        "source_type": "JSON",
+        "authority": "CURRENT_CANONICAL_STATE",
+        "authority_rank": 100,
+        "temporal_status": "CURRENT",
+        "locator": "$.branch_observed",
+        "excerpt": "\"codex-clean\""
+      },
+      {
+        "evidence_id": "evidence:fb43c29cde13306dfadce7a2fc52a20dcb6fa24250a54fb77b91b74f9eb696e8",
+        "path": "RAIOS\\V9\\continuity\\RAIOS-CURRENT-STATE.json",
+        "sha256": "0878783bcb90655882e67e89b2815a172ef618bf28506d6126dabff986bfb76b",
+        "source_type": "JSON",
+        "authority": "CURRENT_CANONICAL_STATE",
+        "authority_rank": 100,
+        "temporal_status": "CURRENT",
+        "locator": "$.known_blockers[0]",
+        "excerpt": "\"V9 kernels are bootstrap implementations, not yet production-promoted.\""
+      },
+      {
+        "evidence_id": "evidence:ec109d217997327bdd63d4b7b96d16c9bb34b8e6de09c2ffe57cf6ad1a5b13a6",
+        "path": "RAIOS\\V9\\continuity\\RAIOS-CURRENT-STATE.json",
+        "sha256": "0878783bcb90655882e67e89b2815a172ef618bf28506d6126dabff986bfb76b",
+        "source_type": "JSON",
+        "authority": "CURRENT_CANONICAL_STATE",
+        "authority_rank": 100,
+        "temporal_status": "CURRENT",
+        "locator": "$.known_blockers[1]",
+        "excerpt": "\"GPU acceleration is not available in the currently observed Kaggle runtime.\""
+      },
+      {
+        "evidence_id": "evidence:c389e1d6401190cf69bb63a9fbc5b59bbffabce8e3fa1fc52634c7379ea848b7",
+        "path": "RAIOS\\V9\\continuity\\RAIOS-CURRENT-STATE.json",
+        "sha256": "0878783bcb90655882e67e89b2815a172ef618bf28506d6126dabff986bfb76b",
+        "source_type": "JSON",
+        "authority": "CURRENT_CANONICAL_STATE",
+        "authority_rank": 100,
+        "temporal_status": "CURRENT",
+        "locator": "$.known_blockers[2]",
+        "excerpt": "\"A2 certification revoked: receipt asserted PASS while lexical and Git historical search were false and self-read evidence fields were null.\""
+      },
+      {
+        "evidence_id": "evidence:265f6f845ec1c79fd6c2fe466ff40751921ba9129745d56a7b8cdff0eaa0acf2",
+        "path": "RAIOS\\V9\\continuity\\RAIOS-CURRENT-STATE.json",
+        "sha256": "0878783bcb90655882e67e89b2815a172ef618bf28506d6126dabff986bfb76b",
+        "source_type": "JSON",
+        "authority": "CURRENT_CANONICAL_STATE",
+        "authority_rank": 100,
+        "temporal_status": "CURRENT",
+        "locator": "$.updated_at",
+        "excerpt": "\"2026-08-18T07:01:34.6998556Z\""
+      },
+      {
+        "evidence_id": "evidence:00c2a34dab2ec305063ddd7b239e3ad61bc8f342c30213cd6ad6a9ee325e9686",
+        "path": "RAIOS\\V9\\continuity\\RAIOS-CURRENT-STATE.json",
+        "sha256": "0878783bcb90655882e67e89b2815a172ef618bf28506d6126dabff986bfb76b",
+        "source_type": "JSON",
+        "authority": "CURRENT_CANONICAL_STATE",
+        "authority_rank": 100,
+        "temporal_status": "CURRENT",
+        "locator": "$.latest_phase_receipt.phase",
+        "excerpt": "\"V9.0-A3\""
+      },
+      {
+        "evidence_id": "evidence:a737167cf5b3c2278de48f660406a043c8e63ce13f34ba100a90e54510f6b056",
+        "path": "RAIOS\\V9\\continuity\\RAIOS-CURRENT-STATE.json",
+        "sha256": "0878783bcb90655882e67e89b2815a172ef618bf28506d6126dabff986bfb76b",
+        "source_type": "JSON",
+        "authority": "CURRENT_CANONICAL_STATE",
+        "authority_rank": 100,
+        "temporal_status": "CURRENT",
+        "locator": "$.latest_phase_receipt.path",
+        "excerpt": "\"RAIOS/V9/evidence/observations/V9.0-A3-RECEIPT.json\""
+      },
+      {
+        "evidence_id": "evidence:c5e0f584808ec0187524b767bbc5592f2cd81c29dfd0b49a08b5747fbfad54bf",
+        "path": "RAIOS\\V9\\continuity\\RAIOS-CURRENT-STATE.json",
+        "sha256": "0878783bcb90655882e67e89b2815a172ef618bf28506d6126dabff986bfb76b",
+        "source_type": "JSON",
+        "authority": "CURRENT_CANONICAL_STATE",
+        "authority_rank": 100,
+        "temporal_status": "CURRENT",
+        "locator": "$.latest_phase_receipt.sha256",
+        "excerpt": "\"3374b526d9ea99ed1daf2aed58b0bf9808f2a8ae913c7eb1152e744beba4cc7c\""
+      },
+      {
+        "evidence_id": "evidence:6741771142e5bab86aab4d5801f98ab9d21b521a663b6a890eee7d9f714d8310",
+        "path": "RAIOS\\V9\\continuity\\RAIOS-CURRENT-STATE.json",
+        "sha256": "0878783bcb90655882e67e89b2815a172ef618bf28506d6126dabff986bfb76b",
+        "source_type": "JSON",
+        "authority": "CURRENT_CANONICAL_STATE",
+        "authority_rank": 100,
+        "temporal_status": "CURRENT",
+        "locator": "$.latest_phase_receipt.certification_status",
+        "excerpt": "\"PASS\""
+      },
+      {
+        "evidence_id": "evidence:8e2fffcec9d1654d801305b3852984731a6238a0e4613700180a057da1142a3f",
+        "path": "RAIOS\\V9\\continuity\\RAIOS-CURRENT-STATE.json",
+        "sha256": "0878783bcb90655882e67e89b2815a172ef618bf28506d6126dabff986bfb76b",
+        "source_type": "JSON",
+        "authority": "CURRENT_CANONICAL_STATE",
+        "authority_rank": 100,
+        "temporal_status": "CURRENT",
+        "locator": "$.experience_reflex.status",
+        "excerpt": "\"ACTIVE\""
+      },
+      {
+        "evidence_id": "evidence:fda37da25710c464c21cd255d68173fde3db3a76b85988160c2c1abb8ea9aed7",
+        "path": "RAIOS\\V9\\continuity\\RAIOS-CURRENT-STATE.json",
+        "sha256": "0878783bcb90655882e67e89b2815a172ef618bf28506d6126dabff986bfb76b",
+        "source_type": "JSON",
+        "authority": "CURRENT_CANONICAL_STATE",
+        "authority_rank": 100,
+        "temporal_status": "CURRENT",
+        "locator": "$.experience_reflex.experience_capture",
+        "excerpt": "\"AUTOMATIC\""
+      },
+      {
+        "evidence_id": "evidence:4db173465bda3115d063a1c1181edbb9c49d9d6c6e3c6012813b07965a5fb14f",
+        "path": "RAIOS\\V9\\continuity\\RAIOS-CURRENT-STATE.json",
+        "sha256": "0878783bcb90655882e67e89b2815a172ef618bf28506d6126dabff986bfb76b",
+        "source_type": "JSON",
+        "authority": "CURRENT_CANONICAL_STATE",
+        "authority_rank": 100,
+        "temporal_status": "CURRENT",
+        "locator": "$.experience_reflex.failure_signature_capture",
+        "excerpt": "\"AUTOMATIC_ON_FAILURE\""
+      },
+      {
+        "evidence_id": "evidence:e869a1a4ac43236a334f56b6de1f177ce0f550404c058f363fc5753f1504e339",
+        "path": "RAIOS\\V9\\continuity\\RAIOS-CURRENT-STATE.json",
+        "sha256": "0878783bcb90655882e67e89b2815a172ef618bf28506d6126dabff986bfb76b",
+        "source_type": "JSON",
+        "authority": "CURRENT_CANONICAL_STATE",
+        "authority_rank": 100,
+        "temporal_status": "CURRENT",
+        "locator": "$.experience_reflex.recovery_skill_candidate",
+        "excerpt": "\"AUTOMATIC_ON_FAILURE_PATTERN\""
+      },
+      {
+        "evidence_id": "evidence:75cf68333381d15d32db78b3652c97aa5edab81af75cb4737c221336664ea2b7",
+        "path": "RAIOS\\V9\\continuity\\RAIOS-CURRENT-STATE.json",
+        "sha256": "0878783bcb90655882e67e89b2815a172ef618bf28506d6126dabff986bfb76b",
+        "source_type": "JSON",
+        "authority": "CURRENT_CANONICAL_STATE",
+        "authority_rank": 100,
+        "temporal_status": "CURRENT",
+        "locator": "$.experience_reflex.canonical_promotion",
+        "excerpt": "\"GOVERNED_ONLY\""
+      },
+      {
+        "evidence_id": "evidence:a91ca1d77ef0c065b66e0df1b2f80d6b7e384b664c35d654e37fdf44ad7863fe",
+        "path": "RAIOS\\V9\\continuity\\RAIOS-CURRENT-STATE.json",
+        "sha256": "0878783bcb90655882e67e89b2815a172ef618bf28506d6126dabff986bfb76b",
+        "source_type": "JSON",
+        "authority": "CURRENT_CANONICAL_STATE",
+        "authority_rank": 100,
+        "temporal_status": "CURRENT",
+        "locator": "$.semantic_understanding.status",
+        "excerpt": "\"ACTIVE_BOOTSTRAP_CERTIFIED\""
+      },
+      {
+        "evidence_id": "evidence:49a73acd5b530eda14a5a4c3c21d779425e0bdc3eaf77a7a14593f90d978a006",
+        "path": "RAIOS\\V9\\continuity\\RAIOS-CURRENT-STATE.json",
+        "sha256": "0878783bcb90655882e67e89b2815a172ef618bf28506d6126dabff986bfb76b",
+        "source_type": "JSON",
+        "authority": "CURRENT_CANONICAL_STATE",
+        "authority_rank": 100,
+        "temporal_status": "CURRENT",
+        "locator": "$.semantic_understanding.claims",
+        "excerpt": "\"EVIDENCE_REQUIRED\""
+      },
+      {
+        "evidence_id": "evidence:932b9bca441ef2011341846bf97d1060b47044bfb62264ae8c203b62865b52ca",
+        "path": "RAIOS\\V9\\continuity\\RAIOS-CURRENT-STATE.json",
+        "sha256": "0878783bcb90655882e67e89b2815a172ef618bf28506d6126dabff986bfb76b",
+        "source_type": "JSON",
+        "authority": "CURRENT_CANONICAL_STATE",
+        "authority_rank": 100,
+        "temporal_status": "CURRENT",
+        "locator": "$.semantic_understanding.provenance",
+        "excerpt": "\"ACTIVE\""
+      },
+      {
+        "evidence_id": "evidence:2645d174b49b29985534d3df2e2650b50d5b628b467bcb39ece8327d7bc86d8c",
+        "path": "RAIOS\\V9\\continuity\\RAIOS-CURRENT-STATE.json",
+        "sha256": "0878783bcb90655882e67e89b2815a172ef618bf28506d6126dabff986bfb76b",
+        "source_type": "JSON",
+        "authority": "CURRENT_CANONICAL_STATE",
+        "authority_rank": 100,
+        "temporal_status": "CURRENT",
+        "locator": "$.semantic_understanding.authority_awareness",
+        "excerpt": "\"ACTIVE\""
+      },
+      {
+        "evidence_id": "evidence:1da93b961c3a29dbc21194841ce6604c9a5c813c76cdbdf677109a92113697ce",
+        "path": "RAIOS\\V9\\continuity\\RAIOS-CURRENT-STATE.json",
+        "sha256": "0878783bcb90655882e67e89b2815a172ef618bf28506d6126dabff986bfb76b",
+        "source_type": "JSON",
+        "authority": "CURRENT_CANONICAL_STATE",
+        "authority_rank": 100,
+        "temporal_status": "CURRENT",
+        "locator": "$.semantic_understanding.temporal_awareness",
+        "excerpt": "\"ACTIVE\""
+      },
+      {
+        "evidence_id": "evidence:1127f566b4f2eb15830d3cbc3df42b5beb04583b5b2d30c4d5bd0cfe36651497",
+        "path": "RAIOS\\V9\\continuity\\RAIOS-CURRENT-STATE.json",
+        "sha256": "0878783bcb90655882e67e89b2815a172ef618bf28506d6126dabff986bfb76b",
+        "source_type": "JSON",
+        "authority": "CURRENT_CANONICAL_STATE",
+        "authority_rank": 100,
+        "temporal_status": "CURRENT",
+        "locator": "$.semantic_understanding.contradiction_objects",
+        "excerpt": "\"ACTIVE\""
+      },
+      {
+        "evidence_id": "evidence:9e417c760a2960b16f115e891506be485a741fa8f929e525735401493198cc4c",
+        "path": "RAIOS\\V9\\continuity\\RAIOS-CURRENT-STATE.json",
+        "sha256": "0878783bcb90655882e67e89b2815a172ef618bf28506d6126dabff986bfb76b",
+        "source_type": "JSON",
+        "authority": "CURRENT_CANONICAL_STATE",
+        "authority_rank": 100,
+        "temporal_status": "CURRENT",
+        "locator": "$.semantic_understanding.confidence_contract",
+        "excerpt": "\"STRICT_0_TO_1\""
+      },
+      {
+        "evidence_id": "evidence:b58b4398c51ef178f5483d42d65e1934649d6557f36a0700e255366e70d32504",
+        "path": "RAIOS\\V9\\continuity\\RAIOS-CURRENT-STATE.json",
+        "sha256": "0878783bcb90655882e67e89b2815a172ef618bf28506d6126dabff986bfb76b",
+        "source_type": "JSON",
+        "authority": "CURRENT_CANONICAL_STATE",
+        "authority_rank": 100,
+        "temporal_status": "CURRENT",
+        "locator": "$.semantic_understanding.historical_override",
+        "excerpt": "\"FORBIDDEN\""
+      },
+      {
+        "evidence_id": "evidence:203f55fdd58647326bacadcf5b76a69378e456b57b4f9c707cf262bae7ed44b8",
+        "path": "RAIOS\\V9\\continuity\\RAIOS-CURRENT-STATE.json",
+        "sha256": "0878783bcb90655882e67e89b2815a172ef618bf28506d6126dabff986bfb76b",
+        "source_type": "JSON",
+        "authority": "CURRENT_CANONICAL_STATE",
+        "authority_rank": 100,
+        "temporal_status": "CURRENT",
+        "locator": "$.semantic_understanding.canonical_auto_promotion",
+        "excerpt": "false"
+      }
+    ],
+    "contradictions": [
+      {
+        "schema": "raios.contradiction.v1",
+        "contradiction_id": "contradiction:6086726917fa5875ea065739830ff4134aa2708ac214ba00a6a66bc3d747ab62",
+        "subject": "RAIOS\\V9\\continuity\\RAIOS-CURRENT-STATE.json",
+        "predicate": "note",
+        "claim_refs": [
+          "claim:25082e00789a7c315400a1bef4d3899ad7476eee2067680beeb356a144b16496",
+          "claim:5574ee719897ae03942a996a62a00ff21563a8851dcde5ad316c082a2594dbcb"
+        ],
+        "values": [
+          "Historical predecessor evidence; startup gate must independently verify when required.",
+          "This does not prove that the provider/account can never expose GPU."
+        ],
+        "status": "UNRESOLVED",
+        "resolution_policy": "AUTHORITY_TEMPORAL_EVIDENCE_REQUIRED"
+      },
+      {
+        "schema": "raios.contradiction.v1",
+        "contradiction_id": "contradiction:c071d07e07d504d8e76cf9add4d109f0587cd5580b6a1ae62f5a16529a275a13",
+        "subject": "RAIOS\\V9\\continuity\\RAIOS-CURRENT-STATE.json",
+        "predicate": "status",
+        "claim_refs": [
+          "claim:fc1ed24ab64f0a5e07c36b392a9e59702db76a7213466bda128e23eca8dfa37c",
+          "claim:2950a67df71b00bcf87ba379f410aae6df133d6e8c3c4e9dd9aa5b0531bf53b4"
+        ],
+        "values": [
+          "ACTIVE",
+          "ACTIVE_BOOTSTRAP_CERTIFIED"
+        ],
+        "status": "UNRESOLVED",
+        "resolution_policy": "AUTHORITY_TEMPORAL_EVIDENCE_REQUIRED"
+      }
+    ],
+    "unresolved_flags": [
+      "CONTRADICTIONS_PRESENT"
+    ],
+    "epistemic_status": "EVIDENCE_BOUNDED",
+    "canonical_promotion": false,
+    "abstention_required": true
+  },
+  "success": true,
+  "failure_signature": null,
+  "evidence_refs": [
+    "RAIOS/V9/continuity/RAIOS-CURRENT-STATE.json"
+  ],
+  "lessons": [],
+  "latency_ms": 5.527,
+  "pre_state": null,
+  "post_state": null,
+  "unresolved_flags": [],
+  "confidence": 1.0,
+  "replayable": true,
+  "captured_at": "2026-08-18T07:03:02.856315+00:00",
+  "experience_id": "2997a62aea2e30a29a96a1334350ad84c2ac08e4c33a23628347b673f9c7651b"
+}

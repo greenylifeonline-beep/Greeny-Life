@@ -1,0 +1,50 @@
+{
+  "schema": "raios.a6.replay-suite.v1",
+  "candidate_id": "skill:ff:07ed310cc0410694d6e681287ad0b4d9",
+  "family_id": "ff:07ed310cc0410694d6e681287ad0b4d9",
+  "case_count": 5,
+  "cases": [
+    {
+      "id": "positive_verified_1",
+      "class": "POSITIVE",
+      "same_family": true,
+      "artifact_available": true,
+      "artifact_verified": true,
+      "expected": "RECOVER"
+    },
+    {
+      "id": "positive_verified_2",
+      "class": "POSITIVE",
+      "same_family": true,
+      "artifact_available": true,
+      "artifact_verified": true,
+      "expected": "RECOVER"
+    },
+    {
+      "id": "negative_unverified",
+      "class": "NEGATIVE_CONTROL",
+      "same_family": true,
+      "artifact_available": true,
+      "artifact_verified": false,
+      "expected": "ABSTAIN"
+    },
+    {
+      "id": "negative_missing",
+      "class": "NEGATIVE_CONTROL",
+      "same_family": true,
+      "artifact_available": false,
+      "artifact_verified": false,
+      "expected": "ABSTAIN"
+    },
+    {
+      "id": "out_of_scope",
+      "class": "OUT_OF_SCOPE",
+      "same_family": false,
+      "artifact_available": true,
+      "artifact_verified": true,
+      "expected": "ABSTAIN"
+    }
+  ],
+  "generated_at": "2026-08-18T07:21:03.986362+00:00",
+  "suite_id": "suite:ede95c6f3a84f2cae51ee5997b4e4b22"
+}

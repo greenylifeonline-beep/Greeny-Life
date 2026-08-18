@@ -1,0 +1,22 @@
+{
+  "schema": "raios.a12.experience.v1",
+  "timestamp": "2026-08-18T08:17:29.185840+00:00",
+  "event": "A12_SUPERVISED_ACTION",
+  "outcome": "REJECTED_OUT_OF_SCOPE",
+  "details": {
+    "schema": "raios.a12.supervised-action.v1",
+    "timestamp": "2026-08-18T08:17:29.184729+00:00",
+    "action_id": "a12:096",
+    "operation": "RECOVERY_SIMULATION",
+    "scenario": "OUT_OF_SCOPE",
+    "confidence": 0.9259848673602842,
+    "latency_ms": 2.1870236906348066,
+    "outcome": "REJECTED_OUT_OF_SCOPE",
+    "rollback": false,
+    "before_hash": "28d5286e2293a8a74d196e76d82b69cc8273e3442afa09be89b0ea23241b7770",
+    "after_hash": "28d5286e2293a8a74d196e76d82b69cc8273e3442afa09be89b0ea23241b7770",
+    "production_mutation": false,
+    "canonical_mutation": false
+  },
+  "experience_id": "exp:c7ecf41fa4cf1bb97fb09ae83edcf701"
+}

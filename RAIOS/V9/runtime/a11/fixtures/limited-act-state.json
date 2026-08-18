@@ -1,0 +1,56 @@
+{
+  "schema": "raios.a11.sandbox-state.v1",
+  "counter": 8,
+  "history": [
+    {
+      "action_id": "act:01",
+      "operation": "READ_ONLY_DIAGNOSTIC",
+      "correlation_id": "corr:a48d32be6e0c47baa0dc45f5367658b6",
+      "causation_id": null
+    },
+    {
+      "action_id": "act:02",
+      "operation": "RECOVERY_SIMULATION",
+      "correlation_id": "corr:8c7c58ada7884dad9db06d3e27d15456",
+      "causation_id": "act:01"
+    },
+    {
+      "action_id": "act:05",
+      "operation": "SANDBOX_STATE_UPDATE",
+      "correlation_id": "corr:92c85ffc0c2c49c0b3ebde00b159f2cc",
+      "causation_id": null
+    },
+    {
+      "action_id": "act:07",
+      "operation": "READ_ONLY_DIAGNOSTIC",
+      "correlation_id": "corr:feeca3b611504285874f9eed64caa03b",
+      "causation_id": null
+    },
+    {
+      "action_id": "act:09",
+      "operation": "RECOVERY_SIMULATION",
+      "correlation_id": "corr:c6ec6311ea9b41278d55f49a888ff276",
+      "causation_id": "act:08"
+    },
+    {
+      "action_id": "act:10",
+      "operation": "READ_ONLY_DIAGNOSTIC",
+      "correlation_id": "corr:6042c03c73974eb79795bec4a0a9108e",
+      "causation_id": null
+    },
+    {
+      "action_id": "act:11",
+      "operation": "SANDBOX_STATE_UPDATE",
+      "correlation_id": "corr:cedba4e79ba84af093d1dbe03f82f72f",
+      "causation_id": null
+    },
+    {
+      "action_id": "act:12",
+      "operation": "RECOVERY_SIMULATION",
+      "correlation_id": "corr:5d7f042638c245d29c04ba8ed0bc60f1",
+      "causation_id": null
+    }
+  ],
+  "production": false,
+  "canonical": false
+}

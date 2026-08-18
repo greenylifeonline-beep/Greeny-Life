@@ -1,0 +1,82 @@
+{
+    "$schema":  "https://json-schema.org/draft/2020-12/schema",
+    "title":  "RAIOS V9 Experience",
+    "type":  "object",
+    "required":  [
+                     "schema",
+                     "experience_id",
+                     "timestamp",
+                     "intent",
+                     "context",
+                     "plan",
+                     "tools",
+                     "observations",
+                     "failures",
+                     "corrections",
+                     "result",
+                     "evidence",
+                     "lesson",
+                     "reusability",
+                     "status"
+                 ],
+    "properties":  {
+                       "schema":  {
+                                      "const":  "raios.experience.v9",
+                                      "type":  "string"
+                                  },
+                       "experience_id":  {
+                                             "type":  "string"
+                                         },
+                       "timestamp":  {
+                                         "type":  "string"
+                                     },
+                       "intent":  {
+                                      "type":  "string"
+                                  },
+                       "context":  {
+                                       "type":  "object"
+                                   },
+                       "plan":  {
+                                    "type":  "array"
+                                },
+                       "tools":  {
+                                     "type":  "array"
+                                 },
+                       "observations":  {
+                                            "type":  "array"
+                                        },
+                       "failures":  {
+                                        "type":  "array"
+                                    },
+                       "corrections":  {
+                                           "type":  "array"
+                                       },
+                       "result":  {
+                                      "type":  "object"
+                                  },
+                       "evidence":  {
+                                        "type":  "array"
+                                    },
+                       "lesson":  {
+                                      "type":  "array"
+                                  },
+                       "reusability":  {
+                                           "type":  "object"
+                                       },
+                       "skill_candidate":  {
+                                               "type":  [
+                                                            "object",
+                                                            "null"
+                                                        ]
+                                           },
+                       "status":  {
+                                      "enum":  [
+                                                   "OBSERVED",
+                                                   "PENDING_VALIDATION",
+                                                   "VALIDATED",
+                                                   "REJECTED",
+                                                   "PROMOTED_TO_SKILL_CANDIDATE"
+                                               ]
+                                  }
+                   }
+}

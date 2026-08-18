@@ -1,0 +1,48 @@
+{
+    "schema":  "raios.v9.a3.receipt.v1",
+    "phase":  "V9.0-A3",
+    "certification_status":  "PASS",
+    "certification_mode":  "FAIL_CLOSED",
+    "repository_sha":  "fb130e232246a00b531835f529f25e4edfae2854",
+    "timestamp":  "2026-08-18T07:01:33.0463319Z",
+    "predecessor":  {
+                        "phase":  "V9.0-A2.1",
+                        "receipt_sha256":  "649896340a1a5b4b748296510f906c983541f93ee9389a97f635bf38d98c52fd"
+                    },
+    "validation":  {
+                       "semantic_understanding":  true,
+                       "claims_require_evidence":  true,
+                       "evidence_native":  true,
+                       "authority_classification":  true,
+                       "temporal_classification":  true,
+                       "contradiction_objects":  true,
+                       "confidence_range_enforced":  true,
+                       "confidence_70_rejected":  true,
+                       "epistemic_status":  "EVIDENCE_BOUNDED",
+                       "automatic_experience_capture":  true,
+                       "failure_signature_capture":  true,
+                       "recovery_skill_candidate_generation":  true,
+                       "canonical_auto_promotion":  false
+                   },
+    "measurements":  {
+                         "semantic_claims":  37,
+                         "semantic_evidence":  37,
+                         "capability_evidence":  15,
+                         "current_tree_evidence":  2,
+                         "historical_evidence":  13,
+                         "automatic_experience_files":  3,
+                         "failure_signature_files":  0,
+                         "recovery_skill_candidates":  0
+                     },
+    "invariants":  [
+                       "No claim may exist without evidence_refs.",
+                       "Historical evidence cannot silently override current authority.",
+                       "Contradictions remain explicit until resolved by evidence.",
+                       "Confidence values must be numeric and strictly inside [0,1].",
+                       "confidence=70 is invalid and must never be interpreted as 0.70.",
+                       "Unknown or unresolved evidence requires abstention or escalation.",
+                       "A3 cannot automatically promote knowledge, policy, skill, or doctrine.",
+                       "Meaningful instrumented operations create Experiences automatically.",
+                       "Failures create reusable Failure Signatures and Recovery Skill Candidates."
+                   ]
+}

@@ -1,0 +1,69 @@
+{
+  "schema": "raios.v9.a4.receipt.v1",
+  "phase": "V9.0-A4",
+  "certification_status": "PASS",
+  "certification_mode": "FAIL_CLOSED",
+  "timestamp": "2026-08-18T07:08:14.932436+00:00",
+  "repository_sha": "fb130e232246a00b531835f529f25e4edfae2854",
+  "predecessor": {
+    "phase": "V9.0-A3.1",
+    "receipt": "RAIOS/V9/evidence/observations/V9.0-A3-RECEIPT.json",
+    "sha256": "0c2e7026b4ec2ea61f19abfebbf1e4638c5c5821765af053610bc8fda4332388",
+    "status": "PASS"
+  },
+  "architecture": {
+    "cognitive_event_bus": "ACTIVE_BOOTSTRAP_CERTIFIED",
+    "cognitive_wal": "APPEND_ONLY_FSYNC",
+    "materialization": "DERIVED_FROM_WAL",
+    "canonical_mutation": false,
+    "event_model": "CORRELATION_AND_CAUSATION_AWARE",
+    "replay": "IDEMPOTENT",
+    "duplicate_event_policy": "REJECT_BY_EVENT_ID"
+  },
+  "validation": {
+    "synchronous_wal": true,
+    "event_hash_validation": true,
+    "experience_materializer": true,
+    "failure_materializer": true,
+    "recovery_candidate_materializer": true,
+    "performance_materializer": true,
+    "evidence_materializer": true,
+    "correlation": true,
+    "causation": true,
+    "duplicate_event_rejection": true,
+    "worker_crash_after_wal": true,
+    "wal_survival": true,
+    "crash_replay": true,
+    "replay_idempotency": true,
+    "canonical_auto_promotion": false
+  },
+  "measurements": {
+    "wal_events": 5,
+    "processed_events": 5,
+    "experiences": 5,
+    "failure_signatures": 1,
+    "recovery_candidates": 1,
+    "performance_observations": 5,
+    "evidence_events": 5
+  },
+  "invariants": [
+    "WAL append precedes derived cognitive materialization.",
+    "A committed WAL event survives materializer or worker failure.",
+    "Replay must not duplicate a materialized event.",
+    "Every event has an immutable event_id and event_hash.",
+    "Correlation and causation are preserved explicitly.",
+    "Failure events produce Failure Signatures automatically.",
+    "Failure events produce Recovery Skill Candidates automatically.",
+    "Recovery candidates cannot promote themselves.",
+    "Derived memory may be reconstructed from the Cognitive WAL.",
+    "No certification PASS may exist unless every mandatory assertion executed successfully.",
+    "Console output is not certification evidence."
+  ],
+  "known_limits": [
+    "A4 bootstrap currently assumes a practical single-writer WAL model.",
+    "Cross-process locking and distributed WAL replication are not yet certified.",
+    "Remote asynchronous durability is not yet connected to this WAL.",
+    "Resource telemetry is structurally supported but not yet fully collected.",
+    "Model and agent adapters still need universal routing through the event bus."
+  ]
+}

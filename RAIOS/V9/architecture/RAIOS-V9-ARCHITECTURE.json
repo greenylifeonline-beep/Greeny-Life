@@ -1,0 +1,41 @@
+{
+    "schema":  "raios.architecture.v9",
+    "version":  "V9.0-A",
+    "planes":  {
+                   "perception":  [
+                                      "read",
+                                      "search",
+                                      "observe",
+                                      "ingest"
+                                  ],
+                   "cognition":  [
+                                     "understand",
+                                     "compare",
+                                     "reason",
+                                     "verify",
+                                     "decide"
+                                 ],
+                   "action":  [
+                                  "tools",
+                                  "agents",
+                                  "execution"
+                              ],
+                   "evolution":  [
+                                     "experience",
+                                     "learning",
+                                     "skill_compilation",
+                                     "experimentation"
+                                 ],
+                   "control":  [
+                                   "continuity",
+                                   "governance",
+                                   "durability",
+                                   "resources",
+                                   "security"
+                               ]
+               },
+    "shared_cognitive_fabric":  true,
+    "background_canonical_mutation":  false,
+    "experience_required":  true,
+    "created_at":  "2026-08-18T06:10:49.7681506Z"
+}

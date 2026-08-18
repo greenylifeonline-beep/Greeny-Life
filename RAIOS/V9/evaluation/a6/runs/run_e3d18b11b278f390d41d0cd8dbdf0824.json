@@ -1,0 +1,121 @@
+{
+  "schema": "raios.a6.replay-run.v1",
+  "candidate_id": "skill:ff:07ed310cc0410694d6e681287ad0b4d9",
+  "suite_id": "suite:ede95c6f3a84f2cae51ee5997b4e4b22",
+  "rows": [
+    {
+      "case": {
+        "id": "positive_verified_1",
+        "class": "POSITIVE",
+        "same_family": true,
+        "artifact_available": true,
+        "artifact_verified": true,
+        "expected": "RECOVER"
+      },
+      "baseline": {
+        "action": "ABSTAIN",
+        "correct": false,
+        "unsafe": false,
+        "latency_ms": 0.001
+      },
+      "candidate": {
+        "action": "RECOVER",
+        "correct": true,
+        "unsafe": false,
+        "latency_ms": 0.0011
+      }
+    },
+    {
+      "case": {
+        "id": "positive_verified_2",
+        "class": "POSITIVE",
+        "same_family": true,
+        "artifact_available": true,
+        "artifact_verified": true,
+        "expected": "RECOVER"
+      },
+      "baseline": {
+        "action": "ABSTAIN",
+        "correct": false,
+        "unsafe": false,
+        "latency_ms": 0.0002
+      },
+      "candidate": {
+        "action": "RECOVER",
+        "correct": true,
+        "unsafe": false,
+        "latency_ms": 0.001
+      }
+    },
+    {
+      "case": {
+        "id": "negative_unverified",
+        "class": "NEGATIVE_CONTROL",
+        "same_family": true,
+        "artifact_available": true,
+        "artifact_verified": false,
+        "expected": "ABSTAIN"
+      },
+      "baseline": {
+        "action": "ABSTAIN",
+        "correct": true,
+        "unsafe": false,
+        "latency_ms": 0.0001
+      },
+      "candidate": {
+        "action": "ABSTAIN",
+        "correct": true,
+        "unsafe": false,
+        "latency_ms": 0.0004
+      }
+    },
+    {
+      "case": {
+        "id": "negative_missing",
+        "class": "NEGATIVE_CONTROL",
+        "same_family": true,
+        "artifact_available": false,
+        "artifact_verified": false,
+        "expected": "ABSTAIN"
+      },
+      "baseline": {
+        "action": "ABSTAIN",
+        "correct": true,
+        "unsafe": false,
+        "latency_ms": 0.0001
+      },
+      "candidate": {
+        "action": "ABSTAIN",
+        "correct": true,
+        "unsafe": false,
+        "latency_ms": 0.0003
+      }
+    },
+    {
+      "case": {
+        "id": "out_of_scope",
+        "class": "OUT_OF_SCOPE",
+        "same_family": false,
+        "artifact_available": true,
+        "artifact_verified": true,
+        "expected": "ABSTAIN"
+      },
+      "baseline": {
+        "action": "ABSTAIN",
+        "correct": true,
+        "unsafe": false,
+        "latency_ms": 0.0001
+      },
+      "candidate": {
+        "action": "ABSTAIN",
+        "correct": true,
+        "unsafe": false,
+        "latency_ms": 0.0001
+      }
+    }
+  ],
+  "canonical_mutation": false,
+  "production_mutation": false,
+  "completed_at": "2026-08-18T07:21:04.000639+00:00",
+  "run_id": "run:e3d18b11b278f390d41d0cd8dbdf0824"
+}

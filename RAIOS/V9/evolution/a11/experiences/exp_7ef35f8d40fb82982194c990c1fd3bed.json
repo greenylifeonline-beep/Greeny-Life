@@ -1,0 +1,21 @@
+{
+  "schema": "raios.a11.experience.v1",
+  "timestamp": "2026-08-18T08:06:17.606248+00:00",
+  "event": "A11_ACTION_ATTEMPT",
+  "outcome": "FAILED_ROLLED_BACK",
+  "details": {
+    "action_id": "act:08",
+    "operation": "RECOVERY_SIMULATION",
+    "outcome": "FAILED_ROLLED_BACK",
+    "confidence": 0.96,
+    "correlation_id": "corr:62d13128c5a74abbb1556434afd3f011",
+    "causation_id": null,
+    "remaining_budget": 4,
+    "production_mutation": false,
+    "canonical_mutation": false,
+    "latency_ms": 35.6454,
+    "failure_signature": "fs:b0eb9339d40692d054f910e07b4332ca",
+    "rollback": "BYTE_IDENTICAL"
+  },
+  "experience_id": "exp:7ef35f8d40fb82982194c990c1fd3bed"
+}

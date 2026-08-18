@@ -1,0 +1,32 @@
+{
+  "schema": "raios.cognitive-event.v1",
+  "event_id": "28898655-1ba0-4886-82ce-db32c7767cbd",
+  "event_type": "FAILURE",
+  "timestamp": "2026-08-18T07:12:29.709559+00:00",
+  "correlation_id": "1bea353c-5f1c-4fb7-b370-e0ad5eb92f9e",
+  "causation_id": null,
+  "actor": "RAIOS.A5.CERTIFIER",
+  "tool": "RAIOS.JSON.PARSER",
+  "model": null,
+  "intent": "Parse architecture contract",
+  "input_ref": null,
+  "output_ref": {
+    "exception_type": "JSONDecodeError",
+    "message": "Malformed JSON at line 77"
+  },
+  "evidence_refs": [
+    "RAIOS/V9/runtime/a5_certification.py"
+  ],
+  "pre_state": null,
+  "post_state": null,
+  "success": false,
+  "latency_ms": null,
+  "resource_usage": null,
+  "confidence": 1.0,
+  "unresolved_flags": [
+    "PARSE_FAILED"
+  ],
+  "repository_sha": "fb130e232246a00b531835f529f25e4edfae2854",
+  "metadata": {},
+  "event_hash": "957b7d1b2148300ff3b47605ce22c6eda88b09094a377fe3824b184a7f88d185"
+}

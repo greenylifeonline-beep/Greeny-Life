@@ -1,0 +1,21 @@
+{
+  "schema": "raios.a11.authorization-lease.v1",
+  "lease_id": "lease:b2041f34483542e7aa4ccef207f782b8",
+  "skill_id": "skill:ff:07ed310cc0410694d6e681287ad0b4d9",
+  "scope": "SANDBOX_LIMITED_ACT_ONLY",
+  "issued_at": "2026-08-18T08:06:17.409361+00:00",
+  "expires_at": "2026-08-18T08:21:17.639977+00:00",
+  "initial_action_budget": 12,
+  "remaining_action_budget": 3,
+  "minimum_confidence": 0.8,
+  "maximum_failure_rate": 0.3,
+  "maximum_latency_ms": 50.0,
+  "allowed_operations": [
+    "READ_ONLY_DIAGNOSTIC",
+    "RECOVERY_SIMULATION",
+    "SANDBOX_STATE_UPDATE"
+  ],
+  "production_active": false,
+  "canonical_mutation": false,
+  "automatic_promotion": false
+}

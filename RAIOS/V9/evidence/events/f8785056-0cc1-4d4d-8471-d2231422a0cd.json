@@ -1,0 +1,29 @@
+{
+  "schema": "raios.cognitive-event.v1",
+  "event_id": "f8785056-0cc1-4d4d-8471-d2231422a0cd",
+  "event_type": "OBSERVATION",
+  "timestamp": "2026-08-18T07:08:14.795231+00:00",
+  "correlation_id": "df46e7f8-e95a-482f-bee4-c656e75f82b2",
+  "causation_id": null,
+  "actor": "RAIOS.A4.CRASH.TEST",
+  "tool": null,
+  "model": null,
+  "intent": "Prove Cognitive WAL survives worker death before materialization",
+  "input_ref": {
+    "test": "CRASH_AFTER_WAL_BEFORE_MATERIALIZATION"
+  },
+  "output_ref": null,
+  "evidence_refs": [
+    "RAIOS/V9/wal/cognitive-events.jsonl"
+  ],
+  "pre_state": null,
+  "post_state": null,
+  "success": true,
+  "latency_ms": null,
+  "resource_usage": null,
+  "confidence": 1.0,
+  "unresolved_flags": [],
+  "repository_sha": "fb130e232246a00b531835f529f25e4edfae2854",
+  "metadata": {},
+  "event_hash": "c4dc29656a56b57e58d8b49d053b3743ed73ea8ecbb06137e256823adc7f85b8"
+}

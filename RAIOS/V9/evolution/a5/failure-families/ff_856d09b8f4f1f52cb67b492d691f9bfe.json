@@ -1,0 +1,28 @@
+{
+  "schema": "raios.failure-family.v1",
+  "family_id": "ff:856d09b8f4f1f52cb67b492d691f9bfe",
+  "geometry": {
+    "event_type": "FAILURE",
+    "tool": "a4_certification",
+    "exception_type": "syntheticcertificationfailure",
+    "message": "controlled fail-path test",
+    "unresolved_flags": [
+      "controlled_test_failure"
+    ]
+  },
+  "occurrence_count": 1,
+  "successful_recoveries": 0,
+  "failed_recoveries": 0,
+  "source_event_ids": [
+    "b0da00f5-a6f4-4be8-bae9-6cc2d09c02c5"
+  ],
+  "tools": [
+    "A4_CERTIFICATION"
+  ],
+  "repository_shas": [
+    "fb130e232246a00b531835f529f25e4edfae2854"
+  ],
+  "first_seen": "2026-08-18T07:08:14.540047+00:00",
+  "last_seen": "2026-08-18T07:08:14.540047+00:00",
+  "status": "ACTIVE"
+}

@@ -1,0 +1,32 @@
+{
+  "schema": "raios.cognitive-event.v1",
+  "event_id": "bcb329d3-10b4-4652-9bbc-95268a556e39",
+  "event_type": "FAILURE",
+  "timestamp": "2026-08-18T07:12:29.463445+00:00",
+  "correlation_id": "40c8112d-a527-4d01-a467-fa18929b6575",
+  "causation_id": null,
+  "actor": "RAIOS.A5.CERTIFIER",
+  "tool": "RAIOS.FILE.READER",
+  "model": null,
+  "intent": "Read required architecture artifact",
+  "input_ref": null,
+  "output_ref": {
+    "exception_type": "FileNotFoundError",
+    "message": "Required architecture file 101 was not found"
+  },
+  "evidence_refs": [
+    "RAIOS/V9/runtime/a5_certification.py"
+  ],
+  "pre_state": null,
+  "post_state": null,
+  "success": false,
+  "latency_ms": null,
+  "resource_usage": null,
+  "confidence": 1.0,
+  "unresolved_flags": [
+    "SOURCE_MISSING"
+  ],
+  "repository_sha": "fb130e232246a00b531835f529f25e4edfae2854",
+  "metadata": {},
+  "event_hash": "84a7e37913bb306c5972b47a524df3fb4a7d4867a631fd3fbbfea14d7474831b"
+}

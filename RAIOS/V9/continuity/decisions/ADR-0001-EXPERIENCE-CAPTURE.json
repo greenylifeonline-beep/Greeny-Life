@@ -1,0 +1,29 @@
+{
+    "schema":  "raios.adr.v1",
+    "id":  "ADR-0001",
+    "title":  "Every meaningful operation becomes a structured Experience",
+    "status":  "ACTIVE",
+    "decision":  "RAIOS V9 records meaningful work as structured Experience objects rather than relying on logs alone.",
+    "reason":  [
+                   "The construction process itself must train the future system.",
+                   "Failures and corrections are valuable cognitive capital.",
+                   "Reusable procedures cannot be compiled from unstructured terminal history reliably.",
+                   "Experience capture enables the recursive V9 development flywheel."
+               ],
+    "required_fields":  [
+                            "intent",
+                            "context",
+                            "plan",
+                            "tools",
+                            "observations",
+                            "failures",
+                            "corrections",
+                            "result",
+                            "evidence",
+                            "lesson",
+                            "reusability",
+                            "skill_candidate"
+                        ],
+    "promotion_rule":  "Experience does not become canonical skill automatically.",
+    "created_at":  "2026-08-18T06:10:49.7681506Z"
+}

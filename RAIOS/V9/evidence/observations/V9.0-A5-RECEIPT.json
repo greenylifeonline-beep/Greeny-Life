@@ -1,0 +1,75 @@
+{
+  "schema": "raios.v9.a5.receipt.v1",
+  "phase": "V9.0-A5",
+  "certification_status": "PASS",
+  "certification_mode": "FAIL_CLOSED",
+  "repository_sha": "fb130e232246a00b531835f529f25e4edfae2854",
+  "timestamp": "2026-08-18T07:12:30.006233+00:00",
+  "predecessor": {
+    "phase": "V9.0-A4",
+    "path": "RAIOS/V9/evidence/observations/V9.0-A4-RECEIPT.json",
+    "sha256": "eb362397efa4dd6cf0cd26bd72d0b3b77593e699f4f2b2dfc02695fe064479b4",
+    "status": "PASS"
+  },
+  "architecture": {
+    "evolution_brain_consumers": "ACTIVE_BOOTSTRAP_CERTIFIED",
+    "failure_clustering": "ACTIVE",
+    "experience_pattern_mining": "ACTIVE",
+    "recovery_outcome_memory": "ACTIVE",
+    "skill_candidate_mining": "ACTIVE",
+    "replay_queue": "ACTIVE",
+    "candidate_deduplication": "ACTIVE",
+    "canonical_auto_promotion": false
+  },
+  "validation": {
+    "a4_predecessor_verified": true,
+    "same_root_failure_clustering": true,
+    "distinct_failure_isolation": true,
+    "experience_pattern_mining": true,
+    "recovery_outcome_memory": true,
+    "candidate_evidence_threshold": true,
+    "skill_candidate_generation": true,
+    "evidence_score_strict_0_1": true,
+    "replay_queue_generation": true,
+    "consumer_idempotency": true,
+    "candidate_deduplication": true,
+    "canonical_auto_promotion": false
+  },
+  "tested_family": {
+    "family_id": "ff:07ed310cc0410694d6e681287ad0b4d9",
+    "occurrences": 2,
+    "successful_recoveries": 1,
+    "failed_recoveries": 0,
+    "candidate_id": "skill:ff:07ed310cc0410694d6e681287ad0b4d9",
+    "candidate_score": 0.666667
+  },
+  "measurements": {
+    "failure_families": 3,
+    "experience_patterns": 8,
+    "recovery_outcomes": 1,
+    "skill_candidates": 1,
+    "replay_jobs": 1
+  },
+  "invariants": [
+    "Raw events do not become skills directly.",
+    "EVENT -> EXPERIENCE -> PATTERN -> CANDIDATE -> VERIFIED SKILL is the required maturation path.",
+    "Repeated failures are clustered by normalized failure geometry, not event identity.",
+    "Distinct failure geometry must not be collapsed merely because failures are temporally adjacent.",
+    "A recovery skill candidate requires repeated failure evidence and successful recovery evidence.",
+    "Candidate confidence/evidence scores remain bounded to [0,1].",
+    "Evolution consumption is idempotent by source event_id.",
+    "A candidate maps deterministically to one failure family.",
+    "Replay is mandatory before verification or promotion.",
+    "Skill candidates cannot promote themselves.",
+    "Canonical state mutation remains governed.",
+    "No PASS receipt is written before every mandatory assertion succeeds."
+  ],
+  "known_limits": [
+    "A5 failure clustering currently uses deterministic normalized failure geometry.",
+    "Embedding-based or learned clustering is intentionally deferred until evidence justifies it.",
+    "Replay execution is queued but the replay executor is not yet certified.",
+    "Benchmark execution is not yet part of A5.",
+    "Cross-environment family generalization requires future Environment Memory integration.",
+    "Recovery causality is explicit for certified events but broad automatic root-cause inference is not yet implemented."
+  ]
+}

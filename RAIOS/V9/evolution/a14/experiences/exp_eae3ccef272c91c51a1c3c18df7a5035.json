@@ -1,0 +1,18 @@
+{
+  "schema": "raios.a14.experience.v1",
+  "timestamp": "2026-08-18T09:01:28.299256+00:00",
+  "event": "A14_HANDOFF",
+  "outcome": "PRIMARY_UNAVAILABLE",
+  "details": {
+    "schema": "raios.a14.handoff-envelope.v1",
+    "task_id": "a14-task:04",
+    "correlation_id": "corr:a43b2ebe691c6c376a05bc80",
+    "causation_id": "attempt:1",
+    "from_executor": "GEMINI",
+    "to_executor": "CLAUDE_CODE",
+    "reason": "PRIMARY_UNAVAILABLE",
+    "context_hash": "a43b2ebe691c6c376a05bc8043f1db8158a4d8ba2bf3010a19c640f0b0b6993b",
+    "attempt": 1
+  },
+  "experience_id": "exp:eae3ccef272c91c51a1c3c18df7a5035"
+}

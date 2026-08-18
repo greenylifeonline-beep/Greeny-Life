@@ -1,0 +1,22 @@
+{
+  "schema": "raios.a12.experience.v1",
+  "timestamp": "2026-08-18T08:17:29.156667+00:00",
+  "event": "A12_SUPERVISED_ACTION",
+  "outcome": "REJECTED_DUPLICATE",
+  "details": {
+    "schema": "raios.a12.supervised-action.v1",
+    "timestamp": "2026-08-18T08:17:29.155696+00:00",
+    "action_id": "a12:094",
+    "operation": "RECOVERY_SIMULATION",
+    "scenario": "DUPLICATE",
+    "confidence": 0.9539026180102632,
+    "latency_ms": 0.7860001000530921,
+    "outcome": "REJECTED_DUPLICATE",
+    "rollback": false,
+    "before_hash": "28d5286e2293a8a74d196e76d82b69cc8273e3442afa09be89b0ea23241b7770",
+    "after_hash": "28d5286e2293a8a74d196e76d82b69cc8273e3442afa09be89b0ea23241b7770",
+    "production_mutation": false,
+    "canonical_mutation": false
+  },
+  "experience_id": "exp:39a80118af7041126900d606302dd146"
+}

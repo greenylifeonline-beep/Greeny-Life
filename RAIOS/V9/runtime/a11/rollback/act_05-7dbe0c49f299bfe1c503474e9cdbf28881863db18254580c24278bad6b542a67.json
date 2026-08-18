@@ -1,0 +1,20 @@
+{
+  "schema": "raios.a11.sandbox-state.v1",
+  "counter": 2,
+  "history": [
+    {
+      "action_id": "act:01",
+      "operation": "READ_ONLY_DIAGNOSTIC",
+      "correlation_id": "corr:a48d32be6e0c47baa0dc45f5367658b6",
+      "causation_id": null
+    },
+    {
+      "action_id": "act:02",
+      "operation": "RECOVERY_SIMULATION",
+      "correlation_id": "corr:8c7c58ada7884dad9db06d3e27d15456",
+      "causation_id": "act:01"
+    }
+  ],
+  "production": false,
+  "canonical": false
+}

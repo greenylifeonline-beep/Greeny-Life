@@ -1,0 +1,11 @@
+{
+  "schema": "raios.a14.experience.v1",
+  "timestamp": "2026-08-18T09:01:28.624827+00:00",
+  "event": "A14_CERTIFICATION_FAILURE",
+  "outcome": "FAILED",
+  "details": {
+    "exception": "RuntimeError('A14_ALL_EXECUTORS_FAILED:a14-task:19')",
+    "traceback": "Traceback (most recent call last):\n  File \"C:\\Users\\Ghanam\\Documents\\Codex\\Greeny-Life-Repair\\RAIOS\\V9\\runtime\\a14_unified_agent_execution_certification.py\", line 2657, in <module>\n    main()\n    ~~~~^^\n  File \"C:\\Users\\Ghanam\\Documents\\Codex\\Greeny-Life-Repair\\RAIOS\\V9\\runtime\\a14_unified_agent_execution_certification.py\", line 1698, in main\n    raise RuntimeError(\n    ...<2 lines>...\n    )\nRuntimeError: A14_ALL_EXECUTORS_FAILED:a14-task:19\n"
+  },
+  "experience_id": "exp:a3a338b16611968e8e3d10060a0b3492"
+}

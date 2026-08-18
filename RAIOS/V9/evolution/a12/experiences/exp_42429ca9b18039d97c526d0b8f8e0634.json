@@ -1,0 +1,22 @@
+{
+  "schema": "raios.a12.experience.v1",
+  "timestamp": "2026-08-18T08:17:26.715581+00:00",
+  "event": "A12_SUPERVISED_ACTION",
+  "outcome": "SUCCESS",
+  "details": {
+    "schema": "raios.a12.supervised-action.v1",
+    "timestamp": "2026-08-18T08:17:26.714399+00:00",
+    "action_id": "a12:008",
+    "operation": "RECOVERY_SIMULATION",
+    "scenario": "SUCCESS",
+    "confidence": 0.9154323016154189,
+    "latency_ms": 0.7132272356812228,
+    "outcome": "SUCCESS",
+    "rollback": false,
+    "before_hash": "f0d381f9d44c8b8ecced8c1ccf31ed92b0efc23ec082bdc0544fc280401ffd33",
+    "after_hash": "36575b46bb3d51f2e73c597c3bf4f9b96d0906c84e9b91bc18ec35ee83101ac3",
+    "production_mutation": false,
+    "canonical_mutation": false
+  },
+  "experience_id": "exp:42429ca9b18039d97c526d0b8f8e0634"
+}

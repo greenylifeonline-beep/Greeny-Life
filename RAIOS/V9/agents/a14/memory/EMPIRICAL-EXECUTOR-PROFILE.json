@@ -1,0 +1,64 @@
+{
+  "schema": "raios.a14.empirical-executor-profile.v1",
+  "timestamp": "2026-08-18T09:13:22.235069+00:00",
+  "certification_mode": "SANDBOX_SYNTHETIC_EXECUTOR_ADAPTERS",
+  "profiles": {
+    "CLAUDE_CODE": {
+      "attempts": 5,
+      "successes": 5,
+      "failures": 0,
+      "success_rate": 1.0,
+      "fallbacks_received": 1,
+      "independent_verifications": 1,
+      "mean_latency_ms": 4.225310982569795
+    },
+    "CLINE": {
+      "attempts": 4,
+      "successes": 4,
+      "failures": 0,
+      "success_rate": 1.0,
+      "fallbacks_received": 1,
+      "independent_verifications": 0,
+      "mean_latency_ms": 3.157595897864187
+    },
+    "CURSOR": {
+      "attempts": 1,
+      "successes": 1,
+      "failures": 0,
+      "success_rate": 1.0,
+      "fallbacks_received": 1,
+      "independent_verifications": 0,
+      "mean_latency_ms": 3.5779801741805377
+    },
+    "GEMINI": {
+      "attempts": 3,
+      "successes": 3,
+      "failures": 0,
+      "success_rate": 1.0,
+      "fallbacks_received": 0,
+      "independent_verifications": 1,
+      "mean_latency_ms": 3.6451948937991374
+    },
+    "LOCAL_DETERMINISTIC": {
+      "attempts": 12,
+      "successes": 10,
+      "failures": 2,
+      "success_rate": 0.8333333333333334,
+      "fallbacks_received": 0,
+      "independent_verifications": 0,
+      "mean_latency_ms": 1.2496281957407398
+    },
+    "RAIOS_INTERNAL": {
+      "attempts": 5,
+      "successes": 5,
+      "failures": 0,
+      "success_rate": 1.0,
+      "fallbacks_received": 1,
+      "independent_verifications": 0,
+      "mean_latency_ms": 0.5535000094775636
+    }
+  },
+  "external_credits_consumed": false,
+  "production_mutation": false,
+  "canonical_mutation": false
+}

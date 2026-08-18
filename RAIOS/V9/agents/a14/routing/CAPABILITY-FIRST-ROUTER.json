@@ -1,0 +1,56 @@
+{
+  "schema": "raios.a14.capability-first-router.v1",
+  "strategy": "CAPABILITY_FIRST_SINGLE_PRIMARY",
+  "capability_map": {
+    "filesystem_read": [
+      "LOCAL_DETERMINISTIC",
+      "RAIOS_INTERNAL"
+    ],
+    "repository_search": [
+      "LOCAL_DETERMINISTIC",
+      "CLINE",
+      "CURSOR"
+    ],
+    "implementation": [
+      "CLINE",
+      "CURSOR",
+      "LOCAL_DETERMINISTIC"
+    ],
+    "deep_debug": [
+      "CLAUDE_CODE",
+      "CLINE",
+      "GEMINI"
+    ],
+    "independent_review": [
+      "GEMINI",
+      "CLAUDE_CODE"
+    ],
+    "governance": [
+      "RAIOS_INTERNAL"
+    ],
+    "test_execution": [
+      "LOCAL_DETERMINISTIC",
+      "CLINE",
+      "CURSOR"
+    ]
+  },
+  "selection_factors": [
+    "capability_fit",
+    "verified_availability",
+    "historical_success",
+    "failure_rate",
+    "latency",
+    "cost_observation"
+  ],
+  "rules": [
+    "One primary executor per task.",
+    "Fallback only on unavailability or failure.",
+    "Second agent may run only for required independent verification.",
+    "Duplicate primary execution is forbidden.",
+    "Ambiguous routing must abstain.",
+    "Executor availability must be evidence-based."
+  ],
+  "automatic_promotion": false,
+  "canonical_mutation": false,
+  "production_activation": false
+}

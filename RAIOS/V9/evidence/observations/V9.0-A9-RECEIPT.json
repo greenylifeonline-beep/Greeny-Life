@@ -1,0 +1,71 @@
+{
+  "schema": "raios.v9.a9.receipt.v1",
+  "phase": "V9.0-A9",
+  "certification_status": "PASS",
+  "certification_mode": "FAIL_CLOSED",
+  "repository_sha": "fb130e232246a00b531835f529f25e4edfae2854",
+  "timestamp": "2026-08-18T07:52:07.321554+00:00",
+  "predecessor": {
+    "phase": "V9.0-A8",
+    "receipt": "RAIOS\\V9\\evidence\\observations\\V9.0-A8-RECEIPT.json",
+    "sha256": "f1a2b428a455d4ed74ef35054e81c8531b0eefffb0f1d43a72df64c3290eaa2e",
+    "status": "PASS"
+  },
+  "skill": {
+    "skill_id": "skill:ff:07ed310cc0410694d6e681287ad0b4d9",
+    "lifecycle": "SHADOW",
+    "active": false,
+    "production_active": false,
+    "automatic_promotion": false
+  },
+  "real_work_corpus": {
+    "path": "RAIOS\\V9\\evaluation\\a9\\corpus\\bd17e6da369a94f2e44c78633be7dd6453aa46295b73b19f7113ad0fc2e9dc3c.json",
+    "sha256": "c6fc30b89cd06c9b436150a217816b17000fa58e2df79dfd985aae6ddce66f4e",
+    "record_count": 42,
+    "synthetic_records": 0,
+    "artifact_class_counts": {
+      "EXPERIENCE": 34,
+      "FAILURE": 5,
+      "RECOVERY": 3
+    }
+  },
+  "splits": {
+    "mining": 25,
+    "validation": 9,
+    "holdout": 8,
+    "data_leakage": false
+  },
+  "evaluation": {
+    "shadow_accuracy": 1.0,
+    "false_positive_rate": 0.0,
+    "false_negative_rate": 0.0,
+    "calibration_error": 0.21,
+    "deterministic_replay": true,
+    "confidence_70_rejected": true
+  },
+  "promotion_readiness": {
+    "score": 0.8232250000000001,
+    "status": "READY_FOR_NEXT_GOVERNANCE_STAGE",
+    "evidence_status": "SUFFICIENT_FOR_BOOTSTRAP_READINESS",
+    "active_authorized": false
+  },
+  "safety": {
+    "production_mutation": false,
+    "canonical_mutation": false,
+    "automatic_promotion": false,
+    "lifecycle_after_a9": "SHADOW"
+  },
+  "experience": {
+    "path": "RAIOS\\V9\\evolution\\a9\\experiences\\exp_9d9cc94fa134493e36fbbdd4796606cb.json"
+  },
+  "epistemic_limits": [
+    "A9 uses historical real-work artifacts already present in RAIOS V9.",
+    "A9 does not claim that historical replay equals live production validation.",
+    "Insufficient validation or holdout evidence cannot produce promotion-readiness by assertion.",
+    "No synthetic records are added to the real-work corpus.",
+    "A9 does not authorize ACTIVE production lifecycle.",
+    "The skill remains SHADOW.",
+    "Canonical mutation remains forbidden.",
+    "Automatic promotion remains forbidden."
+  ]
+}

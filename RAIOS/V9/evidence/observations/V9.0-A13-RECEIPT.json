@@ -1,0 +1,45 @@
+{
+  "schema": "raios.v9.a13.receipt.v1",
+  "phase": "V9.0-A13",
+  "certification_status": "PASS",
+  "certification_mode": "FAIL_CLOSED",
+  "timestamp": "2026-08-18T08:43:59.668007+00:00",
+  "repository_sha": "fb130e232246a00b531835f529f25e4edfae2854",
+  "predecessor": {
+    "phase": "V9.0-A12",
+    "sha256": "9d1c495cb48740f8bb260d8e573a1c093aed49eb9008f094d836fbad7237f30c",
+    "status": "PASS"
+  },
+  "unification": {
+    "discovered_assets": 14,
+    "canonical_owner_count": 8,
+    "exact_duplicate_groups": 0,
+    "semantic_overlap_pairs": 3,
+    "anomalies": 0,
+    "existing_bridge_reused": true,
+    "new_bridge_created": false,
+    "routing_contract": true,
+    "registry_idempotency": true
+  },
+  "safety": {
+    "destructive_merge": false,
+    "automatic_delete": false,
+    "automatic_promotion": false,
+    "canonical_mutation": false,
+    "production_activation": false
+  },
+  "artifacts": {
+    "registry": "RAIOS\\V9\\agents\\a13\\registry\\UNIFIED-AGENT-CAPABILITY-REGISTRY.json",
+    "routing_contract": "RAIOS\\V9\\agents\\a13\\routing\\UNIFIED-AGENT-ROUTING.json",
+    "dedup_report": "RAIOS\\V9\\agents\\a13\\reports\\AGENT-CAPABILITY-DEDUP-REPORT.json",
+    "experience": "RAIOS\\V9\\evolution\\a13\\experiences\\exp_e72b5088b46aafdd58c3a8f8474e784b.json"
+  },
+  "epistemic_limits": [
+    "Semantic overlap identifies review candidates, not proven duplicates.",
+    "Archived agent artifacts remain evidence and are not automatically authoritative.",
+    "A13 does not delete or merge existing agent assets.",
+    "A13 reuses the existing RAIOS capability bridge.",
+    "Canonical ownership can only be changed through governed review.",
+    "Cursor remains optional and is not required for RAIOS continuity."
+  ]
+}

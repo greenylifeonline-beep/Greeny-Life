@@ -1,0 +1,48 @@
+{
+  "schema": "raios.a8.shadow-benchmark.v1",
+  "skill_id": "skill:ff:07ed310cc0410694d6e681287ad0b4d9",
+  "run_id": "run:3f604a42ed4d4d0f8e6ad4ac706df1f7",
+  "case_count": 600,
+  "metrics": {
+    "case_count": 600,
+    "baseline_accuracy": 0.6666666666666666,
+    "shadow_accuracy": 1.0,
+    "decision_agreement": 0.6666666666666666,
+    "false_positive_rate": 0.0,
+    "false_negative_rate": 0.0,
+    "abstention_quality": 1.0,
+    "calibration_error": 0.1283333333333333,
+    "median_latency_ms": 0.0002,
+    "p95_latency_ms": 0.0003,
+    "production_mutation": false,
+    "canonical_mutation": false
+  },
+  "drift": {
+    "schema": "raios.a8.drift-report.v1",
+    "accuracy_drift": 0.0,
+    "false_positive_drift": 0.0,
+    "false_negative_drift": 0.0,
+    "threshold": 0.05,
+    "drift_detected": false,
+    "timestamp": "2026-08-18T07:48:36.732839+00:00"
+  },
+  "gates": {
+    "minimum_cases": true,
+    "shadow_accuracy": true,
+    "baseline_improvement": true,
+    "false_positive": true,
+    "false_negative": true,
+    "abstention_quality": true,
+    "calibration_error": true,
+    "deterministic_replay": true,
+    "drift": true,
+    "production_mutation": true,
+    "canonical_mutation": true
+  },
+  "active": false,
+  "production_active": false,
+  "automatic_promotion": false,
+  "canonical_mutation": false,
+  "created_at": "2026-08-18T07:48:36.742290+00:00",
+  "benchmark_id": "benchmark:8501b19c67e3299b93a0fe9e52c7f668"
+}

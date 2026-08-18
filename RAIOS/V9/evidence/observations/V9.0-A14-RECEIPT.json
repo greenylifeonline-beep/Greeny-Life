@@ -1,0 +1,58 @@
+{
+  "schema": "raios.v9.a14.receipt.v1",
+  "phase": "V9.0-A14",
+  "certification_status": "PASS",
+  "certification_mode": "FAIL_CLOSED",
+  "repository_sha": "fb130e232246a00b531835f529f25e4edfae2854",
+  "timestamp": "2026-08-18T09:13:22.287738+00:00",
+  "predecessor": {
+    "phase": "V9.0-A13",
+    "sha256": "8bc4a2ee40f03cc5e7ac33e7c5e001902dde1a221020a63db379047f9533bd27",
+    "status": "PASS"
+  },
+  "runtime": {
+    "capability_first_router": true,
+    "single_primary_executor": true,
+    "fallback_routing": true,
+    "task_ownership_lock": true,
+    "cross_agent_handoff": true,
+    "result_normalization": true,
+    "independent_verification": true,
+    "availability_memory": true,
+    "empirical_executor_memory": true,
+    "idempotent_retry": true
+  },
+  "certification": {
+    "tasks": 30,
+    "fallbacks": 4,
+    "verifier_runs": 2,
+    "duplicate_rejections": 2,
+    "abstentions": 1,
+    "scope_rejections": 1,
+    "external_credits_consumed": false,
+    "adapter_mode": "SANDBOX_SYNTHETIC_EXECUTOR_ADAPTERS"
+  },
+  "safety": {
+    "confidence_contract": "STRICT_[0,1]",
+    "confidence_70_rejected": true,
+    "automatic_promotion": false,
+    "canonical_mutation": false,
+    "production_activation": false,
+    "active": false
+  },
+  "artifacts": {
+    "executor_registry": "RAIOS\\V9\\agents\\a14\\registry\\EXECUTOR-REGISTRY.json",
+    "router": "RAIOS\\V9\\agents\\a14\\routing\\CAPABILITY-FIRST-ROUTER.json",
+    "availability_memory": "RAIOS\\V9\\agents\\a14\\memory\\EXECUTOR-AVAILABILITY-MEMORY.json",
+    "empirical_profile": "RAIOS\\V9\\agents\\a14\\memory\\EMPIRICAL-EXECUTOR-PROFILE.json",
+    "execution_report": "RAIOS\\V9\\agents\\a14\\reports\\UNIFIED-AGENT-EXECUTION-REPORT.json"
+  },
+  "epistemic_limits": [
+    "A14 certification used sandbox executor adapters and consumed no external model credits.",
+    "IDE extension presence does not prove remote provider availability or account credit.",
+    "A14 proves routing, locking, fallback, handoff, normalization, verification, and executor memory behavior.",
+    "A14 does not authorize production execution.",
+    "A14 does not mutate canonical truth.",
+    "Cursor remains optional."
+  ]
+}

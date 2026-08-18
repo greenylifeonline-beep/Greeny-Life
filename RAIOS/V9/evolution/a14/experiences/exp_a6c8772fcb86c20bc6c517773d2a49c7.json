@@ -1,0 +1,37 @@
+{
+  "schema": "raios.a14.experience.v1",
+  "timestamp": "2026-08-18T09:13:21.866814+00:00",
+  "event": "A14_INDEPENDENT_VERIFICATION",
+  "outcome": "SUCCESS",
+  "details": {
+    "primary_result": {
+      "schema": "raios.a14.normalized-result.v1",
+      "task_id": "a14-task:11",
+      "executor_id": "GEMINI",
+      "status": "SUCCESS",
+      "confidence": 0.93,
+      "evidence": [
+        "sandbox-certification-adapter",
+        "independent_review"
+      ],
+      "latency_ms": 3.5550157537881635,
+      "production_mutation": false,
+      "canonical_mutation": false
+    },
+    "verification_result": {
+      "schema": "raios.a14.normalized-result.v1",
+      "task_id": "a14-task:11",
+      "executor_id": "CLAUDE_CODE",
+      "status": "SUCCESS",
+      "confidence": 0.93,
+      "evidence": [
+        "sandbox-certification-adapter",
+        "independent_review"
+      ],
+      "latency_ms": 4.131454932554321,
+      "production_mutation": false,
+      "canonical_mutation": false
+    }
+  },
+  "experience_id": "exp:a6c8772fcb86c20bc6c517773d2a49c7"
+}

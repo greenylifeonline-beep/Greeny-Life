@@ -1,0 +1,40 @@
+{
+  "schema": "raios.experience.v9",
+  "experience_id": "c4bb70013b7770938185de530023e56396a1eb165b81471014910e09fb9b1910",
+  "timestamp": "2026-08-18T06:23:20.362089+00:00",
+  "intent": "Build RAIOS V9 evidence-native semantic understanding kernel",
+  "context": {
+    "repository": "C:\\Users\\Ghanam\\Documents\\Codex\\Greeny-Life-Repair",
+    "branch": "codex-clean",
+    "repository_sha": "fb130e232246a00b531835f529f25e4edfae2854",
+    "v9_phase": "V9.0-A"
+  },
+  "plan": [],
+  "tools": [
+    "PowerShell",
+    "Python",
+    "Git"
+  ],
+  "observations": [
+    "A2 can read and search but must not confuse claims with implementation proof."
+  ],
+  "failures": [],
+  "corrections": [],
+  "result": {
+    "status": "RECORDED"
+  },
+  "evidence": [
+    "RAIOS/V9/evidence/observations/V9.0-A2-RECEIPT.json"
+  ],
+  "lesson": [
+    "Understanding requires explicit separation of claim, evidence, authority, temporal validity and contradiction.",
+    "RAIOS must abstain rather than infer implementation maturity from report language alone."
+  ],
+  "reusability": {
+    "assessment": "UNASSESSED",
+    "repeat_count": 1,
+    "candidate_for_compilation": false
+  },
+  "skill_candidate": null,
+  "status": "PENDING_VALIDATION"
+}

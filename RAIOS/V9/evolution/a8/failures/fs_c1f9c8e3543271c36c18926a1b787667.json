@@ -1,0 +1,11 @@
+{
+  "schema": "raios.a8.failure-signature.v1",
+  "failure_signature": "fs:c1f9c8e3543271c36c18926a1b787667",
+  "phase": "V9.0-A8",
+  "timestamp": "2026-08-18T07:28:41.116900+00:00",
+  "exception_type": "RuntimeError",
+  "message": "A8_GATE_FAILURE:production_mutation,canonical_mutation",
+  "traceback": "Traceback (most recent call last):\n  File \"C:\\Users\\Ghanam\\Documents\\Codex\\Greeny-Life-Repair\\RAIOS\\V9\\runtime\\a8_shadow_runtime_certification.py\", line 1503, in <module>\n    main()\n    ~~~~^^\n  File \"C:\\Users\\Ghanam\\Documents\\Codex\\Greeny-Life-Repair\\RAIOS\\V9\\runtime\\a8_shadow_runtime_certification.py\", line 978, in main\n    raise RuntimeError(\n    ...<2 lines>...\n    )\nRuntimeError: A8_GATE_FAILURE:production_mutation,canonical_mutation\n",
+  "canonical_mutation": false,
+  "production_mutation": false
+}

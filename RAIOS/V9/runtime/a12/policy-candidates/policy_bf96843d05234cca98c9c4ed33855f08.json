@@ -1,0 +1,33 @@
+{
+  "schema": "raios.a12.policy-candidate.v1",
+  "candidate_id": "policy:bf96843d05234cca98c9c4ed33855f08",
+  "timestamp": "2026-08-18T08:17:30.030629+00:00",
+  "skill_id": "skill:ff:07ed310cc0410694d6e681287ad0b4d9",
+  "source": "EMPIRICAL_RUNTIME_PROFILE",
+  "baseline_policy": {
+    "minimum_confidence": 0.82,
+    "maximum_failure_rate": 0.2,
+    "maximum_p95_latency_ms": 60.0,
+    "minimum_abstention_quality": 0.95,
+    "maximum_duplicate_rate": 0.1,
+    "maximum_rollback_rate": 0.1
+  },
+  "proposed_policy": {
+    "minimum_confidence": 0.82,
+    "maximum_failure_rate": 0.18265306122448982,
+    "maximum_p95_latency_ms": 60.0,
+    "minimum_abstention_quality": 0.95,
+    "maximum_duplicate_rate": 0.1,
+    "maximum_rollback_rate": 0.1
+  },
+  "observed_metrics": {
+    "failure_rate": 0.1326530612244898,
+    "p95_latency_ms": 78.65767365595647,
+    "drift_detected": true
+  },
+  "canonical": false,
+  "runtime_candidate": true,
+  "automatic_promotion": false,
+  "requires_replay_validation": true,
+  "status": "RUNTIME_POLICY_CANDIDATE"
+}

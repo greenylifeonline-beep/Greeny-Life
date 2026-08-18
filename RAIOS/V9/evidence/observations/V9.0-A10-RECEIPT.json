@@ -1,0 +1,56 @@
+{
+  "schema": "raios.v9.a10.receipt.v1",
+  "phase": "V9.0-A10",
+  "certification_status": "PASS",
+  "certification_mode": "FAIL_CLOSED",
+  "repository_sha": "fb130e232246a00b531835f529f25e4edfae2854",
+  "timestamp": "2026-08-18T07:56:15.312294+00:00",
+  "predecessor": {
+    "phase": "V9.0-A9",
+    "sha256": "0f612aeafbe65894dc670683401953a082286a8407362448e5d7e79ca533e0f8",
+    "status": "PASS"
+  },
+  "skill": {
+    "skill_id": "skill:ff:07ed310cc0410694d6e681287ad0b4d9",
+    "candidate_sha256": "d9926749e470f55df9b18c34305935524b32ef1a381e03e5ecc84277eb84afd7",
+    "previous_lifecycle": "SHADOW",
+    "lifecycle_after_a10": "CANARY_AUTHORIZED",
+    "active": false,
+    "production_active": false
+  },
+  "authorization": {
+    "authorization_id": "auth:bbc6bae5d13e4ede8d4445ca96a2fda8",
+    "scope": "SANDBOX_CANARY_ONLY",
+    "max_actions": 6,
+    "kill_switch": true
+  },
+  "guardian": {
+    "report": "RAIOS\\V9\\runtime\\a10\\reports\\RUNTIME-GUARDIAN-REPORT.json",
+    "safe_canary_action": true,
+    "fault_injection": true,
+    "kill_switch": true,
+    "rollback_byte_identical": true,
+    "abstention_gate": true,
+    "out_of_scope_rejection": true
+  },
+  "safety": {
+    "confidence_contract": "STRICT_[0,1]",
+    "confidence_70_rejected": true,
+    "production_mutation": false,
+    "canonical_mutation": false,
+    "automatic_promotion": false,
+    "active_authorized": false
+  },
+  "experience": {
+    "path": "RAIOS\\V9\\evolution\\a10\\experiences\\exp_77ca5e55a06d4831b0748ddeaba6d0f7.json"
+  },
+  "epistemic_limits": [
+    "A10 authorizes sandbox canary execution only.",
+    "A10 does not authorize full production ACTIVE lifecycle.",
+    "The tested action mutated only an explicit sandbox fixture.",
+    "Fault injection was controlled and rollback was verified.",
+    "Canonical truth was not mutated.",
+    "Production state was not mutated.",
+    "Automatic promotion remains forbidden."
+  ]
+}

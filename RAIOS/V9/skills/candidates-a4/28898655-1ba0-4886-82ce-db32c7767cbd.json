@@ -1,0 +1,22 @@
+{
+  "schema": "raios.recovery-skill-candidate.v2",
+  "candidate_id": "recovery:28898655-1ba0-4886-82ce-db32c7767cbd",
+  "source_event_id": "28898655-1ba0-4886-82ce-db32c7767cbd",
+  "failure_signature": "failure:642244c6f110b71debc76ddfd603ac5ea74844c2d1fd3ca29fa5223e4e9dc891",
+  "status": "REVIEW_REQUIRED",
+  "canonical_promotion": false,
+  "promotion_requirements": [
+    "replay",
+    "benchmark",
+    "verification",
+    "governed_promotion"
+  ],
+  "candidate_behavior": {
+    "detect_failure_signature": true,
+    "preserve_evidence": true,
+    "generate_recovery_plan": true,
+    "validate_recovery": true,
+    "rollback_on_regression": true
+  },
+  "created_at": "2026-08-18T07:12:29.793974+00:00"
+}

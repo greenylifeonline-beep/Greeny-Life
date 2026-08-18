@@ -1,0 +1,41 @@
+{
+  "schema": "raios.experience.v9",
+  "experience_id": "83564ca671245c05a0647bd8ca25f874234a0b20d040b5369bb184bb0bf4f1ae",
+  "timestamp": "2026-08-18T06:16:45.357287+00:00",
+  "intent": "Complete V9.0-A2 perception reading and hybrid search bootstrap",
+  "context": {
+    "repository": "C:\\Users\\Ghanam\\Documents\\Codex\\Greeny-Life-Repair",
+    "branch": "codex-clean",
+    "repository_sha": "fb130e232246a00b531835f529f25e4edfae2854",
+    "v9_phase": "V9.0-A"
+  },
+  "plan": [],
+  "tools": [
+    "RAIOS.Perception.Reader.v2",
+    "RAIOS.Search.Hybrid.v2",
+    "Git"
+  ],
+  "observations": [
+    "UTF-8 BOM is now handled explicitly with utf-8-sig.",
+    "Search now separates current-tree lexical evidence from Git historical evidence."
+  ],
+  "failures": [],
+  "corrections": [],
+  "result": {
+    "status": "RECORDED"
+  },
+  "evidence": [
+    "RAIOS/V9/evidence/observations/V9.0-A2-RECEIPT.json"
+  ],
+  "lesson": [
+    "Artifact accessibility, syntax parsing, semantic parsing and authority are separate evidence states.",
+    "Historical capability discovery requires Git-aware retrieval, not current-tree grep alone."
+  ],
+  "reusability": {
+    "assessment": "UNASSESSED",
+    "repeat_count": 1,
+    "candidate_for_compilation": false
+  },
+  "skill_candidate": null,
+  "status": "PENDING_VALIDATION"
+}

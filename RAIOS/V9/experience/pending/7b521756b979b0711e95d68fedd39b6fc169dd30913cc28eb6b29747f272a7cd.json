@@ -1,0 +1,40 @@
+{
+  "schema": "raios.experience.v9",
+  "experience_id": "7b521756b979b0711e95d68fedd39b6fc169dd30913cc28eb6b29747f272a7cd",
+  "timestamp": "2026-08-18T06:16:15.766297+00:00",
+  "intent": "Repair V9 self-reading after UTF-8 BOM parsing failure",
+  "context": {
+    "repository": "C:\\Users\\Ghanam\\Documents\\Codex\\Greeny-Life-Repair",
+    "branch": "codex-clean",
+    "repository_sha": "fb130e232246a00b531835f529f25e4edfae2854",
+    "v9_phase": "V9.0-A"
+  },
+  "plan": [],
+  "tools": [
+    "RAIOS V9 Reader",
+    "PowerShell"
+  ],
+  "observations": [
+    "RAIOS self-read successfully opened the architecture artifact but JSON semantic parsing failed.",
+    "PowerShell-generated UTF-8 JSON contained a BOM."
+  ],
+  "failures": [],
+  "corrections": [],
+  "result": {
+    "status": "RECORDED"
+  },
+  "evidence": [
+    "RAIOS/V9/architecture/RAIOS-V9-ARCHITECTURE.json"
+  ],
+  "lesson": [
+    "Text decoding must be format-aware and tolerant of UTF-8 BOM.",
+    "Successful file access must not be promoted to successful semantic parsing."
+  ],
+  "reusability": {
+    "assessment": "UNASSESSED",
+    "repeat_count": 1,
+    "candidate_for_compilation": false
+  },
+  "skill_candidate": null,
+  "status": "PENDING_VALIDATION"
+}

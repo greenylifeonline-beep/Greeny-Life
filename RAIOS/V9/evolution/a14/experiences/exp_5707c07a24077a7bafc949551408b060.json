@@ -1,0 +1,18 @@
+{
+  "schema": "raios.a14.experience.v1",
+  "timestamp": "2026-08-18T09:13:22.057090+00:00",
+  "event": "A14_HANDOFF",
+  "outcome": "PRIMARY_FAILURE",
+  "details": {
+    "schema": "raios.a14.handoff-envelope.v1",
+    "task_id": "a14-task:20",
+    "correlation_id": "corr:702a456dffdef45ddc61288a",
+    "causation_id": "attempt:1",
+    "from_executor": "LOCAL_DETERMINISTIC",
+    "to_executor": "CLINE",
+    "reason": "PRIMARY_FAILURE",
+    "context_hash": "702a456dffdef45ddc61288a33486fc7d69e554471d214df3cf3f59e8649a998",
+    "attempt": 1
+  },
+  "experience_id": "exp:5707c07a24077a7bafc949551408b060"
+}

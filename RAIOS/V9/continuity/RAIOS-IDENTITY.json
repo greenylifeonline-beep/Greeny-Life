@@ -1,0 +1,24 @@
+{
+    "schema":  "raios.identity.v9",
+    "project":  "RAIOS",
+    "architecture_generation":  "V9",
+    "phase":  "V9.0-A",
+    "repository":  "C:/Users/Ghanam/Documents/Codex/Greeny-Life-Repair",
+    "canonical_branch_observed":  "codex-clean",
+    "repository_sha_observed":  "fb130e232246a00b531835f529f25e4edfae2854",
+    "evidence_strength":  {
+                              "repository":  "VERIFIED_LOCAL_GIT",
+                              "branch":  "OBSERVED",
+                              "sha":  "VERIFIED"
+                          },
+    "continuation_protocol":  "RAIOS.CONTINUITY.v1",
+    "invariants":  [
+                       "Do not convert an observation into a stronger fact than the evidence permits.",
+                       "Historical truth is not automatically current truth.",
+                       "Model output is not canonical truth.",
+                       "Background cognition may propose but may not silently promote canonical truth.",
+                       "Every meaningful operation must produce an Experience record.",
+                       "All production-impacting mutation requires governed promotion."
+                   ],
+    "created_at":  "2026-08-18T06:10:49.7681506Z"
+}

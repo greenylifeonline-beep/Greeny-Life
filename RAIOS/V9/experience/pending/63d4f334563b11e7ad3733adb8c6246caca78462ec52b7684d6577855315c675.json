@@ -1,0 +1,43 @@
+{
+  "schema": "raios.experience.v9",
+  "experience_id": "63d4f334563b11e7ad3733adb8c6246caca78462ec52b7684d6577855315c675",
+  "timestamp": "2026-08-18T06:26:07.755234+00:00",
+  "intent": "Certify V9.0-A2 after repairing missing receipt",
+  "context": {
+    "repository": "C:\\Users\\Ghanam\\Documents\\Codex\\Greeny-Life-Repair",
+    "branch": "codex-clean",
+    "repository_sha": "fb130e232246a00b531835f529f25e4edfae2854",
+    "v9_phase": "V9.0-A"
+  },
+  "plan": [],
+  "tools": [
+    "RAIOS V9 CLI",
+    "PowerShell",
+    "Git"
+  ],
+  "observations": [
+    "Startup Gate was independently revalidated.",
+    "JSON self-reading passed with BOM-tolerant decoding.",
+    "Hybrid search proved Git historical retrieval.",
+    "Evolution remained candidate-only with canonical_mutation=false."
+  ],
+  "failures": [],
+  "corrections": [],
+  "result": {
+    "status": "RECORDED"
+  },
+  "evidence": [
+    "RAIOS/V9/evidence/observations/V9.0-A2-RECEIPT.json"
+  ],
+  "lesson": [
+    "Phase certification requires a durable machine-readable receipt and independent readback.",
+    "Console completion text is not certification evidence."
+  ],
+  "reusability": {
+    "assessment": "UNASSESSED",
+    "repeat_count": 1,
+    "candidate_for_compilation": false
+  },
+  "skill_candidate": null,
+  "status": "PENDING_VALIDATION"
+}

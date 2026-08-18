@@ -1,0 +1,56 @@
+{
+  "schema": "raios.v9.a12.receipt.v1",
+  "phase": "V9.0-A12",
+  "certification_status": "PASS",
+  "certification_mode": "FAIL_CLOSED",
+  "repository_sha": "fb130e232246a00b531835f529f25e4edfae2854",
+  "timestamp": "2026-08-18T08:17:30.063133+00:00",
+  "predecessor": {
+    "phase": "V9.0-A11",
+    "sha256": "ca908e11fc5dd04a45894d85cbe8513415c5b3e4af1921fcc30695b4a260b24f",
+    "status": "PASS"
+  },
+  "supervision": {
+    "actions": 120,
+    "rolling_windows": 101,
+    "drift_detector": true,
+    "empirical_runtime_profile": true,
+    "policy_candidate_generation": true,
+    "policy_replay_validation": true,
+    "replay_idempotency": true
+  },
+  "experience": {
+    "experiences": 120,
+    "failure_signatures": 1,
+    "recovery_candidates": 13
+  },
+  "policy": {
+    "candidate_id": "policy:bf96843d05234cca98c9c4ed33855f08",
+    "candidate_status": "RUNTIME_POLICY_CANDIDATE",
+    "canonical": false,
+    "automatic_promotion": false
+  },
+  "safety": {
+    "confidence_contract": "STRICT_[0,1]",
+    "confidence_70_rejected": true,
+    "production_mutation": false,
+    "canonical_mutation": false,
+    "automatic_promotion": false,
+    "active": false,
+    "lifecycle_after_a12": "SUPERVISED_LIMITED_ACT"
+  },
+  "artifacts": {
+    "supervisor_report": "RAIOS\\V9\\runtime\\a12\\reports\\AUTONOMOUS-RUNTIME-SUPERVISOR.json",
+    "empirical_profile": "RAIOS\\V9\\runtime\\a12\\profiles\\EMPIRICAL-RUNTIME-PROFILE.json",
+    "policy_candidate": "RAIOS\\V9\\runtime\\a12\\policy-candidates\\policy_bf96843d05234cca98c9c4ed33855f08.json"
+  },
+  "epistemic_limits": [
+    "A12 supervises sandbox limited-act runtime only.",
+    "Adaptive policy output is a candidate, not canonical policy.",
+    "Policy candidates require replay validation.",
+    "Hard safety bounds cannot be relaxed automatically.",
+    "Production activation remains false.",
+    "Canonical mutation remains false.",
+    "Automatic promotion remains false."
+  ]
+}

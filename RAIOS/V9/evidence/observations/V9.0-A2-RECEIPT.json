@@ -1,0 +1,46 @@
+{
+    "schema":  "raios.v9.a2.receipt.v5",
+    "phase":  "V9.0-A2",
+    "certification_status":  "PASS",
+    "certification_mode":  "FAIL_CLOSED",
+    "timestamp":  "2026-08-18T06:56:58.6922761Z",
+    "repository_sha":  "fb130e232246a00b531835f529f25e4edfae2854",
+    "validation":  {
+                       "startup_context":  {
+                                               "pass":  true
+                                           },
+                       "self_read":  {
+                                         "pass":  true,
+                                         "type":  "JSON",
+                                         "sha256":  "df7a1211ca8bf52da2a89b077961b11b520a10924aa311ac60392e8cc9125e20",
+                                         "schema":  "raios.read-result.v1"
+                                     },
+                       "current_tree_search":  {
+                                                   "pass":  true,
+                                                   "results":  2
+                                               },
+                       "git_historical_search":  {
+                                                     "pass":  true,
+                                                     "results":  30,
+                                                     "mechanisms":  [
+                                                                        "GIT_HISTORICAL_PATH",
+                                                                        "GIT_HISTORICAL_CONTENT"
+                                                                    ]
+                                                 },
+                       "experience_reflex":  {
+                                                 "pass":  true,
+                                                 "mode":  "AUTOMATIC_RUNTIME_CAPTURE"
+                                             },
+                       "canonical_mutation":  {
+                                                  "pass":  true,
+                                                  "observed":  false
+                                              }
+                   },
+    "invariants":  [
+                       "Any mandatory false or null validation forbids PASS.",
+                       "Exit code alone cannot certify a capability.",
+                       "Every meaningful runtime event must be eligible for automatic experience capture.",
+                       "Failures create reusable negative knowledge.",
+                       "Recovery patterns remain candidates until replay and benchmark promotion."
+                   ]
+}

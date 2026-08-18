@@ -1,0 +1,28 @@
+{
+  "schema": "raios.a12.autonomous-runtime-supervisor.v1",
+  "timestamp": "2026-08-18T08:17:30.049176+00:00",
+  "skill_id": "skill:ff:07ed310cc0410694d6e681287ad0b4d9",
+  "actions": 120,
+  "rolling_window_count": 101,
+  "outcomes": {
+    "FAILED_ROLLED_BACK": 13,
+    "SUCCESS": 85,
+    "ABSTAINED_LOW_CONFIDENCE": 9,
+    "REJECTED_OUT_OF_SCOPE": 8,
+    "REJECTED_DUPLICATE": 5
+  },
+  "observed_failure_rate": 0.1326530612244898,
+  "observed_p95_latency_ms": 78.65767365595647,
+  "drift_detected": true,
+  "kill_switch_events": 5,
+  "experience_count": 120,
+  "failure_signature_count": 1,
+  "recovery_candidate_count": 13,
+  "policy_candidate": "RAIOS\\V9\\runtime\\a12\\policy-candidates\\policy_bf96843d05234cca98c9c4ed33855f08.json",
+  "policy_status": "RUNTIME_POLICY_CANDIDATE",
+  "production_mutation": false,
+  "canonical_mutation": false,
+  "automatic_promotion": false,
+  "active": false,
+  "lifecycle_after_a12": "SUPERVISED_LIMITED_ACT"
+}

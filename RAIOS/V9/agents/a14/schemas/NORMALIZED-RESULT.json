@@ -1,0 +1,14 @@
+{
+  "schema": "raios.a14.normalized-result-schema.v1",
+  "required": [
+    "task_id",
+    "executor_id",
+    "status",
+    "confidence",
+    "evidence",
+    "latency_ms"
+  ],
+  "confidence_contract": "STRICT_[0,1]",
+  "production_mutation": false,
+  "canonical_mutation": false
+}

@@ -1,0 +1,29 @@
+{
+  "schema": "raios.failure-family.v1",
+  "family_id": "ff:07ed310cc0410694d6e681287ad0b4d9",
+  "geometry": {
+    "event_type": "FAILURE",
+    "tool": "raios.file.reader",
+    "exception_type": "filenotfounderror",
+    "message": "required architecture file <n> was not found",
+    "unresolved_flags": [
+      "source_missing"
+    ]
+  },
+  "occurrence_count": 2,
+  "successful_recoveries": 1,
+  "failed_recoveries": 0,
+  "source_event_ids": [
+    "bcb329d3-10b4-4652-9bbc-95268a556e39",
+    "1327ea0a-d38f-4155-8c16-db7aa33321fa"
+  ],
+  "tools": [
+    "RAIOS.FILE.READER"
+  ],
+  "repository_shas": [
+    "fb130e232246a00b531835f529f25e4edfae2854"
+  ],
+  "first_seen": "2026-08-18T07:12:29.463445+00:00",
+  "last_seen": "2026-08-18T07:12:29.559049+00:00",
+  "status": "ACTIVE"
+}

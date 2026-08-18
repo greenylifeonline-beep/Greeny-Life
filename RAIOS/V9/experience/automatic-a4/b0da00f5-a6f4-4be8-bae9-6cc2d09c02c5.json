@@ -1,0 +1,31 @@
+{
+  "schema": "raios.experience.v3",
+  "experience_id": "exp:b0da00f5-a6f4-4be8-bae9-6cc2d09c02c5",
+  "source_event_id": "b0da00f5-a6f4-4be8-bae9-6cc2d09c02c5",
+  "event_type": "FAILURE",
+  "correlation_id": "bc601a4b-34d3-4f43-b72d-e26e43ae9664",
+  "causation_id": null,
+  "actor": "RAIOS.A4.CERTIFIER",
+  "intent": "Prove failure materialization",
+  "tool": "A4_CERTIFICATION",
+  "model": null,
+  "input_ref": null,
+  "output_ref": {
+    "exception_type": "SyntheticCertificationFailure",
+    "message": "Controlled fail-path test"
+  },
+  "success": false,
+  "evidence_refs": [
+    "RAIOS/V9/runtime/a4_certification.py"
+  ],
+  "pre_state": null,
+  "post_state": null,
+  "latency_ms": null,
+  "resource_usage": null,
+  "confidence": 1.0,
+  "unresolved_flags": [
+    "CONTROLLED_TEST_FAILURE"
+  ],
+  "repository_sha": "fb130e232246a00b531835f529f25e4edfae2854",
+  "captured_at": "2026-08-18T07:08:14.593722+00:00"
+}

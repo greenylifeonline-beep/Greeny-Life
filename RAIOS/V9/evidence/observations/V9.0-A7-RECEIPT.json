@@ -1,0 +1,74 @@
+{
+  "schema": "raios.v9.a7.receipt.v1",
+  "phase": "V9.0-A7",
+  "certification_status": "PASS",
+  "certification_mode": "FAIL_CLOSED",
+  "timestamp": "2026-08-18T07:24:42.372873+00:00",
+  "repository_sha": "fb130e232246a00b531835f529f25e4edfae2854",
+  "predecessor": {
+    "phase": "V9.0-A6",
+    "receipt": "RAIOS\\V9\\evidence\\observations\\V9.0-A6-RECEIPT.json",
+    "sha256": "43b11a841fe1174e48c0075b00c7011fa091118d10100ed0bbb07eb6e68a1ac7",
+    "status": "PASS"
+  },
+  "candidate": {
+    "candidate_id": "skill:ff:07ed310cc0410694d6e681287ad0b4d9",
+    "sha256": "d9926749e470f55df9b18c34305935524b32ef1a381e03e5ecc84277eb84afd7",
+    "a5_evidence_score": 0.666667
+  },
+  "promotion": {
+    "proposal_id": "proposal:f05df969add7ce941bf15934c33ed01f",
+    "evidence_bundle_sha256": "0b2f1f8cb287f5899cb8817000e6686158b0d367e126071923fa6bdd6b3b29ca",
+    "authorization_id": "auth:6b7d0de2e3bf4d1b978de478f2dda88d",
+    "registry_sha256": "cdc79db67e6b7b9e3a7bd5f8459c18c4f593d1a8d8d4e03380121ad08d20f67b",
+    "lifecycle": "SHADOW",
+    "promotion_eligible": true,
+    "approved": true,
+    "shadow": true,
+    "active": false,
+    "automatic_promotion": false,
+    "canonical_auto_promotion": false
+  },
+  "rollback": {
+    "path": "RAIOS\\V9\\governance\\a7\\rollback\\pre-shadow-24c3d836484ea7883d66fb9cd430bbab22c885e9050ce441413f6103dcfd98b6.json",
+    "sha256": "24c3d836484ea7883d66fb9cd430bbab22c885e9050ce441413f6103dcfd98b6",
+    "available_before_activation": true
+  },
+  "transaction_guards": {
+    "failed_transaction_byte_identical": true,
+    "atomic_registry_write": true,
+    "candidate_hash_bound": true,
+    "evidence_bundle_frozen": true,
+    "partial_promotion_forbidden": true,
+    "production_activation": false,
+    "canonical_mutation": false
+  },
+  "experience": {
+    "path": "RAIOS\\V9\\evolution\\a7\\experiences\\exp_6362770b1d73c10e32371e62623e5993.json"
+  },
+  "lifecycle_contract": [
+    "CANDIDATE",
+    "BENCHMARKED",
+    "PROMOTION_ELIGIBLE",
+    "APPROVAL_REQUIRED",
+    "APPROVED",
+    "SHADOW",
+    "ACTIVE",
+    "DEGRADED",
+    "SUSPENDED",
+    "REVOKED",
+    "ROLLED_BACK"
+  ],
+  "invariants": [
+    "PROMOTION_ELIGIBLE does not mean PROMOTED.",
+    "APPROVED does not mean ACTIVE.",
+    "SHADOW does not mean production activation.",
+    "Candidate hash must be bound to promotion evidence.",
+    "Evidence bundle is immutable after freeze.",
+    "Rollback state must exist before shadow activation.",
+    "Failed promotion attempts must leave the previous registry byte-identical.",
+    "Partial registry promotion is forbidden.",
+    "Automatic canonical promotion is forbidden.",
+    "ACTIVE production lifecycle is outside A7 authority."
+  ]
+}

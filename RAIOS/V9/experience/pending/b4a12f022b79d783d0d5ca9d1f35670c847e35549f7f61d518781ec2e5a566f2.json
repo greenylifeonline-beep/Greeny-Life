@@ -1,0 +1,43 @@
+{
+  "schema": "raios.experience.v9",
+  "experience_id": "b4a12f022b79d783d0d5ca9d1f35670c847e35549f7f61d518781ec2e5a566f2",
+  "timestamp": "2026-08-18T06:24:09.523784+00:00",
+  "intent": "Complete V9.0-A3 evidence-native semantic understanding bootstrap",
+  "context": {
+    "repository": "C:\\Users\\Ghanam\\Documents\\Codex\\Greeny-Life-Repair",
+    "branch": "codex-clean",
+    "repository_sha": "fb130e232246a00b531835f529f25e4edfae2854",
+    "v9_phase": "V9.0-A"
+  },
+  "plan": [],
+  "tools": [
+    "RAIOS.SemanticEngine.v1",
+    "RAIOS.CapabilityVerifier.v1",
+    "Git"
+  ],
+  "observations": [
+    "RAIOS can now represent claims separately from evidence and implementation.",
+    "Historical and current evidence are classified separately.",
+    "Contradictory claims become explicit unresolved contradiction objects.",
+    "Capability maturity is evidence-bounded and does not infer runtime or production success from artifact presence."
+  ],
+  "failures": [],
+  "corrections": [],
+  "result": {
+    "status": "RECORDED"
+  },
+  "evidence": [
+    "RAIOS/V9/evidence/observations/V9.0-A3-RECEIPT.json"
+  ],
+  "lesson": [
+    "Semantic understanding is the controlled transformation of observations into bounded claims and evidence relationships, not free-form inference.",
+    "RAIOS should abstain at the strongest maturity level that evidence actually supports."
+  ],
+  "reusability": {
+    "assessment": "UNASSESSED",
+    "repeat_count": 1,
+    "candidate_for_compilation": false
+  },
+  "skill_candidate": null,
+  "status": "PENDING_VALIDATION"
+}

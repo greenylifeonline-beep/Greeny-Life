@@ -1,0 +1,11 @@
+{
+  "schema": "raios.a8.failure-signature.v1",
+  "failure_signature": "fs:c1f0613c6622116f8b17de7429adf13a",
+  "phase": "V9.0-A8",
+  "timestamp": "2026-08-18T07:33:17.769941+00:00",
+  "exception_type": "NameError",
+  "message": "name 'metrics1' is not defined",
+  "traceback": "Traceback (most recent call last):\n  File \"C:\\Users\\Ghanam\\Documents\\Codex\\Greeny-Life-Repair\\RAIOS\\V9\\runtime\\a8_shadow_runtime_certification.py\", line 1503, in <module>\n    main()\n    ~~~~^^\n  File \"C:\\Users\\Ghanam\\Documents\\Codex\\Greeny-Life-Repair\\RAIOS\\V9\\runtime\\a8_shadow_runtime_certification.py\", line 766, in main\n    run1 = run_shadow(\n        seed=90817,\n        count=600,\n    )\n  File \"C:\\Users\\Ghanam\\Documents\\Codex\\Greeny-Life-Repair\\RAIOS\\V9\\runtime\\a8_shadow_runtime_certification.py\", line 460, in run_shadow\n    shadow = shadow_skill(case)\n  File \"C:\\Users\\Ghanam\\Documents\\Codex\\Greeny-Life-Repair\\RAIOS\\V9\\runtime\\a8_shadow_runtime_certification.py\", line 396, in shadow_skill\n    \"production_mutation\": metrics1[\"production_mutation\"] is False,\n                           ^^^^^^^^\nNameError: name 'metrics1' is not defined\n",
+  "canonical_mutation": false,
+  "production_mutation": false
+}

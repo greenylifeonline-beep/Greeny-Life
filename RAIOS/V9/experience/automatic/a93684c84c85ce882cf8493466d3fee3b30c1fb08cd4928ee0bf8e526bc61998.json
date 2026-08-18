@@ -1,0 +1,39 @@
+{
+  "schema": "raios.experience.v2",
+  "intent": "Evidence-native semantic understanding",
+  "action": "SEMANTIC_UNDERSTAND",
+  "tool": "RAIOS.V9.A3",
+  "environment": {
+    "timestamp": "2026-08-18T07:03:03.165932+00:00",
+    "repository": "C:\\Users\\Ghanam\\Documents\\Codex\\Greeny-Life-Repair",
+    "repository_sha": "fb130e232246a00b531835f529f25e4edfae2854",
+    "branch": "codex-clean",
+    "python": "3.14.7",
+    "platform": "win32",
+    "pid": 12408
+  },
+  "input": {
+    "path": "RAIOS/V9/THIS-FILE-MUST-NOT-EXIST.json"
+  },
+  "expected_result": null,
+  "actual_result": null,
+  "success": false,
+  "failure_signature": "JSON_CONTRACT_FAILURE",
+  "evidence_refs": [
+    "RAIOS/V9/THIS-FILE-MUST-NOT-EXIST.json"
+  ],
+  "lessons": [
+    "Failure must become reusable negative knowledge.",
+    "Recovery must be validated before promotion."
+  ],
+  "latency_ms": 0.581,
+  "pre_state": null,
+  "post_state": null,
+  "unresolved_flags": [
+    "Traceback (most recent call last):\n  File \"C:\\Users\\Ghanam\\Documents\\Codex\\Greeny-Life-Repair\\RAIOS\\V9\\runtime\\experience_reflex.py\", line 233, in instrumented_call\n    result = fn()\n  File \"C:\\Users\\Ghanam\\Documents\\Codex\\Greeny-Life-Repair\\RAIOS\\V9\\cli\\raios_a3.py\", line 71, in <lambda>\n    understand_artifact(\n    ~~~~~~~~~~~~~~~~~~~^\n        path\n        ^^^^\n    ),\n    ^\n  File \"C:\\Users\\Ghanam\\Documents\\Codex\\Greeny-Life-Repair\\RAIOS\\V9\\cognition\\semantic\\semantic_engine.py\", line 567, in understand_artifact\n    artifact = read_artifact(\n        path_value\n    )\n  File \"C:\\Users\\Ghanam\\Documents\\Codex\\Greeny-Life-Repair\\RAIOS\\V9\\cognition\\semantic\\semantic_engine.py\", line 176, in read_artifact\n    raise FileNotFoundError(\n        f\"ARTIFACT_NOT_FOUND:{path_value}\"\n    )\nFileNotFoundError: ARTIFACT_NOT_FOUND:RAIOS/V9/THIS-FILE-MUST-NOT-EXIST.json\n"
+  ],
+  "confidence": 0.95,
+  "replayable": true,
+  "captured_at": "2026-08-18T07:03:03.449679+00:00",
+  "experience_id": "a93684c84c85ce882cf8493466d3fee3b30c1fb08cd4928ee0bf8e526bc61998"
+}

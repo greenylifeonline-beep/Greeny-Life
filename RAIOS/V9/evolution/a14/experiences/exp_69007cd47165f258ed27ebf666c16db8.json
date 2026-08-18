@@ -1,0 +1,20 @@
+{
+  "schema": "raios.a14.experience.v1",
+  "timestamp": "2026-08-18T09:04:42.183352+00:00",
+  "event": "A14_EXECUTION_ATTEMPT",
+  "outcome": "FAILED",
+  "details": {
+    "schema": "raios.a14.normalized-result.v1",
+    "task_id": "a14-task:19",
+    "executor_id": "RAIOS_INTERNAL",
+    "status": "FAILED",
+    "confidence": 0.93,
+    "evidence": [
+      "controlled-executor-failure"
+    ],
+    "latency_ms": 0.44144635827009676,
+    "production_mutation": false,
+    "canonical_mutation": false
+  },
+  "experience_id": "exp:69007cd47165f258ed27ebf666c16db8"
+}

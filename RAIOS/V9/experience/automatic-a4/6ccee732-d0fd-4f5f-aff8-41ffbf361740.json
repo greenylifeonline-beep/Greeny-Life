@@ -1,0 +1,28 @@
+{
+  "schema": "raios.experience.v3",
+  "experience_id": "exp:6ccee732-d0fd-4f5f-aff8-41ffbf361740",
+  "source_event_id": "6ccee732-d0fd-4f5f-aff8-41ffbf361740",
+  "event_type": "RECOVERY",
+  "correlation_id": "40c8112d-a527-4d01-a467-fa18929b6575",
+  "causation_id": "bcb329d3-10b4-4652-9bbc-95268a556e39",
+  "actor": "RAIOS.A5.CERTIFIER",
+  "intent": "Recover missing architecture artifact",
+  "tool": "RAIOS.RECOVERY.TEST",
+  "model": null,
+  "input_ref": null,
+  "output_ref": {
+    "result": "RECOVERED"
+  },
+  "success": true,
+  "evidence_refs": [
+    "RAIOS/V9/runtime/a5_certification.py"
+  ],
+  "pre_state": null,
+  "post_state": null,
+  "latency_ms": null,
+  "resource_usage": null,
+  "confidence": 1.0,
+  "unresolved_flags": [],
+  "repository_sha": "fb130e232246a00b531835f529f25e4edfae2854",
+  "captured_at": "2026-08-18T07:12:29.900506+00:00"
+}

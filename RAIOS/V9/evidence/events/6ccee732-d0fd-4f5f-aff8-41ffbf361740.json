@@ -1,0 +1,33 @@
+{
+  "schema": "raios.cognitive-event.v1",
+  "event_id": "6ccee732-d0fd-4f5f-aff8-41ffbf361740",
+  "event_type": "RECOVERY",
+  "timestamp": "2026-08-18T07:12:29.839868+00:00",
+  "correlation_id": "40c8112d-a527-4d01-a467-fa18929b6575",
+  "causation_id": "bcb329d3-10b4-4652-9bbc-95268a556e39",
+  "actor": "RAIOS.A5.CERTIFIER",
+  "tool": "RAIOS.RECOVERY.TEST",
+  "model": null,
+  "intent": "Recover missing architecture artifact",
+  "input_ref": null,
+  "output_ref": {
+    "result": "RECOVERED"
+  },
+  "evidence_refs": [
+    "RAIOS/V9/runtime/a5_certification.py"
+  ],
+  "pre_state": null,
+  "post_state": null,
+  "success": true,
+  "latency_ms": null,
+  "resource_usage": null,
+  "confidence": 1.0,
+  "unresolved_flags": [],
+  "repository_sha": "fb130e232246a00b531835f529f25e4edfae2854",
+  "metadata": {
+    "failure_family_id": "ff:07ed310cc0410694d6e681287ad0b4d9",
+    "recovery_success": true,
+    "recovery_method": "RESTORE_VERIFIED_ARTIFACT"
+  },
+  "event_hash": "8786a64e2a163b487f843b57aa201e22b3be252ba06b979c001c7b7b1c1d3cfb"
+}

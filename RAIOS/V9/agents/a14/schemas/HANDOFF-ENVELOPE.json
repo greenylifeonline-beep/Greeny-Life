@@ -1,0 +1,14 @@
+{
+  "schema": "raios.a14.handoff-envelope.v1",
+  "fields": [
+    "task_id",
+    "correlation_id",
+    "causation_id",
+    "from_executor",
+    "to_executor",
+    "reason",
+    "context_hash",
+    "attempt"
+  ],
+  "lossless_context_required": true
+}

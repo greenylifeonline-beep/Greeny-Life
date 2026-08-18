@@ -1,0 +1,32 @@
+{
+  "schema": "raios.a12.empirical-runtime-profile.v1",
+  "timestamp": "2026-08-18T08:17:30.015768+00:00",
+  "skill_id": "skill:ff:07ed310cc0410694d6e681287ad0b4d9",
+  "action_count": 120,
+  "profiles": {
+    "RECOVERY_SIMULATION": {
+      "attempts": 60,
+      "successes": 42,
+      "failures": 7,
+      "abstentions": 2,
+      "rejections": 9,
+      "duplicates": 5,
+      "rollbacks": 7,
+      "median_latency_ms": 1.215191214719759,
+      "p95_latency_ms": 81.764762774806
+    },
+    "READ_ONLY_DIAGNOSTIC": {
+      "attempts": 60,
+      "successes": 43,
+      "failures": 6,
+      "abstentions": 7,
+      "rejections": 4,
+      "duplicates": 0,
+      "rollbacks": 6,
+      "median_latency_ms": 1.4844754713674713,
+      "p95_latency_ms": 70.80645214215828
+    }
+  },
+  "production_mutation": false,
+  "canonical_mutation": false
+}

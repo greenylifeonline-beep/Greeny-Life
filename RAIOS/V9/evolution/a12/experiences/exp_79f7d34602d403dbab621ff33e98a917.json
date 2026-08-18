@@ -1,0 +1,22 @@
+{
+  "schema": "raios.a12.experience.v1",
+  "timestamp": "2026-08-18T08:17:27.259550+00:00",
+  "event": "A12_SUPERVISED_ACTION",
+  "outcome": "FAILED_ROLLED_BACK",
+  "details": {
+    "schema": "raios.a12.supervised-action.v1",
+    "timestamp": "2026-08-18T08:17:27.258419+00:00",
+    "action_id": "a12:027",
+    "operation": "READ_ONLY_DIAGNOSTIC",
+    "scenario": "FAILURE",
+    "confidence": 0.9516129141364332,
+    "latency_ms": 0.2087295560276437,
+    "outcome": "FAILED_ROLLED_BACK",
+    "rollback": true,
+    "before_hash": "aaa34c312464d06844f94dbec7f2ebf2af8928a2f4ed59f2d296dc2b970f0e8a",
+    "after_hash": "aaa34c312464d06844f94dbec7f2ebf2af8928a2f4ed59f2d296dc2b970f0e8a",
+    "production_mutation": false,
+    "canonical_mutation": false
+  },
+  "experience_id": "exp:79f7d34602d403dbab621ff33e98a917"
+}

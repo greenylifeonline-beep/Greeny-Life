@@ -1,0 +1,28 @@
+{
+  "schema": "raios.failure-family.v1",
+  "family_id": "ff:a5ee759625987588a5b3ca05e0eb9c23",
+  "geometry": {
+    "event_type": "FAILURE",
+    "tool": "raios.json.parser",
+    "exception_type": "jsondecodeerror",
+    "message": "malformed json at line <n>",
+    "unresolved_flags": [
+      "parse_failed"
+    ]
+  },
+  "occurrence_count": 1,
+  "successful_recoveries": 0,
+  "failed_recoveries": 0,
+  "source_event_ids": [
+    "28898655-1ba0-4886-82ce-db32c7767cbd"
+  ],
+  "tools": [
+    "RAIOS.JSON.PARSER"
+  ],
+  "repository_shas": [
+    "fb130e232246a00b531835f529f25e4edfae2854"
+  ],
+  "first_seen": "2026-08-18T07:12:29.709559+00:00",
+  "last_seen": "2026-08-18T07:12:29.709559+00:00",
+  "status": "ACTIVE"
+}

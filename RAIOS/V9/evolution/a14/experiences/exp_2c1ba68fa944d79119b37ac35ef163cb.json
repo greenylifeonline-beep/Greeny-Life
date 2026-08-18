@@ -1,0 +1,21 @@
+{
+  "schema": "raios.a14.experience.v1",
+  "timestamp": "2026-08-18T09:07:53.131933+00:00",
+  "event": "A14_EXECUTION_ATTEMPT",
+  "outcome": "SUCCESS",
+  "details": {
+    "schema": "raios.a14.normalized-result.v1",
+    "task_id": "a14-task:08",
+    "executor_id": "LOCAL_DETERMINISTIC",
+    "status": "SUCCESS",
+    "confidence": 0.93,
+    "evidence": [
+      "sandbox-certification-adapter",
+      "repository_search"
+    ],
+    "latency_ms": 0.6473902261746313,
+    "production_mutation": false,
+    "canonical_mutation": false
+  },
+  "experience_id": "exp:2c1ba68fa944d79119b37ac35ef163cb"
+}

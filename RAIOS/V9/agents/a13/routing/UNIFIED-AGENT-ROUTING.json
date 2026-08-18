@@ -1,0 +1,71 @@
+{
+  "schema": "raios.a13.unified-agent-routing.v1",
+  "timestamp": "2026-08-18T08:43:59.479068+00:00",
+  "strategy": "DISCOVER_REUSE_EXTEND_CREATE_ONLY_IF_MISSING",
+  "agents": {
+    "CLINE": {
+      "role": "IMPLEMENTATION_EXECUTOR",
+      "preferred_for": [
+        "multi_file_edits",
+        "terminal_execution",
+        "test_debug_loop"
+      ]
+    },
+    "CLAUDE": {
+      "role": "DEEP_REASONING_DEBUGGER",
+      "preferred_for": [
+        "complex_debugging",
+        "code_reasoning",
+        "architecture_review"
+      ]
+    },
+    "GEMINI": {
+      "role": "SECONDARY_REVIEW_AND_EXECUTION",
+      "preferred_for": [
+        "independent_review",
+        "alternative_analysis",
+        "execution_support"
+      ]
+    },
+    "CURSOR": {
+      "role": "OPTIONAL_EXECUTION_AGENT",
+      "preferred_for": [
+        "repository_execution",
+        "agentic_edit_test_loop"
+      ],
+      "availability": "OPTIONAL_NOT_REQUIRED"
+    },
+    "RAIOS_INTERNAL": {
+      "role": "COGNITIVE_GOVERNANCE_AND_MEMORY",
+      "preferred_for": [
+        "continuity",
+        "experience",
+        "failure_memory",
+        "skill_memory",
+        "governance"
+      ]
+    }
+  },
+  "mandatory_bootstrap": [
+    "READ_CURRENT_STATE",
+    "VERIFY_LATEST_RECEIPT_HASH",
+    "READ_AGENT_CONTRACT",
+    "CHECK_GIT_STATUS",
+    "DISCOVER_EXISTING_CAPABILITY",
+    "REUSE_BEFORE_CREATE"
+  ],
+  "invariants": [
+    "No agent may create a duplicate capability without discovery.",
+    "No semantic duplicate is automatically deleted.",
+    "No canonical owner is replaced automatically.",
+    "Certified predecessor phases are immutable.",
+    "Every execution becomes Experience.",
+    "Every failure becomes Failure Signature and Recovery Skill Candidate.",
+    "Confidence must be in [0,1].",
+    "No automatic promotion."
+  ],
+  "automatic_promotion": false,
+  "automatic_destructive_merge": false,
+  "canonical_mutation": false,
+  "production_activation": false
+}

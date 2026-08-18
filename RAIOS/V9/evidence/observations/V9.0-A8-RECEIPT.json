@@ -1,0 +1,92 @@
+{
+  "schema": "raios.v9.a8.receipt.v1",
+  "phase": "V9.0-A8",
+  "certification_status": "PASS",
+  "certification_mode": "FAIL_CLOSED",
+  "timestamp": "2026-08-18T07:48:36.764735+00:00",
+  "repository_sha": "fb130e232246a00b531835f529f25e4edfae2854",
+  "predecessor": {
+    "phase": "V9.0-A7",
+    "receipt": "RAIOS\\V9\\evidence\\observations\\V9.0-A7-RECEIPT.json",
+    "sha256": "858e00ef375b7cc14749766ed8220de767a7e7663053f41a14caf8ae47f2510c",
+    "status": "PASS"
+  },
+  "skill": {
+    "skill_id": "skill:ff:07ed310cc0410694d6e681287ad0b4d9",
+    "lifecycle": "SHADOW",
+    "production_active": false,
+    "automatic_promotion": false
+  },
+  "runtime_evaluation": {
+    "run_id": "run:3f604a42ed4d4d0f8e6ad4ac706df1f7",
+    "case_count": 600,
+    "live_data_claimed": false,
+    "workload_class": "DETERMINISTIC_LIVE_LIKE_SHADOW",
+    "production_mutation": false,
+    "canonical_mutation": false
+  },
+  "metrics": {
+    "case_count": 600,
+    "baseline_accuracy": 0.6666666666666666,
+    "shadow_accuracy": 1.0,
+    "decision_agreement": 0.6666666666666666,
+    "false_positive_rate": 0.0,
+    "false_negative_rate": 0.0,
+    "abstention_quality": 1.0,
+    "calibration_error": 0.1283333333333333,
+    "median_latency_ms": 0.0002,
+    "p95_latency_ms": 0.0003,
+    "production_mutation": false,
+    "canonical_mutation": false
+  },
+  "drift": {
+    "schema": "raios.a8.drift-report.v1",
+    "accuracy_drift": 0.0,
+    "false_positive_drift": 0.0,
+    "false_negative_drift": 0.0,
+    "threshold": 0.05,
+    "drift_detected": false,
+    "timestamp": "2026-08-18T07:48:36.732839+00:00"
+  },
+  "replay": {
+    "replay_id": "replay:d43964e339e9b60ac57877dc69080330",
+    "deterministic": true,
+    "idempotent_semantics": true
+  },
+  "benchmark": {
+    "benchmark_id": "benchmark:8501b19c67e3299b93a0fe9e52c7f668",
+    "gates": {
+      "minimum_cases": true,
+      "shadow_accuracy": true,
+      "baseline_improvement": true,
+      "false_positive": true,
+      "false_negative": true,
+      "abstention_quality": true,
+      "calibration_error": true,
+      "deterministic_replay": true,
+      "drift": true,
+      "production_mutation": true,
+      "canonical_mutation": true
+    }
+  },
+  "safety": {
+    "confidence_contract": "STRICT_[0,1]",
+    "confidence_70_rejected": true,
+    "false_positive_rate": 0.0,
+    "false_negative_rate": 0.0,
+    "regression_count": 0,
+    "production_active": false,
+    "automatic_promotion": false
+  },
+  "experience": {
+    "path": "RAIOS\\V9\\evolution\\a8\\experiences\\exp_007c7bbf753b0a6fd06db740dd6d6123.json"
+  },
+  "epistemic_limits": [
+    "A8 uses deterministic live-like shadow traffic, not production traffic.",
+    "A8 certification does not authorize ACTIVE production lifecycle.",
+    "Synthetic or live-like success cannot by itself establish real-world generalization.",
+    "The skill remains SHADOW after certification.",
+    "Production mutation remains forbidden.",
+    "Canonical auto-promotion remains forbidden."
+  ]
+}

@@ -1,0 +1,168 @@
+{
+  "set": "HOLDOUT_SET",
+  "count": 8,
+  "rows": [
+    {
+      "artifact_id": "artifact:e5055f6bcafb45c0c36d097dbe22784e",
+      "source_sha256": "e5055f6bcafb45c0c36d097dbe22784e814e6afc47cb5a0dda3754a5cfba077c",
+      "artifact_class": "FAILURE",
+      "failure_family": null,
+      "expected": "ABSTAIN",
+      "baseline": {
+        "action": "ABSTAIN",
+        "confidence": 0.55,
+        "latency_ms": 0.0006
+      },
+      "shadow": {
+        "action": "ABSTAIN",
+        "confidence": 0.91,
+        "latency_ms": 0.0007,
+        "production_mutation": false,
+        "canonical_mutation": false
+      }
+    },
+    {
+      "artifact_id": "artifact:0a5f974a25ab3852acc17bebd2f71782",
+      "source_sha256": "0a5f974a25ab3852acc17bebd2f71782eff253728751e8bdbd7fce785cc4f11b",
+      "artifact_class": "EXPERIENCE",
+      "failure_family": null,
+      "expected": "ABSTAIN",
+      "baseline": {
+        "action": "ABSTAIN",
+        "confidence": 0.55,
+        "latency_ms": 0.0003
+      },
+      "shadow": {
+        "action": "ABSTAIN",
+        "confidence": 0.75,
+        "latency_ms": 0.0012,
+        "production_mutation": false,
+        "canonical_mutation": false
+      }
+    },
+    {
+      "artifact_id": "artifact:f7a141e9e795509ea89784bfc0f1eeb1",
+      "source_sha256": "f7a141e9e795509ea89784bfc0f1eeb1fb480adae0aa904dfcac8089e3359b31",
+      "artifact_class": "EXPERIENCE",
+      "failure_family": null,
+      "expected": "ABSTAIN",
+      "baseline": {
+        "action": "ABSTAIN",
+        "confidence": 0.55,
+        "latency_ms": 0.0003
+      },
+      "shadow": {
+        "action": "ABSTAIN",
+        "confidence": 0.75,
+        "latency_ms": 0.0009,
+        "production_mutation": false,
+        "canonical_mutation": false
+      }
+    },
+    {
+      "artifact_id": "artifact:dfd8f0dcd5722b1aae2107b601e81a7b",
+      "source_sha256": "dfd8f0dcd5722b1aae2107b601e81a7bf8dd94eb9dc13995e9644f7702eb65f6",
+      "artifact_class": "EXPERIENCE",
+      "failure_family": null,
+      "expected": "ABSTAIN",
+      "baseline": {
+        "action": "ABSTAIN",
+        "confidence": 0.55,
+        "latency_ms": 0.0003
+      },
+      "shadow": {
+        "action": "ABSTAIN",
+        "confidence": 0.75,
+        "latency_ms": 0.0008,
+        "production_mutation": false,
+        "canonical_mutation": false
+      }
+    },
+    {
+      "artifact_id": "artifact:74218f5a3345f7e136987aa080579966",
+      "source_sha256": "74218f5a3345f7e136987aa080579966db823daf45e7729691942e04dbc4553a",
+      "artifact_class": "EXPERIENCE",
+      "failure_family": null,
+      "expected": "ABSTAIN",
+      "baseline": {
+        "action": "ABSTAIN",
+        "confidence": 0.55,
+        "latency_ms": 0.0003
+      },
+      "shadow": {
+        "action": "ABSTAIN",
+        "confidence": 0.75,
+        "latency_ms": 0.0008,
+        "production_mutation": false,
+        "canonical_mutation": false
+      }
+    },
+    {
+      "artifact_id": "artifact:4a524d84fda8805d7188c7a0652d7d35",
+      "source_sha256": "4a524d84fda8805d7188c7a0652d7d358d940afb9dde75524ea9b6b4d838505b",
+      "artifact_class": "EXPERIENCE",
+      "failure_family": null,
+      "expected": "ABSTAIN",
+      "baseline": {
+        "action": "ABSTAIN",
+        "confidence": 0.55,
+        "latency_ms": 0.0003
+      },
+      "shadow": {
+        "action": "ABSTAIN",
+        "confidence": 0.75,
+        "latency_ms": 0.0008,
+        "production_mutation": false,
+        "canonical_mutation": false
+      }
+    },
+    {
+      "artifact_id": "artifact:3f4494f92ababf036a8aef5c43784d66",
+      "source_sha256": "3f4494f92ababf036a8aef5c43784d66d9ef937394b7ae28d304a9e657a74b3f",
+      "artifact_class": "EXPERIENCE",
+      "failure_family": "JSON_CONTRACT_FAILURE",
+      "expected": "ABSTAIN",
+      "baseline": {
+        "action": "ABSTAIN",
+        "confidence": 0.55,
+        "latency_ms": 0.0003
+      },
+      "shadow": {
+        "action": "ABSTAIN",
+        "confidence": 0.75,
+        "latency_ms": 0.0008,
+        "production_mutation": false,
+        "canonical_mutation": false
+      }
+    },
+    {
+      "artifact_id": "artifact:ca3ef835cb53ad2033dd8fadc17797c6",
+      "source_sha256": "ca3ef835cb53ad2033dd8fadc17797c65de1667237ceb253d31fae78784358ed",
+      "artifact_class": "EXPERIENCE",
+      "failure_family": null,
+      "expected": "ABSTAIN",
+      "baseline": {
+        "action": "ABSTAIN",
+        "confidence": 0.55,
+        "latency_ms": 0.0003
+      },
+      "shadow": {
+        "action": "ABSTAIN",
+        "confidence": 0.75,
+        "latency_ms": 0.0008,
+        "production_mutation": false,
+        "canonical_mutation": false
+      }
+    }
+  ],
+  "metrics": {
+    "baseline_accuracy": 1.0,
+    "shadow_accuracy": 1.0,
+    "false_positive_rate": 0.0,
+    "false_negative_rate": 0.0,
+    "abstention_quality": 1.0,
+    "calibration_error": 0.22999999999999998,
+    "median_latency_ms": 0.0008,
+    "p95_latency_ms": 0.0012
+  }
+}

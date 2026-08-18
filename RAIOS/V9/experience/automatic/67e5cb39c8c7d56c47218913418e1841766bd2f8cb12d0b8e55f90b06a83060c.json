@@ -1,0 +1,51 @@
+{
+  "schema": "raios.experience.v2",
+  "intent": "Recover critical RAIOS V9 CLI after zero-byte corruption",
+  "action": "FORENSIC_PREIMAGE_RESTORE",
+  "tool": "PowerShell+Python+Git",
+  "environment": {
+    "timestamp": "2026-08-18T06:56:57.917456+00:00",
+    "repository": "C:\\Users\\Ghanam\\Documents\\Codex\\Greeny-Life-Repair",
+    "repository_sha": "fb130e232246a00b531835f529f25e4edfae2854",
+    "branch": "codex-clean",
+    "python": "3.14.7",
+    "platform": "win32",
+    "pid": 9264
+  },
+  "input": {
+    "artifact": "RAIOS/V9/cli/raios_v9.py",
+    "observed_bytes": 0,
+    "observed_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  "expected_result": {
+    "recovered_bytes": 15385,
+    "recovered_sha256": "bbd06a1f8567742221c80093cabd83d4c9eb24889fdd503567ed5aa2f9660c54",
+    "hash_match": true,
+    "runtime_contract_recovered": true
+  },
+  "actual_result": {
+    "recovered_bytes": 15385,
+    "recovered_sha256": "bbd06a1f8567742221c80093cabd83d4c9eb24889fdd503567ed5aa2f9660c54",
+    "hash_match": true,
+    "runtime_contract_recovered": true
+  },
+  "success": true,
+  "failure_signature": null,
+  "evidence_refs": [
+    "RAIOS/V9/cli/raios_v9.py.v9.0-a1.bak",
+    "RAIOS/V9/evidence/quarantined-certifications/"
+  ],
+  "lessons": [
+    "Critical artifact writes require transactional mutation.",
+    "Exit code zero is insufficient without output-contract validation.",
+    "Verified preimage recovery should precede reconstruction."
+  ],
+  "latency_ms": null,
+  "pre_state": null,
+  "post_state": null,
+  "unresolved_flags": [],
+  "confidence": 1.0,
+  "replayable": true,
+  "captured_at": "2026-08-18T06:56:58.012512+00:00",
+  "experience_id": "67e5cb39c8c7d56c47218913418e1841766bd2f8cb12d0b8e55f90b06a83060c"
+}

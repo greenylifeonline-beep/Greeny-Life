@@ -1,0 +1,19 @@
+{
+  "schema": "raios.a10.runtime-guardian-report.v1",
+  "timestamp": "2026-08-18T07:56:15.291959+00:00",
+  "skill_id": "skill:ff:07ed310cc0410694d6e681287ad0b4d9",
+  "authorization_id": "auth:bbc6bae5d13e4ede8d4445ca96a2fda8",
+  "scope": "SANDBOX_CANARY_ONLY",
+  "action_budget": 6,
+  "actions_attempted": 2,
+  "failures_observed": 1,
+  "fault_injection": true,
+  "kill_switch_triggered": true,
+  "rollback_verified": true,
+  "abstention_gate": true,
+  "out_of_scope_rejection": true,
+  "production_mutation": false,
+  "canonical_mutation": false,
+  "automatic_promotion": false,
+  "lifecycle_after_a10": "CANARY_AUTHORIZED"
+}

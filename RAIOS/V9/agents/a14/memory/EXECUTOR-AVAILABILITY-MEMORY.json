@@ -1,0 +1,37 @@
+{
+  "schema": "raios.a14.executor-availability-memory.v1",
+  "timestamp": "2026-08-18T09:13:22.235042+00:00",
+  "executors": {
+    "LOCAL_DETERMINISTIC": {
+      "observed_availability": "AVAILABLE",
+      "evidence_class": "LOCAL_RUNTIME_DISCOVERY",
+      "confidence": 1.0
+    },
+    "CLINE": {
+      "observed_availability": "IDE_EXTENSION_PRESENT",
+      "evidence_class": "LOCAL_RUNTIME_DISCOVERY",
+      "confidence": 1.0
+    },
+    "CLAUDE_CODE": {
+      "observed_availability": "CLI_AVAILABLE",
+      "evidence_class": "LOCAL_RUNTIME_DISCOVERY",
+      "confidence": 1.0
+    },
+    "GEMINI": {
+      "observed_availability": "CLI_AVAILABLE",
+      "evidence_class": "LOCAL_RUNTIME_DISCOVERY",
+      "confidence": 1.0
+    },
+    "CURSOR": {
+      "observed_availability": "IDE_EXTENSION_PRESENT",
+      "evidence_class": "LOCAL_RUNTIME_DISCOVERY",
+      "confidence": 1.0
+    },
+    "RAIOS_INTERNAL": {
+      "observed_availability": "AVAILABLE",
+      "evidence_class": "LOCAL_RUNTIME_DISCOVERY",
+      "confidence": 1.0
+    }
+  },
+  "note": "IDE extension presence does not prove external credit or remote service availability."
+}

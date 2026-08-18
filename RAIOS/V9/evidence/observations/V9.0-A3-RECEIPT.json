@@ -1,0 +1,40 @@
+{
+  "schema": "raios.v9.a3.receipt.v2",
+  "phase": "V9.0-A3.1",
+  "certification_status": "PASS",
+  "certification_mode": "FAIL_CLOSED",
+  "repository_sha": "fb130e232246a00b531835f529f25e4edfae2854",
+  "timestamp": "2026-08-18T07:03:12.137865+00:00",
+  "validation": {
+    "semantic_understanding": true,
+    "evidence_native_claims": true,
+    "claims_require_evidence": true,
+    "authority_awareness": true,
+    "temporal_awareness": true,
+    "contradiction_objects": true,
+    "confidence_strict_0_1": true,
+    "confidence_70_rejected": true,
+    "automatic_success_experience": true,
+    "automatic_failure_experience": true,
+    "failure_signature_capture": true,
+    "recovery_skill_candidate_generation": true,
+    "canonical_auto_promotion": false
+  },
+  "measurements": {
+    "claims": 46,
+    "evidence": 46,
+    "capability_evidence": 17,
+    "automatic_experiences": 6,
+    "failure_signatures": 1,
+    "recovery_skill_candidates": 1
+  },
+  "invariants": [
+    "No mandatory false or null validation may coexist with PASS.",
+    "Every instrumented meaningful success creates an Experience.",
+    "Every instrumented failure creates an Experience and Failure Signature.",
+    "Recovery patterns remain candidates until replay, benchmark and governed promotion.",
+    "Confidence outside [0,1] is rejected.",
+    "Historical evidence cannot silently become current authority.",
+    "Console banners are never certification evidence."
+  ]
+}
