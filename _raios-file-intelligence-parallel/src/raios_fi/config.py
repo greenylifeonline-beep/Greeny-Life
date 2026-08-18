@@ -12,8 +12,11 @@ from typing import Any
 
 ORGANISM_ID = "raios.organism.v9"
 PACKAGE = "_raios-file-intelligence-parallel"
-SCHEMA_VERSION = "file-intelligence.v1"
-PARSER_VERSION = "fi-parser.v1"
+SCHEMA_VERSION = "file-intelligence.v2"
+PARSER_VERSION = "fi-parser.v2"
+CLASSIFIER_VERSION = "fi-classifier.v2"
+PROVIDER_VERSION = "fi-provider.v2"
+REPO_SCAN_LIMIT = 2000
 
 FORBIDDEN_WRITE = (
     "RAIOS/V9",

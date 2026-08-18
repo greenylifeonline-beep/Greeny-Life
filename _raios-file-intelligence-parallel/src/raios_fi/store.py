@@ -6,7 +6,16 @@ import sqlite3
 from pathlib import Path
 from typing import Any
 
-from .config import FailClosed, PARSER_VERSION, assert_writable, canonical_json, sha256_bytes, utc_now
+from .config import (
+    CLASSIFIER_VERSION,
+    FailClosed,
+    PARSER_VERSION,
+    PROVIDER_VERSION,
+    assert_writable,
+    canonical_json,
+    sha256_bytes,
+    utc_now,
+)
 
 
 class CasRecord:
@@ -119,8 +128,20 @@ CREATE TABLE IF NOT EXISTS events (
 CREATE TABLE IF NOT EXISTS parser_cache (
     sha256 TEXT NOT NULL,
     parser_version TEXT NOT NULL,
+    classifier_version TEXT NOT NULL,
+    provider_version TEXT NOT NULL,
+    kind TEXT NOT NULL,
     payload_json TEXT NOT NULL,
-    PRIMARY KEY (sha256, parser_version)
+    PRIMARY KEY (sha256, parser_version, classifier_version, provider_version, kind)
+);
+CREATE TABLE IF NOT EXISTS disagreements (
+    disagreement_id TEXT PRIMARY KEY,
+    file_id TEXT,
+    payload_json TEXT NOT NULL
+);
+CREATE TABLE IF NOT EXISTS query_metrics (
+    query_id TEXT PRIMARY KEY,
+    payload_json TEXT NOT NULL
 );
 CREATE VIRTUAL TABLE IF NOT EXISTS search_index USING fts5(file_id, relative_path, body);
 """
@@ -140,6 +161,24 @@ class IndexStore:
         if not any("FTS5" in str(o).upper() for o in opts):
             raise FailClosed("FTS5_UNAVAILABLE")
         self.conn.executescript(DDL)
+        cols = {r[1] for r in self.conn.execute("PRAGMA table_info(parser_cache)")}
+        if "classifier_version" not in cols or "kind" not in cols:
+            self.conn.execute("DROP TABLE IF EXISTS parser_cache")
+            self.conn.executescript(
+                """
+                CREATE TABLE IF NOT EXISTS parser_cache (
+                    sha256 TEXT NOT NULL,
+                    parser_version TEXT NOT NULL,
+                    classifier_version TEXT NOT NULL,
+                    provider_version TEXT NOT NULL,
+                    kind TEXT NOT NULL,
+                    payload_json TEXT NOT NULL,
+                    PRIMARY KEY (sha256, parser_version, classifier_version, provider_version, kind)
+                );
+                """
+            )
+        self.cache_hits = 0
+        self.cache_misses = 0
 
     def close(self) -> None:
         self.conn.close()
@@ -147,17 +186,55 @@ class IndexStore:
     def put_blob(self, data: bytes) -> str:
         return self.cas.put_bytes(data).sha256
 
-    def cache_get(self, digest: str) -> dict[str, Any] | None:
+    def cache_get(self, digest: str, kind: str = "parse") -> dict[str, Any] | None:
         row = self.conn.execute(
-            "SELECT payload_json FROM parser_cache WHERE sha256=? AND parser_version=?",
-            (digest, PARSER_VERSION),
+            """
+            SELECT payload_json FROM parser_cache
+            WHERE sha256=? AND parser_version=? AND classifier_version=? AND provider_version=? AND kind=?
+            """,
+            (digest, PARSER_VERSION, CLASSIFIER_VERSION, PROVIDER_VERSION, kind),
         ).fetchone()
-        return json.loads(row["payload_json"]) if row else None
+        if row:
+            self.cache_hits += 1
+            return json.loads(row["payload_json"])
+        self.cache_misses += 1
+        return None
 
-    def cache_put(self, digest: str, payload: dict[str, Any]) -> None:
+    def cache_put(self, digest: str, payload: dict[str, Any], kind: str = "parse") -> None:
         self.conn.execute(
-            "INSERT OR REPLACE INTO parser_cache(sha256, parser_version, payload_json) VALUES (?,?,?)",
-            (digest, PARSER_VERSION, canonical_json(payload)),
+            """
+            INSERT OR REPLACE INTO parser_cache(
+                sha256, parser_version, classifier_version, provider_version, kind, payload_json
+            ) VALUES (?,?,?,?,?,?)
+            """,
+            (digest, PARSER_VERSION, CLASSIFIER_VERSION, PROVIDER_VERSION, kind, canonical_json(payload)),
+        )
+
+    def cache_hit_ratio(self) -> float:
+        total = self.cache_hits + self.cache_misses
+        if not total:
+            return 0.0
+        return round(self.cache_hits / total, 4)
+
+    def insert_disagreement(self, rec: dict[str, Any]) -> None:
+        from .config import deterministic_id
+
+        did = rec.get("disagreement_id") or deterministic_id("disagree", rec.get("file_id", ""), rec.get("kind", ""))
+        self.conn.execute(
+            "INSERT OR REPLACE INTO disagreements(disagreement_id, file_id, payload_json) VALUES (?,?,?)",
+            (did, rec.get("file_id"), canonical_json(rec)),
+        )
+
+    def disagreements(self) -> list[dict[str, Any]]:
+        return [json.loads(r["payload_json"]) for r in self.conn.execute("SELECT payload_json FROM disagreements")]
+
+    def insert_query_metrics(self, rec: dict[str, Any]) -> None:
+        from .config import deterministic_id
+
+        qid = rec.get("query_id") or deterministic_id("query", rec.get("natural", ""), utc_now())
+        self.conn.execute(
+            "INSERT OR REPLACE INTO query_metrics(query_id, payload_json) VALUES (?,?)",
+            (qid, canonical_json(rec)),
         )
 
     def upsert_file(self, rec: dict[str, Any]) -> None:

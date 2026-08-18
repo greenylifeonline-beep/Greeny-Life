@@ -7,6 +7,7 @@ import sys
 from pathlib import Path
 from typing import Any
 
+from .certify import run_certification
 from .config import ORGANISM_ID, PACKAGE, FailClosed, canonical_json, package_root, repo_root_from, sha256_text, utc_now, which
 from .inventory import write_inventories
 from .runtime import FileIntelligenceRuntime
@@ -14,7 +15,7 @@ from .tools import detect_tools
 from .versions import VersionDetector
 
 
-FORBIDDEN_SUCCESS_TOKENS = (" PASS", "PASS\n", "status PASS", "\"PASS\"")
+FORBIDDEN_SUCCESS_TOKENS = (" PASS", "PASS\n", "status PASS", "\"PASS\"", "FILE_INTELLIGENCE=PASS")
 
 
 def contains_forbidden_success(text: str) -> bool:
@@ -43,7 +44,7 @@ def v9_clean(repo: Path) -> bool:
     return proc.returncode == 0 and proc.stdout.strip() == ""
 
 
-def run_doctor(var_root: Path, repo: Path, fixtures: Path | None = None) -> dict[str, Any]:
+def run_doctor(var_root: Path, repo: Path, fixtures: Path | None = None, *, scale: str = "fixture") -> dict[str, Any]:
     registry = GateRegistry()
     runtime = FileIntelligenceRuntime(var_root, repo)
     result: dict[str, Any] = {
@@ -71,10 +72,8 @@ def run_doctor(var_root: Path, repo: Path, fixtures: Path | None = None) -> dict
         registry.require("harvest_write_blocked", harvest_blocked)
 
         fixture_root = fixtures or (package_root(repo) / "tests" / "fixtures" / "corpus")
-        if fixture_root.exists():
-            ingest = runtime.ingest(fixture_root, "doctor-fixture", limit=80)
-        else:
-            ingest = runtime.ingest(package_root(repo) / "src", "self", limit=40)
+        cert = run_certification(runtime, repo, scale=scale, fixtures=fixture_root)
+        ingest = cert["ingest"]
         health = runtime.health()
         tools = detect_tools()
         available = [t["name"] for t in tools if t.get("available")]
@@ -88,6 +87,7 @@ def run_doctor(var_root: Path, repo: Path, fixtures: Path | None = None) -> dict
         registry.require("ingest", ingest.get("files", 0) >= 0)
         registry.require("false_pass_protection", not contains_forbidden_success("doctor running"))
         registry.require("ccee_not_written", health.get("cognition", {}).get("ccee_wal_writes") is False)
+        registry.require("no_fake_file_intelligence_pass", cert.get("FILE_INTELLIGENCE") != "PASS" and cert.get("file_intelligence_pass") is False)
         detector = VersionDetector(repo)
         pair = detector.pair()
         repairs = runtime.store.conn.execute("SELECT COUNT(*) AS c FROM repair_candidates").fetchone()["c"]
@@ -117,6 +117,15 @@ def run_doctor(var_root: Path, repo: Path, fixtures: Path | None = None) -> dict
                 "index_health": health,
                 "ingest": ingest,
                 "gates": registry.gates,
+                "FILE_INTELLIGENCE": cert.get("FILE_INTELLIGENCE"),
+                "file_intelligence_pass": False,
+                "degraded_reasons": cert.get("degraded_reasons"),
+                "certification_checks": cert.get("checks"),
+                "performance": cert.get("performance"),
+                "cortex_proposal": cert.get("cortex_proposal"),
+                "query_plan": cert.get("query_plan"),
+                "disagreements": cert.get("disagreements"),
+                "scale": cert.get("scale"),
             }
         )
         critical_ok = all(g["ok"] for g in registry.gates.values() if g["critical"])
@@ -134,7 +143,7 @@ def write_reports(repo: Path | None = None) -> dict[str, Any]:
     reports.mkdir(parents=True, exist_ok=True)
     write_inventories(repo, reports)
     var = pkg / "var" / "doctor-index"
-    doctor = run_doctor(var, repo, pkg / "tests" / "fixtures" / "corpus")
+    doctor = run_doctor(var, repo, pkg / "tests" / "fixtures" / "corpus", scale="repo")
     (reports / "FILE-INTELLIGENCE-DOCTOR.json").write_text(
         json.dumps(doctor, indent=2, sort_keys=True, default=str) + "\n", encoding="utf-8"
     )
@@ -173,6 +182,11 @@ def write_reports(repo: Path | None = None) -> dict[str, Any]:
         "package": PACKAGE,
         "canonical": False,
         "doctor_status": doctor.get("status"),
+        "FILE_INTELLIGENCE": doctor.get("FILE_INTELLIGENCE"),
+        "file_intelligence_pass": False,
+        "performance": doctor.get("performance"),
+        "degraded_reasons": doctor.get("degraded_reasons"),
+        "certification_checks": doctor.get("certification_checks"),
         "IMPLEMENTED": [
             "read-only git ls-files discovery + FileObject",
             "Magika adapter WRAP (detect-only); signature+parser-probe fallback; extension never sole authority",
@@ -195,6 +209,16 @@ def write_reports(repo: Path | None = None) -> dict[str, Any]:
             "shared cognitive state contract (identity shared; CCEE WAL not merged)",
             "idle loop without model calls; foreground preempts",
             "FILE-INTELLIGENCE-DOCTOR fail-closed",
+            "independent authority/temporal/verification/knowledge dimensions",
+            "evidence-native confidence; model cannot produce VERIFIED",
+            "DISAGREEMENT_OBJECT persisted without averaging",
+            "active/dead safety; no archive from one heuristic",
+            "cross-version identity (hash/path/symbols; basename insufficient)",
+            "economic query planner (minimum sufficient stages)",
+            "incremental cache key sha256+parser+classifier+provider versions",
+            "Qwen cortex consumer emits PROPOSAL only",
+            "governed change txn with abort/rollback/learning signal",
+            "repository-scale certification reports DEGRADED_MODE when tools missing",
         ],
         "REUSED": [
             "git",
@@ -240,9 +264,10 @@ def write_reports(repo: Path | None = None) -> dict[str, Any]:
             "Tika PDF/Office extract",
             "tree-sitter TS/TSX accuracy vs heuristic",
             "Ollama STAGE 8 synthesis over evidence bundle",
-            "full-repo ingest beyond fixture/capped scan",
+            "full 2000-file ingest vs remaining untracked/hidden scan",
             "Windows PowerShell A17 live harvest coexistence on operator machine",
             "shared storage merge with CCEE (intentionally not merged)",
+            "live Qwen evidence synthesis (ollama missing; PROPOSAL path only)",
         ],
         "tools": {k: {"available": v.get("available"), "version": v.get("version")} for k, v in available.items()},
         "integrity": {
@@ -285,7 +310,9 @@ def main(argv: list[str] | None = None) -> int:
     if "--report" in argv:
         payload = write_reports(repo)
         status = payload["doctor"].get("status")
-        print(json.dumps({"status": status, "reports": str(package_root(repo) / "reports")}, indent=2))
+        print(json.dumps({"status": status, "FILE_INTELLIGENCE": payload["doctor"].get("FILE_INTELLIGENCE"), "reports": str(package_root(repo) / "reports")}, indent=2))
+        if contains_forbidden_success(json.dumps(payload["doctor"])):
+            return 2
         return 0 if status == "GATES_SATISFIED" else 2
     var = package_root(repo) / "var" / "doctor-index"
     doctor = run_doctor(var, repo)

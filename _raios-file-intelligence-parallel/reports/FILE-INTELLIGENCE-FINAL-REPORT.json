@@ -26,6 +26,7 @@
     "Qwen as default parser",
     "governed apply onto original sources in this parallel package"
   ],
+  "FILE_INTELLIGENCE": "DEGRADED_MODE",
   "IMPLEMENTED": [
     "read-only git ls-files discovery + FileObject",
     "Magika adapter WRAP (detect-only); signature+parser-probe fallback; extension never sole authority",
@@ -47,7 +48,17 @@
     "tool economy (LLM not default parser)",
     "shared cognitive state contract (identity shared; CCEE WAL not merged)",
     "idle loop without model calls; foreground preempts",
-    "FILE-INTELLIGENCE-DOCTOR fail-closed"
+    "FILE-INTELLIGENCE-DOCTOR fail-closed",
+    "independent authority/temporal/verification/knowledge dimensions",
+    "evidence-native confidence; model cannot produce VERIFIED",
+    "DISAGREEMENT_OBJECT persisted without averaging",
+    "active/dead safety; no archive from one heuristic",
+    "cross-version identity (hash/path/symbols; basename insufficient)",
+    "economic query planner (minimum sufficient stages)",
+    "incremental cache key sha256+parser+classifier+provider versions",
+    "Qwen cortex consumer emits PROPOSAL only",
+    "governed change txn with abort/rollback/learning signal",
+    "repository-scale certification reports DEGRADED_MODE when tools missing"
   ],
   "MISSING": [
     "magika binary/python package (adapter present)",
@@ -66,9 +77,10 @@
     "Tika PDF/Office extract",
     "tree-sitter TS/TSX accuracy vs heuristic",
     "Ollama STAGE 8 synthesis over evidence bundle",
-    "full-repo ingest beyond fixture/capped scan",
+    "full 2000-file ingest vs remaining untracked/hidden scan",
     "Windows PowerShell A17 live harvest coexistence on operator machine",
-    "shared storage merge with CCEE (intentionally not merged)"
+    "shared storage merge with CCEE (intentionally not merged)",
+    "live Qwen evidence synthesis (ollama missing; PROPOSAL path only)"
   ],
   "REUSED": [
     "git",
@@ -83,16 +95,64 @@
     "fail-closed / doctor pattern from CCEE"
   ],
   "canonical": false,
+  "certification_checks": {
+    "economic_plan": true,
+    "qwen_output_is_proposal": true,
+    "real_architecture_reconstruction": true,
+    "real_classification": true,
+    "real_code_parsing": true,
+    "real_cross_version_comparison": true,
+    "real_disagreement_case": true,
+    "real_index": true,
+    "real_qwen_evidence_synthesis": false,
+    "real_repository_scan": true,
+    "real_restart_cache_reuse": true,
+    "real_rollback": true,
+    "real_search": true,
+    "real_shadow_patch": true
+  },
+  "degraded_reasons": [
+    "MAGIKA_MISSING",
+    "TIKA_MISSING",
+    "TREE_SITTER_MISSING",
+    "OLLAMA_MISSING_QWEN_SYNTHESIS_NOT_EXECUTED"
+  ],
   "doctor_status": "GATES_SATISFIED",
   "false_pass_token_emitted": false,
-  "generated_at": "2026-08-18T20:11:50Z",
+  "file_intelligence_pass": false,
+  "generated_at": "2026-08-18T20:25:27Z",
   "integrity": {
-    "doctor_sha256": "e49fa1b4e1fea2984f075479b514ed051ff0556fed07be4e2beae965b34cb290",
-    "version_sha256": "83f7677c46e311a4d3e3d496e8d804c09031f2c03ad691646f6f79739caa5e0f"
+    "doctor_sha256": "4d47df1625ccc257c483721dde87d321cc4c94edd2d048b953ca214dadbf3e2a",
+    "version_sha256": "fe3a2e7c2ae9e41f40f642375d1b38215b3f1f80cbd357fbce3b44c27c10c4de"
   },
   "not_scaffolding": true,
   "organism_id": "raios.organism.v9",
   "package": "_raios-file-intelligence-parallel",
+  "performance": {
+    "average_query_latency": 0.0507,
+    "cache_hit_ratio": 0.5687,
+    "classification_abstention_ratio": 0.0486,
+    "classification_coverage": 0.985,
+    "dead_candidates": 0,
+    "duplicate_groups": 254,
+    "files_read_per_query": 50.0,
+    "graph_edges": 1627,
+    "incremental_files": 0,
+    "inferred_edges": 0,
+    "model_calls_per_query": 0.0,
+    "model_escalations": 0,
+    "moves": 0,
+    "proven_edges": 1627,
+    "renames": 2,
+    "repair_candidates": 40,
+    "semantic_equivalents": 2,
+    "structural_parse_coverage": 0.8614,
+    "symbol_coverage": 0.1136,
+    "teacher_escalations": 0,
+    "total_files": 2201,
+    "unknown_edges": 0,
+    "version_matches": 0
+  },
   "tools": {
     "7z": {
       "available": false,

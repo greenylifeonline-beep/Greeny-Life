@@ -1,6 +1,23 @@
 {
+  "FILE_INTELLIGENCE": "DEGRADED_MODE",
   "canonical": false,
-  "code_structurally_parsed_pct": 100.0,
+  "certification_checks": {
+    "economic_plan": true,
+    "qwen_output_is_proposal": true,
+    "real_architecture_reconstruction": true,
+    "real_classification": true,
+    "real_code_parsing": true,
+    "real_cross_version_comparison": true,
+    "real_disagreement_case": true,
+    "real_index": true,
+    "real_qwen_evidence_synthesis": false,
+    "real_repository_scan": true,
+    "real_restart_cache_reuse": true,
+    "real_rollback": true,
+    "real_search": true,
+    "real_shadow_patch": true
+  },
+  "code_structurally_parsed_pct": 86.14,
   "cognition": {
     "canonical_writes": false,
     "ccee_wal_writes": false,
@@ -9,11 +26,609 @@
     "status": "PENDING_RUNTIME_VALIDATION",
     "teacher_harvest": "MISSING"
   },
-  "created_at": "2026-08-18T20:11:49Z",
-  "documents_extractable_pct": 100.0,
-  "duplicate_groups": 0,
+  "cortex_proposal": {
+    "confidence": {
+      "model_alone_not_verified": true
+    },
+    "disagreements": [
+      {
+        "averaged": false,
+        "disagreeing_providers": [
+          "path_rules",
+          "signatures"
+        ],
+        "disagreement_id": "disagree:7fcb7ac344b59533d702ca56add27564",
+        "evidence": [
+          "path_rules=UNKNOWN",
+          "signatures=TEXT"
+        ],
+        "file_id": "file:a397befc12d0134beacff01fccc937ac",
+        "relative_path": ".env.example",
+        "resolution": "UNRESOLVED_DISAGREEMENT",
+        "votes": {
+          "ctags": "UNAVAILABLE",
+          "dependency_graph": "UNAVAILABLE",
+          "git": "UNAVAILABLE",
+          "magika": "UNAVAILABLE",
+          "parser": "UNAVAILABLE",
+          "path_rules": "UNKNOWN",
+          "qwen": "UNAVAILABLE",
+          "semantic_retrieval": "UNAVAILABLE",
+          "signatures": "TEXT",
+          "teachers": "UNAVAILABLE",
+          "tree_sitter": "UNAVAILABLE"
+        }
+      },
+      {
+        "averaged": false,
+        "disagreeing_providers": [
+          "path_rules",
+          "signatures"
+        ],
+        "disagreement_id": "disagree:5004ef0153e368b02f4ac919c753d779",
+        "evidence": [
+          "path_rules=UNKNOWN",
+          "signatures=TEXT"
+        ],
+        "file_id": "file:afad151fc6c83c77f2adc19a752c8c4c",
+        "relative_path": ".gitignore",
+        "resolution": "UNRESOLVED_DISAGREEMENT",
+        "votes": {
+          "ctags": "UNAVAILABLE",
+          "dependency_graph": "UNAVAILABLE",
+          "git": "UNAVAILABLE",
+          "magika": "UNAVAILABLE",
+          "parser": "UNAVAILABLE",
+          "path_rules": "UNKNOWN",
+          "qwen": "UNAVAILABLE",
+          "semantic_retrieval": "UNAVAILABLE",
+          "signatures": "TEXT",
+          "teachers": "UNAVAILABLE",
+          "tree_sitter": "UNAVAILABLE"
+        }
+      },
+      {
+        "averaged": false,
+        "disagreeing_providers": [
+          "parser",
+          "path_rules",
+          "signatures"
+        ],
+        "disagreement_id": "disagree:8353edca0d08a3c22adf7d885bd51c97",
+        "evidence": [
+          "path_rules=toml",
+          "signatures=TEXT",
+          "parser=toml"
+        ],
+        "file_id": "file:e0834336a3bde243d23a5b5409699697",
+        "relative_path": ".govern.toml",
+        "resolution": "UNRESOLVED_DISAGREEMENT",
+        "votes": {
+          "ctags": "UNAVAILABLE",
+          "dependency_graph": "UNAVAILABLE",
+          "git": "UNAVAILABLE",
+          "magika": "UNAVAILABLE",
+          "parser": "toml",
+          "path_rules": "toml",
+          "qwen": "UNAVAILABLE",
+          "semantic_retrieval": "UNAVAILABLE",
+          "signatures": "TEXT",
+          "teachers": "UNAVAILABLE",
+          "tree_sitter": "UNAVAILABLE"
+        }
+      },
+      {
+        "averaged": false,
+        "disagreeing_providers": [
+          "parser",
+          "path_rules",
+          "signatures"
+        ],
+        "disagreement_id": "disagree:d0ce31d37523a851fe69514f2bf1b4e3",
+        "evidence": [
+          "path_rules=markdown",
+          "signatures=TEXT",
+          "parser=markdown"
+        ],
+        "file_id": "file:d7e37115712159b3f6dd605a2ddbb2c9",
+        "relative_path": "AGENTS.md",
+        "resolution": "UNRESOLVED_DISAGREEMENT",
+        "votes": {
+          "ctags": "UNAVAILABLE",
+          "dependency_graph": "UNAVAILABLE",
+          "git": "UNAVAILABLE",
+          "magika": "UNAVAILABLE",
+          "parser": "markdown",
+          "path_rules": "markdown",
+          "qwen": "UNAVAILABLE",
+          "semantic_retrieval": "UNAVAILABLE",
+          "signatures": "TEXT",
+          "teachers": "UNAVAILABLE",
+          "tree_sitter": "UNAVAILABLE"
+        }
+      },
+      {
+        "averaged": false,
+        "disagreeing_providers": [
+          "path_rules",
+          "signatures"
+        ],
+        "disagreement_id": "disagree:f8f009a0f739327fae2f54aea9a28faa",
+        "evidence": [
+          "path_rules=UNKNOWN",
+          "signatures=TEXT"
+        ],
+        "file_id": "file:727563bcb5650d5c5eab07eb1eaa9137",
+        "relative_path": "ALL_SOURCE_CODE.txt",
+        "resolution": "UNRESOLVED_DISAGREEMENT",
+        "votes": {
+          "ctags": "UNAVAILABLE",
+          "dependency_graph": "UNAVAILABLE",
+          "git": "UNAVAILABLE",
+          "magika": "UNAVAILABLE",
+          "parser": "UNAVAILABLE",
+          "path_rules": "UNKNOWN",
+          "qwen": "UNAVAILABLE",
+          "semantic_retrieval": "UNAVAILABLE",
+          "signatures": "TEXT",
+          "teachers": "UNAVAILABLE",
+          "tree_sitter": "UNAVAILABLE"
+        }
+      },
+      {
+        "averaged": false,
+        "disagreeing_providers": [
+          "parser",
+          "path_rules",
+          "signatures"
+        ],
+        "disagreement_id": "disagree:be80f0c9c369cb418cc2abac14c7ec78",
+        "evidence": [
+          "path_rules=markdown",
+          "signatures=TEXT",
+          "parser=markdown"
+        ],
+        "file_id": "file:204bce678ec1cdbaa49226c7b2688239",
+        "relative_path": "ASSET-ASSIMILATION-POLICY.md",
+        "resolution": "UNRESOLVED_DISAGREEMENT",
+        "votes": {
+          "ctags": "UNAVAILABLE",
+          "dependency_graph": "UNAVAILABLE",
+          "git": "UNAVAILABLE",
+          "magika": "UNAVAILABLE",
+          "parser": "markdown",
+          "path_rules": "markdown",
+          "qwen": "UNAVAILABLE",
+          "semantic_retrieval": "UNAVAILABLE",
+          "signatures": "TEXT",
+          "teachers": "UNAVAILABLE",
+          "tree_sitter": "UNAVAILABLE"
+        }
+      },
+      {
+        "averaged": false,
+        "disagreeing_providers": [
+          "parser",
+          "path_rules",
+          "signatures"
+        ],
+        "disagreement_id": "disagree:83a96cb96a8a01c96b7a75ac281e04c6",
+        "evidence": [
+          "path_rules=markdown",
+          "signatures=TEXT",
+          "parser=markdown"
+        ],
+        "file_id": "file:bd9a35c526e8d8d174009bee5b3f1ae1",
+        "relative_path": "CLAUDE.md",
+        "resolution": "UNRESOLVED_DISAGREEMENT",
+        "votes": {
+          "ctags": "UNAVAILABLE",
+          "dependency_graph": "UNAVAILABLE",
+          "git": "UNAVAILABLE",
+          "magika": "UNAVAILABLE",
+          "parser": "markdown",
+          "path_rules": "markdown",
+          "qwen": "UNAVAILABLE",
+          "semantic_retrieval": "UNAVAILABLE",
+          "signatures": "TEXT",
+          "teachers": "UNAVAILABLE",
+          "tree_sitter": "UNAVAILABLE"
+        }
+      },
+      {
+        "averaged": false,
+        "disagreeing_providers": [
+          "parser",
+          "path_rules",
+          "signatures"
+        ],
+        "disagreement_id": "disagree:bac9c2a2270c17fb17150bba2a69ee95",
+        "evidence": [
+          "path_rules=markdown",
+          "signatures=TEXT",
+          "parser=markdown"
+        ],
+        "file_id": "file:0398e323561f33743b24edfd7545fa4f",
+        "relative_path": "CLEANUP-AND-RETENTION-POLICY.md",
+        "resolution": "UNRESOLVED_DISAGREEMENT",
+        "votes": {
+          "ctags": "UNAVAILABLE",
+          "dependency_graph": "UNAVAILABLE",
+          "git": "UNAVAILABLE",
+          "magika": "UNAVAILABLE",
+          "parser": "markdown",
+          "path_rules": "markdown",
+          "qwen": "UNAVAILABLE",
+          "semantic_retrieval": "UNAVAILABLE",
+          "signatures": "TEXT",
+          "teachers": "UNAVAILABLE",
+          "tree_sitter": "UNAVAILABLE"
+        }
+      },
+      {
+        "averaged": false,
+        "disagreeing_providers": [
+          "parser",
+          "path_rules",
+          "signatures"
+        ],
+        "disagreement_id": "disagree:941ba88435f2ebd628af3c6359b0247e",
+        "evidence": [
+          "path_rules=markdown",
+          "signatures=TEXT",
+          "parser=markdown"
+        ],
+        "file_id": "file:eb2ef2a7de6258f5deb66ea6c50ae89e",
+        "relative_path": "COMMERCIAL-CHANGE-GOVERNANCE.md",
+        "resolution": "UNRESOLVED_DISAGREEMENT",
+        "votes": {
+          "ctags": "UNAVAILABLE",
+          "dependency_graph": "UNAVAILABLE",
+          "git": "UNAVAILABLE",
+          "magika": "UNAVAILABLE",
+          "parser": "markdown",
+          "path_rules": "markdown",
+          "qwen": "UNAVAILABLE",
+          "semantic_retrieval": "UNAVAILABLE",
+          "signatures": "TEXT",
+          "teachers": "UNAVAILABLE",
+          "tree_sitter": "UNAVAILABLE"
+        }
+      },
+      {
+        "averaged": false,
+        "disagreeing_providers": [
+          "parser",
+          "path_rules",
+          "signatures"
+        ],
+        "disagreement_id": "disagree:73621bd72228ea3f4c09252da6170a89",
+        "evidence": [
+          "path_rules=markdown",
+          "signatures=TEXT",
+          "parser=markdown"
+        ],
+        "file_id": "file:5e2c4c96403001be50a948ebc929fd20",
+        "relative_path": "COMMERCIAL-CONTEXT-FABRIC.md",
+        "resolution": "UNRESOLVED_DISAGREEMENT",
+        "votes": {
+          "ctags": "UNAVAILABLE",
+          "dependency_graph": "UNAVAILABLE",
+          "git": "UNAVAILABLE",
+          "magika": "UNAVAILABLE",
+          "parser": "markdown",
+          "path_rules": "markdown",
+          "qwen": "UNAVAILABLE",
+          "semantic_retrieval": "UNAVAILABLE",
+          "signatures": "TEXT",
+          "teachers": "UNAVAILABLE",
+          "tree_sitter": "UNAVAILABLE"
+        }
+      }
+    ],
+    "evidence_ids": [
+      "file:74e9ab9fb18bfe1a78b8d45e600e7db3",
+      "file:2380607741958fd9ca687f3e80953df6",
+      "file:93671617e176588c12c1cf8b6c54341c",
+      "file:38bd5a4a12c6265c8b32a641adfd4eaa",
+      "file:100b10a8e10dd8a02e736125e953a869",
+      "file:035e10138b911a67fa67c3e8fd6d19ae",
+      "file:2019c9242d717619e218f34d7aa420c8",
+      "file:887b6895ad5ab8f2243253b250e68223",
+      "file:25411c90c50faf52f9a1e66fde490173",
+      "file:83375af0cd28d12cc8c737dc5e202e31",
+      "file:2aaec141fcb5d145e199087fe92a4f96",
+      "file:101f58826485cf627b437c76c4fe063c",
+      "file:e6af8f2450288c186cb6c0fad771bed7",
+      "RAIOS-COGNITIVE-LEARNING-FABRIC-REFERENCE-V2/learning_fabric/services.py",
+      "FINAL-RUNTIME-BASELINE.md",
+      "_raios-a17-integration-wave/fixtures/teacher-harvest/student-better/student.json",
+      "E3-SOURCE-TRACE-PACKAGE/GIT-TRACKED.txt",
+      "E3-SOURCE-TRACE-PACKAGE/CANONICAL__canonical__intelligence__eos-domain-activation-blueprint-v1.json.txt",
+      "migration/RUNTIME-GAPS.md",
+      "E3-SOURCE-TRACE-PACKAGE/API__app__api__workflow__route.ts.txt",
+      "migration/OLD-TO-CODEX-MAP.md",
+      "E3-SOURCE-TRACE-PACKAGE/DATABASE-CONSUMERS.txt",
+      "lib_list.txt",
+      "E3-SOURCE-TRACE-PACKAGE/API__app__api__sales-orders__route.ts.txt",
+      "E3-SOURCE-TRACE-PACKAGE/CANONICAL__canonical__logistics__shipments.json.txt",
+      "E3-SOURCE-TRACE-PACKAGE/API__app__api__suppliers__route.ts.txt",
+      "E3-SOURCE-TRACE-PACKAGE/CANONICAL__canonical__system_manifest.json.txt",
+      "E3-SOURCE-TRACE-PACKAGE/API__app__api__products__route.ts.txt",
+      "E3-SOURCE-TRACE-PACKAGE/CANONICAL__canonical__prisma__schema.prisma.txt",
+      "E3-SOURCE-TRACE-PACKAGE/CANONICAL__canonical__data__master_products.json.txt",
+      "RAIOS/V9/runtime/install-a12.ps1",
+      "E3-SOURCE-TRACE-PACKAGE/CANONICAL__canonical__intelligence__eos-execution-truth-map.json.txt",
+      "E3-SOURCE-TRACE-PACKAGE/REAL-SOURCE-FILES.txt",
+      "lib/intelligence/data-intelligence-fabric.ts",
+      "lib/intelligence/mastermind-agents.ts",
+      "lib/intelligence/workflow-governance.ts",
+      "E3-SOURCE-TRACE-PACKAGE/WORKFLOW-EXECUTION-TRACE.txt",
+      "lib/intelligence/greeny-life-egypt-brain.ts",
+      "E3-SOURCE-TRACE-PACKAGE/CANONICAL__canonical__intelligence__eos-real-execution-path-map.json.txt",
+      "E3-REPOSITORY-MANIFEST.json"
+    ],
+    "knowledge_state": "PROPOSAL",
+    "model_used": false,
+    "query_plan": {
+      "estimated_cost": 0.71,
+      "evidence_selection": [
+        "why_selected",
+        "provider",
+        "score",
+        "source_hash"
+      ],
+      "expensive_stages_allowed": [
+        "STAGE_0_METADATA",
+        "STAGE_1_FILENAME",
+        "STAGE_2_RIPGREP",
+        "STAGE_3_SYMBOL",
+        "STAGE_5_DEPENDENCY",
+        "STAGE_6_FTS5"
+      ],
+      "file_filters": {
+        "is_binary": false
+      },
+      "graph_traversal": [
+        "state_transition:order->shipped"
+      ],
+      "lexical_queries": [
+        "shipped",
+        "order",
+        "status"
+      ],
+      "model_synthesis": false,
+      "natural": "find where an order becomes shipped and compare both versions",
+      "reason": "metadata_always; lexical+symbol for order/shipped; version comparison; text contains",
+      "root_scope": [
+        "/workspace"
+      ],
+      "selected_stages": [
+        "STAGE_0_METADATA",
+        "STAGE_1_FILENAME",
+        "STAGE_2_RIPGREP",
+        "STAGE_3_SYMBOL",
+        "STAGE_5_DEPENDENCY",
+        "STAGE_6_FTS5"
+      ],
+      "skipped_stages": [
+        "STAGE_4_AST",
+        "STAGE_7_SEMANTIC",
+        "STAGE_8_QWEN"
+      ],
+      "symbol_queries": [
+        "ship",
+        "order",
+        "fulfill"
+      ],
+      "version_comparison": true
+    },
+    "rkg_micrograph": {
+      "edges": [
+        {
+          "confidence": 0.95,
+          "dst": "os",
+          "evidence": "python-ast",
+          "kind": "IMPORTS",
+          "src": "/workspace/brain.py",
+          "state": "PROVEN"
+        },
+        {
+          "confidence": 0.95,
+          "dst": "sys",
+          "evidence": "python-ast",
+          "kind": "IMPORTS",
+          "src": "/workspace/brain.py",
+          "state": "PROVEN"
+        },
+        {
+          "confidence": 0.95,
+          "dst": "json",
+          "evidence": "python-ast",
+          "kind": "IMPORTS",
+          "src": "/workspace/brain.py",
+          "state": "PROVEN"
+        },
+        {
+          "confidence": 0.95,
+          "dst": "yaml",
+          "evidence": "python-ast",
+          "kind": "IMPORTS",
+          "src": "/workspace/brain.py",
+          "state": "PROVEN"
+        },
+        {
+          "confidence": 0.95,
+          "dst": "re",
+          "evidence": "python-ast",
+          "kind": "IMPORTS",
+          "src": "/workspace/brain.py",
+          "state": "PROVEN"
+        },
+        {
+          "confidence": 0.95,
+          "dst": "hashlib",
+          "evidence": "python-ast",
+          "kind": "IMPORTS",
+          "src": "/workspace/brain.py",
+          "state": "PROVEN"
+        },
+        {
+          "confidence": 0.95,
+          "dst": "csv",
+          "evidence": "python-ast",
+          "kind": "IMPORTS",
+          "src": "/workspace/brain.py",
+          "state": "PROVEN"
+        },
+        {
+          "confidence": 0.95,
+          "dst": "subprocess",
+          "evidence": "python-ast",
+          "kind": "IMPORTS",
+          "src": "/workspace/brain.py",
+          "state": "PROVEN"
+        },
+        {
+          "confidence": 0.95,
+          "dst": "logging",
+          "evidence": "python-ast",
+          "kind": "IMPORTS",
+          "src": "/workspace/brain.py",
+          "state": "PROVEN"
+        },
+        {
+          "confidence": 0.95,
+          "dst": "argparse",
+          "evidence": "python-ast",
+          "kind": "IMPORTS",
+          "src": "/workspace/brain.py",
+          "state": "PROVEN"
+        },
+        {
+          "confidence": 0.95,
+          "dst": "shutil",
+          "evidence": "python-ast",
+          "kind": "IMPORTS",
+          "src": "/workspace/brain.py",
+          "state": "PROVEN"
+        },
+        {
+          "confidence": 0.95,
+          "dst": "time",
+          "evidence": "python-ast",
+          "kind": "IMPORTS",
+          "src": "/workspace/brain.py",
+          "state": "PROVEN"
+        },
+        {
+          "confidence": 0.95,
+          "dst": "traceback",
+          "evidence": "python-ast",
+          "kind": "IMPORTS",
+          "src": "/workspace/brain.py",
+          "state": "PROVEN"
+        },
+        {
+          "confidence": 0.95,
+          "dst": "threading",
+          "evidence": "python-ast",
+          "kind": "IMPORTS",
+          "src": "/workspace/brain.py",
+          "state": "PROVEN"
+        },
+        {
+          "confidence": 0.95,
+          "dst": "smtplib",
+          "evidence": "python-ast",
+          "kind": "IMPORTS",
+          "src": "/workspace/brain.py",
+          "state": "PROVEN"
+        },
+        {
+          "confidence": 0.95,
+          "dst": "random",
+          "evidence": "python-ast",
+          "kind": "IMPORTS",
+          "src": "/workspace/brain.py",
+          "state": "PROVEN"
+        },
+        {
+          "confidence": 0.95,
+          "dst": "email.mime.text",
+          "evidence": "python-ast",
+          "kind": "IMPORTS",
+          "src": "/workspace/brain.py",
+          "state": "PROVEN"
+        },
+        {
+          "confidence": 0.95,
+          "dst": "pathlib",
+          "evidence": "python-ast",
+          "kind": "IMPORTS",
+          "src": "/workspace/brain.py",
+          "state": "PROVEN"
+        },
+        {
+          "confidence": 0.95,
+          "dst": "typing",
+          "evidence": "python-ast",
+          "kind": "IMPORTS",
+          "src": "/workspace/brain.py",
+          "state": "PROVEN"
+        },
+        {
+          "confidence": 0.95,
+          "dst": "dataclasses",
+          "evidence": "python-ast",
+          "kind": "IMPORTS",
+          "src": "/workspace/brain.py",
+          "state": "PROVEN"
+        }
+      ]
+    },
+    "skills": [
+      "file-intelligence"
+    ],
+    "status": "SKIPPED",
+    "symbols": [
+      "pathlib",
+      "json",
+      "re",
+      "sys",
+      "pathlib",
+      "pathlib",
+      "greenlines_brain.identity",
+      "greenlines_brain.repository.json_repo",
+      "greenlines_brain.kernel",
+      "sys",
+      "json",
+      "pathlib",
+      "greenlines_brain.identity",
+      "greenlines_brain.repository.json_repo",
+      "greenlines_brain.kernel",
+      "print_section",
+      "test_brain",
+      "__future__",
+      "argparse",
+      "json"
+    ],
+    "text": null,
+    "version_relations": []
+  },
+  "created_at": "2026-08-18T20:25:05Z",
+  "degraded_reasons": [
+    "MAGIKA_MISSING",
+    "TIKA_MISSING",
+    "TREE_SITTER_MISSING",
+    "OLLAMA_MISSING_QWEN_SYNTHESIS_NOT_EXECUTED"
+  ],
+  "disagreements": 2000,
+  "documents_extractable_pct": 99.81,
+  "duplicate_groups": 254,
   "exit_nonzero_if_failed": false,
-  "files_discovered": 8,
+  "file_intelligence_pass": false,
+  "files_discovered": 2201,
   "fts_index": true,
   "gates": {
     "ccee_not_written": {
@@ -51,6 +666,11 @@
       "detail": "ADAPTER_PRESENT_BINARY_MISSING",
       "ok": false
     },
+    "no_fake_file_intelligence_pass": {
+      "critical": true,
+      "detail": "",
+      "ok": true
+    },
     "qwen": {
       "critical": false,
       "detail": "OLLAMA_MISSING",
@@ -78,8 +698,8 @@
     }
   },
   "index_health": {
-    "code_files": 5,
-    "code_structurally_parsed_pct": 100.0,
+    "code_files": 505,
+    "code_structurally_parsed_pct": 86.14,
     "cognition": {
       "canonical_writes": false,
       "ccee_wal_writes": false,
@@ -88,9 +708,9 @@
       "status": "PENDING_RUNTIME_VALIDATION",
       "teacher_harvest": "MISSING"
     },
-    "documents_extractable_pct": 100.0,
-    "duplicate_groups": 0,
-    "files": 8,
+    "documents_extractable_pct": 99.81,
+    "duplicate_groups": 254,
+    "files": 2201,
     "fts": true,
     "magika": {
       "extension_alone": false,
@@ -122,9 +742,9 @@
       "tree_sitter": false,
       "universal_ctags": false
     },
-    "relations": 0,
-    "symbols": 7,
-    "text_searchable_pct": 100.0,
+    "relations": 1627,
+    "symbols": 3289,
+    "text_searchable_pct": 99.82,
     "tika": {
       "fallback": "stdlib-decode/zipfile",
       "ocr": false,
@@ -145,23 +765,29 @@
       }
     },
     "types_recognized": [
+      "BINARY",
       "CODE",
       "CONFIG",
       "DATA",
-      "DOCUMENT"
+      "DOCUMENT",
+      "EVIDENCE",
+      "GENERATED",
+      "UNKNOWN"
     ],
-    "unknown": 0
+    "unknown": 33
   },
   "ingest": {
-    "duplicate_groups": 0,
-    "extracted_text": 8,
-    "files": 8,
-    "kind": "doctor-fixture",
+    "cache_hit_ratio": 0.094,
+    "disagreements": 2000,
+    "duplicate_groups": 74,
+    "extracted_text": 1898,
+    "files": 2000,
+    "kind": "repo",
     "package": "_raios-file-intelligence-parallel",
-    "parsed": 8,
-    "path": "/workspace/_raios-file-intelligence-parallel/tests/fixtures/corpus",
-    "root_id": "root:2c9883c32e4351af2d9ed735693093c3",
-    "unknown": 0
+    "parsed": 2000,
+    "path": "/workspace",
+    "root_id": "root:3e84370a49b05391c81e700c4c7d023e",
+    "unknown": 32
   },
   "magika": {
     "extension_alone": false,
@@ -194,12 +820,90 @@
     "tree_sitter": false,
     "universal_ctags": false
   },
+  "performance": {
+    "average_query_latency": 0.0507,
+    "cache_hit_ratio": 0.5687,
+    "classification_abstention_ratio": 0.0486,
+    "classification_coverage": 0.985,
+    "dead_candidates": 0,
+    "duplicate_groups": 254,
+    "files_read_per_query": 50.0,
+    "graph_edges": 1627,
+    "incremental_files": 0,
+    "inferred_edges": 0,
+    "model_calls_per_query": 0.0,
+    "model_escalations": 0,
+    "moves": 0,
+    "proven_edges": 1627,
+    "renames": 2,
+    "repair_candidates": 40,
+    "semantic_equivalents": 2,
+    "structural_parse_coverage": 0.8614,
+    "symbol_coverage": 0.1136,
+    "teacher_escalations": 0,
+    "total_files": 2201,
+    "unknown_edges": 0,
+    "version_matches": 0
+  },
+  "query_plan": {
+    "estimated_cost": 0.71,
+    "evidence_selection": [
+      "why_selected",
+      "provider",
+      "score",
+      "source_hash"
+    ],
+    "expensive_stages_allowed": [
+      "STAGE_0_METADATA",
+      "STAGE_1_FILENAME",
+      "STAGE_2_RIPGREP",
+      "STAGE_3_SYMBOL",
+      "STAGE_5_DEPENDENCY",
+      "STAGE_6_FTS5"
+    ],
+    "file_filters": {
+      "is_binary": false
+    },
+    "graph_traversal": [
+      "state_transition:order->shipped"
+    ],
+    "lexical_queries": [
+      "shipped",
+      "order",
+      "status"
+    ],
+    "model_synthesis": false,
+    "natural": "find where an order becomes shipped and compare both versions",
+    "reason": "metadata_always; lexical+symbol for order/shipped; version comparison; text contains",
+    "root_scope": [
+      "/workspace"
+    ],
+    "selected_stages": [
+      "STAGE_0_METADATA",
+      "STAGE_1_FILENAME",
+      "STAGE_2_RIPGREP",
+      "STAGE_3_SYMBOL",
+      "STAGE_5_DEPENDENCY",
+      "STAGE_6_FTS5"
+    ],
+    "skipped_stages": [
+      "STAGE_4_AST",
+      "STAGE_7_SEMANTIC",
+      "STAGE_8_QWEN"
+    ],
+    "symbol_queries": [
+      "ship",
+      "order",
+      "fulfill"
+    ],
+    "version_comparison": true
+  },
   "qwen_health": {
     "ok": false,
     "reason": "OLLAMA_MISSING"
   },
-  "relationships": 0,
-  "repair_candidates": 0,
+  "relationships": 1627,
+  "repair_candidates": 1,
   "roots_found": [
     {
       "assumed_newer": false,
@@ -267,13 +971,14 @@
       "score": 2
     }
   ],
+  "scale": "repo",
   "status": "GATES_SATISFIED",
-  "symbols_indexed": 7,
+  "symbols_indexed": 3289,
   "teacher_health": {
     "ok": false,
     "reason": "NOT_INVOKED"
   },
-  "text_searchable_pct": 100.0,
+  "text_searchable_pct": 99.82,
   "tika": {
     "fallback": "stdlib-decode/zipfile",
     "ocr": false,
@@ -320,12 +1025,16 @@
     "docker"
   ],
   "types_recognized": [
+    "BINARY",
     "CODE",
     "CONFIG",
     "DATA",
-    "DOCUMENT"
+    "DOCUMENT",
+    "EVIDENCE",
+    "GENERATED",
+    "UNKNOWN"
   ],
-  "unknown_types": 0,
+  "unknown_types": 33,
   "version_pairs": [
     [
       {
