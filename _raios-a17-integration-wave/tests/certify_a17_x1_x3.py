@@ -8,7 +8,7 @@ controls check the FailClosed reason.
 from __future__ import annotations
 
 import json
-import subprocess
+import os
 import sys
 import tempfile
 from pathlib import Path
@@ -22,11 +22,16 @@ from raios_wave.models import KnowledgeState, RetirementDecision, VerificationSt
 
 
 def _run_unittests() -> dict:
-    proc = subprocess.run(
+    native = ROOT.parent / "_raios-a17-native-cortex"
+    if str(native) not in sys.path:
+        sys.path.insert(0, str(native))
+    from ccee.process_kernel import encoding_safe_run
+
+    proc = encoding_safe_run(
         [sys.executable, "-m", "unittest", "discover", "-s", str(ROOT / "tests"), "-v"],
-        cwd=str(ROOT),
-        capture_output=True,
-        text=True,
+        cwd=ROOT,
+        timeout=180.0,
+        env={**os.environ, "PYTHONPATH": str(SRC)},
     )
     return {
         "returncode": proc.returncode,

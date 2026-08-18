@@ -35,6 +35,11 @@ EVENT_TYPES = (
     "OLLAMA_SERVER_ERROR",
     "CERTIFICATION_GATE",
     "FALSE_PASS_BLOCKED",
+    "TEACHER_CRITIQUE",
+    "BLOCKED_TASK",
+    "QUEUE_TRANSITION",
+    "RAIOS_TURN",
+    "CURSOR_TURN",
 )
 
 KnowledgeState = Literal[
@@ -183,6 +188,125 @@ class SkillRecord(BaseModel):
         if value:
             raise FailClosed("PROMPT_TEMPLATE_IS_NOT_A_SKILL")
         return False
+
+
+Actor = Literal["RAIOS", "CURSOR", "COPILOT", "QWEN", "TOOL"]
+QueueName = Literal[
+    "READY",
+    "BLOCKED",
+    "WAITING_FOR_HUMAN",
+    "WAITING_FOR_DEPENDENCY",
+    "SHADOW_VALIDATION",
+    "READY_FOR_PROMOTION",
+]
+
+
+class CognitiveTurn(BaseModel):
+    """Shared Cursor↔RAIOS↔tool language. Reuses CortexResponse; not a second protocol."""
+
+    model_config = ConfigDict(extra="forbid")
+    schema_id: str = "raios.cognitive-turn.v1"
+    task_id: str
+    attempt: int = 1
+    actor: Actor
+    intent: str
+    observations: list[Any] = Field(default_factory=list)
+    evidence: list[Any] = Field(default_factory=list)
+    hypothesis: list[Any] = Field(default_factory=list)
+    plan: list[Any] = Field(default_factory=list)
+    action_requested: list[Any] = Field(default_factory=list)
+    permission_scope: list[str] = Field(default_factory=list)
+    action_taken: list[Any] = Field(default_factory=list)
+    result: dict[str, Any] = Field(default_factory=dict)
+    confidence: float = 0.0
+    critic_score: float = 0.0
+    failure_class: str | None = None
+    lesson: list[Any] = Field(default_factory=list)
+    next_action: list[Any] = Field(default_factory=list)
+    queue: QueueName = "READY"
+    teacher_used: bool = False
+    execution_authority: bool = False
+
+    @field_validator("confidence", "critic_score")
+    @classmethod
+    def _unit(cls, value: float) -> float:
+        if not 0.0 <= float(value) <= 1.0:
+            raise FailClosed("SCORE_OUT_OF_RANGE")
+        return float(value)
+
+    @field_validator("execution_authority")
+    @classmethod
+    def _no_model_authority(cls, value: bool) -> bool:
+        if value:
+            raise FailClosed("MODEL_OUTPUT_HAS_NO_AUTHORITY")
+        return False
+
+    def as_cortex(self) -> CortexResponse:
+        return CortexResponse(
+            assessment={"task_id": self.task_id, "actor": self.actor, "confidence": self.confidence},
+            uncertainty=[self.failure_class] if self.failure_class else [],
+            claims=list(self.hypothesis),
+            evidence_needed=list(self.evidence),
+            plan=list(self.plan),
+            tool_requests=list(self.action_requested),
+            hypotheses=list(self.hypothesis),
+            skill_candidates=list(self.lesson),
+            learning_signals=list(self.next_action),
+            stop_reason=self.intent[:80],
+        )
+
+
+class CriticScore(BaseModel):
+    model_config = ConfigDict(extra="forbid")
+    diagnosis_accuracy: float = 0.0
+    root_cause_quality: float = 0.0
+    evidence_quality: float = 0.0
+    plan_quality: float = 0.0
+    tool_selection: float = 0.0
+    execution_success: float = 0.0
+    verification_quality: float = 0.0
+    risk_awareness: float = 0.0
+    efficiency: float = 0.0
+    confidence_calibration: float = 0.0
+    learning_quality: float = 0.0
+    transfer_success: float = 0.0
+
+    @field_validator(
+        "diagnosis_accuracy",
+        "root_cause_quality",
+        "evidence_quality",
+        "plan_quality",
+        "tool_selection",
+        "execution_success",
+        "verification_quality",
+        "risk_awareness",
+        "efficiency",
+        "confidence_calibration",
+        "learning_quality",
+        "transfer_success",
+    )
+    @classmethod
+    def _unit(cls, value: float) -> float:
+        if not 0.0 <= float(value) <= 1.0:
+            raise FailClosed("SCORE_OUT_OF_RANGE")
+        return float(value)
+
+    def mean(self) -> float:
+        vals = [
+            self.diagnosis_accuracy,
+            self.root_cause_quality,
+            self.evidence_quality,
+            self.plan_quality,
+            self.tool_selection,
+            self.execution_success,
+            self.verification_quality,
+            self.risk_awareness,
+            self.efficiency,
+            self.confidence_calibration,
+            self.learning_quality,
+            self.transfer_success,
+        ]
+        return sum(vals) / len(vals)
 
 
 def payload_hash(payload: dict[str, Any]) -> str:
