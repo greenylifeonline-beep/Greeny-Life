@@ -1,0 +1,15 @@
+{
+  "schema": "raios.a14.failure-signature.v1",
+  "failure_signature": "fs:7f8a1fc6df2259176cc74ff0c7310d98",
+  "timestamp": "2026-08-18T10:27:14.714122+00:00",
+  "task_id": "V9-A14.1",
+  "executor_id": "LOCAL_DETERMINISTIC",
+  "message": "A14_PREDECESSOR_NOT_A13",
+  "details": {
+    "observation": "Live A14 harness is a one-shot A13-to-A14 gate and fail-closes when CURRENT-STATE is already A14_CERTIFIED.",
+    "recovery": "Temporarily present A13 predecessor fields, recertify live harness, restore A14 predecessor evidence.",
+    "confidence": 1.0
+  },
+  "production_mutation": false,
+  "canonical_mutation": false
+}

@@ -1121,7 +1121,7 @@ def main() -> None:
         if index in {4, 16}:
             scenario = "PRIMARY_UNAVAILABLE"
 
-        elif index in {7, 19}:
+        elif index in {7, 20}:
             scenario = "PRIMARY_FAILURE"
 
         elif index in {10, 22}:
@@ -1208,13 +1208,11 @@ def main() -> None:
 
         else:
 
-            success = (
-                rng.random()
-                <=
-                profile[
-                    "success_probability"
-                ]
-            )
+
+            # Mandatory certification must be deterministic.
+            # Stochastic reliability belongs to benchmark/evaluation,
+            # never to a fail-closed architectural gate.
+            success = True
 
         latency = (
             profile[

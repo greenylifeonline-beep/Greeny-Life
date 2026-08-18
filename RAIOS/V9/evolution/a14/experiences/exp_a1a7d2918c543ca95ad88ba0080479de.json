@@ -1,0 +1,15 @@
+{
+  "schema": "raios.a14.experience.v1",
+  "timestamp": "2026-08-18T10:27:14.722946+00:00",
+  "event": "A14_1_LIVE_RECERTIFICATION_BLOCKED_BY_PREDECESSOR_GATE",
+  "outcome": "FAILED",
+  "details": {
+    "exception": "RuntimeError('A14_PREDECESSOR_NOT_A13')",
+    "failure_signature": "fs:7f8a1fc6df2259176cc74ff0c7310d98",
+    "recovery_candidate": "recovery:d65e242699a7e674cd690ca10d18fd04",
+    "production_mutation": false,
+    "canonical_mutation": false,
+    "confidence": 1.0
+  },
+  "experience_id": "exp:a1a7d2918c543ca95ad88ba0080479de"
+}

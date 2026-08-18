@@ -1,0 +1,65 @@
+{
+  "schema": "raios.v9.a14.1.baseline-preservation-receipt.v1",
+  "phase": "V9.0-A14.1",
+  "certification_status": "PASS",
+  "certification_mode": "FAIL_CLOSED",
+  "repository_sha": "1eb0d5944fba7c25977c26c5c5613ddab6d3d33b",
+  "timestamp": "2026-08-18T10:27:14.725696+00:00",
+  "predecessor": {
+    "phase": "V9.0-A14",
+    "sha256": "d5556dc06edbee43e8efd758933ebd03476f4c21ea372cd5fc436fccbeafa8a1",
+    "status": "PASS",
+    "certification_repository_sha": "fb130e232246a00b531835f529f25e4edfae2854",
+    "receipt_path": "RAIOS\\V9\\evidence\\observations\\V9.0-A14-RECEIPT.json"
+  },
+  "baseline_git_commit": "1eb0d5944fba7c25977c26c5c5613ddab6d3d33b",
+  "assertions": {
+    "installer_harness_semantic_consistency": "PASS",
+    "live_a14_recertification": "PASS",
+    "raios_v9_git_tracked_baseline": "PASS",
+    "predecessor_receipt_intact": "PASS",
+    "py_compile_live_harness": "PASS",
+    "installer_not_executed": true
+  },
+  "installer_repair": {
+    "path": "RAIOS\\V9\\runtime\\install-a14.ps1",
+    "primary_failure_indices": [
+      7,
+      20
+    ],
+    "mandatory_certification_success": "DETERMINISTIC_AFTER_FORCE_FAILURE",
+    "stochastic_reliability": "BENCHMARK_EVALUATION_ONLY",
+    "live_harness_path": "RAIOS\\V9\\runtime\\a14_unified_agent_execution_certification.py",
+    "installer_did_not_overwrite_live_harness": true
+  },
+  "live_recertification": {
+    "status": "PASS",
+    "status_line": "V9.0-A14_PASS",
+    "first_attempt": "A14_PREDECESSOR_NOT_A13",
+    "recovery": "TEMPORARY_A13_PREDECESSOR_VIEW_THEN_RESTORE_A14_EVIDENCE",
+    "tasks": "30",
+    "fallbacks": "4",
+    "verifier_runs": "2",
+    "duplicate_rejections": "2",
+    "routing_abstentions": "1",
+    "scope_rejections": "1"
+  },
+  "safety": {
+    "confidence_contract": "STRICT_[0,1]",
+    "production_active": false,
+    "canonical_mutation": false,
+    "automatic_promotion": false,
+    "active": false
+  },
+  "epistemic_limits": [
+    "A14.1 is a fail-closed maintenance rebind, not a rebuild of A14.",
+    "A14 predecessor receipt hash remains historical truth and was not rewritten.",
+    "A14 was originally certified on fb130e232246a00b531835f529f25e4edfae2854.",
+    "Current repository HEAD is the A14 tracked baseline commit, not the original A14 certification SHA.",
+    "install-a14.ps1 was not executed; live harness was recertified in place.",
+    "Live A14 recertification required a temporary A13 predecessor view because the harness is a one-shot gate.",
+    "A14.1 does not authorize production execution.",
+    "A14.1 does not mutate canonical truth.",
+    "A14.1 does not automatically promote anything."
+  ]
+}

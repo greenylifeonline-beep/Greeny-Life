@@ -1,8 +1,8 @@
 {
   "schema": "raios.current-state.v9",
-  "current_version": "V9.0-A14",
-  "current_phase": "UNIFIED_AGENT_EXECUTION_RUNTIME",
-  "state_status": "A14_CERTIFIED",
+  "current_version": "V9.0-A14.1",
+  "current_phase": "BASELINE_PRESERVATION_CONTINUITY_REBIND",
+  "state_status": "A14_1_CERTIFIED",
   "predecessor": {
     "stable_generation": "V8.6",
     "latest_known_checkpoint_hash": "0062a4f36a600d3ed2187f8e1c704e8e80dcfcc2db74723255e29df5f52a2a14",
@@ -110,18 +110,18 @@
     "classification": "CURRENT_RUNTIME_CPU_ONLY",
     "note": "This does not prove that the provider/account can never expose GPU."
   },
-  "repository_sha_observed": "fb130e232246a00b531835f529f25e4edfae2854",
+  "repository_sha_observed": "1eb0d5944fba7c25977c26c5c5613ddab6d3d33b",
   "branch_observed": "codex-clean",
   "known_blockers": [
     "V9 kernels are bootstrap implementations, not yet production-promoted.",
     "GPU acceleration is not available in the currently observed Kaggle runtime.",
     "A2 certification revoked: receipt asserted PASS while lexical and Git historical search were false and self-read evidence fields were null."
   ],
-  "updated_at": "2026-08-18T09:13:22.309528+00:00",
+  "updated_at": "2026-08-18T10:27:14.779137+00:00",
   "latest_phase_receipt": {
-    "phase": "V9.0-A14",
-    "path": "RAIOS\\V9\\evidence\\observations\\V9.0-A14-RECEIPT.json",
-    "sha256": "d5556dc06edbee43e8efd758933ebd03476f4c21ea372cd5fc436fccbeafa8a1",
+    "phase": "V9.0-A14.1",
+    "path": "RAIOS\\V9\\evidence\\observations\\V9.0-A14.1-BASELINE-PRESERVATION-RECEIPT.json",
+    "sha256": "d8923c61e2b7d985ef44ef4287f3e1f25c2a392731e673e4d3583b64c26b4676",
     "certification_status": "PASS"
   },
   "experience_reflex": {
@@ -305,6 +305,24 @@
     "empirical_executor_memory": true,
     "cursor_required": false,
     "active": false,
+    "production_active": false,
+    "canonical_mutation": false,
+    "automatic_promotion": false
+  },
+  "a14_original_certification": {
+    "phase": "V9.0-A14",
+    "repository_sha": "fb130e232246a00b531835f529f25e4edfae2854",
+    "receipt_path": "RAIOS\\V9\\evidence\\observations\\V9.0-A14-RECEIPT.json",
+    "receipt_sha256": "d5556dc06edbee43e8efd758933ebd03476f4c21ea372cd5fc436fccbeafa8a1",
+    "certification_status": "PASS",
+    "note": "Historical A14 certification repository SHA. Historical truth is not automatically current truth."
+  },
+  "baseline_preservation": {
+    "phase": "V9.0-A14.1",
+    "baseline_git_commit": "1eb0d5944fba7c25977c26c5c5613ddab6d3d33b",
+    "installer_harness_semantic_consistency": "PASS",
+    "live_a14_recertification": "PASS",
+    "raios_v9_git_tracked_baseline": "PASS",
     "production_active": false,
     "canonical_mutation": false,
     "automatic_promotion": false
