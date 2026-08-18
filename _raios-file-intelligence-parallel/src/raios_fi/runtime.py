@@ -7,8 +7,10 @@ from typing import Any
 from .architecture import ArchitectureReconstructor
 from .archive import ArchiveEngine
 from .classify import classify_path
+from .cognition import shared_cognitive_state
 from .config import FailClosed, PACKAGE, package_root, repo_root_from
 from .discovery import FileDiscoveryProvider
+from .duplicates import duplicate_groups
 from .economy import ToolEconomy
 from .extract import TextExtractionProvider
 from .graph import FileKnowledgeGraph
@@ -59,11 +61,22 @@ class FileIntelligenceRuntime:
                 self.graph.add_edge("FILE", rec["relative_path"], "MODULE", imp, "IMPORTS", "PROVEN", parsed.confidence, parsed.parser)
             extracted = self.extract.analyze(rec)
             rec["extractor"] = extracted.get("extractor")
+            rec["extract_status"] = extracted.get("status")
             if extracted.get("text"):
                 extracted_n += 1
             classify_path(Path(rec["absolute_path"]))
+            self.store.upsert_file(rec)
             parsed_n += 1
-        result.update({"parsed": parsed_n, "extracted_text": extracted_n, "unknown": unknown_n, "package": PACKAGE})
+        groups = duplicate_groups(self.store)
+        result.update(
+            {
+                "parsed": parsed_n,
+                "extracted_text": extracted_n,
+                "unknown": unknown_n,
+                "duplicate_groups": len(groups),
+                "package": PACKAGE,
+            }
+        )
         return result
 
     def plan_query(self, natural: str) -> dict[str, Any]:
@@ -83,13 +96,39 @@ class FileIntelligenceRuntime:
         unknown_n = sum(1 for f in files if f.get("class") == "UNKNOWN")
         symbols = self.store.conn.execute("SELECT COUNT(*) AS c FROM symbols").fetchone()["c"]
         rels = self.store.conn.execute("SELECT COUNT(*) AS c FROM relations").fetchone()["c"]
+        groups = duplicate_groups(self.store)
+        cognition = shared_cognitive_state(self.repo, self.store)
+        classes = sorted({str(f.get("class")) for f in files if f.get("class")})
+        doc_files = [
+            f
+            for f in files
+            if f.get("class") in {"DOCUMENT", "DATA", "ARCHIVE"}
+            or (f.get("language") or "") in {"pdf", "html", "xml", "markdown"}
+        ]
+        extracted_docs = sum(1 for f in doc_files if f.get("extract_status") in {"EXTRACTED", "MANIFEST"})
+        parsed_ok = sum(1 for f in files if f.get("class") == "CODE" and f.get("parser") and f.get("parser") != "unavailable")
         return {
             "files": len(files),
+            "types_recognized": classes,
             "text_searchable_pct": round(100.0 * text_n / n, 2),
+            "code_structurally_parsed_pct": round(100.0 * parsed_ok / code_n, 2) if code_n else 0.0,
+            "documents_extractable_pct": round(100.0 * extracted_docs / len(doc_files), 2) if doc_files else 0.0,
             "unknown": unknown_n,
             "code_files": code_n,
             "symbols": symbols,
             "relations": rels,
+            "duplicate_groups": len(groups),
             "fts": True,
+            "magika": self.types.health(),
+            "tika": self.extract.health(),
+            "parser": self.parser.health(),
+            "cognition": {
+                "organism_id": cognition["organism_id"],
+                "shared_identity": cognition["shared_identity"],
+                "ccee_wal_writes": cognition["ccee_wal_writes"],
+                "canonical_writes": cognition["canonical_writes"],
+                "teacher_harvest": cognition["teacher_harvest"]["status"],
+                "status": cognition["status"],
+            },
             "package": PACKAGE,
         }

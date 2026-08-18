@@ -8,6 +8,7 @@ from dataclasses import asdict, dataclass, field
 from pathlib import Path
 from typing import Any
 
+from .adapters import is_ast_grep, is_universal_ctags
 from .config import deterministic_id, which
 from .spi import BaseProvider
 from .store import IndexStore
@@ -55,12 +56,18 @@ class CodeParserProvider(BaseProvider):
     supported_types = ("CODE",)
 
     def health(self) -> dict[str, Any]:
+        tree_sitter = bool(which("tree-sitter"))
+        uctags = is_universal_ctags()
+        ast_grep = is_ast_grep()
         return {
             "ok": True,
-            "tree_sitter": bool(which("tree-sitter")),
-            "universal_ctags": False,
+            "tree_sitter": tree_sitter,
+            "universal_ctags": uctags,
+            "ast_grep": ast_grep,
             "python_ast": True,
             "qwen_used": False,
+            "fallback": None if tree_sitter else "python-ast + heuristic-ts/ps1/sql",
+            "gnu_emacs_ctags_rejected": (not uctags) and bool(which("ctags")),
         }
 
     def analyze(self, obj: dict[str, Any]) -> dict[str, Any]:

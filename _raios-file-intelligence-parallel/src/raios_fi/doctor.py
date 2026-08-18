@@ -82,23 +82,36 @@ def run_doctor(var_root: Path, repo: Path, fixtures: Path | None = None) -> dict
         qwen = bool(which("ollama"))
         registry.observe("qwen", qwen, "ollama" if qwen else "OLLAMA_MISSING")
         registry.observe("teachers", False, "not_invoked")
+        registry.observe("magika", bool(health.get("magika", {}).get("magika")), "ADAPTER_PRESENT_BINARY_MISSING")
+        registry.observe("tika", bool(health.get("tika", {}).get("tika")), "ADAPTER_PRESENT_BINARY_MISSING")
         registry.require("index_writable", runtime.var.exists())
         registry.require("ingest", ingest.get("files", 0) >= 0)
         registry.require("false_pass_protection", not contains_forbidden_success("doctor running"))
+        registry.require("ccee_not_written", health.get("cognition", {}).get("ccee_wal_writes") is False)
         detector = VersionDetector(repo)
         pair = detector.pair()
+        repairs = runtime.store.conn.execute("SELECT COUNT(*) AS c FROM repair_candidates").fetchone()["c"]
         result.update(
             {
                 "roots_found": detector.roots(),
                 "files_discovered": health["files"],
+                "types_recognized": health.get("types_recognized"),
                 "unknown_types": health["unknown"],
                 "text_searchable_pct": health["text_searchable_pct"],
+                "code_structurally_parsed_pct": health.get("code_structurally_parsed_pct"),
+                "documents_extractable_pct": health.get("documents_extractable_pct"),
                 "symbols_indexed": health["symbols"],
                 "relationships": health["relations"],
+                "duplicate_groups": health.get("duplicate_groups"),
+                "repair_candidates": repairs,
                 "fts_index": True,
                 "version_pairs": [pair] if pair else [],
                 "tools_available": available,
                 "tools_missing": missing,
+                "magika": health.get("magika"),
+                "tika": health.get("tika"),
+                "parser": health.get("parser"),
+                "cognition": health.get("cognition"),
                 "qwen_health": {"ok": qwen, "reason": None if qwen else "OLLAMA_MISSING"},
                 "teacher_health": {"ok": False, "reason": "NOT_INVOKED"},
                 "index_health": health,
@@ -162,13 +175,14 @@ def write_reports(repo: Path | None = None) -> dict[str, Any]:
         "doctor_status": doctor.get("status"),
         "IMPLEMENTED": [
             "read-only git ls-files discovery + FileObject",
-            "signature+parser-probe type detection (extension never sole authority)",
-            "stdlib text extract + zip manifest",
-            "python ast symbols; heuristic TS/JS/PS1/SQL",
-            "SQLite+FTS5 index and parser cache keyed by sha256+parser_version",
+            "Magika adapter WRAP (detect-only); signature+parser-probe fallback; extension never sole authority",
+            "Tika adapter WRAP (detect-only, no OCR); stdlib decode + zip manifest fallback",
+            "python ast symbols; heuristic TS/JS/PS1/SQL; GNU Emacs ctags rejected as Universal Ctags",
+            "SQLite+FTS5 index and parser cache keyed by sha256+parser_version (type cache no longer clobbers parse cache)",
             "staged search plan (metadata, filename, rg, symbols, fts5); STAGE 8 fail-closed",
             "two-version detector without assuming newer",
-            "text/symbol/schema comparison",
+            "text/symbol/schema/config comparison (jq/yq structural when present)",
+            "proven duplicate groups by identical sha256",
             "rule-first classification",
             "evidence-based architecture edges PROVEN/INFERRED/UNKNOWN",
             "shadow modification txn + rollback; governed apply forbidden",
@@ -178,7 +192,8 @@ def write_reports(repo: Path | None = None) -> dict[str, Any]:
             "file knowledge graph",
             "query-plan JSON compiler",
             "tool economy (LLM not default parser)",
-            "idle loop without model calls",
+            "shared cognitive state contract (identity shared; CCEE WAL not merged)",
+            "idle loop without model calls; foreground preempts",
             "FILE-INTELLIGENCE-DOCTOR fail-closed",
         ],
         "REUSED": [
@@ -188,22 +203,23 @@ def write_reports(repo: Path | None = None) -> dict[str, Any]:
             "sqlite3 FTS5",
             "zipfile",
             "file(1) as Magika fallback",
+            "jq structural JSON canonicalization when present",
+            "yq YAML canonicalization when present",
             "CAS pattern from _raios-a17-integration-wave",
             "fail-closed / doctor pattern from CCEE",
         ],
         "AVAILABLE_NOT_INTEGRATED": [
             {"name": "java", "reason": "present but Tika jar not installed; do not download"},
             {"name": "node/npm/pnpm", "reason": "JS ecosystem present; not used as parser"},
-            {"name": "jq/yq", "reason": "available for config diffs; not wired as default"},
             {"name": "greenlines_brain/dna/ast_analyzer.py", "reason": "historical; not imported to avoid collision"},
             {"name": "brain.py scan_project_metadata", "reason": "stale 316-file index; not authoritative"},
         ],
         "MISSING": [
-            "magika",
-            "apache tika",
+            "magika binary/python package (adapter present)",
+            "apache tika jar/cli (adapter present; java is not tika)",
             "tree-sitter",
-            "universal ctags",
-            "ast-grep",
+            "universal ctags (GNU Emacs ctags present and rejected)",
+            "ast-grep (/usr/bin/sg is Linux set-group, not ast-grep)",
             "semgrep",
             "7z",
             "fd",
@@ -226,6 +242,7 @@ def write_reports(repo: Path | None = None) -> dict[str, Any]:
             "Ollama STAGE 8 synthesis over evidence bundle",
             "full-repo ingest beyond fixture/capped scan",
             "Windows PowerShell A17 live harvest coexistence on operator machine",
+            "shared storage merge with CCEE (intentionally not merged)",
         ],
         "tools": {k: {"available": v.get("available"), "version": v.get("version")} for k, v in available.items()},
         "integrity": {
@@ -246,6 +263,11 @@ def write_reports(repo: Path | None = None) -> dict[str, Any]:
             "RAIOS/V9": "read-only",
             "native_cortex_var": "write-blocked",
             "this_package_only": True,
+            "ccee_wal_writes": False,
+        },
+        "adapters": {
+            "magika": "WRAP_DETECT_ONLY",
+            "tika": "WRAP_DETECT_ONLY_NO_OCR",
         },
     }
     (reports / "FILE-INTELLIGENCE-REALITY-AUDIT.json").write_text(

@@ -1,5 +1,5 @@
 {
-  "generated_at": "2026-08-18T19:44:35Z",
+  "generated_at": "2026-08-18T20:11:47Z",
   "local_tools": [
     {
       "available": true,
@@ -11,6 +11,7 @@
       "path": "/usr/bin/git",
       "purpose": "version control / ls-files discovery",
       "recommended": false,
+      "recommended_action": "reuse-in-place",
       "reuse_value": "high",
       "version": "git version 2.43.0"
     },
@@ -24,6 +25,7 @@
       "path": "/exec-daemon/rg",
       "purpose": "lexical search",
       "recommended": false,
+      "recommended_action": "reuse-in-place",
       "reuse_value": "high",
       "version": "ripgrep 15.1.0-cursor5 (rev c3e3c2f7ec)"
     },
@@ -37,6 +39,7 @@
       "path": null,
       "purpose": "file enumeration",
       "recommended": false,
+      "recommended_action": "reuse-in-place",
       "reuse_value": "none",
       "version": null
     },
@@ -50,6 +53,7 @@
       "path": null,
       "purpose": "content-type detection",
       "recommended": true,
+      "recommended_action": "detect-only wrap; do not install in this wave",
       "reuse_value": "none",
       "version": null
     },
@@ -63,6 +67,7 @@
       "path": null,
       "purpose": "AST parsing",
       "recommended": true,
+      "recommended_action": "detect-only wrap; do not install in this wave",
       "reuse_value": "none",
       "version": null
     },
@@ -76,6 +81,7 @@
       "path": "/usr/bin/ctags",
       "purpose": "symbol extraction",
       "recommended": false,
+      "recommended_action": "reuse-in-place",
       "reuse_value": "medium",
       "version": "ctags (GNU Emacs 29.3)"
     },
@@ -89,6 +95,7 @@
       "path": null,
       "purpose": "structural search",
       "recommended": true,
+      "recommended_action": "detect-only wrap; do not install in this wave",
       "reuse_value": "none",
       "version": null
     },
@@ -102,6 +109,7 @@
       "path": null,
       "purpose": "semantic grep",
       "recommended": false,
+      "recommended_action": "reuse-in-place",
       "reuse_value": "none",
       "version": null
     },
@@ -115,6 +123,7 @@
       "path": null,
       "purpose": "archives",
       "recommended": false,
+      "recommended_action": "reuse-in-place",
       "reuse_value": "none",
       "version": null
     },
@@ -128,6 +137,7 @@
       "path": null,
       "purpose": "document extraction",
       "recommended": true,
+      "recommended_action": "detect-only wrap; do not install in this wave",
       "reuse_value": "none",
       "version": null
     },
@@ -141,6 +151,7 @@
       "path": "/usr/bin/java",
       "purpose": "tika runtime",
       "recommended": false,
+      "recommended_action": "reuse-in-place",
       "reuse_value": "medium",
       "version": "openjdk version \"21.0.10\" 2026-01-20"
     },
@@ -154,6 +165,7 @@
       "path": "/usr/bin/sqlite3",
       "purpose": "metadata + FTS5",
       "recommended": false,
+      "recommended_action": "reuse-in-place",
       "reuse_value": "high",
       "version": "3.45.1 2024-01-30 16:01:20 e876e51a0ed5c5b3126f52e532044363a014bc594cfefa87ffb5b82257ccalt1 (64-bit)"
     },
@@ -167,6 +179,7 @@
       "path": "/usr/bin/python3",
       "purpose": "runtime + ast",
       "recommended": false,
+      "recommended_action": "reuse-in-place",
       "reuse_value": "high",
       "version": "Python 3.12.3"
     },
@@ -180,6 +193,7 @@
       "path": "/exec-daemon/node",
       "purpose": "js/ts ecosystem",
       "recommended": false,
+      "recommended_action": "reuse-in-place",
       "reuse_value": "medium",
       "version": "v22.14.0"
     },
@@ -193,6 +207,7 @@
       "path": "/home/ubuntu/.nvm/versions/node/v22.22.2/bin/npm",
       "purpose": "js packages",
       "recommended": false,
+      "recommended_action": "reuse-in-place",
       "reuse_value": "low",
       "version": "10.9.7"
     },
@@ -206,6 +221,7 @@
       "path": "/home/ubuntu/.nvm/versions/node/v22.22.2/bin/pnpm",
       "purpose": "js packages",
       "recommended": false,
+      "recommended_action": "reuse-in-place",
       "reuse_value": "low",
       "version": "10.33.3"
     },
@@ -219,6 +235,7 @@
       "path": null,
       "purpose": "local models",
       "recommended": true,
+      "recommended_action": "detect-only wrap; do not install in this wave",
       "reuse_value": "none",
       "version": null
     },
@@ -232,6 +249,7 @@
       "path": null,
       "purpose": "containers",
       "recommended": false,
+      "recommended_action": "reuse-in-place",
       "reuse_value": "none",
       "version": null
     },
@@ -245,6 +263,7 @@
       "path": "/usr/bin/jq",
       "purpose": "json query",
       "recommended": false,
+      "recommended_action": "reuse-in-place",
       "reuse_value": "medium",
       "version": "jq-1.7"
     },
@@ -258,6 +277,7 @@
       "path": "/usr/bin/yq",
       "purpose": "yaml query",
       "recommended": false,
+      "recommended_action": "reuse-in-place",
       "reuse_value": "medium",
       "version": "yq 0.0.0"
     },
@@ -271,6 +291,7 @@
       "path": "/usr/bin/file",
       "purpose": "signature probe",
       "recommended": false,
+      "recommended_action": "reuse-in-place",
       "reuse_value": "high",
       "version": "file-5.45"
     },
@@ -284,6 +305,7 @@
       "path": "/usr/bin/unzip",
       "purpose": "zip archives",
       "recommended": false,
+      "recommended_action": "reuse-in-place",
       "reuse_value": "medium",
       "version": "UnZip 6.00 of 20 April 2009, by Debian. Original by Info-ZIP."
     }

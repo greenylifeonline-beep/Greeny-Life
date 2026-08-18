@@ -46,8 +46,8 @@ def inventory() -> list[dict[str, Any]]:
                 version = ((proc.stdout or proc.stderr or "").strip().splitlines() or [""])[0][:160]
             except Exception as exc:  # noqa: BLE001
                 version = f"ERROR:{exc}"
-        # GNU emacs ctags is not universal ctags
         limited = name == "ctags" and version and "Emacs" in version
+        recommended = (not bool(path) or bool(limited)) and reuse == "high"
         rows.append(
             {
                 "name": name,
@@ -59,7 +59,10 @@ def inventory() -> list[dict[str, Any]]:
                 "overlap": None,
                 "reuse_value": reuse if path else "none",
                 "missing": not bool(path) or bool(limited),
-                "recommended": not bool(path) and reuse == "high",
+                "recommended": recommended,
+                "recommended_action": (
+                    "detect-only wrap; do not install in this wave" if recommended else "reuse-in-place"
+                ),
                 "install": False,
             }
         )

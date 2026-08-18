@@ -1,11 +1,16 @@
 {
+  "adapters": {
+    "magika": "WRAP_DETECT_ONLY",
+    "tika": "WRAP_DETECT_ONLY_NO_OCR"
+  },
   "collision_guard": {
     "RAIOS/V9": "read-only",
+    "ccee_wal_writes": false,
     "native_cortex_var": "write-blocked",
     "this_package_only": true
   },
   "doctor": "GATES_SATISFIED",
-  "generated_at": "2026-08-18T19:44:39Z",
+  "generated_at": "2026-08-18T20:11:50Z",
   "package": "_raios-file-intelligence-parallel",
   "repo": "/workspace",
   "tools_missing": [

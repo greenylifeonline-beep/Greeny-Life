@@ -2,16 +2,21 @@
   "do_not_install_in_this_wave": true,
   "gaps": [
     {
+      "action": "WRAP",
       "fallback": "signature+parser-probe",
       "id": "magika",
       "impact": "content-type accuracy",
-      "status": "MISSING"
+      "install": false,
+      "status": "ADAPTER_PRESENT_BINARY_MISSING"
     },
     {
+      "action": "WRAP",
       "fallback": "UNAVAILABLE status, no OCR",
       "id": "tika",
       "impact": "PDF/Office extraction",
-      "status": "MISSING"
+      "install": false,
+      "note": "java present is not tika",
+      "status": "ADAPTER_PRESENT_BINARY_MISSING"
     },
     {
       "fallback": "regex heuristic",
@@ -23,6 +28,7 @@
       "fallback": "python ast only",
       "id": "universal-ctags",
       "impact": "multi-language symbols",
+      "note": "GNU Emacs ctags rejected",
       "status": "MISSING"
     },
     {
@@ -45,7 +51,7 @@
       "status": "MISSING"
     }
   ],
-  "generated_at": "2026-08-18T19:44:36Z",
+  "generated_at": "2026-08-18T20:11:48Z",
   "missing_tools": [
     {
       "available": false,
@@ -57,6 +63,7 @@
       "path": null,
       "purpose": "file enumeration",
       "recommended": false,
+      "recommended_action": "reuse-in-place",
       "reuse_value": "none",
       "version": null
     },
@@ -70,6 +77,7 @@
       "path": null,
       "purpose": "content-type detection",
       "recommended": true,
+      "recommended_action": "detect-only wrap; do not install in this wave",
       "reuse_value": "none",
       "version": null
     },
@@ -83,6 +91,7 @@
       "path": null,
       "purpose": "AST parsing",
       "recommended": true,
+      "recommended_action": "detect-only wrap; do not install in this wave",
       "reuse_value": "none",
       "version": null
     },
@@ -96,6 +105,7 @@
       "path": "/usr/bin/ctags",
       "purpose": "symbol extraction",
       "recommended": false,
+      "recommended_action": "reuse-in-place",
       "reuse_value": "medium",
       "version": "ctags (GNU Emacs 29.3)"
     },
@@ -109,6 +119,7 @@
       "path": null,
       "purpose": "structural search",
       "recommended": true,
+      "recommended_action": "detect-only wrap; do not install in this wave",
       "reuse_value": "none",
       "version": null
     },
@@ -122,6 +133,7 @@
       "path": null,
       "purpose": "semantic grep",
       "recommended": false,
+      "recommended_action": "reuse-in-place",
       "reuse_value": "none",
       "version": null
     },
@@ -135,6 +147,7 @@
       "path": null,
       "purpose": "archives",
       "recommended": false,
+      "recommended_action": "reuse-in-place",
       "reuse_value": "none",
       "version": null
     },
@@ -148,6 +161,7 @@
       "path": null,
       "purpose": "document extraction",
       "recommended": true,
+      "recommended_action": "detect-only wrap; do not install in this wave",
       "reuse_value": "none",
       "version": null
     },
@@ -161,6 +175,7 @@
       "path": null,
       "purpose": "local models",
       "recommended": true,
+      "recommended_action": "detect-only wrap; do not install in this wave",
       "reuse_value": "none",
       "version": null
     },
@@ -174,6 +189,7 @@
       "path": null,
       "purpose": "containers",
       "recommended": false,
+      "recommended_action": "reuse-in-place",
       "reuse_value": "none",
       "version": null
     }

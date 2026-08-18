@@ -5,6 +5,7 @@ from dataclasses import asdict, dataclass
 from pathlib import Path
 from typing import Any
 
+from .adapters import magika_available, magika_classify
 from .config import which
 from .spi import BaseProvider
 
@@ -85,11 +86,22 @@ class FileTypeProvider(BaseProvider):
     accuracy = 0.85
 
     def __init__(self) -> None:
-        self.magika = bool(which("magika"))
+        self.magika = magika_available()
         self.file_bin = which("file")
 
     def health(self) -> dict[str, Any]:
-        return {"ok": True, "magika": self.magika, "file": bool(self.file_bin), "extension_alone": False}
+        from .adapters import magika_health
+
+        magika = magika_health()
+        return {
+            "ok": True,
+            "status": "AVAILABLE" if self.magika else "FALLBACK",
+            "magika": self.magika,
+            "magika_adapter": magika,
+            "file": bool(self.file_bin),
+            "extension_alone": False,
+            "fallback": None if self.magika else "signature+parser-probe",
+        }
 
     def analyze(self, obj: dict[str, Any]) -> dict[str, Any]:
         path = Path(obj["absolute_path"])
@@ -110,7 +122,8 @@ class FileTypeProvider(BaseProvider):
 
 
 def classify_file(path: Path) -> FileTypeResult:
-    magika = bool(which("magika"))
+    magika = magika_available()
+    magika_hit = magika_classify(path) if magika else None
     head = b""
     try:
         with path.open("rb") as fh:
@@ -128,6 +141,27 @@ def classify_file(path: Path) -> FileTypeResult:
             extension_trusted=False,
             magika=magika,
             reason="UNREADABLE",
+        )
+    if magika_hit and magika_hit.get("file_class") and magika_hit["file_class"] != "UNKNOWN":
+        chosen = magika_hit["file_class"]
+        language = magika_hit.get("language")
+        is_text, encoding = _textness(head)
+        mime = None
+        sig = _signature(head)
+        if sig:
+            mime = sig[1]
+        return FileTypeResult(
+            file_class=chosen if chosen in CLASSES else "UNKNOWN",
+            mime=mime,
+            language=language,
+            is_text=is_text and chosen not in {"ARCHIVE", "MEDIA", "BINARY", "DATABASE", "MODEL"},
+            is_binary=not (is_text and chosen not in {"ARCHIVE", "MEDIA", "BINARY", "DATABASE", "MODEL"}),
+            encoding=encoding if is_text else None,
+            confidence=float(magika_hit.get("confidence") or 0.9),
+            detector=str(magika_hit.get("detector") or "magika"),
+            extension_trusted=False,
+            magika=True,
+            reason=magika_hit.get("reason"),
         )
     sig = _signature(head)
     ext_class, language = EXT_HINT.get(path.suffix.lower(), ("UNKNOWN", None))
