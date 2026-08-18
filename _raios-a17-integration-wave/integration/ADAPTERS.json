@@ -1,0 +1,9 @@
+# Integration notes. This wave does not mutate RAIOS/V9 or live A17.4 paths.
+# Future A17.4 completed harvest is consumed read-only via A174HarvestAdapter.
+{
+  "a17_4_input": "_raios-a17-native-cortex/experience/raw/teacher-harvest",
+  "write_policy": "REFUSE",
+  "model_escalation": "_raios-model-escalation",
+  "learning_fabric": "RAIOS-COGNITIVE-LEARNING-FABRIC-REFERENCE-V2",
+  "cognitive_exchange": "RAIOS-SHARED-COGNITIVE-EXCHANGE-REFERENCE-V2"
+}

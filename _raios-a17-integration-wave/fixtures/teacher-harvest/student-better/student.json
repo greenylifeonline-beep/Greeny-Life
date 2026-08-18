@@ -1,0 +1,11 @@
+{
+  "actor": "student",
+  "task_id": "task:sort.stable",
+  "capability": "algorithms.sort",
+  "correct": true,
+  "claims": ["use timsort or mergesort for stability"],
+  "procedures": ["compare keys", "preserve original order"],
+  "heuristics": ["measure before claiming optimal"],
+  "tool_strategies": ["pytest"],
+  "observation_id": "obs:student-better"
+}

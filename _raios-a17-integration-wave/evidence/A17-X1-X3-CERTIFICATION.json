@@ -1,0 +1,93 @@
+{
+  "A17_10_COGNITIVE_LOOP_CORE": "PASS",
+  "A17_4_REAL_DATA_CONSUMPTION": "PENDING",
+  "A17_5_NORMALIZATION": "PASS",
+  "A17_6_DIFFERENTIAL": "PASS",
+  "A17_7_MASTERY_ENGINE": "PASS",
+  "A17_8_RETIREMENT_ENGINE": "PASS",
+  "A17_9_CORTEX_CONTRACT": "PASS",
+  "A18_EXPERIENCE_FOUNDATION": "PASS",
+  "A19_KNOWLEDGE_FOUNDATION": "PASS",
+  "AUTO_CANONICAL_PROMOTION": false,
+  "AUTO_TEACHER_DELETE": false,
+  "DIRECT_CANONICAL_MUTATION": false,
+  "EVENT_CHAIN": {
+    "count": 34,
+    "ok": true,
+    "tip": "f796bcd235ac09df7dbcc4b350bdb478223d5c12c9cedd8fc132dc9a7ff6b6bc"
+  },
+  "RAIOS_V9_MUTATION": false,
+  "SQLITE_INTEGRITY": "ok",
+  "UNIT_TESTS": "PASS",
+  "WAVE_CERTIFICATION": "PASS",
+  "a17_4_status": {
+    "A17_4_REAL_DATA_CONSUMPTION": "PENDING",
+    "expected": "/workspace/_raios-a17-native-cortex/experience/raw/teacher-harvest",
+    "reason": "HARVEST_ROOT_ABSENT"
+  },
+  "identity": {
+    "architecture_generation": "V9",
+    "binding": "V9_CONTINUITY_READ_ONLY",
+    "canonical_branch_observed": "codex-clean",
+    "continuation_protocol": "RAIOS.CONTINUITY.v1",
+    "cortex_is_identity": false,
+    "created_at": "2026-08-18T06:10:49.7681506Z",
+    "evidence_strength": {
+      "branch": "OBSERVED",
+      "repository": "VERIFIED_LOCAL_GIT",
+      "sha": "VERIFIED"
+    },
+    "invariants": [
+      "Do not convert an observation into a stronger fact than the evidence permits.",
+      "Historical truth is not automatically current truth.",
+      "Model output is not canonical truth.",
+      "Background cognition may propose but may not silently promote canonical truth.",
+      "Every meaningful operation must produce an Experience record.",
+      "All production-impacting mutation requires governed promotion."
+    ],
+    "organism_id": "raios.organism.v9",
+    "phase": "V9.0-A",
+    "project": "RAIOS",
+    "repository": "C:/Users/Ghanam/Documents/Codex/Greeny-Life-Repair",
+    "repository_sha_observed": "fb130e232246a00b531835f529f25e4edfae2854",
+    "schema": "raios.identity.v9",
+    "schema_version": "a17-integration-wave.v1"
+  },
+  "observation_id": "obs:2b125de218b86e75fa76f52cf2b88bc8",
+  "reuse": {
+    "a17_4": {
+      "A17_4_REAL_DATA_CONSUMPTION": "PENDING",
+      "expected": "/workspace/_raios-a17-native-cortex/experience/raw/teacher-harvest",
+      "reason": "HARVEST_ROOT_ABSENT"
+    },
+    "cognitive_exchange": {
+      "available": true,
+      "path": "/workspace/RAIOS-SHARED-COGNITIVE-EXCHANGE-REFERENCE-V2",
+      "role": "CAS_PATTERN_REUSED"
+    },
+    "learning_fabric": {
+      "available": true,
+      "path": "/workspace/RAIOS-COGNITIVE-LEARNING-FABRIC-REFERENCE-V2",
+      "reused": true,
+      "role": "REFERENCE_NOT_AUTHORITY"
+    },
+    "model_escalation": {
+      "available": false,
+      "duplicated": false,
+      "path": "/workspace/_raios-model-escalation",
+      "preferred_hierarchy": [
+        "L0_DETERMINISTIC_TOOLS",
+        "L1_NATIVE_MAIN_CORTEX",
+        "L2_SELF_CRITIQUE",
+        "L3_TEMPORARY_TEACHER",
+        "L4_EXTERNAL_FRONTIER"
+      ],
+      "reused": false,
+      "small_teachers_permanent_routing_targets": false
+    },
+    "v9_identity": {
+      "path": "/workspace/RAIOS/V9/continuity/RAIOS-IDENTITY.json",
+      "read_only": true
+    }
+  }
+}

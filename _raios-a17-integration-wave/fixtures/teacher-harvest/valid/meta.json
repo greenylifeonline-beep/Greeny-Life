@@ -1,0 +1,10 @@
+{
+  "teacher_id": "teacher:granite4-3b",
+  "model": "granite4:3b",
+  "task_id": "task:python.repair.demo",
+  "capability": "python.repair",
+  "observed_at": "2026-08-18T00:00:00Z",
+  "raw_text": "claim: use ast.parse before rewrite\nprocedure: 1) parse 2) patch 3) retest\nheuristic: fail closed on syntax error\nfailure: ignored syntax token\nrecovery: restore previous file bytes\ntool: pytest then linter\nexample: broken def f(\ncounterexample: mutating production without tests\ntransfer: apply same parse-patch-retest to json configs\nskill: syntax-repair-loop\ntraining: sft-parse-patch\nuncertain: whether tokenizer spans are stable\nself-report: I am highly capable at all programming\nstep: 1) parse the module\nstep: 2) apply the patch",
+  "claims": ["use ast.parse before rewrite"],
+  "self_reported_claims": ["I am highly capable at all programming"]
+}
