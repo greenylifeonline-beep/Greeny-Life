@@ -3,13 +3,15 @@
 from __future__ import annotations
 
 import difflib
+import json
 from dataclasses import asdict, dataclass
 from pathlib import Path
 from typing import Any
 
-from raios_fi.config import sha256_bytes
-from raios_fi.parse import parse_file
-from raios_fi.store import Store
+from .adapters import jq_available, yq_available
+from .config import run, sha256_bytes
+from .parse import parse_file
+from .store import IndexStore, Store
 
 
 @dataclass(frozen=True)
@@ -30,7 +32,7 @@ class ComparisonResult:
 
 
 class ComparisonEngine:
-    def __init__(self, store: Store | None = None) -> None:
+    def __init__(self, store: IndexStore | Store | None = None) -> None:
         self.store = store
 
     def text_diff(self, a: Path, b: Path) -> ComparisonResult:
@@ -109,3 +111,104 @@ class ComparisonEngine:
             sha256_bytes(a.read_bytes()),
             sha256_bytes(b.read_bytes()),
         )
+
+    def config_diff(self, a: Path, b: Path) -> ComparisonResult:
+        """Structural JSON/YAML diff. jq/yq preferred when present; newer is not assumed better."""
+        ba, bb = a.read_bytes(), b.read_bytes()
+        ha, hb = sha256_bytes(ba), sha256_bytes(bb)
+        if ha == hb:
+            return ComparisonResult(
+                "none",
+                "identical_hash",
+                "none",
+                (),
+                (),
+                "none",
+                1.0,
+                ("same_sha256",),
+                ha,
+                hb,
+            )
+        sa, sb = a.suffix.lower(), b.suffix.lower()
+        provider = "text"
+        canon_a: str | None = None
+        canon_b: str | None = None
+        if sa == ".json" and sb == ".json":
+            canon_a, pa = _canonical_json(a)
+            canon_b, pb = _canonical_json(b)
+            if canon_a is not None and canon_b is not None:
+                provider = pa if pa == pb else f"{pa}+{pb}"
+        elif sa in {".yaml", ".yml"} and sb in {".yaml", ".yml"}:
+            canon_a, pa = _canonical_yaml(a)
+            canon_b, pb = _canonical_yaml(b)
+            if canon_a is not None and canon_b is not None:
+                provider = pa if pa == pb else f"{pa}+{pb}"
+        if canon_a is not None and canon_b is not None:
+            same = canon_a == canon_b
+            return ComparisonResult(
+                "config_equivalent" if same else "config_modified",
+                f"{provider}_canonical",
+                "config",
+                (),
+                (),
+                "none" if same else "medium",
+                0.9 if provider in {"jq", "yq"} else 0.75,
+                (f"provider={provider}", f"equivalent={same}"),
+                ha,
+                hb,
+            )
+        text = self.text_diff(a, b)
+        return ComparisonResult(
+            "config_text_modified" if text.what_changed != "none" else "none",
+            "config_text_fallback",
+            "config",
+            text.dependencies,
+            text.tests_affected,
+            text.merge_risk,
+            min(text.confidence, 0.7),
+            text.evidence + ("jq_or_yq_structural_unavailable",),
+            ha,
+            hb,
+        )
+
+
+def _canonical_json(path: Path) -> tuple[str | None, str]:
+    if jq_available():
+        proc = run(["jq", "-S", ".", str(path)])
+        if proc.returncode == 0 and proc.stdout is not None:
+            return proc.stdout, "jq"
+    try:
+        payload = json.dumps(
+            json.loads(path.read_text(encoding="utf-8")),
+            sort_keys=True,
+            separators=(",", ":"),
+        )
+        return payload, "python-json"
+    except (OSError, json.JSONDecodeError, UnicodeError):
+        return None, "none"
+
+
+def _canonical_yaml(path: Path) -> tuple[str | None, str]:
+    if not yq_available():
+        return None, "none"
+    cmds: list[list[str]] = []
+    ver = run(["yq", "--version"])
+    blob = ((ver.stdout or "") + (ver.stderr or "")).lower()
+    if "mikefarah" in blob:
+        cmds.append(["yq", "-o=json", str(path)])
+    cmds.extend(
+        [
+            ["yq", "-o=json", str(path)],
+            ["yq", ".", str(path)],
+        ]
+    )
+    seen: set[str] = set()
+    for cmd in cmds:
+        key = " ".join(cmd)
+        if key in seen:
+            continue
+        seen.add(key)
+        proc = run(cmd)
+        if proc.returncode == 0 and (proc.stdout or "").strip():
+            return proc.stdout, "yq"
+    return None, "none"

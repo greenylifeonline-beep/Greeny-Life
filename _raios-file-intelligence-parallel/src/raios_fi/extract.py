@@ -5,8 +5,26 @@ import zipfile
 from pathlib import Path
 from typing import Any
 
-from .config import FailClosed, which
+from .adapters import tika_available, tika_extract
 from .spi import BaseProvider
+
+TIKA_TYPES = {
+    "pdf",
+    "doc",
+    "docx",
+    "xls",
+    "xlsx",
+    "ppt",
+    "pptx",
+    "odt",
+    "ods",
+    "odp",
+    "epub",
+    "html",
+    "xml",
+    "eml",
+    "msg",
+}
 
 
 class TextExtractionProvider(BaseProvider):
@@ -16,28 +34,42 @@ class TextExtractionProvider(BaseProvider):
     accuracy = 0.7
 
     def health(self) -> dict[str, Any]:
-        return {"ok": True, "tika": bool(which("tika")), "ocr": False}
+        from .adapters import tika_health
+
+        tika = tika_health()
+        return {
+            "ok": True,
+            "status": "AVAILABLE" if tika_available() else "FALLBACK",
+            "tika": tika_available(),
+            "tika_adapter": tika,
+            "ocr": False,
+            "fallback": "stdlib-decode/zipfile",
+        }
 
     def analyze(self, obj: dict[str, Any]) -> dict[str, Any]:
         path = Path(obj["absolute_path"])
         src_hash = obj.get("sha256")
         if obj.get("class") == "ARCHIVE" or path.suffix.lower() == ".zip" or obj.get("mime") == "application/zip":
             return self._zip(path, src_hash)
-        if obj.get("language") in {"pdf"} or path.suffix.lower() == ".pdf" or (obj.get("mime") == "application/pdf"):
-            if which("tika"):
-                return {"status": "TIKA_AVAILABLE_NOT_INVOKED", "extractor": "tika"}
-            return {
-                "status": "UNAVAILABLE",
-                "extractor": None,
-                "reason": "TIKA_MISSING",
-                "text": None,
-                "source_hash": src_hash,
-                "immutable_source": True,
-            }
-        if obj.get("is_text"):
-            enc = obj.get("encoding") or "utf-8"
+        lang = (obj.get("language") or "").lower()
+        suffix = path.suffix.lower().lstrip(".")
+        mime = obj.get("mime") or ""
+        needs_tika = (
+            lang in TIKA_TYPES
+            or suffix in TIKA_TYPES
+            or mime.startswith(("application/pdf", "application/msword", "application/vnd."))
+        )
+        if needs_tika:
+            extracted = tika_extract(path)
+            extracted["source_hash"] = src_hash
+            extracted["immutable_source"] = True
+            extracted["ocr"] = False
+            if extracted.get("reason"):
+                extracted["errors"] = [extracted["reason"]]
+            return extracted
+        if obj.get("is_text") or _looks_text(path):
             raw = path.read_bytes()
-            text = raw.decode(enc, errors="replace")
+            text, enc = decode_text(raw, obj.get("encoding"))
             return {
                 "status": "EXTRACTED",
                 "extractor": "stdlib-decode",
@@ -69,3 +101,26 @@ class ArchiveProvider(BaseProvider):
 
     def analyze(self, obj: dict[str, Any]) -> dict[str, Any]:
         return TextExtractionProvider().analyze(obj)
+
+
+def decode_text(raw: bytes, encoding: str | None = None) -> tuple[str, str]:
+    if encoding in {"utf-16", "utf-16-le", "utf-16-be"}:
+        return raw.decode("utf-16", errors="replace"), "utf-16"
+    if encoding in {"utf-8", "utf-8-sig"}:
+        return raw.decode(encoding, errors="replace"), encoding
+    if raw.startswith(b"\xff\xfe") or raw.startswith(b"\xfe\xff"):
+        return raw.decode("utf-16", errors="replace"), "utf-16"
+    if raw.startswith(b"\xef\xbb\xbf"):
+        return raw.decode("utf-8-sig", errors="replace"), "utf-8-sig"
+    try:
+        return raw.decode("utf-8"), "utf-8"
+    except UnicodeDecodeError:
+        return raw.decode("utf-8", errors="replace"), "utf-8-replace"
+
+
+def _looks_text(path: Path) -> bool:
+    try:
+        head = path.read_bytes()[:8]
+    except OSError:
+        return False
+    return head.startswith((b"\xff\xfe", b"\xfe\xff", b"\xef\xbb\xbf"))

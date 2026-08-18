@@ -91,12 +91,11 @@ class FileDiscoveryProvider(BaseProvider):
         n = 0
         for path in self.iter_files(root):
             rec = self.file_object(path, root, root_id)
+            prior = store.conn.execute(
+                "SELECT 1 FROM content_types WHERE sha256=?", (rec["sha256"],)
+            ).fetchone()
+            rec["from_cache"] = bool(prior)
             store.upsert_file(rec)
-            cached = store.cache_get(rec["sha256"])
-            if cached:
-                rec["from_cache"] = True
-            else:
-                store.cache_put(rec["sha256"], {"class": rec["class"], "language": rec.get("language")})
             if rec.get("is_text") and rec["size"] <= MAX_INDEX_BYTES:
                 try:
                     text = Path(rec["absolute_path"]).read_text(encoding=rec.get("encoding") or "utf-8")
