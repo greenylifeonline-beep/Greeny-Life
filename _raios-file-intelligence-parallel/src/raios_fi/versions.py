@@ -8,6 +8,7 @@ from typing import Any
 
 from .config import deterministic_id, repo_root_from
 from .discovery import FileDiscoveryProvider
+from .identity import match_records
 from .store import IndexStore
 
 
@@ -132,21 +133,38 @@ def differential(
     modified = [name for name in shared if map_a[name]["sha256"] != map_b[name]["sha256"]]
     renamed: list[dict[str, Any]] = []
     moved: list[dict[str, Any]] = []
+    identity_matches: list[dict[str, Any]] = []
+    semantic_eq: list[dict[str, Any]] = []
     used_b: set[str] = set()
     for name in only_a:
         digest = map_a[name]["sha256"]
         for other, rec in map_b.items():
             if other in used_b:
                 continue
-            if rec["sha256"] == digest:
-                item = {"a": name, "b": other, "sha256": digest, "kind": "MOVED_OR_RENAMED"}
+            ident = match_records(map_a[name], rec)
+            if ident.basename_only:
+                continue
+            if ident.relation in {"RENAMED", "MOVED", "SAME"} and ident.signals.get("exact_hash"):
+                item = {
+                    "a": name,
+                    "b": other,
+                    "sha256": digest,
+                    "kind": ident.relation,
+                    "identity": ident.to_dict(),
+                }
                 renamed.append(item)
-                parent_a = "/".join(name.split("/")[:-1])
-                parent_b = "/".join(other.split("/")[:-1])
-                if Path(name).name == Path(other).name and parent_a != parent_b:
-                    moved.append({**item, "kind": "MOVED"})
+                if ident.relation == "MOVED":
+                    moved.append(item)
                 used_b.add(other)
+                identity_matches.append(item)
                 break
+            if ident.relation == "SEMANTIC_EQUIVALENT":
+                semantic_eq.append({"a": name, "b": other, "identity": ident.to_dict()})
+    for name in shared:
+        ident = match_records(map_a[name], map_b[name])
+        identity_matches.append({"a": name, "b": name, "kind": ident.relation, "identity": ident.to_dict()})
+        if ident.relation == "SEMANTIC_EQUIVALENT":
+            semantic_eq.append({"a": name, "b": name, "identity": ident.to_dict()})
     return VersionDifferential(
         root_a=a,
         root_b=b,
@@ -157,12 +175,13 @@ def differential(
         same_hash=same_hash,
         modified=modified,
         renamed_or_moved=renamed,
-        semantic_equivalent_candidates=renamed,
+        semantic_equivalent_candidates=semantic_eq or renamed,
         counts={
             "a": len(map_a),
             "b": len(map_b),
             "shared": len(shared),
             "modified": len(modified),
+            "identity_matches": len(identity_matches),
         },
         renamed_candidate=renamed,
         moved_candidate=moved,

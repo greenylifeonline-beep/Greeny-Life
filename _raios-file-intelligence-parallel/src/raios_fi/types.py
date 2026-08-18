@@ -1,7 +1,7 @@
 """File type intelligence. Magika preferred; extension is never sole authority."""
 from __future__ import annotations
 
-from dataclasses import asdict, dataclass
+from dataclasses import asdict, dataclass, replace
 from pathlib import Path
 from typing import Any
 
@@ -74,6 +74,8 @@ class FileTypeResult:
     extension_trusted: bool
     magika: bool
     reason: str | None = None
+    physical_type: str = "UNKNOWN"
+    logical_type: str = "UNKNOWN"
 
     def to_dict(self) -> dict[str, Any]:
         return asdict(self)
@@ -118,6 +120,8 @@ class FileTypeProvider(BaseProvider):
             "detector": typed.detector,
             "magika": typed.magika,
             "reason": typed.reason,
+            "physical_type": typed.physical_type,
+            "logical_type": typed.logical_type,
         }
 
 
@@ -129,18 +133,22 @@ def classify_file(path: Path) -> FileTypeResult:
         with path.open("rb") as fh:
             head = fh.read(256)
     except OSError:
-        return FileTypeResult(
-            file_class="UNKNOWN",
-            mime=None,
-            language=None,
-            is_text=False,
-            is_binary=True,
-            encoding=None,
-            confidence=0.0,
-            detector="unreadable",
-            extension_trusted=False,
-            magika=magika,
-            reason="UNREADABLE",
+        return _with_physical_logical(
+            FileTypeResult(
+                file_class="UNKNOWN",
+                mime=None,
+                language=None,
+                is_text=False,
+                is_binary=True,
+                encoding=None,
+                confidence=0.0,
+                detector="unreadable",
+                extension_trusted=False,
+                magika=magika,
+                reason="UNREADABLE",
+            ),
+            path,
+            head,
         )
     if magika_hit and magika_hit.get("file_class") and magika_hit["file_class"] != "UNKNOWN":
         chosen = magika_hit["file_class"]
@@ -150,18 +158,22 @@ def classify_file(path: Path) -> FileTypeResult:
         sig = _signature(head)
         if sig:
             mime = sig[1]
-        return FileTypeResult(
-            file_class=chosen if chosen in CLASSES else "UNKNOWN",
-            mime=mime,
-            language=language,
-            is_text=is_text and chosen not in {"ARCHIVE", "MEDIA", "BINARY", "DATABASE", "MODEL"},
-            is_binary=not (is_text and chosen not in {"ARCHIVE", "MEDIA", "BINARY", "DATABASE", "MODEL"}),
-            encoding=encoding if is_text else None,
-            confidence=float(magika_hit.get("confidence") or 0.9),
-            detector=str(magika_hit.get("detector") or "magika"),
-            extension_trusted=False,
-            magika=True,
-            reason=magika_hit.get("reason"),
+        return _with_physical_logical(
+            FileTypeResult(
+                file_class=chosen if chosen in CLASSES else "UNKNOWN",
+                mime=mime,
+                language=language,
+                is_text=is_text and chosen not in {"ARCHIVE", "MEDIA", "BINARY", "DATABASE", "MODEL"},
+                is_binary=not (is_text and chosen not in {"ARCHIVE", "MEDIA", "BINARY", "DATABASE", "MODEL"}),
+                encoding=encoding if is_text else None,
+                confidence=float(magika_hit.get("confidence") or 0.9),
+                detector=str(magika_hit.get("detector") or "magika"),
+                extension_trusted=False,
+                magika=True,
+                reason=magika_hit.get("reason"),
+            ),
+            path,
+            head,
         )
     sig = _signature(head)
     ext_class, language = EXT_HINT.get(path.suffix.lower(), ("UNKNOWN", None))
@@ -205,19 +217,87 @@ def classify_file(path: Path) -> FileTypeResult:
         else:
             confidence = 0.1
             detector = "unknown-binary"
-    return FileTypeResult(
-        file_class=chosen if chosen in CLASSES else "UNKNOWN",
-        mime=mime,
-        language=language,
-        is_text=is_text and chosen not in {"ARCHIVE", "MEDIA", "BINARY", "DATABASE", "MODEL"},
-        is_binary=not (is_text and chosen not in {"ARCHIVE", "MEDIA", "BINARY", "DATABASE", "MODEL"}),
-        encoding=encoding if is_text else None,
-        confidence=confidence,
-        detector=detector,
-        extension_trusted=False,
-        magika=magika,
-        reason=None if chosen != "UNKNOWN" else "UNCLAIMED",
+    return _with_physical_logical(
+        FileTypeResult(
+            file_class=chosen if chosen in CLASSES else "UNKNOWN",
+            mime=mime,
+            language=language,
+            is_text=is_text and chosen not in {"ARCHIVE", "MEDIA", "BINARY", "DATABASE", "MODEL"},
+            is_binary=not (is_text and chosen not in {"ARCHIVE", "MEDIA", "BINARY", "DATABASE", "MODEL"}),
+            encoding=encoding if is_text else None,
+            confidence=confidence,
+            detector=detector,
+            extension_trusted=False,
+            magika=magika,
+            reason=None if chosen != "UNKNOWN" else "UNCLAIMED",
+        ),
+        path,
+        head,
     )
+
+
+def _with_physical_logical(result: FileTypeResult, path: Path, head: bytes) -> FileTypeResult:
+    physical = "UNKNOWN"
+    logical = "UNKNOWN"
+    if head.startswith(b"PK\x03\x04"):
+        physical = "ZIP"
+        logical = _zip_logical(path)
+    elif head.startswith(b"%PDF"):
+        physical = "PDF"
+        logical = "PDF_DOCUMENT"
+    elif head.startswith(b"\x89PNG"):
+        physical = "PNG"
+        logical = "RASTER_IMAGE"
+    elif head.startswith(b"\xff\xd8\xff"):
+        physical = "JPEG"
+        logical = "RASTER_IMAGE"
+    elif head.startswith(b"SQLite format 3"):
+        physical = "SQLITE"
+        logical = "SQLITE_DATABASE"
+    elif head.startswith(b"\x7fELF"):
+        physical = "ELF"
+        logical = "NATIVE_BINARY"
+    elif result.is_text:
+        physical = "TEXT"
+        if result.language:
+            logical = f"{result.language.upper()}_SOURCE" if result.file_class == "CODE" else f"{result.language.upper()}_TEXT"
+        elif result.file_class == "CODE":
+            logical = "SOURCE"
+        elif result.file_class == "CONFIG":
+            logical = "CONFIG_TEXT"
+        elif result.file_class == "DATA":
+            logical = "STRUCTURED_DATA"
+        elif result.file_class == "DOCUMENT":
+            logical = "TEXT_DOCUMENT"
+        else:
+            logical = "TEXT"
+    elif result.file_class == "BINARY":
+        physical = "BINARY"
+        logical = "OPAQUE_BINARY"
+    return replace(result, physical_type=physical, logical_type=logical)
+
+
+def _zip_logical(path: Path) -> str:
+    import zipfile
+
+    suffix = path.suffix.lower()
+    ooxml = {".docx", ".xlsx", ".pptx", ".dotx", ".xltx"}
+    odf = {".odt", ".ods", ".odp"}
+    names: set[str] = set()
+    try:
+        with zipfile.ZipFile(path) as zf:
+            names = set(zf.namelist()[:80])
+    except (OSError, zipfile.BadZipFile):
+        names = set()
+    if "[Content_Types].xml" in names or any(n.startswith(("word/", "xl/", "ppt/")) for n in names):
+        return "OOXML_DOCUMENT"
+    if any(n.startswith("META-INF/") for n in names) and suffix in odf:
+        return "ODF_DOCUMENT"
+    if suffix in ooxml:
+        return "OOXML_CANDIDATE_EXT_ONLY"
+    if suffix in odf:
+        return "ODF_CANDIDATE_EXT_ONLY"
+    return "ZIP_ARCHIVE"
 
 
 def _signature(head: bytes) -> tuple | None:

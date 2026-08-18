@@ -8,12 +8,14 @@ from .architecture import ArchitectureReconstructor
 from .archive import ArchiveEngine
 from .classify import classify_path
 from .cognition import shared_cognitive_state
-from .config import FailClosed, PACKAGE, package_root, repo_root_from
+from .config import FailClosed, PACKAGE, package_root, repo_root_from, sha256_text
 from .discovery import FileDiscoveryProvider
+from .disagreement import persist_disagreement, resolve_votes
 from .duplicates import duplicate_groups
 from .economy import ToolEconomy
 from .extract import TextExtractionProvider
 from .graph import FileKnowledgeGraph
+from .identity import normalized_hash
 from .idle import IdleLoop
 from .parse import CodeParserProvider, parse_file
 from .providers import default_registry
@@ -64,7 +66,59 @@ class FileIntelligenceRuntime:
             rec["extract_status"] = extracted.get("status")
             if extracted.get("text"):
                 extracted_n += 1
-            classify_path(Path(rec["absolute_path"]))
+            classified = classify_path(Path(rec["absolute_path"]))
+            rec.update(
+                {
+                    "physical_type": classified.physical_type,
+                    "logical_type": classified.logical_type,
+                    "domain": classified.domain,
+                    "subsystem": classified.subsystem,
+                    "role": classified.role,
+                    "authority_class": classified.authority_class,
+                    "temporal_scope": classified.temporal_scope,
+                    "verification_state": classified.verification_state,
+                    "knowledge_state": classified.knowledge_state,
+                    "lifecycle": classified.lifecycle,
+                    "version_role": classified.version_role,
+                    "criticality": classified.criticality,
+                    "change_risk": classified.change_risk,
+                    "active_state": classified.active_state,
+                    "generated_state": classified.generated_state,
+                    "provenance": classified.provenance,
+                    "evidence_confidence": classified.evidence_confidence,
+                }
+            )
+            ext_hint = Path(rec["absolute_path"]).suffix.lower()
+            from .types import EXT_HINT
+
+            ext_vote = (EXT_HINT.get(ext_hint) or ("UNKNOWN", "UNKNOWN"))[1] or (EXT_HINT.get(ext_hint) or ("UNKNOWN", None))[0]
+            votes = {
+                "path_rules": str(ext_vote or "UNKNOWN"),
+                "signatures": str(rec.get("physical_type") or rec.get("class") or "UNAVAILABLE"),
+                "magika": "UNAVAILABLE",
+                "parser": str(parsed.language or rec.get("language") or "UNAVAILABLE"),
+                "tree_sitter": "UNAVAILABLE",
+                "ctags": "UNAVAILABLE",
+                "dependency_graph": "UNAVAILABLE",
+                "git": "UNAVAILABLE",
+                "semantic_retrieval": "UNAVAILABLE",
+                "qwen": "UNAVAILABLE",
+                "teachers": "UNAVAILABLE",
+            }
+            disagree = resolve_votes(votes, file_id=rec["file_id"], relative_path=rec["relative_path"])
+            rec["disagreement"] = disagree.resolution
+            if disagree.disagreeing_providers:
+                persist_disagreement(self.store, disagree)
+            try:
+                raw = Path(rec["absolute_path"]).read_bytes()
+                rec["normalized_sha256"] = normalized_hash(raw)
+            except OSError:
+                rec["normalized_sha256"] = None
+            if rec.get("class") == "CODE":
+                names = sorted({s.qualified_name for s in parsed.symbols})
+                blob = "|".join(names + ["#"] + sorted(parsed.imports))
+                rec["symbol_fingerprint"] = sha256_text(blob) if names or parsed.imports else None
+                rec["imports"] = parsed.imports
             self.store.upsert_file(rec)
             parsed_n += 1
         groups = duplicate_groups(self.store)
@@ -74,6 +128,8 @@ class FileIntelligenceRuntime:
                 "extracted_text": extracted_n,
                 "unknown": unknown_n,
                 "duplicate_groups": len(groups),
+                "disagreements": len(self.store.disagreements()),
+                "cache_hit_ratio": self.store.cache_hit_ratio(),
                 "package": PACKAGE,
             }
         )

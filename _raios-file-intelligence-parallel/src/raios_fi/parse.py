@@ -88,7 +88,6 @@ class SymbolProvider(CodeParserProvider):
 
 
 def parse_file(path: Path, file_id: str | None = None, store: IndexStore | None = None) -> ParseResult:
-    typed = classify_file(path)
     fid = file_id or str(path)
     digest = None
     try:
@@ -96,9 +95,10 @@ def parse_file(path: Path, file_id: str | None = None, store: IndexStore | None 
     except OSError:
         digest = None
     if store is not None and digest:
-        cached = store.cache_get(digest)
+        cached = store.cache_get(digest, kind="parse")
         if cached and cached.get("kind") == "parse":
             return _parse_from_cache(cached)
+    typed = classify_file(path)
     lang = typed.language
     if lang == "python" or path.suffix.lower() == ".py" or typed.detector.startswith("parser-probe-python"):
         result = _python_parse(path, fid)
@@ -117,7 +117,7 @@ def parse_file(path: Path, file_id: str | None = None, store: IndexStore | None 
             qwen_used=False,
         )
     if store is not None and digest:
-        store.cache_put(digest, {"kind": "parse", **result.to_dict()})
+        store.cache_put(digest, {"kind": "parse", **result.to_dict()}, kind="parse")
     return result
 
 
