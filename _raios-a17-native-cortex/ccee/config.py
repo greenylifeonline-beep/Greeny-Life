@@ -107,3 +107,10 @@ def contains_forbidden_success(text: str) -> list[str]:
         if re.search(rf"(?<![A-Z0-9_]){token}(?![A-Z0-9_])", text.upper()):
             hits.append(token)
     return hits
+
+
+def authoritative_exit(exit_code: Any, default: int = 1) -> int:
+    """0 is success. Never coerce 0 to 1 via `or`."""
+    if exit_code is None:
+        return default
+    return int(exit_code)

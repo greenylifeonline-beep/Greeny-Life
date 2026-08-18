@@ -131,6 +131,28 @@ class FalsePassRegression(unittest.TestCase):
 
         self._failed("stale", fn)
 
+    def test_13_encoding_strict_utf8_does_not_drop_returncode(self) -> None:
+        def fn(reg: AssertionRegistry):
+            from ccee.process_kernel import encoding_safe_run
+
+            obs = encoding_safe_run(
+                [sys.executable, "-c", "import sys; sys.stdout.buffer.write(b'\\xe9'); raise SystemExit(3)"]
+            )
+            if obs.returncode != 3:
+                raise FailClosed("RETURNCODE_LOST")
+            if obs.stdout is None:
+                raise FailClosed("STDOUT_NONE")
+            raise FailClosed("EXPECTED_NONZERO_AFTER_DECODE")
+
+        self._failed("encoding", fn)
+
+    def test_14_printed_pass_after_child_failure(self) -> None:
+        def fn(reg: AssertionRegistry):
+            self.runner.run_child([sys.executable, "-c", "print('PASS'); raise SystemExit(1)"])
+
+        result = self._failed("liar", fn)
+        self.assertIn("FALSE_PASS", result["error"])
+
     def test_false_pass_impossible_on_success_path(self) -> None:
         def fn(reg: AssertionRegistry):
             reg.require("ResponseHash", True)

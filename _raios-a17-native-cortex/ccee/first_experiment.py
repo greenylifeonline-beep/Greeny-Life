@@ -26,26 +26,9 @@ HISTORICAL_FACTS = {
 
 
 def diagnose_atomic_failure(case: dict[str, Any]) -> str:
-    blob = json.dumps(case, sort_keys=True).lower().replace("-", "_")
-    if case.get("http") == 200 and (case.get("invalid_semantic") or case.get("report_integrity") is False):
-        return "HTTP_200_INVALID_SEMANTIC"
-    if "evidence_sha" in blob or "evidencesha256" in blob.replace("_", ""):
-        return "REPORT_INTEGRITY"
-    if case.get("http") in {500, 502, 503, 504} or "ollama_server_error" in blob:
-        return "OLLAMA_SERVER_ERROR"
-    if "responsehash" in blob.replace("_", "") or "response_hash" in blob:
-        return "MISSING_RESPONSE_HASH"
-    if "missing_final" in blob:
-        return "MISSING_FINAL"
-    if "false_pass" in blob or (case.get("printed_pass") and case.get("failed")):
-        return "FALSE_PASS"
-    if "child" in blob and ("exit" in blob or "returncode" in blob):
-        return "CHILD_EXIT_NONZERO"
-    if "powershell" in blob and "else" in blob:
-        return "INTERACTIVE_PARSE"
-    if "timeout" in blob:
-        return "TIMEOUT"
-    return "UNCLASSIFIED"
+    from .root_cause import classify_failure
+
+    return classify_failure(case)
 
 
 def load_historical(repo_root: Path) -> dict[str, Any]:

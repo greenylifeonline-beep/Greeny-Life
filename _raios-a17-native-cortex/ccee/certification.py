@@ -167,17 +167,14 @@ class AtomicCertificationRunner:
         }
 
     def run_child(self, argv: list[str], cwd: str | Path | None = None, timeout: float = 30.0) -> subprocess.CompletedProcess[str]:
+        from .process_kernel import encoding_safe_run
+
         try:
-            completed = subprocess.run(
-                argv,
-                cwd=str(cwd) if cwd else None,
-                capture_output=True,
-                text=True,
-                timeout=timeout,
-            )
-        except subprocess.TimeoutExpired as exc:
-            self.ledger.persist_failure({"name": "timeout", "argv": argv, "error": "TIMEOUT"})
-            raise FailClosed("CHILD_TIMEOUT") from exc
+            obs = encoding_safe_run(argv, cwd=cwd, timeout=timeout)
+        except FailClosed as exc:
+            self.ledger.persist_failure({"name": "child", "argv": list(argv), "error": str(exc)})
+            raise
+        completed = obs.as_completed()
         self.detector.scan(completed.stdout + completed.stderr, gates_complete=completed.returncode == 0)
         self.propagator.check(completed)
         return completed

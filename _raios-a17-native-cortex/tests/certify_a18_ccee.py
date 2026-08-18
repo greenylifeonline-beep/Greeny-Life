@@ -1,8 +1,5 @@
-#!/usr/bin/env python3
-"""Atomic CCEE foundation certification. Child failure invalidates the parent."""
-from __future__ import annotations
-
 import json
+import os
 import subprocess
 import sys
 from pathlib import Path
@@ -13,15 +10,15 @@ sys.path.insert(0, str(NATIVE))
 
 from ccee.config import canonical_json, sha256_text  # noqa: E402
 from ccee.doctor import run_doctor, v9_clean  # noqa: E402
+from ccee.process_kernel import encoding_safe_run  # noqa: E402
 
 
 def main() -> int:
-    unit = subprocess.run(
+    unit = encoding_safe_run(
         [sys.executable, "-m", "unittest", "discover", "-s", str(NATIVE / "tests"), "-v"],
-        cwd=str(NATIVE),
-        capture_output=True,
-        text=True,
-        env={**dict(**{k: v for k, v in __import__("os").environ.items()}), "PYTHONPATH": str(NATIVE)},
+        cwd=NATIVE,
+        env={**os.environ, "PYTHONPATH": str(NATIVE)},
+        timeout=180.0,
     )
     combined = (unit.stdout or "") + (unit.stderr or "")
     tests_ok = combined.count(" ... ok")

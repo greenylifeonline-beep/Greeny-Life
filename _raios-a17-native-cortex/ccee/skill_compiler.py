@@ -28,6 +28,7 @@ ZERO_LLM_CANDIDATES = (
     "failure_classification",
     "report_integrity",
     "dependency_inspection",
+    "encoding_safe_subprocess",
 )
 
 

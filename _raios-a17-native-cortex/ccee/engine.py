@@ -36,6 +36,7 @@ from .transfer import TransferEngine
 from .wal import CognitiveWAL
 from .workers import WorkerPool
 from .certification import AtomicCertificationRunner, EvidenceLedger
+from .nervous_system import DiagnosticNervousSystem
 
 
 class CCEE:
@@ -78,6 +79,17 @@ class CCEE:
         evidence_root = Path(self.root) / "evidence"
         self.evidence = EvidenceLedger(evidence_root, repo_root=self.repo_root)
         self.cert = AtomicCertificationRunner(self.evidence)
+        self.nervous = DiagnosticNervousSystem(
+            self.root / "nervous",
+            ledger=self.ledger,
+            bus=self.bus,
+            causal=self.causal,
+            metabolism=self.metabolism,
+            skills=self.skills,
+            governor=self.governor,
+            meta=self.meta,
+            repo_root=self.repo_root,
+        )
 
     def close(self) -> None:
         self.workers.shutdown()
