@@ -1,0 +1,169 @@
+{
+  "package_name": "RAIOS-SHARED-COGNITIVE-EXCHANGE-REFERENCE-V2",
+  "schema_version": "cognitive-exchange.v2",
+  "migration_versions": [
+    1
+  ],
+  "verdict": "REFERENCE_READY",
+  "file_tree": {
+    ".gitignore": "a3571d941831a75937ab774a3249abebaea4ae0e63026110a4bf5abb7e5ae794",
+    "CERTIFICATION.json": "381b891c37e6720f47cb527ba76b837fbf0e05bdb0e9bb7ce13eab1e97392bfd",
+    "README.md": "50a3d52222f3e608662d692233248d7df88fa7f02be10d12f3fff918413a8fcf",
+    "WINDOWS.md": "fd312e0ed05d4cc8f32c60e74bd31daef78e4d9b8638166aaaa518010b21fa39",
+    "cognitive_exchange/__init__.py": "0d25027a5302d19a805936abd0dfd53c8a8c0dd2825df87572a9d0ddbb312ea7",
+    "cognitive_exchange/cas.py": "a7b01cfd920544c31af465b3c786b918e9d547b4d77ff9d26c094570fab6587f",
+    "cognitive_exchange/exchange.py": "9f27f0f60924c4881c44ecb3925672ee8977a53284fa55071d0abee4bc5f554d",
+    "cognitive_exchange/identity.py": "283eae22570b38bfe9bc5aa58f14f7141403fabb80fc2a428cd64d6419a52e34",
+    "cognitive_exchange/migrations/001_initial.sql": "5277d36d095ad96d3d50892208fef7074e976c8e16d859ae06a30c6d1d442054",
+    "cognitive_exchange/models.py": "75d5aa2add9be0cbc06d0e141f6a5344bfc38bd475fc02a5e997dd71a5beb967",
+    "cognitive_exchange/paths.py": "f5a1d0c249c094f98f28032f9af66cb16f91a875c6a5ae9cedd40606ec479459",
+    "cognitive_exchange/store.py": "219e1cc5ebfccb9b9a6f68c9372a2b1a65f0ec2c0598d4bafaa91baca37a4ab2",
+    "cognitive_exchange/transitions.py": "deb6a213fb6d25f36552ec96155852e3e70e572999ed1b1dc3f0714a07711d8f",
+    "run_benchmarks.py": "b337a2ab14c0051f984ad479293332ebe21268bd48b5ae415d7e4d7e7f7ee758",
+    "run_tests.py": "5e886a54156ca0f6037fde6f40455606153efdf399f2b3d517f67bb77064c3f1",
+    "tests/__init__.py": "735469839c842bc3fbc34792d87ecca2fb190d80bc5c631024bb850a07b5bbfb",
+    "tests/test_exchange_v2.py": "94adcb91e3d37402f55707af246baf44d3ceb25e9a9fb9a669db3a75b5fd72dd"
+  },
+  "file_count": 17,
+  "package_sha256": "8fce95a1a1fb4dd18e000dca6de4fea06bec81081f9163ef802d48636802fdc5",
+  "package_sha256_method": "SHA-256 of sorted 'hex  relative_path\\n' listing of all package files except this manifest",
+  "test_command": "python3 run_tests.py",
+  "test_results": {
+    "tests_total": 35,
+    "tests_passed": 35,
+    "tests_failed": 0,
+    "exit_code": 0,
+    "runtime_seconds": 0.2563,
+    "environment": {
+      "platform": "Linux-6.12.94+-x86_64-with-glibc2.39",
+      "python_version": "3.12.3",
+      "sqlite_version": "3.45.1",
+      "machine": "x86_64"
+    },
+    "required_named_tests": {
+      "MODULE_IMPORT_PASS": "PASS",
+      "DB_MIGRATION_PASS": "PASS",
+      "OBJECT_ATOMIC_WRITE_PASS": "PASS",
+      "OBJECT_DUPLICATE_CONCURRENCY_PASS": "PASS",
+      "INTERRUPTED_OBJECT_RECOVERY_PASS": "PASS",
+      "ORPHAN_RECONCILIATION_PASS": "PASS",
+      "METADATA_WITHOUT_OBJECT_DETECTED": "PASS",
+      "OBJECT_HASH_TAMPER_DETECTED": "PASS",
+      "PATH_TRAVERSAL_REJECTED": "PASS",
+      "WINDOWS_DRIVE_ESCAPE_REJECTED": "PASS",
+      "UNC_ESCAPE_REJECTED": "PASS",
+      "SYMLINK_OR_JUNCTION_ESCAPE_REJECTED": "PASS",
+      "WINDOWS_CASE_COLLISION_HANDLED": "PASS",
+      "TASK_ILLEGAL_TRANSITION_REJECTED": "PASS",
+      "DUPLICATE_TASK_IDEMPOTENT": "PASS",
+      "RESULT_IDEMPOTENT": "PASS",
+      "HANDOFF_IDEMPOTENT": "PASS",
+      "LEASE_OVERLAP_REJECTED": "PASS",
+      "LEASE_FENCING_PASS": "PASS",
+      "STALE_WORKER_REJECTED": "PASS",
+      "READ_ONLY_VERIFIER_CONCURRENT_PASS": "PASS",
+      "EVENT_APPEND_PASS": "PASS",
+      "EVENT_CHAIN_INTEGRITY_PASS": "PASS",
+      "EVENT_CORRUPTION_DETECTED": "PASS",
+      "REPLAY_PASS": "PASS",
+      "REPLAY_IDEMPOTENCY_PASS": "PASS",
+      "CRASH_REPLAY_PASS": "PASS",
+      "QUARANTINE_ISOLATION_PASS": "PASS",
+      "FTS_TRUST_FILTER_PASS": "PASS",
+      "CONTEXT_CAPSULE_CANONICAL_HASH_PASS": "PASS",
+      "RESTART_PERSISTENCE_PASS": "PASS"
+    },
+    "required_tests_missing": [],
+    "benchmarks": {
+      "tasks_10k_seconds": 0.0423,
+      "metadata_100k_seconds": 0.0659,
+      "artifacts_10k_seconds": 6.5199,
+      "artifacts_10k_created": 10000,
+      "dedup_seconds": 0.0005,
+      "fts_seconds": 0.0018,
+      "event_replay_seconds": 0.0069
+    },
+    "verdict": "REFERENCE_READY"
+  },
+  "benchmark_results": {
+    "tasks_10k_seconds": 0.0423,
+    "metadata_100k_seconds": 0.0659,
+    "artifacts_10k_seconds": 6.5199,
+    "artifacts_10k_created": 10000,
+    "dedup_seconds": 0.0005,
+    "fts_seconds": 0.0018,
+    "event_replay_seconds": 0.0069
+  },
+  "schemas": {
+    "logical_schema": "cognitive-exchange.v2",
+    "sqlite_migration": 1,
+    "tables": [
+      "schema_meta",
+      "objects",
+      "object_refs",
+      "tasks",
+      "results",
+      "handoffs",
+      "leases",
+      "collab_events",
+      "capsules",
+      "provenance",
+      "quarantine",
+      "fts_docs",
+      "fts_trusted"
+    ],
+    "task_states": [
+      "CREATED",
+      "ADMITTED",
+      "LEASED",
+      "RUNNING",
+      "VERIFYING",
+      "COMPLETED",
+      "FAILED",
+      "CANCELLED",
+      "BLOCKED"
+    ],
+    "authority": [
+      "storage_status",
+      "validation_status",
+      "trust_status",
+      "canonical_status"
+    ],
+    "exchange_refs": [
+      "task://",
+      "result://",
+      "artifact://sha256/",
+      "evidence://",
+      "failure://",
+      "experience://",
+      "skill://"
+    ]
+  },
+  "known_limitations": [
+    "Standalone reference; not wired into RAIOS runtime or CURRENT-STATE.",
+    "Directory fsync is best-effort and may be rejected on some platforms.",
+    "os.link is preferred for exclusive publish; Windows without link privilege falls back to O_CREAT|O_EXCL.",
+    "FTS5 is used when SQLite was compiled with it; otherwise LIKE search on the trusted table.",
+    "100k metadata benchmark uses a dedicated bench_meta table, not object_refs, because object_refs has a foreign key to objects.",
+    "Garbage collection is not implemented; objects are never auto-deleted.",
+    "Junction/reparse coverage is implemented and Linux-tested via symlinks; native Windows junctions are not executed in this Linux run."
+  ],
+  "integration_contract": {
+    "entry_point": "cognitive_exchange.CognitiveExchange(root)",
+    "do_not": [
+      "treat chmod/readonly as immutability",
+      "conflate SQLite WAL with collab_events",
+      "auto-delete CAS objects from reference_count",
+      "index quarantined or untrusted material into trusted FTS",
+      "declare stored data canonical/true solely because it was ingested",
+      "execute imported object bytes"
+    ],
+    "must": [
+      "verify SHA-256 on authoritative object reads",
+      "use exclusive-create publish for CAS",
+      "fail closed on illegal task transitions and lease fencing mismatches",
+      "keep external model output UNTRUSTED by default",
+      "carry schema_version on contracts; unknown majors fail closed"
+    ]
+  }
+}
