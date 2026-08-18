@@ -1,0 +1,39 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "raios.parallel.verifier.v1",
+  "type": "object",
+  "required": [
+    "outcome",
+    "student_strengths",
+    "student_misses",
+    "teacher_strengths",
+    "teacher_misses",
+    "bad_assumptions",
+    "missing_evidence",
+    "ignored_evidence",
+    "tool_selection_diff",
+    "reasoning_diff",
+    "reusable_pattern",
+    "failure_pattern",
+    "teacher_error_probability",
+    "student_error_probability",
+    "uncertainty",
+    "verdict"
+  ],
+  "properties": {
+    "provider": {
+      "enum": ["DETERMINISTIC", "STRUCTURAL", "TEST_EXECUTION", "MULTI_MODEL", "HUMAN_REVIEW", "FUTURE_FRONTIER_TEACHER"]
+    },
+    "outcome": {
+      "enum": [
+        "STUDENT_RIGHT_TEACHER_WRONG",
+        "STUDENT_WRONG_TEACHER_RIGHT",
+        "BOTH_PARTIAL",
+        "BOTH_CORRECT_DIFFERENT",
+        "UNRESOLVED"
+      ]
+    },
+    "lexical_is_authority": { "const": false },
+    "teacher_assumed_correct": { "const": false }
+  }
+}

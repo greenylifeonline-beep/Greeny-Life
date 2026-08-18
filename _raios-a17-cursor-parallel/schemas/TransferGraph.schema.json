@@ -1,0 +1,30 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "raios.parallel.transfer-graph.v1",
+  "type": "object",
+  "required": ["nodes", "edges_model", "canonical"],
+  "properties": {
+    "canonical": { "const": false },
+    "edges_model": { "type": "string" },
+    "nodes": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": [
+          "teacher",
+          "capability",
+          "source_observations",
+          "teacher_unique_value",
+          "raios_current_score",
+          "transfer_score",
+          "retention_score",
+          "teacher_dependency",
+          "retirement_state",
+          "evidence_refs",
+          "skill_refs",
+          "training_refs"
+        ]
+      }
+    }
+  }
+}
