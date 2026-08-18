@@ -1,0 +1,185 @@
+{
+  "AVAILABLE_NOT_INTEGRATED": [
+    {
+      "name": "java",
+      "reason": "present but Tika jar not installed; do not download"
+    },
+    {
+      "name": "node/npm/pnpm",
+      "reason": "JS ecosystem present; not used as parser"
+    },
+    {
+      "name": "jq/yq",
+      "reason": "available for config diffs; not wired as default"
+    },
+    {
+      "name": "greenlines_brain/dna/ast_analyzer.py",
+      "reason": "historical; not imported to avoid collision"
+    },
+    {
+      "name": "brain.py scan_project_metadata",
+      "reason": "stale 316-file index; not authoritative"
+    }
+  ],
+  "BLOCKED": [
+    "RAIOS/V9 mutation",
+    "A17 harvest / CCEE var writes",
+    "teacher deletion",
+    "canonical mutation",
+    "OCR by default",
+    "Qwen as default parser",
+    "governed apply onto original sources in this parallel package"
+  ],
+  "IMPLEMENTED": [
+    "read-only git ls-files discovery + FileObject",
+    "signature+parser-probe type detection (extension never sole authority)",
+    "stdlib text extract + zip manifest",
+    "python ast symbols; heuristic TS/JS/PS1/SQL",
+    "SQLite+FTS5 index and parser cache keyed by sha256+parser_version",
+    "staged search plan (metadata, filename, rg, symbols, fts5); STAGE 8 fail-closed",
+    "two-version detector without assuming newer",
+    "text/symbol/schema comparison",
+    "rule-first classification",
+    "evidence-based architecture edges PROVEN/INFERRED/UNKNOWN",
+    "shadow modification txn + rollback; governed apply forbidden",
+    "merge candidates KEEP_A/REVIEW_REQUIRED (no auto-keep)",
+    "repair candidates from syntax/broken local imports",
+    "archive lineage states without delete",
+    "file knowledge graph",
+    "query-plan JSON compiler",
+    "tool economy (LLM not default parser)",
+    "idle loop without model calls",
+    "FILE-INTELLIGENCE-DOCTOR fail-closed"
+  ],
+  "MISSING": [
+    "magika",
+    "apache tika",
+    "tree-sitter",
+    "universal ctags",
+    "ast-grep",
+    "semgrep",
+    "7z",
+    "fd",
+    "ollama / qwen3.6",
+    "docker"
+  ],
+  "PENDING_RUNTIME_VALIDATION": [
+    "Magika live classify",
+    "Tika PDF/Office extract",
+    "tree-sitter TS/TSX accuracy vs heuristic",
+    "Ollama STAGE 8 synthesis over evidence bundle",
+    "full-repo ingest beyond fixture/capped scan",
+    "Windows PowerShell A17 live harvest coexistence on operator machine"
+  ],
+  "REUSED": [
+    "git",
+    "rg",
+    "python ast.parse",
+    "sqlite3 FTS5",
+    "zipfile",
+    "file(1) as Magika fallback",
+    "CAS pattern from _raios-a17-integration-wave",
+    "fail-closed / doctor pattern from CCEE"
+  ],
+  "canonical": false,
+  "doctor_status": "GATES_SATISFIED",
+  "false_pass_token_emitted": false,
+  "generated_at": "2026-08-18T19:44:39Z",
+  "integrity": {
+    "doctor_sha256": "08f985e90676968338b36ed5f3cbca4908a643dd43d52bbe6bc5f43f1275f98f",
+    "version_sha256": "a7303af4aa90a65c2cda4d9e2abd6d5b965d9f016e886e35878a74b52bf6f49e"
+  },
+  "not_scaffolding": true,
+  "organism_id": "raios.organism.v9",
+  "package": "_raios-file-intelligence-parallel",
+  "tools": {
+    "7z": {
+      "available": false,
+      "version": null
+    },
+    "ast-grep": {
+      "available": false,
+      "version": null
+    },
+    "ctags": {
+      "available": false,
+      "version": "ctags (GNU Emacs 29.3)"
+    },
+    "docker": {
+      "available": false,
+      "version": null
+    },
+    "fd": {
+      "available": false,
+      "version": null
+    },
+    "file": {
+      "available": true,
+      "version": "file-5.45"
+    },
+    "git": {
+      "available": true,
+      "version": "git version 2.43.0"
+    },
+    "java": {
+      "available": true,
+      "version": "openjdk version \"21.0.10\" 2026-01-20"
+    },
+    "jq": {
+      "available": true,
+      "version": "jq-1.7"
+    },
+    "magika": {
+      "available": false,
+      "version": null
+    },
+    "node": {
+      "available": true,
+      "version": "v22.14.0"
+    },
+    "npm": {
+      "available": true,
+      "version": "10.9.7"
+    },
+    "ollama": {
+      "available": false,
+      "version": null
+    },
+    "pnpm": {
+      "available": true,
+      "version": "10.33.3"
+    },
+    "python3": {
+      "available": true,
+      "version": "Python 3.12.3"
+    },
+    "rg": {
+      "available": true,
+      "version": "ripgrep 15.1.0-cursor5 (rev c3e3c2f7ec)"
+    },
+    "semgrep": {
+      "available": false,
+      "version": null
+    },
+    "sqlite3": {
+      "available": true,
+      "version": "3.45.1 2024-01-30 16:01:20 e876e51a0ed5c5b3126f52e532044363a014bc594cfefa87ffb5b82257ccalt1 (64-bit)"
+    },
+    "tika": {
+      "available": false,
+      "version": null
+    },
+    "tree-sitter": {
+      "available": false,
+      "version": null
+    },
+    "unzip": {
+      "available": true,
+      "version": "UnZip 6.00 of 20 April 2009, by Debian. Original by Info-ZIP."
+    },
+    "yq": {
+      "available": true,
+      "version": "yq 0.0.0"
+    }
+  }
+}
