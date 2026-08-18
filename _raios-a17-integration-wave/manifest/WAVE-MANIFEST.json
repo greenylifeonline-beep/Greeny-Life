@@ -1,0 +1,23 @@
+{
+  "wave": "A17-X1-X3",
+  "package": "_raios-a17-integration-wave",
+  "schema_version": "a17-integration-wave.v1",
+  "organism_id": "raios.organism.v9",
+  "cortex_family": "Qwen",
+  "cortex_master_candidate": "Qwen3.6-35B-A3B",
+  "cortex_is_identity": false,
+  "temporary_teachers": ["granite4:3b", "qwen2.5-coder:3b", "deepseek-r1:1.5b"],
+  "protected_live_writers": [
+    "_raios-a17-native-cortex/experience/raw/teacher-harvest",
+    "_raios-a17-native-cortex/evidence",
+    "_raios-a17-native-cortex/reports",
+    "_raios-a17-native-cortex/store/a17-cognitive.db"
+  ],
+  "scopes": ["A17.5", "A17.6", "A17.7", "A17.8", "A17.9", "A17.10", "A18", "A19"],
+  "reuse": [
+    "RAIOS/V9/continuity/RAIOS-IDENTITY.json",
+    "RAIOS-COGNITIVE-LEARNING-FABRIC-REFERENCE-V2",
+    "RAIOS-SHARED-COGNITIVE-EXCHANGE-REFERENCE-V2",
+    "_raios-model-escalation"
+  ]
+}

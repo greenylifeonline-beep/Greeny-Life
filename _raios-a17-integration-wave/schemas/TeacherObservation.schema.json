@@ -1,0 +1,38 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "TeacherObservation",
+  "type": "object",
+  "required": [
+    "observation_id",
+    "teacher_id",
+    "model",
+    "task_id",
+    "capability",
+    "source_artifact",
+    "source_sha256",
+    "raw_text_ref",
+    "observed_at",
+    "claims",
+    "procedures",
+    "heuristics",
+    "failure_patterns",
+    "recovery_patterns",
+    "tool_strategies",
+    "examples",
+    "counterexamples",
+    "transfer_test_candidates",
+    "skill_candidates",
+    "training_candidates",
+    "uncertainties",
+    "self_reported_claims",
+    "evidence_state",
+    "verification_state",
+    "canonical"
+  ],
+  "properties": {
+    "canonical": { "const": false },
+    "verification_state": {
+      "enum": ["UNVERIFIED", "EMPIRICALLY_OBSERVED", "INDEPENDENTLY_VERIFIED", "CONTRADICTED", "REJECTED"]
+    }
+  }
+}

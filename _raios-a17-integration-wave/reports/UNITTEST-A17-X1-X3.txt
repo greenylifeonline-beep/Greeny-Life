@@ -1,0 +1,38 @@
+test_01_malformed_teacher_artifact_quarantined (test_a17_x1_x3.IntegrationWaveTests.test_01_malformed_teacher_artifact_quarantined) ... ok
+test_02_duplicate_artifact_idempotent (test_a17_x1_x3.IntegrationWaveTests.test_02_duplicate_artifact_idempotent) ... ok
+test_03_source_hash_mismatch_rejected (test_a17_x1_x3.IntegrationWaveTests.test_03_source_hash_mismatch_rejected) ... ok
+test_04_teacher_self_report_remains_unverified (test_a17_x1_x3.IntegrationWaveTests.test_04_teacher_self_report_remains_unverified) ... ok
+test_05_teacher_can_be_wrong (test_a17_x1_x3.IntegrationWaveTests.test_05_teacher_can_be_wrong) ... ok
+test_06_student_can_outperform_teacher (test_a17_x1_x3.IntegrationWaveTests.test_06_student_can_outperform_teacher) ... ok
+test_07_differential_preserves_uncertainty (test_a17_x1_x3.IntegrationWaveTests.test_07_differential_preserves_uncertainty) ... ok
+test_08_validated_is_not_canonical (test_a17_x1_x3.IntegrationWaveTests.test_08_validated_is_not_canonical) ... ok
+test_09_retirement_fails_without_unseen_transfer (test_a17_x1_x3.IntegrationWaveTests.test_09_retirement_fails_without_unseen_transfer) ... ok
+test_10_retirement_fails_without_retention (test_a17_x1_x3.IntegrationWaveTests.test_10_retirement_fails_without_retention) ... ok
+test_11_retirement_fails_with_verifier_regression (test_a17_x1_x3.IntegrationWaveTests.test_11_retirement_fails_with_verifier_regression) ... ok
+test_12_retirement_is_capability_specific (test_a17_x1_x3.IntegrationWaveTests.test_12_retirement_is_capability_specific) ... ok
+test_13_model_deletion_is_never_automatic (test_a17_x1_x3.IntegrationWaveTests.test_13_model_deletion_is_never_automatic) ... ok
+test_14_cortex_output_cannot_directly_mutate_canonical_state (test_a17_x1_x3.IntegrationWaveTests.test_14_cortex_output_cannot_directly_mutate_canonical_state) ... ok
+test_15_cortex_replacement_preserves_identity_contract (test_a17_x1_x3.IntegrationWaveTests.test_15_cortex_replacement_preserves_identity_contract) ... ok
+test_16_context_compiler_obeys_budget (test_a17_x1_x3.IntegrationWaveTests.test_16_context_compiler_obeys_budget) ... ok
+test_17_context_compiler_includes_contradictions_when_relevant (test_a17_x1_x3.IntegrationWaveTests.test_17_context_compiler_includes_contradictions_when_relevant) ... ok
+test_18_experience_preserves_evidence_lineage (test_a17_x1_x3.IntegrationWaveTests.test_18_experience_preserves_evidence_lineage) ... ok
+test_19_knowledge_candidate_preserves_source_version_license (test_a17_x1_x3.IntegrationWaveTests.test_19_knowledge_candidate_preserves_source_version_license) ... ok
+test_20_training_candidate_requires_validation (test_a17_x1_x3.IntegrationWaveTests.test_20_training_candidate_requires_validation) ... ok
+test_21_skill_candidate_is_not_canonical (test_a17_x1_x3.IntegrationWaveTests.test_21_skill_candidate_is_not_canonical) ... ok
+test_22_sqlite_integrity (test_a17_x1_x3.IntegrationWaveTests.test_22_sqlite_integrity) ... ok
+test_23_wal_event_integrity (test_a17_x1_x3.IntegrationWaveTests.test_23_wal_event_integrity) ... ok
+test_24_idempotent_retry (test_a17_x1_x3.IntegrationWaveTests.test_24_idempotent_retry) ... ok
+test_25_rejected_transition_does_not_mutate_authoritative_state (test_a17_x1_x3.IntegrationWaveTests.test_25_rejected_transition_does_not_mutate_authoritative_state) ... ok
+test_a17_4_consumption_pending (test_a17_x1_x3.IntegrationWaveTests.test_a17_4_consumption_pending) ... ok
+test_both_partial_and_both_correct_different (test_a17_x1_x3.IntegrationWaveTests.test_both_partial_and_both_correct_different) ... ok
+test_cli_mastery_and_identity (test_a17_x1_x3.IntegrationWaveTests.test_cli_mastery_and_identity) ... ok
+test_knowledge_debt_distinct_and_frequency (test_a17_x1_x3.IntegrationWaveTests.test_knowledge_debt_distinct_and_frequency) ... ok
+test_loop_model_output_is_not_execution_authority (test_a17_x1_x3.IntegrationWaveTests.test_loop_model_output_is_not_execution_authority) ... ok
+test_student_wrong_teacher_right (test_a17_x1_x3.IntegrationWaveTests.test_student_wrong_teacher_right) ... ok
+test_v9_mutation_rejected (test_a17_x1_x3.IntegrationWaveTests.test_v9_mutation_rejected) ... ok
+
+----------------------------------------------------------------------
+Ran 32 tests in 0.396s
+
+OK
+{"canonical":false,"capability_id":"cli.cap","dimensions":{"capability_id":"cli.cap","distinct_transfer_domains":3,"evidence_refs":["evidence://pass-1"],"execution_score":0.9,"failure_refs":[],"independence_score":0.88,"knowledge_score":0.91,"last_validation":"2026-08-18T18:27:41Z","learning_debt_refs":[],"regression_gate":"PASS","reliability_score":0.92,"repeated_validations":5,"retention_gate":"PASS","retention_score":0.9,"skill_refs":[],"teacher_intervention_rate":0.04,"transfer_score":0.86,"updated_at":"2026-08-18T18:27:41Z","verifier_failure_rate":0.01},"empirical_mastery":true,"gaps":[],"gates":{"distinct_transfer_domains":true,"independent_success":true,"regression_gate":true,"repeated_validations":true,"retention_gate":true,"teacher_intervention":true,"unseen_transfer":true,"verifier_failure":true},"mastery_scalar_insufficient":true,"scalar_mean":0.895,"teacher_dependency":false,"thresholds":{"distinct_transfer_domains":3,"independent_success":0.85,"repeated_validations":5,"teacher_intervention":0.1,"unseen_transfer":0.8,"verifier_failure":0.05}}

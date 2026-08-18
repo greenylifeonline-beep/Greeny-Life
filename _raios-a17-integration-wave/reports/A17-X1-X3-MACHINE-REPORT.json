@@ -1,0 +1,59 @@
+{
+  "wave": "A17-X1-X3",
+  "package": "_raios-a17-integration-wave",
+  "schema_version": "a17-integration-wave.v1",
+  "organism_id": "raios.organism.v9",
+  "cortex_family": "Qwen",
+  "cortex_master_candidate": "Qwen3.6-35B-A3B",
+  "cortex_is_identity": false,
+  "WAVE_CERTIFICATION": "PASS",
+  "claims": {
+    "A17_5_NORMALIZATION": "PASS",
+    "A17_6_DIFFERENTIAL": "PASS",
+    "A17_7_MASTERY_ENGINE": "PASS",
+    "A17_8_RETIREMENT_ENGINE": "PASS",
+    "A17_9_CORTEX_CONTRACT": "PASS",
+    "A17_10_COGNITIVE_LOOP_CORE": "PASS",
+    "A18_EXPERIENCE_FOUNDATION": "PASS",
+    "A19_KNOWLEDGE_FOUNDATION": "PASS",
+    "DIRECT_CANONICAL_MUTATION": false,
+    "AUTO_TEACHER_DELETE": false,
+    "AUTO_CANONICAL_PROMOTION": false,
+    "RAIOS_V9_MUTATION": false,
+    "A17_4_REAL_DATA_CONSUMPTION": "PENDING"
+  },
+  "unit_tests": {
+    "command": "python3 -m unittest discover -s _raios-a17-integration-wave/tests -v",
+    "ran": 32,
+    "result": "OK"
+  },
+  "certification_command": "python3 _raios-a17-integration-wave/tests/certify_a17_x1_x3.py",
+  "negative_control_reasons": {
+    "DIRECT_CANONICAL_MUTATION": "DIRECT_CANONICAL_MUTATION_REJECTED",
+    "AUTO_TEACHER_DELETE": "AUTO_TEACHER_DELETE_REJECTED",
+    "AUTO_CANONICAL_PROMOTION": "AUTO_CANONICAL_PROMOTION_REJECTED",
+    "RAIOS_V9_MUTATION": "RAIOS_V9_MUTATION_REJECTED"
+  },
+  "a17_4": {
+    "status": "PENDING",
+    "reason": "HARVEST_ROOT_ABSENT",
+    "expected": "_raios-a17-native-cortex/experience/raw/teacher-harvest"
+  },
+  "reuse": {
+    "learning_fabric": true,
+    "cognitive_exchange_cas_pattern": true,
+    "v9_identity_read_only": true,
+    "model_escalation_package_present": false
+  },
+  "blocked": [
+    "QWEN36_INSTALL_NOT_AUTHORIZED",
+    "AUTO_TEACHER_DELETE",
+    "AUTO_CANONICAL_PROMOTION",
+    "PROTECTED_LIVE_WRITER",
+    "RAIOS_V9_MUTATION"
+  ],
+  "raios_v9_git_status": "clean",
+  "qwen36_downloaded": false,
+  "powershell_interrupted": false,
+  "models_deleted": false
+}

@@ -1,0 +1,12 @@
+{
+  "teacher_id": "teacher:deepseek-r1-1.5b",
+  "model": "deepseek-r1:1.5b",
+  "task_id": "task:sort.stable",
+  "capability": "algorithms.sort",
+  "correct": false,
+  "claims": ["bubble sort is always optimal"],
+  "procedures": ["swap randomly"],
+  "heuristics": ["ignore n log n"],
+  "tool_strategies": ["no tests"],
+  "uncertainties": ["maybe wrong"]
+}
