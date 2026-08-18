@@ -1,0 +1,42 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "raios.parallel.experience.v1",
+  "type": "object",
+  "required": [
+    "experience_id",
+    "task_id",
+    "goal",
+    "context",
+    "hypotheses",
+    "observations",
+    "decisions",
+    "actions",
+    "tools",
+    "models",
+    "providers",
+    "result",
+    "tests",
+    "evidence",
+    "failures",
+    "root_causes",
+    "corrections",
+    "retest",
+    "final_outcome",
+    "lessons",
+    "skills",
+    "transfer_evidence",
+    "competency_delta",
+    "learning_debt",
+    "knowledge_debt",
+    "cost",
+    "latency",
+    "created_at",
+    "provenance"
+  ],
+  "additionalProperties": true,
+  "properties": {
+    "experience_id": { "type": "string" },
+    "canonical": { "const": false },
+    "content_sha256": { "type": "string", "pattern": "^[0-9a-f]{64}$" }
+  }
+}

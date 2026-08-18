@@ -1,0 +1,50 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "raios.parallel.knowledge.v1",
+  "type": "object",
+  "required": [
+    "claim",
+    "conditions",
+    "evidence",
+    "source",
+    "source_version",
+    "observed_at",
+    "valid_from",
+    "valid_until",
+    "temporal_class",
+    "authority",
+    "confidence",
+    "examples",
+    "counterexamples",
+    "contradictions",
+    "prerequisites",
+    "causal_links",
+    "provenance",
+    "license",
+    "freshness",
+    "maturity",
+    "validation_state"
+  ],
+  "properties": {
+    "state": {
+      "enum": ["DISCOVERED", "UNDERSTOOD", "LINKED", "PRACTICED", "TRANSFER_TESTED", "VALIDATED", "CANONICAL"]
+    },
+    "canonical": { "const": false },
+    "ingest_kind": {
+      "enum": [
+        "books",
+        "papers",
+        "documentation",
+        "source_code",
+        "repositories",
+        "standards",
+        "postmortems",
+        "experiments",
+        "case_studies",
+        "teacher_notes",
+        "human_notes",
+        "model_outputs"
+      ]
+    }
+  }
+}

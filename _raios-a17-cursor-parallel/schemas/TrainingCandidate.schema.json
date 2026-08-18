@@ -1,0 +1,35 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "raios.parallel.training-candidate.v1",
+  "type": "object",
+  "required": ["candidate_id", "lifecycle", "gates"],
+  "properties": {
+    "lifecycle": {
+      "enum": [
+        "CANDIDATE",
+        "FILTERED",
+        "VALIDATED",
+        "TRAIN_READY",
+        "TRAINED",
+        "SHADOW",
+        "REGRESSION_TESTED",
+        "CANARY",
+        "PROMOTED",
+        "REJECTED"
+      ]
+    },
+    "gates": {
+      "type": "object",
+      "required": [
+        "data_provenance",
+        "license",
+        "quality",
+        "dedupe",
+        "contamination",
+        "transfer_evidence",
+        "regression",
+        "rollback"
+      ]
+    }
+  }
+}

@@ -1,0 +1,37 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "raios.parallel.knowledge-debt.v1",
+  "type": "object",
+  "required": [
+    "debt_id",
+    "concept",
+    "capabilities",
+    "missing_prerequisites",
+    "frequency",
+    "importance",
+    "risk",
+    "recommended_sources",
+    "required_study",
+    "required_practice",
+    "required_transfer",
+    "priority",
+    "status",
+    "created_at",
+    "updated_at"
+  ],
+  "properties": {
+    "status": {
+      "enum": [
+        "OPEN",
+        "PRIORITIZED",
+        "STUDYING",
+        "PRACTICING",
+        "TRANSFER_PENDING",
+        "VALIDATION_PENDING",
+        "PAID",
+        "DEFERRED",
+        "INVALIDATED"
+      ]
+    }
+  }
+}

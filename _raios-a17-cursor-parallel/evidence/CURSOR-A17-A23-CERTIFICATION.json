@@ -1,0 +1,65 @@
+{
+  "A17_14_LIVE_LEARNING_ENGINE": "PASS",
+  "A17_15_SEMANTIC_VERIFIER": "PASS",
+  "A17_16_MASTERY_ENGINE": "PASS",
+  "A17_17_RETIREMENT_ENGINE": "PASS",
+  "A18_EXPERIENCE_PLANE": "PASS",
+  "A19_KNOWLEDGE_PLANE": "PASS",
+  "A20_SKILL_COMPILER_FOUNDATION": "PASS",
+  "A21_ADAPTER_FACTORY_CONTRACT": "PASS",
+  "A22_ELASTIC_COMPUTE_CONTRACT": "PASS",
+  "A23_MAINTENANCE_CONTRACT": "PASS",
+  "EVENT_CHAIN": {
+    "count": 17,
+    "ok": true,
+    "tip": "71ba6f33c9c43ec74b469b69c894cb9e425b73ae46c218d7ebab0f398e16e581"
+  },
+  "PENDING_RUNTIME_VALIDATION": true,
+  "SQLITE": "ok",
+  "UNIT_TESTS": "PASS",
+  "WAVE_CERTIFICATION": "PASS",
+  "audit": {
+    "A17.4_teacher_harvest": "MISSING",
+    "A17.5_assimilation": "MISSING",
+    "A17.6+_live_student": "MISSING",
+    "canonical_mutation_count": 0,
+    "cortex_is_identity": false,
+    "current_blockers": [
+      "PENDING_RUNTIME_VALIDATION",
+      "QWEN36_INSTALL_NOT_AUTHORIZED",
+      "A17_4_HARVEST_ROOT_ABSENT"
+    ],
+    "identity": "raios.organism.v9",
+    "invented": false,
+    "knowledge_state_counts": {
+      "VALIDATED": 1
+    },
+    "main_cortex_bound": false,
+    "main_cortex_installed": false,
+    "main_cortex_target": "qwen3.6:35b-a3b",
+    "mastered_capability_count": 0,
+    "native_cortex_discovery": {
+      "A17.10-12": "MISSING",
+      "A17.13": "MISSING",
+      "A17.4": "MISSING",
+      "A17.5": "MISSING",
+      "A17.6-9": "MISSING",
+      "root": "/workspace/_raios-a17-native-cortex",
+      "status": "MISSING"
+    },
+    "skill_state_counts": {
+      "CANDIDATE": 1
+    },
+    "teacher_corps_constitution": [
+      "granite4:3b",
+      "qwen2.5-coder:3b",
+      "deepseek-r1:1.5b"
+    ],
+    "teacher_delete_allowed": false,
+    "teacher_dependency": "UNKNOWN",
+    "teacher_retirement_eligibility_count": 1,
+    "teachers_still_present": "PENDING",
+    "training_candidate_counts": {}
+  },
+  "identity": "raios.organism.v9"
+}

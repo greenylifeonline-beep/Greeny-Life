@@ -1,0 +1,83 @@
+{
+  "wave": "A17.14-A23",
+  "package": "_raios-a17-cursor-parallel",
+  "schema_version": "a17-cursor-parallel.v1",
+  "organism_id": "raios.organism.v9",
+  "cortex_family": "Qwen",
+  "cortex_target": "qwen3.6:35b-a3b",
+  "cortex_is_identity": false,
+  "WAVE_CERTIFICATION": "PASS",
+  "claims": {
+    "A17_14_LIVE_LEARNING_ENGINE": "PASS",
+    "A17_15_SEMANTIC_VERIFIER": "PASS",
+    "A17_16_MASTERY_ENGINE": "PASS",
+    "A17_17_RETIREMENT_ENGINE": "PASS",
+    "A18_EXPERIENCE_PLANE": "PASS",
+    "A19_KNOWLEDGE_PLANE": "PASS",
+    "A20_SKILL_COMPILER_FOUNDATION": "PASS",
+    "A21_ADAPTER_FACTORY_CONTRACT": "PASS",
+    "A22_ELASTIC_COMPUTE_CONTRACT": "PASS",
+    "A23_MAINTENANCE_CONTRACT": "PASS",
+    "UNIT_TESTS": "PASS"
+  },
+  "PENDING_RUNTIME_VALIDATION": true,
+  "unit_tests": {
+    "command": "python3 -m unittest discover -s _raios-a17-cursor-parallel/tests -v",
+    "ran": 35,
+    "result": "OK"
+  },
+  "certification_command": "python3 _raios-a17-cursor-parallel/tests/certify_cursor_a17_a23.py",
+  "powershell_cert": "tests/CERTIFY-CURSOR-A17-A23.ps1",
+  "files_created": 53,
+  "files_modified_outside_package": 0,
+  "architecture": {
+    "identity": "raios.organism.v9",
+    "store": "sqlite+fts5+cas+sha256-wal",
+    "shared_state": ["Identity", "Memory", "Knowledge", "RKG", "Experience", "Skills", "Policies", "Learning", "Competency", "Evidence"]
+  },
+  "reuse": {
+    "integration_wave": true,
+    "learning_fabric": true,
+    "cognitive_exchange_cas_pattern": true,
+    "v9_identity_read_only": true
+  },
+  "a17_native_cortex": {
+    "A17.4": "MISSING",
+    "A17.5": "MISSING",
+    "A17.6-9": "MISSING",
+    "A17.10-12": "MISSING",
+    "A17.13": "MISSING",
+    "status": "MISSING"
+  },
+  "qwen_runtime_state": "NOT_INSTALLED",
+  "teacher_state": {
+    "corps_constitution": ["granite4:3b", "qwen2.5-coder:3b", "deepseek-r1:1.5b"],
+    "still_present": "PENDING",
+    "delete_allowed": false,
+    "retirement_allowed": false
+  },
+  "raios_v9_before": "unmodified",
+  "raios_v9_after": "unmodified",
+  "powershell_collision_avoided": true,
+  "powershell_interrupted": false,
+  "models_deleted": false,
+  "canonical_mutation_count": 0,
+  "commit": false,
+  "push": false,
+  "blocked": [
+    "PENDING_RUNTIME_VALIDATION",
+    "QWEN36_INSTALL_NOT_AUTHORIZED",
+    "A17_4_HARVEST_ROOT_ABSENT",
+    "AUTO_TEACHER_DELETE",
+    "AUTO_CANONICAL_PROMOTION",
+    "PROTECTED_LIVE_WRITER",
+    "RAIOS_V9_MUTATION"
+  ],
+  "next_recommendation": [
+    "Do not interrupt live PowerShell A17.6-A17.13",
+    "Bind harvest read-only via RAIOS_A17_NATIVE_ROOT when present",
+    "Ingest observations as UNVERIFIED",
+    "Require unseen transfer + retention + independent verification before mastery",
+    "Do not retire teachers for size, disk, or a single passing task"
+  ]
+}

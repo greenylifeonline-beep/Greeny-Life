@@ -1,0 +1,9 @@
+{
+  "root": "_raios-a17-native-cortex",
+  "write_policy": "REFUSE",
+  "mode": "READ_ONLY",
+  "detect": ["A17.4", "A17.5", "A17.6-9", "A17.10-12", "A17.13"],
+  "discovery_values": ["FOUND", "MISSING", "PENDING", "BLOCKED"],
+  "invent_state": false,
+  "consume_adapter": "raios_parallel.adapter.NativeCortexBridge"
+}

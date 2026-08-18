@@ -1,0 +1,29 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "raios.parallel.skill.v1",
+  "type": "object",
+  "required": [
+    "skill_id",
+    "capability",
+    "interface",
+    "inputs",
+    "outputs",
+    "procedure",
+    "tool_dependencies",
+    "source_experiences",
+    "source_knowledge",
+    "source_teachers",
+    "tests",
+    "transfer_tests",
+    "success_count",
+    "failure_count",
+    "rollback",
+    "version"
+  ],
+  "properties": {
+    "lifecycle": {
+      "enum": ["CANDIDATE", "VALIDATING", "VALIDATED", "SHADOW", "CANARY", "ACTIVE", "DEPRECATED", "RETIRED"]
+    },
+    "active": { "type": "boolean" }
+  }
+}
