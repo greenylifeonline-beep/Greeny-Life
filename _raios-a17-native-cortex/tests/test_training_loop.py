@@ -12,8 +12,9 @@ sys.path.insert(0, str(ROOT))
 
 from ccee.config import FailClosed  # noqa: E402
 from ccee.engine import CCEE  # noqa: E402
+from ccee.meta_learning import MetaLearning  # noqa: E402
 from ccee.schemas import CognitiveTurn  # noqa: E402
-from ccee.training_loop import LiveCognitiveLoop  # noqa: E402
+from ccee.training_loop import LiveCognitiveLoop, classify_hit  # noqa: E402
 
 
 class TrainingLoopTests(unittest.TestCase):
@@ -92,6 +93,68 @@ class TrainingLoopTests(unittest.TestCase):
         self.loop.ask_raios(task_id="GL-REST", intent="x")
         again = LiveCognitiveLoop(self.ccee, REPO)
         self.assertEqual(again._attempts["GL-REST"], 1)
+
+    def test_classify_hit_buckets(self) -> None:
+        self.assertEqual(classify_hit("RAIOS/V9/runtime/a4_certification.py:20:        text=True,"), "v9_forbidden")
+        self.assertEqual(classify_hit("brain.py:614:                text=True,"), "brain_quarantined")
+        self.assertEqual(classify_hit("tests/test_nervous_system.py:42:                text=True, errors='strict'"), "negative_control")
+        self.assertEqual(
+            classify_hit("_raios-a17-cursor-parallel/tests/certify_cursor_a17_a23.py:27:        text=True,"),
+            "reconnectable_d1",
+        )
+        self.assertEqual(classify_hit("_raios-a17-native-cortex/ccee/process_kernel.py:7:and forbids brain.py's errors='ignore'"), "comment")
+
+    def test_taught_strategy_skips_naive_on_transfer_task(self) -> None:
+        self.loop.ask_raios(task_id="GL-TEACH", intent="x")
+        self.loop.critique(
+            task_id="GL-TEACH",
+            scores={
+                "diagnosis_accuracy": 0.5,
+                "root_cause_quality": 0.5,
+                "evidence_quality": 0.6,
+                "plan_quality": 0.5,
+                "tool_selection": 0.7,
+                "execution_success": 0.7,
+                "verification_quality": 0.4,
+                "risk_awareness": 0.5,
+                "efficiency": 0.4,
+                "confidence_calibration": 0.4,
+                "learning_quality": 0.5,
+                "transfer_success": 0.2,
+            },
+            missed=["encoding class"],
+            supplied=["search text=True and errors=ignore"],
+            notes=["search text=True and errors=ignore", "do not mutate RAIOS/V9"],
+        )
+        transfer = self.loop.ask_raios(task_id="GL-XFER", intent="remaining D1 certify harnesses")
+        self.assertEqual(transfer["attempt"], 1)
+        self.assertEqual((transfer["result"] or {}).get("strategy"), "expand_popen_check_output")
+        self.assertTrue(self.loop.encoding_class_taught())
+
+    def test_meta_learning_restores_from_ledger(self) -> None:
+        self.loop.critique(
+            task_id="GL-META",
+            scores={
+                "diagnosis_accuracy": 0.6,
+                "root_cause_quality": 0.6,
+                "evidence_quality": 0.6,
+                "plan_quality": 0.6,
+                "tool_selection": 0.6,
+                "execution_success": 0.6,
+                "verification_quality": 0.6,
+                "risk_awareness": 0.6,
+                "efficiency": 0.6,
+                "confidence_calibration": 0.6,
+                "learning_quality": 0.6,
+                "transfer_success": 0.6,
+            },
+            missed=[],
+            supplied=[],
+            notes=["search text=True and errors=ignore"],
+        )
+        restored = MetaLearning(self.ccee.ledger)
+        self.assertGreaterEqual(len(restored.records), 1)
+        self.assertTrue(any(r.get("kind") == "meta_learning" for r in restored.records))
 
 
 if __name__ == "__main__":

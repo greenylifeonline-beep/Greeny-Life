@@ -63,7 +63,7 @@ class CCEE:
         self.transfer = TransferEngine(self.bus)
         self.retention = RetentionEngine(self.bus)
         self.forgetting = Forgetting(self.ledger, self.bus)
-        self.meta = MetaLearning()
+        self.meta = MetaLearning(self.ledger)
         self.benchmarks = BenchmarkFactory(self.bus, self.transfer)
         self.arena = Arena()
         self.accel = LearningAcceleration(self.ledger)

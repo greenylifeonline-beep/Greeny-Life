@@ -11,7 +11,7 @@ from collections import defaultdict
 from pathlib import Path
 from typing import Any
 
-from .config import FailClosed, canonical_json, deterministic_id, repo_root_from, sha256_obj, utc_now
+from .config import FailClosed, canonical_json, deterministic_id, native_root, repo_root_from, sha256_obj, utc_now
 from .process_kernel import encoding_safe_run
 from .repair_memory import KERNEL_REPAIR_ID
 from .root_cause import classify_failure
@@ -20,11 +20,50 @@ from .work_gate import WorkGate
 
 MAX_ATTEMPTS = 3
 SKIP_HINTS = ("/archive/", "\\.architecture-backups\\", "/node_modules/", "/.git/")
+TAUGHT_MARKERS = (
+    "text=true",
+    "errors=ignore",
+    "encoding class",
+    "over-classified subprocess.check_output",
+    "do not mutate raios/v9",
+)
+
+UNTAUGHT_STRATEGIES = {
+    1: "naive_repo_rg",
+    2: "exclude_archive",
+    3: "expand_popen_check_output",
+}
+TAUGHT_STRATEGIES = {
+    1: "expand_popen_check_output",
+    2: "exclude_v9_brain",
+    3: "certify_harness_only",
+}
 
 
 def _skip(path: str) -> bool:
     lowered = path.replace("\\", "/")
     return any(h.replace("\\", "/") in lowered for h in SKIP_HINTS)
+
+
+def classify_hit(line: str) -> str:
+    """Bucket a rg hit. Teacher-compiled from GL-ENC-002; not independent Qwen insight."""
+    lowered = line.replace("\\", "/")
+    if _skip(lowered):
+        return "archive_skip"
+    path = lowered.split(":", 1)[0]
+    if "RAIOS/V9/" in lowered:
+        return "v9_forbidden"
+    if path == "brain.py" or path.endswith("/brain.py"):
+        return "brain_quarantined"
+    if "errors='strict'" in line or 'errors="strict"' in line:
+        return "negative_control"
+    if path.endswith("/process_kernel.py") or path.endswith("process_kernel.py"):
+        return "comment"
+    if path.endswith("/training_loop.py") or path.endswith("training_loop.py"):
+        return "classifier_source"
+    if "text=True" in line or "errors='ignore'" in line or 'errors="ignore"' in line:
+        return "reconnectable_d1"
+    return "needs_review"
 
 
 class LiveCognitiveLoop:
@@ -81,6 +120,29 @@ class LiveCognitiveLoop:
             self.queues[queue] = [t for t in self.queues[queue] if t != tid]
             self.queues[queue].append(tid)
 
+    def retrieved_lessons(self) -> list[str]:
+        lessons: list[str] = []
+        for rec in self.ccee.ledger.list("knowledge"):
+            if rec.get("schema_id") != "raios.cognitive-turn.v1":
+                continue
+            for item in rec.get("lesson") or []:
+                text = str(item)
+                if text and text not in lessons:
+                    lessons.append(text)
+        return lessons
+
+    def encoding_class_taught(self) -> bool:
+        blob = " ".join(self.retrieved_lessons()).lower()
+        return any(marker in blob for marker in TAUGHT_MARKERS)
+
+    def _choose_strategy(self, attempt: int, override: str | None) -> str:
+        if override:
+            return override
+        mapping = TAUGHT_STRATEGIES if self.encoding_class_taught() else UNTAUGHT_STRATEGIES
+        if attempt not in mapping:
+            raise FailClosed(f"NO_STRATEGY_FOR_ATTEMPT:{attempt}")
+        return mapping[attempt]
+
     def _queue_set(self, task_id: str, queue: QueueName) -> None:
         for name, items in self.queues.items():
             self.queues[name] = [t for t in items if t != task_id]
@@ -98,7 +160,8 @@ class LiveCognitiveLoop:
         attempt = self._attempts[task_id] + 1
         if attempt > MAX_ATTEMPTS:
             return self.block(task_id, intent, "MAX_ATTEMPTS")
-        strategy = strategy or {1: "naive_repo_rg", 2: "exclude_archive", 3: "expand_popen_check_output"}[attempt]
+        lessons = self.retrieved_lessons()
+        strategy = self._choose_strategy(attempt, strategy)
         argv = self._search_argv(strategy)
         argv_key = sha256_obj({"argv": argv})
         if argv_key in self._commands[task_id]:
@@ -115,6 +178,10 @@ class LiveCognitiveLoop:
         lines = [ln for ln in obs.stdout.splitlines() if ln.strip()]
         if strategy != "naive_repo_rg":
             lines = [ln for ln in lines if not _skip(ln)]
+        buckets: dict[str, list[str]] = defaultdict(list)
+        for line in lines:
+            buckets[classify_hit(line)].append(line)
+        reconnectable = buckets.get("reconnectable_d1") or []
         family = classify_failure(
             {
                 "integrity": obs.integrity,
@@ -125,22 +192,20 @@ class LiveCognitiveLoop:
             }
         )
         memory = self.ccee.nervous.repair_memory.get(KERNEL_REPAIR_ID)
-        hits = lines[:60]
-        unsafe = [
-            h
-            for h in hits
-            if ("text=True" in h or "errors='ignore'" in h or 'errors="ignore"' in h)
-            and "errors='strict'" not in h
-            and 'errors="strict"' not in h
-            and "forbids brain.py" not in h
-        ]
         turn = CognitiveTurn(
             task_id=task_id,
             attempt=attempt,
             actor="RAIOS",
             intent=intent,
             observations=[
-                {"strategy": strategy, "hit_count": len(lines), "shown": len(hits), "returncode": obs.returncode},
+                {
+                    "strategy": strategy,
+                    "hit_count": len(lines),
+                    "returncode": obs.returncode,
+                    "lessons_retrieved": len(lessons),
+                    "encoding_class_taught": self.encoding_class_taught(),
+                    "bucket_counts": {k: len(v) for k, v in sorted(buckets.items())},
+                },
             ],
             evidence=[
                 {"tool": "rg", "kernel": "d1", "stdout_sha256": obs.stdout_sha256, "integrity": obs.integrity},
@@ -149,15 +214,23 @@ class LiveCognitiveLoop:
             hypothesis=[
                 {"family": family or "UNICODE_DECODE", "repair_id": KERNEL_REPAIR_ID if memory else None},
                 {"claim": "remaining locale-decoded subprocess callers are the same D1 class"},
+                {"retrieved_lessons": lessons[:8]},
             ],
             plan=[
-                "search subprocess callers with D1 rg",
-                "filter archive on retry if naive search is noisy",
-                "reconnect remaining callers to encoding_safe_run",
+                "retrieve prior teacher lessons before choosing search strategy",
+                "search subprocess/text=True callers with D1 rg",
+                "classify v9_forbidden vs brain_quarantined vs negative_control vs reconnectable",
+                "reconnect remaining reconnectable_d1 callers to encoding_safe_run",
                 "negative control: latin1 0xe9 must not raise; PASS+exit1 must fail-closed",
             ],
             action_requested=[
-                {"tool": "d1.encoding_safe_run", "targets": unsafe[:20], "mutating": True, "requires": "HUMAN_OR_READY_GATE"},
+                {
+                    "tool": "d1.encoding_safe_run",
+                    "targets": reconnectable[:20],
+                    "mutating": True,
+                    "requires": "HUMAN_OR_READY_GATE",
+                    "do_not_mutate": ["RAIOS/V9", "brain.py"],
+                },
             ],
             permission_scope=["repository reads", "structural search"],
             action_taken=[
@@ -165,17 +238,19 @@ class LiveCognitiveLoop:
             ],
             result={
                 "ok": obs.returncode in {0, 1},
-                "hits": hits,
-                "unsafe_preview": unsafe[:20],
+                "hits": lines[:60],
+                "unsafe_preview": reconnectable[:20],
+                "buckets": {k: v[:12] for k, v in buckets.items()},
                 "strategy": strategy,
                 "execution_authority": False,
+                "teacher_authored_classifier": True,
             },
-            confidence=0.45 if hits else 0.2,
+            confidence=0.55 if reconnectable else 0.25,
             critic_score=0.0,
             failure_class=None if obs.returncode in {0, 1} else family,
             lesson=[],
             next_action=["cursor_critique", "reconnect_if_authorized"],
-            queue="SHADOW_VALIDATION" if unsafe else "READY",
+            queue="SHADOW_VALIDATION" if reconnectable else "READY",
             teacher_used=False,
         )
         persisted = self.persist_turn(turn)
@@ -185,14 +260,15 @@ class LiveCognitiveLoop:
             {"observations": turn.observations, "actions": turn.action_taken, "tool_calls": turn.action_taken, "uncertainty": 0.4},
         )
         persisted["episode_id"] = episode["episode_id"]
-        if attempt >= MAX_ATTEMPTS and not unsafe:
+        if attempt >= MAX_ATTEMPTS and not reconnectable:
             return self.block(task_id, intent, "NO_UNSAFE_HITS_AFTER_THREE")
         return persisted
 
     def _search_argv(self, strategy: str) -> list[str]:
         glob = ["--glob", "*.py"]
+        repo = str(self.repo)
         if strategy == "naive_repo_rg":
-            return ["rg", "-n", "--max-count", "200", *glob, r"subprocess\.(run|Popen|check_output|check_call)", str(self.repo)]
+            return ["rg", "-n", "--max-count", "200", *glob, r"subprocess\.(run|Popen|check_output|check_call)", repo]
         if strategy == "exclude_archive":
             return [
                 "rg",
@@ -205,7 +281,7 @@ class LiveCognitiveLoop:
                 "-g",
                 "!.architecture-backups/**",
                 r"subprocess\.(run|Popen|check_output|check_call)",
-                str(self.repo),
+                repo,
             ]
         if strategy == "expand_popen_check_output":
             return [
@@ -217,7 +293,38 @@ class LiveCognitiveLoop:
                 "-g",
                 "!archive/**",
                 r"text\s*=\s*True|errors\s*=\s*['\"]ignore['\"]",
-                str(self.repo),
+                repo,
+            ]
+        if strategy == "exclude_v9_brain":
+            return [
+                "rg",
+                "-n",
+                "--max-count",
+                "200",
+                *glob,
+                "-g",
+                "!archive/**",
+                "-g",
+                "!RAIOS/V9/**",
+                "-g",
+                "!brain.py",
+                r"text\s*=\s*True|errors\s*=\s*['\"]ignore['\"]",
+                repo,
+            ]
+        if strategy == "certify_harness_only":
+            return [
+                "rg",
+                "-n",
+                "--max-count",
+                "200",
+                "--glob",
+                "*certify*.py",
+                "-g",
+                "!RAIOS/V9/**",
+                "-g",
+                "!archive/**",
+                r"text\s*=\s*True",
+                repo,
             ]
         raise FailClosed(f"UNKNOWN_STRATEGY:{strategy}")
 
@@ -257,6 +364,34 @@ class LiveCognitiveLoop:
         )
         return dumped
 
+    def compile_d1_certify_skill(self, *, transfer_evidence: list[str]) -> dict[str, Any]:
+        return self.ccee.skills.compile(
+            {
+                "interface": "d1_reconnect_certify_harness",
+                "preconditions": ["encoding_class_taught", "caller_is_not_v9", "caller_is_not_brain"],
+                "inputs": ["certify_harness_path"],
+                "outputs": ["encoding_safe_run_child"],
+                "procedure": [
+                    "retrieve_prior_lessons",
+                    "search_text_true_not_bare_check_output",
+                    "classify_v9_brain_negative_control",
+                    "replace_subprocess_run_text_true_with_encoding_safe_run",
+                    "keep_returncode_before_status_text",
+                ],
+                "invariants": ["no_errors_ignore", "stdout_never_none", "v9_unchanged"],
+                "negative_controls": ["latin1_0xe9", "PASS_then_exit_1", "errors=strict_left_intact"],
+                "tests": ["test_training_loop.py", "test_nervous_system.py"],
+                "rollback": {"restore": "git checkout -- certify harness"},
+                "failure_modes": ["IDENTICAL_RETRY_FORBIDDEN", "V9_MUTATION_FORBIDDEN", "BRAIN_QUARANTINED"],
+                "provenance": {"source": "gl-enc-002-teacher", "teacher": "cursor", "executor": "raios-search"},
+                "kind": "MICRO_SKILL",
+                "zero_llm": True,
+                "confidence": 0.62,
+                "transfer_evidence": transfer_evidence,
+                "version": "0.2.0",
+            }
+        )
+
     def block(self, task_id: str, intent: str, reason: str) -> dict[str, Any]:
         turn = CognitiveTurn(
             task_id=task_id,
@@ -282,8 +417,6 @@ class LiveCognitiveLoop:
 
     def continuity_review(self) -> dict[str, Any]:
         ollama = self.ccee.ollama.inventory()
-        from .config import native_root
-
         boot_gate = native_root(self.repo) / "ccee" / "var" / "boot" / "nervous" / "work_gate.json"
         if boot_gate.is_file():
             gate = json.loads(boot_gate.read_text(encoding="utf-8"))
@@ -291,6 +424,12 @@ class LiveCognitiveLoop:
             gate = WorkGate(self.ccee.nervous.gate.path).read()
         wal = self.ccee.wal.verify_chain()
         dirty = encoding_safe_run(["git", "status", "--porcelain"], cwd=self.repo)
+        queues = self.queues_snapshot()
+        blockers = []
+        if not ollama.get("ok"):
+            blockers.append("MAIN_CORTEX_UNREACHABLE")
+        blockers.extend(f"QUEUE_BLOCKED:{tid}" for tid in queues.get("BLOCKED") or [])
+        blockers.extend(f"WAITING_FOR_HUMAN:{tid}" for tid in queues.get("WAITING_FOR_HUMAN") or [])
         review = {
             "schema": "raios.session-start-cognitive-review.v1",
             "created_at": utc_now(),
@@ -313,27 +452,42 @@ class LiveCognitiveLoop:
             "LEARNING_DELTA": {
                 "meta_records": len(self.ccee.meta.records),
                 "policy_candidates": self.ccee.meta.policy_candidates(),
+                "lessons_retrieved": len(self.retrieved_lessons()),
+                "encoding_class_taught": self.encoding_class_taught(),
             },
-            "NEW_CAPABILITIES": ["d1-d11", "cognitive-turn-v1", "live-training-loop"],
+            "NEW_CAPABILITIES": [
+                "d1-d11",
+                "cognitive-turn-v1",
+                "live-training-loop",
+                "lesson-adapted-strategy",
+                "hit-classification-v9-brain-negative-control",
+                "meta-learning-ledger-restore",
+            ],
             "REGRESSIONS": [],
-            "BLOCKERS": [b for b in ["MAIN_CORTEX_UNREACHABLE"] if not ollama.get("ok")],
-            "RESUMABLE_TASKS": self.queues_snapshot(),
+            "BLOCKERS": blockers,
+            "RESUMABLE_TASKS": queues,
             "PRIORITY_NEXT_ACTIONS": [
                 "ask_raios_first_on_next_repair",
                 "do_not_open_work_gate_without_qwen",
+                "transfer_d1_certify_harness_if_reconnectable",
             ],
             "canonical": False,
         }
         path = Path(self.ccee.root) / "SESSION-START-COGNITIVE-REVIEW.json"
         path.parent.mkdir(parents=True, exist_ok=True)
         path.write_text(canonical_json(review) + "\n", encoding="utf-8")
+        reports = native_root(self.repo) / "reports" / "SESSION-START-COGNITIVE-REVIEW.json"
+        loop_root = (native_root(self.repo) / "ccee" / "var" / "loop").resolve()
+        if Path(self.ccee.root).resolve() == loop_root:
+            reports.parent.mkdir(parents=True, exist_ok=True)
+            reports.write_text(canonical_json(review) + "\n", encoding="utf-8")
+            review["reports_path"] = str(reports)
         review["path"] = str(path)
         return review
 
 
 def main(argv: list[str] | None = None) -> int:
     import sys
-    from .config import native_root
     from .engine import CCEE as Engine
 
     args = list(sys.argv[1:] if argv is None else argv)
@@ -358,6 +512,8 @@ def main(argv: list[str] | None = None) -> int:
                 "confidence": raw.get("confidence"),
                 "hit_count": len((raw.get("result") or {}).get("hits") or []),
                 "unsafe_preview": (raw.get("result") or {}).get("unsafe_preview") or [],
+                "buckets": {k: len(v) for k, v in ((raw.get("result") or {}).get("buckets") or {}).items()},
+                "strategy": (raw.get("result") or {}).get("strategy"),
                 "action_taken": raw.get("action_taken"),
                 "plan": raw.get("plan"),
                 "turn_id": raw.get("turn_id"),
