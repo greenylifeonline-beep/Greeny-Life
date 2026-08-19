@@ -1,4 +1,4 @@
-﻿import argparse, json, subprocess, sys
+﻿import argparse, json, sys
 from pathlib import Path
 from datetime import datetime
 
@@ -6,8 +6,13 @@ ROOT=Path.cwd(); AI=ROOT/".ai-os"; ST=AI/"state"
 def load(p): return json.loads(p.read_text(encoding="utf-8-sig"))
 def save(p,x): p.write_text(json.dumps(x,indent=2,ensure_ascii=False)+"\n",encoding="utf-8")
 def git(*a):
-    try: return subprocess.check_output(["git",*a],cwd=ROOT,text=True,stderr=subprocess.STDOUT).strip()
-    except subprocess.CalledProcessError as e: return e.output.strip()
+    native = ROOT / "_raios-a17-native-cortex"
+    if str(native) not in sys.path:
+        sys.path.insert(0, str(native))
+    from ccee.process_kernel import encoding_safe_run
+    obs = encoding_safe_run(["git", *map(str, a)], cwd=ROOT)
+    text = ((obs.stdout or "") + (obs.stderr or "")).strip()
+    return text
 def need():
     if not AI.exists(): sys.exit("RAIOS not installed.")
 def status(_):

@@ -1,0 +1,43 @@
+{
+  "schema": "raios.cognitive-turn-training.v1",
+  "task_id": "GL-ENC-002",
+  "canonical": false,
+  "before": {
+    "attempt": 1,
+    "critic_mean": 0.425,
+    "fault": "classified bytes check_output().decode as locale text=True class"
+  },
+  "teaching": [
+    "bytes + .decode() is not the Windows locale text=True failure class",
+    "search text=True and errors=ignore",
+    "do not mutate RAIOS/V9 from CCEE"
+  ],
+  "after_attempt_3": {
+    "strategy": "expand_popen_check_output",
+    "found": [
+      "brain.py subprocess text=True errors=ignore (quarantined runtime)",
+      "_raios-file-intelligence-parallel/src/raios_fi/doctor.py v9_clean text=True",
+      "_raios-a17-integration-wave/tests/certify_a17_x1_x3.py unittest child text=True"
+    ],
+    "false_positives": [
+      "process_kernel comments",
+      "test_nervous_system negative control errors=strict"
+    ]
+  },
+  "cursor_applied": [
+    "fi doctor v9_clean -> D1 run()",
+    "wave certify unittest child -> D1 encoding_safe_run",
+    "unsafe filter no longer treats bare check_output as encoding-unsafe"
+  ],
+  "raios_credit": "search execution and attempt-3 hit list",
+  "teacher_credit": "class distinction, V9 boundary, applying reconnects, filter fix",
+  "blocked": {
+    "id": "GL-ENC-002-BRAIN",
+    "queue": "WAITING_FOR_HUMAN",
+    "why": "brain.py is quarantined behind brain_safe_entry.py; file-level errors=ignore plus subprocess ignore is the same class but un-quarantine is architectural",
+    "resume_condition": "human authorizes bounded D1 extract from brain._run_command without enabling blocked modes"
+  },
+  "transfer": "FI doctor v9_clean is the same pattern as CCEE doctor v9_clean already repaired",
+  "mastery_claimed": false,
+  "work_gate": "DEGRADED_DIAGNOSTIC_ACTIVE"
+}

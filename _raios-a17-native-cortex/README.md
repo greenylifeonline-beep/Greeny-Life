@@ -14,6 +14,7 @@ cd _raios-a17-native-cortex
 PYTHONPATH=. python3 -m unittest discover -s tests -v
 PYTHONPATH=. python3 tests/certify_a18_ccee.py
 PYTHONPATH=. python3 -m ccee.doctor --report
+PYTHONPATH=. python3 -m ccee.boot
 pwsh -NoProfile -File tests/CERTIFY-A18-CCEE.ps1
 pwsh -NoProfile -File tests/regression/RUN-FALSE-PASS-REGRESSION.ps1
 ```

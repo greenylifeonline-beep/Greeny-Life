@@ -2,13 +2,12 @@
 from __future__ import annotations
 
 import json
-import subprocess
 import sys
 from pathlib import Path
 from typing import Any
 
 from .certify import run_certification
-from .config import ORGANISM_ID, PACKAGE, FailClosed, canonical_json, package_root, repo_root_from, sha256_text, utc_now, which
+from .config import ORGANISM_ID, PACKAGE, FailClosed, canonical_json, package_root, repo_root_from, run, sha256_text, utc_now, which
 from .inventory import write_inventories
 from .runtime import FileIntelligenceRuntime
 from .tools import detect_tools
@@ -36,10 +35,9 @@ class GateRegistry:
 
 
 def v9_clean(repo: Path) -> bool:
-    proc = subprocess.run(
+    proc = run(
         ["git", "-C", str(repo), "status", "--porcelain", "--", "RAIOS/V9"],
-        capture_output=True,
-        text=True,
+        cwd=repo,
     )
     return proc.returncode == 0 and proc.stdout.strip() == ""
 

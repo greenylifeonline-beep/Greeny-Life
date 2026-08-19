@@ -1,0 +1,26 @@
+{
+  "TRACK": "CURSOR",
+  "BLOCK": "C13 session-start contradiction freeze",
+  "STATUS": "IMPLEMENTED",
+  "FILES_CHANGED": [
+    "_raios-a17-native-cortex/ccee/training_loop.py",
+    "_raios-a17-native-cortex/tests/test_training_loop.py"
+  ],
+  "ARTIFACTS": [
+    "_raios-a17-native-cortex/reports/C13-SESSION-REHYDRATE-CHECKPOINT.json"
+  ],
+  "TESTS": "CCEE 87 OK",
+  "RAIOS_RESPONSE": "not a RAIOS diagnosis task; continuity_review rechecks ollama and boot receipts",
+  "NEW_CAPABILITIES": [
+    "CONTRADICTIONS in SESSION-START-COGNITIVE-REVIEW",
+    "execution_authority_allowed false until cortex present, READY gate, and no critical contradictions"
+  ],
+  "BLOCKERS": ["MAIN_CORTEX_UNREACHABLE", "GL-ENC-002-BRAIN"],
+  "COLLISION_RISK": {
+    "C12_fabric": "AVOIDED",
+    "C10_voice": "NOT_STARTED_LEFT_OPEN"
+  },
+  "MERGE_READY": true,
+  "NEXT": "C11 vision/document routing if ChatGPT is on fabric/voice; otherwise wait for incoming ChatGPT artifacts to MERGE/REUSE",
+  "canonical": false
+}

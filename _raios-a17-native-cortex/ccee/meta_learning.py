@@ -5,14 +5,31 @@ from collections import defaultdict
 from typing import Any
 
 from .config import FailClosed, deterministic_id, utc_now
+from .ledger import Ledger
 
 
 class MetaLearning:
-    def __init__(self) -> None:
+    def __init__(self, ledger: Ledger | None = None) -> None:
+        self.ledger = ledger
         self.records: list[dict[str, Any]] = []
+        self._restore()
+
+    def _restore(self) -> None:
+        if self.ledger is None:
+            return
+        seen: set[str] = set()
+        for rec in self.ledger.list("knowledge"):
+            if rec.get("kind") != "meta_learning":
+                continue
+            mid = str(rec.get("meta_id") or "")
+            if not mid or mid in seen:
+                continue
+            seen.add(mid)
+            self.records.append(rec)
 
     def record(self, mission: dict[str, Any]) -> dict[str, Any]:
         rec = {
+            "kind": "meta_learning",
             "meta_id": deterministic_id("meta", str(mission.get("mission_id") or mission)),
             "teaching_method": mission.get("teaching_method") or "unknown",
             "teacher": mission.get("teacher"),
@@ -24,8 +41,17 @@ class MetaLearning:
             "compute_cost": float(mission.get("compute_cost") or 0),
             "success": bool(mission.get("success")),
             "created_at": utc_now(),
+            "canonical": False,
         }
         self.records.append(rec)
+        if self.ledger is not None:
+            self.ledger.put(
+                "knowledge",
+                "knowledge_id",
+                rec["meta_id"],
+                rec,
+                extra={"state": "DISCOVERED", "kind": "meta_learning"},
+            )
         return rec
 
     def policy_candidates(self) -> list[dict[str, Any]]:

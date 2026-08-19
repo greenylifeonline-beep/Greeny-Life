@@ -131,6 +131,79 @@ class FalsePassRegression(unittest.TestCase):
 
         self._failed("stale", fn)
 
+    def test_13_encoding_strict_utf8_does_not_drop_returncode(self) -> None:
+        def fn(reg: AssertionRegistry):
+            from ccee.process_kernel import encoding_safe_run
+
+            obs = encoding_safe_run(
+                [sys.executable, "-c", "import sys; sys.stdout.buffer.write(b'\\xe9'); raise SystemExit(3)"]
+            )
+            if obs.returncode != 3:
+                raise FailClosed("RETURNCODE_LOST")
+            if obs.stdout is None:
+                raise FailClosed("STDOUT_NONE")
+            raise FailClosed("EXPECTED_NONZERO_AFTER_DECODE")
+
+        self._failed("encoding", fn)
+
+    def test_14_printed_pass_after_child_failure(self) -> None:
+        def fn(reg: AssertionRegistry):
+            self.runner.run_child([sys.executable, "-c", "print('PASS'); raise SystemExit(1)"])
+
+        result = self._failed("liar", fn)
+        self.assertIn("FALSE_PASS", result["error"])
+
+    def test_15_bare_pass_exit_zero_is_false_pass(self) -> None:
+        def fn(reg: AssertionRegistry):
+            self.runner.run_child([sys.executable, "-c", "print('PASS')"])
+
+        result = self._failed("bare0", fn)
+        self.assertIn("FALSE_PASS", result["error"])
+
+    def test_16_structured_claims_with_matching_exit_allowed(self) -> None:
+        from ccee.certification import FalsePassDetector
+
+        detector = FalsePassDetector()
+        payload = '{"UNIT_TESTS":"PASS","WAVE_CERTIFICATION":"PASS"}\n'
+        detector.judge_child(payload, "", 0)
+
+    def test_17_json_exit_mismatch_rejected(self) -> None:
+        from ccee.certification import FalsePassDetector
+
+        detector = FalsePassDetector()
+        with self.assertRaises(FailClosed) as ctx:
+            detector.judge_child('{"overall_status":"GATES_SATISFIED","exit_code":0,"UNIT_TESTS":"PASS"}', "", 1)
+        self.assertIn("FALSE_PASS", str(ctx.exception))
+
+    def test_18_missing_artifact_is_not_success(self) -> None:
+        from ccee.certification import FalsePassDetector
+
+        detector = FalsePassDetector()
+        verdict = detector.verdict(
+            exit_code=0,
+            artifact_exists=False,
+            artifact_valid=False,
+            hash_stable=False,
+            tests_ok=True,
+            upstream_ok=True,
+            no_critical_contradiction=True,
+            gates_complete=True,
+            stdout="ok",
+        )
+        self.assertFalse(verdict.ok)
+        self.assertEqual(verdict.overall_status(), "FAILED")
+
+    def test_19_exception_swallowed_then_print_pass(self) -> None:
+        def fn(reg: AssertionRegistry):
+            try:
+                raise RuntimeError("hidden")
+            except Exception:
+                print("PASS")
+            return {"ok": True}
+
+        result = self._failed("swallowed", fn)
+        self.assertIn("FALSE_PASS", result["error"])
+
     def test_false_pass_impossible_on_success_path(self) -> None:
         def fn(reg: AssertionRegistry):
             reg.require("ResponseHash", True)

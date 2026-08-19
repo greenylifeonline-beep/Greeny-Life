@@ -1,25 +1,23 @@
 """CCEE doctor. Nonzero exit if a critical gate fails. stdout is not evidence."""
 from __future__ import annotations
 
-import json
-import subprocess
 import sys
 from pathlib import Path
 from typing import Any
 
-from .certification import AssertionRegistry, AtomicCertificationRunner, EvidenceLedger, FalsePassDetector
-from .config import ORGANISM_ID, FailClosed, canonical_json, contains_forbidden_success, native_root, repo_root_from, sha256_text, utc_now
+from .certification import AssertionRegistry, AtomicCertificationRunner, EvidenceLedger
+from .config import ORGANISM_ID, FailClosed, authoritative_exit, canonical_json, contains_forbidden_success, native_root, repo_root_from, sha256_text, utc_now
 from .engine import CCEE
 from .first_experiment import run_experiment
 from .ollama_runtime import OllamaRuntimeManager
+from .process_kernel import encoding_safe_run
 from .schemas import CortexResponse, CognitiveEvent
 
 
 def v9_clean(repo_root: Path) -> bool:
-    proc = subprocess.run(
+    proc = encoding_safe_run(
         ["git", "-C", str(repo_root), "status", "--porcelain", "--", "RAIOS/V9"],
-        capture_output=True,
-        text=True,
+        cwd=repo_root,
     )
     return proc.returncode == 0 and proc.stdout.strip() == ""
 
@@ -54,8 +52,18 @@ def run_doctor(root: Path, repo_root: Path, evidence: Path) -> dict[str, Any]:
         restored = ccee.checkpoint.save()
         registry.require("checkpoint", bool(restored.get("checkpoint_id")))
         registry.require("hash_chain", verified["ok"])
-        FalsePassDetector().scan("doctor running", gates_complete=False)
-        registry.require("false_pass_protection", True)
+        liar_fp = False
+        try:
+            runner.run_child([sys.executable, "-c", "print('PASS'); raise SystemExit(1)"])
+        except FailClosed as exc:
+            liar_fp = "FALSE_PASS" in str(exc)
+        registry.require("false_pass_protection", liar_fp, "liar_child")
+        bare0 = False
+        try:
+            runner.run_child([sys.executable, "-c", "print('PASS')"])
+        except FailClosed as exc:
+            bare0 = "FALSE_PASS" in str(exc)
+        registry.require("bare_pass_exit_zero_blocked", bare0, "bare_pass")
         registry.require("v9_unchanged", v9_clean(repo_root))
         ollama = OllamaRuntimeManager(ccee.bus)
         inv = ollama.inventory()
@@ -65,6 +73,16 @@ def run_doctor(root: Path, repo_root: Path, evidence: Path) -> dict[str, Any]:
         registry.observe("teacher_corpus", teachers["status"] == "FOUND", teachers["status"])
         experiment = run_experiment(ccee, repo_root)
         registry.require("first_experiment", experiment["transfer"]["passed"] and not experiment["mastery_claimed"])
+        ns = ccee.nervous.certify_self(root / "ns-lab")
+        registry.require("nervous_system_lab", bool(ns["lab"]["executed"] and ns["lab"]["positive"]["ok"]))
+        registry.require("encoding_negative_control", bool(ns["lab"]["negative"]["ok"]))
+        registry.require("integrity_lab", bool((ns.get("integrity_lab") or {}).get("repair_success")))
+        if not inv.get("main_cortex_present"):
+            registry.require(
+                "work_gate_closed_without_cortex",
+                ns["boot"]["gate"]["state"] != "READY_FOR_REAL_PROJECT_WORK",
+                ns["boot"]["gate"]["state"],
+            )
         registry.require("wal_after_experiment", ccee.wal.verify_chain()["ok"])
         snap = ccee.metrics.snapshot()
         result.update(
@@ -76,6 +94,12 @@ def run_doctor(root: Path, repo_root: Path, evidence: Path) -> dict[str, Any]:
                 "ollama": inv,
                 "teachers": teachers,
                 "identity": ccee.identity(),
+                "nervous": {
+                    "family": ns.get("family"),
+                    "episode_id": ns.get("episode_id"),
+                    "work_gate": (ns.get("boot") or {}).get("gate", {}).get("state"),
+                    "lab": ns.get("lab"),
+                },
             }
         )
         certified = runner.certify("ccee-doctor", lambda reg: _copy_gates(reg, registry), run_id=ccee.wal.run_id)
@@ -127,7 +151,7 @@ def main(argv: list[str] | None = None) -> int:
     sys.stdout.write(canonical_json({"overall_status": report.get("overall_status"), "exit_code": report.get("exit_code")}) + "\n")
     if contains_forbidden_success(canonical_json(report)) and report.get("exit_code") != 0:
         return 1
-    return int(report.get("exit_code") or 1)
+    return authoritative_exit(report.get("exit_code"))
 
 
 if __name__ == "__main__":

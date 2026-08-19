@@ -1,0 +1,69 @@
+{
+  "schema": "raios.cognitive-turn-training.v1",
+  "task_id": "GL-ENC-003",
+  "canonical": false,
+  "before": {
+    "related_task": "GL-ENC-002",
+    "attempt": 1,
+    "strategy": "naive_repo_rg",
+    "critic_mean": 0.425,
+    "fault": "classified bytes check_output().decode as locale text=True class"
+  },
+  "teaching": [
+    "search text=True and errors=ignore, not bare check_output",
+    "do not mutate RAIOS/V9",
+    "brain.py is quarantined",
+    "retrieve prior lessons before choosing the first strategy on a similar task"
+  ],
+  "after_attempt_1_transfer_task": {
+    "strategy": "expand_popen_check_output",
+    "critic_mean": 0.693,
+    "used_retrieved_lessons": true,
+    "skipped_naive_search": true,
+    "found": [
+      "_raios-a17-cursor-parallel/tests/certify_cursor_a17_a23.py text=True"
+    ],
+    "false_positive": [
+      "test_nervous_system.py:42 text=True with errors=strict two lines later"
+    ]
+  },
+  "attempt_2": {
+    "strategy": "exclude_v9_brain",
+    "critic_mean": 0.623,
+    "note": "argv changed; same two reconnectable targets; no diagnosis transfer"
+  },
+  "attempt_3": {
+    "strategy": "certify_harness_only",
+    "critic_mean": 0.731,
+    "found": [
+      "_raios-a17-cursor-parallel/tests/certify_cursor_a17_a23.py:27 text=True"
+    ]
+  },
+  "cursor_applied": [
+    "certify_cursor_a17_a23.py unittest child -> D1 encoding_safe_run",
+    "classify_hit_with_context look-ahead for errors=strict",
+    "parallel auditor: PENDING harvest is not teacher FOUND"
+  ],
+  "raios_credit": "D1 rg execution; lesson-adapted first strategy; attempt-3 isolated the transfer harness",
+  "teacher_credit": "strategy programs, hit classifier, applying reconnect, multiline look-ahead, auditor PENDING!=FOUND",
+  "qwen_independent_planning": false,
+  "blocked": {
+    "id": "GL-ENC-002-BRAIN",
+    "queue": "BLOCKED",
+    "why": "brain.py remains quarantined; human approval still required",
+    "resume_condition": "human authorizes bounded D1 extract from brain._run_command without enabling blocked modes"
+  },
+  "transfer": "cursor-parallel certify is the same D1 class as wave certify_a17_x1_x3.py, different file",
+  "learning_delta": {
+    "gl_enc_002_attempt_1_mean": 0.425,
+    "gl_enc_003_attempt_1_mean": 0.693,
+    "naive_search_skipped_after_teaching": true,
+    "mastery_claimed": false
+  },
+  "skill": {
+    "interface": "d1_reconnect_certify_harness",
+    "kind": "MICRO_SKILL",
+    "active": false
+  },
+  "work_gate": "DEGRADED_DIAGNOSTIC_ACTIVE"
+}

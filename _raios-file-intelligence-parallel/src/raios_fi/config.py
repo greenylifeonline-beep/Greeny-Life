@@ -6,6 +6,7 @@ import json
 import os
 import shutil
 import subprocess
+import sys
 from datetime import datetime, timezone
 from pathlib import Path
 from typing import Any
@@ -101,7 +102,12 @@ def which(name: str) -> str | None:
 
 
 def run(cmd: list[str], cwd: Path | None = None, timeout: float = 30.0) -> subprocess.CompletedProcess[str]:
-    return subprocess.run(cmd, cwd=str(cwd) if cwd else None, capture_output=True, text=True, timeout=timeout)
+    native = repo_root_from() / "_raios-a17-native-cortex"
+    if str(native) not in sys.path:
+        sys.path.insert(0, str(native))
+    from ccee.process_kernel import encoding_safe_run
+
+    return encoding_safe_run(cmd, cwd=cwd, timeout=timeout).as_completed()
 
 
 def env_flag(name: str, default: str = "") -> str:

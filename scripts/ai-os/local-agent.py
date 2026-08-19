@@ -1,8 +1,7 @@
 from __future__ import annotations
 
 import argparse
-import json
-import urllib.request
+import sys
 from pathlib import Path
 from datetime import datetime
 
@@ -19,28 +18,18 @@ def read_file(path: Path, max_chars: int = 20000) -> str:
 
 
 def call_model(model: str, prompt: str) -> dict:
+    native = ROOT / "_raios-a17-native-cortex"
+    if str(native) not in sys.path:
+        sys.path.insert(0, str(native))
+    from ccee.config import FailClosed
+    from ccee.ollama_runtime import OllamaRuntimeManager
 
-    body = {
-        "model": model,
-        "prompt": prompt,
-        "stream": False,
-        "keep_alive": 0,
-        "options": {
-            "temperature": 0.1,
-            "num_ctx": 4096,
-            "num_predict": 900
-        }
-    }
-
-    req = urllib.request.Request(
-        OLLAMA,
-        data=json.dumps(body).encode("utf-8"),
-        headers={"Content-Type": "application/json"},
-        method="POST"
-    )
-
-    with urllib.request.urlopen(req, timeout=1200) as r:
-        return json.loads(r.read().decode("utf-8"))
+    manager = OllamaRuntimeManager(base_url=OLLAMA.rsplit("/api/generate", 1)[0])
+    try:
+        result = manager.generate(prompt, model=model)
+    except FailClosed as exc:
+        raise SystemExit(f"OLLAMA_FAIL_CLOSED:{exc}") from exc
+    return {"response": result.get("response") or "", "eval_count": None, "proposal_only": True}
 
 
 def build_context() -> str:

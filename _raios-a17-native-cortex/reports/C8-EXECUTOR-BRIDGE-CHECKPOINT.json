@@ -1,0 +1,48 @@
+{
+  "TRACK": "CURSOR",
+  "BLOCK": "C8 governed executor bridge",
+  "STATUS": "IMPLEMENTED_OBSERVE_ONLY",
+  "FILES_CHANGED": [
+    "_raios-a17-native-cortex/ccee/executor_bridge.py",
+    "_raios-a17-native-cortex/ccee/nervous_system.py",
+    "_raios-a17-native-cortex/ccee/run_supervisor.py",
+    "_raios-a17-native-cortex/ccee/training_loop.py",
+    "_raios-a17-native-cortex/tests/test_executor_bridge.py"
+  ],
+  "ARTIFACTS": [
+    "_raios-a17-native-cortex/reports/C8-EXECUTOR-BRIDGE-CHECKPOINT.json"
+  ],
+  "TESTS": "CCEE 87 OK including 7 executor-bridge tests",
+  "RAIOS_RESPONSE": {
+    "task_id": "GL-EX-001",
+    "qwen_independent_planning": false,
+    "attempts": [
+      {"n": 1, "strategy": "which_executors", "found": ["/exec-daemon/gh"]},
+      {"n": 2, "strategy": "gh_copilot_help", "found": "gh copilot subcommand help exists in this environment"},
+      {"n": 3, "strategy": "cursor_env_probe", "found": "CURSOR_AGENT=1"}
+    ],
+    "critic_mean": 0.575,
+    "credit": "D1 discovery probes only"
+  },
+  "NEW_CAPABILITIES": [
+    "raios.executor-receipt.v1",
+    "observe-only dispatch ACK-LEASED-RUNNING-COMPLETED",
+    "mutating dispatch PERMISSION_DENIED without opening WORK_GATE",
+    "idempotent receipts",
+    "copilot discovery via gh copilot --help without credential logging"
+  ],
+  "BLOCKERS": [
+    "MAIN_CORTEX_UNREACHABLE",
+    "WORK_GATE_NOT_READY",
+    "GL-ENC-002-BRAIN"
+  ],
+  "COLLISION_RISK": {
+    "C12_communication_fabric": "AVOIDED_NOT_TOUCHED",
+    "exchange_v2_package": "VOCABULARY_REUSED_NOT_MUTATED",
+    "RAIOS_V9": "NOT_TOUCHED"
+  },
+  "MERGE_READY": true,
+  "NEXT": "C13 session-start contradiction freeze (independent of ChatGPT fabric). C12 left for ChatGPT+User track.",
+  "canonical": false,
+  "work_gate": "DEGRADED_DIAGNOSTIC_ACTIVE"
+}

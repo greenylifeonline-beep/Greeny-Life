@@ -78,6 +78,16 @@ class OllamaRuntimeManager:
             "teachers_present": {t: any(t.split(":")[0] in str(n) for n in names) for t in TEMPORARY_TEACHERS},
         }
 
+    def generate(self, prompt: str, model: str | None = None, *, stream: bool = False) -> dict[str, Any]:
+        chosen = model or CORTEX_TARGET
+        if stream:
+            raise FailClosed("OLLAMA_STREAM_FORBIDDEN")
+        payload = {"model": chosen, "prompt": prompt, "stream": False}
+        data = self._request("/api/generate", payload, method="POST")
+        if not data.get("response") and not data.get("message"):
+            raise FailClosed("OLLAMA_EMPTY_RESPONSE")
+        return {"ok": True, "model": chosen, "response": data.get("response") or "", "proposal_only": True}
+
     def classify_http(self, status: int) -> str:
         if status >= 500:
             return "OLLAMA_SERVER_ERROR"

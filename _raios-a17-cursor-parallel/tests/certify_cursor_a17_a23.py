@@ -3,7 +3,6 @@
 from __future__ import annotations
 
 import json
-import subprocess
 import sys
 import tempfile
 from pathlib import Path
@@ -19,13 +18,21 @@ from raios_parallel import FailClosed, ParallelRuntime  # noqa: E402
 from raios_parallel.models import KnowledgeState, LiveStage  # noqa: E402
 
 
-def main() -> int:
-    unit = subprocess.run(
+def _run_unittests():
+    native = ROOT.parent / "_raios-a17-native-cortex"
+    if str(native) not in sys.path:
+        sys.path.insert(0, str(native))
+    from ccee.process_kernel import encoding_safe_run
+
+    return encoding_safe_run(
         [sys.executable, "-m", "unittest", "discover", "-s", str(ROOT / "tests"), "-v"],
-        cwd=str(ROOT),
-        capture_output=True,
-        text=True,
+        cwd=ROOT,
+        timeout=180.0,
     )
+
+
+def main() -> int:
+    unit = _run_unittests()
     tmp = tempfile.TemporaryDirectory()
     rt = ParallelRuntime(Path(tmp.name) / "cert", repo_root=ROOT.parents[0])
     claims: dict[str, object] = {"UNIT_TESTS": "PASS" if unit.returncode == 0 else "FAIL"}
