@@ -71,16 +71,8 @@ class AuthoritativeRunSupervisor:
         except FailClosed as exc:
             self.capture.capture(name="run_child", error=str(exc))
             raise
-        completed = obs.as_completed()
-        printed = contains_forbidden_success(obs.stdout + obs.stderr)
-        if printed and obs.returncode != 0:
-            self.capture.capture(name="run_child", error="FALSE_PASS_AFTER_NONZERO", obs=obs)
-            raise FailClosed("FALSE_PASS_DETECTED:PASS")
-        if printed and obs.returncode == 0:
-            # exit 0 + PASS text is still not a supervisor PASS; caller must complete gates
-            self.detector.scan(obs.stdout + obs.stderr, gates_complete=False)
         try:
-            self.propagator.check(completed)
+            self.detector.judge_child(obs.stdout, obs.stderr, obs.returncode)
         except FailClosed as exc:
             self.capture.capture(name="run_child", error=str(exc), obs=obs)
             raise

@@ -1,0 +1,84 @@
+{
+  "schema": "raios.hard-block-report.v1",
+  "block": "C2+C1+C3+C4+C5",
+  "status": "IMPLEMENTED_WITH_EVIDENCE",
+  "canonical": false,
+  "DISCOVERED": [
+    "AtomicCertificationRunner.run_child treated print('PASS'); exit 0 as gates_complete",
+    "doctor false_pass_protection accepted CHILD_EXIT without FALSE_PASS",
+    "root-cause graph always emitted the encoding template",
+    "shadow lab had encoding children only, no integrity lifecycle",
+    "repair memory had no false-PASS fingerprint/match"
+  ],
+  "REUSED": [
+    "ccee.certification.FalsePassDetector",
+    "ccee.causal_learning.CausalLearning",
+    "ccee.repair_memory knowledge ledger",
+    "D1 encoding_safe_run",
+    "raios.cognitive-turn.v1"
+  ],
+  "IMPLEMENTED": [
+    "judge_child: PASS+nonzero and bare PASS+exit0 fail closed; structured claim JSON allowed only with matching exit",
+    "AuthoritativeVerdict: exit, artifact, hash readback, tests, upstream, contradictions, gates",
+    "evidence ledger sha256 readback",
+    "evidence-driven diagnose() with required node/edge types",
+    "shadow integrity session full lifecycle, promotion forbidden",
+    "repair.anti_false_pass.v1 fingerprint match, replay_authorized false"
+  ],
+  "REPAIRED": [
+    "C2 hole in run_child",
+    "D4 shallow encoding-only graph",
+    "D6 missing integrity lifecycle"
+  ],
+  "MERGED": [],
+  "RAIOS ATTEMPT": {
+    "task_id": "GL-FP-001",
+    "attempts": [
+      {"n": 1, "strategy": "naive_print_pass", "critic_mean": 0.396},
+      {"n": 2, "strategy": "except_after_pass", "critic_mean": 0.41},
+      {"n": 3, "strategy": "gates_complete_returncode", "critic_mean": 0.51}
+    ],
+    "qwen_independent_planning": false
+  },
+  "RAIOS SCORE": {
+    "attempt_1_mean": 0.396,
+    "attempt_3_mean": 0.51,
+    "execution": "rg executed",
+    "diagnosis": "found print PASS sites; did not independently close the authority hole"
+  },
+  "CURSOR CORRECTION": [
+    "judge_child + AuthoritativeVerdict",
+    "specialize GL-FP plan text so encoding plan does not leak",
+    "adversarial tests 15-19",
+    "integrity shadow lab",
+    "false-PASS repair memory"
+  ],
+  "TRANSFER RESULT": "print SUCCESS exit 1 blocked in shadow lab; not counted as RAIOS transfer",
+  "TESTS": "CCEE 80 unittest OK before extra modules; FI 50 OK",
+  "FAILURES": "none remaining in CCEE/FI suites after Path import fix",
+  "ROOT CAUSE": "child stdout treated as gates-complete when returncode==0",
+  "EVIDENCE": [
+    "tests/regression/test_false_pass.py test_15_bare_pass_exit_zero_is_false_pass",
+    "tests/test_diagnostic_hard.py",
+    "tests/test_diagnostic_benchmark.py"
+  ],
+  "FILES CHANGED": [
+    "_raios-a17-native-cortex/ccee/certification.py",
+    "_raios-a17-native-cortex/ccee/run_supervisor.py",
+    "_raios-a17-native-cortex/ccee/root_cause.py",
+    "_raios-a17-native-cortex/ccee/causal_learning.py",
+    "_raios-a17-native-cortex/ccee/shadow_lab.py",
+    "_raios-a17-native-cortex/ccee/repair_memory.py",
+    "_raios-a17-native-cortex/ccee/nervous_system.py",
+    "_raios-a17-native-cortex/ccee/doctor.py",
+    "_raios-a17-native-cortex/ccee/training_loop.py"
+  ],
+  "ARTIFACTS": [
+    "_raios-a17-native-cortex/reports/C2-C1-HARD-BLOCK.json"
+  ],
+  "BLOCKERS": [
+    "MAIN_CORTEX_UNREACHABLE",
+    "GL-ENC-002-BRAIN WAITING_FOR_HUMAN"
+  ],
+  "NEXT HARD BLOCK": "C8 governed executor bridge (Cursor/Copilot) without opening WORK_GATE; C12 fabric hardening if C8 blocks on missing CLI"
+}

@@ -52,12 +52,18 @@ def run_doctor(root: Path, repo_root: Path, evidence: Path) -> dict[str, Any]:
         restored = ccee.checkpoint.save()
         registry.require("checkpoint", bool(restored.get("checkpoint_id")))
         registry.require("hash_chain", verified["ok"])
-        liar_blocked = False
+        liar_fp = False
         try:
             runner.run_child([sys.executable, "-c", "print('PASS'); raise SystemExit(1)"])
         except FailClosed as exc:
-            liar_blocked = "FALSE_PASS" in str(exc) or "CHILD_EXIT" in str(exc)
-        registry.require("false_pass_protection", liar_blocked, "liar_child")
+            liar_fp = "FALSE_PASS" in str(exc)
+        registry.require("false_pass_protection", liar_fp, "liar_child")
+        bare0 = False
+        try:
+            runner.run_child([sys.executable, "-c", "print('PASS')"])
+        except FailClosed as exc:
+            bare0 = "FALSE_PASS" in str(exc)
+        registry.require("bare_pass_exit_zero_blocked", bare0, "bare_pass")
         registry.require("v9_unchanged", v9_clean(repo_root))
         ollama = OllamaRuntimeManager(ccee.bus)
         inv = ollama.inventory()
@@ -70,6 +76,7 @@ def run_doctor(root: Path, repo_root: Path, evidence: Path) -> dict[str, Any]:
         ns = ccee.nervous.certify_self(root / "ns-lab")
         registry.require("nervous_system_lab", bool(ns["lab"]["executed"] and ns["lab"]["positive"]["ok"]))
         registry.require("encoding_negative_control", bool(ns["lab"]["negative"]["ok"]))
+        registry.require("integrity_lab", bool((ns.get("integrity_lab") or {}).get("repair_success")))
         if not inv.get("main_cortex_present"):
             registry.require(
                 "work_gate_closed_without_cortex",

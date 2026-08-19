@@ -14,7 +14,7 @@ from .permission_broker import PermissionBroker
 from .process_kernel import EncodingSafeProcessKernel, KERNEL_ID
 from .repair_memory import RepairMemory, RepairPlanner
 from .resource_governor import ResourceGovernor
-from .root_cause import classify_failure, graph_from_observation
+from .root_cause import FALSE_PASS_REPAIR_ID, KERNEL_REPAIR_ID, classify_failure, graph_from_observation
 from .run_supervisor import AuthoritativeRunSupervisor
 from .shadow_lab import ShadowRepairLab
 from .skill_compiler import SkillCompiler
@@ -80,6 +80,7 @@ class DiagnosticNervousSystem:
 
     def certify_self(self, workdir: str | Path) -> dict[str, Any]:
         lab = self.lab.run_encoding_lab(Path(workdir) / "shadow")
+        integrity = self.lab.run_integrity_session(Path(workdir) / "integrity")
         self.governor.release_foreground()
         recert = self.idle.recertify_encoding_and_false_pass()
         lease = self.broker.request_lease(
@@ -106,7 +107,8 @@ class DiagnosticNervousSystem:
                 "recovery_used": True,
             },
         )
-        self.repair_memory.record_validation(plan["repair_id"] or "repair.encoding_safe_subprocess.v1", ok=True, evidence=lab)
+        self.repair_memory.record_validation(KERNEL_REPAIR_ID, ok=True, evidence=lab)
+        self.repair_memory.record_validation(FALSE_PASS_REPAIR_ID, ok=bool(integrity.get("repair_success")), evidence=integrity)
         self.meta.record(
             {
                 "mission_id": "encoding-false-pass-teach",
@@ -143,6 +145,7 @@ class DiagnosticNervousSystem:
             "work_gate": True,
             "experience_capture": bool(episode.get("episode_id")),
             "shadow_lab": bool(lab.get("executed")),
+            "integrity_lab": bool(integrity.get("repair_success")),
             "root_cause": bool(graph.get("nodes")),
             "repair_planner": bool(plan.get("plan_id")),
             "idle_recert": not recert.get("skipped"),
@@ -157,6 +160,7 @@ class DiagnosticNervousSystem:
         boot = self.supervisor.evaluate_boot(components)
         return {
             "lab": lab,
+            "integrity_lab": integrity,
             "recert": recert,
             "graph": graph,
             "plan": plan,

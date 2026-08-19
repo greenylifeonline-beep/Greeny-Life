@@ -43,6 +43,90 @@ class AssertionRegistry:
         return [n for n, g in self.gates.items() if g["mandatory"] and not g["ok"]]
 
 
+ALLOWED_OVERALL = {
+    "GATES_SATISFIED",
+    "FAILED",
+    "STRUCTURED",
+    "DEGRADED_DIAGNOSTIC_ACTIVE",
+}
+
+CERT_CLAIM_KEYS = ("WAVE_CERTIFICATION", "FILE_INTELLIGENCE", "UNIT_TESTS")
+
+
+def structured_child_allowed(stdout: str, returncode: int) -> bool:
+    """JSON claim maps may contain PASS labels. Bare print('PASS') may not."""
+    try:
+        data = json.loads(stdout.strip())
+    except (json.JSONDecodeError, ValueError, TypeError):
+        return False
+    if not isinstance(data, dict):
+        return False
+    overall = data.get("overall_status")
+    if overall in {"PASS", "SUCCESS", "CERTIFIED", "PROVEN", "COMPLETE"}:
+        return False
+    coded = data.get("exit_code")
+    if coded is not None and int(coded) != int(returncode):
+        return False
+    if overall in ALLOWED_OVERALL:
+        return True
+    wave = next((data.get(k) for k in CERT_CLAIM_KEYS if k in data), None)
+    if wave == "PASS":
+        return int(returncode) == 0
+    if wave == "FAIL":
+        return int(returncode) != 0
+    return False
+
+
+class AuthoritativeVerdict:
+    """Printed text is never authority. One certification model for CCEE."""
+
+    def __init__(self, **fields: Any) -> None:
+        self.exit_code = int(fields.get("exit_code") if fields.get("exit_code") is not None else 1)
+        self.artifact_exists = bool(fields.get("artifact_exists"))
+        self.artifact_valid = bool(fields.get("artifact_valid"))
+        self.hash_stable = bool(fields.get("hash_stable"))
+        self.tests_ok = bool(fields.get("tests_ok"))
+        self.upstream_ok = bool(fields.get("upstream_ok"))
+        self.no_critical_contradiction = bool(fields.get("no_critical_contradiction"))
+        self.gates_complete = bool(fields.get("gates_complete"))
+        self.printed_success_tokens = list(fields.get("printed_success_tokens") or [])
+        self.reason = str(fields.get("reason") or "")
+
+    @property
+    def ok(self) -> bool:
+        if self.printed_success_tokens and not self.gates_complete:
+            return False
+        return (
+            self.exit_code == 0
+            and self.artifact_exists
+            and self.artifact_valid
+            and self.hash_stable
+            and self.tests_ok
+            and self.upstream_ok
+            and self.no_critical_contradiction
+            and self.gates_complete
+        )
+
+    def overall_status(self) -> str:
+        return "GATES_SATISFIED" if self.ok else "FAILED"
+
+    def to_dict(self) -> dict[str, Any]:
+        return {
+            "ok": self.ok,
+            "overall_status": self.overall_status(),
+            "exit_code": 0 if self.ok else (self.exit_code if self.exit_code != 0 else 1),
+            "artifact_exists": self.artifact_exists,
+            "artifact_valid": self.artifact_valid,
+            "hash_stable": self.hash_stable,
+            "tests_ok": self.tests_ok,
+            "upstream_ok": self.upstream_ok,
+            "no_critical_contradiction": self.no_critical_contradiction,
+            "gates_complete": self.gates_complete,
+            "printed_success_tokens": self.printed_success_tokens,
+            "reason": self.reason,
+        }
+
+
 class FalsePassDetector:
     def scan(self, text: str, *, gates_complete: bool) -> None:
         hits = contains_forbidden_success(text)
@@ -51,6 +135,26 @@ class FalsePassDetector:
 
     def scan_bytes(self, data: bytes, *, gates_complete: bool) -> None:
         self.scan(data.decode("utf-8", errors="replace"), gates_complete=gates_complete)
+
+    def judge_child(self, stdout: str, stderr: str, returncode: int) -> None:
+        """Child stdout is never a supervisor PASS. Exit 0 does not complete gates."""
+        text = f"{stdout}{stderr}"
+        hits = contains_forbidden_success(text)
+        if hits and int(returncode) != 0:
+            raise FailClosed("FALSE_PASS_DETECTED:PASS")
+        if hits and int(returncode) == 0 and not structured_child_allowed(stdout, returncode):
+            raise FailClosed("FALSE_PASS_DETECTED:BARE_PASS_EXIT_0")
+        if int(returncode) != 0:
+            raise FailClosed(f"CHILD_EXIT_NONZERO:child:{returncode}")
+
+    def verdict(self, **fields: Any) -> AuthoritativeVerdict:
+        printed = list(fields.get("printed_success_tokens") or contains_forbidden_success(str(fields.get("stdout") or "")))
+        verdict = AuthoritativeVerdict(**{**fields, "printed_success_tokens": printed})
+        if printed and not verdict.gates_complete:
+            raise FailClosed("FALSE_PASS_DETECTED:" + ",".join(printed))
+        if verdict.ok is False and fields.get("require_ok"):
+            raise FailClosed("AUTHORITATIVE_VERDICT_FAILED:" + (verdict.reason or "incomplete"))
+        return verdict
 
 
 class ExitCodePropagator:
@@ -83,7 +187,10 @@ class EvidenceLedger:
         digest = sha256_text(text)
         body["sha256"] = digest
         path = self.root / folder / f"{kind}-{digest[:16]}.json"
-        path.write_text(canonical_json(body), encoding="utf-8")
+        path.write_text(canonical_json(body) + "\n", encoding="utf-8")
+        loaded = json.loads(path.read_text(encoding="utf-8"))
+        if loaded.get("sha256") != digest:
+            raise FailClosed("EVIDENCE_READBACK_FAILED")
         lineage = {
             "artifact": str(path),
             "sha256": digest,
@@ -175,6 +282,5 @@ class AtomicCertificationRunner:
             self.ledger.persist_failure({"name": "child", "argv": list(argv), "error": str(exc)})
             raise
         completed = obs.as_completed()
-        self.detector.scan(completed.stdout + completed.stderr, gates_complete=completed.returncode == 0)
-        self.propagator.check(completed)
+        self.detector.judge_child(completed.stdout, completed.stderr, completed.returncode)
         return completed

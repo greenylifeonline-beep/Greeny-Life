@@ -38,6 +38,11 @@ TAUGHT_STRATEGIES = {
     2: "exclude_v9_brain",
     3: "certify_harness_only",
 }
+FALSE_PASS_STRATEGIES = {
+    1: "naive_print_pass",
+    2: "except_after_pass",
+    3: "gates_complete_returncode",
+}
 
 
 def _skip(path: str) -> bool:
@@ -90,6 +95,26 @@ def classify_hit_with_context(line: str) -> str:
     if "errors='strict'" in window or 'errors="strict"' in window:
         return "negative_control"
     return base
+
+
+def classify_fp_hit(line: str) -> str:
+    lowered = line.replace("\\", "/")
+    if _skip(lowered):
+        return "archive_skip"
+    path = lowered.split(":", 1)[0]
+    if "RAIOS/V9/" in lowered:
+        return "v9_forbidden"
+    if path == "brain.py" or path.endswith("/brain.py"):
+        return "brain_quarantined"
+    if path.endswith("/certification.py") or path.endswith("test_false_pass.py") or path.endswith("/doctor.py"):
+        return "detector_or_adversarial"
+    if "WAVE_CERTIFICATION" in line or '"PASS" if' in line or "'PASS' if" in line:
+        return "certify_claim_label"
+    if "print('PASS')" in line or 'print("PASS")' in line:
+        return "liar_print"
+    if "gates_complete=completed.returncode" in line:
+        return "returncode_as_gates"
+    return "needs_review"
 
 
 class LiveCognitiveLoop:
@@ -161,10 +186,13 @@ class LiveCognitiveLoop:
         blob = " ".join(self.retrieved_lessons()).lower()
         return any(marker in blob for marker in TAUGHT_MARKERS)
 
-    def _choose_strategy(self, attempt: int, override: str | None) -> str:
+    def _choose_strategy(self, attempt: int, override: str | None, task_id: str = "") -> str:
         if override:
             return override
-        mapping = TAUGHT_STRATEGIES if self.encoding_class_taught() else UNTAUGHT_STRATEGIES
+        if str(task_id).startswith("GL-FP"):
+            mapping = FALSE_PASS_STRATEGIES
+        else:
+            mapping = TAUGHT_STRATEGIES if self.encoding_class_taught() else UNTAUGHT_STRATEGIES
         if attempt not in mapping:
             raise FailClosed(f"NO_STRATEGY_FOR_ATTEMPT:{attempt}")
         return mapping[attempt]
@@ -187,7 +215,7 @@ class LiveCognitiveLoop:
         if attempt > MAX_ATTEMPTS:
             return self.block(task_id, intent, "MAX_ATTEMPTS")
         lessons = self.retrieved_lessons()
-        strategy = self._choose_strategy(attempt, strategy)
+        strategy = self._choose_strategy(attempt, strategy, task_id)
         argv = self._search_argv(strategy)
         argv_key = sha256_obj({"argv": argv})
         if argv_key in self._commands[task_id]:
@@ -205,9 +233,11 @@ class LiveCognitiveLoop:
         if strategy != "naive_repo_rg":
             lines = [ln for ln in lines if not _skip(ln)]
         buckets: dict[str, list[str]] = defaultdict(list)
+        fp_task = task_id.startswith("GL-FP")
         for line in lines:
-            buckets[classify_hit_with_context(line)].append(line)
+            buckets[(classify_fp_hit if fp_task else classify_hit_with_context)(line)].append(line)
         reconnectable = buckets.get("reconnectable_d1") or []
+        actionable = reconnectable or buckets.get("returncode_as_gates") or buckets.get("liar_print") or []
         family = classify_failure(
             {
                 "integrity": obs.integrity,
@@ -218,6 +248,34 @@ class LiveCognitiveLoop:
             }
         )
         memory = self.ccee.nervous.repair_memory.get(KERNEL_REPAIR_ID)
+        if fp_task:
+            hypothesis = [
+                {"family": "FALSE_PASS", "repair_id": "repair.anti_false_pass.v1"},
+                {"claim": "printed success tokens are never process authority"},
+                {"retrieved_lessons": lessons[:8]},
+            ]
+            plan = [
+                "search print('PASS') and SUCCESS tokens with D1 rg",
+                "search swallowed exceptions after success prints",
+                "search gates_complete=returncode and exit_code or 1",
+                "judge_child must reject bare PASS exit 0 and PASS after nonzero",
+                "do not mutate RAIOS/V9 or brain.py",
+            ]
+            requested_tool = "d7.judge_child"
+        else:
+            hypothesis = [
+                {"family": family or "UNICODE_DECODE", "repair_id": KERNEL_REPAIR_ID if memory else None},
+                {"claim": "remaining locale-decoded subprocess callers are the same D1 class"},
+                {"retrieved_lessons": lessons[:8]},
+            ]
+            plan = [
+                "retrieve prior teacher lessons before choosing search strategy",
+                "search subprocess/text=True callers with D1 rg",
+                "classify v9_forbidden vs brain_quarantined vs negative_control vs reconnectable",
+                "reconnect remaining reconnectable_d1 callers to encoding_safe_run",
+                "negative control: latin1 0xe9 must not raise; PASS+exit1 must fail-closed",
+            ]
+            requested_tool = "d1.encoding_safe_run"
         turn = CognitiveTurn(
             task_id=task_id,
             attempt=attempt,
@@ -231,28 +289,19 @@ class LiveCognitiveLoop:
                     "lessons_retrieved": len(lessons),
                     "encoding_class_taught": self.encoding_class_taught(),
                     "bucket_counts": {k: len(v) for k, v in sorted(buckets.items())},
+                    "task_family": "false_pass" if fp_task else "encoding",
                 },
             ],
             evidence=[
                 {"tool": "rg", "kernel": "d1", "stdout_sha256": obs.stdout_sha256, "integrity": obs.integrity},
                 {"lease_id": lease["lease_id"]},
             ],
-            hypothesis=[
-                {"family": family or "UNICODE_DECODE", "repair_id": KERNEL_REPAIR_ID if memory else None},
-                {"claim": "remaining locale-decoded subprocess callers are the same D1 class"},
-                {"retrieved_lessons": lessons[:8]},
-            ],
-            plan=[
-                "retrieve prior teacher lessons before choosing search strategy",
-                "search subprocess/text=True callers with D1 rg",
-                "classify v9_forbidden vs brain_quarantined vs negative_control vs reconnectable",
-                "reconnect remaining reconnectable_d1 callers to encoding_safe_run",
-                "negative control: latin1 0xe9 must not raise; PASS+exit1 must fail-closed",
-            ],
+            hypothesis=hypothesis,
+            plan=plan,
             action_requested=[
                 {
-                    "tool": "d1.encoding_safe_run",
-                    "targets": reconnectable[:20],
+                    "tool": requested_tool,
+                    "targets": (actionable or reconnectable)[:20],
                     "mutating": True,
                     "requires": "HUMAN_OR_READY_GATE",
                     "do_not_mutate": ["RAIOS/V9", "brain.py"],
@@ -265,7 +314,7 @@ class LiveCognitiveLoop:
             result={
                 "ok": obs.returncode in {0, 1},
                 "hits": lines[:60],
-                "unsafe_preview": reconnectable[:20],
+                "unsafe_preview": (actionable or reconnectable)[:20],
                 "buckets": {k: v[:12] for k, v in buckets.items()},
                 "strategy": strategy,
                 "execution_authority": False,
@@ -276,7 +325,7 @@ class LiveCognitiveLoop:
             failure_class=None if obs.returncode in {0, 1} else family,
             lesson=[],
             next_action=["cursor_critique", "reconnect_if_authorized"],
-            queue="SHADOW_VALIDATION" if reconnectable else "READY",
+            queue="SHADOW_VALIDATION" if (actionable or reconnectable) else "READY",
             teacher_used=False,
         )
         persisted = self.persist_turn(turn)
@@ -286,7 +335,7 @@ class LiveCognitiveLoop:
             {"observations": turn.observations, "actions": turn.action_taken, "tool_calls": turn.action_taken, "uncertainty": 0.4},
         )
         persisted["episode_id"] = episode["episode_id"]
-        if attempt >= MAX_ATTEMPTS and not reconnectable:
+        if attempt >= MAX_ATTEMPTS and not (actionable or reconnectable):
             return self.block(task_id, intent, "NO_UNSAFE_HITS_AFTER_THREE")
         return persisted
 
@@ -350,6 +399,32 @@ class LiveCognitiveLoop:
                 "-g",
                 "!archive/**",
                 r"text\s*=\s*True",
+                repo,
+            ]
+        if strategy == "naive_print_pass":
+            return ["rg", "-n", "--max-count", "200", *glob, r"print\(['\"]PASS['\"]\)", repo]
+        if strategy == "except_after_pass":
+            return [
+                "rg",
+                "-n",
+                "--max-count",
+                "200",
+                *glob,
+                "-g",
+                "!archive/**",
+                r"print\(['\"]PASS['\"]\)|except Exception|except:",
+                repo,
+            ]
+        if strategy == "gates_complete_returncode":
+            return [
+                "rg",
+                "-n",
+                "--max-count",
+                "200",
+                *glob,
+                "-g",
+                "!archive/**",
+                r"gates_complete\s*=\s*completed\.returncode|exit_code\s+or\s+1",
                 repo,
             ]
         raise FailClosed(f"UNKNOWN_STRATEGY:{strategy}")

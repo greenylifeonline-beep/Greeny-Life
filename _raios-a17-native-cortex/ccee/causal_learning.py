@@ -6,7 +6,41 @@ from typing import Any
 from .config import FailClosed, deterministic_id
 from .event_bus import EventBus
 
-NODES = ("CONTEXT", "DECISION", "ACTION", "OBSERVATION", "OUTCOME", "CORRECTION", "TRANSFER")
+NODES = (
+    "CONTEXT",
+    "DECISION",
+    "ACTION",
+    "OBSERVATION",
+    "OUTCOME",
+    "CORRECTION",
+    "TRANSFER",
+    "SYMPTOM",
+    "EXCEPTION",
+    "PROCESS",
+    "TOOL",
+    "ENVIRONMENT",
+    "FILE",
+    "DEPENDENCY",
+    "CONFIG",
+    "STATE",
+    "ASSERTION",
+    "ARTIFACT",
+    "PERMISSION",
+    "RESOURCE",
+    "ROOT_CAUSE",
+    "SECONDARY_FAILURE",
+)
+EDGE_RELATIONS = (
+    "causal_parent",
+    "CAUSED",
+    "TRIGGERED",
+    "DEPENDS_ON",
+    "INVALIDATED",
+    "MASKED",
+    "PROPAGATED_TO",
+    "BLOCKED",
+    "CONTRADICTS",
+)
 
 
 class CausalLearning:
@@ -15,9 +49,11 @@ class CausalLearning:
         self.nodes: dict[str, dict[str, Any]] = {}
         self.edges: list[dict[str, Any]] = []
 
-    def add(self, kind: str, payload: dict[str, Any], parent: str | None = None) -> dict[str, Any]:
+    def add(self, kind: str, payload: dict[str, Any], parent: str | None = None, relation: str = "causal_parent") -> dict[str, Any]:
         if kind not in NODES:
             raise FailClosed(f"UNKNOWN_CAUSAL_NODE:{kind}")
+        if relation not in EDGE_RELATIONS:
+            raise FailClosed(f"UNKNOWN_CAUSAL_EDGE:{relation}")
         node_id = deterministic_id("cau", kind, str(payload.get("id") or payload))
         node = {
             "node_id": node_id,
@@ -31,7 +67,7 @@ class CausalLearning:
         }
         self.nodes[node_id] = node
         if parent:
-            self.edges.append({"src": parent, "dst": node_id, "relation": "causal_parent", "status": "CAUSAL_HYPOTHESIS"})
+            self.edges.append({"src": parent, "dst": node_id, "relation": relation, "status": "CAUSAL_HYPOTHESIS"})
         self.bus.emit("HYPOTHESIS", "causal", {"node_id": node_id, "kind": kind, "tested": False})
         return node
 
