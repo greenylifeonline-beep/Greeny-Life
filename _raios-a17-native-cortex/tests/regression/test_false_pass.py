@@ -204,6 +204,23 @@ class FalsePassRegression(unittest.TestCase):
         result = self._failed("swallowed", fn)
         self.assertIn("FALSE_PASS", result["error"])
 
+    def test_20_live_status_token_is_false_pass(self) -> None:
+        from ccee.certification import FalsePassDetector
+
+        detector = FalsePassDetector()
+        with self.assertRaises(FailClosed) as ctx:
+            detector.judge_child("STATUS=RAIOS_MULTIMODAL_GATEWAY_LIVE\n", "", 0)
+        self.assertIn("FALSE_PASS", str(ctx.exception))
+
+    def test_21_http500_without_success_tokens_is_not_false_pass_class(self) -> None:
+        from ccee.root_cause import classify_failure
+
+        self.assertEqual(classify_failure({"http": 500, "failed": True}), "OLLAMA_SERVER_ERROR")
+        self.assertEqual(
+            classify_failure({"http": 500, "printed_pass": True, "live_claim": True, "failed": True}),
+            "FALSE_PASS",
+        )
+
     def test_false_pass_impossible_on_success_path(self) -> None:
         def fn(reg: AssertionRegistry):
             reg.require("ResponseHash", True)

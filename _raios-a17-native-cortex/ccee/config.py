@@ -27,6 +27,12 @@ HARVEST_REL = PACKAGE_REL / "experience" / "raw" / "teacher-harvest"
 COGNITIVE_DB_REL = PACKAGE_REL / "store" / "a17-cognitive.db"
 
 FORBIDDEN_SUCCESS_TOKENS = ("PASS", "SUCCESS", "CERTIFIED", "PROVEN", "COMPLETE")
+LIVE_CLAIM_RE = (
+    r'(?:STATUS|STATE)\s*[=:]\s*["\']?(?!NOT_LIVE)[A-Z0-9_]*LIVE\b'
+    r'|"STATUS"\s*:\s*"(?!NOT_LIVE)[A-Z0-9_]*LIVE"'
+    r"|GATEWAY_LIVE"
+    r"|MULTIMODAL_GATEWAY_LIVE"
+)
 EPSILON = 1e-9
 
 
@@ -103,9 +109,12 @@ def contains_forbidden_success(text: str) -> list[str]:
     import re
 
     hits: list[str] = []
+    upper = text.upper()
     for token in FORBIDDEN_SUCCESS_TOKENS:
-        if re.search(rf"(?<![A-Z0-9_]){token}(?![A-Z0-9_])", text.upper()):
+        if re.search(rf"(?<![A-Z0-9_]){token}(?![A-Z0-9_])", upper):
             hits.append(token)
+    if re.search(LIVE_CLAIM_RE, upper):
+        hits.append("LIVE")
     return hits
 
 

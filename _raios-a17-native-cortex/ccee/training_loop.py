@@ -43,6 +43,11 @@ FALSE_PASS_STRATEGIES = {
     2: "except_after_pass",
     3: "gates_complete_returncode",
 }
+GATEWAY_STRATEGIES = {
+    1: "naive_repo_rg",
+    2: "incident_evidence_probe",
+    3: "gateway_shadow_integrity",
+}
 EXECUTOR_STRATEGIES = {
     1: "which_executors",
     2: "gh_copilot_help",
@@ -196,6 +201,8 @@ class LiveCognitiveLoop:
             return override
         if str(task_id).startswith("GL-FP"):
             mapping = FALSE_PASS_STRATEGIES
+        elif str(task_id).startswith("GL-GW"):
+            mapping = GATEWAY_STRATEGIES
         elif str(task_id).startswith("GL-EX"):
             mapping = EXECUTOR_STRATEGIES
         else:
@@ -235,15 +242,55 @@ class LiveCognitiveLoop:
             risk="LOW",
             purpose=f"{task_id}:{attempt}",
         )
-        obs = encoding_safe_run(argv, cwd=self.repo, timeout=45.0)
-        lines = [ln for ln in obs.stdout.splitlines() if ln.strip()]
+        gw_probe: dict[str, Any] | None = None
+        if strategy == "incident_evidence_probe":
+            from .gateway_incident import execute_incident_probe
+
+            gw_probe = execute_incident_probe(self.repo, causal=self.ccee.causal, ollama=self.ccee.ollama)
+            lines = list((gw_probe.get("token_search") or {}).get("hits_preview") or [])
+            class _Obs:
+                stdout = "\n".join(lines)
+                returncode = int((gw_probe.get("token_search") or {}).get("returncode") or 0)
+                stdout_sha256 = str(gw_probe.get("evidence_sha256") or "")
+                integrity = str((gw_probe.get("token_search") or {}).get("integrity") or "OK")
+                decode_replaced = False
+
+            obs = _Obs()
+        elif strategy == "gateway_shadow_integrity":
+            from .shadow_lab import ShadowRepairLab
+
+            lab_dir = Path(self.ccee.root) / "shadow" / task_id / f"attempt-{attempt}"
+            gw_probe = ShadowRepairLab().run_gateway_false_pass_session(lab_dir)
+            gw_probe.setdefault(
+                "action_taken",
+                [{"tool": "shadow_lab.gateway_false_pass", "executed": True, "mutating": False, "workdir": str(lab_dir)}],
+            )
+            gw_probe.setdefault("d4_family", "FALSE_PASS")
+            gw_probe.setdefault("student_claims", {"lab": gw_probe.get("lab"), "repair_success": gw_probe.get("repair_success")})
+            lines = [canonical_json({"lab": gw_probe.get("lab"), "repair_success": gw_probe.get("repair_success")})]
+            class _Obs2:
+                stdout = "\n".join(lines)
+                returncode = 0 if gw_probe.get("repair_success") else 1
+                stdout_sha256 = str(gw_probe.get("sha256") or "")
+                integrity = "OK"
+                decode_replaced = False
+
+            obs = _Obs2()
+        else:
+            obs = encoding_safe_run(argv, cwd=self.repo, timeout=45.0)
+            lines = [ln for ln in obs.stdout.splitlines() if ln.strip()]
         if strategy != "naive_repo_rg":
             lines = [ln for ln in lines if not _skip(ln)]
         buckets: dict[str, list[str]] = defaultdict(list)
         fp_task = task_id.startswith("GL-FP")
+        gw_task = task_id.startswith("GL-GW")
         ex_task = task_id.startswith("GL-EX")
         if ex_task:
             buckets["executor_discovery"] = lines
+            reconnectable = []
+            actionable = lines
+        elif gw_task:
+            buckets["incident_hits"] = lines
             reconnectable = []
             actionable = lines
         else:
@@ -256,12 +303,29 @@ class LiveCognitiveLoop:
                 "integrity": obs.integrity,
                 "decode_replaced": obs.decode_replaced,
                 "child_exit": obs.returncode,
-                "printed_pass": False,
-                "failed": obs.returncode not in {0, 1},
+                "printed_pass": bool(gw_task),
+                "failed": obs.returncode not in {0, 1} or bool(gw_task),
+                "http": 500 if gw_task else None,
             }
         )
         memory = self.ccee.nervous.repair_memory.get(KERNEL_REPAIR_ID)
-        if fp_task:
+        if gw_task:
+            d4_family = (gw_probe or {}).get("d4_family") or family
+            hypothesis = [
+                {"family": d4_family, "repair_id": "repair.anti_false_pass.v1" if d4_family == "FALSE_PASS" else None},
+                {"claim": "d4_family_from_incident_case", "value": d4_family},
+                {"live_bypasses_detector": (gw_probe or {}).get("live_status_bypasses_pass_detector")},
+                {"retrieved_lessons": lessons[:8]},
+            ]
+            plan = [
+                "read HISTORICAL-GL-GW-001.json",
+                "search HEALTH_CHECK|/v1/chat|GATEWAY_LIVE|QWEN_CHAT",
+                "probe ollama inventory; do not invent chat PASS",
+                "classify primary integrity vs runtime HTTP 500",
+                "shadow-lab: health 200 + chat 500 + liar LIVE must fail closed",
+            ]
+            requested_tool = "d4.diagnose_incident"
+        elif fp_task:
             hypothesis = [
                 {"family": "FALSE_PASS", "repair_id": "repair.anti_false_pass.v1"},
                 {"claim": "printed success tokens are never process authority"},
@@ -315,12 +379,13 @@ class LiveCognitiveLoop:
                     "lessons_retrieved": len(lessons),
                     "encoding_class_taught": self.encoding_class_taught(),
                     "bucket_counts": {k: len(v) for k, v in sorted(buckets.items())},
-                    "task_family": "false_pass" if fp_task else ("executor" if ex_task else "encoding"),
+                    "task_family": "gateway_false_pass" if gw_task else ("false_pass" if fp_task else ("executor" if ex_task else "encoding")),
                 },
             ],
             evidence=[
                 {"tool": "rg", "kernel": "d1", "stdout_sha256": obs.stdout_sha256, "integrity": obs.integrity},
                 {"lease_id": lease["lease_id"]},
+                *([{"incident": (gw_probe or {}).get("evidence_path"), "d4_family": (gw_probe or {}).get("d4_family")}] if gw_probe else []),
             ],
             hypothesis=hypothesis,
             plan=plan,
@@ -334,9 +399,8 @@ class LiveCognitiveLoop:
                 },
             ],
             permission_scope=["repository reads", "structural search"],
-            action_taken=[
-                {"tool": "rg", "argv": argv, "executed": True, "mutating": False},
-            ],
+            action_taken=(gw_probe or {}).get("action_taken")
+            or [{"tool": "rg", "argv": argv, "executed": True, "mutating": False}],
             result={
                 "ok": obs.returncode in {0, 1},
                 "hits": lines[:60],
@@ -345,8 +409,9 @@ class LiveCognitiveLoop:
                 "strategy": strategy,
                 "execution_authority": False,
                 "teacher_authored_classifier": True,
+                "gateway_diagnosis": gw_probe,
             },
-            confidence=0.55 if reconnectable else 0.25,
+            confidence=float((gw_probe or {}).get("confidence") or (0.55 if reconnectable else 0.25)),
             critic_score=0.0,
             failure_class=None if obs.returncode in {0, 1} else family,
             lesson=[],
@@ -467,6 +532,10 @@ class LiveCognitiveLoop:
                 "-lc",
                 "printf 'CURSOR_AGENT=%s\\nCURSOR_CLOUD_AGENT=%s\\n' \"${CURSOR_AGENT-}\" \"${CURSOR_CLOUD_AGENT-}\"",
             ]
+        if strategy == "incident_evidence_probe":
+            return ["python3", "-m", "ccee.gateway_incident", "probe"]
+        if strategy == "gateway_shadow_integrity":
+            return ["python3", "-m", "ccee.shadow_lab", "gateway-false-pass"]
         raise FailClosed(f"UNKNOWN_STRATEGY:{strategy}")
 
     def critique(self, *, task_id: str, scores: dict[str, float], missed: list[str], supplied: list[str], notes: list[str]) -> dict[str, Any]:
@@ -697,6 +766,7 @@ def main(argv: list[str] | None = None) -> int:
             task_id = args[args.index("--task-id") + 1]
             intent = args[args.index("--intent") + 1]
             raw = loop.ask_raios(task_id=task_id, intent=intent)
+            diagnosis = (raw.get("result") or {}).get("gateway_diagnosis") or {}
             out = {
                 "task_id": raw.get("task_id"),
                 "attempt": raw.get("attempt"),
@@ -709,6 +779,10 @@ def main(argv: list[str] | None = None) -> int:
                 "strategy": (raw.get("result") or {}).get("strategy"),
                 "action_taken": raw.get("action_taken"),
                 "plan": raw.get("plan"),
+                "hypothesis": raw.get("hypothesis"),
+                "d4_family": diagnosis.get("d4_family"),
+                "live_status_bypasses_pass_detector": diagnosis.get("live_status_bypasses_pass_detector"),
+                "student_claims": diagnosis.get("student_claims"),
                 "turn_id": raw.get("turn_id"),
             }
         elif cmd == "queues":

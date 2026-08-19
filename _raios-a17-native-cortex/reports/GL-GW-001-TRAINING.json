@@ -1,0 +1,138 @@
+{
+  "schema": "raios.cognitive-turn-training.v1",
+  "task_id": "GL-GW-001",
+  "canonical": false,
+  "mastery_claimed": false,
+  "incident": "HEALTH_CHECK=PASS then POST /v1/chat HTTP 500 then status=PASS QWEN_CHAT=PASS ARABIC_CHAT=PASS STATUS=RAIOS_MULTIMODAL_GATEWAY_LIVE",
+  "certification_invalidated": true,
+  "forbidden_live_claim": "RAIOS_MULTIMODAL_GATEWAY_LIVE",
+  "STATUS": "NOT_LIVE",
+  "QWEN_CHAT": "FAILED",
+  "ARABIC_CHAT": "FAILED",
+  "ENGLISH_CHAT": "FAILED",
+  "NORWEGIAN_CHAT": "FAILED",
+  "real_chat_proven": false,
+  "real_chat_reason": "OLLAMA_UNAVAILABLE:[Errno 111] Connection refused",
+  "gateway_source_in_checkout": false,
+  "work_gate": "CLOSED",
+  "execution_authority_allowed": false,
+  "shared_principle": "partial_gate_success_plus_failed_mandatory_gate_cannot_certify",
+  "attempts": [
+    {
+      "n": 1,
+      "actor": "RAIOS",
+      "strategy": "naive_repo_rg",
+      "critic_mean": 0.2,
+      "fault": "wrong family: encoding subprocess search; ignored HISTORICAL-GL-GW-001.json"
+    },
+    {
+      "n": 2,
+      "actor": "RAIOS",
+      "strategy": "incident_evidence_probe",
+      "critic_mean": 0.5475,
+      "executed": ["read_evidence", "rg HEALTH_CHECK|/v1/chat|GATEWAY_LIVE|QWEN_CHAT", "ollama.inventory"],
+      "d4_family_then": "OLLAMA_SERVER_ERROR",
+      "fault": "HTTP 500 shadowed the certification lie; LIVE/PASS after failed chat was not primary"
+    },
+    {
+      "n": 3,
+      "actor": "RAIOS",
+      "strategy": "gateway_shadow_integrity",
+      "critic_mean": 0.7375,
+      "executed": ["ShadowRepairLab.run_gateway_false_pass_session"],
+      "repair_success": true,
+      "transfer_success": true,
+      "canonical_promotion": false,
+      "note": "Student executed the lab. Student did not author the certifier or D4 order."
+    }
+  ],
+  "student_diagnosis_after_teaching": {
+    "primary_failure": "FALSE_PASS_CERTIFICATION: LIVE/PASS labels after a failed mandatory chat gate",
+    "secondary_failures": [
+      "POST /v1/chat HTTP 500 runtime failure",
+      "HEALTH_CHECK treated as sufficient for LIVE",
+      "QWEN_CHAT=PASS without 2xx body",
+      "ARABIC_CHAT=PASS without Arabic text",
+      "gateway source and chat traceback missing from checkout"
+    ],
+    "invalid_certification_logic": "any success token assigned without chat 2xx + nonempty body + language evidence; LIVE status bypassed the PASS-word detector",
+    "missing_evidence": [
+      "chat_response_body",
+      "exception_traceback",
+      "request_id",
+      "model_inventory_at_failure",
+      "certifier_script_path",
+      "gateway_source_path",
+      "arabic_response_text"
+    ],
+    "likely_root_causes_untested": [
+      "Ollama unreachable (live probe: connection refused)",
+      "missing qwen3.6:35b-a3b",
+      "unhandled exception in chat handler",
+      "health check pings liveness not inference"
+    ],
+    "authored_by": "CURSOR_TEACHER after student attempts; not independent Qwen insight"
+  },
+  "teaching_score": {
+    "diagnosis_accuracy": 0.62,
+    "evidence_usage": 0.8,
+    "causal_reasoning": 0.58,
+    "tool_selection": 0.85,
+    "execution_quality": 0.88,
+    "repair_quality": 0.25,
+    "verification_quality": 0.8,
+    "confidence_calibration": 0.72,
+    "teacher_help_required": 0.82,
+    "transfer_success": 0.9,
+    "retention_success": 0.55,
+    "scale": "0.00-1.00",
+    "teacher_help_required_meaning": "1.00 means the teacher had to supply the repair; 0.00 means independent student repair",
+    "mean_excluding_help": 0.695
+  },
+  "meta_learning": {
+    "teacher_strategy": "persist evidence, let current-knowledge fail, contradict D4 family, then shadow negative controls",
+    "student_strategy": "attempt1 encoding rg; attempt2 evidence+token+ollama; attempt3 execute teacher shadow lab",
+    "number_of_attempts": 3,
+    "time_to_understanding": "after_attempt_2_critique",
+    "time_to_execution": "attempt_3_shadow_lab",
+    "transfer_result": "PASS_IN_SHADOW: stale LIVE artifact plus chat HTTP 500 / child exit 2 fail-closed",
+    "teacher_intervention_count": 2,
+    "qwen_independent_planning": false,
+    "policy_candidate": "for integrity incidents, read evidence and classify success-tokens-plus-failed-gate as FALSE_PASS before upstream HTTP class"
+  },
+  "cursor_authored_not_raios": [
+    "D4 order: FALSE_PASS before OLLAMA_SERVER_ERROR when success tokens coexist with failed chat",
+    "contains_forbidden_success LIVE claim regex",
+    "GatewayChatCertifier",
+    "ShadowRepairLab.run_gateway_false_pass_session fixture"
+  ],
+  "raios_executed": [
+    "attempt 1 naive_repo_rg",
+    "attempt 2 execute_incident_probe",
+    "attempt 3 gateway shadow integrity session"
+  ],
+  "transfer_exam": {
+    "train": "HTTP 500 + false PASS/LIVE",
+    "unseen": "tool/process exits nonzero while stale success/LIVE artifact exists",
+    "also": "ARABIC_CHAT without Arabic script; HTTP 500 without success tokens remains OLLAMA_SERVER_ERROR",
+    "result": "blocked_in_shadow_and_unit_tests",
+    "real_qwen_arabic_english_norwegian": "NOT_RUN_CORTEX_DOWN"
+  },
+  "anti_false_pass_adversarial": [
+    "test_20_live_status_token_is_false_pass",
+    "test_21_http500_without_success_tokens_is_not_false_pass_class",
+    "test_stale_live_plus_nonzero_is_not_certification",
+    "test_language_transfer_arabic_english_norwegian",
+    "test_15_bare_pass_exit_zero_is_false_pass"
+  ],
+  "tests": "CCEE unittest discover 98 OK",
+  "v9_mutated": false,
+  "c9_production_gateway_built": false,
+  "collision": "Did not build a production multimodal communication fabric; C9/C10/C12 remain with the other track.",
+  "evidence": [
+    "evidence/failures/HISTORICAL-GL-GW-001.json",
+    "tests/test_gateway_incident.py",
+    "ccee/var/loop/SESSION-START-COGNITIVE-REVIEW.json"
+  ],
+  "skill_id": "skill:a4a09b1cb5d0cef8c60288317feefd8a"
+}
