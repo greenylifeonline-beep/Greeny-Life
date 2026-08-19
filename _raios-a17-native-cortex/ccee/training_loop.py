@@ -48,6 +48,11 @@ GATEWAY_STRATEGIES = {
     2: "incident_evidence_probe",
     3: "gateway_shadow_integrity",
 }
+ASIM_STRATEGIES = {
+    1: "naive_repo_rg",
+    2: "assimilation_named_modules",
+    3: "which_executors",
+}
 EXECUTOR_STRATEGIES = {
     1: "which_executors",
     2: "gh_copilot_help",
@@ -203,6 +208,8 @@ class LiveCognitiveLoop:
             mapping = FALSE_PASS_STRATEGIES
         elif str(task_id).startswith("GL-GW"):
             mapping = GATEWAY_STRATEGIES
+        elif str(task_id).startswith("ASIM"):
+            mapping = ASIM_STRATEGIES
         elif str(task_id).startswith("GL-EX"):
             mapping = EXECUTOR_STRATEGIES
         else:
@@ -284,6 +291,7 @@ class LiveCognitiveLoop:
         buckets: dict[str, list[str]] = defaultdict(list)
         fp_task = task_id.startswith("GL-FP")
         gw_task = task_id.startswith("GL-GW")
+        asim_task = task_id.startswith("ASIM")
         ex_task = task_id.startswith("GL-EX")
         if ex_task:
             buckets["executor_discovery"] = lines
@@ -291,6 +299,10 @@ class LiveCognitiveLoop:
             actionable = lines
         elif gw_task:
             buckets["incident_hits"] = lines
+            reconnectable = []
+            actionable = lines
+        elif asim_task:
+            buckets["assimilation_modules"] = lines
             reconnectable = []
             actionable = lines
         else:
@@ -325,6 +337,19 @@ class LiveCognitiveLoop:
                 "shadow-lab: health 200 + chat 500 + liar LIVE must fail closed",
             ]
             requested_tool = "d4.diagnose_incident"
+        elif asim_task:
+            hypothesis = [
+                {"family": "ASSIMILATION_DISCOVERY", "repair_id": None},
+                {"claim": "real student contact is LiveCognitiveLoop; cortex is OllamaRuntimeManager; fabric is GovernedExecutorBridge"},
+                {"retrieved_lessons": lessons[:8]},
+            ]
+            plan = [
+                "search LiveCognitiveLoop GovernedExecutorBridge OllamaRuntimeManager with D1 rg",
+                "probe ollama.inventory for qwen3.6:35b-a3b",
+                "dispatch observe-only GovernedExecutorBridge envelope",
+                "do not invent adapters; do not claim LIVE or QWEN_CHAT=PASS",
+            ]
+            requested_tool = "assimilation.live_bridge"
         elif fp_task:
             hypothesis = [
                 {"family": "FALSE_PASS", "repair_id": "repair.anti_false_pass.v1"},
@@ -379,7 +404,7 @@ class LiveCognitiveLoop:
                     "lessons_retrieved": len(lessons),
                     "encoding_class_taught": self.encoding_class_taught(),
                     "bucket_counts": {k: len(v) for k, v in sorted(buckets.items())},
-                    "task_family": "gateway_false_pass" if gw_task else ("false_pass" if fp_task else ("executor" if ex_task else "encoding")),
+                    "task_family": "assimilation" if asim_task else ("gateway_false_pass" if gw_task else ("false_pass" if fp_task else ("executor" if ex_task else "encoding"))),
                 },
             ],
             evidence=[
@@ -531,6 +556,19 @@ class LiveCognitiveLoop:
                 "bash",
                 "-lc",
                 "printf 'CURSOR_AGENT=%s\\nCURSOR_CLOUD_AGENT=%s\\n' \"${CURSOR_AGENT-}\" \"${CURSOR_CLOUD_AGENT-}\"",
+            ]
+        if strategy == "assimilation_named_modules":
+            return [
+                "rg",
+                "-n",
+                "--max-count",
+                "200",
+                "--glob",
+                "*.py",
+                "-g",
+                "!archive/**",
+                r"LiveCognitiveLoop|GovernedExecutorBridge|OllamaRuntimeManager|PermissionBroker|LiveAssimilationBridge",
+                repo,
             ]
         if strategy == "incident_evidence_probe":
             return ["python3", "-m", "ccee.gateway_incident", "probe"]
