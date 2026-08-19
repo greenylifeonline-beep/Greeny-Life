@@ -6,6 +6,7 @@ from typing import Any
 
 from .certification import EvidenceLedger
 from .cursor_probe import probe_clients
+from .executor_bridge import GovernedExecutorBridge
 from .experience_metabolism import ExperienceMetabolism
 from .failure_capture import FailureCaptureKernel
 from .idle_recert import IdleRecertification
@@ -61,6 +62,7 @@ class DiagnosticNervousSystem:
         self.governor = governor
         self.meta = meta
         self.broker = PermissionBroker(ledger, self.gate)
+        self.executor = GovernedExecutorBridge(self.broker, self.gate, bus, ledger)
 
     def identity(self) -> dict[str, Any]:
         return {
@@ -73,7 +75,7 @@ class DiagnosticNervousSystem:
             "d7": "raios.d7.anti-false-pass.v1",
             "d8": "raios.d8.experience-meta.v1",
             "d9": "raios.d9.idle-recert.v1",
-            "d10": "raios.d10.cursor-probe.v1",
+            "d10": "raios.d10.governed-executor-bridge.v1",
             "d11": "raios.d11.work-gate.v1",
             "work_gate": self.gate.read().get("state"),
         }

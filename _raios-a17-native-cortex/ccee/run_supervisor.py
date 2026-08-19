@@ -25,7 +25,7 @@ from .repair_memory import RepairMemory, RepairPlanner
 from .resource_governor import ResourceGovernor
 from .root_cause import classify_failure, graph_from_observation
 from .shadow_lab import ShadowRepairLab
-from .work_gate import WorkGate
+from .work_gate import READY, WorkGate
 
 GateFn = Callable[[AssertionRegistry], Any]
 
@@ -132,10 +132,12 @@ class AuthoritativeRunSupervisor:
         body["sha256"] = sha256_obj(body)
         return body
 
-    def invoke_cursor(self, *args: Any, **kwargs: Any) -> None:
-        if self.gate.read().get("state") != "READY_FOR_REAL_PROJECT_WORK":
+    def invoke_cursor(self, *args: Any, **kwargs: Any) -> Any:
+        intent = str(args[0] if args else kwargs.get("intent") or "repair")
+        mutating = bool(kwargs.get("mutating", intent != "observe"))
+        if mutating or self.gate.read().get("state") != READY:
             governed_invoke(*args, **kwargs)
-        raise FailClosed("CURSOR_INVOCATION_NOT_IMPLEMENTED")
+        raise FailClosed("CURSOR_MUTATING_INVOCATION_NOT_AUTHORIZED")
 
 
 def encoding_safe_child(argv: Sequence[str], **kwargs: Any) -> KernelObservation:

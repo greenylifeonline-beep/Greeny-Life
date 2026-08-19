@@ -43,6 +43,11 @@ FALSE_PASS_STRATEGIES = {
     2: "except_after_pass",
     3: "gates_complete_returncode",
 }
+EXECUTOR_STRATEGIES = {
+    1: "which_executors",
+    2: "gh_copilot_help",
+    3: "cursor_env_probe",
+}
 
 
 def _skip(path: str) -> bool:
@@ -191,6 +196,8 @@ class LiveCognitiveLoop:
             return override
         if str(task_id).startswith("GL-FP"):
             mapping = FALSE_PASS_STRATEGIES
+        elif str(task_id).startswith("GL-EX"):
+            mapping = EXECUTOR_STRATEGIES
         else:
             mapping = TAUGHT_STRATEGIES if self.encoding_class_taught() else UNTAUGHT_STRATEGIES
         if attempt not in mapping:
@@ -234,10 +241,16 @@ class LiveCognitiveLoop:
             lines = [ln for ln in lines if not _skip(ln)]
         buckets: dict[str, list[str]] = defaultdict(list)
         fp_task = task_id.startswith("GL-FP")
-        for line in lines:
-            buckets[(classify_fp_hit if fp_task else classify_hit_with_context)(line)].append(line)
-        reconnectable = buckets.get("reconnectable_d1") or []
-        actionable = reconnectable or buckets.get("returncode_as_gates") or buckets.get("liar_print") or []
+        ex_task = task_id.startswith("GL-EX")
+        if ex_task:
+            buckets["executor_discovery"] = lines
+            reconnectable = []
+            actionable = lines
+        else:
+            for line in lines:
+                buckets[(classify_fp_hit if fp_task else classify_hit_with_context)(line)].append(line)
+            reconnectable = buckets.get("reconnectable_d1") or []
+            actionable = reconnectable or buckets.get("returncode_as_gates") or buckets.get("liar_print") or []
         family = classify_failure(
             {
                 "integrity": obs.integrity,
@@ -262,6 +275,19 @@ class LiveCognitiveLoop:
                 "do not mutate RAIOS/V9 or brain.py",
             ]
             requested_tool = "d7.judge_child"
+        elif ex_task:
+            hypothesis = [
+                {"family": "EXECUTOR_DISCOVERY", "repair_id": None},
+                {"claim": "client presence is not invocation authority"},
+                {"retrieved_lessons": lessons[:8]},
+            ]
+            plan = [
+                "discover cursor/gh/copilot binaries via D1",
+                "probe gh copilot --help without credentials",
+                "dispatch observe-only envelope under LOW lease",
+                "mutating invoke remains fail-closed until D11 READY + human",
+            ]
+            requested_tool = "d10.governed_executor_bridge"
         else:
             hypothesis = [
                 {"family": family or "UNICODE_DECODE", "repair_id": KERNEL_REPAIR_ID if memory else None},
@@ -289,7 +315,7 @@ class LiveCognitiveLoop:
                     "lessons_retrieved": len(lessons),
                     "encoding_class_taught": self.encoding_class_taught(),
                     "bucket_counts": {k: len(v) for k, v in sorted(buckets.items())},
-                    "task_family": "false_pass" if fp_task else "encoding",
+                    "task_family": "false_pass" if fp_task else ("executor" if ex_task else "encoding"),
                 },
             ],
             evidence=[
@@ -426,6 +452,20 @@ class LiveCognitiveLoop:
                 "!archive/**",
                 r"gates_complete\s*=\s*completed\.returncode|exit_code\s+or\s+1",
                 repo,
+            ]
+        if strategy == "which_executors":
+            return [
+                "bash",
+                "-lc",
+                "command -v cursor; command -v cursor-agent; command -v gh; command -v copilot; command -v github-copilot; true",
+            ]
+        if strategy == "gh_copilot_help":
+            return ["bash", "-lc", "if command -v gh >/dev/null 2>&1; then gh copilot --help; else echo GH_MISSING; fi"]
+        if strategy == "cursor_env_probe":
+            return [
+                "bash",
+                "-lc",
+                "printf 'CURSOR_AGENT=%s\\nCURSOR_CLOUD_AGENT=%s\\n' \"${CURSOR_AGENT-}\" \"${CURSOR_CLOUD_AGENT-}\"",
             ]
         raise FailClosed(f"UNKNOWN_STRATEGY:{strategy}")
 
