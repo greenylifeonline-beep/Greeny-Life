@@ -20,6 +20,20 @@ def classify_failure(case: dict[str, Any]) -> str:
     """Order is evidence-driven: encoding and false-PASS before hash keywords."""
     blob = json.dumps(case, sort_keys=True).lower().replace("-", "_")
     compact = blob.replace("_", "")
+    printed = bool(
+        case.get("printed_pass")
+        or case.get("live_claim")
+        or case.get("false_pass")
+        or "false_pass" in blob
+    )
+    failed_chat = bool(
+        case.get("chat_failed")
+        or case.get("http") in {500, 502, 503, 504}
+        or (case.get("failed") and printed)
+        or (printed and case.get("child_exit") not in {None, 0})
+    )
+    if printed and failed_chat:
+        return "FALSE_PASS"
     if case.get("http") == 200 and (case.get("invalid_semantic") or case.get("report_integrity") is False):
         return "HTTP_200_INVALID_SEMANTIC"
     if case.get("http") in {500, 502, 503, 504} or "ollama_server_error" in blob:
@@ -86,6 +100,9 @@ def diagnose(
         "failed": bool(error) or printed_pass or (obs is not None and obs.returncode != 0),
         "child_exit": obs.returncode if obs is not None else None,
         "timeout": bool(obs and obs.timed_out) or "timeout" in error.lower(),
+        "http": 500 if "500" in (error or "") else None,
+        "live_claim": "live" in (error or secondary or "").lower() or "live" in secondary.lower(),
+        "chat_failed": "chat" in (error or secondary or "").lower() and "500" in (error or ""),
     }
     if obs is not None:
         case["stdout"] = obs.stdout
@@ -117,10 +134,15 @@ def diagnose(
     if family == "FALSE_PASS":
         confidence = 0.78
         add("ASSERTION", "stdout_is_not_authority", "CONTRADICTS")
-        add("ROOT_CAUSE", "false_pass_print_used_as_success", "CAUSED")
-        if obs and obs.returncode != 0:
+        if case.get("http") in {500, 502, 503, 504} or case.get("live_claim") or case.get("chat_failed"):
+            add("ROOT_CAUSE", "false_pass_live_after_failed_chat_gate", "CAUSED")
+            add("SECONDARY_FAILURE", "http_500_or_chat_runtime_failure", "PROPAGATED_TO")
+            add("ARTIFACT", "invalid_live_or_language_pass_labels", "INVALIDATED")
+        elif obs and obs.returncode != 0:
+            add("ROOT_CAUSE", "false_pass_print_used_as_success", "CAUSED")
             add("SECONDARY_FAILURE", "nonzero_exit_after_success_token", "PROPAGATED_TO")
         else:
+            add("ROOT_CAUSE", "false_pass_print_used_as_success", "CAUSED")
             add("SECONDARY_FAILURE", "bare_pass_with_zero_exit", "PROPAGATED_TO")
         repair = FALSE_PASS_REPAIR_ID
     elif family in {"UNICODE_DECODE", "STREAM_NONE"}:

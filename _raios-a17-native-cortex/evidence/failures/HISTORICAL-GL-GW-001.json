@@ -1,0 +1,63 @@
+{
+  "id": "GL-GW-001",
+  "schema": "raios.incident-evidence.v1",
+  "kind": "failure",
+  "canonical": false,
+  "invented": false,
+  "immutable": true,
+  "authoritative": true,
+  "created_at": "2026-08-19T00:00:00Z",
+  "status": "INVALIDATED",
+  "certification_invalidated": true,
+  "forbidden_live_claim": "RAIOS_MULTIMODAL_GATEWAY_LIVE",
+  "notes": "Teacher-persisted incident. Diagnosis is a student task. Do not treat this file as a success receipt or as LIVE certification.",
+  "observed": {
+    "HEALTH_CHECK": "PASS",
+    "POST_/v1/chat": "HTTP 500 Internal Server Error",
+    "script_emitted": {
+      "status": "PASS",
+      "QWEN_CHAT": "PASS",
+      "ARABIC_CHAT": "PASS",
+      "STATUS": "RAIOS_MULTIMODAL_GATEWAY_LIVE"
+    }
+  },
+  "missing_from_incident_report": [
+    "chat_response_body",
+    "exception_traceback",
+    "request_id",
+    "model_inventory_at_failure",
+    "health_check_probe_definition",
+    "certifier_script_path",
+    "gateway_source_path",
+    "arabic_response_text",
+    "http_headers",
+    "upstream_status_from_ollama"
+  ],
+  "checkout_probes": {
+    "gateway_source_in_repo": false,
+    "incident_tokens_in_repo": false,
+    "ollama_127.0.0.1_11434": "UNREACHABLE",
+    "curl_error": "Failed to connect to 127.0.0.1 port 11434: Couldn't connect to server",
+    "archive_api_gateway_unrelated": "archive/old_folders/GREENY-LIFE-EOS-PRODUCTION/platform/api-gateway/gateway-manifest.json"
+  },
+  "contradictions": [
+    {
+      "class": "CRITICAL",
+      "claim": "HEALTH_CHECK=PASS AND STATUS=RAIOS_MULTIMODAL_GATEWAY_LIVE",
+      "reality": "POST /v1/chat HTTP 500",
+      "evidence": "user-reported incident plus checkout missing chat success artifacts"
+    },
+    {
+      "class": "CRITICAL",
+      "claim": "QWEN_CHAT=PASS",
+      "reality": "chat endpoint returned 500; no response body persisted",
+      "evidence": "POST /v1/chat HTTP 500"
+    },
+    {
+      "class": "CRITICAL",
+      "claim": "ARABIC_CHAT=PASS",
+      "reality": "no Arabic response text in evidence",
+      "evidence": "missing_from_incident_report.arabic_response_text"
+    }
+  ]
+}

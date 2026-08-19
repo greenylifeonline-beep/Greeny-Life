@@ -25,5 +25,6 @@ pwsh -NoProfile -File tests/regression/RUN-FALSE-PASS-REGRESSION.ps1
 - no model output has execution, canonical, deletion, or promotion authority
 - success receipts only after mandatory gates
 - child exit != 0 invalidates the parent
+- HEALTH_CHECK is not LIVE; chat HTTP 500 cannot mint QWEN_CHAT=PASS
 - teacher deletion is forbidden
 - forgetting never destroys historical evidence
