@@ -88,6 +88,8 @@ class TrainingLoopTests(unittest.TestCase):
         self.assertEqual(review["schema"], "raios.session-start-cognitive-review.v1")
         self.assertTrue(Path(review["path"]).is_file())
         self.assertIsInstance(review["BLOCKERS"], list)
+        self.assertFalse(review["execution_authority_allowed"])
+        self.assertIn("CONTRADICTIONS", review)
 
     def test_attempts_restore_from_ledger(self) -> None:
         self.loop.ask_raios(task_id="GL-REST", intent="x")

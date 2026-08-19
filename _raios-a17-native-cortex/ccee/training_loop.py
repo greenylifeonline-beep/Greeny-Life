@@ -571,6 +571,54 @@ class LiveCognitiveLoop:
             blockers.append("MAIN_CORTEX_UNREACHABLE")
         blockers.extend(f"QUEUE_BLOCKED:{tid}" for tid in queues.get("BLOCKED") or [])
         blockers.extend(f"WAITING_FOR_HUMAN:{tid}" for tid in queues.get("WAITING_FOR_HUMAN") or [])
+        contradictions: list[dict[str, Any]] = []
+        live_gate = self.ccee.nervous.gate.read()
+        live_path = Path(self.ccee.nervous.gate.path).resolve()
+        if gate.get("state") == "READY_FOR_REAL_PROJECT_WORK" and not ollama.get("main_cortex_present"):
+            contradictions.append(
+                {
+                    "class": "CRITICAL",
+                    "claim": "WORK_GATE_READY",
+                    "reality": "MAIN_CORTEX_MISSING",
+                    "evidence": ollama.get("reason"),
+                }
+            )
+        if boot_gate.is_file() and live_path == boot_gate.resolve() and live_gate.get("state") != gate.get("state"):
+            contradictions.append(
+                {
+                    "class": "CRITICAL",
+                    "claim": f"boot_work_gate={gate.get('state')}",
+                    "reality": f"live_work_gate={live_gate.get('state')}",
+                    "evidence": "work_gate_file_mismatch",
+                }
+            )
+        boot_receipt = native_root(self.repo) / "reports" / "RAIOS-BOOT-RECEIPT.json"
+        if boot_receipt.is_file():
+            prev = json.loads(boot_receipt.read_text(encoding="utf-8"))
+            if prev.get("work_gate") == "READY_FOR_REAL_PROJECT_WORK" and gate.get("state") != "READY_FOR_REAL_PROJECT_WORK":
+                contradictions.append(
+                    {
+                        "class": "CRITICAL",
+                        "claim": "stale_boot_receipt_READY",
+                        "reality": gate.get("state"),
+                        "evidence": str(boot_receipt),
+                    }
+                )
+            if prev.get("main_cortex", {}).get("ok") and not ollama.get("ok"):
+                contradictions.append(
+                    {
+                        "class": "CRITICAL",
+                        "claim": "stale_MODEL_AVAILABLE",
+                        "reality": ollama.get("reason"),
+                        "evidence": "rechecked_ollama",
+                    }
+                )
+        critical = [c for c in contradictions if c.get("class") == "CRITICAL"]
+        execution_authority_allowed = (
+            not critical
+            and bool(ollama.get("main_cortex_present"))
+            and gate.get("state") == "READY_FOR_REAL_PROJECT_WORK"
+        )
         review = {
             "schema": "raios.session-start-cognitive-review.v1",
             "created_at": utc_now(),
@@ -603,14 +651,18 @@ class LiveCognitiveLoop:
                 "lesson-adapted-strategy",
                 "hit-classification-v9-brain-negative-control",
                 "meta-learning-ledger-restore",
+                "governed-executor-bridge-observe-only",
+                "session-contradiction-freeze",
             ],
             "REGRESSIONS": [],
+            "CONTRADICTIONS": contradictions,
+            "execution_authority_allowed": execution_authority_allowed,
             "BLOCKERS": blockers,
             "RESUMABLE_TASKS": queues,
             "PRIORITY_NEXT_ACTIONS": [
                 "ask_raios_first_on_next_repair",
                 "do_not_open_work_gate_without_qwen",
-                "transfer_d1_certify_harness_if_reconnectable",
+                "resolve_critical_contradictions_before_authority",
             ],
             "canonical": False,
         }
