@@ -1,4 +1,4 @@
-"""Local Qwen student via Ollama. Main Cortex stays isolated. No identity swap. No repo weights."""
+"""Local Qwen student via Ollama. Cortex belongs to C1. No identity swap. No repo weights."""
 from __future__ import annotations
 
 import json
@@ -8,19 +8,12 @@ import urllib.error
 import urllib.request
 from typing import Any
 
-CORTEX_IDENTITY = "qwen3.6:35b-a3b"
+from .cortex import CORTEX_IDENTITY, LAWS, gate_run, public_fields, status as cortex_status
+
 STUDENT_PREFERRED = "qwen2.5:0.5b"
 DEFAULT_HOST = os.environ.get("OLLAMA_HOST", "127.0.0.1:11434")
 _CACHE: dict[str, Any] = {"ts": 0.0, "row": None}
 _CACHE_TTL_S = 3.0
-
-LAWS = (
-    "MAIN_CORTEX_ISOLATED_DANGEROUS_WEAK",
-    "STUDENT_NE_MAIN_CORTEX",
-    "TINY_QWEN_NE_CORTEX_IDENTITY",
-    "CUSTOMER_LANGUAGE_NE_CORTEX",
-    "HF_WEIGHTS_NE_IN_SECRET_REPO",
-)
 
 
 def _base(host: str | None = None) -> str:
@@ -64,20 +57,20 @@ def probe(*, host: str | None = None, timeout: float = 1.5, use_cache: bool = Tr
     if use_cache and _CACHE["row"] is not None and now - float(_CACHE["ts"]) < _CACHE_TTL_S:
         return dict(_CACHE["row"])
     url = f"{_base(host)}/api/tags"
+    st = cortex_status()
     row: dict[str, Any] = {
         "schema": "raios.qwen-runtime.v1",
         "present": False,
         "endpoint": url,
         "models": [],
-        "cortex_identity": CORTEX_IDENTITY,
-        "cortex_live": False,
-        "cortex_isolated": True,
         "student_preferred": STUDENT_PREFERRED,
         "student_model": None,
         "student_live": False,
+        "cortex_live": False,
         "reason": "OLLAMA_ABSENT",
         "law": list(LAWS),
         "gl005_proven": False,
+        **public_fields(st),
     }
     try:
         with urllib.request.urlopen(url, timeout=timeout) as resp:
@@ -93,16 +86,16 @@ def probe(*, host: str | None = None, timeout: float = 1.5, use_cache: bool = Tr
                 "student_model": student,
                 "student_live": student is not None,
                 "reason": (
-                    "STUDENT_LIVE_CORTEX_ISOLATED"
+                    "STUDENT_LIVE_CORTEX_HOLD"
                     if student
                     else ("OLLAMA_UP_NO_STUDENT" if names else "OLLAMA_UP_NO_MODELS")
                 ),
             }
         )
         if cortex_live:
-            row["reason"] = "CORTEX_PRESENT_STILL_ISOLATED"
-            row["cortex_isolated"] = True
+            row["reason"] = "CORTEX_PRESENT_HOLD_AWAITING_C1"
             row["cortex_live"] = True
+            row.update(public_fields(st))
     except (urllib.error.URLError, TimeoutError, json.JSONDecodeError, OSError) as err:
         row["error"] = type(err).__name__
         row["reason"] = "OLLAMA_ABSENT"
@@ -122,25 +115,26 @@ def generate(
     status = probe(host=host, use_cache=False)
     chosen = model or status.get("student_model") or STUDENT_PREFERRED
     if _is_cortex(chosen):
+        gate = gate_run()
         return {
             "ok": False,
-            "error": "MAIN_CORTEX_ISOLATED_DANGEROUS_WEAK",
-            "cortex_identity": CORTEX_IDENTITY,
-            "cortex_isolated": True,
+            "error": gate["reason"] if not gate["admitted"] else "CORTEX_ADAPTER_NOT_WIRED",
             "student_live": status.get("student_live"),
             "response": "",
+            "cortex_used": False,
             "law": list(LAWS),
             "gl005_proven": False,
+            **public_fields(),
         }
     if not status.get("present"):
         return {
             "ok": False,
             "error": "DEEP_PATH_UNAVAILABLE_NO_QWEN_OLLAMA",
-            "cortex_isolated": True,
             "student_live": False,
             "response": "",
             "probe": status,
             "gl005_proven": False,
+            **public_fields(),
         }
     body = json.dumps(
         {
@@ -165,17 +159,15 @@ def generate(
             "error": type(err).__name__,
             "model": chosen,
             "role": "student",
-            "cortex_isolated": True,
             "response": "",
             "gl005_proven": False,
+            **public_fields(),
         }
     text = str(payload.get("response") or "")
     return {
         "ok": bool(text.strip()),
         "role": "student",
         "model": chosen,
-        "cortex_identity": CORTEX_IDENTITY,
-        "cortex_isolated": True,
         "cortex_used": False,
         "response": text,
         "eval_count": payload.get("eval_count"),
@@ -183,4 +175,5 @@ def generate(
         "done": payload.get("done"),
         "law": list(LAWS),
         "gl005_proven": False,
+        **public_fields(),
     }

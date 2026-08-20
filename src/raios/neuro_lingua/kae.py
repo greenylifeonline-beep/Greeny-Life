@@ -4,7 +4,7 @@ Not a second mind. Not a second WAL. Not LightRAG. Not a hidden-reasoning extrac
 Retiles an authorized output into reusable practice tiles, then writes DISCOVERED
 candidates through the live ingest keeper.
 
-Main Cortex stays isolated. This channel does not summon C seats.
+Main Cortex belongs to C1 (treat / run / throw). This channel does not summon C seats.
 """
 from __future__ import annotations
 
@@ -73,7 +73,8 @@ LAWS = (
     "AUTHORIZED_OUTPUT_ONLY",
     "NO_HIDDEN_REASONING_EXTRACT",
     "STUDENT_NE_MAIN_CORTEX",
-    "MAIN_CORTEX_ISOLATED_DANGEROUS_WEAK",
+    "C1_OWNS_CORTEX_TREAT_RUN_THROW",
+    "HOLD_NE_THROW",
     "THIS_CHANNEL_NO_C_SEAT_CONSULT",
     "TEACHER_TOURNAMENT_NE_VOTE_NE_TRUTH",
     "ONE_ANSWER_MANY_TILES",
@@ -433,7 +434,8 @@ def assimilate(
         "metrics": metrics,
         "candidate": {"id": (candidate or {}).get("id"), "knowledge_state": "DISCOVERED"} if candidate else None,
         "cortex_used": False,
-        "cortex_isolated": True,
+        "cortex_isolated": False,
+        "isolated_as_disposal": False,
         "consult_used": False,
         "summoned": False,
         "canonical": False,

@@ -61,15 +61,16 @@ def test_tournament_compares_artifacts_and_does_not_summon():
     assert rec["conflict"]
 
 
-def test_main_cortex_stays_isolated():
+def test_main_cortex_hold_is_not_throw():
     gov = CognitiveResourceGovernor(min_free_gb_for_cortex=0)
     decision = gov.admit("SEMANTIC_INTERPRETATION")
     assert decision.admitted is False
-    assert decision.reason == "MAIN_CORTEX_ISOLATED_DANGEROUS_WEAK"
+    assert decision.reason == "CORTEX_HOLD_AWAITING_C1_RUN"
     assert gov.main_cortex_identity == CORTEX_IDENTITY
+    assert gov.cortex_isolated is False
     refused = generate("hello", model=CORTEX_IDENTITY)
     assert refused["ok"] is False
-    assert refused["error"] == "MAIN_CORTEX_ISOLATED_DANGEROUS_WEAK"
+    assert refused["error"] == "CORTEX_HOLD_AWAITING_C1_RUN"
 
 
 def test_c5_knows_libraries_fetches_and_puts_discovered():

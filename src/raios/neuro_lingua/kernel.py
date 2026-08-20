@@ -239,7 +239,9 @@ class NeuroLingua:
                 "registry_status": self.registry.get("status"),
                 "cortex": {
                     "identity": self.governor.main_cortex_identity,
-                    "isolated": True,
+                    "owner": "C1",
+                    "isolated_as_disposal": False,
+                    "hold": not admission.admitted,
                     "admitted": admission.admitted,
                     "reason": admission.reason,
                 },
@@ -258,7 +260,7 @@ class NeuroLingua:
     def _semantic_from_stages(self, text: str, prag: dict[str, Any], concepts: dict[str, Any], cortex_admitted: bool) -> dict[str, Any]:
         warnings = []
         if not cortex_admitted:
-            warnings.append("MAIN_CORTEX_ISOLATED_DETERMINISTIC_SPINE")
+            warnings.append("CORTEX_HOLD_DETERMINISTIC_SPINE_UNTIL_C1_RUN")
         return {
             "status": "OK",
             "confidence": 0.72 if prag.get("action") else None,

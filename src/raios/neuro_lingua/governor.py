@@ -5,7 +5,7 @@ import os
 from dataclasses import dataclass
 from typing import Any
 
-from .qwen_runtime import CORTEX_IDENTITY
+from .cortex import CORTEX_IDENTITY, gate_run, public_fields, status as cortex_status
 
 
 @dataclass(frozen=True)
@@ -75,22 +75,27 @@ def _host_memory() -> dict[str, float] | None:
 
 
 class CognitiveResourceGovernor:
-    """Admission control. Main Cortex identity is not swapped. Cortex is isolated from the live spine."""
+    """Admission control. C1 owns treat/run/throw. Hold is not throw. Identity is not swapped."""
 
-    def __init__(self, min_free_gb_for_cortex: float = 3.0):
+    def __init__(self, min_free_gb_for_cortex: float = 24.0):
         self.min_free_gb_for_cortex = min_free_gb_for_cortex
         self.main_cortex_identity = CORTEX_IDENTITY
-        self.cortex_isolated = True
+        self.cortex_isolated = False
 
     def snapshot(self) -> dict[str, Any]:
         mem = _host_memory()
+        st = cortex_status(min_free_gb=self.min_free_gb_for_cortex)
         return {
             "memory": mem,
             "cortex_identity": self.main_cortex_identity,
-            "cortex_isolated": True,
+            "cortex_owner": "C1",
+            "isolated_as_disposal": False,
+            "cortex_hold": st["hold"],
+            "cortex_isolated": False,
             "ollama_num_parallel": os.environ.get("OLLAMA_NUM_PARALLEL"),
             "ollama_max_loaded_models": os.environ.get("OLLAMA_MAX_LOADED_MODELS"),
             "keep_alive": os.environ.get("OLLAMA_KEEP_ALIVE"),
+            **public_fields(st),
         }
 
     def admit(self, capability: str, offline_ok: bool = True) -> AdmissionDecision:
@@ -105,11 +110,10 @@ class CognitiveResourceGovernor:
         }
         if capability not in cortex_caps:
             return AdmissionDecision(True, "DETERMINISTIC_OR_LOCAL", free_gb, None)
-        # Founder: Main Cortex is the most dangerous and weakest point. Do not admit it.
-        # Identity stays qwen3.6:35b-a3b. A live student is not this identity.
+        gate = gate_run(min_free_gb=self.min_free_gb_for_cortex)
         return AdmissionDecision(
-            False,
-            "MAIN_CORTEX_ISOLATED_DANGEROUS_WEAK",
+            bool(gate["admitted"]),
+            str(gate["reason"]),
             float(free_gb) if free_gb is not None else None,
-            "deterministic_pipeline",
+            gate.get("fallback"),
         )
