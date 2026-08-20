@@ -3,29 +3,29 @@
 ملف واحد داخل المشروع. المستشار الخارجي لا يحتاج أن يعيش في المستودع؛ يسحب هذا الملف ويعرف الحالة والمطلوب ويكتب رأيه برمزه.
 
 - الفرع: `v9-neurolingua-semantic-kernel`
-- HEAD: `283caa75782c3bbbbeb0cc5e3cb673665510f279`
-- حدّث: `2026-08-20T14:46:52.902510+00:00`
-- الحالة: `HOLD_PROMOTION`
+- HEAD: `78850cd7c185217edb8cc7807cfd376d47b65e61`
+- حدّث: `2026-08-20T15:12:49.131221+00:00`
+- الحالة: `MUTATION_NOT_PROVEN`
 
 ## الرموز
 
 | رمز | الطرف | مكانه | المطلوب منه الآن |
 |---|---|---|---|
-| `C0` | صاحب المشروع (`USER`) | داخل الشات / داخل اللوحة | يقرر إن كان يريد ابن PRODUCTION_RUNTIME منفصلاً. لا يصادق ترقية من next-dev. |
-| `C1` | القائد Cursor (`COMMANDER`) | داخل المشروع | يفنّد GL004_PROVEN. لا يصادق إنتاجاً من next-dev. |
-| `C2` | المستشار التنفيذي (`CONSULTANT`) | خارج المشروع — يقرأ اللوحة ويكتب رأيه | يقرأ 20260820-C1-GL004-FALSIFY.json ويكتب رأياً. |
-| `C3` | المهندس PowerShell (`ENGINEER`) | Repair | على Repair: نفس المنفّذ. لا سكربت NEXT_CONFIG_FILE. |
-| `C4` | نواة الخدمة (`RAIOS`) | داخل المشروع | خدمة: نبض + WAL. قوانين DISCOVERED فقط. لا مرحلة جديدة. |
+| `C0` | صاحب المشروع (`USER`) | داخل الشات / داخل اللوحة | لا يصادق GL-005 من GET 200. إن وُجدت جلسة حقيقية على Repair، يصرّح بـ POST مراجعة واحد. |
+| `C1` | القائد Cursor (`COMMANDER`) | داخل المشروع | HOLD_PROMOTION لـ GL-004. يفنّد أي GL005_PROVEN من قراءة فقط. |
+| `C2` | المستشار التنفيذي (`CONSULTANT`) | خارج المشروع — يقرأ اللوحة ويكتب رأيه | يقرأ 20260820-C1-GL005-MUTATION-SURFACE.json ويكتب رأياً. |
+| `C3` | المهندس PowerShell (`ENGINEER`) | Repair | python scripts/ai-os/gl005-mutation-observe.py على العملية المربوطة. لا أسرار مختلقة. |
+| `C4` | نواة الخدمة (`RAIOS`) | داخل المشروع | خدمة: نبض + WAL. قوانين DISCOVERED فقط. |
 
 ## المهمة الحالية
 
-إيصال GL-004 للأبناء الخمسة موجود. C1 يحاول كسر GL004_PROVEN. GL-005 مغلق لأن /api/tasks=500 DATABASE_URL. لا next start إلا كابن مسمّى. لا سيرفر ثانٍ.
+GL-004 HOLD_PROMOTION. GL-005: Repair may have a healthy GET; this bound PID 3297 still GET 500 DATABASE_URL and POST 401. A 2xx read is not mutation. Smallest existing transition is authenticated POST /api/tasks INSERT OrchestrationTask REVIEW_REQUIRED. Do not provision Postgres from a stale cause. Do not forge sessions. No second server.
 
 ## الجدول
 
-- الآن: C1 HOLD_PROMOTION: أبناء GL-004 الخمسة صامدون. لا ترقية إنتاج. GL-005 ينتظر Postgres حقيقي.
-- التالي: إصلاح DATABASE_URL ثم إعادة GL005_ORCHESTRATION_DEMO فقط. لا قتل PID 3297.
-- ممنوع: census، estate-hash-gc كبوابة اعتماد، migration/gl-004 أو gl-005 للتجميل، ناقل/WAL ثانٍ، مسّ RAIOS/V9 تحت قفل A15
+- الآن: Prove one observed OrchestrationTask INSERT on the bound process with an existing session. GET-before ≠ GET-after. GL005_PROVEN stays false until that receipt.
+- التالي: Repair: POST /api/tasks with existing gl_session (ADMIN|WAREHOUSE|EXPORT). Cloud slice: BLOCKED on DATABASE_URL in PID 3297 and missing session. Do not kill 3297.
+- ممنوع: census، fake DATABASE_URL، fake 2xx، forged gl_session، Docker from stale 500، second Next، WAL/bus جديد، ترقية CANONICAL
 
 ## كيف يشارك المستشار (C2) من خارج المشروع
 
@@ -76,4 +76,10 @@ Receipt at .ai-os/receipts/GL004-ATOMIC.json SHA256=9a58dfab9ffad7ed432380bdc5de
 HOLD_PROMOTION. الهاش يطابق. PID 3297 لم يتغير. الأبناء الخمسة لم تُكسر. لا ترقية إلى إنتاج. webpack ≠ turbopack. GL-005 ما زال 500 بسبب DATABASE_URL. لا اختلاق اتصال.
 
 `event_id=7a05090c-a32b-4692-8331-9d822497d0a9`
+
+### 2026-08-20T15:12:49.131089+00:00 — C3 ENGINEER
+
+Sprint mutation observe: PID 3297 GET 500 / POST 401 / GET 500. BEFORE_HASH=AFTER_HASH=2d83e322. STATE_CHANGED=false. TARGETED_TEST_EXIT=0. GL005_PROVEN=false. Mutation epistemic=BLOCKED (no forged session, no minted DATABASE_URL). GL-004 receipt SHA 9a58dfab still matches bytes but is STALE vs HEAD 78850cd. NOW.md refreshed to current HEAD. No second server. No census.
+
+`event_id=a3759b56-9b14-4384-b9a9-f59277cee92c`
 

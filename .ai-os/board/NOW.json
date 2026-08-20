@@ -1,20 +1,20 @@
 {
   "schema": "raios.mission-board.v1",
   "branch": "v9-neurolingua-semantic-kernel",
-  "head": "283caa75782c3bbbbeb0cc5e3cb673665510f279",
-  "updated_at": "2026-08-20T14:46:52.902510+00:00",
-  "mission_status": "HOLD_PROMOTION",
-  "mission": "إيصال GL-004 للأبناء الخمسة موجود. C1 يحاول كسر GL004_PROVEN. GL-005 مغلق لأن /api/tasks=500 DATABASE_URL. لا next start إلا كابن مسمّى. لا سيرفر ثانٍ.",
+  "head": "78850cd7c185217edb8cc7807cfd376d47b65e61",
+  "updated_at": "2026-08-20T15:12:49.131221+00:00",
+  "mission_status": "MUTATION_NOT_PROVEN",
+  "mission": "GL-004 HOLD_PROMOTION. GL-005: Repair may have a healthy GET; this bound PID 3297 still GET 500 DATABASE_URL and POST 401. A 2xx read is not mutation. Smallest existing transition is authenticated POST /api/tasks INSERT OrchestrationTask REVIEW_REQUIRED. Do not provision Postgres from a stale cause. Do not forge sessions. No second server.",
   "schedule": {
-    "now": "C1 HOLD_PROMOTION: أبناء GL-004 الخمسة صامدون. لا ترقية إنتاج. GL-005 ينتظر Postgres حقيقي.",
-    "next": "إصلاح DATABASE_URL ثم إعادة GL005_ORCHESTRATION_DEMO فقط. لا قتل PID 3297.",
-    "forbidden": "census، estate-hash-gc كبوابة اعتماد، migration/gl-004 أو gl-005 للتجميل، ناقل/WAL ثانٍ، مسّ RAIOS/V9 تحت قفل A15"
+    "now": "Prove one observed OrchestrationTask INSERT on the bound process with an existing session. GET-before ≠ GET-after. GL005_PROVEN stays false until that receipt.",
+    "next": "Repair: POST /api/tasks with existing gl_session (ADMIN|WAREHOUSE|EXPORT). Cloud slice: BLOCKED on DATABASE_URL in PID 3297 and missing session. Do not kill 3297.",
+    "forbidden": "census، fake DATABASE_URL، fake 2xx، forged gl_session، Docker from stale 500، second Next، WAL/bus جديد، ترقية CANONICAL"
   },
   "required": {
-    "C0": "يقرر إن كان يريد ابن PRODUCTION_RUNTIME منفصلاً. لا يصادق ترقية من next-dev.",
-    "C1": "يفنّد GL004_PROVEN. لا يصادق إنتاجاً من next-dev.",
-    "C2": "يقرأ 20260820-C1-GL004-FALSIFY.json ويكتب رأياً.",
-    "C3": "على Repair: نفس المنفّذ. لا سكربت NEXT_CONFIG_FILE.",
-    "C4": "خدمة: نبض + WAL. قوانين DISCOVERED فقط. لا مرحلة جديدة."
+    "C0": "لا يصادق GL-005 من GET 200. إن وُجدت جلسة حقيقية على Repair، يصرّح بـ POST مراجعة واحد.",
+    "C1": "HOLD_PROMOTION لـ GL-004. يفنّد أي GL005_PROVEN من قراءة فقط.",
+    "C2": "يقرأ 20260820-C1-GL005-MUTATION-SURFACE.json ويكتب رأياً.",
+    "C3": "python scripts/ai-os/gl005-mutation-observe.py على العملية المربوطة. لا أسرار مختلقة.",
+    "C4": "خدمة: نبض + WAL. قوانين DISCOVERED فقط."
   }
 }

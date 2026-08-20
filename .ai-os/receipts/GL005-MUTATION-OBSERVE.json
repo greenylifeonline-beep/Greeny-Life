@@ -1,0 +1,143 @@
+{
+  "schema": "raios.gl005-mutation-observe.v1",
+  "knowledge_state": "DISCOVERED",
+  "GL005_PROVEN": false,
+  "classification": "MUTATION_NOT_PROVEN",
+  "HEAD": "78850cd7c185217edb8cc7807cfd376d47b65e61",
+  "BRANCH": "v9-neurolingua-semantic-kernel",
+  "bound_at": "2026-08-20T15:11:57.185216+00:00",
+  "bind_error": null,
+  "runtime": {
+    "pid": 3297,
+    "ppid": 3221,
+    "port": 3000,
+    "mode": "dev",
+    "spawned": false,
+    "killed": false
+  },
+  "surface": {
+    "files": [
+      "app/api/tasks/route.ts",
+      "lib/intelligence/task-orchestration.ts",
+      "tests/task_orchestration_check.ts"
+    ],
+    "http_methods_in_route": {
+      "GET": true,
+      "POST": true,
+      "PATCH": false,
+      "PUT": false,
+      "DELETE": false
+    },
+    "domain_writes_database": false,
+    "domain_all_execution_false": true,
+    "createTaskContract_status": "REVIEW_REQUIRED",
+    "validateTaskTransition_persists": false,
+    "unit_test_hits_http_or_db": true,
+    "smallest_durable_mutation": "POST /api/tasks → createTaskContract() → INSERT OrchestrationTask status=REVIEW_REQUIRED",
+    "rejected_as_demonstration": [
+      "GET /api/tasks 200",
+      "tests/task_orchestration_check.ts",
+      "validateTaskTransition to COMPLETED (no HTTP applicator)",
+      ".ai-os/state/TASKS.json",
+      "second Next server",
+      "new harness that copies route SQL"
+    ]
+  },
+  "unit_test": {
+    "exit": 0
+  },
+  "BEFORE_HASH": "2d83e3221adc6bf462804665918ddacda0bdaca78e97ccf140d5fc567879748d",
+  "AFTER_HASH": "2d83e3221adc6bf462804665918ddacda0bdaca78e97ccf140d5fc567879748d",
+  "ACTION_PROCESS_EXIT": {
+    "status": 401,
+    "sha256": "01af368a52d0ad5126358870e2af422e96d1584be2c83fda09f85d67a479f60f",
+    "observation": "ROUTE_EXECUTION+AUTH_GATE_PRESENT",
+    "error": "Authentication required.",
+    "body_path": "/workspace/.ai-os/receipts/gl005-mutation-post.json"
+  },
+  "STATE_CHANGED": false,
+  "TARGETED_TEST_EXIT": 0,
+  "BEFORE_STATE": {
+    "probe": {
+      "status": 500,
+      "sha256": "2d83e3221adc6bf462804665918ddacda0bdaca78e97ccf140d5fc567879748d",
+      "observation": "ROUTE_EXECUTED/APPLICATION_FAILURE",
+      "error": null
+    },
+    "semantic": {
+      "http_2xx": false,
+      "semantic_success": false,
+      "read_path_healthy": false,
+      "count": null,
+      "ids": [],
+      "error": "Unable to read tasks",
+      "details_prefix": "\nInvalid `prisma.$queryRaw()` invocation:\n\n\nerror: Environment variable not found: DATABASE_URL.\n  -->  schema.prisma:3\n   | \n 2 |   provider = \"postgresql\"\n 3 |   url      = env(\"DATABASE_URL\")\n   | \n\nValidation Error Count: 1"
+    },
+    "body_path": "/workspace/.ai-os/receipts/gl005-mutation-before.json"
+  },
+  "ACTION": {
+    "method": "POST",
+    "url": "http://127.0.0.1:3000/api/tasks",
+    "auth": "none — gl_session not forged",
+    "payload": {
+      "taskType": "SYSTEM_MAINTENANCE_REVIEW",
+      "ownerCompany": "MASTERMIND",
+      "subjectId": "gl005-mutation-observe",
+      "evidenceIds": [
+        "GL005-MUTATION-OBSERVE"
+      ],
+      "payload": {
+        "intent": "OBSERVE_STATE_TRANSITION",
+        "execution": false,
+        "note": "Review request only. Not commercial execution."
+      }
+    },
+    "why_this_action": "POST /api/tasks → createTaskContract() → INSERT OrchestrationTask status=REVIEW_REQUIRED"
+  },
+  "AFTER_STATE": {
+    "probe": {
+      "status": 500,
+      "sha256": "2d83e3221adc6bf462804665918ddacda0bdaca78e97ccf140d5fc567879748d",
+      "observation": "ROUTE_EXECUTED/APPLICATION_FAILURE",
+      "error": null
+    },
+    "semantic": {
+      "http_2xx": false,
+      "semantic_success": false,
+      "read_path_healthy": false,
+      "count": null,
+      "ids": [],
+      "error": "Unable to read tasks",
+      "details_prefix": "\nInvalid `prisma.$queryRaw()` invocation:\n\n\nerror: Environment variable not found: DATABASE_URL.\n  -->  schema.prisma:3\n   | \n 2 |   provider = \"postgresql\"\n 3 |   url      = env(\"DATABASE_URL\")\n   | \n\nValidation Error Count: 1"
+    },
+    "new_ids": [],
+    "body_path": "/workspace/.ai-os/receipts/gl005-mutation-after.json"
+  },
+  "DOMAIN_INVARIANT_PRESERVED": {
+    "no_execution_flag": true,
+    "review_only_status_if_created": true,
+    "no_second_server": true,
+    "no_forged_session": true,
+    "no_new_database": true,
+    "live_pid_untouched": true
+  },
+  "law_attack": {
+    "candidate": "ORCHESTRATION_DEMONSTRATED_REQUIRES_OBSERVED_STATE_TRANSITION",
+    "ruling": "ACCEPT_SCOPED_REJECT_STRENGTHENED",
+    "accept_if": "One durable OrchestrationTask row is created through existing POST /api/tasks + createTaskContract, observed as GET-before ≠ GET-after, status REVIEW_REQUIRED, execution false.",
+    "too_strong_if": [
+      "Requires COMPLETED / execution:true / multi-agent — no HTTP applicator exists; all routing is execution:false.",
+      "Requires a second next start child — that is production-equivalence, not GL-005 mutation.",
+      "Requires a new harness that reimplements route SQL — duplication, not demonstration."
+    ],
+    "too_weak_if": [
+      "GET 200 / success:true counts as demonstration.",
+      "tests/task_orchestration_check.ts exit 0 counts as demonstration.",
+      "HTTP 2xx with success:false counts as semantic success."
+    ],
+    "historical_gl005": "Shared task state locks handoff and orchestration demonstrated.",
+    "historical_fit": "Control plane already exists. The missing observed transition is product OrchestrationTask INSERT, not a new orchestrator and not a status walk to COMPLETED."
+  },
+  "next_cheapest_action": "On the machine where GET is semantically healthy, POST /api/tasks with an existing gl_session whose role is ADMIN|WAREHOUSE|EXPORT. Do not mint DATABASE_URL. Do not forge APP_SESSION_SECRET. Do not start a second Next process.",
+  "this_environment": "Unauthenticated POST is the strongest action this observer may take without forging identity. 401 means the mutation surface is present and gated. 201 without a session would be a security defect. GET 500 on this slice does not authorize Repair to ignore a later GET 200, and Repair GET 200 does not authorize provisioning Postgres on this slice."
+}

@@ -54,3 +54,12 @@ Isolated `next build` is BUILD_VALIDITY. `next start` is production-runtime equi
 ## D-012 Build compiler is not the live compiler
 DISCOVERED: `BUILD_COMPILER_NE_RUNTIME_COMPILER`.
 An isolated `next build --webpack` PASS does not prove the live `next-dev` Turbopack process. `GL004_PROVEN` for the five named children is not production equivalence.
+
+## D-013 Repair atomic runner is not a proof forest
+DISCOVERED: `PROOF_FOREST_NE_RECEIPT`; `POWERSHELL_PID_IS_RESERVED`; `HTTP_2XX_NE_ORCHESTRATION`.
+Do not write `._raios-wave2-atomic-proof.ps1` or `_raios-wave2-atomic-proof\` at repo root. Repair runs `scripts/ai-os/gl004-atomic-executor.ps1` or `python .\scripts\ai-os\gl004-atomic-executor.py`. Isolated build worktree lives outside the live tree (`%TEMP%\gl004-isolated-build` / `/tmp/gl004-isolated-build`). `npm run build` is Turbopack on next@16; isolated BUILD uses `npx next build --webpack`. `param([int]$Pid)` binds the current PowerShell PID — use `-ProcessId`. RUNTIME_TRACE requires GET `/` == 200 and Next.js identity, not HTTP 200–499. `GL005_LIVE_PATH_PROVEN` is not `GL005_PROVEN`. Heartbeat/WAL dirt must not BLOCK BUILD; scope dirty to product paths.
+
+## D-014 Observed state transition is required, but not a stronger machine
+DISCOVERED: `ORCHESTRATION_DEMONSTRATED_REQUIRES_OBSERVED_STATE_TRANSITION` is accepted only when scoped.
+A GET 200 or `tests/task_orchestration_check.ts` is not demonstration. The smallest durable product mutation is `POST /api/tasks` → `createTaskContract()` → `INSERT OrchestrationTask` with `status=REVIEW_REQUIRED` and `execution: false`, observed as GET-before ≠ GET-after.
+The same law is too strong if it demands `COMPLETED`, `execution: true`, a second Next process, a new harness, or mutating `.ai-os/state/TASKS.json`. No HTTP applicator exists for `validateTaskTransition`. Stale `DATABASE_URL` 500 must not drive new infrastructure after a later semantic GET 200. `HTTP_2XX_NE_SEMANTIC_SUCCESS`. `READ_PATH_PROVEN_NE_ORCHESTRATION_DEMONSTRATED`. `STALE_FAILURE_CAUSE_MUST_NOT_DRIVE_NEW_INFRASTRUCTURE`.

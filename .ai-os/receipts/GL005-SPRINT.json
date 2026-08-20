@@ -1,0 +1,59 @@
+{
+  "schema": "raios.wave2.sprint-receipt.v1",
+  "knowledge_state": "DISCOVERED",
+  "HEAD": "78850cd7c185217edb8cc7807cfd376d47b65e61",
+  "BRANCH": "v9-neurolingua-semantic-kernel",
+  "START_TIME": "2026-08-20T15:10:52Z",
+  "END_TIME": "2026-08-20T15:14:00Z",
+  "GL004_PROVEN": true,
+  "GL004_PROVEN_SCOPE": "receipt HEAD 147d103; STALE_OBSERVATION versus current HEAD 78850cd; SHA still matches file bytes",
+  "GL004_PRODUCTION_RUNTIME_PROVEN": false,
+  "GL005_PROVEN": false,
+  "PARENT_EXIT": 114,
+  "CHILDREN": [
+    {"name": "TYPECHECK", "exit": 0, "epistemic": "PASS"},
+    {"name": "TEST_CANONICAL", "exit": 0, "epistemic": "PASS"},
+    {"name": "TEST_TASK_ORCHESTRATION", "exit": 0, "epistemic": "PASS"},
+    {"name": "RUNTIME_BIND_CHECK", "exit": 0, "epistemic": "PASS", "pid": 3297},
+    {"name": "AIOS_STATUS", "exit": 0, "epistemic": "PASS"},
+    {"name": "GL005_CONTROL_PLANE", "exit": 0, "epistemic": "PASS"},
+    {"name": "GL005_MUTATION_OBSERVE", "exit": 0, "epistemic": "BLOCKED", "note": "observer recorded; mutation itself BLOCKED"},
+    {"name": "GL005_ORCHESTRATION_DEMO", "exit": 114, "epistemic": "GATE_CLOSED"}
+  ],
+  "mutation_proof": {
+    "BEFORE_STATE": "GET /api/tasks HTTP 500 success:false DATABASE_URL missing on PID 3297",
+    "BEFORE_HASH": "2d83e3221adc6bf462804665918ddacda0bdaca78e97ccf140d5fc567879748d",
+    "ACTION": "POST /api/tasks unauthenticated; gl_session not forged; DATABASE_URL not minted",
+    "ACTION_PROCESS_EXIT": 401,
+    "AFTER_STATE": "GET /api/tasks HTTP 500 identical body",
+    "AFTER_HASH": "2d83e3221adc6bf462804665918ddacda0bdaca78e97ccf140d5fc567879748d",
+    "STATE_CHANGED": false,
+    "DOMAIN_INVARIANT_PRESERVED": true,
+    "TARGETED_TEST_EXIT": 0
+  },
+  "GL004_ATOMIC_SHA256": "9a58dfab9ffad7ed432380bdc5dec25427b170ba8ff187a764619d12f508ff38",
+  "GL005_MUTATION_SHA256": "c64b4eee50752ce254b0f443a0b991811ab6876d05214279b144e9edcb734b6e",
+  "safety": {
+    "spawned_second_server": false,
+    "killed_live_process": false,
+    "forged_session": false,
+    "minted_database_url": false,
+    "new_wal": false,
+    "census": false,
+    "canonical_promotion": false
+  },
+  "blockers": [
+    "This slice PID 3297 has no DATABASE_URL; GET remains 500. Failed read path, not missing orchestrator.",
+    "Authenticated POST requires existing gl_session (ADMIN|WAREHOUSE|EXPORT). Forging APP_SESSION_SECRET is unauthorized.",
+    "GL-004 atomic receipt is SHA-valid but STALE_OBSERVATION for current HEAD 78850cd (receipt HEAD 147d103)."
+  ],
+  "learning_candidates": [
+    "ORCHESTRATION_DEMONSTRATED_REQUIRES_OBSERVED_STATE_TRANSITION (scoped to POST INSERT REVIEW_REQUIRED; too strong if COMPLETED/execution:true)",
+    "STALE_FAILURE_CAUSE_MUST_NOT_DRIVE_NEW_INFRASTRUCTURE",
+    "HTTP_2XX_NE_SEMANTIC_SUCCESS",
+    "READ_PATH_PROVEN_NE_ORCHESTRATION_DEMONSTRATED",
+    "GATE_CLOSED_NE_EPISTEMIC_FAILED",
+    "STALE_OBSERVATION (GL-004 receipt HEAD ≠ current HEAD)"
+  ],
+  "next": "On Repair, if GET is semantically healthy, POST one review task with an existing session on the bound process, then GET-after. Do not kill 3297. Do not mint DATABASE_URL. Do not grant PASS from GET 200."
+}
