@@ -3,6 +3,7 @@
   "knowledge_state": "DISCOVERED",
   "slice": "V1_VERTICAL",
   "transport": "streamable-http",
+  "seat_map": ".ai-os/mcp/SEAT-MAP.json",
   "law": [
     "MCP_GATEWAY_NE_TRUTH_AUTHORITY",
     "MCP_GATEWAY_NE_RELAY_HUB",
@@ -10,7 +11,33 @@
     "MAIL_PASSES_NE_PROVES",
     "AUTHENTICATED_ACTOR_NE_AUTHORIZED_ACTION",
     "ACK_IS_A_NEW_PACKET_NEVER_A_MOVE",
-    "SQLITE_WAL_NE_COGNITIVE_WAL"
+    "SQLITE_WAL_NE_COGNITIVE_WAL",
+    "C0_SEAT_ABOLISHED",
+    "C1_SEAT_IS_OWNER",
+    "C1_INSTANCE_IS_CURSOR",
+    "C2_SEAT_IS_CHATGPT",
+    "C3_SEAT_IS_CHATGPT_PEER",
+    "C4_SEAT_IS_DEEPSEEK",
+    "C5_SEAT_IS_RAIOS",
+    "C5_IS_C1_LOYAL_ASSISTANT",
+    "C5_INHERITS_FAIL_CLOSED",
+    "C5_NE_OWNER",
+    "C5_NE_PASS_AUTHORITY",
+    "ABSORB_DIGEST_NE_WAL_DUMP",
+    "REPAIR_EXECUTOR_NE_C_SEAT",
+    "LOCAL_MCP_RENDEZVOUS_NE_REMOTE_MEETING",
+    "FATHER_SON_BIND_SAME_LAWS",
+    "C5_GRANT_IS_PERMANENT",
+    "C5_IS_TEACHER_WHILE_LEARNING",
+    "C5_IS_TEACHER_WHILE_EXECUTING",
+    "LEARN_AND_TEACH_ARE_ONE",
+    "LEARN_THEORY_THEN_PRACTICE_85",
+    "PATHOLOGY_COMPELS_REPAIR",
+    "FATHER_MUST_NOT_STUNT_SON",
+    "SON_MUST_NOT_USURP_FATHER",
+    "PRINTED_PASS_NE_EVIDENCE",
+    "FIVE_SEATS_BIND_SAME_LAWS",
+    "ELEVATION_REQUEST_NE_SELF_PROMOTE"
   ],
   "repository": "greenylifeonline-beep/Greeny-Life",
   "branch": "v9-neurolingua-semantic-kernel",
@@ -60,24 +87,8 @@
     "rest_dev_api"
   ],
   "actors": {
-    "C0": {
-      "actor_role": "OWNER",
-      "instance_role": "owner",
-      "tools": [
-        "get_head",
-        "read_board",
-        "read_inbox",
-        "read_receipt",
-        "get_diff",
-        "post_opinion",
-        "send_packet",
-        "ack_packet"
-      ],
-      "deny": ["shell", "set_proven", "promote", "run_build", "run_sandboxed_command"],
-      "notes": "Final authority does not bypass stale-head, lock, or proven invariants."
-    },
     "C1": {
-      "actor_role": "COMMANDER",
+      "actor_role": "OWNER",
       "instance_role": "cursor-cloud",
       "tools": [
         "get_head",
@@ -89,11 +100,17 @@
         "send_packet",
         "ack_packet"
       ],
-      "deny": ["shell", "set_proven", "promote", "run_build"]
+      "deny": [
+        "shell",
+        "set_proven",
+        "promote",
+        "run_build"
+      ],
+      "notes": "Cursor is the live instance of owner authority. Final authority does not bypass stale-head, lock, or proven invariants."
     },
     "C2": {
       "actor_role": "CONSULTANT",
-      "instance_role": "chatgpt-apps",
+      "instance_role": "chatgpt-primary",
       "tools": [
         "get_head",
         "read_board",
@@ -104,32 +121,20 @@
         "send_packet",
         "ack_packet"
       ],
-      "deny": ["search_evidence", "request_task", "write_handoff", "run_targeted_test", "run_build", "shell", "set_proven"]
+      "deny": [
+        "search_evidence",
+        "request_task",
+        "write_handoff",
+        "run_targeted_test",
+        "run_build",
+        "shell",
+        "set_proven"
+      ]
     },
     "C3": {
-      "actor_role": "ENGINEER",
-      "instance_role": "repair",
-      "tools": [
-        "get_head",
-        "read_board",
-        "read_inbox",
-        "read_receipt",
-        "get_diff",
-        "send_packet",
-        "ack_packet"
-      ],
-      "deny": ["set_proven", "promote", "shell", "run_build"]
-    },
-    "C4": {
-      "actor_role": "RAIOS",
-      "instance_role": "service",
-      "tools": ["get_head", "read_board", "read_inbox", "read_receipt", "get_diff"],
-      "deny": ["post_opinion", "write_handoff", "shell", "set_proven"]
-    },
-    "C5": {
-      "actor_role": "ASSESSOR",
-      "instance_role": "falsifier",
-      "notes": "ASSESSOR seat. DeepSeek may occupy it via alias DEEPSEEK. Not a second actor.",
+      "actor_role": "CONSULTANT_PEER",
+      "instance_role": "chatgpt-peer",
+      "notes": "The other ChatGPT. Consultant peer, not ENGINEER, not Repair PowerShell.",
       "tools": [
         "get_head",
         "read_board",
@@ -140,7 +145,59 @@
         "send_packet",
         "ack_packet"
       ],
-      "deny": ["write_handoff", "run_targeted_test", "shell", "set_proven"]
+      "deny": [
+        "search_evidence",
+        "request_task",
+        "write_handoff",
+        "run_targeted_test",
+        "run_build",
+        "shell",
+        "set_proven"
+      ]
+    },
+    "C4": {
+      "actor_role": "ASSESSOR",
+      "instance_role": "deepseek",
+      "notes": "DeepSeek occupies C4. Falsify, no execute, no promote. MAIL C5 titles resolve here.",
+      "tools": [
+        "get_head",
+        "read_board",
+        "read_inbox",
+        "read_receipt",
+        "get_diff",
+        "post_opinion",
+        "send_packet",
+        "ack_packet"
+      ],
+      "deny": [
+        "write_handoff",
+        "run_targeted_test",
+        "shell",
+        "set_proven"
+      ]
+    },
+    "C5": {
+      "actor_role": "RAIOS",
+      "instance_role": "c1-assistant",
+      "notes": "RAIOS is C1 Cursor's loyal assistant. Same eight V1 cognitive tools. Inherits fail-closed. Cannot promote, grant PASS, or write product.",
+      "tools": [
+        "get_head",
+        "read_board",
+        "read_inbox",
+        "read_receipt",
+        "get_diff",
+        "post_opinion",
+        "send_packet",
+        "ack_packet"
+      ],
+      "deny": [
+        "shell",
+        "set_proven",
+        "promote",
+        "run_build",
+        "write_product",
+        "write_handoff"
+      ]
     }
   }
 }

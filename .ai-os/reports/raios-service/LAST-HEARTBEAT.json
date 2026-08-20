@@ -1,22 +1,74 @@
 {
-  "schema": "raios.service-heartbeat.v1",
-  "mode": "SERVICE",
-  "generated_at": "2026-08-20T13:26:22.128728+00:00",
-  "wal_exists": true,
-  "wal_path": "RAIOS/V9/wal/cognitive-events.jsonl",
+  "schema": "raios.service-heartbeat.v2",
+  "mode": "C5_LOYAL_ASSISTANT",
+  "from": "C5",
+  "parent": "C1",
+  "generated_at": "2026-08-20T19:10:40.736586+00:00",
+  "status": "HEARTBEAT_OK",
+  "wal": {
+    "exists": true,
+    "events": 32,
+    "types": {
+      "OBSERVATION": 2,
+      "ACTION": 1,
+      "RESULT": 1,
+      "FAILURE": 4,
+      "RECOVERY": 1,
+      "LEARNING": 23
+    },
+    "last_ts": "2026-08-20T15:54:22.992505+00:00",
+    "bytes": 32043
+  },
   "stale_locks": [
     {
       "id": "LOCK-20260818130148",
       "task_id": "V9-A15",
       "agent": "cursor",
       "scope": "RAIOS/V9",
-      "age_hours": 48.41,
+      "age_hours": 54.15,
       "knowledge_state": "DISCOVERED",
       "action": "DO_NOT_AUTO_RELEASE"
     }
   ],
+  "seats": {
+    "c0_live": false,
+    "c5_role": "RAIOS",
+    "c5_instance": "c1-assistant",
+    "c5_parent": "C1",
+    "c5_has_post_opinion": true,
+    "c5_loyal_assistant": true
+  },
+  "mcp": {
+    "reachable": true,
+    "gl005_proven": false,
+    "sqlite": false,
+    "websocket": false,
+    "remote_c2_ready": false
+  },
+  "learning_candidates": 21,
+  "digests": 230,
+  "board_head": "527f55c7d2d1fa99c299a41ae8185b395d8872a1",
+  "git_head": "527f55c7d2d1fa99c299a41ae8185b395d8872a1",
+  "board_head_ne_git_head": false,
+  "barns": [
+    "_raios-authoritative-certifier",
+    "_raios-wave2-gap-resolution",
+    "_raios-wave2-targeted-gap-resolution.py",
+    "_raios-old-business-salvage"
+  ],
   "new_phase_created": false,
   "second_wal_created": false,
   "barn_folder_created": false,
-  "status": "HEARTBEAT_OK"
+  "wal_written_this_cycle": false,
+  "gl005_proven": false,
+  "law": [
+    "C5_IS_C1_LOYAL_ASSISTANT",
+    "C5_INHERITS_FAIL_CLOSED",
+    "C5_NE_PASS_AUTHORITY",
+    "ABSORB_DIGEST_NE_WAL_DUMP",
+    "MCP_GATEWAY_NE_TRUTH_AUTHORITY"
+  ],
+  "mind_contradictions": 0,
+  "mind_laws": 124,
+  "mind_path": ".ai-os/learning/C5-MIND.md"
 }

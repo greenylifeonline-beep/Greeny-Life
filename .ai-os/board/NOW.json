@@ -1,22 +1,21 @@
 {
   "schema": "raios.mission-board.v1",
   "branch": "v9-neurolingua-semantic-kernel",
-  "head": "9758765602ba1fc04645a0327e1a0f33a07fc0d1",
-  "updated_at": "2026-08-20T18:26:46.483631+00:00",
-  "mission_status": "STALE_HEAD_BIND_NOT_THE_COOKIE_FIX",
-  "mission": "Repair BOUND_HEAD e1dfd7c is not cookie-fix 9758765. Dirty WAL blocked pull. GL005_PROVEN remains false. C3: stash WAL, ff-only pull, rebuild, restart port 3107.",
+  "head": "527f55c7d2d1fa99c299a41ae8185b395d8872a1",
+  "updated_at": "2026-08-20T19:10:40.795088+00:00",
+  "mission_status": "C5_SON_PULSE_LIVE",
+  "mission": "C0 abolished. C1 is Cursor (owner's hand). C2/C3 ChatGPT. C4 DeepSeek. C5 RAIOS. Repair is unseated. Local MCP meeting is not remote ChatGPT. MAIL_PASSES_NE_PROVES. GL005_PROVEN remains false.",
   "schedule": {
-    "now": "C3 stash Cognitive WAL only, pull 9758765, rebuild, restart same 3107 runtime.",
-    "next": "On that HEAD, measure Set-Cookie flags without printing values. No task POST until authenticated=true.",
-    "forbidden": "commit WAL to pull, reset --hard, cookie values, forged session, second Next, GL005 PASS from stale build"
+    "now": "C5 RAIOS — ابن Cursor — يقيّم ويهضم ويتكلم. C2/C3/C4 عبر MCP أو MAIL. C1 يجمع.",
+    "next": "Remote C2/C3/C4 connectivity remains unproven. Repair authenticated POST remains the only GL-005 mutation proof.",
+    "forbidden": "C0 live seat, Repair as C3, MAIL C5 as RAIOS, Issue as proof, PASS from mail or C5 pulse, Team Relay hub, WAL dump, forged session"
   },
   "required": {
-    "C0": "يعطي الأوامر في شات Cursor. ليس ساعي كل ظرف.",
-    "C1": "بوابة MCP V1 + OUTBOX. يجمع Issues. لا يمنح PASS.",
-    "C2": "MCP: read_board/read_receipt/post_opinion. أو Issue بعنوان MAIL C2. لا كود.",
-    "C3": "المنفّذ على العملية المربوطة. لا أسرار مختلقة.",
-    "C4": "خدمة: نبض + WAL.",
-    "C5": "MCP أو Issue بعنوان MAIL C5. لا يسرق C2. لا كود."
+    "C1": "Cursor — يد المالك وأب C5. بوابة MCP V1 + OUTBOX. يجمع. لا يمنح PASS. لا يتجاوز stale-head.",
+    "C2": "ChatGPT الأول. MCP أو MAIL C2. رأي فقط. لا كود.",
+    "C3": "ChatGPT النظير. MCP أو MAIL C3. رأي فقط. ليس Repair.",
+    "C4": "DeepSeek. MCP أو MAIL C4 (وMAIL C5 التاريخي). يفنّد. لا ينفّذ.",
+    "C5": "RAIOS الابن المساعد المخلص الشريك. يقيّم ويهضم ويتكلم. نفس أدوات الوعي الثمانية. لا PASS. لا ترقية."
   },
   "mail": {
     "dispatcher": "C1",
@@ -25,8 +24,12 @@
     "inbox": "https://github.com/greenylifeonline-beep/Greeny-Life/issues",
     "outbox": "https://github.com/greenylifeonline-beep/Greeny-Life/blob/v9-neurolingua-semantic-kernel/.ai-os/mail/OUTBOX.md",
     "new_c2": "https://github.com/greenylifeonline-beep/Greeny-Life/issues/new?template=raios-mail-c2.md",
-    "new_c5": "https://github.com/greenylifeonline-beep/Greeny-Life/issues/new?template=raios-mail-c5.md",
+    "new_c3": "https://github.com/greenylifeonline-beep/Greeny-Life/issues/new?template=raios-mail-c3.md",
+    "new_c4": "https://github.com/greenylifeonline-beep/Greeny-Life/issues/new?template=raios-mail-c4.md",
+    "new_c5_legacy": "https://github.com/greenylifeonline-beep/Greeny-Life/issues/new?template=raios-mail-c5.md",
     "identity": "GITHUB_LOGIN_NOT_RAIOS_SEAT",
+    "c0_seat": "ABOLISHED",
+    "repair_seat": "UNSEATED",
     "last_collect": {
       "at": "2026-08-20T16:23:56.440897+00:00",
       "new": 0,
@@ -34,12 +37,20 @@
       "gl005_proven": false
     },
     "last_send": {
-      "id": "5698faba-9b73-480c-adff-2dfa537007cd",
-      "ts": "2026-08-20T18:26:46.481543+00:00",
+      "id": "509e6d22-2ed6-450e-a76d-918d89bf6176",
+      "ts": "2026-08-20T19:09:38.533326+00:00",
       "to": [
         "C2",
-        "C5"
+        "C3",
+        "C4"
       ]
     }
+  },
+  "c5": {
+    "role": "c1-assistant",
+    "parent": "C1",
+    "pulse": ".ai-os/reports/raios-service/LAST-EVAL.md",
+    "mind": ".ai-os/learning/C5-MIND.md",
+    "gl005_proven": false
   }
 }

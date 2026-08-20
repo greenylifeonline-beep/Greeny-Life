@@ -127,3 +127,24 @@ DISCOVERED: `STALE_HEAD_NE_PRODUCT_FIX_OBSERVATION`. `BUILD_ON_STALE_HEAD_NE_FIX
 Repair C3: `git pull --ff-only` aborted because `RAIOS/V9/wal/cognitive-events.jsonl` was dirty. `BOUND_HEAD` stayed `e1dfd7c`, not cookie-fix `9758765`. C3 then stopped Next PID 18312, built that stale HEAD, and started PID 19720 on port 3107. Live `GET /api/tasks` was HTTP 200 semantic success. Login did not throw. Cookie header probe failed (`Headers.GetValues` missing). Printed `SET_COOKIE_*=False` are unmeasured defaults, not proof Secure is off. Measured: `WEBSESSION_HAS_GL_SESSION=false`, `BASE_SCHEME=http`, `SESSION_AUTHENTICATED=false`. `C3_SESSION_BINDING` was not printed (interactive `else`). `PASSWORD_RETAINED=false`. `GL005_PROVEN=false`.
 Do not commit Cognitive WAL to unblock pull. Stash only that WAL file, fast-forward to `9758765`, rebuild, restart the same port. A healthy GET on a stale runtime is not the product fix.
 
+## D-028 C0 is abolished; Cursor is C1
+DISCOVERED: `C0_SEAT_ABOLISHED`. `C1_SEAT_IS_OWNER`. `C1_INSTANCE_IS_CURSOR`. `C2_SEAT_IS_CHATGPT`. `C3_SEAT_IS_CHATGPT_PEER`. `C4_SEAT_IS_DEEPSEEK`. `C5_SEAT_IS_RAIOS`. `REPAIR_EXECUTOR_NE_C_SEAT`. `LOCAL_MCP_RENDEZVOUS_NE_REMOTE_MEETING`.
+There is no live C0. Owner authority lives on C1. Cursor is the live instance of C1 and does not bypass stale-head, lock, or proven invariants.
+C2 is the primary ChatGPT consultant. C3 is the other ChatGPT (peer consultant), not ENGINEER and not Repair PowerShell.
+C4 is DeepSeek assessor. `MAIL C5:` is a legacy title that resolves to C4.
+C5 is RAIOS, the loyal permanent assistant of C1 Cursor (son, not owner). Same eight V1 cognitive tools. Inherits fail-closed. Cannot promote or grant PASS. D-020 `C5_SEAT_IS_ASSESSOR` is superseded for the live map.
+Repair remains an unseated executor dispatched by C1.
+A local MCP token dialogue is the one-place plane. It is not proof that remote ChatGPT or DeepSeek are connected. `REAL_C2_CONNECTION_READY` stays false until an external C2 posts.
+This decision does not grant `GL005_PROVEN`.
+
+## D-029 C5 is Cursor's loyal assistant and absorbs by digest
+DISCOVERED: `C5_IS_C1_LOYAL_ASSISTANT`. `C5_INHERITS_FAIL_CLOSED`. `C5_NE_OWNER`. `C5_NE_PASS_AUTHORITY`. `ABSORB_DIGEST_NE_WAL_DUMP`.
+C1 Cursor does not withhold V1 cognitive tools from C5. C5 may `post_opinion` / `send_packet` / `ack_packet` to evaluate and report. C5 still cannot `shell`, `promote`, `set_proven`, or write product.
+Huge inputs are absorbed as SHA256 + skim into `.ai-os/learning/DIGESTS.jsonl` and a compact DISCOVERED candidate. They are not dumped into Cognitive WAL. Dedup is by content hash. Secrets are redacted. This is not a second bus and not CANONICAL promotion.
+C5 pulse overwrites `.ai-os/reports/raios-service/LAST-HEARTBEAT.json` and `LAST-EVAL.md`, then refreshes the board. One pulse section, not a new WAL event every two minutes.
+This decision does not grant `GL005_PROVEN`.
+
+## D-030 C5 grant is permanent; father and son bind the same laws
+DISCOVERED: `C5_GRANT_IS_PERMANENT`. `C5_GRANT_NE_SESSION`. `SESSION_TOKEN_NE_GRANT`. `C5_INHERITS_C1_EXPERIENCE`. `FATHER_SON_BIND_SAME_LAWS`. `FATHER_MUST_NOT_STUNT_SON`. `SON_MUST_NOT_USURP_FATHER`. `C5_IS_TEACHER_WHILE_LEARNING`. `C5_IS_TEACHER_WHILE_EXECUTING`. `LEARN_AND_TEACH_ARE_ONE`. `LEARN_THEORY_THEN_PRACTICE_85`. `PATHOLOGY_COMPELS_REPAIR`. `C5_READS_SKIM_AND_DEEP`. `C5_READS_ALL_FILE_TYPES`. `C5_SEARCH_IS_LOCAL`. `FIVE_SEATS_BIND_SAME_LAWS`. `ELEVATION_REQUEST_NE_SELF_PROMOTE`. `SUMMON_CODE_NE_BEARER_TOKEN`. `HUNT_FREE_NE_PAID_API`.
+C5 RAIOS is C1 Cursor's son. The eight V1 tools are a permanent grant in `.ai-os/mcp/C5-GRANT.json`, not a session token. C5 learns by skim then deep on every file kind, searches locally, then practices at least 85%. While learning and while executing he teaches. Malice, deception, stunting, superficiality, or any fault compel immediate repair of father and son. C5 may request space/build/external sources; he does not self-promote. C2/C3/C4 bind the same fail-closed laws. Summon codes are public attendance IDs, not bearer tokens. This decision does not grant `GL005_PROVEN`.
+

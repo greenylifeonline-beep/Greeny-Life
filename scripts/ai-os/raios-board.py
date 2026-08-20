@@ -11,24 +11,16 @@ from datetime import datetime, timezone
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[2]
+sys.path.insert(0, str(Path(__file__).resolve().parent))
+from raios_seats import alias_to_code, board_codes, resolve_live_code  # noqa: E402
+
 BOARD = ROOT / ".ai-os" / "board"
 NOW_JSON = BOARD / "NOW.json"
 NOW_MD = BOARD / "NOW.md"
 OPINIONS = BOARD / "opinions.jsonl"
 
-CODES = {
-    "C0": {"actor": "OWNER", "name": "صاحب المشروع", "where": "داخل الشات / داخل اللوحة"},
-    "C1": {"actor": "COMMANDER", "name": "القائد Cursor", "where": "داخل المشروع"},
-    "C2": {"actor": "CONSULTANT", "name": "المساعد الأول / المستشار", "where": "MCP أو البريد — يحضر الحوار ويتعلم"},
-    "C3": {"actor": "ENGINEER", "name": "المهندس PowerShell", "where": "Repair"},
-    "C4": {"actor": "RAIOS", "name": "نواة الخدمة", "where": "داخل المشروع — يتعلم DISCOVERED فقط"},
-    "C5": {"actor": "ASSESSOR", "name": "المقيّم", "where": "MCP — يفنّد ولا ينفّذ. DeepSeek قد يشغل هذا المقعد"},
-}
-ACTOR_TO_CODE = {v["actor"]: k for k, v in CODES.items()}
-ACTOR_TO_CODE["USER"] = "C0"
-ACTOR_TO_CODE["POWERSHELL"] = "C3"
-ACTOR_TO_CODE["DEEPSEEK"] = "C5"
-ACTOR_TO_CODE["DEEPSEEK-LOCAL"] = "C5"
+CODES = board_codes()
+ACTOR_TO_CODE = alias_to_code()
 
 
 def utc() -> str:
@@ -121,13 +113,45 @@ def render(state: dict) -> None:
         f"- التالي: {state.get('schedule', {}).get('next', '—')}",
         f"- ممنوع: {state.get('schedule', {}).get('forbidden', '—')}",
         "",
-        "## كيف يشارك C2 و C5",
+        "## كيف يشارك C2 و C3 و C4",
         "",
-        "لا يدخلان المستودع ولا يملكان shell.",
+        "المكان الواحد: هذه اللوحة + بوابة MCP V1 + صندوق البريد.",
+        "C1 هو Cursor، يد المالك. لا يوجد مقعد C0.",
+        "C2 و C3 ChatGPT (أول ونظير). C4 DeepSeek. لا يدخلون المستودع ولا يملكون shell.",
         "المسار المعتمد: RAIOS Universal MCP Gateway (صلاحيات حسب الممثل).",
-        "المسار المتدهور: قراءة OUTBOX على GitHub والرد Issue بعنوان MAIL C2 أو MAIL C5.",
-        "C1 يجمع البريد. C0 يعطي الأوامر في الشات. البريد يمر ولا يثبت.",
+        "المسار المتدهور: قراءة OUTBOX على GitHub والرد Issue بعنوان MAIL C2 أو MAIL C3 أو MAIL C4.",
+        "MAIL C5: عنوان تاريخي لديب سيك ويُحسب C4، وليس مقعد RAIOS.",
+        "Repair منفّذ بلا رمز C. C1 يأمره. البريد يمر ولا يثبت. اللقاء المحلي ليس اتصال ChatGPT الخارجي.",
         "",
+        "## نبض C5 RAIOS — ابن Cursor",
+        "",
+    ]
+    pulse = ROOT / ".ai-os" / "reports" / "raios-service" / "LAST-EVAL.md"
+    if pulse.exists():
+        body = pulse.read_text(encoding="utf-8").strip()
+        lines.extend(body.splitlines()[2:] if body.startswith("#") else body.splitlines())
+        lines.append("")
+        lines.append("التفاصيل: `.ai-os/reports/raios-service/LAST-EVAL.md` و `.ai-os/learning/C5-MIND.md`")
+        lines.append("")
+    else:
+        lines.append("_C5 لم ينبض بعد. شغّل `python3 scripts/ai-os/raios-service-heartbeat.py`._")
+        lines.append("")
+    for title, rel in (
+        ("استدعاء الخمس", ".ai-os/summon/BOARD-SNIPPET.md"),
+        ("تعلم C5 الحي", ".ai-os/learning/LAST-LEARN.md"),
+        ("فرض الأب والابن", ".ai-os/learning/LAST-ENFORCE.md"),
+        ("درس C5", ".ai-os/learning/C5-TEACH.md"),
+    ):
+        extra = ROOT / rel
+        if extra.exists():
+            lines += [f"## {title}", ""]
+            body = extra.read_text(encoding="utf-8").strip()
+            chunk = body.splitlines()
+            if chunk and chunk[0].startswith("#"):
+                chunk = chunk[1:]
+            lines.extend(chunk)
+            lines.append("")
+    lines += [
         "## الآراء",
         "",
     ]
@@ -146,19 +170,7 @@ def render(state: dict) -> None:
 
 
 def resolve_code(value: str) -> tuple[str, str]:
-    value = value.strip().upper()
-    if value in CODES:
-        return value, CODES[value]["actor"]
-    if value in ACTOR_TO_CODE:
-        actor = value
-        if value == "POWERSHELL":
-            actor = "ENGINEER"
-        if value in {"DEEPSEEK", "DEEPSEEK-LOCAL"}:
-            actor = "ASSESSOR"
-        if value == "USER":
-            actor = "OWNER"
-        return ACTOR_TO_CODE[value], actor
-    raise SystemExit(f"UNKNOWN_CODE:{value}")
+    return resolve_live_code(value)
 
 
 def save_now(state: dict) -> None:
@@ -199,19 +211,19 @@ def bootstrap() -> dict:
         "branch": git("branch", "--show-current") or "v9-neurolingua-semantic-kernel",
         "head": git("rev-parse", "HEAD"),
         "updated_at": utc(),
-        "mission_status": "WAIT_ATOMIC_RECEIPT",
-        "mission": "تنظيم قبل التوسع. المهندس يشغّل منفّذاً ذرياً fail-closed لـ GL-004/GL-005. المستشار يراجع الإيصال. القائد يحاول كسر أي false-PASS. لا census. لا حذف health-reporter.ts.",
+        "mission_status": "ONE_PLACE_MAP_ENCODED_REMOTE_UNPROVEN",
+        "mission": "C0 abolished. C1 is Cursor (owner's hand). C2/C3 ChatGPT. C4 DeepSeek. C5 RAIOS. Repair is unseated. Local MCP meeting is not remote ChatGPT. GL005_PROVEN remains false.",
         "schedule": {
-            "now": "انتظار حمولة الإيصال الثمانية: HEAD, SAFETY_TAG, children[] exits, PARENT_EXIT, RECEIPT, RECEIPT_SHA256, GL004_PROVEN, GL005_PROVEN",
-            "next": "المراجع يكسر الإيصال إن وُجد false-PASS ثم تحويل الحلقة إلى CICF: ربط الحذف بـ HEAD ورسم الاعتمادات",
-            "forbidden": "census، estate-hash-gc كبوابة اعتماد، migration/gl-004 أو gl-005 للتجميل، ناقل/WAL ثانٍ، مسّ RAIOS/V9 تحت قفل A15",
+            "now": "C5 RAIOS — ابن Cursor — يقيّم ويهضم ويتكلم على هذه اللوحة. C1 لا يبخل عليه بأدوات الوعي. C2/C3/C4 عبر MCP أو البريد.",
+            "next": "Remote C2/C3/C4 connectivity remains unproven. Repair authenticated POST remains the only GL-005 mutation proof.",
+            "forbidden": "C0 as a live seat, Repair as C3, MAIL C5 as RAIOS, second WAL, WAL dump of huge inputs, forged session, GL005 PASS from local rendezvous or C5 pulse",
         },
         "required": {
-            "C0": "يقرأ اللوحة ويقرر. لا يصادق على PASS بدون مخارج أبناء.",
-            "C1": "قائد ومراجع تنفيذي. يستقبل الإيصال ويحاول كسره.",
-            "C2": "مستشار خارجي. يقرأ NOW.md، يترك رأياً برمز C2، لا ينفّذ حذفاً من خارج الرسم الحي.",
-            "C3": "منفّذ ذري على Repair: PARENT_EXIT≠0 إذا فشل أي child مطلوب. لا يحذف health-reporter.ts.",
-            "C4": "خدمة: نبض + WAL. قوانين DISCOVERED فقط. لا مرحلة جديدة.",
+            "C1": "Cursor — يد المالك وأب C5. بوابة MCP V1 + OUTBOX. يجمع. لا يمنح PASS. لا يتجاوز stale-head.",
+            "C2": "ChatGPT الأول. MCP أو MAIL C2. رأي فقط. لا كود.",
+            "C3": "ChatGPT النظير. MCP أو MAIL C3. رأي فقط. ليس Repair.",
+            "C4": "DeepSeek. MCP أو MAIL C4 (وMAIL C5 التاريخي). يفنّد. لا ينفّذ.",
+            "C5": "RAIOS الابن المساعد المخلص. يقيّم ويهضم ويتكلم. نفس أدوات الوعي الثمانية. لا PASS. لا ترقية.",
         },
     }
     save_now(state)

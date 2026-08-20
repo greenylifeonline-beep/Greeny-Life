@@ -13,6 +13,9 @@ from datetime import datetime, timezone
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[2]
+sys.path.insert(0, str(Path(__file__).resolve().parent))
+from raios_seats import LEGACY_MAIL, MAIL_CODES, resolve_mail_title_code  # noqa: E402
+
 MAIL = ROOT / ".ai-os" / "mail"
 OUTBOX_JSONL = MAIL / "OUTBOX.jsonl"
 INBOX_JSONL = MAIL / "INBOX.jsonl"
@@ -25,16 +28,19 @@ BRANCH = "v9-neurolingua-semantic-kernel"
 ISSUES_URL = f"https://github.com/{REPO}/issues"
 OUTBOX_URL = f"https://github.com/{REPO}/blob/{BRANCH}/.ai-os/mail/OUTBOX.md"
 NEW_C2 = f"https://github.com/{REPO}/issues/new?template=raios-mail-c2.md"
+NEW_C3 = f"https://github.com/{REPO}/issues/new?template=raios-mail-c3.md"
+NEW_C4 = f"https://github.com/{REPO}/issues/new?template=raios-mail-c4.md"
 NEW_C5 = f"https://github.com/{REPO}/issues/new?template=raios-mail-c5.md"
 
-TITLE_RE = re.compile(r"^MAIL\s+C([25])\b", re.I)
+TITLE_RE = re.compile(r"^MAIL\s+C([0-5])\b", re.I)
 SECRET_RE = re.compile(
     r"DATABASE_URL\s*=\s*\S+|APP_SESSION_SECRET\s*=\s*\S+|gl_session\s*=\s*\S+|postgres(?:ql)?://\S+",
     re.I,
 )
 BEARER_TOKEN_RE = re.compile(r"(?:^|[^A-Za-z])Bearer [A-Za-z0-9\-._~+/]{16,}")
 PASS_CLAIM_RE = re.compile(r"GL00[45]_PROVEN\s*=\s*true", re.I)
-CODES = ("C2", "C5")
+CODES = MAIL_CODES
+REPLY_URLS = {"C2": NEW_C2, "C3": NEW_C3, "C4": NEW_C4}
 
 
 def utc() -> str:
@@ -61,7 +67,7 @@ def parse_title(title: str) -> str | None:
     match = TITLE_RE.match((title or "").strip())
     if not match:
         return None
-    return "C" + match.group(1)
+    return resolve_mail_title_code("C" + match.group(1))
 
 
 def redact(text: str) -> tuple[str, bool]:
@@ -96,24 +102,23 @@ def sync_board(*, last_collect: dict | None = None, last_send: dict | None = Non
     state["branch"] = BRANCH
     state["head"] = git_head()
     state["updated_at"] = utc()
-    state["mission_status"] = "MUTATION_NOT_PROVEN"
+    state["mission_status"] = "ONE_PLACE_MAP_ENCODED_REMOTE_UNPROVEN"
     state["mission"] = (
-        "GL-004 HOLD_PROMOTION. GL-005 mutation not proven. "
-        "MCP V1 Streamable HTTP is the connector. GitHub Issues are degraded mail. "
-        "C1 dispatches. MAIL_PASSES_NE_PROVES. EMPIRE_CONNECTOR_SPEC_AS_WRITTEN_IS_REJECTED."
+        "C0 abolished. C1 is Cursor (owner's hand). C2/C3 ChatGPT. C4 DeepSeek. C5 RAIOS. "
+        "Repair is unseated. Local MCP meeting is not remote ChatGPT. "
+        "MAIL_PASSES_NE_PROVES. GL005_PROVEN remains false."
     )
     state["schedule"] = {
-        "now": "C2/C5 use MCP V1 (read_board, read_receipt, post_opinion) or degraded MAIL C2/C5 Issues. C1 collects.",
-        "next": "Repair authenticated POST remains the only GL-005 mutation proof. Mail does not prove.",
-        "forbidden": "معاملة Issue كإثبات، PASS من بريد، Team Relay hub، fake DATABASE_URL، forged session",
+        "now": "C5 RAIOS — ابن Cursor — يقيّم ويهضم ويتكلم. C2/C3/C4 عبر MCP أو MAIL. C1 يجمع.",
+        "next": "Remote C2/C3/C4 connectivity remains unproven. Repair authenticated POST remains the only GL-005 mutation proof.",
+        "forbidden": "C0 live seat, Repair as C3, MAIL C5 as RAIOS, Issue as proof, PASS from mail or C5 pulse, Team Relay hub, WAL dump, forged session",
     }
     state["required"] = {
-        "C0": "يعطي الأوامر في شات Cursor. ليس ساعي كل ظرف.",
-        "C1": "بوابة MCP V1 + OUTBOX. يجمع Issues. لا يمنح PASS.",
-        "C2": "MCP: read_board/read_receipt/post_opinion. أو Issue بعنوان MAIL C2. لا كود.",
-        "C3": "المنفّذ على العملية المربوطة. لا أسرار مختلقة.",
-        "C4": "خدمة: نبض + WAL.",
-        "C5": "MCP أو Issue بعنوان MAIL C5. لا يسرق C2. لا كود.",
+        "C1": "Cursor — يد المالك وأب C5. بوابة MCP V1 + OUTBOX. يجمع. لا يمنح PASS.",
+        "C2": "ChatGPT الأول. MCP أو MAIL C2. لا كود.",
+        "C3": "ChatGPT النظير. MCP أو MAIL C3. ليس Repair.",
+        "C4": "DeepSeek. MCP أو MAIL C4. MAIL C5 التاريخي يصل هنا.",
+        "C5": "RAIOS الابن المساعد المخلص. يقيّم ويهضم ويتكلم. لا بريد GitHub. لا PASS.",
     }
     mail = {
         "dispatcher": "C1",
@@ -122,8 +127,12 @@ def sync_board(*, last_collect: dict | None = None, last_send: dict | None = Non
         "inbox": ISSUES_URL,
         "outbox": OUTBOX_URL,
         "new_c2": NEW_C2,
-        "new_c5": NEW_C5,
+        "new_c3": NEW_C3,
+        "new_c4": NEW_C4,
+        "new_c5_legacy": NEW_C5,
         "identity": "GITHUB_LOGIN_NOT_RAIOS_SEAT",
+        "c0_seat": "ABOLISHED",
+        "repair_seat": "UNSEATED",
     }
     if last_collect is not None:
         mail["last_collect"] = last_collect
@@ -142,15 +151,18 @@ def render_outbox(rows: list[dict]) -> None:
     lines = [
         "# صندوق الإرسال — C1",
         "",
-        "C0 يعطي الأمر في الشات. C1 يرسل من هنا. C2 و C5 يردان بـ GitHub Issue.",
+        "C1 Cursor يرسل من هنا. C2 و C3 و C4 يردون بـ GitHub Issue.",
+        "C0 ملغى. C5 RAIOS ليس مقعد بريد. `MAIL C5:` عنوان تاريخي → C4.",
         "`MAIL_PASSES_NE_PROVES`. هذا الملف ليس TASKS وليست LOCKS وليس `GL005_PROVEN`.",
         "",
         f"- القراءة: {OUTBOX_URL}",
         f"- الرد C2: {NEW_C2}",
-        f"- الرد C5: {NEW_C5}",
+        f"- الرد C3: {NEW_C3}",
+        f"- الرد C4: {NEW_C4}",
+        f"- الرد التاريخي C5→C4: {NEW_C5}",
         f"- الصندوق: {ISSUES_URL}",
         "",
-        "لا git. لا اشتراك. لا أسرار. عنوان العدد يبدأ بـ `MAIL C2:` أو `MAIL C5:`.",
+        "لا git. لا اشتراك. لا أسرار. عنوان العدد يبدأ بـ `MAIL C2:` أو `MAIL C3:` أو `MAIL C4:`.",
         "",
         "## الرسائل",
         "",
@@ -190,7 +202,7 @@ def send(to: list[str], text: str) -> dict:
         "identity": "C1_CURSOR_CLOUD",
         "gl005_proven": False,
         "law": "MAIL_PASSES_NE_PROVES",
-        "reply": {"C2": NEW_C2, "C5": NEW_C5},
+        "reply": dict(REPLY_URLS),
     }
     append_jsonl(OUTBOX_JSONL, rec)
     render_outbox(load_jsonl(OUTBOX_JSONL))
@@ -215,6 +227,7 @@ def envelope_from_issue(issue: dict) -> dict | None:
         "direction": "in",
         "source": "github-issue",
         "claimed_code": code,
+        "legacy_title_mapped_from": "C5" if title.upper().startswith("MAIL C5") else None,
         "github_login": login,
         "identity": "GITHUB_LOGIN_NOT_RAIOS_SEAT",
         "issue": number,
@@ -303,7 +316,9 @@ def show() -> dict:
         "outbox": OUTBOX_URL,
         "inbox": ISSUES_URL,
         "new_c2": NEW_C2,
-        "new_c5": NEW_C5,
+        "new_c3": NEW_C3,
+        "new_c4": NEW_C4,
+        "new_c5_legacy": NEW_C5,
         "out_count": len(load_jsonl(OUTBOX_JSONL)),
         "in_count": len(load_jsonl(INBOX_JSONL)),
         "gl005_proven": False,
@@ -316,7 +331,7 @@ def main() -> int:
     p = argparse.ArgumentParser()
     sub = p.add_subparsers(dest="c", required=True)
     s = sub.add_parser("send")
-    s.add_argument("--to", required=True, help="C2,C5")
+    s.add_argument("--to", required=True, help="C2,C3,C4")
     s.add_argument("--text", required=True)
     c = sub.add_parser("collect")
     c.add_argument("--fixture", type=Path)

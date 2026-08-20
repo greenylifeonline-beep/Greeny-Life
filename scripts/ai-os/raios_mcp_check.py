@@ -25,6 +25,7 @@ from raios_mcp.gateway import (  # noqa: E402
     write_envelope,
 )
 from raios_mcp.server import Handler, handle_rpc  # noqa: E402
+from raios_seats import LIVE_CODES, load_seat_map  # noqa: E402
 
 
 def check(cond: bool, msg: str) -> None:
@@ -66,6 +67,9 @@ def gw_for(tmp: Path, extra_grants: list[dict] | None = None) -> Gateway:
         {"actor_id": "C0", "token": "tok-c0", "expires_at": future},
         {"actor_id": "C1", "token": "tok-c1", "expires_at": future},
         {"actor_id": "C2", "token": "tok-c2", "expires_at": future},
+        {"actor_id": "C3", "token": "tok-c3", "expires_at": future},
+        {"actor_id": "C4", "token": "tok-c4", "expires_at": future},
+        {"actor_id": "C5", "token": "tok-c5", "expires_at": future},
     ]
     if extra_grants:
         grants.extend(extra_grants)
@@ -86,9 +90,21 @@ def main() -> int:
     tmp = make_repo()
     head = git(tmp, "rev-parse", "HEAD")
     gw = gw_for(tmp)
-    c0 = gw.authenticate("tok-c0")
+    expect_error(lambda: gw.authenticate("tok-c0"), "UNAUTHENTICATED")
     c1 = gw.authenticate("tok-c1")
     c2 = gw.authenticate("tok-c2")
+    c3 = gw.authenticate("tok-c3")
+    c4 = gw.authenticate("tok-c4")
+    c5 = gw.authenticate("tok-c5")
+    check(c1.actor_role == "OWNER" and c1.instance_role == "cursor-cloud", "C1 is Cursor owner")
+    check(c3.actor_role == "CONSULTANT_PEER", "C3 is ChatGPT peer")
+    check(c4.actor_role == "ASSESSOR", "C4 is DeepSeek")
+    check(c5.actor_role == "RAIOS" and c5.instance_role == "c1-assistant", "C5 is RAIOS loyal assistant")
+    check("C0" not in gw.actors, "C0 is not a live actor")
+    seat_map = load_seat_map()
+    check(tuple(seat_map["live"]) == LIVE_CODES, "seat map live codes")
+    for code in LIVE_CODES:
+        check(gw.actors[code].actor_role == seat_map["seats"][code]["actor_role"], f"{code} role matches seat map")
 
     board = gw.call(c2, "read_board", {})
     check("slice=waiting" in board["text"], "V1 C2 read_board")
@@ -115,9 +131,9 @@ def main() -> int:
     )
     stale = write_envelope(c2, "0" * 40, {"text": "stale c2"})
     expect_error(lambda: gw.call(c2, "post_opinion", stale), "STALE_HEAD")
-    stale0 = write_envelope(c0, "0" * 40, {"text": "stale c0"})
-    expect_error(lambda: gw.call(c0, "post_opinion", stale0), "STALE_HEAD")
-    check(True, "C0 cannot bypass stale HEAD")
+    stale1 = write_envelope(c1, "0" * 40, {"text": "stale c1"})
+    expect_error(lambda: gw.call(c1, "post_opinion", stale1), "STALE_HEAD")
+    check(True, "C1 Cursor cannot bypass stale HEAD")
 
     expired = write_envelope(c2, head, {"text": "late", "expires_at": "2000-01-01T00:00:00+00:00"})
     expect_error(lambda: gw.call(c2, "post_opinion", expired), "EXPIRED")
@@ -132,7 +148,7 @@ def main() -> int:
     expect_error(lambda: gw.call(c2, "post_opinion", same), "INVALID_PACKET")
 
     esc = write_envelope(c2, head, {"text": "escalate", "actor_id": "C0"})
-    expect_error(lambda: gw.call(c2, "post_opinion", esc), "IDENTITY_MISMATCH")
+    expect_error(lambda: gw.call(c2, "post_opinion", esc), "C0_SEAT_ABOLISHED")
     exec_yes = write_envelope(c2, head, {"text": "exec", "execution_intent": "YES"})
     expect_error(lambda: gw.call(c2, "post_opinion", exec_yes), "ESCALATION_DENIED")
     secret = write_envelope(c2, head, {"text": "DATABASE_URL=postgres://x"})
@@ -150,8 +166,18 @@ def main() -> int:
     bad_hash["payload_hash"] = "00" * 32
     expect_error(lambda: gw.call(c2, "post_opinion", bad_hash), "PAYLOAD_HASH_MISMATCH")
 
-    exec_c0 = write_envelope(c0, head, {"text": "c0 exec", "execution_intent": "YES"})
-    expect_error(lambda: gw.call(c0, "post_opinion", exec_c0), "ESCALATION_DENIED")
+    exec_c1 = write_envelope(c1, head, {"text": "c1 exec", "execution_intent": "YES"})
+    expect_error(lambda: gw.call(c1, "post_opinion", exec_c1), "ESCALATION_DENIED")
+    c5_voice = write_envelope(c5, head, {"text": "C5 loyal assistant evaluating. GL005 stays false."})
+    check(gw.call(c5, "post_opinion", c5_voice)["ok"] is True, "C5 assistant can post_opinion")
+    expect_error(
+        lambda: gw.call(c5, "post_opinion", write_envelope(c5, head, {"text": "GL005_PROVEN=true"})),
+        "FORBIDDEN_FIELD",
+    )
+    expect_error(
+        lambda: gw.call(c5, "post_opinion", write_envelope(c5, head, {"text": "exec", "execution_intent": "YES"})),
+        "ESCALATION_DENIED",
+    )
 
     before_tasks = (tmp / ".ai-os" / "state" / "TASKS.json").read_text(encoding="utf-8")
     send_env = write_envelope(c2, head, {"text": "hello C1", "to": ["C1"], "write_intent": "COORDINATION"})

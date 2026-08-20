@@ -23,7 +23,7 @@ def ingest(text: str, source: str, evidence_refs: list[str]) -> dict:
         "schema": "raios.learning-candidate.v1",
         "id": str(uuid.uuid4()),
         "ts": utc(),
-        "from": "C4",
+        "from": "C5",
         "source": source,
         "text": text,
         "evidence_refs": evidence_refs,

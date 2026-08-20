@@ -143,6 +143,8 @@ class Gateway:
         token_by_id = {row["actor_id"]: row for row in loaded}
         actors = {}
         for actor_id, spec in (policy.get("actors") or {}).items():
+            if actor_id == "C0":
+                continue
             grant = token_by_id.get(actor_id) or {}
             policy_tools = list(spec.get("tools") or [])
             requested_scopes = list(grant.get("scopes") or policy_tools)
@@ -166,6 +168,8 @@ class Gateway:
         digest = sha256_text(token)
         for actor in self.actors.values():
             if actor.token_sha256 and actor.token_sha256 == digest:
+                if actor.actor_id == "C0":
+                    raise GatewayError("C0_SEAT_ABOLISHED", "C0 is not a live seat", 403)
                 if actor.expires_at and parse_dt(actor.expires_at) <= datetime.now(timezone.utc):
                     raise GatewayError("EXPIRED", "token expired", 401)
                 return actor
@@ -211,6 +215,8 @@ class Gateway:
         if "head" in arguments and "requested_head" not in arguments:
             arguments["requested_head"] = arguments["head"]
         claimed = str(arguments.get("actor_id") or actor.actor_id).upper()
+        if claimed == "C0":
+            raise GatewayError("C0_SEAT_ABOLISHED", "C0 is not a live seat", 403)
         if claimed != actor.actor_id:
             raise GatewayError("IDENTITY_MISMATCH", "actor_id does not match token", 403)
         if arguments.get("actor_role") and str(arguments["actor_role"]).upper() != actor.actor_role.upper():

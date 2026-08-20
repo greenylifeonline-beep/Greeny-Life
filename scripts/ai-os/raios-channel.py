@@ -10,10 +10,35 @@ from datetime import datetime, timezone
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[2]
+sys.path.insert(0, str(Path(__file__).resolve().parent))
+from raios_seats import C0_ABOLISHED, REPAIR_UNSEATED, resolve_live_code  # noqa: E402
+
 CHAN = ROOT / ".ai-os" / "channel"
 LIVE = CHAN / "LIVE.md"
 LOG = CHAN / "messages.jsonl"
-ACTORS = ("USER", "OWNER", "COMMANDER", "CONSULTANT", "ENGINEER", "POWERSHELL", "RAIOS", "ASSESSOR", "DEEPSEEK", "DEEPSEEK-LOCAL")
+ACTORS = (
+    "OWNER",
+    "CURSOR",
+    "COMMANDER",
+    "USER",
+    "CONSULTANT",
+    "CONSULTANT_PEER",
+    "CHATGPT",
+    "CHATGPT-PEER",
+    "CHATGPT_OTHER",
+    "ASSESSOR",
+    "DEEPSEEK",
+    "DEEPSEEK-LOCAL",
+    "RAIOS",
+    "SON",
+    "C1-ASSISTANT",
+    "C1_ASSISTANT",
+    "C1",
+    "C2",
+    "C3",
+    "C4",
+    "C5",
+)
 
 
 def utc() -> str:
@@ -60,12 +85,14 @@ def render(records: list[dict]) -> None:
         "| الطرف | كيف يكتب |",
         "|---|---|",
         "| لوحة المهمة الواحدة | `.ai-os/board/NOW.md` |",
-        "| C0 أنت | `--from OWNER` أو `--from USER` |",
-        "| C1 القائد Cursor | `--from COMMANDER` |",
-        "| C2 المساعد الأول | `--from CONSULTANT` |",
-        "| C3 المهندس PowerShell | `--from ENGINEER` أو `--from POWERSHELL` |",
-        "| C4 RAIOS | `--from RAIOS` |",
-        "| C5 المقيّم | `--from ASSESSOR` أو `--from DEEPSEEK` |",
+        "| لوحة المهمة الواحدة | `.ai-os/board/NOW.md` |",
+        "| C1 Cursor يد المالك | `--from OWNER` أو `--from CURSOR` |",
+        "| C2 ChatGPT الأول | `--from CONSULTANT` أو `--from CHATGPT` |",
+        "| C3 ChatGPT النظير | `--from CONSULTANT_PEER` أو `--from CHATGPT-PEER` |",
+        "| C4 DeepSeek المقيّم | `--from ASSESSOR` أو `--from DEEPSEEK` |",
+        "| C5 RAIOS ابن Cursor | `--from RAIOS` — يقيّم ويهضم ويتكلم |",
+        "| C0 | ملغى. ليس مقعداً حياً. |",
+        "| Repair PowerShell | منفّذ بلا رمز C. ليس C3. |",
         "",
         "السلطة: Cognitive WAL. ليست ناقلاً ثانياً. الحالة DISCOVERED حتى الاعتماد.",
         "",
@@ -95,12 +122,14 @@ def load() -> list[dict]:
 
 def post(actor: str, text: str) -> dict:
     actor = actor.upper()
-    if actor in {"DEEPSEEK-LOCAL", "DEEPSEEK"}:
-        actor = "ASSESSOR"
-    if actor == "USER":
-        actor = "OWNER"
+    if actor in {"C0"}:
+        raise SystemExit(C0_ABOLISHED)
+    if actor in {"POWERSHELL", "ENGINEER", "REPAIR"}:
+        raise SystemExit(REPAIR_UNSEATED)
     if actor not in ACTORS:
         raise SystemExit(f"UNKNOWN_ACTOR:{actor}")
+    code, role = resolve_live_code(actor)
+    actor = role
     text = text.strip()
     if not text:
         raise SystemExit("EMPTY_TEXT")

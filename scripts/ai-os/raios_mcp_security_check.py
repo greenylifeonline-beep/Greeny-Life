@@ -17,7 +17,7 @@ ROOT = Path(__file__).resolve().parents[2]
 sys.path.insert(0, str(ROOT / "scripts" / "ai-os"))
 
 from raios_mcp.gateway import Gateway, write_envelope  # noqa: E402
-from raios_mcp.server import Handler  # noqa: E402
+from raios_mcp.server import Handler, handle_rpc  # noqa: E402
 
 
 def check(cond: bool, msg: str) -> None:
@@ -52,6 +52,7 @@ def is_denied(reply: dict) -> bool:
         reply.get("error", {}).get("code") == -32001
         or '"isError": true' in blob.replace(" ", "")
         or "UNAUTHENTICATED" in blob
+        or "C0_SEAT_ABOLISHED" in blob
         or "CAPABILITY_DENIED" in blob
         or "TOOL_NOT_FOUND" in blob
         or "STALE_HEAD" in blob

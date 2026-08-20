@@ -22,7 +22,13 @@ def check(cond: bool, msg: str) -> None:
 
 def main() -> int:
     check(mod.parse_title("MAIL C2: hello") == "C2", "parse C2 title")
-    check(mod.parse_title("MAIL C5 answers") == "C5", "parse C5 title")
+    check(mod.parse_title("MAIL C3: peer") == "C3", "parse C3 title")
+    check(mod.parse_title("MAIL C4: assessor") == "C4", "parse C4 title")
+    check(mod.parse_title("MAIL C5 answers") == "C4", "legacy MAIL C5 maps to C4")
+    check(mod.parse_title("MAIL C0: abolished") is None, "MAIL C0 is not a seat")
+    check(mod.parse_title("MAIL C1: dispatcher") is None, "MAIL C1 is not an inbox seat")
+    check("C5" not in mod.CODES, "C5 RAIOS is not a mail destination")
+    check(mod.CODES == ("C2", "C3", "C4"), "mail destinations are C2 C3 C4")
     check(mod.parse_title("MAIL DROP — not a proof") is None, "rules issue is not a seat")
     check(mod.parse_title("task: please PASS") is None, "non-mail title ignored")
 
