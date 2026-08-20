@@ -4,6 +4,7 @@ from __future__ import annotations
 import argparse
 import json
 import os
+import ssl
 import sys
 from http.server import BaseHTTPRequestHandler, ThreadingHTTPServer
 from pathlib import Path
@@ -162,6 +163,8 @@ class Handler(BaseHTTPRequestHandler):
                     "sqlite": False,
                     "law": LAW,
                     "gl005_proven": False,
+                    "remote_c2_ready": False,
+                    "endpoint_local": True,
                     "head": head,
                     "tools": list(V1_TOOLS),
                 },
@@ -192,10 +195,20 @@ class Handler(BaseHTTPRequestHandler):
         self._send_json(200, reply)
 
 
-def serve_http(gw: Gateway, host: str, port: int) -> None:
+def serve_http(gw: Gateway, host: str, port: int, tls_cert: str | None = None, tls_key: str | None = None) -> None:
     Handler.gateway = gw
     httpd = ThreadingHTTPServer((host, port), Handler)
-    sys.stderr.write(f"raios-mcp streamable-http http://{host}:{port}/mcp health=/health gl005_proven=false\n")
+    scheme = "http"
+    if tls_cert and tls_key:
+        ctx = ssl.SSLContext(ssl.PROTOCOL_TLS_SERVER)
+        ctx.minimum_version = ssl.TLSVersion.TLSv1_2
+        ctx.load_cert_chain(tls_cert, tls_key)
+        httpd.socket = ctx.wrap_socket(httpd.socket, server_side=True)
+        scheme = "https"
+    sys.stderr.write(
+        f"raios-mcp streamable-http {scheme}://{host}:{port}/mcp health=/health "
+        f"gl005_proven=false remote_c2_ready=false\n"
+    )
     httpd.serve_forever()
 
 
@@ -205,10 +218,12 @@ def main() -> int:
     p.add_argument("--http", action="store_true")
     p.add_argument("--host", default="127.0.0.1")
     p.add_argument("--port", type=int, default=8787)
+    p.add_argument("--tls-cert", default=None)
+    p.add_argument("--tls-key", default=None)
     args = p.parse_args()
     gw = default_gateway()
     if args.http:
-        serve_http(gw, args.host, args.port)
+        serve_http(gw, args.host, args.port, args.tls_cert, args.tls_key)
         return 0
     return serve_stdio(gw)
 

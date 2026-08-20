@@ -1,0 +1,22 @@
+{
+  "schema": "raios.mcp-v1-security-accept.v1",
+  "MCP_HEAD": "b807be90865edb766d69b4578efab75b5197d9c2",
+  "MCP_ENDPOINT_LOCAL": "http://127.0.0.1:8787/mcp",
+  "MCP_ENDPOINT_REMOTE": "NONE",
+  "REMOTE_AUTH": "SCOPED_BEARER_NOT_OAUTH",
+  "REAL_C2_CONNECTION_READY": false,
+  "C2_READ_HEAD": true,
+  "C2_READ_BOARD": true,
+  "C2_READ_RECEIPT": true,
+  "C2_POST_OPINION": true,
+  "C1_READ_EXTERNAL_C2_OPINION": false,
+  "C2_PRODUCT_WRITE_DENIED": true,
+  "C2_EXECUTION_DENIED": true,
+  "STALE_HEAD_DENIED": true,
+  "SECOND_WAL_CREATED": false,
+  "SECOND_DB_CREATED": false,
+  "GL005_PROVEN": false,
+  "NEXT_TRUE_GAP": "PROVE_REAL_EXTERNAL_C2_CONNECTIVITY",
+  "tls_local_same_server": true,
+  "public_https_hostname": null
+}

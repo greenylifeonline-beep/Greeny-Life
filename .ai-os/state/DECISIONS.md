@@ -87,3 +87,7 @@ A FastAPI+WebSocket+SQLite WAL+Relay Hub+JWT/HMAC+cache+Railway 6-week plan is r
 ## D-020 C5 seat is ASSESSOR
 DISCOVERED: `C5_SEAT_IS_ASSESSOR`.
 The MCP/board seat C5 is ASSESSOR (falsify, no execute, no promote). DeepSeek may occupy that seat via alias `DEEPSEEK` / `DEEPSEEK-LOCAL`. This is not a sixth actor. Agents may propose learning via opinion/packet; only an internal RAIOS adapter may ingest DISCOVERED candidates. The adapter must not write Cognitive WAL from the gateway and must not VALIDATE or PROMOTE.
+
+## D-021 Issues are degraded mail, not truth
+DISCOVERED: `ISSUE_NE_TASK`. `ISSUE_NE_RECEIPT`. `ISSUE_NE_AUTHORITY`. `ISSUE_NE_LEARNING`. `ISSUE_NE_CERTIFICATION`.
+`LOCAL_MCP_NE_REMOTE_C2`. Passing the local vertical slice does not mean ChatGPT C2 is connected. `127.0.0.1:8787` is local-only. Remote-ready requires a public HTTPS path to this same process, scoped bearer/OAuth, and one externally created C2 opinion that C1 reads. GitHub Issue titles `MAIL C2:` / `MAIL C5:` are transport metadata only.
