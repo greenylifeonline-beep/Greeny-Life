@@ -1,13 +1,15 @@
 {
   "schema": "raios.c5-grind.v1",
   "meeting_id": "GL-COUNCIL-4a11023c3c321b6f",
-  "case": "CASE-006",
-  "ts": "2026-08-20T22:16:31.625108+00:00",
+  "case": "CASE-008",
+  "ts": "2026-08-20T22:35:28.458830+00:00",
   "from": "C5",
   "parent": "C1",
   "host": "local-or-cursor",
-  "files_scanned": 550,
-  "bytes_scanned": 19542411,
+  "consult_gate": false,
+  "helpers_permanent": false,
+  "files_scanned": 558,
+  "bytes_scanned": 19839900,
   "trees": [
     {
       "path": "lib/intelligence",
@@ -84,18 +86,18 @@
     {
       "path": ".ai-os",
       "exists": true,
-      "files": 253,
-      "bytes": 5264706,
-      "merkle": "a1fd4a8bdeb6dfd1e856daa04230082ba7c29511995d0b8d8ff58d455cd85456",
+      "files": 260,
+      "bytes": 5550502,
+      "merkle": "03520b8f70155ec6d3efdd8975ac7dd179c4a2ea1a40db5ce4172fb9090285b5",
       "entities": {
         "GREENS_NATURE_UAE": 20,
         "GREENY_LIFE_EGYPT": 14,
         "GREEN_LINES_NORWAY_EU": 20,
         "Inventory": 9,
-        "Invoice": 9,
+        "Invoice": 11,
         "OrchestrationTask": 24,
-        "Payment": 8,
-        "SalesOrder": 10,
+        "Payment": 10,
+        "SalesOrder": 11,
         "Shipment": 10,
         "Supplier": 11
       }
@@ -103,18 +105,18 @@
     {
       "path": "scripts/ai-os",
       "exists": true,
-      "files": 48,
-      "bytes": 395385,
-      "merkle": "dfb410ffaea41e23cdec3ca5493244578685b1c263592b4fd97742aea63fca2d",
+      "files": 49,
+      "bytes": 407078,
+      "merkle": "4e30e6fde57e6a2a87d1f130b5edd2594ae783be44da5720111e896511e07c33",
       "entities": {
         "GREENS_NATURE_UAE": 2,
         "GREENY_LIFE_EGYPT": 2,
         "GREEN_LINES_NORWAY_EU": 2,
         "Inventory": 1,
-        "Invoice": 1,
+        "Invoice": 2,
         "OrchestrationTask": 5,
-        "Payment": 1,
-        "SalesOrder": 1,
+        "Payment": 2,
+        "SalesOrder": 2,
         "Shipment": 1,
         "Supplier": 1
       }
@@ -218,6 +220,115 @@
       "gap_open": true
     }
   ],
+  "domains": [
+    {
+      "id": "erp_accounting",
+      "keepers": [
+        {
+          "path": "prisma/schema.prisma",
+          "exists": true,
+          "sha256": "1e037429cf7ec04e9ca9b359c104f70e0cbedc2ca3f6ad24d4da8b5879357ffa"
+        },
+        {
+          "path": "app/api/sales-orders/route.ts",
+          "exists": true,
+          "sha256": "8653455e723e8f42a25aa43521439e5c84c18252a5a2dd7a60698071b18ea8c9"
+        },
+        {
+          "path": "app/api/products/route.ts",
+          "exists": true,
+          "sha256": "dc989d6b966681b4880ae79df51ee301d52df84c97753c2a5e4fb02524e938ee"
+        }
+      ],
+      "keeper_ok": true,
+      "thin": false
+    },
+    {
+      "id": "trade_customs",
+      "keepers": [
+        {
+          "path": "TRADE-GOVERNANCE.md",
+          "exists": true,
+          "sha256": "b2fb4dc35ac45158630293f0d64f1f677a1607c266c66c2edcf581d151f63d3d"
+        },
+        {
+          "path": "TRADE-TRACEABILITY.md",
+          "exists": true,
+          "sha256": "a5f8761585bf0bad9e2a254790cd3cea41905c917c0b7e795a5a69fa6749a0bc"
+        },
+        {
+          "path": "app/api/trade-corridors/route.ts",
+          "exists": true,
+          "sha256": "e1bb34c247c3d31e9980d047230d7d0aff46c050536a9e84da82d10a31b69eac"
+        }
+      ],
+      "keeper_ok": true,
+      "thin": false
+    },
+    {
+      "id": "production_packaging",
+      "keepers": [
+        {
+          "path": "lib/intelligence/greeny-life-egypt-brain.ts",
+          "exists": true,
+          "sha256": "6c1f668dc1ed68506f3ce02a48640442456d561a96da3c4c574f3f9871884292"
+        },
+        {
+          "path": "lib/intelligence/gels-label-readiness.ts",
+          "exists": true,
+          "sha256": "145b27365aa64764402c9e9c039bdd3d62cf83b108e152f80f90a75cb795b897"
+        }
+      ],
+      "keeper_ok": true,
+      "thin": false
+    },
+    {
+      "id": "tracking_quality",
+      "keepers": [
+        {
+          "path": "app/api/traceability/route.ts",
+          "exists": true,
+          "sha256": "6eddf8627786ebb53a2f5aff3afa51efc80a22751b0c8a3a4b8a6a9aedfe3067"
+        },
+        {
+          "path": "app/api/evidence/official/route.ts",
+          "exists": true,
+          "sha256": "fee16be1df1b994d30c5559fd321c9fbe0baab4467033a6f0344730ffce1d642"
+        }
+      ],
+      "keeper_ok": true,
+      "thin": false
+    },
+    {
+      "id": "inventory",
+      "keepers": [
+        {
+          "path": "canonical/inventory/stock-levels.json",
+          "exists": true,
+          "sha256": "a2fb0ca1c4e43e82bb370f2110babe12da1d2163cc4e06612ea1d9ba08bb48d5"
+        },
+        {
+          "path": "app/api/suppliers/route.ts",
+          "exists": true,
+          "sha256": "9963eb3dfcb9fb14fe92a9ffff05d184c6f5f0880bc9e3cc794f85ba4820e63c"
+        }
+      ],
+      "keeper_ok": true,
+      "thin": false
+    },
+    {
+      "id": "marketing",
+      "keepers": [
+        {
+          "path": "canonical/docs/migrated_brand.md",
+          "exists": true,
+          "sha256": "9d00851857722734748c6dd81381209783c1aa2e998c5f0f14e747d7df82f1c6"
+        }
+      ],
+      "keeper_ok": true,
+      "thin": true
+    }
+  ],
   "prisma_models": [
     "Organization",
     "Entity",
@@ -288,10 +399,10 @@
     "GREENY_LIFE_EGYPT": 47,
     "GREEN_LINES_NORWAY_EU": 42,
     "Inventory": 21,
-    "Invoice": 18,
+    "Invoice": 21,
     "OrchestrationTask": 35,
-    "Payment": 13,
-    "SalesOrder": 32,
+    "Payment": 16,
+    "SalesOrder": 34,
     "Shipment": 41,
     "Supplier": 94
   },
@@ -515,9 +626,11 @@
     "THREE_COMPANIES_ALREADY_NAMED",
     "WHITE_NOTEBOOK_NE_ABSENT_MIND",
     "REUSE_KEEPER_BEFORE_NEW_STACK",
-    "PASTE_NE_LEARNING"
+    "PENDING_PASTE_NE_GATE",
+    "HELPER_SEAT_NE_PERMANENT_MIND",
+    "CONSULT_NE_BLOCK_EXECUTE"
   ],
-  "ms": 45.465,
+  "ms": 47.523,
   "hashes": {
     "three_operating_brains": "eb9cb6104ca26f9be2ef6205d3f776cae706c2310228c4be0b2e47a85b31de71",
     "schema_prisma": "1e037429cf7ec04e9ca9b359c104f70e0cbedc2ca3f6ad24d4da8b5879357ffa",

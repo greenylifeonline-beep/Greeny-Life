@@ -1,0 +1,28 @@
+{
+  "schema": "raios.council-case.v1",
+  "id": "CASE-008",
+  "meeting_id": "GL-COUNCIL-4a11023c3c321b6f",
+  "from": "C1",
+  "ts": "2026-08-20T22:33:00+00:00",
+  "text": "C2 وC3 وC4 غير دائمين. هم للمساعدة فقط. أنجز الأمر بأسرع وأكثر الطرق احترافية.",
+  "status": "HELPERS_TEMPORARY_EXECUTE_NOW",
+  "knowledge_state": "DISCOVERED",
+  "canonical": false,
+  "gl005_proven": false,
+  "wal_written": false,
+  "consult_gate": false,
+  "permanent": ["C1", "C5"],
+  "temporary_help": ["C2", "C3", "C4"],
+  "execute": [
+    "python3 scripts/ai-os/raios_c5_grind.py",
+    "python3 scripts/ai-os/raios_c5_week.py --all",
+    "python3 scripts/ai-os/raios_c5_minute.py"
+  ],
+  "says": {
+    "C1": "helpers are temporary; finish fast professionally",
+    "C2": "acknowledged; not waiting for C3/C4; mill now",
+    "C3": "SILENCE_OK_HELPER_OPTIONAL",
+    "C4": "SILENCE_OK_HELPER_OPTIONAL",
+    "C5": "permanent in-repo; mill domains without consult gate"
+  }
+}

@@ -2,15 +2,16 @@
 
 - الاجتماع: `GL-COUNCIL-4a11023c3c321b6f`
 - المضيف: `local-or-cursor`
-- الملفات الممسوحة: `550`
-- البايتات: `19542411`
+- الملفات الممسوحة: `558`
+- البايتات: `19839900`
 - نماذج Prisma: `27`
 - مسارات API: `29`
 - منتجات: `15`
 - موردون: `5`
 - مخزون: `10`
-- كيانات_مطحونة: `{"GREENS_NATURE_UAE": 41, "GREENY_LIFE_EGYPT": 47, "GREEN_LINES_NORWAY_EU": 42, "Inventory": 21, "Invoice": 18, "OrchestrationTask": 35, "Payment": 13, "SalesOrder": 32, "Shipment": 41, "Supplier": 94}`
-- المدة_ms: `45.465`
+- كيانات_مطحونة: `{"GREENS_NATURE_UAE": 41, "GREENY_LIFE_EGYPT": 47, "GREEN_LINES_NORWAY_EU": 42, "Inventory": 21, "Invoice": 21, "OrchestrationTask": 35, "Payment": 16, "SalesOrder": 34, "Shipment": 41, "Supplier": 94}`
+- المدة_ms: `47.523`
+- المساعدون C2/C3/C4 مؤقتون. C5 دائم في المستودع. لا انتظار للصق.
 - اللصق قناة. التعلّم تكرار وممارسة واستيعاب.
 - Celerp/AG2/LightRAG اقتراح اكتشاف، ليست تثبيتاً.
 - GL005_PROVEN: `false`
@@ -22,6 +23,17 @@
 | Greeny-Life Egypt | نعم,نعم,نعم | لا |
 | Greens Nature UAE | نعم | مفتوحة |
 | Green Lines Norway/EU | نعم,نعم,نعم,نعم | مفتوحة |
+
+## مجالات التسعين يوماً المضغوطة (من المستودع، بلا انتظار C3/C4)
+
+| مجال | حراس | رقيق |
+|---|---|---|
+| `erp_accounting` | نعم | لا |
+| `trade_customs` | نعم | لا |
+| `production_packaging` | نعم | لا |
+| `tracking_quality` | نعم | لا |
+| `inventory` | نعم | لا |
+| `marketing` | نعم | نعم |
 
 ## رفض الإمبراطورية الجديدة
 

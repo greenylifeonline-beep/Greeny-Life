@@ -198,5 +198,9 @@ Founder asked for a complete AI for three import/export companies and judged the
 DISCOVERED for CASE-007, not CANONICAL: `EMPIRE_PLAN_NE_EXECUTE`. `CALENDAR_90_NE_PROOF`. `NAMED_SCRIPT_NE_EXISTING_SCRIPT`. `CLONE_ODOO_NE_C5_TRAIN`. `PERCENT_KPI_NE_MASTERY`. `C0_NE_GRANTOR`. `CURSOR_IS_C2_NE_C3`. `REST_ZERO_NE_VIRTUE`.
 A 90-day 24/7 empire syllabus with Odoo clones and 90 named study scripts is a CLAIM. Observation: those scripts are absent; giant clones are not in the repo; D-019 already rejects calendar as a RAIOS success metric. Accept the fail-closed constraints already bound (no PASS, `GL005_PROVEN=false`, no paid API, no customer secrets, no execute without approval). Reuse `raios_c5_grind.py` + `raios_c5_week.py --auto` + `raios_c5_minute.py`. Do not write an autopilot bus. Do not deliver to C0. Does not close GL-005.
 
+## D-041 Helper seats are temporary; consult does not gate execute
+DISCOVERED for CASE-008, not CANONICAL: `HELPER_SEAT_NE_PERMANENT_MIND`. `C2_C3_C4_ARE_HELP`. `C5_IN_REPO_IS_PERMANENT`. `PENDING_PASTE_NE_GATE`. `CONSULT_NE_BLOCK_EXECUTE`. `FASTEST_PROFESSIONAL_PATH_IS_LIVE_MILL`.
+Founder: C2/C3/C4 are not permanent; they help only. C1 owner and in-repo C5 remain. Do not wait for C3/C4 paste. Do not treat a Cursor session as C5. Finish with the live mill: grind domains already in the repository, week `--all`, minute exam. Silence after optional consult is absence, not a blocker. Does not close GL-005.
+
 
 

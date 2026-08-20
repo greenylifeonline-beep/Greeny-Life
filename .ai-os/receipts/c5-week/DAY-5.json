@@ -3,11 +3,31 @@
   "meeting_id": "GL-COUNCIL-4a11023c3c321b6f",
   "day": 5,
   "slot": "HF_CATALOG_NO_DOWNLOAD",
-  "ts": "2026-08-20T20:58:16.057224+00:00",
+  "ts": "2026-08-20T22:35:28.404905+00:00",
   "from": "C5",
   "parent": "C1",
   "host": "local-or-cursor",
   "checks": [
+    {
+      "name": "inject_before_execute",
+      "ok": true,
+      "detail": "no execute without live memory"
+    },
+    {
+      "name": "core_injected",
+      "ok": true,
+      "detail": "/workspace/.ai-os/CORE-CONTRACT.md"
+    },
+    {
+      "name": "grant_injected",
+      "ok": true,
+      "detail": "/workspace/.ai-os/mcp/C5-GRANT.json"
+    },
+    {
+      "name": "ladder_injected",
+      "ok": true,
+      "detail": "TOOLS-LADDER"
+    },
     {
       "name": "hf_catalog_reachable",
       "ok": true,
@@ -46,7 +66,9 @@
     "COLAB_NE_C5",
     "KAGGLE_NE_C5",
     "COMPUTE_OFF_NE_MEMORY_ERASED",
-    "SCHEDULED_PULSE_NE_SECOND_WAL"
+    "SCHEDULED_PULSE_NE_SECOND_WAL",
+    "INJECT_BEFORE_EXECUTE",
+    "PROMOTE_THEN_RETIRE_TRAINER"
   ],
   "wal_mtime_unchanged": true
 }

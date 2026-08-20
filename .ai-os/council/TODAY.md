@@ -1,9 +1,8 @@
 # TODAY — 2026-08-20
 
 meeting: `GL-COUNCIL-4a11023c3c321b6f`
-case: `CASE-007`
+case: `CASE-008`
 `GL005_PROVEN=false`
 
-خطة 90 يوماً: هدف مقبول. تنفيذ إمبراطوري مرفوض.
-كل يوم: grind + week --auto + minute.
-لا Odoo. لا C0. Cursor = C2.
+C2/C3/C4 مساعدة مؤقتة. C5 دائم. لا انتظار للصق.
+الآن: grind + week --all + minute.

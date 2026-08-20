@@ -19,6 +19,37 @@ ENTITY_RE = re.compile(
     r"GREENY_LIFE_EGYPT|GREENS_NATURE_UAE|GREEN_LINES_NORWAY_EU|OrchestrationTask|SalesOrder|Inventory|Supplier|Shipment|Invoice|Payment"
 )
 
+DOMAINS = (
+    {
+        "id": "erp_accounting",
+        "keepers": ("prisma/schema.prisma", "app/api/sales-orders/route.ts", "app/api/products/route.ts"),
+    },
+    {
+        "id": "trade_customs",
+        "keepers": ("TRADE-GOVERNANCE.md", "TRADE-TRACEABILITY.md", "app/api/trade-corridors/route.ts"),
+    },
+    {
+        "id": "production_packaging",
+        "keepers": (
+            "lib/intelligence/greeny-life-egypt-brain.ts",
+            "lib/intelligence/gels-label-readiness.ts",
+        ),
+    },
+    {
+        "id": "tracking_quality",
+        "keepers": ("app/api/traceability/route.ts", "app/api/evidence/official/route.ts"),
+    },
+    {
+        "id": "inventory",
+        "keepers": ("canonical/inventory/stock-levels.json", "app/api/suppliers/route.ts"),
+    },
+    {
+        "id": "marketing",
+        "keepers": ("canonical/docs/migrated_brand.md",),
+        "thin": True,
+    },
+)
+
 BRAINS = (
     {
         "id": "GREENY_LIFE_EGYPT",
@@ -165,6 +196,21 @@ def proposed_absent() -> list[dict]:
     return rows
 
 
+def mill_domains() -> list[dict]:
+    rows = []
+    for domain in DOMAINS:
+        keepers = [{"path": p, "exists": exists(p), "sha256": sha(ROOT / p)} for p in domain["keepers"]]
+        rows.append(
+            {
+                "id": domain["id"],
+                "keepers": keepers,
+                "keeper_ok": all(k["exists"] for k in keepers),
+                "thin": bool(domain.get("thin")),
+            }
+        )
+    return rows
+
+
 def mill_brains() -> list[dict]:
     rows = []
     for brain in BRAINS:
@@ -224,6 +270,7 @@ def render_md(rec: dict) -> str:
         f"- مخزون: `{rec['canonical']['stock']}`",
         f"- كيانات_مطحونة: `{json.dumps(rec.get('entities') or {}, ensure_ascii=False)}`",
         f"- المدة_ms: `{rec['ms']}`",
+        "- المساعدون C2/C3/C4 مؤقتون. C5 دائم في المستودع. لا انتظار للصق.",
         "- اللصق قناة. التعلّم تكرار وممارسة واستيعاب.",
         "- Celerp/AG2/LightRAG اقتراح اكتشاف، ليست تثبيتاً.",
         "- GL005_PROVEN: `false`",
@@ -237,6 +284,13 @@ def render_md(rec: dict) -> str:
         keep = ",".join("نعم" if k["exists"] else "لا" for k in brain["keepers"])
         gap = "مفتوحة" if brain["gap_open"] else "لا"
         lines.append(f"| {brain['name']} | {keep} | {gap} |")
+    lines += ["", "## مجالات التسعين يوماً المضغوطة (من المستودع، بلا انتظار C3/C4)", ""]
+    lines.append("| مجال | حراس | رقيق |")
+    lines.append("|---|---|---|")
+    for domain in rec.get("domains") or []:
+        keep = "نعم" if domain["keeper_ok"] else "لا"
+        thin = "نعم" if domain.get("thin") else "لا"
+        lines.append(f"| `{domain['id']}` | {keep} | {thin} |")
     lines += ["", "## رفض الإمبراطورية الجديدة", ""]
     for row in rec["proposed"]:
         lines.append(f"- `{row['name']}` → `{row['law']}` يعاد استخدام `{row['reuse']}`")
@@ -276,21 +330,25 @@ def grind(host: str = "local-or-cursor") -> dict:
         for key, val in (tree.get("entities") or {}).items():
             entities[key] = entities.get(key, 0) + val
     brains = mill_brains()
+    domains = mill_domains()
     models = prisma_models()
     routes = api_routes()
     proposed = proposed_absent()
     rec = {
         "schema": "raios.c5-grind.v1",
         "meeting_id": MEETING,
-        "case": "CASE-006",
+        "case": "CASE-008",
         "ts": utc(),
         "from": "C5",
         "parent": "C1",
         "host": host,
+        "consult_gate": False,
+        "helpers_permanent": False,
         "files_scanned": sum(t["files"] for t in trees),
         "bytes_scanned": sum(t["bytes"] for t in trees),
         "trees": trees,
         "brains": brains,
+        "domains": domains,
         "prisma_models": models,
         "api_routes": routes,
         "canonical": {
@@ -301,7 +359,9 @@ def grind(host: str = "local-or-cursor") -> dict:
         "entities": dict(sorted(entities.items())),
         "proposed": proposed,
         "graph": graph(brains, models, routes),
-        "ok": all(b["keeper_ok"] for b in brains) and not any(p["in_package_manifest"] for p in proposed),
+        "ok": all(b["keeper_ok"] for b in brains)
+        and all(d["keeper_ok"] for d in domains)
+        and not any(p["in_package_manifest"] for p in proposed),
         "knowledge_state": "DISCOVERED",
         "canonical_flag": False,
         "promoted": False,
@@ -316,7 +376,9 @@ def grind(host: str = "local-or-cursor") -> dict:
             "THREE_COMPANIES_ALREADY_NAMED",
             "WHITE_NOTEBOOK_NE_ABSENT_MIND",
             "REUSE_KEEPER_BEFORE_NEW_STACK",
-            "PASTE_NE_LEARNING",
+            "PENDING_PASTE_NE_GATE",
+            "HELPER_SEAT_NE_PERMANENT_MIND",
+            "CONSULT_NE_BLOCK_EXECUTE",
         ],
     }
     rec["ms"] = round((time.perf_counter() - t0) * 1000.0, 3)
