@@ -1,0 +1,84 @@
+{
+  "schema": "raios.gl005-chain-falsify.v1",
+  "knowledge_state": "DISCOVERED",
+  "from": "C1",
+  "role": "COMMANDER",
+  "GL004_PROVEN": true,
+  "GL004_PRODUCTION_RUNTIME_PROVEN": false,
+  "GL005_PROVEN": false,
+  "HEAD": "6afdce04c0e0a01f9dc37f0b338463092765f0b8",
+  "live_process": {
+    "pid": 3297,
+    "comm": "next-server (v16.2.10)",
+    "cwd": "/workspace",
+    "spawned": false,
+    "killed": false,
+    "GET_root": 200,
+    "DATABASE_URL_in_process": false,
+    "APP_SESSION_SECRET_in_process": false,
+    "gl_session_presented": false
+  },
+  "minimum_mutation_path": "POST /api/tasks → authorizeRequest(ADMIN|WAREHOUSE|EXPORT) → createTaskContract() → INSERT OrchestrationTask status=REVIEW_REQUIRED execution:false",
+  "chain": {
+    "HEAD": {"status": "BOUND", "value": "6afdce04c0e0a01f9dc37f0b338463092765f0b8"},
+    "LIVE_PROCESS_IDENTITY": {"status": "BOUND", "pid": 3297, "spawned": false},
+    "BEFORE_STATE": {
+      "status": "NOT_A_TASK_LIST",
+      "GET_api_tasks": 500,
+      "semantic_success": false,
+      "ids": [],
+      "hash": "2d83e3221adc6bf462804665918ddacda0bdaca78e97ccf140d5fc567879748d",
+      "note": "Current observation on this process. Must not drive new Postgres on Repair if Repair later has semantic GET 200."
+    },
+    "AUTHENTICATED_MUTATION": {
+      "status": "BLOCKED_AUTH",
+      "reason": "No legitimate gl_session. Observer did not forge APP_SESSION_SECRET or cookie."
+    },
+    "MUTATION_RESPONSE": {
+      "status": 401,
+      "error": "Authentication required.",
+      "observation": "ROUTE_EXECUTION+AUTH_GATE_PRESENT"
+    },
+    "ENTITY_ID": {"status": "ABSENT"},
+    "AFTER_STATE": {
+      "status": "UNCHANGED_NON_LIST",
+      "GET_api_tasks": 500,
+      "hash": "2d83e3221adc6bf462804665918ddacda0bdaca78e97ccf140d5fc567879748d"
+    },
+    "PERSISTENCE_OBSERVATION": {
+      "STATE_CHANGED": false,
+      "BEFORE_HASH_EQUALS_AFTER": true
+    },
+    "RECEIPT_HASH": {
+      "observe": "ef056a488626977128c7999565b40a53a88b5d5bcd7ee58b6c4f450819591cad",
+      "file": ".ai-os/receipts/GL005-MUTATION-OBSERVE.json"
+    },
+    "C1_FALSIFICATION": {
+      "verdict": "CHAIN_BROKEN",
+      "falsified_claims": [
+        "tests/task_orchestration_check.ts exit 0 demonstrates orchestration",
+        "POST 401 is a state transition",
+        "GET 500 before/after with equal hashes is persistence of a new OrchestrationTask",
+        "GL004 five-child PASS implies GL005",
+        "MCP V1 rendezvous implies GL005",
+        "this slice DATABASE_URL 500 authorizes new infrastructure"
+      ],
+      "surviving_facts": [
+        "PID 3297 still the live Next, not duplicated",
+        "POST /api/tasks exists and is auth-gated",
+        "createTaskContract status is REVIEW_REQUIRED and execution is false",
+        "unauthenticated POST 401 is the correct fail-closed write gate"
+      ]
+    }
+  },
+  "epistemic": {
+    "mutation": "BLOCKED_AUTH",
+    "read_path_this_slice": "APPLICATION_FAILURE",
+    "unit_test": "SUPPORTING_ONLY",
+    "gl005_gate": "GATE_CLOSED",
+    "GATE_CLOSED_NE_EPISTEMIC_FAILED": true
+  },
+  "c3": "Repair may continue independently if a real gl_session exists there. This cloud slice cannot manufacture it.",
+  "c4": "DISCOVERED candidate only. No Cognitive WAL write. No promotion.",
+  "next_critical_gate": "OBSERVED_AUTHENTICATED_ORCHESTRATION_STATE_TRANSITION"
+}
