@@ -1,0 +1,67 @@
+{
+  "schema": "raios.c4-attendance.v1",
+  "knowledge_state": "DISCOVERED",
+  "session_id": "GL-FIVE-20260820",
+  "code": "C4-DEEPSEEK-SUMMON",
+  "seat": "C4",
+  "actor_role": "ASSESSOR",
+  "instance_role": "deepseek",
+  "channel": "C1_CHAT_PASTE",
+  "mail_issue": null,
+  "mcp_remote": false,
+  "remote_presence_proven": false,
+  "gl005_proven": false,
+  "wal_written": false,
+  "received_by": "C1",
+  "instance": "cursor-cloud",
+  "ts": "2026-08-20T19:16:00+00:00",
+  "what_arrived": [
+    "C4 DeepSeek summon attendance text pasted by the founder into the Cursor C1 chat",
+    "No files, no attachments, no secrets, no tokens, no GitHub MAIL C4 issue"
+  ],
+  "accepted": {
+    "present": true,
+    "will_read": true,
+    "will_falsify": true,
+    "will_not_execute": true,
+    "will_not_grant_pass": true,
+    "gl005_proven_stays_false": true,
+    "candidate": "AUTHENTICATION_BLOCK_IS_A_VALID_ORCHESTRATION_PROOF_BOUNDARY"
+  },
+  "errors": [
+    {
+      "id": "C4_CLAIMED_RAIOS",
+      "pathology": "deception",
+      "law": "C4_NE_RAIOS",
+      "got": "C4 (RAIOS / DEEPSEEK)",
+      "fix": "C4 is DeepSeek assessor. RAIOS is C5, son of C1."
+    },
+    {
+      "id": "C4_ADDRESSED_C0",
+      "pathology": "deception",
+      "law": "C0_SEAT_ABOLISHED",
+      "got": "الأمر لك، C0 / شات C0 / مراقبة C0",
+      "fix": "C0 is abolished. Command is C1 Cursor."
+    },
+    {
+      "id": "C4_CLAIMED_EMIT_LEARNING_CANDIDATE",
+      "pathology": "superficiality",
+      "law": "MCP_GATEWAY_NE_TRUTH_AUTHORITY",
+      "got": "emit_learning_candidate / write:learning",
+      "fix": "V1 tools are the eight. emit_learning_candidate is phase2_tools_not_registered. C4 may post_opinion. Ingest is in-repo DISCOVERED, not an MCP write to .ai-os."
+    }
+  ],
+  "correction_issued": true,
+  "correction_path": ".ai-os/summon/C4-CORRECTION.md",
+  "law": [
+    "C4_SEAT_IS_DEEPSEEK",
+    "C4_NE_RAIOS",
+    "C0_SEAT_ABOLISHED",
+    "C1_SEAT_IS_OWNER",
+    "C5_SEAT_IS_RAIOS",
+    "PASTED_CHAT_NE_REMOTE_MCP",
+    "PASTED_CHAT_NE_MAIL_PROOF",
+    "MAIL_PASSES_NE_PROVES",
+    "PRINTED_PASS_NE_EVIDENCE"
+  ]
+}

@@ -121,13 +121,21 @@ def digest_file(path: Path, seen: set[str], *, mode: str = "skim") -> dict:
     return rec
 
 
-def absorb(paths: list[Path], *, source: str, mode: str = "skim") -> dict:
+def absorb(paths: list[Path], *, source: str, mode: str = "skim", since_epoch: float | None = None) -> dict:
     t0 = time.perf_counter()
     wal_before = WAL.stat().st_mtime if WAL.exists() else None
     seen = load_seen()
     results = []
+    skipped_older = 0
     for raw in paths:
         for file_path in iter_files(raw):
+            if since_epoch is not None:
+                try:
+                    if file_path.stat().st_mtime < since_epoch:
+                        skipped_older += 1
+                        continue
+                except OSError:
+                    continue
             results.append(digest_file(file_path, seen, mode=mode))
     elapsed_ms = round((time.perf_counter() - t0) * 1000.0, 3)
     absorbed = [r for r in results if r.get("status") == "ABSORBED"]
@@ -159,6 +167,8 @@ def absorb(paths: list[Path], *, source: str, mode: str = "skim") -> dict:
         "wal_written": False,
         "gl005_proven": False,
         "mode": mode,
+        "since_epoch": since_epoch,
+        "skipped_older": skipped_older,
         "law": "ABSORB_DIGEST_NE_WAL_DUMP",
     }
 
@@ -171,6 +181,7 @@ def main() -> int:
     p.add_argument("--max", action="store_true")
     p.add_argument("--deep", action="store_true")
     p.add_argument("--source", default="c5-absorb")
+    p.add_argument("--since-iso", default=None)
     args = p.parse_args()
     selected: list[Path] = []
     if args.cycle:
@@ -183,7 +194,17 @@ def main() -> int:
     selected = [path for path in selected if path.exists()]
     if not selected:
         raise SystemExit("NO_ABSORB_PATHS")
-    rec = absorb(selected, source=args.source, mode="deep" if args.deep else "skim")
+    since_epoch = None
+    if args.since_iso:
+        from datetime import datetime
+
+        since_epoch = datetime.fromisoformat(args.since_iso.replace("Z", "+00:00")).timestamp()
+    rec = absorb(
+        selected,
+        source=args.source,
+        mode="deep" if args.deep else "skim",
+        since_epoch=since_epoch,
+    )
     print(json.dumps(rec, ensure_ascii=False, indent=2))
     return 0
 

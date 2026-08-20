@@ -59,6 +59,10 @@ def skip_path(path: Path) -> bool:
         "LESSONS.jsonl",
         "COMPEL.jsonl",
         "LAST-LEARN.json",
+        "LAST-UNCONSCIOUS.json",
+        "LAST-UNCONSCIOUS.md",
+        "MEMORY.json",
+        "MEMORY.md",
         "tokens.local.json",
     }:
         return True

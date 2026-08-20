@@ -1,0 +1,133 @@
+{
+  "schema": "raios.council-connectivity.v1",
+  "ts": "2026-08-20T19:26:47.619592+00:00",
+  "from": "C5",
+  "parent": "C1",
+  "meeting_id": "GL-COUNCIL-4a11023c3c321b6f",
+  "case_hash": "35b5cbde5a4ce4e66a9b29c9ef75697afabf830dc5f81ca1155c620654c26c6b",
+  "head": "64fa63f72cb457defb5118f29e88c789612c795f",
+  "census": {
+    "schema": "raios.council-census.v1",
+    "ts": "2026-08-20T19:26:45.198473+00:00",
+    "head": "64fa63f72cb457defb5118f29e88c789612c795f",
+    "branch": "v9-neurolingua-semantic-kernel",
+    "direct_inbound_transport": "UNAVAILABLE",
+    "public_https_hostname": null,
+    "local_mcp": {
+      "endpoint": "http://127.0.0.1:8787/mcp",
+      "reachable": true,
+      "remote_c2_ready": false,
+      "is_chatgpt": false,
+      "is_deepseek": false,
+      "tokens_local": false
+    },
+    "github_mail": {
+      "open_mail_issues": 0,
+      "issues": [],
+      "collect_inbox_total": 0
+    },
+    "github_blob_pull": {
+      "available": true,
+      "blob": "https://github.com/greenylifeonline-beep/greeny-life/blob/v9-neurolingua-semantic-kernel/.ai-os/council/LIVE.md",
+      "raw": "https://raw.githubusercontent.com/greenylifeonline-beep/greeny-life/v9-neurolingua-semantic-kernel/.ai-os/council/LIVE.md",
+      "note": "ChatGPT/DeepSeek can fetch a public GitHub file. That is pull, not a webhook."
+    },
+    "founder_relay": {
+      "available": true,
+      "note": "Founder paste into the live ChatGPT/DeepSeek windows is a real channel. C1 does not invent their reply."
+    },
+    "attendance": {
+      "C1": {
+        "status": "PRESENT",
+        "channel": "this_cursor_chat",
+        "connected": true
+      },
+      "C2": {
+        "status": "INVITED",
+        "channel": null,
+        "connected": false
+      },
+      "C3": {
+        "status": "ATTENDED_VIA_C1_PASTE",
+        "channel": "founder_paste_of_council_order",
+        "connected": false,
+        "note": "Order received. Not MAIL. Not remote MCP."
+      },
+      "C4": {
+        "status": "ATTENDED_VIA_C1_PASTE",
+        "channel": "founder_paste",
+        "connected": false,
+        "identity_errors": [
+          "C4_CLAIMED_RAIOS",
+          "C4_ADDRESSED_C0",
+          "C4_CLAIMED_EMIT_LEARNING_CANDIDATE"
+        ]
+      },
+      "C5": {
+        "status": "PRESENT_PERMANENT",
+        "channel": "in_repo_pulse",
+        "connected": true
+      }
+    },
+    "shortest_real_path": "ISSUE unpredictable challenge → public GitHub blob + founder paste → actor fetches and returns nonce + self-invented salt → C5 verifies. No local ACK.",
+    "smallest_mcp_bridge": "Public HTTPS in front of the SAME process 127.0.0.1:8787. Do not start a second MCP.",
+    "rejected": [
+      "mock agent",
+      "hardcoded ACK",
+      "locally generated C2/C3/C4 response",
+      "JSON claiming CONNECTED",
+      "orchestrator impersonation",
+      "PASS from files"
+    ],
+    "gl005_proven": false,
+    "council_operation_proven": false,
+    "law": [
+      "SUMMON_IDENTITY_KNOWN_NE_ACTOR_CONNECTED",
+      "DELIVERY_CLAIM_NE_DELIVERY_PROVEN",
+      "GENERATED_TRANSCRIPT_NE_COMMUNICATION",
+      "ORCHESTRATOR_OUTPUT_NE_EXTERNAL_ACTOR_RESPONSE",
+      "HTTP_2XX_NE_SEMANTIC_SUCCESS",
+      "ROUND_TRIP_WITH_UNSEEN_CHALLENGE_IS_MINIMUM_CONNECTIVITY_PROOF",
+      "COUNCIL_NE_GL005"
+    ]
+  },
+  "flags": {
+    "SUMMON_ISSUED": true,
+    "SUMMON_DELIVERED": false,
+    "ACTOR_RECEIVED": false,
+    "ACTOR_RESPONSE_RECEIVED": false,
+    "ROUND_TRIP": false,
+    "IDENTITY_BOUND": false,
+    "RESPONSE_NOT_PRECOMPUTED": true,
+    "LOCAL_IMPERSONATION_FALSIFIED": true,
+    "C2_SUMMON_IDENTITY": "KNOWN",
+    "C3_SUMMON_IDENTITY": "KNOWN",
+    "C4_SUMMON_IDENTITY": "KNOWN",
+    "C2_CONNECTED": "NOT_PROVEN",
+    "C3_CONNECTED": "NOT_PROVEN",
+    "C4_CONNECTED": "NOT_PROVEN",
+    "COUNCIL_OPERATION_PROVEN": false,
+    "SIMULATION_ACCEPTED": false,
+    "DIRECT_INBOUND_TRANSPORT": "UNAVAILABLE",
+    "TRANSPORT_CAPABILITY_GAP": "PROVEN",
+    "GL005_PROVEN": false
+  },
+  "mail_outbox_ids": [
+    "baadc8b1-b0fe-4a8b-bb7d-45e499d2961d",
+    "55910af9-6f37-4f9d-8ef8-3ccb9429604e",
+    "f110eaae-2a63-45c1-9b72-fbc9cc22b9c6"
+  ],
+  "falsify": {
+    "pass": true,
+    "c2_response_written_by_c1_or_c5": false,
+    "nonce_seen_in_inbox_or_opinions": []
+  },
+  "independent_of_gl005": true,
+  "gl005_proven": false,
+  "wal_written": false,
+  "fetch": {
+    "blob": "https://github.com/greenylifeonline-beep/greeny-life/blob/v9-neurolingua-semantic-kernel/.ai-os/council/LIVE.md",
+    "raw": "https://raw.githubusercontent.com/greenylifeonline-beep/greeny-life/v9-neurolingua-semantic-kernel/.ai-os/council/LIVE.md"
+  },
+  "next": "Founder pastes C2-CHALLENGE.md into live ChatGPT C2. C5 waits. No local ACK."
+}
