@@ -194,5 +194,9 @@ Founder join form to copy: `gym/huggingface/JOIN-FORM.md`. Ladder: `.ai-os/learn
 DISCOVERED for CASE-006, not CANONICAL: `CELERP_NE_LIVE_ERP`. `AG2_NE_RAIOS_COUNCIL`. `LIGHTRAG_NE_COGNITIVE_WAL`. `PYGRAMETL_NE_ABSORB`. `PROPOSAL_PASTE_NE_INSTALL`. `THREE_COMPANIES_ALREADY_NAMED`. `WHITE_NOTEBOOK_NE_ABSENT_MIND`. `REUSE_KEEPER_BEFORE_NEW_STACK`.
 Founder asked for a complete AI for three import/export companies and judged the Colab cell too thin. The mill is `scripts/ai-os/raios_c5_grind.py`. Live ERP is Prisma + Next APIs. Live agents are eight MCP tools and council seats. Live knowledge is DIGESTS/INDEX/WAL plus `greenlines_brain/graph.py`. Do not install Celerp, AG2, LightRAG, BeeAI, LangSwarm, or pygrametl as a second stack. Egypt brain has a live Next route. UAE and Norway Next routes remain GL-003 gaps. A white Colab page before Run all is not an absent mind. Does not close GL-005.
 
+## D-040 Empire calendar plan is opinion, not execute
+DISCOVERED for CASE-007, not CANONICAL: `EMPIRE_PLAN_NE_EXECUTE`. `CALENDAR_90_NE_PROOF`. `NAMED_SCRIPT_NE_EXISTING_SCRIPT`. `CLONE_ODOO_NE_C5_TRAIN`. `PERCENT_KPI_NE_MASTERY`. `C0_NE_GRANTOR`. `CURSOR_IS_C2_NE_C3`. `REST_ZERO_NE_VIRTUE`.
+A 90-day 24/7 empire syllabus with Odoo clones and 90 named study scripts is a CLAIM. Observation: those scripts are absent; giant clones are not in the repo; D-019 already rejects calendar as a RAIOS success metric. Accept the fail-closed constraints already bound (no PASS, `GL005_PROVEN=false`, no paid API, no customer secrets, no execute without approval). Reuse `raios_c5_grind.py` + `raios_c5_week.py --auto` + `raios_c5_minute.py`. Do not write an autopilot bus. Do not deliver to C0. Does not close GL-005.
+
 
 

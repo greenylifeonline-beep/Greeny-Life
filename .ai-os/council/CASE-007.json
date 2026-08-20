@@ -1,0 +1,29 @@
+{
+  "schema": "raios.council-case.v1",
+  "id": "CASE-007",
+  "meeting_id": "GL-COUNCIL-4a11023c3c321b6f",
+  "from": "C1",
+  "ts": "2026-08-20T22:27:00+00:00",
+  "text": "ما رأيك في خطة 3 أشهر إمبراطورية لتدريب C5: clone Odoo/ERPNext، 90 سكربتاً، 24/7، نسب جاهزية، تسليم إلى C0، Cursor كـ C3 ENGINEER.",
+  "status": "EMPIRE_PLAN_FALSIFIED_DISCOVERED",
+  "knowledge_state": "DISCOVERED",
+  "canonical": false,
+  "gl005_proven": false,
+  "wal_written": false,
+  "execute_empire": false,
+  "paste_is_learning": false,
+  "identity_errors": [
+    "C0_NE_GRANTOR",
+    "CURSOR_IS_C2_NE_C3",
+    "DELIVER_TO_C0_NE_VALID"
+  ],
+  "plan": ".ai-os/council/PLAN-CASE-007.md",
+  "falsify": "scripts/ai-os/raios_c5_plan.py",
+  "says": {
+    "C1": "asked opinion on 90-day empire training plan",
+    "C2": "reject execute; accept fail-closed constraints; reuse grind/week/minute",
+    "C3": "PENDING_PASTE",
+    "C4": "PENDING_PASTE",
+    "C5": "named scripts absent; clones rejected; GL005 false"
+  }
+}

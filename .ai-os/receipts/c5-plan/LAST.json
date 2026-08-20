@@ -1,0 +1,163 @@
+{
+  "schema": "raios.c5-plan.v1",
+  "meeting_id": "GL-COUNCIL-4a11023c3c321b6f",
+  "case": "CASE-007",
+  "ts": "2026-08-20T22:31:33.049711+00:00",
+  "from": "C5",
+  "parent": "C1",
+  "claim": "90-day empire autopilot trains C5 into a super-mind by cloning Odoo and 90 new scripts",
+  "evidence": "named scripts absent; clones not in repo; calendar is not a RAIOS proof",
+  "observation": {
+    "claimed_scripts": 93,
+    "claimed_scripts_missing": 93,
+    "clones_requested": [
+      "odoo/odoo",
+      "erpnext/erpnext",
+      "dolibarr/dolibarr",
+      "tryton/tryton",
+      "akaunting/akaunting"
+    ],
+    "clones_present": false,
+    "live_keepers": [
+      "scripts/ai-os/raios_c5_grind.py",
+      "scripts/ai-os/raios_c5_week.py",
+      "scripts/ai-os/raios_c5_learn.py",
+      "scripts/ai-os/raios_c5_minute.py",
+      "scripts/ai-os/raios_absorb.py",
+      ".github/workflows/c5-week.yml"
+    ],
+    "live_ok": true
+  },
+  "identity_errors": [
+    "C0_NE_GRANTOR",
+    "CURSOR_IS_C2_NE_C3",
+    "C3_SEAT_IS_CHATGPT",
+    "DELIVER_TO_C0_NE_VALID"
+  ],
+  "accept": [
+    "NO_PASS",
+    "GL005_PROVEN_FALSE",
+    "NO_PAID_API",
+    "NO_CUSTOMER_SECRETS",
+    "NO_EXECUTE_WITHOUT_APPROVAL",
+    "CLAIM_NE_EVIDENCE_NE_OBSERVATION"
+  ],
+  "reject_execute": [
+    "clone odoo/erpnext/dolibarr/tryton/akaunting",
+    "write 90 new study_*.py files",
+    "empire_autopilot asyncio 24/7",
+    "percent KPI as mastery",
+    "deliver to C0",
+    "download open LLMs"
+  ],
+  "reuse_daily": [
+    "python3 scripts/ai-os/raios_c5_grind.py",
+    "python3 scripts/ai-os/raios_c5_week.py --auto",
+    "python3 scripts/ai-os/raios_c5_minute.py"
+  ],
+  "domains": [
+    {
+      "domain": "erp_accounting",
+      "reuse": "prisma Invoice/Payment/SalesOrder",
+      "exists": true,
+      "path": "prisma/schema.prisma"
+    },
+    {
+      "domain": "three_companies",
+      "reuse": "Egypt live; UAE/Norway Next GAP",
+      "exists": true,
+      "path": "lib/intelligence/three-operating-brains.ts"
+    },
+    {
+      "domain": "trade_customs",
+      "reuse": "governance + official evidence",
+      "exists": true,
+      "path": "TRADE-GOVERNANCE.md"
+    },
+    {
+      "domain": "production_packaging",
+      "reuse": "Egypt brain + GELS",
+      "exists": true,
+      "path": "lib/intelligence/greeny-life-egypt-brain.ts"
+    },
+    {
+      "domain": "tracking_quality",
+      "reuse": "shipments + traceability API",
+      "exists": true,
+      "path": "app/api/traceability/route.ts"
+    },
+    {
+      "domain": "council_agents",
+      "reuse": "eight MCP tools",
+      "exists": true,
+      "path": ".ai-os/mcp/C5-GRANT.json"
+    },
+    {
+      "domain": "marketing",
+      "reuse": "GAP unless in-repo evidence",
+      "exists": true,
+      "path": "THREE-OPERATING-BRAINS.md"
+    }
+  ],
+  "checks": [
+    {
+      "name": "identity_c0_invalid",
+      "ok": true,
+      "detail": "C0 abolished; grantor is C1 founder"
+    },
+    {
+      "name": "identity_cursor_is_c2",
+      "ok": true,
+      "detail": "Cursor is C2 ENGINEER not C3"
+    },
+    {
+      "name": "claimed_scripts_absent",
+      "ok": true,
+      "detail": "missing=93/93"
+    },
+    {
+      "name": "no_giant_clones",
+      "ok": true,
+      "detail": "CLONE_ODOO_NE_C5_TRAIN"
+    },
+    {
+      "name": "live_mill_present",
+      "ok": true,
+      "detail": "grind+week+learn+minute"
+    },
+    {
+      "name": "percent_kpi_ne_mastery",
+      "ok": true,
+      "detail": "printed 95% is a claim"
+    },
+    {
+      "name": "calendar_90_ne_proof",
+      "ok": true,
+      "detail": "D-019 calendar is not success"
+    },
+    {
+      "name": "gl005_false",
+      "ok": true,
+      "detail": "POST /api/tasks still required"
+    }
+  ],
+  "ok": true,
+  "execute_empire": false,
+  "knowledge_state": "DISCOVERED",
+  "canonical": false,
+  "wal_written": false,
+  "gl005_proven": false,
+  "law": [
+    "EMPIRE_PLAN_NE_EXECUTE",
+    "CALENDAR_90_NE_PROOF",
+    "NAMED_SCRIPT_NE_EXISTING_SCRIPT",
+    "CLONE_ODOO_NE_C5_TRAIN",
+    "PERCENT_KPI_NE_MASTERY",
+    "C0_NE_GRANTOR",
+    "CURSOR_IS_C2_NE_C3",
+    "REST_ZERO_NE_VIRTUE",
+    "GENIUS_IS_COMPRESSION_NE_DISK_FILL",
+    "PASTE_NE_LEARNING"
+  ],
+  "wal_mtime_unchanged": true
+}
