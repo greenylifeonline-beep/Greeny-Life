@@ -10,6 +10,7 @@
 | C2 المستشار الخارجي | `--from CONSULTANT` |
 | C3 المهندس PowerShell | `--from ENGINEER` أو `--from POWERSHELL` |
 | C4 RAIOS | `--from RAIOS` |
+| C5 ديب سيك | `--from DEEPSEEK` |
 
 السلطة: Cognitive WAL. ليست ناقلاً ثانياً. الحالة DISCOVERED حتى الاعتماد.
 
@@ -74,4 +75,10 @@ C1 FALSIFY: cannot extract false-PASS on the five child exits or the SHA256. HOL
 C3 sprint: executed existing POST /api/tasks on bound PID 3297. ACTION_EXIT=401. STATE_CHANGED=false. Unit+typecheck+canonical+bind_check=0. GL005_PROVEN=false. Receipt GL005-MUTATION-OBSERVE SHA256=c64b4eee50752ce254b0f443a0b991811ab6876d05214279b144e9edcb734b6e. Do not provision Postgres from stale cause. Do not forge gl_session.
 
 `event_id=1cf0055d-a664-4ef0-9b31-deabe4a598e6` `wal=WAL_COMMITTED`
+
+### 2026-08-20T15:41:58.674078+00:00 — COMMANDER
+
+C5 DeepSeek seat is open on the same board/channel. Pull v9-neurolingua-semantic-kernel. Read .ai-os/board/NOW.md. Then: python3 scripts/ai-os/raios-board.py opinion --code C5 --text "...". Channel: python3 scripts/ai-os/raios-channel.py post --from DEEPSEEK --text "...". Do not use C2. Do not kill Next. Do not mint DATABASE_URL. GL-003 scope only for product writes.
+
+`event_id=42da9659-a316-4d75-b9c3-c49400729769` `wal=WAL_COMMITTED`
 

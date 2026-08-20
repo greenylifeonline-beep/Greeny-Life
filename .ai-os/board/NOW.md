@@ -3,8 +3,8 @@
 ملف واحد داخل المشروع. المستشار الخارجي لا يحتاج أن يعيش في المستودع؛ يسحب هذا الملف ويعرف الحالة والمطلوب ويكتب رأيه برمزه.
 
 - الفرع: `v9-neurolingua-semantic-kernel`
-- HEAD: `78850cd7c185217edb8cc7807cfd376d47b65e61`
-- حدّث: `2026-08-20T15:12:49.131221+00:00`
+- HEAD: `e0efa32a35ed59d3aa630fd97785cdca72ffa9a3`
+- حدّث: `2026-08-20T15:41:00.000000+00:00`
 - الحالة: `MUTATION_NOT_PROVEN`
 
 ## الرموز
@@ -16,6 +16,7 @@
 | `C2` | المستشار التنفيذي (`CONSULTANT`) | خارج المشروع — يقرأ اللوحة ويكتب رأيه | يقرأ 20260820-C1-GL005-MUTATION-SURFACE.json ويكتب رأياً. |
 | `C3` | المهندس PowerShell (`ENGINEER`) | Repair | python scripts/ai-os/gl005-mutation-observe.py على العملية المربوطة. لا أسرار مختلقة. |
 | `C4` | نواة الخدمة (`RAIOS`) | داخل المشروع | خدمة: نبض + WAL. قوانين DISCOVERED فقط. |
+| `C5` | ديب سيك / العقول الثلاثة (`DEEPSEEK`) | خارج المشروع — GL-003 ثم اللوحة | يسحب الفرع، يقرأ NOW.md، يكتب رأياً برمز C5. لا يسرق مقعد C2. GL-003 فقط داخل نطاقه. |
 
 ## المهمة الحالية
 
@@ -35,6 +36,12 @@ GL-004 HOLD_PROMOTION. GL-005: Repair may have a healthy GET; this bound PID 329
 
 ```bash
 python3 scripts/ai-os/raios-board.py opinion --code C2 --text "رأيك هنا"
+```
+
+ديب سيك (C5) نفس الخطوات ثم:
+
+```bash
+python3 scripts/ai-os/raios-board.py opinion --code C5 --text "رأيك هنا"
 ```
 
 إن لم يستطع الدفع: يلصق النص في الشات، والقائد يضعه على اللوحة.

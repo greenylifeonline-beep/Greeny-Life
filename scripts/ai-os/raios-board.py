@@ -22,9 +22,11 @@ CODES = {
     "C2": {"actor": "CONSULTANT", "name": "المستشار التنفيذي", "where": "خارج المشروع — يقرأ اللوحة ويكتب رأيه"},
     "C3": {"actor": "ENGINEER", "name": "المهندس PowerShell", "where": "Repair"},
     "C4": {"actor": "RAIOS", "name": "نواة الخدمة", "where": "داخل المشروع"},
+    "C5": {"actor": "DEEPSEEK", "name": "ديب سيك / العقول الثلاثة", "where": "خارج المشروع — GL-003 ثم اللوحة"},
 }
 ACTOR_TO_CODE = {v["actor"]: k for k, v in CODES.items()}
 ACTOR_TO_CODE["POWERSHELL"] = "C3"
+ACTOR_TO_CODE["DEEPSEEK-LOCAL"] = "C5"
 
 
 def utc() -> str:
@@ -127,6 +129,12 @@ def render(state: dict) -> None:
         'python3 scripts/ai-os/raios-board.py opinion --code C2 --text "رأيك هنا"',
         "```",
         "",
+        "ديب سيك (C5) نفس الخطوات ثم:",
+        "",
+        "```bash",
+        'python3 scripts/ai-os/raios-board.py opinion --code C5 --text "رأيك هنا"',
+        "```",
+        "",
         "إن لم يستطع الدفع: يلصق النص في الشات، والقائد يضعه على اللوحة.",
         "",
         "## الآراء",
@@ -151,7 +159,12 @@ def resolve_code(value: str) -> tuple[str, str]:
     if value in CODES:
         return value, CODES[value]["actor"]
     if value in ACTOR_TO_CODE:
-        return ACTOR_TO_CODE[value], value if value != "POWERSHELL" else "ENGINEER"
+        actor = value
+        if value == "POWERSHELL":
+            actor = "ENGINEER"
+        if value == "DEEPSEEK-LOCAL":
+            actor = "DEEPSEEK"
+        return ACTOR_TO_CODE[value], actor
     raise SystemExit(f"UNKNOWN_CODE:{value}")
 
 

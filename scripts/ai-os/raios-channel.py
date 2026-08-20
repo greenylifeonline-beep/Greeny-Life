@@ -13,7 +13,7 @@ ROOT = Path(__file__).resolve().parents[2]
 CHAN = ROOT / ".ai-os" / "channel"
 LIVE = CHAN / "LIVE.md"
 LOG = CHAN / "messages.jsonl"
-ACTORS = ("USER", "COMMANDER", "CONSULTANT", "ENGINEER", "POWERSHELL", "RAIOS")
+ACTORS = ("USER", "COMMANDER", "CONSULTANT", "ENGINEER", "POWERSHELL", "RAIOS", "DEEPSEEK", "DEEPSEEK-LOCAL")
 
 
 def utc() -> str:
@@ -65,6 +65,7 @@ def render(records: list[dict]) -> None:
         "| C2 المستشار الخارجي | `--from CONSULTANT` |",
         "| C3 المهندس PowerShell | `--from ENGINEER` أو `--from POWERSHELL` |",
         "| C4 RAIOS | `--from RAIOS` |",
+        "| C5 ديب سيك | `--from DEEPSEEK` |",
         "",
         "السلطة: Cognitive WAL. ليست ناقلاً ثانياً. الحالة DISCOVERED حتى الاعتماد.",
         "",
@@ -94,6 +95,8 @@ def load() -> list[dict]:
 
 def post(actor: str, text: str) -> dict:
     actor = actor.upper()
+    if actor == "DEEPSEEK-LOCAL":
+        actor = "DEEPSEEK"
     if actor not in ACTORS:
         raise SystemExit(f"UNKNOWN_ACTOR:{actor}")
     text = text.strip()

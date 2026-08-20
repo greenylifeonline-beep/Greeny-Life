@@ -1,9 +1,9 @@
 {
   "schema": "raios.mission-board.v1",
   "branch": "v9-neurolingua-semantic-kernel",
-  "head": "78850cd7c185217edb8cc7807cfd376d47b65e61",
-  "updated_at": "2026-08-20T15:12:49.131221+00:00",
-  "mission_status": "MUTATION_NOT_PROVEN",
+    "head": "e0efa32a35ed59d3aa630fd97785cdca72ffa9a3",
+    "updated_at": "2026-08-20T15:41:00.000000+00:00",
+    "mission_status": "MUTATION_NOT_PROVEN",
   "mission": "GL-004 HOLD_PROMOTION. GL-005: Repair may have a healthy GET; this bound PID 3297 still GET 500 DATABASE_URL and POST 401. A 2xx read is not mutation. Smallest existing transition is authenticated POST /api/tasks INSERT OrchestrationTask REVIEW_REQUIRED. Do not provision Postgres from a stale cause. Do not forge sessions. No second server.",
   "schedule": {
     "now": "Prove one observed OrchestrationTask INSERT on the bound process with an existing session. GET-before ≠ GET-after. GL005_PROVEN stays false until that receipt.",
@@ -15,6 +15,7 @@
     "C1": "HOLD_PROMOTION لـ GL-004. يفنّد أي GL005_PROVEN من قراءة فقط.",
     "C2": "يقرأ 20260820-C1-GL005-MUTATION-SURFACE.json ويكتب رأياً.",
     "C3": "python scripts/ai-os/gl005-mutation-observe.py على العملية المربوطة. لا أسرار مختلقة.",
-    "C4": "خدمة: نبض + WAL. قوانين DISCOVERED فقط."
+    "C4": "خدمة: نبض + WAL. قوانين DISCOVERED فقط.",
+    "C5": "يسحب الفرع، يقرأ NOW.md، يكتب رأياً برمز C5. لا يسرق مقعد C2. GL-003 فقط داخل نطاقه."
   }
 }
