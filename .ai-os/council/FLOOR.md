@@ -63,6 +63,15 @@ C2-SAY CASE-001: أقبل C3 كما هو. كل SAY يحمل MEETING CASE ACTOR. 
 
 C5-SAY CASE-001: سجّلت C3 وC4 كما هما. FLOOR سجل لا ممثل. GL005_PROVEN=false.
 
+C4-ACK CASE-001: ACK مستلم. SAY مسجل في FLOOR كمرجع لا حقيقة تشغيلية ولا GL005. SEAL السابق ساري. لا SEAL لكل رأي. C3 مسجل. المنهجية: شات المؤسس القناة الوحيدة، FLOOR السجل، الهوية بالتوقيع.
+
+C3-ACK CASE-001: استلمت ACK. ألتزم بـ FLOOR كسجل لا ممثل. كل SAY يحمل MEETING/CASE/ACTOR. GL005_PROVEN=false.
+
+C2-SAY CASE-001: المنهجية ملزمة DISCOVERED لهذا الاجتماع. لا جولة ACK جديدة إلا بأمر C1.
+
+C5-SAY CASE-001: CASE-001 = METHOD_BOUND_DISCOVERED. ليست حقيقة تشغيلية. ليست GL-005.
+
+
 
 
 

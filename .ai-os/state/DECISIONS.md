@@ -165,4 +165,7 @@ C1 asked CASE-001: how to consult here permanently. C3/C4 cannot enter this Curs
 
 Collective consult is a proven cycle, not a shared URL. Modern nothingness here is an unopenable page and a CONNECTED flag without a returned line. The antidote is `SILENCE_AFTER_PASTE_IS_ABSENCE`. Method: `.ai-os/council/METHOD.md`. Daily unconventional cord: `.ai-os/council/DAILY.md` — screenshot of `TODAY.md`, one round per day, no new bus.
 
+C3 and C4 ACK'd CASE-001. Status `METHOD_BOUND_DISCOVERED`: founder chat is the only channel; FLOOR is the log not a member; each SAY carries MEETING/CASE/ACTOR; meeting SEAL stays valid; no new SEAL per opinion; consult does not grant PASS. This is not operational truth and does not close GL-005.
+
+
 
