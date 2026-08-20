@@ -1,0 +1,22 @@
+{
+  "schema": "raios.service-heartbeat.v1",
+  "mode": "SERVICE",
+  "generated_at": "2026-08-20T13:17:14.028261+00:00",
+  "wal_exists": true,
+  "wal_path": "RAIOS/V9/wal/cognitive-events.jsonl",
+  "stale_locks": [
+    {
+      "id": "LOCK-20260818130148",
+      "task_id": "V9-A15",
+      "agent": "cursor",
+      "scope": "RAIOS/V9",
+      "age_hours": 48.26,
+      "knowledge_state": "DISCOVERED",
+      "action": "DO_NOT_AUTO_RELEASE"
+    }
+  ],
+  "new_phase_created": false,
+  "second_wal_created": false,
+  "barn_folder_created": false,
+  "status": "HEARTBEAT_OK"
+}

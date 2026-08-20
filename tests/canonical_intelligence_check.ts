@@ -2,6 +2,7 @@ import assert from "node:assert/strict";
 
 import { runAuditEngine } from "../canonical/intelligence/intelligence/engines/audit-engine";
 import { runIntegrityEngine } from "../canonical/intelligence/intelligence/engines/data-integrity-engine";
+import { generateHealthReport } from "../canonical/intelligence/intelligence/health/health-reporter";
 import { canonicalIntegrityReview } from "../lib/intelligence/canonical-integrity-adapter";
 
 const audit = runAuditEngine();
@@ -18,5 +19,9 @@ assert.equal(integrity.summary.health, "HEALTHY");
 const adapter = canonicalIntegrityReview();
 assert.equal(adapter.status, "SUPPORTED");
 assert.equal(adapter.executionRule.includes("read-only"), true);
+
+const health = generateHealthReport();
+assert.equal(health.status, "HEALTHY");
+assert.equal(health.engines.every((engine) => engine.exists), true);
 
 console.log("Canonical intelligence engines: PASS");

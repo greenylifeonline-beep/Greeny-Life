@@ -201,6 +201,26 @@
       "status": "DONE",
       "claimed_by": "cursor",
       "evidence": ".ai-os/handoffs/20260820-cursor-DRIVER-PACKET.json"
+    },
+    {
+      "id": "COMMAND-ORG",
+      "title": "Command: organize before expand",
+      "objective": "Record command vision, dispatch PowerShell helper, RAIOS service mode, and compress obsolete live residue.",
+      "scope": [
+        ".ai-os/handoffs",
+        ".ai-os/state/DECISIONS.md",
+        "scripts/ai-os",
+        "canonical/intelligence/intelligence",
+        "archive/duplicates"
+      ],
+      "dependencies": [],
+      "allowed_agents": [
+        "cursor"
+      ],
+      "validation": "Vision+orders committed; obsolete residue deleted or receipted; no second WAL; no migration/gl-* folders.",
+      "status": "DONE",
+      "claimed_by": "cursor",
+      "evidence": ".ai-os/COMMAND-VISION.md;.ai-os/reports/raios-service/LAST-HEARTBEAT.json;type-check=0;canonical=0;orch=0"
     }
   ]
 }
