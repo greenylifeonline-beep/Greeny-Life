@@ -1,0 +1,314 @@
+{
+  "suite": "RAIOS V9.NL-0 NeuroLingua",
+  "exitstatus": 0,
+  "collected": 60,
+  "passed": 60,
+  "failed": 0,
+  "skipped": 0,
+  "gpu_required": false,
+  "llm_required": false,
+  "offline": true,
+  "tests": [
+    {
+      "nodeid": "tests/neuro_lingua/test_codeswitch.py::test_egyptian_english_technical_code_switch",
+      "outcome": "passed",
+      "longrepr": ""
+    },
+    {
+      "nodeid": "tests/neuro_lingua/test_codeswitch.py::test_norwegian_code_switch_preserves_technical_loans",
+      "outcome": "passed",
+      "longrepr": ""
+    },
+    {
+      "nodeid": "tests/neuro_lingua/test_codeswitch.py::test_filenames_urls_and_functions_preserved",
+      "outcome": "passed",
+      "longrepr": ""
+    },
+    {
+      "nodeid": "tests/neuro_lingua/test_concepts.py::test_loads_unique_concept_ids",
+      "outcome": "passed",
+      "longrepr": ""
+    },
+    {
+      "nodeid": "tests/neuro_lingua/test_concepts.py::test_alias_collision_detected",
+      "outcome": "passed",
+      "longrepr": ""
+    },
+    {
+      "nodeid": "tests/neuro_lingua/test_concepts.py::test_canonical_redefinition_rejected",
+      "outcome": "passed",
+      "longrepr": ""
+    },
+    {
+      "nodeid": "tests/neuro_lingua/test_concepts.py::test_scope_may_customize_realization",
+      "outcome": "passed",
+      "longrepr": ""
+    },
+    {
+      "nodeid": "tests/neuro_lingua/test_concepts.py::test_duplicate_concept_id_different_meaning_is_collision",
+      "outcome": "passed",
+      "longrepr": ""
+    },
+    {
+      "nodeid": "tests/neuro_lingua/test_concepts.py::test_loader_raises_on_alias_collision",
+      "outcome": "passed",
+      "longrepr": ""
+    },
+    {
+      "nodeid": "tests/neuro_lingua/test_contracts.py::test_public_api_hides_providers",
+      "outcome": "passed",
+      "longrepr": ""
+    },
+    {
+      "nodeid": "tests/neuro_lingua/test_contracts.py::test_pipeline_stages_match_spec",
+      "outcome": "passed",
+      "longrepr": ""
+    },
+    {
+      "nodeid": "tests/neuro_lingua/test_contracts.py::test_risk_level_mirrors_gl_dos",
+      "outcome": "passed",
+      "longrepr": ""
+    },
+    {
+      "nodeid": "tests/neuro_lingua/test_contracts.py::test_capability_contracts_are_vendor_neutral",
+      "outcome": "passed",
+      "longrepr": ""
+    },
+    {
+      "nodeid": "tests/neuro_lingua/test_contracts.py::test_factory_offline_by_default",
+      "outcome": "passed",
+      "longrepr": ""
+    },
+    {
+      "nodeid": "tests/neuro_lingua/test_contracts.py::test_registry_exposes_contracts",
+      "outcome": "passed",
+      "longrepr": ""
+    },
+    {
+      "nodeid": "tests/neuro_lingua/test_detection.py::test_initial_locales_represented",
+      "outcome": "passed",
+      "longrepr": ""
+    },
+    {
+      "nodeid": "tests/neuro_lingua/test_detection.py::test_gulf_taxonomy_extensible_without_classifiers",
+      "outcome": "passed",
+      "longrepr": ""
+    },
+    {
+      "nodeid": "tests/neuro_lingua/test_detection.py::test_egyptian_vs_gulf_distinct",
+      "outcome": "passed",
+      "longrepr": ""
+    },
+    {
+      "nodeid": "tests/neuro_lingua/test_detection.py::test_zero_confidence_when_no_dialect_markers",
+      "outcome": "passed",
+      "longrepr": ""
+    },
+    {
+      "nodeid": "tests/neuro_lingua/test_detection.py::test_norwegian_not_swedish",
+      "outcome": "passed",
+      "longrepr": ""
+    },
+    {
+      "nodeid": "tests/neuro_lingua/test_detection.py::test_english_detection",
+      "outcome": "passed",
+      "longrepr": ""
+    },
+    {
+      "nodeid": "tests/neuro_lingua/test_detection.py::test_tier1_unavailable_is_recorded_not_faked",
+      "outcome": "passed",
+      "longrepr": ""
+    },
+    {
+      "nodeid": "tests/neuro_lingua/test_detection.py::test_llm_tier_not_used_offline",
+      "outcome": "passed",
+      "longrepr": ""
+    },
+    {
+      "nodeid": "tests/neuro_lingua/test_golden.py::test_golden_egyptian_request",
+      "outcome": "passed",
+      "longrepr": ""
+    },
+    {
+      "nodeid": "tests/neuro_lingua/test_golden.py::test_golden_code_switch_ar_en",
+      "outcome": "passed",
+      "longrepr": ""
+    },
+    {
+      "nodeid": "tests/neuro_lingua/test_golden.py::test_golden_norwegian_deploy",
+      "outcome": "passed",
+      "longrepr": ""
+    },
+    {
+      "nodeid": "tests/neuro_lingua/test_golden.py::test_low_risk_skips_independent_and_backtranslation",
+      "outcome": "passed",
+      "longrepr": ""
+    },
+    {
+      "nodeid": "tests/neuro_lingua/test_learning.py::test_every_gap_enum_is_reachable",
+      "outcome": "passed",
+      "longrepr": ""
+    },
+    {
+      "nodeid": "tests/neuro_lingua/test_learning.py::test_training_never_runs_even_for_adapter_candidate",
+      "outcome": "passed",
+      "longrepr": ""
+    },
+    {
+      "nodeid": "tests/neuro_lingua/test_learning.py::test_changing_facts_go_to_retrieval",
+      "outcome": "passed",
+      "longrepr": ""
+    },
+    {
+      "nodeid": "tests/neuro_lingua/test_learning.py::test_repeated_procedure_compiles_skill",
+      "outcome": "passed",
+      "longrepr": ""
+    },
+    {
+      "nodeid": "tests/neuro_lingua/test_offline.py::test_offline_interpret_all_seed_languages",
+      "outcome": "passed",
+      "longrepr": ""
+    },
+    {
+      "nodeid": "tests/neuro_lingua/test_offline.py::test_meaning_is_canonical_boundary",
+      "outcome": "passed",
+      "longrepr": ""
+    },
+    {
+      "nodeid": "tests/neuro_lingua/test_pragmatics.py::test_politeness_is_not_a_logical_condition",
+      "outcome": "passed",
+      "longrepr": ""
+    },
+    {
+      "nodeid": "tests/neuro_lingua/test_pragmatics.py::test_egyptian_idiom_system_regression_needs_software_context",
+      "outcome": "passed",
+      "longrepr": ""
+    },
+    {
+      "nodeid": "tests/neuro_lingua/test_preservation.py::test_numbers_preserved",
+      "outcome": "passed",
+      "longrepr": ""
+    },
+    {
+      "nodeid": "tests/neuro_lingua/test_preservation.py::test_arabic_indic_numbers_preserved",
+      "outcome": "passed",
+      "longrepr": ""
+    },
+    {
+      "nodeid": "tests/neuro_lingua/test_preservation.py::test_identifiers_preserved_through_realize",
+      "outcome": "passed",
+      "longrepr": ""
+    },
+    {
+      "nodeid": "tests/neuro_lingua/test_preservation.py::test_uuid_and_filename_preserved",
+      "outcome": "passed",
+      "longrepr": ""
+    },
+    {
+      "nodeid": "tests/neuro_lingua/test_property.py::test_property_integers_are_extracted",
+      "outcome": "passed",
+      "longrepr": ""
+    },
+    {
+      "nodeid": "tests/neuro_lingua/test_property.py::test_property_detector_never_invents_confidence_outside_unit_interval",
+      "outcome": "passed",
+      "longrepr": ""
+    },
+    {
+      "nodeid": "tests/neuro_lingua/test_property.py::test_property_wal_idempotent_on_same_payload",
+      "outcome": "passed",
+      "longrepr": ""
+    },
+    {
+      "nodeid": "tests/neuro_lingua/test_providers.py::test_offline_never_calls_llm",
+      "outcome": "passed",
+      "longrepr": ""
+    },
+    {
+      "nodeid": "tests/neuro_lingua/test_providers.py::test_generic_llm_unavailable_without_callable",
+      "outcome": "passed",
+      "longrepr": ""
+    },
+    {
+      "nodeid": "tests/neuro_lingua/test_providers.py::test_provider_failure_is_surfaced",
+      "outcome": "passed",
+      "longrepr": ""
+    },
+    {
+      "nodeid": "tests/neuro_lingua/test_providers.py::test_registry_fallback_skips_network_when_offline",
+      "outcome": "passed",
+      "longrepr": ""
+    },
+    {
+      "nodeid": "tests/neuro_lingua/test_providers.py::test_no_provider_for_back_translation_offline",
+      "outcome": "passed",
+      "longrepr": ""
+    },
+    {
+      "nodeid": "tests/neuro_lingua/test_scandinavian.py::test_swedish_output_does_not_contain_norwegian_ikke",
+      "outcome": "passed",
+      "longrepr": ""
+    },
+    {
+      "nodeid": "tests/neuro_lingua/test_scandinavian.py::test_norwegian_output_does_not_contain_swedish_inte",
+      "outcome": "passed",
+      "longrepr": ""
+    },
+    {
+      "nodeid": "tests/neuro_lingua/test_scandinavian.py::test_danish_isolated_from_swedish",
+      "outcome": "passed",
+      "longrepr": ""
+    },
+    {
+      "nodeid": "tests/neuro_lingua/test_scandinavian.py::test_no_mixed_scandinavian_language",
+      "outcome": "passed",
+      "longrepr": ""
+    },
+    {
+      "nodeid": "tests/neuro_lingua/test_verification.py::test_medium_includes_semantic_and_terminology",
+      "outcome": "passed",
+      "longrepr": ""
+    },
+    {
+      "nodeid": "tests/neuro_lingua/test_verification.py::test_critical_does_not_back_translate_by_default",
+      "outcome": "passed",
+      "longrepr": ""
+    },
+    {
+      "nodeid": "tests/neuro_lingua/test_verification.py::test_high_records_missing_independent_verifier",
+      "outcome": "passed",
+      "longrepr": ""
+    },
+    {
+      "nodeid": "tests/neuro_lingua/test_wal.py::test_wal_append_is_idempotent",
+      "outcome": "passed",
+      "longrepr": ""
+    },
+    {
+      "nodeid": "tests/neuro_lingua/test_wal.py::test_replay_from_disk_skips_duplicates",
+      "outcome": "passed",
+      "longrepr": ""
+    },
+    {
+      "nodeid": "tests/neuro_lingua/test_wal.py::test_cannot_append_canonical_directly",
+      "outcome": "passed",
+      "longrepr": ""
+    },
+    {
+      "nodeid": "tests/neuro_lingua/test_wal.py::test_promotion_requires_validated_then_evidence",
+      "outcome": "passed",
+      "longrepr": ""
+    },
+    {
+      "nodeid": "tests/neuro_lingua/test_wal.py::test_illegal_transition_helper",
+      "outcome": "passed",
+      "longrepr": ""
+    },
+    {
+      "nodeid": "tests/neuro_lingua/test_wal.py::test_stable_event_id_is_deterministic",
+      "outcome": "passed",
+      "longrepr": ""
+    }
+  ],
+  "hidden_failures": false
+}

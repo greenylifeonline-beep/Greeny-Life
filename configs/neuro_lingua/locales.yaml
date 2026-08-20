@@ -1,0 +1,52 @@
+locales:
+  ar-EG:
+    language: ar
+    dialect: egyptian
+    parent: ar
+    script: arab
+    direction: rtl
+  ar-GULF:
+    language: ar
+    dialect: gulf_neutral
+    parent: ar
+    script: arab
+    direction: rtl
+    extensible_children:
+      ar-SA: saudi
+      ar-AE: emirati
+      ar-KW: kuwaiti
+      ar-QA: qatari
+      ar-BH: bahraini
+      ar-OM: omani
+  en:
+    language: en
+    dialect: null
+    parent: en
+    script: latn
+    direction: ltr
+  nb-NO:
+    language: nb
+    dialect: null
+    parent: scandinavian
+    script: latn
+    direction: ltr
+  sv-SE:
+    language: sv
+    dialect: null
+    parent: scandinavian
+    script: latn
+    direction: ltr
+  da-DK:
+    language: da
+    dialect: null
+    parent: scandinavian
+    script: latn
+    direction: ltr
+
+initial_scope:
+  - ar-EG
+  - ar-GULF
+  - en
+  - nb-NO
+  - sv-SE
+  - da-DK

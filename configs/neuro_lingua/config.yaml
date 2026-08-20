@@ -1,0 +1,31 @@
+# NeuroLingua NL-0 runtime config.
+# Root config.yaml is a BOUND.md danger zone; this file is the NL-0 surface.
+# The loader may *read* host llm.provider/model but never writes that file.
+
+offline: true
+allow_llm_adjudication: false
+allow_back_translation: false
+wal_path: intelligence/knowledge_base/neuro_lingua/cognitive_wal.jsonl
+evolution_inbox_path: intelligence/knowledge_base/neuro_lingua/evolution_inbox.jsonl
+
+languages:
+  - ar-EG
+  - ar-GULF
+  - en
+  - nb-NO
+  - sv-SE
+  - da-DK
+
+gulf_taxonomy:
+  parent: ar-GULF
+  children:
+    - ar-SA   # Saudi — classifier deferred to NL-1
+    - ar-AE   # Emirati
+    - ar-KW   # Kuwaiti
+    - ar-QA   # Qatari
+    - ar-BH   # Bahraini
+    - ar-OM   # Omani
+  classifiers_implemented: []
+
+pipeline:
+  prefer: [deterministic, cheap_local, specialized_local, general_llm]

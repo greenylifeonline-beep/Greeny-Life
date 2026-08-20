@@ -1,0 +1,15 @@
+{"id": "nl0-ar-eg-pragmatic", "text": "شوف لنا الموضوع وإذا ما عليك أمر خلصه اليوم", "context": {"domain": "operations"}, "expect": {"locale": "ar-EG", "language": "ar", "action": "resolve", "deadline": "today", "politeness_marker": true, "not_logical_condition": true}, "realize": {"target_locale": "nb-NO", "must_include": ["løs", "i dag"], "must_not_include": ["إذا ما عليك أمر"]}}
+{"id": "nl0-ar-eg-codeswitch", "text": "أنا عملت migration بس الـreport مش بيتولد بعد الـexecutor", "context": {"domain": "software"}, "expect": {"locale": "ar-EG", "code_switched": true, "preserve": ["migration", "report", "executor"]}, "realize": {"target_locale": "en", "must_include": ["migration", "report", "executor"]}}
+{"id": "nl0-ar-gulf", "text": "شلون الحال وايد زين الحين", "context": {}, "expect": {"locale": "ar-GULF", "dialect": "gulf_neutral"}}
+{"id": "nl0-ar-eg-regression", "text": "الدنيا هتبوظ", "context": {"domain": "software"}, "expect": {"concepts": ["system.regression"], "intent": "report_system_regression"}}
+{"id": "nl0-nb-codeswitch", "text": "Kan du deploye den nye builden, men ikke touche production-databasen?", "context": {"domain": "software"}, "expect": {"locale": "nb-NO", "preserve": ["deploye", "builden", "touche", "production-databasen"]}, "realize": {"target_locale": "nb-NO", "must_include": ["deploye", "builden", "production-databasen"]}}
+{"id": "nl0-sv-isolation", "text": "Please resolve the matter today", "context": {"domain": "operations"}, "expect": {"locale": "en"}, "realize": {"target_locale": "sv-SE", "must_include": ["i dag"], "must_not_include": ["ikke"]}}
+{"id": "nl0-da-isolation", "text": "Please resolve the matter today", "context": {}, "expect": {"locale": "en"}, "realize": {"target_locale": "da-DK", "must_not_include": ["inte", "och"]}}
+{"id": "nl0-en-numbers", "text": "Scale replicas to 12 and timeout 3.5", "context": {}, "expect": {"numbers": ["12", "3.5"]}, "realize": {"target_locale": "en", "must_include": ["12", "3.5"]}}
+{"id": "nl0-ar-indic-number", "text": "العدد ١٢ في report", "context": {"domain": "software"}, "expect": {"numbers": ["١٢"], "preserve": ["report"]}}
+{"id": "nl0-en-ids", "text": "Failed job 550e8400-e29b-41d4-a716-446655440000 in kernel.py", "context": {"domain": "software"}, "expect": {"preserve": ["550e8400-e29b-41d4-a716-446655440000", "kernel.py"]}}
+{"id": "nl0-nb-distinct", "text": "Kan du løse saken, men ikke knekke noe?", "context": {}, "expect": {"locale": "nb-NO"}}
+{"id": "nl0-sv-distinct", "text": "Kan du lösa saken, men inte kanske något här?", "context": {}, "expect": {"locale": "sv-SE"}}
+{"id": "nl0-da-distinct", "text": "Kan du løse sagen, men ikke gøre noget?", "context": {}, "expect": {"locale": "da-DK"}}
+{"id": "nl0-en-please", "text": "please deploy the report today", "context": {"domain": "software"}, "expect": {"locale": "en", "preserve": ["deploy", "report"]}}
+{"id": "nl0-ar-fusha-no-dialect", "text": "هذا نص عربي بدون علامات لهجة", "context": {}, "expect": {"language": "ar", "dialect": null}}

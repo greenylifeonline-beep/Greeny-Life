@@ -1,0 +1,188 @@
+{
+  "title": "RAIOS V9.NL-0 NeuroLingua integration map",
+  "repository": "GREENY LIFE Digital Operating System (GL-DOS / EOS)",
+  "architectural_conflict": {
+    "expected": "Existing RAIOS V9 substrate (Cognitive WAL, knowledge states, Live/Evolution Brain split, capability providers, RiskLevel verification policy, NeuroLingua scaffolding).",
+    "found": "This repository is Greeny-Life EOS: a product/packaging/PIM digital operating system with a Python governance brain (brain.py) and a TypeScript unified-intelligence layer. There is no RAIOS package, no Cognitive WAL, no DISCOVERED→VALIDATED→CANONICAL machine, no NeuroLingua tree, no benchmarks/neuro_lingua/seed_cases.jsonl, and no configs/neuro_lingua/concepts.yaml prior to NL-0.",
+    "decision": "Do not invent a second product brain and do not replace GreenyLifeBrain. Introduce a Python RAIOS V9 language-layer substrate under src/raios that NeuroLingua uses, reusing GL-DOS contracts (RiskLevel, capability routing, knowledge_base path, YAML config, logs/, idempotent append) where they already exist. Document every new primitive as complementary, not competing."
+  },
+  "components": [
+    {
+      "existing_component": "GreenyLifeBrain (EOS enterprise brain)",
+      "path": "brain.py",
+      "responsibility": "Governance, quality, security, documentation, product-master scans. Loads config.yaml, writes logs/, maintains intelligence/knowledge_base.",
+      "neuro_lingua_should_reuse": true,
+      "integration_mechanism": "Read-only reuse of config loader pattern, logs/ directory, and knowledge_base_path. NeuroLingua is not a replacement brain; src/raios/adapters/greeny_life.py exposes interpret as an intelligence capability.",
+      "conflicts_or_duplication": "Creating a second 'RAIOS brain' would conflict. NL-0 does not. GreenyLifeBrain remains the EOS orchestrator."
+    },
+    {
+      "existing_component": "Root YAML configuration",
+      "path": "config.yaml",
+      "responsibility": "Host LLM vendor block (claude), govern thresholds, brain.knowledge_base_path, security.",
+      "neuro_lingua_should_reuse": true,
+      "integration_mechanism": "raios.config.load_neuro_lingua_config reads llm.provider/model and brain.knowledge_base_path. Does not write config.yaml (BOUND.md danger zone). NL-0 config lives in configs/neuro_lingua/.",
+      "conflicts_or_duplication": "Host llm.provider is hardcoded to claude. NeuroLingua must not adopt that as architecture; providers are capability contracts. Overlay is read-only."
+    },
+    {
+      "existing_component": "BOUND constraints",
+      "path": "BOUND.md",
+      "responsibility": "Forbids unreviewed edits to src/master_data, src/finance, src/auth, src/compliance, .env, config.yaml.",
+      "neuro_lingua_should_reuse": true,
+      "integration_mechanism": "NL-0 does not modify those paths. New code is under src/raios, configs/neuro_lingua, tests/neuro_lingua, benchmarks/neuro_lingua, docs/v9, reports/.",
+      "conflicts_or_duplication": "None if those paths stay untouched."
+    },
+    {
+      "existing_component": "Cognitive WAL",
+      "path": null,
+      "responsibility": "Specified V9 local-first linguistic learning log (DISCOVERED without remote ACK).",
+      "neuro_lingua_should_reuse": false,
+      "integration_mechanism": "Created: src/raios/wal (JSONL, idempotent event_id, local durability). Stored under intelligence/knowledge_base/neuro_lingua/ to sit beside existing knowledge_base, not under data/ (product SSOT).",
+      "conflicts_or_duplication": "No prior WAL existed. This is not a second WAL; it is the first. Do not confuse with Prisma auditLog or intelligence/project-memory.json."
+    },
+    {
+      "existing_component": "Project memory (idempotent decisions)",
+      "path": "intelligence/memory/project-memory.ts",
+      "responsibility": "Append-only JSON decision log; skip if engine+finding+decision already exist.",
+      "neuro_lingua_should_reuse": true,
+      "integration_mechanism": "Pattern reused in raios.events.EventSink and CognitiveWAL idempotency. Python WAL is used for linguistic events because the TS memory file is product/intelligence decisions, not linguistic observations.",
+      "conflicts_or_duplication": "Writing linguistic events into project-memory.json would mix domains. NL-0 keeps a sibling JSONL instead of overloading that file."
+    },
+    {
+      "existing_component": "Knowledge base paths / canonical path map",
+      "path": "intelligence/knowledge-base.json and intelligence/knowledge_base/",
+      "responsibility": "Canonical path map, tools manifest, project metadata. brain.py default knowledge_base_path.",
+      "neuro_lingua_should_reuse": true,
+      "integration_mechanism": "Manifest at intelligence/knowledge_base/neuro_lingua_manifest.json. WAL/inbox under intelligence/knowledge_base/neuro_lingua/. Does not mutate knowledge-base.json canonical_paths (product SSOT).",
+      "conflicts_or_duplication": "knowledge-base.json is a path policy for product JSON/TS, not a linguistic concept registry. Concept Registry is configs/neuro_lingua/concepts.yaml."
+    },
+    {
+      "existing_component": "Knowledge-state machine DISCOVERED→VALIDATED→CANONICAL",
+      "path": null,
+      "responsibility": "V9 promotion policy for learned knowledge.",
+      "neuro_lingua_should_reuse": false,
+      "integration_mechanism": "Created: src/raios/knowledge_state.py. WAL appends DISCOVERED only. Canonical promotion requires VALIDATED + allow_canonical + evidence.",
+      "conflicts_or_duplication": "Absent before NL-0. EngineStatus in intelligence/core/engine-registry.ts (ACTIVE/DISABLED/DEPRECATED) is not a knowledge state and is not reused as a substitute."
+    },
+    {
+      "existing_component": "Provider / capability routing (TypeScript)",
+      "path": "unified-intelligence/adapters/intelligence-adapter.ts",
+      "responsibility": "Capability name → execute; CAPABILITY_NOT_REGISTERED / graceful failure; never mutates Master Data.",
+      "neuro_lingua_should_reuse": true,
+      "integration_mechanism": "Python mirror: src/raios/providers (CapabilityContract, ProviderRegistry, cheapest capable provider). NeuroLinguaCapability adapter matches the TS IntelligenceCapability shape.",
+      "conflicts_or_duplication": "A second TS registry was not added. Python registry is required because the public NL-0 API is Python. Host config.yaml llm.provider=claude is explicitly not the routing key."
+    },
+    {
+      "existing_component": "Engine registry",
+      "path": "intelligence/core/engine-registry.ts",
+      "responsibility": "Lists TS intelligence engines (duplicate, cleanup, audit, memory).",
+      "neuro_lingua_should_reuse": false,
+      "integration_mechanism": "Not extended: engines listed there are invoked by TS scan scripts. NeuroLingua is Python. Discovery is via neuro_lingua_manifest.json.",
+      "conflicts_or_duplication": "Registering a Python kernel as a TS engine would break runDuplicateEngine-style loaders."
+    },
+    {
+      "existing_component": "RiskLevel + governance gate",
+      "path": "unified-intelligence/runtime/controlled-runtime-orchestrator.ts and unified-intelligence/adapters/gl-dos-governance-gate.ts",
+      "responsibility": "riskLevel LOW|MEDIUM|HIGH|CRITICAL. CRITICAL denied without human auth; HIGH review required.",
+      "neuro_lingua_should_reuse": true,
+      "integration_mechanism": "src/raios/risk.py mirrors the same four names. Semantic verification policy in src/raios/neuro_lingua/verification.py escalates checks by that taxonomy. Does not reimplement the TS governance gate (execution authorization ≠ semantic verification).",
+      "conflicts_or_duplication": "Verification policy was NOT already scaffolded in Python. TS gate is authorization, not number/entity/terminology preservation. NL-0 adds semantic verification without replacing the gate."
+    },
+    {
+      "existing_component": "Event system",
+      "path": null,
+      "responsibility": "No Python or TS pub/sub event bus exists.",
+      "neuro_lingua_should_reuse": false,
+      "integration_mechanism": "Minimal in-process EventSink (src/raios/events.py) used by WAL and Evolution inbox. Not a distributed bus.",
+      "conflicts_or_duplication": "Would be a competing bus only if we introduced Redis/NATS/etc. We did not."
+    },
+    {
+      "existing_component": "Semantic state structures / CognitiveMeaningPacket",
+      "path": null,
+      "responsibility": "Canonical meaning boundary.",
+      "neuro_lingua_should_reuse": false,
+      "integration_mechanism": "Created: src/raios/neuro_lingua/packet.py. Application API consumes meaning, not vendor output.",
+      "conflicts_or_duplication": "None pre-existing."
+    },
+    {
+      "existing_component": "RAG / retrieval infrastructure",
+      "path": null,
+      "responsibility": "Specified for changing facts → retrieval.",
+      "neuro_lingua_should_reuse": false,
+      "integration_mechanism": "No product RAG exists (no vector index, no chunk store). sentence-transformers is in requirements.txt but unused by EOS runtime. NL-0 training policy routes changing facts to retrieval as a decision, and does not install or download embedding models in tests.",
+      "conflicts_or_duplication": "Do not treat requirements.txt sentence-transformers as an existing RAG stack. Training policy names retrieval without calling it."
+    },
+    {
+      "existing_component": "Model adapters",
+      "path": "config.yaml llm.provider; brain.py optional claude/npx claude",
+      "responsibility": "Host brain optionally shells out to claude. Not capability-contract based.",
+      "neuro_lingua_should_reuse": false,
+      "integration_mechanism": "GenericLLMProvider is vendor-agnostic and unconfigured by default (unavailable). LocalDeterministicProvider is the NL-0 default. Host claude settings are read as metadata only.",
+      "conflicts_or_duplication": "Hard-wiring NeuroLingua to claude would violate 'model is replaceable'. We did not."
+    },
+    {
+      "existing_component": "Unified-intelligence adapters (master data, governance, reports)",
+      "path": "unified-intelligence/adapters/*.ts",
+      "responsibility": "Master Data reads are authoritative; reports are derived; governance gates execution.",
+      "neuro_lingua_should_reuse": true,
+      "integration_mechanism": "NeuroLingua never writes product Master Data. Reports for NL-0 go to reports/v9-*.json following the existing reports/ derived-artifact convention.",
+      "conflicts_or_duplication": "None."
+    },
+    {
+      "existing_component": "Test architecture",
+      "path": "__tests__/workflowEngine.test.ts, intelligence/test/*.ts, tests/performance/smoke_test.js, test_db_entities.py",
+      "responsibility": "Vitest workflow engine (Prisma mocked), TS intelligence tests, k6 smoke, Prisma entity live test.",
+      "neuro_lingua_should_reuse": true,
+      "integration_mechanism": "Python NL-0 suite added at tests/neuro_lingua with pytest (new, because no pytest suite existed). Does not modify Vitest or Prisma tests. pytest.ini pythonpath=src. Does not run test_db_entities.py (needs PostgreSQL).",
+      "conflicts_or_duplication": "No prior pytest layout. Adding pytest.ini is scoped to tests/neuro_lingua via testpaths."
+    },
+    {
+      "existing_component": "Logging / observability",
+      "path": "brain.py _setup_logging; logs/; unified-intelligence phase reports",
+      "responsibility": "Console + logs/brain-YYYYMMDD.log. Architecture phase JSON under unified-intelligence/reports/.",
+      "neuro_lingua_should_reuse": true,
+      "integration_mechanism": "src/raios/observability.py writes logs/neuro-lingua-YYYYMMDD.log with the same formatter. Benchmark/test JSON in reports/ like other derived artifacts.",
+      "conflicts_or_duplication": "Does not create a second metrics backend (no Prometheus/OTel added)."
+    },
+    {
+      "existing_component": "Confidence helper",
+      "path": "intelligence/core/confidence.ts",
+      "responsibility": "Returns hardcoded 100/95/85/60.",
+      "neuro_lingua_should_reuse": false,
+      "integration_mechanism": "NeuroLingua Confidence is measured from evidence (script ratios, lexical hit counts). Missing tiers recorded in unavailable_tiers. Does not call calculateConfidence.",
+      "conflicts_or_duplication": "Reusing the TS helper would fake confidence. Explicitly avoided."
+    },
+    {
+      "existing_component": "Live Brain / Evolution Brain split",
+      "path": null,
+      "responsibility": "V9 principle: live inference vs evolution/learning.",
+      "neuro_lingua_should_reuse": false,
+      "integration_mechanism": "Live path: NeuroLingua.interpret/realize. Evolution path: EvolutionInbox JSONL (learning gaps). No training is started.",
+      "conflicts_or_duplication": "These brains did not exist. Inbox is an integration point, not a second EOS brain."
+    },
+    {
+      "existing_component": "Experience → Skill Compilation",
+      "path": "intelligence/knowledge_base/tools_manifest.json merged_skills (empty)",
+      "responsibility": "Placeholder merged_skills list.",
+      "neuro_lingua_should_reuse": true,
+      "integration_mechanism": "Training policy routes repeated procedures to COMPILED_SKILL without writing weights or mutating tools_manifest.json in NL-0.",
+      "conflicts_or_duplication": "tools_manifest.merged_skills is empty; NL-0 does not populate it automatically."
+    }
+  ],
+  "files_created_expected": [
+    "src/raios/**",
+    "configs/neuro_lingua/**",
+    "tests/neuro_lingua/**",
+    "benchmarks/neuro_lingua/**",
+    "docs/v9/V9-NL0-IMPLEMENTATION-REPORT.md",
+    "reports/v9-neurolingua-*.json"
+  ],
+  "do_not_touch": [
+    "src/master_data/**",
+    "src/finance/**",
+    "src/compliance/**",
+    "config.yaml",
+    ".env",
+    "brain.py (no rewrite)",
+    "prisma/**"
+  ]
+}

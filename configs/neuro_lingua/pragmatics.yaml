@@ -1,0 +1,54 @@
+# Pragmatic markers bound to concept_id — not a giant phrase dictionary.
+# Surface forms are evidence for concept binding; interpretation is conceptual.
+
+markers:
+  - concept_id: pragmatics.politeness_softener
+    flag: politeness_marker
+    not_logical_condition: true
+    patterns:
+      - "إذا ما عليك أمر"
+      - "اذا ما عليك امر"
+      - "لو سمحت"
+      - "من فضلك"
+      - "please"
+      - "if you don't mind"
+      - "vær så snill"
+      - "var snäll"
+      - "vær venlig"
+
+  - concept_id: deadline.today
+    flag: deadline_today
+    patterns:
+      - "اليوم"
+      - "النهارده"
+      - "النهاردة"
+      - "today"
+      - "i dag"
+      - "idag"
+
+  - concept_id: action.resolve
+    flag: action_resolve
+    patterns:
+      - "خلصه"
+      - "خلّصه"
+      - "finish"
+      - "resolve"
+      - "løse"
+      - "lösa"
+
+  - concept_id: action.inspect
+    flag: action_inspect
+    patterns:
+      - "شوف لنا"
+      - "شوف"
+      - "look into"
+      - "se på"
+
+  - concept_id: system.regression
+    flag: system_regression
+    requires_domain: [software, engineering, devops]
+    patterns:
+      - "الدنيا هتبوظ"
+      - "هتبوظ"
+      - "going to break"
+      - "kommer til å knekke"

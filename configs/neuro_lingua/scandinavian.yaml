@@ -1,0 +1,60 @@
+# Shared Scandinavian understanding with locale-isolated realization.
+# Distinctive tokens are used for leakage detection — not as a translator.
+
+shared_function_words:
+  - kan
+  - du
+  - den
+  - men
+  - nye
+  - nya  # Swedish adjective form; listed so detectors can compete honestly
+
+distinctive:
+  nb-NO:
+    - ikke
+    - noe
+    - noen
+    - gøy
+    - ikke
+    - knekke
+    - saken
+    - ferdig
+    - ikke
+  sv-SE:
+    - inte
+    - och
+    - också
+    - kanske
+    - något
+    - någon
+    - ska
+    - här
+    - där
+    - även
+    - lösa
+    - saken
+    - kraschar
+  da-DK:
+    - noget
+    - nogen
+    - knække
+    - sagen
+    - gøre
+    - ikke
+    - og
+
+# Tokens that must not appear in a given target locale's realized output
+# when they are distinctive of a sibling Scandinavian language.
+leakage:
+  nb-NO:
+    forbidden: [inte, och, också, kanske, något, någon, knække, gøre, kraschar]
+  sv-SE:
+    forbidden: [ikke, noe, noen, knække, gøre, gøy, knekke]
+  da-DK:
+    forbidden: [inte, och, också, kanske, något, någon, knekke, gøy, saken]
+
+# Infinitive markers help isolate Norwegian (å) vs Danish/Swedish (at/att)
+infinitive_markers:
+  nb-NO: ["å"]
+  sv-SE: ["att"]
+  da-DK: ["at"]

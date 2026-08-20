@@ -1,0 +1,208 @@
+# Canonical Concept Registry — meaning is independent of language.
+# Lower scopes may customize realization; they may not silently redefine
+# canonical_meaning. Collision detection lives in the loader.
+
+concepts:
+  - concept_id: action.resolve
+    canonical_meaning: "Bring an open matter to a completed, handled state."
+    aliases:
+      en: [resolve, finish, complete, close out, take care of]
+      ar-EG: [خلصه, خلص, عالج, اقفله]
+      ar-GULF: [خلصه, خلص, عالج]
+      nb-NO: [løse, fikse, gjøre ferdig]
+      sv-SE: [lösa, åtgärda, göra klart]
+      da-DK: [løse, fikse, gøre færdig]
+    realizations:
+      en: "resolve the matter"
+      ar-EG: "خلّص الموضوع"
+      ar-GULF: "خلّص الموضوع"
+      nb-NO: "løs saken"
+      sv-SE: "lös saken"
+      da-DK: "løs sagen"
+    domains: [software, operations, general]
+
+  - concept_id: deadline.today
+    canonical_meaning: "The required completion time is the current local calendar day."
+    aliases:
+      en: [today, by today, this day]
+      ar-EG: [اليوم, النهارده, النهاردة]
+      ar-GULF: [اليوم, الحين]
+      nb-NO: [i dag, idag]
+      sv-SE: [i dag, idag]
+      da-DK: [i dag, idag]
+    realizations:
+      en: "today"
+      ar-EG: "اليوم"
+      ar-GULF: "اليوم"
+      nb-NO: "i dag"
+      sv-SE: "i dag"
+      da-DK: "i dag"
+    domains: [general, operations]
+
+  - concept_id: pragmatics.politeness_softener
+    canonical_meaning: "A politeness or deference marker; not a logical precondition."
+    aliases:
+      en: [please, if you don't mind, if it's no trouble]
+      ar-EG: [إذا ما عليك أمر, لو سمحت, من فضلك, لو تكرمت]
+      ar-GULF: [إذا ما عليك أمر, لو سمحت, تكرم]
+      nb-NO: [vær så snill, om du har mulighet]
+      sv-SE: [var snäll, om det går]
+      da-DK: [vær venlig, hvis det er muligt]
+    realizations:
+      en: "please"
+      ar-EG: "لو سمحت"
+      ar-GULF: "لو سمحت"
+      nb-NO: "vær så snill"
+      sv-SE: "var snäll"
+      da-DK: "vær venlig"
+    domains: [general]
+    flags:
+      not_logical_condition: true
+
+  - concept_id: system.regression
+    canonical_meaning: "A system, environment, or pipeline is heading toward an unstable or failing state."
+    aliases:
+      en: [regression, system break, going to break, falling over]
+      ar-EG: [الدنيا هتبوظ, هتبوظ, هيبوظ, الدنيا وقعت, هيقع]
+      ar-GULF: [بيخرب, بيطبح]
+      nb-NO: [systemet knekker, går i stykker]
+      sv-SE: [systemet kraschar, går sönder]
+      da-DK: [systemet knækker, går i stykker]
+    realizations:
+      en: "the system is going to break"
+      ar-EG: "الدنيا هتبوظ"
+      ar-GULF: "بيخرب النظام"
+      nb-NO: "systemet kommer til å knekke"
+      sv-SE: "systemet kommer att gå sönder"
+      da-DK: "systemet kommer til at knække"
+    domains: [software]
+    contextual_only: true
+
+  - concept_id: software.migration
+    canonical_meaning: "A software schema, data, or environment migration process."
+    aliases:
+      en: [migration]
+      ar-EG: [migration]
+      ar-GULF: [migration]
+    realizations:
+      en: "migration"
+      ar-EG: "migration"
+      ar-GULF: "migration"
+      nb-NO: "migration"
+      sv-SE: "migration"
+      da-DK: "migration"
+    domains: [software]
+    preserve_surface: true
+
+  - concept_id: software.report
+    canonical_meaning: "A generated report artifact."
+    aliases:
+      en: [report]
+      ar-EG: [report]
+      ar-GULF: [report]
+    realizations:
+      en: "report"
+      ar-EG: "report"
+      ar-GULF: "report"
+      nb-NO: "report"
+      sv-SE: "report"
+      da-DK: "report"
+    domains: [software]
+    preserve_surface: true
+
+  - concept_id: software.executor
+    canonical_meaning: "A process or component that executes jobs or workflows."
+    aliases:
+      en: [executor]
+      ar-EG: [executor]
+      ar-GULF: [executor]
+    realizations:
+      en: "executor"
+      ar-EG: "executor"
+      ar-GULF: "executor"
+      nb-NO: "executor"
+      sv-SE: "executor"
+      da-DK: "executor"
+    domains: [software]
+    preserve_surface: true
+
+  - concept_id: software.deploy
+    canonical_meaning: "Ship a build into an environment."
+    aliases:
+      en: [deploy, deploye]
+      nb-NO: [deploye, deploy]
+      sv-SE: [deploya, deploy]
+      da-DK: [deploye, deploy]
+    realizations:
+      en: "deploy"
+      nb-NO: "deploye"
+      sv-SE: "deploya"
+      da-DK: "deploye"
+    domains: [software]
+    preserve_surface: true
+
+  - concept_id: software.build
+    canonical_meaning: "A compiled or packaged software build artifact."
+    aliases:
+      en: [build, builden]
+      nb-NO: [builden, build]
+      sv-SE: [builden, build]
+      da-DK: [builden, build]
+    realizations:
+      en: "build"
+      nb-NO: "builden"
+      sv-SE: "builden"
+      da-DK: "builden"
+    domains: [software]
+    preserve_surface: true
+
+  - concept_id: software.production_database
+    canonical_meaning: "The production (live) database. High-risk mutable store."
+    aliases:
+      en: [production database, production-databasen, prod db]
+      nb-NO: [production-databasen]
+      sv-SE: [production-databasen]
+      da-DK: [production-databasen]
+    realizations:
+      en: "production database"
+      nb-NO: "production-databasen"
+      sv-SE: "production-databasen"
+      da-DK: "production-databasen"
+    domains: [software]
+    preserve_surface: true
+
+  - concept_id: software.touch
+    canonical_meaning: "Mutate or write to a resource."
+    aliases:
+      en: [touch, touche]
+      nb-NO: [touche, røre]
+      sv-SE: [röra, touche]
+      da-DK: [røre, touche]
+    realizations:
+      en: "touch"
+      nb-NO: "touche"
+      sv-SE: "röra"
+      da-DK: "røre"
+    domains: [software]
+
+  - concept_id: action.inspect
+    canonical_meaning: "Look into a matter; inspect without necessarily completing it."
+    aliases:
+      en: [look into, check, inspect]
+      ar-EG: [شوف لنا, بص على, شوف]
+      ar-GULF: [شوف لنا, شف]
+      nb-NO: [se på, sjekk]
+      sv-SE: [titta på, kolla]
+      da-DK: [se på, tjek]
+    realizations:
+      en: "look into"
+      ar-EG: "شوف لنا"
+      ar-GULF: "شوف لنا"
+      nb-NO: "se på"
+      sv-SE: "titta på"
+      da-DK: "se på"
+    domains: [general, software]
+
+# Scope overlays customize realization only. canonical_meaning collisions
+# against global concepts are errors, not silent redefinitions.
+scopes: []
