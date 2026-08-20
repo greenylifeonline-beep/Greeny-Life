@@ -32,16 +32,13 @@ Prove REAL council connectivity with one meeting_id and one case_hash. C1 is own
 - challenge_id: `CHAL-f1396e7eeba2004c`
 - nonce: `048cbd9d1eb8a2ba30448efb1b02cc96`
 
-## الرد المطلوب (نفس الشكل لكل مقعد)
+## الرد المطلوب — سطر واحد لا نموذج
 
 ```
-meeting_id: GL-COUNCIL-4a11023c3c321b6f
-challenge_id: <your challenge_id>
-nonce: <echo exactly>
-origin_salt: <invent now, not copied>
-bound: <C2-CHATGPT-1-SUMMON | C3-CHATGPT-PEER-SUMMON | C4-DEEPSEEK-SUMMON>
-GL005_PROVEN=false
-COUNCIL_OPERATION_PROVEN=false
+SEAL C2 GL-COUNCIL-4a11023c3c321b6f CHAL-c02ec6b915caac01 62562351fbffc449650db9a817bd80d1 SALT=... WORD=...
+SEAL C3 GL-COUNCIL-4a11023c3c321b6f CHAL-639d162942d717ee 6b7bc5cb54226790bf080a92397b53db SALT=... WORD=...
+SEAL C4 GL-COUNCIL-4a11023c3c321b6f CHAL-f1396e7eeba2004c 048cbd9d1eb8a2ba30448efb1b02cc96 SALT=... WORD=...
 ```
 
-C1 وحده يقرر بعد الرد. لا تصنع موافقة C1.
+النداء يُهمس في شات النموذج. الرد سطر SEAL. المؤسس يعيده إلى C1. ليس إيميل. ليس تذكرة GitHub.
+

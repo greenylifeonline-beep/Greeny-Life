@@ -6,6 +6,7 @@ import argparse
 import hashlib
 import json
 import os
+import re
 import secrets
 import subprocess
 import sys
@@ -492,6 +493,91 @@ def issue() -> dict:
     return receipt
 
 
+SEAL_RE = re.compile(
+    r"SEAL\s+(C[234])\s+(GL-COUNCIL-[A-Za-z0-9]+)\s+(CHAL-[0-9a-f]+)\s+([0-9a-f]{32})\s+SALT=(\S+)\s+WORD=(\S+)",
+    re.I,
+)
+
+
+def _forbidden_tokens(meeting: dict) -> set[str]:
+    blob = ""
+    for name in ("LIVE.md", "WHISPER-C2.md", "WHISPER-C3.md", "WHISPER-C4.md"):
+        path = COUNCIL / name
+        if path.exists():
+            blob += path.read_text(encoding="utf-8")
+    for name in ("WARN-C2.md", "WARN-C3.md", "WARN-C4.md"):
+        path = ROOT / ".ai-os" / "summon" / name
+        if path.exists():
+            blob += path.read_text(encoding="utf-8")
+    tokens = {t.lower() for t in re.findall(r"[A-Za-z0-9_\u0600-\u06FF]{3,}", blob)}
+    for chal in (meeting.get("challenges") or {}).values():
+        tokens.add(str(chal.get("nonce") or "").lower())
+        tokens.add(str(chal.get("challenge_id") or "").lower())
+    tokens.add(str(meeting.get("meeting_id") or "").lower())
+    return tokens
+
+
+def hear(line: str) -> dict:
+    before = wal_mtime()
+    meeting = load_json(COUNCIL / "MEETING.json")
+    if not meeting:
+        raise SystemExit("NO_MEETING")
+    match = SEAL_RE.search(line or "")
+    rec = {
+        "schema": "raios.council-hear.v1",
+        "ts": utc(),
+        "line_sha256": sha256_text(line or ""),
+        "ok": False,
+        "gl005_proven": False,
+        "council_operation_proven": False,
+        "wal_written": False,
+        "transport": "founder_whisper",
+    }
+    if not match:
+        rec["reason"] = "NO_SEAL_LINE"
+        dump(COUNCIL / "LAST-HEAR.json", rec)
+        return rec
+    code, meeting_id, challenge_id, nonce, salt, word = match.groups()
+    code = code.upper()
+    chal = (meeting.get("challenges") or {}).get(code) or {}
+    forbidden = _forbidden_tokens(meeting)
+    if meeting_id != meeting.get("meeting_id"):
+        rec["reason"] = "MEETING_MISMATCH"
+    elif challenge_id != chal.get("challenge_id"):
+        rec["reason"] = "CHALLENGE_MISMATCH"
+    elif nonce != chal.get("nonce"):
+        rec["reason"] = "NONCE_MISMATCH"
+    elif salt.lower() in forbidden or word.lower() in forbidden:
+        rec["reason"] = "SALT_OR_WORD_PRECOMPUTED"
+    elif salt.lower() == nonce.lower() or word.lower() == nonce.lower():
+        rec["reason"] = "SALT_IS_NONCE"
+    else:
+        rec.update(
+            {
+                "ok": True,
+                "reason": "WHISPER_BOUND",
+                "seat": code,
+                "target": chal.get("target"),
+                "meeting_id": meeting_id,
+                "challenge_id": challenge_id,
+                "nonce_echoed": True,
+                "origin_salt_len": len(salt),
+                "word": word,
+                "ROUND_TRIP": True,
+                "C2_CONNECTED": "WHISPER_BOUND" if code == "C2" else "NOT_PROVEN",
+            }
+        )
+        rec[f"{code}_WHISPER_BOUND"] = True
+    heard_path = COUNCIL / "HEARD.jsonl"
+    with heard_path.open("a", encoding="utf-8") as handle:
+        handle.write(json.dumps(rec, ensure_ascii=False) + "\n")
+    dump(COUNCIL / "LAST-HEAR.json", rec)
+    if wal_mtime() != before:
+        raise SystemExit("COUNCIL_WAL_VIOLATION")
+    rec["wal_mtime_unchanged"] = True
+    return rec
+
+
 def verify() -> dict:
     meeting = load_json(COUNCIL / "MEETING.json")
     if not meeting:
@@ -522,8 +608,13 @@ def verify() -> dict:
 
 def main() -> int:
     p = argparse.ArgumentParser()
-    p.add_argument("cmd", choices=["census", "issue", "verify"])
+    p.add_argument("cmd", choices=["census", "issue", "verify", "hear"])
+    p.add_argument("--line", default="")
     args = p.parse_args()
+    if args.cmd == "hear":
+        rec = hear(args.line)
+        print(json.dumps(rec, ensure_ascii=False, indent=2))
+        return 0 if rec.get("ok") else 2
     if args.cmd == "census":
         rec = census()
         dump(COUNCIL / "LAST-CENSUS.json", rec)

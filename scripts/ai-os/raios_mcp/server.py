@@ -170,6 +170,25 @@ class Handler(BaseHTTPRequestHandler):
                 },
             )
             return
+        if path in {"/council/live", "/council"}:
+            live = ROOT / ".ai-os" / "council" / "LIVE.md"
+            body = live.read_text(encoding="utf-8") if live.exists() else "NO_MEETING\n"
+            self._send_bytes(200, body.encode("utf-8"), "text/markdown; charset=utf-8")
+            return
+        if path == "/council/call.json":
+            meeting = ROOT / ".ai-os" / "council" / "MEETING.json"
+            payload = json.loads(meeting.read_text(encoding="utf-8")) if meeting.exists() else {}
+            payload = {
+                "ok": True,
+                "door": "whisper-seal",
+                "gl005_proven": False,
+                "council_operation_proven": False,
+                "meeting_id": payload.get("meeting_id"),
+                "case_hash": payload.get("case_hash"),
+                "reply": "one line: SEAL Cx meeting_id challenge_id nonce SALT=... WORD=...",
+            }
+            self._send_json(200, payload)
+            return
         if path == "/mcp":
             self._send_json(405, {"ok": False, "error": "GET_SSE_NOT_REQUIRED_STATELESS_V1"})
             return
