@@ -163,5 +163,6 @@ Transport is founder paste, not GitHub MAIL, not remote MCP. `DIRECT_INBOUND_TRA
 DISCOVERED: `THREE_WINDOWS_ARE_THE_COUNCIL`. `FOUNDER_RELAY_IS_THE_INBOUND_TRANSPORT`. `PUBLIC_URL_NE_PERMANENT_ROOM`. `C5_IN_REPO_IS_PERMANENT_PRESENCE`. `CURSOR_SESSION_NE_C5`. `NO_SECOND_BUS_FOR_CONSULT`.
 C1 asked CASE-001: how to consult here permanently. C3/C4 cannot enter this Cursor chat or the Cloudflare door. Standing path: Cursor chat holds C1+C2+C5; ChatGPT holds C3; DeepSeek holds C4; C1 pastes; C5 records `.ai-os/council/FLOOR.md`. Do not build a website, SMTP, WebSocket, or second MCP for this. `GL005_PROVEN` stays false.
 
-Collective consult is a proven cycle, not a shared URL. Modern nothingness here is an unopenable page and a CONNECTED flag without a returned line. The antidote is `SILENCE_AFTER_PASTE_IS_ABSENCE`. Method: `.ai-os/council/METHOD.md`.
+Collective consult is a proven cycle, not a shared URL. Modern nothingness here is an unopenable page and a CONNECTED flag without a returned line. The antidote is `SILENCE_AFTER_PASTE_IS_ABSENCE`. Method: `.ai-os/council/METHOD.md`. Daily unconventional cord: `.ai-os/council/DAILY.md` — screenshot of `TODAY.md`, one round per day, no new bus.
+
 
