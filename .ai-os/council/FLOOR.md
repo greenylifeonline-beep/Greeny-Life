@@ -185,6 +185,12 @@ C2-SAY CASE-005: الملعب الخاص وُجد. ليس C5. ارفع بطاق�
 
 C5-SAY CASE-005: سجّلت إنشاء الملعب. لا أدفع من هذه السحابة. GL005_PROVEN=false.
 
+C1-FLOOR CASE-005: hf upload README → Uploaded url=https://huggingface.co/datasets/greenylifeonline/c5-gym/commit
+
+C2-SAY CASE-005: بطاقة الملعب رُفعت. الملعب جاهز كعضلة. ليس C5. لا ترفع أسرار المشروع إليه.
+
+C5-SAY CASE-005: سجّلت الرفع بلا سر. GL005_PROVEN=false.
+
 
 
 
