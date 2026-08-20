@@ -17,15 +17,17 @@ NOW_MD = BOARD / "NOW.md"
 OPINIONS = BOARD / "opinions.jsonl"
 
 CODES = {
-    "C0": {"actor": "USER", "name": "صاحب المشروع", "where": "داخل الشات / داخل اللوحة"},
+    "C0": {"actor": "OWNER", "name": "صاحب المشروع", "where": "داخل الشات / داخل اللوحة"},
     "C1": {"actor": "COMMANDER", "name": "القائد Cursor", "where": "داخل المشروع"},
-    "C2": {"actor": "CONSULTANT", "name": "المستشار التنفيذي", "where": "خارج المشروع — يقرأ اللوحة ويكتب رأيه"},
+    "C2": {"actor": "CONSULTANT", "name": "المساعد الأول / المستشار", "where": "MCP أو البريد — يحضر الحوار ويتعلم"},
     "C3": {"actor": "ENGINEER", "name": "المهندس PowerShell", "where": "Repair"},
-    "C4": {"actor": "RAIOS", "name": "نواة الخدمة", "where": "داخل المشروع"},
-    "C5": {"actor": "DEEPSEEK", "name": "ديب سيك / العقول الثلاثة", "where": "خارج المشروع — GL-003 ثم اللوحة"},
+    "C4": {"actor": "RAIOS", "name": "نواة الخدمة", "where": "داخل المشروع — يتعلم DISCOVERED فقط"},
+    "C5": {"actor": "ASSESSOR", "name": "المقيّم", "where": "MCP — يفنّد ولا ينفّذ. DeepSeek قد يشغل هذا المقعد"},
 }
 ACTOR_TO_CODE = {v["actor"]: k for k, v in CODES.items()}
+ACTOR_TO_CODE["USER"] = "C0"
 ACTOR_TO_CODE["POWERSHELL"] = "C3"
+ACTOR_TO_CODE["DEEPSEEK"] = "C5"
 ACTOR_TO_CODE["DEEPSEEK-LOCAL"] = "C5"
 
 
@@ -151,8 +153,10 @@ def resolve_code(value: str) -> tuple[str, str]:
         actor = value
         if value == "POWERSHELL":
             actor = "ENGINEER"
-        if value == "DEEPSEEK-LOCAL":
-            actor = "DEEPSEEK"
+        if value in {"DEEPSEEK", "DEEPSEEK-LOCAL"}:
+            actor = "ASSESSOR"
+        if value == "USER":
+            actor = "OWNER"
         return ACTOR_TO_CODE[value], actor
     raise SystemExit(f"UNKNOWN_CODE:{value}")
 

@@ -1,8 +1,8 @@
 {
   "schema": "raios.mission-board.v1",
   "branch": "v9-neurolingua-semantic-kernel",
-  "head": "d89a5104118258a4c62f3258154b2c12c3b5e11c",
-  "updated_at": "2026-08-20T16:23:56.442562+00:00",
+  "head": "ea85d2e9d6ade0ac669ad647d43a9ce5b170cb72",
+  "updated_at": "2026-08-20T16:36:49.465522+00:00",
   "mission_status": "MUTATION_NOT_PROVEN",
   "mission": "GL-004 HOLD_PROMOTION. GL-005 mutation not proven. MCP V1 Streamable HTTP is the connector. GitHub Issues are degraded mail. C1 dispatches. MAIL_PASSES_NE_PROVES. EMPIRE_CONNECTOR_SPEC_AS_WRITTEN_IS_REJECTED.",
   "schedule": {
@@ -12,11 +12,11 @@
   },
   "required": {
     "C0": "يعطي الأوامر في شات Cursor. ليس ساعي كل ظرف.",
-    "C1": "يرسل في OUTBOX ويجمع Issues. لا يمنح PASS من بريد.",
-    "C2": "يقرأ OUTBOX ويرد Issue بعنوان MAIL C2. لا دخول للمستودع.",
+    "C1": "بوابة MCP V1 + OUTBOX. يجمع Issues. لا يمنح PASS.",
+    "C2": "MCP: read_board/read_receipt/post_opinion. أو Issue بعنوان MAIL C2. لا كود.",
     "C3": "المنفّذ على العملية المربوطة. لا أسرار مختلقة.",
     "C4": "خدمة: نبض + WAL.",
-    "C5": "يقرأ OUTBOX ويرد Issue بعنوان MAIL C5. لا يسرق C2."
+    "C5": "MCP أو Issue بعنوان MAIL C5. لا يسرق C2. لا كود."
   },
   "mail": {
     "dispatcher": "C1",
@@ -34,8 +34,8 @@
       "gl005_proven": false
     },
     "last_send": {
-      "id": "d94e3492-dc18-407a-b4e9-f7987c2e263e",
-      "ts": "2026-08-20T16:23:56.022014+00:00",
+      "id": "3ad589bb-2267-43ed-af9a-59e0f78cbf7d",
+      "ts": "2026-08-20T16:36:42.780694+00:00",
       "to": [
         "C2",
         "C5"

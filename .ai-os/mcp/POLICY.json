@@ -61,7 +61,7 @@
   ],
   "actors": {
     "C0": {
-      "actor_role": "USER",
+      "actor_role": "OWNER",
       "instance_role": "owner",
       "tools": [
         "get_head",
@@ -127,8 +127,9 @@
       "deny": ["post_opinion", "write_handoff", "shell", "set_proven"]
     },
     "C5": {
-      "actor_role": "DEEPSEEK",
-      "instance_role": "three-brains",
+      "actor_role": "ASSESSOR",
+      "instance_role": "falsifier",
+      "notes": "ASSESSOR seat. DeepSeek may occupy it via alias DEEPSEEK. Not a second actor.",
       "tools": [
         "get_head",
         "read_board",

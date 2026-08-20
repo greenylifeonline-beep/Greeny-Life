@@ -82,4 +82,8 @@ V1 registers eight tools only: `get_head`, `read_board`, `read_inbox`, `read_rec
 
 ## D-019 Empire connector spec is rejected as written
 DISCOVERED: `EMPIRE_CONNECTOR_SPEC_AS_WRITTEN_IS_REJECTED`.
-A FastAPI+WebSocket+SQLite WAL+Relay Hub+JWT/HMAC+cache+Railway 6-week plan is rejected. Accept only the already-running Streamable HTTP V1 slice over `.ai-os`. Do not rename C5 from DEEPSEEK to ASSESSOR. Do not give C0 execute/promote through the connector. `AUTHORITY_NE_BYPASS_INVARIANTS`. Calendar-week delivery plans are not a RAIOS success metric.
+A FastAPI+WebSocket+SQLite WAL+Relay Hub+JWT/HMAC+cache+Railway 6-week plan is rejected. Accept only the Streamable HTTP V1 slice over `.ai-os`. Do not give C0 execute/promote through the connector. `AUTHORITY_NE_BYPASS_INVARIANTS`. Calendar-week delivery plans are not a RAIOS success metric.
+
+## D-020 C5 seat is ASSESSOR
+DISCOVERED: `C5_SEAT_IS_ASSESSOR`.
+The MCP/board seat C5 is ASSESSOR (falsify, no execute, no promote). DeepSeek may occupy that seat via alias `DEEPSEEK` / `DEEPSEEK-LOCAL`. This is not a sixth actor. Agents may propose learning via opinion/packet; only an internal RAIOS adapter may ingest DISCOVERED candidates. The adapter must not write Cognitive WAL from the gateway and must not VALIDATE or PROMOTE.

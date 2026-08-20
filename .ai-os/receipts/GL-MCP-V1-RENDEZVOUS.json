@@ -1,0 +1,51 @@
+{
+  "schema": "raios.mcp-v1-rendezvous.v1",
+  "isolated": {
+    "live": false,
+    "head": "836028d5ad8fb737214626351cde12a3380b864c",
+    "c2_opinion": "55056115-6591-45c8-b157-8748eca995e0",
+    "c2_answer": "3161b488-c0d4-434d-b839-8480b5148fbc",
+    "c1_challenge": "9f8810f8-e490-4afe-a144-ea107e6ed667",
+    "c1_ack": "9f325d66-9ac5-464d-ae5a-0f86c3350c1a",
+    "c5_falsify": "cc3dd33e-5aab-4211-bb3d-076e19d9497b",
+    "wal_written": false,
+    "gl005_proven": false,
+    "product_write_from_c2": false,
+    "sqlite": false,
+    "receipts": {
+      "c2_opinion": "db6c7df05b7ff769e35dda511ddf73f11641bf18426298f278aadc85f9e07e6c",
+      "c1_challenge": "9dcfb45799223ad12dda51bea528eb7d051d4140db78559feace03497536d36e",
+      "c2_answer": "d91e4fa3a9b345b116f2a8a6dd6aa45c425f37b66dabc26e1063dcb8eb57699d",
+      "c5_falsify": "00040ee8d582866e1d819a6e380758971db5d880811f2a696d6bd7bbbe65bb0a"
+    }
+  },
+  "live": {
+    "live": true,
+    "head": "ea85d2e9d6ade0ac669ad647d43a9ce5b170cb72",
+    "c2_opinion": "6ef0037e-85c9-4c06-a3cd-f9592ad0370a",
+    "c2_answer": "f54c4faf-af29-425e-b35f-273ffb4df6dd",
+    "c1_challenge": "aa0eb9bf-007a-4321-84f6-e42c06ce3890",
+    "c1_ack": "9eb5bf3c-bfac-401c-9e70-4364537a0196",
+    "c5_falsify": "e92a449e-276f-41a0-b9ff-9f9ab91a1440",
+    "wal_written": false,
+    "gl005_proven": false,
+    "product_write_from_c2": false,
+    "sqlite": false,
+    "receipts": {
+      "c2_opinion": "d691e30521a358b9330bc2f1ebb516be84e84bc0e53652493cec8c9681ec5a9b",
+      "c1_challenge": "3f44f9dd76ee9412bcd22cd658d42ef0f03a3549a972c011efee755bb43ad160",
+      "c2_answer": "9ab039a5d29b166fc196fba2ebd2cb0653dd1ef41680ea00feddb868557517f8",
+      "c5_falsify": "9957ba8fc7bb389a07288b79330666f84171c7b298c61e40489ff9df6f1851d3"
+    }
+  },
+  "learning_candidate": "f4b1bad6-7f76-4c86-bc64-b04093c16fbb",
+  "learning_receipt": "294cb7d7f2bb26a5e60449ae4ee07a78ee69df6744e0b3e03908f5436c670415",
+  "gl005_proven": false,
+  "authorities": {
+    ".ai-os": "operational",
+    "Cognitive WAL": "learning",
+    "git": "source/history",
+    "gateway": "transport"
+  },
+  "receipt_sha256": "adc48a677198161dbcc4431db4d848dae09b6a53c48a022420c76bc5ee186607"
+}
