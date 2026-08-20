@@ -41,3 +41,21 @@ PID 3297 `/workspace` is **not** Repair. Do not copy Instance B GET 500 or BLOCK
 Classifier: 401 = `BLOCKED`. 201 with unchanged hash = `INVALID_OBSERVATION`. 201 with missing id after = `FAILED`. 201 with diff + visible id = `PASS_CANDIDATE` (still not `GL005_PROVEN`).
 
 Protected capability is not missing capability.
+
+## Repair observation recorded
+
+`PASSWORD_LENGTH=0`
+`NEW_PASSWORD_TOO_SHORT`
+`PASSWORD_VALUE_PRINTED=FALSE`
+`LOGIN_EXECUTED=FALSE`
+`TASK_MUTATION_EXECUTED=FALSE`
+`GL005_PROVEN=FALSE`
+
+That is `BLOCKED`, fail-closed correctly. Do **not** retry with a generated password.
+
+## Remaining probe only
+
+`GET /api/auth/session` on the bound Repair Next.
+If `authenticated=false`: stop. `BLOCKED_AUTH`.
+Do not run `scripts/provision-admin.ts` as the GL-005 proof.
+

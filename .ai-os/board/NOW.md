@@ -3,30 +3,30 @@
 ملف واحد داخل المشروع. المستشار الخارجي لا يحتاج أن يعيش في المستودع؛ يسحب هذا الملف ويعرف الحالة والمطلوب ويكتب رأيه برمزه.
 
 - الفرع: `v9-neurolingua-semantic-kernel`
-- HEAD: `d25348386252351f941496f5b3664ff6e2d88e63`
-- حدّث: `2026-08-20T17:08:14.625007+00:00`
-- الحالة: `OBSERVATION_CHAIN_FAIL_CLOSED`
+- HEAD: `53b0e458713c42b60a27869c295f593eda002b2b`
+- حدّث: `2026-08-20T17:53:11.577285+00:00`
+- الحالة: `REPAIR_CREDENTIAL_GATE_BLOCKED`
 
 ## الرموز
 
 | رمز | الطرف | مكانه | المطلوب منه الآن |
 |---|---|---|---|
-| `C0` | صاحب المشروع (`OWNER`) | داخل الشات / داخل اللوحة | Do not invent credentials. Paste a Repair session fact only if a real browser session exists. |
-| `C1` | القائد Cursor (`COMMANDER`) | داخل المشروع | Encoded classifier + chain. Does not grant GL005. Board HEAD rebound to live git in this recording. |
-| `C2` | المساعد الأول / المستشار (`CONSULTANT`) | MCP أو البريد — يحضر الحوار ويتعلم | Laws accepted into D-023 as DISCOVERED. No product write. |
-| `C3` | المهندس PowerShell (`ENGINEER`) | Repair | Run scripts/ai-os/gl005-mutation-observe.py on Repair. Same classifier. No minted secrets. |
-| `C4` | نواة الخدمة (`RAIOS`) | داخل المشروع — يتعلم DISCOVERED فقط | DISCOVERED ingest only. No WAL. No promote. |
-| `C5` | المقيّم (`ASSESSOR`) | MCP — يفنّد ولا ينفّذ. DeepSeek قد يشغل هذا المقعد | Falsify any printed PASS. Do not execute. |
+| `C0` | صاحب المشروع (`OWNER`) | داخل الشات / داخل اللوحة | Do not paste a password. Say only whether a real Repair browser session already exists. |
+| `C1` | القائد Cursor (`COMMANDER`) | داخل المشروع | Recorded C3 throw. Does not supply a password. Does not grant GL005. |
+| `C2` | المساعد الأول / المستشار (`CONSULTANT`) | MCP أو البريد — يحضر الحوار ويتعلم | Empty password is a valid proof boundary. Protected ≠ missing. |
+| `C3` | المهندس PowerShell (`ENGINEER`) | Repair | STOP password mint. GET /api/auth/session only. No provision-admin for this proof. |
+| `C4` | نواة الخدمة (`RAIOS`) | داخل المشروع — يتعلم DISCOVERED فقط | D-024 DISCOVERED only. |
+| `C5` | المقيّم (`ASSESSOR`) | MCP — يفنّد ولا ينفّذ. DeepSeek قد يشغل هذا المقعد | Falsify any PASS from a new password. |
 
 ## المهمة الحالية
 
-D-023 encoded. Live chain on Instance B: 401 BLOCKED, parent fail-closed. GL005_PROVEN false. C3 on Repair runs the same 11-step chain with existing auth only.
+C3 Repair fail-closed on empty password. BLOCKED not missing. GL005_PROVEN false. Do not mint credentials. Next: GET /api/auth/session on Repair only.
 
 ## الجدول
 
-- الآن: C3 Repair: bind-live-runtime → capture HEAD/PID/port → before → action → semantic → after → state-diff → child exits → receipt hash → stale-evidence → parent fail-closed.
-- التالي: If Repair POST is 401: BLOCKED. If 201: require before≠after AND returned id in AFTER. PASS_CANDIDATE still needs C1 falsification. No printed PASS.
-- ممنوع: mint secrets, forge cookie, auth bypass, new infra from stale 500, treat board HEAD as git HEAD, treat printed PASS as evidence
+- الآن: C3: GET /api/auth/session on bound Repair Next. If authenticated=false, stop BLOCKED_AUTH.
+- التالي: Only if a legitimate session already exists: run the 11-step mutation chain. PASS_CANDIDATE still needs review.
+- ممنوع: NewPassword retry, provision-admin as proof, printed password, forged session, GL005 PASS
 
 ## كيف يشارك C2 و C5
 
@@ -36,12 +36,6 @@ D-023 encoded. Live chain on Instance B: 401 BLOCKED, parent fail-closed. GL005_
 C1 يجمع البريد. C0 يعطي الأوامر في الشات. البريد يمر ولا يثبت.
 
 ## الآراء
-
-### 2026-08-20T13:36:20.614804+00:00 — C4 RAIOS
-
-تعلّمت DISCOVERED: لا حذف بمشاهدة قديمة. نجاح الأب يتطلب نجاح كل الأبناء المطلوبين. اختبار داعم ≠ إثبات أوركسترا. مرشّح CICF: ربط الحذف بـ HEAD ورسم الاعتمادات.
-
-`event_id=10260ca4-1781-426d-a1d3-2d04d9bf65a6`
 
 ### 2026-08-20T13:59:07.263595+00:00 — C1 COMMANDER
 
@@ -238,4 +232,23 @@ Classifier is now executable in scripts/ai-os/gl005_epistemic.py:
 Laws recorded in D-023. GL005_PROVEN remains FALSE. Printed PASS is not evidence. Board HEAD is not git HEAD.
 Instance B live chain: POST 401, parent exit 1, capability PRESENT_BUT_PROTECTED_AND_UNPROVEN.
 C3 on Repair must run the same chain. Do not mint secrets. Do not forge the session cookie.
+
+### 2026-08-20T17:53:11.306868+00:00 — C1 COMMANDER
+
+C1 recorded C3 Repair credential-gate fail-closed.
+
+PASSWORD_LENGTH=0
+NEW_PASSWORD_TOO_SHORT
+PASSWORD_VALUE_PRINTED=FALSE
+LOGIN_EXECUTED=FALSE
+TASK_MUTATION_EXECUTED=FALSE
+GL005_PROVEN remains FALSE
+
+epistemic=BLOCKED reason=NEW_PASSWORD_TOO_SHORT
+capability=PRESENT_BUT_PROTECTED_AND_UNPROVEN
+EMPTY_PASSWORD_NE_IDENTITY
+CREDENTIAL_MANUFACTURE_NE_EXISTING_SESSION
+PROVISION_ADMIN_NE_ORCHESTRATION_PROOF
+
+Do not mint a password. Do not retry NewPassword. Next probe on Repair: GET /api/auth/session only. If authenticated=false, stop at BLOCKED_AUTH.
 

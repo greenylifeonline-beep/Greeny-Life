@@ -12,6 +12,7 @@ sys.path.insert(0, str(Path(__file__).resolve().parent))
 from gl005_epistemic import (  # noqa: E402
     LAWS,
     OBSERVATION_CHAIN,
+    classify_credential_gate,
     classify_observe_receipt,
     classify_post_mutation,
     parent_fail_closed,
@@ -129,6 +130,30 @@ def main() -> int:
     check(parent_cand["GL005_PROVEN"] is False, "candidate is not evidence of proven")
     check(parent_cand["observation_complete"] is True, "candidate may complete observation without opening the gate")
     check(parent_cand["gate"] == "GATE_CLOSED", "printed PASS is not the gate")
+
+    cred = classify_credential_gate(
+        password_length=0,
+        password_value_printed=False,
+        login_executed=False,
+        task_mutation_executed=False,
+        thrown="NEW_PASSWORD_TOO_SHORT",
+    )
+    check(cred["epistemic"] == "BLOCKED", "empty password is BLOCKED")
+    check(cred["reason"] == "NEW_PASSWORD_TOO_SHORT", "Repair throw is the reason")
+    check(cred["GL005_PROVEN"] is False, "empty password cannot prove")
+    check(cred["login_executed"] is False, "login was not executed")
+    check(cred["task_mutation_executed"] is False, "mutation was not executed")
+    check("EMPTY_PASSWORD_NE_IDENTITY" in LAWS, "empty-password law present")
+    check("CREDENTIAL_MANUFACTURE_NE_EXISTING_SESSION" in LAWS, "no manufactured credential")
+    check("PROVISION_ADMIN_NE_ORCHESTRATION_PROOF" in LAWS, "provision-admin is not GL-005")
+
+    printed = classify_credential_gate(
+        password_length=14,
+        password_value_printed=True,
+        login_executed=False,
+        task_mutation_executed=False,
+    )
+    check(printed["epistemic"] == "INVALID_OBSERVATION", "printed password invalidates the observation")
 
     print("gl005_epistemic_check: PASS")
     print(json.dumps({"gl005_proven": False, "epistemic": live["epistemic"], "laws": list(LAWS)}, ensure_ascii=False))

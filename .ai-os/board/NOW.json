@@ -1,22 +1,22 @@
 {
   "schema": "raios.mission-board.v1",
   "branch": "v9-neurolingua-semantic-kernel",
-  "head": "d25348386252351f941496f5b3664ff6e2d88e63",
-  "updated_at": "2026-08-20T17:08:14.625007+00:00",
-  "mission_status": "OBSERVATION_CHAIN_FAIL_CLOSED",
-  "mission": "D-023 encoded. Live chain on Instance B: 401 BLOCKED, parent fail-closed. GL005_PROVEN false. C3 on Repair runs the same 11-step chain with existing auth only.",
+  "head": "53b0e458713c42b60a27869c295f593eda002b2b",
+  "updated_at": "2026-08-20T17:53:11.577285+00:00",
+  "mission_status": "REPAIR_CREDENTIAL_GATE_BLOCKED",
+  "mission": "C3 Repair fail-closed on empty password. BLOCKED not missing. GL005_PROVEN false. Do not mint credentials. Next: GET /api/auth/session on Repair only.",
   "schedule": {
-    "now": "C3 Repair: bind-live-runtime → capture HEAD/PID/port → before → action → semantic → after → state-diff → child exits → receipt hash → stale-evidence → parent fail-closed.",
-    "next": "If Repair POST is 401: BLOCKED. If 201: require before≠after AND returned id in AFTER. PASS_CANDIDATE still needs C1 falsification. No printed PASS.",
-    "forbidden": "mint secrets, forge cookie, auth bypass, new infra from stale 500, treat board HEAD as git HEAD, treat printed PASS as evidence"
+    "now": "C3: GET /api/auth/session on bound Repair Next. If authenticated=false, stop BLOCKED_AUTH.",
+    "next": "Only if a legitimate session already exists: run the 11-step mutation chain. PASS_CANDIDATE still needs review.",
+    "forbidden": "NewPassword retry, provision-admin as proof, printed password, forged session, GL005 PASS"
   },
   "required": {
-    "C0": "Do not invent credentials. Paste a Repair session fact only if a real browser session exists.",
-    "C1": "Encoded classifier + chain. Does not grant GL005. Board HEAD rebound to live git in this recording.",
-    "C2": "Laws accepted into D-023 as DISCOVERED. No product write.",
-    "C3": "Run scripts/ai-os/gl005-mutation-observe.py on Repair. Same classifier. No minted secrets.",
-    "C4": "DISCOVERED ingest only. No WAL. No promote.",
-    "C5": "Falsify any printed PASS. Do not execute."
+    "C0": "Do not paste a password. Say only whether a real Repair browser session already exists.",
+    "C1": "Recorded C3 throw. Does not supply a password. Does not grant GL005.",
+    "C2": "Empty password is a valid proof boundary. Protected ≠ missing.",
+    "C3": "STOP password mint. GET /api/auth/session only. No provision-admin for this proof.",
+    "C4": "D-024 DISCOVERED only.",
+    "C5": "Falsify any PASS from a new password."
   },
   "mail": {
     "dispatcher": "C1",
@@ -34,8 +34,8 @@
       "gl005_proven": false
     },
     "last_send": {
-      "id": "10c846e9-8be3-4299-8e0a-f78b73d12650",
-      "ts": "2026-08-20T17:08:14.496712+00:00",
+      "id": "61677d7e-d503-425c-9a93-79955a60cf42",
+      "ts": "2026-08-20T17:53:11.450320+00:00",
       "to": [
         "C2",
         "C5"

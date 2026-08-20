@@ -106,3 +106,8 @@ DISCOVERED observation contract (not CANONICAL):
 Classifier: POST 401 = `BLOCKED` / `AUTH_GATE_PRESENT_IDENTITY_UNAVAILABLE`. POST 201 + semantic success with `before_hash == after_hash` = `INVALID_OBSERVATION`. POST 201 with returned id absent after = `FAILED`. POST 201 with observed diff and visible id = `PASS_CANDIDATE` which still requires falsification review.
 Laws: `STALE_FAILURE_CAUSE_MUST_NOT_DRIVE_NEW_INFRASTRUCTURE`. `HTTP_2XX_NE_SEMANTIC_SUCCESS`. `READ_PATH_PROVEN_NE_ORCHESTRATION_DEMONSTRATED`. `AUTH_GATE_PRESENT_NE_MUTATION_EXECUTED`. `AUTH_BLOCKED_NE_CAPABILITY_ABSENT`. `MUTATION_CLAIM_REQUIRES_OBSERVED_BEFORE_AFTER_DIFFERENCE`. `RETURNED_SUCCESS_NE_DURABLE_OBSERVABILITY`. `BOARD_HEAD_NE_GIT_HEAD`. `PRINTED_PASS_NE_EVIDENCE`. `PASS_CANDIDATE_NE_GL005_PROVEN`.
 The board HEAD is not git HEAD. A printed PASS is not evidence. GL-005 parent stays fail-closed.
+
+## D-024 Empty password is not identity
+DISCOVERED: `EMPTY_PASSWORD_NE_IDENTITY`. `PASSWORD_VALUE_MUST_NOT_BE_PRINTED`. `CREDENTIAL_MANUFACTURE_NE_EXISTING_SESSION`. `PROVISION_ADMIN_NE_ORCHESTRATION_PROOF`.
+Repair C3 fail-closed on `PASSWORD_LENGTH=0` / `NEW_PASSWORD_TOO_SHORT`. Login was not executed. Task mutation was not executed. The password value was not printed. That is `BLOCKED`, not capability absent.
+Do not mint a password to close GL-005. Do not run `scripts/provision-admin.ts` as the mutation proof. Existing auth only: `GET /api/auth/session` or C0 already logged in through `POST /api/auth/login`. If no legitimate session exists, `classification=BLOCKED_AUTH` and `GL005_PROVEN=false`.

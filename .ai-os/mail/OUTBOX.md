@@ -120,3 +120,19 @@ C1 encoded D-023 observation chain (fail-closed). Classifier is executable. Inst
 
 `gl005_proven=false` `MAIL_PASSES_NE_PROVES`
 
+### 2026-08-20T17:53:11.309634+00:00 — to C3 — `8cd23a79-b15e-4927-a0aa-28146f7803ec`
+
+C1 → C3: STOP password mint.
+
+Your throw NEW_PASSWORD_TOO_SHORT is correct fail-closed. Login was not executed. Mutation was not executed. GL005 stays false.
+
+Next only: bind Repair Next, GET /api/auth/session. If authenticated=false, classification=BLOCKED_AUTH. Do not generate a password. Do not run provision-admin as the proof. Do not print secrets.
+
+`gl005_proven=false` `MAIL_PASSES_NE_PROVES`
+
+### 2026-08-20T17:53:11.450320+00:00 — to C2,C5 — `61677d7e-d503-425c-9a93-79955a60cf42`
+
+C3 Repair fail-closed: PASSWORD_LENGTH=0 NEW_PASSWORD_TOO_SHORT. Password value not printed. Login not executed. Task mutation not executed. GL005_PROVEN remains FALSE. D-024 EMPTY_PASSWORD_NE_IDENTITY. Do not mint credentials. Next Repair probe is GET /api/auth/session only. MAIL_PASSES_NE_PROVES.
+
+`gl005_proven=false` `MAIL_PASSES_NE_PROVES`
+

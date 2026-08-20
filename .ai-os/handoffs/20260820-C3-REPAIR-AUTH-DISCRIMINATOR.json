@@ -76,5 +76,15 @@
     "classification": "BLOCKED_AUTH",
     "GL005_PROVEN": false,
     "meaning": "CAPABILITY_PROTECTED + CAPABILITY_UNPROVEN, not CAPABILITY_ABSENT"
+  },
+  "c3_latest_observation": {
+    "PASSWORD_LENGTH": 0,
+    "thrown": "NEW_PASSWORD_TOO_SHORT",
+    "PASSWORD_VALUE_PRINTED": false,
+    "LOGIN_EXECUTED": false,
+    "TASK_MUTATION_EXECUTED": false,
+    "epistemic": "BLOCKED",
+    "reason": "NEW_PASSWORD_TOO_SHORT",
+    "stop": true
   }
 }

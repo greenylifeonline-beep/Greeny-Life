@@ -17,6 +17,10 @@ LAWS = (
     "POST_401_NE_STATE_TRANSITION",
     "AUTH_GATE_PRESENT_NE_AUTHENTICATED_MUTATION",
     "PASS_CANDIDATE_NE_GL005_PROVEN",
+    "EMPTY_PASSWORD_NE_IDENTITY",
+    "PASSWORD_VALUE_MUST_NOT_BE_PRINTED",
+    "CREDENTIAL_MANUFACTURE_NE_EXISTING_SESSION",
+    "PROVISION_ADMIN_NE_ORCHESTRATION_PROOF",
 )
 
 OBSERVATION_CHAIN = (
@@ -105,6 +109,68 @@ def classify_post_mutation(
     rec["before_hash_equals_after"] = before_hash is not None and before_hash == after_hash
     rec["returned_id_in_after"] = bool(returned_id) and str(returned_id) in after_set
     rec["GL005_PROVEN"] = False
+    return rec
+
+
+def classify_credential_gate(
+    *,
+    password_length: int,
+    password_value_printed: bool,
+    login_executed: bool,
+    task_mutation_executed: bool,
+    thrown: str | None = None,
+) -> dict[str, Any]:
+    """Pre-POST identity gate. Manufacturing a password is not an existing session."""
+    if password_value_printed:
+        rec = {
+            "epistemic": "INVALID_OBSERVATION",
+            "reason": "PASSWORD_VALUE_PRINTED",
+            "capability": "CAPABILITY_UNPROVEN",
+            "laws": ["PASSWORD_VALUE_MUST_NOT_BE_PRINTED"],
+        }
+    elif thrown == "NEW_PASSWORD_TOO_SHORT" or password_length < 14:
+        rec = {
+            "epistemic": "BLOCKED",
+            "reason": "NEW_PASSWORD_TOO_SHORT",
+            "capability": "PRESENT_BUT_PROTECTED_AND_UNPROVEN",
+            "laws": [
+                "EMPTY_PASSWORD_NE_IDENTITY",
+                "CREDENTIAL_MANUFACTURE_NE_EXISTING_SESSION",
+                "AUTH_BLOCKED_NE_CAPABILITY_ABSENT",
+            ],
+        }
+    elif not login_executed:
+        rec = {
+            "epistemic": "BLOCKED",
+            "reason": "LOGIN_NOT_EXECUTED",
+            "capability": "PRESENT_BUT_PROTECTED_AND_UNPROVEN",
+            "laws": ["AUTH_GATE_PRESENT_NE_MUTATION_EXECUTED"],
+        }
+    elif not task_mutation_executed:
+        rec = {
+            "epistemic": "BLOCKED",
+            "reason": "AUTHENTICATED_MUTATION_NOT_EXECUTED",
+            "capability": "PRESENT_BUT_PROTECTED_AND_UNPROVEN",
+            "laws": ["AUTH_GATE_PRESENT_NE_MUTATION_EXECUTED"],
+        }
+    else:
+        rec = {
+            "epistemic": "FAILED",
+            "reason": "CREDENTIAL_GATE_IS_NOT_MUTATION_PROOF",
+            "capability": "CAPABILITY_UNPROVEN",
+            "laws": ["PROVISION_ADMIN_NE_ORCHESTRATION_PROOF"],
+        }
+    rec.update(
+        {
+            "password_length": password_length,
+            "password_value_printed": bool(password_value_printed),
+            "login_executed": bool(login_executed),
+            "task_mutation_executed": bool(task_mutation_executed),
+            "thrown": thrown,
+            "gl005_proven": False,
+            "GL005_PROVEN": False,
+        }
+    )
     return rec
 
 
