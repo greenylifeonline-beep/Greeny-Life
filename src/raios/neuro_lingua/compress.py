@@ -116,7 +116,8 @@ def compress_meaning(
     for lex in (ACTORS, ACTIONS, OBJECTS, PLACES, TIMES):
         for surfaces in lex.values():
             mapped_surfaces.update(s.lower() for s in surfaces)
-    unknown = [t for t in tokens if t.lower() not in mapped_surfaces]
+    stop = {"the", "to", "a", "an", "of", "in", "and", "or", "for", "on"}
+    unknown = [t for t in tokens if t.lower() not in mapped_surfaces and t.lower() not in stop]
     known_ratio = round(1.0 - (len(unknown) / max(len(tokens), 1)), 4)
     delta = unknown[:12]
     return {
