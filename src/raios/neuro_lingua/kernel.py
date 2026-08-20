@@ -132,6 +132,15 @@ class NeuroLingua:
         )
         stages.append(concepts)
 
+        from .compress import compress_meaning
+
+        compressed = run_stage(
+            "SEMANTIC_COMPRESSION",
+            "deterministic-compress",
+            lambda: compress_meaning(working, concepts.payload, prag.payload, register.payload),
+        )
+        stages.append(compressed)
+
         admission = self.governor.admit("SEMANTIC_INTERPRETATION")
         routed = self.router.route(
             CapabilityRequirement(
@@ -147,14 +156,15 @@ class NeuroLingua:
         )
         stages.append(semantic)
 
-        action = prag.payload.get("action") or semantic.payload.get("action") or "unknown"
+        action = prag.payload.get("action") or semantic.payload.get("action") or (compressed.payload.get("pattern") or {}).get("action") or "unknown"
         constraints: list[str] = []
         if prag.payload.get("domain_warning") == "risk_of_regression" or "متبوظش" in working or "regression" in working.lower():
             constraints.append("avoid_regression")
         if "production" in working.lower() or "produksjon" in working.lower() or "produktion" in working.lower():
             constraints.append("avoid_regression")
 
-        intent_primary = "request_action" if action in {"resolve", "inspect", "remove"} else "unknown"
+        pattern = compressed.payload.get("pattern") or {}
+        intent_primary = "request_action" if action in {"resolve", "inspect", "remove"} else (pattern.get("intent") or "unknown")
         lang_profiles = []
         for row in languages:
             lang_profiles.append(
@@ -199,6 +209,9 @@ class NeuroLingua:
                 propositions=[{
                     "action": action,
                     "deadline": getattr(prag.payload.get("temporal"), "deadline", None),
+                    "pattern": pattern,
+                    "delta": compressed.payload.get("delta") or [],
+                    "known_ratio": compressed.payload.get("known_ratio"),
                 }],
             ),
             constraints=constraints,
@@ -224,6 +237,18 @@ class NeuroLingua:
                 "governor": admission.reason,
                 "routing": routed,
                 "registry_status": self.registry.get("status"),
+                "cortex": {
+                    "identity": self.governor.main_cortex_identity,
+                    "isolated": True,
+                    "admitted": admission.admitted,
+                    "reason": admission.reason,
+                },
+                "compression": {
+                    "pattern": pattern,
+                    "delta": compressed.payload.get("delta") or [],
+                    "known_ratio": compressed.payload.get("known_ratio"),
+                    "word_list": False,
+                },
             },
         )
         packet.propositions = list(packet.semantics.propositions)
@@ -233,7 +258,7 @@ class NeuroLingua:
     def _semantic_from_stages(self, text: str, prag: dict[str, Any], concepts: dict[str, Any], cortex_admitted: bool) -> dict[str, Any]:
         warnings = []
         if not cortex_admitted:
-            warnings.append("MAIN_CORTEX_DENIED_DETERMINISTIC_FALLBACK")
+            warnings.append("MAIN_CORTEX_ISOLATED_DETERMINISTIC_SPINE")
         return {
             "status": "OK",
             "confidence": 0.72 if prag.get("action") else None,
@@ -270,6 +295,16 @@ class NeuroLingua:
             stages=stages,
             meaning=meaning,
         )
+
+    async def speak_to_customer(
+        self,
+        text: str,
+        company: str,
+        target_locale: str | None = None,
+    ) -> dict[str, Any]:
+        from .customer import speak
+
+        return await speak(self, text, company, target_locale)
 
     async def record_observation(self, intent: str, payload: dict[str, Any]) -> dict[str, Any]:
         return self.wal.append_learning(intent, payload, knowledge_state=KnowledgeState.DISCOVERED)

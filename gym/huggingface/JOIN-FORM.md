@@ -36,7 +36,7 @@ hf auth login
 ## Colab
 
 ادخل بنفس جيميل `greenylife.online@gmail.com`.
-افتح هذا الرابط ثم Runtime → Run all. الدفتر يطحن الشركات الثلاث من المستودع. انسخ `.ai-os/receipts/c5-grind/LAST.md` إلى شات Cursor. لا تلصق توكن. لا تثبّت Celerp/AG2/LightRAG.
+افتح هذا الرابط ثم Runtime → Run all. الدفتر يشغّل شبكة التدريب (`raios_c5_train.py`) من المستودع. انسخ `.ai-os/receipts/c5-train/LAST.md` إلى الشات. لا تلصق توكن. لا تثبّت Celerp/AG2/LightRAG.
 
 https://colab.research.google.com/github/greenylifeonline-beep/Greeny-Life/blob/v9-neurolingua-semantic-kernel/gym/colab_kaggle_c5.ipynb
 

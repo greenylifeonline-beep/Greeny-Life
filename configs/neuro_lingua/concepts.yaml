@@ -95,3 +95,125 @@ concepts:
         preferred: "lösa"
       da-DK:
         preferred: "løse"
+
+  - concept_id: greeny.actor.supplier
+    layer: DOMAIN
+    version: 1
+    provenance: greeny-life
+    canonical_semantics: "Party that supplies goods."
+    aliases:
+      - "supplier"
+      - "المورد"
+      - "مورد"
+      - "leverandør"
+    realizations:
+      en:
+        preferred: "supplier"
+      ar:
+        formal: "المورد"
+      ar-EG:
+        preferred: "المورد"
+      ar-GULF:
+        preferred: "المورد"
+      nb-NO:
+        preferred: "leverandør"
+
+  - concept_id: greeny.actor.customer
+    layer: DOMAIN
+    version: 1
+    provenance: greeny-life
+    canonical_semantics: "Party that receives goods."
+    aliases:
+      - "customer"
+      - "العميل"
+      - "kunde"
+    realizations:
+      en:
+        preferred: "customer"
+      ar:
+        formal: "العميل"
+      ar-EG:
+        preferred: "العميل"
+      ar-GULF:
+        preferred: "العميل"
+      nb-NO:
+        preferred: "kunde"
+
+  - concept_id: greeny.object.product
+    layer: DOMAIN
+    version: 1
+    provenance: greeny-life
+    canonical_semantics: "Tradable goods item."
+    aliases:
+      - "product"
+      - "products"
+      - "المنتج"
+      - "المنتجات"
+      - "produkt"
+    realizations:
+      en:
+        preferred: "product"
+      ar:
+        formal: "المنتج"
+      ar-EG:
+        preferred: "المنتج"
+      nb-NO:
+        preferred: "produkt"
+
+  - concept_id: greeny.action.ship
+    layer: DOMAIN
+    version: 1
+    provenance: greeny-life
+    canonical_semantics: "Move goods toward a destination."
+    aliases:
+      - "ship"
+      - "shipped"
+      - "ships"
+      - "شحن"
+      - "يشحن"
+    realizations:
+      en:
+        preferred: "ship"
+      ar:
+        formal: "شحن"
+      ar-EG:
+        preferred: "شحن"
+      nb-NO:
+        preferred: "sende"
+
+  - concept_id: greeny.action.receive
+    layer: DOMAIN
+    version: 1
+    provenance: greeny-life
+    canonical_semantics: "Take delivery of goods."
+    aliases:
+      - "receive"
+      - "received"
+      - "استلم"
+      - "يستلم"
+    realizations:
+      en:
+        preferred: "receive"
+      ar:
+        formal: "استلام"
+      ar-EG:
+        preferred: "استلم"
+      nb-NO:
+        preferred: "motta"
+
+  - concept_id: greeny.place.norway
+    layer: DOMAIN
+    version: 1
+    provenance: greeny-life
+    canonical_semantics: "Norway as destination market."
+    aliases:
+      - "Norway"
+      - "النرويج"
+      - "Norge"
+    realizations:
+      en:
+        preferred: "Norway"
+      ar:
+        formal: "النرويج"
+      nb-NO:
+        preferred: "Norge"

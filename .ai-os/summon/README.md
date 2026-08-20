@@ -6,8 +6,8 @@ C1 حاضر. C5 حاضر بمنحة دائمة. C2 و C3 و C4 يُستدعون 
 
 | رمز | كود الاستدعاء | طريق الحضور |
 |---|---|---|
-| `C1` | `C1-CURSOR-FATHER` | هذا الشات |
-| `C2` | `C2-CHATGPT-1-SUMMON` | `MAIL C2:` |
+| `C1` | `C1-FOUNDER-OWNER` | هذا الشات |
+| `C2` | `C2-CURSOR-ENGINEER` | `MAIL C2:` |
 | `C3` | `C3-CHATGPT-PEER-SUMMON` | `MAIL C3:` |
 | `C4` | `C4-DEEPSEEK-SUMMON` | `MAIL C4:` |
 | `C5` | `C5-RAIOS-SON-PERMANENT` | نبض دائم داخل المشروع |

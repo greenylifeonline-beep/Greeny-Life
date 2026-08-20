@@ -77,6 +77,13 @@ def analyze_pragmatics(text: str, context: dict[str, Any] | None = None) -> dict
         action = "remove"
     elif "kontrollera" in text.lower() or "tjek" in text.lower() or "check" in text.lower():
         action = "inspect"
+    if action is None:
+        from .customer import detect_customer_action
+
+        customer_act = detect_customer_action(text)
+        if customer_act:
+            action = customer_act
+            evidence.append(f"action:{customer_act}")
 
     domain_warning = None
     if warning and context.get("domain") in {"project", "system", None}:

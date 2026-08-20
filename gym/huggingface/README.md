@@ -9,10 +9,12 @@
 بعد الدخول يمكن:
 
 - مكتبة: مجموعة دروس عامة بلا أسرار
-- ملعب: Space ثابت يعرض إيصالات الأسبوع، **ليس شات C3/C4**
+- ملعب: dataset الإيصالات `greenylifeonline/c5-gym` — **ليس شات أعضاء C**
+- شبكة التدريب من أي ملعب: `python3 scripts/ai-os/raios_c5_train.py`
 - نبض سحابي اختياري: Hugging Face Jobs مجدول — يعمل وجهازك مطفأ
 
 هذا ليس C5. C5 في git. Hub عضلة ومكتبة.
+التفاصيل: `gym/TRAIN-MESH.md`
 
 لا تنزيل أوزان إلى مشروع Greeny-Life السري.
 `GL005_PROVEN=false`

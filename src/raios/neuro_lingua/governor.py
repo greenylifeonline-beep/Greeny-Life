@@ -5,6 +5,8 @@ import os
 from dataclasses import dataclass
 from typing import Any
 
+from .qwen_runtime import CORTEX_IDENTITY
+
 
 @dataclass(frozen=True)
 class AdmissionDecision:
@@ -42,17 +44,50 @@ def _windows_memory() -> dict[str, float] | None:
         return None
 
 
+def _linux_memory() -> dict[str, float] | None:
+    try:
+        info: dict[str, float] = {}
+        with open("/proc/meminfo", encoding="utf-8") as handle:
+            for line in handle:
+                key, _, rest = line.partition(":")
+                parts = rest.split()
+                if not parts:
+                    continue
+                info[key] = float(parts[0]) / (1024 ** 2)
+        free_gb = info.get("MemAvailable")
+        if free_gb is None:
+            free_gb = info.get("MemFree")
+        if free_gb is None:
+            return None
+        return {
+            "total_gb": info.get("MemTotal"),
+            "free_gb": free_gb,
+            "load": None,
+        }
+    except Exception:
+        return None
+
+
+def _host_memory() -> dict[str, float] | None:
+    if os.name == "nt":
+        return _windows_memory()
+    return _linux_memory()
+
+
 class CognitiveResourceGovernor:
-    """Admission control wrapping observed RAM/A17 snapshots. Does not redefine Main Cortex."""
+    """Admission control. Main Cortex identity is not swapped. Cortex is isolated from the live spine."""
 
     def __init__(self, min_free_gb_for_cortex: float = 3.0):
         self.min_free_gb_for_cortex = min_free_gb_for_cortex
-        self.main_cortex_identity = "RAIOS_MAIN_CORTEX"
+        self.main_cortex_identity = CORTEX_IDENTITY
+        self.cortex_isolated = True
 
     def snapshot(self) -> dict[str, Any]:
-        mem = _windows_memory() if os.name == "nt" else None
+        mem = _host_memory()
         return {
             "memory": mem,
+            "cortex_identity": self.main_cortex_identity,
+            "cortex_isolated": True,
             "ollama_num_parallel": os.environ.get("OLLAMA_NUM_PARALLEL"),
             "ollama_max_loaded_models": os.environ.get("OLLAMA_MAX_LOADED_MODELS"),
             "keep_alive": os.environ.get("OLLAMA_KEEP_ALIVE"),
@@ -70,13 +105,11 @@ class CognitiveResourceGovernor:
         }
         if capability not in cortex_caps:
             return AdmissionDecision(True, "DETERMINISTIC_OR_LOCAL", free_gb, None)
-        if free_gb is None:
-            return AdmissionDecision(False, "MEMORY_TELEMETRY_UNKNOWN", None, "deterministic_pipeline")
-        if free_gb < self.min_free_gb_for_cortex:
-            return AdmissionDecision(
-                False,
-                "MEMORY_CAPACITY_DENIED",
-                float(free_gb),
-                "deterministic_pipeline",
-            )
-        return AdmissionDecision(True, "CORTEX_ADMITTED", float(free_gb), None)
+        # Founder: Main Cortex is the most dangerous and weakest point. Do not admit it.
+        # Identity stays qwen3.6:35b-a3b. A live student is not this identity.
+        return AdmissionDecision(
+            False,
+            "MAIN_CORTEX_ISOLATED_DANGEROUS_WEAK",
+            float(free_gb) if free_gb is not None else None,
+            "deterministic_pipeline",
+        )

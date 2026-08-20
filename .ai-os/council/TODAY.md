@@ -1,9 +1,10 @@
 # TODAY — 2026-08-20
 
 meeting: `GL-COUNCIL-4a11023c3c321b6f`
-case: `CASE-009`
+case: `CASE-017`
 `GL005_PROVEN=false`
 
-C3 مسجَّل. بوابة إثبات شغّالة.
-93 ادعاء / 0 وجود. لا انتقال C3.
-`python3 scripts/ai-os/raios_c5_proof.py`
+هذه القناة: المؤسس + التنفيذ + C5 في git. لا استشارة مقاعد C.
+أمر التدريب: `python3 scripts/ai-os/raios_c5_train.py`
+اللغة: مفاهيم وأنماط لا قائمة كلمات. `src/raios/neuro_lingua/compress.py`
+KAE: `python3 scripts/ai-os/raios_c5_kae.py --demo` — ليست عقلاً ثانياً. Main Cortex معزولة.

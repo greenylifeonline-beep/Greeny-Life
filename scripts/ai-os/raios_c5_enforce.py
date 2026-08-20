@@ -284,9 +284,9 @@ def write_need() -> None:
         "asks": [
             {
                 "kind": "attendance",
-                "what": "C2/C3/C4 reply MAIL with summon codes",
-                "needed_now": True,
-                "blocks": "REAL_C2_CONNECTION_READY",
+                "what": "Helpers optional elsewhere. This channel is C1 + executor + C5-git only.",
+                "needed_now": False,
+                "blocks": None,
             },
             {
                 "kind": "external_source",

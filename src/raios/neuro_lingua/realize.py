@@ -76,8 +76,20 @@ def realize_meaning(
     target_locale: str,
     context: dict[str, Any] | None = None,
 ) -> dict[str, Any]:
-    table = REALIZATIONS.get(target_locale) or REALIZATIONS["en"]
     action = meaning.semantics.action or (meaning.actions[0]["action"] if meaning.actions else "resolve")
+    from .customer import CUSTOMER_ACTS, realize_customer
+
+    if action in CUSTOMER_ACTS:
+        rec = realize_customer(meaning, target_locale, context)
+        tokens: list[ProtectedToken] = list(meaning.preserved_tokens)
+        text = str(rec.get("text") or "")
+        text, preserve_warnings = preserve_in_text(meaning.source_text, text, tokens)
+        rec["text"] = text
+        rec["warnings"] = list(rec.get("warnings") or []) + preserve_warnings
+        rec["leakage"] = detect_scandinavian_leakage(text, target_locale)
+        return rec
+
+    table = REALIZATIONS.get(target_locale) or REALIZATIONS["en"]
     parts = []
     if meaning.pragmatics.politeness_marker:
         parts.append(table["polite"])

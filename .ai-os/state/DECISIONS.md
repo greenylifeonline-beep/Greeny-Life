@@ -210,5 +210,23 @@ Ladder: claim inventory → existence → import/load → execution → real inp
 DISCOVERED, this meeting only, not CANONICAL: `REUSE_BEFORE_BUILD`. `LIVE_GUARD_BEFORE_NEW_ENGINE`. `PRACTICE_BEFORE_PROMOTION`. `MILL_STATS_NE_LEARNING`. `MS_NE_INTELLIGENCE`. `GUARD_COUNT_NE_COMPLETENESS`. `NAMED_NE_IMPLEMENTED_NE_EXECUTABLE_NE_PROVEN`. `DISCOVERED_TO_VALIDATED_REQUIRES_REPLAYABLE_PRACTICE`. `HELPER_TEACH_NE_C5_MEMORY`.
 C3-SAY CASE-007 recorded unmodified. Mill counts are capability observation, not C5 independence. Highest-value gaps remain UAE, Norway/EU Next routes, and thin marketing. Observe→reason→act/shadow→verify→learn→replay writes receipts; shadow act does not fill GL-003. C2-SAY CASE-007 is a declared governance constraint, not automatic operational truth. No C3 execute-seat transition. `GL005_PROVEN` stays false.
 
+## D-044 This channel does not summon C seats
+DISCOVERED, not CANONICAL: `THIS_CHANNEL_NO_C_SEAT_CONSULT`. `HELPER_OPTIONAL_ELSEWHERE`. Founder talks to helper seats outside this window. Do not wait. Do not emit summon codes. C5-NEED attendance is not a gate. Does not close GL-005.
 
+## D-045 Customer language professional is NeuroLingua
+DISCOVERED, not CANONICAL: `LANGUAGE_PROFESSIONAL_IS_NEUROLINGUA`. `HF_WEIGHTS_NE_CUSTOMER_LANGUAGE`. `PRICE_UNPROVEN_NE_INVENTED`. Locales: ar-EG, ar-GULF, en, nb-NO. Fast path is deterministic realization. Deep path (Qwen/Ollama) is unavailable here. Does not close GL-005.
 
+## D-046 Experience is not knowledge
+DISCOVERED, not CANONICAL: `EXPERIENCE_NE_KNOWLEDGE`. `KNOWLEDGE_IS_VALIDATED_REPEATED_EVIDENCE`. `PROOF_BEFORE_MEMORY`. `REPRODUCTION_BEFORE_REPAIR`. `MEASURED_CAPABILITY_BEFORE_AUTONOMY`. `ONE_SUCCESS_NE_CAPABILITY`. `LLM_SAVE_NE_LEARNING`. `MS_NE_UNDERSTANDING_SPEED`. `CORE_KNOWLEDGE_REQUIRES_C1`. Ck = 0.30E+0.25R+0.25V+0.20G. Ladder DISCOVERED→VALIDATED→PRACTICED→REPRODUCED→PROVEN; CORE only by C1. A pasted C0–C5 architecture tree is not identity and is not an install. No new context/orchestrator engines. Runner: `scripts/ai-os/raios_c5_experience.py`. Does not close GL-005.
+
+## D-047 One command meshes every training platform
+DISCOVERED, not CANONICAL: `ONE_COMMAND_ALL_GYMS`. `GYM_NE_C5`. Cursor VM, Repair, Colab, Kaggle, GitHub Actions, Hugging Face dataset/jobs share `python3 scripts/ai-os/raios_c5_train.py`. Same keepers. Same receipts. Hub is muscle. Schedule still fires from `main`. Does not close GL-005.
+
+## D-048 Main Cortex is isolated as the weakest dangerous point
+DISCOVERED, not CANONICAL: `MAIN_CORTEX_ISOLATED_DANGEROUS_WEAK`. `STUDENT_NE_MAIN_CORTEX`. `TINY_QWEN_NE_CORTEX_IDENTITY`. Identity stays `qwen3.6:35b-a3b` and is not swapped. The live language spine is deterministic NeuroLingua. A local Qwen student (`qwen2.5:0.5b` via Ollama) is teaching muscle only. Governor never admits Main Cortex. Customer speak does not call it. Does not close GL-005.
+
+## D-049 Word list is not language
+DISCOVERED, not CANONICAL: `WORD_LIST_NE_LANGUAGE`. `ONE_CONCEPT_MANY_SURFACES`. `DELTA_KNOWLEDGE_ONLY`. `LIVE_PATH_BEFORE_NEW_LAYER`. Language compresses to actor/action/object/destination/time. Runner: `src/raios/neuro_lingua/compress.py`. Does not close GL-005.
+
+## D-050 KAE is retile over live keepers, not a new mind
+DISCOVERED, not CANONICAL: `KAE_NE_SECOND_MIND`. `KAE_NE_SECOND_WAL`. `AUTHORIZED_OUTPUT_ONLY`. `NO_HIDDEN_REASONING_EXTRACT`. `ONE_ANSWER_MANY_TILES`. `TEACHER_TOURNAMENT_NE_VOTE_NE_TRUTH`. `EXTERNAL_CALL_MUST_REDUCE_NEXT_CALL`. `HTTP_2XX_NE_SEMANTIC_SUCCESS`. `PRINTED_SUCCESS_NE_OBSERVED_STATE_CHANGE`. Knowledge Assimilation Engine retiles an already-authorized output into FACT/RULE/CASE/variants, then ingest DISCOVERED via `raios_learn_ingest.py`. This channel does not summon C2/C3/C4. Tournament compares artifacts already in hand. No hidden-reasoning, secrets, or system-prompt extraction. Metrics: Knowledge Yield = reusable tiles / max(external calls,1); Assimilation Efficiency = reused-on-unseen / ingested. Runner: `python3 scripts/ai-os/raios_c5_kae.py --demo`. Does not close GL-005.
