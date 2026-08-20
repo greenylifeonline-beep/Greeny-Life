@@ -14,6 +14,7 @@ from __future__ import annotations
 import hashlib
 import json
 import os
+import shutil
 import subprocess
 import sys
 import time
@@ -131,36 +132,70 @@ def child_runtime_trace() -> dict:
         )
 
 
+WORKTREE = Path("/tmp/gl004-isolated-build")
+
+
+def prepare_build_worktree() -> dict:
+    """Compile in a detached worktree so default distDir cannot touch live `.next`."""
+    if WORKTREE.exists():
+        subprocess.run(["git", "worktree", "remove", "--force", str(WORKTREE)], cwd=ROOT, capture_output=True, text=True)
+        shutil.rmtree(WORKTREE, ignore_errors=True)
+    added = subprocess.run(
+        ["git", "worktree", "add", "--detach", str(WORKTREE), "HEAD"],
+        cwd=ROOT,
+        text=True,
+        capture_output=True,
+    )
+    if added.returncode != 0:
+        return {"ok": False, "stderr": (added.stderr or added.stdout or "")[-2000:]}
+    nm = WORKTREE / "node_modules"
+    if nm.exists() or nm.is_symlink():
+        nm.unlink()
+    nm.symlink_to(ROOT / "node_modules")
+    return {"ok": True, "path": str(WORKTREE)}
+
+
 def child_build() -> dict:
     before = fingerprint_dist()
-    if before["dot_next_has_production_build_id"]:
+    before_top = set(before.get("dot_next_top") or [])
+    prep = prepare_build_worktree()
+    if not prep.get("ok"):
         return annotate(
             {
                 "name": "BUILD",
                 "exit": 2,
-                "reason": "LIVE_DOT_NEXT_ALREADY_HAS_PRODUCTION_BUILD_ID",
-                "fingerprint_before": before,
+                "reason": "WORKTREE_ADD_FAILED",
+                "stderr_tail": prep.get("stderr"),
                 "listened": False,
+                "isolation": "git_worktree",
             },
-            invalid=True,
+            blocked=True,
         )
-    env = {"GL004_ISOLATED_DIST": ISOLATED_DIST, "NODE_ENV": "production"}
-    child = run_child("BUILD", ["node", str(PRELOAD.parent / "gl004-isolated-build.cjs")], env=env, timeout=900)
+    child = run_child(
+        "BUILD",
+        ["npx", "--no-install", "next", "build"],
+        cwd=WORKTREE,
+        env={"NODE_ENV": "production"},
+        timeout=900,
+    )
     after = fingerprint_dist()
-    child["isolated_dist"] = ISOLATED_DIST
+    after_top = set(after.get("dot_next_top") or [])
+    grew = sorted(after_top - before_top)
+    child["worktree"] = str(WORKTREE)
     child["listened"] = False
+    child["isolation"] = "git_worktree_default_distDir"
     child["law"] = "ISOLATED_BUILD_NE_SECOND_RUNTIME"
-    child["rejected_isolation"] = "NEXT_CONFIG_FILE is not a Next.js contract on this version"
+    child["rejected_isolation"] = [
+        "NEXT_CONFIG_FILE is not a Next.js contract on this version",
+        "in-repo distDir injection still leaked nft/server files into live .next",
+    ]
     child["fingerprint_before"] = before
     child["fingerprint_after"] = after
-    isolation_failed = after["dot_next_has_production_build_id"] and not before["dot_next_has_production_build_id"]
-    if isolation_failed:
+    child["live_next_new_entries"] = grew
+    child["worktree_has_build_id"] = (WORKTREE / ".next" / "BUILD_ID").exists()
+    if grew:
         child["exit"] = 2
-        child["reason"] = "ISOLATION_FAILED_WROTE_LIVE_DOT_NEXT"
-        return annotate(child, invalid=True)
-    if child["exit"] == 0 and not after["isolated_exists"]:
-        child["exit"] = 2
-        child["reason"] = "ISOLATED_DIST_MISSING_PRELOAD_FAILED"
+        child["reason"] = "ISOLATION_FAILED_LIVE_DOT_NEXT_GREW"
         return annotate(child, invalid=True)
     if child["exit"] == 0:
         child["classification"] = "BUILD_VALIDITY"

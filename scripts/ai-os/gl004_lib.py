@@ -155,10 +155,12 @@ def fingerprint_dist(root: Path | None = None) -> dict[str, Any]:
     root = root or ROOT
     nxt = root / ".next"
     isolated = root / ISOLATED_DIST
+    live_names = sorted(p.name for p in nxt.iterdir()) if nxt.exists() else []
     return {
         "dot_next_exists": nxt.exists(),
         "dot_next_has_dev": (nxt / "dev").exists(),
         "dot_next_has_production_build_id": (nxt / "BUILD_ID").exists(),
+        "dot_next_top": live_names,
         "isolated_exists": isolated.exists(),
         "isolated_has_build_id": (isolated / "BUILD_ID").exists(),
         "isolated_dist": ISOLATED_DIST,

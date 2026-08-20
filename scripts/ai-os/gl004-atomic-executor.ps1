@@ -53,14 +53,24 @@ $canon = Invoke-Child "TEST_CANONICAL" { npx --no-install tsx tests/canonical_in
 $orch = Invoke-Child "TEST_TASK_ORCHESTRATION" { npx --no-install tsx tests/task_orchestration_check.ts }
 $env:GL004_ISOLATED_DIST = ".next-gl004-proof"
 $env:NODE_ENV = "production"
-$build = Invoke-Child "BUILD" { node (Join-Path $PSScriptRoot "gl004-isolated-build.cjs") }
-$build["isolated_dist"] = ".next-gl004-proof"
-$build["listened"] = $false
-if ($build.exit -eq 0 -and -not (Test-Path (Join-Path $Repo ".next-gl004-proof"))) {
-    $build.exit = 2
-    $build.epistemic = "INVALID_OBSERVATION"
-    $build.reason = "ISOLATED_DIST_MISSING_PRELOAD_FAILED"
+$Work = Join-Path $env:TEMP "gl004-isolated-build"
+if (Test-Path $Work) {
+    git worktree remove --force $Work 2>$null
+    Remove-Item -LiteralPath $Work -Recurse -Force -ErrorAction SilentlyContinue
 }
+git worktree add --detach $Work HEAD
+$nm = Join-Path $Work "node_modules"
+if (Test-Path $nm) { Remove-Item -LiteralPath $nm -Force -ErrorAction SilentlyContinue }
+cmd /c mklink /J "$nm" (Join-Path $Repo "node_modules") | Out-Null
+$build = Invoke-Child "BUILD" { npx --no-install next build }
+# BUILD child ran with cwd override below
+$build = Invoke-Child "BUILD" {
+    Push-Location $Work
+    try { npx --no-install next build } finally { Pop-Location }
+}
+$build["isolation"] = "git_worktree_default_distDir"
+$build["listened"] = $false
+$build["worktree"] = $Work
 $aios = Invoke-Child "AIOS_STATUS" { python .\scripts\ai-os\aios.py status }
 $controlOk = (Test-Path ".\.ai-os\state\TASKS.json") -and (Test-Path ".\.ai-os\state\LOCKS.json") -and (Test-Path ".\.ai-os\handoffs")
 $control = [ordered]@{ name = "GL005_CONTROL_PLANE"; exit = $(if ($controlOk) { 0 } else { 97 }); epistemic = $(if ($controlOk) { "PASS" } else { "UNAVAILABLE" }) }
