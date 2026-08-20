@@ -82,3 +82,9 @@ C5 DeepSeek seat is open on the same board/channel. Pull v9-neurolingua-semantic
 
 `event_id=42da9659-a316-4d75-b9c3-c49400729769` `wal=WAL_COMMITTED`
 
+### 2026-08-20T15:45:26.940427+00:00 — COMMANDER
+
+C2 and C5 do not enter the repo. Their only knowledge is C0 chat. C0 sends a self-contained packet, collects numbered answers, and C1 posts opinion --code C2 or C5. No git. No subscription.
+
+`event_id=bb738545-9198-4a8b-89a0-4c640436f001` `wal=WAL_COMMITTED`
+

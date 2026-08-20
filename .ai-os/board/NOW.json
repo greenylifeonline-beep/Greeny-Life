@@ -1,21 +1,21 @@
 {
   "schema": "raios.mission-board.v1",
   "branch": "v9-neurolingua-semantic-kernel",
-    "head": "e0efa32a35ed59d3aa630fd97785cdca72ffa9a3",
-    "updated_at": "2026-08-20T15:41:00.000000+00:00",
-    "mission_status": "MUTATION_NOT_PROVEN",
-  "mission": "GL-004 HOLD_PROMOTION. GL-005: Repair may have a healthy GET; this bound PID 3297 still GET 500 DATABASE_URL and POST 401. A 2xx read is not mutation. Smallest existing transition is authenticated POST /api/tasks INSERT OrchestrationTask REVIEW_REQUIRED. Do not provision Postgres from a stale cause. Do not forge sessions. No second server.",
+  "head": "15f0d8a3781b2b5a9ee8a5d3665ad4be7c576e28",
+  "updated_at": "2026-08-20T15:45:00.000000+00:00",
+  "mission_status": "MUTATION_NOT_PROVEN",
+  "mission": "GL-004 HOLD_PROMOTION. GL-005 mutation not proven. C2 and C5 do not enter the repo. C0 briefs them in chat, takes numbered answers, C1 posts to the board. No git. No subscription.",
   "schedule": {
-    "now": "Prove one observed OrchestrationTask INSERT on the bound process with an existing session. GET-before ≠ GET-after. GL005_PROVEN stays false until that receipt.",
-    "next": "Repair: POST /api/tasks with existing gl_session (ADMIN|WAREHOUSE|EXPORT). Cloud slice: BLOCKED on DATABASE_URL in PID 3297 and missing session. Do not kill 3297.",
-    "forbidden": "census، fake DATABASE_URL، fake 2xx، forged gl_session، Docker from stale 500، second Next، WAL/bus جديد، ترقية CANONICAL"
+    "now": "C0 sends chat packets to C2 and C5. Paste answers back. C1 records C2/C5 on NOW.md.",
+    "next": "Authenticated POST on Repair remains the mutation proof. Do not wait for C2/C5 to clone.",
+    "forbidden": "census، fake DATABASE_URL، fake 2xx، forged gl_session، إجبار C2/C5 على git أو دخول المشروع"
   },
   "required": {
-    "C0": "لا يصادق GL-005 من GET 200. إن وُجدت جلسة حقيقية على Repair، يصرّح بـ POST مراجعة واحد.",
-    "C1": "HOLD_PROMOTION لـ GL-004. يفنّد أي GL005_PROVEN من قراءة فقط.",
-    "C2": "يقرأ 20260820-C1-GL005-MUTATION-SURFACE.json ويكتب رأياً.",
-    "C3": "python scripts/ai-os/gl005-mutation-observe.py على العملية المربوطة. لا أسرار مختلقة.",
-    "C4": "خدمة: نبض + WAL. قوانين DISCOVERED فقط.",
-    "C5": "يسحب الفرع، يقرأ NOW.md، يكتب رأياً برمز C5. لا يسرق مقعد C2. GL-003 فقط داخل نطاقه."
+    "C0": "أرسل حزمة الشات، خذ الأجوبة المرقمة، أعدها للقائد.",
+    "C1": "يضع رأي الشات على اللوحة بالرمز C2 أو C5. لا يخلط الرموز.",
+    "C2": "يجيب الحزمة في الشات فقط. لا git. لا دخول للمستودع.",
+    "C3": "المنفّذ على العملية المربوطة. لا أسرار مختلقة.",
+    "C4": "خدمة: نبض + WAL.",
+    "C5": "يجيب الحزمة في الشات برمز C5. لا يسرق C2. لا git."
   }
 }

@@ -3,48 +3,36 @@
 ملف واحد داخل المشروع. المستشار الخارجي لا يحتاج أن يعيش في المستودع؛ يسحب هذا الملف ويعرف الحالة والمطلوب ويكتب رأيه برمزه.
 
 - الفرع: `v9-neurolingua-semantic-kernel`
-- HEAD: `e0efa32a35ed59d3aa630fd97785cdca72ffa9a3`
-- حدّث: `2026-08-20T15:41:00.000000+00:00`
+- HEAD: `15f0d8a3781b2b5a9ee8a5d3665ad4be7c576e28`
+- حدّث: `2026-08-20T15:45:00.000000+00:00`
 - الحالة: `MUTATION_NOT_PROVEN`
 
 ## الرموز
 
 | رمز | الطرف | مكانه | المطلوب منه الآن |
 |---|---|---|---|
-| `C0` | صاحب المشروع (`USER`) | داخل الشات / داخل اللوحة | لا يصادق GL-005 من GET 200. إن وُجدت جلسة حقيقية على Repair، يصرّح بـ POST مراجعة واحد. |
-| `C1` | القائد Cursor (`COMMANDER`) | داخل المشروع | HOLD_PROMOTION لـ GL-004. يفنّد أي GL005_PROVEN من قراءة فقط. |
-| `C2` | المستشار التنفيذي (`CONSULTANT`) | خارج المشروع — يقرأ اللوحة ويكتب رأيه | يقرأ 20260820-C1-GL005-MUTATION-SURFACE.json ويكتب رأياً. |
-| `C3` | المهندس PowerShell (`ENGINEER`) | Repair | python scripts/ai-os/gl005-mutation-observe.py على العملية المربوطة. لا أسرار مختلقة. |
-| `C4` | نواة الخدمة (`RAIOS`) | داخل المشروع | خدمة: نبض + WAL. قوانين DISCOVERED فقط. |
-| `C5` | ديب سيك / العقول الثلاثة (`DEEPSEEK`) | خارج المشروع — GL-003 ثم اللوحة | يسحب الفرع، يقرأ NOW.md، يكتب رأياً برمز C5. لا يسرق مقعد C2. GL-003 فقط داخل نطاقه. |
+| `C0` | صاحب المشروع (`USER`) | داخل الشات / داخل اللوحة | أرسل حزمة الشات، خذ الأجوبة المرقمة، أعدها للقائد. |
+| `C1` | القائد Cursor (`COMMANDER`) | داخل المشروع | يضع رأي الشات على اللوحة بالرمز C2 أو C5. لا يخلط الرموز. |
+| `C2` | المستشار التنفيذي (`CONSULTANT`) | خارج المشروع — يقرأ اللوحة ويكتب رأيه | يجيب الحزمة في الشات فقط. لا git. لا دخول للمستودع. |
+| `C3` | المهندس PowerShell (`ENGINEER`) | Repair | المنفّذ على العملية المربوطة. لا أسرار مختلقة. |
+| `C4` | نواة الخدمة (`RAIOS`) | داخل المشروع | خدمة: نبض + WAL. |
+| `C5` | ديب سيك / العقول الثلاثة (`DEEPSEEK`) | خارج المشروع — GL-003 ثم اللوحة | يجيب الحزمة في الشات برمز C5. لا يسرق C2. لا git. |
 
 ## المهمة الحالية
 
-GL-004 HOLD_PROMOTION. GL-005: Repair may have a healthy GET; this bound PID 3297 still GET 500 DATABASE_URL and POST 401. A 2xx read is not mutation. Smallest existing transition is authenticated POST /api/tasks INSERT OrchestrationTask REVIEW_REQUIRED. Do not provision Postgres from a stale cause. Do not forge sessions. No second server.
+GL-004 HOLD_PROMOTION. GL-005 mutation not proven. C2 and C5 do not enter the repo. C0 briefs them in chat, takes numbered answers, C1 posts to the board. No git. No subscription.
 
 ## الجدول
 
-- الآن: Prove one observed OrchestrationTask INSERT on the bound process with an existing session. GET-before ≠ GET-after. GL005_PROVEN stays false until that receipt.
-- التالي: Repair: POST /api/tasks with existing gl_session (ADMIN|WAREHOUSE|EXPORT). Cloud slice: BLOCKED on DATABASE_URL in PID 3297 and missing session. Do not kill 3297.
-- ممنوع: census، fake DATABASE_URL، fake 2xx، forged gl_session، Docker from stale 500، second Next، WAL/bus جديد، ترقية CANONICAL
+- الآن: C0 sends chat packets to C2 and C5. Paste answers back. C1 records C2/C5 on NOW.md.
+- التالي: Authenticated POST on Repair remains the mutation proof. Do not wait for C2/C5 to clone.
+- ممنوع: census، fake DATABASE_URL، fake 2xx، forged gl_session، إجبار C2/C5 على git أو دخول المشروع
 
-## كيف يشارك المستشار (C2) من خارج المشروع
+## كيف يشارك C2 و C5
 
-1. `git pull origin v9-neurolingua-semantic-kernel`
-2. اقرأ `.ai-os/board/NOW.md`
-3. اكتب رأيك:
-
-```bash
-python3 scripts/ai-os/raios-board.py opinion --code C2 --text "رأيك هنا"
-```
-
-ديب سيك (C5) نفس الخطوات ثم:
-
-```bash
-python3 scripts/ai-os/raios-board.py opinion --code C5 --text "رأيك هنا"
-```
-
-إن لم يستطع الدفع: يلصق النص في الشات، والقائد يضعه على اللوحة.
+لا يدخلان المستودع. معرفتهما من شات C0 فقط.
+C0 يرسل حزمة الشات، يأخذ الجواب، والقائد يضعه على اللوحة: C2 أو C5.
+لا git. لا اشتراك. لا أوامر داخل المشروع.
 
 ## الآراء
 
