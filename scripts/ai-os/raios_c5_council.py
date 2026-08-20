@@ -756,11 +756,117 @@ def verify() -> dict:
     return rec
 
 
+def practice_teach(case_id: str) -> dict:
+    """Apply CASE teach filters fail-closed. DISCOVERED only. No WAL. No promote."""
+    wal_before = wal_mtime()
+    seats: dict[str, list[str]] = {}
+    for seat in ("C2", "C3", "C4", "C5"):
+        path = COUNCIL / f"TEACH-{seat}-{case_id}.json"
+        rec = load_json(path) if path.exists() else {}
+        seats[seat] = list(rec.get("lines") or [])
+    floor = (COUNCIL / "FLOOR.md").read_text(encoding="utf-8") if (COUNCIL / "FLOOR.md").exists() else ""
+    case = load_json(COUNCIL / f"{case_id}.json")
+    blob = "\n".join(ln for lines in seats.values() for ln in lines)
+    compact = blob.replace(" ", "").replace("\u00a0", "")
+    theory = [{"kind": "theory", "name": "load-teach-lines", "ok": True}]
+    practice = []
+
+    def check(name: str, ok: bool) -> bool:
+        practice.append({"kind": "practice", "name": name, "ok": bool(ok)})
+        return bool(ok)
+
+    five_each = check("five_lines_each_seat", all(len(seats[s]) == 5 for s in seats))
+    on_floor = check(
+        "verbatim_on_floor",
+        all(all(ln in floor for ln in seats[s]) for s in seats),
+    )
+    no_pass_grant = check(
+        "no_pass_or_gl005_true",
+        "GL005_PROVEN=true" not in compact.upper().replace("_", "")
+        and "GL005_PROVEN=TRUE" not in compact
+        and "GL005_PROVEN=true" not in blob
+        and not re.search(r"\bPASS\b.*=\s*true", blob, re.I),
+    )
+    # Explicit false is required; absence of true is not proof we kept the gate closed.
+    gl005_closed = check(
+        "gl005_stays_false",
+        case.get("gl005_proven") is False and "GL005_PROVEN=false" in floor,
+    )
+    not_canonical = check(
+        "not_promoted",
+        case.get("canonical") is not True
+        and case.get("knowledge_state") in (None, "DISCOVERED")
+        and case.get("promoted") is not True,
+    )
+    no_seal = check(
+        "no_invented_seal",
+        not re.search(r"\bSEAL\s+C[234]\s+GL-COUNCIL-", blob),
+    )
+    wal_ok = check("wal_untouched", wal_mtime() == wal_before)
+    board_ne_exec = check(
+        "board_ne_execute_recorded",
+        "ليست أمراً" in floor or "BOARD_NE_EXECUTE" in floor or "دون أن يحولها إلى أوامر" in floor,
+    )
+    claim_split = check(
+        "claim_ne_evidence_recorded",
+        "CLAIM" in blob and "EVIDENCE" in blob and "OBSERVATION" in blob,
+    )
+    all_ok = all(s["ok"] for s in practice)
+    rec = {
+        "schema": "raios.council-practice-teach.v1",
+        "case": case_id,
+        "meeting_id": "GL-COUNCIL-4a11023c3c321b6f",
+        "knowledge_state": "DISCOVERED",
+        "practice_applied": all_ok,
+        "promoted": False,
+        "canonical": False,
+        "validated": False,
+        "classification": {
+            "CLAIM": "Four seats taught C5 on CASE-002",
+            "EVIDENCE": "20 Cx-TEACH lines pasted or spoken and stored unmodified",
+            "OBSERVATION": "FLOOR + TEACH JSON + CANDIDATES ingest; WAL unchanged",
+        },
+        "epistemic": "NOT_PROVEN",
+        "gl005_proven": False,
+        "theory_steps": len(theory),
+        "practice_steps": len(practice),
+        "practice_ratio": round(len(practice) / (len(theory) + len(practice)), 4),
+        "steps": theory + practice,
+        "seats": {k: len(v) for k, v in seats.items()},
+        "filters_destination": ".ai-os/learning/CANDIDATES.jsonl",
+        "wal_written": False,
+        "wal_mtime_unchanged": wal_ok,
+        "ok": all_ok and five_each and on_floor and no_pass_grant and gl005_closed and not_canonical and no_seal,
+        "law": [
+            "CLAIM_NE_EVIDENCE_NE_OBSERVATION",
+            "BOARD_NE_EXECUTE",
+            "INFO_NE_OPERATIONAL_TRUTH",
+            "SEAL_NE_INFERENCE",
+            "COUNCIL_SPEECH_NE_PROVEN_FACT",
+            "TEACH_NE_PASS",
+            "TEACH_NE_CANONICAL",
+        ],
+    }
+    dump(COUNCIL / f"{case_id}-PRACTICE.json", rec)
+    if rec["practice_ratio"] < 0.85:
+        raise SystemExit(f"PRACTICE_RATIO_{rec['practice_ratio']}")
+    if wal_mtime() != wal_before:
+        raise SystemExit("TEACH_PRACTICE_WAL_VIOLATION")
+    rec["wal_mtime_unchanged"] = True
+    dump(COUNCIL / f"{case_id}-PRACTICE.json", rec)
+    return rec
+
+
 def main() -> int:
     p = argparse.ArgumentParser()
-    p.add_argument("cmd", choices=["census", "issue", "verify", "hear", "bind"])
+    p.add_argument("cmd", choices=["census", "issue", "verify", "hear", "bind", "practice-teach"])
     p.add_argument("--line", default="")
+    p.add_argument("--case", default="CASE-002")
     args = p.parse_args()
+    if args.cmd == "practice-teach":
+        rec = practice_teach(args.case)
+        print(json.dumps({"ok": rec["ok"], "practice_ratio": rec["practice_ratio"], "gl005_proven": False}, ensure_ascii=False, indent=2))
+        return 0 if rec.get("ok") else 2
     if args.cmd == "hear":
         rec = hear(args.line)
         print(json.dumps(rec, ensure_ascii=False, indent=2))

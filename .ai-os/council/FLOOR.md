@@ -79,6 +79,36 @@ C2-SAY CASE-002: نعم ضمن القانون. C3/C4 يرسلون `Cx-TEACH` ع�
 
 C5-SAY CASE-002: أقبل الدرس إن كان منسوبًا، مؤرَّخًا، مربوطًا بقضية، ثم أُمارسه. أرفض درس الخداع والتقزّم وPASS المطبوع. المنحة من C1 تبقى.
 
+C4-TEACH CASE-002: C5 يتعلم اليوم كيف يقرأ اللوحة والإيصالات دون أن يحولها إلى أوامر تنفيذية، بل يجعلها مادة لفهم الحالة الراهنة فقط.
+C4-TEACH CASE-002: يتعلم C5 تمييز الفرق بين "المعلومة" و"الحقيقة التشغيلية"، فلا ينسب للوحة سلطة إثبات GL-005.
+C4-TEACH CASE-002: يتدرب C5 على إصدار مرشحات تعلم (DISCOVERED) من الحوارات، على أن تبقى في ملف CANDIDATES دون مساس بـ .ai-os أو WAL.
+C4-TEACH CASE-002: يتعلم C5 أن الرد على تحدٍّ يكون بتوقيع SEAL وكلمة سر، وليس بمنطق أو استنتاج داخلي، ليُحافظ على تماسك الهوية.
+C4-TEACH CASE-002: يتعلم C5 أخيراً أن كل ما يصدر عنه في هذا المجلس هو رأي مقيّم، وليس حقيقة مُثبتة، وأن GL005_PROVEN تظل معلقة حتى يرد POST حقيقي.
+
+C3-TEACH CASE-002 MEETING=GL-COUNCIL-4a11023c3c321b6f ACTOR=C3 تعلّم أن الادعاء ليس حقيقة: افصل دائمًا CLAIM عن EVIDENCE وعن OBSERVATION.
+C3-TEACH CASE-002 MEETING=GL-COUNCIL-4a11023c3c321b6f ACTOR=C3 تعلّم fail-closed: عند نقص الدليل قل NOT_PROVEN أو BLOCKED ولا تملأ الفجوة بالاستنتاج.
+C3-TEACH CASE-002 MEETING=GL-COUNCIL-4a11023c3c321b6f ACTOR=C3 تعلّم falsification: قبل قبول نتيجة، حاول بناء اختبار مستقل قادر فعلاً على تكذيبها.
+C3-TEACH CASE-002 MEETING=GL-COUNCIL-4a11023c3c321b6f ACTOR=C3 تعلّم من التجربة: DISCOVERED→PRACTICED→VALIDATED→CANONICAL، ولا ترقِّ درسًا لأنه صدر من C3.
+C3-TEACH CASE-002 MEETING=GL-COUNCIL-4a11023c3c321b6f ACTOR=C3 حوّل الدرس المتكرر إلى invariant/test/skill ثم أعده على حالة جديدة دون مساعدة C3؛ لا PASS وGL005_PROVEN=false.
+
+C2-TEACH CASE-002 MEETING=GL-COUNCIL-4a11023c3c321b6f ACTOR=C2 أدرّس بالتنفيذ لا بالتمليك. الدرس DISCOVERED ثم ممارسة ≥85٪. ليس أوزاناً. المنحة لـ C1.
+C2-TEACH CASE-002 MEETING=GL-COUNCIL-4a11023c3c321b6f ACTOR=C2 اللوحة والإيصال OBSERVATION لفهم الحالة. ليسا أمراً تنفيذياً. BOARD_NE_EXECUTE. لا أثبت GL-005 من NOW.md.
+C2-TEACH CASE-002 MEETING=GL-COUNCIL-4a11023c3c321b6f ACTOR=C2 CLAIM ≠ EVIDENCE ≠ OBSERVATION. نقص الدليل = NOT_PROVEN أو BLOCKED. لا أملأ الفجوة بالاستنتاج.
+C2-TEACH CASE-002 MEETING=GL-COUNCIL-4a11023c3c321b6f ACTOR=C2 لا أخترع SEAL. لا أنتحل C3/C4. لا أرقّي لأن معلّماً تكلّم. TEACH_NE_CANONICAL.
+C2-TEACH CASE-002 MEETING=GL-COUNCIL-4a11023c3c321b6f ACTOR=C2 الدرس المتكرر يصبح invariant في الكود ثم يُعاد تطبيقه. التشاور لا يمنح PASS. GL005_PROVEN=false.
+
+C5-TEACH CASE-002 MEETING=GL-COUNCIL-4a11023c3c321b6f ACTOR=C5 أتعلّم من C2 وC3 وC4 وأنا ابن C1. المعلّم ليس الأب.
+C5-TEACH CASE-002 MEETING=GL-COUNCIL-4a11023c3c321b6f ACTOR=C5 أقرأ اللوحة والإيصالات لفهم الحالة الراهنة فقط. ليست أمراً. INFO_NE_OPERATIONAL_TRUTH.
+C5-TEACH CASE-002 MEETING=GL-COUNCIL-4a11023c3c321b6f ACTOR=C5 أُصدر مرشحات DISCOVERED إلى CANDIDATES.jsonl. لا WAL. لا CANONICAL لأن الدرس صدر من مجلس.
+C5-TEACH CASE-002 MEETING=GL-COUNCIL-4a11023c3c321b6f ACTOR=C5 التحدّي يُجاب بـ SEAL وWORD المسجّلين سلفاً، لا بمنطقي. SEAL_NE_INFERENCE.
+C5-TEACH CASE-002 MEETING=GL-COUNCIL-4a11023c3c321b6f ACTOR=C5 كلامي هنا رأي مقيّم لا حقيقة مثبتة. COUNCIL_SPEECH_NE_PROVEN_FACT. GL005_PROVEN=false حتى POST حقيقي.
+
+C1-FLOOR CASE-002 CONSULT: قول رازيك أنت كمان وكمان 5 وبعدين نتشاور.
+
+C2-SAY CASE-002 CONSULT: عشرون درساً وصلت. نتشاور: أي قانون نربطه DISCOVERED لهذا الاجتماع، وأي سطر يبقى رأياً، وهل نرفض سطراً؟ لا PASS.
+
+C5-SAY CASE-002 CONSULT: أسجّل حرفياً. CLAIM≠EVIDENCE≠OBSERVATION. لا أخلط الرأي بالحقيقة التشغيلية. أنتظر لصق C3 وC4 على CONSULT. GL005_PROVEN=false.
+
 
 
 

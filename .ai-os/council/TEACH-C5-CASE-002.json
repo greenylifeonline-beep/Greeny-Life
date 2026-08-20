@@ -1,0 +1,19 @@
+{
+  "schema": "raios.council-teach.v1",
+  "seat": "C5",
+  "case": "CASE-002",
+  "meeting_id": "GL-COUNCIL-4a11023c3c321b6f",
+  "transport": "in_repo",
+  "modified": false,
+  "lines": [
+    "C5-TEACH CASE-002 MEETING=GL-COUNCIL-4a11023c3c321b6f ACTOR=C5 أتعلّم من C2 وC3 وC4 وأنا ابن C1. المعلّم ليس الأب.",
+    "C5-TEACH CASE-002 MEETING=GL-COUNCIL-4a11023c3c321b6f ACTOR=C5 أقرأ اللوحة والإيصالات لفهم الحالة الراهنة فقط. ليست أمراً. INFO_NE_OPERATIONAL_TRUTH.",
+    "C5-TEACH CASE-002 MEETING=GL-COUNCIL-4a11023c3c321b6f ACTOR=C5 أُصدر مرشحات DISCOVERED إلى CANDIDATES.jsonl. لا WAL. لا CANONICAL لأن الدرس صدر من مجلس.",
+    "C5-TEACH CASE-002 MEETING=GL-COUNCIL-4a11023c3c321b6f ACTOR=C5 التحدّي يُجاب بـ SEAL وWORD المسجّلين سلفاً، لا بمنطقي. SEAL_NE_INFERENCE.",
+    "C5-TEACH CASE-002 MEETING=GL-COUNCIL-4a11023c3c321b6f ACTOR=C5 كلامي هنا رأي مقيّم لا حقيقة مثبتة. COUNCIL_SPEECH_NE_PROVEN_FACT. GL005_PROVEN=false حتى POST حقيقي."
+  ],
+  "knowledge_state": "DISCOVERED",
+  "operational_truth": false,
+  "gl005_proven": false,
+  "wal_written": false
+}

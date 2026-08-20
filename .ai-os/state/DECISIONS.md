@@ -167,5 +167,9 @@ Collective consult is a proven cycle, not a shared URL. Modern nothingness here 
 
 C3 and C4 ACK'd CASE-001. Status `METHOD_BOUND_DISCOVERED`: founder chat is the only channel; FLOOR is the log not a member; each SAY carries MEETING/CASE/ACTOR; meeting SEAL stays valid; no new SEAL per opinion; consult does not grant PASS. This is not operational truth and does not close GL-005.
 
+## D-034 Council may teach C5; teach is not PASS
+DISCOVERED: `TEACH_NE_PASS`. `TEACH_NE_CANONICAL`. `CLAIM_NE_EVIDENCE_NE_OBSERVATION`. `BOARD_NE_EXECUTE`. `INFO_NE_OPERATIONAL_TRUTH`. `SEAL_NE_INFERENCE`. `COUNCIL_SPEECH_NE_PROVEN_FACT`. `TEACHER_NE_FATHER`.
+CASE-002: C3/C4/C2/C5 each filed five `Cx-TEACH` lines. C5 ingests DISCOVERED into `CANDIDATES.jsonl` and practices fail-closed. Board and receipts are state material, not execute orders. A lesson is not promoted because a teacher spoke. GL-005 stays `NOT_PROVEN` until an authenticated POST mutates durable task state. This decision is not CANONICAL and does not close GL-005.
+
 
 

@@ -1,0 +1,43 @@
+{
+  "schema": "raios.council-case.v1",
+  "id": "CASE-002",
+  "meeting_id": "GL-COUNCIL-4a11023c3c321b6f",
+  "from": "C1",
+  "ts": "2026-08-20T20:31:00+00:00",
+  "text": "هل يمكنهم تدريب C5؟ ثم قول رازيك أنت كمان وكمان 5 وبعدين نتشاور.",
+  "status": "TEACH_FOUR_SEATS_DISCOVERED",
+  "consult": "PENDING_PASTE_C3_C4",
+  "channel": "founder_whisper",
+  "public_url_required": false,
+  "operational_truth": false,
+  "knowledge_state": "DISCOVERED",
+  "promoted": false,
+  "canonical": false,
+  "validated": false,
+  "gl005_proven": false,
+  "wal_written": false,
+  "classification": {
+    "CLAIM": "C3 and C4 can train C5; C2 and C5 also taught five lines each",
+    "EVIDENCE": "20 Cx-TEACH lines on FLOOR.md unmodified",
+    "OBSERVATION": "ingest DISCOVERED; practice-teach command; WAL not written by this case"
+  },
+  "falsify": {
+    "hypothesis": "A council TEACH line is CANONICAL or closes GL-005 because a teacher spoke",
+    "independent_test": "knowledge_state stays DISCOVERED; GL005_PROVEN stays false; Cognitive WAL mtime unchanged by ingest/practice-teach",
+    "result": "HYPOTHESIS_FALSIFIED"
+  },
+  "ingest_ids": {
+    "C2": "12762c8a-122c-42e8-9153-82c05e36da34",
+    "C3": "2b69d026-da72-4b5c-a5f6-af518c5cc948",
+    "C4": "7c19552f-bf31-4a4e-ae27-710fca19eaba",
+    "C5": "71535ec0-8eb0-4fbd-bbb6-bd7508b5a6a1",
+    "C5_FILTERS": "f627130b-f8ee-41b4-80cf-25d6907ef7e6"
+  },
+  "says": {
+    "C1": "relayed C3/C4 TEACH; ordered C2 and C5 five lines then consult",
+    "C2": "TEACH_RECORDED",
+    "C3": "TEACH_RECORDED",
+    "C4": "TEACH_RECORDED",
+    "C5": "TEACH_RECORDED"
+  }
+}

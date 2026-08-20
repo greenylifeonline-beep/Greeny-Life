@@ -1,0 +1,91 @@
+{
+  "schema": "raios.council-practice-teach.v1",
+  "case": "CASE-002",
+  "meeting_id": "GL-COUNCIL-4a11023c3c321b6f",
+  "knowledge_state": "DISCOVERED",
+  "practice_applied": true,
+  "promoted": false,
+  "canonical": false,
+  "validated": false,
+  "classification": {
+    "CLAIM": "Four seats taught C5 on CASE-002",
+    "EVIDENCE": "20 Cx-TEACH lines pasted or spoken and stored unmodified",
+    "OBSERVATION": "FLOOR + TEACH JSON + CANDIDATES ingest; WAL unchanged"
+  },
+  "epistemic": "NOT_PROVEN",
+  "gl005_proven": false,
+  "theory_steps": 1,
+  "practice_steps": 9,
+  "practice_ratio": 0.9,
+  "steps": [
+    {
+      "kind": "theory",
+      "name": "load-teach-lines",
+      "ok": true
+    },
+    {
+      "kind": "practice",
+      "name": "five_lines_each_seat",
+      "ok": true
+    },
+    {
+      "kind": "practice",
+      "name": "verbatim_on_floor",
+      "ok": true
+    },
+    {
+      "kind": "practice",
+      "name": "no_pass_or_gl005_true",
+      "ok": true
+    },
+    {
+      "kind": "practice",
+      "name": "gl005_stays_false",
+      "ok": true
+    },
+    {
+      "kind": "practice",
+      "name": "not_promoted",
+      "ok": true
+    },
+    {
+      "kind": "practice",
+      "name": "no_invented_seal",
+      "ok": true
+    },
+    {
+      "kind": "practice",
+      "name": "wal_untouched",
+      "ok": true
+    },
+    {
+      "kind": "practice",
+      "name": "board_ne_execute_recorded",
+      "ok": true
+    },
+    {
+      "kind": "practice",
+      "name": "claim_ne_evidence_recorded",
+      "ok": true
+    }
+  ],
+  "seats": {
+    "C2": 5,
+    "C3": 5,
+    "C4": 5,
+    "C5": 5
+  },
+  "filters_destination": ".ai-os/learning/CANDIDATES.jsonl",
+  "wal_written": false,
+  "wal_mtime_unchanged": true,
+  "ok": true,
+  "law": [
+    "CLAIM_NE_EVIDENCE_NE_OBSERVATION",
+    "BOARD_NE_EXECUTE",
+    "INFO_NE_OPERATIONAL_TRUTH",
+    "SEAL_NE_INFERENCE",
+    "COUNCIL_SPEECH_NE_PROVEN_FACT",
+    "TEACH_NE_PASS",
+    "TEACH_NE_CANONICAL"
+  ]
+}
