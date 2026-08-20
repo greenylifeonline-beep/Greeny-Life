@@ -17,6 +17,7 @@ from gl005_epistemic import (  # noqa: E402
     classify_login_session,
     classify_observe_receipt,
     classify_post_mutation,
+    classify_stale_fix_runtime,
     parent_fail_closed,
     stale_evidence_check,
 )
@@ -213,6 +214,30 @@ def main() -> int:
     check("COOKIE_TRANSPORT_MISMATCH_NE_GL005_PROVEN" in LAWS, "transport candidate is not GL-005")
     check("NODE_ENV_PRODUCTION_NE_HTTPS" in LAWS, "production NODE_ENV is not HTTPS")
     check("DISABLE_SECURE_FLAG_NE_ORCHESTRATION_PROOF" in LAWS, "disabling Secure is not orchestration")
+
+    stale_fix = classify_stale_fix_runtime(
+        bound_head="e1dfd7c235b0bd4ba1a58ab6dfea47bd00173370",
+        required_head="9758765602ba1fc04645a0327e1a0f33a07fc0d1",
+        git_pull_failed=True,
+        pull_blocker="RAIOS/V9/wal/cognitive-events.jsonl",
+        cookie_header_probe_failed=True,
+        websession_has_gl_session=False,
+        login_success=True,
+        session_authenticated=False,
+        task_mutation_executed=False,
+        password_retained=False,
+        gl005_proven_printed=False,
+        c3_session_binding_printed=None,
+        live_runtime_semantic_success=True,
+    )
+    check(stale_fix["epistemic"] == "FAILED", "stale HEAD bind is FAILED")
+    check(stale_fix["reason"] == "STALE_HEAD_NE_PRODUCT_FIX_OBSERVATION", "stale HEAD reason")
+    check(stale_fix["head_matches_required_fix"] is False, "e1dfd7c is not the cookie-fix HEAD")
+    check(stale_fix["cookie_flags_measured"] is False, "GetValues failure is unmeasured")
+    check(stale_fix["GL005_PROVEN"] is False, "stale HEAD cannot prove GL-005")
+    check("STALE_HEAD_NE_PRODUCT_FIX_OBSERVATION" in LAWS, "stale-head law present")
+    check("UNMEASURED_FLAG_NE_OBSERVED_FALSE" in LAWS, "unmeasured flag law present")
+    check("WAL_DIRTY_NE_COMMIT_TO_PULL" in LAWS, "do not commit WAL to pull")
 
     print("gl005_epistemic_check: PASS")
     print(json.dumps({"gl005_proven": False, "epistemic": live["epistemic"], "laws": list(LAWS)}, ensure_ascii=False))

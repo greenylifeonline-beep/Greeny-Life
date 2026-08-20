@@ -30,6 +30,10 @@ LAWS = (
     "COOKIE_TRANSPORT_MISMATCH_NE_GL005_PROVEN",
     "DISABLE_SECURE_FLAG_NE_ORCHESTRATION_PROOF",
     "NODE_ENV_PRODUCTION_NE_HTTPS",
+    "STALE_HEAD_NE_PRODUCT_FIX_OBSERVATION",
+    "UNMEASURED_FLAG_NE_OBSERVED_FALSE",
+    "WAL_DIRTY_NE_COMMIT_TO_PULL",
+    "BUILD_ON_STALE_HEAD_NE_FIX_RUNTIME",
 )
 
 OBSERVATION_CHAIN = (
@@ -365,6 +369,117 @@ def classify_cookie_transport(
             "password_retained": bool(password_retained),
             "evidence_mutation_executed": bool(evidence_mutation_executed),
             "task_mutation_executed": bool(task_mutation_executed),
+            "gl005_proven_printed": bool(gl005_proven_printed),
+            "gl005_proven": False,
+            "GL005_PROVEN": False,
+        }
+    )
+    return rec
+
+
+def _heads_match(bound_head: str | None, required_head: str | None) -> bool:
+    if not bound_head or not required_head:
+        return False
+    left = bound_head.strip().lower()
+    right = required_head.strip().lower()
+    n = min(len(left), len(right))
+    return n >= 7 and left[:n] == right[:n]
+
+
+def classify_stale_fix_runtime(
+    *,
+    bound_head: str | None,
+    required_head: str | None,
+    git_pull_failed: bool,
+    pull_blocker: str | None,
+    cookie_header_probe_failed: bool,
+    websession_has_gl_session: bool | None,
+    login_success: bool,
+    session_authenticated: bool,
+    task_mutation_executed: bool,
+    password_retained: bool,
+    gl005_proven_printed: bool,
+    c3_session_binding_printed: str | None = None,
+    live_runtime_semantic_success: bool | None = None,
+) -> dict[str, Any]:
+    """A build/restart on a stale HEAD cannot observe the cookie-scheme fix."""
+    head_ok = _heads_match(bound_head, required_head)
+    if password_retained:
+        rec = {
+            "epistemic": "INVALID_OBSERVATION",
+            "reason": "PASSWORD_RETAINED",
+            "capability": "CAPABILITY_UNPROVEN",
+            "laws": ["PASSWORD_VALUE_MUST_NOT_BE_PRINTED"],
+        }
+    elif gl005_proven_printed:
+        rec = {
+            "epistemic": "INVALID_OBSERVATION",
+            "reason": "PRINTED_GL005_PROVEN_WITHOUT_MUTATION",
+            "capability": "CAPABILITY_UNPROVEN",
+            "laws": ["PRINTED_PASS_NE_EVIDENCE"],
+        }
+    elif task_mutation_executed:
+        rec = {
+            "epistemic": "FAILED",
+            "reason": "MUTATION_CLAIMED_WITHOUT_BOUND_SESSION",
+            "capability": "CAPABILITY_UNPROVEN",
+            "laws": ["AUTH_GATE_PRESENT_NE_MUTATION_EXECUTED"],
+        }
+    elif git_pull_failed or not head_ok:
+        rec = {
+            "epistemic": "FAILED",
+            "reason": "STALE_HEAD_NE_PRODUCT_FIX_OBSERVATION",
+            "capability": "PRESENT_BUT_PROTECTED_AND_UNPROVEN",
+            "laws": [
+                "STALE_HEAD_NE_PRODUCT_FIX_OBSERVATION",
+                "BUILD_ON_STALE_HEAD_NE_FIX_RUNTIME",
+                "WAL_DIRTY_NE_COMMIT_TO_PULL",
+                "UNMEASURED_FLAG_NE_OBSERVED_FALSE",
+                "LOGIN_HTTP_200_NE_SIGNED_SESSION",
+                "PROVISION_ADMIN_NE_ORCHESTRATION_PROOF",
+            ],
+        }
+    elif cookie_header_probe_failed:
+        rec = {
+            "epistemic": "INVALID_OBSERVATION",
+            "reason": "UNMEASURED_FLAG_NE_OBSERVED_FALSE",
+            "capability": "PRESENT_BUT_PROTECTED_AND_UNPROVEN",
+            "laws": ["UNMEASURED_FLAG_NE_OBSERVED_FALSE", "PRINTED_PASS_NE_EVIDENCE"],
+        }
+    elif login_success and session_authenticated is False:
+        rec = classify_login_session(
+            login_http=200,
+            login_success=True,
+            session_http=200,
+            authenticated=False,
+            signed_admin_session_printed=False,
+            atomic_login_proven_printed=False,
+            task_mutation_executed=False,
+            session_over_http=True,
+        )
+    else:
+        rec = {
+            "epistemic": "FAILED",
+            "reason": "LOGIN_SESSION_NOT_IN_PASS_SHAPE",
+            "capability": "CAPABILITY_UNPROVEN",
+            "laws": ["PARENT_FAIL_CLOSED"],
+        }
+    rec.update(
+        {
+            "bound_head": bound_head,
+            "required_head": required_head,
+            "head_matches_required_fix": head_ok,
+            "git_pull_failed": bool(git_pull_failed),
+            "pull_blocker": pull_blocker,
+            "cookie_header_probe_failed": bool(cookie_header_probe_failed),
+            "cookie_flags_measured": not cookie_header_probe_failed,
+            "websession_has_gl_session": websession_has_gl_session,
+            "login_success": bool(login_success),
+            "session_authenticated": bool(session_authenticated),
+            "live_runtime_semantic_success": live_runtime_semantic_success,
+            "c3_session_binding_printed": c3_session_binding_printed,
+            "task_mutation_executed": bool(task_mutation_executed),
+            "password_retained": bool(password_retained),
             "gl005_proven_printed": bool(gl005_proven_printed),
             "gl005_proven": False,
             "GL005_PROVEN": False,

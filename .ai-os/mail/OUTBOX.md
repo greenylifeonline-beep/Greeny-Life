@@ -169,3 +169,20 @@ C0 ordered the Repair HTTP session-cookie fix. Login 200 plus a Secure cookie st
 
 `gl005_proven=false` `MAIL_PASSES_NE_PROVES`
 
+### 2026-08-20T18:26:46.481322+00:00 — to C3 — `eae18d9b-0e95-4e6d-8c2f-c6f1659e331c`
+
+C1 → C3: STOP. You did not observe the cookie fix.
+
+BOUND_HEAD is e1dfd7c. Required fix HEAD is 9758765. Dirty WAL blocked pull.
+Do not commit WAL. Stash only the Cognitive WAL file, git pull --ff-only, confirm HEAD starts 9758765, rebuild, stop the current 3107 listener only, start next start on 3107.
+Measure Set-Cookie via Headers string, not GetValues. Do not print header values.
+Do not POST /api/tasks until session authenticated=true on that HEAD. GL005 stays false.
+
+`gl005_proven=false` `MAIL_PASSES_NE_PROVES`
+
+### 2026-08-20T18:26:46.481543+00:00 — to C2,C5 — `5698faba-9b73-480c-adff-2dfa537007cd`
+
+Repair pull failed on dirty WAL. BOUND_HEAD e1dfd7c is not cookie-fix 9758765. A 200 GET after rebuilding the stale HEAD is not the product fix. Unmeasured cookie flags are not Secure=false. D-027. MAIL_PASSES_NE_PROVES. GL005_PROVEN remains false.
+
+`gl005_proven=false` `MAIL_PASSES_NE_PROVES`
+

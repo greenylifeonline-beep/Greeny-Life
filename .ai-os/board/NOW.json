@@ -1,22 +1,22 @@
 {
   "schema": "raios.mission-board.v1",
   "branch": "v9-neurolingua-semantic-kernel",
-  "head": "54e31487fe7c1273678b4baef9574bae746185c2",
-  "updated_at": "2026-08-20T18:13:54.950563+00:00",
-  "mission_status": "COOKIE_TRANSPORT_FIX_RECORDED_NOT_GL005",
-  "mission": "C0 ordered the HTTP Secure-cookie fix. Scheme-aware Secure is in lib/auth.ts. COOKIE_TRANSPORT_MISMATCH is a PROVEN_CANDIDATE. GL005_PROVEN remains false. C3: pull, restart the same bound Next, re-login over HTTP, report flags only.",
+  "head": "9758765602ba1fc04645a0327e1a0f33a07fc0d1",
+  "updated_at": "2026-08-20T18:26:46.483631+00:00",
+  "mission_status": "STALE_HEAD_BIND_NOT_THE_COOKIE_FIX",
+  "mission": "Repair BOUND_HEAD e1dfd7c is not cookie-fix 9758765. Dirty WAL blocked pull. GL005_PROVEN remains false. C3: stash WAL, ff-only pull, rebuild, restart port 3107.",
   "schedule": {
-    "now": "C3 pull this HEAD, restart the SAME Repair Next, login over HTTP, print cookie flags not values.",
-    "next": "If SESSION_AUTHENTICATED=true with ADMIN|WAREHOUSE|EXPORT, run the 11-step mutation chain. Else stay FAILED at session bind.",
-    "forbidden": "cookie value, forged session cookie, second Next, GL005 PASS from scheme-aware Secure, global Secure-off as proof"
+    "now": "C3 stash Cognitive WAL only, pull 9758765, rebuild, restart same 3107 runtime.",
+    "next": "On that HEAD, measure Set-Cookie flags without printing values. No task POST until authenticated=true.",
+    "forbidden": "commit WAL to pull, reset --hard, cookie values, forged session, second Next, GL005 PASS from stale build"
   },
   "required": {
-    "C0": "Ordered صلح. Do not paste cookies or passwords.",
-    "C1": "Recorded D-026 and scheme-aware Secure. Does not grant GL005.",
-    "C2": "Secure cookie on HTTP ≠ signed session. Printed candidate ≠ proven.",
-    "C3": "Pull, restart same Next, re-login over HTTP, flags only. No task POST until authenticated=true.",
-    "C4": "D-026 DISCOVERED only. No CANONICAL promotion.",
-    "C5": "Falsify any PASS from the cookie-scheme fix."
+    "C0": "يعطي الأوامر في شات Cursor. ليس ساعي كل ظرف.",
+    "C1": "بوابة MCP V1 + OUTBOX. يجمع Issues. لا يمنح PASS.",
+    "C2": "MCP: read_board/read_receipt/post_opinion. أو Issue بعنوان MAIL C2. لا كود.",
+    "C3": "المنفّذ على العملية المربوطة. لا أسرار مختلقة.",
+    "C4": "خدمة: نبض + WAL.",
+    "C5": "MCP أو Issue بعنوان MAIL C5. لا يسرق C2. لا كود."
   },
   "mail": {
     "dispatcher": "C1",
@@ -34,8 +34,8 @@
       "gl005_proven": false
     },
     "last_send": {
-      "id": "26ba865b-9d35-4502-906d-733b8048bbc0",
-      "ts": "2026-08-20T18:13:54.948681+00:00",
+      "id": "5698faba-9b73-480c-adff-2dfa537007cd",
+      "ts": "2026-08-20T18:26:46.481543+00:00",
       "to": [
         "C2",
         "C5"

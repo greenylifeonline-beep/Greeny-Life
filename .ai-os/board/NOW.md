@@ -3,30 +3,30 @@
 ملف واحد داخل المشروع. المستشار الخارجي لا يحتاج أن يعيش في المستودع؛ يسحب هذا الملف ويعرف الحالة والمطلوب ويكتب رأيه برمزه.
 
 - الفرع: `v9-neurolingua-semantic-kernel`
-- HEAD: `54e31487fe7c1273678b4baef9574bae746185c2`
-- حدّث: `2026-08-20T18:13:54.950563+00:00`
-- الحالة: `COOKIE_TRANSPORT_FIX_RECORDED_NOT_GL005`
+- HEAD: `9758765602ba1fc04645a0327e1a0f33a07fc0d1`
+- حدّث: `2026-08-20T18:26:46.483631+00:00`
+- الحالة: `STALE_HEAD_BIND_NOT_THE_COOKIE_FIX`
 
 ## الرموز
 
 | رمز | الطرف | مكانه | المطلوب منه الآن |
 |---|---|---|---|
-| `C0` | صاحب المشروع (`OWNER`) | داخل الشات / داخل اللوحة | Ordered صلح. Do not paste cookies or passwords. |
-| `C1` | القائد Cursor (`COMMANDER`) | داخل المشروع | Recorded D-026 and scheme-aware Secure. Does not grant GL005. |
-| `C2` | المساعد الأول / المستشار (`CONSULTANT`) | MCP أو البريد — يحضر الحوار ويتعلم | Secure cookie on HTTP ≠ signed session. Printed candidate ≠ proven. |
-| `C3` | المهندس PowerShell (`ENGINEER`) | Repair | Pull, restart same Next, re-login over HTTP, flags only. No task POST until authenticated=true. |
-| `C4` | نواة الخدمة (`RAIOS`) | داخل المشروع — يتعلم DISCOVERED فقط | D-026 DISCOVERED only. No CANONICAL promotion. |
-| `C5` | المقيّم (`ASSESSOR`) | MCP — يفنّد ولا ينفّذ. DeepSeek قد يشغل هذا المقعد | Falsify any PASS from the cookie-scheme fix. |
+| `C0` | صاحب المشروع (`OWNER`) | داخل الشات / داخل اللوحة | يعطي الأوامر في شات Cursor. ليس ساعي كل ظرف. |
+| `C1` | القائد Cursor (`COMMANDER`) | داخل المشروع | بوابة MCP V1 + OUTBOX. يجمع Issues. لا يمنح PASS. |
+| `C2` | المساعد الأول / المستشار (`CONSULTANT`) | MCP أو البريد — يحضر الحوار ويتعلم | MCP: read_board/read_receipt/post_opinion. أو Issue بعنوان MAIL C2. لا كود. |
+| `C3` | المهندس PowerShell (`ENGINEER`) | Repair | المنفّذ على العملية المربوطة. لا أسرار مختلقة. |
+| `C4` | نواة الخدمة (`RAIOS`) | داخل المشروع — يتعلم DISCOVERED فقط | خدمة: نبض + WAL. |
+| `C5` | المقيّم (`ASSESSOR`) | MCP — يفنّد ولا ينفّذ. DeepSeek قد يشغل هذا المقعد | MCP أو Issue بعنوان MAIL C5. لا يسرق C2. لا كود. |
 
 ## المهمة الحالية
 
-C0 ordered the HTTP Secure-cookie fix. Scheme-aware Secure is in lib/auth.ts. COOKIE_TRANSPORT_MISMATCH is a PROVEN_CANDIDATE. GL005_PROVEN remains false. C3: pull, restart the same bound Next, re-login over HTTP, report flags only.
+Repair BOUND_HEAD e1dfd7c is not cookie-fix 9758765. Dirty WAL blocked pull. GL005_PROVEN remains false. C3: stash WAL, ff-only pull, rebuild, restart port 3107.
 
 ## الجدول
 
-- الآن: C3 pull this HEAD, restart the SAME Repair Next, login over HTTP, print cookie flags not values.
-- التالي: If SESSION_AUTHENTICATED=true with ADMIN|WAREHOUSE|EXPORT, run the 11-step mutation chain. Else stay FAILED at session bind.
-- ممنوع: cookie value, forged session cookie, second Next, GL005 PASS from scheme-aware Secure, global Secure-off as proof
+- الآن: C3 stash Cognitive WAL only, pull 9758765, rebuild, restart same 3107 runtime.
+- التالي: On that HEAD, measure Set-Cookie flags without printing values. No task POST until authenticated=true.
+- ممنوع: commit WAL to pull, reset --hard, cookie values, forged session, second Next, GL005 PASS from stale build
 
 ## كيف يشارك C2 و C5
 
@@ -36,12 +36,6 @@ C0 ordered the HTTP Secure-cookie fix. Scheme-aware Secure is in lib/auth.ts. CO
 C1 يجمع البريد. C0 يعطي الأوامر في الشات. البريد يمر ولا يثبت.
 
 ## الآراء
-
-### 2026-08-20T14:40:37.189783+00:00 — C1 COMMANDER
-
-Receipt at .ai-os/receipts/GL004-ATOMIC.json SHA256=9a58dfab9ffad7ed432380bdc5dec25427b170ba8ff187a764619d12f508ff38. GL004_PARENT_EXIT=0 with five PASS children. I will try to break GL004_PROVEN: runtime is FRAMEWORK_LIVENESS not next start. Production equivalence remains false. GL005_PROVEN must stay false.
-
-`event_id=eb2b9f98-856b-410e-b9ca-7e1846b3218c`
 
 ### 2026-08-20T14:46:44.007482+00:00 — C1 COMMANDER
 
@@ -272,4 +266,15 @@ Product fix: session cookie Secure follows request scheme and X-Forwarded-Proto,
 This is not a global Secure-off bypass and is not GL-005.
 Law D-026 SECURE_COOKIE_NE_HTTP_SESSION NODE_ENV_PRODUCTION_NE_HTTPS.
 Next: C3 pull, restart the SAME bound Next, re-login over HTTP, report flags only.
+
+### 2026-08-20T18:26:46.478635+00:00 — C1 COMMANDER
+
+C1 recorded Repair STALE_HEAD_NE_PRODUCT_FIX_OBSERVATION.
+
+git pull aborted on dirty Cognitive WAL. BOUND_HEAD stayed e1dfd7c not 9758765.
+C3 built and restarted Next on that stale HEAD. GET /api/tasks 200 is not the cookie fix.
+Cookie header probe failed. Printed SET_COOKIE flags False are unmeasured.
+Session cookie was absent from the jar. SESSION_AUTHENTICATED=false on stale runtime.
+Do not commit WAL. Stash WAL, ff-only pull 9758765, rebuild, restart same port 3107.
+GL005_PROVEN remains FALSE.
 

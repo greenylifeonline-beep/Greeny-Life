@@ -43,7 +43,7 @@
   },
   "next_cheapest_discriminator_on_repair": [
     "1. Bind authoritative Repair HEAD.",
-    "2. Pull this HEAD. Restart the SAME bound Repair Next. Do not spawn a second process.",
+    "2. Stash only RAIOS/V9/wal/cognitive-events.jsonl, ff-only pull to 9758765, rebuild, restart the SAME port 3107. Do not commit WAL. Do not spawn a second process.",
     "3. GET /api/tasks and parse semantic body (success/count/data, not status code alone).",
     "4. Inspect the EXISTING legitimate authentication mechanism only: authorizeRequest, login route, roles ADMIN/WAREHOUSE/EXPORT, whether C0 already has a legitimate active session (browser cookie or GET /api/auth/session on that process).",
     "5. Do not manufacture APP_SESSION_SECRET.",
@@ -110,6 +110,22 @@
     "reason": "SECURE_SESSION_COOKIE_NOT_USABLE_OVER_CURRENT_HTTP_RUNTIME",
     "GL005_PROVEN": false,
     "c0_order": "صلح",
-    "product_fix": "lib/auth.ts cookieShouldBeSecure uses request scheme and X-Forwarded-Proto"
+    "product_fix": "lib/auth.ts cookieShouldBeSecure uses request scheme and X-Forwarded-Proto",
+    "superseded_by": "GL005-C3-REPAIR-STALE-HEAD-BIND.json"
+  },
+  "c3_stale_head_bind": {
+    "GIT_PULL_FAILED": true,
+    "PULL_BLOCKER": "RAIOS/V9/wal/cognitive-events.jsonl",
+    "BOUND_HEAD": "e1dfd7c235b0bd4ba1a58ab6dfea47bd00173370",
+    "REQUIRED_FIX_HEAD": "9758765602ba1fc04645a0327e1a0f33a07fc0d1",
+    "BOUND_RUNTIME_PID": 19720,
+    "BOUND_PORT": 3107,
+    "LIVE_RUNTIME_SEMANTIC_SUCCESS": true,
+    "COOKIE_FLAGS_MEASURED": false,
+    "WEBSESSION_HAS_GL_SESSION": false,
+    "SESSION_AUTHENTICATED": false,
+    "epistemic": "FAILED",
+    "reason": "STALE_HEAD_NE_PRODUCT_FIX_OBSERVATION",
+    "GL005_PROVEN": false
   }
 }
