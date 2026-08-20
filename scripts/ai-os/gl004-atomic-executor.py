@@ -173,7 +173,7 @@ def child_build() -> dict:
         )
     child = run_child(
         "BUILD",
-        ["npx", "--no-install", "next", "build"],
+        ["npx", "--no-install", "next", "build", "--webpack"],
         cwd=WORKTREE,
         env={"NODE_ENV": "production"},
         timeout=900,

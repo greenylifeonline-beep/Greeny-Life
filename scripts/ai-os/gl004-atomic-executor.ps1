@@ -51,7 +51,6 @@ $bind = Invoke-Child "RUNTIME_TRACE" {
 $tc = Invoke-Child "TYPECHECK" { npm run type-check }
 $canon = Invoke-Child "TEST_CANONICAL" { npx --no-install tsx tests/canonical_intelligence_check.ts }
 $orch = Invoke-Child "TEST_TASK_ORCHESTRATION" { npx --no-install tsx tests/task_orchestration_check.ts }
-$env:GL004_ISOLATED_DIST = ".next-gl004-proof"
 $env:NODE_ENV = "production"
 $Work = Join-Path $env:TEMP "gl004-isolated-build"
 if (Test-Path $Work) {
@@ -62,11 +61,9 @@ git worktree add --detach $Work HEAD
 $nm = Join-Path $Work "node_modules"
 if (Test-Path $nm) { Remove-Item -LiteralPath $nm -Force -ErrorAction SilentlyContinue }
 cmd /c mklink /J "$nm" (Join-Path $Repo "node_modules") | Out-Null
-$build = Invoke-Child "BUILD" { npx --no-install next build }
-# BUILD child ran with cwd override below
 $build = Invoke-Child "BUILD" {
     Push-Location $Work
-    try { npx --no-install next build } finally { Pop-Location }
+    try { npx --no-install next build --webpack } finally { Pop-Location }
 }
 $build["isolation"] = "git_worktree_default_distDir"
 $build["listened"] = $false
