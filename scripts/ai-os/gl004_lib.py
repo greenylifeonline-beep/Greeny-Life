@@ -38,7 +38,24 @@ GL005_CHILDREN = (
     "AIOS_STATUS",
     "GL005_CONTROL_PLANE",
     "TEST_TASK_ORCHESTRATION",
+    "GL005_API_TASKS",
     "GL005_ORCHESTRATION_DEMO",
+)
+
+PRODUCT_PATHS = (
+    "app",
+    "lib",
+    "tests",
+    "prisma",
+    "canonical",
+    "package.json",
+    "package-lock.json",
+    "tsconfig.json",
+    "next.config.ts",
+    "next.config.js",
+    "next.config.mjs",
+    "next-env.d.ts",
+    "scripts/ai-os",
 )
 
 # Binder exits. 0 is the only success for RUNTIME_TRACE.
@@ -151,6 +168,21 @@ def classify_http(status: int | None, *, is_root: bool = False, next_identity: b
     return "INVALID_OBSERVATION"
 
 
+def product_scoped_dirty() -> dict[str, Any]:
+    """Heartbeat/WAL dirt must not block BUILD. Product paths may."""
+    names: list[str] = []
+    queries = (
+        ["git", "diff", "--name-only", "--", *PRODUCT_PATHS],
+        ["git", "diff", "--cached", "--name-only", "--", *PRODUCT_PATHS],
+        ["git", "ls-files", "--others", "--exclude-standard", "--", *PRODUCT_PATHS],
+    )
+    for argv in queries:
+        r = subprocess.run(argv, cwd=ROOT, text=True, capture_output=True)
+        names.extend(n for n in (r.stdout or "").splitlines() if n.strip())
+    uniq = sorted(set(names))
+    return {"dirty": bool(uniq), "files": uniq}
+
+
 def fingerprint_dist(root: Path | None = None) -> dict[str, Any]:
     root = root or ROOT
     nxt = root / ".next"
@@ -164,6 +196,14 @@ def fingerprint_dist(root: Path | None = None) -> dict[str, Any]:
         "isolated_exists": isolated.exists(),
         "isolated_has_build_id": (isolated / "BUILD_ID").exists(),
         "isolated_dist": ISOLATED_DIST,
+    }
+
+
+def gl005_verdict(*, aios_ok: bool, control_ok: bool, orch_ok: bool, api_ok: bool) -> dict[str, bool]:
+    """HTTP 2xx + control plane is a live path, not GL-005 PASS."""
+    return {
+        "gl005_live_path_proven": bool(aios_ok and control_ok and orch_ok and api_ok),
+        "gl005_proven": False,
     }
 
 

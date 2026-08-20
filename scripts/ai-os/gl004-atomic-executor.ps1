@@ -1,147 +1,298 @@
-#Requires -Version 5.1
+# GL-004 / GL-005 atomic executor for Repair (Windows).
+# Do NOT write ._raios-wave2-atomic-proof.ps1 or _raios-wave2-atomic-proof\ at repo root.
+# Preferred: python .\scripts\ai-os\gl004-atomic-executor.py
+# Native PowerShell path below is the same contract, not a forest bootstrap.
+
 $ErrorActionPreference = "Stop"
 Set-StrictMode -Version Latest
-# Wave2 isolated proof for Repair. Same contract as gl004-atomic-executor.py.
-# NEVER set NEXT_CONFIG_FILE. NEVER write next.config.*. NEVER create _raios-* proof forests.
-# NEVER spawn or kill Next. Isolated compile: node scripts/ai-os/gl004-isolated-build.cjs
 
 $Repo = (Resolve-Path (Join-Path $PSScriptRoot "..\..")).Path
 Set-Location $Repo
-$ReceiptDir = Join-Path $Repo ".ai-os\receipts"
-New-Item -ItemType Directory -Force -Path $ReceiptDir | Out-Null
 
-function Invoke-Child([string]$Name, [scriptblock]$Body) {
-    $t0 = Get-Date
-    $code = 2
-    $out = ""
-    $epistemic = "FAILED"
+$Head = (git rev-parse HEAD).Trim()
+$Branch = (git branch --show-current).Trim()
+$Stamp = Get-Date -Format "yyyyMMdd-HHmmss"
+
+$ProofRoot = Join-Path $Repo ".ai-os\receipts"
+New-Item -ItemType Directory -Force $ProofRoot | Out-Null
+$Receipt = Join-Path $ProofRoot "GL004-ATOMIC.json"
+$ApiBodyFile = Join-Path $ProofRoot "api-tasks-body.txt"
+$BindSidecar = Join-Path $ProofRoot "GL004-RUNTIME-BIND.json"
+
+$ProductPaths = @(
+    "app", "lib", "tests", "prisma", "canonical",
+    "package.json", "package-lock.json", "tsconfig.json",
+    "next.config.ts", "next.config.js", "next.config.mjs",
+    "next-env.d.ts", "scripts\ai-os"
+)
+
+function Test-ProductScopedDirty {
+    foreach ($Rel in $ProductPaths) {
+        $Full = Join-Path $Repo $Rel
+        if (-not (Test-Path $Full)) { continue }
+        git diff --quiet -- $Rel
+        if ($LASTEXITCODE -ne 0) { return $true }
+        git diff --cached --quiet -- $Rel
+        if ($LASTEXITCODE -ne 0) { return $true }
+    }
+    return $false
+}
+
+$Children = [ordered]@{}
+
+function Run-Child {
+    param(
+        [string]$Name,
+        [scriptblock]$Action
+    )
+    Write-Host ""
+    Write-Host "RUN=$Name"
     try {
-        $out = & $Body 2>&1 | Out-String
-        if ($null -eq $LASTEXITCODE) { $code = 0 } else { $code = [int]$LASTEXITCODE }
-    } catch {
-        $code = 1
-        $out = [string]$_
+        & $Action
+        $Code = $LASTEXITCODE
+        if ($null -eq $Code) { $Code = 0 }
     }
-    if ($code -eq 0) { $epistemic = "PASS" }
-    return [ordered]@{
-        name = $Name
-        exit = $code
-        epistemic = $epistemic
-        seconds = [math]::Round(((Get-Date) - $t0).TotalSeconds, 3)
-        stdout_tail = if ($out.Length -gt 4000) { $out.Substring($out.Length - 4000) } else { $out }
+    catch {
+        Write-Host "CHILD_EXCEPTION::$Name::$($_.Exception.Message)"
+        $Code = 90
+    }
+    $Children[$Name] = [int]$Code
+    Write-Host "CHILD::$Name::$Code"
+}
+
+Write-Host "############################################################"
+Write-Host "# RAIOS WAVE2 ATOMIC PROOF (Repair native)"
+Write-Host "############################################################"
+Write-Host "REPOSITORY=$Repo"
+Write-Host "BRANCH=$Branch"
+Write-Host "HEAD=$Head"
+Write-Host "RECEIPT_PATH=$Receipt"
+
+Run-Child "TYPECHECK" { & npm run type-check }
+
+if (Test-Path ".\tests\canonical_intelligence_check.ts") {
+    Run-Child "TEST_CANONICAL" { & npx tsx ".\tests\canonical_intelligence_check.ts" }
+} else {
+    $Children.TEST_CANONICAL = 91
+    Write-Host "CHILD::TEST_CANONICAL::91"
+}
+
+if (Test-Path ".\tests\task_orchestration_check.ts") {
+    Run-Child "TEST_TASK_ORCHESTRATION" { & npx tsx ".\tests\task_orchestration_check.ts" }
+} else {
+    $Children.TEST_TASK_ORCHESTRATION = 92
+    Write-Host "CHILD::TEST_TASK_ORCHESTRATION::92"
+}
+
+$TrackedDirty = Test-ProductScopedDirty
+$BuildWT = Join-Path $env:TEMP "gl004-isolated-build"
+
+if ($TrackedDirty) {
+    $Children.BUILD = 102
+    Write-Host "BUILD_STATE=BLOCKED"
+    Write-Host "BUILD_REASON=PRODUCT_SCOPED_WORKTREE_DIFFERS_FROM_HEAD"
+    Write-Host "CHILD::BUILD::102"
+} else {
+    if (Test-Path $BuildWT) {
+        git worktree remove --force $BuildWT 2>$null
+        Remove-Item -LiteralPath $BuildWT -Recurse -Force -ErrorAction SilentlyContinue
+    }
+    git worktree add --detach $BuildWT $Head
+    if ($LASTEXITCODE -ne 0) {
+        $Children.BUILD = 103
+        Write-Host "CHILD::BUILD::103"
+    } else {
+        $MainNodeModules = Join-Path $Repo "node_modules"
+        $BuildNodeModules = Join-Path $BuildWT "node_modules"
+        if (!(Test-Path $MainNodeModules)) {
+            $Children.BUILD = 104
+            Write-Host "CHILD::BUILD::104"
+        } else {
+            if (!(Test-Path $BuildNodeModules)) {
+                cmd /c "mklink /J `"$BuildNodeModules`" `"$MainNodeModules`"" | Out-Null
+            }
+            Push-Location $BuildWT
+            try {
+                Write-Host "BUILD_CMD=npx next build --webpack"
+                & npx next build --webpack
+                $Children.BUILD = [int]$LASTEXITCODE
+            }
+            catch {
+                $Children.BUILD = 105
+                Write-Host "BUILD_EXCEPTION=$($_.Exception.Message)"
+            }
+            finally {
+                Pop-Location
+            }
+            Write-Host "CHILD::BUILD::$($Children.BUILD)"
+        }
     }
 }
 
-function Get-Parent([object[]]$Children, [string[]]$Required) {
-    $by = @{}
-    foreach ($c in $Children) { $by[$c.name] = $c }
-    $codes = @()
-    foreach ($n in $Required) {
-        if (-not $by.ContainsKey($n) -or $null -eq $by[$n].exit) { $codes += 2 }
-        else { $codes += [int]$by[$n].exit }
-    }
-    $nz = @($codes | Where-Object { $_ -ne 0 })
-    if ($nz.Count -eq 0) { return 0 }
-    return [int]($nz | Measure-Object -Maximum).Maximum
+# Bind live Next — no spawn, no kill. Invoke the binder (uses -ProcessId, not $PID).
+Write-Host ""
+Write-Host "RUN=RUNTIME_TRACE"
+& powershell.exe -NoProfile -ExecutionPolicy Bypass -File (Join-Path $PSScriptRoot "gl004-runtime-bind.ps1")
+$Children.RUNTIME_TRACE = [int]$LASTEXITCODE
+Write-Host "CHILD::RUNTIME_TRACE::$($Children.RUNTIME_TRACE)"
+
+$Bound = $null
+if (Test-Path $BindSidecar) {
+    try {
+        $Bound = Get-Content -LiteralPath $BindSidecar -Raw | ConvertFrom-Json
+    } catch {}
 }
 
-$bind = Invoke-Child "RUNTIME_TRACE" {
-    powershell -NoProfile -ExecutionPolicy Bypass -File (Join-Path $PSScriptRoot "gl004-runtime-bind.ps1")
+if (Test-Path ".\scripts\ai-os\aios.py") {
+    Run-Child "AIOS_STATUS" { & python ".\scripts\ai-os\aios.py" status }
+} else {
+    $Children.AIOS_STATUS = 109
 }
-$tc = Invoke-Child "TYPECHECK" { npm run type-check }
-$canon = Invoke-Child "TEST_CANONICAL" { npx --no-install tsx tests/canonical_intelligence_check.ts }
-$orch = Invoke-Child "TEST_TASK_ORCHESTRATION" { npx --no-install tsx tests/task_orchestration_check.ts }
-$env:NODE_ENV = "production"
-$Work = Join-Path $env:TEMP "gl004-isolated-build"
-if (Test-Path $Work) {
-    git worktree remove --force $Work 2>$null
-    Remove-Item -LiteralPath $Work -Recurse -Force -ErrorAction SilentlyContinue
-}
-git worktree add --detach $Work HEAD
-$nm = Join-Path $Work "node_modules"
-if (Test-Path $nm) { Remove-Item -LiteralPath $nm -Force -ErrorAction SilentlyContinue }
-cmd /c mklink /J "$nm" (Join-Path $Repo "node_modules") | Out-Null
-$build = Invoke-Child "BUILD" {
-    Push-Location $Work
-    try { npx --no-install next build --webpack } finally { Pop-Location }
-}
-$build["isolation"] = "git_worktree_default_distDir"
-$build["listened"] = $false
-$build["worktree"] = $Work
-$aios = Invoke-Child "AIOS_STATUS" { python .\scripts\ai-os\aios.py status }
-$controlOk = (Test-Path ".\.ai-os\state\TASKS.json") -and (Test-Path ".\.ai-os\state\LOCKS.json") -and (Test-Path ".\.ai-os\handoffs")
-$control = [ordered]@{ name = "GL005_CONTROL_PLANE"; exit = $(if ($controlOk) { 0 } else { 97 }); epistemic = $(if ($controlOk) { "PASS" } else { "UNAVAILABLE" }) }
 
-$demoExit = 100
-$apiStatus = $null
-$apiHash = $null
-$apiDetails = $null
-$bodyPath = Join-Path $ReceiptDir "api-tasks-body.txt"
+$TasksExists = Test-Path ".\.ai-os\state\TASKS.json"
+$LocksExists = Test-Path ".\.ai-os\state\LOCKS.json"
+$HandoffsExists = Test-Path ".\.ai-os\handoffs"
+if ($TasksExists -and $LocksExists -and $HandoffsExists) {
+    $Children.GL005_CONTROL_PLANE = 0
+} else {
+    $Children.GL005_CONTROL_PLANE = 110
+}
+Write-Host "CHILD::GL005_CONTROL_PLANE::$($Children.GL005_CONTROL_PLANE)"
+
+$ApiStatus = $null
+$ApiError = $null
+$ApiBodyHash = $null
+$Port = 3000
+if ($Bound -and $Bound.port) { $Port = [int]$Bound.port }
+
 try {
-    $resp = Invoke-WebRequest -Uri "http://127.0.0.1:3000/api/tasks" -UseBasicParsing -TimeoutSec 15
-    $apiStatus = [int]$resp.StatusCode
-    [IO.File]::WriteAllText($bodyPath, [string]$resp.Content, [Text.UTF8Encoding]::new($false))
-} catch {
-    if ($_.Exception.Response) {
-        try { $apiStatus = [int]$_.Exception.Response.StatusCode.value__ } catch {}
-        try {
-            $reader = New-Object IO.StreamReader($_.Exception.Response.GetResponseStream())
-            $content = $reader.ReadToEnd()
-            [IO.File]::WriteAllText($bodyPath, $content, [Text.UTF8Encoding]::new($false))
-        } catch {}
+    $Response = Invoke-WebRequest `
+        -Uri "http://127.0.0.1:$Port/api/tasks" `
+        -UseBasicParsing `
+        -TimeoutSec 15
+    $ApiStatus = [int]$Response.StatusCode
+    [IO.File]::WriteAllText($ApiBodyFile, [string]$Response.Content, [Text.UTF8Encoding]::new($false))
+    $ApiBodyHash = (Get-FileHash -LiteralPath $ApiBodyFile -Algorithm SHA256).Hash.ToLower()
+    if ($ApiStatus -ge 200 -and $ApiStatus -lt 300) {
+        $Children.GL005_API_TASKS = 0
+    } else {
+        $Children.GL005_API_TASKS = 112
     }
 }
-if (Test-Path $bodyPath) {
-    $apiHash = (Get-FileHash $bodyPath -Algorithm SHA256).Hash.ToLowerInvariant()
-    try { $apiDetails = (Get-Content $bodyPath -Raw | ConvertFrom-Json).details } catch {}
+catch {
+    $ApiError = $_.Exception.Message
+    try { $ApiStatus = [int]$_.Exception.Response.StatusCode.value__ } catch {}
+    try {
+        if ($_.ErrorDetails.Message) {
+            [IO.File]::WriteAllText($ApiBodyFile, [string]$_.ErrorDetails.Message, [Text.UTF8Encoding]::new($false))
+            $ApiBodyHash = (Get-FileHash -LiteralPath $ApiBodyFile -Algorithm SHA256).Hash.ToLower()
+        }
+    } catch {}
+    $Children.GL005_API_TASKS = 113
 }
-if ($apiStatus -ge 200 -and $apiStatus -lt 300) { $demoExit = 0 } else { $demoExit = 99 }
-$demo = [ordered]@{
-    name = "GL005_ORCHESTRATION_DEMO"
-    exit = $demoExit
-    epistemic = $(if ($demoExit -eq 0) { "PASS" } else { "FAILED" })
-    status = $apiStatus
-    body_sha256 = $apiHash
-    details = $apiDetails
+Write-Host "API_TASKS_STATUS=$ApiStatus"
+Write-Host "API_TASKS_ERROR=$ApiError"
+Write-Host "API_TASKS_BODY_SHA256=$ApiBodyHash"
+Write-Host "CHILD::GL005_API_TASKS::$($Children.GL005_API_TASKS)"
+
+# Live path ≠ orchestration demo. Keep demo fail-closed until a live OrchestrationTask exists.
+$GL005LivePath =
+    $Children.AIOS_STATUS -eq 0 -and
+    $Children.GL005_CONTROL_PLANE -eq 0 -and
+    $Children.TEST_TASK_ORCHESTRATION -eq 0 -and
+    $Children.GL005_API_TASKS -eq 0
+
+$Children.GL005_ORCHESTRATION_DEMO = 114
+Write-Host "CHILD::GL005_ORCHESTRATION_DEMO::114"
+Write-Host "GL005_LIVE_PATH_PROVEN=$GL005LivePath"
+
+$GL004 =
+    $Children.TYPECHECK -eq 0 -and
+    $Children.BUILD -eq 0 -and
+    $Children.TEST_CANONICAL -eq 0 -and
+    $Children.TEST_TASK_ORCHESTRATION -eq 0 -and
+    $Children.RUNTIME_TRACE -eq 0
+
+$GL005 = $false
+
+$RequiredNames = @(
+    "TYPECHECK", "BUILD", "TEST_CANONICAL", "TEST_TASK_ORCHESTRATION",
+    "RUNTIME_TRACE", "AIOS_STATUS", "GL005_CONTROL_PLANE",
+    "GL005_API_TASKS", "GL005_ORCHESTRATION_DEMO"
+)
+$FailureCodes = @()
+foreach ($Name in $RequiredNames) {
+    if (!$Children.Contains($Name)) { $FailureCodes += 120; continue }
+    if ([int]$Children[$Name] -ne 0) { $FailureCodes += [int]$Children[$Name] }
+}
+$ParentExit = if ($FailureCodes.Count -eq 0) { 0 } else { [int]($FailureCodes | Measure-Object -Maximum).Maximum }
+
+$Proof = [ordered]@{
+    schema = "raios.wave2.atomic-proof.v2"
+    repository = [ordered]@{ root = $Repo; branch = $Branch; head = $Head }
+    children = $Children
+    runtime = $Bound
+    orchestration_http = [ordered]@{
+        status = $ApiStatus
+        body_sha256 = $ApiBodyHash
+        error = $ApiError
+    }
+    verdict = [ordered]@{
+        gl004_proven = $GL004
+        gl005_live_path_proven = $GL005LivePath
+        gl005_proven = $GL005
+        parent_exit = $ParentExit
+    }
+    laws_observed = @(
+        "BIND_EXISTING_NE_SPAWN",
+        "NOT_RUN_NE_FAILED",
+        "LIVENESS_NE_READINESS_NE_CORRECTNESS",
+        "PARENT_SUCCESS_REQUIRES_ALL_REQUIRED_CHILDREN_SUCCESS",
+        "SUPPORTING_TEST_NE_ORCHESTRATION_DEMONSTRATION",
+        "PROOF_FOREST_NE_RECEIPT"
+    )
+    safety = [ordered]@{
+        new_server_spawned = $false
+        existing_server_killed = $false
+        second_wal_created = $false
+        second_bus_created = $false
+        census_created = $false
+        canonical_promotion = $false
+        proof_forest_created = $false
+    }
+    created_at = (Get-Date).ToUniversalTime().ToString("o")
 }
 
-$children = @($bind, $tc, $canon, $orch, $build, $aios, $control, $demo)
-$gl004 = Get-Parent $children @("TYPECHECK","BUILD","TEST_CANONICAL","TEST_TASK_ORCHESTRATION","RUNTIME_TRACE")
-$gl005 = Get-Parent $children @("AIOS_STATUS","GL005_CONTROL_PLANE","TEST_TASK_ORCHESTRATION","GL005_ORCHESTRATION_DEMO")
-$combined = Get-Parent $children @("TYPECHECK","BUILD","TEST_CANONICAL","TEST_TASK_ORCHESTRATION","RUNTIME_TRACE","AIOS_STATUS","GL005_CONTROL_PLANE","GL005_ORCHESTRATION_DEMO")
+[IO.File]::WriteAllText($Receipt, ($Proof | ConvertTo-Json -Depth 30), [Text.UTF8Encoding]::new($false))
+$ReceiptHash = (Get-FileHash -LiteralPath $Receipt -Algorithm SHA256).Hash.ToLower()
 
-$head = (git rev-parse HEAD).Trim()
-$tag = "safety/pre-gl004-bind-" + (git rev-parse --short HEAD).Trim()
-if (-not (git tag --list $tag)) { git tag $tag }
-
-$receiptPath = Join-Path $ReceiptDir "GL004-ATOMIC.json"
-$payload = [ordered]@{
-    schema = "raios.wave2.isolated-proof.v1"
-    HEAD = $head
-    SAFETY_TAG = $tag
-    children = $children
-    GL004_PARENT_EXIT = $gl004
-    GL005_PARENT_EXIT = $gl005
-    PARENT_EXIT = $combined
-    RECEIPT = $receiptPath
-    GL004_PROVEN = ($gl004 -eq 0)
-    GL005_PROVEN = ($gl005 -eq 0)
-    rejected = @{
-        NEXT_CONFIG_FILE = "not a Next 16 contract; would risk live .next"
-        "_raios-wave2-proof-isolated" = "proof forest rejected; use .ai-os/receipts"
+if (Test-Path $BuildWT) {
+    git worktree remove --force $BuildWT 2>$null
+    if (Test-Path $BuildWT) {
+        Remove-Item -LiteralPath $BuildWT -Recurse -Force -ErrorAction SilentlyContinue
     }
 }
-$payload | ConvertTo-Json -Depth 10 | Set-Content -LiteralPath $receiptPath -Encoding UTF8
-$sha = (Get-FileHash -Algorithm SHA256 -LiteralPath $receiptPath).Hash.ToLowerInvariant()
+git worktree prune
 
-Write-Output "HEAD=$head"
-Write-Output "SAFETY_TAG=$tag"
-foreach ($c in $children) { Write-Output ("CHILD::{0}::{1}::{2}" -f $c.name, $c.exit, $c.epistemic) }
-Write-Output "GL004_PARENT_EXIT=$gl004"
-Write-Output "GL005_PARENT_EXIT=$gl005"
-Write-Output "PARENT_EXIT=$combined"
-Write-Output "RECEIPT=$receiptPath"
-Write-Output "RECEIPT_SHA256=$sha"
-Write-Output "GL004_PROVEN=$(($gl004 -eq 0).ToString().ToLowerInvariant())"
-Write-Output "GL005_PROVEN=$(($gl005 -eq 0).ToString().ToLowerInvariant())"
-exit $combined
+Write-Host ""
+Write-Host "############################################################"
+Write-Host "# ATOMIC RESULT"
+Write-Host "############################################################"
+foreach ($Name in $Children.Keys) {
+    Write-Host "CHILD::$Name::$($Children[$Name])"
+}
+Write-Host "GL004_PROVEN=$($GL004.ToString().ToUpper())"
+Write-Host "GL005_LIVE_PATH_PROVEN=$($GL005LivePath.ToString().ToUpper())"
+Write-Host "GL005_PROVEN=FALSE"
+Write-Host "PARENT_EXIT=$ParentExit"
+Write-Host "RECEIPT=$Receipt"
+Write-Host "RECEIPT_SHA256=$ReceiptHash"
+Write-Host "SERVER_KILLED=FALSE"
+Write-Host "SECOND_SERVER_STARTED=FALSE"
+if ($ParentExit -eq 0) {
+    Write-Host "STATUS=ATOMIC_PROOF_PASS"
+} else {
+    Write-Host "STATUS=ATOMIC_PROOF_NOT_PROVEN"
+}
+Write-Host "############################################################"
+exit $ParentExit

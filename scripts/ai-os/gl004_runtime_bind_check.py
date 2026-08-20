@@ -76,6 +76,25 @@ def main() -> int:
     check(epistemic_state(2, not_run=True) == "NOT_RUN", "NOT_RUN distinct from FAILED")
     check(epistemic_state(2, invalid=True) == "INVALID_OBSERVATION", "isolation invalid")
 
+    from gl004_lib import fingerprint_dist, gl005_verdict, product_scoped_dirty
+
+    fp = fingerprint_dist()
+    check(isinstance(fp.get("dot_next_top"), list), "fingerprint_dist restored")
+    scoped = product_scoped_dirty()
+    check(all("LAST-HEARTBEAT" not in n for n in scoped["files"]), "heartbeat not product-dirty")
+    check(all("experience/pending" not in n for n in scoped["files"]), "WAL pending not product-dirty")
+    scripts_diff = subprocess.check_output(
+        ["git", "diff", "--name-only", "--", "scripts/ai-os"],
+        cwd=ROOT,
+        text=True,
+    ).strip()
+    if scripts_diff:
+        check(scoped["dirty"] is True, "uncommitted scripts/ai-os blocks BUILD")
+        check(any(n.startswith("scripts/ai-os/") for n in scoped["files"]), "dirty scripts listed")
+    all_ready = gl005_verdict(aios_ok=True, control_ok=True, orch_ok=True, api_ok=True)
+    check(all_ready["gl005_live_path_proven"] is True, "live path can open")
+    check(all_ready["gl005_proven"] is False, "GL005_PROVEN stays false when live path is true")
+
     print(json.dumps({"pid": rec["pid"], "port": rec["listen_port"], "mode": rec["mode"], "head": rec["head"][:12]}))
     print("gl004_runtime_bind_check: PASS")
     return 0

@@ -1,120 +1,129 @@
-#Requires -Version 5.1
+# GL-004 runtime binder for Repair (Windows). BIND_EXISTING_NE_SPAWN.
+# Do not use param([int]$Pid) — $PID is an automatic variable in PowerShell.
+# Do not write _raios-* proof forests. Do not spawn next. Do not kill listeners.
+
 $ErrorActionPreference = "Stop"
 Set-StrictMode -Version Latest
-# GL-004 RUNTIME_TRACE binder for Repair (Windows). BIND_DONT_SPAWN. Never Start-Process next.
 
-$Repo = (Resolve-Path (Join-Path $PSScriptRoot "..\..")).Path
-Set-Location $Repo
-
-if ($args -contains "-Spawn" -or $args -contains "-Start") {
-    Write-Output "SPAWN_REFUSED_BIND_EXISTING_NE_SPAWN"
+if ($args -contains "--spawn" -or $args -contains "--start") {
+    Write-Host "BIND_SPAWN_FORBIDDEN"
     exit 7
 }
 
-function Get-Sha256([string]$Path) {
-    return (Get-FileHash -Algorithm SHA256 -LiteralPath $Path).Hash.ToLowerInvariant()
+$Repo = (Resolve-Path (Join-Path $PSScriptRoot "..\..")).Path
+
+$AllProcesses = @(Get-CimInstance Win32_Process)
+
+function Get-ProcessById {
+    param([int]$ProcessId)
+    return $AllProcesses |
+        Where-Object { $_.ProcessId -eq $ProcessId } |
+        Select-Object -First 1
 }
 
-function Get-Head { return (git rev-parse HEAD).Trim() }
+function Test-ProcessChainBelongsToRepo {
+    param(
+        [int]$ProcessId,
+        [string]$RepoPath
+    )
 
-$candidates = Get-CimInstance Win32_Process -ErrorAction SilentlyContinue |
-    Where-Object {
-        $_.CommandLine -and (
-            $_.CommandLine -match "next-server" -or
-            $_.CommandLine -match "next dev" -or
-            $_.CommandLine -match "next start" -or
-            $_.CommandLine -match "next\.dev" -or
-            ($_.Name -match "node" -and $_.CommandLine -match "\\next(\.cmd|\.exe)?")
-        )
-    }
+    $Seen = @{}
+    $Current = $ProcessId
 
-$matched = @()
-foreach ($proc in @($candidates)) {
-    $cwd = $null
-    try {
-        $cwd = (Get-Process -Id $proc.ProcessId -ErrorAction Stop).Path
-    } catch { }
-    $listen = @()
-    try {
-        $listen = @(Get-NetTCPConnection -OwningProcess $proc.ProcessId -State Listen -ErrorAction SilentlyContinue)
-    } catch { }
-    if ($listen.Count -gt 0) {
-        $matched += [pscustomobject]@{
-            Pid = $proc.ProcessId
-            Ppid = $proc.ParentProcessId
-            Cmd = $proc.CommandLine
-            Listen = $listen
-            Creation = $proc.CreationDate
+    for ($i = 0; $i -lt 10; $i++) {
+        if ($Seen.ContainsKey($Current)) { break }
+        $Seen[$Current] = $true
+
+        $P = Get-ProcessById -ProcessId $Current
+        if ($null -eq $P) { break }
+
+        $Cmd = [string]$P.CommandLine
+        if (
+            $Cmd -and
+            $Cmd.IndexOf($RepoPath, [System.StringComparison]::OrdinalIgnoreCase) -ge 0 -and
+            $Cmd -match 'next'
+        ) {
+            return $true
         }
+
+        if ($P.ParentProcessId -le 0) { break }
+        $Current = [int]$P.ParentProcessId
+    }
+
+    return $false
+}
+
+$Listeners = @(
+    Get-NetTCPConnection -State Listen -ErrorAction SilentlyContinue |
+    Where-Object { $_.OwningProcess -gt 0 }
+)
+
+$Bound = $null
+foreach ($L in $Listeners) {
+    if (Test-ProcessChainBelongsToRepo -ProcessId ([int]$L.OwningProcess) -RepoPath $Repo) {
+        $P = Get-ProcessById -ProcessId ([int]$L.OwningProcess)
+        $Bound = [ordered]@{
+            pid = [int]$L.OwningProcess
+            ppid = if ($P) { [int]$P.ParentProcessId } else { $null }
+            command = if ($P) { [string]$P.CommandLine } else { $null }
+            address = [string]$L.LocalAddress
+            port = [int]$L.LocalPort
+        }
+        break
     }
 }
 
-if ($matched.Count -lt 1) {
-    Write-Output "NO_LIVE_NEXT_LISTENER_FOR_REPO"
-    exit 2
+if ($null -eq $Bound) {
+    Write-Host "RUNTIME_BOUND=FALSE"
+    exit 106
 }
 
-$serverish = @($matched | Where-Object { $_.Cmd -match "next-server" })
-$chosenSet = if ($serverish.Count -gt 0) { $serverish } else { $matched }
-if ($chosenSet.Count -gt 1) {
-    Write-Output "SECOND_RUNTIME_OR_AMBIGUOUS"
-    exit 3
-}
-$chosen = $chosenSet[0]
-$port = [int]$chosen.Listen[0].LocalPort
+Write-Host "RUNTIME_BOUND=TRUE"
+Write-Host "RUNTIME_PID=$($Bound.pid)"
+Write-Host "RUNTIME_PPID=$($Bound.ppid)"
+Write-Host "RUNTIME_PORT=$($Bound.port)"
+Write-Host "RUNTIME_COMMAND=$($Bound.command)"
 
 try {
-    $resp = Invoke-WebRequest -Uri "http://127.0.0.1:$port/" -UseBasicParsing -TimeoutSec 8
-} catch {
-    Write-Output "HTTP_IDENTITY_INVALID"
-    Write-Output $_.Exception.Message
-    exit 6
+    $RootResponse = Invoke-WebRequest `
+        -Uri "http://127.0.0.1:$($Bound.port)/" `
+        -UseBasicParsing `
+        -TimeoutSec 15
+    $RootStatus = [int]$RootResponse.StatusCode
+    $RootBody = [string]$RootResponse.Content
 }
-if ([int]$resp.StatusCode -ne 200) {
-    Write-Output "HTTP_IDENTITY_INVALID status=$($resp.StatusCode)"
-    exit 6
-}
-$powered = [string]$resp.Headers["X-Powered-By"]
-$body = [string]$resp.Content
-if ($powered -notmatch "Next" -and $body -notmatch "/_next/" -and $body -notmatch "Next.js") {
-    Write-Output "HTTP_IDENTITY_INVALID no Next.js marker"
-    exit 6
+catch {
+    Write-Host "ROOT_HTTP_ERROR=$($_.Exception.Message)"
+    exit 108
 }
 
-$mode = "unknown"
-if ($chosen.Cmd -match "next dev") { $mode = "dev" }
-elseif ($chosen.Cmd -match "next start") { $mode = "start" }
+$LooksNext = ($RootBody -match 'Next.js' -or $RootBody -match '/_next/')
+Write-Host "ROOT_HTTP_STATUS=$RootStatus"
+Write-Host "ROOT_LOOKS_NEXT=$LooksNext"
 
-$receiptDir = Join-Path $Repo ".ai-os\receipts"
-New-Item -ItemType Directory -Force -Path $receiptDir | Out-Null
-$receiptPath = Join-Path $receiptDir "GL004-RUNTIME-BIND.json"
-$payload = [ordered]@{
+$ReceiptDir = Join-Path $Repo ".ai-os\receipts"
+New-Item -ItemType Directory -Force $ReceiptDir | Out-Null
+$ReceiptPath = Join-Path $ReceiptDir "GL004-RUNTIME-BIND.json"
+$BindReceipt = [ordered]@{
     schema = "raios.gl004-runtime-bind.v1"
-    invariant = "LIVE_PROCESS_CAN_SATISFY_RUNTIME_PROOF_IF_IDENTITY_AND_HTTP_EVIDENCE_ARE_BOUND"
-    ok = $true
-    pid = $chosen.Pid
-    ppid = $chosen.Ppid
-    cmdline = $chosen.Cmd
-    listen_port = $port
-    mode = $mode
-    http_root = [int]$resp.StatusCode
-    head = Get-Head
+    ok = $false
+    pid = $Bound.pid
+    ppid = $Bound.ppid
+    listen_port = $Bound.port
+    port = $Bound.port
+    cmdline = $Bound.command
     spawned = $false
     killed = $false
-    platform = "windows"
+    http_root_status = $RootStatus
+    looks_next = $LooksNext
 }
-$payload | ConvertTo-Json -Depth 6 | Set-Content -LiteralPath $receiptPath -Encoding UTF8
-$sha = Get-Sha256 $receiptPath
+if ($RootStatus -eq 200 -and $LooksNext) {
+    $BindReceipt.ok = $true
+    $BindReceipt.exit = 0
+    [IO.File]::WriteAllText($ReceiptPath, ($BindReceipt | ConvertTo-Json -Depth 10), [Text.UTF8Encoding]::new($false))
+    Write-Host "RUNTIME_CLASS=PROVEN_AS_DEV_LIVENESS"
+    exit 0
+}
 
-Write-Output "RUNTIME_TRACE_EXIT=0"
-Write-Output "PID=$($chosen.Pid)"
-Write-Output "PPID=$($chosen.Ppid)"
-Write-Output "PORT=$port"
-Write-Output "MODE=$mode"
-Write-Output "HEAD=$(Get-Head)"
-Write-Output "HTTP_ROOT=$($resp.StatusCode)"
-Write-Output "RECEIPT=$receiptPath"
-Write-Output "RECEIPT_SHA256=$sha"
-Write-Output "SPAWNED=false"
-Write-Output "GL004_PROVEN=false"
-exit 0
+Write-Host "RUNTIME_CLASS=HTTP_NOT_FRAMEWORK_LIVENESS"
+exit 107
