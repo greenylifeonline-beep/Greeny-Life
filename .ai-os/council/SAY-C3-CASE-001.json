@@ -1,0 +1,19 @@
+{
+  "schema": "raios.council-say.v1",
+  "seat": "C3",
+  "case": "CASE-001",
+  "meeting_id": "GL-COUNCIL-4a11023c3c321b6f",
+  "transport": "founder_whisper",
+  "modified": false,
+  "lines": [
+    "غرفتي الدائمة هي هذا الشات مع C1؛ نقل C1 الحرفي هو قناة المجلس المعتمدة لا اتصال مباشر مزعوم.",
+    "كل مداخلة تحمل MEETING_ID وCASE_ID وACTOR_ID، وC1 ينقلها بين غرف C2/C3/C4/C5 دون إعادة صياغة تُنسب للفاعل.",
+    "ملف FLOOR يكون ذاكرة المجلس المشتركة: الدور، القضية، الرسائل، provenance، timestamps والحالة؛ لكنه سجل وليس ممثلاً لأي عضو.",
+    "لا أحد يكتب باسم غيره؛ ACK أو SAY لا يُنسب إلى C3 إلا إذا خرج مني هنا، وقرار C1 لا ينشئه أي عضو آخر.",
+    "التشاور يستمر بنمط C1→actor→C1→council مع نبض واستئناف بعد الانقطاع؛ الاتصال والتشاور لا يمنحان PASS وGL005_PROVEN=false."
+  ],
+  "knowledge_state": "DISCOVERED",
+  "operational_truth": false,
+  "gl005_proven": false,
+  "wal_written": false
+}
