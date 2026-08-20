@@ -6,13 +6,13 @@
     {
       "id": "ASIM-LIVE-001",
       "priority": 0,
-      "status": "ACTIVE",
+      "status": "TRANSFER_RECORDED_CORTEX_BLOCKED",
       "capability": "live_assimilation_cortex_execution_fabric",
       "material_ref": "_raios-assimilation-runtime/state/CURRENT-TEACHER-PACKET.json",
       "state_ref": "_raios-assimilation-runtime/state/LIVE-ASSIMILATION-STATE.json",
       "student_task_id": "ASIM-LIVE-001",
-      "retention_due_at": null,
-      "notes": "First live assimilation: connect to real CCEE training_loop, Ollama cortex, GovernedExecutorBridge. No fake adapters."
+      "retention_due_at": "2026-08-21T00:51:31Z",
+      "notes": "Student loop reachable. MAIN CORTEX BLOCKED (Ollama missing). Transfer ASIM-XFER-001 executed. Mastery not claimed. Retention UNKNOWN until due."
     }
   ]
 }

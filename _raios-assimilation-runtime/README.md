@@ -6,8 +6,7 @@ Connects the learning observatory to **real** RAIOS interfaces in `_raios-a17-na
 cd /workspace
 PYTHONPATH=_raios-a17-native-cortex:_raios-a17-integration-wave/src:_raios-a17-cursor-parallel/src python3 -m _raios-assimilation-runtime contact
 PYTHONPATH=... python3 -m _raios-assimilation-runtime discover
-PYTHONPATH=... python3 -m _raios-assimilation-runtime cycle
-PYTHONPATH=... python3 -m _raios-assimilation-runtime ask --intent "..."
+PYTHONPATH=_raios-a17-native-cortex:_raios-a17-integration-wave/src:_raios-a17-cursor-parallel/src python3 -m _raios-assimilation-runtime continue
 ```
 
 State:
