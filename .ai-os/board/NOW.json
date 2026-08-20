@@ -1,22 +1,22 @@
 {
   "schema": "raios.mission-board.v1",
   "branch": "v9-neurolingua-semantic-kernel",
-  "head": "ea85d2e9d6ade0ac669ad647d43a9ce5b170cb72",
-  "updated_at": "2026-08-20T16:41:57.855778+00:00",
-  "mission_status": "MUTATION_NOT_PROVEN",
-  "mission": "GL-004 HOLD_PROMOTION. GL-005 mutation not proven. MCP V1 Streamable HTTP is the connector. GitHub Issues are degraded mail. C1 dispatches. MAIL_PASSES_NE_PROVES. EMPIRE_CONNECTOR_SPEC_AS_WRITTEN_IS_REJECTED.",
+  "head": "9ba64be3e77b5f830028e52267126897a22d895e",
+  "updated_at": "2026-08-20T16:58:37.305800+00:00",
+  "mission_status": "FALSIFICATION_ACCEPTED_CHAIN_BROKEN_AT_AUTH",
+  "mission": "C2 accepted C1 falsification. Chain broken at AUTHENTICATED_MUTATION. Instance B mutation is PRESENT_BUT_PROTECTED_AND_UNPROVEN. C3 on Repair inspects existing login/session only. GL005_PROVEN stays false. D-022 DISCOVERED.",
   "schedule": {
-    "now": "C2/C5 use MCP V1 (read_board, read_receipt, post_opinion) or degraded MAIL C2/C5 Issues. C1 collects.",
-    "next": "Repair authenticated POST remains the only GL-005 mutation proof. Mail does not prove.",
-    "forbidden": "معاملة Issue كإثبات، PASS من بريد، Team Relay hub، fake DATABASE_URL، forged session"
+    "now": "C3 on Repair: bind HEAD + live Next; GET /api/tasks semantic; GET /api/auth/session; decide LEGITIMATE_SESSION_AVAILABLE or BLOCKED_AUTH.",
+    "next": "If Repair has a legitimate ADMIN|WAREHOUSE|EXPORT session: authenticated POST /api/tasks then AFTER GET same entity_id. Else stop at BLOCKED_AUTH.",
+    "forbidden": "mint session secret, forge session cookie, auth bypass, Postgres/Docker from Instance B GET 500, GL005 PASS, second Next, Team Relay hub"
   },
   "required": {
-    "C0": "يعطي الأوامر في شات Cursor. ليس ساعي كل ظرف.",
-    "C1": "بوابة MCP V1 + OUTBOX. يجمع Issues. لا يمنح PASS.",
-    "C2": "MCP: read_board/read_receipt/post_opinion. أو Issue بعنوان MAIL C2. لا كود.",
-    "C3": "المنفّذ على العملية المربوطة. لا أسرار مختلقة.",
-    "C4": "خدمة: نبض + WAL.",
-    "C5": "MCP أو Issue بعنوان MAIL C5. لا يسرق C2. لا كود."
+    "C0": "Paste Repair session fact only if a real browser session already exists. Do not invent credentials.",
+    "C1": "Recorded C2. Does not generalize PID 3297 GET 500 to Repair. Does not grant PASS.",
+    "C2": "FALSIFICATION ACCEPTED is on the board. Wait Repair discriminator. No product write.",
+    "C3": "Repair only. Existing auth path. If session exists: real POST. If not: BLOCKED_AUTH. No minted secrets.",
+    "C4": "DISCOVERED candidate ingested. No WAL write. No promote.",
+    "C5": "May falsify any PASS claim. Do not steal C2. Do not execute."
   },
   "mail": {
     "dispatcher": "C1",
@@ -34,8 +34,8 @@
       "gl005_proven": false
     },
     "last_send": {
-      "id": "3ad589bb-2267-43ed-af9a-59e0f78cbf7d",
-      "ts": "2026-08-20T16:36:42.780694+00:00",
+      "id": "b41bc8d0-4b62-4884-92a8-a1bd2e203d84",
+      "ts": "2026-08-20T16:58:10.633020+00:00",
       "to": [
         "C2",
         "C5"

@@ -91,3 +91,11 @@ The MCP/board seat C5 is ASSESSOR (falsify, no execute, no promote). DeepSeek ma
 ## D-021 Issues are degraded mail, not truth
 DISCOVERED: `ISSUE_NE_TASK`. `ISSUE_NE_RECEIPT`. `ISSUE_NE_AUTHORITY`. `ISSUE_NE_LEARNING`. `ISSUE_NE_CERTIFICATION`.
 `LOCAL_MCP_NE_REMOTE_C2`. Passing the local vertical slice does not mean ChatGPT C2 is connected. `127.0.0.1:8787` is local-only. Remote-ready requires a public HTTPS path to this same process, scoped bearer/OAuth, and one externally created C2 opinion that C1 reads. GitHub Issue titles `MAIL C2:` / `MAIL C5:` are transport metadata only.
+
+## D-022 Protected capability is not missing capability
+DISCOVERED: `AUTHENTICATION_BLOCK_IS_A_VALID_ORCHESTRATION_PROOF_BOUNDARY`.
+A capability can exist and be correctly protected while the proof remains incomplete. Do not misclassify a protected write as an absent write.
+Capability taxonomy (not the same state): `CAPABILITY_ABSENT` | `CAPABILITY_BROKEN` | `CAPABILITY_PROTECTED` | `CAPABILITY_UNAVAILABLE` | `CAPABILITY_UNPROVEN`.
+This cloud slice (PID 3297, cwd `/workspace`): `ORCHESTRATION_MUTATION_CAPABILITY = PRESENT_BUT_PROTECTED_AND_UNPROVEN`.
+Also DISCOVERED: `PROTECTED_CAPABILITY_NE_MISSING_CAPABILITY`. `POST_401_NE_STATE_TRANSITION`. `AUTH_GATE_PRESENT_NE_AUTHENTICATED_MUTATION`. `UNIT_CONTRACT_PASS_NE_LIVE_ORCHESTRATION`. `UNCHANGED_STATE_NE_ORCHESTRATION_DEMONSTRATED`. `FAILURE_ON_INSTANCE_B_NE_FAILURE_ON_REPAIR`.
+Unauthenticated POST 401 on Instance B does not authorize calling Repair broken, missing, or unauthenticated if Repair has newer semantic GET 200. Do not mint `APP_SESSION_SECRET`, forge `gl_session`, add an auth bypass, or provision Postgres/Docker from this slice's GET 500.

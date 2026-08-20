@@ -1,0 +1,67 @@
+{
+  "schema": "raios.c3-repair-packet.v1",
+  "from": "C1",
+  "role": "COMMANDER",
+  "to": ["C3"],
+  "via": ["C2 CONSULTANT"],
+  "knowledge_state": "DISCOVERED",
+  "GL005_PROVEN": false,
+  "GL004_PROVEN": true,
+  "GL004_PRODUCTION_RUNTIME_PROVEN": false,
+  "c2_verdict": "FALSIFICATION_ACCEPTED",
+  "chain_status": "BROKEN",
+  "breakpoint": "AUTHENTICATED_MUTATION",
+  "authority": "Repair is the mutation authority. PID 3297 cwd=/workspace is Instance B, not Repair.",
+  "do_not_generalize": {
+    "FAILURE_ON_INSTANCE_B_NE_FAILURE_ON_REPAIR": true,
+    "instance_b": {
+      "pid": 3297,
+      "cwd": "/workspace",
+      "GET_api_tasks": 500,
+      "POST_api_tasks_unauthenticated": 401,
+      "GET_api_auth_session": {"success": true, "authenticated": false, "session": null},
+      "LEGITIMATE_SESSION_AVAILABLE": false,
+      "classification": "BLOCKED_AUTH",
+      "capability": "PRESENT_BUT_PROTECTED_AND_UNPROVEN"
+    }
+  },
+  "forbidden": [
+    "Do not manufacture APP_SESSION_SECRET",
+    "Do not forge gl_session",
+    "Do not add an auth bypass",
+    "Do not spawn a second Next",
+    "Do not create PostgreSQL or Docker unless a FRESH Repair observation proves dependency absence",
+    "Do not treat Instance B GET 500 as Repair truth",
+    "Do not grant GL005_PROVEN from POST 401 or GET 200"
+  ],
+  "existing_auth_only": {
+    "gate": "lib/authz.ts authorizeRequest(); writeRolePolicy.task = ADMIN|WAREHOUSE|EXPORT",
+    "cookie": "lib/auth.ts cookie name gl_session; HMAC via existing APP_SESSION_SECRET; createSession/readSession/requireRole",
+    "login": "POST /api/auth/login (app/api/auth/login/route.ts) email+password against Prisma user",
+    "session_probe": "GET /api/auth/session (app/api/auth/session/route.ts)",
+    "ui": "app/login/page.tsx"
+  },
+  "next_cheapest_discriminator_on_repair": [
+    "1. Bind authoritative Repair HEAD.",
+    "2. Bind the existing live Repair Next process. Do not spawn.",
+    "3. GET /api/tasks and parse semantic body (success/count/data, not status code alone).",
+    "4. Inspect the EXISTING legitimate authentication mechanism only: authorizeRequest, login route, roles ADMIN/WAREHOUSE/EXPORT, whether C0 already has a legitimate active session (browser cookie or GET /api/auth/session on that process).",
+    "5. Do not manufacture APP_SESSION_SECRET.",
+    "6. Do not forge gl_session.",
+    "7. Do not add an auth bypass.",
+    "8. Do not create PostgreSQL/Docker unless a fresh Repair observation proves dependency absence.",
+    "9. If legitimate identity exists: BEFORE GET → authenticated POST /api/tasks → entity_id → AFTER GET → same entity → persistence. POST body uses existing contract: taskType, ownerCompany, subjectId. createTaskContract status is REVIEW_REQUIRED; execution remains false.",
+    "10. If legitimate identity does not exist: classification = BLOCKED_AUTH; GL005_PROVEN = FALSE."
+  ],
+  "if_authenticated_post": {
+    "route": "POST /api/tasks",
+    "expected_status": 201,
+    "expected_task_status": "REVIEW_REQUIRED",
+    "proof": "BEFORE_HASH != AFTER_HASH AND same entity id in AFTER GET"
+  },
+  "if_blocked_auth": {
+    "classification": "BLOCKED_AUTH",
+    "GL005_PROVEN": false,
+    "meaning": "CAPABILITY_PROTECTED + CAPABILITY_UNPROVEN, not CAPABILITY_ABSENT"
+  }
+}
