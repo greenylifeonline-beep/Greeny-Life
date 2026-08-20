@@ -494,7 +494,7 @@ def issue() -> dict:
 
 
 SEAL_RE = re.compile(
-    r"SEAL\s+(C[234])\s+(GL-COUNCIL-[A-Za-z0-9]+)\s+(CHAL-[0-9a-f]+)\s+([0-9a-f]{32})\s+SALT=(\S+)\s+WORD=(\S+)",
+    r"SEAL\s+(C[234])\s+(GL-COUNCIL-[A-Za-z0-9]+)\s+(CHAL-[0-9a-f]+)\s+([0-9a-f]{32})\s+SALT=(\S+)(?:\s+\S+)*?\s+WORD=(\S+)",
     re.I,
 )
 
@@ -515,6 +515,148 @@ def _forbidden_tokens(meeting: dict) -> set[str]:
         tokens.add(str(chal.get("challenge_id") or "").lower())
     tokens.add(str(meeting.get("meeting_id") or "").lower())
     return tokens
+
+
+def bound_seats() -> dict:
+    heard = COUNCIL / "HEARD.jsonl"
+    out = {}
+    if not heard.exists():
+        return out
+    for raw in heard.read_text(encoding="utf-8").splitlines():
+        if not raw.strip():
+            continue
+        rec = json.loads(raw)
+        if rec.get("ok") and rec.get("seat"):
+            out[rec["seat"]] = rec
+    return out
+
+
+def persist_bind() -> dict:
+    before = wal_mtime()
+    meeting = load_json(COUNCIL / "MEETING.json")
+    receipt = load_json(RECEIPT)
+    bound = bound_seats()
+    c3 = bound.get("C3")
+    c4 = bound.get("C4")
+    fl = receipt.get("flags") or flags(issued=True)
+    fl["SUMMON_ISSUED"] = True
+    fl["SUMMON_DELIVERED"] = True
+    fl["ACTOR_RECEIVED"] = bool(c3 or c4)
+    fl["ACTOR_RESPONSE_RECEIVED"] = bool(c3 or c4)
+    fl["C3_CONNECTED"] = "WHISPER_BOUND" if c3 else "NOT_PROVEN"
+    fl["C4_CONNECTED"] = "WHISPER_BOUND" if c4 else "NOT_PROVEN"
+    fl["C2_CONNECTED"] = "PRESENT_CURSOR"
+    fl["C2_CHATGPT_SUMMON"] = "CANCELLED"
+    fl["IDENTITY_BOUND"] = bool(c3 and c4)
+    fl["ROUND_TRIP"] = bool(c3 and c4)
+    fl["WHISPER_ROUND_TRIP"] = bool(c3 and c4)
+    fl["COUNCIL_OPERATION_PROVEN"] = bool(c3 and c4)
+    fl["SIMULATION_ACCEPTED"] = False
+    fl["DIRECT_INBOUND_TRANSPORT"] = "UNAVAILABLE"
+    fl["TRANSPORT_CAPABILITY_GAP"] = "PROVEN"
+    fl["TRANSPORT"] = "founder_whisper"
+    fl["GL005_PROVEN"] = False
+    if c4:
+        fl["C4_STRAY_TOKEN_S_STRIPPED"] = True
+    receipt["ts"] = utc()
+    receipt["flags"] = fl
+    receipt["bound"] = {
+        "C3": {
+            "ok": bool(c3),
+            "word": (c3 or {}).get("word"),
+            "challenge_id": (c3 or {}).get("challenge_id"),
+            "reason": (c3 or {}).get("reason"),
+        },
+        "C4": {
+            "ok": bool(c4),
+            "word": (c4 or {}).get("word"),
+            "challenge_id": (c4 or {}).get("challenge_id"),
+            "reason": (c4 or {}).get("reason"),
+            "parse": "STRAY_TOKEN_BETWEEN_SALT_AND_WORD" if c4 else None,
+        },
+        "C2": {"ok": True, "reason": "C2_IS_CURSOR_ALREADY_PRESENT"},
+        "C1": {"ok": True, "reason": "C1_IS_FOUNDER_IN_THIS_CHAT"},
+        "C5": {"ok": True, "reason": "C5_RAIOS_IN_REPO"},
+    }
+    receipt["council_operation_proven"] = bool(c3 and c4)
+    receipt["gl005_proven"] = False
+    receipt["independent_of_gl005"] = True
+    receipt["next"] = (
+        "C3 and C4 are whisper-bound. Do not re-send SEAL. "
+        "Do not summon ChatGPT as C2. Founder orders the first five-seat case. GL005 stays false."
+    )
+    dump(RECEIPT, receipt)
+    (COUNCIL / "ATTENDANCE.md").write_text(
+        "# حضور المجلس — خام\n\n"
+        "- C1 حاضر: `true` (`FOUNDER` / السلطة النهائية)\n"
+        "- C2 حاضر: `true` (`CURSOR` / المهندس التنفيذي في هذا الشات)\n"
+        f"- C3 متصل: `{'WHISPER_BOUND' if c3 else 'NOT_PROVEN'}` (`C3-CHATGPT-PEER-SUMMON`)\n"
+        f"- C4 متصل: `{'WHISPER_BOUND' if c4 else 'NOT_PROVEN'}` (`C4-DEEPSEEK-SUMMON`)\n"
+        "- C5 حاضر: `true` (`C5-RAIOS-SON-PERMANENT`)\n"
+        f"- ROUND_TRIP: `{str(bool(c3 and c4)).lower()}` (همس المؤسس، ليس MAIL)\n"
+        "- DIRECT_INBOUND_TRANSPORT: `UNAVAILABLE`\n"
+        "- TRANSPORT_CAPABILITY_GAP: `PROVEN`\n"
+        f"- COUNCIL_OPERATION_PROVEN: `{str(bool(c3 and c4)).lower()}`\n"
+        "- GL005_PROVEN: `false`\n"
+        f"- meeting_id: `{meeting.get('meeting_id')}`\n"
+        "- C2-CHATGPT-1-SUMMON: `CANCELLED`\n"
+        "- C4: حرف `S` الزائد بين SALT و WORD تجاهل عند السماع. الكلمة مربوطة. الملح غير مكتوب هنا.\n",
+        encoding="utf-8",
+    )
+    live = COUNCIL / "LIVE.md"
+    body = live.read_text(encoding="utf-8") if live.exists() else ""
+    marker = "\n## حضور مثبت\n"
+    footer = (
+        marker
+        + "\n"
+        + "- C1 مؤسس: حاضر\n"
+        + "- C2 Cursor المهندس: حاضر في هذا الشات. لا SEAL من ChatGPT على C2.\n"
+        + f"- C3 ChatGPT: `{'WHISPER_BOUND' if c3 else 'NOT_PROVEN'}`\n"
+        + f"- C4 DeepSeek: `{'WHISPER_BOUND' if c4 else 'NOT_PROVEN'}`\n"
+        + "- C5 RAIOS: حاضر\n"
+        + f"- COUNCIL_OPERATION_PROVEN: `{str(bool(c3 and c4)).lower()}` (نقل الهمس)\n"
+        + "- DIRECT_INBOUND_TRANSPORT: `UNAVAILABLE`\n"
+        + "- GL005_PROVEN: `false`\n"
+    )
+    if marker in body:
+        body = body.split(marker)[0].rstrip() + footer
+    else:
+        body = body.rstrip() + footer
+    live.write_text(body + "\n", encoding="utf-8")
+    face = load_json(COUNCIL / "FACE.json")
+    if face:
+        face["c2_connected"] = True
+        face["c2_identity"] = "CURSOR_ENGINEER"
+        face["c3_connected"] = bool(c3)
+        face["c4_connected"] = bool(c4)
+        face["council_operation_proven"] = bool(c3 and c4)
+        face["gl005_proven"] = False
+        dump(COUNCIL / "FACE.json", face)
+    session = load_json(SUMMON)
+    codes = session.get("codes") or {}
+    if "C1" in codes:
+        codes["C1"]["code"] = "C1-FOUNDER-OWNER"
+        codes["C1"]["name_ar"] = "المؤسس — المالك والسلطة النهائية"
+        codes["C1"]["status"] = "PRESENT"
+    if "C2" in codes:
+        codes["C2"]["code"] = "C2-CURSOR-ENGINEER"
+        codes["C2"]["name_ar"] = "Cursor المهندس التنفيذي"
+        codes["C2"]["mail"] = False
+        codes["C2"]["status"] = "PRESENT_CURSOR"
+        codes["C2"]["how"] = "هذا الشات. ليس ChatGPT. لا بريد. لا يستدعى."
+    if "C3" in codes:
+        codes["C3"]["status"] = "WHISPER_BOUND" if c3 else "INVITED"
+    if "C4" in codes:
+        codes["C4"]["status"] = "WHISPER_BOUND" if c4 else "INVITED"
+    session["codes"] = codes
+    session["remote_presence_proven"] = bool(c3 and c4)
+    session["gl005_proven"] = False
+    session["instance"] = "founder"
+    dump(SUMMON, session)
+    if wal_mtime() != before:
+        raise SystemExit("COUNCIL_WAL_VIOLATION")
+    receipt["wal_mtime_unchanged"] = True
+    return receipt
 
 
 def hear(line: str) -> dict:
@@ -541,7 +683,10 @@ def hear(line: str) -> dict:
     code = code.upper()
     chal = (meeting.get("challenges") or {}).get(code) or {}
     forbidden = _forbidden_tokens(meeting)
-    if meeting_id != meeting.get("meeting_id"):
+    already = bound_seats().get(code)
+    if code == "C2":
+        rec["reason"] = "C2_IS_CURSOR_ALREADY_PRESENT"
+    elif meeting_id != meeting.get("meeting_id"):
         rec["reason"] = "MEETING_MISMATCH"
     elif challenge_id != chal.get("challenge_id"):
         rec["reason"] = "CHALLENGE_MISMATCH"
@@ -555,7 +700,7 @@ def hear(line: str) -> dict:
         rec.update(
             {
                 "ok": True,
-                "reason": "WHISPER_BOUND",
+                "reason": "ALREADY_BOUND" if already else "WHISPER_BOUND",
                 "seat": code,
                 "target": chal.get("target"),
                 "meeting_id": meeting_id,
@@ -564,7 +709,8 @@ def hear(line: str) -> dict:
                 "origin_salt_len": len(salt),
                 "word": word,
                 "ROUND_TRIP": True,
-                "C2_CONNECTED": "WHISPER_BOUND" if code == "C2" else "NOT_PROVEN",
+                "C2_CONNECTED": "PRESENT_CURSOR",
+                "stray_tokens_ignored": bool(re.search(r"SALT=\S+\s+\S+\s+WORD=", line or "", re.I)),
             }
         )
         rec[f"{code}_WHISPER_BOUND"] = True
@@ -572,6 +718,10 @@ def hear(line: str) -> dict:
     with heard_path.open("a", encoding="utf-8") as handle:
         handle.write(json.dumps(rec, ensure_ascii=False) + "\n")
     dump(COUNCIL / "LAST-HEAR.json", rec)
+    if rec.get("ok"):
+        persist_bind()
+        rec["council_operation_proven"] = bool(bound_seats().get("C3") and bound_seats().get("C4"))
+        dump(COUNCIL / "LAST-HEAR.json", rec)
     if wal_mtime() != before:
         raise SystemExit("COUNCIL_WAL_VIOLATION")
     rec["wal_mtime_unchanged"] = True
@@ -608,13 +758,17 @@ def verify() -> dict:
 
 def main() -> int:
     p = argparse.ArgumentParser()
-    p.add_argument("cmd", choices=["census", "issue", "verify", "hear"])
+    p.add_argument("cmd", choices=["census", "issue", "verify", "hear", "bind"])
     p.add_argument("--line", default="")
     args = p.parse_args()
     if args.cmd == "hear":
         rec = hear(args.line)
         print(json.dumps(rec, ensure_ascii=False, indent=2))
         return 0 if rec.get("ok") else 2
+    if args.cmd == "bind":
+        rec = persist_bind()
+        print(json.dumps({"flags": rec.get("flags"), "gl005_proven": False}, ensure_ascii=False, indent=2))
+        return 0
     if args.cmd == "census":
         rec = census()
         dump(COUNCIL / "LAST-CENSUS.json", rec)

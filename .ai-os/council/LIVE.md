@@ -42,3 +42,14 @@ SEAL C4 GL-COUNCIL-4a11023c3c321b6f CHAL-f1396e7eeba2004c 048cbd9d1eb8a2ba30448e
 
 النداء يُهمس في شات النموذج. الرد سطر SEAL. المؤسس يعيده إلى C1. ليس إيميل. ليس تذكرة GitHub.
 
+## حضور مثبت
+
+- C1 مؤسس: حاضر
+- C2 Cursor المهندس: حاضر في هذا الشات. لا SEAL من ChatGPT على C2.
+- C3 ChatGPT: `WHISPER_BOUND`
+- C4 DeepSeek: `WHISPER_BOUND`
+- C5 RAIOS: حاضر
+- COUNCIL_OPERATION_PROVEN: `true` (نقل الهمس)
+- DIRECT_INBOUND_TRANSPORT: `UNAVAILABLE`
+- GL005_PROVEN: `false`
+

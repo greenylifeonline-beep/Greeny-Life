@@ -152,3 +152,10 @@ C5 RAIOS is C1 Cursor's son. The eight V1 tools are a permanent grant in `.ai-os
 DISCOVERED: `SUMMON_IDENTITY_KNOWN_NE_ACTOR_CONNECTED`. `DELIVERY_CLAIM_NE_DELIVERY_PROVEN`. `GENERATED_TRANSCRIPT_NE_COMMUNICATION`. `ORCHESTRATOR_OUTPUT_NE_EXTERNAL_ACTOR_RESPONSE`. `ROUND_TRIP_WITH_UNSEEN_CHALLENGE_IS_MINIMUM_CONNECTIVITY_PROOF`. `DIRECT_INBOUND_TRANSPORT_UNAVAILABLE`. `COUNCIL_NE_GL005`. `UNIFIED_MEMORY_NE_SECOND_WAL`. `UNCONSCIOUS_CLOSES_SLEEP_GAP`. `COMPUTE_OFF_NE_MEMORY_ERASED`. `PASTED_CHAT_NE_REMOTE_MCP`. `C4_NE_RAIOS`.
 C2/C3/C4 attend by fetching `.ai-os/council/LIVE.md` and returning an unseen nonce plus an actor-invented origin_salt via `MAIL Cx:` with the exact summon title. Local MCP is not ChatGPT. A founder paste is not a round-trip. C1 does not impersonate them. This path does not change `GL005_PROVEN`.
 
+## D-032 Adopted live identity; C3/C4 whisper-bound on GL-COUNCIL-4a11023c3c321b6f
+DISCOVERED: `C1_INSTANCE_IS_FOUNDER`. `C2_INSTANCE_IS_CURSOR`. `C2_SEAT_IS_EXECUTIVE_ENGINEER`. `C3_SEAT_IS_CHATGPT`. `C4_SEAT_IS_DEEPSEEK`. `C5_SEAT_IS_RAIOS`. `C2_CHATGPT_SUMMON_CANCELLED`. `FOUNDER_WHISPER_SEAL_IS_ROUND_TRIP`. `STRAY_TOKEN_BETWEEN_SALT_AND_WORD_NE_INVALID_NONCE`.
+C3 correction adopted by the founder: C1 is the owner/founder; C2 is Cursor the executive engineer in this chat; C3 is ChatGPT (`C3-CHATGPT-PEER-SUMMON`); C4 is DeepSeek; C5 is RAIOS. `C2-CHATGPT-1-SUMMON` is cancelled. Repair stays unseated.
+C3 SEAL bound: nonce `6b7bc5cb54226790bf080a92397b53db` echoed, WORD=`بوصلة`. `C3_CONNECTED=WHISPER_BOUND`.
+C4 SEAL bound: nonce `048cbd9d1eb8a2ba30448efb1b02cc96` echoed, WORD=`ميزان`. A stray `S` between SALT and WORD was ignored. `C4_CONNECTED=WHISPER_BOUND`.
+Transport is founder paste, not GitHub MAIL, not remote MCP. `DIRECT_INBOUND_TRANSPORT=UNAVAILABLE`. `GL005_PROVEN` stays false. This decision does not close GL-005.
+
