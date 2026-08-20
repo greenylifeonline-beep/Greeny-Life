@@ -36,3 +36,17 @@ DISCOVERED operational bind (not RAIOS CANONICAL promotion):
 `BIND_EXISTING_NE_SPAWN`. `DEV_LISTEN_NE_PRODUCTION_BUILD`. `HTTP_200_ON_ROOT_NE_APP_HEALTH`.
 `ISOLATED_BUILD_NE_SECOND_RUNTIME` — `next build` into `.next-gl004-proof` is compile proof, not a second listener.
 A live `next dev` does not grant `GL004_PROVEN` by itself. Parent exit is 0 only if TYPECHECK, BUILD, TEST_CANONICAL, TEST_TASK_ORCHESTRATION, and RUNTIME_TRACE are all 0.
+
+## D-010 Epistemic state is not the gate bit
+DISCOVERED: `GATE_CLOSED_NE_EPISTEMIC_FAILED`.
+The final gate stays closed unless every required child is PASS/exit 0.
+Learning must still distinguish `NOT_RUN`, `FAILED`, `INVALID_OBSERVATION`, `BLOCKED`, `UNAVAILABLE`, `PASS`.
+`BUILD=NOT_RUN` because a live `.next` was protected is not `BUILD_FAILED`.
+
+## D-011 Observation classes must not collapse
+DISCOVERED: `LIVENESS_NE_READINESS_NE_CORRECTNESS_NE_PRODUCTION_EQUIVALENCE`.
+TCP LISTEN is process liveness. HTTP 200 root + Next identity is framework liveness.
+401/403 is route execution plus auth gate. 404 is live server / absent route.
+500 is route executed / application failure. Domain 2xx is capability readiness.
+Isolated `next build` is BUILD_VALIDITY. `next start` is production-runtime equivalence, a separate child.
+`NEXT_CONFIG_FILE` is not an isolation contract on next@16.2.10. Proof receipts stay in `.ai-os/receipts`, not a new `_raios-*` forest.

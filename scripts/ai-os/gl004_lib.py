@@ -34,6 +34,12 @@ REQUIRED_CHILDREN = (
     "TEST_TASK_ORCHESTRATION",
     "RUNTIME_TRACE",
 )
+GL005_CHILDREN = (
+    "AIOS_STATUS",
+    "GL005_CONTROL_PLANE",
+    "TEST_TASK_ORCHESTRATION",
+    "GL005_ORCHESTRATION_DEMO",
+)
 
 # Binder exits. 0 is the only success for RUNTIME_TRACE.
 EXIT_BOUND = 0
@@ -77,11 +83,15 @@ def write_json(path: Path, payload: dict[str, Any]) -> str:
     return sha256_file(path)
 
 
-def parent_exit(children: list[dict[str, Any]]) -> int:
-    """0 only if every required child is present and exit==0. Missing = 2."""
+def parent_exit(children: list[dict[str, Any]], required: tuple[str, ...] = REQUIRED_CHILDREN) -> int:
+    """Gate: 0 only if every required child is present and exit==0. Missing = 2.
+
+    Epistemic state is recorded separately. NOT_RUN and FAILED both keep the
+    gate closed; they must not be collapsed into one learning signal.
+    """
     by_name = {c.get("name"): c for c in children}
     codes: list[int] = []
-    for name in REQUIRED_CHILDREN:
+    for name in required:
         child = by_name.get(name)
         if child is None or child.get("exit") is None:
             codes.append(2)
@@ -96,7 +106,63 @@ def parent_exit(children: list[dict[str, Any]]) -> int:
 
 
 def gl004_proven(children: list[dict[str, Any]], parent: int) -> bool:
-    return parent == 0 and parent_exit(children) == 0
+    return parent == 0 and parent_exit(children, REQUIRED_CHILDREN) == 0
+
+
+def epistemic_state(
+    exit_code: int | None,
+    *,
+    not_run: bool = False,
+    blocked: bool = False,
+    unavailable: bool = False,
+    invalid: bool = False,
+) -> str:
+    if invalid:
+        return "INVALID_OBSERVATION"
+    if blocked:
+        return "BLOCKED"
+    if not_run:
+        return "NOT_RUN"
+    if unavailable:
+        return "UNAVAILABLE"
+    if exit_code is None:
+        return "UNAVAILABLE"
+    if int(exit_code) == 0:
+        return "PASS"
+    return "FAILED"
+
+
+def classify_http(status: int | None, *, is_root: bool = False, next_identity: bool = False) -> str:
+    """LIVENESS_NE_READINESS_NE_CORRECTNESS_NE_PRODUCTION_EQUIVALENCE."""
+    if status is None:
+        return "UNAVAILABLE"
+    if is_root and status == 200 and next_identity:
+        return "FRAMEWORK_LIVENESS"
+    if status in (401, 403):
+        return "ROUTE_EXECUTION+AUTH_GATE_PRESENT"
+    if status == 404:
+        return "SERVER_LIVE/ROUTE_ABSENT"
+    if status >= 500:
+        return "ROUTE_EXECUTED/APPLICATION_FAILURE"
+    if 200 <= status < 300:
+        return "CAPABILITY_READINESS" if not is_root else "FRAMEWORK_LIVENESS"
+    if 400 <= status < 500:
+        return "ROUTE_EXECUTED/CLIENT_OR_CONTRACT_FAILURE"
+    return "INVALID_OBSERVATION"
+
+
+def fingerprint_dist(root: Path | None = None) -> dict[str, Any]:
+    root = root or ROOT
+    nxt = root / ".next"
+    isolated = root / ISOLATED_DIST
+    return {
+        "dot_next_exists": nxt.exists(),
+        "dot_next_has_dev": (nxt / "dev").exists(),
+        "dot_next_has_production_build_id": (nxt / "BUILD_ID").exists(),
+        "isolated_exists": isolated.exists(),
+        "isolated_has_build_id": (isolated / "BUILD_ID").exists(),
+        "isolated_dist": ISOLATED_DIST,
+    }
 
 
 def read_cmdline(pid: int) -> str:
@@ -389,6 +455,10 @@ def bind_live(repo: Path | None = None) -> dict[str, Any]:
         http_probe(f"http://127.0.0.1:{port}/api/tasks"),
     ]
     root_probe = probes[0]
+    probes[0]["observation"] = classify_http(root_probe.get("status"), is_root=True, next_identity=next_identity_ok(root_probe))
+    probes[1]["observation"] = classify_http(probes[1].get("status"))
+    probes[2]["observation"] = classify_http(probes[2].get("status"))
+    probes[3]["observation"] = classify_http(probes[3].get("status"))
     if not next_identity_ok(root_probe):
         raise BindError(
             EXIT_HTTP_INVALID,

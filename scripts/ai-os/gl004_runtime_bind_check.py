@@ -15,6 +15,8 @@ from gl004_lib import (  # noqa: E402
     ROOT,
     BindError,
     bind_live,
+    classify_http,
+    epistemic_state,
     parent_exit,
     refuse_spawn,
 )
@@ -65,6 +67,14 @@ def main() -> int:
         [{"name": n, "exit": 0} for n in REQUIRED_CHILDREN[:-1]] + [{"name": REQUIRED_CHILDREN[-1], "exit": 2}]
     )
     check(mixed == 2, "nonzero child becomes parent")
+    check(classify_http(200, is_root=True, next_identity=True) == "FRAMEWORK_LIVENESS", "200 root class")
+    check(classify_http(401) == "ROUTE_EXECUTION+AUTH_GATE_PRESENT", "401 class")
+    check(classify_http(404) == "SERVER_LIVE/ROUTE_ABSENT", "404 class")
+    check(classify_http(500) == "ROUTE_EXECUTED/APPLICATION_FAILURE", "500 class")
+    check(epistemic_state(0) == "PASS", "exit0 PASS")
+    check(epistemic_state(1) == "FAILED", "exit1 FAILED")
+    check(epistemic_state(2, not_run=True) == "NOT_RUN", "NOT_RUN distinct from FAILED")
+    check(epistemic_state(2, invalid=True) == "INVALID_OBSERVATION", "isolation invalid")
 
     print(json.dumps({"pid": rec["pid"], "port": rec["listen_port"], "mode": rec["mode"], "head": rec["head"][:12]}))
     print("gl004_runtime_bind_check: PASS")
