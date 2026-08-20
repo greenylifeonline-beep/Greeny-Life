@@ -202,5 +202,13 @@ A 90-day 24/7 empire syllabus with Odoo clones and 90 named study scripts is a C
 DISCOVERED for CASE-008, not CANONICAL: `HELPER_SEAT_NE_PERMANENT_MIND`. `C2_C3_C4_ARE_HELP`. `C5_IN_REPO_IS_PERMANENT`. `PENDING_PASTE_NE_GATE`. `CONSULT_NE_BLOCK_EXECUTE`. `FASTEST_PROFESSIONAL_PATH_IS_LIVE_MILL`.
 Founder: C2/C3/C4 are not permanent; they help only. C1 owner and in-repo C5 remain. Do not wait for C3/C4 paste. Do not treat a Cursor session as C5. Finish with the live mill: grind domains already in the repository, week `--all`, minute exam. Silence after optional consult is absence, not a blocker. Does not close GL-005.
 
+## D-042 State moves through a proof gate, not a naming gate
+DISCOVERED for CASE-009, not CANONICAL: `NAMING_GATE_NE_PROOF_GATE`. `CLAIM_INVENTORY_NE_EXISTENCE`. `EXISTENCE_NE_IMPORT`. `IMPORT_NE_EXECUTION`. `EXECUTION_NE_REAL_IO`. `REAL_IO_NE_LIVE_GUARD`. `LIVE_GUARD_NE_GL005`. `C3_TRANSITION_REQUIRES_PROOF`. `FAIL_STAYS_FALSE`. `WIDE_EXECUTE_REQUIRES_LIVE_KEEPER_PROOF`.
+Ladder: claim inventory → existence → import/load → execution → real input/output → live guard → failure/recovery → GL-005. A named script is a CLAIM. Absence is FAIL, not a reason to write 93 stubs. No C3 transition, no `GL005_PROVEN=true`, no wide execute adoption until repeatable operational evidence on live keepers. GL-005 FAIL/BLOCKED/UNPROVEN stays `false`. Runner: `scripts/ai-os/raios_c5_proof.py`. Does not close GL-005.
+
+## D-043 C3 CASE-007 consult: reuse, live guard, practice before promotion
+DISCOVERED, this meeting only, not CANONICAL: `REUSE_BEFORE_BUILD`. `LIVE_GUARD_BEFORE_NEW_ENGINE`. `PRACTICE_BEFORE_PROMOTION`. `MILL_STATS_NE_LEARNING`. `MS_NE_INTELLIGENCE`. `GUARD_COUNT_NE_COMPLETENESS`. `NAMED_NE_IMPLEMENTED_NE_EXECUTABLE_NE_PROVEN`. `DISCOVERED_TO_VALIDATED_REQUIRES_REPLAYABLE_PRACTICE`. `HELPER_TEACH_NE_C5_MEMORY`.
+C3-SAY CASE-007 recorded unmodified. Mill counts are capability observation, not C5 independence. Highest-value gaps remain UAE, Norway/EU Next routes, and thin marketing. Observe→reason→act/shadow→verify→learn→replay writes receipts; shadow act does not fill GL-003. C2-SAY CASE-007 is a declared governance constraint, not automatic operational truth. No C3 execute-seat transition. `GL005_PROVEN` stays false.
+
 
 
