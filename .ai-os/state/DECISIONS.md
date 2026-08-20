@@ -171,5 +171,12 @@ C3 and C4 ACK'd CASE-001. Status `METHOD_BOUND_DISCOVERED`: founder chat is the 
 DISCOVERED: `TEACH_NE_PASS`. `TEACH_NE_CANONICAL`. `CLAIM_NE_EVIDENCE_NE_OBSERVATION`. `BOARD_NE_EXECUTE`. `INFO_NE_OPERATIONAL_TRUTH`. `SEAL_NE_INFERENCE`. `COUNCIL_SPEECH_NE_PROVEN_FACT`. `TEACHER_NE_FATHER`.
 CASE-002: C3/C4/C2/C5 each filed five `Cx-TEACH` lines. C5 ingests DISCOVERED into `CANDIDATES.jsonl` and practices fail-closed. Board and receipts are state material, not execute orders. A lesson is not promoted because a teacher spoke. GL-005 stays `NOT_PROVEN` until an authenticated POST mutates durable task state. This decision is not CANONICAL and does not close GL-005.
 
+## D-035 CASE-002 consult binds temporary meeting laws only
+DISCOVERED, this meeting only, reviewable each session, not binding outside this council, not CANONICAL:
+`FLOOR_OPINION_NE_OPERATIONAL_TRUTH`. `NAMED_UNMODIFIED_FLOOR`. `CLAIM_NE_EVIDENCE_NE_OBSERVATION`. `EVIDENCE_GAP_IS_NOT_PROVEN_OR_BLOCKED`. `TEACH_NE_PASS`. `LESSON_STARTS_DISCOVERED`. `FALSIFY_BEFORE_IMPORTANT_CLAIM`. `SEAL_PROVES_IDENTITY_NE_CONTENT`. `SPEAKER_AUTHORITY_NE_EVIDENCE`. `DISCOVERED_NE_FACT`. `PASTE_NE_LEARNING`.
+C4: keep "info vs operational truth" as engineering opinion; operational truth forms from `.ai-os`/runtime, not from discussion. C3: recurring-knowledge-must-become-skill stays opinion.
+Rejected as law: lessons binding outside this council; SEAL as content proof; paste-as-learning; speaker authority as evidence; DISCOVERED as fact.
+`GL005_PROVEN` stays false.
+
 
 

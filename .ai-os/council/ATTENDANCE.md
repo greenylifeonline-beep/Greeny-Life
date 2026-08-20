@@ -21,4 +21,4 @@
 - C3 على الصفحة العامة: `PAGE_ACCESS_DENIED` — لم يدعِ إرسال رد هناك
 - سؤال C1 لـ C4 «هل أنت هنا»: مُسلَّم. الجواب `C4-HERE نعم`
 - CASE-001: `METHOD_BOUND_DISCOVERED` — C3-ACK وC4-ACK مستلمان. المنهجية ثابتة في هذا الاجتماع. ليست حقيقة تشغيلية. GL005_PROVEN=false
-- CASE-002: `TEACH_FOUR_SEATS_DISCOVERED` — C3/C4/C2/C5 خمسة أسطر تعليم لكلٍ. التشاور ينتظر لصق C3 وC4. ليست CANONICAL. GL005_PROVEN=false
+- CASE-002: `CONSULT_BOUND_DISCOVERED` — تشاور C3 وC4 مسجّل. قوانين مؤقتة لهذا الاجتماع فقط. ليست CANONICAL. ليست خارج المجلس. GL005_PROVEN=false
