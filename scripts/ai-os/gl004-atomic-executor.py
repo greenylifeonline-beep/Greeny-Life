@@ -316,7 +316,8 @@ def child_orchestration_demo(api: dict) -> dict:
             "api_status": api.get("status"),
             "api_observation": api.get("observation"),
             "law": "HTTP_2XX_NE_ORCHESTRATION; GL005_LIVE_PATH_PROVEN is not GL005_PROVEN",
-        }
+        },
+        blocked=True,
     )
 
 
