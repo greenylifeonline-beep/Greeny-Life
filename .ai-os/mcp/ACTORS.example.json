@@ -1,0 +1,12 @@
+{
+  "schema": "raios.mcp-tokens.example.v1",
+  "comment": "Copy to tokens.local.json (gitignored). OAuth/OIDC is preferred when ChatGPT Apps remote MCP is registered. V1 uses scoped bearer tokens with expires_at (access-token shape). No JWT/HMAC plane. No shared tokens. No secrets in packets.",
+  "actors": [
+    {"actor_id": "C0", "token": "replace-c0-local-token", "expires_at": "2099-01-01T00:00:00+00:00", "scopes": ["get_head", "read_board", "read_inbox", "read_receipt", "get_diff", "post_opinion", "send_packet", "ack_packet"]},
+    {"actor_id": "C1", "token": "replace-c1-local-token", "expires_at": "2099-01-01T00:00:00+00:00"},
+    {"actor_id": "C2", "token": "replace-c2-local-token", "expires_at": "2099-01-01T00:00:00+00:00"},
+    {"actor_id": "C3", "token": "replace-c3-local-token", "expires_at": "2099-01-01T00:00:00+00:00"},
+    {"actor_id": "C4", "token": "replace-c4-local-token", "expires_at": "2099-01-01T00:00:00+00:00"},
+    {"actor_id": "C5", "token": "replace-c5-local-token", "expires_at": "2099-01-01T00:00:00+00:00"}
+  ]
+}

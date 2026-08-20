@@ -1,0 +1,48 @@
+{
+  "schema": "raios.mcp-empire-challenge.v1",
+  "knowledge_state": "DISCOVERED",
+  "promoted": false,
+  "implementation": false,
+  "ARCHITECTURE_VERDICT": "CONDITIONAL_REJECT_OF_SPEC_AS_WRITTEN. ACCEPT the V1 vertical slice already built: Streamable HTTP MCP, eight tools, capability-scoped, no shell, no second WAL. REJECT the empire payload.",
+  "accepted": [
+    "One MCP contract for every agent",
+    "Capability-based permissions",
+    "MCP gateway is transport, not truth",
+    ".ai-os remains operational state",
+    "Cognitive WAL remains sole learning authority",
+    "No PASS writable by external agents",
+    "stale requested_head fail closed",
+    "no self-escalation",
+    "C2 read + opinion/message only",
+    "receipt/hash on writes",
+    "MCP protocol is free/open"
+  ],
+  "rejected": [
+    "FastAPI + WebSocket as V1 transport",
+    "Relay Hub as a peer system beside .ai-os",
+    "SQLite WAL (name collision and second database)",
+    "Evidence cache without HEAD/TTL/source hash",
+    "JWT + HMAC identity plane",
+    "run_sandboxed_command whitelist (cat/grep becomes a shell)",
+    "broadcast_message",
+    "6-week calendar plan",
+    "C0 execute=all and promotion=yes on the connector",
+    "Renaming C5 DEEPSEEK to ASSESSOR",
+    "Default branch main (live branch is v9-neurolingua-semantic-kernel)",
+    "Railway/Fly.io as a V1 success gate",
+    "1000 req/s performance theatre",
+    "Five new markdown books before the slice is used"
+  ],
+  "c5": "DEEPSEEK (GL-003). Not ASSESSOR.",
+  "transport": "Streamable HTTP. ChatGPT Apps / Developer Mode remote MCP. Pro is read/fetch for custom MCP; write/modify on Business and Enterprise/Edu. Not custom GPT Actions. Not WebSocket.",
+  "cost": "Gateway itself needs no paid API. LLM vendor plans are separate. Do not treat vendor pricing as a RAIOS architecture requirement.",
+  "already_built": {
+    "path": "scripts/ai-os/raios_mcp/",
+    "check": "python3 scripts/ai-os/raios_mcp_check.py",
+    "tools": 8,
+    "sqlite": false,
+    "websocket": false,
+    "gl005_proven": false
+  },
+  "next": "Use the slice. Do not start raios-connector/ FastAPI tree. Repair authenticated POST remains the only GL-005 mutation proof."
+}

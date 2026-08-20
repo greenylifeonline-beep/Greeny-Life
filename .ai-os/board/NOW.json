@@ -1,21 +1,45 @@
 {
   "schema": "raios.mission-board.v1",
   "branch": "v9-neurolingua-semantic-kernel",
-  "head": "15f0d8a3781b2b5a9ee8a5d3665ad4be7c576e28",
-  "updated_at": "2026-08-20T15:54:22.838373+00:00",
+  "head": "d89a5104118258a4c62f3258154b2c12c3b5e11c",
+  "updated_at": "2026-08-20T16:23:56.442562+00:00",
   "mission_status": "MUTATION_NOT_PROVEN",
-  "mission": "GL-004 HOLD_PROMOTION. GL-005 mutation not proven. C2 and C5 do not enter the repo. C0 briefs them in chat, takes numbered answers, C1 posts to the board. No git. No subscription.",
+  "mission": "GL-004 HOLD_PROMOTION. GL-005 mutation not proven. MCP V1 Streamable HTTP is the connector. GitHub Issues are degraded mail. C1 dispatches. MAIL_PASSES_NE_PROVES. EMPIRE_CONNECTOR_SPEC_AS_WRITTEN_IS_REJECTED.",
   "schedule": {
-    "now": "C0 sends chat packets to C2 and C5. Paste answers back. C1 records C2/C5 on NOW.md.",
-    "next": "Authenticated POST on Repair remains the mutation proof. Do not wait for C2/C5 to clone.",
-    "forbidden": "census، fake DATABASE_URL، fake 2xx، forged gl_session، إجبار C2/C5 على git أو دخول المشروع"
+    "now": "C2/C5 use MCP V1 (read_board, read_receipt, post_opinion) or degraded MAIL C2/C5 Issues. C1 collects.",
+    "next": "Repair authenticated POST remains the only GL-005 mutation proof. Mail does not prove.",
+    "forbidden": "معاملة Issue كإثبات، PASS من بريد، Team Relay hub، fake DATABASE_URL، forged session"
   },
   "required": {
-    "C0": "أرسل حزمة الشات، خذ الأجوبة المرقمة، أعدها للقائد.",
-    "C1": "يضع رأي الشات على اللوحة بالرمز C2 أو C5. لا يخلط الرموز.",
-    "C2": "يجيب الحزمة في الشات فقط. لا git. لا دخول للمستودع.",
+    "C0": "يعطي الأوامر في شات Cursor. ليس ساعي كل ظرف.",
+    "C1": "يرسل في OUTBOX ويجمع Issues. لا يمنح PASS من بريد.",
+    "C2": "يقرأ OUTBOX ويرد Issue بعنوان MAIL C2. لا دخول للمستودع.",
     "C3": "المنفّذ على العملية المربوطة. لا أسرار مختلقة.",
     "C4": "خدمة: نبض + WAL.",
-    "C5": "يجيب الحزمة في الشات برمز C5. لا يسرق C2. لا git."
+    "C5": "يقرأ OUTBOX ويرد Issue بعنوان MAIL C5. لا يسرق C2."
+  },
+  "mail": {
+    "dispatcher": "C1",
+    "law": "MAIL_PASSES_NE_PROVES",
+    "gl005_proven": false,
+    "inbox": "https://github.com/greenylifeonline-beep/Greeny-Life/issues",
+    "outbox": "https://github.com/greenylifeonline-beep/Greeny-Life/blob/v9-neurolingua-semantic-kernel/.ai-os/mail/OUTBOX.md",
+    "new_c2": "https://github.com/greenylifeonline-beep/Greeny-Life/issues/new?template=raios-mail-c2.md",
+    "new_c5": "https://github.com/greenylifeonline-beep/Greeny-Life/issues/new?template=raios-mail-c5.md",
+    "identity": "GITHUB_LOGIN_NOT_RAIOS_SEAT",
+    "last_collect": {
+      "at": "2026-08-20T16:23:56.440897+00:00",
+      "new": 0,
+      "inbox_total": 0,
+      "gl005_proven": false
+    },
+    "last_send": {
+      "id": "d94e3492-dc18-407a-b4e9-f7987c2e263e",
+      "ts": "2026-08-20T16:23:56.022014+00:00",
+      "to": [
+        "C2",
+        "C5"
+      ]
+    }
   }
 }

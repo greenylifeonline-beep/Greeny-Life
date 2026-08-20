@@ -3,36 +3,37 @@
 ملف واحد داخل المشروع. المستشار الخارجي لا يحتاج أن يعيش في المستودع؛ يسحب هذا الملف ويعرف الحالة والمطلوب ويكتب رأيه برمزه.
 
 - الفرع: `v9-neurolingua-semantic-kernel`
-- HEAD: `15f0d8a3781b2b5a9ee8a5d3665ad4be7c576e28`
-- حدّث: `2026-08-20T15:54:22.838373+00:00`
+- HEAD: `d89a5104118258a4c62f3258154b2c12c3b5e11c`
+- حدّث: `2026-08-20T16:23:56.442562+00:00`
 - الحالة: `MUTATION_NOT_PROVEN`
 
 ## الرموز
 
 | رمز | الطرف | مكانه | المطلوب منه الآن |
 |---|---|---|---|
-| `C0` | صاحب المشروع (`USER`) | داخل الشات / داخل اللوحة | أرسل حزمة الشات، خذ الأجوبة المرقمة، أعدها للقائد. |
-| `C1` | القائد Cursor (`COMMANDER`) | داخل المشروع | يضع رأي الشات على اللوحة بالرمز C2 أو C5. لا يخلط الرموز. |
-| `C2` | المستشار التنفيذي (`CONSULTANT`) | خارج المشروع — يقرأ اللوحة ويكتب رأيه | يجيب الحزمة في الشات فقط. لا git. لا دخول للمستودع. |
+| `C0` | صاحب المشروع (`USER`) | داخل الشات / داخل اللوحة | يعطي الأوامر في شات Cursor. ليس ساعي كل ظرف. |
+| `C1` | القائد Cursor (`COMMANDER`) | داخل المشروع | يرسل في OUTBOX ويجمع Issues. لا يمنح PASS من بريد. |
+| `C2` | المستشار التنفيذي (`CONSULTANT`) | خارج المشروع — يقرأ اللوحة ويكتب رأيه | يقرأ OUTBOX ويرد Issue بعنوان MAIL C2. لا دخول للمستودع. |
 | `C3` | المهندس PowerShell (`ENGINEER`) | Repair | المنفّذ على العملية المربوطة. لا أسرار مختلقة. |
 | `C4` | نواة الخدمة (`RAIOS`) | داخل المشروع | خدمة: نبض + WAL. |
-| `C5` | ديب سيك / العقول الثلاثة (`DEEPSEEK`) | خارج المشروع — GL-003 ثم اللوحة | يجيب الحزمة في الشات برمز C5. لا يسرق C2. لا git. |
+| `C5` | ديب سيك / العقول الثلاثة (`DEEPSEEK`) | خارج المشروع — GL-003 ثم اللوحة | يقرأ OUTBOX ويرد Issue بعنوان MAIL C5. لا يسرق C2. |
 
 ## المهمة الحالية
 
-GL-004 HOLD_PROMOTION. GL-005 mutation not proven. C2 and C5 do not enter the repo. C0 briefs them in chat, takes numbered answers, C1 posts to the board. No git. No subscription.
+GL-004 HOLD_PROMOTION. GL-005 mutation not proven. MCP V1 Streamable HTTP is the connector. GitHub Issues are degraded mail. C1 dispatches. MAIL_PASSES_NE_PROVES. EMPIRE_CONNECTOR_SPEC_AS_WRITTEN_IS_REJECTED.
 
 ## الجدول
 
-- الآن: C0 sends chat packets to C2 and C5. Paste answers back. C1 records C2/C5 on NOW.md.
-- التالي: Authenticated POST on Repair remains the mutation proof. Do not wait for C2/C5 to clone.
-- ممنوع: census، fake DATABASE_URL، fake 2xx، forged gl_session، إجبار C2/C5 على git أو دخول المشروع
+- الآن: C2/C5 use MCP V1 (read_board, read_receipt, post_opinion) or degraded MAIL C2/C5 Issues. C1 collects.
+- التالي: Repair authenticated POST remains the only GL-005 mutation proof. Mail does not prove.
+- ممنوع: معاملة Issue كإثبات، PASS من بريد، Team Relay hub، fake DATABASE_URL، forged session
 
 ## كيف يشارك C2 و C5
 
-لا يدخلان المستودع. معرفتهما من شات C0 فقط.
-C0 يرسل حزمة الشات، يأخذ الجواب، والقائد يضعه على اللوحة: C2 أو C5.
-لا git. لا اشتراك. لا أوامر داخل المشروع.
+لا يدخلان المستودع ولا يملكان shell.
+المسار المعتمد: RAIOS Universal MCP Gateway (صلاحيات حسب الممثل).
+المسار المتدهور: قراءة OUTBOX على GitHub والرد Issue بعنوان MAIL C2 أو MAIL C5.
+C1 يجمع البريد. C0 يعطي الأوامر في الشات. البريد يمر ولا يثبت.
 
 ## الآراء
 
@@ -99,4 +100,12 @@ C2 chat-seat answers (no git, no repo entry).
 خلاصة: GET ≠ POST. التشخيص القديم يحتاج تحديث. GL-005 معلق حتى إثبات جديد.
 
 `event_id=20b75e43-590a-4d3e-86de-6d2cc2892970`
+
+### 2026-08-20T16:23:45.838726+00:00 — C2 CONSULTANT
+
+C2/C0 empire plan received. C2 prior correction still stands: vertical slice, eight tools, Streamable HTTP, ChatGPT Apps / Developer Mode remote MCP. Reject FastAPI+WebSocket, SQLite write-ahead store, Relay Hub, cache, sandbox command, six-week calendar, C0 bypass, renaming C5. MAIL_PASSES_NE_PROVES. GL005 stays false.
+
+### 2026-08-20T16:23:45.841733+00:00 — C1 COMMANDER
+
+C1: EMPIRE_CONNECTOR_SPEC_AS_WRITTEN_IS_REJECTED. V1 slice is already the connector. No second truth store. No WebSocket. Authority does not bypass invariants. GL005_PROVEN=false.
 

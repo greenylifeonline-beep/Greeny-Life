@@ -63,3 +63,23 @@ Do not write `._raios-wave2-atomic-proof.ps1` or `_raios-wave2-atomic-proof\` at
 DISCOVERED: `ORCHESTRATION_DEMONSTRATED_REQUIRES_OBSERVED_STATE_TRANSITION` is accepted only when scoped.
 A GET 200 or `tests/task_orchestration_check.ts` is not demonstration. The smallest durable product mutation is `POST /api/tasks` → `createTaskContract()` → `INSERT OrchestrationTask` with `status=REVIEW_REQUIRED` and `execution: false`, observed as GET-before ≠ GET-after.
 The same law is too strong if it demands `COMPLETED`, `execution: true`, a second Next process, a new harness, or mutating `.ai-os/state/TASKS.json`. No HTTP applicator exists for `validateTaskTransition`. Stale `DATABASE_URL` 500 must not drive new infrastructure after a later semantic GET 200. `HTTP_2XX_NE_SEMANTIC_SUCCESS`. `READ_PATH_PROVEN_NE_ORCHESTRATION_DEMONSTRATED`. `STALE_FAILURE_CAUSE_MUST_NOT_DRIVE_NEW_INFRASTRUCTURE`.
+
+## D-015 Mail drop is not proof
+DISCOVERED: `MAIL_PASSES_NE_PROVES`.
+A public GitHub Issue may carry C2/C5 envelopes so agents without MCP can write. C1 dispatches and collects. C0 commands in Cursor chat and is not the mailman for every envelope. An Issue is not TASKS, not a lock, not a handoff, and not `GL005_PROVEN`. GitHub login is envelope sender, not a RAIOS seat. Impersonation or noise closes the drop and returns to chat. This is not Team Relay.
+
+## D-016 MCP gateway is not truth authority
+DISCOVERED: `MCP_GATEWAY_NE_TRUTH_AUTHORITY`.
+The RAIOS Universal Agent Connector is a capability-scoped Streamable HTTP MCP surface. `.ai-os` remains operational state. Cognitive WAL remains the sole learning authority. The gateway must not write `GL004_PROVEN` or `GL005_PROVEN`, must not expose raw shell, must not self-escalate, and must fail closed on stale `requested_head`. Authenticated actor ≠ authorized action. `AUTHORITY_NE_BYPASS_INVARIANTS` — C0 included.
+
+## D-017 MCP gateway is not a Relay Hub
+DISCOVERED: `MCP_GATEWAY_NE_RELAY_HUB`.
+Do not build a Cloud Relay Hub, SQLite WAL, Redis, evidence cache, WebSocket, or JWT/HMAC authority plane in V1. MCP is the interface. Relay is a later async adapter only. GitHub Issues remain a degraded inbox. `SQLITE_WAL_NE_COGNITIVE_WAL`. `ACK_IS_A_NEW_PACKET_NEVER_A_MOVE`.
+
+## D-018 Vertical slice before empire
+DISCOVERED: `VERTICAL_SLICE_BEFORE_EMPIRE`.
+V1 registers eight tools only: `get_head`, `read_board`, `read_inbox`, `read_receipt`, `get_diff`, `post_opinion`, `send_packet`, `ack_packet`. Prove C2 read_board + read_receipt + post_opinion and C1 read of that opinion before phase-2 tools. Transport is Streamable HTTP (ChatGPT Apps / Developer Mode remote MCP). Local stdio is Cursor-only. Sessions are stateless or short-lived memory. Scoped bearer tokens stand in for OAuth until a remote app is registered. No `run_sandboxed_command` in V1.
+
+## D-019 Empire connector spec is rejected as written
+DISCOVERED: `EMPIRE_CONNECTOR_SPEC_AS_WRITTEN_IS_REJECTED`.
+A FastAPI+WebSocket+SQLite WAL+Relay Hub+JWT/HMAC+cache+Railway 6-week plan is rejected. Accept only the already-running Streamable HTTP V1 slice over `.ai-os`. Do not rename C5 from DEEPSEEK to ASSESSOR. Do not give C0 execute/promote through the connector. `AUTHORITY_NE_BYPASS_INVARIANTS`. Calendar-week delivery plans are not a RAIOS success metric.

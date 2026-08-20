@@ -1,0 +1,145 @@
+{
+  "schema": "raios.mcp-policy.v1",
+  "knowledge_state": "DISCOVERED",
+  "slice": "V1_VERTICAL",
+  "transport": "streamable-http",
+  "law": [
+    "MCP_GATEWAY_NE_TRUTH_AUTHORITY",
+    "MCP_GATEWAY_NE_RELAY_HUB",
+    "AUTHORITY_NE_BYPASS_INVARIANTS",
+    "MAIL_PASSES_NE_PROVES",
+    "AUTHENTICATED_ACTOR_NE_AUTHORIZED_ACTION",
+    "ACK_IS_A_NEW_PACKET_NEVER_A_MOVE",
+    "SQLITE_WAL_NE_COGNITIVE_WAL"
+  ],
+  "repository": "greenylifeonline-beep/Greeny-Life",
+  "branch": "v9-neurolingua-semantic-kernel",
+  "v1_tools": [
+    "get_head",
+    "read_board",
+    "read_inbox",
+    "read_receipt",
+    "get_diff",
+    "post_opinion",
+    "send_packet",
+    "ack_packet"
+  ],
+  "phase2_tools_not_registered": [
+    "search_evidence",
+    "request_task",
+    "write_handoff",
+    "emit_learning_candidate",
+    "run_targeted_test"
+  ],
+  "phase3_tools_not_registered": [
+    "run_build",
+    "run_runtime_probe",
+    "execute_scoped_task",
+    "run_sandboxed_command",
+    "broadcast_message"
+  ],
+  "forbidden_tools": [
+    "shell",
+    "bash",
+    "sh",
+    "run_command",
+    "spawn",
+    "certify",
+    "promote",
+    "set_proven",
+    "unlock",
+    "write_product"
+  ],
+  "not_in_v1": [
+    "sqlite",
+    "redis",
+    "evidence_cache",
+    "relay_hub",
+    "websocket",
+    "jwt_hmac_authority",
+    "rest_dev_api"
+  ],
+  "actors": {
+    "C0": {
+      "actor_role": "USER",
+      "instance_role": "owner",
+      "tools": [
+        "get_head",
+        "read_board",
+        "read_inbox",
+        "read_receipt",
+        "get_diff",
+        "post_opinion",
+        "send_packet",
+        "ack_packet"
+      ],
+      "deny": ["shell", "set_proven", "promote", "run_build", "run_sandboxed_command"],
+      "notes": "Final authority does not bypass stale-head, lock, or proven invariants."
+    },
+    "C1": {
+      "actor_role": "COMMANDER",
+      "instance_role": "cursor-cloud",
+      "tools": [
+        "get_head",
+        "read_board",
+        "read_inbox",
+        "read_receipt",
+        "get_diff",
+        "post_opinion",
+        "send_packet",
+        "ack_packet"
+      ],
+      "deny": ["shell", "set_proven", "promote", "run_build"]
+    },
+    "C2": {
+      "actor_role": "CONSULTANT",
+      "instance_role": "chatgpt-apps",
+      "tools": [
+        "get_head",
+        "read_board",
+        "read_inbox",
+        "read_receipt",
+        "get_diff",
+        "post_opinion",
+        "send_packet",
+        "ack_packet"
+      ],
+      "deny": ["search_evidence", "request_task", "write_handoff", "run_targeted_test", "run_build", "shell", "set_proven"]
+    },
+    "C3": {
+      "actor_role": "ENGINEER",
+      "instance_role": "repair",
+      "tools": [
+        "get_head",
+        "read_board",
+        "read_inbox",
+        "read_receipt",
+        "get_diff",
+        "send_packet",
+        "ack_packet"
+      ],
+      "deny": ["set_proven", "promote", "shell", "run_build"]
+    },
+    "C4": {
+      "actor_role": "RAIOS",
+      "instance_role": "service",
+      "tools": ["get_head", "read_board", "read_inbox", "read_receipt", "get_diff"],
+      "deny": ["post_opinion", "write_handoff", "shell", "set_proven"]
+    },
+    "C5": {
+      "actor_role": "DEEPSEEK",
+      "instance_role": "three-brains",
+      "tools": [
+        "get_head",
+        "read_board",
+        "read_inbox",
+        "read_receipt",
+        "get_diff",
+        "post_opinion",
+        "send_packet",
+        "ack_packet"
+      ],
+      "deny": ["write_handoff", "run_targeted_test", "shell", "set_proven"]
+    }
+  }
+}
