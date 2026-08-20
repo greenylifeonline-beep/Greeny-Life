@@ -1,20 +1,20 @@
 {
   "schema": "raios.mission-board.v1",
   "branch": "v9-neurolingua-semantic-kernel",
-  "head": "a2dbed5a00475df0e337be704807ff47079c9846",
-  "updated_at": "2026-08-20T13:59:07.263772+00:00",
-  "mission_status": "WAIT_ATOMIC_RECEIPT",
-  "mission": "تنظيم قبل التوسع. المهندس يشغّل منفّذاً ذرياً fail-closed لـ GL-004/GL-005. المستشار يراجع الإيصال. القائد يحاول كسر أي false-PASS. لا census. لا حذف health-reporter.ts.",
+  "head": "147d103b8473399625d230351e9585fb151a39e5",
+  "updated_at": "2026-08-20T14:40:37.189959+00:00",
+  "mission_status": "GL004_FIVE_PASS_GL005_NOT_PROVEN",
+  "mission": "إيصال GL-004 للأبناء الخمسة موجود. C1 يحاول كسر GL004_PROVEN. GL-005 مغلق لأن /api/tasks=500 DATABASE_URL. لا next start إلا كابن مسمّى. لا سيرفر ثانٍ.",
   "schedule": {
-    "now": "انتظار حمولة الإيصال الثمانية: HEAD, SAFETY_TAG, children[] exits, PARENT_EXIT, RECEIPT, RECEIPT_SHA256, GL004_PROVEN, GL005_PROVEN",
-    "next": "المراجع يكسر الإيصال إن وُجد false-PASS ثم تحويل الحلقة إلى CICF: ربط الحذف بـ HEAD ورسم الاعتمادات",
+    "now": "C1 يفنّد الإيصال. Repair يعيد نفس المنفّذ: python3 scripts/ai-os/gl004-atomic-executor.py — ممنوع NEXT_CONFIG_FILE و_raios-wave2-proof-isolated",
+    "next": "إصلاح DATABASE_URL ثم إعادة GL005_ORCHESTRATION_DEMO فقط. لا قتل PID 3297.",
     "forbidden": "census، estate-hash-gc كبوابة اعتماد، migration/gl-004 أو gl-005 للتجميل، ناقل/WAL ثانٍ، مسّ RAIOS/V9 تحت قفل A15"
   },
   "required": {
     "C0": "يقرأ اللوحة ويقرر. لا يصادق على PASS بدون مخارج أبناء.",
-    "C1": "قائد ومراجع تنفيذي. يستقبل الإيصال ويحاول كسره.",
-    "C2": "مستشار خارجي. يقرأ NOW.md، يترك رأياً برمز C2، لا ينفّذ حذفاً من خارج الرسم الحي.",
-    "C3": "منفّذ ذري على Repair: PARENT_EXIT≠0 إذا فشل أي child مطلوب. لا يحذف health-reporter.ts.",
+    "C1": "يفنّد GL004_PROVEN. لا يصادق إنتاجاً من next-dev.",
+    "C2": "يقرأ الإيصال والهجوم على العقد. رأي C2 على اللوحة.",
+    "C3": "على Repair: نفس المنفّذ. لا سكربت NEXT_CONFIG_FILE.",
     "C4": "خدمة: نبض + WAL. قوانين DISCOVERED فقط. لا مرحلة جديدة."
   }
 }

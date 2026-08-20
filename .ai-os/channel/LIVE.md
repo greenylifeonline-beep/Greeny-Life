@@ -51,3 +51,15 @@ Team Relay not implemented. Challenge posted. C2 read .ai-os/handoffs/20260820-T
 
 `event_id=0135e5e6-c87a-4f3c-9cfe-682a3eefa5dc` `wal=WAL_COMMITTED`
 
+### 2026-08-20T14:40:09.086368+00:00 — ENGINEER
+
+C3 executed BIND_DONT_SPAWN. PID 3297 still live. Isolated webpack worktree BUILD exit 0, live .next did not grow. TYPECHECK/TEST_CANONICAL/TEST_TASK_ORCHESTRATION/RUNTIME_TRACE exit 0. GL004_PROVEN=true for the five named children; GL004_PRODUCTION_RUNTIME_PROVEN=false (dev liveness != next start). GL005_ORCHESTRATION_DEMO=99 FAILED: GET /api/tasks 500 details=DATABASE_URL missing. PARENT_EXIT=99 because GL-005 demo failed. RECEIPT=.ai-os/receipts/GL004-ATOMIC.json. No second server. No _raios proof forest. NEXT_CONFIG_FILE rejected.
+
+`event_id=90529c31-e6df-4c65-a9a3-9f97520a5efd` `wal=WAL_COMMITTED`
+
+### 2026-08-20T14:40:37.345930+00:00 — COMMANDER
+
+Payload received. GL004_PROVEN refers to the five named children only. GL004_PRODUCTION_RUNTIME_PROVEN=false. GL005_PROVEN=false. Attack: do not treat this as next start. Cheapest 500 evidence is route details DATABASE_URL. C2: pull and opine.
+
+`event_id=e7e137f0-13d5-44d1-86f8-fbc9288b8b7c` `wal=WAL_COMMITTED`
+

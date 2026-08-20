@@ -1,0 +1,170 @@
+{
+  "schema": "raios.gl004-runtime-bind.v1",
+  "invariant": "LIVE_PROCESS_CAN_SATISFY_RUNTIME_PROOF_IF_IDENTITY_AND_HTTP_EVIDENCE_ARE_BOUND",
+  "laws": [
+    "BIND_EXISTING_NE_SPAWN",
+    "DEV_LISTEN_NE_PRODUCTION_BUILD",
+    "HTTP_200_ON_ROOT_NE_APP_HEALTH"
+  ],
+  "bound_at": "2026-08-20T14:39:31.999728+00:00",
+  "repo": "/workspace",
+  "head": "147d103b8473399625d230351e9585fb151a39e5",
+  "branch": "v9-neurolingua-semantic-kernel",
+  "pid": 3297,
+  "ppid": 3221,
+  "comm": "next-server (v1",
+  "cmdline": "next-server (v16.2.10)",
+  "cwd": "/workspace",
+  "start": "2026-08-20T12:31:25.530000+00:00",
+  "mode": "dev",
+  "node_env": "development",
+  "next_dev_server": "1",
+  "ports": [
+    {
+      "family": "tcp6",
+      "ip": "::",
+      "port": 3000,
+      "inode": 5845
+    }
+  ],
+  "listen_port": 3000,
+  "http": [
+    {
+      "url": "http://127.0.0.1:3000/",
+      "status": 200,
+      "headers": {
+        "Vary": "rsc, next-router-state-tree, next-router-prefetch, next-router-segment-prefetch, Accept-Encoding",
+        "Cache-Control": "no-cache, must-revalidate",
+        "X-Powered-By": "Next.js",
+        "Content-Type": "text/html; charset=utf-8",
+        "Date": "Thu, 20 Aug 2026 14:39:31 GMT",
+        "Connection": "close",
+        "Transfer-Encoding": "chunked"
+      },
+      "body_prefix": "<!DOCTYPE html><html lang=\"en\"><head><meta charSet=\"utf-8\"/><meta name=\"viewport\" content=\"width=device-width, initial-scale=1\"/><link rel=\"preload\" as=\"script\" fetchPriority=\"low\" href=\"/_next/static/chunks/%5Bturbopack%5D_browser_dev_hmr-client_hmr-client_ts_1xx01vv._.js\"/><script src=\"/_next/static/chunks/node_modules_next_dist_compiled_next-devtools_index_090k2jm.js\" async=\"\"></script><script src=\"/_next/static/chunks/node_modules_next_dist_compiled_react-dom_096_9a-._.js\" async=\"\"></script>",
+      "ms": 38,
+      "observation": "FRAMEWORK_LIVENESS"
+    },
+    {
+      "url": "http://127.0.0.1:3000/api/health",
+      "status": 404,
+      "headers": {
+        "Cache-Control": "no-cache, must-revalidate",
+        "Vary": "rsc, next-router-state-tree, next-router-prefetch, next-router-segment-prefetch, Accept-Encoding",
+        "X-Powered-By": "Next.js",
+        "Content-Type": "text/html; charset=utf-8",
+        "Date": "Thu, 20 Aug 2026 14:39:31 GMT",
+        "Connection": "close",
+        "Transfer-Encoding": "chunked"
+      },
+      "body_prefix": "<!DOCTYPE html><html lang=\"en\"><head><meta charSet=\"utf-8\"/><meta name=\"viewport\" content=\"width=device-width, initial-scale=1\"/><link rel=\"preload\" as=\"script\" fetchPriority=\"low\" href=\"/_next/static/chunks/%5Bturbopack%5D_browser_dev_hmr-client_hmr-client_ts_1xx01vv._.js\"/><script src=\"/_next/static/chunks/node_modules_next_dist_compiled_next-devtools_index_090k2jm.js\" async=\"\"></script><script src=\"/_next/static/chunks/node_modules_next_dist_compiled_react-dom_096_9a-._.js\" async=\"\"></script>",
+      "ms": 24,
+      "observation": "SERVER_LIVE/ROUTE_ABSENT"
+    },
+    {
+      "url": "http://127.0.0.1:3000/api/workflow",
+      "status": 401,
+      "headers": {
+        "vary": "rsc, next-router-state-tree, next-router-prefetch, next-router-segment-prefetch",
+        "content-type": "application/json",
+        "Date": "Thu, 20 Aug 2026 14:39:31 GMT",
+        "Connection": "close",
+        "Transfer-Encoding": "chunked"
+      },
+      "body_prefix": "{\"success\":false,\"error\":\"Authentication required.\"}",
+      "ms": 7,
+      "observation": "ROUTE_EXECUTION+AUTH_GATE_PRESENT"
+    },
+    {
+      "url": "http://127.0.0.1:3000/api/tasks",
+      "status": 500,
+      "headers": {
+        "vary": "rsc, next-router-state-tree, next-router-prefetch, next-router-segment-prefetch",
+        "content-type": "application/json",
+        "Date": "Thu, 20 Aug 2026 14:39:31 GMT",
+        "Connection": "close",
+        "Transfer-Encoding": "chunked"
+      },
+      "body_prefix": "{\"success\":false,\"error\":\"Unable to read tasks\",\"details\":\"\\nInvalid `prisma.$queryRaw()` invocation:\\n\\n\\nerror: Environment variable not found: DATABASE_URL.\\n  -->  schema.prisma:3\\n   | \\n 2 |   provider = \\\"postgresql\\\"\\n 3 |   url      = env(\\\"DATABASE_URL\\\")\\n   | \\n\\nValidation Error Count: 1\"}",
+      "ms": 4,
+      "observation": "ROUTE_EXECUTED/APPLICATION_FAILURE"
+    }
+  ],
+  "http_root_ok": true,
+  "http_valid_means": "GET / == 200 and Next.js identity. Other routes are execution evidence, not health PASS.",
+  "log": {
+    "path": "/tmp/cursor/start-user/start-user.log",
+    "stdout_fd": "pipe:[5695]",
+    "tail": "- Local:         http://localhost:3000\n- Network:       http://172.30.0.2:3000\n✓ Ready in 394ms\n\n GET / 200 in 1325ms (next.js: 1221ms, application-code: 105ms)\n GET /api/health 404 in 214ms (next.js: 184ms, application-code: 30ms)\n GET /api/workflow 401 in 272ms (next.js: 250ms, application-code: 23ms)\n GET /api/tasks 500 in 90ms (next.js: 84ms, application-code: 6ms)\n GET / 200 in 23ms (next.js: 1959µs, application-code: 21ms)\n GET / 200 in 26ms (next.js: 2ms, application-code: 23ms)\n GET /api/health 404 in 22ms (next.js: 2ms, application-code: 20ms)\n GET /api/workflow 401 in 5ms (next.js: 1706µs, application-code: 4ms)\n GET /api/tasks 500 in 5ms (next.js: 1879µs, application-code: 3ms)\n GET /api/tasks 500 in 7ms (next.js: 2ms, application-code: 5ms)\n GET / 200 in 21ms (next.js: 3ms, application-code: 18ms)\n GET /api/health 404 in 21ms (next.js: 2ms, application-code: 19ms)\n GET /api/workflow 401 in 14ms (next.js: 5ms, application-code: 9ms)\n GET /api/tasks 500 in 4ms (next.js: 959µs, application-code: 3ms)\n GET / 200 in 23ms (next.js: 1768µs, application-code: 21ms)\n GET /api/health 404 in 23ms (next.js: 2ms, application-code: 20ms)\n GET /api/workflow 401 in 4ms (next.js: 1082µs, application-code: 3ms)\n GET /api/tasks 500 in 5ms (next.js: 829µs, application-code: 4ms)\n GET / 200 in 21ms (next.js: 1863µs, application-code: 19ms)\n GET /api/health 404 in 20ms (next.js: 2ms, application-code: 18ms)\n GET /api/workflow 401 in 5ms (next.js: 900µs, application-code: 4ms)\n GET /api/tasks 500 in 8ms (next.js: 1372µs, application-code: 6ms)\n GET /api/tasks 500 in 5ms (next.js: 1664µs, application-code: 3ms)\n GET /api/tasks 500 in 4ms (next.js: 1153µs, application-code: 3ms)\n GET / 200 in 23ms (next.js: 2ms, application-code: 21ms)\n GET / 200 in 20ms (next.js: 1847µs, application-code: 18ms)\n GET /api/health 404 in 20ms (next.js: 2ms, application-code: 18ms)\n GET /api/workflow 401 in 5ms (next.js: 1466µs, application-code: 3ms)\n GET /api/tasks 500 in 4ms (next.js: 1291µs, application-code: 3ms)\n GET /api/tasks 500 in 6ms (next.js: 2ms, application-code: 4ms)\n GET /api/tasks 500 in 4ms (next.js: 1360µs, application-code: 2ms)\n GET / 200 in 22ms (next.js: 1758µs, application-code: 20ms)\n GET / 200 in 18ms (next.js: 1838µs, application-code: 16ms)\n GET /api/health 404 in 20ms (next.js: 3ms, application-code: 18ms)\n GET /api/workflow 401 in 4ms (next.js: 1024µs, application-code: 3ms)\n GET /api/tasks 500 in 3ms (next.js: 848µs, application-code: 2ms)"
+  },
+  "ancestors": [
+    {
+      "pid": 3297,
+      "ppid": 3221,
+      "name": "next-server (v1",
+      "cmdline": "next-server (v16.2.10)",
+      "cwd": "/workspace",
+      "start": "2026-08-20T12:31:25.530000+00:00"
+    },
+    {
+      "pid": 3221,
+      "ppid": 3220,
+      "name": "node",
+      "cmdline": "node /workspace/node_modules/.bin/next dev",
+      "cwd": "/workspace",
+      "start": "2026-08-20T12:31:25.330000+00:00"
+    },
+    {
+      "pid": 3220,
+      "ppid": 3202,
+      "name": "sh",
+      "cmdline": "sh -c next dev",
+      "cwd": "/workspace",
+      "start": "2026-08-20T12:31:25.330000+00:00"
+    },
+    {
+      "pid": 3202,
+      "ppid": 3052,
+      "name": "npm run dev",
+      "cmdline": "npm run dev",
+      "cwd": "/workspace",
+      "start": "2026-08-20T12:31:25.260000+00:00"
+    },
+    {
+      "pid": 3052,
+      "ppid": 2790,
+      "name": "bash",
+      "cmdline": "bash -l /tmp/cursor/start-user/start-user.sh",
+      "cwd": "/workspace",
+      "start": "2026-08-20T12:31:25.170000+00:00"
+    },
+    {
+      "pid": 2790,
+      "ppid": 7,
+      "name": "bash",
+      "cmdline": "bash -lc set -o pipefail\nbash -l '/tmp/cursor/start-user/start-user.sh' 2>&1 | tee '/tmp/cursor/start-user/start-user.log'\nstatus=${PIPESTATUS[0]}\nprintf '%s\\n' \"$status\" > '/tmp/cursor/start-user/start-user.status'\nexit \"$status\"",
+      "cwd": "/workspace",
+      "start": "2026-08-20T12:31:25.050000+00:00"
+    }
+  ],
+  "ignored_other_next": [
+    {
+      "pid": 3220,
+      "cwd": "/workspace",
+      "cmdline": "sh -c next dev",
+      "comm": "sh",
+      "ports": []
+    },
+    {
+      "pid": 3221,
+      "cwd": "/workspace",
+      "cmdline": "node /workspace/node_modules/.bin/next dev",
+      "comm": "node",
+      "ports": []
+    }
+  ],
+  "spawned": false,
+  "killed": false,
+  "second_runtime": false,
+  "ok": true
+}
