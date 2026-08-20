@@ -1,0 +1,16 @@
+{
+  "schema": "raios.council-case.v1",
+  "id": "CASE-018",
+  "meeting_id": "GL-COUNCIL-4a11023c3c321b6f",
+  "from": "C1",
+  "ts": "2026-08-20T23:20:00+00:00",
+  "text": "أين المكتبات والمعلومات التي يتعلم منها وأين يضعها وهل يعرف أين هي وكيف يأتي بها.",
+  "status": "LIBRARIES_CATALOG_BOUND_DISCOVERED",
+  "knowledge_state": "DISCOVERED",
+  "canonical": false,
+  "gl005_proven": false,
+  "wal_written": false,
+  "map": "src/raios/neuro_lingua/kae_libraries.py",
+  "human": "configs/neuro_lingua/LIBRARIES.md",
+  "runner": "scripts/ai-os/raios_c5_kae.py --libraries"
+}

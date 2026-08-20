@@ -19,6 +19,7 @@ from raios.neuro_lingua.governor import CognitiveResourceGovernor  # noqa: E402
 from raios.neuro_lingua.kernel import NeuroLingua  # noqa: E402
 from raios.neuro_lingua.qwen_runtime import CORTEX_IDENTITY, generate, probe  # noqa: E402
 from raios.neuro_lingua.kae import HTTP_DEMO, assimilate  # noqa: E402
+from raios.neuro_lingua.kae_libraries import fetch, locate  # noqa: E402
 from raios.neuro_lingua.training import decide_training  # noqa: E402
 
 WAL = ROOT / "RAIOS" / "V9" / "wal" / "cognitive-events.jsonl"
@@ -40,6 +41,7 @@ LANGUAGE_MODULES = (
     "schema.py",
     "qwen_runtime.py",
     "kae.py",
+    "kae_libraries.py",
 )
 TEACHING_SCRIPTS = (
     "raios_learn_ingest.py",
@@ -121,6 +123,8 @@ def teaching_live(*, require_student: bool) -> list[dict]:
     score = learning_score(1, 1, 1, 1, 1, 1)
     policy = decide_training("changing_fact")
     kae = assimilate(HTTP_DEMO, ingest=True, external_calls=0)
+    libs = locate()
+    fetched = fetch(".ai-os/CORE-CONTRACT.md")
     student_ok = bool(status.get("student_live") and gen.get("ok") and not gen.get("cortex_used"))
     rows = [
         check("ingest_discovered", ingest_rec.get("knowledge_state") == "DISCOVERED" and ingest_rec.get("wal_written") is False, ingest_rec.get("id") or ""),
@@ -137,6 +141,9 @@ def teaching_live(*, require_student: bool) -> list[dict]:
         check("identity_unswapped", CORTEX_IDENTITY == "qwen3.6:35b-a3b", CORTEX_IDENTITY),
         check("kae_retile", kae.get("ok") is True and len(kae.get("tiles") or {}) == 16, str((kae.get("metrics") or {}).get("knowledge_yield"))),
         check("kae_no_cortex", kae.get("cortex_used") is False and kae.get("consult_used") is False, "isolated"),
+        check("libraries_known", libs.get("knows_where") is True and int(libs.get("known_count") or 0) >= 8, str(libs.get("known_count"))),
+        check("fetch_core", fetched.get("ok") is True and "Source of truth" in (fetched.get("text") or ""), fetched.get("path") or ""),
+        check("put_candidates", (libs.get("put") or {}).get("discovered") == ".ai-os/learning/CANDIDATES.jsonl", str((libs.get("put") or {}).get("discovered"))),
     ]
     if require_student:
         rows.append(check("require_student", student_ok, status.get("student_model") or status.get("reason") or ""))

@@ -7,6 +7,7 @@ from raios.neuro_lingua.kae import (
     tournament,
     verify_semantic_mutation,
 )
+from raios.neuro_lingua.kae_libraries import assimilate_path, assimilate_query, fetch, locate
 from raios.neuro_lingua.qwen_runtime import CORTEX_IDENTITY, generate
 
 
@@ -69,3 +70,31 @@ def test_main_cortex_stays_isolated():
     refused = generate("hello", model=CORTEX_IDENTITY)
     assert refused["ok"] is False
     assert refused["error"] == "MAIN_CORTEX_ISOLATED_DANGEROUS_WEAK"
+
+
+def test_c5_knows_libraries_fetches_and_puts_discovered():
+    rec = locate()
+    assert rec["knows_where"] is True
+    by_id = {row["id"]: row for row in rec["libraries"]}
+    assert by_id["decisions"]["exists"] is True
+    assert by_id["decisions"]["fetchable"] is True
+    assert by_id["candidates"]["writable"] is True
+    assert rec["put"]["discovered"] == ".ai-os/learning/CANDIDATES.jsonl"
+    got = fetch(".ai-os/CORE-CONTRACT.md")
+    assert got["ok"] is True
+    assert "Source of truth" in got["text"]
+    banned = fetch("RAIOS/V9/wal/cognitive-events.jsonl")
+    assert banned["ok"] is False
+    env = fetch(".env")
+    assert env["ok"] is False
+    learned = assimilate_path(".ai-os/CORE-CONTRACT.md", ingest=False)
+    assert learned["ok"] is True
+    assert learned["fetched"]["path"] == ".ai-os/CORE-CONTRACT.md"
+
+
+def test_query_uses_catalog_not_the_web():
+    rec = assimilate_query("Source of truth", ingest=False)
+    assert rec.get("consult_used") is False or rec.get("ok") is False
+    if rec.get("ok"):
+        assert rec["find"]["chosen"]
+        assert rec["gl005_proven"] is False

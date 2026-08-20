@@ -119,6 +119,11 @@ def source_adapter(kind: str, payload: str, *, path: str | None = None) -> dict[
         }
     if path and ("RAIOS/V9" in path.replace("\\", "/") or path.endswith(".env")):
         return {"ok": False, "error": "SOURCE_LOCKED_OR_SECRET", "path": path}
+    if path:
+        from .kae_libraries import allowed as path_allowed
+
+        if not path_allowed(path):
+            return {"ok": False, "error": "SOURCE_LOCKED_OR_SECRET", "path": path}
     cleaned, redacted = redact(payload or "")
     return {
         "ok": True,
