@@ -22,3 +22,4 @@
 - سؤال C1 لـ C4 «هل أنت هنا»: مُسلَّم. الجواب `C4-HERE نعم`
 - CASE-001: `METHOD_BOUND_DISCOVERED` — C3-ACK وC4-ACK مستلمان. المنهجية ثابتة في هذا الاجتماع. ليست حقيقة تشغيلية. GL005_PROVEN=false
 - CASE-002: `CONSULT_BOUND_DISCOVERED` — تشاور C3 وC4 مسجّل. قوانين مؤقتة لهذا الاجتماع فقط. ليست CANONICAL. ليست خارج المجلس. GL005_PROVEN=false
+- CASE-003: `CURRICULUM_PROPOSED_DISCOVERED` — منهج مجاني محلي لعدة أيام مقترح. ينتظر C3/C4. Hugging Face ليس C5. GL005_PROVEN=false

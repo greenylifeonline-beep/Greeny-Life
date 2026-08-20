@@ -178,5 +178,9 @@ C4: keep "info vs operational truth" as engineering opinion; operational truth f
 Rejected as law: lessons binding outside this council; SEAL as content proof; paste-as-learning; speaker authority as evidence; DISCOVERED as fact.
 `GL005_PROVEN` stays false.
 
+## D-036 C5 training is local free practice, not weight fine-tune
+DISCOVERED proposal for CASE-003, not CANONICAL: `C5_IS_IN_REPO_NE_HF_MODEL`. `HF_SPACE_NE_C5`. `COLAB_NE_C5`. `DIRECT_TRAIN_WITH_C5_IS_THIS_CURSOR_CHAT`. `COMPUTE_OFF_NE_MEMORY_ERASED`.
+Free sources pinned first: CORE-CONTRACT, DECISIONS, FLOOR, handoffs, receipts, C5-GRANT, FREE-RESOURCES hunt, git memory, `raios_c5_learn.py`. Ollama is absent on this VM. HF embeddings stay catalog-only; do not download; do not send confidential text. Curriculum: `.ai-os/council/CURRICULUM-CASE-003.md`. This does not close GL-005.
+
 
 
