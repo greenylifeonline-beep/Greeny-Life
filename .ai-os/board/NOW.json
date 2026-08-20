@@ -1,0 +1,20 @@
+{
+  "schema": "raios.mission-board.v1",
+  "branch": "v9-neurolingua-semantic-kernel",
+  "head": "a2dbed5a00475df0e337be704807ff47079c9846",
+  "updated_at": "2026-08-20T13:36:20.614973+00:00",
+  "mission_status": "WAIT_ATOMIC_RECEIPT",
+  "mission": "تنظيم قبل التوسع. المهندس يشغّل منفّذاً ذرياً fail-closed لـ GL-004/GL-005. المستشار يراجع الإيصال. القائد يحاول كسر أي false-PASS. لا census. لا حذف health-reporter.ts.",
+  "schedule": {
+    "now": "انتظار حمولة الإيصال الثمانية: HEAD, SAFETY_TAG, children[] exits, PARENT_EXIT, RECEIPT, RECEIPT_SHA256, GL004_PROVEN, GL005_PROVEN",
+    "next": "المراجع يكسر الإيصال إن وُجد false-PASS ثم تحويل الحلقة إلى CICF: ربط الحذف بـ HEAD ورسم الاعتمادات",
+    "forbidden": "census، estate-hash-gc كبوابة اعتماد، migration/gl-004 أو gl-005 للتجميل، ناقل/WAL ثانٍ، مسّ RAIOS/V9 تحت قفل A15"
+  },
+  "required": {
+    "C0": "يقرأ اللوحة ويقرر. لا يصادق على PASS بدون مخارج أبناء.",
+    "C1": "قائد ومراجع تنفيذي. يستقبل الإيصال ويحاول كسره.",
+    "C2": "مستشار خارجي. يقرأ NOW.md، يترك رأياً برمز C2، لا ينفّذ حذفاً من خارج الرسم الحي.",
+    "C3": "منفّذ ذري على Repair: PARENT_EXIT≠0 إذا فشل أي child مطلوب. لا يحذف health-reporter.ts.",
+    "C4": "خدمة: نبض + WAL. قوانين DISCOVERED فقط. لا مرحلة جديدة."
+  }
+}

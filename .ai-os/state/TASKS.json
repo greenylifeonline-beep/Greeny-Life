@@ -257,6 +257,23 @@
       "status": "DONE",
       "claimed_by": "cursor",
       "evidence": ".ai-os/experience/pending-validation/CASE-20260820-QUAD-LOOP.json WAL 9d68e062 DISCOVERED not CANONICAL"
+    },
+    {
+      "id": "BOARD-0",
+      "title": "In-repo mission board for all role codes",
+      "objective": "One board file inside the repo so the external consultant and every actor can read status, required work, and leave an opinion without a second bus.",
+      "scope": [
+        ".ai-os/board",
+        "scripts/ai-os"
+      ],
+      "dependencies": [],
+      "allowed_agents": [
+        "cursor"
+      ],
+      "validation": "NOW.md+NOW.json exist; opinion writes WAL; codes C0-C4 documented.",
+      "status": "DONE",
+      "claimed_by": "cursor",
+      "evidence": ".ai-os/board/NOW.md WAL opinions C1 C4"
     }
   ]
 }

@@ -8,13 +8,15 @@ Wave: organize before expand. No new empire of proofs.
 One live product path. One orchestration path. One learning authority (Cognitive WAL).
 One capability per job. Git is the backup. Filesystem archaeology is not operations.
 
-## Three actors
+## Actors and codes
 
-| Actor | Role | Default |
+| Code | Actor | Default |
 |---|---|---|
-| Cursor | Commander / executor | Decide keepers, merge unique behavior, repair live code, prove GL-004/GL-005 |
-| PowerShell assistant | Field engineer on Repair | Hash-GC, delete barn, dangling-ref scan, return receipts with real exit codes |
-| RAIOS | Service kernel | Standby + heartbeat. Burst only for a real gap. No A16/A17. No second WAL |
+| C0 | User | Owner. Reads the board. Does not rubber-stamp PASS. |
+| C1 | Cursor commander | Decide, review receipts, try to extract false-PASS |
+| C2 | Executive consultant (outside the repo) | Reads `.ai-os/board/NOW.md`, leaves opinion, does not execute stale deletes |
+| C3 | PowerShell engineer on Repair | Atomic fail-closed executor. Not the GC script as cert gate |
+| C4 | RAIOS | Service heartbeat + WAL. DISCOVERED laws only |
 
 ## Laws
 

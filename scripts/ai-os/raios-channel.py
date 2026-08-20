@@ -13,7 +13,7 @@ ROOT = Path(__file__).resolve().parents[2]
 CHAN = ROOT / ".ai-os" / "channel"
 LIVE = CHAN / "LIVE.md"
 LOG = CHAN / "messages.jsonl"
-ACTORS = ("USER", "COMMANDER", "POWERSHELL", "RAIOS")
+ACTORS = ("USER", "COMMANDER", "CONSULTANT", "ENGINEER", "POWERSHELL", "RAIOS")
 
 
 def utc() -> str:
@@ -59,10 +59,12 @@ def render(records: list[dict]) -> None:
         "",
         "| الطرف | كيف يكتب |",
         "|---|---|",
-        "| أنت | قل لي في الشات، أو: `python3 scripts/ai-os/raios-channel.py post --from USER --text \"...\"` |",
-        "| القائد (Cursor) | نفس الأمر `--from COMMANDER` |",
-        "| مساعد PowerShell | `python3 scripts/ai-os/raios-channel.py post --from POWERSHELL --text \"GC_EXIT=...\"` |",
-        "| RAIOS | نبض الخدمة + رسائل `--from RAIOS` |",
+        "| لوحة المهمة الواحدة | `.ai-os/board/NOW.md` |",
+        "| C0 أنت | `--from USER` |",
+        "| C1 القائد Cursor | `--from COMMANDER` |",
+        "| C2 المستشار الخارجي | `--from CONSULTANT` |",
+        "| C3 المهندس PowerShell | `--from ENGINEER` أو `--from POWERSHELL` |",
+        "| C4 RAIOS | `--from RAIOS` |",
         "",
         "السلطة: Cognitive WAL. ليست ناقلاً ثانياً. الحالة DISCOVERED حتى الاعتماد.",
         "",
