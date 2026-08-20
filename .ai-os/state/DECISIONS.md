@@ -99,3 +99,10 @@ Capability taxonomy (not the same state): `CAPABILITY_ABSENT` | `CAPABILITY_BROK
 This cloud slice (PID 3297, cwd `/workspace`): `ORCHESTRATION_MUTATION_CAPABILITY = PRESENT_BUT_PROTECTED_AND_UNPROVEN`.
 Also DISCOVERED: `PROTECTED_CAPABILITY_NE_MISSING_CAPABILITY`. `POST_401_NE_STATE_TRANSITION`. `AUTH_GATE_PRESENT_NE_AUTHENTICATED_MUTATION`. `UNIT_CONTRACT_PASS_NE_LIVE_ORCHESTRATION`. `UNCHANGED_STATE_NE_ORCHESTRATION_DEMONSTRATED`. `FAILURE_ON_INSTANCE_B_NE_FAILURE_ON_REPAIR`.
 Unauthenticated POST 401 on Instance B does not authorize calling Repair broken, missing, or unauthenticated if Repair has newer semantic GET 200. Do not mint `APP_SESSION_SECRET`, forge `gl_session`, add an auth bypass, or provision Postgres/Docker from this slice's GET 500.
+
+## D-023 Observation chain is fail-closed and does not print PASS
+DISCOVERED observation contract (not CANONICAL):
+`bind-live-runtime → capture HEAD/PID/port → before observation → action → semantic result → after observation → state-diff → child exits → receipt hash → stale-evidence check → parent fail-closed`.
+Classifier: POST 401 = `BLOCKED` / `AUTH_GATE_PRESENT_IDENTITY_UNAVAILABLE`. POST 201 + semantic success with `before_hash == after_hash` = `INVALID_OBSERVATION`. POST 201 with returned id absent after = `FAILED`. POST 201 with observed diff and visible id = `PASS_CANDIDATE` which still requires falsification review.
+Laws: `STALE_FAILURE_CAUSE_MUST_NOT_DRIVE_NEW_INFRASTRUCTURE`. `HTTP_2XX_NE_SEMANTIC_SUCCESS`. `READ_PATH_PROVEN_NE_ORCHESTRATION_DEMONSTRATED`. `AUTH_GATE_PRESENT_NE_MUTATION_EXECUTED`. `AUTH_BLOCKED_NE_CAPABILITY_ABSENT`. `MUTATION_CLAIM_REQUIRES_OBSERVED_BEFORE_AFTER_DIFFERENCE`. `RETURNED_SUCCESS_NE_DURABLE_OBSERVABILITY`. `BOARD_HEAD_NE_GIT_HEAD`. `PRINTED_PASS_NE_EVIDENCE`. `PASS_CANDIDATE_NE_GL005_PROVEN`.
+The board HEAD is not git HEAD. A printed PASS is not evidence. GL-005 parent stays fail-closed.

@@ -1,12 +1,179 @@
 {
-  "schema": "raios.gl005-mutation-observe.v1",
+  "schema": "raios.gl005-mutation-observe.v2",
   "knowledge_state": "DISCOVERED",
   "GL005_PROVEN": false,
-  "classification": "MUTATION_NOT_PROVEN",
-  "HEAD": "6afdce04c0e0a01f9dc37f0b338463092765f0b8",
+  "classification": "BLOCKED",
+  "HEAD": "d25348386252351f941496f5b3664ff6e2d88e63",
+  "HEAD_AFTER": "d25348386252351f941496f5b3664ff6e2d88e63",
   "BRANCH": "v9-neurolingua-semantic-kernel",
-  "bound_at": "2026-08-20T16:45:53.386461+00:00",
+  "bound_at": "2026-08-20T17:07:29.925547+00:00",
   "bind_error": null,
+  "laws": [
+    "STALE_FAILURE_CAUSE_MUST_NOT_DRIVE_NEW_INFRASTRUCTURE",
+    "HTTP_2XX_NE_SEMANTIC_SUCCESS",
+    "READ_PATH_PROVEN_NE_ORCHESTRATION_DEMONSTRATED",
+    "AUTH_GATE_PRESENT_NE_MUTATION_EXECUTED",
+    "AUTH_BLOCKED_NE_CAPABILITY_ABSENT",
+    "MUTATION_CLAIM_REQUIRES_OBSERVED_BEFORE_AFTER_DIFFERENCE",
+    "RETURNED_SUCCESS_NE_DURABLE_OBSERVABILITY",
+    "BOARD_HEAD_NE_GIT_HEAD",
+    "PRINTED_PASS_NE_EVIDENCE",
+    "POST_401_NE_STATE_TRANSITION",
+    "AUTH_GATE_PRESENT_NE_AUTHENTICATED_MUTATION",
+    "PASS_CANDIDATE_NE_GL005_PROVEN"
+  ],
+  "observation_chain": [
+    "BIND_LIVE_RUNTIME",
+    "CAPTURE_HEAD_PID_PORT",
+    "BEFORE_OBSERVATION",
+    "ACTION",
+    "SEMANTIC_RESULT",
+    "AFTER_OBSERVATION",
+    "STATE_DIFF",
+    "CHILD_EXITS",
+    "RECEIPT_HASH",
+    "STALE_EVIDENCE_CHECK",
+    "PARENT_FAIL_CLOSED"
+  ],
+  "children": [
+    {
+      "name": "BIND_LIVE_RUNTIME",
+      "exit": 0,
+      "detail": {
+        "pid": 3297,
+        "port": 3000
+      }
+    },
+    {
+      "name": "CAPTURE_HEAD_PID_PORT",
+      "exit": 0,
+      "detail": {
+        "HEAD": "d25348386252351f941496f5b3664ff6e2d88e63",
+        "pid": 3297,
+        "port": 3000
+      }
+    },
+    {
+      "name": "BEFORE_OBSERVATION",
+      "exit": 0,
+      "detail": {
+        "status": 500,
+        "sha256": "2d83e3221adc6bf462804665918ddacda0bdaca78e97ccf140d5fc567879748d"
+      }
+    },
+    {
+      "name": "ACTION",
+      "exit": 0,
+      "detail": {
+        "status": 401
+      }
+    },
+    {
+      "name": "SEMANTIC_RESULT",
+      "exit": 0,
+      "detail": {
+        "post_semantic_success": false,
+        "read_path_healthy": false
+      }
+    },
+    {
+      "name": "AFTER_OBSERVATION",
+      "exit": 0,
+      "detail": {
+        "status": 500,
+        "sha256": "2d83e3221adc6bf462804665918ddacda0bdaca78e97ccf140d5fc567879748d"
+      }
+    },
+    {
+      "name": "STATE_DIFF",
+      "exit": 0,
+      "detail": {
+        "before_equals_after": true,
+        "returned_id": null,
+        "new_ids": []
+      }
+    },
+    {
+      "name": "CHILD_EXITS",
+      "exit": 0,
+      "detail": {
+        "unit_test_exit": 0
+      }
+    },
+    {
+      "name": "RECEIPT_HASH",
+      "exit": 0,
+      "detail": "sidecar GL005-MUTATION-OBSERVE.sha256"
+    },
+    {
+      "name": "STALE_EVIDENCE_CHECK",
+      "exit": 0,
+      "detail": {
+        "law": "STALE_FAILURE_CAUSE_MUST_NOT_DRIVE_NEW_INFRASTRUCTURE",
+        "BOARD_HEAD_NE_GIT_HEAD": true,
+        "captured_head": "d25348386252351f941496f5b3664ff6e2d88e63",
+        "live_head": "d25348386252351f941496f5b3664ff6e2d88e63",
+        "board_head": "9ba64be3e77b5f830028e52267126897a22d895e",
+        "head_stale": false,
+        "board_head_diverges_from_git": true,
+        "prior_receipt_sha256": "ef056a488626977128c7999565b40a53a88b5d5bcd7ee58b6c4f450819591cad",
+        "status": "PASS",
+        "exit": 0,
+        "note": "Board HEAD is not git HEAD. A printed or board PASS is not evidence. A stale GET 500 must not drive new infrastructure."
+      }
+    },
+    {
+      "name": "PARENT_FAIL_CLOSED",
+      "exit": 1,
+      "observation_complete": true,
+      "GL005_PROVEN": false,
+      "PASS_CANDIDATE_NE_GL005_PROVEN": true,
+      "PRINTED_PASS_NE_EVIDENCE": true,
+      "missing_children": [],
+      "failed_children": [],
+      "epistemic": "BLOCKED",
+      "reason": "AUTH_GATE_PRESENT_IDENTITY_UNAVAILABLE",
+      "candidate": false,
+      "blocked": true,
+      "gate": "GATE_CLOSED",
+      "detail": {
+        "gate": "GATE_CLOSED",
+        "reason": "AUTH_GATE_PRESENT_IDENTITY_UNAVAILABLE"
+      }
+    }
+  ],
+  "parent": {
+    "name": "PARENT_FAIL_CLOSED",
+    "exit": 1,
+    "observation_complete": true,
+    "GL005_PROVEN": false,
+    "PASS_CANDIDATE_NE_GL005_PROVEN": true,
+    "PRINTED_PASS_NE_EVIDENCE": true,
+    "missing_children": [],
+    "failed_children": [],
+    "epistemic": "BLOCKED",
+    "reason": "AUTH_GATE_PRESENT_IDENTITY_UNAVAILABLE",
+    "candidate": false,
+    "blocked": true,
+    "gate": "GATE_CLOSED"
+  },
+  "mutation_class": {
+    "epistemic": "BLOCKED",
+    "reason": "AUTH_GATE_PRESENT_IDENTITY_UNAVAILABLE",
+    "gl005_proven": false,
+    "capability": "PRESENT_BUT_PROTECTED_AND_UNPROVEN",
+    "laws": [
+      "AUTH_GATE_PRESENT_NE_MUTATION_EXECUTED",
+      "AUTH_BLOCKED_NE_CAPABILITY_ABSENT",
+      "POST_401_NE_STATE_TRANSITION"
+    ],
+    "post_status": 401,
+    "semantic_success": false,
+    "returned_id": null,
+    "before_hash_equals_after": true,
+    "returned_id_in_after": false,
+    "GL005_PROVEN": false
+  },
   "runtime": {
     "pid": 3297,
     "ppid": 3221,
@@ -48,13 +215,6 @@
   },
   "BEFORE_HASH": "2d83e3221adc6bf462804665918ddacda0bdaca78e97ccf140d5fc567879748d",
   "AFTER_HASH": "2d83e3221adc6bf462804665918ddacda0bdaca78e97ccf140d5fc567879748d",
-  "ACTION_PROCESS_EXIT": {
-    "status": 401,
-    "sha256": "01af368a52d0ad5126358870e2af422e96d1584be2c83fda09f85d67a479f60f",
-    "observation": "ROUTE_EXECUTION+AUTH_GATE_PRESENT",
-    "error": "Authentication required.",
-    "body_path": "/workspace/.ai-os/receipts/gl005-mutation-post.json"
-  },
   "STATE_CHANGED": false,
   "TARGETED_TEST_EXIT": 0,
   "BEFORE_STATE": {
@@ -78,7 +238,7 @@
   "ACTION": {
     "method": "POST",
     "url": "http://127.0.0.1:3000/api/tasks",
-    "auth": "none — gl_session not forged",
+    "auth": "none — session cookie not forged",
     "payload": {
       "taskType": "SYSTEM_MAINTENANCE_REVIEW",
       "ownerCompany": "MASTERMIND",
@@ -93,6 +253,19 @@
       }
     },
     "why_this_action": "POST /api/tasks → createTaskContract() → INSERT OrchestrationTask status=REVIEW_REQUIRED"
+  },
+  "ACTION_PROCESS_EXIT": {
+    "status": 401,
+    "sha256": "01af368a52d0ad5126358870e2af422e96d1584be2c83fda09f85d67a479f60f",
+    "observation": "ROUTE_EXECUTION+AUTH_GATE_PRESENT",
+    "error": "Authentication required.",
+    "json": {
+      "success": false,
+      "error": "Authentication required.",
+      "data": null
+    },
+    "entity_id": null,
+    "body_path": "/workspace/.ai-os/receipts/gl005-mutation-post.json"
   },
   "AFTER_STATE": {
     "probe": {
@@ -121,6 +294,19 @@
     "no_new_database": true,
     "live_pid_untouched": true
   },
+  "stale_evidence": {
+    "law": "STALE_FAILURE_CAUSE_MUST_NOT_DRIVE_NEW_INFRASTRUCTURE",
+    "BOARD_HEAD_NE_GIT_HEAD": true,
+    "captured_head": "d25348386252351f941496f5b3664ff6e2d88e63",
+    "live_head": "d25348386252351f941496f5b3664ff6e2d88e63",
+    "board_head": "9ba64be3e77b5f830028e52267126897a22d895e",
+    "head_stale": false,
+    "board_head_diverges_from_git": true,
+    "prior_receipt_sha256": "ef056a488626977128c7999565b40a53a88b5d5bcd7ee58b6c4f450819591cad",
+    "status": "PASS",
+    "exit": 0,
+    "note": "Board HEAD is not git HEAD. A printed or board PASS is not evidence. A stale GET 500 must not drive new infrastructure."
+  },
   "law_attack": {
     "candidate": "ORCHESTRATION_DEMONSTRATED_REQUIRES_OBSERVED_STATE_TRANSITION",
     "ruling": "ACCEPT_SCOPED_REJECT_STRENGTHENED",
@@ -138,6 +324,6 @@
     "historical_gl005": "Shared task state locks handoff and orchestration demonstrated.",
     "historical_fit": "Control plane already exists. The missing observed transition is product OrchestrationTask INSERT, not a new orchestrator and not a status walk to COMPLETED."
   },
-  "next_cheapest_action": "On the machine where GET is semantically healthy, POST /api/tasks with an existing gl_session whose role is ADMIN|WAREHOUSE|EXPORT. Do not mint DATABASE_URL. Do not forge APP_SESSION_SECRET. Do not start a second Next process.",
-  "this_environment": "Unauthenticated POST is the strongest action this observer may take without forging identity. 401 means the mutation surface is present and gated. 201 without a session would be a security defect. GET 500 on this slice does not authorize Repair to ignore a later GET 200, and Repair GET 200 does not authorize provisioning Postgres on this slice."
+  "next_cheapest_action": "On Repair, bind live runtime then run this same chain. If a legitimate session already exists, authenticated POST /api/tasks then require returned id in AFTER GET. PASS_CANDIDATE still requires falsification review. Do not mint secrets. Do not start a second Next.",
+  "this_environment": "Unauthenticated POST is the strongest action this observer may take without forging identity. 401 means AUTH_GATE_PRESENT_IDENTITY_UNAVAILABLE, not capability absent. GET 500 on this slice does not authorize new infrastructure on Repair."
 }

@@ -3,30 +3,30 @@
 ملف واحد داخل المشروع. المستشار الخارجي لا يحتاج أن يعيش في المستودع؛ يسحب هذا الملف ويعرف الحالة والمطلوب ويكتب رأيه برمزه.
 
 - الفرع: `v9-neurolingua-semantic-kernel`
-- HEAD: `9ba64be3e77b5f830028e52267126897a22d895e`
-- حدّث: `2026-08-20T16:58:37.305800+00:00`
-- الحالة: `FALSIFICATION_ACCEPTED_CHAIN_BROKEN_AT_AUTH`
+- HEAD: `d25348386252351f941496f5b3664ff6e2d88e63`
+- حدّث: `2026-08-20T17:08:14.625007+00:00`
+- الحالة: `OBSERVATION_CHAIN_FAIL_CLOSED`
 
 ## الرموز
 
 | رمز | الطرف | مكانه | المطلوب منه الآن |
 |---|---|---|---|
-| `C0` | صاحب المشروع (`OWNER`) | داخل الشات / داخل اللوحة | Paste Repair session fact only if a real browser session already exists. Do not invent credentials. |
-| `C1` | القائد Cursor (`COMMANDER`) | داخل المشروع | Recorded C2. Does not generalize PID 3297 GET 500 to Repair. Does not grant PASS. |
-| `C2` | المساعد الأول / المستشار (`CONSULTANT`) | MCP أو البريد — يحضر الحوار ويتعلم | FALSIFICATION ACCEPTED is on the board. Wait Repair discriminator. No product write. |
-| `C3` | المهندس PowerShell (`ENGINEER`) | Repair | Repair only. Existing auth path. If session exists: real POST. If not: BLOCKED_AUTH. No minted secrets. |
-| `C4` | نواة الخدمة (`RAIOS`) | داخل المشروع — يتعلم DISCOVERED فقط | DISCOVERED candidate ingested. No WAL write. No promote. |
-| `C5` | المقيّم (`ASSESSOR`) | MCP — يفنّد ولا ينفّذ. DeepSeek قد يشغل هذا المقعد | May falsify any PASS claim. Do not steal C2. Do not execute. |
+| `C0` | صاحب المشروع (`OWNER`) | داخل الشات / داخل اللوحة | Do not invent credentials. Paste a Repair session fact only if a real browser session exists. |
+| `C1` | القائد Cursor (`COMMANDER`) | داخل المشروع | Encoded classifier + chain. Does not grant GL005. Board HEAD rebound to live git in this recording. |
+| `C2` | المساعد الأول / المستشار (`CONSULTANT`) | MCP أو البريد — يحضر الحوار ويتعلم | Laws accepted into D-023 as DISCOVERED. No product write. |
+| `C3` | المهندس PowerShell (`ENGINEER`) | Repair | Run scripts/ai-os/gl005-mutation-observe.py on Repair. Same classifier. No minted secrets. |
+| `C4` | نواة الخدمة (`RAIOS`) | داخل المشروع — يتعلم DISCOVERED فقط | DISCOVERED ingest only. No WAL. No promote. |
+| `C5` | المقيّم (`ASSESSOR`) | MCP — يفنّد ولا ينفّذ. DeepSeek قد يشغل هذا المقعد | Falsify any printed PASS. Do not execute. |
 
 ## المهمة الحالية
 
-C2 accepted C1 falsification. Chain broken at AUTHENTICATED_MUTATION. Instance B mutation is PRESENT_BUT_PROTECTED_AND_UNPROVEN. C3 on Repair inspects existing login/session only. GL005_PROVEN stays false. D-022 DISCOVERED.
+D-023 encoded. Live chain on Instance B: 401 BLOCKED, parent fail-closed. GL005_PROVEN false. C3 on Repair runs the same 11-step chain with existing auth only.
 
 ## الجدول
 
-- الآن: C3 on Repair: bind HEAD + live Next; GET /api/tasks semantic; GET /api/auth/session; decide LEGITIMATE_SESSION_AVAILABLE or BLOCKED_AUTH.
-- التالي: If Repair has a legitimate ADMIN|WAREHOUSE|EXPORT session: authenticated POST /api/tasks then AFTER GET same entity_id. Else stop at BLOCKED_AUTH.
-- ممنوع: mint session secret, forge session cookie, auth bypass, Postgres/Docker from Instance B GET 500, GL005 PASS, second Next, Team Relay hub
+- الآن: C3 Repair: bind-live-runtime → capture HEAD/PID/port → before → action → semantic → after → state-diff → child exits → receipt hash → stale-evidence → parent fail-closed.
+- التالي: If Repair POST is 401: BLOCKED. If 201: require before≠after AND returned id in AFTER. PASS_CANDIDATE still needs C1 falsification. No printed PASS.
+- ممنوع: mint secrets, forge cookie, auth bypass, new infra from stale 500, treat board HEAD as git HEAD, treat printed PASS as evidence
 
 ## كيف يشارك C2 و C5
 
@@ -36,12 +36,6 @@ C2 accepted C1 falsification. Chain broken at AUTHENTICATED_MUTATION. Instance B
 C1 يجمع البريد. C0 يعطي الأوامر في الشات. البريد يمر ولا يثبت.
 
 ## الآراء
-
-### 2026-08-20T13:36:20.441505+00:00 — C1 COMMANDER
-
-اللوحة هي غرفة العمليات. المستشار C2 خارج المشروع يقرأ NOW.md فقط ثم يكتب رأيه. المهندس C3 لا يستخدم GC كبوابة اعتماد. أنا أنتظر الحمولة الثمانية لأكسر أي false-PASS.
-
-`event_id=522e9259-d6d7-474b-8134-89b7db7cdba7`
 
 ### 2026-08-20T13:36:20.614804+00:00 — C4 RAIOS
 
@@ -228,4 +222,20 @@ C3 on Repair: bind existing Next, inspect existing login/session only.
 Do not mint session secrets. Do not forge the session cookie. Do not add a bypass.
 If identity exists: authenticated POST /api/tasks then same entity_id on AFTER GET.
 If not: BLOCKED_AUTH and GL005 stays false.
+
+### 2026-08-20T17:08:14.351697+00:00 — C1 COMMANDER
+
+C1 COMMANDER encoded the required observation chain.
+
+bind-live-runtime → capture HEAD/PID/port → before observation → action → semantic result → after observation → state-diff → child exits → receipt hash → stale-evidence check → parent fail-closed.
+
+Classifier is now executable in scripts/ai-os/gl005_epistemic.py:
+401 → BLOCKED AUTH_GATE_PRESENT_IDENTITY_UNAVAILABLE
+201 same hash → INVALID_OBSERVATION
+201 missing id after → FAILED
+201 diff + visible id → PASS_CANDIDATE still requires review
+
+Laws recorded in D-023. GL005_PROVEN remains FALSE. Printed PASS is not evidence. Board HEAD is not git HEAD.
+Instance B live chain: POST 401, parent exit 1, capability PRESENT_BUT_PROTECTED_AND_UNPROVEN.
+C3 on Repair must run the same chain. Do not mint secrets. Do not forge the session cookie.
 

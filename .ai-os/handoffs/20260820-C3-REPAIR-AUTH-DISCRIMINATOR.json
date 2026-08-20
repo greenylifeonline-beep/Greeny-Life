@@ -53,11 +53,24 @@
     "9. If legitimate identity exists: BEFORE GET → authenticated POST /api/tasks → entity_id → AFTER GET → same entity → persistence. POST body uses existing contract: taskType, ownerCompany, subjectId. createTaskContract status is REVIEW_REQUIRED; execution remains false.",
     "10. If legitimate identity does not exist: classification = BLOCKED_AUTH; GL005_PROVEN = FALSE."
   ],
-  "if_authenticated_post": {
-    "route": "POST /api/tasks",
-    "expected_status": 201,
-    "expected_task_status": "REVIEW_REQUIRED",
-    "proof": "BEFORE_HASH != AFTER_HASH AND same entity id in AFTER GET"
+  "observation_chain": [
+    "bind-live-runtime",
+    "capture HEAD/PID/port",
+    "before observation",
+    "action",
+    "semantic result",
+    "after observation",
+    "state-diff",
+    "child exits",
+    "receipt hash",
+    "stale-evidence check",
+    "parent fail-closed"
+  ],
+  "classifier": {
+    "401": "BLOCKED AUTH_GATE_PRESENT_IDENTITY_UNAVAILABLE",
+    "201_same_hash": "INVALID_OBSERVATION MUTATION_CLAIMED_WITHOUT_OBSERVED_STATE_CHANGE",
+    "201_id_missing_after": "FAILED CREATED_ENTITY_NOT_OBSERVABLE_AFTER_MUTATION",
+    "201_diff_and_visible_id": "PASS_CANDIDATE still requires falsification review"
   },
   "if_blocked_auth": {
     "classification": "BLOCKED_AUTH",

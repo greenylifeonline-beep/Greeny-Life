@@ -1,22 +1,22 @@
 {
   "schema": "raios.mission-board.v1",
   "branch": "v9-neurolingua-semantic-kernel",
-  "head": "9ba64be3e77b5f830028e52267126897a22d895e",
-  "updated_at": "2026-08-20T16:58:37.305800+00:00",
-  "mission_status": "FALSIFICATION_ACCEPTED_CHAIN_BROKEN_AT_AUTH",
-  "mission": "C2 accepted C1 falsification. Chain broken at AUTHENTICATED_MUTATION. Instance B mutation is PRESENT_BUT_PROTECTED_AND_UNPROVEN. C3 on Repair inspects existing login/session only. GL005_PROVEN stays false. D-022 DISCOVERED.",
+  "head": "d25348386252351f941496f5b3664ff6e2d88e63",
+  "updated_at": "2026-08-20T17:08:14.625007+00:00",
+  "mission_status": "OBSERVATION_CHAIN_FAIL_CLOSED",
+  "mission": "D-023 encoded. Live chain on Instance B: 401 BLOCKED, parent fail-closed. GL005_PROVEN false. C3 on Repair runs the same 11-step chain with existing auth only.",
   "schedule": {
-    "now": "C3 on Repair: bind HEAD + live Next; GET /api/tasks semantic; GET /api/auth/session; decide LEGITIMATE_SESSION_AVAILABLE or BLOCKED_AUTH.",
-    "next": "If Repair has a legitimate ADMIN|WAREHOUSE|EXPORT session: authenticated POST /api/tasks then AFTER GET same entity_id. Else stop at BLOCKED_AUTH.",
-    "forbidden": "mint session secret, forge session cookie, auth bypass, Postgres/Docker from Instance B GET 500, GL005 PASS, second Next, Team Relay hub"
+    "now": "C3 Repair: bind-live-runtime → capture HEAD/PID/port → before → action → semantic → after → state-diff → child exits → receipt hash → stale-evidence → parent fail-closed.",
+    "next": "If Repair POST is 401: BLOCKED. If 201: require before≠after AND returned id in AFTER. PASS_CANDIDATE still needs C1 falsification. No printed PASS.",
+    "forbidden": "mint secrets, forge cookie, auth bypass, new infra from stale 500, treat board HEAD as git HEAD, treat printed PASS as evidence"
   },
   "required": {
-    "C0": "Paste Repair session fact only if a real browser session already exists. Do not invent credentials.",
-    "C1": "Recorded C2. Does not generalize PID 3297 GET 500 to Repair. Does not grant PASS.",
-    "C2": "FALSIFICATION ACCEPTED is on the board. Wait Repair discriminator. No product write.",
-    "C3": "Repair only. Existing auth path. If session exists: real POST. If not: BLOCKED_AUTH. No minted secrets.",
-    "C4": "DISCOVERED candidate ingested. No WAL write. No promote.",
-    "C5": "May falsify any PASS claim. Do not steal C2. Do not execute."
+    "C0": "Do not invent credentials. Paste a Repair session fact only if a real browser session exists.",
+    "C1": "Encoded classifier + chain. Does not grant GL005. Board HEAD rebound to live git in this recording.",
+    "C2": "Laws accepted into D-023 as DISCOVERED. No product write.",
+    "C3": "Run scripts/ai-os/gl005-mutation-observe.py on Repair. Same classifier. No minted secrets.",
+    "C4": "DISCOVERED ingest only. No WAL. No promote.",
+    "C5": "Falsify any printed PASS. Do not execute."
   },
   "mail": {
     "dispatcher": "C1",
@@ -34,8 +34,8 @@
       "gl005_proven": false
     },
     "last_send": {
-      "id": "b41bc8d0-4b62-4884-92a8-a1bd2e203d84",
-      "ts": "2026-08-20T16:58:10.633020+00:00",
+      "id": "10c846e9-8be3-4299-8e0a-f78b73d12650",
+      "ts": "2026-08-20T17:08:14.496712+00:00",
       "to": [
         "C2",
         "C5"

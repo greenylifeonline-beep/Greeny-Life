@@ -26,6 +26,14 @@ from gl004_lib import (  # noqa: E402
     utc,
     write_json,
 )
+from gl005_epistemic import (  # noqa: E402
+    LAWS,
+    OBSERVATION_CHAIN,
+    chain_child,
+    classify_post_mutation,
+    parent_fail_closed,
+    stale_evidence_check,
+)
 
 RECEIPT = ROOT / ".ai-os" / "receipts" / "GL005-MUTATION-OBSERVE.json"
 BEFORE_BODY = ROOT / ".ai-os" / "receipts" / "gl005-mutation-before.json"
@@ -160,8 +168,27 @@ def run_unit_test() -> dict:
     }
 
 
+def git_head() -> str:
+    return subprocess.check_output(["git", "rev-parse", "HEAD"], cwd=ROOT, text=True).strip()
+
+
+def board_head() -> str | None:
+    path = ROOT / ".ai-os" / "board" / "NOW.json"
+    if not path.exists():
+        return None
+    try:
+        return json.loads(path.read_text(encoding="utf-8")).get("head")
+    except Exception:
+        return None
+
+
 def main() -> int:
     surface = domain_surface()
+    captured_head = git_head()
+    prior_sha = None
+    sha_path = ROOT / ".ai-os" / "receipts" / "GL005-MUTATION-OBSERVE.sha256"
+    if sha_path.exists():
+        prior_sha = sha_path.read_text(encoding="utf-8").strip() or None
     unit = run_unit_test()
 
     try:
@@ -193,18 +220,44 @@ def main() -> int:
     AFTER_BODY.write_text(after.get("body") or "", encoding="utf-8")
 
     new_ids = sorted(set(after_sem.get("ids") or []) - set(before_sem.get("ids") or []))
-    state_changed = bool(
-        before_sem.get("read_path_healthy")
-        and after_sem.get("read_path_healthy")
-        and (
-            new_ids
-            or before_sem.get("count") != after_sem.get("count")
-            or (before.get("sha256") and before.get("sha256") != after.get("sha256"))
-        )
-        and post.get("status") == 201
-        and isinstance(post.get("json"), dict)
-        and post["json"].get("success") is True
+    post_json = post.get("json") if isinstance(post.get("json"), dict) else {}
+    returned_id = None
+    data = post_json.get("data") if isinstance(post_json, dict) else None
+    if isinstance(data, dict) and data.get("id"):
+        returned_id = str(data.get("id"))
+    classification = classify_post_mutation(
+        post_status=post.get("status") if isinstance(post.get("status"), int) else None,
+        semantic_success=post.get("status") == 201 and post_json.get("success") is True,
+        before_hash=before.get("sha256"),
+        after_hash=after.get("sha256"),
+        returned_id=returned_id,
+        after_ids=after_sem.get("ids") or [],
     )
+    state_changed = classification["epistemic"] == "PASS_CANDIDATE"
+    live_head = git_head()
+    stale = stale_evidence_check(
+        captured_head=captured_head,
+        live_head=live_head,
+        board_head=board_head(),
+        prior_receipt_sha256=prior_sha,
+    )
+    children = [
+        chain_child("BIND_LIVE_RUNTIME", ok=bool(pid and port) and bind_error is None, detail={"pid": pid, "port": port}),
+        chain_child("CAPTURE_HEAD_PID_PORT", ok=bool(captured_head and pid and port), detail={"HEAD": captured_head, "pid": pid, "port": port}),
+        chain_child("BEFORE_OBSERVATION", ok=before.get("status") is not None, detail={"status": before.get("status"), "sha256": before.get("sha256")}),
+        chain_child("ACTION", ok=post.get("status") is not None, detail={"status": post.get("status")}),
+        chain_child("SEMANTIC_RESULT", ok=True, detail={"post_semantic_success": classification["semantic_success"], "read_path_healthy": after_sem.get("read_path_healthy")}),
+        chain_child("AFTER_OBSERVATION", ok=after.get("status") is not None, detail={"status": after.get("status"), "sha256": after.get("sha256")}),
+        chain_child("STATE_DIFF", ok=True, detail={"before_equals_after": classification["before_hash_equals_after"], "returned_id": returned_id, "new_ids": new_ids}),
+        chain_child("CHILD_EXITS", ok=unit["exit"] == 0, detail={"unit_test_exit": unit["exit"]}, exit_override=int(unit["exit"])),
+        chain_child("RECEIPT_HASH", ok=True, detail="sidecar GL005-MUTATION-OBSERVE.sha256"),
+        chain_child("STALE_EVIDENCE_CHECK", ok=stale["exit"] == 0, detail=stale, exit_override=stale["exit"]),
+    ]
+    parent = parent_fail_closed(children, classification)
+    children.append({**parent, "name": "PARENT_FAIL_CLOSED", "detail": {"gate": parent["gate"], "reason": parent["reason"]}})
+    named = [c["name"] for c in children]
+    if named != list(OBSERVATION_CHAIN):
+        raise SystemExit("CHAIN_ORDER_VIOLATION:" + ",".join(named))
 
     invariant = {
         "no_execution_flag": True,
@@ -240,16 +293,20 @@ def main() -> int:
     }
 
     payload = {
-        "schema": "raios.gl005-mutation-observe.v1",
+        "schema": "raios.gl005-mutation-observe.v2",
         "knowledge_state": "DISCOVERED",
         "GL005_PROVEN": False,
-        "classification": "LIVE_READ_PATH_PROVEN_EXECUTION_MUTATION_NOT_YET_PROVEN"
-        if before_sem.get("read_path_healthy") and not state_changed
-        else "MUTATION_NOT_PROVEN",
-        "HEAD": subprocess.check_output(["git", "rev-parse", "HEAD"], cwd=ROOT, text=True).strip(),
+        "classification": classification["epistemic"],
+        "HEAD": captured_head,
+        "HEAD_AFTER": live_head,
         "BRANCH": subprocess.check_output(["git", "branch", "--show-current"], cwd=ROOT, text=True).strip(),
         "bound_at": utc(),
         "bind_error": bind_error,
+        "laws": list(LAWS),
+        "observation_chain": OBSERVATION_CHAIN,
+        "children": children,
+        "parent": parent,
+        "mutation_class": classification,
         "runtime": {
             "pid": pid,
             "ppid": bound.get("ppid") if isinstance(bound, dict) else None,
@@ -262,7 +319,6 @@ def main() -> int:
         "unit_test": {"exit": unit["exit"]},
         "BEFORE_HASH": before.get("sha256"),
         "AFTER_HASH": after.get("sha256"),
-        "ACTION_PROCESS_EXIT": post.get("status"),
         "STATE_CHANGED": state_changed,
         "TARGETED_TEST_EXIT": unit["exit"],
         "BEFORE_STATE": {
@@ -273,7 +329,7 @@ def main() -> int:
         "ACTION": {
             "method": "POST",
             "url": base,
-            "auth": "none — gl_session not forged",
+            "auth": "none — session cookie not forged",
             "payload": POST_PAYLOAD,
             "why_this_action": surface["smallest_durable_mutation"],
         },
@@ -282,6 +338,8 @@ def main() -> int:
             "sha256": post.get("sha256"),
             "observation": post.get("observation"),
             "error": (post.get("json") or {}).get("error") if isinstance(post.get("json"), dict) else post.get("error"),
+            "json": {"success": post_json.get("success"), "error": post_json.get("error"), "data": {"id": returned_id} if returned_id else None},
+            "entity_id": returned_id,
             "body_path": str(POST_BODY),
         },
         "AFTER_STATE": {
@@ -290,44 +348,37 @@ def main() -> int:
             "new_ids": new_ids,
             "body_path": str(AFTER_BODY),
         },
-        "STATE_CHANGED": state_changed,
         "DOMAIN_INVARIANT_PRESERVED": invariant,
+        "stale_evidence": stale,
         "law_attack": law_attack,
         "next_cheapest_action": (
-            "On the machine where GET is semantically healthy, POST /api/tasks with an existing gl_session "
-            "whose role is ADMIN|WAREHOUSE|EXPORT. Do not mint DATABASE_URL. Do not forge APP_SESSION_SECRET. "
-            "Do not start a second Next process."
+            "On Repair, bind live runtime then run this same chain. If a legitimate session already exists, "
+            "authenticated POST /api/tasks then require returned id in AFTER GET. "
+            "PASS_CANDIDATE still requires falsification review. Do not mint secrets. Do not start a second Next."
         ),
         "this_environment": (
             "Unauthenticated POST is the strongest action this observer may take without forging identity. "
-            "401 means the mutation surface is present and gated. 201 without a session would be a security defect. "
-            "GET 500 on this slice does not authorize Repair to ignore a later GET 200, and Repair GET 200 does not "
-            "authorize provisioning Postgres on this slice."
+            "401 means AUTH_GATE_PRESENT_IDENTITY_UNAVAILABLE, not capability absent. "
+            "GET 500 on this slice does not authorize new infrastructure on Repair."
         ),
     }
     digest = write_json(RECEIPT, payload)
     (ROOT / ".ai-os" / "receipts" / "GL005-MUTATION-OBSERVE.sha256").write_text(digest + "\n", encoding="utf-8")
     summary = {
         "GL005_PROVEN": False,
-        "BEFORE_STATE": before_sem,
         "BEFORE_HASH": before.get("sha256"),
-        "ACTION": "POST /api/tasks unauthenticated (gl_session not forged)",
         "ACTION_PROCESS_EXIT": post.get("status"),
-        "AFTER_STATE": after_sem,
         "AFTER_HASH": after.get("sha256"),
         "STATE_CHANGED": state_changed,
-        "DOMAIN_INVARIANT_PRESERVED": invariant,
         "TARGETED_TEST_EXIT": unit["exit"],
         "READ_PATH_HEALTHY": before_sem.get("read_path_healthy"),
-        "epistemic": {
-            "mutation": "PASS" if state_changed else ("BLOCKED" if post.get("status") in (401, 403) else "FAILED" if before.get("status") else "UNAVAILABLE"),
-            "read_path": "PASS" if before_sem.get("read_path_healthy") else "FAILED" if before.get("status") == 500 else "UNAVAILABLE",
-            "unit_test": "PASS" if unit["exit"] == 0 else "FAILED",
-            "gl005_gate": "GATE_CLOSED",
-        },
+        "epistemic": classification,
+        "parent": {"exit": parent["exit"], "gate": parent["gate"]},
+        "chain": named,
         "RECEIPT": str(RECEIPT),
         "RECEIPT_SHA256": digest,
         "PID_ALIVE": invariant["live_pid_untouched"],
+        "HEAD": captured_head,
     }
     print(json.dumps(summary, indent=2, ensure_ascii=False))
     print(f"RECEIPT_SHA256={digest}")

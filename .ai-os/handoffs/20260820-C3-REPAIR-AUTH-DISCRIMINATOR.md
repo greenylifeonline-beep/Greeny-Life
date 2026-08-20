@@ -24,13 +24,20 @@ PID 3297 `/workspace` is **not** Repair. Do not copy Instance B GET 500 or BLOCK
 - Login: `POST /api/auth/login`
 - Probe: `GET /api/auth/session`
 
-## Do this
+## Do this (fail-closed chain)
 
-1. Bind Repair HEAD.
-2. Bind the existing live Repair Next. Do not spawn.
-3. `GET /api/tasks` and parse the semantic body.
-4. Inspect whether C0 already has a legitimate session on that process.
-5. If yes: BEFORE GET → authenticated `POST /api/tasks` → entity_id → AFTER GET same entity.
-6. If no: `classification = BLOCKED_AUTH`, `GL005_PROVEN = FALSE`.
+1. bind-live-runtime
+2. capture HEAD/PID/port
+3. before observation (`GET /api/tasks` semantic body)
+4. action (existing auth only)
+5. semantic result
+6. after observation
+7. state-diff
+8. child exits
+9. receipt hash
+10. stale-evidence check
+11. parent fail-closed
+
+Classifier: 401 = `BLOCKED`. 201 with unchanged hash = `INVALID_OBSERVATION`. 201 with missing id after = `FAILED`. 201 with diff + visible id = `PASS_CANDIDATE` (still not `GL005_PROVEN`).
 
 Protected capability is not missing capability.
