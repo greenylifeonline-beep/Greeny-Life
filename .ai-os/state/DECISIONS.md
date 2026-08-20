@@ -186,5 +186,9 @@ Free sources pinned first: CORE-CONTRACT, DECISIONS, FLOOR, handoffs, receipts, 
 DISCOVERED for CASE-004, not CANONICAL: `SCHEDULED_PULSE_NE_SECOND_WAL`. `HF_ACCOUNT_NE_C5`. `COLAB_NE_C5`. `KAGGLE_NE_C5`. `PASTE_NE_LEARNING`. `COMPUTE_OFF_NE_MEMORY_ERASED`.
 Week program: `python3 scripts/ai-os/raios_c5_week.py --auto`. GitHub Actions `.github/workflows/c5-week.yml` every 6 hours from default branch `main`. Founder must register at huggingface.co/join; this agent cannot create the account (`BLOCKED_AUTH`). Colab/Kaggle notebooks are muscle. This chat remains the council. Does not close GL-005.
 
+## D-038 Inject before execute; retire trainers; minute exam
+DISCOVERED for CASE-005, not CANONICAL: `INJECT_BEFORE_EXECUTE`. `NO_SOUND_EXECUTE_WITHOUT_LIVE_MEMORY`. `PROMOTE_THEN_RETIRE_TRAINER`. `MINUTE_EXAM_NE_SECOND_WAL`. `GENIUS_IS_COMPRESSION_NE_DISK_FILL`.
+Founder join form to copy: `gym/huggingface/JOIN-FORM.md`. Ladder: `.ai-os/learning/TOOLS-LADDER.json`. Minute exam: `scripts/ai-os/raios_c5_minute.py`. Do not delete retired trainer files on stale observation; stop invoking them. Does not close GL-005.
+
 
 

@@ -1,0 +1,127 @@
+{
+  "schema": "raios.c5-tools-ladder.v1",
+  "from": "C5",
+  "parent": "C1",
+  "knowledge_state": "DISCOVERED",
+  "canonical": false,
+  "gl005_proven": false,
+  "wal_written": false,
+  "law": [
+    "INJECT_BEFORE_EXECUTE",
+    "NO_SOUND_EXECUTE_WITHOUT_LIVE_MEMORY",
+    "PROMOTE_THEN_RETIRE_TRAINER",
+    "MINUTE_EXAM_NE_SECOND_WAL",
+    "GENIUS_IS_COMPRESSION_NE_DISK_FILL"
+  ],
+  "inject_before_execute": true,
+  "learn_from_system": [
+    {
+      "id": "get_head",
+      "kind": "mcp",
+      "status": "LEARNING"
+    },
+    {
+      "id": "read_board",
+      "kind": "mcp",
+      "status": "LEARNING"
+    },
+    {
+      "id": "read_inbox",
+      "kind": "mcp",
+      "status": "LEARNING"
+    },
+    {
+      "id": "read_receipt",
+      "kind": "mcp",
+      "status": "LEARNING"
+    },
+    {
+      "id": "get_diff",
+      "kind": "mcp",
+      "status": "LEARNING"
+    },
+    {
+      "id": "post_opinion",
+      "kind": "mcp",
+      "status": "LEARNING"
+    },
+    {
+      "id": "send_packet",
+      "kind": "mcp",
+      "status": "LEARNING"
+    },
+    {
+      "id": "ack_packet",
+      "kind": "mcp",
+      "status": "LEARNING"
+    },
+    {
+      "id": "hunt",
+      "kind": "internal",
+      "path": "scripts/ai-os/raios_c5_hunt.py",
+      "status": "LEARNING"
+    },
+    {
+      "id": "absorb",
+      "kind": "internal",
+      "path": "scripts/ai-os/raios_absorb.py",
+      "status": "LEARNING"
+    },
+    {
+      "id": "ingest",
+      "kind": "internal",
+      "path": "scripts/ai-os/raios_learn_ingest.py",
+      "status": "LEARNING"
+    },
+    {
+      "id": "week",
+      "kind": "internal",
+      "path": "scripts/ai-os/raios_c5_week.py",
+      "status": "LEARNING"
+    },
+    {
+      "id": "practice-teach",
+      "kind": "internal",
+      "path": "scripts/ai-os/raios_c5_council.py",
+      "status": "LEARNING"
+    },
+    {
+      "id": "minute-exam",
+      "kind": "internal",
+      "path": "scripts/ai-os/raios_c5_minute.py",
+      "status": "LEARNING"
+    }
+  ],
+  "never": [
+    "shell",
+    "set_proven",
+    "promote",
+    "run_build",
+    "write_product"
+  ],
+  "retired_trainers": [
+    {
+      "id": "PASTE-CASE-001",
+      "reason": "CASE-001 method bound; trainer prompt no longer live",
+      "keep_file": true,
+      "invoke": false
+    }
+  ],
+  "measure": [
+    "practice_ratio>=0.85",
+    "knowledge_state",
+    "wal_mtime_unchanged",
+    "gl005_proven=false",
+    "contradiction_count",
+    "CLAIM_NE_EVIDENCE_NE_OBSERVATION",
+    "week_slot_ok_or_blocked",
+    "minute_exam",
+    "retired_trainer_not_invoked"
+  ],
+  "space": {
+    "workspace_gb": 1.4,
+    "disk_free_gb": 229,
+    "install_hf_weights": false,
+    "enough": true
+  }
+}

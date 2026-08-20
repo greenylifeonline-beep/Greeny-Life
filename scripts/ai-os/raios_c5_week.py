@@ -165,12 +165,26 @@ SLOTS = {
     7: ("WEEK_DIGEST", slot_digest),
 }
 
+LADDER = ROOT / ".ai-os" / "learning" / "TOOLS-LADDER.json"
+
+
+def inject_before_execute() -> list[dict]:
+    ladder = load_json(LADDER)
+    core = ROOT / ".ai-os" / "CORE-CONTRACT.md"
+    grant = ROOT / ".ai-os" / "mcp" / "C5-GRANT.json"
+    return [
+        check("inject_before_execute", bool(ladder.get("inject_before_execute")), "no execute without live memory"),
+        check("core_injected", core.exists(), str(core)),
+        check("grant_injected", grant.exists(), str(grant)),
+        check("ladder_injected", bool(ladder.get("learn_from_system")), "TOOLS-LADDER"),
+    ]
+
 
 def run_slot(day: int) -> dict:
     wal_before = wal_mtime()
     host = gym_host()
     name, fn = SLOTS[day]
-    checks = fn(host)
+    checks = inject_before_execute() + fn(host)
     ok = all(c["ok"] for c in checks if c["name"] not in {"hf_login", "ran_on_gym"})
     rec = {
         "schema": "raios.c5-week.v1",
@@ -195,6 +209,8 @@ def run_slot(day: int) -> dict:
             "KAGGLE_NE_C5",
             "COMPUTE_OFF_NE_MEMORY_ERASED",
             "SCHEDULED_PULSE_NE_SECOND_WAL",
+            "INJECT_BEFORE_EXECUTE",
+            "PROMOTE_THEN_RETIRE_TRAINER",
         ],
     }
     if wal_mtime() != wal_before:
