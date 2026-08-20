@@ -1,0 +1,42 @@
+{
+  "schema": "raios.council-case.v1",
+  "id": "CASE-006",
+  "meeting_id": "GL-COUNCIL-4a11023c3c321b6f",
+  "from": "C1",
+  "ts": "2026-08-20T22:11:00+00:00",
+  "text": "Colab cell too simple / still white so it must grind. Design a complete AI mind for three import-export companies using free OSS: Celerp + AG2 + LightRAG + pygrametl.",
+  "status": "MILL_WIRED_DISCOVERED",
+  "knowledge_state": "DISCOVERED",
+  "canonical": false,
+  "gl005_proven": false,
+  "wal_written": false,
+  "paste_is_learning": false,
+  "install": {
+    "celerp": false,
+    "ag2": false,
+    "lightrag": false,
+    "pygrametl": false,
+    "beeai": false,
+    "langswarm": false
+  },
+  "reuse": {
+    "erp": "prisma/schema.prisma + app/api",
+    "agents": ".ai-os/mcp eight V1 tools + council seats",
+    "knowledge": ".ai-os/learning DIGESTS/INDEX + RAIOS/V9 WAL + greenlines_brain/graph.py",
+    "etl": "scripts/ai-os/raios_absorb.py + raios_learn_ingest.py",
+    "companies": [
+      "GREENY_LIFE_EGYPT",
+      "GREENS_NATURE_UAE",
+      "GREEN_LINES_NORWAY_EU"
+    ]
+  },
+  "mill": "scripts/ai-os/raios_c5_grind.py",
+  "map": ".ai-os/council/MAP-CASE-006.md",
+  "says": {
+    "C1": "simple notebook; still white; must grind complete three-company AI",
+    "C2": "MILL_WIRED reuse keepers reject new stack",
+    "C3": "PENDING_PASTE",
+    "C4": "PENDING_PASTE",
+    "C5": "mill observes Egypt present; UAE/Norway Next routes GAP"
+  }
+}

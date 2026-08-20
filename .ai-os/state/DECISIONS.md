@@ -190,5 +190,9 @@ Week program: `python3 scripts/ai-os/raios_c5_week.py --auto`. GitHub Actions `.
 DISCOVERED for CASE-005, not CANONICAL: `INJECT_BEFORE_EXECUTE`. `NO_SOUND_EXECUTE_WITHOUT_LIVE_MEMORY`. `PROMOTE_THEN_RETIRE_TRAINER`. `MINUTE_EXAM_NE_SECOND_WAL`. `GENIUS_IS_COMPRESSION_NE_DISK_FILL`.
 Founder join form to copy: `gym/huggingface/JOIN-FORM.md`. Ladder: `.ai-os/learning/TOOLS-LADDER.json`. Minute exam: `scripts/ai-os/raios_c5_minute.py`. Do not delete retired trainer files on stale observation; stop invoking them. Does not close GL-005.
 
+## D-039 Three-company mill reuses keepers; proposal paste is not install
+DISCOVERED for CASE-006, not CANONICAL: `CELERP_NE_LIVE_ERP`. `AG2_NE_RAIOS_COUNCIL`. `LIGHTRAG_NE_COGNITIVE_WAL`. `PYGRAMETL_NE_ABSORB`. `PROPOSAL_PASTE_NE_INSTALL`. `THREE_COMPANIES_ALREADY_NAMED`. `WHITE_NOTEBOOK_NE_ABSENT_MIND`. `REUSE_KEEPER_BEFORE_NEW_STACK`.
+Founder asked for a complete AI for three import/export companies and judged the Colab cell too thin. The mill is `scripts/ai-os/raios_c5_grind.py`. Live ERP is Prisma + Next APIs. Live agents are eight MCP tools and council seats. Live knowledge is DIGESTS/INDEX/WAL plus `greenlines_brain/graph.py`. Do not install Celerp, AG2, LightRAG, BeeAI, LangSwarm, or pygrametl as a second stack. Egypt brain has a live Next route. UAE and Norway Next routes remain GL-003 gaps. A white Colab page before Run all is not an absent mind. Does not close GL-005.
+
 
 

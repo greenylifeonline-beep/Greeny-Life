@@ -46,4 +46,6 @@
 رابط واحد من الفرع `v9-neurolingua-semantic-kernel`:
 https://colab.research.google.com/github/greenylifeonline-beep/Greeny-Life/blob/v9-neurolingua-semantic-kernel/gym/colab_kaggle_c5.ipynb
 
+بعد Run all يطحن الحراس الأحياء ويطبع `c5-grind/LAST.md`. ليس Celerp/AG2/LightRAG.
+
 `GL005_PROVEN=false`

@@ -3,11 +3,31 @@
   "meeting_id": "GL-COUNCIL-4a11023c3c321b6f",
   "day": 6,
   "slot": "COLAB_KAGGLE_GYM",
-  "ts": "2026-08-20T20:58:16.057496+00:00",
+  "ts": "2026-08-20T22:16:31.626201+00:00",
   "from": "C5",
   "parent": "C1",
   "host": "local-or-cursor",
   "checks": [
+    {
+      "name": "inject_before_execute",
+      "ok": true,
+      "detail": "no execute without live memory"
+    },
+    {
+      "name": "core_injected",
+      "ok": true,
+      "detail": "/workspace/.ai-os/CORE-CONTRACT.md"
+    },
+    {
+      "name": "grant_injected",
+      "ok": true,
+      "detail": "/workspace/.ai-os/mcp/C5-GRANT.json"
+    },
+    {
+      "name": "ladder_injected",
+      "ok": true,
+      "detail": "TOOLS-LADDER"
+    },
     {
       "name": "notebook_present",
       "ok": true,
@@ -27,6 +47,21 @@
       "name": "ran_on_gym",
       "ok": false,
       "detail": "BLOCKED_GYM_NOT_THIS_HOST"
+    },
+    {
+      "name": "mill_ok",
+      "ok": true,
+      "detail": "files=550 bytes=19542411"
+    },
+    {
+      "name": "mill_three_companies",
+      "ok": true,
+      "detail": "3"
+    },
+    {
+      "name": "no_new_stack",
+      "ok": true,
+      "detail": "Celerp/AG2/LightRAG not installed"
     }
   ],
   "ok": true,
@@ -41,7 +76,9 @@
     "COLAB_NE_C5",
     "KAGGLE_NE_C5",
     "COMPUTE_OFF_NE_MEMORY_ERASED",
-    "SCHEDULED_PULSE_NE_SECOND_WAL"
+    "SCHEDULED_PULSE_NE_SECOND_WAL",
+    "INJECT_BEFORE_EXECUTE",
+    "PROMOTE_THEN_RETIRE_TRAINER"
   ],
   "wal_mtime_unchanged": true
 }

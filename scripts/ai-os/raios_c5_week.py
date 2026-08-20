@@ -137,11 +137,25 @@ def slot_hf_catalog(host: str) -> list[dict]:
 def slot_gym(host: str) -> list[dict]:
     nb = ROOT / "gym" / "colab_kaggle_c5.ipynb"
     on_gym = host in {"colab", "kaggle", "huggingface-spaces"}
+    grind_mod = None
+    mill: dict = {}
+    try:
+        import importlib.util
+
+        spec = importlib.util.spec_from_file_location("raios_c5_grind", ROOT / "scripts" / "ai-os" / "raios_c5_grind.py")
+        grind_mod = importlib.util.module_from_spec(spec)
+        spec.loader.exec_module(grind_mod)
+        mill = grind_mod.grind(host)
+    except Exception as exc:  # noqa: BLE001 — mill fail-closed
+        mill = {"ok": False, "error": type(exc).__name__}
     return [
         check("notebook_present", nb.exists(), str(nb)),
         check("gym_host", True, host),
         check("gym_ne_c5", True, "Colab/Kaggle/Spaces are muscle, not identity"),
         check("ran_on_gym", on_gym, "BLOCKED_GYM_NOT_THIS_HOST" if not on_gym else "this host is a gym"),
+        check("mill_ok", bool(mill.get("ok")), f"files={mill.get('files_scanned')} bytes={mill.get('bytes_scanned')}"),
+        check("mill_three_companies", bool(mill.get("brains")) and len(mill.get("brains") or []) == 3, str(len(mill.get("brains") or []))),
+        check("no_new_stack", mill.get("install_celerp") is False and mill.get("install_ag2") is False, "Celerp/AG2/LightRAG not installed"),
     ]
 
 
@@ -226,6 +240,7 @@ def run_slot(day: int) -> dict:
         f"- نجح: `{ok}`\n"
         f"- Hugging Face ليس C5\n"
         f"- اللصق قناة. التعلّم تكرار وممارسة واستيعاب.\n"
+        f"- الطاحونة: `.ai-os/receipts/c5-grind/LAST.md`\n"
         f"- GL005_PROVEN: `false`\n",
         encoding="utf-8",
     )
