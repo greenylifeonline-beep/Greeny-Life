@@ -1,0 +1,50 @@
+﻿schema_version: 1
+
+profiles:
+
+  ar-EG:
+    family: ar
+    dialect: egyptian
+    parent: ar
+
+  ar-GULF:
+    family: ar
+    dialect: gulf-neutral
+    parent: ar
+    country_identity: false
+    children:
+      ar-SA: {implemented: false}
+      ar-AE: {implemented: false}
+      ar-KW: {implemented: false}
+      ar-QA: {implemented: false}
+      ar-BH: {implemented: false}
+      ar-OM: {implemented: false}
+
+  en:
+    family: en
+    dialect: international
+
+  nb-NO:
+    family: no
+    dialect: bokmal
+    scandinavian_layer: shared
+
+  sv-SE:
+    family: sv
+    dialect: standard
+    scandinavian_layer: shared
+
+  da-DK:
+    family: da
+    dialect: standard
+    scandinavian_layer: shared
+
+code_switching:
+  enabled: true
+  preserve_technical_terms: true
+  expected_pairs:
+    - [ar-EG, en]
+    - [ar-GULF, en]
+    - [nb-NO, en]
+    - [sv-SE, en]
+    - [da-DK, en]

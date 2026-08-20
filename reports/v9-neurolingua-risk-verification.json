@@ -1,0 +1,14 @@
+{
+  "schema": "raios.v9.neurolingua.risk-verification.v1",
+  "reused_risk_levels": [
+    "LOW",
+    "MEDIUM",
+    "HIGH",
+    "CRITICAL"
+  ],
+  "backtranslation_default": false,
+  "tests": [
+    "tests/neuro_lingua/test_risk.py",
+    "roundtrip kernel test"
+  ]
+}

@@ -1,0 +1,125 @@
+{
+  "schema": "raios.deep-cognitive-map.v1",
+  "generated_at": "2026-08-20T06:54:49.317314+00:00",
+  "head": "d3f5ca69b858843dcf626f74fa13cf83d3e2e20c",
+  "note": "Status is filesystem-verified this session except where marked inherited.",
+  "components": [
+    {
+      "component": "Cognitive WAL",
+      "path": "RAIOS/V9/runtime/cognitive_event_bus.py",
+      "status": "WORKING",
+      "responsibility": "fsync jsonl + replay",
+      "tests": [
+        "tests/neuro_lingua/test_wal.py"
+      ],
+      "confidence": 0.9,
+      "reuse_recommendation": "PRIMARY",
+      "risk": "A15 lock; growing jsonl",
+      "conflicts": [],
+      "evidence": [],
+      "dependencies": [],
+      "consumers": []
+    },
+    {
+      "component": "Knowledge state machine",
+      "path": "multiple DISCOVERED/VALIDATED/CANONICAL",
+      "status": "PARTIAL",
+      "responsibility": "Promotion states not one module",
+      "confidence": 0.6,
+      "reuse_recommendation": "ALIGN",
+      "risk": "split-brain promotion",
+      "conflicts": [],
+      "evidence": [],
+      "dependencies": [],
+      "consumers": [],
+      "tests": []
+    },
+    {
+      "component": "Qwen Main Cortex",
+      "path": "_raios-a17-native-cortex/cortex/runtime/MAIN-CORTEX-BINDING.json",
+      "status": "BROKEN",
+      "responsibility": "Replaceable reasoning cortex",
+      "evidence": [
+        "QWEN36-FORENSIC-CERTIFICATION operational_integrity NOT_PROVEN",
+        "MEMORY_CAPACITY_FAILURE"
+      ],
+      "confidence": 0.85,
+      "reuse_recommendation": "KEEP_IDENTITY_DO_NOT_REPLACE_WITH_TINY_MODEL",
+      "risk": "8GB RAM vs 22GB weights",
+      "conflicts": [],
+      "dependencies": [],
+      "consumers": [],
+      "tests": []
+    },
+    {
+      "component": "Teacher models",
+      "path": "RAIOS-COGNITIVE-BOOT.json teacher_corps",
+      "status": "PARTIAL",
+      "responsibility": "granite4:3b/deepseek/qwen25_coder",
+      "evidence": [
+        "control_model granite4:3b prior PASS, not re-run this session"
+      ],
+      "confidence": 0.4,
+      "reuse_recommendation": "PREEMPT_WHEN_CORTEX_NEEDED",
+      "risk": "teacher competition",
+      "conflicts": [],
+      "dependencies": [],
+      "consumers": [],
+      "tests": []
+    },
+    {
+      "component": "Permission broker",
+      "path": "_raios-cognitive-governance/src/cognitive_governance.py",
+      "status": "PARTIAL",
+      "responsibility": "L0-L5 permission levels",
+      "confidence": 0.55,
+      "reuse_recommendation": "REUSE for NL mutations",
+      "risk": "not wired into NL kernel",
+      "conflicts": [],
+      "evidence": [],
+      "dependencies": [],
+      "consumers": [],
+      "tests": []
+    },
+    {
+      "component": "Experience store",
+      "path": "RAIOS/V9/experience/automatic-a4",
+      "status": "WORKING",
+      "responsibility": "Materialized experience JSON",
+      "confidence": 0.8,
+      "reuse_recommendation": "PRIMARY",
+      "conflicts": [],
+      "evidence": [],
+      "dependencies": [],
+      "consumers": [],
+      "tests": []
+    },
+    {
+      "component": "Skill compiler",
+      "path": "RAIOS/V9/runtime/evolution_brain.py",
+      "status": "PARTIAL",
+      "responsibility": "Skill candidate mining",
+      "confidence": 0.55,
+      "reuse_recommendation": "FEED gaps to evolution brain",
+      "conflicts": [],
+      "evidence": [],
+      "dependencies": [],
+      "consumers": [],
+      "tests": []
+    },
+    {
+      "component": "Idle/speculative cognition",
+      "path": "unknown dedicated runtime",
+      "status": "UNKNOWN",
+      "responsibility": "Advertised in architecture docs",
+      "confidence": null,
+      "reuse_recommendation": "DO_NOT_FAKE",
+      "risk": "scaffolding",
+      "conflicts": [],
+      "evidence": [],
+      "dependencies": [],
+      "consumers": [],
+      "tests": []
+    }
+  ]
+}

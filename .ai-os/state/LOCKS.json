@@ -1,66 +1,122 @@
 {
-    "schema_version":  "1.0",
-    "locks":  [
-                  {
-                      "id":  "LOCK-20260815154753",
-                      "task_id":  "GL-001",
-                      "agent":  "gemini-cli",
-                      "scope":  "migration",
-                      "status":  "RELEASED"
-                  },
-                  {
-                      "id":  "LOCK-20260815173207",
-                      "task_id":  "GL-002",
-                      "agent":  "codex",
-                      "scope":  "governance",
-                      "status":  "RELEASED"
-                  },
-                  {
-                      "id":  "LOCK-20260815173219",
-                      "task_id":  "GL-002",
-                      "agent":  "codex",
-                      "scope":  "intelligence/main",
-                      "status":  "RELEASED"
-                  },
-                  {
-                      "id":  "LOCK-20260815173943",
-                      "task_id":  "GL-002",
-                      "agent":  "claude-code",
-                      "scope":  "governance",
-                      "status":  "SUPERSEDED_BY_WORKTREE",
-                      "superseded_at":  "2026-08-15T22:12:05.4910437+02:00"
-                  },
-                  {
-                      "id":  "LOCK-20260815173955",
-                      "task_id":  "GL-002",
-                      "agent":  "claude-code",
-                      "scope":  "intelligence/main",
-                      "status":  "SUPERSEDED_BY_WORKTREE",
-                      "superseded_at":  "2026-08-15T22:12:05.5111171+02:00"
-                  },
-                  {
-                      "id":  "LOCK-20260815192837",
-                      "task_id":  "GL-004",
-                      "agent":  "cursor",
-                      "scope":  "app",
-                      "status":  "SUPERSEDED_BY_WORKTREE",
-                      "superseded_at":  "2026-08-15T22:12:05.5131253+02:00"
-                  },
-                  {
-                      "id":  "LOCK-20260815192838",
-                      "task_id":  "GL-004",
-                      "agent":  "cursor",
-                      "scope":  "prisma",
-                      "status":  "SUPERSEDED_BY_WORKTREE",
-                      "superseded_at":  "2026-08-15T22:12:05.5131253+02:00"
-                  },
-                  {
-                      "id":  "LOCK-20260815192840",
-                      "task_id":  "GL-004",
-                      "agent":  "cursor",
-                      "scope":  "tests",
-                      "status":  "SUPERSEDED_BY_WORKTREE",
-                      "superseded_at":  "2026-08-15T22:12:05.5131253+02:00"
-                  }
-              ]
+  "schema_version": "1.0",
+  "locks": [
+    {
+      "id": "LOCK-20260815154753",
+      "task_id": "GL-001",
+      "agent": "gemini-cli",
+      "scope": "migration",
+      "status": "RELEASED"
+    },
+    {
+      "id": "LOCK-20260815173207",
+      "task_id": "GL-002",
+      "agent": "codex",
+      "scope": "governance",
+      "status": "RELEASED"
+    },
+    {
+      "id": "LOCK-20260815173219",
+      "task_id": "GL-002",
+      "agent": "codex",
+      "scope": "intelligence/main",
+      "status": "RELEASED"
+    },
+    {
+      "id": "LOCK-20260815173943",
+      "task_id": "GL-002",
+      "agent": "claude-code",
+      "scope": "governance",
+      "status": "SUPERSEDED_BY_WORKTREE",
+      "superseded_at": "2026-08-15T22:12:05.4910437+02:00"
+    },
+    {
+      "id": "LOCK-20260815173955",
+      "task_id": "GL-002",
+      "agent": "claude-code",
+      "scope": "intelligence/main",
+      "status": "SUPERSEDED_BY_WORKTREE",
+      "superseded_at": "2026-08-15T22:12:05.5111171+02:00"
+    },
+    {
+      "id": "LOCK-20260815192837",
+      "task_id": "GL-004",
+      "agent": "cursor",
+      "scope": "app",
+      "status": "SUPERSEDED_BY_WORKTREE",
+      "superseded_at": "2026-08-15T22:12:05.5131253+02:00"
+    },
+    {
+      "id": "LOCK-20260815192838",
+      "task_id": "GL-004",
+      "agent": "cursor",
+      "scope": "prisma",
+      "status": "SUPERSEDED_BY_WORKTREE",
+      "superseded_at": "2026-08-15T22:12:05.5131253+02:00"
+    },
+    {
+      "id": "LOCK-20260815192840",
+      "task_id": "GL-004",
+      "agent": "cursor",
+      "scope": "tests",
+      "status": "SUPERSEDED_BY_WORKTREE",
+      "superseded_at": "2026-08-15T22:12:05.5131253+02:00"
+    },
+    {
+      "id": "LOCK-20260818121953",
+      "task_id": "V9-A14.1",
+      "agent": "cursor",
+      "scope": "RAIOS/V9",
+      "status": "RELEASED"
+    },
+    {
+      "id": "LOCK-20260818130148",
+      "task_id": "V9-A15",
+      "agent": "cursor",
+      "scope": "RAIOS/V9",
+      "status": "ACTIVE"
+    },
+    {
+      "id": "LOCK-20260820062957",
+      "task_id": "V9-NL0",
+      "agent": "cursor",
+      "scope": "src/raios/neuro_lingua",
+      "status": "ACTIVE"
+    },
+    {
+      "id": "LOCK-20260820062957",
+      "task_id": "V9-NL0",
+      "agent": "cursor",
+      "scope": "configs/neuro_lingua",
+      "status": "ACTIVE"
+    },
+    {
+      "id": "LOCK-20260820062957",
+      "task_id": "V9-NL0",
+      "agent": "cursor",
+      "scope": "tests/neuro_lingua",
+      "status": "ACTIVE"
+    },
+    {
+      "id": "LOCK-20260820062957",
+      "task_id": "V9-NL0",
+      "agent": "cursor",
+      "scope": "benchmarks/neuro_lingua",
+      "status": "ACTIVE"
+    },
+    {
+      "id": "LOCK-20260820062958",
+      "task_id": "V9-NL0",
+      "agent": "cursor",
+      "scope": "reports",
+      "status": "ACTIVE"
+    },
+    {
+      "id": "LOCK-20260820062958",
+      "task_id": "V9-NL0",
+      "agent": "cursor",
+      "scope": "docs/v9",
+      "status": "ACTIVE"
+    }
+  ]
 }

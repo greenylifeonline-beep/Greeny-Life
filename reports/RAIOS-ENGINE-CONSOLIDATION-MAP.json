@@ -1,0 +1,90 @@
+{
+  "schema": "raios.engine-consolidation-map.v1",
+  "generated_at": "2026-08-20T06:54:49.317314+00:00",
+  "prior_audit": {
+    "path": "_raios-engine-deep-audit/reports/ENGINE-AUDIT-FINAL-REPORT.json",
+    "claimed_status": "PASS",
+    "independent_judgment": "NOT_TRUSTED_AS_PASS",
+    "reason": "exact_duplicates include site-packages venv files; 1872 engines is inventory inflation"
+  },
+  "engines": [
+    {
+      "name": "cognitive_event_bus",
+      "path": "RAIOS/V9/runtime/cognitive_event_bus.py",
+      "decision": "PRIMARY",
+      "reason": "Certified A4 WAL/replay used by evolution brain and now NL",
+      "unique_capabilities": [
+        "fsync append",
+        "event_hash",
+        "idempotent event_id",
+        "replay"
+      ],
+      "missing_capabilities": [
+        "compaction",
+        "linguistic event taxonomy"
+      ],
+      "merge_target": null,
+      "repair_required": false,
+      "archive_candidate": false,
+      "delete_allowed": false,
+      "evidence": [
+        "append_to_wal",
+        "replay_wal"
+      ]
+    },
+    {
+      "name": "communication_fabric_sqlite_wal",
+      "path": "_raios-communication-fabric/src/raios_communication_fabric.py",
+      "decision": "PRIMARY",
+      "reason": "Different job: envelopes/permissions, not cognitive meaning",
+      "unique_capabilities": [
+        "Envelope",
+        "CapabilityRegistry",
+        "sqlite WAL"
+      ],
+      "missing_capabilities": [
+        "CognitiveMeaningPacket"
+      ],
+      "merge_target": null,
+      "repair_required": false,
+      "archive_candidate": false,
+      "delete_allowed": false,
+      "evidence": [
+        "class Envelope",
+        "COMMUNICATION-DOCTOR.json"
+      ]
+    },
+    {
+      "name": "neuro_lingua_stub_wal",
+      "path": "src/raios/neuro_lingua/wal.py",
+      "decision": "MERGE_CANDIDATE",
+      "reason": "Was a second WAL protocol; now adapter over cognitive_event_bus",
+      "unique_capabilities": [
+        "KnowledgeState.DISCOVERED enforcement"
+      ],
+      "missing_capabilities": [],
+      "merge_target": "RAIOS/V9/runtime/cognitive_event_bus.py",
+      "repair_required": false,
+      "archive_candidate": false,
+      "delete_allowed": false,
+      "evidence": [
+        "ExistingCognitiveWALWriter"
+      ]
+    },
+    {
+      "name": "engine_audit_venv_noise",
+      "path": "_raios-communication-fabric/.venv-multimodal",
+      "decision": "REFERENCE",
+      "reason": "Third-party packages must be excluded from engine inventory",
+      "unique_capabilities": [],
+      "missing_capabilities": [],
+      "merge_target": null,
+      "repair_required": true,
+      "archive_candidate": false,
+      "delete_allowed": false,
+      "evidence": [
+        "DUPLICATE-ENGINE-MAP.json site-packages groups"
+      ]
+    }
+  ]
+}
