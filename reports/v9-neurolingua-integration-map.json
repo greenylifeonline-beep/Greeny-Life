@@ -1,0 +1,298 @@
+{
+  "schema": "raios.v9.neurolingua.integration-map.v1",
+  "generated_at": "2026-08-20T06:54:49.317314+00:00",
+  "head": "d3f5ca69b858843dcf626f74fa13cf83d3e2e20c",
+  "components": [
+    {
+      "component": "cognitive_wal",
+      "existing_component": "Cognitive WAL",
+      "path": "RAIOS/V9/runtime/cognitive_event_bus.py",
+      "responsibility": "Append-only fsync JSONL WAL with replay",
+      "status": "ACTIVE",
+      "reuse": true,
+      "integration_method": "WRAP emit/build_event LEARNING",
+      "duplication_risk": "HIGH if second jsonl created",
+      "conflict": "A15 lock on RAIOS/V9 source; runtime append allowed",
+      "evidence": [
+        "WAL_FILE",
+        "tests/neuro_lingua/test_wal.py"
+      ],
+      "conflicts": [],
+      "dependencies": [],
+      "consumers": [],
+      "tests": []
+    },
+    {
+      "component": "knowledge_lifecycle",
+      "existing_component": "DISCOVERED/VALIDATED/CANONICAL",
+      "path": "src/raios/neuro_lingua/schema.py",
+      "responsibility": "Knowledge states; no direct canonical promotion",
+      "status": "PARTIAL",
+      "reuse": true,
+      "integration_method": "ALIGN with assimilation runtime",
+      "duplication_risk": "MEDIUM duplicate enums",
+      "conflict": "None blocking",
+      "evidence": [
+        "KnowledgeState",
+        "wal.append_learning refuses CANONICAL"
+      ],
+      "conflicts": [],
+      "dependencies": [],
+      "consumers": [],
+      "tests": []
+    },
+    {
+      "component": "provider_routing",
+      "existing_component": "MODEL-REGISTRY + Main Cortex binding + model_escalation",
+      "path": ".ai-os/MODEL-REGISTRY.json",
+      "responsibility": "Capability routing, replaceable cortex",
+      "status": "PARTIAL",
+      "reuse": true,
+      "integration_method": "EXTEND ProviderRouter",
+      "duplication_risk": "HIGH multiple registries",
+      "conflict": "Hardcoded qwen in cognitive runtime",
+      "evidence": [
+        "MAIN-CORTEX-BINDING.json replaceable"
+      ],
+      "conflicts": [],
+      "dependencies": [],
+      "consumers": [],
+      "tests": []
+    },
+    {
+      "component": "event_bus",
+      "existing_component": "cognitive_event_bus",
+      "path": "RAIOS/V9/runtime/cognitive_event_bus.py",
+      "responsibility": "Canonical event types",
+      "status": "ACTIVE",
+      "reuse": true,
+      "integration_method": "REUSE LEARNING type",
+      "duplication_risk": "CRITICAL vs communication fabric sqlite WAL",
+      "conflict": "Two WAL-like stores exist for different jobs",
+      "evidence": [
+        "EVENT_TYPES"
+      ],
+      "conflicts": [],
+      "dependencies": [],
+      "consumers": [],
+      "tests": []
+    },
+    {
+      "component": "semantic_state",
+      "existing_component": "semantic_engine",
+      "path": "RAIOS/V9/cognition/semantic/semantic_engine.py",
+      "responsibility": "Artifact claims, not human NLU",
+      "status": "ACTIVE",
+      "reuse": true,
+      "integration_method": "Keep as document semantics; NL is language boundary",
+      "duplication_risk": "MEDIUM",
+      "conflict": "None",
+      "evidence": [
+        "EvidenceRef",
+        "clamp_confidence"
+      ],
+      "conflicts": [],
+      "dependencies": [],
+      "consumers": [],
+      "tests": []
+    },
+    {
+      "component": "retrieval_rag",
+      "existing_component": "unified_intelligence_fast",
+      "path": "_raios-unified-review/unified_intelligence_fast.py",
+      "responsibility": "Fast file intelligence",
+      "status": "PARTIAL",
+      "reuse": true,
+      "integration_method": "REUSE later for terminology retrieval",
+      "duplication_risk": "MEDIUM missing advertised parallel package",
+      "conflict": "_raios-file-intelligence-parallel missing",
+      "evidence": [
+        "Glob zero files"
+      ],
+      "conflicts": [],
+      "dependencies": [],
+      "consumers": [],
+      "tests": []
+    },
+    {
+      "component": "model_adapters",
+      "existing_component": "ollama clients",
+      "path": "_raios-communication-fabric/src/raios_ollama_client.py",
+      "responsibility": "HTTP to local models",
+      "status": "PARTIAL",
+      "reuse": true,
+      "integration_method": "WRAP behind capabilities",
+      "duplication_risk": "HIGH name coupling",
+      "conflict": "qwen3.6:35b-a3b hardcoded",
+      "evidence": [
+        "raios_chat.py"
+      ],
+      "conflicts": [],
+      "dependencies": [],
+      "consumers": [],
+      "tests": []
+    },
+    {
+      "component": "test_architecture",
+      "existing_component": "pytest + V9 certifiers",
+      "path": "tests/neuro_lingua",
+      "responsibility": "NL tests plus existing business tests",
+      "status": "ACTIVE",
+      "reuse": true,
+      "integration_method": "ADD pytest suite",
+      "duplication_risk": "LOW",
+      "conflict": "None",
+      "evidence": [
+        "17 passed"
+      ],
+      "conflicts": [],
+      "dependencies": [],
+      "consumers": [],
+      "tests": []
+    },
+    {
+      "component": "configuration_loader",
+      "existing_component": "neuro_lingua yaml",
+      "path": "configs/neuro_lingua",
+      "responsibility": "Locales and concepts",
+      "status": "ACTIVE",
+      "reuse": true,
+      "integration_method": "EXTEND yaml + loader diagnostics",
+      "duplication_risk": "LOW",
+      "conflict": "None",
+      "evidence": [
+        "concepts.py"
+      ],
+      "conflicts": [],
+      "dependencies": [],
+      "consumers": [],
+      "tests": []
+    },
+    {
+      "component": "logging_observability",
+      "existing_component": "event materializers",
+      "path": "RAIOS/V9/runtime/cognitive_event_bus.py",
+      "responsibility": "Performance/experience JSON",
+      "status": "PARTIAL",
+      "reuse": true,
+      "integration_method": "StageTrace on packets",
+      "duplication_risk": "MEDIUM no unified logger",
+      "conflict": "None",
+      "evidence": [
+        "StageTrace"
+      ],
+      "conflicts": [],
+      "dependencies": [],
+      "consumers": [],
+      "tests": []
+    },
+    {
+      "component": "continuity",
+      "existing_component": "RAIOS-CURRENT-STATE",
+      "path": "RAIOS/V9/continuity/RAIOS-CURRENT-STATE.json",
+      "responsibility": "Certified phase pointer",
+      "status": "ACTIVE",
+      "reuse": true,
+      "integration_method": "Do not rewrite A15",
+      "duplication_risk": "LOW",
+      "conflict": "LOCKS reference V9-NL0 without TASKS entry",
+      "evidence": [
+        "current_version V9.0-A15"
+      ],
+      "conflicts": [],
+      "dependencies": [],
+      "consumers": [],
+      "tests": []
+    },
+    {
+      "component": "learning_runtime",
+      "existing_component": "learning law + evolution brain",
+      "path": "_raios-learning-law/state/EXECUTION-LEARNING-CONSTITUTION.json",
+      "responsibility": "Teacher/student loop",
+      "status": "PARTIAL",
+      "reuse": true,
+      "integration_method": "REUSE; Qwen student currently unavailable",
+      "duplication_risk": "HIGH many learning folders",
+      "conflict": "MEMORY_CAPACITY_FAILURE",
+      "evidence": [
+        "QWEN-RUNTIME-ROOT-CAUSE.json"
+      ],
+      "conflicts": [],
+      "dependencies": [],
+      "consumers": [],
+      "tests": []
+    },
+    {
+      "component": "resource_governor",
+      "existing_component": "A11 budget + A17 snapshot + new governor",
+      "path": "src/raios/neuro_lingua/governor.py",
+      "responsibility": "Admit Main Cortex by RAM",
+      "status": "PARTIAL",
+      "reuse": true,
+      "integration_method": "CREATE wrapper because named governor missing",
+      "duplication_risk": "LOW if single admission API",
+      "conflict": "Does not yet manage Ollama keep_alive",
+      "evidence": [
+        "CognitiveResourceGovernor"
+      ],
+      "conflicts": [],
+      "dependencies": [],
+      "consumers": [],
+      "tests": []
+    },
+    {
+      "component": "communication_fabric",
+      "existing_component": "Envelope bus",
+      "path": "_raios-communication-fabric/src/raios_communication_fabric.py",
+      "responsibility": "Human/agent messages; sqlite WAL",
+      "status": "ACTIVE",
+      "reuse": true,
+      "integration_method": "Future ingress only; not cognitive WAL",
+      "duplication_risk": "CRITICAL if merged with Cognitive WAL",
+      "conflict": "sqlite_wal vs jsonl WAL",
+      "evidence": [
+        "COMMUNICATION-DOCTOR.json"
+      ],
+      "conflicts": [],
+      "dependencies": [],
+      "consumers": [],
+      "tests": []
+    },
+    {
+      "component": "file_intelligence",
+      "existing_component": "unified intelligence fast",
+      "path": "_raios-unified-review/unified_intelligence_fast.py",
+      "responsibility": "Indexing",
+      "status": "PARTIAL",
+      "reuse": true,
+      "integration_method": "REUSE",
+      "duplication_risk": "MEDIUM",
+      "conflict": "Advertised _raios-file-intelligence-parallel absent",
+      "evidence": [
+        "INTEGRATION-READINESS.json"
+      ],
+      "conflicts": [],
+      "dependencies": [],
+      "consumers": [],
+      "tests": []
+    },
+    {
+      "component": "diagnostic_nervous_system",
+      "existing_component": "doctor reports",
+      "path": "_raios-cognitive-governance/reports/FINAL-DOCTOR.json",
+      "responsibility": "Static doctor artifacts",
+      "status": "PARTIAL",
+      "reuse": true,
+      "integration_method": "REFERENCE",
+      "duplication_risk": "MEDIUM PASS strings stale-risk",
+      "conflict": "None",
+      "evidence": [
+        "FINAL-DOCTOR.json"
+      ],
+      "conflicts": [],
+      "dependencies": [],
+      "consumers": [],
+      "tests": []
+    }
+  ]
+}

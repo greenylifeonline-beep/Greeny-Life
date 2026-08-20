@@ -1,0 +1,20 @@
+{
+  "schema": "raios.v9.neurolingua.learning-summary.v1",
+  "student": "RAIOS_MAIN_CORTEX",
+  "qwen_participation": "UNAVAILABLE_MEMORY_CAPACITY_FAILURE",
+  "deterministic_student_actions": [
+    "WAL adapter located cognitive-events.jsonl without a second WAL",
+    "Resource governor denied cortex when free RAM below threshold and pipeline continued",
+    "ar-EG vs ar-GULF distinguished on held-out seed cases"
+  ],
+  "transfer_test": {
+    "question": "Where must a new semantic subsystem persist linguistic observations?",
+    "student_answer_executed": "RAIOS/V9/runtime/cognitive_event_bus.py append_to_wal / LEARNING events",
+    "forbidden_answer_avoided": "src/raios/neuro_lingua/wal.py as storage",
+    "result": "PASS",
+    "evidence": "tests/neuro_lingua/test_wal.py"
+  },
+  "knowledge_state": "DISCOVERED",
+  "mastery": false,
+  "teacher_dependence": true
+}

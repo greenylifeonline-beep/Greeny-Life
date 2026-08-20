@@ -1,0 +1,58 @@
+{
+  "schema": "raios.old-business.cursor-independent-zero-gap.v1",
+  "generated_at": "2026-08-20T06:54:49.317314+00:00",
+  "authoritative_repo": "C:\\Users\\Ghanam\\Documents\\Codex\\Greeny-Life-Repair",
+  "branch": "v9-neurolingua-semantic-kernel",
+  "head": "d3f5ca69b858843dcf626f74fa13cf83d3e2e20c",
+  "dirty_state_summary": {
+    "short_status_lines": 84,
+    "preserved_shipment_mutation": true,
+    "gitattributes_added": true
+  },
+  "shipment_origin_count": 30,
+  "shipment_origin_semantic_diff": {
+    "json_valid": true,
+    "added_vs_HEAD": 30,
+    "other_field_changes": 0,
+    "origin_value": "Cairo, Egypt",
+    "after_hash": "cae055f195a0c2c18695e5e3453ad079b620cf9a80a1006ff77fc4c9debcf0aa",
+    "current_hash": "cae055f195a0c2c18695e5e3453ad079b620cf9a80a1006ff77fc4c9debcf0aa",
+    "hash_matches_promotion_log": true
+  },
+  "workflow_findUnique_evidence": {
+    "path": "canonical/lib/workflowEngine.ts",
+    "symbol": "tx.salesOrder.findUnique",
+    "present": true,
+    "working_tree_diff_empty": true
+  },
+  "regression_results": {
+    "type_check_exit": 0,
+    "workflow_governance_exit": 0,
+    "workflow_approval_contract_exit": 0,
+    "shipment_tracking_exit": 0,
+    "legacy_brain_exit": 0,
+    "lint_exit": 1,
+    "lint_classification": "TOOLCHAIN_BUG_NEXT16_REMOVED_NEXT_LINT",
+    "lint_salvage_related": false
+  },
+  "anti_false_pass_checks": {
+    "did_not_claim_lint_pass": true,
+    "did_not_trust_retirement_filename": true,
+    "hashes_current": true
+  },
+  "unresolved_business_value": 0,
+  "confidence": {
+    "value": 0.86,
+    "source": "independent_filesystem+fresh_targeted_tests",
+    "unknowns": [
+      "full npm run verify not rerun"
+    ]
+  },
+  "blockers": [
+    "next lint broken on Next 16",
+    "A15 lock ACTIVE",
+    "origin promotion uncommitted"
+  ],
+  "legacy_retirement_recommendation": "READY_FOR_CONTROLLED_RETIREMENT",
+  "legacy_delete_executed": false
+}

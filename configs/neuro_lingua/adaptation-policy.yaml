@@ -1,0 +1,51 @@
+﻿schema_version: 1
+
+principle:
+  model_is_replaceable: true
+  meaning_is_canonical: true
+
+knowledge_routing:
+
+  changing_fact:
+    destination: retrieval
+
+  stable_fact:
+    destination: semantic_memory
+
+  repeated_procedure:
+    destination: compiled_skill
+
+  persistent_behavior_gap:
+    destination: adapter_candidate
+
+training:
+
+  default:
+    enabled: false
+
+  first_candidate:
+    method: QLoRA
+
+  escalation:
+    - LoRA
+    - QLoRA
+
+  experimental_only_after_benchmark:
+    - MoRA
+    - multi_adapter
+    - MoE_LoRA
+    - targeted_continual_pretraining
+
+  require_before_training:
+    - measurable_gap
+    - representative_benchmark
+    - provenance_check
+    - license_check
+    - regression_suite
+    - expected_learning_roi
+
+  never_train_for:
+    - rapidly_changing_facts
+    - secrets
+    - credentials
+    - transient_session_state
