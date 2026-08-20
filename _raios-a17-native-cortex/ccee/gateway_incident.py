@@ -107,7 +107,11 @@ def classify_gw_hit(line: str) -> str:
         "config.py",
         "root_cause.py",
         "test_false_pass.py",
+        "live_bridge.py",
+        "test_live_bridge.py",
     }:
+        return "detector_or_harness"
+    if "/_raios-assimilation-runtime/" in lowered or "/_raios-learning-observatory/" in lowered:
         return "detector_or_harness"
     if "/reports/" in lowered or path.endswith(".md"):
         return "detector_or_harness"

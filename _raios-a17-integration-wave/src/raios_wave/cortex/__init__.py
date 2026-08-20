@@ -110,8 +110,10 @@ class StubCortex:
 
 
 class LocalOllamaCortex(StubCortex):
-    kind: CortexProviderKind = CortexProviderKind.LOCAL_OLLAMA
-    model_name: str = CORTEX_MASTER_CANDIDATE
+    """Declared local-Ollama SPI. Does not HTTP-probe; CCEE OllamaRuntimeManager does."""
+
+    def __init__(self) -> None:
+        super().__init__(kind=CortexProviderKind.LOCAL_OLLAMA, model_name=CORTEX_MASTER_CANDIDATE)
 
     def discover(self) -> dict[str, Any]:
         data = super().discover()

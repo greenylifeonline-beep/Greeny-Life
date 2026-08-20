@@ -1,0 +1,40 @@
+{
+  "schema": "raios.teacher-packet.v1",
+  "packet_id": "TP-ASIM-LIVE-001",
+  "created_at": "2026-08-19T22:45:00Z",
+  "canonical": false,
+  "teacher": "CURSOR",
+  "capability": "live_assimilation_cortex_execution_fabric",
+  "objective": "Connect the live assimilation session to the real RAIOS main cortex and execution fabric without inventing adapters.",
+  "material": {
+    "law": [
+      "ANTI-FALSE-PASS: no PASS without evidence",
+      "HEALTH_CHECK is not LIVE",
+      "student execution required for mastery",
+      "teacher repair does not count as student mastery"
+    ],
+    "real_interfaces": {
+      "student_contact": "_raios-a17-native-cortex/ccee/training_loop.py LiveCognitiveLoop.ask_raios",
+      "cortex": "_raios-a17-native-cortex/ccee/ollama_runtime.py OllamaRuntimeManager.inventory",
+      "execution_fabric": "_raios-a17-native-cortex/ccee/executor_bridge.py GovernedExecutorBridge.dispatch",
+      "permission": "_raios-a17-native-cortex/ccee/permission_broker.py PermissionBroker",
+      "assimilation_ingest": "_raios-a17-integration-wave/src/raios_wave/assimilation Normalizer",
+      "live_session": "_raios-a17-cursor-parallel/src/raios_parallel/live_learning LiveStudentEngine"
+    },
+    "prior_lesson_ref": "_raios-a17-native-cortex/reports/GL-GW-001-TRAINING.json"
+  },
+  "teach": {
+    "prompt": "You are RAIOS student. Using governed tools only, explain which real modules connect assimilation to cortex and execution fabric. Then execute discovery: rg for LiveCognitiveLoop, GovernedExecutorBridge, OllamaRuntimeManager; probe ollama inventory; dispatch observe-only executor envelope. Do not invent adapters or claim LIVE.",
+    "questions": [
+      "What evidence proves the cortex is reachable?",
+      "What contradicts claiming QWEN_CHAT=PASS?",
+      "Which module is observe-only execution fabric?",
+      "What would falsify a fake adapter?"
+    ],
+    "forbidden": ["invented_gateway", "simulated_response", "PASS_without_evidence", "LIVE_without_chat"]
+  },
+  "transfer_seed": {
+    "train": "discover named modules in repo",
+    "unseen": "stale success artifact while process exit nonzero must not certify"
+  }
+}
