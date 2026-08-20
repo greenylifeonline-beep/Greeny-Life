@@ -29,3 +29,10 @@ A receipt parent exit is 0 only if every required child exit is 0. Missing child
 ## D-008 Supporting test is not orchestration demonstration
 `SUPPORTING_TEST_NE_ORCHESTRATION_DEMONSTRATION`.
 `tests/task_orchestration_check.ts` cannot grant GL-005. CICF candidate: `DESTRUCTIVE_ACTION_REQUIRES_FRESH_HEAD_AND_DEPENDENCY_GRAPH`.
+
+## D-009 Live process may satisfy RUNTIME_TRACE if identity and HTTP are bound
+DISCOVERED operational bind (not RAIOS CANONICAL promotion):
+`LIVE_PROCESS_CAN_SATISFY_RUNTIME_PROOF_IF_IDENTITY_AND_HTTP_EVIDENCE_ARE_BOUND`.
+`BIND_EXISTING_NE_SPAWN`. `DEV_LISTEN_NE_PRODUCTION_BUILD`. `HTTP_200_ON_ROOT_NE_APP_HEALTH`.
+`ISOLATED_BUILD_NE_SECOND_RUNTIME` — `next build` into `.next-gl004-proof` is compile proof, not a second listener.
+A live `next dev` does not grant `GL004_PROVEN` by itself. Parent exit is 0 only if TYPECHECK, BUILD, TEST_CANONICAL, TEST_TASK_ORCHESTRATION, and RUNTIME_TRACE are all 0.
