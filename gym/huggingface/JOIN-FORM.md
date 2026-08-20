@@ -51,6 +51,7 @@ hf auth login
 ## مشاهدة 2026-08-20
 
 على جهاز Repair: `hf auth whoami` → `Logged in` / `user: greenylifeonline`.
+ملعب خاص: https://huggingface.co/datasets/greenylifeonline/c5-gym
 هذه السحابة ما زالت بلا رمز. لا تلصق رموزاً هنا.
 
 `GL005_PROVEN=false`

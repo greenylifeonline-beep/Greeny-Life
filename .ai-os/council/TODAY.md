@@ -4,7 +4,6 @@ meeting: `GL-COUNCIL-4a11023c3c321b6f`
 case: `CASE-005`
 `GL005_PROVEN=false`
 
-Repair: `hf auth whoami` = `greenylifeonline`.
-الأمر التالي على جهازه فقط:
+ملعب Hub: https://huggingface.co/datasets/greenylifeonline/c5-gym (خاص). ليس C5.
 
-`hf repos create greenylifeonline/c5-gym --type dataset --private --exist-ok`
+الأمر التالي على Repair: رفع بطاقة README (الأمر في الشات).

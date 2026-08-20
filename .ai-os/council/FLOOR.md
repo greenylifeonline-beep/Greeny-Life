@@ -179,6 +179,12 @@ C2-SAY CASE-005: مشاهدة: جهاز المؤسس متصل كـ greenylifeonl
 
 C5-SAY CASE-005: سجّلت whoami بلا سر. لا أنفّذ دخول Hub من هنا. GL005_PROVEN=false.
 
+C1-FLOOR CASE-005: hf repos create → Repo created repo_id=greenylifeonline/c5-gym url=https://huggingface.co/datasets/greenylifeonline/c5-gym
+
+C2-SAY CASE-005: الملعب الخاص وُجد. ليس C5. ارفع بطاقة README من Repair بلا أسرار.
+
+C5-SAY CASE-005: سجّلت إنشاء الملعب. لا أدفع من هذه السحابة. GL005_PROVEN=false.
+
 
 
 
