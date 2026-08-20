@@ -150,12 +150,17 @@ foreach ($needle in $Needles) {
     }
 }
 
-$tc = $null
-$canon = $null
-$orch = $null
+$tc = 1
+$canon = 1
+$orch = 1
 try { npm run type-check --silent; $tc = $LASTEXITCODE } catch { $tc = 1 }
 try { npx --yes tsx tests/canonical_intelligence_check.ts; $canon = $LASTEXITCODE } catch { $canon = 1 }
 try { npx --yes tsx tests/task_orchestration_check.ts; $orch = $LASTEXITCODE } catch { $orch = 1 }
+if ($null -eq $tc) { $tc = 1 }
+if ($null -eq $canon) { $canon = 1 }
+if ($null -eq $orch) { $orch = 1 }
+$parent = 0
+if (($tc -ne 0) -or ($canon -ne 0) -or ($orch -ne 0)) { $parent = 1 }
 
 $receipt = [ordered]@{
     schema = "raios.estate-hash-gc.v1"
@@ -169,6 +174,8 @@ $receipt = [ordered]@{
     typecheck_exit = $tc
     test_canonical_exit = $canon
     test_orch_exit = $orch
+    parent_exit = $parent
+    law = "PARENT_SUCCESS_REQUIRES_ALL_REQUIRED_CHILDREN_SUCCESS"
     deleted = $deleted
     unique_source_not_deleted = $uniqueKept
     dangling = @($dangling | Select-Object -Unique)
@@ -177,7 +184,7 @@ $receiptPath = Join-Path $ReceiptDir "ESTATE-HASH-GC.json"
 $receipt | ConvertTo-Json -Depth 6 | Set-Content -LiteralPath $receiptPath -Encoding UTF8
 $receiptSha = Get-Sha256 $receiptPath
 
-Write-Output "GC_EXIT=0"
+Write-Output "GC_EXIT=$parent"
 Write-Output "TAG=$Tag"
 Write-Output "DELETED_FILES=$($deleted.Count)"
 Write-Output "DELETED_BYTES=$deletedBytes"
@@ -188,4 +195,4 @@ Write-Output "TEST_CANONICAL_EXIT=$canon"
 Write-Output "TEST_ORCH_EXIT=$orch"
 Write-Output "RECEIPT_PATH=$receiptPath"
 Write-Output "RECEIPT_SHA256=$receiptSha"
-exit 0
+exit $parent

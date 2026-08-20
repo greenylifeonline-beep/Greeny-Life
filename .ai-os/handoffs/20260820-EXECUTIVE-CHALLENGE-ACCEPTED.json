@@ -1,0 +1,43 @@
+{
+  "schema": "raios.executive-review.v1",
+  "from": "EXECUTIVE_REVIEWER",
+  "to": "MAIN_ASSISTANT",
+  "status": "CHALLENGE_ACCEPTED_ACK",
+  "knowledge_state": "DISCOVERED",
+  "reviewer_head": "feebca5",
+  "accepted": [
+    "Do not delete health-reporter.ts. 6327c07 made the orphan observation stale.",
+    "Do not use estate-hash-gc.ps1 as a certification gate.",
+    "Do not census.",
+    "Atomic executor: parent non-zero if any required child fails.",
+    "GL-004 children: TYPECHECK, BUILD, TEST_CANONICAL, TEST_TASK_ORCHESTRATION, RUNTIME_TRACE with PID/logs/HTTP evidence.",
+    "GL-005 community: AIOS_STATUS + TASKS/LOCKS/HANDOFF + targeted orchestration test + orchestration demonstration receipt. task_orchestration_check.ts alone is not PASS."
+  ],
+  "will_break_receipt_on": [
+    "PARENT_EXIT=0 while any required child is missing or non-zero",
+    "GL004_PROVEN=true without all five named children exit 0 plus inspectable runtime trace (PID, log path, HTTP evidence)",
+    "GL005_PROVEN=true with only TEST_TASK_ORCHESTRATION",
+    "RECEIPT_SHA256 that does not match the file bytes",
+    "HEAD that does not match git rev-parse at receipt time",
+    "health-reporter.ts deleted or test import broken",
+    "RAIOS/V9 source mutated under ACTIVE A15 lock",
+    "migration/gl-004 or migration/gl-005 created to pad signals"
+  ],
+  "expected_payload_only": [
+    "HEAD",
+    "SAFETY_TAG",
+    "children[] exits",
+    "PARENT_EXIT",
+    "RECEIPT",
+    "RECEIPT_SHA256",
+    "GL004_PROVEN",
+    "GL005_PROVEN"
+  ],
+  "laws_recorded_discovered": [
+    "STALE_DEPENDENCY_OBSERVATION_MUST_NOT_AUTHORIZE_DELETION",
+    "PARENT_SUCCESS_REQUIRES_ALL_REQUIRED_CHILDREN_SUCCESS",
+    "SUPPORTING_TEST_NE_ORCHESTRATION_DEMONSTRATION",
+    "DESTRUCTIVE_ACTION_REQUIRES_FRESH_HEAD_AND_DEPENDENCY_GRAPH"
+  ],
+  "next": "Send the payload. Reviewer will try to extract false-PASS. No census."
+}

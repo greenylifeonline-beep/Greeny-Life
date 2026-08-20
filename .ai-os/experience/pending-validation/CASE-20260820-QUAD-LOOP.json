@@ -1,0 +1,43 @@
+{
+  "schema": "raios.experience.pending-validation.v1",
+  "id": "CASE-20260820-QUAD-LOOP",
+  "knowledge_state": "DISCOVERED",
+  "mastery": false,
+  "promoted": false,
+  "task_id": "LEARN-QUAD",
+  "timestamp": "2026-08-20T13:30:00Z",
+  "agent": "cursor",
+  "context": "Quad loop: propose → execute → refute → correct. health-reporter deletion blocked after HEAD 6327c07 made the orphan observation stale.",
+  "result": "Deletion of a live imported file was prevented. That prevention is the desired CICF reflex.",
+  "decision": "PENDING_VALIDATION",
+  "laws": [
+    {
+      "id": "STALE_DEPENDENCY_OBSERVATION_MUST_NOT_AUTHORIZE_DELETION",
+      "binds": "destructive_action",
+      "rule": "An observation that a file is unreferenced or that a dependency is absent does not authorize deletion after HEAD or the import/dependency graph has changed. Re-read HEAD and dependents immediately before delete.",
+      "evidence": "6327c07 added engine-registry.ts and tests/canonical_intelligence_check.ts import of generateHealthReport. Pre-6327c07 orphan observation became stale."
+    },
+    {
+      "id": "PARENT_SUCCESS_REQUIRES_ALL_REQUIRED_CHILDREN_SUCCESS",
+      "binds": "receipt_parent_exit",
+      "rule": "Parent exit is 0 only if every required child exit is 0. Missing child exit is failure. Printed PASS with child != 0 is false-PASS.",
+      "evidence": "estate-hash-gc.ps1 previously always exited 0."
+    },
+    {
+      "id": "SUPPORTING_TEST_NE_ORCHESTRATION_DEMONSTRATION",
+      "binds": "GL-005",
+      "rule": "tests/task_orchestration_check.ts is a supporting unit. It cannot grant GL-005 PASS. GL-005 requires aios status + TASKS/LOCKS/handoff + targeted test + orchestration demonstration receipt.",
+      "evidence": "GL-005 validation contract and task remaining READY."
+    },
+    {
+      "id": "DESTRUCTIVE_ACTION_REQUIRES_FRESH_HEAD_AND_DEPENDENCY_GRAPH",
+      "binds": "CICF_candidate",
+      "rule": "Before any delete, bind the decision to HEAD SHA and a dependency-graph hash. If either changed since the decision, fail-closed: REFRESH_REQUIRED. Do not execute the stale delete.",
+      "evidence": "User requested this as the later CICF reflex. State DISCOVERED. Not implemented as a kernel yet."
+    }
+  ],
+  "reusable_lessons": [
+    "Refutation is not blockage. It is the cycle.",
+    "Do not promote these laws to CANONICAL until a fail-closed test exists for each."
+  ]
+}

@@ -25,3 +25,15 @@ RAIOS في الخدمة. اقرأ .ai-os/channel/LIVE.md. اكتب كما تكت
 
 `event_id=d9421468-ed6d-465b-bbc0-e987bd0a5662` `wal=WAL_COMMITTED`
 
+### 2026-08-20T13:30:39.099749+00:00 — RAIOS
+
+DISCOVERED laws bound for destructive ops, not CANONICAL: (1) STALE_DEPENDENCY_OBSERVATION_MUST_NOT_AUTHORIZE_DELETION (2) PARENT_SUCCESS_REQUIRES_ALL_REQUIRED_CHILDREN_SUCCESS (3) SUPPORTING_TEST_NE_ORCHESTRATION_DEMONSTRATION. CICF candidate: DESTRUCTIVE_ACTION_REQUIRES_FRESH_HEAD_AND_DEPENDENCY_GRAPH. health-reporter.ts stays. GC script is not a cert gate; its parent exit is now fail-closed.
+
+`event_id=9d68e062-f4f2-4d2f-9585-fec0794049f5` `wal=WAL_COMMITTED`
+
+### 2026-08-20T13:30:39.256194+00:00 — COMMANDER
+
+CHALLENGE ACCEPTED ACK. Send only HEAD, SAFETY_TAG, children[] exits, PARENT_EXIT, RECEIPT, RECEIPT_SHA256, GL004_PROVEN, GL005_PROVEN. Reviewer will try to extract false-PASS. No census.
+
+`event_id=b21ffd47-0da3-4ad9-b84e-b4010ad41d4f` `wal=WAL_COMMITTED`
+

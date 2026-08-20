@@ -238,6 +238,25 @@
       "status": "DONE",
       "claimed_by": "cursor",
       "evidence": ".ai-os/channel/LIVE.md WAL_COMMITTED doctor.context_certified=false SHA mismatch DISCOVERED"
+    },
+    {
+      "id": "LEARN-QUAD",
+      "title": "Record quad-loop learning laws as DISCOVERED",
+      "objective": "Bind stale-observation, parent-exit, and supporting-test laws after health-reporter deletion was correctly blocked.",
+      "scope": [
+        ".ai-os/experience",
+        ".ai-os/state/DECISIONS.md",
+        ".ai-os/channel",
+        "scripts/ai-os"
+      ],
+      "dependencies": [],
+      "allowed_agents": [
+        "cursor"
+      ],
+      "validation": "DISCOVERED laws in experience+WAL; GC script parent fail-closed; no CANONICAL promotion.",
+      "status": "DONE",
+      "claimed_by": "cursor",
+      "evidence": ".ai-os/experience/pending-validation/CASE-20260820-QUAD-LOOP.json WAL 9d68e062 DISCOVERED not CANONICAL"
     }
   ]
 }
