@@ -185,6 +185,22 @@
       "validation": "WAVE2-TARGETED-GAP-RESOLUTION.json with real process exit 0",
       "status": "IN_PROGRESS",
       "claimed_by": "cursor"
+    },
+    {
+      "id": "DRIVER-SYNC",
+      "title": "Driver packet for main assistant",
+      "objective": "Record exact executor stop-state for the driving assistant without further discovery reports.",
+      "scope": [
+        ".ai-os/handoffs"
+      ],
+      "dependencies": [],
+      "allowed_agents": [
+        "cursor"
+      ],
+      "validation": "Compact DRIVER-PACKET.json + handoff; no false PASS.",
+      "status": "DONE",
+      "claimed_by": "cursor",
+      "evidence": ".ai-os/handoffs/20260820-cursor-DRIVER-PACKET.json"
     }
   ]
 }
