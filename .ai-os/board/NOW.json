@@ -1,19 +1,19 @@
 {
   "schema": "raios.mission-board.v1",
   "branch": "v9-neurolingua-semantic-kernel",
-  "head": "147d103b8473399625d230351e9585fb151a39e5",
-  "updated_at": "2026-08-20T14:40:37.189959+00:00",
-  "mission_status": "GL004_FIVE_PASS_GL005_NOT_PROVEN",
+  "head": "283caa75782c3bbbbeb0cc5e3cb673665510f279",
+  "updated_at": "2026-08-20T14:46:52.902510+00:00",
+  "mission_status": "HOLD_PROMOTION",
   "mission": "إيصال GL-004 للأبناء الخمسة موجود. C1 يحاول كسر GL004_PROVEN. GL-005 مغلق لأن /api/tasks=500 DATABASE_URL. لا next start إلا كابن مسمّى. لا سيرفر ثانٍ.",
   "schedule": {
-    "now": "C1 يفنّد الإيصال. Repair يعيد نفس المنفّذ: python3 scripts/ai-os/gl004-atomic-executor.py — ممنوع NEXT_CONFIG_FILE و_raios-wave2-proof-isolated",
+    "now": "C1 HOLD_PROMOTION: أبناء GL-004 الخمسة صامدون. لا ترقية إنتاج. GL-005 ينتظر Postgres حقيقي.",
     "next": "إصلاح DATABASE_URL ثم إعادة GL005_ORCHESTRATION_DEMO فقط. لا قتل PID 3297.",
     "forbidden": "census، estate-hash-gc كبوابة اعتماد، migration/gl-004 أو gl-005 للتجميل، ناقل/WAL ثانٍ، مسّ RAIOS/V9 تحت قفل A15"
   },
   "required": {
-    "C0": "يقرأ اللوحة ويقرر. لا يصادق على PASS بدون مخارج أبناء.",
+    "C0": "يقرر إن كان يريد ابن PRODUCTION_RUNTIME منفصلاً. لا يصادق ترقية من next-dev.",
     "C1": "يفنّد GL004_PROVEN. لا يصادق إنتاجاً من next-dev.",
-    "C2": "يقرأ الإيصال والهجوم على العقد. رأي C2 على اللوحة.",
+    "C2": "يقرأ 20260820-C1-GL004-FALSIFY.json ويكتب رأياً.",
     "C3": "على Repair: نفس المنفّذ. لا سكربت NEXT_CONFIG_FILE.",
     "C4": "خدمة: نبض + WAL. قوانين DISCOVERED فقط. لا مرحلة جديدة."
   }

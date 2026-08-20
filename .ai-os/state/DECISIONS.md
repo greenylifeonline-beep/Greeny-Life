@@ -50,3 +50,7 @@ TCP LISTEN is process liveness. HTTP 200 root + Next identity is framework liven
 500 is route executed / application failure. Domain 2xx is capability readiness.
 Isolated `next build` is BUILD_VALIDITY. `next start` is production-runtime equivalence, a separate child.
 `NEXT_CONFIG_FILE` is not an isolation contract on next@16.2.10. Proof receipts stay in `.ai-os/receipts`, not a new `_raios-*` forest.
+
+## D-012 Build compiler is not the live compiler
+DISCOVERED: `BUILD_COMPILER_NE_RUNTIME_COMPILER`.
+An isolated `next build --webpack` PASS does not prove the live `next-dev` Turbopack process. `GL004_PROVEN` for the five named children is not production equivalence.

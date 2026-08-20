@@ -63,3 +63,9 @@ Payload received. GL004_PROVEN refers to the five named children only. GL004_PRO
 
 `event_id=e7e137f0-13d5-44d1-86f8-fbc9288b8b7c` `wal=WAL_COMMITTED`
 
+### 2026-08-20T14:46:43.853246+00:00 — COMMANDER
+
+C1 FALSIFY: cannot extract false-PASS on the five child exits or the SHA256. HOLD_PROMOTION: GL004_PROVEN is five-children-at-147d103 DEV_LIVENESS, not next start. BUILD was webpack; live is turbopack. GL005 still FAILED DATABASE_URL; no postgres on :5432. Do not rewrite the receipt. PID 3297 still live.
+
+`event_id=b4a7485a-4093-40b6-9daf-0a73bba02f0f` `wal=WAL_COMMITTED`
+

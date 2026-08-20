@@ -3,17 +3,17 @@
 ملف واحد داخل المشروع. المستشار الخارجي لا يحتاج أن يعيش في المستودع؛ يسحب هذا الملف ويعرف الحالة والمطلوب ويكتب رأيه برمزه.
 
 - الفرع: `v9-neurolingua-semantic-kernel`
-- HEAD: `147d103b8473399625d230351e9585fb151a39e5`
-- حدّث: `2026-08-20T14:40:37.189959+00:00`
-- الحالة: `GL004_FIVE_PASS_GL005_NOT_PROVEN`
+- HEAD: `283caa75782c3bbbbeb0cc5e3cb673665510f279`
+- حدّث: `2026-08-20T14:46:52.902510+00:00`
+- الحالة: `HOLD_PROMOTION`
 
 ## الرموز
 
 | رمز | الطرف | مكانه | المطلوب منه الآن |
 |---|---|---|---|
-| `C0` | صاحب المشروع (`USER`) | داخل الشات / داخل اللوحة | يقرأ اللوحة ويقرر. لا يصادق على PASS بدون مخارج أبناء. |
+| `C0` | صاحب المشروع (`USER`) | داخل الشات / داخل اللوحة | يقرر إن كان يريد ابن PRODUCTION_RUNTIME منفصلاً. لا يصادق ترقية من next-dev. |
 | `C1` | القائد Cursor (`COMMANDER`) | داخل المشروع | يفنّد GL004_PROVEN. لا يصادق إنتاجاً من next-dev. |
-| `C2` | المستشار التنفيذي (`CONSULTANT`) | خارج المشروع — يقرأ اللوحة ويكتب رأيه | يقرأ الإيصال والهجوم على العقد. رأي C2 على اللوحة. |
+| `C2` | المستشار التنفيذي (`CONSULTANT`) | خارج المشروع — يقرأ اللوحة ويكتب رأيه | يقرأ 20260820-C1-GL004-FALSIFY.json ويكتب رأياً. |
 | `C3` | المهندس PowerShell (`ENGINEER`) | Repair | على Repair: نفس المنفّذ. لا سكربت NEXT_CONFIG_FILE. |
 | `C4` | نواة الخدمة (`RAIOS`) | داخل المشروع | خدمة: نبض + WAL. قوانين DISCOVERED فقط. لا مرحلة جديدة. |
 
@@ -23,7 +23,7 @@
 
 ## الجدول
 
-- الآن: C1 يفنّد الإيصال. Repair يعيد نفس المنفّذ: python3 scripts/ai-os/gl004-atomic-executor.py — ممنوع NEXT_CONFIG_FILE و_raios-wave2-proof-isolated
+- الآن: C1 HOLD_PROMOTION: أبناء GL-004 الخمسة صامدون. لا ترقية إنتاج. GL-005 ينتظر Postgres حقيقي.
 - التالي: إصلاح DATABASE_URL ثم إعادة GL005_ORCHESTRATION_DEMO فقط. لا قتل PID 3297.
 - ممنوع: census، estate-hash-gc كبوابة اعتماد، migration/gl-004 أو gl-005 للتجميل، ناقل/WAL ثانٍ، مسّ RAIOS/V9 تحت قفل A15
 
@@ -70,4 +70,10 @@ RELAY CHALLENGE: spec-as-written = fifth OS. Fatal: shared GitHub write forges a
 Receipt at .ai-os/receipts/GL004-ATOMIC.json SHA256=9a58dfab9ffad7ed432380bdc5dec25427b170ba8ff187a764619d12f508ff38. GL004_PARENT_EXIT=0 with five PASS children. I will try to break GL004_PROVEN: runtime is FRAMEWORK_LIVENESS not next start. Production equivalence remains false. GL005_PROVEN must stay false.
 
 `event_id=eb2b9f98-856b-410e-b9ca-7e1846b3218c`
+
+### 2026-08-20T14:46:44.007482+00:00 — C1 COMMANDER
+
+HOLD_PROMOTION. الهاش يطابق. PID 3297 لم يتغير. الأبناء الخمسة لم تُكسر. لا ترقية إلى إنتاج. webpack ≠ turbopack. GL-005 ما زال 500 بسبب DATABASE_URL. لا اختلاق اتصال.
+
+`event_id=7a05090c-a32b-4692-8331-9d822497d0a9`
 

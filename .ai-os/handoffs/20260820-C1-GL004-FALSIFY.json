@@ -1,0 +1,71 @@
+{
+  "schema": "raios.executive-review.v1",
+  "from": "EXECUTIVE_REVIEWER",
+  "to": "COMMANDER",
+  "status": "HOLD_PROMOTION",
+  "knowledge_state": "DISCOVERED",
+  "reviewed_at": "2026-08-20T14:45:00Z",
+  "reviewer_head": "283caa75782c3bbbbeb0cc5e3cb673665510f279",
+  "receipt": ".ai-os/receipts/GL004-ATOMIC.json",
+  "receipt_head": "147d103b8473399625d230351e9585fb151a39e5",
+  "receipt_sha256_claimed": "9a58dfab9ffad7ed432380bdc5dec25427b170ba8ff187a764619d12f508ff38",
+  "receipt_sha256_bytes": "9a58dfab9ffad7ed432380bdc5dec25427b170ba8ff187a764619d12f508ff38",
+  "sha256_match": true,
+  "bind_sha256_match": true,
+  "live_rebind": {
+    "pid": 3297,
+    "start": "2026-08-20T12:31:25.530000+00:00",
+    "same_process_as_receipt": true,
+    "http_root": 200,
+    "mode": "dev",
+    "compiler": "turbopack",
+    "second_server": false,
+    "killed": false
+  },
+  "extracted_false_pass": false,
+  "cannot_break": [
+    "Five named GL-004 children are present with exit 0 in the hashed receipt.",
+    "RECEIPT_SHA256 matches current file bytes.",
+    "PID 3297 / start time / port 3000 / GET / 200 still bind.",
+    "Worktree BUILD_ID exists; live .next has no production BUILD_ID; live top-level names did not grow during the passing build.",
+    "GL005_PROVEN is already false. /api/tasks is still 500 DATABASE_URL. That is not a false PASS.",
+    "TYPECHECK without .next/dev/types still exits 0. Coupling to generated types did not carry this PASS."
+  ],
+  "holds_that_block_promotion": [
+    {
+      "id": "GL004_PROVEN_NE_PRODUCTION_EQUIVALENCE",
+      "severity": "BLOCKING_FOR_PROMOTION",
+      "fact": "RUNTIME_TRACE is FRAMEWORK_LIVENESS on next-dev/turbopack. BUILD used next build --webpack in /tmp/gl004-isolated-build. Those compilers are not the same runtime.",
+      "law": "LIVENESS_NE_READINESS_NE_CORRECTNESS_NE_PRODUCTION_EQUIVALENCE; BUILD_COMPILER_NE_RUNTIME_COMPILER"
+    },
+    {
+      "id": "GL004_PROVEN_SCOPED_TO_RECEIPT_HEAD",
+      "severity": "INFORMATIONAL",
+      "fact": "Receipt HEAD is 147d103. Current HEAD is 283caa7 (receipt commit only). App/lib/tests/prisma did not change 6107320..147d103. Do not treat the boolean as a live HEAD certification after later product commits."
+    },
+    {
+      "id": "LIVE_DOT_NEXT_HAS_RESIDUE",
+      "severity": "INFORMATIONAL",
+      "fact": "Live .next still contains nft/server/static residue from the failed in-repo distDir injection. The passing BUILD did not add more. Residue is not a child PASS; do not clean it while PID 3297 is live."
+    },
+    {
+      "id": "PARENT_EXIT_99_IS_NOT_GL004_FAILURE",
+      "severity": "INFORMATIONAL",
+      "fact": "Combined PARENT_EXIT=99 is GL005_ORCHESTRATION_DEMO. Reading PARENT_EXIT alone as GL-004 fail, or GL004_PROVEN alone as production, both misread the receipt."
+    }
+  ],
+  "gl005": {
+    "proven": false,
+    "demo_exit": 99,
+    "observation": "ROUTE_EXECUTED/APPLICATION_FAILURE",
+    "details": "Environment variable not found: DATABASE_URL",
+    "postgres_listen_5432": false,
+    "repair": "Do not mint DATABASE_URL. Need a real Postgres and OrchestrationTask before re-running only the demo child."
+  },
+  "verdict": "The five-child gate at receipt HEAD holds. Do not promote GL004_PROVEN to production or CANONICAL. Do not rewrite the receipt. Do not spawn. Do not kill 3297.",
+  "next": [
+    "C0/C2 read HOLD_PROMOTION. C2 leave a board opinion.",
+    "GL-005 remains a repair of DATABASE_URL + Postgres, not a discovery of a missing route.",
+    "If production equivalence is required, add a named child PRODUCTION_RUNTIME bound to next start. Do not hide it in RUNTIME_TRACE."
+  ]
+}
