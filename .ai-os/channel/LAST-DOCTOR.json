@@ -1,0 +1,52 @@
+{
+  "schema": "raios.startup-gate.v1",
+  "timestamp": "2026-08-20T13:26:13.625977+00:00",
+  "context_certified": false,
+  "write_permission": "DENIED",
+  "checks": [
+    {
+      "check": "repository_found",
+      "passed": true,
+      "evidence": "/workspace"
+    },
+    {
+      "check": "identity_found",
+      "passed": true,
+      "evidence": "/workspace/RAIOS/V9/continuity/RAIOS-IDENTITY.json"
+    },
+    {
+      "check": "current_state_found",
+      "passed": true,
+      "evidence": "/workspace/RAIOS/V9/continuity/RAIOS-CURRENT-STATE.json"
+    },
+    {
+      "check": "current_task_found",
+      "passed": true,
+      "evidence": "/workspace/RAIOS/V9/continuity/RAIOS-CURRENT-TASK.json"
+    },
+    {
+      "check": "repository_sha_recognized",
+      "passed": false,
+      "evidence": {
+        "current": "f9384a4fd6de464bb70046c4bf9243f6e23a373a",
+        "identity": "fb130e232246a00b531835f529f25e4edfae2854",
+        "state": "1eb0d5944fba7c25977c26c5c5613ddab6d3d33b"
+      }
+    },
+    {
+      "check": "architecture_version_known",
+      "passed": true,
+      "evidence": "V9"
+    },
+    {
+      "check": "active_phase_known",
+      "passed": true,
+      "evidence": "BASELINE_PRESERVATION_CONTINUITY_REBIND"
+    },
+    {
+      "check": "current_task_known",
+      "passed": true,
+      "evidence": "RECURSIVE_COGNITIVE_BOOTSTRAP"
+    }
+  ]
+}

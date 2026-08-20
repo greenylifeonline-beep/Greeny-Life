@@ -221,6 +221,23 @@
       "status": "DONE",
       "claimed_by": "cursor",
       "evidence": ".ai-os/COMMAND-VISION.md;.ai-os/reports/raios-service/LAST-HEARTBEAT.json;type-check=0;canonical=0;orch=0"
+    },
+    {
+      "id": "RAIOS-LINK",
+      "title": "Bring RAIOS live as shared channel",
+      "objective": "Start RAIOS service and open one communication channel over Cognitive WAL plus .ai-os/channel, no second bus.",
+      "scope": [
+        ".ai-os/channel",
+        "scripts/ai-os"
+      ],
+      "dependencies": [],
+      "allowed_agents": [
+        "cursor"
+      ],
+      "validation": "doctor ran; heartbeat running; LIVE.md + WAL event for open channel.",
+      "status": "DONE",
+      "claimed_by": "cursor",
+      "evidence": ".ai-os/channel/LIVE.md WAL_COMMITTED doctor.context_certified=false SHA mismatch DISCOVERED"
     }
   ]
 }
