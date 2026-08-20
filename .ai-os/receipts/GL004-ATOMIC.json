@@ -1,10 +1,10 @@
 {
   "schema": "raios.wave2.isolated-proof.v1",
   "knowledge_state": "DISCOVERED",
-  "HEAD": "147d103b8473399625d230351e9585fb151a39e5",
+  "HEAD": "46f24ac4b5db56fc29ea5c44dc8ce9ffd052ad88",
   "BRANCH": "v9-neurolingua-semantic-kernel",
-  "SAFETY_TAG": "safety/pre-gl004-bind-147d103",
-  "bound_at": "2026-08-20T14:39:44.341652+00:00",
+  "SAFETY_TAG": "safety/pre-gl004-bind-46f24ac",
+  "bound_at": "2026-08-20T15:16:07.222860+00:00",
   "children": [
     {
       "name": "RUNTIME_TRACE",
@@ -13,7 +13,7 @@
         "scripts/ai-os/gl004-runtime-bind.py"
       ],
       "exit": 0,
-      "seconds": 0.084,
+      "seconds": 0.079,
       "pid": 3297,
       "ppid": 3221,
       "port": 3000,
@@ -46,7 +46,7 @@
       "proven_as": "BINDABLE/PROVEN_AS_DEV_LIVENESS",
       "log": "/tmp/cursor/start-user/start-user.log",
       "receipt": "/workspace/.ai-os/receipts/GL004-RUNTIME-BIND.json",
-      "receipt_sha256": "7bcfaf6bc155efb5d9c60346934579e5d7414812d67c89adbcbba4bab91eb286",
+      "receipt_sha256": "67d7b54e441eef21c3f1572e7c1a020e9e2fe8686f54f142a4df5b1395d971db",
       "spawned": false,
       "epistemic": "PASS",
       "gate_open": true
@@ -59,7 +59,7 @@
         "type-check"
       ],
       "exit": 0,
-      "seconds": 1.064,
+      "seconds": 1.041,
       "stdout_tail": "\n> greeny-life@1.0.0 type-check\n> tsc --noEmit\n\n",
       "stderr_tail": "",
       "epistemic": "PASS",
@@ -74,7 +74,7 @@
         "tests/canonical_intelligence_check.ts"
       ],
       "exit": 0,
-      "seconds": 0.322,
+      "seconds": 0.319,
       "stdout_tail": "Canonical intelligence engines: PASS\n",
       "stderr_tail": "",
       "epistemic": "PASS",
@@ -89,7 +89,7 @@
         "tests/task_orchestration_check.ts"
       ],
       "exit": 0,
-      "seconds": 0.315,
+      "seconds": 0.305,
       "stdout_tail": "Task orchestration core: PASS\n",
       "stderr_tail": "",
       "epistemic": "PASS",
@@ -105,8 +105,8 @@
         "--webpack"
       ],
       "exit": 0,
-      "seconds": 8.926,
-      "stdout_tail": "▲ Next.js 16.2.10 (webpack)\n\n  Creating an optimized production build ...\n✓ Compiled successfully in 3.4s\n  Running TypeScript ...\n  Finished TypeScript in 2.3s ...\n  Collecting page data using 3 workers ...\n  Generating static pages using 3 workers (0/34) ...\n  Generating static pages using 3 workers (8/34) \n  Generating static pages using 3 workers (16/34) \n  Generating static pages using 3 workers (25/34) \n✓ Generating static pages using 3 workers (34/34) in 114ms\n  Finalizing page optimization ...\n  Collecting build traces ...\n\nRoute (app)\n┌ ○ /\n├ ○ /_not-found\n├ ƒ /api/auth/login\n├ ƒ /api/auth/logout\n├ ƒ /api/auth/session\n├ ƒ /api/brains/greeny-life-egypt\n├ ƒ /api/commercial-changes\n├ ƒ /api/data-control\n├ ƒ /api/decisions/export-readiness\n├ ƒ /api/decisions/official-evidence-review\n├ ƒ /api/evidence/official\n├ ƒ /api/intelligence/asset-registry\n├ ƒ /api/intelligence/data-fabric\n├ ƒ /api/intelligence/gels-label-readiness\n├ ƒ /api/intelligence/production-readiness\n├ ƒ /api/learning/evaluations\n├ ƒ /api/learning/outcomes\n├ ƒ /api/learning/training-cases\n├ ƒ /api/mastermind/commercial-context\n├ ƒ /api/mastermind/decision-package\n├ ƒ /api/mastermind/operating-model\n├ ƒ /api/mastermind/tools\n├ ƒ /api/portfolio/egyptian-exports\n├ ƒ /api/products\n├ ƒ /api/sales-orders\n├ ƒ /api/suppliers\n├ ƒ /api/tasks\n├ ƒ /api/traceability\n├ ƒ /api/trade-corridors\n├ ƒ /api/workflow\n├ ƒ /api/workflow/approvals\n├ ○ /data-control\n└ ○ /login\n\n\n○  (Static)   prerendered as static content\nƒ  (Dynamic)  server-rendered on demand\n\n",
+      "seconds": 8.744,
+      "stdout_tail": "▲ Next.js 16.2.10 (webpack)\n\n  Creating an optimized production build ...\n✓ Compiled successfully in 3.3s\n  Running TypeScript ...\n  Finished TypeScript in 2.3s ...\n  Collecting page data using 3 workers ...\n  Generating static pages using 3 workers (0/34) ...\n  Generating static pages using 3 workers (8/34) \n  Generating static pages using 3 workers (16/34) \n  Generating static pages using 3 workers (25/34) \n✓ Generating static pages using 3 workers (34/34) in 112ms\n  Finalizing page optimization ...\n  Collecting build traces ...\n\nRoute (app)\n┌ ○ /\n├ ○ /_not-found\n├ ƒ /api/auth/login\n├ ƒ /api/auth/logout\n├ ƒ /api/auth/session\n├ ƒ /api/brains/greeny-life-egypt\n├ ƒ /api/commercial-changes\n├ ƒ /api/data-control\n├ ƒ /api/decisions/export-readiness\n├ ƒ /api/decisions/official-evidence-review\n├ ƒ /api/evidence/official\n├ ƒ /api/intelligence/asset-registry\n├ ƒ /api/intelligence/data-fabric\n├ ƒ /api/intelligence/gels-label-readiness\n├ ƒ /api/intelligence/production-readiness\n├ ƒ /api/learning/evaluations\n├ ƒ /api/learning/outcomes\n├ ƒ /api/learning/training-cases\n├ ƒ /api/mastermind/commercial-context\n├ ƒ /api/mastermind/decision-package\n├ ƒ /api/mastermind/operating-model\n├ ƒ /api/mastermind/tools\n├ ƒ /api/portfolio/egyptian-exports\n├ ƒ /api/products\n├ ƒ /api/sales-orders\n├ ƒ /api/suppliers\n├ ƒ /api/tasks\n├ ƒ /api/traceability\n├ ƒ /api/trade-corridors\n├ ƒ /api/workflow\n├ ƒ /api/workflow/approvals\n├ ○ /data-control\n└ ○ /login\n\n\n○  (Static)   prerendered as static content\nƒ  (Dynamic)  server-rendered on demand\n\n",
       "stderr_tail": "",
       "epistemic": "PASS",
       "gate_open": true,
@@ -162,7 +162,7 @@
         "status"
       ],
       "exit": 0,
-      "stdout_tail": "Project: GREENY-LIFE\nBranch: v9-neurolingua-semantic-kernel\nHEAD: 147d103b8473399625d230351e9585fb151a39e5\nWave: Wave 2\nGoal: Execute GL-002 Main Brain, GL-003 Three Project Brains, and GL-004 Runtime/Tests in parallel, then converge into GL-005 Unified Orchestrator.\nActive tasks: 7\nActive locks: 10\nDirty: yes\n",
+      "stdout_tail": "Project: GREENY-LIFE\nBranch: v9-neurolingua-semantic-kernel\nHEAD: 46f24ac4b5db56fc29ea5c44dc8ce9ffd052ad88\nWave: Wave 2\nGoal: Execute GL-002 Main Brain, GL-003 Three Project Brains, and GL-004 Runtime/Tests in parallel, then converge into GL-005 Unified Orchestrator.\nActive tasks: 7\nActive locks: 10\nDirty: yes\n",
       "epistemic": "PASS",
       "gate_open": true
     },
@@ -178,8 +178,8 @@
       "gate_open": true
     },
     {
-      "name": "GL005_ORCHESTRATION_DEMO",
-      "exit": 99,
+      "name": "GL005_API_TASKS",
+      "exit": 112,
       "status": 500,
       "observation": "ROUTE_EXECUTED/APPLICATION_FAILURE",
       "body_path": "/workspace/.ai-os/receipts/api-tasks-body.txt",
@@ -190,15 +190,28 @@
       "law": "HTTP_200_ON_ROOT_NE_APP_HEALTH; LIVENESS_NE_READINESS_NE_CORRECTNESS",
       "epistemic": "FAILED",
       "gate_open": false
+    },
+    {
+      "name": "GL005_ORCHESTRATION_DEMO",
+      "exit": 114,
+      "reason": "SUPPORTING_TEST_NE_ORCHESTRATION_DEMONSTRATION",
+      "api_child": "GL005_API_TASKS",
+      "api_status": 500,
+      "api_observation": "ROUTE_EXECUTED/APPLICATION_FAILURE",
+      "law": "HTTP_2XX_NE_ORCHESTRATION; GL005_LIVE_PATH_PROVEN is not GL005_PROVEN",
+      "epistemic": "BLOCKED",
+      "gate_open": false
     }
   ],
   "GL004_PARENT_EXIT": 0,
-  "GL005_PARENT_EXIT": 99,
-  "PARENT_EXIT": 99,
+  "GL005_PARENT_EXIT": 114,
+  "PARENT_EXIT": 114,
   "RECEIPT": "/workspace/.ai-os/receipts/GL004-ATOMIC.json",
   "GL004_PROVEN": true,
   "GL004_PRODUCTION_RUNTIME_PROVEN": false,
+  "GL005_LIVE_PATH_PROVEN": false,
   "GL005_PROVEN": false,
+  "GL005_reason": "SUPPORTING_TEST_NE_ORCHESTRATION_DEMONSTRATION; GL005_ORCHESTRATION_DEMO stays 114 even if /api/tasks is 2xx",
   "RUNTIME_TRACE": "BINDABLE/PROVEN_AS_DEV_LIVENESS",
   "spawned_second_runtime": false,
   "killed_live_process": false,
@@ -248,7 +261,11 @@
   },
   "rejected": {
     "NEXT_CONFIG_FILE": "not present in next@16.2.10; writing next.config.* would HMR the live server",
-    "_raios-wave2-proof-isolated": "proof forest rejected; receipts stay in .ai-os/receipts"
+    "_raios-wave2-atomic-proof": "proof forest rejected; runner is scripts/ai-os/gl004-atomic-executor.ps1",
+    "HTTP_200_499_AS_RUNTIME_TRACE": "RUNTIME_TRACE requires GET / == 200 and Next.js identity",
+    "npm run build in worktree": "next 16 defaults to turbopack; use next build --webpack after junction/symlink",
+    "git diff -- .": "heartbeat/WAL dirt must not BLOCK BUILD; scope to product paths",
+    "param $Pid": "PowerShell reserved automatic variable; use ProcessId"
   },
   "c1_contract_attack": {
     "historical_gl004": "type-check + build + tests + runtime execution truth",
@@ -268,6 +285,8 @@
     "LIVENESS_NE_READINESS_NE_CORRECTNESS_NE_PRODUCTION_EQUIVALENCE",
     "GATE_CLOSED_NE_EPISTEMIC_FAILED",
     "PARENT_SUCCESS_REQUIRES_ALL_REQUIRED_CHILDREN_SUCCESS",
-    "PROOF_FOREST_NE_RECEIPT"
+    "PROOF_FOREST_NE_RECEIPT",
+    "HTTP_2XX_NE_ORCHESTRATION",
+    "POWERSHELL_PID_IS_RESERVED"
   ]
 }

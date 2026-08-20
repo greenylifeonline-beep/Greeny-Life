@@ -6,9 +6,9 @@
     "DEV_LISTEN_NE_PRODUCTION_BUILD",
     "HTTP_200_ON_ROOT_NE_APP_HEALTH"
   ],
-  "bound_at": "2026-08-20T14:39:31.999728+00:00",
+  "bound_at": "2026-08-20T15:15:55.156142+00:00",
   "repo": "/workspace",
-  "head": "147d103b8473399625d230351e9585fb151a39e5",
+  "head": "46f24ac4b5db56fc29ea5c44dc8ce9ffd052ad88",
   "branch": "v9-neurolingua-semantic-kernel",
   "pid": 3297,
   "ppid": 3221,
@@ -37,12 +37,12 @@
         "Cache-Control": "no-cache, must-revalidate",
         "X-Powered-By": "Next.js",
         "Content-Type": "text/html; charset=utf-8",
-        "Date": "Thu, 20 Aug 2026 14:39:31 GMT",
+        "Date": "Thu, 20 Aug 2026 15:15:55 GMT",
         "Connection": "close",
         "Transfer-Encoding": "chunked"
       },
       "body_prefix": "<!DOCTYPE html><html lang=\"en\"><head><meta charSet=\"utf-8\"/><meta name=\"viewport\" content=\"width=device-width, initial-scale=1\"/><link rel=\"preload\" as=\"script\" fetchPriority=\"low\" href=\"/_next/static/chunks/%5Bturbopack%5D_browser_dev_hmr-client_hmr-client_ts_1xx01vv._.js\"/><script src=\"/_next/static/chunks/node_modules_next_dist_compiled_next-devtools_index_090k2jm.js\" async=\"\"></script><script src=\"/_next/static/chunks/node_modules_next_dist_compiled_react-dom_096_9a-._.js\" async=\"\"></script>",
-      "ms": 38,
+      "ms": 39,
       "observation": "FRAMEWORK_LIVENESS"
     },
     {
@@ -53,12 +53,12 @@
         "Vary": "rsc, next-router-state-tree, next-router-prefetch, next-router-segment-prefetch, Accept-Encoding",
         "X-Powered-By": "Next.js",
         "Content-Type": "text/html; charset=utf-8",
-        "Date": "Thu, 20 Aug 2026 14:39:31 GMT",
+        "Date": "Thu, 20 Aug 2026 15:15:55 GMT",
         "Connection": "close",
         "Transfer-Encoding": "chunked"
       },
       "body_prefix": "<!DOCTYPE html><html lang=\"en\"><head><meta charSet=\"utf-8\"/><meta name=\"viewport\" content=\"width=device-width, initial-scale=1\"/><link rel=\"preload\" as=\"script\" fetchPriority=\"low\" href=\"/_next/static/chunks/%5Bturbopack%5D_browser_dev_hmr-client_hmr-client_ts_1xx01vv._.js\"/><script src=\"/_next/static/chunks/node_modules_next_dist_compiled_next-devtools_index_090k2jm.js\" async=\"\"></script><script src=\"/_next/static/chunks/node_modules_next_dist_compiled_react-dom_096_9a-._.js\" async=\"\"></script>",
-      "ms": 24,
+      "ms": 21,
       "observation": "SERVER_LIVE/ROUTE_ABSENT"
     },
     {
@@ -67,12 +67,12 @@
       "headers": {
         "vary": "rsc, next-router-state-tree, next-router-prefetch, next-router-segment-prefetch",
         "content-type": "application/json",
-        "Date": "Thu, 20 Aug 2026 14:39:31 GMT",
+        "Date": "Thu, 20 Aug 2026 15:15:55 GMT",
         "Connection": "close",
         "Transfer-Encoding": "chunked"
       },
       "body_prefix": "{\"success\":false,\"error\":\"Authentication required.\"}",
-      "ms": 7,
+      "ms": 6,
       "observation": "ROUTE_EXECUTION+AUTH_GATE_PRESENT"
     },
     {
@@ -81,7 +81,7 @@
       "headers": {
         "vary": "rsc, next-router-state-tree, next-router-prefetch, next-router-segment-prefetch",
         "content-type": "application/json",
-        "Date": "Thu, 20 Aug 2026 14:39:31 GMT",
+        "Date": "Thu, 20 Aug 2026 15:15:55 GMT",
         "Connection": "close",
         "Transfer-Encoding": "chunked"
       },
@@ -95,7 +95,7 @@
   "log": {
     "path": "/tmp/cursor/start-user/start-user.log",
     "stdout_fd": "pipe:[5695]",
-    "tail": "- Local:         http://localhost:3000\n- Network:       http://172.30.0.2:3000\n✓ Ready in 394ms\n\n GET / 200 in 1325ms (next.js: 1221ms, application-code: 105ms)\n GET /api/health 404 in 214ms (next.js: 184ms, application-code: 30ms)\n GET /api/workflow 401 in 272ms (next.js: 250ms, application-code: 23ms)\n GET /api/tasks 500 in 90ms (next.js: 84ms, application-code: 6ms)\n GET / 200 in 23ms (next.js: 1959µs, application-code: 21ms)\n GET / 200 in 26ms (next.js: 2ms, application-code: 23ms)\n GET /api/health 404 in 22ms (next.js: 2ms, application-code: 20ms)\n GET /api/workflow 401 in 5ms (next.js: 1706µs, application-code: 4ms)\n GET /api/tasks 500 in 5ms (next.js: 1879µs, application-code: 3ms)\n GET /api/tasks 500 in 7ms (next.js: 2ms, application-code: 5ms)\n GET / 200 in 21ms (next.js: 3ms, application-code: 18ms)\n GET /api/health 404 in 21ms (next.js: 2ms, application-code: 19ms)\n GET /api/workflow 401 in 14ms (next.js: 5ms, application-code: 9ms)\n GET /api/tasks 500 in 4ms (next.js: 959µs, application-code: 3ms)\n GET / 200 in 23ms (next.js: 1768µs, application-code: 21ms)\n GET /api/health 404 in 23ms (next.js: 2ms, application-code: 20ms)\n GET /api/workflow 401 in 4ms (next.js: 1082µs, application-code: 3ms)\n GET /api/tasks 500 in 5ms (next.js: 829µs, application-code: 4ms)\n GET / 200 in 21ms (next.js: 1863µs, application-code: 19ms)\n GET /api/health 404 in 20ms (next.js: 2ms, application-code: 18ms)\n GET /api/workflow 401 in 5ms (next.js: 900µs, application-code: 4ms)\n GET /api/tasks 500 in 8ms (next.js: 1372µs, application-code: 6ms)\n GET /api/tasks 500 in 5ms (next.js: 1664µs, application-code: 3ms)\n GET /api/tasks 500 in 4ms (next.js: 1153µs, application-code: 3ms)\n GET / 200 in 23ms (next.js: 2ms, application-code: 21ms)\n GET / 200 in 20ms (next.js: 1847µs, application-code: 18ms)\n GET /api/health 404 in 20ms (next.js: 2ms, application-code: 18ms)\n GET /api/workflow 401 in 5ms (next.js: 1466µs, application-code: 3ms)\n GET /api/tasks 500 in 4ms (next.js: 1291µs, application-code: 3ms)\n GET /api/tasks 500 in 6ms (next.js: 2ms, application-code: 4ms)\n GET /api/tasks 500 in 4ms (next.js: 1360µs, application-code: 2ms)\n GET / 200 in 22ms (next.js: 1758µs, application-code: 20ms)\n GET / 200 in 18ms (next.js: 1838µs, application-code: 16ms)\n GET /api/health 404 in 20ms (next.js: 3ms, application-code: 18ms)\n GET /api/workflow 401 in 4ms (next.js: 1024µs, application-code: 3ms)\n GET /api/tasks 500 in 3ms (next.js: 848µs, application-code: 2ms)"
+    "tail": " GET /api/health 404 in 20ms (next.js: 3ms, application-code: 17ms)\n GET /api/workflow 401 in 5ms (next.js: 1467µs, application-code: 3ms)\n GET /api/tasks 500 in 4ms (next.js: 1251µs, application-code: 2ms)\n GET / 200 in 22ms (next.js: 2ms, application-code: 20ms)\n GET /api/tasks 500 in 16ms (next.js: 3ms, application-code: 14ms)\n GET / 200 in 22ms (next.js: 2ms, application-code: 20ms)\n GET /api/tasks 500 in 4ms (next.js: 899µs, application-code: 3ms)\n GET /api/tasks 500 in 5ms (next.js: 1482µs, application-code: 4ms)\n GET / 200 in 19ms (next.js: 1399µs, application-code: 18ms)\n GET /api/tasks 500 in 5ms (next.js: 1507µs, application-code: 4ms)\n GET / 200 in 20ms (next.js: 1934µs, application-code: 18ms)\n GET /api/health 404 in 20ms (next.js: 1620µs, application-code: 18ms)\n GET /api/workflow 401 in 5ms (next.js: 1449µs, application-code: 3ms)\n GET /api/tasks 500 in 13ms (next.js: 2ms, application-code: 11ms)\n GET /api/tasks 500 in 4ms (next.js: 1204µs, application-code: 3ms)\n POST /api/tasks 401 in 4ms (next.js: 841µs, application-code: 3ms)\n GET /api/tasks 500 in 3ms (next.js: 865µs, application-code: 2ms)\n GET /api/tasks 500 in 5ms (next.js: 1729µs, application-code: 3ms)\n POST /api/tasks 401 in 5ms (next.js: 1044µs, application-code: 4ms)\n GET / 200 in 21ms (next.js: 1628µs, application-code: 19ms)\n GET /api/health 404 in 18ms (next.js: 1998µs, application-code: 16ms)\n GET /api/workflow 401 in 4ms (next.js: 856µs, application-code: 3ms)\n GET /api/tasks 500 in 4ms (next.js: 818µs, application-code: 3ms)\n GET /api/tasks 500 in 4ms (next.js: 1227µs, application-code: 3ms)\n POST /api/tasks 401 in 4ms (next.js: 991µs, application-code: 3ms)\n GET /api/tasks 500 in 4ms (next.js: 1043µs, application-code: 3ms)\n GET / 200 in 16ms (next.js: 1595µs, application-code: 15ms)\n GET /api/health 404 in 26ms (next.js: 3ms, application-code: 24ms)\n GET /api/workflow 401 in 3ms (next.js: 885µs, application-code: 2ms)\n GET /api/tasks 500 in 3ms (next.js: 947µs, application-code: 2ms)\n GET / 200 in 23ms (next.js: 3ms, application-code: 20ms)\n GET /api/health 404 in 19ms (next.js: 1634µs, application-code: 17ms)\n GET /api/workflow 401 in 4ms (next.js: 1263µs, application-code: 3ms)\n GET /api/tasks 500 in 4ms (next.js: 1263µs, application-code: 2ms)\n GET /api/tasks 500 in 5ms (next.js: 1986µs, application-code: 3ms)\n GET /api/tasks 500 in 4ms (next.js: 1557µs, application-code: 3ms)\n GET / 200 in 19ms (next.js: 2ms, application-code: 17ms)\n GET /api/health 404 in 19ms (next.js: 1624µs, application-code: 17ms)\n GET /api/workflow 401 in 4ms (next.js: 938µs, application-code: 3ms)\n GET /api/tasks 500 in 3ms (next.js: 891µs, application-code: 3ms)"
   },
   "ancestors": [
     {
