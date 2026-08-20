@@ -169,6 +169,22 @@
       "validation": "NL-0 artifacts + offline benchmark llm_calls=0 + no second WAL; RAIOS transfer on WAL reuse.",
       "status": "IN_PROGRESS",
       "claimed_by": "cursor"
+    },
+    {
+      "id": "WAVE2-GAP-RES",
+      "title": "Wave2 targeted GL-004/GL-005 estate resolution",
+      "objective": "Read authoritative resurrection audit, name path-signal gaps, search estate without implementing.",
+      "scope": [
+        "_raios-wave2-gap-resolution",
+        "_raios-wave2-targeted-gap-resolution.py"
+      ],
+      "dependencies": [],
+      "allowed_agents": [
+        "cursor"
+      ],
+      "validation": "WAVE2-TARGETED-GAP-RESOLUTION.json with real process exit 0",
+      "status": "IN_PROGRESS",
+      "claimed_by": "cursor"
     }
   ]
 }
