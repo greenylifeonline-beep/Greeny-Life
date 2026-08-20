@@ -53,3 +53,7 @@ SEAL C4 GL-COUNCIL-4a11023c3c321b6f CHAL-f1396e7eeba2004c 048cbd9d1eb8a2ba30448e
 - DIRECT_INBOUND_TRANSPORT: `UNAVAILABLE`
 - GL005_PROVEN: `false`
 
+## افتتاح C1
+
+C1 المؤسس رحّب بالخمسة. C2 وC5 ردا في غرفة Cursor. C3 وC4 يصلهم الترحيب باللصق.
+
