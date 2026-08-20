@@ -1,0 +1,52 @@
+{
+  "schema": "raios.c5-week.v1",
+  "meeting_id": "GL-COUNCIL-4a11023c3c321b6f",
+  "day": 5,
+  "slot": "HF_CATALOG_NO_DOWNLOAD",
+  "ts": "2026-08-20T20:58:16.057224+00:00",
+  "from": "C5",
+  "parent": "C1",
+  "host": "local-or-cursor",
+  "checks": [
+    {
+      "name": "hf_catalog_reachable",
+      "ok": true,
+      "detail": "BAAI/bge-small-en-v1.5,BAAI/bge-large-en-v1.5,BAAI/bge-base-en-v1.5"
+    },
+    {
+      "name": "no_weight_download",
+      "ok": true,
+      "detail": "catalog only"
+    },
+    {
+      "name": "hf_login",
+      "ok": false,
+      "detail": "BLOCKED_AUTH until founder registers and sets HF_TOKEN"
+    },
+    {
+      "name": "hf_is_not_c5",
+      "ok": true,
+      "detail": "Hub gym/library; C5 remains in-repo"
+    },
+    {
+      "name": "host_recorded",
+      "ok": true,
+      "detail": "local-or-cursor"
+    }
+  ],
+  "ok": true,
+  "knowledge_state": "DISCOVERED",
+  "canonical": false,
+  "promoted": false,
+  "wal_written": false,
+  "gl005_proven": false,
+  "law": [
+    "C5_IS_IN_REPO_NE_HF_MODEL",
+    "PASTE_NE_LEARNING",
+    "COLAB_NE_C5",
+    "KAGGLE_NE_C5",
+    "COMPUTE_OFF_NE_MEMORY_ERASED",
+    "SCHEDULED_PULSE_NE_SECOND_WAL"
+  ],
+  "wal_mtime_unchanged": true
+}

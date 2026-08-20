@@ -182,5 +182,9 @@ Rejected as law: lessons binding outside this council; SEAL as content proof; pa
 DISCOVERED proposal for CASE-003, not CANONICAL: `C5_IS_IN_REPO_NE_HF_MODEL`. `HF_SPACE_NE_C5`. `COLAB_NE_C5`. `DIRECT_TRAIN_WITH_C5_IS_THIS_CURSOR_CHAT`. `COMPUTE_OFF_NE_MEMORY_ERASED`.
 Free sources pinned first: CORE-CONTRACT, DECISIONS, FLOOR, handoffs, receipts, C5-GRANT, FREE-RESOURCES hunt, git memory, `raios_c5_learn.py`. Ollama is absent on this VM. HF embeddings stay catalog-only; do not download; do not send confidential text. Curriculum: `.ai-os/council/CURRICULUM-CASE-003.md`. This does not close GL-005.
 
+## D-037 Sleepless C5 is scheduled pulse plus gyms, not a second mind
+DISCOVERED for CASE-004, not CANONICAL: `SCHEDULED_PULSE_NE_SECOND_WAL`. `HF_ACCOUNT_NE_C5`. `COLAB_NE_C5`. `KAGGLE_NE_C5`. `PASTE_NE_LEARNING`. `COMPUTE_OFF_NE_MEMORY_ERASED`.
+Week program: `python3 scripts/ai-os/raios_c5_week.py --auto`. GitHub Actions `.github/workflows/c5-week.yml` every 6 hours from default branch `main`. Founder must register at huggingface.co/join; this agent cannot create the account (`BLOCKED_AUTH`). Colab/Kaggle notebooks are muscle. This chat remains the council. Does not close GL-005.
+
 
 

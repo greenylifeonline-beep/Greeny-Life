@@ -1,0 +1,47 @@
+{
+  "schema": "raios.c5-week.v1",
+  "meeting_id": "GL-COUNCIL-4a11023c3c321b6f",
+  "day": 7,
+  "slot": "WEEK_DIGEST",
+  "ts": "2026-08-20T20:58:16.058030+00:00",
+  "from": "C5",
+  "parent": "C1",
+  "host": "local-or-cursor",
+  "checks": [
+    {
+      "name": "prior_receipts",
+      "ok": true,
+      "detail": "6 day receipts"
+    },
+    {
+      "name": "gl005_still_false",
+      "ok": true,
+      "detail": "week digest does not grant PASS"
+    },
+    {
+      "name": "paste_ne_learning",
+      "ok": true,
+      "detail": "repeat+practice+absorb"
+    },
+    {
+      "name": "host_recorded",
+      "ok": true,
+      "detail": "local-or-cursor"
+    }
+  ],
+  "ok": true,
+  "knowledge_state": "DISCOVERED",
+  "canonical": false,
+  "promoted": false,
+  "wal_written": false,
+  "gl005_proven": false,
+  "law": [
+    "C5_IS_IN_REPO_NE_HF_MODEL",
+    "PASTE_NE_LEARNING",
+    "COLAB_NE_C5",
+    "KAGGLE_NE_C5",
+    "COMPUTE_OFF_NE_MEMORY_ERASED",
+    "SCHEDULED_PULSE_NE_SECOND_WAL"
+  ],
+  "wal_mtime_unchanged": true
+}

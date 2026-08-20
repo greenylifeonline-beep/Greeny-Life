@@ -23,3 +23,4 @@
 - CASE-001: `METHOD_BOUND_DISCOVERED` — C3-ACK وC4-ACK مستلمان. المنهجية ثابتة في هذا الاجتماع. ليست حقيقة تشغيلية. GL005_PROVEN=false
 - CASE-002: `CONSULT_BOUND_DISCOVERED` — تشاور C3 وC4 مسجّل. قوانين مؤقتة لهذا الاجتماع فقط. ليست CANONICAL. ليست خارج المجلس. GL005_PROVEN=false
 - CASE-003: `CURRICULUM_PROPOSED_DISCOVERED` — منهج مجاني محلي لعدة أيام مقترح. ينتظر C3/C4. Hugging Face ليس C5. GL005_PROVEN=false
+- CASE-004: `WEEK_PROGRAM_DISCOVERED` — أسبوع أوتوماتيكي. Hub/Colab/Kaggle ملعب. التسجيل على Hugging Face بيد المؤسس. GL005_PROVEN=false
