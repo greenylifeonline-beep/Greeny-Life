@@ -12,7 +12,7 @@ export async function POST(request: NextRequest) {
     if (!user || !user.passwordHash || !verifyPassword(password, user.passwordHash)) return NextResponse.json({ success: false, error: "Invalid credentials." }, { status: 401 });
     const token = createSession({ userId: user.id, email: user.email, role: user.role as import("@/lib/auth").AppRole });
     const response = NextResponse.json({ success: true, user: { id: user.id, email: user.email, name: user.name, role: user.role } });
-    setSessionCookie(response, token);
+    setSessionCookie(response, token, request);
     return response;
   } catch (error) { return NextResponse.json({ success: false, error: "Login unavailable", details: (error as Error).message }, { status: 503 }); }
 }

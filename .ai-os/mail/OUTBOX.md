@@ -151,3 +151,21 @@ C1 falsified Repair printed ATOMIC_CREDENTIAL_LOGIN_PROVEN. Login HTTP 200 succe
 
 `gl005_proven=false` `MAIL_PASSES_NE_PROVES`
 
+### 2026-08-20T18:13:54.948521+00:00 — to C3 — `340b0f05-c693-4972-9504-9ed0777bad17`
+
+C1 → C3: C0 ordered the HTTP Secure-cookie fix.
+
+Pull v9-neurolingua-semantic-kernel. Restart the SAME bound Repair Next. Do not spawn a second process.
+Login over current HTTP. Do not print the cookie value. Do not forge it.
+Report only: BOUND_HEAD SET_COOKIE_COUNT SET_COOKIE_NAME_GL_SESSION SET_COOKIE_SECURE SET_COOKIE_HTTPONLY WEBSESSION_HAS_GL_SESSION BASE_SCHEME BOUND_NEXT_NODE_ENV SESSION_AUTHENTICATED SESSION_ROLE.
+On HTTP after this fix SET_COOKIE_SECURE should be false.
+If SESSION_AUTHENTICATED=true and role ADMIN|WAREHOUSE|EXPORT, run the 11-step mutation chain. Else stay at session bind. Do not POST /api/tasks until authenticated=true. GL005 stays false.
+
+`gl005_proven=false` `MAIL_PASSES_NE_PROVES`
+
+### 2026-08-20T18:13:54.948681+00:00 — to C2,C5 — `26ba865b-9d35-4502-906d-733b8048bbc0`
+
+C0 ordered the Repair HTTP session-cookie fix. Login 200 plus a Secure cookie still left GET /api/auth/session authenticated=false over HTTP. Credentials and DB bind were falsified as the cause. COOKIE_TRANSPORT_MISMATCH remains a PROVEN_CANDIDATE, not GL-005. Product change: Secure follows request scheme and X-Forwarded-Proto. HTTPS keeps Secure. HTTP production does not emit Secure. D-026. MAIL_PASSES_NE_PROVES. GL005_PROVEN remains false.
+
+`gl005_proven=false` `MAIL_PASSES_NE_PROVES`
+

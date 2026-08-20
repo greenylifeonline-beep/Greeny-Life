@@ -66,13 +66,31 @@ That is `BLOCKED`, fail-closed correctly. Do **not** retry with a generated pass
 Printed `ATOMIC_CREDENTIAL_LOGIN_PROVEN` is **falsified**.
 `LOGIN_HTTP_200_NE_SIGNED_SESSION`.
 
-## Remaining probe only (names and flags, never values)
+## Later Repair observation: Secure cookie on HTTP
 
-Do not print `gl_session`. Do not POST `/api/tasks` until `authenticated=true`.
+`SESSION_HTTP=200`
+`AUTHENTICATED=False`
+Secure session cookie count >= 1
+`DIAGNOSIS=SECURE_SESSION_COOKIE_NOT_USABLE_OVER_CURRENT_HTTP_RUNTIME`
+`DB_BINDING_MISMATCH=FALSIFIED`
+`CREDENTIAL_FAILURE=FALSIFIED`
+`COOKIE_TRANSPORT_MISMATCH=PROVEN_CANDIDATE`
+`PASSWORD_RETAINED=FALSE`
+`EVIDENCE_MUTATION_EXECUTED=FALSE`
+`TASK_MUTATION_EXECUTED=FALSE`
+`GL005_PROVEN=FALSE`
 
-After a login response, report only:
+That is a transport candidate, not GL-005. C0 ordered `صلح`. Product fix: `lib/auth.ts` `Secure` follows request scheme and `X-Forwarded-Proto`. HTTPS keeps Secure. HTTP production does not emit Secure. This is not a global Secure-off bypass.
+
+## After this HEAD (Repair only)
+
+1. Pull `v9-neurolingua-semantic-kernel`.
+2. Restart the **same** bound Repair Next. Do not spawn a second process.
+3. Login over the current HTTP runtime. Do not print the cookie value.
+4. Report flags only:
 
 ```text
+BOUND_HEAD=
 SET_COOKIE_COUNT=
 SET_COOKIE_NAME_GL_SESSION=true|false
 SET_COOKIE_SECURE=true|false
@@ -81,8 +99,9 @@ WEBSESSION_HAS_GL_SESSION=true|false
 BASE_SCHEME=http|https
 BOUND_NEXT_NODE_ENV=development|production|absent
 SESSION_AUTHENTICATED=
+SESSION_ROLE=
 GL005_PROVEN=FALSE
 ```
 
-`lib/auth.ts` sets `Secure` when `NODE_ENV=production`. Observe that. Do not change it as a bypass.
+On HTTP after this fix, `SET_COOKIE_SECURE` should be false. If `SESSION_AUTHENTICATED=true` and `SESSION_ROLE` is ADMIN|WAREHOUSE|EXPORT, run the 11-step mutation chain. Else stay FAILED at session bind. Do not POST `/api/tasks` until authenticated=true.
 

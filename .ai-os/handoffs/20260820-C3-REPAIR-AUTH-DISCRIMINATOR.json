@@ -32,18 +32,18 @@
     "Do not spawn a second Next",
     "Do not create PostgreSQL or Docker unless a FRESH Repair observation proves dependency absence",
     "Do not treat Instance B GET 500 as Repair truth",
-    "Do not grant GL005_PROVEN from POST 401 or GET 200"
+    "Do not grant GL005_PROVEN from POST 401, GET 200, or a scheme-aware cookie fix"
   ],
   "existing_auth_only": {
     "gate": "lib/authz.ts authorizeRequest(); writeRolePolicy.task = ADMIN|WAREHOUSE|EXPORT",
-    "cookie": "lib/auth.ts cookie name gl_session; HMAC via existing APP_SESSION_SECRET; createSession/readSession/requireRole",
+    "cookie": "lib/auth.ts cookie name gl_session; HMAC via existing APP_SESSION_SECRET; Secure follows request scheme and X-Forwarded-Proto",
     "login": "POST /api/auth/login (app/api/auth/login/route.ts) email+password against Prisma user",
     "session_probe": "GET /api/auth/session (app/api/auth/session/route.ts)",
     "ui": "app/login/page.tsx"
   },
   "next_cheapest_discriminator_on_repair": [
     "1. Bind authoritative Repair HEAD.",
-    "2. Bind the existing live Repair Next process. Do not spawn.",
+    "2. Pull this HEAD. Restart the SAME bound Repair Next. Do not spawn a second process.",
     "3. GET /api/tasks and parse semantic body (success/count/data, not status code alone).",
     "4. Inspect the EXISTING legitimate authentication mechanism only: authorizeRequest, login route, roles ADMIN/WAREHOUSE/EXPORT, whether C0 already has a legitimate active session (browser cookie or GET /api/auth/session on that process).",
     "5. Do not manufacture APP_SESSION_SECRET.",
@@ -86,7 +86,7 @@
     "epistemic": "BLOCKED",
     "reason": "NEW_PASSWORD_TOO_SHORT",
     "stop": true,
-    "superseded_by": "GL005-C3-REPAIR-LOGIN-SESSION-SPLIT.json"
+    "superseded_by": "GL005-C3-REPAIR-COOKIE-TRANSPORT.json"
   },
   "c3_login_session_split": {
     "RUNTIME_LOGIN_HTTP": 200,
@@ -95,6 +95,21 @@
     "AUTHENTICATED": false,
     "epistemic": "FAILED",
     "reason": "LOGIN_HTTP_200_NE_SIGNED_SESSION",
-    "GL005_PROVEN": false
+    "GL005_PROVEN": false,
+    "superseded_by": "GL005-C3-REPAIR-COOKIE-TRANSPORT.json"
+  },
+  "c3_cookie_transport": {
+    "SESSION_HTTP": 200,
+    "AUTHENTICATED": false,
+    "SESSION_OVER_HTTP": true,
+    "SECURE_GL_SESSION_COUNT": ">=1",
+    "DB_BINDING_MISMATCH": "FALSIFIED",
+    "CREDENTIAL_FAILURE": "FALSIFIED",
+    "COOKIE_TRANSPORT_MISMATCH": "PROVEN_CANDIDATE",
+    "epistemic": "FAILED",
+    "reason": "SECURE_SESSION_COOKIE_NOT_USABLE_OVER_CURRENT_HTTP_RUNTIME",
+    "GL005_PROVEN": false,
+    "c0_order": "صلح",
+    "product_fix": "lib/auth.ts cookieShouldBeSecure uses request scheme and X-Forwarded-Proto"
   }
 }

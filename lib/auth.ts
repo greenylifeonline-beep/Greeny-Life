@@ -45,10 +45,30 @@ export function readSession(token?: string): Session | null {
     return roles.includes(parsed.role) && parsed.expiresAt > Date.now() ? parsed : null;
   } catch { return null; }
 }
-export function setSessionCookie(response: NextResponse, token: string) {
-  response.cookies.set(cookieName, token, { httpOnly: true, secure: process.env.NODE_ENV === "production", sameSite: "lax", path: "/", maxAge: sessionHours * 60 * 60 });
+export function cookieShouldBeSecure(input?: { protocol?: string | null; forwardedProto?: string | null }) {
+  const forwarded = String(input?.forwardedProto || "").split(",")[0].trim().toLowerCase();
+  if (forwarded === "https") return true;
+  if (forwarded === "http") return false;
+  const protocol = String(input?.protocol || "").toLowerCase();
+  if (protocol === "https:" || protocol === "https") return true;
+  if (protocol === "http:" || protocol === "http") return false;
+  return process.env.NODE_ENV === "production";
 }
-export function clearSessionCookie(response: NextResponse) { response.cookies.set(cookieName, "", { httpOnly: true, secure: process.env.NODE_ENV === "production", sameSite: "lax", path: "/", maxAge: 0 }); }
+export function sessionCookieSecure(request: NextRequest) {
+  return cookieShouldBeSecure({
+    protocol: request.nextUrl.protocol,
+    forwardedProto: request.headers.get("x-forwarded-proto"),
+  });
+}
+function sessionCookieOptions(request: NextRequest, maxAge: number) {
+  return { httpOnly: true, secure: sessionCookieSecure(request), sameSite: "lax" as const, path: "/", maxAge };
+}
+export function setSessionCookie(response: NextResponse, token: string, request: NextRequest) {
+  response.cookies.set(cookieName, token, sessionCookieOptions(request, sessionHours * 60 * 60));
+}
+export function clearSessionCookie(response: NextResponse, request: NextRequest) {
+  response.cookies.set(cookieName, "", sessionCookieOptions(request, 0));
+}
 export function requireRole(request: NextRequest, allowed: readonly AppRole[]) {
   const session = readSession(request.cookies.get(cookieName)?.value);
   if (!session) return { session: null, response: NextResponse.json({ success: false, error: "Authentication required." }, { status: 401 }) };

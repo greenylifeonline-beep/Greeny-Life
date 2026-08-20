@@ -12,6 +12,7 @@ sys.path.insert(0, str(Path(__file__).resolve().parent))
 from gl005_epistemic import (  # noqa: E402
     LAWS,
     OBSERVATION_CHAIN,
+    classify_cookie_transport,
     classify_credential_gate,
     classify_login_session,
     classify_observe_receipt,
@@ -184,6 +185,34 @@ def main() -> int:
     )
     check(bound["epistemic"] == "SESSION_BOUND_CANDIDATE", "authenticated ADMIN is session candidate only")
     check(bound["GL005_PROVEN"] is False, "bound session is not GL-005")
+
+    transport = classify_cookie_transport(
+        login_http=200,
+        login_success=True,
+        session_http=200,
+        authenticated=False,
+        secure_gl_session_count=1,
+        session_over_http=True,
+        cookie_transport_mismatch_printed="PROVEN_CANDIDATE",
+        db_binding_mismatch="FALSIFIED",
+        credential_failure="FALSIFIED",
+        task_mutation_executed=False,
+        password_retained=False,
+        evidence_mutation_executed=False,
+        gl005_proven_printed=False,
+    )
+    check(transport["epistemic"] == "FAILED", "secure cookie on HTTP is FAILED bind")
+    check(
+        transport["reason"] == "SECURE_SESSION_COOKIE_NOT_USABLE_OVER_CURRENT_HTTP_RUNTIME",
+        "cookie transport reason",
+    )
+    check(transport["cookie_transport_mismatch"] == "PROVEN_CANDIDATE", "transport is candidate only")
+    check(transport["printed_cookie_transport_mismatch_is_not_gl005"] is True, "printed candidate is not proven")
+    check(transport["GL005_PROVEN"] is False, "cookie transport candidate is not GL-005")
+    check("SECURE_COOKIE_NE_HTTP_SESSION" in LAWS, "secure-cookie-ne-http law present")
+    check("COOKIE_TRANSPORT_MISMATCH_NE_GL005_PROVEN" in LAWS, "transport candidate is not GL-005")
+    check("NODE_ENV_PRODUCTION_NE_HTTPS" in LAWS, "production NODE_ENV is not HTTPS")
+    check("DISABLE_SECURE_FLAG_NE_ORCHESTRATION_PROOF" in LAWS, "disabling Secure is not orchestration")
 
     print("gl005_epistemic_check: PASS")
     print(json.dumps({"gl005_proven": False, "epistemic": live["epistemic"], "laws": list(LAWS)}, ensure_ascii=False))

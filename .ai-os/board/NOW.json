@@ -1,22 +1,22 @@
 {
   "schema": "raios.mission-board.v1",
   "branch": "v9-neurolingua-semantic-kernel",
-  "head": "e5206c9da15d9eeb0ffc609a3e9c33338d0de18c",
-  "updated_at": "2026-08-20T18:02:36.324336+00:00",
-  "mission_status": "LOGIN_200_SESSION_UNAUTHENTICATED",
-  "mission": "Repair login HTTP 200 then session authenticated=false. Printed ATOMIC login proven is falsified. GL005_PROVEN false. Next: cookie flags only.",
+  "head": "54e31487fe7c1273678b4baef9574bae746185c2",
+  "updated_at": "2026-08-20T18:13:54.950563+00:00",
+  "mission_status": "COOKIE_TRANSPORT_FIX_RECORDED_NOT_GL005",
+  "mission": "C0 ordered the HTTP Secure-cookie fix. Scheme-aware Secure is in lib/auth.ts. COOKIE_TRANSPORT_MISMATCH is a PROVEN_CANDIDATE. GL005_PROVEN remains false. C3: pull, restart the same bound Next, re-login over HTTP, report flags only.",
   "schedule": {
-    "now": "C3: report Set-Cookie flags, WebSession has session-cookie name, BASE_SCHEME, bound Next NODE_ENV. No cookie value. No task POST.",
-    "next": "If authenticated=true with ADMIN|WAREHOUSE|EXPORT, run the 11-step mutation chain. Else stay FAILED at cookie bind.",
-    "forbidden": "print cookie value, forge session cookie, GL005 PASS from login 200, provision as orchestration"
+    "now": "C3 pull this HEAD, restart the SAME Repair Next, login over HTTP, print cookie flags not values.",
+    "next": "If SESSION_AUTHENTICATED=true with ADMIN|WAREHOUSE|EXPORT, run the 11-step mutation chain. Else stay FAILED at session bind.",
+    "forbidden": "cookie value, forged session cookie, second Next, GL005 PASS from scheme-aware Secure, global Secure-off as proof"
   },
   "required": {
-    "C0": "Do not paste cookies or passwords.",
-    "C1": "Falsified ATOMIC_CREDENTIAL_LOGIN_PROVEN. Does not grant GL005.",
-    "C2": "Login 200 ≠ signed session. Printed PROVEN ≠ evidence.",
-    "C3": "Cookie attribute probe only. Do not POST /api/tasks yet.",
-    "C4": "D-025 DISCOVERED only.",
-    "C5": "Falsify any PASS from login 200."
+    "C0": "Ordered صلح. Do not paste cookies or passwords.",
+    "C1": "Recorded D-026 and scheme-aware Secure. Does not grant GL005.",
+    "C2": "Secure cookie on HTTP ≠ signed session. Printed candidate ≠ proven.",
+    "C3": "Pull, restart same Next, re-login over HTTP, flags only. No task POST until authenticated=true.",
+    "C4": "D-026 DISCOVERED only. No CANONICAL promotion.",
+    "C5": "Falsify any PASS from the cookie-scheme fix."
   },
   "mail": {
     "dispatcher": "C1",
@@ -34,8 +34,8 @@
       "gl005_proven": false
     },
     "last_send": {
-      "id": "e5c7b05d-de8f-40ae-b2ef-50a076ce7c01",
-      "ts": "2026-08-20T18:02:36.196854+00:00",
+      "id": "26ba865b-9d35-4502-906d-733b8048bbc0",
+      "ts": "2026-08-20T18:13:54.948681+00:00",
       "to": [
         "C2",
         "C5"

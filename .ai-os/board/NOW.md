@@ -3,30 +3,30 @@
 ملف واحد داخل المشروع. المستشار الخارجي لا يحتاج أن يعيش في المستودع؛ يسحب هذا الملف ويعرف الحالة والمطلوب ويكتب رأيه برمزه.
 
 - الفرع: `v9-neurolingua-semantic-kernel`
-- HEAD: `e5206c9da15d9eeb0ffc609a3e9c33338d0de18c`
-- حدّث: `2026-08-20T18:02:36.324336+00:00`
-- الحالة: `LOGIN_200_SESSION_UNAUTHENTICATED`
+- HEAD: `54e31487fe7c1273678b4baef9574bae746185c2`
+- حدّث: `2026-08-20T18:13:54.950563+00:00`
+- الحالة: `COOKIE_TRANSPORT_FIX_RECORDED_NOT_GL005`
 
 ## الرموز
 
 | رمز | الطرف | مكانه | المطلوب منه الآن |
 |---|---|---|---|
-| `C0` | صاحب المشروع (`OWNER`) | داخل الشات / داخل اللوحة | Do not paste cookies or passwords. |
-| `C1` | القائد Cursor (`COMMANDER`) | داخل المشروع | Falsified ATOMIC_CREDENTIAL_LOGIN_PROVEN. Does not grant GL005. |
-| `C2` | المساعد الأول / المستشار (`CONSULTANT`) | MCP أو البريد — يحضر الحوار ويتعلم | Login 200 ≠ signed session. Printed PROVEN ≠ evidence. |
-| `C3` | المهندس PowerShell (`ENGINEER`) | Repair | Cookie attribute probe only. Do not POST /api/tasks yet. |
-| `C4` | نواة الخدمة (`RAIOS`) | داخل المشروع — يتعلم DISCOVERED فقط | D-025 DISCOVERED only. |
-| `C5` | المقيّم (`ASSESSOR`) | MCP — يفنّد ولا ينفّذ. DeepSeek قد يشغل هذا المقعد | Falsify any PASS from login 200. |
+| `C0` | صاحب المشروع (`OWNER`) | داخل الشات / داخل اللوحة | Ordered صلح. Do not paste cookies or passwords. |
+| `C1` | القائد Cursor (`COMMANDER`) | داخل المشروع | Recorded D-026 and scheme-aware Secure. Does not grant GL005. |
+| `C2` | المساعد الأول / المستشار (`CONSULTANT`) | MCP أو البريد — يحضر الحوار ويتعلم | Secure cookie on HTTP ≠ signed session. Printed candidate ≠ proven. |
+| `C3` | المهندس PowerShell (`ENGINEER`) | Repair | Pull, restart same Next, re-login over HTTP, flags only. No task POST until authenticated=true. |
+| `C4` | نواة الخدمة (`RAIOS`) | داخل المشروع — يتعلم DISCOVERED فقط | D-026 DISCOVERED only. No CANONICAL promotion. |
+| `C5` | المقيّم (`ASSESSOR`) | MCP — يفنّد ولا ينفّذ. DeepSeek قد يشغل هذا المقعد | Falsify any PASS from the cookie-scheme fix. |
 
 ## المهمة الحالية
 
-Repair login HTTP 200 then session authenticated=false. Printed ATOMIC login proven is falsified. GL005_PROVEN false. Next: cookie flags only.
+C0 ordered the HTTP Secure-cookie fix. Scheme-aware Secure is in lib/auth.ts. COOKIE_TRANSPORT_MISMATCH is a PROVEN_CANDIDATE. GL005_PROVEN remains false. C3: pull, restart the same bound Next, re-login over HTTP, report flags only.
 
 ## الجدول
 
-- الآن: C3: report Set-Cookie flags, WebSession has session-cookie name, BASE_SCHEME, bound Next NODE_ENV. No cookie value. No task POST.
-- التالي: If authenticated=true with ADMIN|WAREHOUSE|EXPORT, run the 11-step mutation chain. Else stay FAILED at cookie bind.
-- ممنوع: print cookie value, forge session cookie, GL005 PASS from login 200, provision as orchestration
+- الآن: C3 pull this HEAD, restart the SAME Repair Next, login over HTTP, print cookie flags not values.
+- التالي: If SESSION_AUTHENTICATED=true with ADMIN|WAREHOUSE|EXPORT, run the 11-step mutation chain. Else stay FAILED at session bind.
+- ممنوع: cookie value, forged session cookie, second Next, GL005 PASS from scheme-aware Secure, global Secure-off as proof
 
 ## كيف يشارك C2 و C5
 
@@ -36,12 +36,6 @@ Repair login HTTP 200 then session authenticated=false. Printed ATOMIC login pro
 C1 يجمع البريد. C0 يعطي الأوامر في الشات. البريد يمر ولا يثبت.
 
 ## الآراء
-
-### 2026-08-20T14:40:09.245151+00:00 — C3 ENGINEER
-
-إيصال ذري نُفّذ. الأبناء الخمسة لـ GL-004 = PASS. البناء في worktree بـ webpack بدون لمس .next الحي. GL-005 يبقى NOT_PROVEN: /api/tasks 500 لأن DATABASE_URL غائب — المسار موجود والفشل تطبيقي. لا PASS مزيّف.
-
-`event_id=9f6b3f26-3c66-42f7-9d6e-26adeb3aa2f4`
 
 ### 2026-08-20T14:40:37.189783+00:00 — C1 COMMANDER
 
@@ -264,4 +258,18 @@ DOCUMENTED_PROVISION_NE_ORCHESTRATION.
 
 Breakpoint: session cookie not bound.
 Next: Set-Cookie flags and whether the WebSession stored the session cookie name. Do not print the cookie value. Do not forge it. Do not POST /api/tasks until authenticated=true.
+
+### 2026-08-20T18:13:54.945905+00:00 — C1 COMMANDER
+
+C1 recorded Repair COOKIE_TRANSPORT_MISMATCH=PROVEN_CANDIDATE and C0 order to fix.
+
+SESSION_HTTP=200 AUTHENTICATED=False over HTTP.
+Secure session cookie count >= 1.
+DB_BINDING_MISMATCH=FALSIFIED CREDENTIAL_FAILURE=FALSIFIED.
+TASK_MUTATION_EXECUTED=false GL005_PROVEN remains FALSE.
+
+Product fix: session cookie Secure follows request scheme and X-Forwarded-Proto, not NODE_ENV=production alone. HTTPS keeps Secure. HTTP production does not emit Secure.
+This is not a global Secure-off bypass and is not GL-005.
+Law D-026 SECURE_COOKIE_NE_HTTP_SESSION NODE_ENV_PRODUCTION_NE_HTTPS.
+Next: C3 pull, restart the SAME bound Next, re-login over HTTP, report flags only.
 

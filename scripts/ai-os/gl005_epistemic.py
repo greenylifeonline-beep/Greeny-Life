@@ -24,6 +24,12 @@ LAWS = (
     "LOGIN_HTTP_200_NE_SIGNED_SESSION",
     "CLI_HASH_MATCH_NE_RUNTIME_SESSION",
     "DOCUMENTED_PROVISION_NE_ORCHESTRATION",
+    "SECURE_COOKIE_NE_HTTP_SESSION",
+    "COOKIE_TRANSPORT_MISMATCH_NE_CREDENTIAL_FAILURE",
+    "COOKIE_TRANSPORT_MISMATCH_NE_DB_BINDING_MISMATCH",
+    "COOKIE_TRANSPORT_MISMATCH_NE_GL005_PROVEN",
+    "DISABLE_SECURE_FLAG_NE_ORCHESTRATION_PROOF",
+    "NODE_ENV_PRODUCTION_NE_HTTPS",
 )
 
 OBSERVATION_CHAIN = (
@@ -187,9 +193,18 @@ def classify_login_session(
     atomic_login_proven_printed: bool,
     task_mutation_executed: bool,
     session_role: str | None = None,
+    secure_gl_session_count: int | None = None,
+    session_over_http: bool | None = None,
 ) -> dict[str, Any]:
     """Login HTTP 200 is not a signed session. Printed PROVEN is not evidence."""
     write_roles = {"ADMIN", "WAREHOUSE", "EXPORT"}
+    cookie_transport = (
+        login_http == 200
+        and login_success
+        and authenticated is False
+        and (secure_gl_session_count or 0) >= 1
+        and session_over_http is True
+    )
     if task_mutation_executed:
         rec = {
             "epistemic": "FAILED",
@@ -203,6 +218,23 @@ def classify_login_session(
             "reason": "SIGNED_SESSION_OBSERVED" if (session_role or "").upper() in write_roles else "SESSION_ROLE_NOT_WRITE",
             "capability": "PRESENT_BUT_PROTECTED_AND_UNPROVEN",
             "laws": ["PASS_CANDIDATE_NE_GL005_PROVEN"],
+        }
+    elif cookie_transport:
+        rec = {
+            "epistemic": "FAILED",
+            "reason": "SECURE_SESSION_COOKIE_NOT_USABLE_OVER_CURRENT_HTTP_RUNTIME",
+            "capability": "PRESENT_BUT_PROTECTED_AND_UNPROVEN",
+            "laws": [
+                "SECURE_COOKIE_NE_HTTP_SESSION",
+                "COOKIE_TRANSPORT_MISMATCH_NE_CREDENTIAL_FAILURE",
+                "COOKIE_TRANSPORT_MISMATCH_NE_DB_BINDING_MISMATCH",
+                "COOKIE_TRANSPORT_MISMATCH_NE_GL005_PROVEN",
+                "LOGIN_HTTP_200_NE_SIGNED_SESSION",
+                "HTTP_2XX_NE_SEMANTIC_SUCCESS",
+                "PRINTED_PASS_NE_EVIDENCE",
+                "DISABLE_SECURE_FLAG_NE_ORCHESTRATION_PROOF",
+                "NODE_ENV_PRODUCTION_NE_HTTPS",
+            ],
         }
     elif login_http == 200 and login_success and authenticated is False:
         rec = {
@@ -241,6 +273,99 @@ def classify_login_session(
             "signed_admin_session_printed": bool(signed_admin_session_printed),
             "printed_atomic_login_proven_falsified": bool(atomic_login_proven_printed) and authenticated is False,
             "task_mutation_executed": bool(task_mutation_executed),
+            "secure_gl_session_count": secure_gl_session_count,
+            "session_over_http": session_over_http,
+            "cookie_transport_mismatch": (
+                "PROVEN_CANDIDATE" if cookie_transport else None
+            ),
+            "gl005_proven": False,
+            "GL005_PROVEN": False,
+        }
+    )
+    return rec
+
+
+def classify_cookie_transport(
+    *,
+    login_http: int | None,
+    login_success: bool,
+    session_http: int | None,
+    authenticated: bool,
+    secure_gl_session_count: int,
+    session_over_http: bool,
+    cookie_transport_mismatch_printed: str | None,
+    db_binding_mismatch: str | None,
+    credential_failure: str | None,
+    task_mutation_executed: bool,
+    password_retained: bool,
+    evidence_mutation_executed: bool,
+    gl005_proven_printed: bool,
+) -> dict[str, Any]:
+    """Secure cookie on HTTP is a transport candidate, not a session and not GL-005."""
+    printed = (cookie_transport_mismatch_printed or "").strip().upper()
+    if password_retained:
+        rec = {
+            "epistemic": "INVALID_OBSERVATION",
+            "reason": "PASSWORD_RETAINED",
+            "capability": "CAPABILITY_UNPROVEN",
+            "laws": ["PASSWORD_VALUE_MUST_NOT_BE_PRINTED"],
+        }
+    elif evidence_mutation_executed or task_mutation_executed:
+        rec = {
+            "epistemic": "FAILED",
+            "reason": "MUTATION_CLAIMED_WITHOUT_BOUND_SESSION",
+            "capability": "CAPABILITY_UNPROVEN",
+            "laws": ["AUTH_GATE_PRESENT_NE_MUTATION_EXECUTED"],
+        }
+    elif gl005_proven_printed:
+        rec = {
+            "epistemic": "INVALID_OBSERVATION",
+            "reason": "PRINTED_GL005_PROVEN_WITHOUT_MUTATION",
+            "capability": "CAPABILITY_UNPROVEN",
+            "laws": ["PRINTED_PASS_NE_EVIDENCE", "COOKIE_TRANSPORT_MISMATCH_NE_GL005_PROVEN"],
+        }
+    else:
+        rec = classify_login_session(
+            login_http=login_http,
+            login_success=login_success,
+            session_http=session_http,
+            authenticated=authenticated,
+            signed_admin_session_printed=False,
+            atomic_login_proven_printed=False,
+            task_mutation_executed=False,
+            secure_gl_session_count=secure_gl_session_count,
+            session_over_http=session_over_http,
+        )
+        rec["db_binding_mismatch"] = db_binding_mismatch
+        rec["credential_failure"] = credential_failure
+        rec["cookie_transport_mismatch_printed"] = cookie_transport_mismatch_printed
+        rec["printed_cookie_transport_mismatch_is_not_gl005"] = printed in {
+            "PROVEN_CANDIDATE",
+            "PROVEN",
+            "TRUE",
+        }
+        rec["password_retained"] = bool(password_retained)
+        rec["evidence_mutation_executed"] = bool(evidence_mutation_executed)
+        rec["task_mutation_executed"] = bool(task_mutation_executed)
+        rec["gl005_proven_printed"] = bool(gl005_proven_printed)
+        rec["gl005_proven"] = False
+        rec["GL005_PROVEN"] = False
+        return rec
+    rec.update(
+        {
+            "login_http": login_http,
+            "login_success": bool(login_success),
+            "session_http": session_http,
+            "authenticated": bool(authenticated),
+            "secure_gl_session_count": secure_gl_session_count,
+            "session_over_http": bool(session_over_http),
+            "cookie_transport_mismatch_printed": cookie_transport_mismatch_printed,
+            "db_binding_mismatch": db_binding_mismatch,
+            "credential_failure": credential_failure,
+            "password_retained": bool(password_retained),
+            "evidence_mutation_executed": bool(evidence_mutation_executed),
+            "task_mutation_executed": bool(task_mutation_executed),
+            "gl005_proven_printed": bool(gl005_proven_printed),
             "gl005_proven": False,
             "GL005_PROVEN": False,
         }
