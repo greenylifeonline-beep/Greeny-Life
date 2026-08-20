@@ -1,0 +1,14 @@
+[project]
+name = "raios-neuro-lingua"
+version = "9.0.0-nl0"
+description = "RAIOS V9.NL-0 NeuroLingua Semantic Kernel"
+requires-python = ">=3.11"
+dependencies = ["PyYAML>=6.0"]
+
+[project.optional-dependencies]
+test = ["pytest>=8.0", "pytest-asyncio>=0.23", "hypothesis>=6.100"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests/neuro_lingua"]
+pythonpath = ["src"]
+asyncio_mode = "auto"

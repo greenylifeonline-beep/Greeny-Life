@@ -1,0 +1,830 @@
+{
+  "suite": "RAIOS V9.NL-0 NeuroLingua",
+  "generated": true,
+  "summary": {
+    "cases": 15,
+    "passed": 15,
+    "failed": 0,
+    "language_detection_accuracy": 1.0,
+    "dialect_detection_accuracy": 1.0,
+    "mean_latency_ms": 0.269,
+    "total_llm_calls": 0,
+    "total_provider_calls": 15,
+    "mean_local_execution_ratio": 1.0,
+    "llm_required": false,
+    "offline": true
+  },
+  "cases": [
+    {
+      "id": "nl0-ar-eg-pragmatic",
+      "passed": true,
+      "failures": [],
+      "skips": [],
+      "latency_ms": 0.733,
+      "llm_calls": 0,
+      "provider_calls": 1,
+      "local_execution_ratio": 1.0,
+      "locale": "ar-EG",
+      "language": "ar",
+      "dialect": "egyptian",
+      "code_switched": false,
+      "language_detection_ok": true,
+      "dialect_detection_ok": true,
+      "intent": "resolve_by_today",
+      "numbers": [],
+      "identifiers": [],
+      "realized": {
+        "text": "vær så snill: løs saken i dag",
+        "target_locale": "nb-NO",
+        "realization_complete": true,
+        "verification": {
+          "risk_level": "LOW",
+          "passed": true,
+          "checks": [
+            {
+              "name": "number_preservation",
+              "passed": true,
+              "detail": "surface_must_survive",
+              "missing": [],
+              "extras": []
+            },
+            {
+              "name": "identifier_preservation",
+              "passed": true,
+              "detail": "surface_must_survive",
+              "missing": [],
+              "extras": []
+            },
+            {
+              "name": "target_language_leakage",
+              "passed": true,
+              "detail": "scandinavian_isolation",
+              "missing": [],
+              "extras": []
+            }
+          ],
+          "leakage": {
+            "target_locale": "nb-NO",
+            "leaked_tokens": [],
+            "passed": true
+          },
+          "used_back_translation": false,
+          "independent_verifier": false
+        },
+        "metrics": {
+          "latency_ms": 0.09,
+          "provider_calls": 1,
+          "llm_calls": 0,
+          "local_steps": 1,
+          "local_execution_ratio": 1.0,
+          "tiers_used": []
+        },
+        "warnings": [],
+        "leakage": [],
+        "packet_id": "cmp_e90d8f98a3ce7949"
+      },
+      "verification": {
+        "risk_level": "LOW",
+        "passed": true,
+        "checks": [
+          {
+            "name": "number_preservation",
+            "passed": true,
+            "detail": "surface_must_survive",
+            "missing": [],
+            "extras": []
+          },
+          {
+            "name": "identifier_preservation",
+            "passed": true,
+            "detail": "surface_must_survive",
+            "missing": [],
+            "extras": []
+          },
+          {
+            "name": "target_language_leakage",
+            "passed": true,
+            "detail": "scandinavian_isolation",
+            "missing": [],
+            "extras": []
+          }
+        ],
+        "leakage": {
+          "target_locale": "nb-NO",
+          "leaked_tokens": [],
+          "passed": true
+        },
+        "used_back_translation": false,
+        "independent_verifier": false
+      }
+    },
+    {
+      "id": "nl0-ar-eg-codeswitch",
+      "passed": true,
+      "failures": [],
+      "skips": [],
+      "latency_ms": 0.389,
+      "llm_calls": 0,
+      "provider_calls": 1,
+      "local_execution_ratio": 1.0,
+      "locale": "ar-EG",
+      "language": "ar",
+      "dialect": "egyptian",
+      "code_switched": true,
+      "language_detection_ok": true,
+      "dialect_detection_ok": true,
+      "intent": "report_generation_issue",
+      "numbers": [],
+      "identifiers": [
+        "migration",
+        "report",
+        "executor"
+      ],
+      "realized": {
+        "text": "migration executor report",
+        "target_locale": "en",
+        "realization_complete": true,
+        "verification": {
+          "risk_level": "LOW",
+          "passed": true,
+          "checks": [
+            {
+              "name": "number_preservation",
+              "passed": true,
+              "detail": "surface_must_survive",
+              "missing": [],
+              "extras": []
+            },
+            {
+              "name": "identifier_preservation",
+              "passed": true,
+              "detail": "surface_must_survive",
+              "missing": [],
+              "extras": []
+            }
+          ],
+          "leakage": {
+            "target_locale": "en",
+            "leaked_tokens": [],
+            "passed": true
+          },
+          "used_back_translation": false,
+          "independent_verifier": false
+        },
+        "metrics": {
+          "latency_ms": 0.018,
+          "provider_calls": 1,
+          "llm_calls": 0,
+          "local_steps": 1,
+          "local_execution_ratio": 1.0,
+          "tiers_used": []
+        },
+        "warnings": [],
+        "leakage": [],
+        "packet_id": "cmp_31d6857441e414b5"
+      },
+      "verification": {
+        "risk_level": "LOW",
+        "passed": true,
+        "checks": [
+          {
+            "name": "number_preservation",
+            "passed": true,
+            "detail": "surface_must_survive",
+            "missing": [],
+            "extras": []
+          },
+          {
+            "name": "identifier_preservation",
+            "passed": true,
+            "detail": "surface_must_survive",
+            "missing": [],
+            "extras": []
+          }
+        ],
+        "leakage": {
+          "target_locale": "en",
+          "leaked_tokens": [],
+          "passed": true
+        },
+        "used_back_translation": false,
+        "independent_verifier": false
+      }
+    },
+    {
+      "id": "nl0-ar-gulf",
+      "passed": true,
+      "failures": [],
+      "skips": [],
+      "latency_ms": 0.195,
+      "llm_calls": 0,
+      "provider_calls": 1,
+      "local_execution_ratio": 1.0,
+      "locale": "ar-GULF",
+      "language": "ar",
+      "dialect": "gulf_neutral",
+      "code_switched": false,
+      "language_detection_ok": true,
+      "dialect_detection_ok": true,
+      "intent": "concept_bearing_utterance",
+      "numbers": [],
+      "identifiers": [],
+      "realized": null,
+      "verification": null
+    },
+    {
+      "id": "nl0-ar-eg-regression",
+      "passed": true,
+      "failures": [],
+      "skips": [],
+      "latency_ms": 0.169,
+      "llm_calls": 0,
+      "provider_calls": 1,
+      "local_execution_ratio": 1.0,
+      "locale": "ar-EG",
+      "language": "ar",
+      "dialect": "egyptian",
+      "code_switched": false,
+      "language_detection_ok": true,
+      "dialect_detection_ok": true,
+      "intent": "report_system_regression",
+      "numbers": [],
+      "identifiers": [],
+      "realized": null,
+      "verification": null
+    },
+    {
+      "id": "nl0-nb-codeswitch",
+      "passed": true,
+      "failures": [],
+      "skips": [],
+      "latency_ms": 0.344,
+      "llm_calls": 0,
+      "provider_calls": 1,
+      "local_execution_ratio": 1.0,
+      "locale": "nb-NO",
+      "language": "nb",
+      "dialect": null,
+      "code_switched": false,
+      "language_detection_ok": true,
+      "dialect_detection_ok": true,
+      "intent": "deploy_request",
+      "numbers": [],
+      "identifiers": [
+        "deploye",
+        "builden",
+        "touche production-databasen"
+      ],
+      "realized": {
+        "text": "production-databasen deploye builden touche touche production-databasen",
+        "target_locale": "nb-NO",
+        "realization_complete": true,
+        "verification": {
+          "risk_level": "LOW",
+          "passed": true,
+          "checks": [
+            {
+              "name": "number_preservation",
+              "passed": true,
+              "detail": "surface_must_survive",
+              "missing": [],
+              "extras": []
+            },
+            {
+              "name": "identifier_preservation",
+              "passed": true,
+              "detail": "surface_must_survive",
+              "missing": [],
+              "extras": []
+            },
+            {
+              "name": "target_language_leakage",
+              "passed": true,
+              "detail": "scandinavian_isolation",
+              "missing": [],
+              "extras": []
+            }
+          ],
+          "leakage": {
+            "target_locale": "nb-NO",
+            "leaked_tokens": [],
+            "passed": true
+          },
+          "used_back_translation": false,
+          "independent_verifier": false
+        },
+        "metrics": {
+          "latency_ms": 0.028,
+          "provider_calls": 1,
+          "llm_calls": 0,
+          "local_steps": 1,
+          "local_execution_ratio": 1.0,
+          "tiers_used": []
+        },
+        "warnings": [],
+        "leakage": [],
+        "packet_id": "cmp_0f4dccbe0bdf8949"
+      },
+      "verification": {
+        "risk_level": "LOW",
+        "passed": true,
+        "checks": [
+          {
+            "name": "number_preservation",
+            "passed": true,
+            "detail": "surface_must_survive",
+            "missing": [],
+            "extras": []
+          },
+          {
+            "name": "identifier_preservation",
+            "passed": true,
+            "detail": "surface_must_survive",
+            "missing": [],
+            "extras": []
+          },
+          {
+            "name": "target_language_leakage",
+            "passed": true,
+            "detail": "scandinavian_isolation",
+            "missing": [],
+            "extras": []
+          }
+        ],
+        "leakage": {
+          "target_locale": "nb-NO",
+          "leaked_tokens": [],
+          "passed": true
+        },
+        "used_back_translation": false,
+        "independent_verifier": false
+      }
+    },
+    {
+      "id": "nl0-sv-isolation",
+      "passed": true,
+      "failures": [],
+      "skips": [],
+      "latency_ms": 0.21,
+      "llm_calls": 0,
+      "provider_calls": 1,
+      "local_execution_ratio": 1.0,
+      "locale": "en",
+      "language": "en",
+      "dialect": null,
+      "code_switched": false,
+      "language_detection_ok": true,
+      "dialect_detection_ok": true,
+      "intent": "resolve_by_today",
+      "numbers": [],
+      "identifiers": [],
+      "realized": {
+        "text": "lös saken i dag",
+        "target_locale": "sv-SE",
+        "realization_complete": true,
+        "verification": {
+          "risk_level": "LOW",
+          "passed": true,
+          "checks": [
+            {
+              "name": "number_preservation",
+              "passed": true,
+              "detail": "surface_must_survive",
+              "missing": [],
+              "extras": []
+            },
+            {
+              "name": "identifier_preservation",
+              "passed": true,
+              "detail": "surface_must_survive",
+              "missing": [],
+              "extras": []
+            },
+            {
+              "name": "target_language_leakage",
+              "passed": true,
+              "detail": "scandinavian_isolation",
+              "missing": [],
+              "extras": []
+            }
+          ],
+          "leakage": {
+            "target_locale": "sv-SE",
+            "leaked_tokens": [],
+            "passed": true
+          },
+          "used_back_translation": false,
+          "independent_verifier": false
+        },
+        "metrics": {
+          "latency_ms": 0.02,
+          "provider_calls": 1,
+          "llm_calls": 0,
+          "local_steps": 1,
+          "local_execution_ratio": 1.0,
+          "tiers_used": []
+        },
+        "warnings": [],
+        "leakage": [],
+        "packet_id": "cmp_6eea318326aa3329"
+      },
+      "verification": {
+        "risk_level": "LOW",
+        "passed": true,
+        "checks": [
+          {
+            "name": "number_preservation",
+            "passed": true,
+            "detail": "surface_must_survive",
+            "missing": [],
+            "extras": []
+          },
+          {
+            "name": "identifier_preservation",
+            "passed": true,
+            "detail": "surface_must_survive",
+            "missing": [],
+            "extras": []
+          },
+          {
+            "name": "target_language_leakage",
+            "passed": true,
+            "detail": "scandinavian_isolation",
+            "missing": [],
+            "extras": []
+          }
+        ],
+        "leakage": {
+          "target_locale": "sv-SE",
+          "leaked_tokens": [],
+          "passed": true
+        },
+        "used_back_translation": false,
+        "independent_verifier": false
+      }
+    },
+    {
+      "id": "nl0-da-isolation",
+      "passed": true,
+      "failures": [],
+      "skips": [],
+      "latency_ms": 0.2,
+      "llm_calls": 0,
+      "provider_calls": 1,
+      "local_execution_ratio": 1.0,
+      "locale": "en",
+      "language": "en",
+      "dialect": null,
+      "code_switched": false,
+      "language_detection_ok": true,
+      "dialect_detection_ok": true,
+      "intent": "resolve_by_today",
+      "numbers": [],
+      "identifiers": [],
+      "realized": {
+        "text": "løs sagen i dag",
+        "target_locale": "da-DK",
+        "realization_complete": true,
+        "verification": {
+          "risk_level": "LOW",
+          "passed": true,
+          "checks": [
+            {
+              "name": "number_preservation",
+              "passed": true,
+              "detail": "surface_must_survive",
+              "missing": [],
+              "extras": []
+            },
+            {
+              "name": "identifier_preservation",
+              "passed": true,
+              "detail": "surface_must_survive",
+              "missing": [],
+              "extras": []
+            },
+            {
+              "name": "target_language_leakage",
+              "passed": true,
+              "detail": "scandinavian_isolation",
+              "missing": [],
+              "extras": []
+            }
+          ],
+          "leakage": {
+            "target_locale": "da-DK",
+            "leaked_tokens": [],
+            "passed": true
+          },
+          "used_back_translation": false,
+          "independent_verifier": false
+        },
+        "metrics": {
+          "latency_ms": 0.02,
+          "provider_calls": 1,
+          "llm_calls": 0,
+          "local_steps": 1,
+          "local_execution_ratio": 1.0,
+          "tiers_used": []
+        },
+        "warnings": [],
+        "leakage": [],
+        "packet_id": "cmp_6eea318326aa3329"
+      },
+      "verification": {
+        "risk_level": "LOW",
+        "passed": true,
+        "checks": [
+          {
+            "name": "number_preservation",
+            "passed": true,
+            "detail": "surface_must_survive",
+            "missing": [],
+            "extras": []
+          },
+          {
+            "name": "identifier_preservation",
+            "passed": true,
+            "detail": "surface_must_survive",
+            "missing": [],
+            "extras": []
+          },
+          {
+            "name": "target_language_leakage",
+            "passed": true,
+            "detail": "scandinavian_isolation",
+            "missing": [],
+            "extras": []
+          }
+        ],
+        "leakage": {
+          "target_locale": "da-DK",
+          "leaked_tokens": [],
+          "passed": true
+        },
+        "used_back_translation": false,
+        "independent_verifier": false
+      }
+    },
+    {
+      "id": "nl0-en-numbers",
+      "passed": true,
+      "failures": [],
+      "skips": [],
+      "latency_ms": 0.207,
+      "llm_calls": 0,
+      "provider_calls": 1,
+      "local_execution_ratio": 1.0,
+      "locale": "en",
+      "language": "en",
+      "dialect": null,
+      "code_switched": false,
+      "language_detection_ok": true,
+      "dialect_detection_ok": true,
+      "intent": null,
+      "numbers": [
+        "12",
+        "3.5"
+      ],
+      "identifiers": [],
+      "realized": {
+        "text": "12 3.5",
+        "target_locale": "en",
+        "realization_complete": true,
+        "verification": {
+          "risk_level": "LOW",
+          "passed": true,
+          "checks": [
+            {
+              "name": "number_preservation",
+              "passed": true,
+              "detail": "surface_must_survive",
+              "missing": [],
+              "extras": []
+            },
+            {
+              "name": "identifier_preservation",
+              "passed": true,
+              "detail": "surface_must_survive",
+              "missing": [],
+              "extras": []
+            }
+          ],
+          "leakage": {
+            "target_locale": "en",
+            "leaked_tokens": [],
+            "passed": true
+          },
+          "used_back_translation": false,
+          "independent_verifier": false
+        },
+        "metrics": {
+          "latency_ms": 0.011,
+          "provider_calls": 1,
+          "llm_calls": 0,
+          "local_steps": 1,
+          "local_execution_ratio": 1.0,
+          "tiers_used": []
+        },
+        "warnings": [],
+        "leakage": [],
+        "packet_id": "cmp_339ed26acf10352a"
+      },
+      "verification": {
+        "risk_level": "LOW",
+        "passed": true,
+        "checks": [
+          {
+            "name": "number_preservation",
+            "passed": true,
+            "detail": "surface_must_survive",
+            "missing": [],
+            "extras": []
+          },
+          {
+            "name": "identifier_preservation",
+            "passed": true,
+            "detail": "surface_must_survive",
+            "missing": [],
+            "extras": []
+          }
+        ],
+        "leakage": {
+          "target_locale": "en",
+          "leaked_tokens": [],
+          "passed": true
+        },
+        "used_back_translation": false,
+        "independent_verifier": false
+      }
+    },
+    {
+      "id": "nl0-ar-indic-number",
+      "passed": true,
+      "failures": [],
+      "skips": [],
+      "latency_ms": 0.21,
+      "llm_calls": 0,
+      "provider_calls": 1,
+      "local_execution_ratio": 1.0,
+      "locale": null,
+      "language": "ar",
+      "dialect": null,
+      "code_switched": true,
+      "language_detection_ok": true,
+      "dialect_detection_ok": true,
+      "intent": "report_generation_issue",
+      "numbers": [
+        "١٢"
+      ],
+      "identifiers": [
+        "report"
+      ],
+      "realized": null,
+      "verification": null
+    },
+    {
+      "id": "nl0-en-ids",
+      "passed": true,
+      "failures": [],
+      "skips": [],
+      "latency_ms": 0.373,
+      "llm_calls": 0,
+      "provider_calls": 1,
+      "local_execution_ratio": 1.0,
+      "locale": null,
+      "language": null,
+      "dialect": null,
+      "code_switched": false,
+      "language_detection_ok": true,
+      "dialect_detection_ok": true,
+      "intent": null,
+      "numbers": [
+        "55",
+        "400",
+        "4",
+        "16",
+        "446655440000"
+      ],
+      "identifiers": [
+        "550e8400-e29b-41d4-a716-446655440000",
+        "kernel.py"
+      ],
+      "realized": null,
+      "verification": null
+    },
+    {
+      "id": "nl0-nb-distinct",
+      "passed": true,
+      "failures": [],
+      "skips": [],
+      "latency_ms": 0.199,
+      "llm_calls": 0,
+      "provider_calls": 1,
+      "local_execution_ratio": 1.0,
+      "locale": "nb-NO",
+      "language": "nb",
+      "dialect": null,
+      "code_switched": false,
+      "language_detection_ok": true,
+      "dialect_detection_ok": true,
+      "intent": "resolve",
+      "numbers": [],
+      "identifiers": [],
+      "realized": null,
+      "verification": null
+    },
+    {
+      "id": "nl0-sv-distinct",
+      "passed": true,
+      "failures": [],
+      "skips": [],
+      "latency_ms": 0.221,
+      "llm_calls": 0,
+      "provider_calls": 1,
+      "local_execution_ratio": 1.0,
+      "locale": "sv-SE",
+      "language": "sv",
+      "dialect": null,
+      "code_switched": false,
+      "language_detection_ok": true,
+      "dialect_detection_ok": true,
+      "intent": "resolve",
+      "numbers": [],
+      "identifiers": [],
+      "realized": null,
+      "verification": null
+    },
+    {
+      "id": "nl0-da-distinct",
+      "passed": true,
+      "failures": [],
+      "skips": [],
+      "latency_ms": 0.192,
+      "llm_calls": 0,
+      "provider_calls": 1,
+      "local_execution_ratio": 1.0,
+      "locale": "da-DK",
+      "language": "da",
+      "dialect": null,
+      "code_switched": false,
+      "language_detection_ok": true,
+      "dialect_detection_ok": true,
+      "intent": "resolve",
+      "numbers": [],
+      "identifiers": [],
+      "realized": null,
+      "verification": null
+    },
+    {
+      "id": "nl0-en-please",
+      "passed": true,
+      "failures": [],
+      "skips": [],
+      "latency_ms": 0.202,
+      "llm_calls": 0,
+      "provider_calls": 1,
+      "local_execution_ratio": 1.0,
+      "locale": "en",
+      "language": "en",
+      "dialect": null,
+      "code_switched": false,
+      "language_detection_ok": true,
+      "dialect_detection_ok": true,
+      "intent": "deploy_request",
+      "numbers": [],
+      "identifiers": [
+        "deploy",
+        "report"
+      ],
+      "realized": null,
+      "verification": null
+    },
+    {
+      "id": "nl0-ar-fusha-no-dialect",
+      "passed": true,
+      "failures": [],
+      "skips": [],
+      "latency_ms": 0.186,
+      "llm_calls": 0,
+      "provider_calls": 1,
+      "local_execution_ratio": 1.0,
+      "locale": null,
+      "language": "ar",
+      "dialect": null,
+      "code_switched": false,
+      "language_detection_ok": true,
+      "dialect_detection_ok": true,
+      "intent": null,
+      "numbers": [],
+      "identifiers": [],
+      "realized": null,
+      "verification": null
+    }
+  ],
+  "notes": [
+    "Benchmark ran fully offline with the local deterministic provider.",
+    "No LLM calls were made. Provider-dependent checks are not faked.",
+    "Back-translation is disabled by default and was not executed."
+  ]
+}
