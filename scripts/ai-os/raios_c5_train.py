@@ -99,6 +99,8 @@ KEEPERS = (
     ("proof", "scripts/ai-os/raios_c5_proof.py"),
     ("qwen", "scripts/ai-os/raios_c5_qwen.py"),
     ("kae", "scripts/ai-os/raios_c5_kae.py"),
+    ("toc", "scripts/ai-os/raios_c5_toc.py"),
+    ("mind-fill", "scripts/ai-os/raios_c5_mind_fill.py"),
 )
 
 

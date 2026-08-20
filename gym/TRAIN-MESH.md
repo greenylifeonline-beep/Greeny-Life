@@ -19,7 +19,7 @@ python3 scripts/ai-os/raios_c5_train.py
 | Hugging Face Jobs | اختياري لاحقًا |
 
 لا تنزيل أوزان. لا أدوات MCP جديدة. لا استدعاء مقاعد C من هذه القناة.
-KAE إعادة توريق: `python3 scripts/ai-os/raios_c5_kae.py --demo`. ليست عقلاً ثانياً. Main Cortex معزولة.
+KAE: `python3 scripts/ai-os/raios_c5_kae.py --demo`. حقن العقل: `powershell -File scripts/ai-os/raios_c5_mind_fill.ps1`.
 
 https://colab.research.google.com/github/greenylifeonline-beep/Greeny-Life/blob/v9-neurolingua-semantic-kernel/gym/colab_kaggle_c5.ipynb
 

@@ -233,3 +233,12 @@ DISCOVERED, not CANONICAL: `KAE_NE_SECOND_MIND`. `KAE_NE_SECOND_WAL`. `AUTHORIZE
 
 ## D-051 C5 knows libraries via catalog, fetches locally, puts DISCOVERED
 DISCOVERED, not CANONICAL: `C5_KNOWS_LIBRARIES_VIA_CATALOG`. `FETCH_IS_LOCAL_ALLOWLIST`. `PUT_IS_DISCOVERED_CANDIDATE`. Map: `src/raios/neuro_lingua/kae_libraries.py` and `configs/neuro_lingua/LIBRARIES.md`. Learn-from: CORE-CONTRACT, DECISIONS, council, handoffs, lawbook, concepts, NeuroLingua, keepers, canonical stock/shipments. Find: DIGESTS+INDEX then catalog scan. Put: `.ai-os/learning/CANDIDATES.jsonl` and `.ai-os/receipts/c5-kae/`. Never WAL, never HF weights, never live C seats, never scrape. Runner: `python3 scripts/ai-os/raios_c5_kae.py --libraries`. Does not close GL-005.
+
+## D-052 C1 owns cortex: treat, run, or throw
+DISCOVERED, not CANONICAL: `C1_OWNS_CORTEX_TREAT_RUN_THROW`. `HOLD_NE_THROW`. `EXECUTOR_NE_THROW_CORTEX`. Isolation by an executor is not disposal. Identity stays `qwen3.6:35b-a3b`. Student `qwen2.5:0.5b` is not that identity. Run requires C1 grant and a capable host. This VM has no GPU. Runner: `python3 scripts/ai-os/raios_c5_qwen.py --cortex`. Does not close GL-005.
+
+## D-053 The Goal uses live WIP, not invented minutes
+DISCOVERED, not CANONICAL: `TOC_IDENTIFY_FROM_LIVE_WIP`. `INVENTED_MINUTES_NE_CONSTRAINT`. `ELEVATE_REQUIRES_C1`. Canonical origin is Cairo, not Europe. No Gulf warehouse record. No duration fields. ChatGPT 15% / $5000 paste is falsified. Runner: `python3 scripts/ai-os/raios_c5_toc.py`. Does not close GL-005.
+
+## D-054 PowerShell fills C5 mind from important files only
+DISCOVERED, not CANONICAL: `C5_MIND_FILL_IMPORTANT_ONLY`. `POWERSHELL_CALLS_LIVE_KEEPER`. `ABSORB_DIGEST_NE_WAL_DUMP`. `powershell -File scripts/ai-os/raios_c5_mind_fill.ps1` injects CORE-CONTRACT, DECISIONS, GRANT, LAWBOOK, products, stock, shipments into DIGESTS+INDEX+C5-MIND. Not WAL. Not V9. Not HF weights. Does not close GL-005.

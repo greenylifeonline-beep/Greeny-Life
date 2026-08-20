@@ -42,6 +42,8 @@ LANGUAGE_MODULES = (
     "qwen_runtime.py",
     "kae.py",
     "kae_libraries.py",
+    "cortex.py",
+    "toc.py",
 )
 TEACHING_SCRIPTS = (
     "raios_learn_ingest.py",
@@ -52,6 +54,8 @@ TEACHING_SCRIPTS = (
     "raios_c5_speak.py",
     "raios_c5_qwen.py",
     "raios_c5_kae.py",
+    "raios_c5_toc.py",
+    "raios_c5_mind_fill.py",
     "raios_c5_grind.py",
     "raios_c5_week.py",
 )
@@ -92,7 +96,7 @@ async def language_live() -> list[dict]:
     compressed = compress_meaning("The supplier shipped the products to Norway.")
     return [
         check("cortex_denied", admission.admitted is False, admission.reason),
-        check("cortex_reason", admission.reason == "MAIN_CORTEX_ISOLATED_DANGEROUS_WEAK", admission.reason),
+        check("cortex_reason", admission.reason == "CORTEX_HOLD_AWAITING_C1_RUN", admission.reason),
         check("interpret", interpreted.meaning.semantics.action is not None or compressed["pattern"]["action"] == "ship", interpreted.meaning.source_locale or "und"),
         check("compress_pattern", compressed["pattern"]["actor"] == "supplier" and compressed["word_list"] is False, str(compressed["pattern"])),
         check("realize", bool(realized.text), realized.text[:80]),
@@ -109,7 +113,7 @@ def teaching_live(*, require_student: bool) -> list[dict]:
     from raios_c5_experience import main as experience_main
 
     ingest_rec = ingest(
-        "Qwen student live; Main Cortex isolated as dangerous/weak.",
+        "Qwen student live; C1 owns cortex treat/run/throw; hold is not throw.",
         "tools-audit",
         ["CASE-016", "D-048"],
     )
@@ -136,11 +140,11 @@ def teaching_live(*, require_student: bool) -> list[dict]:
         check("training_policy", policy.get("install_cpt") is False, policy.get("decision") or ""),
         check("student_probe", bool(status.get("student_live")), status.get("reason") or ""),
         check("student_generate", bool(gen.get("ok")), (gen.get("response") or gen.get("error") or "")[:120]),
-        check("cortex_not_used", gen.get("cortex_used") is False or gen.get("error") == "MAIN_CORTEX_ISOLATED_DANGEROUS_WEAK" or not gen.get("ok"), str(gen.get("cortex_used"))),
+        check("cortex_not_used", gen.get("cortex_used") is False, str(gen.get("cortex_used"))),
         check("deep_path_label", path["deep_available"] == bool(status.get("student_live")), path["reason"]),
         check("identity_unswapped", CORTEX_IDENTITY == "qwen3.6:35b-a3b", CORTEX_IDENTITY),
         check("kae_retile", kae.get("ok") is True and len(kae.get("tiles") or {}) == 16, str((kae.get("metrics") or {}).get("knowledge_yield"))),
-        check("kae_no_cortex", kae.get("cortex_used") is False and kae.get("consult_used") is False, "isolated"),
+        check("kae_no_cortex", kae.get("cortex_used") is False and kae.get("consult_used") is False, "hold"),
         check("libraries_known", libs.get("knows_where") is True and int(libs.get("known_count") or 0) >= 8, str(libs.get("known_count"))),
         check("fetch_core", fetched.get("ok") is True and "Source of truth" in (fetched.get("text") or ""), fetched.get("path") or ""),
         check("put_candidates", (libs.get("put") or {}).get("discovered") == ".ai-os/learning/CANDIDATES.jsonl", str((libs.get("put") or {}).get("discovered"))),
@@ -165,16 +169,19 @@ def audit(*, require_student: bool) -> dict:
         "failed": [row["name"] for row in checks if not row["ok"]],
         "checks": checks,
         "cortex_identity": CORTEX_IDENTITY,
-        "cortex_isolated": True,
+        "cortex_isolated": False,
+        "isolated_as_disposal": False,
         "require_student": require_student,
         "consult_used": False,
         "wal_written": False,
         "gl005_proven": False,
         "law": [
-            "MAIN_CORTEX_ISOLATED_DANGEROUS_WEAK",
+            "C1_OWNS_CORTEX_TREAT_RUN_THROW",
+            "HOLD_NE_THROW",
             "STUDENT_NE_MAIN_CORTEX",
             "LANGUAGE_PROFESSIONAL_IS_NEUROLINGUA",
             "WORD_LIST_NE_LANGUAGE",
+            "C5_MIND_FILL_IMPORTANT_ONLY",
         ],
     }
     wal_after = wal_mtime()
@@ -188,7 +195,7 @@ def audit(*, require_student: bool) -> dict:
         "",
         f"- نجح: `{ok}`",
         f"- فشل: `{rec['failed']}`",
-        f"- القشرة معزولة: `true` (`{CORTEX_IDENTITY}`)",
+        f"- القشرة ملك C1: treat/run/throw — عزل كرمي `false` (`{CORTEX_IDENTITY}`)",
         f"- GL005_PROVEN: `false`",
         "",
     ]
@@ -212,7 +219,7 @@ def main() -> int:
                 "ok": rec["ok"],
                 "failed": rec["failed"],
                 "n": len(rec["checks"]),
-                "cortex_isolated": True,
+                "cortex_isolated": False,
                 "gl005_proven": False,
             },
             ensure_ascii=False,

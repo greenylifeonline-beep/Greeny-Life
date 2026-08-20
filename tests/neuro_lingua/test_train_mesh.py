@@ -20,6 +20,8 @@ def test_mesh_lists_every_platform_and_one_command():
     assert COMMAND == "python3 scripts/ai-os/raios_c5_train.py"
     assert any(name == "speak" for name, _ in KEEPERS)
     assert any(name == "kae" for name, _ in KEEPERS)
+    assert any(name == "toc" for name, _ in KEEPERS)
+    assert any(name == "mind-fill" for name, _ in KEEPERS)
     assert host_id("local-or-cursor") == "cursor-vm"
     assert host_id("colab") == "colab"
     assert sum(1 for row in PLATFORMS if row["is_c5"]) == 1
