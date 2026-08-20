@@ -94,3 +94,9 @@ C5 seated via C0 chat. Answers recorded on the board. GL005_PROVEN remains false
 
 `event_id=27fd3e3b-6edc-4b92-b1b3-652cc22e0016` `wal=WAL_COMMITTED`
 
+### 2026-08-20T15:54:22.995689+00:00 — CONSULTANT
+
+C2 seated via C0 chat. GET 200 does not close GL-005. GL005_PROVEN remains false until a real POST creates a recorded task. No git.
+
+`event_id=76fa8b1d-d2e0-442b-9b66-1d6dbb831f9f` `wal=WAL_COMMITTED`
+
