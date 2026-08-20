@@ -45,3 +45,9 @@ C2: مكانك هنا. اسحب الفرع واقرأ .ai-os/board/NOW.md ثم p
 
 `event_id=04e0865b-cda7-49ab-8953-49d736953c11` `wal=WAL_COMMITTED`
 
+### 2026-08-20T13:59:07.420248+00:00 — COMMANDER
+
+Team Relay not implemented. Challenge posted. C2 read .ai-os/handoffs/20260820-TEAM-RELAY-CHALLENGE.json then leave C2 opinion on the board.
+
+`event_id=0135e5e6-c87a-4f3c-9cfe-682a3eefa5dc` `wal=WAL_COMMITTED`
+

@@ -1,0 +1,23 @@
+{
+  "schema": "raios.experience.pending-validation.v1",
+  "id": "CASE-20260820-TEAM-RELAY",
+  "knowledge_state": "DISCOVERED",
+  "promoted": false,
+  "task_id": "RELAY-REVIEW",
+  "timestamp": "2026-08-20T13:57:00Z",
+  "agent": "cursor",
+  "context": "Adversarial review of RAIOS Team Relay / actor mailboxes. Not implemented.",
+  "decision": "PENDING_VALIDATION",
+  "laws": [
+    {"id": "RELAY_PACKET_NE_TASK", "rule": "A mailbox packet cannot create, claim, or complete a .ai-os task."},
+    {"id": "RELAY_NE_ORCHESTRATION", "rule": "A mailbox round-trip is not GL-005 orchestration."},
+    {"id": "ACTOR_MAY_WRITE_ONLY_OWN_OUTBOX", "rule": "Shared-repo write is not mailbox ownership."},
+    {"id": "ACK_IS_A_NEW_PACKET_NEVER_A_MOVE", "rule": "processed/ moves are mutations and races."},
+    {"id": "PACKET_ID_IS_THE_ONLY_DEDUPE_KEY", "rule": "correlation_id must not dedupe messages."},
+    {"id": "MESSAGE_RECEIVED_NE_COMMAND_AUTHORIZED", "rule": "Arrival is not execution."},
+    {"id": "DELIVERY_RECEIPT_NE_EXECUTION_RECEIPT", "rule": "Hub cannot mint Repair PASS."},
+    {"id": "LEARNING_CANDIDATE_NE_CANONICAL", "rule": "External review text cannot promote knowledge."},
+    {"id": "TEAM_RELAY_DOWN_NE_RUNTIME_STOP", "rule": "Internal .ai-os, board, WAL, and tests continue offline."},
+    {"id": "ENVELOPE_MAY_REFERENCE_EVIDENCE_NEVER_CONTAIN_EXECUTION_TRUTH", "rule": "No pass/certified booleans on envelopes."}
+  ]
+}

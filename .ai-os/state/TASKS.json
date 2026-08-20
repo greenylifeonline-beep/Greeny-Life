@@ -274,6 +274,24 @@
       "status": "DONE",
       "claimed_by": "cursor",
       "evidence": ".ai-os/board/NOW.md WAL opinions C1 C4"
+    },
+    {
+      "id": "RELAY-REVIEW",
+      "title": "Adversarial review of Team Relay proposal",
+      "objective": "Challenge Team Relay/mailbox design without implementing it. Record DISCOVERED protocol laws.",
+      "scope": [
+        ".ai-os/handoffs",
+        ".ai-os/experience",
+        ".ai-os/board"
+      ],
+      "dependencies": [],
+      "allowed_agents": [
+        "cursor"
+      ],
+      "validation": "Written challenge covering 18 questions; no mailbox implementation; no second WAL.",
+      "status": "DONE",
+      "claimed_by": "cursor",
+      "evidence": ".ai-os/handoffs/20260820-TEAM-RELAY-CHALLENGE.json DISCOVERED not implemented"
     }
   ]
 }
