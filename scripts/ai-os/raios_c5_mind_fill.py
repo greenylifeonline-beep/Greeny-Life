@@ -11,13 +11,19 @@ from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[2]
 sys.path.insert(0, str(Path(__file__).resolve().parent))
-sys.path.insert(0, str(ROOT / "src"))
 
-from raios.neuro_lingua.kae_libraries import allowed  # noqa: E402
 from raios_absorb import absorb  # noqa: E402
 from raios_c5_index import build as build_index  # noqa: E402
 from raios_c5_memory import catalog  # noqa: E402
 from raios_c5_mind import write_mind  # noqa: E402
+
+DENIED_PARTS = ("RAIOS/V9", ".env", "node_modules", ".git/", "tokens.local")
+
+
+def allowed(rel: str) -> bool:
+    raw = rel.replace("\\", "/")
+    return not any(part in raw for part in DENIED_PARTS)
+
 
 WAL = ROOT / "RAIOS" / "V9" / "wal" / "cognitive-events.jsonl"
 OUT_DIR = ROOT / ".ai-os" / "receipts" / "c5-mind-fill"
