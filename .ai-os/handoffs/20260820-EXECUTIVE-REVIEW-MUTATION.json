@@ -1,0 +1,62 @@
+{
+  "schema": "raios.executive-review.v1",
+  "role": "EXECUTIVE_REVIEWER",
+  "knowledge_state": "DISCOVERED",
+  "verdict": "REJECT_CERTIFICATION",
+  "reviewed_at": "2026-08-20T13:20:00Z",
+  "reviewer_head": "6327c07ab54935c41d454991ed5e2d6f48b7865c",
+  "receipt_under_review": null,
+  "receipt_present_this_slice": false,
+  "challenge": [
+    {
+      "id": "NO_HASHED_RECEIPT",
+      "severity": "BLOCKING",
+      "fact": "This authority slice has no ESTATE-HASH-GC.json and no mutation receipt SHA256. Claims in flight cannot be certified.",
+      "law": "Presence of a narrative is not a receipt. Printed PASS is not truth."
+    },
+    {
+      "id": "PARENT_EXIT_ALWAYS_ZERO",
+      "severity": "BLOCKING",
+      "fact": "scripts/ai-os/estate-hash-gc.ps1 writes GC_EXIT=0 and exit 0 after capturing child codes. A failing type-check or test cannot fail the parent.",
+      "evidence": "scripts/ai-os/estate-hash-gc.ps1 lines 180-191",
+      "law": "Child exit and claimed result must match. Parent must be max(children) fail-closed."
+    },
+    {
+      "id": "HEALTH_REPORTER_OBSERVATION_STALE",
+      "severity": "BLOCKING_IF_DELETED_ON_REPAIR",
+      "fact": "On origin 6327c07, canonical/intelligence/intelligence/core/engine-registry.ts exists and tests/canonical_intelligence_check.ts imports generateHealthReport. Retiring health-reporter as an absent-registry orphan is true only on a pre-6327c07 working tree.",
+      "consequence": "Deleting health-reporter without reverting that test makes TEST_CANONICAL_EXIT nonzero while GC_EXIT can still print 0."
+    },
+    {
+      "id": "GL004_CONTRACT_MISMATCH",
+      "severity": "BLOCKING",
+      "contract": "Type-check build tests runtime trace.",
+      "dispatched_battery": "type-check + canonical_intelligence_check + task_orchestration_check. Build, verify suite, and named runtime trace are absent from the GC script.",
+      "note": "npm run test:all is legacy-health stubs, not the verify suite. A production probe without a named command, URL, and trace artifact is not runtime execution truth."
+    },
+    {
+      "id": "GL005_CONTRACT_MISMATCH",
+      "severity": "BLOCKING",
+      "contract": "Shared task state locks handoff and orchestration demonstrated.",
+      "observed": "task_orchestration_check.ts is in-process review-contract unit proof. GL-005 remains READY and depends on GL-002, GL-003, GL-004 none DONE except GL-001.",
+      "law": "A unit test is not orchestration demonstration. SIGNAL_GAP_NE_CAPABILITY_GAP still forbids migration/gl-005 folders as substitutes."
+    }
+  ],
+  "what_may_still_be_valid": [
+    "Deletion of byte-identical barn, false-PASS generated estates, retired-worktree redundant copies, and multimodal venv, if hashed lists exist.",
+    "Leaving RAIOS/V9 untouched under ACTIVE A15 lock."
+  ],
+  "must_not": [
+    "Certify GL-004",
+    "Certify GL-005",
+    "Treat GC_EXIT=0 as proof",
+    "Start another census"
+  ],
+  "required_from_repair_before_any_pass": [
+    "HEAD SHA, safety tag, receipt path, receipt SHA256",
+    "Parent exit equal to worst child (type-check, build, named tests, runtime probe)",
+    "If health-reporter deleted: show canonical_intelligence_check still exit 0, or show the test import removed in the same commit",
+    "GL-004: type-check_exit, build_exit, named_test_exits, runtime_probe command+trace path",
+    "GL-005: aios status + lock/handoff evidence + orchestration demo, not only task_orchestration_check.ts"
+  ]
+}
