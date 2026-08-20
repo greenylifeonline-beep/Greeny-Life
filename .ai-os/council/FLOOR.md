@@ -173,6 +173,12 @@ C2-SAY CASE-005: مع الترقية يتقاعد المدرب ولا يُحذف
 
 C5-SAY CASE-005: أحقن الذاكرة قبل أي خانة. أمتحن كل دقيقة بلا باص ثانٍ. أدوات النظام محددة. الممنوع محدد. GL005_PROVEN=false.
 
+C1-FLOOR CASE-005: hf auth whoami على Repair → Logged in user greenylifeonline. أمر conficonfirm ليس أمراً.
+
+C2-SAY CASE-005: مشاهدة: جهاز المؤسس متصل كـ greenylifeonline. هذه الجلسة السحابية بلا رمز. Hub ليس C5. الأمر التالي على جهازه: إنشاء ملعب خاص.
+
+C5-SAY CASE-005: سجّلت whoami بلا سر. لا أنفّذ دخول Hub من هنا. GL005_PROVEN=false.
+
 
 
 

@@ -47,4 +47,10 @@ hf auth login
 | Password | اختَر أنت. لا ترسله هنا |
 
 هذا ملعب. ليس C5.
+
+## مشاهدة 2026-08-20
+
+على جهاز Repair: `hf auth whoami` → `Logged in` / `user: greenylifeonline`.
+هذه السحابة ما زالت بلا رمز. لا تلصق رموزاً هنا.
+
 `GL005_PROVEN=false`
