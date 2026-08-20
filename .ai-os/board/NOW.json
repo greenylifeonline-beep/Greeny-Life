@@ -1,22 +1,22 @@
 {
   "schema": "raios.mission-board.v1",
   "branch": "v9-neurolingua-semantic-kernel",
-  "head": "53b0e458713c42b60a27869c295f593eda002b2b",
-  "updated_at": "2026-08-20T17:53:11.577285+00:00",
-  "mission_status": "REPAIR_CREDENTIAL_GATE_BLOCKED",
-  "mission": "C3 Repair fail-closed on empty password. BLOCKED not missing. GL005_PROVEN false. Do not mint credentials. Next: GET /api/auth/session on Repair only.",
+  "head": "e5206c9da15d9eeb0ffc609a3e9c33338d0de18c",
+  "updated_at": "2026-08-20T18:02:36.324336+00:00",
+  "mission_status": "LOGIN_200_SESSION_UNAUTHENTICATED",
+  "mission": "Repair login HTTP 200 then session authenticated=false. Printed ATOMIC login proven is falsified. GL005_PROVEN false. Next: cookie flags only.",
   "schedule": {
-    "now": "C3: GET /api/auth/session on bound Repair Next. If authenticated=false, stop BLOCKED_AUTH.",
-    "next": "Only if a legitimate session already exists: run the 11-step mutation chain. PASS_CANDIDATE still needs review.",
-    "forbidden": "NewPassword retry, provision-admin as proof, printed password, forged session, GL005 PASS"
+    "now": "C3: report Set-Cookie flags, WebSession has session-cookie name, BASE_SCHEME, bound Next NODE_ENV. No cookie value. No task POST.",
+    "next": "If authenticated=true with ADMIN|WAREHOUSE|EXPORT, run the 11-step mutation chain. Else stay FAILED at cookie bind.",
+    "forbidden": "print cookie value, forge session cookie, GL005 PASS from login 200, provision as orchestration"
   },
   "required": {
-    "C0": "Do not paste a password. Say only whether a real Repair browser session already exists.",
-    "C1": "Recorded C3 throw. Does not supply a password. Does not grant GL005.",
-    "C2": "Empty password is a valid proof boundary. Protected ≠ missing.",
-    "C3": "STOP password mint. GET /api/auth/session only. No provision-admin for this proof.",
-    "C4": "D-024 DISCOVERED only.",
-    "C5": "Falsify any PASS from a new password."
+    "C0": "Do not paste cookies or passwords.",
+    "C1": "Falsified ATOMIC_CREDENTIAL_LOGIN_PROVEN. Does not grant GL005.",
+    "C2": "Login 200 ≠ signed session. Printed PROVEN ≠ evidence.",
+    "C3": "Cookie attribute probe only. Do not POST /api/tasks yet.",
+    "C4": "D-025 DISCOVERED only.",
+    "C5": "Falsify any PASS from login 200."
   },
   "mail": {
     "dispatcher": "C1",
@@ -34,8 +34,8 @@
       "gl005_proven": false
     },
     "last_send": {
-      "id": "61677d7e-d503-425c-9a93-79955a60cf42",
-      "ts": "2026-08-20T17:53:11.450320+00:00",
+      "id": "e5c7b05d-de8f-40ae-b2ef-50a076ce7c01",
+      "ts": "2026-08-20T18:02:36.196854+00:00",
       "to": [
         "C2",
         "C5"

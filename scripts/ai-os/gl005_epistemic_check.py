@@ -13,6 +13,7 @@ from gl005_epistemic import (  # noqa: E402
     LAWS,
     OBSERVATION_CHAIN,
     classify_credential_gate,
+    classify_login_session,
     classify_observe_receipt,
     classify_post_mutation,
     parent_fail_closed,
@@ -154,6 +155,35 @@ def main() -> int:
         task_mutation_executed=False,
     )
     check(printed["epistemic"] == "INVALID_OBSERVATION", "printed password invalidates the observation")
+
+    login_split = classify_login_session(
+        login_http=200,
+        login_success=True,
+        session_http=200,
+        authenticated=False,
+        signed_admin_session_printed=False,
+        atomic_login_proven_printed=True,
+        task_mutation_executed=False,
+    )
+    check(login_split["epistemic"] == "FAILED", "login 200 with unauthenticated session is FAILED")
+    check(login_split["reason"] == "LOGIN_HTTP_200_NE_SIGNED_SESSION", "login/session split reason")
+    check(login_split["printed_atomic_login_proven_falsified"] is True, "printed ATOMIC login proven is falsified")
+    check(login_split["GL005_PROVEN"] is False, "login 200 does not prove GL-005")
+    check("LOGIN_HTTP_200_NE_SIGNED_SESSION" in LAWS, "login-ne-session law present")
+    check("DOCUMENTED_PROVISION_NE_ORCHESTRATION" in LAWS, "provision is not orchestration")
+
+    bound = classify_login_session(
+        login_http=200,
+        login_success=True,
+        session_http=200,
+        authenticated=True,
+        signed_admin_session_printed=True,
+        atomic_login_proven_printed=True,
+        task_mutation_executed=False,
+        session_role="ADMIN",
+    )
+    check(bound["epistemic"] == "SESSION_BOUND_CANDIDATE", "authenticated ADMIN is session candidate only")
+    check(bound["GL005_PROVEN"] is False, "bound session is not GL-005")
 
     print("gl005_epistemic_check: PASS")
     print(json.dumps({"gl005_proven": False, "epistemic": live["epistemic"], "laws": list(LAWS)}, ensure_ascii=False))

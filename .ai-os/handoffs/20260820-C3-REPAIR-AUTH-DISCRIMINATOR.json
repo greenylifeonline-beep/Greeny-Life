@@ -85,6 +85,16 @@
     "TASK_MUTATION_EXECUTED": false,
     "epistemic": "BLOCKED",
     "reason": "NEW_PASSWORD_TOO_SHORT",
-    "stop": true
+    "stop": true,
+    "superseded_by": "GL005-C3-REPAIR-LOGIN-SESSION-SPLIT.json"
+  },
+  "c3_login_session_split": {
+    "RUNTIME_LOGIN_HTTP": 200,
+    "RUNTIME_LOGIN_SUCCESS": true,
+    "SESSION_HTTP": 200,
+    "AUTHENTICATED": false,
+    "epistemic": "FAILED",
+    "reason": "LOGIN_HTTP_200_NE_SIGNED_SESSION",
+    "GL005_PROVEN": false
   }
 }

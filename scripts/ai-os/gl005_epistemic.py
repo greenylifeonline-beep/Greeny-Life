@@ -21,6 +21,9 @@ LAWS = (
     "PASSWORD_VALUE_MUST_NOT_BE_PRINTED",
     "CREDENTIAL_MANUFACTURE_NE_EXISTING_SESSION",
     "PROVISION_ADMIN_NE_ORCHESTRATION_PROOF",
+    "LOGIN_HTTP_200_NE_SIGNED_SESSION",
+    "CLI_HASH_MATCH_NE_RUNTIME_SESSION",
+    "DOCUMENTED_PROVISION_NE_ORCHESTRATION",
 )
 
 OBSERVATION_CHAIN = (
@@ -167,6 +170,77 @@ def classify_credential_gate(
             "login_executed": bool(login_executed),
             "task_mutation_executed": bool(task_mutation_executed),
             "thrown": thrown,
+            "gl005_proven": False,
+            "GL005_PROVEN": False,
+        }
+    )
+    return rec
+
+
+def classify_login_session(
+    *,
+    login_http: int | None,
+    login_success: bool,
+    session_http: int | None,
+    authenticated: bool,
+    signed_admin_session_printed: bool,
+    atomic_login_proven_printed: bool,
+    task_mutation_executed: bool,
+    session_role: str | None = None,
+) -> dict[str, Any]:
+    """Login HTTP 200 is not a signed session. Printed PROVEN is not evidence."""
+    write_roles = {"ADMIN", "WAREHOUSE", "EXPORT"}
+    if task_mutation_executed:
+        rec = {
+            "epistemic": "FAILED",
+            "reason": "MUTATION_CLAIMED_WITHOUT_SESSION_BIND_CLASSIFIER",
+            "capability": "CAPABILITY_UNPROVEN",
+            "laws": ["AUTH_GATE_PRESENT_NE_MUTATION_EXECUTED"],
+        }
+    elif login_http == 200 and login_success and session_http == 200 and authenticated is True:
+        rec = {
+            "epistemic": "SESSION_BOUND_CANDIDATE" if (session_role or "").upper() in write_roles else "BLOCKED",
+            "reason": "SIGNED_SESSION_OBSERVED" if (session_role or "").upper() in write_roles else "SESSION_ROLE_NOT_WRITE",
+            "capability": "PRESENT_BUT_PROTECTED_AND_UNPROVEN",
+            "laws": ["PASS_CANDIDATE_NE_GL005_PROVEN"],
+        }
+    elif login_http == 200 and login_success and authenticated is False:
+        rec = {
+            "epistemic": "FAILED",
+            "reason": "LOGIN_HTTP_200_NE_SIGNED_SESSION",
+            "capability": "PRESENT_BUT_PROTECTED_AND_UNPROVEN",
+            "laws": [
+                "LOGIN_HTTP_200_NE_SIGNED_SESSION",
+                "CLI_HASH_MATCH_NE_RUNTIME_SESSION",
+                "HTTP_2XX_NE_SEMANTIC_SUCCESS",
+                "PRINTED_PASS_NE_EVIDENCE",
+            ],
+        }
+    elif login_http == 401:
+        rec = {
+            "epistemic": "BLOCKED",
+            "reason": "AUTH_GATE_PRESENT_IDENTITY_UNAVAILABLE",
+            "capability": "PRESENT_BUT_PROTECTED_AND_UNPROVEN",
+            "laws": ["AUTH_GATE_PRESENT_NE_MUTATION_EXECUTED"],
+        }
+    else:
+        rec = {
+            "epistemic": "FAILED",
+            "reason": "LOGIN_SESSION_NOT_IN_PASS_SHAPE",
+            "capability": "CAPABILITY_UNPROVEN",
+            "laws": ["PARENT_FAIL_CLOSED"],
+        }
+    rec.update(
+        {
+            "login_http": login_http,
+            "login_success": bool(login_success),
+            "session_http": session_http,
+            "authenticated": bool(authenticated),
+            "session_role": session_role,
+            "atomic_login_proven_printed": bool(atomic_login_proven_printed),
+            "signed_admin_session_printed": bool(signed_admin_session_printed),
+            "printed_atomic_login_proven_falsified": bool(atomic_login_proven_printed) and authenticated is False,
+            "task_mutation_executed": bool(task_mutation_executed),
             "gl005_proven": False,
             "GL005_PROVEN": False,
         }

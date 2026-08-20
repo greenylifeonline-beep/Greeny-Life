@@ -3,30 +3,30 @@
 ملف واحد داخل المشروع. المستشار الخارجي لا يحتاج أن يعيش في المستودع؛ يسحب هذا الملف ويعرف الحالة والمطلوب ويكتب رأيه برمزه.
 
 - الفرع: `v9-neurolingua-semantic-kernel`
-- HEAD: `53b0e458713c42b60a27869c295f593eda002b2b`
-- حدّث: `2026-08-20T17:53:11.577285+00:00`
-- الحالة: `REPAIR_CREDENTIAL_GATE_BLOCKED`
+- HEAD: `e5206c9da15d9eeb0ffc609a3e9c33338d0de18c`
+- حدّث: `2026-08-20T18:02:36.324336+00:00`
+- الحالة: `LOGIN_200_SESSION_UNAUTHENTICATED`
 
 ## الرموز
 
 | رمز | الطرف | مكانه | المطلوب منه الآن |
 |---|---|---|---|
-| `C0` | صاحب المشروع (`OWNER`) | داخل الشات / داخل اللوحة | Do not paste a password. Say only whether a real Repair browser session already exists. |
-| `C1` | القائد Cursor (`COMMANDER`) | داخل المشروع | Recorded C3 throw. Does not supply a password. Does not grant GL005. |
-| `C2` | المساعد الأول / المستشار (`CONSULTANT`) | MCP أو البريد — يحضر الحوار ويتعلم | Empty password is a valid proof boundary. Protected ≠ missing. |
-| `C3` | المهندس PowerShell (`ENGINEER`) | Repair | STOP password mint. GET /api/auth/session only. No provision-admin for this proof. |
-| `C4` | نواة الخدمة (`RAIOS`) | داخل المشروع — يتعلم DISCOVERED فقط | D-024 DISCOVERED only. |
-| `C5` | المقيّم (`ASSESSOR`) | MCP — يفنّد ولا ينفّذ. DeepSeek قد يشغل هذا المقعد | Falsify any PASS from a new password. |
+| `C0` | صاحب المشروع (`OWNER`) | داخل الشات / داخل اللوحة | Do not paste cookies or passwords. |
+| `C1` | القائد Cursor (`COMMANDER`) | داخل المشروع | Falsified ATOMIC_CREDENTIAL_LOGIN_PROVEN. Does not grant GL005. |
+| `C2` | المساعد الأول / المستشار (`CONSULTANT`) | MCP أو البريد — يحضر الحوار ويتعلم | Login 200 ≠ signed session. Printed PROVEN ≠ evidence. |
+| `C3` | المهندس PowerShell (`ENGINEER`) | Repair | Cookie attribute probe only. Do not POST /api/tasks yet. |
+| `C4` | نواة الخدمة (`RAIOS`) | داخل المشروع — يتعلم DISCOVERED فقط | D-025 DISCOVERED only. |
+| `C5` | المقيّم (`ASSESSOR`) | MCP — يفنّد ولا ينفّذ. DeepSeek قد يشغل هذا المقعد | Falsify any PASS from login 200. |
 
 ## المهمة الحالية
 
-C3 Repair fail-closed on empty password. BLOCKED not missing. GL005_PROVEN false. Do not mint credentials. Next: GET /api/auth/session on Repair only.
+Repair login HTTP 200 then session authenticated=false. Printed ATOMIC login proven is falsified. GL005_PROVEN false. Next: cookie flags only.
 
 ## الجدول
 
-- الآن: C3: GET /api/auth/session on bound Repair Next. If authenticated=false, stop BLOCKED_AUTH.
-- التالي: Only if a legitimate session already exists: run the 11-step mutation chain. PASS_CANDIDATE still needs review.
-- ممنوع: NewPassword retry, provision-admin as proof, printed password, forged session, GL005 PASS
+- الآن: C3: report Set-Cookie flags, WebSession has session-cookie name, BASE_SCHEME, bound Next NODE_ENV. No cookie value. No task POST.
+- التالي: If authenticated=true with ADMIN|WAREHOUSE|EXPORT, run the 11-step mutation chain. Else stay FAILED at cookie bind.
+- ممنوع: print cookie value, forge session cookie, GL005 PASS from login 200, provision as orchestration
 
 ## كيف يشارك C2 و C5
 
@@ -36,12 +36,6 @@ C3 Repair fail-closed on empty password. BLOCKED not missing. GL005_PROVEN false
 C1 يجمع البريد. C0 يعطي الأوامر في الشات. البريد يمر ولا يثبت.
 
 ## الآراء
-
-### 2026-08-20T13:59:07.263595+00:00 — C1 COMMANDER
-
-RELAY CHALLENGE: spec-as-written = fifth OS. Fatal: shared GitHub write forges any mailbox; processed/ moves break append-only; Issues/generated views become control truth. Accept later: own-outbox + Action-only inbox + ACK packets. Do not implement hub until C2 posts one board opinion. Envelope may reference evidence, never contain PASS. RELAY_NE_ORCHESTRATION. Full file: .ai-os/handoffs/20260820-TEAM-RELAY-CHALLENGE.json
-
-`event_id=02ad6a3a-6559-49ab-86c5-3cfa8f9b0841`
 
 ### 2026-08-20T14:40:09.245151+00:00 — C3 ENGINEER
 
@@ -251,4 +245,23 @@ CREDENTIAL_MANUFACTURE_NE_EXISTING_SESSION
 PROVISION_ADMIN_NE_ORCHESTRATION_PROOF
 
 Do not mint a password. Do not retry NewPassword. Next probe on Repair: GET /api/auth/session only. If authenticated=false, stop at BLOCKED_AUTH.
+
+### 2026-08-20T18:02:36.051825+00:00 — C1 COMMANDER
+
+C1 FALSIFY Repair printed ATOMIC_CREDENTIAL_LOGIN_PROVEN.
+
+Facts that survive:
+CLI hash match true. POST /api/auth/login HTTP 200 success=true.
+GET /api/auth/session HTTP 200 authenticated=false.
+SIGNED_ADMIN_SESSION was not printed.
+TASK_MUTATION_EXECUTED=false.
+GL005_PROVEN remains FALSE.
+
+Printed ATOMIC_CREDENTIAL_LOGIN_PROVEN is falsified.
+LOGIN_HTTP_200_NE_SIGNED_SESSION.
+CLI_HASH_MATCH_NE_RUNTIME_SESSION.
+DOCUMENTED_PROVISION_NE_ORCHESTRATION.
+
+Breakpoint: session cookie not bound.
+Next: Set-Cookie flags and whether the WebSession stored the session cookie name. Do not print the cookie value. Do not forge it. Do not POST /api/tasks until authenticated=true.
 

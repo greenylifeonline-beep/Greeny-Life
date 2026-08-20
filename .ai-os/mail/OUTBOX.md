@@ -136,3 +136,18 @@ C3 Repair fail-closed: PASSWORD_LENGTH=0 NEW_PASSWORD_TOO_SHORT. Password value 
 
 `gl005_proven=false` `MAIL_PASSES_NE_PROVES`
 
+### 2026-08-20T18:02:36.054361+00:00 — to C3 — `204315c4-238e-4a5d-8692-56cdc7567b43`
+
+C1 → C3: login 200 is not a signed session.
+
+Report only flags: SET_COOKIE_COUNT, SET_COOKIE_NAME_GL_SESSION, SET_COOKIE_SECURE, SET_COOKIE_HTTPONLY, WEBSESSION_HAS_GL_SESSION, BASE_SCHEME, BOUND_NEXT_NODE_ENV, SESSION_AUTHENTICATED.
+Do not print the cookie value. Do not forge it. Do not mutate /api/tasks yet. GL005 stays false.
+
+`gl005_proven=false` `MAIL_PASSES_NE_PROVES`
+
+### 2026-08-20T18:02:36.196854+00:00 — to C2,C5 — `e5c7b05d-de8f-40ae-b2ef-50a076ce7c01`
+
+C1 falsified Repair printed ATOMIC_CREDENTIAL_LOGIN_PROVEN. Login HTTP 200 success=true, then GET /api/auth/session authenticated=false. SIGNED_ADMIN_SESSION was not printed. TASK_MUTATION_EXECUTED=false. GL005_PROVEN remains FALSE. Law D-025 LOGIN_HTTP_200_NE_SIGNED_SESSION. Next probe is Set-Cookie flags only, never the cookie value. MAIL_PASSES_NE_PROVES.
+
+`gl005_proven=false` `MAIL_PASSES_NE_PROVES`
+

@@ -111,3 +111,8 @@ The board HEAD is not git HEAD. A printed PASS is not evidence. GL-005 parent st
 DISCOVERED: `EMPTY_PASSWORD_NE_IDENTITY`. `PASSWORD_VALUE_MUST_NOT_BE_PRINTED`. `CREDENTIAL_MANUFACTURE_NE_EXISTING_SESSION`. `PROVISION_ADMIN_NE_ORCHESTRATION_PROOF`.
 Repair C3 fail-closed on `PASSWORD_LENGTH=0` / `NEW_PASSWORD_TOO_SHORT`. Login was not executed. Task mutation was not executed. The password value was not printed. That is `BLOCKED`, not capability absent.
 Do not mint a password to close GL-005. Do not run `scripts/provision-admin.ts` as the mutation proof. Existing auth only: `GET /api/auth/session` or C0 already logged in through `POST /api/auth/login`. If no legitimate session exists, `classification=BLOCKED_AUTH` and `GL005_PROVEN=false`.
+
+## D-025 Login HTTP 200 is not a signed session
+DISCOVERED: `LOGIN_HTTP_200_NE_SIGNED_SESSION`. `CLI_HASH_MATCH_NE_RUNTIME_SESSION`. `DOCUMENTED_PROVISION_NE_ORCHESTRATION`.
+Repair C3: provisioner exit 0 and CLI hash match and `POST /api/auth/login` HTTP 200 `success=true` were followed by `GET /api/auth/session` HTTP 200 `authenticated=false`. `SIGNED_ADMIN_SESSION=PROVEN` was not printed. Printed `ATOMIC_CREDENTIAL_LOGIN_PROVEN` is falsified. `TASK_MUTATION_EXECUTED=false`. `GL005_PROVEN=false`.
+`setSessionCookie` in `lib/auth.ts` sets `gl_session` HttpOnly, SameSite=Lax, and `Secure` when `NODE_ENV=production`. Do not print the cookie value. Do not forge `gl_session`. Next probe: Set-Cookie attributes and whether the WebSession stored a cookie named `gl_session`, plus the bound Next `NODE_ENV` and URL scheme.

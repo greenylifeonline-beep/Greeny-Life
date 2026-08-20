@@ -53,9 +53,36 @@ Protected capability is not missing capability.
 
 That is `BLOCKED`, fail-closed correctly. Do **not** retry with a generated password.
 
-## Remaining probe only
+## Later Repair observation: login 200, session unauthenticated
 
-`GET /api/auth/session` on the bound Repair Next.
-If `authenticated=false`: stop. `BLOCKED_AUTH`.
-Do not run `scripts/provision-admin.ts` as the GL-005 proof.
+`RUNTIME_LOGIN_HTTP=200`
+`RUNTIME_LOGIN_SUCCESS=True`
+`SESSION_HTTP=200`
+`AUTHENTICATED=False`
+`SIGNED_ADMIN_SESSION` was not printed
+`TASK_MUTATION_EXECUTED=FALSE`
+`GL005_PROVEN=FALSE`
+
+Printed `ATOMIC_CREDENTIAL_LOGIN_PROVEN` is **falsified**.
+`LOGIN_HTTP_200_NE_SIGNED_SESSION`.
+
+## Remaining probe only (names and flags, never values)
+
+Do not print `gl_session`. Do not POST `/api/tasks` until `authenticated=true`.
+
+After a login response, report only:
+
+```text
+SET_COOKIE_COUNT=
+SET_COOKIE_NAME_GL_SESSION=true|false
+SET_COOKIE_SECURE=true|false
+SET_COOKIE_HTTPONLY=true|false
+WEBSESSION_HAS_GL_SESSION=true|false
+BASE_SCHEME=http|https
+BOUND_NEXT_NODE_ENV=development|production|absent
+SESSION_AUTHENTICATED=
+GL005_PROVEN=FALSE
+```
+
+`lib/auth.ts` sets `Secure` when `NODE_ENV=production`. Observe that. Do not change it as a bypass.
 
