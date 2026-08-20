@@ -94,7 +94,7 @@ def test_c5_knows_libraries_fetches_and_puts_discovered():
 
 def test_query_uses_catalog_not_the_web():
     rec = assimilate_query("Source of truth", ingest=False)
-    assert rec.get("consult_used") is False or rec.get("ok") is False
-    if rec.get("ok"):
-        assert rec["find"]["chosen"]
-        assert rec["gl005_proven"] is False
+    assert rec.get("ok") is True
+    assert rec["find"]["chosen"] == ".ai-os/CORE-CONTRACT.md"
+    assert rec["consult_used"] is False
+    assert rec["gl005_proven"] is False

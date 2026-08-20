@@ -85,10 +85,12 @@ def repo_root() -> Path:
 
 
 def rel_of(path: str | Path) -> str:
-    raw = str(path).replace("\\", "/").lstrip("./")
+    raw = str(path).replace("\\", "/")
+    while raw.startswith("./"):
+        raw = raw[2:]
     root = str(repo_root()).replace("\\", "/")
-    if raw.startswith(root):
-        raw = raw[len(root) :].lstrip("/")
+    if raw.startswith(root + "/"):
+        raw = raw[len(root) + 1 :]
     return raw
 
 
@@ -210,8 +212,24 @@ def find(query: str, *, limit: int = 8) -> dict[str, Any]:
     q = (query or "").strip()
     hits: list[dict[str, Any]] = []
     root = repo_root()
+    if q:
+        needle = q.lower()
+        for item in LIBRARIES:
+            if item["role"] not in {"learn", "facts"}:
+                continue
+            path = root / item["path"]
+            if not path.is_file():
+                continue
+            try:
+                blob = path.read_text(encoding="utf-8", errors="replace")[:20000].lower()
+            except OSError:
+                continue
+            if needle in blob:
+                hits.append({"source": "catalog", "path": item["path"], "id": item["id"]})
+            if len(hits) >= limit:
+                break
     index_path = root / ".ai-os" / "learning" / "INDEX.json"
-    if q and index_path.is_file():
+    if q and index_path.is_file() and len(hits) < limit:
         try:
             index = json.loads(index_path.read_text(encoding="utf-8"))
         except json.JSONDecodeError:
@@ -220,25 +238,12 @@ def find(query: str, *, limit: int = 8) -> dict[str, Any]:
         postings = index.get("postings") or {}
         for term in terms:
             for doc in (postings.get(term) or [])[:6]:
-                paths = _digest_paths_for_sha(str(doc))
-                hits.append({"source": "index", "term": term, "doc": doc, "paths": paths})
-                if len(hits) >= limit:
-                    break
-            if len(hits) >= limit:
-                break
-    if q:
-        needle = q.lower()
-        for item in LIBRARIES:
-            if item["role"] in {"forbidden", "write", "index"}:
-                continue
-            path = root / item["path"]
-            if path.is_file():
-                try:
-                    blob = path.read_text(encoding="utf-8", errors="replace")[:20000].lower()
-                except OSError:
+                paths = [p for p in _digest_paths_for_sha(str(doc)) if allowed(p)]
+                if not paths:
                     continue
-                if needle in blob or any(part.lower() in blob for part in needle.split() if len(part) > 3):
-                    hits.append({"source": "catalog", "path": item["path"], "id": item["id"]})
+                hits.append({"source": "index", "term": term, "doc": doc, "paths": paths})
+                if len(hits) >= limit * 2:
+                    break
             if len(hits) >= limit * 2:
                 break
     return {
@@ -274,7 +279,9 @@ def assimilate_path(path: str, *, ingest: bool = True) -> dict[str, Any]:
 def assimilate_query(query: str, *, ingest: bool = True) -> dict[str, Any]:
     found = find(query)
     path = None
-    for hit in found.get("hits") or []:
+    catalog_hits = [h for h in found.get("hits") or [] if h.get("source") == "catalog"]
+    other_hits = [h for h in found.get("hits") or [] if h.get("source") != "catalog"]
+    for hit in catalog_hits + other_hits:
         if hit.get("path") and allowed(str(hit["path"])):
             path = hit["path"]
             break
