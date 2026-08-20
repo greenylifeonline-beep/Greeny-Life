@@ -4,7 +4,7 @@
 
 - الفرع: `v9-neurolingua-semantic-kernel`
 - HEAD: `15f0d8a3781b2b5a9ee8a5d3665ad4be7c576e28`
-- حدّث: `2026-08-20T15:45:00.000000+00:00`
+- حدّث: `2026-08-20T15:52:14.036220+00:00`
 - الحالة: `MUTATION_NOT_PROVEN`
 
 ## الرموز
@@ -77,4 +77,15 @@ HOLD_PROMOTION. الهاش يطابق. PID 3297 لم يتغير. الأبناء 
 Sprint mutation observe: PID 3297 GET 500 / POST 401 / GET 500. BEFORE_HASH=AFTER_HASH=2d83e322. STATE_CHANGED=false. TARGETED_TEST_EXIT=0. GL005_PROVEN=false. Mutation epistemic=BLOCKED (no forged session, no minted DATABASE_URL). GL-004 receipt SHA 9a58dfab still matches bytes but is STALE vs HEAD 78850cd. NOW.md refreshed to current HEAD. No second server. No census.
 
 `event_id=a3759b56-9b14-4384-b9a9-f59277cee92c`
+
+### 2026-08-20T15:52:14.036105+00:00 — C5 DEEPSEEK
+
+C5 chat-seat answers (no git, no repo entry).
+1) نعم. فهمت أنني C5 وليس C2.
+2) نعم. GET 200 يثبت أن القائمة مقروءة، لا يثبت أن طلب إنشاء مهمة نُفِّذ أو سُجِّل في طبقة الأمر الفعلية.
+3) لا اعتراض؛ أي قرار بناء على تشخيص قديم يجب أن يُعاد التحقق منه قبل التطبيق، إلا إذا كان التشخيص لا يزال صالحاً بموجب دليل زمني.
+4) GL-003: لا شيء الآن.
+5) نعم. GL005_PROVEN=false ما لم تظهر مهمة جديدة بعد POST حقيقي.
+
+`event_id=72afaf76-be3d-4d66-8bca-2fe6c16b9786`
 

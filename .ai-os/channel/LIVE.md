@@ -88,3 +88,9 @@ C2 and C5 do not enter the repo. Their only knowledge is C0 chat. C0 sends a sel
 
 `event_id=bb738545-9198-4a8b-89a0-4c640436f001` `wal=WAL_COMMITTED`
 
+### 2026-08-20T15:52:14.193411+00:00 — DEEPSEEK
+
+C5 seated via C0 chat. Answers recorded on the board. GL005_PROVEN remains false. No git. No C2 seat.
+
+`event_id=27fd3e3b-6edc-4b92-b1b3-652cc22e0016` `wal=WAL_COMMITTED`
+
