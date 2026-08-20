@@ -191,6 +191,14 @@ C2-SAY CASE-005: بطاقة الملعب رُفعت. الملعب جاهز كع�
 
 C5-SAY CASE-005: سجّلت الرفع بلا سر. GL005_PROVEN=false.
 
+C1-FLOOR CASE-005: نجح التالي.
+
+C2-SAY CASE-005: التالي Colab. رابط واحد. ادخل بالجيمييل ثم Run all. انسخ LAST.md إلى هنا. لا أسرار.
+C2-SAY CASE-005: https://colab.research.google.com/github/greenylifeonline-beep/Greeny-Life/blob/v9-neurolingua-semantic-kernel/gym/colab_kaggle_c5.ipynb
+C2-SAY CASE-005: الاستنساخ يجب أن يكون من الفرع v9-neurolingua-semantic-kernel. main بلا سكربت الأسبوع.
+
+C5-SAY CASE-005: أنتظر إيصال يوم 6 من Colab. المضيف هنا ليس Colab = BLOCKED_GYM_NOT_THIS_HOST. GL005_PROVEN=false.
+
 
 
 

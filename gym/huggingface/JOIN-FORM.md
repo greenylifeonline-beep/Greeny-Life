@@ -36,7 +36,9 @@ hf auth login
 ## Colab
 
 ادخل بنفس جيميل `greenylife.online@gmail.com`.
-ارفع أو افتح لاحقاً الملف `gym/colab_kaggle_c5.ipynb`.
+افتح هذا الرابط ثم Runtime → Run all. انسخ `LAST.md` إلى شات Cursor. لا تلصق توكن.
+
+https://colab.research.google.com/github/greenylifeonline-beep/Greeny-Life/blob/v9-neurolingua-semantic-kernel/gym/colab_kaggle_c5.ipynb
 
 ## Kaggle — https://www.kaggle.com/account/login
 

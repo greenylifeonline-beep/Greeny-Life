@@ -41,4 +41,9 @@
 حلقة: `scripts/ai-os/raios-c5-minute-loop.sh`
 ليست باصاً ثانياً. تكتب `LAST-MINUTE` فقط.
 
+## Colab
+
+رابط واحد من الفرع `v9-neurolingua-semantic-kernel`:
+https://colab.research.google.com/github/greenylifeonline-beep/Greeny-Life/blob/v9-neurolingua-semantic-kernel/gym/colab_kaggle_c5.ipynb
+
 `GL005_PROVEN=false`
