@@ -242,3 +242,6 @@ DISCOVERED, not CANONICAL: `TOC_IDENTIFY_FROM_LIVE_WIP`. `INVENTED_MINUTES_NE_CO
 
 ## D-054 PowerShell fills C5 mind from important files only
 DISCOVERED, not CANONICAL: `C5_MIND_FILL_IMPORTANT_ONLY`. `POWERSHELL_CALLS_LIVE_KEEPER`. `ABSORB_DIGEST_NE_WAL_DUMP`. `powershell -File scripts/ai-os/raios_c5_mind_fill.ps1` injects CORE-CONTRACT, DECISIONS, GRANT, LAWBOOK, products, stock, shipments into DIGESTS+INDEX+C5-MIND. Not WAL. Not V9. Not HF weights. Does not close GL-005.
+
+## D-055 Paid RAG paste is not the live injector
+DISCOVERED, not CANONICAL: `INVERTED_INDEX_NE_UNLOADED_EMBEDDING`. `HUNT_FREE_NE_PAID_API`. `LIVE_PATH_BEFORE_NEW_LAYER`. `REUSE_BEFORE_BUILD`. LangChain + OpenAIEmbeddings + Chroma/FAISS + gpt-4o + AnythingLLM/Dify/Flowise are CLAIMs. Live retrieve is `.ai-os/learning/INDEX.json` via `raios_c5_read.py search`. Live inject is `raios_c5_mind_fill.ps1`. Live speak is NeuroLingua, `llm_calls=0`. Does not close GL-005.
