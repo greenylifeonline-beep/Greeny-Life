@@ -251,3 +251,6 @@ DISCOVERED, not CANONICAL: `C5_WHOAMI_IS_LIVE`. `CURSOR_SESSION_NE_C5`. `HELPER_
 
 ## D-057 C5 system screen is standard OSS; flipped keyboard is input
 DISCOVERED, not CANONICAL: `C5_SCREEN_IS_STANDARD`. `FLIPPED_KEYBOARD_IS_INPUT`. `UNPOLISHED_SCREEN_NE_SHIP`. Local professional chat at `python3 scripts/ai-os/raios_c5_screen.py` (`http://127.0.0.1:8765`). History `.ai-os/learning/C5-SCREEN.jsonl` so C1 resumes. Arabic typed on an English keyboard is decoded. Stack is Python stdlib + git + local INDEX. Not LangChain, not OpenAI, not a second WAL. Does not close GL-005.
+
+## D-058 Retrieval is not a cognitive answer
+DISCOVERED, not CANONICAL: `ROLE_IDENTITY_NE_MODEL_IDENTITY`. `LOCAL_SOURCE_NE_LOCAL_MODEL_EXECUTION`. `INDEX_HIT_NE_REASONING`. `FILE_DISCOVERY_NE_FILE_ASSIMILATION`. `RETRIEVAL_RESULT_NE_COGNITIVE_ANSWER`. C5 role is RAIOS. Live provider is INDEX+file-read+deterministic reason. Named cortex `qwen3.6:35b-a3b` is C1-owned and not bound to the live answer path. Ollama student is teaching muscle, not this path. Trace: `python3 scripts/ai-os/raios_c5_trace.py`. Does not close GL-005.

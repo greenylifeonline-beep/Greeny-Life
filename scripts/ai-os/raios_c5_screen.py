@@ -14,7 +14,7 @@ ROOT = Path(__file__).resolve().parents[2]
 sys.path.insert(0, str(Path(__file__).resolve().parent))
 
 from raios_c5_keyboard import decode_flipped_keyboard, teach_text  # noqa: E402
-from raios_c5_read import search  # noqa: E402
+from raios_c5_reason import ground  # noqa: E402
 from raios_c5_whoami import whoami  # noqa: E402
 
 WAL = ROOT / "RAIOS" / "V9" / "wal" / "cognitive-events.jsonl"
@@ -107,29 +107,8 @@ def _screen_reply() -> str:
 
 
 def _search_reply(query: str) -> str:
-    rec = search(query, use_rg=False)
-    hits = rec.get("hits") or []
-    lookup = digest_by_sha()
-    lines = ["من الفهرس المحلي — مش OpenAI:"]
-    seen: set[str] = set()
-    for hit in hits:
-        sha = str(hit.get("doc") or "")
-        meta = lookup.get(sha) or {}
-        path = meta.get("path") or str(hit.get("path") or "")
-        if not path or path in seen:
-            continue
-        seen.add(path)
-        title = meta.get("title") or path
-        lines.append(f"• {path} — {title}")
-        if len(seen) >= 5:
-            break
-    if len(seen) == 0:
-        return (
-            "بحثت في الفهرس المحلي ولم أجد ملفًا باسم واضح. "
-            "المحرك حي: mind-fill + INDEX. ليس RAG مدفوع. GL005_PROVEN=false."
-        )
-    lines.append("GL005_PROVEN=false")
-    return "\n".join(lines)
+    rec = ground(query)
+    return rec["answer"]
 
 
 def teach_reply(message: str) -> dict:
@@ -147,7 +126,7 @@ def teach_reply(message: str) -> dict:
         kind = "whoami"
     else:
         answer = _search_reply(text)
-        kind = "index"
+        kind = "ground"
     rec = {
         "schema": "raios.c5-screen-turn.v1",
         "ts": utc(),
@@ -165,7 +144,10 @@ def teach_reply(message: str) -> dict:
             "C5_SCREEN_IS_STANDARD",
             "FLIPPED_KEYBOARD_IS_INPUT",
             "HUNT_FREE_NE_PAID_API",
-            "CURSOR_SESSION_NE_C5",
+            "INDEX_HIT_NE_REASONING",
+            "FILE_DISCOVERY_NE_FILE_ASSIMILATION",
+            "RETRIEVAL_RESULT_NE_COGNITIVE_ANSWER",
+            "ROLE_IDENTITY_NE_MODEL_IDENTITY",
         ],
     }
     if wal_mtime() != wal_before:
