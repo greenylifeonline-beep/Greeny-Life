@@ -4,7 +4,6 @@ from __future__ import annotations
 
 import json
 import re
-import subprocess
 import sys
 from datetime import datetime, timezone
 from pathlib import Path
@@ -16,17 +15,30 @@ from raios_c5_read import search  # noqa: E402
 
 WAL = ROOT / "RAIOS" / "V9" / "wal" / "cognitive-events.jsonl"
 DIGESTS = ROOT / ".ai-os" / "learning" / "DIGESTS.jsonl"
+SEAT_MAP = ROOT / ".ai-os" / "mcp" / "SEAT-MAP.json"
 SKIP_PARTS = ("/wal/", ".env", "tokens.local", "node_modules", ".git/")
 TERM_RE = re.compile(r"[A-Za-z][A-Za-z0-9_]{2,}|[\u0600-\u06FF]{2,}")
+BOOST = (
+    ".ai-os/mcp/SEAT-MAP.json",
+    ".ai-os/mcp/C5-GRANT.json",
+    ".ai-os/council/METHOD.md",
+    ".ai-os/council/ATTENDANCE.md",
+    ".ai-os/council/",
+    ".ai-os/summon/",
+    ".ai-os/learning/C5-MIND.md",
+)
+DEMOTE = (
+    "C1-GIT-MEMORY.md",
+    ".ai-os/board/",
+    ".ai-os/mail/",
+    ".ai-os/channel/",
+    ".ai-os/reports/",
+    ".ai-os/receipts/",
+)
 
 
 def utc() -> str:
     return datetime.now(timezone.utc).isoformat()
-
-
-def git_head() -> str:
-    r = subprocess.run(["git", "rev-parse", "HEAD"], cwd=ROOT, text=True, capture_output=True)
-    return (r.stdout or "").strip()
 
 
 def wal_mtime():
@@ -75,17 +87,60 @@ def _terms(query: str) -> list[str]:
     return terms
 
 
+def _canon(query: str) -> list[str]:
+    extra: list[str] = []
+    if re.search(r"\bC[0-5]\b", query or "", re.I):
+        extra.append(".ai-os/mcp/SEAT-MAP.json")
+    if "مجلس" in (query or "") or "council" in (query or "").lower():
+        extra.extend([".ai-os/council/METHOD.md", ".ai-os/council/ATTENDANCE.md"])
+    return extra
+
+
+def _score(path: str) -> int:
+    score = 0
+    for i, boost in enumerate(BOOST):
+        if boost in path:
+            score += 80 - i
+            break
+    for demote in DEMOTE:
+        if demote in path:
+            score -= 50
+    return score
+
+
+def _rank(paths: list[str]) -> list[str]:
+    indexed = list(enumerate(paths))
+    indexed.sort(key=lambda row: (-_score(row[1]), row[0]))
+    return [path for _, path in indexed]
+
+
+def _noisy(text: str) -> bool:
+    compact = " ".join(text.split())
+    if compact.count('"') >= 6:
+        return True
+    if compact.count("{") + compact.count("}") >= 2:
+        return True
+    if compact.startswith("{") or compact.startswith("[") or compact.startswith('"'):
+        return True
+    return False
+
+
 def _extract(text: str, terms: list[str], *, limit: int = 4) -> list[str]:
-    chunks = re.split(r"[\n.؟!]+", text)
+    lines = [" ".join(ln.split()) for ln in text.splitlines()]
     scored: list[tuple[int, str]] = []
-    for chunk in chunks:
-        line = " ".join(chunk.split())
-        if len(line) < 24:
+    for i, line in enumerate(lines):
+        if not line:
             continue
         lower = line.lower()
         score = sum(1 for t in terms if t in lower)
-        if score:
-            scored.append((score, line[:280]))
+        if not score:
+            continue
+        lo = max(0, i - 1)
+        hi = min(len(lines), i + 3)
+        window = " ".join(x for x in lines[lo:hi] if x)[:360]
+        if len(window) < 24 or _noisy(window):
+            continue
+        scored.append((score, window))
     scored.sort(key=lambda row: (-row[0], -len(row[1])))
     seen: list[str] = []
     for _, line in scored:
@@ -94,6 +149,27 @@ def _extract(text: str, terms: list[str], *, limit: int = 4) -> list[str]:
         if len(seen) >= limit:
             break
     return seen
+
+
+def _seat_evidence(query: str) -> list[dict]:
+    if not SEAT_MAP.is_file():
+        return []
+    try:
+        seats = (json.loads(SEAT_MAP.read_text(encoding="utf-8")).get("seats") or {})
+    except json.JSONDecodeError:
+        return []
+    out: list[dict] = []
+    for seat in re.findall(r"\bC[0-5]\b", query or "", re.I):
+        row = seats.get(seat.upper()) or {}
+        if not row:
+            continue
+        text = (
+            f"{seat.upper()} actor_role={row.get('actor_role')} "
+            f"instance={row.get('instance_role')} "
+            f"{row.get('name_ar') or ''} — {str(row.get('notes') or '')[:180]}"
+        )
+        out.append({"path": ".ai-os/mcp/SEAT-MAP.json", "text": " ".join(text.split())})
+    return out
 
 
 def ground(query: str) -> dict:
@@ -107,23 +183,52 @@ def ground(query: str) -> dict:
         path = path.replace("\\", "/")
         if path and path not in files_found:
             files_found.append(path)
-        if len(files_found) >= 6:
+        if len(files_found) >= 8:
             break
+    for extra in _canon(query):
+        if extra not in files_found:
+            files_found.insert(0, extra)
+    files_found = _rank(files_found)
     files_opened: list[str] = []
-    evidence: list[dict] = []
-    for rel in files_found[:4]:
+    evidence: list[dict] = _seat_evidence(query)
+    seat_read = {row["path"] for row in evidence}
+    for rel in files_found[:6]:
         path = _safe_path(rel)
         if path is None:
             continue
-        files_opened.append(rel)
-        text = path.read_text(encoding="utf-8", errors="ignore")[:8000]
+        if rel not in files_opened:
+            files_opened.append(rel)
+        if rel in seat_read and rel.endswith(".json"):
+            continue
+        text = path.read_text(encoding="utf-8", errors="ignore")[:12000]
         for snippet in _extract(text, terms):
             evidence.append({"path": rel, "text": snippet})
-        if len(evidence) >= 6:
+        if len(files_opened) >= 4:
             break
+    # de-dupe evidence text
+    uniq: list[dict] = []
+    for row in evidence:
+        text = row["text"]
+        replaced = False
+        drop = False
+        for i, other in enumerate(uniq):
+            if text == other["text"]:
+                drop = True
+                break
+            if text in other["text"]:
+                drop = True
+                break
+            if other["text"] in text:
+                uniq[i] = row
+                replaced = True
+                break
+        if drop or replaced:
+            continue
+        uniq.append(row)
+    evidence = uniq
     content_read = bool(files_opened)
     reasoning_entered = bool(evidence)
-    if not files_found:
+    if not files_found and not evidence:
         stop = "RETRIEVAL_EMPTY"
         answer = "لا دليل كافٍ في الفهرس المحلي. أمتنع. GL005_PROVEN=false"
         synthesized = False
@@ -142,8 +247,10 @@ def ground(query: str) -> dict:
         bullets = "\n".join(f"- {row['text']} ({row['path']})" for row in evidence[:5])
         refs = "، ".join(sorted({row["path"] for row in evidence}))
         answer = (
-            f"إجابة مبنية على قراءة الملفات لا على قائمة أسمائها:\n{bullets}\n\n"
-            f"المراجع: {refs}\nالثقة: medium · model_call=0 · GL005_PROVEN=false"
+            "إجابة مبنية على قراءة المحتوى لا على أسماء الملفات:\n"
+            f"{bullets}\n\n"
+            f"المراجع: {refs}\n"
+            "الثقة: medium · model_call=0 · ollama_used=false · GL005_PROVEN=false"
         )
         synthesized = True
         confidence = "medium"
@@ -180,3 +287,15 @@ def ground(query: str) -> dict:
     rec["wal_mtime_unchanged"] = True
     rec["ok"] = True
     return rec
+
+
+def main() -> int:
+    args = [a for a in sys.argv[1:] if not a.startswith("-")]
+    query = " ".join(args).strip() or "ما دور C4 في المجلس"
+    rec = ground(query)
+    print(rec["answer"])
+    return 0 if rec["ok"] else 2
+
+
+if __name__ == "__main__":
+    raise SystemExit(main())

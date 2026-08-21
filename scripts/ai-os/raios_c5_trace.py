@@ -1,8 +1,9 @@
 #!/usr/bin/env python3
-"""Targeted C5 execution trace. No model swap. No paid API. No WAL."""
+"""Targeted C5 execution trace. No model swap. No paid API. No WAL. No pydantic."""
 from __future__ import annotations
 
 import hashlib
+import importlib.util
 import json
 import subprocess
 import sys
@@ -11,10 +12,7 @@ from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[2]
 sys.path.insert(0, str(Path(__file__).resolve().parent))
-sys.path.insert(0, str(ROOT / "src"))
 
-from raios.neuro_lingua.cortex import CORTEX_IDENTITY, gate_run  # noqa: E402
-from raios.neuro_lingua.qwen_runtime import probe  # noqa: E402
 from raios_c5_reason import ground  # noqa: E402
 
 GRANT = ROOT / ".ai-os" / "mcp" / "C5-GRANT.json"
@@ -39,6 +37,16 @@ def load(path: Path) -> dict:
     return json.loads(path.read_text(encoding="utf-8"))
 
 
+def load_cortex():
+    path = ROOT / "src" / "raios" / "neuro_lingua" / "cortex.py"
+    spec = importlib.util.spec_from_file_location("raios_cortex_standalone", path)
+    if spec is None or spec.loader is None:
+        raise SystemExit("CORTEX_MODULE_MISSING")
+    mod = importlib.util.module_from_spec(spec)
+    spec.loader.exec_module(mod)
+    return mod
+
+
 def render(fields: dict) -> str:
     order = [
         "C5_ROLE",
@@ -61,7 +69,11 @@ def render(fields: dict) -> str:
         "RECEIPT_SHA256",
         "GL005_PROVEN",
     ]
-    lines = ["############################################################", "# RAIOS C5 EXECUTION TRACE", "############################################################"]
+    lines = [
+        "############################################################",
+        "# RAIOS C5 EXECUTION TRACE",
+        "############################################################",
+    ]
     for key in order:
         lines.append(f"{key}={fields[key]}")
     lines.append("############################################################")
@@ -73,22 +85,20 @@ def trace(query: str) -> dict:
     wal_before = WAL.stat().st_mtime if WAL.exists() else None
     grant = load(GRANT)
     seats = ((load(SEATS).get("seats") or {}).get("C5") or {})
-    gate = gate_run()
-    ollama = probe(use_cache=False)
+    cortex = load_cortex()
+    gate = cortex.gate_run()
     grounded = ground(query)
-    bound = False  # live answer path never calls cortex generate
+    bound = False
     why = (
-        "OLD_PATH_INDEX_PRINT"
-        if not grounded["answer_synthesized"]
-        else "NEW_PATH_READ_THEN_REASON_ZERO_LLM"
+        "qwen3.6:35b-a3b_is_named_cortex_not_bound_to_C5_live_answer; "
+        "old_path_printed_index_filenames; "
+        "live_path_now_opens_files_extracts_evidence_synthesizes_zero_llm"
     )
-    if grounded["stop_stage"] == "ANSWER":
-        why = "retrieval_used_to_print_filenames_before_fix; now_read_and_reason_without_model"
     fields = {
         "C5_ROLE": seats.get("actor_role") or "RAIOS",
         "C5_PROVIDER": "local-keepers+INDEX+NeuroLingua",
         "C5_MODEL": "none-on-live-answer-path",
-        "CORTEX_IDENTITY_NAMED": CORTEX_IDENTITY,
+        "CORTEX_IDENTITY_NAMED": cortex.CORTEX_IDENTITY,
         "CORTEX_BOUND_TO_C5_LIVE_ANSWER": str(bound).lower(),
         "OLLAMA_USED": "false",
         "MODEL_CALL_COUNT": "0",
@@ -107,8 +117,6 @@ def trace(query: str) -> dict:
         "GRANT_PAID_API": str(bool(grant.get("paid_api"))).lower(),
         "GRANT_TOOLS": ",".join(grant.get("cognitive_tools") or []),
         "CORTEX_GATE": gate.get("reason"),
-        "STUDENT_LIVE": str(bool(ollama.get("student_live"))).lower(),
-        "STUDENT_MODEL": ollama.get("student_model") or "none",
         "QUERY": query,
     }
     rec = {
@@ -117,7 +125,7 @@ def trace(query: str) -> dict:
         "from": "C5",
         "fields": fields,
         "answer": grounded["answer"],
-        "ollama_probe_used_for_status_only": True,
+        "ollama_probe_used_for_status_only": False,
         "generate_called": False,
         "paid_api": False,
         "wal_written": False,

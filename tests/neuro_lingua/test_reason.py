@@ -20,10 +20,16 @@ def test_ground_reads_files_and_does_not_stop_at_filenames():
     assert before == after
     assert rec["content_read"] is True
     assert rec["files_opened"]
-    assert rec["stop_stage"] in {"ANSWER", "OPENED_NO_EVIDENCE"}
+    assert rec["answer_synthesized"] is True
+    assert rec["stop_stage"] == "ANSWER"
     assert "من الفهرس المحلي — مش OpenAI" not in rec["answer"]
     assert rec["answer"].strip() != ""
-    assert any("C4" in p or "council" in p for p in rec["files_found"] + rec["files_opened"])
+    opened = " ".join(rec["files_opened"])
+    assert ".ai-os/mcp/SEAT-MAP.json" in opened
+    assert ".ai-os/council/" in opened
+    assert "ASSESSOR" in rec["answer"] or "DeepSeek" in rec["answer"] or "مقيّم" in rec["answer"]
+    assert not rec["answer"].lstrip().startswith('"')
+    assert rec["answer"].count('"') < 12
 
 
 def test_screen_ground_kind_uses_reasoner():
