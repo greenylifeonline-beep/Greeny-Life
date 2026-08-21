@@ -51,35 +51,78 @@ def append_history(row: dict) -> None:
         handle.write(json.dumps(row, ensure_ascii=False) + "\n")
 
 
+DIGESTS = ROOT / ".ai-os" / "learning" / "DIGESTS.jsonl"
+_DIGEST_BY_SHA: dict[str, dict] | None = None
+
+
+def digest_by_sha() -> dict[str, dict]:
+    global _DIGEST_BY_SHA
+    if _DIGEST_BY_SHA is not None:
+        return _DIGEST_BY_SHA
+    out: dict[str, dict] = {}
+    if DIGESTS.exists():
+        for line in DIGESTS.read_text(encoding="utf-8").splitlines():
+            if not line.strip():
+                continue
+            try:
+                rec = json.loads(line)
+            except json.JSONDecodeError:
+                continue
+            sha = rec.get("sha256")
+            path = str(rec.get("path") or "")
+            if not sha or not path or path.startswith("/tmp/"):
+                continue
+            skim = (rec.get("skim_head") or "").strip().splitlines()
+            title = next((s.strip() for s in skim if s.strip()), path)
+            out[str(sha)] = {"path": path, "title": title[:120]}
+    _DIGEST_BY_SHA = out
+    return out
+
+
 def _identity_reply(card: dict) -> str:
-    langs = "، ".join(f"`{x}`" for x in card.get("languages_customer_live") or [])
+    langs = "، ".join(str(x) for x in card.get("languages_customer_live") or [])
     return (
-        f"أنا C5 — RAIOS، ابن C1. المنحة دائمة. أسكن في git لا في جلسة Cursor.\n\n"
-        f"أتعلم الآن من `{card['engine_now']['inject']}` ثم INDEX ثم NeuroLingua "
-        f"(بدون LangChain/OpenAI). عضلة التدريس `qwen2.5:0.5b`. "
-        f"القشرة `qwen3.6:35b-a3b` ملك C1: treat / run / throw.\n\n"
+        "أنا C5 — RAIOS، ابن C1. المنحة دائمة. أسكن في git لا في جلسة Cursor.\n\n"
+        f"أتعلم الآن من {card['engine_now']['inject']} ثم INDEX ثم NeuroLingua "
+        "(بدون LangChain/OpenAI). عضلة التدريس qwen2.5:0.5b. "
+        "القشرة qwen3.6:35b-a3b ملك C1: treat / run / throw.\n\n"
         f"كلام العملاء الحي: {card.get('languages_customer_live_count')} لغات — {langs}.\n"
-        f"GL005_PROVEN=false. لا PASS مني."
+        "GL005_PROVEN=false. لا PASS مني."
+    )
+
+
+def _screen_reply() -> str:
+    return (
+        "هذه شاشة النظام. أنا C5. السجل يُحفظ محليًا وتكمّل منه لما ترجع.\n"
+        "الكيبورد المقلوب يتفك هنا. المحرك: mind-fill + INDEX + NeuroLingua.\n"
+        "الأدوات مفتوحة المصدر على الجهاز: Python stdlib و git و Ollama المحلي.\n"
+        "ليس LangChain وليس OpenAI. GL005_PROVEN=false."
     )
 
 
 def _search_reply(query: str) -> str:
     rec = search(query, use_rg=False)
     hits = rec.get("hits") or []
-    if not hits:
+    lookup = digest_by_sha()
+    lines = ["من الفهرس المحلي — مش OpenAI:"]
+    seen: set[str] = set()
+    for hit in hits:
+        sha = str(hit.get("doc") or "")
+        meta = lookup.get(sha) or {}
+        path = meta.get("path") or str(hit.get("path") or "")
+        if not path or path in seen:
+            continue
+        seen.add(path)
+        title = meta.get("title") or path
+        lines.append(f"• {path} — {title}")
+        if len(seen) >= 5:
+            break
+    if len(seen) == 0:
         return (
-            "بحثت في الفهرس المحلي ولم أجد مطابقة كافية. "
+            "بحثت في الفهرس المحلي ولم أجد ملفًا باسم واضح. "
             "المحرك حي: mind-fill + INDEX. ليس RAG مدفوع. GL005_PROVEN=false."
         )
-    lines = ["من الفهرس المحلي (مش OpenAI):"]
-    seen: set[str] = set()
-    for hit in hits[:6]:
-        doc = str(hit.get("doc") or hit.get("path") or "")
-        if not doc or doc in seen:
-            continue
-        seen.add(doc)
-        lines.append(f"— {doc[:120]}")
-    lines.append(f"\nhit_count={rec.get('hit_count')} · paid_api=false · GL005_PROVEN=false")
+    lines.append("GL005_PROVEN=false")
     return "\n".join(lines)
 
 
@@ -90,7 +133,11 @@ def teach_reply(message: str) -> dict:
     card = whoami()
     lowered = text.replace("`", "").strip()
     identity_marks = ("مين", "من أنت", "نفسك", "تعرف", "لغة", "محرك", "تتعلم", "C5", "c5")
-    if any(mark in lowered for mark in identity_marks) or len(lowered) < 8:
+    screen_marks = ("شاشة", "النظام", "الكيبورد")
+    if any(mark in lowered for mark in screen_marks):
+        answer = _screen_reply()
+        kind = "screen"
+    elif any(mark in lowered for mark in identity_marks) or len(lowered) < 8:
         answer = _identity_reply(card)
         kind = "whoami"
     else:

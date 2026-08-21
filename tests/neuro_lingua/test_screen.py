@@ -19,6 +19,7 @@ def test_screen_is_standard_rtl_and_does_not_touch_wal():
     assert rec["wal_written"] is False
     assert before == after
     assert "C5" in rec["answer"]
+    assert rec["kind"] == "whoami"
     assert "dir=\"rtl\"" in PAGE
     assert "شاشة النظام" in PAGE
     assert "LangChain" in PAGE
@@ -29,3 +30,6 @@ def test_screen_decodes_flipped_keyboard_on_turn():
     rec = teach_reply("DULG AHAM")
     assert rec["flipped"] is True
     assert rec["decoded"] == "يعمل شاشة"
+    assert rec["kind"] == "screen"
+    assert "127.0.0.1" not in rec["answer"] or "شاشة" in rec["answer"]
+    assert "33e431" not in rec["answer"]
