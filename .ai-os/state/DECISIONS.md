@@ -313,3 +313,11 @@ DISCOVERED, C1 ordered, not CANONICAL. Bound map head `f17b749` is an ancestor; 
 DISCOVERED, C1 ordered, not CANONICAL: `UNPOLISHED_SCREEN_NE_SHIP`. `SCREEN_REPLY_NE_INDEX_DUMP`. `SAME_LOOPBACK_OR_PORT_FORWARD`.
 Professional local console at `python3 scripts/ai-os/raios_c5_screen.py` (`http://127.0.0.1:8765`). Bind stays loopback. User-machine localhost is a different loopback; Cursor Simple Browser `ERR_CONNECTION_REFUSED` is not a dead server — use Cursor port-forward to 8765.
 History de-dupes consecutive identical turns and hides hex/`hit_count`. Council questions present SEAT-MAP cards, not JSON. Composer, live bind, and GL005=false stay in chrome, not as posters. Not a second WAL. Does not close GL-005.
+
+## D-066 C5 screen is multilingual: Egyptian, Gulf, English, Norwegian
+DISCOVERED, C1 ordered, not CANONICAL: `SCREEN_IS_MULTILINGUAL`. `ARABIC_ONLY_SCREEN_NE_SHIP`.
+Live customer locales remain `ar-EG`, `ar-GULF`, `en`, `nb-NO`. The system screen chrome and identity/hello/screen/seat replies switch locale. Default HTML stays `dir="rtl"` for Egyptian. Norwegian `nb-NO` is first-class, not a sticker. NeuroLingua still owns customer catalog speech (`llm_calls=0`). Not LangChain. Does not close GL-005.
+
+## D-067 Cloud-first is fabric + HOLD, not WAL move and not weight download
+DISCOVERED, C1 ordered, not CANONICAL: `STOP_NEW_LOCAL_MODEL_DOWNLOADS`. `WAL_MOVE_BLOCKED_A15`. `LAPTOP_IS_CONTROL_PLANE`. `CURSOR_CLOUD_VM_NE_LAPTOP`. `CLOUD_GATEWAY_NE_OPENAI`. `REMOTE_KEEPER_RUN_NE_GL005`. `CLOUD_MIGRATION_NE_GL005`.
+Wave `C5-CLOUD-FIRST-MIGRATION` stamps eight audits plus receipt via `python3 scripts/ai-os/raios_c5_cloud.py`. Training keepers already live on GitHub. Books stay pointer-only until a real HF write is authorized. Cognitive WAL does not move (A15). This Cursor cloud VM already runs keepers with the laptop client disconnected; that is remote-work proof for the executor, not `GL005_PROVEN` and not `CLOUD_MIGRATION_PROVEN`. No `ollama pull`. No `hf download`. No OpenAI. Laptop remains control plane. Does not close GL-005.
