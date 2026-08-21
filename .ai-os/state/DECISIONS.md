@@ -254,3 +254,14 @@ DISCOVERED, not CANONICAL: `C5_SCREEN_IS_STANDARD`. `FLIPPED_KEYBOARD_IS_INPUT`.
 
 ## D-058 Retrieval is not a cognitive answer
 DISCOVERED, not CANONICAL: `ROLE_IDENTITY_NE_MODEL_IDENTITY`. `LOCAL_SOURCE_NE_LOCAL_MODEL_EXECUTION`. `INDEX_HIT_NE_REASONING`. `FILE_DISCOVERY_NE_FILE_ASSIMILATION`. `RETRIEVAL_RESULT_NE_COGNITIVE_ANSWER`. C5 role is RAIOS. Live provider is INDEX+file-read+deterministic reason. Named cortex `qwen3.6:35b-a3b` is C1-owned and not bound to the live answer path. Ollama student is teaching muscle, not this path. Trace: `python3 scripts/ai-os/raios_c5_trace.py`. Does not close GL-005.
+
+## D-059 CI pass is not assimilation and is not GL-005
+DISCOVERED, C1 ordered, not CANONICAL: `CI_PASS_NE_ASSIMILATION`. `CI_PASS_NE_GL005`. `EXTRACT_CLAIM_NE_ASSIMILATION`. `SAFE_TO_REMOVE_SOURCE_REQUIRES_INDEPENDENT_EXECUTION`.
+Locked basis for every later result:
+
+`CI(1e28f84)=PASS`
+`EXTRACTED_QWEN_GRANITE=false`
+`SAFE_TO_REMOVE_SOURCE=false`
+`GL005_PROVEN=false`
+
+Green CI on `1e28f84` proves the commit did not regress existing tests. It does not prove Qwen/Granite extraction, injection, or operational assimilation. Do not delete any source/weights. Do not print GL-005 PASS. Next work is authenticated OrchestrationTask mutation plus source-independent capability execution. Then, and only then, C1 re-evaluates `SAFE_TO_REMOVE_SOURCE`. State file: `.ai-os/state/FOUNDATION.json`. Runner: `python3 scripts/ai-os/raios_c5_foundation.py`. Does not close GL-005.

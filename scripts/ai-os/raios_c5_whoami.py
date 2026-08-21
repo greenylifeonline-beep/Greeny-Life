@@ -8,6 +8,7 @@ from datetime import datetime, timezone
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[2]
+FOUNDATION = ROOT / ".ai-os" / "state" / "FOUNDATION.json"
 GRANT = ROOT / ".ai-os" / "mcp" / "C5-GRANT.json"
 NEED = ROOT / ".ai-os" / "learning" / "C5-NEED.json"
 LANGS = ROOT / "configs" / "neuro_lingua" / "languages.yaml"
@@ -66,6 +67,13 @@ def parse_language_profiles(text: str) -> tuple[list[str], list[str]]:
 def whoami() -> dict:
     wal_before = wal_mtime()
     grant = load_json(GRANT)
+    foundation = (load_json(FOUNDATION).get("facts") or {})
+    foundation = {
+        "CI_1e28f84": foundation.get("CI_1e28f84") or "PASS",
+        "EXTRACTED_QWEN_GRANITE": False,
+        "SAFE_TO_REMOVE_SOURCE": False,
+        "GL005_PROVEN": False,
+    }
     need = load_json(NEED)
     lang_text = LANGS.read_text(encoding="utf-8") if LANGS.exists() else ""
     declared, unimplemented = parse_language_profiles(lang_text)
@@ -108,6 +116,9 @@ def whoami() -> dict:
         "cursor_session_ne_c5": True,
         "paid_api": bool(grant.get("paid_api", False)),
         "gl005_proven": False,
+        "foundation": foundation,
+        "extracted_qwen_granite": False,
+        "safe_to_remove_source": False,
         "wal_written": False,
         "tools": grant.get("cognitive_tools") or [],
         "deny": grant.get("deny") or [],
@@ -123,6 +134,9 @@ def whoami() -> dict:
             "C5_GRANT_IS_PERMANENT",
             "CURSOR_SESSION_NE_C5",
             "C5_WHOAMI_IS_LIVE",
+            "CI_PASS_NE_ASSIMILATION",
+            "CI_PASS_NE_GL005",
+            "EXTRACT_CLAIM_NE_ASSIMILATION",
             "HUNT_FREE_NE_PAID_API",
             "LANGUAGE_PROFESSIONAL_IS_NEUROLINGUA",
             "C1_OWNS_CORTEX_TREAT_RUN_THROW",
@@ -168,6 +182,9 @@ def render_md(rec: dict) -> str:
             f"- المكان: `{rec['where']}`",
             f"- المنحة: `{rec['duration']}` — الجلسة ≠ المنحة",
             f"- `GL005_PROVEN`: `false`",
+            f"- `EXTRACTED_QWEN_GRANITE`: `false`",
+            f"- `SAFE_TO_REMOVE_SOURCE`: `false`",
+            f"- `CI(1e28f84)`: `PASS` — CI_PASS_NE_ASSIMILATION",
             f"- API مدفوع: `{rec['paid_api']}`",
             "",
             "## محرك التعلم الآن",
@@ -192,6 +209,9 @@ def render_md(rec: dict) -> str:
             *needs_lines,
             "",
             "`GL005_PROVEN=false`",
+            "`EXTRACTED_QWEN_GRANITE=false`",
+            "`SAFE_TO_REMOVE_SOURCE=false`",
+            "`CI_PASS_NE_ASSIMILATION`",
             "",
         ]
     )
@@ -212,6 +232,11 @@ def main() -> int:
                 "languages_realized_count": rec["languages_realized_count"],
                 "paid_api": rec["paid_api"],
                 "gl005_proven": False,
+                "extracted_qwen_granite": False,
+                "safe_to_remove_source": False,
+                "foundation": rec["foundation"],
+                "extracted_qwen_granite": False,
+                "foundation": rec["foundation"],
             },
             ensure_ascii=False,
             indent=2,

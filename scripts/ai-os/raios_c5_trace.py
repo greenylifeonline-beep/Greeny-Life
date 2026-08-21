@@ -13,6 +13,7 @@ from pathlib import Path
 ROOT = Path(__file__).resolve().parents[2]
 sys.path.insert(0, str(Path(__file__).resolve().parent))
 
+from raios_c5_foundation import load_foundation  # noqa: E402
 from raios_c5_reason import ground  # noqa: E402
 
 GRANT = ROOT / ".ai-os" / "mcp" / "C5-GRANT.json"
@@ -68,6 +69,9 @@ def render(fields: dict) -> str:
         "RECEIPT",
         "RECEIPT_SHA256",
         "GL005_PROVEN",
+        "EXTRACTED_QWEN_GRANITE",
+        "SAFE_TO_REMOVE_SOURCE",
+        "CI_1e28f84",
     ]
     lines = [
         "############################################################",
@@ -85,6 +89,7 @@ def trace(query: str) -> dict:
     wal_before = WAL.stat().st_mtime if WAL.exists() else None
     grant = load(GRANT)
     seats = ((load(SEATS).get("seats") or {}).get("C5") or {})
+    foundation = load_foundation().get("facts") or {}
     cortex = load_cortex()
     gate = cortex.gate_run()
     grounded = ground(query)
@@ -114,6 +119,9 @@ def trace(query: str) -> dict:
         "RECEIPT": str(OUT / "LAST.txt"),
         "RECEIPT_SHA256": "",
         "GL005_PROVEN": "false",
+        "EXTRACTED_QWEN_GRANITE": "false",
+        "SAFE_TO_REMOVE_SOURCE": "false",
+        "CI_1e28f84": str(foundation.get("CI_1e28f84") or "PASS"),
         "GRANT_PAID_API": str(bool(grant.get("paid_api"))).lower(),
         "GRANT_TOOLS": ",".join(grant.get("cognitive_tools") or []),
         "CORTEX_GATE": gate.get("reason"),

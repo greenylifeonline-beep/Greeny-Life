@@ -1,0 +1,34 @@
+{
+  "schema": "raios.c1-foundation.v1",
+  "knowledge_state": "DISCOVERED",
+  "canonical": false,
+  "from": "C1",
+  "recorded_by": "C2",
+  "decision": "D-059",
+  "ci_commit": "1e28f845b9530777b7378298885e986c01feaa0c",
+  "facts": {
+    "CI_1e28f84": "PASS",
+    "EXTRACTED_QWEN_GRANITE": false,
+    "SAFE_TO_REMOVE_SOURCE": false,
+    "GL005_PROVEN": false
+  },
+  "law": [
+    "CI_PASS_NE_ASSIMILATION",
+    "CI_PASS_NE_GL005",
+    "EXTRACT_CLAIM_NE_ASSIMILATION",
+    "SAFE_TO_REMOVE_SOURCE_REQUIRES_INDEPENDENT_EXECUTION",
+    "PRINTED_PASS_NE_EVIDENCE",
+    "HOLD_NE_THROW"
+  ],
+  "next": [
+    "GL005_AUTHENTICATED_MUTATION",
+    "QWEN_GRANITE_ASSIMILATION"
+  ],
+  "flip_requires": {
+    "GL005_PROVEN": "authenticated POST /api/tasks then visible OrchestrationTask row",
+    "EXTRACTED_QWEN_GRANITE": "capability pack executed by C5 after source absent",
+    "SAFE_TO_REMOVE_SOURCE": "both of the above plus C1 decision"
+  },
+  "gl005_proven": false,
+  "wal_written": false
+}

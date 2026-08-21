@@ -71,6 +71,20 @@ def prove() -> dict:
 
     gates.append(
         gate(
+            "c1_foundation",
+            "LOCKED",
+            "CI(1e28f84)=PASS; EXTRACTED_QWEN_GRANITE=false; SAFE_TO_REMOVE_SOURCE=false; GL005_PROVEN=false",
+            {
+                "CI_PASS_NE_ASSIMILATION": True,
+                "CI_PASS_NE_GL005": True,
+                "gl005_proven": False,
+                "extracted_qwen_granite": False,
+                "safe_to_remove_source": False,
+            },
+        )
+    )
+    gates.append(
+        gate(
             "claim_inventory",
             "OBSERVED",
             f"claimed={len(claimed)} live={len(LIVE)}",
@@ -247,6 +261,8 @@ def prove() -> dict:
             "EXECUTION_NE_REAL_IO",
             "REAL_IO_NE_LIVE_GUARD",
             "LIVE_GUARD_NE_GL005",
+            "CI_PASS_NE_ASSIMILATION",
+            "CI_PASS_NE_GL005",
             "PRINTED_PASS_NE_EVIDENCE",
             "C3_TRANSITION_REQUIRES_PROOF",
             "FAIL_STAYS_FALSE",
