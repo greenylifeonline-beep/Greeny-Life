@@ -1,6 +1,6 @@
 {
   "schema": "raios.c5-need.v1",
-  "ts": "2026-08-21T00:00:00+00:00",
+  "ts": "2026-08-21T19:58:55.734000+00:00",
   "from": "C5",
   "parent": "C1",
   "self_promote": false,
@@ -29,6 +29,18 @@
       "what": "أعد تشغيل powershell -File scripts/ai-os/raios_c5_mind_fill.ps1 على Repair لما الملفات المهمة تتغير.",
       "needed_now": false,
       "blocks": null
+    },
+    {
+      "kind": "proof",
+      "what": "Existing DATABASE_URL + legitimate login so GET /api/auth/session authenticated=true, then POST /api/tasks. Do not mint secrets.",
+      "needed_now": true,
+      "blocks": "AUTHENTICATED_ORCHESTRATION_TASK"
+    },
+    {
+      "kind": "compute",
+      "what": "Load qwen3.6:35b-a3b and Granite on a capable host. Student 0.5b is not the source. C1_CORTEX_RUN required to run cortex. HOLD_NE_THROW.",
+      "needed_now": false,
+      "blocks": "QWEN_GRANITE_SOURCE_INDEPENDENT_ASSIMILATION"
     }
   ],
   "not_needed": [

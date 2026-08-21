@@ -1,0 +1,105 @@
+{
+  "schema": "raios.c5-book.v1",
+  "ts": "2026-08-21T19:58:55.734213+00:00",
+  "from": "C5",
+  "parent": "C1",
+  "decision": "D-062",
+  "book": [
+    "learn",
+    "practice",
+    "record",
+    "retrieve",
+    "replay",
+    "measure",
+    "identify_weakness",
+    "request_research",
+    "compile_experience"
+  ],
+  "stop": "AUTHENTICATED_ORCHESTRATION_TASK",
+  "highest_weakness": "AUTHENTICATED_ORCHESTRATION_TASK",
+  "experience": {
+    "Ck": 0.6035,
+    "rung": "VALIDATED",
+    "knowledge": false,
+    "promoted": false,
+    "reproduced": true
+  },
+  "gl005_proven": false,
+  "extracted_qwen_granite": false,
+  "authenticated_orchestration_task": false,
+  "wal_written": false,
+  "self_promote": false,
+  "paid_api": false,
+  "law": [
+    "C5_BOOK_CYCLE_IS_LIVE_KEEPERS",
+    "BOOK_CYCLE_NE_GL005",
+    "LEARN_THEORY_THEN_PRACTICE_85",
+    "LEARN_AND_TEACH_ARE_ONE",
+    "EXPERIENCE_NE_KNOWLEDGE",
+    "ELEVATION_REQUEST_NE_SELF_PROMOTE",
+    "CI_PASS_NE_ASSIMILATION"
+  ],
+  "ok": true,
+  "text": "############################################################\n# RAIOS C5 BOOK CYCLE — LEARN/PRACTICE/RECORD/…/EXPERIENCE\n############################################################\nFROM=C5\nPARENT=C1\nBOOK_STEPS=learn,practice,record,retrieve,replay,measure,identify_weakness,request_research,compile_experience\nOK=true\nSTOP=AUTHENTICATED_ORCHESTRATION_TASK\nHIGHEST_WEAKNESS=AUTHENTICATED_ORCHESTRATION_TASK\nCK=0.6035\nRUNG=VALIDATED\nKNOWLEDGE=false\nPROMOTED=false\nREPRODUCED=true\nEXTRACTED_QWEN_GRANITE=false\nAUTHENTICATED_ORCHESTRATION_TASK=false\nGL005_PROVEN=false\nWAL_WRITTEN=false\nSELF_PROMOTE=false\nPAID_API=false\nNEXT=AUTHENTICATED_ORCHESTRATION_TASK\n############################################################\n",
+  "wal_mtime_unchanged": true,
+  "step_ok": {
+    "learn": true,
+    "practice": true,
+    "record": true,
+    "retrieve": true,
+    "replay": true,
+    "measure": true,
+    "identify_weakness": true,
+    "request_research": true,
+    "compile_experience": true
+  },
+  "weaknesses": [
+    {
+      "id": "AUTHENTICATED_ORCHESTRATION_TASK",
+      "class": "CAPABILITY_PROTECTED",
+      "detail": "GET /api/auth/session authenticated=false; POST /api/tasks 401; GET 500 DATABASE_URL missing",
+      "blocks": "0.1"
+    },
+    {
+      "id": "QWEN_GRANITE_SOURCE_PRESENT",
+      "class": "SOURCE_ABSENT",
+      "detail": "Ollama student qwen2.5:0.5b is not cortex/granite",
+      "blocks": "0.2"
+    },
+    {
+      "id": "GL003_UAE_NORWAY_NEXT",
+      "class": "CAPABILITY_ABSENT",
+      "detail": "UAE/Norway Next routes 404; do not fill from this slice",
+      "blocks": "2"
+    },
+    {
+      "id": "CORTEX_HOLD",
+      "class": "HOLD_NE_THROW",
+      "detail": "qwen3.6:35b-a3b named, not loaded, HOST_NO_GPU",
+      "blocks": "4"
+    }
+  ],
+  "research_asks": [
+    {
+      "kind": "proof",
+      "what": "Existing DATABASE_URL + legitimate login so GET /api/auth/session authenticated=true, then POST /api/tasks. Do not mint secrets.",
+      "needed_now": true,
+      "blocks": "AUTHENTICATED_ORCHESTRATION_TASK",
+      "self_promote": false
+    },
+    {
+      "kind": "compute",
+      "what": "Load qwen3.6:35b-a3b and Granite on a capable host. Student 0.5b is not the source. C1_CORTEX_RUN required to run cortex. HOLD_NE_THROW.",
+      "needed_now": false,
+      "blocks": "QWEN_GRANITE_SOURCE_INDEPENDENT_ASSIMILATION",
+      "self_promote": false
+    },
+    {
+      "kind": "knowledge",
+      "what": "Local free: CORE-CONTRACT, DECISIONS, Phase Zero map, P0 stamp, INDEX retrieve. No LangChain/OpenAI/Chroma/HF weights in the secret repo.",
+      "needed_now": false,
+      "blocks": null,
+      "self_promote": false
+    }
+  ]
+}
