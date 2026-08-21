@@ -4,6 +4,7 @@ from __future__ import annotations
 
 import json
 import os
+import re
 import subprocess
 import sys
 import urllib.error
@@ -16,7 +17,6 @@ sys.path.insert(0, str(Path(__file__).resolve().parent))
 
 from raios_c5_foundation import load_foundation  # noqa: E402
 from raios_c5_p0 import ASSIMILATION_CHAIN, GATE_ORDER, stamp as p0_stamp  # noqa: E402
-from raios_c5_train import KEEPERS  # noqa: E402
 
 WAL = ROOT / "RAIOS" / "V9" / "wal" / "cognitive-events.jsonl"
 OUT = ROOT / ".ai-os" / "receipts" / "c5-phase0"
@@ -119,6 +119,18 @@ def git_head() -> str:
 
 def exists(rel: str) -> bool:
     return (ROOT / rel).is_file() or (ROOT / rel).is_dir()
+
+
+def keepers_inventory() -> list[dict]:
+    """Read train.KEEPERS from source so this runner stays stdlib (no pydantic)."""
+    text = (ROOT / "scripts" / "ai-os" / "raios_c5_train.py").read_text(encoding="utf-8")
+    start = text.find("KEEPERS = (")
+    if start < 0:
+        return []
+    end = text.find("\n)", start)
+    block = text[start : end + 2]
+    rows = re.findall(r'\("([^"]+)", "([^"]+)"\)', block)
+    return [{"name": name, "path": path, "exists": exists(path)} for name, path in rows]
 
 
 def http_code(path: str) -> int | None:
@@ -422,7 +434,7 @@ def stamp() -> dict:
         "world_class_is": list(WORLD_CLASS_IS),
         "world_class_is_not": list(WORLD_CLASS_IS_NOT),
         "reject": [{"claim": n, "law": law, "keeper": k} for n, law, k in REJECT],
-        "keepers": [{"name": n, "path": p, "exists": exists(p)} for n, p in KEEPERS],
+        "keepers": keepers_inventory(),
         "brains": [brain_row(spec) for spec in BRAINS],
         "packs": [{"path": p, "exists": exists(p)} for p in PACKS],
         "p0": {

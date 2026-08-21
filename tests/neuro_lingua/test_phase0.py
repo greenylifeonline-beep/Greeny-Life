@@ -55,4 +55,5 @@ def test_phase0_map_is_discovery_not_kernel_and_does_not_flip_locks():
     assert dumped["execution"][0]["status"] == "DONE_DISCOVERED"
     assert all("name" in row and "path" in row for row in rec["keepers"])
     assert any(row["name"] == "phase0" and row["exists"] for row in rec["keepers"])
+    assert len(rec["keepers"]) >= 10
     assert "WORLD-CLASS DISCOVERY" in MAP_MD.read_text(encoding="utf-8")
