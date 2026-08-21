@@ -130,7 +130,6 @@ def teach_reply(message: str) -> dict:
     wal_before = wal_mtime()
     kb = decode_flipped_keyboard(message)
     text = teach_text(message)
-    card = whoami()
     lowered = text.replace("`", "").strip()
     identity_marks = ("مين", "من أنت", "نفسك", "تعرف", "لغة", "محرك", "تتعلم", "C5", "c5")
     screen_marks = ("شاشة", "النظام", "الكيبورد")
@@ -138,7 +137,7 @@ def teach_reply(message: str) -> dict:
         answer = _screen_reply()
         kind = "screen"
     elif any(mark in lowered for mark in identity_marks) or len(lowered) < 8:
-        answer = _identity_reply(card)
+        answer = _identity_reply(whoami())
         kind = "whoami"
     else:
         answer = _search_reply(text)
@@ -330,14 +329,30 @@ PAGE = """<!DOCTYPE html>
       const text = box.value.trim();
       if (!text) return;
       box.value = "";
-      const r = await fetch("/api/chat", {
-        method: "POST",
-        headers: {"Content-Type": "application/json"},
-        body: JSON.stringify({text}),
-      });
-      const data = await r.json();
-      bubble("C1", data.decoded || text, data.flipped);
-      bubble("C5", data.answer || "خطأ", false);
+      const btn = form.querySelector("button");
+      btn.disabled = true;
+      try {
+        const r = await fetch("/api/chat", {
+          method: "POST",
+          headers: {"Content-Type": "application/json"},
+          body: JSON.stringify({text}),
+        });
+        const data = await r.json();
+        bubble("C1", data.decoded || text, data.flipped);
+        bubble("C5", data.answer || "تعذر الرد.", false);
+      } catch (err) {
+        bubble("C1", text, false);
+        bubble("C5", "تعذر الاتصال بالشاشة المحلية.", false);
+      } finally {
+        btn.disabled = false;
+        box.focus();
+      }
+    });
+    box.addEventListener("keydown", (e) => {
+      if (e.key === "Enter" && !e.shiftKey) {
+        e.preventDefault();
+        form.requestSubmit();
+      }
     });
     boot();
   </script>
@@ -392,10 +407,11 @@ class Handler(BaseHTTPRequestHandler):
         raw = self.rfile.read(min(length, 80_000)).decode("utf-8")
         try:
             data = json.loads(raw or "{}")
-        except json.JSONDecodeError:
-            self._send(400, b'{"ok":false}', "application/json")
+            rec = teach_reply(str(data.get("text") or ""))
+        except Exception as exc:
+            rec = {"ok": False, "from": "C5", "answer": "تعذر الرد.", "error": type(exc).__name__, "gl005_proven": False}
+            self._send(200, json.dumps(rec, ensure_ascii=False).encode("utf-8"), "application/json; charset=utf-8")
             return
-        rec = teach_reply(str(data.get("text") or ""))
         self._send(200, json.dumps(rec, ensure_ascii=False).encode("utf-8"), "application/json; charset=utf-8")
 
 
