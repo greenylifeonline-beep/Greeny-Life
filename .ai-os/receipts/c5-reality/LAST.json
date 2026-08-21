@@ -1,0 +1,107 @@
+{
+  "schema": "raios.c2-reality-stamp.v1",
+  "knowledge_state": "DISCOVERED",
+  "canonical": false,
+  "from": "C2",
+  "parent": "C1",
+  "c5": "git_not_this_session",
+  "decision": "D-063",
+  "foundation_decision": "D-059",
+  "p0_decision": "D-060",
+  "ts": "2026-08-21T20:11:03.428582+00:00",
+  "head": "6fd4511f27facfd0575e4bef5939a7e58bab746d",
+  "facts": {
+    "CI_1e28f84": "PASS",
+    "CI_68af867": "PASS",
+    "EXTRACTED_QWEN_GRANITE": false,
+    "SAFE_TO_REMOVE_SOURCE": false,
+    "GL005_PROVEN": false,
+    "AUTHENTICATED_ORCHESTRATION_TASK": false
+  },
+  "artifacts": [
+    {
+      "name": "RAIOS-WORLD-CLASS-REALITY-AUDIT.json",
+      "path": ".ai-os/reports/RAIOS-WORLD-CLASS-REALITY-AUDIT.json",
+      "sha256": "91627268b4ccbcfb233ff1e4c46469dad56e2f17aef0863de6b0398358543736"
+    },
+    {
+      "name": "RAIOS-CAPABILITY-GAP-MATRIX.json",
+      "path": ".ai-os/reports/RAIOS-CAPABILITY-GAP-MATRIX.json",
+      "sha256": "c4da9ccd823484781b695ecd34d84266cb7cba5c3737f61f70d518ed49d96d68"
+    },
+    {
+      "name": "RAIOS-ERP-REALITY-MATRIX.json",
+      "path": ".ai-os/reports/RAIOS-ERP-REALITY-MATRIX.json",
+      "sha256": "f9573071ad50dbf0699a673413dc74d82e86b8f1154adaf4b87c4d89801809a1"
+    },
+    {
+      "name": "RAIOS-COGNITIVE-DATAFLOW.json",
+      "path": ".ai-os/reports/RAIOS-COGNITIVE-DATAFLOW.json",
+      "sha256": "0727ddeb8d2372be0b9245ac9a9e8d2768af4dabaa4772f958c51b05f12b476a"
+    },
+    {
+      "name": "RAIOS-RESOURCE-FABRIC-MAP.json",
+      "path": ".ai-os/reports/RAIOS-RESOURCE-FABRIC-MAP.json",
+      "sha256": "b6220b9e3de3742c07c4cf5d3c877fee03c5a4944f995fa474b2bcb5c7845cf6"
+    },
+    {
+      "name": "RAIOS-STATE-OF-THE-ART-RESEARCH-PLAN.md",
+      "path": ".ai-os/reports/RAIOS-STATE-OF-THE-ART-RESEARCH-PLAN.md",
+      "sha256": "a7a09a403a1a437c3efd835078fcbbf6c41a7321b94bb66249cebe2a5463f984"
+    },
+    {
+      "name": "RAIOS-C1-C10-COUNCIL-ARCHITECTURE.json",
+      "path": ".ai-os/reports/RAIOS-C1-C10-COUNCIL-ARCHITECTURE.json",
+      "sha256": "666a8a93ff995ef9fe7f046637603a07008ffc758c4abdca263e82bbbeb27ba5"
+    },
+    {
+      "name": "RAIOS-MASTER-EXECUTION-GRAPH.json",
+      "path": ".ai-os/reports/RAIOS-MASTER-EXECUTION-GRAPH.json",
+      "sha256": "ed686edf4dddd3b71286ab418d3bfc1f543fd9af5f505c8ac641db15d0c04764"
+    }
+  ],
+  "stop": "AUTHENTICATED_ORCHESTRATION_TASK",
+  "next": "AUTHENTICATED_ORCHESTRATION_TASK",
+  "live_c_seats": [
+    "C1",
+    "C2",
+    "C3",
+    "C4",
+    "C5"
+  ],
+  "c6_c10_live": false,
+  "new_kernel": false,
+  "platform_proven": false,
+  "gl005_proven": false,
+  "extracted_qwen_granite": false,
+  "safe_to_remove_source": false,
+  "authenticated_orchestration_task": false,
+  "wal_written": false,
+  "paid_api": false,
+  "law": [
+    "SCALE_BY_COMPRESSION_NOT_COMPLEXITY",
+    "REALITY_AUDIT_NE_NEW_KERNEL",
+    "NAMED_ARTIFACT_NE_PLATFORM_PROVEN",
+    "FROM_INVENTORY_NE_TO_PLATFORM",
+    "C6_C10_NE_LIVE",
+    "CI_PASS_NE_ASSIMILATION",
+    "CI_PASS_NE_GL005",
+    "EXPERIENCE_NE_KNOWLEDGE",
+    "HOLD_NE_THROW",
+    "REUSE_BEFORE_BUILD"
+  ],
+  "ok": true,
+  "text": "############################################################\n# RAIOS C2 WORLD-CLASS REALITY STAMP — EIGHT ARTIFACTS\n############################################################\nHEAD=6fd4511f27fa\nFROM=C2\nPARENT=C1\nC5=git_not_this_session\nDECISION=D-063\nSCALE_BY_COMPRESSION_NOT_COMPLEXITY=true\nREALITY_AUDIT_NE_NEW_KERNEL=true\nNAMED_ARTIFACT_NE_PLATFORM_PROVEN=true\nFROM_INVENTORY_NE_TO_PLATFORM=true\nC6_C10_NE_LIVE=true\nPLATFORM_PROVEN=false\nAUTHENTICATED_ORCHESTRATION_TASK=false\nEXTRACTED_QWEN_GRANITE=false\nSAFE_TO_REMOVE_SOURCE=false\nGL005_PROVEN=false\nWAL_WRITTEN=false\nNEW_KERNEL=false\nARTIFACTS=RAIOS-WORLD-CLASS-REALITY-AUDIT.json,RAIOS-CAPABILITY-GAP-MATRIX.json,RAIOS-ERP-REALITY-MATRIX.json,RAIOS-COGNITIVE-DATAFLOW.json,RAIOS-RESOURCE-FABRIC-MAP.json,RAIOS-STATE-OF-THE-ART-RESEARCH-PLAN.md,RAIOS-C1-C10-COUNCIL-ARCHITECTURE.json,RAIOS-MASTER-EXECUTION-GRAPH.json\nSTOP=AUTHENTICATED_ORCHESTRATION_TASK\nNEXT=AUTHENTICATED_ORCHESTRATION_TASK\n############################################################\n",
+  "wal_mtime_unchanged": true,
+  "probe_classes": {
+    "/api/auth/session": "HTTP_200_NE_SEMANTIC_SUCCESS",
+    "/api/tasks": "CAPABILITY_UNAVAILABLE_OR_BROKEN",
+    "/api/products": "CAPABILITY_UNAVAILABLE_OR_BROKEN",
+    "/api/brains/greeny-life-egypt": "CAPABILITY_PROTECTED",
+    "/api/brains/greens-nature-uae": "CAPABILITY_ABSENT",
+    "/api/brains/green-lines-norway-eu": "CAPABILITY_ABSENT",
+    "/api/intelligence/data-fabric": "CAPABILITY_PROTECTED",
+    "/api/suppliers": "CAPABILITY_PROTECTED",
+    "/api/sales-orders": "CAPABILITY_UNAVAILABLE_OR_BROKEN"
+  }
+}

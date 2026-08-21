@@ -93,6 +93,7 @@ def whoami() -> dict:
         "student_muscle": "qwen2.5:0.5b via Ollama",
         "cortex_identity": "qwen3.6:35b-a3b (C1 treat/run/throw; not loaded here)",
         "mesh": "python3 scripts/ai-os/raios_c5_train.py",
+        "reality": "python3 scripts/ai-os/raios_c5_reality.py",
         "not": [
             "LangChain",
             "OpenAIEmbeddings",
@@ -144,6 +145,8 @@ def whoami() -> dict:
             "HUNT_FREE_NE_PAID_API",
             "LANGUAGE_PROFESSIONAL_IS_NEUROLINGUA",
             "C1_OWNS_CORTEX_TREAT_RUN_THROW",
+            "SCALE_BY_COMPRESSION_NOT_COMPLEXITY",
+            "C6_C10_NE_LIVE",
         ],
     }
     wal_after = wal_mtime()
@@ -200,6 +203,7 @@ def render_md(rec: dict) -> str:
             f"- عضلة تدريس: `{eng['student_muscle']}`",
             f"- قشرة رئيسية: `{eng['cortex_identity']}`",
             f"- شبكة تدريب: `{eng['mesh']}`",
+            f"- تدقيق الواقع: `{eng['reality']}`",
             f"- مش: {', '.join(eng['not'])}",
             "",
             "## اللغات",

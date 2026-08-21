@@ -295,3 +295,11 @@ DISCOVERED, C1 ordered, not CANONICAL: `C5_BOOK_CYCLE_IS_LIVE_KEEPERS`. `BOOK_CY
 C1 assigned C5 the book loop: learn → practice → record → retrieve → replay → measure → identify weakness → request research → compile experience.
 That loop reuses existing keepers (foundation/P0/whoami/minute/search). It does not write Cognitive WAL, does not mint `GL005_PROVEN`, does not delete sources, and does not self-promote. Experience compiled from the cycle stays DISCOVERED until C1 validates repeated evidence.
 Runner: `python3 scripts/ai-os/raios_c5_book.py`. Does not close GL-005.
+
+## D-063 Scale by compression; C2 reality stamp is not a platform
+DISCOVERED, C1 ordered, not CANONICAL: `SCALE_BY_COMPRESSION_NOT_COMPLEXITY`. `REALITY_AUDIT_NE_NEW_KERNEL`. `NAMED_ARTIFACT_NE_PLATFORM_PROVEN`. `FROM_INVENTORY_NE_TO_PLATFORM`. `C6_C10_NE_LIVE`.
+RAIOS shall not scale by accumulating complexity. It scales by compressing knowledge, compiling experience, distributing compute, reusing capability, and proving improvement.
+FROM remains repository + agents + foundry + experiments until P0 evidence. TO (persistent evidence-native self-improving distributed resource-aware research-capable experience-compiling operational cognitive industrial platform) is a target, not a minted fact.
+C2 stamps eight named reality artifacts from live keepers. They are DISCOVERED audits, not a new kernel, not ten live council seats, not Odoo/Celerp, and not `GL005_PROVEN`. C6–C10 stay `NOT_SEATED`. Do not invent seats to look complete.
+Artifacts: `.ai-os/reports/RAIOS-WORLD-CLASS-REALITY-AUDIT.json`, `RAIOS-CAPABILITY-GAP-MATRIX.json`, `RAIOS-ERP-REALITY-MATRIX.json`, `RAIOS-COGNITIVE-DATAFLOW.json`, `RAIOS-RESOURCE-FABRIC-MAP.json`, `RAIOS-STATE-OF-THE-ART-RESEARCH-PLAN.md`, `RAIOS-C1-C10-COUNCIL-ARCHITECTURE.json`, `RAIOS-MASTER-EXECUTION-GRAPH.json`.
+Runner: `python3 scripts/ai-os/raios_c5_reality.py`. Next remains `AUTHENTICATED_ORCHESTRATION_TASK`. Does not close GL-005.
