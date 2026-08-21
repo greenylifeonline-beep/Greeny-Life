@@ -289,3 +289,9 @@ The world-class map inventories live keepers and orders execution. It is not a 2
 World-class here means: one live product path, one authenticated orchestration path, C5 hybrid mind then source-independent assimilation, one Cognitive WAL, fail-closed evidence, zero paid API.
 Execution order remains D-060: `AUTHENTICATED_ORCHESTRATION_TASK` → Qwen/Granite chain → `GL005`. Then WAL-bind product experiences, then GL-003 (other agent), then cron-on-main and C1 cortex treat/run/throw.
 Map: `.ai-os/reports/RAIOS-PHASE-ZERO-MAP.md`. Runner: `python3 scripts/ai-os/raios_c5_phase0.py`. Does not close GL-005.
+
+## D-062 C5 book cycle is live keepers, not a second mind
+DISCOVERED, C1 ordered, not CANONICAL: `C5_BOOK_CYCLE_IS_LIVE_KEEPERS`. `BOOK_CYCLE_NE_GL005`. `EXPERIENCE_NE_KNOWLEDGE`.
+C1 assigned C5 the book loop: learn → practice → record → retrieve → replay → measure → identify weakness → request research → compile experience.
+That loop reuses existing keepers (foundation/P0/whoami/minute/search). It does not write Cognitive WAL, does not mint `GL005_PROVEN`, does not delete sources, and does not self-promote. Experience compiled from the cycle stays DISCOVERED until C1 validates repeated evidence.
+Runner: `python3 scripts/ai-os/raios_c5_book.py`. Does not close GL-005.

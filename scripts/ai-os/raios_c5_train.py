@@ -105,6 +105,7 @@ KEEPERS = (
     ("foundation", "scripts/ai-os/raios_c5_foundation.py"),
     ("p0", "scripts/ai-os/raios_c5_p0.py"),
     ("phase0", "scripts/ai-os/raios_c5_phase0.py"),
+    ("book", "scripts/ai-os/raios_c5_book.py"),
     ("keyboard", "scripts/ai-os/raios_c5_keyboard.py"),
     ("screen", "scripts/ai-os/raios_c5_screen.py"),
 )
