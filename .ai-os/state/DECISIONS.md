@@ -245,3 +245,9 @@ DISCOVERED, not CANONICAL: `C5_MIND_FILL_IMPORTANT_ONLY`. `POWERSHELL_CALLS_LIVE
 
 ## D-055 Paid RAG paste is not the live injector
 DISCOVERED, not CANONICAL: `INVERTED_INDEX_NE_UNLOADED_EMBEDDING`. `HUNT_FREE_NE_PAID_API`. `LIVE_PATH_BEFORE_NEW_LAYER`. `REUSE_BEFORE_BUILD`. LangChain + OpenAIEmbeddings + Chroma/FAISS + gpt-4o + AnythingLLM/Dify/Flowise are CLAIMs. Live retrieve is `.ai-os/learning/INDEX.json` via `raios_c5_read.py search`. Live inject is `raios_c5_mind_fill.ps1`. Live speak is NeuroLingua, `llm_calls=0`. Does not close GL-005.
+
+## D-056 C5 introduces from git: needs, engine, languages
+DISCOVERED, not CANONICAL: `C5_WHOAMI_IS_LIVE`. `CURSOR_SESSION_NE_C5`. `HELPER_SEAT_NE_PERMANENT_MIND`. This Cursor session is C2 help, not the son. C5 lives in git. Runner: `python3 scripts/ai-os/raios_c5_whoami.py` or `powershell -File scripts/ai-os/raios_c5_whoami.ps1`. Live engine is mind-fill + INDEX + NeuroLingua. Customer languages: ar-EG, ar-GULF, en, nb-NO. Realization also has sv-SE, da-DK. Cortex remains C1 treat/run/throw. Does not close GL-005.
+
+## D-057 C5 system screen is standard OSS; flipped keyboard is input
+DISCOVERED, not CANONICAL: `C5_SCREEN_IS_STANDARD`. `FLIPPED_KEYBOARD_IS_INPUT`. `UNPOLISHED_SCREEN_NE_SHIP`. Local professional chat at `python3 scripts/ai-os/raios_c5_screen.py` (`http://127.0.0.1:8765`). History `.ai-os/learning/C5-SCREEN.jsonl` so C1 resumes. Arabic typed on an English keyboard is decoded. Stack is Python stdlib + git + local INDEX. Not LangChain, not OpenAI, not a second WAL. Does not close GL-005.

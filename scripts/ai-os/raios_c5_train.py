@@ -101,6 +101,9 @@ KEEPERS = (
     ("kae", "scripts/ai-os/raios_c5_kae.py"),
     ("toc", "scripts/ai-os/raios_c5_toc.py"),
     ("mind-fill", "scripts/ai-os/raios_c5_mind_fill.py"),
+    ("whoami", "scripts/ai-os/raios_c5_whoami.py"),
+    ("keyboard", "scripts/ai-os/raios_c5_keyboard.py"),
+    ("screen", "scripts/ai-os/raios_c5_screen.py"),
 )
 
 

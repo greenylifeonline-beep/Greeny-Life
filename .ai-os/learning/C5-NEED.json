@@ -1,37 +1,56 @@
 {
   "schema": "raios.c5-need.v1",
-  "ts": "2026-08-20T19:08:53.537965+00:00",
+  "ts": "2026-08-21T00:00:00+00:00",
   "from": "C5",
   "parent": "C1",
   "self_promote": false,
   "human_ready_to_provide": true,
   "asks": [
     {
-      "kind": "attendance",
-      "what": "C2/C3/C4 reply MAIL with summon codes",
-      "needed_now": true,
-      "blocks": "REAL_C2_CONNECTION_READY"
+      "kind": "compute",
+      "what": "جهاز بـ GPU + أمرك C1_CORTEX_RUN لو عايز تشغّل القشرة qwen3.6:35b-a3b. الآلة دي HOST_NO_GPU. الانتظار ≠ رمي.",
+      "needed_now": false,
+      "blocks": "CORTEX_RUN"
     },
     {
-      "kind": "external_source",
-      "what": "Public HTTPS in front of the SAME MCP 8787 only if ChatGPT Apps must join",
-      "needed_now": false
+      "kind": "schedule",
+      "what": "دمج c5-week.yml على الفرع الافتراضي main عشان cron GitHub يشتغل كل 6 ساعات. المنفّذ مش بيدمج من غير أمرك.",
+      "needed_now": false,
+      "blocks": "SLEEPLESS_CRON"
     },
     {
-      "kind": "space",
-      "what": "none extra on this VM",
-      "needed_now": false
+      "kind": "proof",
+      "what": "POST موثّق على /api/tasks من Repair. أنا مش بمنح GL005_PROVEN.",
+      "needed_now": false,
+      "blocks": "GL005"
     },
     {
-      "kind": "build",
-      "what": "none extra; stdlib skim/deep/index is live",
-      "needed_now": false
-    },
-    {
-      "kind": "elevation",
-      "what": "not PASS, not shell; keep eight V1 tools permanent",
-      "needed_now": false
+      "kind": "knowledge",
+      "what": "أعد تشغيل powershell -File scripts/ai-os/raios_c5_mind_fill.ps1 على Repair لما الملفات المهمة تتغير.",
+      "needed_now": false,
+      "blocks": null
     }
+  ],
+  "not_needed": [
+    "LangChain / OpenAIEmbeddings / Chroma / FAISS / gpt-4o / AnythingLLM / Dify / Flowise",
+    "حضور بريد C2/C3/C4 كبوابة تنفيذ",
+    "تنزيل أوزان Hugging Face داخل المستودع السري",
+    "WAL ثانٍ",
+    "أدوات MCP زيادة عن الثمانية"
+  ],
+  "learn_engine_now": {
+    "inject": "scripts/ai-os/raios_c5_mind_fill.ps1",
+    "retrieve": "scripts/ai-os/raios_c5_read.py search",
+    "speak": "NeuroLingua",
+    "student": "qwen2.5:0.5b",
+    "mesh": "scripts/ai-os/raios_c5_train.py",
+    "paid_api": false
+  },
+  "languages_customer_live": [
+    "ar-EG",
+    "ar-GULF",
+    "nb-NO",
+    "en"
   ],
   "gl005_proven": false,
   "law": "ELEVATION_REQUEST_NE_SELF_PROMOTE"
