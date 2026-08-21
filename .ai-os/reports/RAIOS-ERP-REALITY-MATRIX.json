@@ -4,8 +4,11 @@
   "canonical": false,
   "from": "C2",
   "parent": "C1",
-  "decision": "D-063",
-  "ts": "2026-08-21T20:53:03.509705+00:00",
+  "decision": [
+    "D-063",
+    "D-064"
+  ],
+  "ts": "2026-08-21T20:55:13.974066+00:00",
   "live_erp": "Prisma + Next app/api — not Celerp, not Odoo clone",
   "prisma_models": [
     "Organization",
@@ -575,6 +578,224 @@
     "Invoice",
     "Payment"
   ],
+  "domains": [
+    {
+      "domain": "sales",
+      "models": [
+        "SalesOrder",
+        "SalesOrderItem"
+      ],
+      "routes": [
+        "/api/sales-orders"
+      ],
+      "live": [
+        {
+          "path": "/api/sales-orders",
+          "http_code": 500,
+          "class": "CAPABILITY_UNAVAILABLE_OR_BROKEN"
+        }
+      ],
+      "gap": null,
+      "status": "CONNECTED",
+      "clone_odoo": false
+    },
+    {
+      "domain": "procurement",
+      "models": [],
+      "routes": [],
+      "live": [],
+      "gap": "NO_DEDICATED_DOMAIN",
+      "status": "ABSENT",
+      "clone_odoo": false
+    },
+    {
+      "domain": "supplier",
+      "models": [
+        "Supplier"
+      ],
+      "routes": [
+        "/api/suppliers"
+      ],
+      "live": [
+        {
+          "path": "/api/suppliers",
+          "http_code": 401,
+          "class": "CAPABILITY_PROTECTED"
+        }
+      ],
+      "gap": null,
+      "status": "CONNECTED",
+      "clone_odoo": false
+    },
+    {
+      "domain": "inventory",
+      "models": [
+        "Inventory"
+      ],
+      "routes": [
+        "/api/intelligence/data-fabric"
+      ],
+      "live": [
+        {
+          "path": "/api/intelligence/data-fabric",
+          "http_code": 401,
+          "class": "CAPABILITY_PROTECTED"
+        }
+      ],
+      "gap": "PRISMA_MODEL_NE_ROUTE; canonical JSON only",
+      "status": "FILE_ONLY",
+      "clone_odoo": false
+    },
+    {
+      "domain": "warehouse",
+      "models": [
+        "Warehouse"
+      ],
+      "routes": [],
+      "live": [],
+      "gap": "NO_ROUTE",
+      "status": "FILE_ONLY",
+      "clone_odoo": false
+    },
+    {
+      "domain": "shipment",
+      "models": [
+        "Shipment"
+      ],
+      "routes": [
+        "/api/traceability"
+      ],
+      "live": [],
+      "gap": null,
+      "status": "CONNECTED",
+      "clone_odoo": false
+    },
+    {
+      "domain": "invoice",
+      "models": [
+        "Invoice"
+      ],
+      "routes": [],
+      "live": [],
+      "gap": "NO_ROUTE",
+      "status": "FILE_ONLY",
+      "clone_odoo": false
+    },
+    {
+      "domain": "payment",
+      "models": [
+        "Payment"
+      ],
+      "routes": [],
+      "live": [],
+      "gap": "NO_ROUTE",
+      "status": "FILE_ONLY",
+      "clone_odoo": false
+    },
+    {
+      "domain": "workflow",
+      "models": [
+        "WorkflowApproval"
+      ],
+      "routes": [
+        "/api/workflow"
+      ],
+      "live": [
+        {
+          "path": "/api/workflow",
+          "http_code": 401,
+          "class": "CAPABILITY_PROTECTED"
+        }
+      ],
+      "gap": null,
+      "status": "CONNECTED",
+      "clone_odoo": false
+    },
+    {
+      "domain": "quality",
+      "models": [
+        "OfficialEvidenceRegistry"
+      ],
+      "routes": [
+        "/api/evidence/official"
+      ],
+      "live": [
+        {
+          "path": "/api/evidence/official",
+          "http_code": 401,
+          "class": "CAPABILITY_PROTECTED"
+        }
+      ],
+      "gap": null,
+      "status": "CONNECTED",
+      "clone_odoo": false
+    },
+    {
+      "domain": "production",
+      "models": [],
+      "routes": [
+        "/api/brains/greeny-life-egypt"
+      ],
+      "live": [
+        {
+          "path": "/api/brains/greeny-life-egypt",
+          "http_code": 401,
+          "class": "CAPABILITY_PROTECTED"
+        }
+      ],
+      "gap": null,
+      "status": "CONNECTED",
+      "clone_odoo": false
+    },
+    {
+      "domain": "crm",
+      "models": [
+        "Customer"
+      ],
+      "routes": [
+        "/api/data-control"
+      ],
+      "live": [
+        {
+          "path": "/api/data-control",
+          "http_code": 401,
+          "class": "CAPABILITY_PROTECTED"
+        }
+      ],
+      "gap": null,
+      "status": "CONNECTED",
+      "clone_odoo": false
+    },
+    {
+      "domain": "marketing",
+      "models": [],
+      "routes": [
+        "/api/portfolio/egyptian-exports"
+      ],
+      "live": [
+        {
+          "path": "/api/portfolio/egyptian-exports",
+          "http_code": 200,
+          "class": "HTTP_200_NE_SEMANTIC_SUCCESS"
+        }
+      ],
+      "gap": "THIN",
+      "status": "PROTOTYPE",
+      "clone_odoo": false
+    },
+    {
+      "domain": "accounting",
+      "models": [
+        "Invoice",
+        "Payment"
+      ],
+      "routes": [],
+      "live": [],
+      "gap": "NO_ROUTE",
+      "status": "ABSENT",
+      "clone_odoo": false
+    }
+  ],
   "data_fabric": {
     "route": "/api/intelligence/data-fabric",
     "source": "canonical JSON, not Prisma Inventory CRUD",
@@ -609,5 +830,6 @@
     "EXPERIENCE_NE_KNOWLEDGE",
     "HOLD_NE_THROW",
     "REUSE_BEFORE_BUILD"
-  ]
+  ],
+  "wave": "WAVE-1"
 }

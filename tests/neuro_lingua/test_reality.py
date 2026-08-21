@@ -53,6 +53,7 @@ def test_c2_reality_stamp_writes_eight_artifacts_without_promoting():
     assert erp["clone_celerp"] is False
     assert "Invoice" in erp["finance_gap"]
     assert "Payment" in erp["finance_gap"]
+    assert any(d["domain"] == "sales" for d in erp["domains"])
     plan = (REPORTS / "RAIOS-STATE-OF-THE-ART-RESEARCH-PLAN.md").read_text(encoding="utf-8")
     assert "SCALE_BY_COMPRESSION_NOT_COMPLEXITY" in plan
     assert "GL005_PROVEN=false" in plan

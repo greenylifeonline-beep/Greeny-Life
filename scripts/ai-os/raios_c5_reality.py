@@ -516,6 +516,22 @@ def erp_matrix(probes: list[dict]) -> dict:
         )
     unmapped = [name for name in models if name not in ERP_BIND]
     finance_gap = [row["model"] for row in rows if row["model"] in {"Invoice", "Payment"} and row["gap"] == "NO_ROUTE"]
+    domains = [
+        {"domain": "sales", "models": ["SalesOrder", "SalesOrderItem"], "routes": ["/api/sales-orders"], "status": "CONNECTED", "clone_odoo": False},
+        {"domain": "procurement", "models": [], "routes": [], "status": "ABSENT", "gap": "NO_DEDICATED_DOMAIN", "clone_odoo": False},
+        {"domain": "supplier", "models": ["Supplier"], "routes": ["/api/suppliers"], "status": "CONNECTED", "clone_odoo": False},
+        {"domain": "inventory", "models": ["Inventory"], "routes": ["/api/intelligence/data-fabric"], "status": "FILE_ONLY", "gap": "PRISMA_MODEL_NE_ROUTE", "clone_odoo": False},
+        {"domain": "warehouse", "models": ["Warehouse"], "routes": [], "status": "FILE_ONLY", "gap": "NO_ROUTE", "clone_odoo": False},
+        {"domain": "shipment", "models": ["Shipment"], "routes": ["/api/traceability"], "status": "CONNECTED", "clone_odoo": False},
+        {"domain": "invoice", "models": ["Invoice"], "routes": [], "status": "FILE_ONLY", "gap": "NO_ROUTE", "clone_odoo": False},
+        {"domain": "payment", "models": ["Payment"], "routes": [], "status": "FILE_ONLY", "gap": "NO_ROUTE", "clone_odoo": False},
+        {"domain": "workflow", "models": ["WorkflowApproval"], "routes": ["/api/workflow"], "status": "CONNECTED", "clone_odoo": False},
+        {"domain": "quality", "models": ["OfficialEvidenceRegistry"], "routes": ["/api/evidence/official"], "status": "CONNECTED", "clone_odoo": False},
+        {"domain": "production", "models": [], "routes": ["/api/brains/greeny-life-egypt"], "status": "CONNECTED", "clone_odoo": False},
+        {"domain": "crm", "models": ["Customer"], "routes": ["/api/data-control"], "status": "CONNECTED", "clone_odoo": False},
+        {"domain": "marketing", "models": [], "routes": ["/api/portfolio/egyptian-exports"], "status": "PROTOTYPE", "gap": "THIN", "clone_odoo": False},
+        {"domain": "accounting", "models": ["Invoice", "Payment"], "routes": [], "status": "ABSENT", "gap": "NO_ROUTE", "clone_odoo": False},
+    ]
     return {
         "schema": "raios.erp-reality-matrix.v1",
         "knowledge_state": "DISCOVERED",
@@ -530,6 +546,7 @@ def erp_matrix(probes: list[dict]) -> dict:
         "rows": rows,
         "unmapped_bind": unmapped,
         "finance_gap": finance_gap,
+        "domains": domains,
         "data_fabric": {
             "route": "/api/intelligence/data-fabric",
             "source": "canonical JSON, not Prisma Inventory CRUD",
