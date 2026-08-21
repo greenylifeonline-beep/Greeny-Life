@@ -308,3 +308,8 @@ Runner: `python3 scripts/ai-os/raios_c5_reality.py`. Next remains `AUTHENTICATED
 DISCOVERED, C1 ordered, not CANONICAL. Bound map head `f17b749` is an ancestor; do not reset, clean, stash, or delete sources.
 `LLM_FABRIC_PROVEN`, `ASSIMILATION_PROVEN`, `RSIC_PROVEN`, `AEMC_PROVEN`, `CETD_PROVEN` stay false unless independently exercised. This host: only Ollama student `qwen2.5:0.5b` generate is live; cortex and Granite generate 404. Assimilation E2E stops at WAL (A15 lock). Do not build parallel RSIC/AEMC/CETD systems; wire existing keepers. Granite is a tournament candidate, not sovereign backbone. Mandatory memo claims (mesh, Granite-backbone, NetworkX+SQLite, 8GB, interleaved schedule, JWT/OAuth empire, 6-week, GL005-as-whole-system) are REJECT.
 `GL005_PROVEN` stays false until authenticated live `POST /api/tasks`. Runner: `python3 scripts/ai-os/raios_c5_wave1.py`. Does not close GL-005.
+
+## D-065 C5 screen is an ops console, not a sticker wall
+DISCOVERED, C1 ordered, not CANONICAL: `UNPOLISHED_SCREEN_NE_SHIP`. `SCREEN_REPLY_NE_INDEX_DUMP`. `SAME_LOOPBACK_OR_PORT_FORWARD`.
+Professional local console at `python3 scripts/ai-os/raios_c5_screen.py` (`http://127.0.0.1:8765`). Bind stays loopback. User-machine localhost is a different loopback; Cursor Simple Browser `ERR_CONNECTION_REFUSED` is not a dead server — use Cursor port-forward to 8765.
+History de-dupes consecutive identical turns and hides hex/`hit_count`. Council questions present SEAT-MAP cards, not JSON. Composer, live bind, and GL005=false stay in chrome, not as posters. Not a second WAL. Does not close GL-005.

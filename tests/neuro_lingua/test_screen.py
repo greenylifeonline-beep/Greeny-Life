@@ -2,7 +2,7 @@ import sys
 from pathlib import Path
 
 sys.path.insert(0, str(Path(__file__).resolve().parents[2] / "scripts" / "ai-os"))
-from raios_c5_screen import PAGE, load_history, teach_reply  # noqa: E402
+from raios_c5_screen import PAGE, load_history, present_answer, teach_reply  # noqa: E402
 
 ROOT = Path(__file__).resolve().parents[2]
 WAL = ROOT / "RAIOS" / "V9" / "wal" / "cognitive-events.jsonl"
@@ -23,6 +23,10 @@ def test_screen_is_standard_rtl_and_does_not_touch_wal():
     assert "dir=\"rtl\"" in PAGE
     assert "شاشة النظام" in PAGE
     assert "LangChain" in PAGE
+    assert "127.0.0.1:8765" in PAGE
+    assert "port-forward" in PAGE
+    assert "GL005" in PAGE
+    assert "إرسال" in PAGE
     assert (ROOT / "scripts" / "ai-os" / "raios_c5_screen.ps1").is_file()
 
 
@@ -32,6 +36,39 @@ def test_screen_decodes_flipped_keyboard_on_turn():
     assert rec["decoded"] == "يعمل شاشة"
     assert rec["kind"] == "screen"
     assert "hit_count=" not in rec["answer"]
+    assert "LangChain" in rec["answer"]
     for row in load_history():
         assert "hit_count=" not in (row.get("answer") or "")
         assert "33e431" not in (row.get("answer") or "")
+
+
+def test_screen_presents_seat_card_not_index_dump():
+    rec = teach_reply("ما دور C4 في المجلس")
+    assert rec["kind"] == "ground"
+    assert rec["gl005_proven"] is False
+    assert "hit_count=" not in rec["answer"]
+    assert "من الفهرس المحلي — مش OpenAI" not in rec["answer"]
+    assert "ASSESSOR" in rec["answer"] or "مقيّم" in rec["answer"] or "DeepSeek" in rec["answer"]
+    assert rec["answer"].count('"') < 8
+    assert "33e431" not in rec["answer"]
+
+
+def test_present_answer_strips_hex_and_telemetry():
+    raw = (
+        "من الفهرس المحلي\n"
+        "— 33e4311255f95d8db7f14bc269d90f31b85e04d371d666586ee6f660db9085d7\n"
+        "hit_count=13 · paid_api=false · GL005_PROVEN=false\n"
+        "C4 actor_role=ASSESSOR"
+    )
+    cleaned = present_answer(raw)
+    assert "33e431" not in cleaned
+    assert "hit_count=" not in cleaned
+    assert "ASSESSOR" in cleaned
+
+
+def test_empty_turn_is_not_whoami_and_skips_history():
+    rec = teach_reply("   ")
+    assert rec["kind"] == "empty"
+    assert rec["stored"] is False
+    assert rec["wal_written"] is False
+    assert rec["gl005_proven"] is False
