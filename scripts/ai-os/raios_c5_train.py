@@ -108,6 +108,7 @@ KEEPERS = (
     ("book", "scripts/ai-os/raios_c5_book.py"),
     ("reality", "scripts/ai-os/raios_c5_reality.py"),
     ("wave1", "scripts/ai-os/raios_c5_wave1.py"),
+    ("cloud", "scripts/ai-os/raios_c5_cloud.py"),
     ("keyboard", "scripts/ai-os/raios_c5_keyboard.py"),
     ("screen", "scripts/ai-os/raios_c5_screen.py"),
 )
