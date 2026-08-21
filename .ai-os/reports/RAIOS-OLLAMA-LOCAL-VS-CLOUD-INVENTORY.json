@@ -1,0 +1,68 @@
+{
+  "schema": "raios.c5-ollama-local-vs-cloud.v1",
+  "ts": "2026-08-21T23:47:01.976021+00:00",
+  "from": "C2",
+  "canonical": false,
+  "gl005_proven": false,
+  "ollama_http": true,
+  "local_live": [
+    "qwen2.5:0.5b"
+  ],
+  "local_generate": [
+    {
+      "model": "qwen2.5:0.5b",
+      "ok": true,
+      "code": 200,
+      "error": null
+    },
+    {
+      "model": "qwen3.6:35b-a3b",
+      "ok": false,
+      "code": 404,
+      "error": null
+    },
+    {
+      "model": "granite4:3b",
+      "ok": false,
+      "code": 404,
+      "error": null
+    },
+    {
+      "model": "ibm/granite",
+      "ok": false,
+      "code": 404,
+      "error": null
+    },
+    {
+      "model": "deepseek-r1:7b",
+      "ok": false,
+      "code": 404,
+      "error": null
+    }
+  ],
+  "cloud_candidates": [
+    "qwen3.6:35b-a3b",
+    "granite4:3b",
+    "ibm/granite",
+    "deepseek-r1:7b"
+  ],
+  "cloud_generate_here": false,
+  "student_ne_cortex": true,
+  "paid_api": false,
+  "law": [
+    "SCREEN_IS_MULTILINGUAL",
+    "STOP_NEW_LOCAL_MODEL_DOWNLOADS",
+    "OLLAMA_PULL_FORBIDDEN_HERE",
+    "WAL_MOVE_BLOCKED_A15",
+    "HF_DATASET_NE_SECOND_WAL",
+    "LAPTOP_IS_CONTROL_PLANE",
+    "CURSOR_CLOUD_VM_NE_LAPTOP",
+    "REMOTE_KEEPER_RUN_NE_GL005",
+    "CLOUD_GATEWAY_NE_OPENAI",
+    "CLOUD_MIGRATION_NE_GL005",
+    "HUNT_FREE_NE_PAID_API",
+    "HOLD_NE_THROW",
+    "NO_WEIGHT_DOWNLOAD",
+    "SCALE_BY_COMPRESSION_NOT_COMPLEXITY"
+  ]
+}
