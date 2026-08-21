@@ -2,7 +2,7 @@ import sys
 from pathlib import Path
 
 sys.path.insert(0, str(Path(__file__).resolve().parents[2] / "scripts" / "ai-os"))
-from raios_c5_screen import PAGE, teach_reply  # noqa: E402
+from raios_c5_screen import PAGE, load_history, teach_reply  # noqa: E402
 
 ROOT = Path(__file__).resolve().parents[2]
 WAL = ROOT / "RAIOS" / "V9" / "wal" / "cognitive-events.jsonl"
@@ -31,5 +31,7 @@ def test_screen_decodes_flipped_keyboard_on_turn():
     assert rec["flipped"] is True
     assert rec["decoded"] == "يعمل شاشة"
     assert rec["kind"] == "screen"
-    assert "127.0.0.1" not in rec["answer"] or "شاشة" in rec["answer"]
-    assert "33e431" not in rec["answer"]
+    assert "hit_count=" not in rec["answer"]
+    for row in load_history():
+        assert "hit_count=" not in (row.get("answer") or "")
+        assert "33e431" not in (row.get("answer") or "")

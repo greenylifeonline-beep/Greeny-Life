@@ -3,6 +3,7 @@
 from __future__ import annotations
 
 import json
+import re
 import sys
 from datetime import datetime, timezone
 from http.server import BaseHTTPRequestHandler, ThreadingHTTPServer
@@ -21,6 +22,7 @@ HISTORY = ROOT / ".ai-os" / "learning" / "C5-SCREEN.jsonl"
 OUT_DIR = ROOT / ".ai-os" / "receipts" / "c5-screen"
 DEFAULT_HOST = "127.0.0.1"
 DEFAULT_PORT = 8765
+HEX_DUMP_RE = re.compile(r"[a-f0-9]{40,}", re.I)
 
 
 def utc() -> str:
@@ -39,9 +41,13 @@ def load_history(limit: int = 80) -> list[dict]:
         if not line.strip():
             continue
         try:
-            rows.append(json.loads(line))
+            row = json.loads(line)
         except json.JSONDecodeError:
             continue
+        answer = str(row.get("answer") or "")
+        if "hit_count=" in answer or HEX_DUMP_RE.search(answer):
+            continue
+        rows.append(row)
     return rows[-limit:]
 
 
