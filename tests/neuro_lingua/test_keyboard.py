@@ -41,3 +41,10 @@ def test_english_sentence_is_not_flipped():
     rec = decode_flipped_keyboard("who are you")
     assert rec["flipped"] is False
     assert rec["decoded"] == "who are you"
+
+
+def test_norwegian_sentence_is_not_flipped():
+    rec = decode_flipped_keyboard("Hvem er du")
+    assert rec["flipped"] is False
+    assert rec["decoded"] == "Hvem er du"
+    assert teach_text("Hva er C4s rolle i rådet") == "Hva er C4s rolle i rådet"

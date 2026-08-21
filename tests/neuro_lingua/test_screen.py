@@ -28,6 +28,9 @@ def test_screen_is_standard_rtl_and_does_not_touch_wal():
     assert "GL005" in PAGE
     assert "إرسال" in PAGE
     assert "data-fill=\"مين أنت\"" in PAGE
+    assert "nb-NO" in PAGE
+    assert "Systemskjerm" in PAGE
+    assert "data-locale=\"nb-NO\"" in PAGE
     assert (ROOT / "scripts" / "ai-os" / "raios_c5_screen.ps1").is_file()
 
 
@@ -99,3 +102,27 @@ def test_history_collapses_repeats_and_shows_seat_card():
             assert "ASSESSOR" in answer or "مقيّم" in answer or "DeepSeek" in answer
             assert "METHOD.md" not in answer
             assert '"instance_role"' not in answer
+
+
+def test_screen_norwegian_and_english_identity():
+    nb = teach_reply("Hvem er du")
+    assert nb["kind"] == "whoami"
+    assert nb["locale"] == "nb-NO"
+    assert nb["flipped"] is False
+    assert "sønn" in nb["answer"] or "RAIOS" in nb["answer"]
+    assert "LangChain" in nb["answer"]
+    en = teach_reply("Who are you")
+    assert en["kind"] == "whoami"
+    assert en["locale"] == "en"
+    assert en["flipped"] is False
+    assert "son of C1" in en["answer"]
+    gulf = teach_reply("شلونك من أنت")
+    assert gulf["kind"] == "whoami"
+    assert gulf["locale"] == "ar-GULF"
+    council = teach_reply("Hva er C4s rolle i rådet")
+    assert council["kind"] == "ground"
+    assert council["locale"] == "nb-NO"
+    assert council["flipped"] is False
+    assert "ASSESSOR" in council["answer"] or "DeepSeek" in council["answer"]
+    assert council["gl005_proven"] is False
+    assert council["wal_written"] is False

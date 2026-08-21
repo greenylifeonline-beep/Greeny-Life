@@ -87,6 +87,30 @@ ENGLISH_HINTS = {
     "true",
     "false",
 }
+NORWEGIAN_HINTS = {
+    "hvem",
+    "hva",
+    "du",
+    "jeg",
+    "det",
+    "ikke",
+    "skjerm",
+    "tastatur",
+    "takk",
+    "hei",
+    "hallo",
+    "rolle",
+    "radet",
+    "norsk",
+    "god",
+    "dag",
+    "dette",
+    "eller",
+    "med",
+    "fra",
+    "som",
+    "sonn",
+}
 
 
 def _protect(text: str) -> tuple[str, list[str]]:
@@ -122,7 +146,7 @@ def looks_flipped(text: str) -> bool:
     if arabic > latin:
         return False
     words = {w.lower() for w in re.findall(r"[A-Za-z]+", text)}
-    if words & ENGLISH_HINTS and not any(ch in text for ch in ";[]"):
+    if words & (ENGLISH_HINTS | NORWEGIAN_HINTS) and not any(ch in text for ch in ";[]"):
         return False
     if any(ch in text for ch in ";[]`"):
         return True
