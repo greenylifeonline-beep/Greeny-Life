@@ -73,13 +73,29 @@ def prove() -> dict:
         gate(
             "c1_foundation",
             "LOCKED",
-            "CI(1e28f84)=PASS; EXTRACTED_QWEN_GRANITE=false; SAFE_TO_REMOVE_SOURCE=false; GL005_PROVEN=false",
+            "CI(1e28f84)=PASS; CI(68af867)=PASS; EXTRACTED_QWEN_GRANITE=false; SAFE_TO_REMOVE_SOURCE=false; GL005_PROVEN=false",
             {
                 "CI_PASS_NE_ASSIMILATION": True,
                 "CI_PASS_NE_GL005": True,
                 "gl005_proven": False,
                 "extracted_qwen_granite": False,
                 "safe_to_remove_source": False,
+                "authenticated_orchestration_task": False,
+            },
+        )
+    )
+    gates.append(
+        gate(
+            "p0_order",
+            "LOCKED",
+            "1=AUTHENTICATED_ORCHESTRATION_TASK 2=QWEN_GRANITE_ASSIMILATION 3=GL005; CI pass is not either proof",
+            {
+                "authenticated_orchestration_task": False,
+                "extracted_qwen_granite": False,
+                "gl005_proven": False,
+                "safe_to_remove_source": False,
+                "source_deleted": False,
+                "student_ne_extraction": True,
             },
         )
     )

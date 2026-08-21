@@ -16,9 +16,11 @@ OUT = ROOT / ".ai-os" / "receipts" / "c5-foundation"
 CI_COMMIT = "1e28f845b9530777b7378298885e986c01feaa0c"
 LOCKED = {
     "CI_1e28f84": "PASS",
+    "CI_68af867": "PASS",
     "EXTRACTED_QWEN_GRANITE": False,
     "SAFE_TO_REMOVE_SOURCE": False,
     "GL005_PROVEN": False,
+    "AUTHENTICATED_ORCHESTRATION_TASK": False,
 }
 LAWS = [
     "CI_PASS_NE_ASSIMILATION",
@@ -27,6 +29,15 @@ LAWS = [
     "SAFE_TO_REMOVE_SOURCE_REQUIRES_INDEPENDENT_EXECUTION",
     "PRINTED_PASS_NE_EVIDENCE",
     "HOLD_NE_THROW",
+    "MOCK_PATH_NE_ORCHESTRATION_TASK",
+    "STUDENT_NE_EXTRACTION",
+    "SOURCE_DELETION_FORBIDDEN_UNTIL_INDEPENDENT_EXECUTION",
+    "AUTHENTICATED_ORCHESTRATION_TASK_NE_GL005",
+]
+P0_NEXT = [
+    "AUTHENTICATED_ORCHESTRATION_TASK",
+    "QWEN_GRANITE_SOURCE_INDEPENDENT_ASSIMILATION",
+    "GL005",
 ]
 
 
@@ -45,12 +56,15 @@ def load_foundation() -> dict:
         rec = {"schema": "raios.c1-foundation.v1", "facts": {}}
     facts = dict(rec.get("facts") or {})
     facts["CI_1e28f84"] = "PASS"
+    facts["CI_68af867"] = "PASS"
     facts["EXTRACTED_QWEN_GRANITE"] = False
     facts["SAFE_TO_REMOVE_SOURCE"] = False
     facts["GL005_PROVEN"] = False
+    facts["AUTHENTICATED_ORCHESTRATION_TASK"] = False
     rec["facts"] = facts
     rec["ci_commit"] = CI_COMMIT
     rec["law"] = list(LAWS)
+    rec["next"] = list(P0_NEXT)
     rec["gl005_proven"] = False
     rec["wal_written"] = False
     return rec
@@ -140,16 +154,18 @@ def render(facts: dict, gl005: dict, sources: dict) -> str:
             "# RAIOS C1 FOUNDATION — BASIS FOR LATER RESULTS",
             "############################################################",
             f"CI(1e28f84)={facts['CI_1e28f84']}",
+            "CI(68af867)=PASS",
             "EXTRACTED_QWEN_GRANITE=false",
             "SAFE_TO_REMOVE_SOURCE=false",
             "GL005_PROVEN=false",
+            "AUTHENTICATED_ORCHESTRATION_TASK=false",
             "CI_PASS_NE_ASSIMILATION=true",
             "CI_PASS_NE_GL005=true",
             f"GL005_STATUS={gl005['status']}",
             f"GL005_DETAIL={gl005['detail']}",
             f"OLLAMA_MODELS={','.join(sources['ollama_models']) or 'none'}",
             "QWEN_GRANITE_SOURCE_PRESENT=false",
-            "NEXT=GL005_AUTHENTICATED_MUTATION+QWEN_GRANITE_ASSIMILATION",
+            "NEXT=AUTHENTICATED_ORCHESTRATION_TASK;THEN_QWEN_GRANITE_ASSIMILATION;THEN_GL005",
             "############################################################",
             "",
         ]
@@ -171,7 +187,8 @@ def stamp() -> dict:
         "ci_commit": CI_COMMIT,
         "gl005": gl005,
         "sources": sources,
-        "next": ["GL005_AUTHENTICATED_MUTATION", "QWEN_GRANITE_ASSIMILATION"],
+        "next": list(P0_NEXT),
+        "p0_decision": "D-060",
         "law": LAWS,
         "gl005_proven": False,
         "extracted_qwen_granite": False,

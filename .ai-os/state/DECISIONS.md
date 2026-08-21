@@ -265,3 +265,20 @@ Locked basis for every later result:
 `GL005_PROVEN=false`
 
 Green CI on `1e28f84` proves the commit did not regress existing tests. It does not prove Qwen/Granite extraction, injection, or operational assimilation. Do not delete any source/weights. Do not print GL-005 PASS. Next work is authenticated OrchestrationTask mutation plus source-independent capability execution. Then, and only then, C1 re-evaluates `SAFE_TO_REMOVE_SOURCE`. State file: `.ai-os/state/FOUNDATION.json`. Runner: `python3 scripts/ai-os/raios_c5_foundation.py`. Does not close GL-005.
+
+## D-060 Ordered P0 gates: auth orchestration, then assimilation, then GL-005
+DISCOVERED, C1 ordered, not CANONICAL. D-059 remains the locked basis. Additional green CI (`CI(68af867)=PASS`) still does not flip assimilation or GL-005.
+
+`CI_PASS_NE_ASSIMILATION`. `CI_PASS_NE_GL005`. `MOCK_PATH_NE_ORCHESTRATION_TASK`. `STUDENT_NE_EXTRACTION`. `TINY_QWEN_NE_CORTEX_IDENTITY`. `SOURCE_DELETION_FORBIDDEN_UNTIL_INDEPENDENT_EXECUTION`. `AUTHENTICATED_ORCHESTRATION_TASK_NE_GL005`.
+
+Ordered gates, fail-closed, no skip:
+
+1. `AUTHENTICATED_ORCHESTRATION_TASK` — live product path only: existing `GET /api/auth/session` `authenticated=true`, then `POST /api/tasks` → `createTaskContract()` → INSERT `OrchestrationTask`, then GET-after shows the row and `before_hash != after_hash`. Not a mock, not `tests/task_orchestration_check.ts`, not a side harness. Success sets observation `AUTHENTICATED_ORCHESTRATION_TASK=true` and does **not** set `GL005_PROVEN`. Do not mint `APP_SESSION_SECRET`, forge `gl_session`, add an auth bypass, provision Postgres from GET 500, or run `scripts/provision-admin.ts` as the proof. Existing auth only. POST 401 = `CAPABILITY_PROTECTED`. Missing `DATABASE_URL` = `CAPABILITY_UNAVAILABLE`. Empty/missing login env = `BLOCKED_AUTH`.
+
+2. `QWEN_GRANITE_SOURCE_INDEPENDENT_ASSIMILATION` — full chain, and only then `EXTRACTED_QWEN_GRANITE=true`:
+`SOURCE PRESENT → CAPABILITY EXECUTES → SOURCE DISABLED/ISOLATED → C5 EXECUTES SAME CAPABILITY → RESTART → STILL EXECUTES → BENCHMARK PASS`.
+Source identity is cortex `qwen3.6:35b-a3b` plus Granite (`granite4:3b` / `ibm/granite`). Student `qwen2.5:0.5b` is not the source. Isolation must not delete weights; deletion stays forbidden until C1 re-evaluates `SAFE_TO_REMOVE_SOURCE`. A missing source is `FAIL` at `SOURCE_PRESENT`, not a skip.
+
+3. `GL005` — only after (1) and (2). Prove C5 moved from vault/retrieval to brain behavior: routing + association + execution + persistence + reuse. `PASS_CANDIDATE_NE_GL005_PROVEN`.
+
+Forbidden now: any source/weights deletion or brain downsizing on the assumption that assimilation already happened. Runner: `python3 scripts/ai-os/raios_c5_p0.py`. Does not close GL-005.

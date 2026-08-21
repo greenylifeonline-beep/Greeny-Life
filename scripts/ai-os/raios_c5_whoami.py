@@ -70,9 +70,11 @@ def whoami() -> dict:
     foundation = (load_json(FOUNDATION).get("facts") or {})
     foundation = {
         "CI_1e28f84": foundation.get("CI_1e28f84") or "PASS",
+        "CI_68af867": foundation.get("CI_68af867") or "PASS",
         "EXTRACTED_QWEN_GRANITE": False,
         "SAFE_TO_REMOVE_SOURCE": False,
         "GL005_PROVEN": False,
+        "AUTHENTICATED_ORCHESTRATION_TASK": False,
     }
     need = load_json(NEED)
     lang_text = LANGS.read_text(encoding="utf-8") if LANGS.exists() else ""
@@ -137,6 +139,8 @@ def whoami() -> dict:
             "CI_PASS_NE_ASSIMILATION",
             "CI_PASS_NE_GL005",
             "EXTRACT_CLAIM_NE_ASSIMILATION",
+            "AUTHENTICATED_ORCHESTRATION_TASK_NE_GL005",
+            "STUDENT_NE_EXTRACTION",
             "HUNT_FREE_NE_PAID_API",
             "LANGUAGE_PROFESSIONAL_IS_NEUROLINGUA",
             "C1_OWNS_CORTEX_TREAT_RUN_THROW",
