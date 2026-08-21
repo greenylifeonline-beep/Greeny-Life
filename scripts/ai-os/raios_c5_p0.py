@@ -360,7 +360,7 @@ def c5_same_capability(*, isolated: bool) -> dict:
         "transferred_pack_present": packs["any"],
         "markers": packs["markers"],
         "executed_same_capability": False,
-        "detail": "C5 live path is INDEX+file-read+deterministic reason; transferred Qwen/Granite pack absent",
+        "reason": "C5 live path is INDEX+file-read+deterministic reason; transferred Qwen/Granite pack absent",
     }
 
 
@@ -415,9 +415,9 @@ def gate2_assimilation(models: list[str]) -> dict:
     if isolated and c5_one["executed_same_capability"]:
         stages.append(stage("C5_EXECUTES_SAME_CAPABILITY", "PASS", "C5 executed the same capability with source isolated", **c5_one))
     elif isolated:
-        stages.append(stage("C5_EXECUTES_SAME_CAPABILITY", "FAIL", c5_one["detail"], **c5_one))
+        stages.append(stage("C5_EXECUTES_SAME_CAPABILITY", "FAIL", c5_one["reason"], **c5_one))
     else:
-        stages.append(stage("C5_EXECUTES_SAME_CAPABILITY", "UNREACHED", c5_one["detail"], **c5_one))
+        stages.append(stage("C5_EXECUTES_SAME_CAPABILITY", "UNREACHED", c5_one["reason"], **c5_one))
 
     prev = stages[-1]["status"] == "PASS"
     c5_two = c5_same_capability(isolated=isolated) if prev else c5_one
