@@ -28,6 +28,7 @@ TELEMETRY_RE = re.compile(
     r"hit_count=|model_call=|ollama_used=|GL005_PROVEN=|الثقة:",
 )
 JSONISH_RE = re.compile(r'[{}\[\]]|"\s*:')
+SEAL_RE = re.compile(r"\bSEAL\b|\bCHAL-|\bSALT=")
 IDENTITY_MARKS = (
     "مين أنت",
     "من أنت",
@@ -67,6 +68,8 @@ def _noise_answer(answer: str) -> bool:
         return True
     if "من الفهرس المحلي" in answer:
         return True
+    if SEAL_RE.search(answer):
+        return True
     if HEX_DUMP_RE.search(answer):
         return True
     return False
@@ -83,7 +86,7 @@ def present_answer(answer: str) -> str:
             continue
         if TELEMETRY_RE.search(line) and len(line) < 160:
             continue
-        if HEX_DUMP_RE.search(line):
+        if HEX_DUMP_RE.search(line) or SEAL_RE.search(line):
             continue
         stripped = line.strip()
         if stripped.count('"') >= 4 or JSONISH_RE.search(stripped[:80] if stripped.startswith(("{", "[", '"')) else ""):
@@ -229,7 +232,12 @@ def _is_identity(text: str) -> bool:
     t = text.replace("`", "").strip()
     if t in {"مين", "whoami"}:
         return True
-    return any(mark in t for mark in IDENTITY_MARKS)
+    if any(mark in t for mark in IDENTITY_MARKS):
+        return True
+    if ("أنت" in t or "انت" in t) and len(t) <= 12:
+        if not any(x in t for x in ("دور", "مجلس", "مقعد")):
+            return True
+    return False
 
 
 def _is_hello(text: str) -> bool:
@@ -514,7 +522,9 @@ PAGE = """<!DOCTYPE html>
       min-width: 104px;
     }
     .send:disabled { opacity: 0.55; cursor: default; }
-    .hint { grid-column: 1 / -1; color: var(--muted); font-size: 11px; }
+    .hint { grid-column: 1 / -1; color: var(--muted); font-size: 11px; display: flex; flex-wrap: wrap; gap: 10px; align-items: center; }
+    .hint .examples { display: flex; flex-wrap: wrap; gap: 8px; }
+    .hint .examples button { min-height: 28px; }
     .dots span {
       display: inline-block; width: 6px; height: 6px; margin: 0 2px;
       border-radius: 50%; background: var(--muted);
@@ -577,7 +587,14 @@ PAGE = """<!DOCTYPE html>
         <form id="f" class="composer">
           <textarea id="t" placeholder="اكتب لـ C5…" autofocus aria-label="رسالة إلى C5"></textarea>
           <button class="send" type="submit">إرسال</button>
-          <div class="hint">Enter للإرسال · Shift+Enter سطر جديد · ليست LangChain وليست OpenAI</div>
+          <div class="hint">
+            <span class="examples">
+              <button type="button" data-fill="مين أنت">مين أنت</button>
+              <button type="button" data-fill="ما دور C4 في المجلس">دور C4</button>
+              <button type="button" data-fill="DULG AHAM">كيبورد مقلوب</button>
+            </span>
+            <span>Enter للإرسال · Shift+Enter سطر جديد · ليست LangChain وليست OpenAI</span>
+          </div>
         </form>
       </main>
     </div>

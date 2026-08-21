@@ -27,6 +27,7 @@ def test_screen_is_standard_rtl_and_does_not_touch_wal():
     assert "port-forward" in PAGE
     assert "GL005" in PAGE
     assert "إرسال" in PAGE
+    assert "data-fill=\"مين أنت\"" in PAGE
     assert (ROOT / "scripts" / "ai-os" / "raios_c5_screen.ps1").is_file()
 
 
@@ -58,11 +59,13 @@ def test_present_answer_strips_hex_and_telemetry():
         "من الفهرس المحلي\n"
         "— 33e4311255f95d8db7f14bc269d90f31b85e04d371d666586ee6f660db9085d7\n"
         "hit_count=13 · paid_api=false · GL005_PROVEN=false\n"
-        "C4 actor_role=ASSESSOR"
+        "C4 actor_role=ASSESSOR\n"
+        "SEAL C2 GL-COUNCIL-4a11023c3c321b6f CHAL-c02ec6b915caac01"
     )
     cleaned = present_answer(raw)
     assert "33e431" not in cleaned
     assert "hit_count=" not in cleaned
+    assert "SEAL" not in cleaned
     assert "ASSESSOR" in cleaned
 
 
@@ -71,6 +74,14 @@ def test_empty_turn_is_not_whoami_and_skips_history():
     assert rec["kind"] == "empty"
     assert rec["stored"] is False
     assert rec["wal_written"] is False
+    assert rec["gl005_proven"] is False
+
+
+def test_short_identity_typo_is_whoami_not_index_dump():
+    rec = teach_reply("ين أنت")
+    assert rec["kind"] == "whoami"
+    assert "SEAL" not in rec["answer"]
+    assert "C5" in rec["answer"]
     assert rec["gl005_proven"] is False
 
 
@@ -83,6 +94,7 @@ def test_history_collapses_repeats_and_shows_seat_card():
         answer = row.get("answer") or ""
         assert "hit_count=" not in answer
         assert "33e431" not in answer
+        assert "SEAL" not in answer
         if "ما دور C4" in str(row.get("decoded") or ""):
             assert "ASSESSOR" in answer or "مقيّم" in answer or "DeepSeek" in answer
             assert "METHOD.md" not in answer
