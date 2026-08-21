@@ -35,6 +35,9 @@ def test_cloud_wave_fail_closed_no_wal_no_pull_no_gl005():
         assert path.is_file(), name
         payload = json.loads(path.read_text(encoding="utf-8"))
         assert payload.get("gl005_proven") is False
+    storage = json.loads((REPORTS / "RAIOS-CLOUD-STORAGE-REALITY-AUDIT.json").read_text(encoding="utf-8"))
+    assert storage["github_origin"].startswith("https://github.com/")
+    assert "x-access-token" not in storage["github_origin"]
     move = json.loads((REPORTS / "RAIOS-CLOUD-MOVE-TRAINING-BOOKS-WAL.json").read_text(encoding="utf-8"))
     assert move["wal"]["moved"] is False
     assert move["wal"]["action"] == "BLOCKED_A15"
@@ -54,3 +57,10 @@ def test_gateway_forbids_openai_and_refuses_ollama_pull():
     assert openai["execute"] is False
     student = gateway_route("qwen2.5:0.5b")
     assert student["route"] in {"LOCAL_OLLAMA", "LOCAL_OLLAMA_DOWN"}
+
+
+def test_git_remote_userinfo_is_stripped():
+    from raios_c5_cloud import strip_userinfo
+
+    assert strip_userinfo("https://github.com/org/repo") == "https://github.com/org/repo"
+    assert strip_userinfo("https://x-access-token:example@github.com/org/repo") == "https://github.com/org/repo"

@@ -74,9 +74,17 @@ def git_head() -> str:
     return (r.stdout or "").strip()
 
 
+def strip_userinfo(url: str) -> str:
+    raw = (url or "").strip()
+    if "://" not in raw or "@" not in raw:
+        return raw
+    scheme, rest = raw.split("://", 1)
+    return f"{scheme}://{rest.rsplit('@', 1)[-1]}"
+
+
 def git_remote() -> str:
     r = subprocess.run(["git", "remote", "get-url", "origin"], cwd=ROOT, text=True, capture_output=True)
-    return (r.stdout or "").strip()
+    return strip_userinfo((r.stdout or "").strip())
 
 
 def sha256_bytes(data: bytes) -> str:
