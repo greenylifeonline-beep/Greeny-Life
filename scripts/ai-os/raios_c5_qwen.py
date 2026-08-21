@@ -14,6 +14,7 @@ sys.path.insert(0, str(ROOT / "src"))
 from raios.neuro_lingua.cortex import (  # noqa: E402
     CORTEX_IDENTITY,
     OWNER,
+    explicit_receipt,
     gate_run,
     refuse_throw,
     status as cortex_status,
@@ -101,13 +102,30 @@ def run_student(*, do_generate: bool, prompt: str) -> dict:
 
 
 def emit_cortex(kind: str, rec: dict, extra_md: list[str]) -> dict:
-    rec = {**rec, "ts": utc(), "from": "C5", "parent": "C1"}
+    probe_row = probe(use_cache=True)
+    block = explicit_receipt(
+        verb=kind,
+        student_model=str(probe_row.get("student_model") or "qwen2.5:0.5b"),
+        student_live=bool(probe_row.get("student_live")),
+        loaded=bool(rec.get("loaded")),
+    )
+    rec = {
+        **rec,
+        "ts": utc(),
+        "from": "C5",
+        "parent": "C1",
+        "identity": CORTEX_IDENTITY,
+        "explicit_sha256": block["sha256"],
+        "student_model": probe_row.get("student_model"),
+        "student_live": probe_row.get("student_live"),
+    }
     lines = [
         "# القشرة — ملك C1",
         "",
         f"- الفعل: `{kind}`",
         f"- الهوية: `{CORTEX_IDENTITY}`",
         f"- المالك: `{OWNER}`",
+        f"- إيصال: `{block['sha256']}`",
         f"- عزل كرمي: `false`",
         f"- GL005_PROVEN: `false`",
         "",
@@ -116,9 +134,11 @@ def emit_cortex(kind: str, rec: dict, extra_md: list[str]) -> dict:
         "`GL005_PROVEN=false`",
         "",
     ]
+    CORTEX_DIR.mkdir(parents=True, exist_ok=True)
+    (CORTEX_DIR / "LAST.txt").write_text(block["text"], encoding="utf-8")
     _write(CORTEX_DIR, rec, "\n".join(lines))
-    print(json.dumps(rec, ensure_ascii=False, indent=2, default=str))
-    print((CORTEX_DIR / "LAST.md").read_text(encoding="utf-8"))
+    print(block["text"], end="")
+    print(f"RECEIPT_SHA256={block['sha256']}")
     return rec
 
 

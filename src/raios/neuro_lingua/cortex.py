@@ -166,6 +166,58 @@ def refuse_throw() -> dict[str, Any]:
     }
 
 
+def explicit_receipt(
+    *,
+    verb: str = "status",
+    student_model: str = "qwen2.5:0.5b",
+    student_live: bool = False,
+    loaded: bool = False,
+) -> dict[str, Any]:
+    """Plain KEY=VALUE receipt. Identity is never implied."""
+    import hashlib
+
+    gate = gate_run()
+    st = status()
+    lines = [
+        "############################################################",
+        "# RAIOS C1 MAIN CORTEX RECEIPT",
+        "############################################################",
+        f"IDENTITY={CORTEX_IDENTITY}",
+        f"OWNER={OWNER}",
+        "VERBS=treat,run,throw",
+        f"VERB={verb}",
+        f"STUDENT={student_model}",
+        f"STUDENT_LIVE={str(student_live).lower()}",
+        "STUDENT_NE_CORTEX=true",
+        f"LOADED={str(bool(loaded)).lower()}",
+        f"HOLD={str(bool(st['hold'])).lower()}",
+        f"THROWN={str(bool(st['thrown'])).lower()}",
+        "ISOLATED_AS_DISPOSAL=false",
+        f"C1_CORTEX_RUN={str(bool(st['run_granted'])).lower()}",
+        f"HOST_CAN_RUN={str(bool(st['host_can_run'])).lower()}",
+        f"HOST_REASON={st['host_reason']}",
+        f"GATE={gate['reason']}",
+        "WAL_WRITTEN=false",
+        "PAID_API_USED=false",
+        "GL005_PROVEN=false",
+        "############################################################",
+        "",
+    ]
+    text = "\n".join(lines)
+    digest = hashlib.sha256(text.encode("utf-8")).hexdigest()
+    return {
+        "schema": "raios.cortex-explicit-receipt.v1",
+        "ok": True,
+        "identity": CORTEX_IDENTITY,
+        "owner": OWNER,
+        "text": text,
+        "sha256": digest,
+        "gate": gate["reason"],
+        "loaded": False,
+        "gl005_proven": False,
+    }
+
+
 def public_fields(st: dict[str, Any] | None = None) -> dict[str, Any]:
     row = st or status()
     return {

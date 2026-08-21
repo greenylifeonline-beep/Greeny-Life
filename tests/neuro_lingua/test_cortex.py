@@ -33,6 +33,18 @@ def test_executor_never_throws_cortex():
     assert rec["error"] == "EXECUTOR_NE_THROW_CORTEX"
 
 
+def test_explicit_receipt_names_qwen36_cortex():
+    from raios.neuro_lingua.cortex import explicit_receipt
+
+    rec = explicit_receipt()
+    assert rec["identity"] == "qwen3.6:35b-a3b"
+    assert "IDENTITY=qwen3.6:35b-a3b" in rec["text"]
+    assert "STUDENT_NE_CORTEX=true" in rec["text"]
+    assert "LOADED=false" in rec["text"]
+    assert "GL005_PROVEN=false" in rec["text"]
+    assert rec["sha256"]
+
+
 def test_treat_does_not_load_or_throw():
     rec = treat()
     assert rec["ok"] is True
