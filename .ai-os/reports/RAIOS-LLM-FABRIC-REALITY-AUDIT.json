@@ -1,0 +1,371 @@
+{
+  "schema": "raios.llm-fabric-reality-audit.v1",
+  "knowledge_state": "DISCOVERED",
+  "canonical": false,
+  "from": "C2",
+  "parent": "C1",
+  "decision": "D-064",
+  "bound_head": "f17b749",
+  "head": "b94e07eed4e8c153c2a618b31f86312a54ffbf31",
+  "ts": "2026-08-21T20:52:35.952699+00:00",
+  "runtimes": {
+    "ollama_bin": true,
+    "ollama_http": {
+      "present": true,
+      "http": 200,
+      "models": [
+        "qwen2.5:0.5b"
+      ]
+    },
+    "vllm_bin": false,
+    "nvidia_smi": false,
+    "imports": [
+      {
+        "name": "transformers",
+        "present": false,
+        "error": "ModuleNotFoundError"
+      },
+      {
+        "name": "torch",
+        "present": false,
+        "error": "ModuleNotFoundError"
+      },
+      {
+        "name": "vllm",
+        "present": false,
+        "error": "ModuleNotFoundError"
+      },
+      {
+        "name": "llama_cpp",
+        "present": false,
+        "error": "ModuleNotFoundError"
+      },
+      {
+        "name": "networkx",
+        "present": false,
+        "error": "ModuleNotFoundError"
+      },
+      {
+        "name": "chromadb",
+        "present": false,
+        "error": "ModuleNotFoundError"
+      },
+      {
+        "name": "langchain",
+        "present": false,
+        "error": "ModuleNotFoundError"
+      },
+      {
+        "name": "ollama",
+        "present": false,
+        "error": "ModuleNotFoundError"
+      }
+    ]
+  },
+  "generate": [
+    {
+      "model": "qwen2.5:0.5b",
+      "http": 200,
+      "ok": true,
+      "eval_count": 4,
+      "error": null,
+      "response_len": 10
+    },
+    {
+      "model": "qwen3.6:35b-a3b",
+      "http": 404,
+      "ok": false,
+      "error": "{\"error\":\"model 'qwen3.6:35b-a3b' not found\"}"
+    },
+    {
+      "model": "granite4:3b",
+      "http": 404,
+      "ok": false,
+      "error": "{\"error\":\"model 'granite4:3b' not found\"}"
+    },
+    {
+      "model": "ibm/granite",
+      "http": 404,
+      "ok": false,
+      "error": "{\"error\":\"model 'ibm/granite' not found\"}"
+    },
+    {
+      "model": "deepseek-r1:1.5b",
+      "http": 404,
+      "ok": false,
+      "error": "{\"error\":\"model 'deepseek-r1:1.5b' not found\"}"
+    },
+    {
+      "model": "deepseek-r1:7b",
+      "http": 404,
+      "ok": false,
+      "error": "{\"error\":\"model 'deepseek-r1:7b' not found\"}"
+    }
+  ],
+  "packs_present": {
+    "RAIOS-COGNITIVE-BOOT.json": false,
+    "_raios-qwen-forensics/reports/QWEN36-FORENSIC-CERTIFICATION.json": false,
+    "_raios-a17-native-cortex/cortex/runtime/MAIN-CORTEX-BINDING.json": false
+  },
+  "components": [
+    {
+      "id": "MODEL_REGISTRY",
+      "path": ".ai-os/MODEL-REGISTRY.json",
+      "class": "FILE_ONLY",
+      "note": "Repair Windows deepseek-r1 names; not installed here",
+      "registry_models": [
+        "deepseek-local-deep",
+        "deepseek-local-fast"
+      ],
+      "repair_ram_gb": 7.8
+    },
+    {
+      "id": "CAPABILITY_CONTRACTS",
+      "path": "src/raios/neuro_lingua/provider_contracts.py",
+      "class": "TESTED",
+      "note": "NeuroLingua CapabilityRequirement; not LLM tool-calling"
+    },
+    {
+      "id": "ROUTER",
+      "path": "src/raios/neuro_lingua/router.py",
+      "class": "TESTED",
+      "note": "deterministic-neuro-lingua; cortex not admitted"
+    },
+    {
+      "id": "FALLBACK",
+      "path": "src/raios/neuro_lingua/governor.py",
+      "class": "LIVE",
+      "note": "CORTEX_HOLD_AWAITING_C1_RUN → deterministic"
+    },
+    {
+      "id": "ENSEMBLE",
+      "path": null,
+      "class": "ABSENT",
+      "note": "no live ensemble"
+    },
+    {
+      "id": "EMBEDDINGS",
+      "path": ".ai-os/learning/INDEX.json",
+      "class": "ABSENT",
+      "alt": "inverted INDEX LIVE",
+      "note": "INVERTED_INDEX_NE_UNLOADED_EMBEDDING"
+    },
+    {
+      "id": "RERANKER",
+      "path": null,
+      "class": "ABSENT"
+    },
+    {
+      "id": "VLM",
+      "path": null,
+      "class": "ABSENT"
+    },
+    {
+      "id": "CODE_MODEL",
+      "path": null,
+      "class": "ABSENT",
+      "note": "qwen25_coder is memo only"
+    },
+    {
+      "id": "CONTEXT_GOVERNOR",
+      "path": "src/raios/neuro_lingua/governor.py",
+      "class": "LIVE",
+      "ram_gb": 15.64,
+      "min_free_gb_for_cortex": 24.0
+    },
+    {
+      "id": "COST_GOVERNOR",
+      "path": ".ai-os/mcp/C5-GRANT.json",
+      "class": "LIVE",
+      "paid_api": false
+    },
+    {
+      "id": "RESOURCE_GOVERNOR",
+      "path": "src/raios/neuro_lingua/governor.py",
+      "class": "LIVE",
+      "stale_claim": "reports/RAIOS-RESOURCE-GOVERNOR-AUDIT.json host_ram_gb=7.8 Repair, not this VM"
+    },
+    {
+      "id": "MODEL_HEALTH",
+      "class": "LIVE",
+      "student_generate": {
+        "model": "qwen2.5:0.5b",
+        "http": 200,
+        "ok": true,
+        "eval_count": 4,
+        "error": null,
+        "response_len": 10
+      },
+      "cortex_generate": {
+        "model": "qwen3.6:35b-a3b",
+        "http": 404,
+        "ok": false,
+        "error": "{\"error\":\"model 'qwen3.6:35b-a3b' not found\"}"
+      },
+      "granite_generate": [
+        {
+          "model": "granite4:3b",
+          "http": 404,
+          "ok": false,
+          "error": "{\"error\":\"model 'granite4:3b' not found\"}"
+        },
+        {
+          "model": "ibm/granite",
+          "http": 404,
+          "ok": false,
+          "error": "{\"error\":\"model 'ibm/granite' not found\"}"
+        }
+      ]
+    },
+    {
+      "id": "CACHE",
+      "path": "src/raios/neuro_lingua/qwen_runtime.py",
+      "class": "PROTOTYPE",
+      "note": "3s probe cache only"
+    },
+    {
+      "id": "OBSERVABILITY",
+      "path": ".ai-os/receipts",
+      "class": "LIVE",
+      "note": "fail-closed receipts; not LLM traces"
+    },
+    {
+      "id": "TEACHER_STUDENT",
+      "class": "PARTIAL",
+      "student": "qwen2.5:0.5b LIVE",
+      "teachers": "granite/deepseek/cortex HTTP 404"
+    },
+    {
+      "id": "DISTILLATION",
+      "class": "ABSENT"
+    },
+    {
+      "id": "SKILL_COMPILATION",
+      "path": "scripts/ai-os/raios_c5_kae.py",
+      "class": "PROTOTYPE",
+      "note": "KAE retile; not neural distill"
+    }
+  ],
+  "granite_sovereign_backbone": false,
+  "llm_fabric_proven": false,
+  "gl005_proven": false,
+  "extracted_qwen_granite": false,
+  "law": [
+    "SCALE_BY_COMPRESSION_NOT_COMPLEXITY",
+    "CI_PASS_NE_ASSIMILATION",
+    "CI_PASS_NE_GL005",
+    "STORED_NE_ASSIMILATED",
+    "EMBEDDED_NE_ASSIMILATED",
+    "REPLAYED_NE_VALIDATED",
+    "HOLD_NE_THROW",
+    "STUDENT_NE_EXTRACTION",
+    "GRANITE_CANDIDATE_NE_SOVEREIGN_BACKBONE",
+    "NO_RESET_NO_STASH_NO_SOURCE_DELETION",
+    "PRINTED_PASS_NE_EVIDENCE",
+    "REUSE_BEFORE_BUILD",
+    "A15_WAL_LOCK"
+  ],
+  "tournament": [
+    {
+      "slot": "router",
+      "candidate": "deterministic-neuro-lingua",
+      "granite": "not-sovereign",
+      "class": "TESTED",
+      "pull": false
+    },
+    {
+      "slot": "reasoning",
+      "candidate": "qwen3.6:35b-a3b",
+      "installed": {
+        "model": "qwen3.6:35b-a3b",
+        "http": 404,
+        "ok": false,
+        "error": "{\"error\":\"model 'qwen3.6:35b-a3b' not found\"}"
+      },
+      "class": "ABSENT",
+      "pull": false
+    },
+    {
+      "slot": "coding",
+      "candidate": null,
+      "class": "ABSENT",
+      "pull": false
+    },
+    {
+      "slot": "embedding",
+      "candidate": "inverted-INDEX",
+      "neural": false,
+      "class": "LIVE",
+      "pull": false
+    },
+    {
+      "slot": "reranking",
+      "candidate": null,
+      "class": "ABSENT",
+      "pull": false
+    },
+    {
+      "slot": "document_vlm",
+      "candidate": null,
+      "class": "ABSENT",
+      "pull": false
+    },
+    {
+      "slot": "teacher",
+      "candidates": [
+        "granite4:3b",
+        "qwen3.6:35b-a3b",
+        "qwen2.5:0.5b"
+      ],
+      "live": {
+        "qwen2.5:0.5b": {
+          "model": "qwen2.5:0.5b",
+          "http": 200,
+          "ok": true,
+          "eval_count": 4,
+          "error": null,
+          "response_len": 10
+        },
+        "qwen3.6:35b-a3b": {
+          "model": "qwen3.6:35b-a3b",
+          "http": 404,
+          "ok": false,
+          "error": "{\"error\":\"model 'qwen3.6:35b-a3b' not found\"}"
+        },
+        "granite4:3b": {
+          "model": "granite4:3b",
+          "http": 404,
+          "ok": false,
+          "error": "{\"error\":\"model 'granite4:3b' not found\"}"
+        },
+        "ibm/granite": {
+          "model": "ibm/granite",
+          "http": 404,
+          "ok": false,
+          "error": "{\"error\":\"model 'ibm/granite' not found\"}"
+        },
+        "deepseek-r1:1.5b": {
+          "model": "deepseek-r1:1.5b",
+          "http": 404,
+          "ok": false,
+          "error": "{\"error\":\"model 'deepseek-r1:1.5b' not found\"}"
+        },
+        "deepseek-r1:7b": {
+          "model": "deepseek-r1:7b",
+          "http": 404,
+          "ok": false,
+          "error": "{\"error\":\"model 'deepseek-r1:7b' not found\"}"
+        }
+      },
+      "class": "PARTIAL",
+      "granite_sovereign": false,
+      "pull": false
+    },
+    {
+      "slot": "critic",
+      "candidate": "C4 DeepSeek seat elsewhere, not a local model",
+      "class": "FILE_ONLY",
+      "pull": false
+    }
+  ]
+}

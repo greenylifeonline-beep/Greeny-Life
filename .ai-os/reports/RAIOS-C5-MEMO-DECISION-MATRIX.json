@@ -1,0 +1,110 @@
+{
+  "schema": "raios.c5-memo-decision-matrix.v1",
+  "knowledge_state": "DISCOVERED",
+  "canonical": false,
+  "from": "C2",
+  "parent": "C1",
+  "decision": "D-064",
+  "ts": "2026-08-21T20:52:36.154412+00:00",
+  "rows": [
+    {
+      "claim": "Decentralized Cognitive Mesh",
+      "status": "REJECT",
+      "reason": "Second bus / relay hub rejected. One Cognitive WAL. Compression not mesh sprawl.",
+      "evidence": [
+        "D-017 MCP_GATEWAY_NE_RELAY_HUB",
+        "D-005 ORGANIZE_BEFORE_EXPAND",
+        "D-063 SCALE_BY_COMPRESSION_NOT_COMPLEXITY"
+      ]
+    },
+    {
+      "claim": "Granite-as-backbone",
+      "status": "REJECT",
+      "reason": "Granite is a candidate teacher, not sovereign backbone. Source identity is cortex qwen3.6:35b-a3b plus Granite. This host: granite generate 404.",
+      "evidence": [
+        "D-048",
+        "D-060",
+        "ollama generate granite4:3b HTTP 404"
+      ]
+    },
+    {
+      "claim": "NetworkX+SQLite brain",
+      "status": "REJECT",
+      "reason": "networkx absent here. Norway graph.py is stdlib KnowledgeGraph, not C5 mind. SQLite WAL ≠ Cognitive WAL.",
+      "evidence": [
+        "import networkx ABSENT",
+        "greenlines_brain/graph.py",
+        "D-017 SQLITE_WAL_NE_COGNITIVE_WAL",
+        "D-039 LIGHTRAG_NE_COGNITIVE_WAL"
+      ]
+    },
+    {
+      "claim": "8GB RAM claim",
+      "status": "REJECT",
+      "reason": "Stale Repair observation (MODEL-REGISTRY 7.8GB / governor audit 7.8 vs 22GB blob). This VM RAM≈15.64Gi, still HOST_NO_GPU, still below 24GB cortex gate. Not a license to throw sources.",
+      "evidence": [
+        ".ai-os/MODEL-REGISTRY.json",
+        "reports/RAIOS-RESOURCE-GOVERNOR-AUDIT.json",
+        "D-052 HOLD_NE_THROW"
+      ]
+    },
+    {
+      "claim": "interleaved training fixed schedule",
+      "status": "REJECT",
+      "reason": "Calendar/interleave is not intelligence. c5-week.yml pulse exists but fires from main. Not a 6-hour genius loop.",
+      "evidence": [
+        "D-037 SCHEDULED_PULSE_NE_SECOND_WAL",
+        "D-040 CALENDAR_90_NE_PROOF",
+        ".github/workflows/c5-week.yml"
+      ]
+    },
+    {
+      "claim": "OAuth/JWT/API-key recommendation",
+      "status": "REJECT",
+      "reason": "Empire JWT/HMAC plane rejected. V1 is scoped bearer until remote OAuth is registered. No new auth plane this slice.",
+      "evidence": [
+        "D-017",
+        "D-018",
+        "D-019 EMPIRE_CONNECTOR_SPEC_AS_WRITTEN_IS_REJECTED"
+      ]
+    },
+    {
+      "claim": "6-week sequence",
+      "status": "REJECT",
+      "reason": "Calendar-week delivery is not a RAIOS success metric.",
+      "evidence": [
+        "D-019",
+        "D-040"
+      ]
+    },
+    {
+      "claim": "GL005 as whole-system success condition",
+      "status": "REJECT",
+      "reason": "GL-005 is last P0 gate after authenticated OrchestrationTask and Qwen/Granite assimilation. Not whole-system success. Cannot print true without live authenticated POST /api/tasks.",
+      "evidence": [
+        "D-060",
+        "D-008",
+        "AUTHENTICATED_ORCHESTRATION_TASK_NE_GL005"
+      ]
+    }
+  ],
+  "accepted": 0,
+  "rejected": 8,
+  "research_required": 0,
+  "gl005_proven": false,
+  "law": [
+    "SCALE_BY_COMPRESSION_NOT_COMPLEXITY",
+    "CI_PASS_NE_ASSIMILATION",
+    "CI_PASS_NE_GL005",
+    "STORED_NE_ASSIMILATED",
+    "EMBEDDED_NE_ASSIMILATED",
+    "REPLAYED_NE_VALIDATED",
+    "HOLD_NE_THROW",
+    "STUDENT_NE_EXTRACTION",
+    "GRANITE_CANDIDATE_NE_SOVEREIGN_BACKBONE",
+    "NO_RESET_NO_STASH_NO_SOURCE_DELETION",
+    "PRINTED_PASS_NE_EVIDENCE",
+    "REUSE_BEFORE_BUILD",
+    "A15_WAL_LOCK"
+  ]
+}

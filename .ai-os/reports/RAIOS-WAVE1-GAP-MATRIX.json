@@ -1,0 +1,92 @@
+{
+  "schema": "raios.wave1-gap-matrix.v1",
+  "knowledge_state": "DISCOVERED",
+  "canonical": false,
+  "from": "C2",
+  "parent": "C1",
+  "decision": "D-064",
+  "ts": "2026-08-21T20:52:36.154419+00:00",
+  "rows": [
+    {
+      "id": "LLM_FABRIC_E2E",
+      "class": "PARTIAL",
+      "proven": false,
+      "gap": "only student 0.5b generate LIVE"
+    },
+    {
+      "id": "ASSIMILATION_E2E",
+      "class": "BLOCKED",
+      "proven": false,
+      "stop": "WAL"
+    },
+    {
+      "id": "RSIC_LIVE_LOOP",
+      "class": "PARTIAL",
+      "proven": false
+    },
+    {
+      "id": "AEMC_OBSERVE_DIAGNOSE_VERIFY",
+      "class": "PARTIAL",
+      "proven": false
+    },
+    {
+      "id": "CETD_TRAIN_RESUME",
+      "class": "PARTIAL",
+      "proven": false
+    },
+    {
+      "id": "AUTHENTICATED_ORCHESTRATION_TASK",
+      "class": "BLOCKED",
+      "proven": false
+    },
+    {
+      "id": "QWEN_GRANITE_SOURCE_INDEPENDENT_ASSIMILATION",
+      "class": "FAIL",
+      "proven": false,
+      "student_ne_extraction": true
+    },
+    {
+      "id": "GL005",
+      "class": "UNREACHED",
+      "proven": false
+    },
+    {
+      "id": "GRANITE_INSTALLED",
+      "class": "ABSENT",
+      "proven": false
+    },
+    {
+      "id": "CORTEX_INSTALLED",
+      "class": "ABSENT",
+      "proven": false
+    },
+    {
+      "id": "BLIND_UNSEEN_REUSE",
+      "class": "ABSENT",
+      "proven": false
+    }
+  ],
+  "llm_fabric_proven": false,
+  "assimilation_proven": false,
+  "rsic_proven": false,
+  "aemc_proven": false,
+  "cetd_proven": false,
+  "gl005_proven": false,
+  "extracted_qwen_granite": false,
+  "safe_to_remove_source": false,
+  "law": [
+    "SCALE_BY_COMPRESSION_NOT_COMPLEXITY",
+    "CI_PASS_NE_ASSIMILATION",
+    "CI_PASS_NE_GL005",
+    "STORED_NE_ASSIMILATED",
+    "EMBEDDED_NE_ASSIMILATED",
+    "REPLAYED_NE_VALIDATED",
+    "HOLD_NE_THROW",
+    "STUDENT_NE_EXTRACTION",
+    "GRANITE_CANDIDATE_NE_SOVEREIGN_BACKBONE",
+    "NO_RESET_NO_STASH_NO_SOURCE_DELETION",
+    "PRINTED_PASS_NE_EVIDENCE",
+    "REUSE_BEFORE_BUILD",
+    "A15_WAL_LOCK"
+  ]
+}

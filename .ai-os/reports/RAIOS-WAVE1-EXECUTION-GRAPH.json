@@ -1,0 +1,128 @@
+{
+  "schema": "raios.wave1-execution-graph.v1",
+  "knowledge_state": "DISCOVERED",
+  "canonical": false,
+  "from": "C2",
+  "parent": "C1",
+  "decision": "D-064",
+  "bound_head": "f17b749",
+  "no_reset": true,
+  "no_stash": true,
+  "no_clean": true,
+  "ts": "2026-08-21T20:52:36.154426+00:00",
+  "stop": "AUTHENTICATED_ORCHESTRATION_TASK",
+  "next": "AUTHENTICATED_ORCHESTRATION_TASK",
+  "nodes": [
+    {
+      "id": "BOUND_MAP",
+      "name": "PHASE_ZERO_MAP",
+      "head": "f17b749",
+      "status": "DONE_DISCOVERED",
+      "reset": false
+    },
+    {
+      "id": "W1A",
+      "name": "LLM_FABRIC_INVENTORY",
+      "status": "DONE_DISCOVERED"
+    },
+    {
+      "id": "W1B",
+      "name": "ASSIMILATION_E2E",
+      "status": "BLOCKED",
+      "stop": "WAL"
+    },
+    {
+      "id": "W1C",
+      "name": "RSIC_WIRE",
+      "status": "DONE_DISCOVERED",
+      "new_system": false
+    },
+    {
+      "id": "W1D",
+      "name": "AEMC_WIRE",
+      "status": "DONE_DISCOVERED",
+      "new_system": false
+    },
+    {
+      "id": "W1E",
+      "name": "CETD_WIRE",
+      "status": "DONE_DISCOVERED",
+      "new_system": false
+    },
+    {
+      "id": "W1F",
+      "name": "ERP_REALITY",
+      "status": "DONE_DISCOVERED"
+    },
+    {
+      "id": "W1G",
+      "name": "MEMO_DECISIONS",
+      "status": "DONE_DISCOVERED"
+    },
+    {
+      "id": "W1H",
+      "name": "TOURNAMENT_SLOTS",
+      "status": "DONE_DISCOVERED",
+      "pull": false
+    },
+    {
+      "id": "0.1",
+      "name": "AUTHENTICATED_ORCHESTRATION_TASK",
+      "status": "BLOCKED",
+      "skip": false
+    },
+    {
+      "id": "0.2",
+      "name": "QWEN_GRANITE_SOURCE_INDEPENDENT_ASSIMILATION",
+      "status": "FAIL",
+      "skip": false
+    },
+    {
+      "id": "0.3",
+      "name": "GL005",
+      "status": "UNREACHED",
+      "skip": false
+    }
+  ],
+  "edges": [
+    {
+      "from": "BOUND_MAP",
+      "to": "W1A"
+    },
+    {
+      "from": "W1A",
+      "to": "W1B"
+    },
+    {
+      "from": "W1B",
+      "to": "0.1",
+      "note": "WAL/unseen reuse blocked; P0 0.1 still first live product proof"
+    },
+    {
+      "from": "0.1",
+      "to": "0.2",
+      "skip": false
+    },
+    {
+      "from": "0.2",
+      "to": "0.3",
+      "skip": false
+    }
+  ],
+  "gl005_proven": false,
+  "law": [
+    "SCALE_BY_COMPRESSION_NOT_COMPLEXITY",
+    "CI_PASS_NE_ASSIMILATION",
+    "CI_PASS_NE_GL005",
+    "STORED_NE_ASSIMILATED",
+    "EMBEDDED_NE_ASSIMILATED",
+    "REPLAYED_NE_VALIDATED",
+    "HOLD_NE_THROW",
+    "STUDENT_NE_EXTRACTION",
+    "GRANITE_CANDIDATE_NE_SOVEREIGN_BACKBONE",
+    "NO_RESET_NO_STASH_NO_SOURCE_DELETION",
+    "PRINTED_PASS_NE_EVIDENCE",
+    "REUSE_BEFORE_BUILD",
+    "A15_WAL_LOCK"
+  ]
+}

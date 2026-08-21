@@ -1,0 +1,123 @@
+{
+  "schema": "raios.wave1-receipt.v1",
+  "knowledge_state": "DISCOVERED",
+  "canonical": false,
+  "from": "C2",
+  "parent": "C1",
+  "c5": "git_not_this_session",
+  "decision": "D-064",
+  "bound_head": "f17b749",
+  "head": "b94e07eed4e8c153c2a618b31f86312a54ffbf31",
+  "bound_is_ancestor": true,
+  "no_reset": true,
+  "no_clean": true,
+  "no_stash": true,
+  "no_source_deletion": true,
+  "no_auto_canonical": true,
+  "no_fake_pass": true,
+  "ts": "2026-08-21T20:52:36.159176+00:00",
+  "facts": {
+    "CI_1e28f84": "PASS",
+    "CI_68af867": "PASS",
+    "EXTRACTED_QWEN_GRANITE": false,
+    "SAFE_TO_REMOVE_SOURCE": false,
+    "GL005_PROVEN": false,
+    "AUTHENTICATED_ORCHESTRATION_TASK": false
+  },
+  "llm_fabric_proven": false,
+  "assimilation_proven": false,
+  "rsic_proven": false,
+  "aemc_proven": false,
+  "cetd_proven": false,
+  "extracted_qwen_granite": false,
+  "safe_to_remove_source": false,
+  "authenticated_orchestration_task": false,
+  "gl005_proven": false,
+  "wal_written": false,
+  "student_generate_ok": true,
+  "granite_generate_ok": false,
+  "cortex_generate_ok": false,
+  "stop": "AUTHENTICATED_ORCHESTRATION_TASK",
+  "next": "AUTHENTICATED_ORCHESTRATION_TASK",
+  "artifacts": [
+    {
+      "name": "RAIOS-LLM-FABRIC-REALITY-AUDIT.json",
+      "path": ".ai-os/reports/RAIOS-LLM-FABRIC-REALITY-AUDIT.json",
+      "sha256": "9d8ed13880328e115d3becac98e0751b19d446ebb7c9a3b8d5430cc678cd10ad"
+    },
+    {
+      "name": "RAIOS-ASSIMILATION-E2E-PROOF.json",
+      "path": ".ai-os/reports/RAIOS-ASSIMILATION-E2E-PROOF.json",
+      "sha256": "2a40c6e9758b4d052c7b75d494aed554e829818b27f293e9a07520ece9123421"
+    },
+    {
+      "name": "RAIOS-RSIC-REALITY.json",
+      "path": ".ai-os/reports/RAIOS-RSIC-REALITY.json",
+      "sha256": "07e19c8baad271c0ce5c42065862446caccadc78b789ce74dc7af6e00c3e82be"
+    },
+    {
+      "name": "RAIOS-AEMC-REALITY.json",
+      "path": ".ai-os/reports/RAIOS-AEMC-REALITY.json",
+      "sha256": "9c3a1705b179909798f2535bd23f7d58587ab7e35860620a23345c9d4f18c634"
+    },
+    {
+      "name": "RAIOS-CETD-REALITY.json",
+      "path": ".ai-os/reports/RAIOS-CETD-REALITY.json",
+      "sha256": "405b42336a652ea2b1365d423e854fe1684596a5adb0d82344dff8bb70159e07"
+    },
+    {
+      "name": "RAIOS-ERP-REALITY-MATRIX.json",
+      "path": ".ai-os/reports/RAIOS-ERP-REALITY-MATRIX.json",
+      "sha256": "0242ec855e5b2b2fec764651d9ed9e1564627833f3ba31326831e404193a3417"
+    },
+    {
+      "name": "RAIOS-C5-MEMO-DECISION-MATRIX.json",
+      "path": ".ai-os/reports/RAIOS-C5-MEMO-DECISION-MATRIX.json",
+      "sha256": "42ef1bad91370d466be8283d21051720198f3576b853ab3faec9c3f75ed8093d"
+    },
+    {
+      "name": "RAIOS-WAVE1-GAP-MATRIX.json",
+      "path": ".ai-os/reports/RAIOS-WAVE1-GAP-MATRIX.json",
+      "sha256": "602134e7861281a016e2aa351a343bbfd691d8e1cfefa9fc2dc5911cb96f29df"
+    },
+    {
+      "name": "RAIOS-WAVE1-EXECUTION-GRAPH.json",
+      "path": ".ai-os/reports/RAIOS-WAVE1-EXECUTION-GRAPH.json",
+      "sha256": "46cd9040723533aa035fe66e8075014b3e8d28aa43ff0161ec2f042d32dd9678"
+    },
+    {
+      "name": "RAIOS-WAVE1-RECEIPT.json",
+      "path": ".ai-os/reports/RAIOS-WAVE1-RECEIPT.json",
+      "sha256": "34c50845f491aaa510d1aef7d14e302f87b7c4e64c978c4aea66ac0a608c8493"
+    }
+  ],
+  "sha256_critical": {
+    "runner": "06b8c66801377cafba1de7c2aa62260859612974acf4d2e429fcc454f672e533",
+    "p0": "84e202434884bf50e0ff01e3c1a9a8f1fb4b19765ce053bcecb03c08c6282ace",
+    "foundation": "c76e0eb43f304c13fcad40f87f35e8a7c9c04a8abfdd3043c8bdfa646a34eb14",
+    "allowed_source": "2d538d6ec24ab73a131e174d74b531a9c9cd389b42156c9fa5e45860ccaa36eb",
+    "model_registry": "36f1d7f4c91d0bcba499225794c7bcb880ca334687de8cf691cfb8ad9a53ddb9"
+  },
+  "listen": {
+    "next_3000": true,
+    "ollama_11434": true,
+    "postgres_5432": false
+  },
+  "law": [
+    "SCALE_BY_COMPRESSION_NOT_COMPLEXITY",
+    "CI_PASS_NE_ASSIMILATION",
+    "CI_PASS_NE_GL005",
+    "STORED_NE_ASSIMILATED",
+    "EMBEDDED_NE_ASSIMILATED",
+    "REPLAYED_NE_VALIDATED",
+    "HOLD_NE_THROW",
+    "STUDENT_NE_EXTRACTION",
+    "GRANITE_CANDIDATE_NE_SOVEREIGN_BACKBONE",
+    "NO_RESET_NO_STASH_NO_SOURCE_DELETION",
+    "PRINTED_PASS_NE_EVIDENCE",
+    "REUSE_BEFORE_BUILD",
+    "A15_WAL_LOCK"
+  ],
+  "ok": true,
+  "wal_mtime_unchanged": true
+}

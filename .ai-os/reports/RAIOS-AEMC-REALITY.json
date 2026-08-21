@@ -1,0 +1,106 @@
+{
+  "schema": "raios.aemc-reality.v1",
+  "knowledge_state": "DISCOVERED",
+  "canonical": false,
+  "from": "C2",
+  "parent": "C1",
+  "decision": "D-064",
+  "ts": "2026-08-21T20:52:35.963272+00:00",
+  "observe_issues": [
+    {
+      "id": "MISSING_TRAIN",
+      "pathology": "slack",
+      "law": "SKIP_WITHOUT_RECEIPT_IS_SLACK",
+      "detail": ".ai-os/receipts/c5-train/LAST.json"
+    },
+    {
+      "id": "MISSING_SPEAK",
+      "pathology": "slack",
+      "law": "SKIP_WITHOUT_RECEIPT_IS_SLACK",
+      "detail": ".ai-os/receipts/c5-speak/LAST.json"
+    },
+    {
+      "id": "STALE_EXPERIENCE",
+      "pathology": "halt",
+      "law": "HALT_IS_PATHOLOGY",
+      "age_s": 77085.8
+    },
+    {
+      "id": "SKIPPED_GRIND",
+      "pathology": "slack",
+      "law": "SKIP_WITHOUT_RECEIPT_IS_SLACK",
+      "detail": "grind"
+    },
+    {
+      "id": "SKIPPED_WEEK",
+      "pathology": "slack",
+      "law": "SKIP_WITHOUT_RECEIPT_IS_SLACK",
+      "detail": "week"
+    },
+    {
+      "id": "SKIPPED_MINUTE",
+      "pathology": "slack",
+      "law": "SKIP_WITHOUT_RECEIPT_IS_SLACK",
+      "detail": "minute"
+    },
+    {
+      "id": "SKIPPED_SPEAK",
+      "pathology": "slack",
+      "law": "SKIP_WITHOUT_RECEIPT_IS_SLACK",
+      "detail": "speak"
+    },
+    {
+      "id": "SKIPPED_EXPERIENCE",
+      "pathology": "slack",
+      "law": "SKIP_WITHOUT_RECEIPT_IS_SLACK",
+      "detail": "experience"
+    }
+  ],
+  "functions": [
+    {
+      "id": "health_observation",
+      "keeper": "scripts/ai-os/raios_c5_watchdog.py",
+      "class": "LIVE",
+      "issues": 8
+    },
+    {
+      "id": "failure_diagnosis",
+      "keeper": "scripts/ai-os/raios_c5_watchdog.py classify + c5-failure",
+      "class": "PROTOTYPE"
+    },
+    {
+      "id": "repair_planning",
+      "keeper": "scripts/ai-os/raios_c5_plan.py",
+      "class": "FILE_ONLY"
+    },
+    {
+      "id": "verification",
+      "keeper": "scripts/ai-os/raios_c5_proof.py",
+      "class": "LIVE"
+    },
+    {
+      "id": "rollback",
+      "keeper": null,
+      "class": "ABSENT",
+      "note": "NO_RESET/NO_STASH this slice"
+    },
+    {
+      "id": "receipt",
+      "keeper": ".ai-os/receipts",
+      "class": "LIVE"
+    },
+    {
+      "id": "maintenance_to_learning_event",
+      "keeper": "scripts/ai-os/raios_c5_experience.py",
+      "class": "PROTOTYPE",
+      "wal": false
+    }
+  ],
+  "observe_diagnose_verify_proven": false,
+  "aemc_proven": false,
+  "gl005_proven": false,
+  "law": [
+    "PATHOLOGY_COMPELS_REPAIR",
+    "REUSE_BEFORE_BUILD"
+  ]
+}

@@ -1,0 +1,75 @@
+{
+  "schema": "raios.cetd-reality.v1",
+  "knowledge_state": "DISCOVERED",
+  "canonical": false,
+  "from": "C2",
+  "parent": "C1",
+  "decision": "D-064",
+  "ts": "2026-08-21T20:52:35.963297+00:00",
+  "keepers_named": 20,
+  "functions": [
+    {
+      "id": "books",
+      "keeper": "scripts/ai-os/raios_c5_book.py",
+      "class": "LIVE",
+      "knowledge": false,
+      "ck": 0.6035
+    },
+    {
+      "id": "official_sources",
+      "keeper": "mind_fill + CORE-CONTRACT/DECISIONS",
+      "class": "LIVE"
+    },
+    {
+      "id": "models",
+      "keeper": "scripts/ai-os/raios_c5_qwen.py",
+      "class": "PARTIAL",
+      "student_only": true
+    },
+    {
+      "id": "erp_events",
+      "keeper": "POST /api/tasks",
+      "class": "BLOCKED",
+      "p0": "AUTHENTICATED_ORCHESTRATION_TASK"
+    },
+    {
+      "id": "simulations",
+      "keeper": null,
+      "class": "ABSENT"
+    },
+    {
+      "id": "kaggle_colab_local_workers",
+      "keeper": "scripts/ai-os/raios_c5_train.py + gym/",
+      "class": "CONNECTED"
+    },
+    {
+      "id": "weakness_queues",
+      "keeper": "book identify_weakness + C5-NEED",
+      "class": "LIVE"
+    },
+    {
+      "id": "blind_tests",
+      "keeper": null,
+      "class": "ABSENT"
+    },
+    {
+      "id": "revalidation",
+      "keeper": "book replay",
+      "class": "PROTOTYPE",
+      "law": "REPLAYED_NE_VALIDATED"
+    },
+    {
+      "id": "skill_certification",
+      "keeper": "scripts/ai-os/raios_c5_experience.py",
+      "class": "PROTOTYPE",
+      "promoted": false
+    }
+  ],
+  "training_path_resume_proven": false,
+  "cetd_proven": false,
+  "gl005_proven": false,
+  "law": [
+    "EXPERIENCE_NE_KNOWLEDGE",
+    "ONE_COMMAND_ALL_GYMS"
+  ]
+}

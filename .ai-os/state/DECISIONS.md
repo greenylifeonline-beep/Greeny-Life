@@ -303,3 +303,8 @@ FROM remains repository + agents + foundry + experiments until P0 evidence. TO (
 C2 stamps eight named reality artifacts from live keepers. They are DISCOVERED audits, not a new kernel, not ten live council seats, not Odoo/Celerp, and not `GL005_PROVEN`. C6–C10 stay `NOT_SEATED`. Do not invent seats to look complete.
 Artifacts: `.ai-os/reports/RAIOS-WORLD-CLASS-REALITY-AUDIT.json`, `RAIOS-CAPABILITY-GAP-MATRIX.json`, `RAIOS-ERP-REALITY-MATRIX.json`, `RAIOS-COGNITIVE-DATAFLOW.json`, `RAIOS-RESOURCE-FABRIC-MAP.json`, `RAIOS-STATE-OF-THE-ART-RESEARCH-PLAN.md`, `RAIOS-C1-C10-COUNCIL-ARCHITECTURE.json`, `RAIOS-MASTER-EXECUTION-GRAPH.json`.
 Runner: `python3 scripts/ai-os/raios_c5_reality.py`. Next remains `AUTHENTICATED_ORCHESTRATION_TASK`. Does not close GL-005.
+
+## D-064 Wave-1 converts the Phase Zero map into fail-closed live capability, not a fake platform
+DISCOVERED, C1 ordered, not CANONICAL. Bound map head `f17b749` is an ancestor; do not reset, clean, stash, or delete sources.
+`LLM_FABRIC_PROVEN`, `ASSIMILATION_PROVEN`, `RSIC_PROVEN`, `AEMC_PROVEN`, `CETD_PROVEN` stay false unless independently exercised. This host: only Ollama student `qwen2.5:0.5b` generate is live; cortex and Granite generate 404. Assimilation E2E stops at WAL (A15 lock). Do not build parallel RSIC/AEMC/CETD systems; wire existing keepers. Granite is a tournament candidate, not sovereign backbone. Mandatory memo claims (mesh, Granite-backbone, NetworkX+SQLite, 8GB, interleaved schedule, JWT/OAuth empire, 6-week, GL005-as-whole-system) are REJECT.
+`GL005_PROVEN` stays false until authenticated live `POST /api/tasks`. Runner: `python3 scripts/ai-os/raios_c5_wave1.py`. Does not close GL-005.
