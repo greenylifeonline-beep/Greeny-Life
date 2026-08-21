@@ -313,7 +313,7 @@ def render_md(rec: dict) -> str:
         "",
         "### Live C5 keepers",
         "",
-        *[f"- `{name}` → `{path}`" for name, path in rec["keepers"]],
+        *[f"- `{row['name']}` → `{row['path']}`" + ("" if row.get("exists") else " (missing)") for row in rec["keepers"]],
         "",
         "### Rejected as world-class substitutes",
         "",

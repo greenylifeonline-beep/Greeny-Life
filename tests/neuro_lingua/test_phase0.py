@@ -51,4 +51,8 @@ def test_phase0_map_is_discovery_not_kernel_and_does_not_flip_locks():
     dumped = json.loads(MAP_JSON.read_text(encoding="utf-8"))
     assert dumped["gl005_proven"] is False
     assert dumped["extracted_qwen_granite"] is False
+    assert dumped["p0"]["gate1_status"] in {"BLOCKED", "FAIL"}
+    assert dumped["execution"][0]["status"] == "DONE_DISCOVERED"
+    assert all("name" in row and "path" in row for row in rec["keepers"])
+    assert any(row["name"] == "phase0" and row["exists"] for row in rec["keepers"])
     assert "WORLD-CLASS DISCOVERY" in MAP_MD.read_text(encoding="utf-8")
