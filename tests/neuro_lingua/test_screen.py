@@ -72,3 +72,18 @@ def test_empty_turn_is_not_whoami_and_skips_history():
     assert rec["stored"] is False
     assert rec["wal_written"] is False
     assert rec["gl005_proven"] is False
+
+
+def test_history_collapses_repeats_and_shows_seat_card():
+    rows = load_history()
+    decoded = [str(row.get("decoded") or "") for row in rows]
+    assert decoded.count("مين أنت") <= 1
+    assert decoded.count("يعمل شاشة") <= 1
+    for row in rows:
+        answer = row.get("answer") or ""
+        assert "hit_count=" not in answer
+        assert "33e431" not in answer
+        if "ما دور C4" in str(row.get("decoded") or ""):
+            assert "ASSESSOR" in answer or "مقيّم" in answer or "DeepSeek" in answer
+            assert "METHOD.md" not in answer
+            assert '"instance_role"' not in answer

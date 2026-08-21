@@ -65,6 +65,8 @@ def wal_mtime():
 def _noise_answer(answer: str) -> bool:
     if "hit_count=" in answer:
         return True
+    if "من الفهرس المحلي" in answer:
+        return True
     if HEX_DUMP_RE.search(answer):
         return True
     return False
@@ -105,25 +107,38 @@ def load_history(limit: int = 24) -> list[dict]:
             row = json.loads(line)
         except json.JSONDecodeError:
             continue
-        answer = present_answer(str(row.get("answer") or ""))
-        if not answer or _noise_answer(str(row.get("answer") or "")):
+        raw_answer = str(row.get("answer") or "")
+        if _noise_answer(raw_answer):
             continue
         original = str(row.get("original") or "").strip()
         decoded = str(row.get("decoded") or original).strip()
         if not original and not decoded:
             continue
+        answer = present_answer(raw_answer)
+        seat = _seat_card(decoded or original)
+        if seat:
+            answer = seat
+        if not answer:
+            continue
         row = dict(row)
         row["answer"] = answer
-        key = (decoded, answer)
-        if rows:
-            prev = (
-                str(rows[-1].get("decoded") or rows[-1].get("original") or "").strip(),
-                str(rows[-1].get("answer") or ""),
-            )
-            if prev == key:
-                continue
         rows.append(row)
-    return rows[-limit:]
+    uniq: list[dict] = []
+    seen: set[tuple[str, ...]] = set()
+    for row in reversed(rows):
+        kind = str(row.get("kind") or "")
+        decoded = str(row.get("decoded") or row.get("original") or "").strip()
+        if kind in {"whoami", "hello", "screen", "empty"}:
+            key: tuple[str, ...] = (kind,)
+        else:
+            key = (kind, decoded)
+        if key in seen:
+            continue
+        seen.add(key)
+        uniq.append(row)
+        if len(uniq) >= limit:
+            break
+    return list(reversed(uniq))
 
 
 def append_history(row: dict) -> None:
@@ -367,7 +382,7 @@ PAGE = """<!DOCTYPE html>
     aside {
       border-left: 1px solid var(--line);
       background: var(--elev);
-      padding: 22px 18px;
+      padding: 28px 22px;
       overflow: auto;
     }
     aside h2 {
@@ -409,10 +424,10 @@ PAGE = """<!DOCTYPE html>
     #log {
       flex: 1;
       overflow: auto;
-      padding: 22px 28px 8px;
+      padding: 28px 32px 12px;
       display: flex;
       flex-direction: column;
-      gap: 16px;
+      gap: 20px;
     }
     .msg { max-width: 680px; display: grid; gap: 6px; }
     .msg.me { margin-inline-start: auto; }
@@ -426,10 +441,12 @@ PAGE = """<!DOCTYPE html>
     .bubble {
       border: 1px solid var(--line);
       background: var(--panel);
-      border-radius: 14px 14px 14px 4px;
-      padding: 12px 14px;
+      border-radius: 16px 16px 16px 6px;
+      padding: 14px 16px;
       white-space: pre-wrap;
       word-break: break-word;
+      font-size: 14.5px;
+      line-height: 1.7;
     }
     .me .bubble {
       background: var(--accent-dim);
