@@ -282,3 +282,10 @@ Source identity is cortex `qwen3.6:35b-a3b` plus Granite (`granite4:3b` / `ibm/g
 3. `GL005` — only after (1) and (2). Prove C5 moved from vault/retrieval to brain behavior: routing + association + execution + persistence + reuse. `PASS_CANDIDATE_NE_GL005_PROVEN`.
 
 Forbidden now: any source/weights deletion or brain downsizing on the assumption that assimilation already happened. Runner: `python3 scripts/ai-os/raios_c5_p0.py`. Does not close GL-005.
+
+## D-061 Phase Zero map is discovery, not a new kernel
+DISCOVERED, C1 ordered, not CANONICAL: `PHASE_ZERO_MAP_NE_NEW_KERNEL`. `PHASE_ZERO_MAP_NE_GL005`. `ORGANIZE_BEFORE_EXPAND`.
+The world-class map inventories live keepers and orders execution. It is not a 22-phase architecture program, not a 90-day empire, and not authorization to clone Celerp/AG2/LightRAG/LangChain or to delete Qwen/Granite sources.
+World-class here means: one live product path, one authenticated orchestration path, C5 hybrid mind then source-independent assimilation, one Cognitive WAL, fail-closed evidence, zero paid API.
+Execution order remains D-060: `AUTHENTICATED_ORCHESTRATION_TASK` → Qwen/Granite chain → `GL005`. Then WAL-bind product experiences, then GL-003 (other agent), then cron-on-main and C1 cortex treat/run/throw.
+Map: `.ai-os/reports/RAIOS-PHASE-ZERO-MAP.md`. Runner: `python3 scripts/ai-os/raios_c5_phase0.py`. Does not close GL-005.
