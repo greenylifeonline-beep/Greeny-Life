@@ -1,0 +1,173 @@
+{
+  "generated_at": "2026-08-22T11:35:20.901891+00:00",
+  "law": {
+    "FULL_RESEARCH_FROM_ZERO": false,
+    "REUSE_EXISTING_EVIDENCE": true,
+    "CURRENT_RUNTIME_TRUTH_NOT_ASSUMED": true
+  },
+  "topic_coverage_in_index": {
+    "RAIOS": true,
+    "C5": true,
+    "memory": true,
+    "retrieval/index": true,
+    "NeuroLingua": true,
+    "WAL/events": true,
+    "model registry": true,
+    "Qwen": true,
+    "Granite": true,
+    "DeepSeek": true,
+    "training": true,
+    "continual learning": true,
+    "council": true,
+    "foundry": true,
+    "cloud/nomadic": true,
+    "model lab": true,
+    "self-inspection": true,
+    "consolidation": true,
+    "GL005/auth": true,
+    "runtime": true,
+    "architecture": true
+  },
+  "targets": [
+    {
+      "id": "G-001",
+      "topic": "architecture",
+      "why_new_analysis_required": "Current checkout is origin/main without RAIOS/ or .ai-os/. Tree identity vs v9/Repair/OneDrive/worktrees is not established.",
+      "after": "C3 tree census / current disk truth"
+    },
+    {
+      "id": "G-002",
+      "topic": "RAIOS",
+      "why_new_analysis_required": "No RAIOS V9 tree on this disk. Git-reachable V9 reports are not runtime-verified here. Notebook is V8.6.2 Kaggle, not V9.",
+      "after": "C3 bind then capability archaeology on bound tree"
+    },
+    {
+      "id": "G-003",
+      "topic": "C5",
+      "why_new_analysis_required": "C5 code/receipts live on other refs/sessions. This disk has no C5. UI demo agents are not capability proof.",
+      "after": "C3 bind + live C5 probe on bound tree"
+    },
+    {
+      "id": "G-004",
+      "topic": "memory",
+      "why_new_analysis_required": "Persistent cognitive storage flagged unproven; no WAL/memory fabric on this checkout.",
+      "after": "new analysis after C3"
+    },
+    {
+      "id": "G-005",
+      "topic": "retrieval/index",
+      "why_new_analysis_required": "File-intelligence PRs exist on isolated branches; not in this checkout; Magika/Tika not verified.",
+      "after": "new analysis after C3"
+    },
+    {
+      "id": "G-006",
+      "topic": "NeuroLingua",
+      "why_new_analysis_required": "NL-0 PR and reality audit disagree on file counts; spaCy/Stanza/CAMeL absent in audit; not on this disk.",
+      "after": "new analysis after C3"
+    },
+    {
+      "id": "G-007",
+      "topic": "WAL/events",
+      "why_new_analysis_required": "Existing WAL only on v9 journal paths; reports say wal_written=false. Must not create another WAL. Need C3 to locate the one cognitive WAL if any.",
+      "after": "C3 locate existing WAL; archaeology may read, not rewrite"
+    },
+    {
+      "id": "G-008",
+      "topic": "model registry",
+      "why_new_analysis_required": "MODEL-* reports are foundation-only; winner=null; weight_hash=null.",
+      "after": "new measured registry after C3"
+    },
+    {
+      "id": "G-009",
+      "topic": "Qwen",
+      "why_new_analysis_required": "Prior student_live claim is host-specific; cortex held; do_not_call_qwen_3_6. No local model files on this checkout.",
+      "after": "new runtime measurement; do not reuse live flags"
+    },
+    {
+      "id": "G-010",
+      "topic": "Granite",
+      "why_new_analysis_required": "granite_generate_ok=false and granite_sovereign_backbone=false in sampled reports. No Granite weights here.",
+      "after": "new runtime measurement"
+    },
+    {
+      "id": "G-011",
+      "topic": "DeepSeek",
+      "why_new_analysis_required": "Only DEEPSEEK-LOCAL-BENCHMARK.md on some branches; not on this disk; not re-read as current.",
+      "after": "new analysis after C3"
+    },
+    {
+      "id": "G-012",
+      "topic": "training",
+      "why_new_analysis_required": "C5 book/grind/week receipts exist in git; training not rerun. Foundry not run.",
+      "after": "do not train C5 in C2; later measured training"
+    },
+    {
+      "id": "G-013",
+      "topic": "continual learning",
+      "why_new_analysis_required": "A17/A18/CCEE live-learning engines are isolated PR branches, not this checkout.",
+      "after": "new analysis after C3"
+    },
+    {
+      "id": "G-014",
+      "topic": "council",
+      "why_new_analysis_required": "Council packets/handoffs on v9; actor binding matrix exists as claim. Repair unreachable.",
+      "after": "C3 actor/tree bind"
+    },
+    {
+      "id": "G-015",
+      "topic": "foundry",
+      "why_new_analysis_required": "POST-CONSOLIDATION-REALITY.foundry='not run'. No foundry evidence on this disk.",
+      "after": "new analysis; do not run weight merge in C2"
+    },
+    {
+      "id": "G-016",
+      "topic": "cloud/nomadic",
+      "why_new_analysis_required": "Kaggle notebook + capacity matrices exist; work-stealing proven only as local sim in MASTER-RECEIPT. This host is not Kaggle.",
+      "after": "new analysis on actual workers"
+    },
+    {
+      "id": "G-017",
+      "topic": "model lab",
+      "why_new_analysis_required": "MODEL-LAB-REALITY merge_executed=false winner=null.",
+      "after": "new analysis; do not run weight merge"
+    },
+    {
+      "id": "G-018",
+      "topic": "self-inspection",
+      "why_new_analysis_required": "Proof artifact exists for a prior host; censuses not rerun (SAME_HASH_REANALYSIS=false).",
+      "after": "reuse hash; C3/archaeology may re-run only after tree bind if hash no longer matches disk"
+    },
+    {
+      "id": "G-019",
+      "topic": "consolidation",
+      "why_new_analysis_required": "Consolidation ordered but NOT_EXECUTED. Duplicate EOS inventories vs RAIOS merge inventory. Do not merge/delete.",
+      "after": "C3 then optional consolidation under C1"
+    },
+    {
+      "id": "G-020",
+      "topic": "GL005/auth",
+      "why_new_analysis_required": "Many GL-004/GL-005 receipts; gl005_proven false everywhere sampled. Auth discriminator/cookie transport are git receipts only.",
+      "after": "new live auth/GL-005 after C3"
+    },
+    {
+      "id": "G-021",
+      "topic": "runtime",
+      "why_new_analysis_required": "This session did not execute brain.py or keepers. Old health SUCCESS/HEALTHY/RUNNING conflict. INSTALL_FAILED on this cloud run.",
+      "after": "C3 current runtime truth"
+    }
+  ],
+  "explicit_non_actions_still_in_force": [
+    "do_not_merge",
+    "do_not_copy",
+    "do_not_delete",
+    "do_not_archive",
+    "do_not_modify_canonical_files",
+    "do_not_create_another_WAL",
+    "do_not_create_another_registry",
+    "do_not_train_C5",
+    "do_not_run_weight_merge",
+    "do_not_execute_brain.py",
+    "do_not_declare_canonical_root",
+    "do_not_duplicate_C3_tree_census"
+  ]
+}

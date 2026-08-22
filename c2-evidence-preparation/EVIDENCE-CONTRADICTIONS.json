@@ -1,0 +1,401 @@
+{
+  "generated_at": "2026-08-22T11:35:20.140112+00:00",
+  "resolution_policy": "DO_NOT_RESOLVE_BY_ASSUMPTION",
+  "current_truth_inferred_from_old_reports": false,
+  "contradictions": [
+    {
+      "id": "C-001",
+      "topic": "architecture",
+      "artifacts": [
+        "current_checkout",
+        "origin/v9-neurolingua-semantic-kernel:.ai-os/reports/CANONICAL-ROOT.json"
+      ],
+      "field": "workspace_identity",
+      "values": {
+        "this_session_checkout": "cursor/c2-evidence-reuse-preparation-4247@da67f44963fafde67df52cb62ab32f75fe725df0",
+        "canonical_root_json_claim": "branch=v9-neurolingua-semantic-kernel HEAD=c21dfd71e23b81a5758a8d99beddaac1228cc8ed path=/workspace canonical_root_proven=true ts=2026-08-22T09:40:38Z",
+        "current_v9_tip": "8d5dc79f2e77055aa3d8434f035ac70732ed72ca"
+      },
+      "resolution": "UNRESOLVED",
+      "must_not_assume": true,
+      "note": "Same absolute path /workspace is claimed as v9 canonical root in a recent report, but this C2 checkout is origin/main without .ai-os or RAIOS/. Report HEAD c21dfd71 is an ancestor of current v9 tip, not this checkout. Do not treat either as proven canonical."
+    },
+    {
+      "id": "C-002",
+      "topic": "consolidation",
+      "artifacts": [
+        "origin/v9-neurolingua-semantic-kernel:.ai-os/reports/UNIFICATION-RECEIPT.json",
+        "origin/v9-neurolingua-semantic-kernel:.ai-os/reports/CANONICAL-ROOT.json"
+      ],
+      "field": "canonical_vs_unification_flags",
+      "values": {
+        "CANONICAL_ROOT_PROVEN": true,
+        "C3_BOUND_TO_CANONICAL": false,
+        "CROSS_TREE_UNIFICATION_PROVEN": false,
+        "GL005_PROVEN": false,
+        "this_session_CANONICAL_ROOT_PROVEN": false
+      },
+      "resolution": "UNRESOLVED",
+      "must_not_assume": true,
+      "note": "Prior C2 unification receipt claims canonical proven while C3 still unbound and unification unproven. This session must not inherit CANONICAL_ROOT_PROVEN."
+    },
+    {
+      "id": "C-003",
+      "topic": "architecture",
+      "artifacts": [
+        "full_report.json",
+        "unified-intelligence/reports/discovery/phase-2-summary-20260726-145740.json",
+        "unified-intelligence/reports/enterprise-audit/enterprise-audit-summary-20260726-181303.json",
+        "CANONICAL-ROOT.json",
+        "CROSS-TREE-MANIFEST.json TMP_C5_CLONE_MAIN"
+      ],
+      "field": "file_counts",
+      "values": {
+        "full_report.json_total_files": 351,
+        "phase_2_TotalFiles": 385,
+        "enterprise_audit_files": 31824,
+        "canonical_root_tracked_file_count": 2342,
+        "cross_tree_manifest_main_dump_tracked": 616,
+        "this_session_does_not_census": true
+      },
+      "resolution": "UNRESOLVED",
+      "must_not_assume": true,
+      "note": "Incompatible inventories. Likely different roots, include-rules, or Windows vs cloud slices. C3 must establish current disk truth; do not pick a count."
+    },
+    {
+      "id": "C-004",
+      "topic": "runtime",
+      "artifacts": [
+        "reports/system-health.json",
+        "health.json",
+        "eos-health-report.json",
+        "intelligence/comprehensive_report.json",
+        "unified-intelligence/reports/architecture/phase-22/phase-22-manifest-20260726-175733.json"
+      ],
+      "field": "health_or_status",
+      "values": {
+        "system-health": "HEALTHY @ 2026-07-23 (GL-DOS engines ACTIVE)",
+        "health.json": "SUCCESS @ 2026-07-25 12:19:16",
+        "eos-health-report.json": "SUCCESS @ 2026-07-24 21:10:34",
+        "comprehensive_report.status": "RUNNING with multiple failed scans",
+        "phase-22": "DIGITAL_TWIN_ACTIVE / PASSED"
+      },
+      "resolution": "UNRESOLVED",
+      "must_not_assume": true,
+      "note": "EOS health documents disagree with each other and are all historical. None is this-host runtime."
+    },
+    {
+      "id": "C-005",
+      "topic": "Qwen",
+      "artifacts": [
+        "QWEN-RUNTIME-REALITY.json",
+        "RAIOS-LLM-FABRIC-REALITY-AUDIT.json",
+        "RAIOS-WAVE1-RECEIPT.json",
+        "C5-ENTERPRISE-BRAIN-AUDIT.json"
+      ],
+      "field": "model_runtime",
+      "values": {
+        "student_live_qwen2.5:0.5b": true,
+        "student_generate_ok": true,
+        "cortex_qwen3.6:35b-a3b_loaded": false,
+        "granite_generate_ok": false,
+        "weight_hash": null,
+        "final_backbone": null,
+        "llm_fabric_proven": false,
+        "extracted_qwen_granite": false
+      },
+      "resolution": "UNRESOLVED",
+      "must_not_assume": true,
+      "note": "Reports describe a student generate OK on some prior host/session. This checkout has no ollama/Qwen runtime evidence. Do not infer current model liveness."
+    },
+    {
+      "id": "C-006",
+      "topic": "NeuroLingua",
+      "artifacts": [
+        "NEUROLINGUA-REALITY-AUDIT.json",
+        "origin/cursor/neurolingua-semantic-kernel-4f9d",
+        "RAIOS-CURRENT-STATE.json"
+      ],
+      "field": "neurolingua_presence_and_file_count",
+      "values": {
+        "founder_claimed_file_count": 79,
+        "this_checkout_related_files_in_audit": 38,
+        "spacy_stanza_camel_tools": false,
+        "RAIOS-CURRENT-STATE.branch_observed": "codex-clean",
+        "RAIOS-CURRENT-STATE.repository_sha_observed": "1eb0d5944fba7c25977c26c5c5613ddab6d3d33b",
+        "PR11_head": "cursor/neurolingua-semantic-kernel-4f9d",
+        "current_checkout": "no NeuroLingua tree"
+      },
+      "resolution": "UNRESOLVED",
+      "must_not_assume": true,
+      "note": "File-count claim vs observed related files, plus current-state bound to older codex-clean SHA. Unresolved."
+    },
+    {
+      "id": "C-007",
+      "topic": "GL005/auth",
+      "artifacts": [
+        "multiple .ai-os/receipts/GL005-*",
+        "UNIFICATION-RECEIPT.json",
+        "MASTER-RECEIPT.json",
+        "RAIOS-WAVE1-RECEIPT.json"
+      ],
+      "field": "gl005_proven",
+      "values": {
+        "all_sampled_reports": false,
+        "receipts_exist": true
+      },
+      "resolution": "UNRESOLVED",
+      "must_not_assume": true,
+      "note": "GL-005 receipts exist while every sampled proven flag remains false. Receipt presence is not proof."
+    },
+    {
+      "id": "C-008",
+      "topic": "consolidation",
+      "artifacts": [
+        "POST-CONSOLIDATION-REALITY.json",
+        "20260820-cursor-DRIVER-PACKET.json",
+        "UNIFICATION-RECEIPT.json"
+      ],
+      "field": "consolidation_executed",
+      "values": {
+        "repository_consolidation_proven": false,
+        "driver_packet_mission_status": "NOT_EXECUTED",
+        "merge_executed": false,
+        "deleted": false,
+        "retire_count": 0
+      },
+      "resolution": "UNRESOLVED",
+      "must_not_assume": true,
+      "note": "Driver packet ordered consolidation+deletion; later stamps say not executed. Do not assume estate was compressed."
+    },
+    {
+      "id": "C-009",
+      "topic": "cloud/nomadic",
+      "artifacts": [
+        "notebook8c2d6a9080.ipynb",
+        "RAIOS-CURRENT-STATE.json",
+        "v9 reports"
+      ],
+      "field": "raios_version_label",
+      "values": {
+        "notebook": "RAIOS-V8.6.2 / raios-cognitive-factory / Kaggle",
+        "continuity_state": "V9.0-A14.1 A14_1_CERTIFIED",
+        "git_raios_path": "RAIOS/V9 on non-main branches only"
+      },
+      "resolution": "UNRESOLVED",
+      "must_not_assume": true,
+      "note": "Version labels V8.6.2 vs V9.0-A14.1 vs missing-on-main. Do not collapse into one runtime."
+    },
+    {
+      "id": "C-010",
+      "topic": "WAL/events",
+      "artifacts": [
+        "RAIOS-CLOUD-MOVE-TRAINING-BOOKS-WAL.json",
+        "POST-CONSOLIDATION-REALITY.json",
+        "UNIFICATION-RECEIPT.json"
+      ],
+      "field": "wal_written",
+      "values": {
+        "wal_written": false,
+        "wal_mtime_unchanged": true,
+        "continuity": "WAL untouched",
+        "cloud_migration_proven": false
+      },
+      "resolution": "UNRESOLVED",
+      "must_not_assume": true,
+      "note": "WAL reported untouched; this checkout has no WAL file. Do not create another WAL in C2."
+    },
+    {
+      "id": "C-011",
+      "topic": "self-inspection",
+      "artifacts": [
+        "SELF-INSPECTION-ENGINE-PROOF.json"
+      ],
+      "field": "self_inspection_proven",
+      "values": {
+        "self_inspection_proven": true,
+        "gl005_proven": false,
+        "host": "prior C2 session"
+      },
+      "resolution": "UNRESOLVED",
+      "must_not_assume": true,
+      "note": "Self-inspection marked proven on a prior session. Proof hash in-file is not re-verified as current host truth."
+    },
+    {
+      "id": "C-012",
+      "topic": "C5",
+      "artifacts": [
+        "cloud agents named Test/Demo/Open C5 screen",
+        "C5-ENTERPRISE-BRAIN-AUDIT.json",
+        "current_checkout"
+      ],
+      "field": "c5_presence",
+      "values": {
+        "ui_demo_sessions": "multiple IDLE internal agents on this repo",
+        "audit_maturity": "HYBRID_RETRIEVAL_PLUS_TIER0_DETERMINISTIC",
+        "audit_canonical": false,
+        "this_disk": "no C5 tree"
+      },
+      "resolution": "UNRESOLVED",
+      "must_not_assume": true,
+      "note": "C5 UI sessions and git audits exist; this disk has no C5 implementation. Demo sessions are not capability proof."
+    },
+    {
+      "id": "C-013",
+      "topic": "architecture",
+      "artifacts": [
+        "CROSS-TREE-MANIFEST.json",
+        "this_session"
+      ],
+      "field": "reachable_trees",
+      "values": {
+        "manifest_ts": "2026-08-22T09:40:38Z",
+        "canonical_candidate": "/workspace as v9@c21dfd71",
+        "this_session_/workspace": "cursor/c2-evidence-reuse-preparation-4247@da67f44963fafde67df52cb62ab32f75fe725df0",
+        "repair": "unreachable Windows founder copy",
+        "tmp_clones": "prior host /tmp paths; not re-walked"
+      },
+      "resolution": "UNRESOLVED",
+      "must_not_assume": true,
+      "note": "Prior manifest enumerated trees on another agent host/session. This C2 run did not repeat that census (C3_WORK_DUPLICATED=false). Paths may no longer exist."
+    },
+    {
+      "id": "C-014",
+      "topic": "runtime",
+      "artifacts": [
+        "intelligence/comprehensive_report.json scans vs passed flags"
+      ],
+      "field": "scan_pass_vs_summary",
+      "values": {
+        "ouro_loop.passed": true,
+        "ouro_loop.summary": "Ouro Loop is not installed. Skipping.",
+        "sonarqube.passed": false,
+        "archguard.passed": false
+      },
+      "resolution": "UNRESOLVED",
+      "must_not_assume": true,
+      "note": "passed=true used for skipped/uninstalled tools. Do not treat as measured pass."
+    },
+    {
+      "id": "C-015",
+      "topic": "architecture",
+      "artifacts": [
+        "origin/main vs origin/v9-neurolingua-semantic-kernel"
+      ],
+      "field": "git_divergence",
+      "values": {
+        "rev_list_left_right_count_main_v9": "176 170",
+        "main_has_ai_os": false,
+        "main_has_RAIOS": false,
+        "v9_has_ai_os_reports": true
+      },
+      "resolution": "UNRESOLVED",
+      "must_not_assume": true,
+      "note": "Two long-diverged refs. C3 must identify trees; C2 only records the split."
+    },
+    {
+      "id": "C-016",
+      "topic": "consolidation",
+      "artifacts": [
+        "intelligence/comprehensive_report.md",
+        "intelligence/comprehensive_report.json",
+        "intelligence/knowledge_base/tools_manifest.json",
+        "reports/v9-neurolingua-benchmark.json",
+        "reports/v9-neurolingua-integration-map.json",
+        "reports/v9-neurolingua-test-report.json"
+      ],
+      "field": "same_relative_path_different_hashes",
+      "values": {
+        "variant_path_count": 6,
+        "sample": {
+          "intelligence/comprehensive_report.md": [
+            "6437b653bee826cd95762068cd397ff0b32e8ac5efb8db95350fd390a0373c71",
+            "7da24820c74f2cea405bc5577740c8d93cdccb6d6d901db47a1da0b93935e4a4"
+          ],
+          "intelligence/comprehensive_report.json": [
+            "03a2d81eec00b36b6719224647c78147fadcae44e9e4bf6f8f6a692886f2eac7",
+            "68943bdb90f95abdcccf99900d15fc609cc244d6444c93c1538063f14217ba0d"
+          ],
+          "intelligence/knowledge_base/tools_manifest.json": [
+            "b321f4fa3957cff1893820f4edcbbe37475c138ddd04874c890b35058a721fbc",
+            "db3d009785917fce36d0850d97d4b98969ae48727e9b8ee5cc7fab25f32850b3"
+          ],
+          "reports/v9-neurolingua-benchmark.json": [
+            "3cfd74796375a10712d752ee4789b877d5d0f8fcdce323ae93379696f088cd31",
+            "b2390fe2b1a5769cc18fef8840aaaabac6eb3517690f06b19a29aec42491d037"
+          ],
+          "reports/v9-neurolingua-integration-map.json": [
+            "188516d7bb502ac1a6c0bfb3cce481413fe7a1f8c05bd42f97faa1e2aca20ec8",
+            "6dbfbc13172ffe604f852f822ec8b62fae2486b4c79649ae8b93ecf0668c2a17"
+          ],
+          "reports/v9-neurolingua-test-report.json": [
+            "997c33e87768af390de8cb54ec8875cc7d435e16d1b9af325876b6f923443339",
+            "c6af89b444072473a6ec15626bb39bf31fc28e4b839dc6f1498c99f59e425a97"
+          ]
+        }
+      },
+      "resolution": "UNRESOLVED",
+      "must_not_assume": true,
+      "note": "Same relative path has multiple SHA256 values across refs. Not resolved; C3 binds which blob is current."
+    },
+    {
+      "id": "C-017",
+      "topic": "runtime",
+      "artifacts": [
+        "header_peek.claimed_head across artifacts"
+      ],
+      "field": "bound_git_head",
+      "values": {
+        "64fa63f72cb457defb5118f29e88c789612c795f": [
+          ".ai-os/council/LAST-CENSUS.json",
+          ".ai-os/council/MEETING.json",
+          ".ai-os/receipts/GL-COUNCIL-CONNECTIVITY.json"
+        ],
+        "af7aa57ef7f7a9e6a901af687d6f2d6d7504cd93": [
+          ".ai-os/handoffs/20260820-C1-GL004-CONTRACT-ATTACK.json"
+        ],
+        "46f24ac4b5db56fc29ea5c44dc8ce9ffd052ad88": [
+          ".ai-os/receipts/GL004-ATOMIC.json",
+          ".ai-os/receipts/GL004-RUNTIME-BIND.json"
+        ],
+        "9ba64be3e77b5f830028e52267126897a22d895e": [
+          ".ai-os/receipts/GL005-C2-FALSIFY-ACCEPTED.json"
+        ],
+        "6afdce04c0e0a01f9dc37f0b338463092765f0b8": [
+          ".ai-os/receipts/GL005-CHAIN-FALSIFY.json"
+        ],
+        "d25348386252351f941496f5b3664ff6e2d88e63": [
+          ".ai-os/receipts/GL005-MUTATION-OBSERVE.json"
+        ],
+        "78850cd7c185217edb8cc7807cfd376d47b65e61": [
+          ".ai-os/receipts/GL005-SPRINT.json"
+        ],
+        "98654f81aaffbde1471ce19556ed69bd9deb4455": [
+          ".ai-os/receipts/c5-reality/LAST.json",
+          ".ai-os/receipts/c5-wave1/LAST.json",
+          ".ai-os/reports/RAIOS-LLM-FABRIC-REALITY-AUDIT.json",
+          ".ai-os/reports/RAIOS-WAVE1-RECEIPT.json",
+          ".ai-os/reports/RAIOS-WORLD-CLASS-REALITY-AUDIT.json"
+        ],
+        "482e24584b6fc06fc3c487516eabf296a40b1d54": [
+          ".ai-os/reports/C5-ENTERPRISE-BRAIN-AUDIT.json"
+        ],
+        "c21dfd71e23b81a5758a8d99beddaac1228cc8ed": [
+          ".ai-os/reports/CANONICAL-ROOT.json",
+          ".ai-os/reports/CROSS-TREE-MANIFEST.json",
+          ".ai-os/reports/UNIFICATION-RECEIPT.json"
+        ],
+        "4ea6ef633372d26926be2390c6c28f35e47512a0": [
+          ".ai-os/reports/MASTER-RECEIPT.json"
+        ],
+        "f17b749": [
+          ".ai-os/reports/RAIOS-ASSIMILATION-E2E-PROOF.json",
+          ".ai-os/reports/RAIOS-WAVE1-EXECUTION-GRAPH.json"
+        ]
+      },
+      "resolution": "UNRESOLVED",
+      "must_not_assume": true,
+      "note": "Evidence artifacts bind many different git HEADs. None is this session's current truth."
+    }
+  ]
+}

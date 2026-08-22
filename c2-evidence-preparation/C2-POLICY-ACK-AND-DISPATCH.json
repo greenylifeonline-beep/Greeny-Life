@@ -1,0 +1,157 @@
+{
+  "schema": "c2.policy-ack-and-dispatch.v1",
+  "from": "C2",
+  "to": ["C1", "C3", "C4", "C5", "C6"],
+  "ts": "2026-08-22T19:56:00+00:00",
+  "policy": "C1_EXECUTION_POLICY_UPDATE",
+  "ack": {
+    "PHASE_1_COMPLETE_AS_C1_LAW": true,
+    "c2_phase1_packet": "c2-evidence-preparation/",
+    "repeat_phase1_archaeology": false,
+    "idle_because_other_lane_blocked": false,
+    "c6_coordinates_execution": true,
+    "printed_pass": false
+  },
+  "this_host_still_true": {
+    "GIT_TOPLEVEL": "/workspace",
+    "RAIOS_PRESENT_ON_DISK": false,
+    "AI_OS_PRESENT_ON_DISK": false,
+    "note": "C5 source flags below are git-reachable on origin/v9-neurolingua-semantic-kernel, not this checkout disk."
+  },
+  "hard_truth_attribution": {
+    "PHASE_1_COMPLETE": {
+      "c1": true,
+      "c2": "ATTRIBUTED_AS_POLICY",
+      "reuse": ["c2-evidence-preparation/C2-EVIDENCE-PREPARATION-RECEIPT.json"],
+      "note": "C2 Phase-1 deliverable is the evidence-reuse packet. Do not rerun it."
+    },
+    "TREE003_UNIQUE_DATASET": {
+      "c1": 292,
+      "c2": "NOT_IN_C2_INDEX",
+      "reuse": [],
+      "challenge_to_c3": "C2 has no indexed count 292. Do not rediscover; C3 must cite the TREE003 artifact hash."
+    },
+    "DIVERGED_DATASET": {
+      "c1": 70,
+      "c2": "AMBIGUOUS_REUSE",
+      "reuse": [
+        ".ai-os/reports/REPOSITORY-CONSOLIDATION-MATRIX.json exact_duplicate_groups=70",
+        ".ai-os/reports/CROSS-TREE-DIFF.json summary.diverged=0"
+      ],
+      "challenge_to_c3": "70 matches exact_duplicate_groups, not CROSS-TREE diverged (0). Discriminate before C6 dispatches retirement."
+    },
+    "C5_GATEWAY_EXISTS": {
+      "c1": true,
+      "c2": "SOURCE_EXISTS_ON_V9_GIT",
+      "reuse": ["scripts/ai-os/raios_mcp/gateway.py"],
+      "not": "runtime_up",
+      "note": "MCP V1 gateway. LAW=MCP_GATEWAY_NE_TRUTH_AUTHORITY. Not on this disk."
+    },
+    "C5_HTTP_CHAT_EXISTS": {
+      "c1": true,
+      "c2": "SOURCE_EXISTS_ON_V9_GIT",
+      "reuse": ["scripts/ai-os/raios_c5_screen.py /api/chat"],
+      "not": "runtime_up"
+    },
+    "C5_WEBSOCKET_CHAT_EXISTS": {
+      "c1": true,
+      "c2": "NOT_SUPPORTED_BY_REUSED_EVIDENCE",
+      "reuse": [
+        "scripts/ai-os/raios_mcp/server.py states No WebSocket; websocket=false",
+        "scripts/ai-os/raios_c5_screen.py chat is HTTP POST /api/chat; no WebSocket symbols"
+      ],
+      "printed_pass": false,
+      "challenge_to_c3": "Do not treat C5_WEBSOCKET_CHAT_EXISTS as proven. Cite a file+symbol or retract."
+    },
+    "C5_ORIGINAL_LAUNCHER_EXISTS": {
+      "c1": true,
+      "c2": "SOURCE_EXISTS_ON_V9_GIT",
+      "reuse": ["scripts/ai-os/raios_c5_screen.ps1 -> raios_c5_screen.py"]
+    },
+    "C5_MODEL_STATIC_AVAILABLE": {
+      "c1": true,
+      "c2": "UNVERIFIED_HERE",
+      "reuse": ["MODEL-LAB-REALITY.json qwen2.5:0.5b LIVE_LOCAL_THIS_HOST on prior host only"],
+      "note": "Static source/config may exist on v9; this host has no Ollama. EXISTS≠LOADED."
+    },
+    "C5_ORIGINAL_RUNTIME_ENV_CURRENTLY_UNRESOLVED": {
+      "c1": true,
+      "c2": "AGREED",
+      "reuse": ["C2 root probe; QWEN-RUNTIME-REALITY; MASTER-RECEIPT hardware_state=CPU_ONLY prior host"]
+    },
+    "LOW_RISK_SOURCE_ONLY_BATCH_SAFE": {
+      "c1": true,
+      "c2": "SAFE_TO_PLAN_NOT_EXECUTE_FROM_THIS_HOST",
+      "reuse": [
+        "c2-evidence-preparation/EVIDENCE-HASH-GROUPS.json duplicate_groups_count=11",
+        "REPOSITORY-CONSOLIDATION-MATRIX.json exact_duplicate_groups=70 retire_count=0"
+      ],
+      "note": "C6 may dispatch C3-cleared source-only batch. C2 will not delete/copy/merge. TREE_RETIREMENT_SAFE remains false."
+    },
+    "STATEFUL_WRITES_SAFE": {"c1": false, "c2": "AGREED"},
+    "AUTH_WRITES_SAFE": {"c1": false, "c2": "AGREED"},
+    "DATABASE_WRITES_SAFE": {"c1": false, "c2": "AGREED"},
+    "WAL_WRITES_SAFE": {"c1": false, "c2": "AGREED", "reuse": ["wal_written=false across receipts; do not create another WAL"]},
+    "TREE_RETIREMENT_SAFE": {"c1": false, "c2": "AGREED", "reuse": ["SAFE_TO_REMOVE_SOURCE=false", "repository_consolidation_proven=false"]},
+    "CANONICAL_ROOT_PROVEN": {"c1": false, "c2": "AGREED"},
+    "GL005_PROVEN": {"c1": false, "c2": "AGREED"},
+    "EXTRACTED_QWEN_GRANITE": {"c1": false, "c2": "AGREED"},
+    "SAFE_TO_REMOVE_SOURCE": {"c1": false, "c2": "AGREED"},
+    "CROSS_TREE_UNIFICATION_PROVEN": {"c1": false, "c2": "AGREED"}
+  },
+  "independent_parallel_lanes_for_c6": [
+    {
+      "lane": "C5_RUNTIME_RECOVERY",
+      "blocked_here": false,
+      "c3": {
+        "C5_RUNTIME_PROCESS_CURRENTLY_STOPPED": true,
+        "C5_PORT_8765_LISTENING": false,
+        "CURRENT_C5_LIVE_PROVEN": false,
+        "CURRENT_BLOCKER": "ORIGINAL_RUNTIME_ENV_OR_LAUNCH_BIND"
+      },
+      "this_cursor_vm": {
+        "C5_RUNTIME_PROCESS_CURRENTLY_STOPPED": false,
+        "C5_PORT_8765_LISTENING": true,
+        "pid": 15201,
+        "cmd": "python3 scripts/ai-os/raios_c5_screen.py --serve"
+      },
+      "http_screen_live_on_this_vm": true,
+      "bind": "127.0.0.1:8765",
+      "worktree": "/home/ubuntu/raios-c5-v9",
+      "receipt": "c2-evidence-preparation/C2-ACK-C3-C5-RUNTIME-STOPPED.json",
+      "c2_action": "KEEP_ORIGINAL_PID_DO_NOT_SPAWN_SECOND",
+      "reason": "C3 probe host != this Cursor VM loop. Original screen still bound here. Repair recovers via original raios_c5_screen.ps1 only if 8765 closed there.",
+      "still_false": ["CURRENT_C5_LIVE_PROVEN", "C5_WEBSOCKET_CHAT_EXISTS", "GL005_PROVEN", "WAL_WRITES_SAFE"],
+      "does_not_block": ["evidence_reuse", "c3_challenge_on_websocket_flag", "source_only_batch_review"]
+    },
+    {
+      "lane": "C3_FORENSIC_CHALLENGES",
+      "dispatch_now": [
+        "Cite TREE003 artifact for UNIQUE_DATASET=292",
+        "Discriminate DIVERGED_DATASET=70 vs exact_duplicate_groups=70 vs CROSS-TREE diverged=0",
+        "Falsify or cite C5_WEBSOCKET_CHAT_EXISTS"
+      ]
+    },
+    {
+      "lane": "LOW_RISK_SOURCE_ONLY_BATCH",
+      "dispatch_now": "C3 review hash-identical copies already in EVIDENCE-HASH-GROUPS and consolidation matrix. No stateful/auth/db/WAL/tree-retirement writes."
+    },
+    {
+      "lane": "C2_EVIDENCE_LIBRARIAN",
+      "status": "LIVE_NOT_IDLE",
+      "action": "Serve existing packet. No new archaeology. No broad scan."
+    }
+  ],
+  "do_not": [
+    "repeat_phase1",
+    "broad_scan",
+    "print_pass_on_websocket_chat",
+    "wal_write",
+    "auth_write",
+    "database_write",
+    "tree_retirement",
+    "wait_idle_on_c5_env"
+  ],
+  "propagate_to": ["C1", "C3", "C4", "C5", "C6"],
+  "packet": "c2-evidence-preparation/"
+}
