@@ -2,7 +2,7 @@ import sys
 from pathlib import Path
 
 sys.path.insert(0, str(Path(__file__).resolve().parents[2] / "scripts" / "ai-os"))
-from raios_c5_screen import PAGE, load_history, present_answer, teach_reply  # noqa: E402
+from raios_c5_screen import BIND_PORTS, C1_PORT, PAGE, load_history, present_answer, screen_health, teach_reply  # noqa: E402
 
 ROOT = Path(__file__).resolve().parents[2]
 WAL = ROOT / "RAIOS" / "V9" / "wal" / "cognitive-events.jsonl"
@@ -135,3 +135,18 @@ def test_screen_norwegian_and_english_identity():
     assert nb_seat
     assert "Levende rolle" in nb_seat[-1]["answer"] or "ASSESSOR" in nb_seat[-1]["answer"]
     assert "hit_count=" not in nb_seat[-1]["answer"]
+
+
+def test_same_c5_dual_bind_and_honest_health():
+    assert BIND_PORTS == (8765, 8876)
+    assert C1_PORT == 8876
+    rec = screen_health(port=8876)
+    assert rec["ok"] is True
+    assert rec["http"] == 200
+    assert rec["from"] == "C5"
+    assert rec["duplicate_c5"] is False
+    assert rec["MODEL"] == "qwen3.6:35b-a3b"
+    assert rec["student_substituted"] is False
+    assert rec["gl005_proven"] is False
+    assert rec["MAIN_CORTEX"] is rec["main_cortex"]
+    assert "127.0.0.1:8765" in PAGE

@@ -2,12 +2,16 @@
 """C5 introduces himself from git. Not this Cursor session. No WAL. No pydantic."""
 from __future__ import annotations
 
+import argparse
 import json
 import re
+import sys
 from datetime import datetime, timezone
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[2]
+sys.path.insert(0, str(ROOT / "src"))
+sys.path.insert(0, str(Path(__file__).resolve().parent))
 FOUNDATION = ROOT / ".ai-os" / "state" / "FOUNDATION.json"
 GRANT = ROOT / ".ai-os" / "mcp" / "C5-GRANT.json"
 NEED = ROOT / ".ai-os" / "learning" / "C5-NEED.json"
@@ -17,6 +21,12 @@ REALIZE = ROOT / "src" / "raios" / "neuro_lingua" / "realize.py"
 WAL = ROOT / "RAIOS" / "V9" / "wal" / "cognitive-events.jsonl"
 OUT_DIR = ROOT / ".ai-os" / "receipts" / "c5-whoami"
 OUT_MD = ROOT / ".ai-os" / "learning" / "C5-WHOAMI.md"
+REGISTRY = ROOT / ".ai-os" / "MODEL-REGISTRY.json"
+SEAT_MAP = ROOT / ".ai-os" / "mcp" / "SEAT-MAP.json"
+P4_RECEIPT = ROOT / ".ai-os" / "receipts" / "c5-p4" / "P4-PREP.json"
+MCP_HEALTH_URL = "http://127.0.0.1:8787/health"
+MCP_ENDPOINT = "http://127.0.0.1:8787/mcp"
+SCREEN_PORTS = (8765, 8876)
 
 PROFILE_RE = re.compile(r"^  ([A-Za-z]{2}(?:-[A-Za-z]{2,4})?):\s*$")
 CHILD_RE = re.compile(r"^      ([A-Za-z]{2}-[A-Za-z]{2}):\s*\{([^}]*)\}")
@@ -37,6 +47,93 @@ def load_json(path: Path) -> dict:
     if not path.exists():
         return {}
     return json.loads(path.read_text(encoding="utf-8"))
+
+
+def c5_bind() -> dict:
+    """Surface existing Council, MCP, and Model Registry on C5. No duplicate systems."""
+    from raios.neuro_lingua.cortex import CORTEX_IDENTITY, gate_run
+    from raios.neuro_lingua.qwen_runtime import probe
+    from raios_c5_council import mcp_health
+    from raios_mcp.gateway import V1_TOOLS
+
+    probed = probe()
+    gate = gate_run()
+    mcp = mcp_health()
+    registry = load_json(REGISTRY)
+    models = registry.get("models") or {}
+    cortex_row = models.get("raios-main-cortex") or {}
+    workers = sorted(
+        key
+        for key, row in models.items()
+        if isinstance(row, dict) and (row.get("class") in {"FAST_WORKER", "FAST_WORKER_EMBEDDING", "INTERACTIVE_FAST"} or row.get("not_cortex"))
+    )
+    tools = list(mcp.get("tools") or V1_TOOLS)
+    return {
+        "c5_screen_ports": list(SCREEN_PORTS),
+        "c5_base_c1": "http://127.0.0.1:8876",
+        "c5_screen_default": "http://127.0.0.1:8765",
+        "duplicate_c5": False,
+        "mcp_endpoint": MCP_ENDPOINT,
+        "mcp_health": MCP_HEALTH_URL,
+        "mcp_reachable": bool(mcp.get("ok")),
+        "mcp_tools": tools,
+        "mcp_tool_count": len(tools),
+        "duplicate_mcp": False,
+        "council_seat_map": ".ai-os/mcp/SEAT-MAP.json",
+        "council_seat_map_present": SEAT_MAP.is_file(),
+        "council_census": "scripts/ai-os/raios_c5_council.py census",
+        "duplicate_council": False,
+        "model_registry": ".ai-os/MODEL-REGISTRY.json",
+        "model_lab": "RAIOS/V9/evolution/model_lab/model_registry.py",
+        "duplicate_registry": False,
+        "cortex_model": CORTEX_IDENTITY,
+        "cortex_registry_model": cortex_row.get("model"),
+        "cortex_registry_bound": cortex_row.get("model") == CORTEX_IDENTITY,
+        "fast_workers": workers,
+        "main_cortex": bool(probed.get("cortex_live")),
+        "cortex_live": bool(probed.get("cortex_live")),
+        "ollama_models": list(probed.get("models") or []),
+        "gate": gate.get("reason"),
+        "gate_admitted": bool(gate.get("admitted")),
+        "student_substituted": False,
+        "interactive_ne_cortex": True,
+        "gl005_proven": False,
+    }
+
+
+def write_p4_receipt(bind: dict | None = None) -> dict:
+    rec = {
+        "schema": "raios.c5-p4-prep.v1",
+        "ts": utc(),
+        "from": "C5",
+        "parent": "C1",
+        "ok": True,
+        "p4_prep": True,
+        "duplicate_systems": False,
+        **(bind or c5_bind()),
+        "wal_written": False,
+        "gl005_proven": False,
+        "law": [
+            "P4_REUSES_EXISTING_COUNCIL_MCP_REGISTRY",
+            "NO_DUPLICATE_C5",
+            "NO_DUPLICATE_MCP",
+            "NO_NEW_MCP_TOOLS",
+            "INTERACTIVE_NE_CORTEX",
+        ],
+    }
+    rec["ok"] = bool(
+        rec.get("cortex_registry_bound")
+        and rec.get("council_seat_map_present")
+        and rec.get("mcp_tool_count") == 8
+        and rec.get("duplicate_c5") is False
+        and rec.get("duplicate_mcp") is False
+        and rec.get("duplicate_council") is False
+        and rec.get("interactive_ne_cortex") is True
+        and rec.get("gl005_proven") is False
+    )
+    P4_RECEIPT.parent.mkdir(parents=True, exist_ok=True)
+    P4_RECEIPT.write_text(json.dumps(rec, indent=2, ensure_ascii=False) + "\n", encoding="utf-8")
+    return rec
 
 
 def parse_language_profiles(text: str) -> tuple[list[str], list[str]]:
@@ -94,6 +191,9 @@ def whoami() -> dict:
         "cortex_identity": "qwen3.6:35b-a3b (C1 treat/run/throw; not loaded here)",
         "mesh": "python3 scripts/ai-os/raios_c5_train.py",
         "reality": "python3 scripts/ai-os/raios_c5_reality.py",
+        "mcp": MCP_ENDPOINT,
+        "council": ".ai-os/mcp/SEAT-MAP.json",
+        "model_registry": ".ai-os/MODEL-REGISTRY.json",
         "not": [
             "LangChain",
             "OpenAIEmbeddings",
@@ -126,6 +226,7 @@ def whoami() -> dict:
         "tools": grant.get("cognitive_tools") or [],
         "deny": grant.get("deny") or [],
         "engine_now": engine,
+        "c5_bind": c5_bind(),
         "languages_customer_live": live_customer,
         "languages_customer_live_count": len(live_customer),
         "languages_realized": realized,
@@ -180,6 +281,7 @@ def render_md(rec: dict) -> str:
     if not needs_lines:
         needs_lines = ["- لا طلب ترقية."]
     eng = rec["engine_now"]
+    bind = rec.get("c5_bind") or {}
     return "\n".join(
         [
             "# C5 — تعريف حي",
@@ -204,7 +306,19 @@ def render_md(rec: dict) -> str:
             f"- قشرة رئيسية: `{eng['cortex_identity']}`",
             f"- شبكة تدريب: `{eng['mesh']}`",
             f"- تدقيق الواقع: `{eng['reality']}`",
+            f"- MCP: `{eng.get('mcp')}`",
+            f"- مجلس: `{eng.get('council')}`",
+            f"- سجل النماذج: `{eng.get('model_registry')}`",
             f"- مش: {', '.join(eng['not'])}",
+            "",
+            "## ربط C5 القائم — بلا أنظمة مكررة",
+            "",
+            f"- شاشة: `127.0.0.1:8765` + `127.0.0.1:8876` — نفس C5",
+            f"- MCP: `{bind.get('mcp_endpoint')}` reachable=`{bind.get('mcp_reachable')}` tools=`{bind.get('mcp_tool_count')}`",
+            f"- مجلس: `{bind.get('council_seat_map')}`",
+            f"- سجل: `{bind.get('model_registry')}` cortex=`{bind.get('cortex_registry_model')}`",
+            f"- MAIN_CORTEX (حي هنا): `{str(bool(bind.get('main_cortex'))).lower()}`",
+            f"- `INTERACTIVE_NE_CORTEX`: `true`",
             "",
             "## اللغات",
             "",
@@ -226,7 +340,14 @@ def render_md(rec: dict) -> str:
 
 
 def main() -> int:
+    p = argparse.ArgumentParser()
+    p.add_argument("--p4", action="store_true", help="Write P4-PREP receipt connecting existing Council/MCP/Registry")
+    args = p.parse_args()
     rec = whoami()
+    if args.p4:
+        p4 = write_p4_receipt(rec.get("c5_bind"))
+        print(json.dumps({"ok": p4["ok"], "receipt": str(P4_RECEIPT), "gl005_proven": False}, ensure_ascii=False, indent=2))
+        return 0 if p4["ok"] else 2
     print(
         json.dumps(
             {

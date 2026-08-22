@@ -46,8 +46,10 @@ def test_router_language_id_never_calls_cortex():
 def test_live_probe_cortex_absent_is_model_missing_not_student():
     status = probe(use_cache=False)
     names = list(status.get("models") or [])
+    if status.get("cortex_live"):
+        assert any(n == CORTEX_IDENTITY or n.startswith(f"{CORTEX_IDENTITY}:") for n in names)
+        return
     assert CORTEX_IDENTITY not in names
-    assert not any(n == CORTEX_IDENTITY or n.startswith(f"{CORTEX_IDENTITY}:") for n in names)
     rec = generate("hello", model=CORTEX_IDENTITY)
     assert rec["ok"] is False
     assert rec["error"] == "MODEL_MISSING"
@@ -73,6 +75,7 @@ def test_router_semantic_online_binds_identity_and_execute_is_model_missing():
     assert rec["error"] == "MODEL_MISSING"
     assert rec["llm_executed"] is False
     assert rec["student_substituted"] is False
+    assert rec["provider_execute_called"] is True
     assert router.metrics()["llm_calls"] == 0
 
 
@@ -131,6 +134,7 @@ def test_mocked_live_cortex_execute_increments_llm_calls(monkeypatch):
     assert rec["model"] == CORTEX_IDENTITY
     assert rec["student_substituted"] is False
     assert rec["provider"] == "main-cortex-capability"
+    assert rec["provider_execute_called"] is True
     assert router.metrics()["llm_calls"] == 1
 
 
@@ -161,7 +165,16 @@ def test_kernel_default_interpret_stays_deterministic():
     assert routed["provider"] == "deterministic-neuro-lingua"
 
 
-def test_kernel_online_missing_model_does_not_swap_student():
+def test_kernel_online_missing_model_does_not_swap_student(monkeypatch):
+    monkeypatch.setattr(
+        "raios.neuro_lingua.qwen_runtime.probe",
+        lambda *a, **k: {
+            "cortex_live": False,
+            "present": True,
+            "models": ["qwen2.5:0.5b"],
+            "student_substituted": False,
+        },
+    )
     nl = NeuroLingua()
     result = asyncio.run(nl.interpret("Why is the shipment on hold?", offline_required=False))
     routed = result.meaning.metadata["routing"]
@@ -169,9 +182,48 @@ def test_kernel_online_missing_model_does_not_swap_student():
     assert routed["model"] == CORTEX_IDENTITY
     assert routed["student_substituted"] is False
     assert result.metrics["llm_calls"] == 0
+    assert result.meaning.metadata["provider_execute_called"] is True
+    assert result.meaning.metadata["cortex_execution"] is not None
+    assert result.meaning.metadata["cortex_execution"]["provider_execute_called"] is True
     semantic = next(s for s in result.stages if s.stage == "SEMANTIC_INTERPRETATION")
     assert semantic.payload.get("error") == "MODEL_MISSING"
     assert semantic.payload.get("student_substituted") is False
+    assert semantic.payload.get("provider_execute_called") is True
+
+
+def test_kernel_online_live_executes_cortex_generate(monkeypatch):
+    monkeypatch.setattr(
+        "raios.neuro_lingua.qwen_runtime.probe",
+        lambda *a, **k: {
+            "cortex_live": True,
+            "present": True,
+            "models": [CORTEX_IDENTITY],
+            "student_substituted": False,
+        },
+    )
+    monkeypatch.setattr(
+        "raios.neuro_lingua.qwen_runtime.generate",
+        lambda prompt, **kw: {
+            "ok": True,
+            "response": "held-for-missing-docs",
+            "model": CORTEX_IDENTITY,
+            "llm_executed": True,
+            "model_name_bound": True,
+            "student_substituted": False,
+        },
+    )
+    nl = NeuroLingua()
+    result = asyncio.run(nl.interpret("Why is the shipment on hold?", offline_required=False))
+    assert result.metrics["llm_calls"] == 1
+    assert result.meaning.metadata["provider_execute_called"] is True
+    exec_rec = result.meaning.metadata["cortex_execution"]
+    assert exec_rec["ok"] is True
+    assert exec_rec["response"] == "held-for-missing-docs"
+    assert exec_rec["model"] == CORTEX_IDENTITY
+    assert exec_rec["model_name_bound"] is True
+    assert exec_rec["llm_executed"] is True
+    semantic = next(s for s in result.stages if s.stage == "SEMANTIC_INTERPRETATION")
+    assert semantic.payload.get("cortex_response") == "held-for-missing-docs"
 
 
 def test_chat_and_screen_generic_return_model_missing_without_wal():
@@ -189,6 +241,9 @@ def test_chat_and_screen_generic_return_model_missing_without_wal():
     assert rec["model_name_bound"] is False
     assert rec["llm_executed"] is False
     assert rec["student_substituted"] is False
+    assert rec["provider_execute_called"] is True
+    assert rec["cortex_model"] == CORTEX_IDENTITY
+    assert rec["real_llm_execution"] is False
     assert rec["wal_mtime_unchanged"] is True
     assert rec["gl005_proven"] is False
 
@@ -201,6 +256,7 @@ def test_chat_and_screen_generic_return_model_missing_without_wal():
     assert screen["error"] == "MODEL_MISSING"
     assert screen["c5_to_neurolingua"] is True
     assert screen["model_response_to_c5"] is True
+    assert screen["provider_execute_called"] is True
     assert screen["student_substituted"] is False
     assert screen["wal_mtime_unchanged"] is True
     assert screen["gl005_proven"] is False

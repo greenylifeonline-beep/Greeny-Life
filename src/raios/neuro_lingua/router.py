@@ -108,6 +108,7 @@ class ProviderRouter:
                 "model_name_bound": False,
                 "llm_executed": False,
                 "student_substituted": False,
+                "provider_execute_called": True,
                 "gl005_proven": False,
             }
         if decision.get("model") != CORTEX_IDENTITY or decision.get("provider") != "main-cortex-capability":
@@ -119,6 +120,7 @@ class ProviderRouter:
                 "model_name_bound": False,
                 "llm_executed": False,
                 "student_substituted": False,
+                "provider_execute_called": True,
                 "gl005_proven": False,
             }
         provider = next(
@@ -137,6 +139,7 @@ class ProviderRouter:
         rec["llm_executed"] = executed
         rec["model_name_bound"] = True
         rec["student_substituted"] = False
+        rec["provider_execute_called"] = True
         rec["model"] = CORTEX_IDENTITY
         rec["provider"] = "main-cortex-capability"
         return rec

@@ -114,8 +114,9 @@ async def chat(text: str) -> dict:
     routed = (interpreted.meaning.metadata or {}).get("routing") or {}
     cortex_exec = (interpreted.meaning.metadata or {}).get("cortex_execution")
     error = routed.get("error") or ((cortex_exec or {}).get("error") if cortex_exec else None)
-    model_name_bound = bool(routed.get("model_name_bound"))
+    model_name_bound = bool((cortex_exec or {}).get("model_name_bound") or routed.get("model_name_bound"))
     llm_executed = bool((cortex_exec or {}).get("llm_executed")) if cortex_exec else False
+    provider_execute_called = cortex_exec is not None
     if error == "MODEL_MISSING" or (not model_name_bound and not llm_executed):
         answer = "MODEL_MISSING"
         error = "MODEL_MISSING"
@@ -137,9 +138,12 @@ async def chat(text: str) -> dict:
         "answer": answer,
         "error": error,
         "model": routed.get("model") or CORTEX_IDENTITY,
+        "cortex_model": CORTEX_IDENTITY,
         "model_name_bound": model_name_bound,
         "llm_executed": llm_executed,
+        "real_llm_execution": bool(llm_executed and model_name_bound and answer and answer != "MODEL_MISSING"),
         "student_substituted": False,
+        "provider_execute_called": provider_execute_called,
         "provider": routed.get("provider"),
         "routing": routed,
         "c5_to_neurolingua": True,
@@ -184,8 +188,11 @@ def main() -> int:
                     "answer": rec["answer"],
                     "error": rec.get("error"),
                     "model": rec.get("model"),
+                    "cortex_model": rec.get("cortex_model"),
                     "model_name_bound": rec.get("model_name_bound"),
                     "llm_executed": rec.get("llm_executed"),
+                    "real_llm_execution": rec.get("real_llm_execution"),
+                    "provider_execute_called": rec.get("provider_execute_called"),
                     "student_substituted": rec.get("student_substituted"),
                     "c5_to_neurolingua": rec.get("c5_to_neurolingua"),
                     "neurolingua_to_provider": rec.get("neurolingua_to_provider"),

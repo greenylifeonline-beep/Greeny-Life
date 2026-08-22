@@ -6,17 +6,19 @@ import asyncio
 import json
 import re
 import sys
+import threading
 from datetime import datetime, timezone
 from http.server import BaseHTTPRequestHandler, ThreadingHTTPServer
 from pathlib import Path
 from urllib.parse import urlparse
 
 ROOT = Path(__file__).resolve().parents[2]
+sys.path.insert(0, str(ROOT / "src"))
 sys.path.insert(0, str(Path(__file__).resolve().parent))
 
 from raios_c5_keyboard import decode_flipped_keyboard, teach_text  # noqa: E402
 from raios_c5_reason import ground  # noqa: E402
-from raios_c5_whoami import whoami  # noqa: E402
+from raios_c5_whoami import c5_bind, whoami  # noqa: E402
 
 WAL = ROOT / "RAIOS" / "V9" / "wal" / "cognitive-events.jsonl"
 HISTORY = ROOT / ".ai-os" / "learning" / "C5-SCREEN.jsonl"
@@ -24,6 +26,8 @@ OUT_DIR = ROOT / ".ai-os" / "receipts" / "c5-screen"
 SEAT_MAP = ROOT / ".ai-os" / "mcp" / "SEAT-MAP.json"
 DEFAULT_HOST = "127.0.0.1"
 DEFAULT_PORT = 8765
+C1_PORT = 8876
+BIND_PORTS = (DEFAULT_PORT, C1_PORT)
 HEX_DUMP_RE = re.compile(r"[a-f0-9]{40,}", re.I)
 TELEMETRY_RE = re.compile(
     r"hit_count=|model_call=|ollama_used=|GL005_PROVEN=|الثقة:",
@@ -355,6 +359,42 @@ def wal_mtime():
     return WAL.stat().st_mtime if WAL.exists() else None
 
 
+def screen_health(*, host: str = DEFAULT_HOST, port: int | None = None) -> dict:
+    """Same C5 process health. Honest cortex flag from probe(), not a printed MAIN_CORTEX."""
+    bind = c5_bind()
+    ports = list(bind.get("c5_screen_ports") or BIND_PORTS)
+    rec = {
+        "schema": "raios.c5-health.v1",
+        "ok": True,
+        "from": "C5",
+        "http": 200,
+        "host": host,
+        "port": DEFAULT_PORT if port is None else port,
+        "bind": f"{host}:{DEFAULT_PORT if port is None else port}",
+        "ports": ports,
+        "urls": [f"http://{host}:{p}" for p in ports],
+        "duplicate_c5": False,
+        "duplicate_router": False,
+        "duplicate_mcp": False,
+        "paid_api": False,
+        "gl005_proven": False,
+        **bind,
+    }
+    rec["HEALTH"] = 200
+    rec["MAIN_CORTEX"] = bool(rec.get("main_cortex"))
+    rec["MODEL"] = rec.get("cortex_model")
+    rec["law"] = [
+        "SAME_C5_DUAL_BIND",
+        "HEALTH_200_NE_CORTEX_LIVE",
+        "PROBE_IS_CORTEX_TRUTH",
+        "STUDENT_NE_CORTEX",
+        "NO_DUPLICATE_MCP",
+        "NO_DUPLICATE_COUNCIL",
+        "NO_DUPLICATE_REGISTRY",
+    ]
+    return rec
+
+
 def _noise_answer(answer: str) -> bool:
     if "hit_count=" in answer:
         return True
@@ -650,8 +690,11 @@ def teach_reply(message: str, locale: str | None = None) -> dict:
     }
     if kind == "speak":
         rec["model"] = chat_rec.get("model")
+        rec["cortex_model"] = chat_rec.get("cortex_model")
         rec["model_name_bound"] = chat_rec.get("model_name_bound")
         rec["llm_executed"] = chat_rec.get("llm_executed")
+        rec["real_llm_execution"] = chat_rec.get("real_llm_execution")
+        rec["provider_execute_called"] = chat_rec.get("provider_execute_called")
         rec["error"] = chat_rec.get("error")
         rec["student_substituted"] = False
         rec["c5_to_neurolingua"] = True
@@ -1151,6 +1194,7 @@ PAGE = PAGE.replace("__I18N__", json.dumps(I18N, ensure_ascii=False))
 class Handler(BaseHTTPRequestHandler):
     bind_host = DEFAULT_HOST
     bind_port = DEFAULT_PORT
+    bind_ports = BIND_PORTS
 
     def log_message(self, fmt: str, *args) -> None:
         sys.stderr.write("C5-SCREEN " + (fmt % args) + "\n")
@@ -1168,12 +1212,21 @@ class Handler(BaseHTTPRequestHandler):
         if path in {"/", "/index.html"}:
             self._send(200, PAGE.encode("utf-8"), "text/html; charset=utf-8")
             return
+        if path in {"/health", "/api/health"}:
+            rec = screen_health(host=self.bind_host, port=self.bind_port)
+            rec["port"] = self.bind_port
+            rec["bind"] = f"{self.bind_host}:{self.bind_port}"
+            rec["ports"] = list(getattr(self, "bind_ports", BIND_PORTS))
+            payload = json.dumps(rec, ensure_ascii=False).encode("utf-8")
+            self._send(200, payload, "application/json; charset=utf-8")
+            return
         if path == "/api/history":
             payload = json.dumps({"turns": load_history(), "gl005_proven": False}, ensure_ascii=False).encode("utf-8")
             self._send(200, payload, "application/json; charset=utf-8")
             return
         if path == "/api/status":
             card = whoami()
+            bind = card.get("c5_bind") or {}
             payload = json.dumps(
                 {
                     "ok": True,
@@ -1181,9 +1234,15 @@ class Handler(BaseHTTPRequestHandler):
                     "host": self.bind_host,
                     "port": self.bind_port,
                     "bind": f"{self.bind_host}:{self.bind_port}",
+                    "ports": list(getattr(self, "bind_ports", BIND_PORTS)),
                     "languages_customer_live_count": card.get("languages_customer_live_count"),
                     "languages_customer_live": card.get("languages_customer_live"),
                     "locales": list(LIVE_LOCALES),
+                    "main_cortex": bool(bind.get("main_cortex")),
+                    "cortex_model": bind.get("cortex_model"),
+                    "mcp_reachable": bind.get("mcp_reachable"),
+                    "council_seat_map": bind.get("council_seat_map"),
+                    "model_registry": bind.get("model_registry"),
                     "paid_api": False,
                     "gl005_proven": False,
                     "law": ["SAME_LOOPBACK_OR_PORT_FORWARD", "UNPOLISHED_SCREEN_NE_SHIP", "SCREEN_IS_MULTILINGUAL"],
@@ -1210,12 +1269,54 @@ class Handler(BaseHTTPRequestHandler):
         self._send(200, json.dumps(rec, ensure_ascii=False).encode("utf-8"), "application/json; charset=utf-8")
 
 
-def serve(host: str = DEFAULT_HOST, port: int = DEFAULT_PORT) -> None:
+def serve(host: str = DEFAULT_HOST, ports: tuple[int, ...] | list[int] | None = None) -> None:
+    """One C5 screen, two loopbacks. Not a second C5."""
+    wanted = tuple(ports or BIND_PORTS)
     Handler.bind_host = host
-    Handler.bind_port = port
-    httpd = ThreadingHTTPServer((host, port), Handler)
-    print(json.dumps({"ok": True, "url": f"http://{host}:{port}", "from": "C5", "gl005_proven": False}, ensure_ascii=False))
-    httpd.serve_forever()
+    Handler.bind_ports = wanted
+    servers: list[tuple[int, ThreadingHTTPServer]] = []
+    for port in wanted:
+        handler = type(
+            f"C5Handler{port}",
+            (Handler,),
+            {"bind_host": host, "bind_port": port, "bind_ports": wanted},
+        )
+        try:
+            httpd = ThreadingHTTPServer((host, port), handler)
+        except OSError as err:
+            print(
+                json.dumps(
+                    {
+                        "ok": False,
+                        "from": "C5",
+                        "url": f"http://{host}:{port}",
+                        "error": type(err).__name__,
+                        "duplicate_c5": False,
+                        "gl005_proven": False,
+                    },
+                    ensure_ascii=False,
+                )
+            )
+            continue
+        servers.append((port, httpd))
+        print(
+            json.dumps(
+                {
+                    "ok": True,
+                    "url": f"http://{host}:{port}",
+                    "from": "C5",
+                    "ports": list(wanted),
+                    "duplicate_c5": False,
+                    "gl005_proven": False,
+                },
+                ensure_ascii=False,
+            )
+        )
+    if not servers:
+        raise SystemExit("C5_SCREEN_NO_BIND")
+    for _port, httpd in servers[:-1]:
+        threading.Thread(target=httpd.serve_forever, name=f"c5-screen-{_port}", daemon=True).start()
+    servers[-1][1].serve_forever()
 
 
 def main() -> int:
@@ -1224,11 +1325,12 @@ def main() -> int:
         print(json.dumps({"ok": rec["ok"], "decoded": rec["decoded"], "flipped": rec["flipped"], "gl005_proven": False}, ensure_ascii=False, indent=2))
         return 0 if rec["ok"] and rec["flipped"] else 2
     host = DEFAULT_HOST
-    port = DEFAULT_PORT
-    args = [a for a in sys.argv[1:] if a != "--serve"]
+    ports = BIND_PORTS
+    args = [a for a in sys.argv[1:] if a not in {"--serve", "--self-check"}]
     if args:
-        port = int(args[0])
-    serve(host, port)
+        extra = int(args[0])
+        ports = tuple(dict.fromkeys((*BIND_PORTS, extra)))
+    serve(host, ports)
     return 0
 
 

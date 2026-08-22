@@ -158,41 +158,25 @@ class NeuroLingua:
             base = self._semantic_from_stages(working, prag.payload, concepts.payload, admission.admitted)
             if offline_required:
                 return base
-            if routed.get("error") == "MODEL_MISSING":
-                base.update(
-                    {
-                        "status": "MODEL_MISSING",
-                        "error": "MODEL_MISSING",
-                        "source": "main-cortex-capability",
-                        "model": routed.get("model"),
-                        "llm_executed": False,
-                        "model_name_bound": False,
-                        "student_substituted": False,
-                        "fallback_used": False,
-                    }
-                )
+            if routed.get("provider") != "main-cortex-capability":
                 return base
-            if (
-                routed.get("llm")
-                and routed.get("model_name_bound")
-                and routed.get("provider") == "main-cortex-capability"
-            ):
-                cortex_exec = self.router.execute(routed, {"text": working})
-                ok = bool(cortex_exec.get("ok"))
-                base.update(
-                    {
-                        "source": "main-cortex-capability",
-                        "model": cortex_exec.get("model"),
-                        "llm_executed": cortex_exec.get("llm_executed", False),
-                        "model_name_bound": cortex_exec.get("model_name_bound", False),
-                        "student_substituted": False,
-                        "cortex_response": cortex_exec.get("response") or "",
-                        "status": "OK" if ok else (cortex_exec.get("error") or "CORTEX_EXECUTE_FAIL"),
-                        "error": None if ok else cortex_exec.get("error"),
-                        "fallback_used": False,
-                    }
-                )
-                return base
+            cortex_exec = self.router.execute(routed, {"text": working})
+            ok = bool(cortex_exec.get("ok"))
+            err = cortex_exec.get("error") or routed.get("error")
+            base.update(
+                {
+                    "source": "main-cortex-capability",
+                    "model": cortex_exec.get("model") or routed.get("model"),
+                    "llm_executed": bool(cortex_exec.get("llm_executed")),
+                    "model_name_bound": bool(cortex_exec.get("model_name_bound")),
+                    "student_substituted": False,
+                    "provider_execute_called": True,
+                    "cortex_response": cortex_exec.get("response") or "",
+                    "status": "OK" if ok else (err or "CORTEX_EXECUTE_FAIL"),
+                    "error": None if ok else err,
+                    "fallback_used": False,
+                }
+            )
             return base
 
         semantic = run_stage(
@@ -283,6 +267,7 @@ class NeuroLingua:
                 "governor": admission.reason,
                 "routing": routed,
                 "cortex_execution": cortex_exec,
+                "provider_execute_called": cortex_exec is not None,
                 "offline_required": offline_required,
                 "registry_status": self.registry.get("status"),
                 "cortex": {
