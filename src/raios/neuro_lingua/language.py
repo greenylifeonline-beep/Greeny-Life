@@ -24,6 +24,7 @@ EGYPTIAN_MARKERS = (
     "كده",
     "علشان",
     "عشان",
+    "واقفة",
 )
 
 GULF_MARKERS = (
@@ -37,6 +38,7 @@ GULF_MARKERS = (
     "أبي",
     "حجي",
     "يبي",
+    "محجوزة",
 )
 
 NB_POSITIVE = ("ikke", "kan", "den", "nye", "ikke", "bokmål", "ikke")
@@ -90,9 +92,9 @@ def identify_language(text: str) -> dict[str, Any]:
         evidence.append("arabic_script")
 
     scandi_hits = {
-        "nb-NO": sum(1 for w in ("ikke", "deploye", "builden", "databasen") if w in lower),
-        "sv-SE": sum(1 for w in ("påverka", "ändringen", "kontrollera", "och") if w in lower),
-        "da-DK": sum(1 for w in ("tjek", "ændringen", "påvirke", "uden") if w in lower),
+        "nb-NO": sum(1 for w in ("ikke", "deploye", "builden", "databasen", "forsendelse", "tollen", "sending") if w in lower),
+        "sv-SE": sum(1 for w in ("påverka", "ändringen", "kontrollera", "och", "försändelse", "tullen", "stoppad") if w in lower),
+        "da-DK": sum(1 for w in ("tjek", "ændringen", "påvirke", "uden", "tolden", "tilbageholdt") if w in lower),
     }
     en_hits = sum(
         1
