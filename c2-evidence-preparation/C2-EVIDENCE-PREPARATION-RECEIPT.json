@@ -1,0 +1,82 @@
+{
+  "schema": "c2.evidence-preparation-receipt.v1",
+  "generated_at": "2026-08-22T11:35:20.140112+00:00",
+  "order": "C2-EVIDENCE-REUSE-PREPARATION",
+  "session": {
+    "order": "C2-EVIDENCE-REUSE-PREPARATION",
+    "bc_id": "bc-45b80213-d5e4-47bc-9ce4-e63550834247",
+    "checkout_head": "da67f44963fafde67df52cb62ab32f75fe725df0",
+    "checkout_branch": "cursor/c2-evidence-reuse-preparation-4247"
+  },
+  "outputs": {
+    "EVIDENCE-REUSE-INDEX.json": "/workspace/c2-evidence-preparation/EVIDENCE-REUSE-INDEX.json",
+    "EVIDENCE-HASH-GROUPS.json": "/workspace/c2-evidence-preparation/EVIDENCE-HASH-GROUPS.json",
+    "EVIDENCE-TOPIC-MAP.json": "/workspace/c2-evidence-preparation/EVIDENCE-TOPIC-MAP.json",
+    "EVIDENCE-CONTRADICTIONS.json": "/workspace/c2-evidence-preparation/EVIDENCE-CONTRADICTIONS.json",
+    "FUTURE-DEEP-ANALYSIS-TARGETS.json": "/workspace/c2-evidence-preparation/FUTURE-DEEP-ANALYSIS-TARGETS.json",
+    "C2-EVIDENCE-PREPARATION-RECEIPT.json": "/workspace/c2-evidence-preparation/C2-EVIDENCE-PREPARATION-RECEIPT.json"
+  },
+  "flags": {
+    "MODE": "READ_ONLY",
+    "C3_WORK_DUPLICATED": false,
+    "SAME_HASH_REANALYZED": false,
+    "CURRENT_TRUTH_INFERRED_FROM_OLD_REPORTS": false,
+    "CANONICAL_ROOT_PROVEN": false,
+    "READY_FOR_CAPABILITY_ARCHAEOLOGY": false,
+    "READY_FOR_CAPABILITY_ARCHAEOLOGY_DETAIL": "INDEX_COMPLETE_C3_TREE_BIND_REQUIRED"
+  },
+  "did_not": [
+    "merge",
+    "copy_trees",
+    "delete",
+    "archive",
+    "modify_canonical_files",
+    "create_another_WAL",
+    "create_another_registry",
+    "train_C5",
+    "run_weight_merge",
+    "execute_brain.py",
+    "declare_canonical_root",
+    "duplicate_C3_tree_census",
+    "walk_/tmp_clones",
+    "hash_non_evidence_source_trees",
+    "full_parse_CROSS-TREE-MANIFEST_file_list"
+  ],
+  "did": [
+    "discover_evidence_by_name_and_known_report_homes",
+    "sha256_each_unique_blob_once",
+    "light_header_peek_once_per_hash",
+    "cluster_topics_heuristically",
+    "record_contradictions_unresolved",
+    "index_prior_c3_like_reports_for_reuse_not_rerun"
+  ],
+  "counts": {
+    "artifacts": 713,
+    "on_current_disk": 152,
+    "git_reachable_not_on_disk": 405,
+    "sha256_unknown": 156,
+    "unique_sha256": 538
+  },
+  "prior_c3_like_artifacts_indexed_not_rerun": [
+    ".ai-os/reports/CANONICAL-ROOT.json",
+    ".ai-os/reports/NONCANONICAL-TREES.json",
+    ".ai-os/reports/CROSS-TREE-MANIFEST.json",
+    ".ai-os/reports/CROSS-TREE-DIFF.json",
+    ".ai-os/reports/UNIFICATION-RECEIPT.json",
+    ".ai-os/reports/UNIQUE-ASSET-RECONCILIATION.json",
+    ".ai-os/reports/ACTOR-BINDING-MATRIX.json",
+    ".ai-os/reports/CAPABILITY-RECONCILIATION.json"
+  ],
+  "this_checkout_observation_not_a_census": {
+    "branch": "cursor/c2-evidence-reuse-preparation-4247",
+    "head": "da67f44963fafde67df52cb62ab32f75fe725df0",
+    "has_.ai-os": false,
+    "has_RAIOS": false,
+    "has_notebook_raios": true
+  },
+  "cloud_run": {
+    "bcId": "bc-45b80213-d5e4-47bc-9ce4-e63550834247",
+    "setupStatus_observed": "INSTALL_FAILED",
+    "note": "setupStatus is cloud metadata, not used as project runtime truth"
+  }
+}
