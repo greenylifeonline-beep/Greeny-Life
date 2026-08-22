@@ -257,6 +257,10 @@ def git_identity(path: Path) -> dict[str, Any]:
     untracked = [ln[3:] for ln in porcelain if ln.startswith("??")]
     wt = git(["rev-parse", "--git-dir"], path)
     common = git(["rev-parse", "--git-common-dir"], path)
+    if wt and not Path(wt).is_absolute():
+        wt = str((path / wt).resolve())
+    if common and not Path(common).is_absolute():
+        common = str((path / common).resolve())
     return {
         "git": True,
         "head": head,

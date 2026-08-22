@@ -1,0 +1,56 @@
+{
+  "schema": "raios.actor-binding-matrix.v1",
+  "ts": "2026-08-22T09:40:38.402152+00:00",
+  "canonical_root": {
+    "absolute_path": "/workspace",
+    "host": "cursor",
+    "git": "https://github.com/greenylifeonline-beep/greeny-life",
+    "branch": "v9-neurolingua-semantic-kernel",
+    "HEAD": "c21dfd71e23b81a5758a8d99beddaac1228cc8ed"
+  },
+  "actors": {
+    "C2": {
+      "bound": true,
+      "this_session": true,
+      "identity": "cursor-cloud C2 executor on C2C5_LIVE",
+      "cwd": "/workspace",
+      "head": "c21dfd71e23b81a5758a8d99beddaac1228cc8ed",
+      "target_identity": "https://github.com/greenylifeonline-beep/greeny-life/tree/v9-neurolingua-semantic-kernel"
+    },
+    "C3": {
+      "bound": false,
+      "this_session": false,
+      "identity": "C3 engineer claimed on Repair",
+      "target_identity": "https://github.com/greenylifeonline-beep/greeny-life v9-neurolingua-semantic-kernel@c21dfd71e23b81a5758a8d99beddaac1228cc8ed",
+      "required_action": "cd Repair; git stash WAL if dirty; git pull --ff-only origin v9-neurolingua-semantic-kernel; confirm HEAD=c21dfd71e23b81a5758a8d99beddaac1228cc8ed",
+      "impersonated": false
+    },
+    "C4": {
+      "bound": false,
+      "this_session": false,
+      "identity": "C4 DeepSeek peer claimed on Repair",
+      "target_identity": "https://github.com/greenylifeonline-beep/greeny-life v9-neurolingua-semantic-kernel@c21dfd71e23b81a5758a8d99beddaac1228cc8ed",
+      "required_action": "same pull as C3 onto v9-neurolingua-semantic-kernel @c21dfd71e23b",
+      "impersonated": false
+    },
+    "C5": {
+      "bound": true,
+      "this_session": false,
+      "identity": "RAIOS git mind",
+      "cwd": "/workspace",
+      "head": "c21dfd71e23b81a5758a8d99beddaac1228cc8ed",
+      "lives_in": "git, not the Cursor session"
+    },
+    "C6": {
+      "bound": false,
+      "this_session": false,
+      "identity": "C6 not live",
+      "law": "C6_C10_NE_LIVE"
+    }
+  },
+  "seat_map_laws_unchanged": true,
+  "do_not_summon": true,
+  "impersonated": false,
+  "gl005_proven": false,
+  "wal_written": false
+}

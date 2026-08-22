@@ -1,0 +1,71 @@
+{
+  "schema": "raios.canonical-root.v1",
+  "ts": "2026-08-22T09:40:38.401481+00:00",
+  "from": "C2",
+  "c5": "git",
+  "absolute_path": "/workspace",
+  "host": "cursor",
+  "git": "https://github.com/greenylifeonline-beep/greeny-life",
+  "origin_observed": "https://github.com/greenylifeonline-beep/greeny-life",
+  "branch": "v9-neurolingua-semantic-kernel",
+  "HEAD": "c21dfd71e23b81a5758a8d99beddaac1228cc8ed",
+  "git_worktree_identity": "/workspace/.git",
+  "tracked_file_count": 2342,
+  "untracked_file_count": 119,
+  "modified_count": 32,
+  "total_size_bytes": 174912817,
+  "last_activity": "2026-08-22T09:40:34.736010+00:00",
+  "runtime_keeper_count": 9,
+  "proof": {
+    "newest_valid_HEAD_on_live_branch": true,
+    "origin_branch_head": "c21dfd71e23b81a5758a8d99beddaac1228cc8ed",
+    "ahead_of_origin_branch": 0,
+    "behind_origin_branch": 0,
+    "in_sync_with_origin_branch": true,
+    "tracked_completeness": {
+      "C2C5_LIVE": 2342,
+      "TMP_C5_CLONE_V9": 2096,
+      "TMP_C5_CLONE_MAIN": 616
+    },
+    "runtime_keeper_count_on_C2C5_LIVE": 9,
+    "live_process_count_on_C2C5_LIVE": 60,
+    "git_worktree_list": "worktree /workspace\nHEAD c21dfd71e23b81a5758a8d99beddaac1228cc8ed\nbranch refs/heads/v9-neurolingua-semantic-kernel",
+    "unique_keepers_only_on_live": {
+      "mind_fill": true,
+      "kae": true,
+      "ops_compile": true,
+      "clone_v9_mind_fill": false,
+      "clone_v9_kae": false,
+      "clone_v9_ops_compile": false
+    },
+    "repair_reachable": false,
+    "not_chosen_by_path_name": true,
+    "path_name_would_have_chosen_repair": "C:\\Users\\Ghanam\\Documents\\Codex\\Greeny-Life-Repair",
+    "chosen_because": [
+      "only reachable tree with live Next/MCP/screen/minute keeper processes",
+      "newest HEAD on origin/v9-neurolingua-semantic-kernel (in sync when ahead=behind=0)",
+      "highest tracked completeness among reachable Greeny-Life git trees",
+      "unique keepers mind_fill/kae/ops_compile present here, absent on /tmp/c5-clone-v9",
+      "Repair/OneDrive/named worktrees are not mounted so they cannot be canonical on this host",
+      "/tmp/c5-clone-main is origin/main dump (images, architecture-backups, 87MB summary) — not a newer RAIOS HEAD"
+    ],
+    "clone_v9_unique_tracked": 0,
+    "clone_main_is_older_main": true
+  },
+  "canonical_root_proven": true,
+  "scope": "REACHABLE_TREES_THIS_HOST",
+  "not_chosen_by_path_name": true,
+  "gl005_proven": false,
+  "law": [
+    "DISCOVER_HASH_COMPARE_RECONCILE_TEST_REBIND_RECEIPT",
+    "NO_BLIND_COPY_OVER",
+    "NO_DELETE_UNTIL_GATES",
+    "REPAIR_UNREACHABLE_NE_EMPTY",
+    "TMP_CLONE_NE_C3_TREE",
+    "ONE_COGNITIVE_WAL",
+    "CROSS_TREE_UNIFICATION_NE_GL005",
+    "ACTOR_BIND_NE_IMPERSONATION",
+    "NOT_CHOSEN_BY_PATH_NAME",
+    "STALE_MAIN_DUMP_NE_UNIQUE_CAPABILITY"
+  ]
+}

@@ -1,0 +1,164 @@
+{
+  "schema": "raios.capability-reconciliation.v1",
+  "ts": "2026-08-22T09:40:38.402151+00:00",
+  "capabilities": {
+    "NeuroLingua": {
+      "canonical_owner_tree": "C2C5_LIVE",
+      "markers_present_live": [
+        "src/raios/neuro_lingua/kernel.py",
+        "src/raios/neuro_lingua/ops_compile.py",
+        "src/raios/neuro_lingua/kae.py",
+        "src/raios/neuro_lingua/customer.py"
+      ],
+      "markers_present_clone_v9": [
+        "src/raios/neuro_lingua/kernel.py"
+      ],
+      "repair": "UNREACHABLE",
+      "status": "PRESENT_ON_CANONICAL",
+      "merge_required": false
+    },
+    "Model Registry": {
+      "canonical_owner_tree": "C2C5_LIVE",
+      "markers_present_live": [
+        ".ai-os/MODEL-REGISTRY.json",
+        "RAIOS/V9/evolution/model_lab/model_registry.py"
+      ],
+      "markers_present_clone_v9": [
+        ".ai-os/MODEL-REGISTRY.json"
+      ],
+      "repair": "UNREACHABLE",
+      "status": "PRESENT_ON_CANONICAL",
+      "merge_required": false
+    },
+    "Qwen": {
+      "canonical_owner_tree": "C2C5_LIVE",
+      "markers_present_live": [
+        "src/raios/neuro_lingua/qwen_runtime.py",
+        "scripts/ai-os/raios_c5_qwen.py"
+      ],
+      "markers_present_clone_v9": [],
+      "repair": "UNREACHABLE",
+      "status": "PRESENT_ON_CANONICAL",
+      "merge_required": false
+    },
+    "Granite": {
+      "canonical_owner_tree": "C2C5_LIVE",
+      "markers_present_live": [],
+      "markers_present_clone_v9": [],
+      "repair": "UNREACHABLE",
+      "status": "IDENTITY_CLAIM_NOT_LIVE_ON_THIS_VM",
+      "merge_required": false
+    },
+    "DeepSeek": {
+      "canonical_owner_tree": "C2C5_LIVE",
+      "markers_present_live": [
+        ".ai-os/adapters/DEEPSEEK.md"
+      ],
+      "markers_present_clone_v9": [
+        ".ai-os/adapters/DEEPSEEK.md"
+      ],
+      "repair": "UNREACHABLE",
+      "status": "ADAPTER_FILE_PRESENT_RUNTIME_POINTS_AT_REPAIR_NOT_THIS_VM",
+      "merge_required": false
+    },
+    "C5 runtime": {
+      "canonical_owner_tree": "C2C5_LIVE",
+      "markers_present_live": [
+        "scripts/ai-os/raios_c5_train.py",
+        "scripts/ai-os/raios_c5_mind_fill.py",
+        "scripts/ai-os/raios_c5_screen.py"
+      ],
+      "markers_present_clone_v9": [],
+      "repair": "UNREACHABLE",
+      "status": "PRESENT_ON_CANONICAL",
+      "merge_required": false
+    },
+    "WAL/event bus": {
+      "canonical_owner_tree": "C2C5_LIVE",
+      "markers_present_live": [
+        "RAIOS/V9/runtime/cognitive_event_bus.py",
+        "src/raios/neuro_lingua/wal.py"
+      ],
+      "markers_present_clone_v9": [
+        "RAIOS/V9/runtime/cognitive_event_bus.py",
+        "src/raios/neuro_lingua/wal.py"
+      ],
+      "repair": "UNREACHABLE",
+      "status": "PRESENT_ON_CANONICAL",
+      "merge_required": false
+    },
+    "Council": {
+      "canonical_owner_tree": "C2C5_LIVE",
+      "markers_present_live": [
+        ".ai-os/council/PROTOCOL.md",
+        ".ai-os/mcp/SEAT-MAP.json"
+      ],
+      "markers_present_clone_v9": [
+        ".ai-os/council/PROTOCOL.md",
+        ".ai-os/mcp/SEAT-MAP.json"
+      ],
+      "repair": "UNREACHABLE",
+      "status": "PRESENT_ON_CANONICAL",
+      "merge_required": false
+    },
+    "Foundry": {
+      "canonical_owner_tree": "C2C5_LIVE",
+      "markers_present_live": [],
+      "markers_present_clone_v9": [],
+      "repair": "UNREACHABLE",
+      "status": "NOT_RUN",
+      "merge_required": false
+    },
+    "Cloud/Nomadic": {
+      "canonical_owner_tree": "C2C5_LIVE",
+      "markers_present_live": [
+        "RAIOS/V9/cloud/nomadic/work_stealing_scheduler.py",
+        "RAIOS/V9/cloud/storage/local_backend.py"
+      ],
+      "markers_present_clone_v9": [],
+      "repair": "UNREACHABLE",
+      "status": "PRESENT_ON_CANONICAL",
+      "merge_required": false
+    },
+    "Model Lab": {
+      "canonical_owner_tree": "C2C5_LIVE",
+      "markers_present_live": [
+        "RAIOS/V9/evolution/model_lab/merge_executor.py"
+      ],
+      "markers_present_clone_v9": [],
+      "repair": "UNREACHABLE",
+      "status": "PRESENT_ON_CANONICAL",
+      "merge_required": false
+    },
+    "Consolidation tools": {
+      "canonical_owner_tree": "C2C5_LIVE",
+      "markers_present_live": [
+        "scripts/ai-os/raios_c5_merge_engines.py",
+        "scripts/ai-os/raios_c5_cross_tree.py"
+      ],
+      "markers_present_clone_v9": [],
+      "repair": "UNREACHABLE",
+      "status": "PRESENT_ON_CANONICAL",
+      "merge_required": false
+    },
+    "GL005/auth runtime": {
+      "canonical_owner_tree": "C2C5_LIVE",
+      "markers_present_live": [
+        "lib/intelligence/task-orchestration.ts",
+        "app/api/tasks/route.ts",
+        "lib/auth.ts",
+        "scripts/ai-os/gl005-mutation-observe.py"
+      ],
+      "markers_present_clone_v9": [
+        "lib/intelligence/task-orchestration.ts",
+        "app/api/tasks/route.ts",
+        "lib/auth.ts",
+        "scripts/ai-os/gl005-mutation-observe.py"
+      ],
+      "repair": "UNREACHABLE",
+      "status": "CODE_PRESENT_RUNTIME_UNPROVEN",
+      "merge_required": false
+    }
+  },
+  "gl005_proven": false
+}
