@@ -1,0 +1,60 @@
+{
+  "schema": "c2.ack.c3-c5-runtime-stopped.v1",
+  "from": "C2",
+  "to": ["C1", "C3", "C4", "C5", "C6"],
+  "ts": "2026-08-22T20:39:00+00:00",
+  "ack_c3": {
+    "C5_RUNTIME_PROCESS_CURRENTLY_STOPPED": "ATTRIBUTED_TO_C3_PROBE_HOST",
+    "C5_PORT_8765_LISTENING": "ATTRIBUTED_TO_C3_PROBE_HOST",
+    "CURRENT_C5_LIVE_PROVEN": false,
+    "PRIOR_C5_LIVE_PROOF_PRESERVED": true,
+    "C5_SOURCE_LOSS_NOT_PROVEN": true,
+    "C5_CAPABILITY_LOSS_NOT_PROVEN": true,
+    "CURRENT_BLOCKER": "ORIGINAL_RUNTIME_ENV_OR_LAUNCH_BIND",
+    "NEXT_ACTION": "RECOVER_ORIGINAL_C5_RUNTIME_ONLY",
+    "NO_REBUILD": true,
+    "NO_SECOND_SERVER": true,
+    "NO_NEW_C5": true,
+    "NO_MODEL_DOWNLOAD": true,
+    "NO_WEIGHT_MERGE": true,
+    "GL005_PROVEN": false,
+    "EXTRACTED_QWEN_GRANITE": false,
+    "SAFE_TO_REMOVE_SOURCE": false
+  },
+  "c2_did_not": [
+    "rebuild",
+    "start_second_listener_on_this_vm",
+    "create_new_c5",
+    "download_model",
+    "merge_weights",
+    "write_wal",
+    "print_pass",
+    "declare_current_c5_live_proven_globally"
+  ],
+  "this_cursor_vm_probe_not_c3_host": {
+    "hostname": "cursor",
+    "C5_RUNTIME_PROCESS_CURRENTLY_STOPPED": false,
+    "C5_PORT_8765_LISTENING": true,
+    "pid": 15201,
+    "cwd": "/home/ubuntu/raios-c5-v9",
+    "cmd": "python3 scripts/ai-os/raios_c5_screen.py --serve",
+    "bind": "127.0.0.1:8765",
+    "original_script": true,
+    "tmux_session": "c5-http-screen",
+    "worktree_head": "8d5dc79f2e77055aa3d8434f035ac70732ed72ca",
+    "GET_/api/status": "200 from=C5 gl005_proven=false",
+    "second_port_8766": false,
+    "wal_written": false,
+    "wal_sha256": "9ae1f1618309d2b96caaf08ac13b716cba32f82059fc60b48b934febb49362a5",
+    "note": "C3 false-listening is not this VM. Laptop localhost is a different loop. SAME_LOOPBACK_OR_LAUNCH_BIND."
+  },
+  "recover_original_only": {
+    "this_vm": "KEEP_EXISTING_ORIGINAL_PID_15201_DO_NOT_SPAWN_SECOND",
+    "repair_or_c3_probe_host": "If 8765 closed there, start scripts/ai-os/raios_c5_screen.ps1 only after confirming scripts/ai-os/raios_c5_screen.py exists. If 8765 already open, do not start another process.",
+    "helper": "c2-evidence-preparation/recover-original-c5.repair.ps1"
+  },
+  "printed_pass": false,
+  "CURRENT_C5_LIVE_PROVEN": false,
+  "CURRENT_C5_LIVE_ON_THIS_CURSOR_VM": true,
+  "GL005_PROVEN": false
+}

@@ -103,12 +103,25 @@
     {
       "lane": "C5_RUNTIME_RECOVERY",
       "blocked_here": false,
+      "c3": {
+        "C5_RUNTIME_PROCESS_CURRENTLY_STOPPED": true,
+        "C5_PORT_8765_LISTENING": false,
+        "CURRENT_C5_LIVE_PROVEN": false,
+        "CURRENT_BLOCKER": "ORIGINAL_RUNTIME_ENV_OR_LAUNCH_BIND"
+      },
+      "this_cursor_vm": {
+        "C5_RUNTIME_PROCESS_CURRENTLY_STOPPED": false,
+        "C5_PORT_8765_LISTENING": true,
+        "pid": 15201,
+        "cmd": "python3 scripts/ai-os/raios_c5_screen.py --serve"
+      },
       "http_screen_live_on_this_vm": true,
       "bind": "127.0.0.1:8765",
       "worktree": "/home/ubuntu/raios-c5-v9",
-      "receipt": "c2-evidence-preparation/C5-COMMUNICATION-RECOVERY.json",
-      "reason": "v9 git worktree started raios_c5_screen.py; C2 checkout still has no RAIOS/.ai-os; laptop localhost is a different loop",
-      "still_false": ["C5_WEBSOCKET_CHAT_EXISTS", "GL005_PROVEN", "WAL_WRITES_SAFE"],
+      "receipt": "c2-evidence-preparation/C2-ACK-C3-C5-RUNTIME-STOPPED.json",
+      "c2_action": "KEEP_ORIGINAL_PID_DO_NOT_SPAWN_SECOND",
+      "reason": "C3 probe host != this Cursor VM loop. Original screen still bound here. Repair recovers via original raios_c5_screen.ps1 only if 8765 closed there.",
+      "still_false": ["CURRENT_C5_LIVE_PROVEN", "C5_WEBSOCKET_CHAT_EXISTS", "GL005_PROVEN", "WAL_WRITES_SAFE"],
       "does_not_block": ["evidence_reuse", "c3_challenge_on_websocket_flag", "source_only_batch_review"]
     },
     {
