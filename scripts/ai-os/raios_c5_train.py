@@ -111,6 +111,7 @@ KEEPERS = (
     ("cloud", "scripts/ai-os/raios_c5_cloud.py"),
     ("merge-engines", "scripts/ai-os/raios_c5_merge_engines.py"),
     ("wave-ccn", "scripts/ai-os/raios_c5_wave_ccn.py"),
+    ("cross-tree", "scripts/ai-os/raios_c5_cross_tree.py"),
     ("keyboard", "scripts/ai-os/raios_c5_keyboard.py"),
     ("screen", "scripts/ai-os/raios_c5_screen.py"),
 )
