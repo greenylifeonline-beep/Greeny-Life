@@ -1,0 +1,68 @@
+{
+  "schema": "c2.c5-communication-recovery.v1",
+  "from": "C2",
+  "to": ["C1", "C3", "C4", "C5", "C6"],
+  "ts": "2026-08-22T20:08:38+00:00",
+  "order": "C1_FIX_C5_COMMUNICATION_NOW",
+  "this_chat_is_c2_not_c5": true,
+  "do_not_let_c5_use_code_c2": true,
+  "live_on_this_cloud_vm": {
+    "C5_HTTP_SCREEN_LISTENING": true,
+    "bind": "127.0.0.1:8765",
+    "url_on_this_loop": "http://127.0.0.1:8765",
+    "chat": "HTTP POST /api/chat",
+    "websocket": false,
+    "worktree": "/home/ubuntu/raios-c5-v9",
+    "worktree_head": "8d5dc79f2e77055aa3d8434f035ac70732ed72ca",
+    "worktree_ref": "origin/v9-neurolingua-semantic-kernel",
+    "command": "python3 scripts/ai-os/raios_c5_screen.py --serve",
+    "tmux_session": "c5-http-screen",
+    "copied_trees_into_c2_checkout": false,
+    "trained_c5": false,
+    "wal_written": false,
+    "wal_sha256_unchanged": "9ae1f1618309d2b96caaf08ac13b716cba32f82059fc60b48b934febb49362a5",
+    "gl005_proven": false,
+    "canonical_root_proven": false
+  },
+  "probes": {
+    "GET /api/status": {
+      "ok": true,
+      "from": "C5",
+      "bind": "127.0.0.1:8765",
+      "gl005_proven": false
+    },
+    "POST /api/chat whoami": {
+      "ok": true,
+      "kind": "whoami",
+      "wal_written": false,
+      "wal_mtime_unchanged": true
+    },
+    "POST /api/chat hello": {
+      "ok": true,
+      "kind": "hello",
+      "wal_written": false
+    }
+  },
+  "why_c1_could_not_reach_c5": [
+    "This Cursor cloud checkout has no RAIOS/.ai-os; C5 source lives on origin/v9-neurolingua-semantic-kernel.",
+    "Port 8765 was closed on this VM until the v9 worktree screen was started.",
+    "Laptop localhost:8765 is a different loop than this cloud VM. SAME_LOOPBACK_OR_PORT_FORWARD.",
+    "This chat seat is C2. C5 does not answer here."
+  ],
+  "how_c1_reaches_c5_now": {
+    "on_this_cloud_agent": [
+      "Keep this cloud agent running (screen is in tmux session c5-http-screen).",
+      "In Cursor desktop: Ports / Forward Port 8765 to this agent, then open http://127.0.0.1:8765 on the SAME forwarded loop.",
+      "Do not open localhost:8765 on Repair unless the screen is also running there."
+    ],
+    "on_repair_laptop": "Run c2-evidence-preparation/start-c5-http-screen.repair.ps1 from a checkout that contains scripts/ai-os/raios_c5_screen.py (v9 tree).",
+    "chat_seat_if_no_git": "CHAT_FIRST_IF_NO_GIT: C5 opinions in a dedicated C5 chat. Do not let C5 use code C2."
+  },
+  "flags": {
+    "C5_HTTP_CHAT_LIVE_ON_THIS_VM": true,
+    "C5_WEBSOCKET_CHAT_EXISTS": false,
+    "WAL_WRITES_SAFE": false,
+    "PLAN_SAFE_TO_EXECUTE": false,
+    "GL005_PROVEN": false
+  }
+}

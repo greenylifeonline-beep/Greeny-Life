@@ -102,8 +102,13 @@
   "independent_parallel_lanes_for_c6": [
     {
       "lane": "C5_RUNTIME_RECOVERY",
-      "blocked_here": true,
-      "reason": "C5 source on v9 git; runtime env unresolved; this disk has no RAIOS/.ai-os",
+      "blocked_here": false,
+      "http_screen_live_on_this_vm": true,
+      "bind": "127.0.0.1:8765",
+      "worktree": "/home/ubuntu/raios-c5-v9",
+      "receipt": "c2-evidence-preparation/C5-COMMUNICATION-RECOVERY.json",
+      "reason": "v9 git worktree started raios_c5_screen.py; C2 checkout still has no RAIOS/.ai-os; laptop localhost is a different loop",
+      "still_false": ["C5_WEBSOCKET_CHAT_EXISTS", "GL005_PROVEN", "WAL_WRITES_SAFE"],
       "does_not_block": ["evidence_reuse", "c3_challenge_on_websocket_flag", "source_only_batch_review"]
     },
     {
