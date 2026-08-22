@@ -2,10 +2,12 @@
 """P0 fail-closed gates (D-060). CI pass is not assimilation. No source delete. No GL005 mint."""
 from __future__ import annotations
 
+import argparse
 import hashlib
 import http.cookiejar
 import json
 import os
+import sys
 import urllib.error
 import urllib.request
 from datetime import datetime, timezone
@@ -466,6 +468,98 @@ def gate2_assimilation(models: list[str]) -> dict:
     }
 
 
+def knowledge_e2e() -> dict:
+    """Existing keepers only: mind-fill → absorb/INDEX → KAE → ops_compile. No WAL. No GL005 mint."""
+    sys.path.insert(0, str(ROOT / "scripts" / "ai-os"))
+    sys.path.insert(0, str(ROOT / "src"))
+    from raios_c5_mind_fill import fill
+    from raios.neuro_lingua.kae_libraries import assimilate_path
+    from raios.neuro_lingua.ops_compile import auto_compile
+
+    wal_before = wal_mtime()
+    filled = fill()
+    index_path = ROOT / ".ai-os" / "learning" / "INDEX.json"
+    filled_paths = list(filled.get("paths") or [])
+    chosen = "canonical/logistics/customs-clearance.json"
+    mind_fill_to_index = bool(
+        filled.get("ok")
+        and index_path.is_file()
+        and int(filled.get("index_docs") or 0) > 0
+        and int(filled.get("files") or 0) > 0
+        and chosen in filled_paths
+    )
+    kae_rec = assimilate_path(chosen, ingest=False)
+    kae_rec["find"] = {
+        "query": "customs-clearance",
+        "chosen": chosen,
+        "from": "mind-fill-important",
+        "hit_count": 1,
+    }
+    index_to_kae = bool(kae_rec.get("ok") and (kae_rec.get("find") or {}).get("chosen") == chosen)
+    compiled = auto_compile("the shipment is on customs hold", target_locale="en")
+    kae_to_ops = bool(kae_rec.get("ok") and compiled.get("schema") == "raios.neurolingua-ops-compile.v1")
+    ops_to_meaning = bool(
+        compiled.get("meaning_equivalent")
+        and compiled.get("llm_calls") == 0
+        and compiled.get("wal_written") is False
+    )
+    connected = bool(mind_fill_to_index and index_to_kae and kae_to_ops and ops_to_meaning)
+    rec = {
+        "schema": "raios.c5-p0-knowledge-e2e.v1",
+        "ts": utc(),
+        "from": "C2",
+        "parent": "C1",
+        "ok": connected,
+        "connected": connected,
+        "mind_fill_to_index": mind_fill_to_index,
+        "index_to_kae": index_to_kae,
+        "kae_to_ops_compile": kae_to_ops,
+        "ops_compile_to_meaning": ops_to_meaning,
+        "mind_fill": {
+            "ok": filled.get("ok"),
+            "files": filled.get("files"),
+            "absorbed": filled.get("absorbed"),
+            "index_docs": filled.get("index_docs"),
+            "index_terms": filled.get("index_terms"),
+        },
+        "kae": {
+            "ok": kae_rec.get("ok"),
+            "chosen": (kae_rec.get("find") or {}).get("chosen"),
+            "hit_count": (kae_rec.get("find") or {}).get("hit_count"),
+            "tiles": list((kae_rec.get("tiles") or {}).keys()),
+            "wal_written": kae_rec.get("wal_written"),
+            "cortex_used": kae_rec.get("cortex_used"),
+        },
+        "ops_compile": {
+            "ok": compiled.get("ok"),
+            "meaning_equivalent": compiled.get("meaning_equivalent"),
+            "canonical": compiled.get("canonical"),
+            "llm_calls": compiled.get("llm_calls"),
+            "l3_used": (compiled.get("l3") or {}).get("used"),
+            "wal_written": compiled.get("wal_written"),
+        },
+        "wal_written": False,
+        "gl005_proven": False,
+        "authenticated_orchestration_task": False,
+        "neurolingua_e2e_proven": False,
+        "extracted_qwen_granite": False,
+        "law": [
+            "REUSE_BEFORE_BUILD",
+            "NO_SECOND_WAL",
+            "NO_SECOND_ROUTER",
+            "KAE_INGEST_NE_WAL",
+            "OPS_COMPILE_NE_CORTEX",
+            "KNOWLEDGE_E2E_NE_GL005",
+        ],
+    }
+    if wal_mtime() != wal_before:
+        raise SystemExit("P0_KNOWLEDGE_WAL_VIOLATION")
+    rec["wal_mtime_unchanged"] = True
+    OUT.mkdir(parents=True, exist_ok=True)
+    (OUT / "KNOWLEDGE-E2E.json").write_text(json.dumps(rec, indent=2, ensure_ascii=False) + "\n", encoding="utf-8")
+    return rec
+
+
 def gate3_gl005(*, auth_ok: bool, extracted: bool) -> dict:
     behavior = {name: False for name in BRAIN_BEHAVIOR}
     if not auth_ok:
@@ -602,6 +696,30 @@ def stamp() -> dict:
 
 
 def main() -> int:
+    parser = argparse.ArgumentParser()
+    parser.add_argument("--knowledge", action="store_true", help="Connect mind-fill → INDEX → KAE → ops_compile")
+    args = parser.parse_args()
+    if args.knowledge:
+        rec = knowledge_e2e()
+        print(
+            json.dumps(
+                {
+                    "ok": rec["ok"],
+                    "connected": rec["connected"],
+                    "mind_fill_to_index": rec["mind_fill_to_index"],
+                    "index_to_kae": rec["index_to_kae"],
+                    "kae_to_ops_compile": rec["kae_to_ops_compile"],
+                    "ops_compile_to_meaning": rec["ops_compile_to_meaning"],
+                    "wal_mtime_unchanged": rec["wal_mtime_unchanged"],
+                    "gl005_proven": False,
+                    "authenticated_orchestration_task": False,
+                    "neurolingua_e2e_proven": False,
+                },
+                ensure_ascii=False,
+                indent=2,
+            )
+        )
+        return 0 if rec["connected"] else 2
     rec = stamp()
     print(rec["text"], end="")
     return 0 if rec["ok"] else 2

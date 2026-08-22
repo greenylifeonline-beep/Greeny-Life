@@ -8,6 +8,7 @@ from raios_c5_p0 import (  # noqa: E402
     GATE_ORDER,
     classify_sources,
     extracted_from_chain,
+    knowledge_e2e,
     stage,
     stamp,
 )
@@ -97,3 +98,30 @@ def test_p0_live_fail_closed_does_not_flip_locked_facts():
     assert state["facts"]["AUTHENTICATED_ORCHESTRATION_TASK"] is False
     assert state["p0"]["order"] == list(GATE_ORDER)
     assert state["p0_decision"] == "D-060"
+
+
+def test_knowledge_e2e_connects_existing_keepers_without_wal_or_gl005():
+    before = WAL.stat().st_mtime if WAL.exists() else None
+    rec = knowledge_e2e()
+    after = WAL.stat().st_mtime if WAL.exists() else None
+    assert before == after
+    assert rec["ok"] is True
+    assert rec["connected"] is True
+    assert rec["mind_fill_to_index"] is True
+    assert rec["index_to_kae"] is True
+    assert rec["kae_to_ops_compile"] is True
+    assert rec["ops_compile_to_meaning"] is True
+    assert rec["wal_mtime_unchanged"] is True
+    assert rec["wal_written"] is False
+    assert rec["gl005_proven"] is False
+    assert rec["authenticated_orchestration_task"] is False
+    assert rec["neurolingua_e2e_proven"] is False
+    assert rec["extracted_qwen_granite"] is False
+    assert rec["ops_compile"]["llm_calls"] == 0
+    assert rec["ops_compile"]["l3_used"] is False
+    assert rec["kae"]["cortex_used"] is False
+    assert rec["kae"]["wal_written"] is False
+    assert rec["kae"]["chosen"] == "canonical/logistics/customs-clearance.json"
+    assert rec["mind_fill"]["index_docs"] >= 1
+    assert rec["mind_fill"]["files"] >= 8
+    assert (ROOT / ".ai-os" / "receipts" / "c5-p0" / "KNOWLEDGE-E2E.json").is_file()
