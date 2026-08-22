@@ -409,7 +409,10 @@ def load_history(limit: int = 24) -> list[dict]:
         if not original and not decoded:
             continue
         answer = present_answer(raw_answer)
-        seat = _seat_card(decoded or original)
+        loc = str(row.get("locale") or "ar-EG")
+        if loc not in I18N:
+            loc = "ar-EG"
+        seat = _seat_card(decoded or original, loc)
         if seat:
             answer = seat
         if not answer:

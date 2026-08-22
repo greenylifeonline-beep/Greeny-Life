@@ -130,3 +130,8 @@ def test_screen_norwegian_and_english_identity():
     assert "ASSESSOR" in council["answer"] or "DeepSeek" in council["answer"]
     assert council["gl005_proven"] is False
     assert council["wal_written"] is False
+    rows = load_history()
+    nb_seat = [row for row in rows if "C4s rolle" in str(row.get("decoded") or "")]
+    assert nb_seat
+    assert "Levende rolle" in nb_seat[-1]["answer"] or "ASSESSOR" in nb_seat[-1]["answer"]
+    assert "hit_count=" not in nb_seat[-1]["answer"]
