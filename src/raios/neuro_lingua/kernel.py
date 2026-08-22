@@ -76,6 +76,8 @@ class NeuroLingua:
         text: str,
         context: dict[str, Any] | None = None,
         target_locale: str | None = None,
+        *,
+        offline_required: bool = True,
     ) -> InterpretResult:
         context = dict(context or {})
         stages: list[StageResult] = []
@@ -146,13 +148,57 @@ class NeuroLingua:
             CapabilityRequirement(
                 capability="SEMANTIC_INTERPRETATION",
                 languages=(primary_locale,),
-                offline_required=True,
+                offline_required=offline_required,
             )
         )
+        cortex_exec: dict[str, Any] | None = None
+
+        def _semantic() -> dict[str, Any]:
+            nonlocal cortex_exec
+            base = self._semantic_from_stages(working, prag.payload, concepts.payload, admission.admitted)
+            if offline_required:
+                return base
+            if routed.get("error") == "MODEL_MISSING":
+                base.update(
+                    {
+                        "status": "MODEL_MISSING",
+                        "error": "MODEL_MISSING",
+                        "source": "main-cortex-capability",
+                        "model": routed.get("model"),
+                        "llm_executed": False,
+                        "model_name_bound": False,
+                        "student_substituted": False,
+                        "fallback_used": False,
+                    }
+                )
+                return base
+            if (
+                routed.get("llm")
+                and routed.get("model_name_bound")
+                and routed.get("provider") == "main-cortex-capability"
+            ):
+                cortex_exec = self.router.execute(routed, {"text": working})
+                ok = bool(cortex_exec.get("ok"))
+                base.update(
+                    {
+                        "source": "main-cortex-capability",
+                        "model": cortex_exec.get("model"),
+                        "llm_executed": cortex_exec.get("llm_executed", False),
+                        "model_name_bound": cortex_exec.get("model_name_bound", False),
+                        "student_substituted": False,
+                        "cortex_response": cortex_exec.get("response") or "",
+                        "status": "OK" if ok else (cortex_exec.get("error") or "CORTEX_EXECUTE_FAIL"),
+                        "error": None if ok else cortex_exec.get("error"),
+                        "fallback_used": False,
+                    }
+                )
+                return base
+            return base
+
         semantic = run_stage(
             "SEMANTIC_INTERPRETATION",
             routed["provider"],
-            lambda: self._semantic_from_stages(working, prag.payload, concepts.payload, admission.admitted),
+            _semantic,
         )
         stages.append(semantic)
 
@@ -236,6 +282,8 @@ class NeuroLingua:
                 "target_locale": target_locale,
                 "governor": admission.reason,
                 "routing": routed,
+                "cortex_execution": cortex_exec,
+                "offline_required": offline_required,
                 "registry_status": self.registry.get("status"),
                 "cortex": {
                     "identity": self.governor.main_cortex_identity,
@@ -322,8 +370,19 @@ def _client() -> NeuroLingua:
     return _default
 
 
-async def interpret(text: str, context: dict[str, Any] | None = None, target_locale: str | None = None) -> InterpretResult:
-    return await _client().interpret(text=text, context=context, target_locale=target_locale)
+async def interpret(
+    text: str,
+    context: dict[str, Any] | None = None,
+    target_locale: str | None = None,
+    *,
+    offline_required: bool = True,
+) -> InterpretResult:
+    return await _client().interpret(
+        text=text,
+        context=context,
+        target_locale=target_locale,
+        offline_required=offline_required,
+    )
 
 
 async def realize(meaning: CognitiveMeaningPacket, target_locale: str, context: dict[str, Any] | None = None) -> RealizeResult:

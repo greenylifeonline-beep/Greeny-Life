@@ -10,6 +10,8 @@ import shutil
 from pathlib import Path
 from typing import Any
 
+from .provider_contracts import ProviderCapability
+
 CORTEX_IDENTITY = "qwen3.6:35b-a3b"
 OWNER = "C1"
 VERBS = ("treat", "run", "throw")
@@ -216,6 +218,34 @@ def explicit_receipt(
         "loaded": False,
         "gl005_proven": False,
     }
+
+
+class CortexProvider:
+    """LanguageProvider for CORTEX_IDENTITY. Executes via qwen_runtime.generate. No student swap."""
+
+    provider_id = "main-cortex-capability"
+
+    @property
+    def capabilities(self) -> ProviderCapability:
+        return ProviderCapability(
+            provider_id=self.provider_id,
+            capabilities=("SEMANTIC_INTERPRETATION", "SEMANTIC_REALIZATION", "SEMANTIC_VERIFICATION"),
+            languages=("ar-EG", "ar-GULF", "en", "nb-NO", "sv-SE", "da-DK"),
+            local=True,
+            quality_score=0.95,
+            estimated_latency_ms=8000,
+        )
+
+    def run(self, payload: dict[str, Any]) -> dict[str, Any]:
+        from .qwen_runtime import generate as qwen_generate
+
+        text = str(payload.get("text") or payload.get("prompt") or "").strip()
+        return qwen_generate(text, model=CORTEX_IDENTITY)
+
+    async def execute(self, capability: str, payload: dict[str, Any]) -> dict[str, Any]:
+        rec = self.run(payload)
+        rec["capability"] = capability
+        return rec
 
 
 def public_fields(st: dict[str, Any] | None = None) -> dict[str, Any]:

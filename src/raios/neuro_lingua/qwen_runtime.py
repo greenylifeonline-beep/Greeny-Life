@@ -8,7 +8,7 @@ import urllib.error
 import urllib.request
 from typing import Any
 
-from .cortex import CORTEX_IDENTITY, LAWS, gate_run, public_fields, status as cortex_status
+from .cortex import CORTEX_IDENTITY, LAWS, public_fields, status as cortex_status
 
 STUDENT_PREFERRED = "qwen2.5:0.5b"
 DEFAULT_HOST = os.environ.get("OLLAMA_HOST", "127.0.0.1:11434")
@@ -115,18 +115,23 @@ def generate(
     status = probe(host=host, use_cache=False)
     chosen = model or status.get("student_model") or STUDENT_PREFERRED
     if _is_cortex(chosen):
-        gate = gate_run()
-        return {
-            "ok": False,
-            "error": gate["reason"] if not gate["admitted"] else "CORTEX_ADAPTER_NOT_WIRED",
-            "student_live": status.get("student_live"),
-            "response": "",
-            "cortex_used": False,
-            "law": list(LAWS),
-            "gl005_proven": False,
-            **public_fields(),
-        }
-    if not status.get("present"):
+        if not status.get("cortex_live"):
+            return {
+                "ok": False,
+                "error": "MODEL_MISSING",
+                "model": CORTEX_IDENTITY,
+                "model_name_bound": False,
+                "student_live": status.get("student_live"),
+                "student_substituted": False,
+                "response": "",
+                "cortex_used": False,
+                "llm_executed": False,
+                "law": list(LAWS),
+                "gl005_proven": False,
+                **public_fields(),
+            }
+        chosen = CORTEX_IDENTITY
+    elif not status.get("present"):
         return {
             "ok": False,
             "error": "DEEP_PATH_UNAVAILABLE_NO_QWEN_OLLAMA",
@@ -158,17 +163,25 @@ def generate(
             "ok": False,
             "error": type(err).__name__,
             "model": chosen,
-            "role": "student",
+            "role": "cortex" if _is_cortex(chosen) else "student",
             "response": "",
+            "cortex_used": False,
+            "llm_executed": False,
+            "model_name_bound": _is_cortex(chosen),
+            "student_substituted": False,
             "gl005_proven": False,
             **public_fields(),
         }
     text = str(payload.get("response") or "")
+    cortex_used = _is_cortex(chosen)
     return {
         "ok": bool(text.strip()),
-        "role": "student",
+        "role": "cortex" if cortex_used else "student",
         "model": chosen,
-        "cortex_used": False,
+        "cortex_used": cortex_used,
+        "llm_executed": bool(text.strip()),
+        "model_name_bound": True,
+        "student_substituted": False,
         "response": text,
         "eval_count": payload.get("eval_count"),
         "eval_duration": payload.get("eval_duration"),

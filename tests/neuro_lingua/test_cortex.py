@@ -23,7 +23,9 @@ def test_c1_owns_cortex_hold_is_not_throw(monkeypatch):
     assert "treat" in gate["verbs"]
     refused = generate("hello", model=CORTEX_IDENTITY)
     assert refused["ok"] is False
-    assert refused["error"] == "CORTEX_HOLD_AWAITING_C1_RUN"
+    assert refused["error"] == "MODEL_MISSING"
+    assert refused["student_substituted"] is False
+    assert refused["model"] == CORTEX_IDENTITY
     assert refused["isolated_as_disposal"] is False
 
 

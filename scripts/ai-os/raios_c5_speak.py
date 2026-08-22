@@ -13,6 +13,7 @@ ROOT = Path(__file__).resolve().parents[2]
 sys.path.insert(0, str(ROOT / "src"))
 sys.path.insert(0, str(Path(__file__).resolve().parent))
 
+from raios.neuro_lingua.cortex import CORTEX_IDENTITY  # noqa: E402
 from raios.neuro_lingua.customer import COMPANIES  # noqa: E402
 from raios.neuro_lingua.kernel import NeuroLingua  # noqa: E402
 from raios.neuro_lingua.customer import speak as customer_speak  # noqa: E402
@@ -101,12 +102,103 @@ async def run_dialogues(items: list[tuple[str, str]]) -> dict:
     return rec
 
 
+async def chat(text: str) -> dict:
+    """C5 screen/reasoning path: NeuroLingua → ProviderRouter → cortex generate.
+
+    Customer catalog speak() stays deterministic (llm_calls==0). Cortex is used
+    only here. Missing qwen3.6:35b-a3b returns MODEL_MISSING. No student swap. No WAL.
+    """
+    wal_before = wal_mtime()
+    nl = NeuroLingua()
+    interpreted = await nl.interpret(text, offline_required=False)
+    routed = (interpreted.meaning.metadata or {}).get("routing") or {}
+    cortex_exec = (interpreted.meaning.metadata or {}).get("cortex_execution")
+    error = routed.get("error") or ((cortex_exec or {}).get("error") if cortex_exec else None)
+    model_name_bound = bool(routed.get("model_name_bound"))
+    llm_executed = bool((cortex_exec or {}).get("llm_executed")) if cortex_exec else False
+    if error == "MODEL_MISSING" or (not model_name_bound and not llm_executed):
+        answer = "MODEL_MISSING"
+        error = "MODEL_MISSING"
+        model_name_bound = False
+        llm_executed = False
+    elif cortex_exec and cortex_exec.get("ok"):
+        answer = str(cortex_exec.get("response") or "").strip()
+    else:
+        answer = "MODEL_MISSING"
+        error = error or "MODEL_MISSING"
+        llm_executed = False
+        model_name_bound = False
+    rec = {
+        "schema": "raios.c5-chat.v1",
+        "ts": utc(),
+        "from": "C5",
+        "parent": "C1",
+        "ok": bool(llm_executed and answer and answer != "MODEL_MISSING"),
+        "answer": answer,
+        "error": error,
+        "model": routed.get("model") or CORTEX_IDENTITY,
+        "model_name_bound": model_name_bound,
+        "llm_executed": llm_executed,
+        "student_substituted": False,
+        "provider": routed.get("provider"),
+        "routing": routed,
+        "c5_to_neurolingua": True,
+        "neurolingua_to_provider": True,
+        "provider_to_model": routed.get("model") == CORTEX_IDENTITY or routed.get("provider") == "main-cortex-capability",
+        "model_response_to_c5": True,
+        "wal_written": False,
+        "gl005_proven": False,
+        "consult_used": False,
+        "law": [
+            "C5_SCREEN_TO_NEUROLINGUA",
+            "NEUROLINGUA_TO_PROVIDER",
+            "PROVIDER_TO_CORTEX_IDENTITY",
+            "STUDENT_NE_CORTEX",
+            "TINY_QWEN_NE_CORTEX_IDENTITY",
+            "CUSTOMER_LANGUAGE_NE_CORTEX",
+        ],
+    }
+    wal_after = wal_mtime()
+    unchanged = wal_before == wal_after
+    rec["wal_mtime_unchanged"] = unchanged
+    if not unchanged:
+        rec["ok"] = False
+        rec["error"] = "WAL_VIOLATION"
+        rec["wal_written"] = True
+    return rec
+
+
 def main() -> int:
     p = argparse.ArgumentParser()
     p.add_argument("--text", default=None)
     p.add_argument("--company", default=None, choices=sorted(COMPANIES))
     p.add_argument("--demo", action="store_true")
+    p.add_argument("--chat", default=None, help="Reasoning-tier chat via cortex (MODEL_MISSING if absent)")
     args = p.parse_args()
+    if args.chat:
+        rec = asyncio.run(chat(args.chat))
+        print(
+            json.dumps(
+                {
+                    "ok": rec["ok"],
+                    "answer": rec["answer"],
+                    "error": rec.get("error"),
+                    "model": rec.get("model"),
+                    "model_name_bound": rec.get("model_name_bound"),
+                    "llm_executed": rec.get("llm_executed"),
+                    "student_substituted": rec.get("student_substituted"),
+                    "c5_to_neurolingua": rec.get("c5_to_neurolingua"),
+                    "neurolingua_to_provider": rec.get("neurolingua_to_provider"),
+                    "provider_to_model": rec.get("provider_to_model"),
+                    "model_response_to_c5": rec.get("model_response_to_c5"),
+                    "wal_mtime_unchanged": rec.get("wal_mtime_unchanged"),
+                    "gl005_proven": False,
+                },
+                ensure_ascii=False,
+                indent=2,
+            )
+        )
+        return 0 if rec.get("error") != "WAL_VIOLATION" else 2
     if args.text and args.company:
         items = [(args.company, args.text)]
     else:

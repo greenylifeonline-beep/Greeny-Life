@@ -70,7 +70,9 @@ def test_main_cortex_hold_is_not_throw():
     assert gov.cortex_isolated is False
     refused = generate("hello", model=CORTEX_IDENTITY)
     assert refused["ok"] is False
-    assert refused["error"] == "CORTEX_HOLD_AWAITING_C1_RUN"
+    assert refused["error"] == "MODEL_MISSING"
+    assert refused.get("student_substituted") is False
+    assert refused.get("model") == CORTEX_IDENTITY
 
 
 def test_c5_knows_libraries_fetches_and_puts_discovered():

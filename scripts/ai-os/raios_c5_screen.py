@@ -2,6 +2,7 @@
 """C5 professional system screen. Open-source, local, standard. No paid API. No WAL."""
 from __future__ import annotations
 
+import asyncio
 import json
 import re
 import sys
@@ -607,8 +608,18 @@ def teach_reply(message: str, locale: str | None = None) -> dict:
         answer = _screen_reply(loc)
         kind = "screen"
     else:
-        answer = _search_reply(text if kb.get("applied") else orig_norm, loc)
-        kind = "ground"
+        query = text if kb.get("applied") else orig_norm
+        seat = _seat_card(query, loc)
+        if seat:
+            answer = seat
+            kind = "ground"
+            chat_rec = None
+        else:
+            from raios_c5_speak import chat
+
+            chat_rec = asyncio.run(chat(query))
+            answer = str(chat_rec.get("answer") or "")
+            kind = "speak"
     rec = {
         "schema": "raios.c5-screen-turn.v1",
         "ts": utc(),
@@ -619,7 +630,7 @@ def teach_reply(message: str, locale: str | None = None) -> dict:
         "original": message,
         "decoded": text,
         "flipped": bool(kb.get("applied")),
-        "answer": present_answer(answer) or answer,
+        "answer": answer if kind == "speak" else (present_answer(answer) or answer),
         "paid_api": False,
         "wal_written": False,
         "gl005_proven": False,
@@ -637,6 +648,19 @@ def teach_reply(message: str, locale: str | None = None) -> dict:
             "ROLE_IDENTITY_NE_MODEL_IDENTITY",
         ],
     }
+    if kind == "speak":
+        rec["model"] = chat_rec.get("model")
+        rec["model_name_bound"] = chat_rec.get("model_name_bound")
+        rec["llm_executed"] = chat_rec.get("llm_executed")
+        rec["error"] = chat_rec.get("error")
+        rec["student_substituted"] = False
+        rec["c5_to_neurolingua"] = True
+        rec["neurolingua_to_provider"] = True
+        rec["provider_to_model"] = chat_rec.get("provider_to_model")
+        rec["model_response_to_c5"] = True
+        rec["law"] = list(rec["law"]) + ["C5_SCREEN_TO_NEUROLINGUA", "STUDENT_NE_CORTEX"]
+        if chat_rec.get("error") == "WAL_VIOLATION":
+            raise SystemExit("SCREEN_WAL_VIOLATION")
     if wal_mtime() != wal_before:
         raise SystemExit("SCREEN_WAL_VIOLATION")
     rec["wal_mtime_unchanged"] = True
