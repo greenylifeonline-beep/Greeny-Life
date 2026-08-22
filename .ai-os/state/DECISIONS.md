@@ -321,3 +321,7 @@ Live customer locales remain `ar-EG`, `ar-GULF`, `en`, `nb-NO`. The system scree
 ## D-067 Cloud-first is fabric + HOLD, not WAL move and not weight download
 DISCOVERED, C1 ordered, not CANONICAL: `STOP_NEW_LOCAL_MODEL_DOWNLOADS`. `WAL_MOVE_BLOCKED_A15`. `LAPTOP_IS_CONTROL_PLANE`. `CURSOR_CLOUD_VM_NE_LAPTOP`. `CLOUD_GATEWAY_NE_OPENAI`. `REMOTE_KEEPER_RUN_NE_GL005`. `CLOUD_MIGRATION_NE_GL005`.
 Wave `C5-CLOUD-FIRST-MIGRATION` stamps eight audits plus receipt via `python3 scripts/ai-os/raios_c5_cloud.py`. Training keepers already live on GitHub. Books stay pointer-only until a real HF write is authorized. Cognitive WAL does not move (A15). This Cursor cloud VM already runs keepers with the laptop client disconnected; that is remote-work proof for the executor, not `GL005_PROVEN` and not `CLOUD_MIGRATION_PROVEN`. No `ollama pull`. No `hf download`. No OpenAI. Laptop remains control plane. Does not close GL-005.
+
+## D-068 Merge-engine inventory is not merge execution
+DISCOVERED, C1 ordered, not CANONICAL: `MERGE_ENGINE_INVENTORY_NE_MERGE_EXECUTION`. `FILE_NAMED_ENGINE_NE_LIVE_ENGINE`. `ARCHIVE_COPY_NE_RUNTIME`. `DESTRUCTIVE_MERGE_FORBIDDEN`.
+`python3 scripts/ai-os/raios_c5_merge_engines.py` stamps named copies plus the live compress path (mind-fill → INDEX → KAE → NeuroLingua). `brain.py discover_and_merge_intelligence` stays `DO_NOT_RUN`. Archive EOS `*engine*.json` and phase-22 knowledge-merge-analysis are history, not runtime. A13 `automatic_merge=false`. NeuroLingua WAL is an adapter over the Cognitive WAL, not a second bus. Does not close GL-005.
