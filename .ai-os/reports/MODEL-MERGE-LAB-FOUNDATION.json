@@ -1,0 +1,267 @@
+{
+  "schema": "raios.model-merge-lab-foundation.v1",
+  "declarations": {
+    "strategies": [
+      "LINEAR",
+      "SLERP",
+      "TIES",
+      "DARE",
+      "SCE",
+      "TASK_ARITHMETIC",
+      "LAYER_BLOCK_MERGE",
+      "LORA_MERGE",
+      "ADAPTER_FUSION",
+      "CUSTOM"
+    ],
+    "installed_blindly": false,
+    "tools": [
+      {
+        "id": "mergekit",
+        "install": false,
+        "justified": false,
+        "role": "CANDIDATE"
+      },
+      {
+        "id": "peft",
+        "install": false,
+        "justified": false,
+        "role": "CANDIDATE"
+      },
+      {
+        "id": "safetensors",
+        "install": false,
+        "justified": false,
+        "role": "CANDIDATE"
+      },
+      {
+        "id": "transformers",
+        "install": false,
+        "justified": false,
+        "role": "CANDIDATE"
+      },
+      {
+        "id": "accelerate",
+        "install": false,
+        "justified": false,
+        "role": "CANDIDATE"
+      },
+      {
+        "id": "optuna",
+        "install": false,
+        "justified": false,
+        "role": "CANDIDATE"
+      },
+      {
+        "id": "lm-evaluation-harness",
+        "install": false,
+        "justified": false,
+        "role": "CANDIDATE"
+      },
+      {
+        "id": "ray-tune",
+        "install": false,
+        "justified": false,
+        "role": "NOT_JUSTIFIED_AT_THIS_SCALE"
+      }
+    ],
+    "execution": "FORBIDDEN_HERE",
+    "gl005_proven": false
+  },
+  "plans": {
+    "plans": [
+      {
+        "id": "exp-linear-qwen2.5:0.5b-x-qwen3.6:35b-a3b",
+        "strategy": "LINEAR",
+        "parents": [
+          "qwen2.5:0.5b",
+          "qwen3.6:35b-a3b"
+        ],
+        "execute": false,
+        "blocked": "NO_WEIGHT_DOWNLOAD_AND_NO_MERGE_HERE"
+      },
+      {
+        "id": "exp-slerp-qwen2.5:0.5b-x-qwen3.6:35b-a3b",
+        "strategy": "SLERP",
+        "parents": [
+          "qwen2.5:0.5b",
+          "qwen3.6:35b-a3b"
+        ],
+        "execute": false,
+        "blocked": "NO_WEIGHT_DOWNLOAD_AND_NO_MERGE_HERE"
+      },
+      {
+        "id": "exp-ties-qwen2.5:0.5b-x-qwen3.6:35b-a3b",
+        "strategy": "TIES",
+        "parents": [
+          "qwen2.5:0.5b",
+          "qwen3.6:35b-a3b"
+        ],
+        "execute": false,
+        "blocked": "NO_WEIGHT_DOWNLOAD_AND_NO_MERGE_HERE"
+      },
+      {
+        "id": "exp-dare-qwen2.5:0.5b-x-qwen3.6:35b-a3b",
+        "strategy": "DARE",
+        "parents": [
+          "qwen2.5:0.5b",
+          "qwen3.6:35b-a3b"
+        ],
+        "execute": false,
+        "blocked": "NO_WEIGHT_DOWNLOAD_AND_NO_MERGE_HERE"
+      },
+      {
+        "id": "exp-sce-qwen2.5:0.5b-x-qwen3.6:35b-a3b",
+        "strategy": "SCE",
+        "parents": [
+          "qwen2.5:0.5b",
+          "qwen3.6:35b-a3b"
+        ],
+        "execute": false,
+        "blocked": "NO_WEIGHT_DOWNLOAD_AND_NO_MERGE_HERE"
+      },
+      {
+        "id": "exp-task_arithmetic-qwen2.5:0.5b-x-qwen3.6:35b-a3b",
+        "strategy": "TASK_ARITHMETIC",
+        "parents": [
+          "qwen2.5:0.5b",
+          "qwen3.6:35b-a3b"
+        ],
+        "execute": false,
+        "blocked": "NO_WEIGHT_DOWNLOAD_AND_NO_MERGE_HERE"
+      },
+      {
+        "id": "exp-layer_block_merge-qwen2.5:0.5b-x-qwen3.6:35b-a3b",
+        "strategy": "LAYER_BLOCK_MERGE",
+        "parents": [
+          "qwen2.5:0.5b",
+          "qwen3.6:35b-a3b"
+        ],
+        "execute": false,
+        "blocked": "NO_WEIGHT_DOWNLOAD_AND_NO_MERGE_HERE"
+      },
+      {
+        "id": "exp-lora_merge-qwen2.5:0.5b-x-qwen3.6:35b-a3b",
+        "strategy": "LORA_MERGE",
+        "parents": [
+          "qwen2.5:0.5b",
+          "qwen3.6:35b-a3b"
+        ],
+        "execute": false,
+        "blocked": "NO_WEIGHT_DOWNLOAD_AND_NO_MERGE_HERE"
+      },
+      {
+        "id": "exp-adapter_fusion-qwen2.5:0.5b-x-qwen3.6:35b-a3b",
+        "strategy": "ADAPTER_FUSION",
+        "parents": [
+          "qwen2.5:0.5b",
+          "qwen3.6:35b-a3b"
+        ],
+        "execute": false,
+        "blocked": "NO_WEIGHT_DOWNLOAD_AND_NO_MERGE_HERE"
+      },
+      {
+        "id": "exp-custom-qwen2.5:0.5b-x-qwen3.6:35b-a3b",
+        "strategy": "CUSTOM",
+        "parents": [
+          "qwen2.5:0.5b",
+          "qwen3.6:35b-a3b"
+        ],
+        "execute": false,
+        "blocked": "NO_WEIGHT_DOWNLOAD_AND_NO_MERGE_HERE"
+      }
+    ],
+    "executed": 0,
+    "winner": null,
+    "gl005_proven": false
+  },
+  "merge_executor": {
+    "ok": false,
+    "executed": false,
+    "reason": "MERGE_FORBIDDEN_HERE",
+    "plan_id": "exp-linear-qwen2.5:0.5b-x-qwen3.6:35b-a3b",
+    "strategy": "LINEAR",
+    "weights_touched": false,
+    "downloaded": false,
+    "gl005_proven": false,
+    "law": [
+      "NO_NEW_LOCAL_MODEL_DOWNLOADS",
+      "MERGE_DECLARATION_NE_MERGE_EXECUTION",
+      "DESTRUCTIVE_MERGE_FORBIDDEN"
+    ]
+  },
+  "compatibility": {
+    "ok": false,
+    "reason": "ARCH_UNKNOWN",
+    "merge_allowed": false,
+    "a": "qwen2.5:0.5b",
+    "b": "qwen3.6:35b-a3b"
+  },
+  "evaluation": {
+    "model_id": "qwen2.5:0.5b",
+    "harness": "NOT_RUN",
+    "axes": {
+      "reasoning": "UNKNOWN",
+      "coding": "UNKNOWN",
+      "tool_use": "UNKNOWN",
+      "multilingual": "UNKNOWN",
+      "arabic": "UNKNOWN",
+      "norwegian_scandinavian": "UNKNOWN",
+      "long_context": "UNKNOWN",
+      "domain_performance": "UNKNOWN",
+      "latency": "UNKNOWN",
+      "ram": "UNKNOWN",
+      "vram": "UNKNOWN",
+      "storage": "UNKNOWN",
+      "license": "UNKNOWN",
+      "quantization": "UNKNOWN",
+      "parallelism": "UNKNOWN",
+      "safety": "UNKNOWN",
+      "regression": "UNKNOWN"
+    },
+    "lm_eval": false,
+    "gl005_proven": false
+  },
+  "regression": {
+    "ok": false,
+    "reason": "NO_MERGED_MODEL_TO_REGRESS",
+    "before_id": "qwen2.5:0.5b",
+    "after_id": "merged-none",
+    "forgetting": "NOT_MEASURED",
+    "gl005_proven": false
+  },
+  "pareto": {
+    "winner": null,
+    "reason": "HARDWARE_OR_EVAL_INCOMPLETE",
+    "candidates": [
+      "qwen2.5:0.5b",
+      "qwen3.6:35b-a3b",
+      "granite4:3b",
+      "ibm/granite",
+      "deepseek-r1:1.5b"
+    ],
+    "gpu_capacity": "NOT_PROVEN",
+    "gl005_proven": false
+  },
+  "adapter": {
+    "ok": false,
+    "compiled": false,
+    "reason": "ADAPTER_COMPILE_FORBIDDEN_UNTIL_LAB_EVAL",
+    "plan_id": "none",
+    "peft_installed": false,
+    "gl005_proven": false
+  },
+  "canary": {
+    "canaries": [],
+    "promoted": [],
+    "automatic_promotion": false,
+    "gl005_proven": false,
+    "law": [
+      "NO_AUTO_CANONICAL_PROMOTION"
+    ]
+  },
+  "installed_blindly": false,
+  "gl005_proven": false,
+  "from": "C2",
+  "c5": "git",
+  "wal_written": false
+}

@@ -1,0 +1,64 @@
+{
+  "schema": "raios.qwen-runtime-reality.v1",
+  "student_preferred": "qwen2.5:0.5b",
+  "student_live": true,
+  "student_generate_ok": true,
+  "student_model_id": "qwen2.5:0.5b",
+  "parameter_count_claimed": "0.5b_name_only",
+  "weight_hash": null,
+  "architecture_from_artifact": null,
+  "do_not_call_qwen_3_6": true,
+  "cortex_identity_string": "qwen3.6:35b-a3b",
+  "cortex_loaded": false,
+  "cortex_generate_ok": false,
+  "cortex_generate_error": "CORTEX_HOLD_AWAITING_C1_RUN",
+  "granite_generate_ok": false,
+  "final_backbone": null,
+  "qwen_configured_ne_final_backbone": true,
+  "ollama_tags": [
+    "qwen2.5:0.5b"
+  ],
+  "probe": {
+    "schema": "raios.qwen-runtime.v1",
+    "present": true,
+    "endpoint": "http://127.0.0.1:11434/api/tags",
+    "models": [
+      "qwen2.5:0.5b"
+    ],
+    "student_preferred": "qwen2.5:0.5b",
+    "student_model": "qwen2.5:0.5b",
+    "student_live": true,
+    "cortex_live": false,
+    "reason": "STUDENT_LIVE_CORTEX_HOLD",
+    "law": [
+      "C1_OWNS_CORTEX_TREAT_RUN_THROW",
+      "EXECUTOR_NE_THROW_CORTEX",
+      "EXECUTOR_NE_ISOLATE_AS_DISPOSAL",
+      "HOLD_NE_THROW",
+      "CORTEX_RUN_REQUIRES_C1",
+      "STUDENT_NE_MAIN_CORTEX",
+      "TINY_QWEN_NE_CORTEX_IDENTITY",
+      "CUSTOMER_LANGUAGE_NE_CORTEX",
+      "HF_WEIGHTS_NE_IN_SECRET_REPO"
+    ],
+    "gl005_proven": false,
+    "cortex_identity": "qwen3.6:35b-a3b",
+    "cortex_owner": "C1",
+    "cortex_verbs": [
+      "treat",
+      "run",
+      "throw"
+    ],
+    "isolated_as_disposal": false,
+    "cortex_hold": true,
+    "cortex_thrown": false,
+    "cortex_isolated": false,
+    "run_granted": false,
+    "host_can_run": false,
+    "host_reason": "HOST_NO_GPU"
+  },
+  "gl005_proven": false,
+  "from": "C2",
+  "c5": "git",
+  "wal_written": false
+}

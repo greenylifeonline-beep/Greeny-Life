@@ -1,0 +1,58 @@
+{
+  "schema": "raios.council-parallel-tasks.v1",
+  "channel": ".ai-os/council/packets",
+  "cognitive_wal": false,
+  "packets": {
+    "C2": {
+      "seat": "C2",
+      "tasks": [
+        "repository consolidation",
+        "cloud integration",
+        "runtime wiring"
+      ],
+      "impersonated": false,
+      "status": "THIS_STAMP"
+    },
+    "C4": {
+      "seat": "C4",
+      "tasks": [
+        "adversarial architecture review",
+        "model/merge critique",
+        "retirement falsification",
+        "NeuroLingua attack tests"
+      ],
+      "impersonated": false,
+      "status": "PACKET_ONLY",
+      "do_not_summon": true
+    },
+    "C5": {
+      "seat": "C5",
+      "tasks": [
+        "self-inspection",
+        "learning",
+        "runtime trace",
+        "assimilation proof",
+        "blind transfer"
+      ],
+      "impersonated": false,
+      "status": "GIT_MIND",
+      "lives_in": "git",
+      "cognitive_wal_written": false
+    },
+    "C3": {
+      "seat": "C3",
+      "tasks": [
+        "state-of-art research",
+        "model/tool scouting",
+        "architecture comparison"
+      ],
+      "impersonated": false,
+      "status": "PACKET_ONLY",
+      "do_not_summon": true
+    }
+  },
+  "gl005_proven": false,
+  "from": "C2",
+  "c5": "git",
+  "wal_written": false
+}

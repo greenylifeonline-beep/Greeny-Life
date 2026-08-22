@@ -1,0 +1,48 @@
+{
+  "schema": "raios.model-execution-dataflow.v1",
+  "flow": [
+    "INPUT",
+    "parser",
+    "NeuroLingua L1",
+    "NeuroLingua L2",
+    "router",
+    "model shell (training only if student generate 200)",
+    "model weights (student only on this VM)",
+    "context/cortex matrix HOLD",
+    "retrieval FILE_ONLY",
+    "memory WAL locked",
+    "reasoning deterministic",
+    "verifier",
+    "output"
+  ],
+  "classes": {
+    "input": "LIVE",
+    "parser": "LIVE",
+    "neurolingua_l1": "LIVE",
+    "neurolingua_l2": "CONNECTED",
+    "router": "LIVE",
+    "model_shell": "TRAINING_ONLY",
+    "model_weights": "TRAINING_ONLY",
+    "context_cortex_matrix": "HOLD",
+    "retrieval": "FILE_ONLY",
+    "memory": "LIVE",
+    "reasoning": "LIVE",
+    "verifier": "LIVE",
+    "output": "LIVE",
+    "qwen2.5:0.5b": "TRAINING_ONLY",
+    "qwen3.6:35b-a3b": "HOLD",
+    "granite": "NOT_REACHED",
+    "deepseek": "FILE_ONLY",
+    "semantic_kernel": "LIVE",
+    "model_registry": "CONNECTED"
+  },
+  "student": {
+    "ok": true,
+    "model": "qwen2.5:0.5b",
+    "error": null
+  },
+  "gl005_proven": false,
+  "from": "C2",
+  "c5": "git",
+  "wal_written": false
+}

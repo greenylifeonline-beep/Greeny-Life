@@ -1,0 +1,94 @@
+{
+  "schema": "raios.kaggle-work-stealing-proof.v1",
+  "work_stealing_proven": false,
+  "work_stealing_local_sim_proven": true,
+  "kaggle_a_worker_proven": false,
+  "kaggle_b_worker_proven": false,
+  "job": {
+    "job_id": "job-customs-1",
+    "op": "hash_payload",
+    "payload": {
+      "event": "shipment_status",
+      "state": "customs_hold"
+    },
+    "input_hash": "2cd4d7e356df293ac38a0599c52b180e425d547d8ebbd1403c1a23266e5419e3",
+    "status": "QUEUED",
+    "worker_id": null,
+    "created_at": "2026-08-22T06:47:51.892055+00:00"
+  },
+  "worker_a_death": {
+    "ok": false,
+    "reason": "WORKER_DIED_AFTER_CHECKPOINT",
+    "resumable": true,
+    "seq": 1,
+    "trace": [
+      "DISCOVER_JOB",
+      "CLAIM_LEASE",
+      "VERIFY_INPUT_HASH",
+      "EXECUTE",
+      "CHECKPOINT"
+    ],
+    "worker_id": "LOCAL_SIM_A",
+    "job_id": "job-customs-1"
+  },
+  "discover_b": {
+    "ok": true,
+    "worker_id": "LOCAL_SIM_B",
+    "jobs": [
+      "job-customs-1"
+    ],
+    "step": "DISCOVER_JOB"
+  },
+  "worker_b_complete": {
+    "ok": true,
+    "resumed": true,
+    "output_hash": "e9036be7bd804040a40cf897fed8d7cf0c98dd2e71d0824c1af4f0258162dd32",
+    "trace": [
+      "DISCOVER_JOB",
+      "CLAIM_LEASE",
+      "VERIFY_INPUT_HASH",
+      "EXECUTE",
+      "CHECKPOINT",
+      "WRITE_OUTPUT",
+      "HASH_OUTPUT",
+      "WRITE_RECEIPT",
+      "RELEASE_LEASE"
+    ],
+    "worker_id": "LOCAL_SIM_B"
+  },
+  "retry_duplicate": true,
+  "reconciliation": {
+    "receipts": 1,
+    "jobs": 1,
+    "duplicate_job_receipts": [],
+    "duplicate_output_detected": false,
+    "same_hash_across_jobs": {},
+    "ok": true,
+    "gl005_proven": false
+  },
+  "lifecycle": [
+    "DISCOVER_JOB",
+    "CLAIM_LEASE",
+    "VERIFY_INPUT_HASH",
+    "EXECUTE",
+    "CHECKPOINT",
+    "WRITE_OUTPUT",
+    "HASH_OUTPUT",
+    "WRITE_RECEIPT",
+    "RELEASE_LEASE"
+  ],
+  "law": [
+    "PROVIDER_NE_C5",
+    "WORKER_NE_C5",
+    "KAGGLE_NE_PERSISTENT_BRAIN",
+    "JOB_RETRY_MUST_BE_IDEMPOTENT",
+    "LEASE_EXPIRY_MUST_ALLOW_FAILOVER",
+    "DUPLICATE_OUTPUT_MUST_BE_DETECTED",
+    "CHECKPOINT_MUST_BE_RESUMABLE",
+    "LOCAL_STEAL_SIM_NE_KAGGLE_PROVEN"
+  ],
+  "gl005_proven": false,
+  "from": "C2",
+  "c5": "git",
+  "wal_written": false
+}

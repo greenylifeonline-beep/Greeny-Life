@@ -1,0 +1,67 @@
+{
+  "schema": "raios.kaggle-hardware-matrix.v1",
+  "this_vm_probe": {
+    "schema": "raios.kaggle-hardware-probe.v1",
+    "worker_id": "CURSOR_CLOUD_VM",
+    "hostname": "cursor",
+    "platform": "Linux-6.12.94+-x86_64-with-glibc2.39",
+    "python": "3.12.3",
+    "cpu_model": "Intel(R) Xeon(R) Processor",
+    "cpu_count": 4,
+    "ram_total": 16791945216,
+    "ram_free": 12891144192,
+    "accelerator_type": "CPU",
+    "gpu_count": 0,
+    "gpu_name": [],
+    "vram_total_per_gpu": [],
+    "vram_free_per_gpu": [],
+    "cuda_availability": false,
+    "torch_version": null,
+    "disk_total": 270436077568,
+    "disk_free": 210212638720,
+    "/kaggle/working_capacity": {
+      "disk_total_bytes": null,
+      "disk_free_bytes": null,
+      "path": "/kaggle/working"
+    },
+    "/kaggle/input_mounted_assets": [],
+    "session_runtime_identity": {
+      "hostname": "cursor",
+      "kaggle_kernel_run_type": null,
+      "kaggle_kernel_id": null,
+      "cwd": "/workspace"
+    },
+    "hardware_state": "CPU_ONLY",
+    "gpu_capacity": "NOT_PROVEN",
+    "on_kaggle": false,
+    "is_c5": false,
+    "gl005_proven": false,
+    "law": [
+      "ACCOUNT_CAPABILITY_NE_SESSION_GPU",
+      "NO_GPU_MEANS_CPU_ONLY",
+      "WORKER_NE_C5"
+    ]
+  },
+  "kaggle_a_session": {
+    "status": "NOT_RUN_ON_KAGGLE",
+    "hardware_state": "UNKNOWN",
+    "gpu_capacity": "NOT_PROVEN"
+  },
+  "kaggle_b_session": {
+    "status": "NOT_RUN_ON_KAGGLE",
+    "hardware_state": "UNKNOWN",
+    "gpu_capacity": "NOT_PROVEN"
+  },
+  "founder_claimed_cpu_only_probes": true,
+  "do_not_infer_gpu_from_account": true,
+  "this_vm_hardware_state": "CPU_ONLY",
+  "this_vm_gpu_capacity": "NOT_PROVEN",
+  "c1_actions": [
+    "Enable Kaggle accelerator in the A session if GPU work is required, then run gym/kaggle/KAGGLE-A-HARDWARE-PROBE.ipynb",
+    "Authenticate Kaggle B as an independent account, then run gym/kaggle/KAGGLE-B-HARDWARE-PROBE.ipynb"
+  ],
+  "gl005_proven": false,
+  "from": "C2",
+  "c5": "git",
+  "wal_written": false
+}

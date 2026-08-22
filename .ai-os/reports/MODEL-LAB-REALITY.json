@@ -1,0 +1,92 @@
+{
+  "schema": "raios.model-lab-reality.v1",
+  "registry": {
+    "schema": "raios.model-registry.v1",
+    "families_scouted": [
+      "qwen",
+      "deepseek",
+      "granite",
+      "llama",
+      "mistral",
+      "gemma",
+      "phi",
+      "yi",
+      "command-r",
+      "eurollm",
+      "silma",
+      "jais",
+      "viking",
+      "norwai",
+      "unknown-open"
+    ],
+    "axes": [
+      "reasoning",
+      "coding",
+      "tool_use",
+      "multilingual",
+      "arabic",
+      "norwegian_scandinavian",
+      "long_context",
+      "domain_performance",
+      "latency",
+      "ram",
+      "vram",
+      "storage",
+      "license",
+      "quantization",
+      "parallelism",
+      "safety",
+      "regression"
+    ],
+    "models": [
+      {
+        "id": "qwen2.5:0.5b",
+        "source": "LIVE_LOCAL_THIS_HOST",
+        "winner": false,
+        "status": "MEASURED"
+      },
+      {
+        "id": "qwen3.6:35b-a3b",
+        "source": "NAMED_HOLD",
+        "winner": false,
+        "status": "NOT_LOADED"
+      },
+      {
+        "id": "granite4:3b",
+        "source": "NAMED_HOLD",
+        "winner": false,
+        "status": "NOT_LOADED"
+      },
+      {
+        "id": "ibm/granite",
+        "source": "NAMED_HOLD",
+        "winner": false,
+        "status": "NOT_LOADED"
+      },
+      {
+        "id": "deepseek-r1:1.5b",
+        "source": "FOUNDER_CLAIMED_LAPTOP",
+        "winner": false,
+        "status": "UNVERIFIED_HERE"
+      }
+    ],
+    "winner": null,
+    "selection_blocked_until_hardware": true,
+    "hardcoded_qwen_winner": false,
+    "hardcoded_deepseek_winner": false,
+    "hardcoded_granite_winner": false,
+    "gl005_proven": false
+  },
+  "hardware_this_host": {
+    "hardware_state": "CPU_ONLY",
+    "gpu_capacity": "NOT_PROVEN",
+    "ram_total": 16791945216
+  },
+  "winner": null,
+  "model_lab_foundation_proven": true,
+  "merge_executed": false,
+  "gl005_proven": false,
+  "from": "C2",
+  "c5": "git",
+  "wal_written": false
+}

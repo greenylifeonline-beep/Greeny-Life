@@ -1,0 +1,124 @@
+{
+  "schema": "raios.neurolingua-e2e-proof.v1",
+  "ok": true,
+  "rows": [
+    {
+      "locale": "ar-EG",
+      "input": "الشحنة واقفة في الجمارك",
+      "source_locale": "ar-EG",
+      "canonical": {
+        "event": "shipment_status",
+        "state": "customs_hold"
+      },
+      "generated": "الشحنة واقفة في الجمارك",
+      "meaning_equivalent": true,
+      "roundtrip_equivalent": true,
+      "l3_used": false,
+      "llm_calls": 0,
+      "wal_written": false
+    },
+    {
+      "locale": "ar-GULF",
+      "input": "الشحنة محجوزة في الجمارك",
+      "source_locale": "ar-GULF",
+      "canonical": {
+        "event": "shipment_status",
+        "state": "customs_hold"
+      },
+      "generated": "الشحنة محجوزة في الجمارك",
+      "meaning_equivalent": true,
+      "roundtrip_equivalent": true,
+      "l3_used": false,
+      "llm_calls": 0,
+      "wal_written": false
+    },
+    {
+      "locale": "en",
+      "input": "the shipment is on customs hold",
+      "source_locale": "en",
+      "canonical": {
+        "event": "shipment_status",
+        "state": "customs_hold"
+      },
+      "generated": "The shipment is on customs hold.",
+      "meaning_equivalent": true,
+      "roundtrip_equivalent": true,
+      "l3_used": false,
+      "llm_calls": 0,
+      "wal_written": false
+    },
+    {
+      "locale": "nb-NO",
+      "input": "forsendelsen er holdt i tollen",
+      "source_locale": "nb-NO",
+      "canonical": {
+        "event": "shipment_status",
+        "state": "customs_hold"
+      },
+      "generated": "Forsendelsen er holdt i tollen.",
+      "meaning_equivalent": true,
+      "roundtrip_equivalent": true,
+      "l3_used": false,
+      "llm_calls": 0,
+      "wal_written": false
+    },
+    {
+      "locale": "sv-SE",
+      "input": "försändelsen är stoppad i tullen",
+      "source_locale": "sv-SE",
+      "canonical": {
+        "event": "shipment_status",
+        "state": "customs_hold"
+      },
+      "generated": "Försändelsen är stoppad i tullen.",
+      "meaning_equivalent": true,
+      "roundtrip_equivalent": true,
+      "l3_used": false,
+      "llm_calls": 0,
+      "wal_written": false
+    },
+    {
+      "locale": "da-DK",
+      "input": "forsendelsen er tilbageholdt i tolden",
+      "source_locale": "da-DK",
+      "canonical": {
+        "event": "shipment_status",
+        "state": "customs_hold"
+      },
+      "generated": "Forsendelsen er tilbageholdt i tolden.",
+      "meaning_equivalent": true,
+      "roundtrip_equivalent": true,
+      "l3_used": false,
+      "llm_calls": 0,
+      "wal_written": false
+    }
+  ],
+  "locales": [
+    "ar-EG",
+    "ar-GULF",
+    "da-DK",
+    "en",
+    "nb-NO",
+    "sv-SE"
+  ],
+  "target": {
+    "event": "shipment_status",
+    "state": "customs_hold"
+  },
+  "text_similarity_used": false,
+  "auto_wired": true,
+  "proven_flags": {
+    "NEUROLINGUA_L1_PROVEN": false,
+    "NEUROLINGUA_L2_PROVEN": false,
+    "NEUROLINGUA_L3_PROVEN": false,
+    "NEUROLINGUA_L4_PROVEN": false,
+    "NEUROLINGUA_E2E_PROVEN": false
+  },
+  "tested": true,
+  "note": "Six-locale customs_hold meaning is TESTED. Full layer proof stays false (embeddings/morphology/cortex absent).",
+  "gl005_proven": false,
+  "wal_written": false,
+  "NEUROLINGUA_E2E_PROVEN": false,
+  "from": "C2",
+  "c5": "git"
+}

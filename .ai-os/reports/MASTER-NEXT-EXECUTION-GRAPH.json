@@ -1,0 +1,23 @@
+{
+  "schema": "raios.master-next-execution-graph.v1",
+  "p0": [
+    "AUTHENTICATED_ORCHESTRATION_TASK",
+    "QWEN_GRANITE_SOURCE_INDEPENDENT_ASSIMILATION",
+    "GL005"
+  ],
+  "c1_minimum_actions": [
+    "Enable Kaggle accelerator in the worker session if GPU is required, then run the A/B hardware probe notebooks",
+    "Authenticate Kaggle B as an independent worker",
+    "Grant a durable cloud credential if persistent cognitive storage should leave the laptop (HF dataset write repo or object store)"
+  ],
+  "next_automated": [
+    "Keep laptop as control plane",
+    "Do not download new local models",
+    "Do not delete Qwen/Granite sources",
+    "Do not mint GL005"
+  ],
+  "gl005_proven": false,
+  "from": "C2",
+  "c5": "git",
+  "wal_written": false
+}

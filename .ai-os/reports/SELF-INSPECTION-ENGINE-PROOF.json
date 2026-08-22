@@ -1,0 +1,333 @@
+{
+  "schema": "raios.self-inspection.v1",
+  "ts": "2026-08-22T06:47:53.002673+00:00",
+  "censuses": [
+    "tool_census",
+    "model_census",
+    "duplicate_census",
+    "runtime_graph_census",
+    "storage_census",
+    "health_census",
+    "knowledge_gap_census",
+    "security_census",
+    "neurolingua_census",
+    "cloud_capacity_census"
+  ],
+  "actions_allowed": [
+    "KEEP",
+    "MERGE",
+    "ARCHIVE",
+    "DELETE_CANDIDATE",
+    "RESEARCH_REQUIRED",
+    "REPAIR_REQUIRED"
+  ],
+  "rows": [
+    {
+      "census": "tool_census",
+      "action": "KEEP",
+      "keepers": 39,
+      "paths": [
+        "scripts/ai-os/raios_c5_book.py",
+        "scripts/ai-os/raios_c5_check.py",
+        "scripts/ai-os/raios_c5_cloud.py",
+        "scripts/ai-os/raios_c5_council.py",
+        "scripts/ai-os/raios_c5_enforce.py",
+        "scripts/ai-os/raios_c5_experience.py",
+        "scripts/ai-os/raios_c5_foundation.py",
+        "scripts/ai-os/raios_c5_grind.py",
+        "scripts/ai-os/raios_c5_hunt.py",
+        "scripts/ai-os/raios_c5_index.py",
+        "scripts/ai-os/raios_c5_kae.py",
+        "scripts/ai-os/raios_c5_keyboard.py",
+        "scripts/ai-os/raios_c5_learn.py",
+        "scripts/ai-os/raios_c5_memory.py",
+        "scripts/ai-os/raios_c5_merge_engines.py",
+        "scripts/ai-os/raios_c5_mind.py",
+        "scripts/ai-os/raios_c5_mind_fill.py",
+        "scripts/ai-os/raios_c5_minute.py",
+        "scripts/ai-os/raios_c5_p0.py",
+        "scripts/ai-os/raios_c5_phase0.py",
+        "scripts/ai-os/raios_c5_plan.py",
+        "scripts/ai-os/raios_c5_proof.py",
+        "scripts/ai-os/raios_c5_qwen.py",
+        "scripts/ai-os/raios_c5_read.py",
+        "scripts/ai-os/raios_c5_reality.py",
+        "scripts/ai-os/raios_c5_reason.py",
+        "scripts/ai-os/raios_c5_screen.py",
+        "scripts/ai-os/raios_c5_speak.py",
+        "scripts/ai-os/raios_c5_steward.py",
+        "scripts/ai-os/raios_c5_toc.py",
+        "scripts/ai-os/raios_c5_tools_audit.py",
+        "scripts/ai-os/raios_c5_trace.py",
+        "scripts/ai-os/raios_c5_train.py",
+        "scripts/ai-os/raios_c5_unconscious.py",
+        "scripts/ai-os/raios_c5_watchdog.py",
+        "scripts/ai-os/raios_c5_wave1.py",
+        "scripts/ai-os/raios_c5_wave_ccn.py",
+        "scripts/ai-os/raios_c5_week.py",
+        "scripts/ai-os/raios_c5_whoami.py"
+      ]
+    },
+    {
+      "census": "model_census",
+      "action": "RESEARCH_REQUIRED",
+      "live": [
+        "qwen2.5:0.5b"
+      ],
+      "hold": [
+        "qwen3.6:35b-a3b",
+        "granite4:3b",
+        "ibm/granite"
+      ],
+      "winner": null,
+      "note": "Do not select backbone until hardware capacity is known."
+    },
+    {
+      "census": "duplicate_census",
+      "action": "DELETE_CANDIDATE",
+      "files_hashed": 2397,
+      "skipped_large_or_empty": 146,
+      "exact_duplicate_groups": 70,
+      "reclaimable_bytes": 1575835,
+      "retire_now": false,
+      "note": "Candidates only. NO_BLIND_DELETE. SAFE_TO_REMOVE_SOURCE=false."
+    },
+    {
+      "census": "runtime_graph_census",
+      "action": "KEEP",
+      "live_spine": "deterministic-neuro-lingua",
+      "student": "qwen2.5:0.5b TRAINING_ONLY_IF_GENERATE_200",
+      "cortex": "HOLD"
+    },
+    {
+      "census": "storage_census",
+      "action": "RESEARCH_REQUIRED",
+      "providers": [
+        [
+          "REFERENCED",
+          "BLOCKED_AUTH",
+          "CAPACITY_UNKNOWN"
+        ],
+        [
+          "REFERENCED",
+          "FOUNDER_CLAIMED_AUTHENTICATED",
+          "BLOCKED_AUTH_THIS_HOST"
+        ],
+        [
+          "REFERENCED",
+          "NOT_BOUND"
+        ],
+        [
+          "REFERENCED",
+          "READABLE",
+          "CAPACITY_UNKNOWN"
+        ],
+        [
+          "REFERENCED",
+          "CAPACITY_UNKNOWN"
+        ],
+        [
+          "REFERENCED",
+          "WORKER"
+        ],
+        [
+          "AUTHENTICATED",
+          "WRITABLE",
+          "LIVE_TESTED",
+          "CAPACITY_KNOWN"
+        ],
+        [
+          "ABSENT"
+        ],
+        [
+          "WRITABLE",
+          "READABLE",
+          "LIVE_TESTED"
+        ],
+        [
+          "REFERENCED",
+          "LOCKED_A15"
+        ]
+      ],
+      "persistent_cognitive_storage_proven": false
+    },
+    {
+      "census": "health_census",
+      "action": "KEEP",
+      "ollama_student_generate": true,
+      "wal_locked_a15": true,
+      "gl005_proven": false
+    },
+    {
+      "census": "knowledge_gap_census",
+      "action": "RESEARCH_REQUIRED",
+      "gaps": [
+        "AUTHENTICATED_ORCHESTRATION_TASK",
+        "QWEN_GRANITE_SOURCE_INDEPENDENT_ASSIMILATION",
+        "KAGGLE_B_BIND",
+        "PERSISTENT_COGNITIVE_PROVIDER"
+      ]
+    },
+    {
+      "census": "security_census",
+      "action": "KEEP",
+      "secret_print": false,
+      "paid_api": false,
+      "openai": false,
+      "auth_bypass": false
+    },
+    {
+      "census": "neurolingua_census",
+      "action": "KEEP",
+      "file_count": 38,
+      "layers": {
+        "L1": "TESTED",
+        "L2": "TESTED",
+        "L3": "HOLD",
+        "L4": "TESTED"
+      },
+      "l1_proven": false,
+      "l2_proven": false,
+      "l3_proven": false,
+      "l4_proven": false,
+      "e2e_proven": false
+    },
+    {
+      "census": "cloud_capacity_census",
+      "action": "RESEARCH_REQUIRED",
+      "providers": [
+        "huggingface",
+        "kaggle_a",
+        "kaggle_b",
+        "github",
+        "onedrive",
+        "colab",
+        "cursor_cloud_vm",
+        "s3_r2_b2_supabase_neon",
+        "local_cas",
+        "cognitive_wal"
+      ],
+      "laptop_control_plane": true
+    }
+  ],
+  "maintenance_queue": [
+    {
+      "census": "duplicate_census",
+      "action": "DELETE_CANDIDATE",
+      "files_hashed": 2397,
+      "skipped_large_or_empty": 146,
+      "exact_duplicate_groups": 70,
+      "reclaimable_bytes": 1575835,
+      "retire_now": false,
+      "note": "Candidates only. NO_BLIND_DELETE. SAFE_TO_REMOVE_SOURCE=false."
+    }
+  ],
+  "research_queue": [
+    {
+      "census": "model_census",
+      "action": "RESEARCH_REQUIRED",
+      "live": [
+        "qwen2.5:0.5b"
+      ],
+      "hold": [
+        "qwen3.6:35b-a3b",
+        "granite4:3b",
+        "ibm/granite"
+      ],
+      "winner": null,
+      "note": "Do not select backbone until hardware capacity is known."
+    },
+    {
+      "census": "storage_census",
+      "action": "RESEARCH_REQUIRED",
+      "providers": [
+        [
+          "REFERENCED",
+          "BLOCKED_AUTH",
+          "CAPACITY_UNKNOWN"
+        ],
+        [
+          "REFERENCED",
+          "FOUNDER_CLAIMED_AUTHENTICATED",
+          "BLOCKED_AUTH_THIS_HOST"
+        ],
+        [
+          "REFERENCED",
+          "NOT_BOUND"
+        ],
+        [
+          "REFERENCED",
+          "READABLE",
+          "CAPACITY_UNKNOWN"
+        ],
+        [
+          "REFERENCED",
+          "CAPACITY_UNKNOWN"
+        ],
+        [
+          "REFERENCED",
+          "WORKER"
+        ],
+        [
+          "AUTHENTICATED",
+          "WRITABLE",
+          "LIVE_TESTED",
+          "CAPACITY_KNOWN"
+        ],
+        [
+          "ABSENT"
+        ],
+        [
+          "WRITABLE",
+          "READABLE",
+          "LIVE_TESTED"
+        ],
+        [
+          "REFERENCED",
+          "LOCKED_A15"
+        ]
+      ],
+      "persistent_cognitive_storage_proven": false
+    },
+    {
+      "census": "knowledge_gap_census",
+      "action": "RESEARCH_REQUIRED",
+      "gaps": [
+        "AUTHENTICATED_ORCHESTRATION_TASK",
+        "QWEN_GRANITE_SOURCE_INDEPENDENT_ASSIMILATION",
+        "KAGGLE_B_BIND",
+        "PERSISTENT_COGNITIVE_PROVIDER"
+      ]
+    },
+    {
+      "census": "cloud_capacity_census",
+      "action": "RESEARCH_REQUIRED",
+      "providers": [
+        "huggingface",
+        "kaggle_a",
+        "kaggle_b",
+        "github",
+        "onedrive",
+        "colab",
+        "cursor_cloud_vm",
+        "s3_r2_b2_supabase_neon",
+        "local_cas",
+        "cognitive_wal"
+      ],
+      "laptop_control_plane": true
+    }
+  ],
+  "c5_learning_event": {
+    "written_cognitive_wal": false,
+    "reason": "A15_LOCK",
+    "channel": ".ai-os/receipts/c5-self-inspection"
+  },
+  "scheduler": "existing raios_c5_train KEEPERS + this stamp",
+  "new_scheduler_invented": false,
+  "self_inspection_proven": true,
+  "gl005_proven": false,
+  "wal_written": false,
+  "sha256": "9866d989df00e119fae6a7f6da0bb7d5dbe5c44c73c44d7f3f59df195971a0d5",
+  "from": "C2",
+  "c5": "git"
+}

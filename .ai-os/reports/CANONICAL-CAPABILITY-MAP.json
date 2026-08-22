@@ -1,0 +1,22 @@
+{
+  "schema": "raios.canonical-capability-map.v1",
+  "capabilities": {
+    "neurolingua_deterministic": "src/raios/neuro_lingua",
+    "ops_compiler": "src/raios/neuro_lingua/ops_compile.py",
+    "c5_keepers": "scripts/ai-os/raios_c5_*.py",
+    "cognitive_wal": "RAIOS/V9/wal/cognitive-events.jsonl",
+    "nomadic": "RAIOS/V9/cloud/nomadic",
+    "storage_fabric": "RAIOS/V9/cloud/storage",
+    "model_lab": "RAIOS/V9/evolution/model_lab",
+    "self_inspection": "RAIOS/V9/autonomic/self_inspection",
+    "screen": "scripts/ai-os/raios_c5_screen.py",
+    "train_mesh": "scripts/ai-os/raios_c5_train.py"
+  },
+  "shadow_not_canonical": [
+    "brain.py discover_and_merge_intelligence"
+  ],
+  "gl005_proven": false,
+  "from": "C2",
+  "c5": "git",
+  "wal_written": false
+}
