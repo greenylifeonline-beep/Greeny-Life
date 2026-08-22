@@ -1,0 +1,25 @@
+"""Nomadic compute plane. Workers steal jobs. They are not the mind."""
+from __future__ import annotations
+
+LIFECYCLE = (
+    "DISCOVER_JOB",
+    "CLAIM_LEASE",
+    "VERIFY_INPUT_HASH",
+    "EXECUTE",
+    "CHECKPOINT",
+    "WRITE_OUTPUT",
+    "HASH_OUTPUT",
+    "WRITE_RECEIPT",
+    "RELEASE_LEASE",
+)
+
+LAWS = (
+    "PROVIDER_NE_C5",
+    "WORKER_NE_C5",
+    "KAGGLE_NE_PERSISTENT_BRAIN",
+    "JOB_RETRY_MUST_BE_IDEMPOTENT",
+    "LEASE_EXPIRY_MUST_ALLOW_FAILOVER",
+    "DUPLICATE_OUTPUT_MUST_BE_DETECTED",
+    "CHECKPOINT_MUST_BE_RESUMABLE",
+    "LOCAL_STEAL_SIM_NE_KAGGLE_PROVEN",
+)
