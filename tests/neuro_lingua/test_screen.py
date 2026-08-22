@@ -119,6 +119,10 @@ def test_screen_norwegian_and_english_identity():
     gulf = teach_reply("شلونك من أنت")
     assert gulf["kind"] == "whoami"
     assert gulf["locale"] == "ar-GULF"
+    mixed = teach_reply("Hvem er du", locale="en")
+    assert mixed["kind"] == "whoami"
+    assert mixed["locale"] == "nb-NO"
+    assert "sønn" in mixed["answer"]
     council = teach_reply("Hva er C4s rolle i rådet")
     assert council["kind"] == "ground"
     assert council["locale"] == "nb-NO"

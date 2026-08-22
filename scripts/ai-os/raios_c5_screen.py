@@ -442,8 +442,6 @@ def append_history(row: dict) -> None:
 
 
 def detect_locale(text: str, hinted: str | None = None) -> str:
-    if hinted in I18N:
-        return hinted
     t = (text or "").strip()
     low = t.lower().rstrip("!؟?.")
     if low in {"hei", "hallo", "god dag"}:
@@ -458,6 +456,8 @@ def detect_locale(text: str, hinted: str | None = None) -> str:
         return "en"
     if ARABIC_RE.search(t):
         return "ar-EG"
+    if hinted in I18N:
+        return hinted
     latin = len(re.findall(r"[A-Za-z]", t))
     if latin >= 4:
         return "en"
@@ -676,13 +676,15 @@ PAGE = """<!DOCTYPE html>
     .app {
       height: 100%;
       display: grid;
-      grid-template-rows: 56px 1fr;
+      grid-template-rows: auto 1fr;
     }
     .top {
       display: flex;
       align-items: center;
-      gap: 16px;
-      padding: 0 20px;
+      flex-wrap: wrap;
+      gap: 12px 16px;
+      min-height: 56px;
+      padding: 8px 20px;
       border-bottom: 1px solid var(--line);
       background: rgba(16, 23, 20, 0.96);
     }
@@ -695,10 +697,11 @@ PAGE = """<!DOCTYPE html>
     .pulse.off { background: var(--danger); box-shadow: none; }
     .brand h1 { font-size: 15px; font-weight: 650; margin: 0; letter-spacing: 0.04em; }
     .brand small { display: block; color: var(--muted); font-size: 11px; font-weight: 400; }
-    .langs { display: flex; gap: 4px; }
+    .langs { display: flex; gap: 4px; flex-shrink: 0; }
     .langs button {
       background: var(--elev); color: var(--c1); border: 1px solid var(--line);
-      border-radius: 999px; padding: 4px 8px; font: inherit; font-size: 11px; cursor: pointer;
+      border-radius: 999px; padding: 6px 10px; font: inherit; font-size: 12px; cursor: pointer;
+      min-width: 44px;
     }
     .langs button.on { border-color: var(--accent); color: var(--text); }
     .chip {
@@ -943,6 +946,11 @@ PAGE = """<!DOCTYPE html>
     const btn = form.querySelector("button.send");
     let currentLocale = "ar-EG";
     function bootLocale() {
+      try {
+        const q = new URLSearchParams(location.search);
+        const fromUrl = q.get("lang") || q.get("locale");
+        if (fromUrl && I18N[fromUrl]) return fromUrl;
+      } catch (err) {}
       try {
         const saved = localStorage.getItem("c5-locale");
         if (saved && I18N[saved]) return saved;
