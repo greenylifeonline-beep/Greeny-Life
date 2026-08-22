@@ -20,7 +20,19 @@
 - قشرة رئيسية: `qwen3.6:35b-a3b (C1 treat/run/throw; not loaded here)`
 - شبكة تدريب: `python3 scripts/ai-os/raios_c5_train.py`
 - تدقيق الواقع: `python3 scripts/ai-os/raios_c5_reality.py`
+- MCP: `http://127.0.0.1:8787/mcp`
+- مجلس: `.ai-os/mcp/SEAT-MAP.json`
+- سجل النماذج: `.ai-os/MODEL-REGISTRY.json`
 - مش: LangChain, OpenAIEmbeddings, Chroma, FAISS, gpt-4o, AnythingLLM, Dify, Flowise
+
+## ربط C5 القائم — بلا أنظمة مكررة
+
+- شاشة: `127.0.0.1:8765` + `127.0.0.1:8876` — نفس C5
+- MCP: `http://127.0.0.1:8787/mcp` reachable=`True` tools=`8`
+- مجلس: `.ai-os/mcp/SEAT-MAP.json`
+- سجل: `.ai-os/MODEL-REGISTRY.json` cortex=`qwen3.6:35b-a3b`
+- MAIN_CORTEX (حي هنا): `false`
+- `INTERACTIVE_NE_CORTEX`: `true`
 
 ## اللغات
 
