@@ -383,11 +383,22 @@ def screen_health(*, host: str = DEFAULT_HOST, port: int | None = None) -> dict:
     rec["HEALTH"] = 200
     rec["MAIN_CORTEX"] = bool(rec.get("main_cortex"))
     rec["MODEL"] = rec.get("cortex_model")
+    rec["LOCAL_WINNER"] = False
+    rec["ROLE"] = "CORTEX_MODEL"
+    rec["LAPTOP_IS_MODEL_HOST"] = False
+    rec["OLLAMA_IS_DEV_FALLBACK"] = True
+    rec["TRANSPORT"] = "openai-compatible"
     rec["law"] = [
         "SAME_C5_DUAL_BIND",
         "HEALTH_200_NE_CORTEX_LIVE",
         "PROBE_IS_CORTEX_TRUTH",
         "STUDENT_NE_CORTEX",
+        "CURRENT_WINNERS_ARE_NOT_FINAL",
+        "RAIOS_NE_ONE_MODEL",
+        "LAPTOP_NE_MODEL_HOST",
+        "OLLAMA_IS_DEV_FALLBACK",
+        "LOCAL_OLLAMA_NE_CORTEX_CRITERION",
+        "OPENAI_COMPAT_TRANSPORT",
         "NO_DUPLICATE_MCP",
         "NO_DUPLICATE_COUNCIL",
         "NO_DUPLICATE_REGISTRY",
@@ -691,6 +702,15 @@ def teach_reply(message: str, locale: str | None = None) -> dict:
     if kind == "speak":
         rec["model"] = chat_rec.get("model")
         rec["cortex_model"] = chat_rec.get("cortex_model")
+        rec["role"] = chat_rec.get("role")
+        rec["role_bound"] = chat_rec.get("role_bound")
+        rec["model_agnostic"] = chat_rec.get("model_agnostic")
+        rec["local_winner"] = False
+        rec["winner_final"] = False
+        rec["endpoint_kind"] = chat_rec.get("endpoint_kind")
+        rec["endpoint_configured"] = chat_rec.get("endpoint_configured")
+        rec["laptop_is_model_host"] = False
+        rec["transport"] = chat_rec.get("transport") or "openai-compatible"
         rec["model_name_bound"] = chat_rec.get("model_name_bound")
         rec["llm_executed"] = chat_rec.get("llm_executed")
         rec["real_llm_execution"] = chat_rec.get("real_llm_execution")

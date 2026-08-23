@@ -52,11 +52,13 @@ class ProviderRouter:
             self.providers = [DeterministicProvider(), CortexProvider()]
 
     def route(self, requirement: CapabilityRequirement) -> dict[str, Any]:
-        from .cortex import CORTEX_IDENTITY
-        from .qwen_runtime import probe
+        from .cortex import named_cortex_model, resolve_endpoint, resolve_role
 
         self.provider_calls += 1
         admission = self.governor.admit(requirement.capability)
+        role = resolve_role("CORTEX_MODEL")
+        endpoint = resolve_endpoint("CORTEX_MODEL")
+        named = str(endpoint.get("model") or role.get("model") or named_cortex_model())
         cortex_needed = requirement.capability in {
             "SEMANTIC_INTERPRETATION",
             "SEMANTIC_REALIZATION",
@@ -70,53 +72,79 @@ class ProviderRouter:
                 "reason": "TIER0_OR_TIER1" if not cortex_needed else (admission.reason or "TIER0_OR_TIER1"),
                 "llm": False,
                 "model_name_bound": False,
+                "role": None,
+                "local_winner": False,
+                "laptop_is_model_host": False,
                 "admission": admission.reason,
             }
-        status = probe()
-        if not status.get("cortex_live"):
+        configured = bool(endpoint.get("configured"))
+        base = {
+            "provider": "main-cortex-capability",
+            "fallback_used": False,
+            "model": named,
+            "role": "CORTEX_MODEL",
+            "local_winner": False,
+            "winner_final": False,
+            "student_substituted": False,
+            "laptop_is_model_host": False,
+            "local_ollama_ne_cortex_criterion": True,
+            "local_ram_ne_cortex_criterion": True,
+            "endpoint_kind": endpoint.get("kind"),
+            "endpoint_configured": configured,
+            "transport": "openai-compatible",
+            "source_patch_required": False,
+            "admission": admission.reason,
+        }
+        if not configured:
             return {
-                "provider": "main-cortex-capability",
-                "fallback_used": False,
-                "reason": "MODEL_MISSING",
+                **base,
+                "reason": endpoint.get("reason") or "ENDPOINT_UNBOUND",
                 "error": "MODEL_MISSING",
                 "llm": False,
                 "model_name_bound": False,
-                "model": CORTEX_IDENTITY,
-                "student_substituted": False,
-                "admission": admission.reason,
             }
         return {
-            "provider": "main-cortex-capability",
-            "fallback_used": False,
+            **base,
             "reason": "TIER3_SEMANTIC",
             "llm": True,
             "model_name_bound": True,
-            "model": CORTEX_IDENTITY,
-            "student_substituted": False,
-            "admission": admission.reason,
         }
 
     def execute(self, decision: dict[str, Any], payload: dict[str, Any]) -> dict[str, Any]:
-        from .cortex import CORTEX_IDENTITY
+        from .cortex import model_in_role, named_cortex_model, resolve_endpoint, resolve_role
 
+        role = resolve_role("CORTEX_MODEL")
+        endpoint = resolve_endpoint("CORTEX_MODEL")
+        named = str(endpoint.get("model") or role.get("model") or named_cortex_model())
+        chosen = str(decision.get("model") or named)
         if decision.get("error") == "MODEL_MISSING" or not decision.get("model_name_bound"):
             return {
                 "ok": False,
                 "error": "MODEL_MISSING",
+                "reason": decision.get("reason") or endpoint.get("reason") or "ENDPOINT_UNBOUND",
                 "response": "",
-                "model": CORTEX_IDENTITY,
+                "model": named,
+                "role": "CORTEX_MODEL",
+                "local_winner": False,
+                "winner_final": False,
                 "model_name_bound": False,
                 "llm_executed": False,
                 "student_substituted": False,
                 "provider_execute_called": True,
+                "endpoint_kind": endpoint.get("kind"),
+                "endpoint_configured": bool(endpoint.get("configured")),
+                "laptop_is_model_host": False,
+                "transport": "openai-compatible",
                 "gl005_proven": False,
             }
-        if decision.get("model") != CORTEX_IDENTITY or decision.get("provider") != "main-cortex-capability":
+        if decision.get("provider") != "main-cortex-capability" or not model_in_role(chosen, "CORTEX_MODEL"):
             return {
                 "ok": False,
                 "error": "STUDENT_NE_CORTEX",
                 "response": "",
                 "model": decision.get("model"),
+                "role": "CORTEX_MODEL",
+                "local_winner": False,
                 "model_name_bound": False,
                 "llm_executed": False,
                 "student_substituted": False,
@@ -128,11 +156,11 @@ class ProviderRouter:
             None,
         )
         if provider is not None and hasattr(provider, "run"):
-            rec = provider.run(payload)
+            rec = provider.run({**payload, "model": chosen})
         else:
             from .qwen_runtime import generate
 
-            rec = generate(str(payload.get("text") or payload.get("prompt") or ""), model=CORTEX_IDENTITY)
+            rec = generate(str(payload.get("text") or payload.get("prompt") or ""), model=chosen)
         executed = bool(rec.get("ok"))
         if executed:
             self.llm_calls += 1
@@ -140,8 +168,16 @@ class ProviderRouter:
         rec["model_name_bound"] = True
         rec["student_substituted"] = False
         rec["provider_execute_called"] = True
-        rec["model"] = CORTEX_IDENTITY
+        rec["model"] = chosen
+        rec["role"] = "CORTEX_MODEL"
+        rec["local_winner"] = False
+        rec["winner_final"] = False
         rec["provider"] = "main-cortex-capability"
+        rec["endpoint_kind"] = endpoint.get("kind")
+        rec["endpoint_configured"] = bool(endpoint.get("configured"))
+        rec["laptop_is_model_host"] = False
+        rec["transport"] = "openai-compatible"
+        rec["source_patch_required"] = False
         return rec
 
     def metrics(self) -> dict[str, Any]:

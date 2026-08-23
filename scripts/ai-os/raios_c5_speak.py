@@ -13,7 +13,7 @@ ROOT = Path(__file__).resolve().parents[2]
 sys.path.insert(0, str(ROOT / "src"))
 sys.path.insert(0, str(Path(__file__).resolve().parent))
 
-from raios.neuro_lingua.cortex import CORTEX_IDENTITY  # noqa: E402
+from raios.neuro_lingua.cortex import CORTEX_IDENTITY, named_cortex_model, resolve_endpoint, resolve_role  # noqa: E402
 from raios.neuro_lingua.customer import COMPANIES  # noqa: E402
 from raios.neuro_lingua.kernel import NeuroLingua  # noqa: E402
 from raios.neuro_lingua.customer import speak as customer_speak  # noqa: E402
@@ -105,8 +105,9 @@ async def run_dialogues(items: list[tuple[str, str]]) -> dict:
 async def chat(text: str) -> dict:
     """C5 screen/reasoning path: NeuroLingua → ProviderRouter → cortex generate.
 
-    Customer catalog speak() stays deterministic (llm_calls==0). Cortex is used
-    only here. Missing qwen3.6:35b-a3b returns MODEL_MISSING. No student swap. No WAL.
+    Customer catalog speak() stays deterministic (llm_calls==0). Cortex role is used
+    only here. No crowned local winner. Missing/unrunnable cortex returns MODEL_MISSING.
+    No student swap. No WAL.
     """
     wal_before = wal_mtime()
     nl = NeuroLingua()
@@ -129,6 +130,9 @@ async def chat(text: str) -> dict:
         error = error or "MODEL_MISSING"
         llm_executed = False
         model_name_bound = False
+    role = resolve_role("CORTEX_MODEL")
+    endpoint = resolve_endpoint("CORTEX_MODEL")
+    named = str(endpoint.get("model") or role.get("model") or routed.get("model") or named_cortex_model() or CORTEX_IDENTITY)
     rec = {
         "schema": "raios.c5-chat.v1",
         "ts": utc(),
@@ -137,8 +141,13 @@ async def chat(text: str) -> dict:
         "ok": bool(llm_executed and answer and answer != "MODEL_MISSING"),
         "answer": answer,
         "error": error,
-        "model": routed.get("model") or CORTEX_IDENTITY,
-        "cortex_model": CORTEX_IDENTITY,
+        "model": routed.get("model") or named,
+        "cortex_model": named,
+        "role": "CORTEX_MODEL",
+        "role_bound": True,
+        "model_agnostic": True,
+        "local_winner": False,
+        "winner_final": False,
         "model_name_bound": model_name_bound,
         "llm_executed": llm_executed,
         "real_llm_execution": bool(llm_executed and model_name_bound and answer and answer != "MODEL_MISSING"),
@@ -146,9 +155,16 @@ async def chat(text: str) -> dict:
         "provider_execute_called": provider_execute_called,
         "provider": routed.get("provider"),
         "routing": routed,
+        "endpoint_kind": endpoint.get("kind") or routed.get("endpoint_kind"),
+        "endpoint_configured": bool(endpoint.get("configured")),
+        "endpoint_reason": endpoint.get("reason"),
+        "transport": "openai-compatible",
+        "laptop_is_model_host": False,
+        "local_ollama_ne_cortex_criterion": True,
+        "source_patch_required": False,
         "c5_to_neurolingua": True,
         "neurolingua_to_provider": True,
-        "provider_to_model": routed.get("model") == CORTEX_IDENTITY or routed.get("provider") == "main-cortex-capability",
+        "provider_to_model": routed.get("provider") == "main-cortex-capability" or routed.get("role") == "CORTEX_MODEL",
         "model_response_to_c5": True,
         "wal_written": False,
         "gl005_proven": False,
@@ -156,10 +172,15 @@ async def chat(text: str) -> dict:
         "law": [
             "C5_SCREEN_TO_NEUROLINGUA",
             "NEUROLINGUA_TO_PROVIDER",
-            "PROVIDER_TO_CORTEX_IDENTITY",
+            "PROVIDER_TO_CORTEX_ROLE",
             "STUDENT_NE_CORTEX",
             "TINY_QWEN_NE_CORTEX_IDENTITY",
             "CUSTOMER_LANGUAGE_NE_CORTEX",
+            "CURRENT_WINNERS_ARE_NOT_FINAL",
+            "RAIOS_NE_ONE_MODEL",
+            "LAPTOP_NE_MODEL_HOST",
+            "OLLAMA_IS_DEV_FALLBACK",
+            "OPENAI_COMPAT_TRANSPORT",
         ],
     }
     wal_after = wal_mtime()
@@ -189,6 +210,14 @@ def main() -> int:
                     "error": rec.get("error"),
                     "model": rec.get("model"),
                     "cortex_model": rec.get("cortex_model"),
+                    "role": rec.get("role"),
+                    "role_bound": rec.get("role_bound"),
+                    "model_agnostic": rec.get("model_agnostic"),
+                    "local_winner": rec.get("local_winner"),
+                    "endpoint_kind": rec.get("endpoint_kind"),
+                    "endpoint_configured": rec.get("endpoint_configured"),
+                    "laptop_is_model_host": rec.get("laptop_is_model_host"),
+                    "transport": rec.get("transport"),
                     "model_name_bound": rec.get("model_name_bound"),
                     "llm_executed": rec.get("llm_executed"),
                     "real_llm_execution": rec.get("real_llm_execution"),

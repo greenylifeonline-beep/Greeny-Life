@@ -66,10 +66,11 @@ def test_router_semantic_online_binds_identity_and_execute_is_model_missing():
         CapabilityRequirement(capability="SEMANTIC_INTERPRETATION", offline_required=False)
     )
     assert decision["provider"] == "main-cortex-capability"
-    assert decision["error"] == "MODEL_MISSING"
     assert decision["model"] == CORTEX_IDENTITY
-    assert decision["model_name_bound"] is False
+    assert decision["role"] == "CORTEX_MODEL"
     assert decision["student_substituted"] is False
+    assert decision["local_ollama_ne_cortex_criterion"] is True
+    assert decision["laptop_is_model_host"] is False
     rec = router.execute(decision, {"text": "why is the shipment held?"})
     assert rec["ok"] is False
     assert rec["error"] == "MODEL_MISSING"
@@ -97,6 +98,9 @@ def test_execute_rejects_student_as_cortex():
 
 
 def test_mocked_live_cortex_execute_increments_llm_calls(monkeypatch):
+    monkeypatch.setenv("RAIOS_CORTEX_ENDPOINT", "LIGHTNING_WORKER")
+    monkeypatch.setenv("RAIOS_CORTEX_BASE_URL", "http://lightning-worker.test:8000")
+    monkeypatch.setenv("RAIOS_CORTEX_MODEL", CORTEX_IDENTITY)
     monkeypatch.setattr(
         "raios.neuro_lingua.qwen_runtime.probe",
         lambda *a, **k: {
@@ -178,9 +182,10 @@ def test_kernel_online_missing_model_does_not_swap_student(monkeypatch):
     nl = NeuroLingua()
     result = asyncio.run(nl.interpret("Why is the shipment on hold?", offline_required=False))
     routed = result.meaning.metadata["routing"]
-    assert routed["error"] == "MODEL_MISSING"
+    assert routed["provider"] == "main-cortex-capability"
     assert routed["model"] == CORTEX_IDENTITY
     assert routed["student_substituted"] is False
+    assert routed["local_ollama_ne_cortex_criterion"] is True
     assert result.metrics["llm_calls"] == 0
     assert result.meaning.metadata["provider_execute_called"] is True
     assert result.meaning.metadata["cortex_execution"] is not None
@@ -192,6 +197,9 @@ def test_kernel_online_missing_model_does_not_swap_student(monkeypatch):
 
 
 def test_kernel_online_live_executes_cortex_generate(monkeypatch):
+    monkeypatch.setenv("RAIOS_CORTEX_ENDPOINT", "HF_ENDPOINT")
+    monkeypatch.setenv("RAIOS_CORTEX_BASE_URL", "http://hf-endpoint.test/v1")
+    monkeypatch.setenv("RAIOS_CORTEX_MODEL", CORTEX_IDENTITY)
     monkeypatch.setattr(
         "raios.neuro_lingua.qwen_runtime.probe",
         lambda *a, **k: {
@@ -243,7 +251,13 @@ def test_chat_and_screen_generic_return_model_missing_without_wal():
     assert rec["student_substituted"] is False
     assert rec["provider_execute_called"] is True
     assert rec["cortex_model"] == CORTEX_IDENTITY
+    assert rec["role"] == "CORTEX_MODEL"
+    assert rec["role_bound"] is True
+    assert rec["model_agnostic"] is True
+    assert rec["local_winner"] is False
     assert rec["real_llm_execution"] is False
+    assert rec["laptop_is_model_host"] is False
+    assert rec["transport"] == "openai-compatible"
     assert rec["wal_mtime_unchanged"] is True
     assert rec["gl005_proven"] is False
 
@@ -257,6 +271,7 @@ def test_chat_and_screen_generic_return_model_missing_without_wal():
     assert screen["c5_to_neurolingua"] is True
     assert screen["model_response_to_c5"] is True
     assert screen["provider_execute_called"] is True
+    assert screen["local_winner"] is False
     assert screen["student_substituted"] is False
     assert screen["wal_mtime_unchanged"] is True
     assert screen["gl005_proven"] is False
@@ -270,3 +285,123 @@ def test_whoami_and_c4_seat_are_unchanged():
     seat = teach_reply("ما دور C4 في المجلس")
     assert seat["kind"] == "ground"
     assert "ASSESSOR" in seat["answer"] or "مقيّم" in seat["answer"] or "DeepSeek" in seat["answer"]
+
+
+def test_resolve_role_is_registry_backed_and_does_not_crown_a_winner():
+    from raios.neuro_lingua.cortex import (
+        ENDPOINT_KINDS,
+        ROLE_KEYS,
+        execution_bridges,
+        resolve_endpoint,
+        resolve_role,
+    )
+
+    for key in ROLE_KEYS:
+        row = resolve_role(key)
+        assert row["role"] == key
+        assert row["local_winner"] is False
+        assert row["winner_final"] is False
+        assert row["duplicate_registry"] is False
+    cortex = resolve_role("CORTEX_MODEL")
+    assert cortex["model"] == CORTEX_IDENTITY
+    assert cortex["reason"] == "MEMORY_ALLOCATION_FAILED"
+    assert cortex["arena"] == "CORTEX"
+    code = resolve_role("CODE_MODEL")
+    assert code["bridge"] == "opencode"
+    assert "qwen2.5-coder:3b" in code["candidate_models"]
+    router_role = resolve_role("ROUTER")
+    assert router_role["role"] == "ROUTER_MODEL"
+    bridges = execution_bridges()
+    assert bridges["control"]["id"] == "raios-mcp"
+    assert bridges["control"]["endpoint"] == "http://127.0.0.1:8787/mcp"
+    assert bridges["execution"]["id"] == "opencode"
+    assert bridges["execution"]["install"] is False
+    assert bridges["execution"]["duplicate_mcp"] is False
+    assert bridges["local_infer"]["generate"] == "qwen_runtime.generate"
+    assert bridges["local_infer"]["not_cortex_host"] is True
+    assert bridges["transport"]["protocol"] == "openai-compatible"
+    assert bridges["laptop_is_model_host"] is False
+    assert tuple(bridges["endpoint_kinds"]) == ENDPOINT_KINDS
+    software = ProviderRouter()
+    decision = software.route(
+        CapabilityRequirement(capability="SEMANTIC_INTERPRETATION", offline_required=True)
+    )
+    assert decision["provider"] == "deterministic-neuro-lingua"
+    unbound = resolve_endpoint("CORTEX_MODEL")
+    assert unbound["laptop_is_model_host"] is False
+    assert unbound["source_patch_required"] is False
+    assert unbound["protocol"] == "openai-compatible"
+    assert unbound["paid_openai_api"] is False
+
+
+def test_endpoint_env_switches_provider_without_source_patch(monkeypatch):
+    import json
+    import urllib.request
+
+    from raios.neuro_lingua.cortex import resolve_endpoint
+    from raios.neuro_lingua.governor import CognitiveResourceGovernor
+    from raios.neuro_lingua.qwen_runtime import generate
+
+    monkeypatch.setenv("RAIOS_CORTEX_ENDPOINT", "KAGGLE_WORKER")
+    monkeypatch.setenv("RAIOS_CORTEX_BASE_URL", "http://kaggle-worker.test:9000/v1")
+    monkeypatch.setenv("RAIOS_CORTEX_MODEL", CORTEX_IDENTITY)
+    monkeypatch.setenv("RAIOS_CORTEX_API_KEY", "test-key")
+    row = resolve_endpoint("CORTEX_MODEL")
+    assert row["kind"] == "KAGGLE_WORKER"
+    assert row["configured"] is True
+    assert row["base_url"] == "http://kaggle-worker.test:9000/v1"
+    assert row["chat_url"].endswith("/v1/chat/completions")
+    assert row["api_key_present"] is True
+    assert row["source_patch_required"] is False
+    assert row["laptop_is_model_host"] is False
+    assert row["remote"] is True
+    gov = CognitiveResourceGovernor(min_free_gb_for_cortex=9999)
+    admitted = gov.admit("SEMANTIC_INTERPRETATION")
+    assert admitted.admitted is True
+    assert admitted.reason == "REMOTE_ENDPOINT"
+    seen: dict[str, str] = {}
+
+    class FakeResp:
+        status = 200
+
+        def __enter__(self):
+            return self
+
+        def __exit__(self, *args):
+            return False
+
+        def read(self):
+            return json.dumps({"choices": [{"message": {"content": "remote-ok"}}]}).encode("utf-8")
+
+    def fake_urlopen(req, timeout=0):
+        seen["url"] = getattr(req, "full_url", str(req))
+        return FakeResp()
+
+    monkeypatch.setattr(urllib.request, "urlopen", fake_urlopen)
+    rec = generate("hello", model=CORTEX_IDENTITY)
+    assert rec["ok"] is True
+    assert rec["response"] == "remote-ok"
+    assert rec["transport"] == "openai-compatible"
+    assert rec["endpoint_kind"] == "KAGGLE_WORKER"
+    assert "kaggle-worker.test" in seen["url"]
+    assert "11434" not in seen["url"]
+    assert seen["url"].endswith("/v1/chat/completions")
+
+
+def test_unbound_endpoint_when_local_host_unset(monkeypatch):
+    from raios.neuro_lingua.cortex import resolve_endpoint
+    from raios.neuro_lingua.qwen_runtime import generate
+
+    monkeypatch.delenv("OLLAMA_HOST", raising=False)
+    monkeypatch.delenv("RAIOS_CORTEX_BASE_URL", raising=False)
+    monkeypatch.delenv("RAIOS_CORTEX_ENDPOINT", raising=False)
+    monkeypatch.delenv("RAIOS_CORTEX_API_KEY", raising=False)
+    row = resolve_endpoint("CORTEX_MODEL")
+    assert row["configured"] is False
+    assert row["unbound"] is True
+    assert row["reason"] == "ENDPOINT_UNBOUND"
+    rec = generate("hello", model=CORTEX_IDENTITY)
+    assert rec["ok"] is False
+    assert rec["error"] == "MODEL_MISSING"
+    assert rec["reason"] == "ENDPOINT_UNBOUND"
+    assert rec["student_substituted"] is False

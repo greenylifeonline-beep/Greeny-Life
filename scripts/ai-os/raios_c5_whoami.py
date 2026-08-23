@@ -24,6 +24,7 @@ OUT_MD = ROOT / ".ai-os" / "learning" / "C5-WHOAMI.md"
 REGISTRY = ROOT / ".ai-os" / "MODEL-REGISTRY.json"
 SEAT_MAP = ROOT / ".ai-os" / "mcp" / "SEAT-MAP.json"
 P4_RECEIPT = ROOT / ".ai-os" / "receipts" / "c5-p4" / "P4-PREP.json"
+ROLES_RECEIPT = ROOT / ".ai-os" / "receipts" / "c5-p4" / "MODEL-ROLES.json"
 MCP_HEALTH_URL = "http://127.0.0.1:8787/health"
 MCP_ENDPOINT = "http://127.0.0.1:8787/mcp"
 SCREEN_PORTS = (8765, 8876)
@@ -51,7 +52,15 @@ def load_json(path: Path) -> dict:
 
 def c5_bind() -> dict:
     """Surface existing Council, MCP, and Model Registry on C5. No duplicate systems."""
-    from raios.neuro_lingua.cortex import CORTEX_IDENTITY, gate_run
+    from raios.neuro_lingua.cortex import (
+        ENDPOINT_KINDS,
+        ROLE_KEYS,
+        execution_bridges,
+        named_cortex_model,
+        resolve_endpoint,
+        resolve_role,
+        gate_run,
+    )
     from raios.neuro_lingua.qwen_runtime import probe
     from raios_c5_council import mcp_health
     from raios_mcp.gateway import V1_TOOLS
@@ -62,12 +71,16 @@ def c5_bind() -> dict:
     registry = load_json(REGISTRY)
     models = registry.get("models") or {}
     cortex_row = models.get("raios-main-cortex") or {}
+    named = named_cortex_model()
     workers = sorted(
         key
         for key, row in models.items()
         if isinstance(row, dict) and (row.get("class") in {"FAST_WORKER", "FAST_WORKER_EMBEDDING", "INTERACTIVE_FAST"} or row.get("not_cortex"))
     )
     tools = list(mcp.get("tools") or V1_TOOLS)
+    roles = {key: resolve_role(key) for key in ROLE_KEYS}
+    bridges = execution_bridges()
+    endpoint = resolve_endpoint("CORTEX_MODEL")
     return {
         "c5_screen_ports": list(SCREEN_PORTS),
         "c5_base_c1": "http://127.0.0.1:8876",
@@ -86,9 +99,39 @@ def c5_bind() -> dict:
         "model_registry": ".ai-os/MODEL-REGISTRY.json",
         "model_lab": "RAIOS/V9/evolution/model_lab/model_registry.py",
         "duplicate_registry": False,
-        "cortex_model": CORTEX_IDENTITY,
+        "cortex_model": named,
         "cortex_registry_model": cortex_row.get("model"),
-        "cortex_registry_bound": cortex_row.get("model") == CORTEX_IDENTITY,
+        "cortex_registry_bound": cortex_row.get("model") == named,
+        "cortex_local_winner": False,
+        "local_winner": False,
+        "winner_final": False,
+        "winners_are_final": False,
+        "model_agnostic": True,
+        "laptop_is_model_host": False,
+        "laptop_role": "CONTROL_PLANE_ONLY",
+        "local_ollama_is": "DEV_FALLBACK",
+        "local_ollama_ne_cortex_criterion": True,
+        "local_ram_ne_cortex_criterion": True,
+        "source_patch_required": False,
+        "transport": "openai-compatible",
+        "chat_path": "/v1/chat/completions",
+        "endpoint_kinds": list(ENDPOINT_KINDS),
+        "endpoint": {
+            "kind": endpoint.get("kind"),
+            "configured": bool(endpoint.get("configured")),
+            "unbound": bool(endpoint.get("unbound")),
+            "reason": endpoint.get("reason"),
+            "base_url": endpoint.get("base_url"),
+            "chat_url": endpoint.get("chat_url"),
+            "api_key_present": bool(endpoint.get("api_key_present")),
+            "api_key_env": endpoint.get("api_key_env"),
+            "model": endpoint.get("model"),
+            "dev_fallback": bool(endpoint.get("dev_fallback")),
+            "remote": bool(endpoint.get("remote")),
+        },
+        "arenas": list(registry.get("arenas") or []),
+        "roles": roles,
+        "bridges": bridges,
         "fast_workers": workers,
         "main_cortex": bool(probed.get("cortex_live")),
         "cortex_live": bool(probed.get("cortex_live")),
@@ -119,6 +162,10 @@ def write_p4_receipt(bind: dict | None = None) -> dict:
             "NO_DUPLICATE_MCP",
             "NO_NEW_MCP_TOOLS",
             "INTERACTIVE_NE_CORTEX",
+            "LAPTOP_NE_MODEL_HOST",
+            "OLLAMA_IS_DEV_FALLBACK",
+            "OPENAI_COMPAT_TRANSPORT",
+            "SOURCE_PATCH_NE_PROVIDER_SWITCH",
         ],
     }
     rec["ok"] = bool(
@@ -129,10 +176,74 @@ def write_p4_receipt(bind: dict | None = None) -> dict:
         and rec.get("duplicate_mcp") is False
         and rec.get("duplicate_council") is False
         and rec.get("interactive_ne_cortex") is True
+        and rec.get("laptop_is_model_host") is False
+        and rec.get("source_patch_required") is False
         and rec.get("gl005_proven") is False
     )
     P4_RECEIPT.parent.mkdir(parents=True, exist_ok=True)
     P4_RECEIPT.write_text(json.dumps(rec, indent=2, ensure_ascii=False) + "\n", encoding="utf-8")
+    return rec
+
+
+def write_roles_receipt(bind: dict | None = None) -> dict:
+    from raios.neuro_lingua.cortex import ROLE_KEYS
+
+    bind = bind or c5_bind()
+    roles = bind.get("roles") or {}
+    rec = {
+        "schema": "raios.c5-model-roles.v1",
+        "ts": utc(),
+        "from": "C5",
+        "parent": "C1",
+        "ok": True,
+        "winners_are_final": False,
+        "local_winner": False,
+        "cortex_local_winner": False,
+        "model_agnostic": True,
+        "duplicate_registry": False,
+        "duplicate_mcp": False,
+        "arenas": bind.get("arenas") or [],
+        "roles": roles,
+        "bridges": bind.get("bridges") or {},
+        "cortex_reason": (roles.get("CORTEX_MODEL") or {}).get("reason"),
+        "code_bridge": ((roles.get("CODE_MODEL") or {}).get("bridge")),
+        "endpoint_kinds": bind.get("endpoint_kinds") or [],
+        "endpoint": bind.get("endpoint") or {},
+        "laptop_is_model_host": False,
+        "transport": bind.get("transport") or "openai-compatible",
+        "source_patch_required": False,
+        "wal_written": False,
+        "gl005_proven": False,
+        "law": [
+            "RAIOS_NE_ONE_MODEL",
+            "CURRENT_WINNERS_ARE_NOT_FINAL",
+            "ROLE_NE_CROWNED_WINNER",
+            "NO_DUPLICATE_REGISTRY",
+            "OPENCODE_NE_MCP",
+            "LAPTOP_NE_MODEL_HOST",
+            "OLLAMA_IS_DEV_FALLBACK",
+            "OPENAI_COMPAT_TRANSPORT",
+        ],
+    }
+    rec["ok"] = bool(
+        rec["arenas"] == ["ROUTER", "CORTEX", "CODE", "REASONING", "EMBEDDING", "RERANKER"]
+        and set(ROLE_KEYS).issubset(roles)
+        and rec["local_winner"] is False
+        and rec["cortex_reason"] == "MEMORY_ALLOCATION_FAILED"
+        and rec["code_bridge"] == "opencode"
+        and rec["duplicate_registry"] is False
+        and rec["laptop_is_model_host"] is False
+        and rec["endpoint_kinds"] == [
+            "LOCAL_DEV",
+            "KAGGLE_WORKER",
+            "LIGHTNING_WORKER",
+            "HF_ENDPOINT",
+            "FRONTIER_PROVIDER",
+        ]
+        and rec["gl005_proven"] is False
+    )
+    ROLES_RECEIPT.parent.mkdir(parents=True, exist_ok=True)
+    ROLES_RECEIPT.write_text(json.dumps(rec, indent=2, ensure_ascii=False) + "\n", encoding="utf-8")
     return rec
 
 
@@ -318,6 +429,11 @@ def render_md(rec: dict) -> str:
             f"- مجلس: `{bind.get('council_seat_map')}`",
             f"- سجل: `{bind.get('model_registry')}` cortex=`{bind.get('cortex_registry_model')}`",
             f"- MAIN_CORTEX (حي هنا): `{str(bool(bind.get('main_cortex'))).lower()}`",
+            f"- `LOCAL_WINNER`: `false`",
+            f"- `LAPTOP_IS_MODEL_HOST`: `false`",
+            f"- `OLLAMA_IS_DEV_FALLBACK`: `true`",
+            f"- endpoint: `{bind.get('endpoint', {}).get('kind')}` configured=`{str(bool((bind.get('endpoint') or {}).get('configured'))).lower()}`",
+            f"- transport: `openai-compatible /v1/chat/completions`",
             f"- `INTERACTIVE_NE_CORTEX`: `true`",
             "",
             "## اللغات",
@@ -342,8 +458,13 @@ def render_md(rec: dict) -> str:
 def main() -> int:
     p = argparse.ArgumentParser()
     p.add_argument("--p4", action="store_true", help="Write P4-PREP receipt connecting existing Council/MCP/Registry")
+    p.add_argument("--roles", action="store_true", help="Write MODEL-ROLES receipt from existing registry")
     args = p.parse_args()
     rec = whoami()
+    if args.roles:
+        roles = write_roles_receipt(rec.get("c5_bind"))
+        print(json.dumps({"ok": roles["ok"], "receipt": str(ROLES_RECEIPT), "local_winner": False, "gl005_proven": False}, ensure_ascii=False, indent=2))
+        return 0 if roles["ok"] else 2
     if args.p4:
         p4 = write_p4_receipt(rec.get("c5_bind"))
         print(json.dumps({"ok": p4["ok"], "receipt": str(P4_RECEIPT), "gl005_proven": False}, ensure_ascii=False, indent=2))

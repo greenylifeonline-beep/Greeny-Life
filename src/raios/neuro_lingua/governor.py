@@ -110,6 +110,11 @@ class CognitiveResourceGovernor:
         }
         if capability not in cortex_caps:
             return AdmissionDecision(True, "DETERMINISTIC_OR_LOCAL", free_gb, None)
+        from .cortex import resolve_endpoint
+
+        endpoint = resolve_endpoint("CORTEX_MODEL")
+        if endpoint.get("configured") and endpoint.get("kind") not in {None, "LOCAL_DEV"}:
+            return AdmissionDecision(True, "REMOTE_ENDPOINT", float(free_gb) if free_gb is not None else None, None)
         gate = gate_run(min_free_gb=self.min_free_gb_for_cortex)
         return AdmissionDecision(
             bool(gate["admitted"]),

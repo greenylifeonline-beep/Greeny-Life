@@ -41,6 +41,11 @@ def test_explicit_receipt_names_qwen36_cortex():
     rec = explicit_receipt()
     assert rec["identity"] == "qwen3.6:35b-a3b"
     assert "IDENTITY=qwen3.6:35b-a3b" in rec["text"]
+    assert "ROLE=CORTEX_MODEL" in rec["text"]
+    assert "LOCAL_WINNER=false" in rec["text"]
+    assert "LAPTOP_IS_MODEL_HOST=false" in rec["text"]
+    assert "OLLAMA_IS_DEV_FALLBACK=true" in rec["text"]
+    assert "AVAILABILITY=MEMORY_ALLOCATION_FAILED" in rec["text"]
     assert "STUDENT_NE_CORTEX=true" in rec["text"]
     assert "LOADED=false" in rec["text"]
     assert "GL005_PROVEN=false" in rec["text"]

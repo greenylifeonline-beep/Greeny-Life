@@ -149,4 +149,9 @@ def test_same_c5_dual_bind_and_honest_health():
     assert rec["student_substituted"] is False
     assert rec["gl005_proven"] is False
     assert rec["MAIN_CORTEX"] is rec["main_cortex"]
+    assert rec["LOCAL_WINNER"] is False
+    assert rec["ROLE"] == "CORTEX_MODEL"
+    assert rec["LAPTOP_IS_MODEL_HOST"] is False
+    assert rec["OLLAMA_IS_DEV_FALLBACK"] is True
+    assert rec["TRANSPORT"] == "openai-compatible"
     assert "127.0.0.1:8765" in PAGE

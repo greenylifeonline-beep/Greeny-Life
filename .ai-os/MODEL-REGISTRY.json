@@ -1,8 +1,16 @@
 {
-  "schema_version": "2.0",
+  "schema_version": "2.1",
   "generated_at": "2026-08-15T21:58:03.8220065+02:00",
-  "updated_at": "2026-08-22T22:45:00+00:00",
+  "updated_at": "2026-08-23T01:00:00+00:00",
   "interactive_ne_cortex": true,
+  "winners_are_final": false,
+  "local_winner": null,
+  "laptop_is_model_host": false,
+  "laptop_role": "CONTROL_PLANE_ONLY",
+  "local_ollama_is": "DEV_FALLBACK",
+  "local_ram_ne_cortex_criterion": true,
+  "local_ollama_ne_cortex_criterion": true,
+  "source_patch_required_to_switch_provider": false,
   "primary_cortex_id": "raios-main-cortex",
   "policy": {
     "cloud_fallback_for_confidential": false,
@@ -15,16 +23,255 @@
       "cpu": "11th Gen Intel(R) Core(TM) i3-1115G4 @ 3.00GHz",
       "total_ram_gb": 7.8,
       "id": "local-windows",
-      "role": "CONTROL_NODE_AND_LIGHT_INFERENCE"
+      "role": "CONTROL_PLANE_ONLY",
+      "not_model_host": true
+    }
+  },
+  "arenas": [
+    "ROUTER",
+    "CORTEX",
+    "CODE",
+    "REASONING",
+    "EMBEDDING",
+    "RERANKER"
+  ],
+  "roles": {
+    "ROUTER_MODEL": {
+      "arena": "ROUTER",
+      "candidates": [
+        "deepseek-local-fast",
+        "qwen-student-fast"
+      ],
+      "selected": null,
+      "local_winner": false,
+      "named_candidate": null,
+      "endpoint_kind": null,
+      "endpoint_kind_env": "RAIOS_ROUTER_ENDPOINT",
+      "base_url_env": "RAIOS_ROUTER_BASE_URL",
+      "api_key_env": "RAIOS_ROUTER_API_KEY",
+      "model_env": "RAIOS_ROUTER_MODEL",
+      "fallback_endpoint_kind": "LOCAL_DEV",
+      "reason": "CURRENT_WINNERS_ARE_NOT_FINAL",
+      "note": "Software router stays src/raios/neuro_lingua/router.py. This role is an LLM candidate for task-routing, not a second router."
+    },
+    "CORTEX_MODEL": {
+      "arena": "CORTEX",
+      "candidates": [
+        "raios-main-cortex"
+      ],
+      "selected": null,
+      "local_winner": false,
+      "named_candidate": "qwen3.6:35b-a3b",
+      "named_candidate_reason": "MEMORY_ALLOCATION_FAILED",
+      "endpoint_kind": null,
+      "endpoint_kind_env": "RAIOS_CORTEX_ENDPOINT",
+      "base_url_env": "RAIOS_CORTEX_BASE_URL",
+      "api_key_env": "RAIOS_CORTEX_API_KEY",
+      "model_env": "RAIOS_CORTEX_MODEL",
+      "fallback_endpoint_kind": "LOCAL_DEV",
+      "reason": "MEMORY_ALLOCATION_FAILED",
+      "not_current_local_winner": true,
+      "note": "Named candidate only. Not a local winner. Bind via role→endpoint env/registry. Laptop is not the host."
+    },
+    "CODE_MODEL": {
+      "arena": "CODE",
+      "candidates": [
+        "qwen-coder-fast",
+        "granite-code-3b"
+      ],
+      "selected": null,
+      "local_winner": false,
+      "named_candidate": null,
+      "endpoint_kind": null,
+      "endpoint_kind_env": "RAIOS_CODE_ENDPOINT",
+      "base_url_env": "RAIOS_CODE_BASE_URL",
+      "api_key_env": "RAIOS_CODE_API_KEY",
+      "model_env": "RAIOS_CODE_MODEL",
+      "fallback_endpoint_kind": "LOCAL_DEV",
+      "reason": "CURRENT_WINNERS_ARE_NOT_FINAL",
+      "bridge": "opencode"
+    },
+    "REASONING_MODEL": {
+      "arena": "REASONING",
+      "candidates": [
+        "deepseek-local-fast",
+        "deepseek-local-deep"
+      ],
+      "selected": null,
+      "local_winner": false,
+      "named_candidate": null,
+      "endpoint_kind": null,
+      "endpoint_kind_env": "RAIOS_REASONING_ENDPOINT",
+      "base_url_env": "RAIOS_REASONING_BASE_URL",
+      "api_key_env": "RAIOS_REASONING_API_KEY",
+      "model_env": "RAIOS_REASONING_MODEL",
+      "fallback_endpoint_kind": "LOCAL_DEV",
+      "reason": "CURRENT_WINNERS_ARE_NOT_FINAL"
+    },
+    "EMBEDDING_MODEL": {
+      "arena": "EMBEDDING",
+      "candidates": [
+        "granite-embedding-278m"
+      ],
+      "selected": null,
+      "local_winner": false,
+      "named_candidate": null,
+      "endpoint_kind": null,
+      "endpoint_kind_env": "RAIOS_EMBEDDING_ENDPOINT",
+      "base_url_env": "RAIOS_EMBEDDING_BASE_URL",
+      "api_key_env": "RAIOS_EMBEDDING_API_KEY",
+      "model_env": "RAIOS_EMBEDDING_MODEL",
+      "fallback_endpoint_kind": "LOCAL_DEV",
+      "reason": "CURRENT_WINNERS_ARE_NOT_FINAL",
+      "note": "Inverted INDEX.json is not this embedding."
+    },
+    "RERANKER_MODEL": {
+      "arena": "RERANKER",
+      "candidates": [],
+      "selected": null,
+      "local_winner": false,
+      "named_candidate": null,
+      "endpoint_kind": null,
+      "endpoint_kind_env": "RAIOS_RERANKER_ENDPOINT",
+      "base_url_env": "RAIOS_RERANKER_BASE_URL",
+      "api_key_env": "RAIOS_RERANKER_API_KEY",
+      "model_env": "RAIOS_RERANKER_MODEL",
+      "fallback_endpoint_kind": "LOCAL_DEV",
+      "reason": "ROLE_ABSENT",
+      "class": "ABSENT"
+    },
+    "FRONTIER_TEACHER_MODEL": {
+      "arena": "CORTEX",
+      "candidates": [
+        "raios-main-cortex"
+      ],
+      "selected": null,
+      "local_winner": false,
+      "named_candidate": "qwen3.6:35b-a3b",
+      "endpoint_kind": null,
+      "endpoint_kind_env": "RAIOS_FRONTIER_TEACHER_ENDPOINT",
+      "base_url_env": "RAIOS_FRONTIER_TEACHER_BASE_URL",
+      "api_key_env": "RAIOS_FRONTIER_TEACHER_API_KEY",
+      "model_env": "RAIOS_FRONTIER_TEACHER_MODEL",
+      "fallback_endpoint_kind": "LOCAL_DEV",
+      "reason": "TEACHER_NE_LOCAL_WINNER",
+      "note": "Teacher candidate is not a crowned backbone."
+    }
+  },
+  "bridges": {
+    "control": {
+      "id": "raios-mcp",
+      "role": "control/orchestration",
+      "path": "scripts/ai-os/raios_mcp/server.py",
+      "gateway": "scripts/ai-os/raios_mcp/gateway.py",
+      "endpoint": "http://127.0.0.1:8787/mcp",
+      "health": "http://127.0.0.1:8787/health",
+      "tools": 8,
+      "not": "model-execution"
+    },
+    "execution": {
+      "id": "opencode",
+      "role": "coding/model-execution-bridge",
+      "uses_role": "CODE_MODEL",
+      "status": "PREP_NOT_INSTALLED",
+      "install": false,
+      "duplicate_mcp": false,
+      "not_control_plane": true,
+      "integration_points": [
+        ".ai-os/MODEL-REGISTRY.json bridges.execution",
+        "roles.CODE_MODEL.bridge=opencode",
+        "shutil.which('opencode') probe only",
+        "do not add MCP tools",
+        "do not download"
+      ]
+    },
+    "local_infer": {
+      "id": "ollama",
+      "role": "DEV_FALLBACK",
+      "path": "src/raios/neuro_lingua/qwen_runtime.py",
+      "generate": "qwen_runtime.generate",
+      "probe": "qwen_runtime.probe",
+      "uses_role": "CORTEX_MODEL",
+      "base_url_env": "OLLAMA_HOST",
+      "not_cortex_host": true,
+      "not_final_criterion": true
+    }
+  },
+  "transport": {
+    "path": [
+      "C5",
+      "NeuroLingua",
+      "MODEL_ROLE",
+      "PROVIDER_ENDPOINT",
+      "openai-compatible /v1/chat/completions",
+      "response"
+    ],
+    "protocol": "openai-compatible",
+    "chat_path": "/v1/chat/completions",
+    "sdk": false,
+    "paid_openai_api": false,
+    "source_patch_required_to_switch": false
+  },
+  "provider_endpoints": {
+    "LOCAL_DEV": {
+      "kind": "LOCAL_DEV",
+      "protocol": "openai-compatible",
+      "native_fallback": "ollama /api/generate",
+      "chat_path": "/v1/chat/completions",
+      "base_url_env": "OLLAMA_HOST",
+      "api_key_env": "OLLAMA_API_KEY",
+      "dev_fallback": true,
+      "laptop_is_model_host": false,
+      "not_final_cortex_criterion": true
+    },
+    "KAGGLE_WORKER": {
+      "kind": "KAGGLE_WORKER",
+      "protocol": "openai-compatible",
+      "chat_path": "/v1/chat/completions",
+      "base_url_env": "RAIOS_KAGGLE_BASE_URL",
+      "api_key_env": "RAIOS_KAGGLE_API_KEY",
+      "model_env": "RAIOS_KAGGLE_MODEL",
+      "worker_id_env": "RAIOS_KAGGLE_WORKER",
+      "install": false
+    },
+    "LIGHTNING_WORKER": {
+      "kind": "LIGHTNING_WORKER",
+      "protocol": "openai-compatible",
+      "chat_path": "/v1/chat/completions",
+      "base_url_env": "RAIOS_LIGHTNING_BASE_URL",
+      "api_key_env": "RAIOS_LIGHTNING_API_KEY",
+      "model_env": "RAIOS_LIGHTNING_MODEL",
+      "install": false
+    },
+    "HF_ENDPOINT": {
+      "kind": "HF_ENDPOINT",
+      "protocol": "openai-compatible",
+      "chat_path": "/v1/chat/completions",
+      "base_url_env": "RAIOS_HF_BASE_URL",
+      "api_key_env": "HF_TOKEN",
+      "api_key_env_alt": "HUGGING_FACE_HUB_TOKEN",
+      "model_env": "RAIOS_HF_MODEL",
+      "download": false
+    },
+    "FRONTIER_PROVIDER": {
+      "kind": "FRONTIER_PROVIDER",
+      "protocol": "openai-compatible",
+      "chat_path": "/v1/chat/completions",
+      "base_url_env": "RAIOS_FRONTIER_BASE_URL",
+      "api_key_env": "RAIOS_FRONTIER_API_KEY",
+      "model_env": "RAIOS_FRONTIER_MODEL",
+      "paid_openai_api": false
     }
   },
   "models": {
     "raios-main-cortex": {
       "class": "MAIN_CORTEX",
       "model": "qwen3.6:35b-a3b",
-      "provider": "ollama",
+      "provider": "role-endpoint",
       "privacy": "LOCAL_ONLY",
-      "endpoint": "http://localhost:11434",
+      "endpoint": null,
+      "base_url_env": "RAIOS_CORTEX_BASE_URL",
+      "fallback_base_url_env": "OLLAMA_HOST",
       "roles": [
         "semantic-interpretation",
         "semantic-realization",
@@ -32,7 +279,8 @@
       ],
       "interactive_ne_cortex": true,
       "not_cortex": false,
-      "availability": "C1_TREAT_RUN_THROW",
+      "local_winner": false,
+      "availability": "MEMORY_ALLOCATION_FAILED",
       "owner": "C1"
     },
     "deepseek-local-deep": {
@@ -74,7 +322,8 @@
         "light-code-analysis",
         "dataset-curation-assistance"
       ],
-      "endpoint": "http://localhost:11434",
+      "endpoint": null,
+      "base_url_env": "OLLAMA_HOST",
       "not_cortex": true
     },
     "qwen-student-fast": {
@@ -82,7 +331,8 @@
       "model": "qwen2.5:0.5b",
       "provider": "ollama",
       "privacy": "LOCAL_ONLY",
-      "endpoint": "http://localhost:11434",
+      "endpoint": null,
+      "base_url_env": "OLLAMA_HOST",
       "roles": [
         "student-muscle",
         "tiny-local-worker"
@@ -98,7 +348,8 @@
       "model": "qwen2.5-coder:3b",
       "provider": "ollama",
       "privacy": "LOCAL_ONLY",
-      "endpoint": "http://localhost:11434",
+      "endpoint": null,
+      "base_url_env": "OLLAMA_HOST",
       "roles": [
         "light-code-analysis"
       ],
@@ -113,7 +364,8 @@
       "model": "granite4:3b",
       "provider": "ollama",
       "privacy": "LOCAL_ONLY",
-      "endpoint": "http://localhost:11434",
+      "endpoint": null,
+      "base_url_env": "OLLAMA_HOST",
       "not_cortex": true,
       "forbidden_roles": [
         "main-cortex",
@@ -125,7 +377,8 @@
       "model": "granite3-dense:8b",
       "provider": "ollama",
       "privacy": "LOCAL_ONLY",
-      "endpoint": "http://localhost:11434",
+      "endpoint": null,
+      "base_url_env": "OLLAMA_HOST",
       "not_cortex": true,
       "forbidden_roles": [
         "main-cortex",
@@ -137,7 +390,8 @@
       "model": "granite3-dense:2b",
       "provider": "ollama",
       "privacy": "LOCAL_ONLY",
-      "endpoint": "http://localhost:11434",
+      "endpoint": null,
+      "base_url_env": "OLLAMA_HOST",
       "not_cortex": true,
       "forbidden_roles": [
         "main-cortex",
@@ -149,7 +403,8 @@
       "model": "granite-code:3b",
       "provider": "ollama",
       "privacy": "LOCAL_ONLY",
-      "endpoint": "http://localhost:11434",
+      "endpoint": null,
+      "base_url_env": "OLLAMA_HOST",
       "not_cortex": true,
       "forbidden_roles": [
         "main-cortex",
@@ -161,7 +416,8 @@
       "model": "granite-embedding:278m",
       "provider": "ollama",
       "privacy": "LOCAL_ONLY",
-      "endpoint": "http://localhost:11434",
+      "endpoint": null,
+      "base_url_env": "OLLAMA_HOST",
       "not_cortex": true,
       "forbidden_roles": [
         "main-cortex",
@@ -178,6 +434,7 @@
     "interactive": "deepseek-local-fast",
     "cortex": "raios-main-cortex",
     "fast_worker": "qwen-student-fast",
+    "code": "QUEUE_UNTIL_CODE_ROLE_WINNER",
     "critical_decision": "MULTI_AGENT_VALIDATION_REQUIRED"
   }
 }
