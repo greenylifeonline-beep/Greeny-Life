@@ -32,6 +32,11 @@
 - مجلس: `.ai-os/mcp/SEAT-MAP.json`
 - سجل: `.ai-os/MODEL-REGISTRY.json` cortex=`qwen3.6:35b-a3b`
 - MAIN_CORTEX (حي هنا): `false`
+- `LOCAL_WINNER`: `false`
+- `LAPTOP_IS_MODEL_HOST`: `false`
+- `OLLAMA_IS_DEV_FALLBACK`: `true`
+- endpoint: `None` configured=`false`
+- transport: `openai-compatible /v1/chat/completions`
 - `INTERACTIVE_NE_CORTEX`: `true`
 
 ## اللغات
