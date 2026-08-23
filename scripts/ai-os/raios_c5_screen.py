@@ -18,7 +18,7 @@ sys.path.insert(0, str(Path(__file__).resolve().parent))
 
 from raios_c5_keyboard import decode_flipped_keyboard, teach_text  # noqa: E402
 from raios_c5_reason import ground  # noqa: E402
-from raios_c5_whoami import c5_bind, whoami  # noqa: E402
+from raios_c5_whoami import c5_bind, control_plane_runtime, whoami  # noqa: E402
 
 WAL = ROOT / "RAIOS" / "V9" / "wal" / "cognitive-events.jsonl"
 HISTORY = ROOT / ".ai-os" / "learning" / "C5-SCREEN.jsonl"
@@ -124,7 +124,7 @@ I18N = {
         "tools_v": "Python stdlib · git · Ollama محلي",
         "forbid_k": "ممنوع",
         "forbid_v": "LangChain · OpenAI · Chroma · PASS",
-        "note": "القناة على حلقة هذا الجهاز (127.0.0.1:8765). localhost على جهازك حلقة أخرى. استخدم تمرير منفذ Cursor. الشاشة عربية ومصرية وخليجية وإنجليزية ونرويجية.",
+        "note": "الشاشة على سيرفر التحكم المحلي 127.0.0.1:8765 — مش جلسة Cursor. على ويندوز: powershell -File scripts/ai-os/raios_c5_screen.ps1 -Install ثم -Ensure.",
         "thread": "شاشة النظام",
         "thread_sub": "الكيبورد المقلوب يُفك تلقائيًا · السجل يُكمَّل لما ترجع · متعدد اللغات",
         "empty_h": "ابدأ المحادثة",
@@ -140,7 +140,7 @@ I18N = {
         "fill_who": "مين أنت",
         "fill_c4": "ما دور C4 في المجلس",
         "fill_flip": "DULG AHAM",
-        "offline": "منقطع — port-forward",
+        "offline": "منقطع — شغّل الشاشة على السيرفر المحلي",
         "seat_role": "الدور الحي",
         "seat_where": "المكان",
         "seat_mail": "البريد",
@@ -150,11 +150,11 @@ I18N = {
         "seat_src": "المصدر: .ai-os/mcp/SEAT-MAP.json — بيان مقعد، ليست إجابة معرفية كاملة.",
         "empty_prompt": "اكتب رسالة لـ C5.",
         "ground_empty": "لا دليل كافٍ لصياغة رد نظيف من الاسترجاع المحلي. هذا ليس إثبات GL-005.",
-        "conn_err": "تعذر الاتصال. الربط 127.0.0.1:8765 على هذه الآلة أو عبر تمرير منفذ Cursor — ليس localhost جهازك.",
+        "conn_err": "تعذر الاتصال. الشاشة لازم تشتغل دائمًا على السيرفر المحلي 127.0.0.1:8765. جلسة Cursor مؤقتة.",
         "hello": "حيّ. أنا C5 على الشاشة المحلية.\nاكتب بالمصري أو الخليجي أو الإنجليزي أو النرويجي، أو بالكيبورد المقلوب. Enter للإرسال.",
         "screen": (
-            "هذه شاشة التواصل المحلية مع C5. متعددة اللغات: ar-EG، ar-GULF، en، nb-NO.\n"
-            "الربط 127.0.0.1:8765 على نفس الجهاز أو عبر تمرير منفذ Cursor. localhost على جهازك ليس هذه الآلة.\n"
+            "هذه شاشة التواصل مع C5 على سيرفر التحكم المحلي. متعددة اللغات: ar-EG، ar-GULF، en، nb-NO.\n"
+            "الربط 127.0.0.1:8765 على السيرفر المحلي. جلسة Cursor ليست البيت.\n"
             "السجل يُحفظ محليًا. الكيبورد المقلوب يُفك هنا.\n"
             "المحرك: mind-fill → INDEX → NeuroLingua. Python stdlib و git و Ollama المحلي.\n"
             "ليس LangChain وليس OpenAI."
@@ -186,7 +186,7 @@ I18N = {
         "tools_v": "Python stdlib · git · Ollama محلي",
         "forbid_k": "ممنوع",
         "forbid_v": "LangChain · OpenAI · Chroma · PASS",
-        "note": "القناة على نفس الجهاز 127.0.0.1:8765. لو المتصفح رفض، أنت على localhost جهاز ثاني. استخدم port-forward. الشاشة تدعم المصري والخليجي والإنجليزي والنرويجي.",
+        "note": "الشاشة على سيرفر التحكم المحلي 127.0.0.1:8765 — مو جلسة Cursor. ويندوز: powershell -File scripts/ai-os/raios_c5_screen.ps1 -Install بعدين -Ensure.",
         "thread": "شاشة النظام",
         "thread_sub": "الكيبورد المقلوب ينفك تلقائي · السجل يكمل لما ترجع · متعدد اللغات",
         "empty_h": "ابدأ المحادثة",
@@ -202,7 +202,7 @@ I18N = {
         "fill_who": "من أنت",
         "fill_c4": "ما دور C4 في المجلس",
         "fill_flip": "DULG AHAM",
-        "offline": "منقطع — port-forward",
+        "offline": "منقطع — شغّل الشاشة على السيرفر المحلي",
         "seat_role": "الدور الحي",
         "seat_where": "المكان",
         "seat_mail": "البريد",
@@ -212,11 +212,11 @@ I18N = {
         "seat_src": "المصدر: .ai-os/mcp/SEAT-MAP.json — بيان مقعد، مو إجابة معرفية كاملة.",
         "empty_prompt": "اكتب رسالة لـ C5.",
         "ground_empty": "ما فيه دليل كافي لرد نظيف من الفهرس المحلي. هذا مو إثبات GL-005.",
-        "conn_err": "تعذر الاتصال. 127.0.0.1:8765 على هالجهاز أو port-forward من Cursor.",
+        "conn_err": "تعذر الاتصال. الشاشة لازم تشتغل دائمًا على السيرفر المحلي 127.0.0.1:8765. جلسة Cursor مؤقتة.",
         "hello": "حياك. أنا C5 على الشاشة المحلية.\nاكتب بالخليجي أو المصري أو الإنجليزي أو النرويجي.",
         "screen": (
-            "هذي شاشة التواصل المحلية مع C5. اللغات: ar-EG، ar-GULF، en، nb-NO.\n"
-            "الربط 127.0.0.1:8765. localhost جهازك مو هالجهاز.\n"
+            "هذي شاشة التواصل مع C5 على سيرفر التحكم المحلي. اللغات: ar-EG، ar-GULF، en، nb-NO.\n"
+            "الربط 127.0.0.1:8765 على السيرفر المحلي. جلسة Cursor مو البيت.\n"
             "المحرك: mind-fill → INDEX → NeuroLingua. مو LangChain ومو OpenAI."
         ),
         "whoami": (
@@ -246,7 +246,7 @@ I18N = {
         "tools_v": "Python stdlib · git · local Ollama",
         "forbid_k": "Forbidden",
         "forbid_v": "LangChain · OpenAI · Chroma · PASS",
-        "note": "This channel is loopback 127.0.0.1:8765. Your machine localhost is a different loop. Use Cursor port-forward. UI: Egyptian, Gulf, English, Norwegian.",
+        "note": "C5 screen lives on the local control-plane server at 127.0.0.1:8765 — not this Cursor session. Windows: powershell -File scripts/ai-os/raios_c5_screen.ps1 -Install then -Ensure.",
         "thread": "System screen",
         "thread_sub": "Flipped keyboard decodes · history resumes · multilingual",
         "empty_h": "Start the conversation",
@@ -262,7 +262,7 @@ I18N = {
         "fill_who": "Who are you",
         "fill_c4": "What is C4's role in the council",
         "fill_flip": "DULG AHAM",
-        "offline": "offline — port-forward",
+        "offline": "offline — start the local control-plane screen",
         "seat_role": "Live role",
         "seat_where": "Where",
         "seat_mail": "Mail",
@@ -272,11 +272,11 @@ I18N = {
         "seat_src": "Source: .ai-os/mcp/SEAT-MAP.json — a seat statement, not a full cognitive answer.",
         "empty_prompt": "Write a message to C5.",
         "ground_empty": "Not enough local evidence for a clean reply. This is not GL-005 proof.",
-        "conn_err": "Cannot reach the local screen. Bind is 127.0.0.1:8765 on this machine or via Cursor port-forward — not your laptop localhost.",
+        "conn_err": "Cannot reach the local control-plane screen at 127.0.0.1:8765. This Cursor session is SESSION_TEMP. Run -Install then -Ensure on the local server.",
         "hello": "Live. I am C5 on the local screen.\nWrite in Egyptian, Gulf Arabic, English, or Norwegian. Enter to send.",
         "screen": (
-            "This is the local C5 console. Locales: ar-EG, ar-GULF, en, nb-NO.\n"
-            "Bind 127.0.0.1:8765 on this host or Cursor port-forward. Your laptop localhost is another loop.\n"
+            "This is the C5 console on the local control-plane server. Locales: ar-EG, ar-GULF, en, nb-NO.\n"
+            "Bind 127.0.0.1:8765 on that host. A Cursor session bind is SESSION_TEMP, not home.\n"
             "Engine: mind-fill → INDEX → NeuroLingua. Python stdlib, git, local Ollama.\n"
             "Not LangChain and not OpenAI."
         ),
@@ -307,7 +307,7 @@ I18N = {
         "tools_v": "Python stdlib · git · lokal Ollama",
         "forbid_k": "Forbudt",
         "forbid_v": "LangChain · OpenAI · Chroma · PASS",
-        "note": "Kanalen er loopback 127.0.0.1:8765. Localhost på din maskin er en annen sløyfe. Bruk Cursor port-forward. Skjermen snakker egyptisk, gulf-arabisk, engelsk og norsk.",
+        "note": "C5-skjermen bor på den lokale control-plane-serveren 127.0.0.1:8765 — ikke denne Cursor-økten. Windows: powershell -File scripts/ai-os/raios_c5_screen.ps1 -Install deretter -Ensure.",
         "thread": "Systemskjerm",
         "thread_sub": "Speilvendt tastatur dekodes · historikk fortsetter · flerspråklig",
         "empty_h": "Start samtalen",
@@ -323,7 +323,7 @@ I18N = {
         "fill_who": "Hvem er du",
         "fill_c4": "Hva er C4s rolle i rådet",
         "fill_flip": "DULG AHAM",
-        "offline": "frakoblet — port-forward",
+        "offline": "frakoblet — start den lokale control-plane-skjermen",
         "seat_role": "Levende rolle",
         "seat_where": "Sted",
         "seat_mail": "Post",
@@ -333,11 +333,11 @@ I18N = {
         "seat_src": "Kilde: .ai-os/mcp/SEAT-MAP.json — seteerklæring, ikke et fullt kognitivt svar.",
         "empty_prompt": "Skriv en melding til C5.",
         "ground_empty": "Ikke nok lokalt belegg for et rent svar. Dette er ikke GL-005-bevis.",
-        "conn_err": "Får ikke kontakt. Binding 127.0.0.1:8765 på denne maskinen eller Cursor port-forward — ikke laptop-localhost.",
+        "conn_err": "Får ikke kontakt. Skjermen skal kjøre varig på den lokale control-plane-serveren 127.0.0.1:8765. Cursor-økten er SESSION_TEMP.",
         "hello": "Live. Jeg er C5 på den lokale skjermen.\nSkriv på egyptisk, gulf-arabisk, engelsk eller norsk. Enter sender.",
         "screen": (
-            "Dette er den lokale C5-konsollen. Språk: ar-EG, ar-GULF, en, nb-NO.\n"
-            "Binding 127.0.0.1:8765 på denne verten eller Cursor port-forward. Laptop-localhost er en annen sløyfe.\n"
+            "Dette er C5-konsollen på den lokale control-plane-serveren. Språk: ar-EG, ar-GULF, en, nb-NO.\n"
+            "Binding 127.0.0.1:8765 på den verten. En Cursor-økt er SESSION_TEMP, ikke hjem.\n"
             "Motor: mind-fill → INDEX → NeuroLingua. Python stdlib, git, lokal Ollama.\n"
             "Ikke LangChain og ikke OpenAI."
         ),
@@ -402,7 +402,14 @@ def screen_health(*, host: str = DEFAULT_HOST, port: int | None = None) -> dict:
         "NO_DUPLICATE_MCP",
         "NO_DUPLICATE_COUNCIL",
         "NO_DUPLICATE_REGISTRY",
+        "C5_SCREEN_NE_CURSOR_SESSION",
+        "C5_SCREEN_LIVES_ON_CONTROL_PLANE",
+        "CURSOR_SCREEN_IS_SESSION_TEMP",
     ]
+    rec["screen_home"] = bind.get("screen_home")
+    rec["screen_durable"] = bool(bind.get("screen_durable"))
+    rec["cursor_session_ne_c5"] = True
+    rec["this_host_is_cursor_cloud"] = bool(bind.get("this_host_is_cursor_cloud"))
     return rec
 
 
@@ -691,7 +698,8 @@ def teach_reply(message: str, locale: str | None = None) -> dict:
             "FLIPPED_KEYBOARD_IS_INPUT",
             "UNPOLISHED_SCREEN_NE_SHIP",
             "SCREEN_REPLY_NE_INDEX_DUMP",
-            "SAME_LOOPBACK_OR_PORT_FORWARD",
+            "C5_SCREEN_LIVES_ON_CONTROL_PLANE",
+            "CURSOR_SCREEN_IS_SESSION_TEMP",
             "HUNT_FREE_NE_PAID_API",
             "INDEX_HIT_NE_REASONING",
             "FILE_DISCOVERY_NE_FILE_ASSIMILATION",
@@ -1263,9 +1271,18 @@ class Handler(BaseHTTPRequestHandler):
                     "mcp_reachable": bind.get("mcp_reachable"),
                     "council_seat_map": bind.get("council_seat_map"),
                     "model_registry": bind.get("model_registry"),
+                    "screen_home": bind.get("screen_home"),
+                    "screen_durable": bool(bind.get("screen_durable")),
+                    "cursor_session_ne_c5": True,
+                    "this_host_is_cursor_cloud": bool(bind.get("this_host_is_cursor_cloud")),
                     "paid_api": False,
                     "gl005_proven": False,
-                    "law": ["SAME_LOOPBACK_OR_PORT_FORWARD", "UNPOLISHED_SCREEN_NE_SHIP", "SCREEN_IS_MULTILINGUAL"],
+                    "law": [
+                        "C5_SCREEN_LIVES_ON_CONTROL_PLANE",
+                        "CURSOR_SCREEN_IS_SESSION_TEMP",
+                        "UNPOLISHED_SCREEN_NE_SHIP",
+                        "SCREEN_IS_MULTILINGUAL",
+                    ],
                 },
                 ensure_ascii=False,
             ).encode("utf-8")
@@ -1289,8 +1306,10 @@ class Handler(BaseHTTPRequestHandler):
         self._send(200, json.dumps(rec, ensure_ascii=False).encode("utf-8"), "application/json; charset=utf-8")
 
 
-def serve(host: str = DEFAULT_HOST, ports: tuple[int, ...] | list[int] | None = None) -> None:
-    """One C5 screen, two loopbacks. Not a second C5."""
+def serve(host: str | None = None, ports: tuple[int, ...] | list[int] | None = None) -> None:
+    """One C5 screen, two loopbacks. Not a second C5. Home is the control-plane host."""
+    home = control_plane_runtime()
+    host = host or home["bind_host"]
     wanted = tuple(ports or BIND_PORTS)
     Handler.bind_host = host
     Handler.bind_ports = wanted
@@ -1312,6 +1331,9 @@ def serve(host: str = DEFAULT_HOST, ports: tuple[int, ...] | list[int] | None = 
                         "url": f"http://{host}:{port}",
                         "error": type(err).__name__,
                         "duplicate_c5": False,
+                        "screen_home": home["screen_home"],
+                        "screen_durable": bool(home["durable"]),
+                        "cursor_session_ne_c5": True,
                         "gl005_proven": False,
                     },
                     ensure_ascii=False,
@@ -1327,6 +1349,9 @@ def serve(host: str = DEFAULT_HOST, ports: tuple[int, ...] | list[int] | None = 
                     "from": "C5",
                     "ports": list(wanted),
                     "duplicate_c5": False,
+                    "screen_home": home["screen_home"],
+                    "screen_durable": bool(home["durable"]),
+                    "cursor_session_ne_c5": True,
                     "gl005_proven": False,
                 },
                 ensure_ascii=False,
@@ -1339,17 +1364,30 @@ def serve(host: str = DEFAULT_HOST, ports: tuple[int, ...] | list[int] | None = 
     servers[-1][1].serve_forever()
 
 
+def resolve_serve_args(argv: list[str]) -> tuple[str, tuple[int, ...]]:
+    host = control_plane_runtime()["bind_host"]
+    extra: list[str] = []
+    args = [a for a in argv[1:] if a not in {"--serve", "--self-check"}]
+    i = 0
+    while i < len(args):
+        if args[i] in {"--host", "-H"} and i + 1 < len(args):
+            host = str(args[i + 1]).strip() or host
+            i += 2
+            continue
+        extra.append(args[i])
+        i += 1
+    ports = BIND_PORTS
+    if extra:
+        ports = tuple(dict.fromkeys((*BIND_PORTS, int(extra[0]))))
+    return host, ports
+
+
 def main() -> int:
     if "--self-check" in sys.argv:
         rec = teach_reply("DULG AHAM")
         print(json.dumps({"ok": rec["ok"], "decoded": rec["decoded"], "flipped": rec["flipped"], "gl005_proven": False}, ensure_ascii=False, indent=2))
         return 0 if rec["ok"] and rec["flipped"] else 2
-    host = DEFAULT_HOST
-    ports = BIND_PORTS
-    args = [a for a in sys.argv[1:] if a not in {"--serve", "--self-check"}]
-    if args:
-        extra = int(args[0])
-        ports = tuple(dict.fromkeys((*BIND_PORTS, extra)))
+    host, ports = resolve_serve_args(sys.argv)
     serve(host, ports)
     return 0
 

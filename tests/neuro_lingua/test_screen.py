@@ -24,7 +24,9 @@ def test_screen_is_standard_rtl_and_does_not_touch_wal():
     assert "شاشة النظام" in PAGE
     assert "LangChain" in PAGE
     assert "127.0.0.1:8765" in PAGE
-    assert "port-forward" in PAGE
+    assert "control-plane" in PAGE
+    assert "SESSION_TEMP" in PAGE
+    assert "raios_c5_screen.ps1 -Install" in PAGE
     assert "GL005" in PAGE
     assert "إرسال" in PAGE
     assert "data-fill=\"مين أنت\"" in PAGE
@@ -154,4 +156,23 @@ def test_same_c5_dual_bind_and_honest_health():
     assert rec["LAPTOP_IS_MODEL_HOST"] is False
     assert rec["OLLAMA_IS_DEV_FALLBACK"] is True
     assert rec["TRANSPORT"] == "openai-compatible"
+    assert rec["cursor_session_ne_c5"] is True
+    assert rec["screen_home"] in {"SESSION_TEMP", "CONTROL_PLANE"}
+    assert rec["duplicate_c5"] is False
     assert "127.0.0.1:8765" in PAGE
+    ps1 = (ROOT / "scripts" / "ai-os" / "raios_c5_screen.ps1").read_text(encoding="utf-8")
+    assert "RAIOS-C5-SCREEN" in ps1
+    assert "-Install" in ps1
+    assert "-Ensure" in ps1
+    assert (ROOT / "scripts" / "ai-os" / "raios_c5_screen_ensure.sh").is_file()
+
+
+def test_serve_args_honor_host_flag_and_keep_dual_bind():
+    from raios_c5_screen import resolve_serve_args
+
+    host, ports = resolve_serve_args(["raios_c5_screen.py", "--host", "127.0.0.1"])
+    assert host == "127.0.0.1"
+    assert ports == (8765, 8876)
+    host2, ports2 = resolve_serve_args(["raios_c5_screen.py", "--serve"])
+    assert host2 in {"127.0.0.1", "0.0.0.0"} or host2
+    assert ports2 == (8765, 8876)
