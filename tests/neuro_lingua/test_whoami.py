@@ -33,6 +33,8 @@ def test_c5_whoami_from_git_not_paid_rag():
     assert rec["c5_bind"]["laptop_is_model_host"] is False
     assert rec["c5_bind"]["duplicate_mcp"] is False
     assert rec["c5_bind"]["interactive_ne_cortex"] is True
+    assert rec["c5_bind"]["cursor_session_ne_c5"] is True
+    assert rec["c5_bind"]["screen_home"] in {"SESSION_TEMP", "CONTROL_PLANE"}
     assert "LangChain" in rec["engine_now"]["not"]
     assert (ROOT / "scripts" / "ai-os" / "raios_c5_whoami.ps1").is_file()
     assert (ROOT / ".ai-os" / "learning" / "C5-WHOAMI.md").is_file()
@@ -86,6 +88,9 @@ def test_p4_connects_existing_council_mcp_registry_without_duplicates():
     assert bind["bridges"]["execution"]["duplicate_mcp"] is False
     assert bind["mcp_endpoint"] == "http://127.0.0.1:8787/mcp"
     assert bind["mcp_tool_count"] == 8
+    assert bind["cursor_session_ne_c5"] is True
+    assert bind["screen_home"] in {"SESSION_TEMP", "CONTROL_PLANE"}
+    assert bind["duplicate_c5"] is False
     assert bind["council_seat_map_present"] is True
     live = bool(probe(use_cache=False).get("cortex_live"))
     assert bind["main_cortex"] is live
@@ -152,3 +157,34 @@ def test_p4_connects_existing_council_mcp_registry_without_duplicates():
     assert roles_rec["laptop_is_model_host"] is False
     assert roles_rec["transport"] == "openai-compatible"
     assert roles_rec["bridges"]["execution"]["install"] is False
+
+
+def test_screen_home_is_control_plane_not_cursor_session():
+    from raios_c5_whoami import control_plane_runtime, whoami, write_screen_home_receipt
+
+    whoami()
+
+    home = control_plane_runtime()
+    assert home["cursor_session_ne_c5"] is True
+    assert home["duplicate_c5"] is False
+    assert home["gl005_proven"] is False
+    assert "raios_c5_screen.ps1 -Install" in home["install_windows"]
+    assert "raios_c5_screen.ps1 -Ensure" in home["ensure_windows"]
+    assert home["ensure_linux"].endswith("raios_c5_screen_ensure.sh")
+    if home["this_host_is_cursor_cloud"]:
+        assert home["screen_home"] == "SESSION_TEMP"
+        assert home["durable"] is False
+    else:
+        assert home["screen_home"] == "CONTROL_PLANE"
+    rec = write_screen_home_receipt()
+    assert rec["ok"] is True
+    assert rec["cursor_session_ne_c5"] is True
+    assert rec["duplicate_c5"] is False
+    assert rec["new_mcp_tools"] is False
+    assert rec["wal_written"] is False
+    assert rec["gl005_proven"] is False
+    assert rec["screen_home"] == home["screen_home"]
+    assert (ROOT / ".ai-os" / "receipts" / "c5-p4" / "SCREEN-HOME.json").is_file()
+    md = (ROOT / ".ai-os" / "learning" / "C5-WHOAMI.md").read_text(encoding="utf-8")
+    assert "SCREEN_HOME" in md
+    assert "CURSOR_SESSION_NE_C5" in md

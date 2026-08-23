@@ -27,7 +27,10 @@
 
 ## ربط C5 القائم — بلا أنظمة مكررة
 
-- شاشة: `127.0.0.1:8765` + `127.0.0.1:8876` — نفس C5
+- شاشة: `http://127.0.0.1:8765` + `http://127.0.0.1:8876` — نفس C5
+- `SCREEN_HOME`: `SESSION_TEMP` durable=`false`
+- `CURSOR_SESSION_NE_C5`: `true`
+- تثبيت ويندوز: `powershell -File scripts/ai-os/raios_c5_screen.ps1 -Install` ثم `powershell -File scripts/ai-os/raios_c5_screen.ps1 -Ensure`
 - MCP: `http://127.0.0.1:8787/mcp` reachable=`True` tools=`8`
 - مجلس: `.ai-os/mcp/SEAT-MAP.json`
 - سجل: `.ai-os/MODEL-REGISTRY.json` cortex=`qwen3.6:35b-a3b`

@@ -1,6 +1,6 @@
 {
   "schema": "raios.c5-p4-prep.v1",
-  "ts": "2026-08-23T00:46:01.214303+00:00",
+  "ts": "2026-08-23T01:10:26.349153+00:00",
   "from": "C5",
   "parent": "C1",
   "ok": true,
@@ -12,6 +12,14 @@
   ],
   "c5_base_c1": "http://127.0.0.1:8876",
   "c5_screen_default": "http://127.0.0.1:8765",
+  "bind_host": "127.0.0.1",
+  "screen_home": "SESSION_TEMP",
+  "screen_durable": false,
+  "cursor_session_ne_c5": true,
+  "this_host_is_cursor_cloud": true,
+  "install_windows": "powershell -File scripts/ai-os/raios_c5_screen.ps1 -Install",
+  "ensure_windows": "powershell -File scripts/ai-os/raios_c5_screen.ps1 -Ensure",
+  "ensure_linux": "bash scripts/ai-os/raios_c5_screen_ensure.sh",
   "duplicate_c5": false,
   "mcp_endpoint": "http://127.0.0.1:8787/mcp",
   "mcp_health": "http://127.0.0.1:8787/health",
@@ -328,6 +336,7 @@
     "LAPTOP_NE_MODEL_HOST",
     "OLLAMA_IS_DEV_FALLBACK",
     "OPENAI_COMPAT_TRANSPORT",
-    "SOURCE_PATCH_NE_PROVIDER_SWITCH"
+    "SOURCE_PATCH_NE_PROVIDER_SWITCH",
+    "C5_SCREEN_NE_CURSOR_SESSION"
   ]
 }

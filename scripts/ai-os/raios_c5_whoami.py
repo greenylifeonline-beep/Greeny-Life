@@ -4,7 +4,9 @@ from __future__ import annotations
 
 import argparse
 import json
+import os
 import re
+import socket
 import sys
 from datetime import datetime, timezone
 from pathlib import Path
@@ -25,9 +27,8 @@ REGISTRY = ROOT / ".ai-os" / "MODEL-REGISTRY.json"
 SEAT_MAP = ROOT / ".ai-os" / "mcp" / "SEAT-MAP.json"
 P4_RECEIPT = ROOT / ".ai-os" / "receipts" / "c5-p4" / "P4-PREP.json"
 ROLES_RECEIPT = ROOT / ".ai-os" / "receipts" / "c5-p4" / "MODEL-ROLES.json"
-MCP_HEALTH_URL = "http://127.0.0.1:8787/health"
-MCP_ENDPOINT = "http://127.0.0.1:8787/mcp"
 SCREEN_PORTS = (8765, 8876)
+SCREEN_HOME_RECEIPT = ROOT / ".ai-os" / "receipts" / "c5-p4" / "SCREEN-HOME.json"
 
 PROFILE_RE = re.compile(r"^  ([A-Za-z]{2}(?:-[A-Za-z]{2,4})?):\s*$")
 CHILD_RE = re.compile(r"^      ([A-Za-z]{2}-[A-Za-z]{2}):\s*\{([^}]*)\}")
@@ -38,6 +39,34 @@ REALIZE_KEY_RE = re.compile(r'^    "([A-Za-z]{2}(?:-[A-Za-z0-9]+)?)"\s*:\s*\{', 
 
 def utc() -> str:
     return datetime.now(timezone.utc).isoformat()
+
+
+def control_plane_runtime() -> dict:
+    """C5 screen/MCP belong to the local control-plane host, not this Cursor session."""
+    bind_host = (os.environ.get("RAIOS_C5_SCREEN_HOST") or "127.0.0.1").strip() or "127.0.0.1"
+    mcp_host = (os.environ.get("RAIOS_MCP_HOST") or bind_host).strip() or bind_host
+    cursor_vm = Path("/opt/cursor").is_dir() or socket.gethostname() == "cursor"
+    return {
+        "bind_host": bind_host,
+        "mcp_host": mcp_host,
+        "cursor_session_ne_c5": True,
+        "this_host_is_cursor_cloud": cursor_vm,
+        "screen_home": "SESSION_TEMP" if cursor_vm else "CONTROL_PLANE",
+        "durable": not cursor_vm,
+        "install_windows": "powershell -File scripts/ai-os/raios_c5_screen.ps1 -Install",
+        "ensure_windows": "powershell -File scripts/ai-os/raios_c5_screen.ps1 -Ensure",
+        "ensure_linux": "bash scripts/ai-os/raios_c5_screen_ensure.sh",
+        "open": f"http://{bind_host}:8765",
+        "c1": f"http://{bind_host}:8876",
+        "mcp": f"http://{mcp_host}:8787/mcp",
+        "mcp_health": f"http://{mcp_host}:8787/health",
+        "duplicate_c5": False,
+        "gl005_proven": False,
+    }
+
+
+MCP_HEALTH_URL = control_plane_runtime()["mcp_health"]
+MCP_ENDPOINT = control_plane_runtime()["mcp"]
 
 
 def wal_mtime():
@@ -81,10 +110,19 @@ def c5_bind() -> dict:
     roles = {key: resolve_role(key) for key in ROLE_KEYS}
     bridges = execution_bridges()
     endpoint = resolve_endpoint("CORTEX_MODEL")
+    home = control_plane_runtime()
     return {
         "c5_screen_ports": list(SCREEN_PORTS),
-        "c5_base_c1": "http://127.0.0.1:8876",
-        "c5_screen_default": "http://127.0.0.1:8765",
+        "c5_base_c1": home["c1"],
+        "c5_screen_default": home["open"],
+        "bind_host": home["bind_host"],
+        "screen_home": home["screen_home"],
+        "screen_durable": bool(home["durable"]),
+        "cursor_session_ne_c5": True,
+        "this_host_is_cursor_cloud": bool(home["this_host_is_cursor_cloud"]),
+        "install_windows": home["install_windows"],
+        "ensure_windows": home["ensure_windows"],
+        "ensure_linux": home["ensure_linux"],
         "duplicate_c5": False,
         "mcp_endpoint": MCP_ENDPOINT,
         "mcp_health": MCP_HEALTH_URL,
@@ -166,6 +204,7 @@ def write_p4_receipt(bind: dict | None = None) -> dict:
             "OLLAMA_IS_DEV_FALLBACK",
             "OPENAI_COMPAT_TRANSPORT",
             "SOURCE_PATCH_NE_PROVIDER_SWITCH",
+            "C5_SCREEN_NE_CURSOR_SESSION",
         ],
     }
     rec["ok"] = bool(
@@ -178,6 +217,7 @@ def write_p4_receipt(bind: dict | None = None) -> dict:
         and rec.get("interactive_ne_cortex") is True
         and rec.get("laptop_is_model_host") is False
         and rec.get("source_patch_required") is False
+        and rec.get("cursor_session_ne_c5") is True
         and rec.get("gl005_proven") is False
     )
     P4_RECEIPT.parent.mkdir(parents=True, exist_ok=True)
@@ -244,6 +284,63 @@ def write_roles_receipt(bind: dict | None = None) -> dict:
     )
     ROLES_RECEIPT.parent.mkdir(parents=True, exist_ok=True)
     ROLES_RECEIPT.write_text(json.dumps(rec, indent=2, ensure_ascii=False) + "\n", encoding="utf-8")
+    return rec
+
+
+def write_screen_home_receipt(bind: dict | None = None) -> dict:
+    """Honest home stamp. Cursor VM is SESSION_TEMP. Durable only on the control-plane host."""
+    home = control_plane_runtime()
+    bind = bind or {}
+    rec = {
+        "schema": "raios.c5-screen-home.v1",
+        "ts": utc(),
+        "from": "C5",
+        "parent": "C1",
+        "ok": True,
+        "cursor_session_ne_c5": True,
+        "this_host_is_cursor_cloud": bool(home["this_host_is_cursor_cloud"]),
+        "screen_home": home["screen_home"],
+        "durable": bool(home["durable"]),
+        "bind_host": home["bind_host"],
+        "open": home["open"],
+        "c1": home["c1"],
+        "mcp": home["mcp"],
+        "install_windows": home["install_windows"],
+        "ensure_windows": home["ensure_windows"],
+        "ensure_linux": home["ensure_linux"],
+        "duplicate_c5": False,
+        "new_mcp_tools": False,
+        "mcp_tool_count": bind.get("mcp_tool_count"),
+        "need_c1": bool(home["this_host_is_cursor_cloud"]),
+        "wal_written": False,
+        "gl005_proven": False,
+        "law": [
+            "C5_SCREEN_NE_CURSOR_SESSION",
+            "C5_SCREEN_LIVES_ON_CONTROL_PLANE",
+            "CURSOR_SCREEN_IS_SESSION_TEMP",
+            "NO_DUPLICATE_C5",
+            "NO_NEW_MCP_TOOLS",
+        ],
+    }
+    rec["ok"] = bool(
+        rec["cursor_session_ne_c5"] is True
+        and rec["duplicate_c5"] is False
+        and rec["new_mcp_tools"] is False
+        and rec["gl005_proven"] is False
+        and (
+            (
+                rec["this_host_is_cursor_cloud"]
+                and rec["screen_home"] == "SESSION_TEMP"
+                and rec["durable"] is False
+            )
+            or (
+                (not rec["this_host_is_cursor_cloud"])
+                and rec["screen_home"] == "CONTROL_PLANE"
+            )
+        )
+    )
+    SCREEN_HOME_RECEIPT.parent.mkdir(parents=True, exist_ok=True)
+    SCREEN_HOME_RECEIPT.write_text(json.dumps(rec, indent=2, ensure_ascii=False) + "\n", encoding="utf-8")
     return rec
 
 
@@ -424,7 +521,10 @@ def render_md(rec: dict) -> str:
             "",
             "## ربط C5 القائم — بلا أنظمة مكررة",
             "",
-            f"- شاشة: `127.0.0.1:8765` + `127.0.0.1:8876` — نفس C5",
+            f"- شاشة: `{bind.get('c5_screen_default') or 'http://127.0.0.1:8765'}` + `{bind.get('c5_base_c1') or 'http://127.0.0.1:8876'}` — نفس C5",
+            f"- `SCREEN_HOME`: `{bind.get('screen_home')}` durable=`{str(bool(bind.get('screen_durable'))).lower()}`",
+            f"- `CURSOR_SESSION_NE_C5`: `true`",
+            f"- تثبيت ويندوز: `{bind.get('install_windows')}` ثم `{bind.get('ensure_windows')}`",
             f"- MCP: `{bind.get('mcp_endpoint')}` reachable=`{bind.get('mcp_reachable')}` tools=`{bind.get('mcp_tool_count')}`",
             f"- مجلس: `{bind.get('council_seat_map')}`",
             f"- سجل: `{bind.get('model_registry')}` cortex=`{bind.get('cortex_registry_model')}`",
@@ -459,8 +559,29 @@ def main() -> int:
     p = argparse.ArgumentParser()
     p.add_argument("--p4", action="store_true", help="Write P4-PREP receipt connecting existing Council/MCP/Registry")
     p.add_argument("--roles", action="store_true", help="Write MODEL-ROLES receipt from existing registry")
+    p.add_argument("--screen-home", action="store_true", help="Stamp SCREEN-HOME receipt (Cursor=SESSION_TEMP)")
     args = p.parse_args()
     rec = whoami()
+    if args.screen_home:
+        home = write_screen_home_receipt(rec.get("c5_bind"))
+        print(
+            json.dumps(
+                {
+                    "ok": home["ok"],
+                    "receipt": str(SCREEN_HOME_RECEIPT),
+                    "screen_home": home["screen_home"],
+                    "durable": home["durable"],
+                    "cursor_session_ne_c5": True,
+                    "need_c1": home["need_c1"],
+                    "install_windows": home["install_windows"],
+                    "ensure_windows": home["ensure_windows"],
+                    "gl005_proven": False,
+                },
+                ensure_ascii=False,
+                indent=2,
+            )
+        )
+        return 0 if home["ok"] else 2
     if args.roles:
         roles = write_roles_receipt(rec.get("c5_bind"))
         print(json.dumps({"ok": roles["ok"], "receipt": str(ROLES_RECEIPT), "local_winner": False, "gl005_proven": False}, ensure_ascii=False, indent=2))
