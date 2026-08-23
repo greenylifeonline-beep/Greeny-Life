@@ -17,7 +17,7 @@
 - استرجاع: `scripts/ai-os/raios_c5_read.py search`
 - كلام العملاء: `NeuroLingua deterministic (llm_calls=0)`
 - عضلة تدريس: `qwen2.5:0.5b via Ollama`
-- قشرة رئيسية: `qwen3.6:35b-a3b (C1 treat/run/throw; not loaded here)`
+- قشرة رئيسية: `qwen3.6:35b-a3b (named candidate only; C1 treat/run/throw; not permanent; not loaded here)`
 - شبكة تدريب: `python3 scripts/ai-os/raios_c5_train.py`
 - تدقيق الواقع: `python3 scripts/ai-os/raios_c5_reality.py`
 - MCP: `http://127.0.0.1:8787/mcp`
