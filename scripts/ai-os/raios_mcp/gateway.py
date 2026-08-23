@@ -4,6 +4,7 @@ from __future__ import annotations
 import hashlib
 import json
 import re
+import shutil
 import subprocess
 import uuid
 from dataclasses import dataclass, field
@@ -98,6 +99,38 @@ def append_jsonl(path: Path, rec: dict) -> None:
 def git(root: Path, *args: str) -> str:
     r = subprocess.run(["git", *args], cwd=root, text=True, capture_output=True)
     return (r.stdout or "").strip()
+
+
+def mcp_to_opencode_seam(root: Path | None = None) -> dict[str, Any]:
+    """Minimum existing MCP→OpenCode bind. Surfaces CODE_MODEL on get_head. No new tools. No shell."""
+    binary = shutil.which("opencode")
+    registry: dict[str, Any] = {}
+    path = (root or Path.cwd()) / ".ai-os" / "MODEL-REGISTRY.json"
+    if path.is_file():
+        try:
+            payload = json.loads(path.read_text(encoding="utf-8"))
+        except (OSError, json.JSONDecodeError):
+            payload = {}
+        if isinstance(payload, dict):
+            registry = payload
+    declared = ((registry.get("bridges") or {}).get("execution") or {})
+    return {
+        "control_tool": "get_head",
+        "control": "raios-mcp",
+        "execution": "opencode",
+        "uses_role": str(declared.get("uses_role") or "CODE_MODEL"),
+        "present": binary is not None,
+        "binary": binary,
+        "install": False,
+        "new_mcp_tools": False,
+        "shell_via_mcp": False,
+        "execution_proven": False,
+        "mcp_tool_count": len(V1_TOOLS),
+        "duplicate_mcp": False,
+        "status": "BINARY_PRESENT_NOT_EXECUTED" if binary else str(declared.get("status") or "PREP_NOT_INSTALLED"),
+        "declared_version": declared.get("declared_version"),
+        "registry": ".ai-os/MODEL-REGISTRY.json",
+    }
 
 
 def payload_hash_of(arguments: dict) -> str:
@@ -307,6 +340,7 @@ class Gateway:
                 "branch": git(self.root, "branch", "--show-current") or BRANCH,
                 "repository": REPO,
                 "actor_id": actor.actor_id,
+                "mcp_to_opencode": mcp_to_opencode_seam(self.root),
             }
         )
 

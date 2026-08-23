@@ -382,7 +382,10 @@ def screen_health(*, host: str = DEFAULT_HOST, port: int | None = None) -> dict:
     }
     rec["HEALTH"] = 200
     rec["MAIN_CORTEX"] = bool(rec.get("main_cortex"))
-    rec["MODEL"] = rec.get("cortex_model")
+    rec["MODEL"] = rec.get("bound_model") or rec.get("cortex_model")
+    rec["NAMED_CANDIDATE"] = rec.get("named_candidate")
+    rec["BOUND_MODEL"] = rec.get("bound_model") or rec.get("cortex_model")
+    rec["PERMANENT_IDENTITY"] = False
     rec["LOCAL_WINNER"] = False
     rec["ROLE"] = "CORTEX_MODEL"
     rec["LAPTOP_IS_MODEL_HOST"] = False
@@ -399,6 +402,8 @@ def screen_health(*, host: str = DEFAULT_HOST, port: int | None = None) -> dict:
         "OLLAMA_IS_DEV_FALLBACK",
         "LOCAL_OLLAMA_NE_CORTEX_CRITERION",
         "OPENAI_COMPAT_TRANSPORT",
+        "ROLE_NE_HARDCODED_IDENTITY",
+        "NAMED_CANDIDATE_NE_PERMANENT_CORTEX",
         "NO_DUPLICATE_MCP",
         "NO_DUPLICATE_COUNCIL",
         "NO_DUPLICATE_REGISTRY",

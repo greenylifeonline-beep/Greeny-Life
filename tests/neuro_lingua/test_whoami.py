@@ -59,6 +59,9 @@ def test_p4_connects_existing_council_mcp_registry_without_duplicates():
     assert bind["duplicate_council"] is False
     assert bind["duplicate_registry"] is False
     assert bind["cortex_model"] == CORTEX_IDENTITY
+    assert bind["named_candidate"] == CORTEX_IDENTITY
+    assert bind["bound_model"] == CORTEX_IDENTITY
+    assert bind["permanent_identity"] is False
     assert bind["cortex_registry_bound"] is True
     assert bind["interactive_ne_cortex"] is True
     assert bind["cortex_local_winner"] is False
@@ -86,6 +89,12 @@ def test_p4_connects_existing_council_mcp_registry_without_duplicates():
     assert bind["bridges"]["execution"]["id"] == "opencode"
     assert bind["bridges"]["execution"]["install"] is False
     assert bind["bridges"]["execution"]["duplicate_mcp"] is False
+    assert bind["bridges"]["execution"]["mcp_seam"] == "get_head"
+    assert bind["bridges"]["mcp_to_opencode"]["control_tool"] == "get_head"
+    assert bind["bridges"]["mcp_to_opencode"]["execution"] == "opencode"
+    assert bind["bridges"]["mcp_to_opencode"]["uses_role"] == "CODE_MODEL"
+    assert bind["bridges"]["mcp_to_opencode"]["execution_proven"] is False
+    assert bind["bridges"]["mcp_to_opencode"]["new_mcp_tools"] is False
     assert bind["mcp_endpoint"] == "http://127.0.0.1:8787/mcp"
     assert bind["mcp_tool_count"] == 8
     assert bind["cursor_session_ne_c5"] is True
@@ -100,6 +109,9 @@ def test_p4_connects_existing_council_mcp_registry_without_duplicates():
     assert health["HEALTH"] == 200
     assert health["MAIN_CORTEX"] is live
     assert health["MODEL"] == CORTEX_IDENTITY
+    assert health["NAMED_CANDIDATE"] == CORTEX_IDENTITY
+    assert health["BOUND_MODEL"] == CORTEX_IDENTITY
+    assert health["PERMANENT_IDENTITY"] is False
     assert health["LOCAL_WINNER"] is False
     assert health["ROLE"] == "CORTEX_MODEL"
     assert health["LAPTOP_IS_MODEL_HOST"] is False
@@ -130,9 +142,14 @@ def test_p4_connects_existing_council_mcp_registry_without_duplicates():
     assert registry["routing"]["cortex"] == "raios-main-cortex"
     assert registry["routing"]["interactive"] != "raios-main-cortex"
     assert registry["roles"]["CORTEX_MODEL"]["local_winner"] is False
+    assert registry["roles"]["CORTEX_MODEL"]["permanent_identity"] is False
+    assert registry["roles"]["CORTEX_MODEL"]["named_candidate_only"] is True
+    assert registry["models"]["raios-main-cortex"]["permanent"] is False
     assert registry["bridges"]["control"]["endpoint"] == "http://127.0.0.1:8787/mcp"
     assert registry["bridges"]["execution"]["id"] == "opencode"
     assert registry["bridges"]["execution"]["install"] is False
+    assert registry["bridges"]["execution"]["mcp_seam"] == "get_head"
+    assert registry["bridges"]["execution"]["execution_proven"] is False
     worker_models = {row["model"] for row in registry["models"].values() if row.get("not_cortex")}
     for name in (
         "deepseek-r1:1.5b",
@@ -157,6 +174,12 @@ def test_p4_connects_existing_council_mcp_registry_without_duplicates():
     assert roles_rec["laptop_is_model_host"] is False
     assert roles_rec["transport"] == "openai-compatible"
     assert roles_rec["bridges"]["execution"]["install"] is False
+    assert roles_rec["permanent_identity"] is False
+    assert roles_rec["mcp_to_opencode_bind"] is True
+    assert roles_rec["opencode_execution_proven"] is False
+    assert roles_rec["model_agnostic_bind"] is True
+    assert roles_rec["remote_provider_supported"] is True
+    assert roles_rec["role_based_routing"] is True
 
 
 def test_screen_home_is_control_plane_not_cursor_session():

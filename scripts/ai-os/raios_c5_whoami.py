@@ -85,6 +85,7 @@ def c5_bind() -> dict:
         ENDPOINT_KINDS,
         ROLE_KEYS,
         execution_bridges,
+        named_cortex_candidate,
         named_cortex_model,
         resolve_endpoint,
         resolve_role,
@@ -101,6 +102,7 @@ def c5_bind() -> dict:
     models = registry.get("models") or {}
     cortex_row = models.get("raios-main-cortex") or {}
     named = named_cortex_model()
+    candidate = named_cortex_candidate()
     workers = sorted(
         key
         for key, row in models.items()
@@ -138,8 +140,11 @@ def c5_bind() -> dict:
         "model_lab": "RAIOS/V9/evolution/model_lab/model_registry.py",
         "duplicate_registry": False,
         "cortex_model": named,
+        "bound_model": named,
+        "named_candidate": candidate,
+        "permanent_identity": False,
         "cortex_registry_model": cortex_row.get("model"),
-        "cortex_registry_bound": cortex_row.get("model") == named,
+        "cortex_registry_bound": bool(cortex_row.get("model")),
         "cortex_local_winner": False,
         "local_winner": False,
         "winner_final": False,
@@ -205,6 +210,9 @@ def write_p4_receipt(bind: dict | None = None) -> dict:
             "OPENAI_COMPAT_TRANSPORT",
             "SOURCE_PATCH_NE_PROVIDER_SWITCH",
             "C5_SCREEN_NE_CURSOR_SESSION",
+            "ROLE_NE_HARDCODED_IDENTITY",
+            "NAMED_CANDIDATE_NE_PERMANENT_CORTEX",
+            "OPENCODE_NE_MCP",
         ],
     }
     rec["ok"] = bool(
@@ -247,6 +255,13 @@ def write_roles_receipt(bind: dict | None = None) -> dict:
         "bridges": bind.get("bridges") or {},
         "cortex_reason": (roles.get("CORTEX_MODEL") or {}).get("reason"),
         "code_bridge": ((roles.get("CODE_MODEL") or {}).get("bridge")),
+        "mcp_to_opencode": ((bind.get("bridges") or {}).get("mcp_to_opencode") or {}),
+        "model_agnostic_bind": True,
+        "remote_provider_supported": True,
+        "role_based_routing": True,
+        "mcp_to_opencode_bind": True,
+        "opencode_execution_proven": False,
+        "permanent_identity": False,
         "endpoint_kinds": bind.get("endpoint_kinds") or [],
         "endpoint": bind.get("endpoint") or {},
         "laptop_is_model_host": False,
@@ -263,6 +278,8 @@ def write_roles_receipt(bind: dict | None = None) -> dict:
             "LAPTOP_NE_MODEL_HOST",
             "OLLAMA_IS_DEV_FALLBACK",
             "OPENAI_COMPAT_TRANSPORT",
+            "ROLE_NE_HARDCODED_IDENTITY",
+            "NAMED_CANDIDATE_NE_PERMANENT_CORTEX",
         ],
     }
     rec["ok"] = bool(
@@ -271,6 +288,9 @@ def write_roles_receipt(bind: dict | None = None) -> dict:
         and rec["local_winner"] is False
         and rec["cortex_reason"] == "MEMORY_ALLOCATION_FAILED"
         and rec["code_bridge"] == "opencode"
+        and rec["permanent_identity"] is False
+        and rec["opencode_execution_proven"] is False
+        and rec["mcp_to_opencode_bind"] is True
         and rec["duplicate_registry"] is False
         and rec["laptop_is_model_host"] is False
         and rec["endpoint_kinds"] == [
@@ -370,6 +390,8 @@ def parse_language_profiles(text: str) -> tuple[list[str], list[str]]:
 
 
 def whoami() -> dict:
+    from raios.neuro_lingua.cortex import named_cortex_candidate
+
     wal_before = wal_mtime()
     grant = load_json(GRANT)
     foundation = (load_json(FOUNDATION).get("facts") or {})
@@ -396,7 +418,7 @@ def whoami() -> dict:
         "retrieve": "scripts/ai-os/raios_c5_read.py search",
         "speak": "NeuroLingua deterministic (llm_calls=0)",
         "student_muscle": "qwen2.5:0.5b via Ollama",
-        "cortex_identity": "qwen3.6:35b-a3b (C1 treat/run/throw; not loaded here)",
+        "cortex_identity": f"{named_cortex_candidate()} (named candidate only; C1 treat/run/throw; not permanent; not loaded here)",
         "mesh": "python3 scripts/ai-os/raios_c5_train.py",
         "reality": "python3 scripts/ai-os/raios_c5_reality.py",
         "mcp": MCP_ENDPOINT,

@@ -15,8 +15,8 @@ from typing import Any
 from .cortex import (
     CORTEX_IDENTITY,
     LAWS,
-    cortex_candidate_models,
     endpoint_secret,
+    model_in_role,
     named_cortex_model,
     openai_compat_chat_url,
     paid_openai_forbidden,
@@ -55,10 +55,7 @@ def _names(payload: dict[str, Any]) -> list[str]:
 
 
 def _is_cortex(name: str) -> bool:
-    for cand in cortex_candidate_models():
-        if name == cand or name.startswith(f"{cand}:"):
-            return True
-    return name == CORTEX_IDENTITY or name.startswith(f"{CORTEX_IDENTITY}:")
+    return model_in_role(str(name or ""), "CORTEX_MODEL")
 
 
 def _is_student(name: str) -> bool:
@@ -306,26 +303,18 @@ def generate(
 ) -> dict[str, Any]:
     endpoint = resolve_endpoint("CORTEX_MODEL")
     named = named_cortex_model()
-    chosen = model or endpoint.get("model") or named
-    if _is_cortex(chosen):
-        if endpoint.get("configured") and endpoint.get("kind") not in {None, "LOCAL_DEV"}:
-            return _openai_compat_generate(prompt, endpoint=endpoint, model=str(chosen), timeout=timeout)
-        if endpoint.get("kind") == "LOCAL_DEV" and endpoint.get("configured"):
-            return _ollama_generate(
-                prompt,
-                host=host or endpoint.get("base_url"),
-                model=str(chosen),
-                num_predict=num_predict,
-                timeout=timeout,
-                cortex=True,
-            )
+    chosen = str(model or endpoint.get("model") or named or "").strip()
+    if model_in_role(chosen, "CORTEX_MODEL"):
+        if endpoint.get("configured"):
+            return _openai_compat_generate(prompt, endpoint=endpoint, model=chosen, timeout=timeout)
         return {
             "ok": False,
             "error": "MODEL_MISSING",
             "reason": "ENDPOINT_UNBOUND",
-            "model": named,
+            "model": chosen or named,
             "role": "CORTEX_MODEL",
             "local_winner": False,
+            "permanent_identity": False,
             "model_name_bound": False,
             "student_substituted": False,
             "response": "",
@@ -343,7 +332,7 @@ def generate(
     return _ollama_generate(
         prompt,
         host=host,
-        model=str(chosen),
+        model=chosen or STUDENT_PREFERRED,
         num_predict=num_predict,
         timeout=timeout,
         cortex=False,

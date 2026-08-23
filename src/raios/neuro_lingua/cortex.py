@@ -13,7 +13,6 @@ from typing import Any
 
 from .provider_contracts import ProviderCapability
 
-CORTEX_IDENTITY = "qwen3.6:35b-a3b"
 OWNER = "C1"
 VERBS = ("treat", "run", "throw")
 MIN_RAM_GB_FOR_CORTEX = 24.0
@@ -57,6 +56,9 @@ LAWS = (
     "OPENAI_COMPAT_TRANSPORT",
     "CLOUD_GATEWAY_NE_OPENAI",
     "SOURCE_PATCH_NE_PROVIDER_SWITCH",
+    "ROLE_NE_HARDCODED_IDENTITY",
+    "NAMED_CANDIDATE_NE_PERMANENT_CORTEX",
+    "OPENCODE_NE_MCP",
 )
 
 _TRUE = {"1", "true", "yes", "on"}
@@ -130,6 +132,22 @@ def paid_openai_forbidden(url: str | None) -> bool:
     return host == "api.openai.com" or host.endswith(".openai.com") or "openai.azure.com" in host
 
 
+def named_cortex_candidate() -> str:
+    """Named candidate from the existing registry. Not a crowned or permanent identity."""
+    registry = load_model_registry()
+    row = (registry.get("roles") or {}).get("CORTEX_MODEL") or {}
+    named = str(row.get("named_candidate") or "").strip()
+    if named:
+        return named
+    models = registry.get("models") or {}
+    primary = models.get("raios-main-cortex") if isinstance(models.get("raios-main-cortex"), dict) else {}
+    return str((primary or {}).get("model") or "").strip()
+
+
+# Compatibility alias: registry named candidate only. Runtime bind uses resolve_endpoint().
+CORTEX_IDENTITY = named_cortex_candidate()
+
+
 def openai_compat_chat_url(base_url: str) -> str:
     base = _normalize_base_url(base_url) or ""
     if base.endswith("/v1"):
@@ -153,9 +171,10 @@ def resolve_role(role: str) -> dict[str, Any]:
         name = str((entry or {}).get("model") or mid)
         if name:
             candidate_models.append(name)
-    named = row.get("named_candidate") or (candidate_models[0] if candidate_models else None)
-    if key == "CORTEX_MODEL" and not named:
-        named = CORTEX_IDENTITY
+    prefix = _role_env_prefix(key)
+    env_model = _env(f"{prefix}_MODEL", row.get("model_env"))
+    named_candidate = row.get("named_candidate")
+    named = env_model or named_candidate or (candidate_models[0] if candidate_models else None)
     selected = row.get("selected")
     local_winner = bool(row.get("local_winner")) and selected is not None
     if registry.get("winners_are_final") is False:
@@ -172,6 +191,8 @@ def resolve_role(role: str) -> dict[str, Any]:
         "candidate_models": candidate_models,
         "selected": selected,
         "model": named,
+        "named_candidate": named_candidate,
+        "permanent_identity": False,
         "local_winner": local_winner,
         "winner_final": False,
         "reason": reason,
@@ -236,8 +257,6 @@ def resolve_endpoint(role: str = "CORTEX_MODEL") -> dict[str, Any]:
     )
     api_key_env_alt = kind_row.get("api_key_env_alt") or ("HF_TOKEN" if kind == "HF_ENDPOINT" else None)
     model = _env(f"{prefix}_MODEL", row.get("model_env"), kind_row.get("model_env")) or row.get("named_candidate")
-    if not model:
-        model = CORTEX_IDENTITY if key == "CORTEX_MODEL" else None
     configured = bool(base_url)
     forbidden = paid_openai_forbidden(base_url) if base_url else False
     chat_url = openai_compat_chat_url(base_url) if base_url and not forbidden else None
@@ -268,6 +287,8 @@ def resolve_endpoint(role: str = "CORTEX_MODEL") -> dict[str, Any]:
             )
         ),
         "model": model,
+        "named_candidate": row.get("named_candidate"),
+        "permanent_identity": False,
         "dev_fallback": kind == "LOCAL_DEV",
         "used_fallback": used_fallback,
         "remote": remote,
@@ -284,42 +305,62 @@ def resolve_endpoint(role: str = "CORTEX_MODEL") -> dict[str, Any]:
     }
 
 
-def named_cortex_model() -> str:
-    return str(resolve_role("CORTEX_MODEL").get("model") or CORTEX_IDENTITY)
+def named_cortex_model() -> str | None:
+    bound = resolve_endpoint("CORTEX_MODEL").get("model") or resolve_role("CORTEX_MODEL").get("model")
+    return str(bound) if bound else None
 
 
 def cortex_candidate_models() -> tuple[str, ...]:
     row = resolve_role("CORTEX_MODEL")
     names = list(row.get("candidate_models") or [])
-    named = str(row.get("model") or CORTEX_IDENTITY)
-    if named not in names:
+    named = str(row.get("named_candidate") or row.get("model") or "")
+    if named and named not in names:
         names.insert(0, named)
-    return tuple(dict.fromkeys(names))
+    return tuple(dict.fromkeys(item for item in names if item))
+
+
+def _not_cortex_models() -> set[str]:
+    models = load_model_registry().get("models") or {}
+    out: set[str] = set()
+    for entry in models.values():
+        if isinstance(entry, dict) and entry.get("not_cortex") and entry.get("model"):
+            out.add(str(entry["model"]))
+    return out
 
 
 def model_in_role(model: str, role: str) -> bool:
-    name = str(model or "")
-    row = resolve_role(role)
+    name = str(model or "").strip()
+    if not name:
+        return False
+    key = _normalize_role(role)
+    if key in {"CORTEX_MODEL", "FRONTIER_TEACHER_MODEL"} and name in _not_cortex_models():
+        return False
+    endpoint = resolve_endpoint(key)
+    bound = str(endpoint.get("model") or "")
+    if bound and (name == bound or name.startswith(f"{bound}:")):
+        return True
+    row = resolve_role(key)
     allowed = list(row.get("candidate_models") or [])
-    named = str(row.get("model") or "")
-    if named:
-        allowed.append(named)
+    for extra in (row.get("named_candidate"), row.get("model")):
+        if extra:
+            allowed.append(str(extra))
     return any(name == item or (item and name.startswith(f"{item}:")) for item in allowed if item)
 
 
 def execution_bridges() -> dict[str, Any]:
-    """RAIOS/MCP = control. OpenCode = coding execution bridge. Probe only. No install."""
+    """RAIOS/MCP = control. OpenCode = coding execution bridge. No new MCP tools. No install."""
     binary = shutil.which("opencode")
     registry = load_model_registry()
     declared = ((registry.get("bridges") or {}).get("execution") or {})
+    mcp_host = _env("RAIOS_MCP_HOST") or "127.0.0.1"
     return {
         "control": {
             "id": "raios-mcp",
             "role": "control/orchestration",
             "path": "scripts/ai-os/raios_mcp/server.py",
             "gateway": "scripts/ai-os/raios_mcp/gateway.py",
-            "endpoint": "http://127.0.0.1:8787/mcp",
-            "health": "http://127.0.0.1:8787/health",
+            "endpoint": f"http://{mcp_host}:8787/mcp",
+            "health": f"http://{mcp_host}:8787/health",
             "tools": 8,
             "not": "model-execution",
         },
@@ -332,17 +373,29 @@ def execution_bridges() -> dict[str, Any]:
             "install": False,
             "duplicate_mcp": False,
             "not_control_plane": True,
-            "status": "BINARY_PRESENT_NOT_WIRED" if binary else str(declared.get("status") or "PREP_NOT_INSTALLED"),
+            "execution_proven": False,
+            "status": "BINARY_PRESENT_NOT_EXECUTED" if binary else str(declared.get("status") or "PREP_NOT_INSTALLED"),
+            "mcp_seam": "get_head",
             "integration_points": list(
                 declared.get("integration_points")
                 or [
                     ".ai-os/MODEL-REGISTRY.json bridges.execution",
                     "roles.CODE_MODEL.bridge=opencode",
-                    "shutil.which('opencode') probe only",
+                    "MCP get_head mcp_to_opencode",
                     "do not add MCP tools",
                     "do not download",
                 ]
             ),
+        },
+        "mcp_to_opencode": {
+            "control_tool": "get_head",
+            "control": "raios-mcp",
+            "execution": "opencode",
+            "uses_role": "CODE_MODEL",
+            "present": binary is not None,
+            "new_mcp_tools": False,
+            "shell_via_mcp": False,
+            "execution_proven": False,
         },
         "local_infer": {
             "id": "ollama",
@@ -352,6 +405,8 @@ def execution_bridges() -> dict[str, Any]:
             "probe": "qwen_runtime.probe",
             "uses_role": "CORTEX_MODEL",
             "base_url_env": "OLLAMA_HOST",
+            "transport": "openai-compatible /v1/chat/completions",
+            "native_fallback": "ollama /api/generate",
             "not_cortex_host": True,
             "not_final_criterion": True,
         },
@@ -428,7 +483,9 @@ def status(*, min_free_gb: float = MIN_RAM_GB_FOR_CORTEX) -> dict[str, Any]:
         "schema": "raios.cortex.v1",
         "owner": OWNER,
         "verbs": list(VERBS),
-        "identity": CORTEX_IDENTITY,
+        "identity": named_cortex_candidate(),
+        "named_candidate": named_cortex_candidate(),
+        "permanent_identity": False,
         "role": "CORTEX_MODEL",
         "local_winner": False,
         "winner_final": False,
@@ -480,7 +537,9 @@ def treat() -> dict[str, Any]:
         "ok": True,
         "verb": "treat",
         "owner": OWNER,
-        "identity": CORTEX_IDENTITY,
+        "identity": named_cortex_candidate(),
+        "named_candidate": named_cortex_candidate(),
+        "permanent_identity": False,
         "loaded": False,
         "thrown": False,
         "run": False,
@@ -509,7 +568,9 @@ def refuse_throw() -> dict[str, Any]:
         "verb": "throw",
         "error": "EXECUTOR_NE_THROW_CORTEX",
         "owner": OWNER,
-        "identity": CORTEX_IDENTITY,
+        "identity": named_cortex_candidate(),
+        "named_candidate": named_cortex_candidate(),
+        "permanent_identity": False,
         "isolated_as_disposal": False,
         "law": list(LAWS),
         "gl005_proven": False,
@@ -532,7 +593,9 @@ def explicit_receipt(
         "############################################################",
         "# RAIOS C1 MAIN CORTEX RECEIPT",
         "############################################################",
-        f"IDENTITY={CORTEX_IDENTITY}",
+        f"NAMED_CANDIDATE={named_cortex_candidate()}",
+        "PERMANENT_IDENTITY=false",
+        f"IDENTITY={named_cortex_candidate()}",
         "ROLE=CORTEX_MODEL",
         "LOCAL_WINNER=false",
         "WINNERS_ARE_FINAL=false",
@@ -564,7 +627,9 @@ def explicit_receipt(
     return {
         "schema": "raios.cortex-explicit-receipt.v1",
         "ok": True,
-        "identity": CORTEX_IDENTITY,
+        "identity": named_cortex_candidate(),
+        "named_candidate": named_cortex_candidate(),
+        "permanent_identity": False,
         "role": "CORTEX_MODEL",
         "local_winner": False,
         "owner": OWNER,
@@ -601,7 +666,23 @@ class CortexProvider:
         text = str(payload.get("text") or payload.get("prompt") or "").strip()
         role = resolve_role("CORTEX_MODEL")
         endpoint = resolve_endpoint("CORTEX_MODEL")
-        requested = str(payload.get("model") or endpoint.get("model") or role.get("model") or CORTEX_IDENTITY)
+        requested = str(payload.get("model") or endpoint.get("model") or role.get("model") or "").strip()
+        if not requested:
+            return {
+                "ok": False,
+                "error": "MODEL_MISSING",
+                "reason": "ROLE_MODEL_UNBOUND",
+                "model": None,
+                "role": "CORTEX_MODEL",
+                "local_winner": False,
+                "llm_executed": False,
+                "model_name_bound": False,
+                "student_substituted": False,
+                "laptop_is_model_host": False,
+                "permanent_identity": False,
+                "response": "",
+                "gl005_proven": False,
+            }
         if not model_in_role(requested, "CORTEX_MODEL"):
             return {
                 "ok": False,
@@ -635,7 +716,10 @@ class CortexProvider:
 def public_fields(st: dict[str, Any] | None = None) -> dict[str, Any]:
     row = st or status()
     return {
-        "cortex_identity": CORTEX_IDENTITY,
+        "cortex_identity": named_cortex_candidate(),
+        "named_candidate": named_cortex_candidate(),
+        "permanent_identity": False,
+        "bound_model": (resolve_endpoint("CORTEX_MODEL") or {}).get("model"),
         "cortex_role": "CORTEX_MODEL",
         "local_winner": False,
         "laptop_is_model_host": False,

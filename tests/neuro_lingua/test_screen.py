@@ -148,6 +148,9 @@ def test_same_c5_dual_bind_and_honest_health():
     assert rec["from"] == "C5"
     assert rec["duplicate_c5"] is False
     assert rec["MODEL"] == "qwen3.6:35b-a3b"
+    assert rec["NAMED_CANDIDATE"] == "qwen3.6:35b-a3b"
+    assert rec["BOUND_MODEL"] == "qwen3.6:35b-a3b"
+    assert rec["PERMANENT_IDENTITY"] is False
     assert rec["student_substituted"] is False
     assert rec["gl005_proven"] is False
     assert rec["MAIN_CORTEX"] is rec["main_cortex"]

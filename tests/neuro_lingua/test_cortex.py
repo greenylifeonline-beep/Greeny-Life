@@ -40,7 +40,11 @@ def test_explicit_receipt_names_qwen36_cortex():
 
     rec = explicit_receipt()
     assert rec["identity"] == "qwen3.6:35b-a3b"
+    assert rec["named_candidate"] == "qwen3.6:35b-a3b"
+    assert rec["permanent_identity"] is False
     assert "IDENTITY=qwen3.6:35b-a3b" in rec["text"]
+    assert "NAMED_CANDIDATE=qwen3.6:35b-a3b" in rec["text"]
+    assert "PERMANENT_IDENTITY=false" in rec["text"]
     assert "ROLE=CORTEX_MODEL" in rec["text"]
     assert "LOCAL_WINNER=false" in rec["text"]
     assert "LAPTOP_IS_MODEL_HOST=false" in rec["text"]
@@ -59,6 +63,8 @@ def test_treat_does_not_load_or_throw():
     assert rec["thrown"] is False
     assert rec["run"] is False
     assert rec["identity"] == "qwen3.6:35b-a3b"
+    assert rec["named_candidate"] == "qwen3.6:35b-a3b"
+    assert rec["permanent_identity"] is False
 
 
 def test_c1_run_on_this_host_still_blocked_without_gpu(monkeypatch):

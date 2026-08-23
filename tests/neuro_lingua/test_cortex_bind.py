@@ -317,6 +317,9 @@ def test_resolve_role_is_registry_backed_and_does_not_crown_a_winner():
     assert bridges["execution"]["id"] == "opencode"
     assert bridges["execution"]["install"] is False
     assert bridges["execution"]["duplicate_mcp"] is False
+    assert bridges["execution"]["mcp_seam"] == "get_head"
+    assert bridges["mcp_to_opencode"]["control_tool"] == "get_head"
+    assert bridges["mcp_to_opencode"]["execution_proven"] is False
     assert bridges["local_infer"]["generate"] == "qwen_runtime.generate"
     assert bridges["local_infer"]["not_cortex_host"] is True
     assert bridges["transport"]["protocol"] == "openai-compatible"
@@ -375,6 +378,7 @@ def test_endpoint_env_switches_provider_without_source_patch(monkeypatch):
 
     def fake_urlopen(req, timeout=0):
         seen["url"] = getattr(req, "full_url", str(req))
+        seen["auth"] = req.get_header("Authorization")
         return FakeResp()
 
     monkeypatch.setattr(urllib.request, "urlopen", fake_urlopen)
@@ -386,6 +390,7 @@ def test_endpoint_env_switches_provider_without_source_patch(monkeypatch):
     assert "kaggle-worker.test" in seen["url"]
     assert "11434" not in seen["url"]
     assert seen["url"].endswith("/v1/chat/completions")
+    assert seen["auth"] == "Bearer test-key"
 
 
 def test_unbound_endpoint_when_local_host_unset(monkeypatch):
@@ -405,3 +410,168 @@ def test_unbound_endpoint_when_local_host_unset(monkeypatch):
     assert rec["error"] == "MODEL_MISSING"
     assert rec["reason"] == "ENDPOINT_UNBOUND"
     assert rec["student_substituted"] is False
+
+
+def test_env_model_wins_over_named_candidate_and_is_not_permanent(monkeypatch):
+    from raios.neuro_lingua.cortex import named_cortex_candidate, resolve_endpoint, resolve_role
+
+    monkeypatch.setenv("RAIOS_CORTEX_ENDPOINT", "KAGGLE_WORKER")
+    monkeypatch.setenv("RAIOS_CORTEX_BASE_URL", "http://kaggle-worker.test:9000/v1")
+    monkeypatch.setenv("RAIOS_CORTEX_MODEL", "kaggle-remote-model")
+    monkeypatch.setenv("RAIOS_CORTEX_API_KEY", "test-key")
+    role = resolve_role("CORTEX_MODEL")
+    endpoint = resolve_endpoint("CORTEX_MODEL")
+    assert named_cortex_candidate() == CORTEX_IDENTITY
+    assert role["named_candidate"] == CORTEX_IDENTITY
+    assert role["model"] == "kaggle-remote-model"
+    assert role["permanent_identity"] is False
+    assert endpoint["model"] == "kaggle-remote-model"
+    assert endpoint["named_candidate"] == CORTEX_IDENTITY
+    assert endpoint["permanent_identity"] is False
+    assert endpoint["kind"] == "KAGGLE_WORKER"
+    assert endpoint["chat_url"].endswith("/v1/chat/completions")
+
+
+def test_local_dev_cortex_uses_openai_compat_not_native_generate(monkeypatch):
+    import json
+    import urllib.request
+
+    from raios.neuro_lingua.qwen_runtime import generate
+
+    monkeypatch.setenv("OLLAMA_HOST", "http://ollama-dev.test:11434")
+    monkeypatch.delenv("RAIOS_CORTEX_ENDPOINT", raising=False)
+    monkeypatch.delenv("RAIOS_CORTEX_BASE_URL", raising=False)
+    monkeypatch.delenv("RAIOS_CORTEX_MODEL", raising=False)
+    seen: dict[str, str] = {}
+
+    class FakeResp:
+        status = 200
+
+        def __enter__(self):
+            return self
+
+        def __exit__(self, *args):
+            return False
+
+        def read(self):
+            return json.dumps({"choices": [{"message": {"content": "local-dev-ok"}}]}).encode("utf-8")
+
+    def fake_urlopen(req, timeout=0):
+        seen["url"] = getattr(req, "full_url", str(req))
+        return FakeResp()
+
+    monkeypatch.setattr(urllib.request, "urlopen", fake_urlopen)
+    rec = generate("hello", model=CORTEX_IDENTITY)
+    assert rec["ok"] is True
+    assert rec["response"] == "local-dev-ok"
+    assert rec["transport"] == "openai-compatible"
+    assert rec["endpoint_kind"] == "LOCAL_DEV"
+    assert seen["url"].endswith("/v1/chat/completions")
+    assert "/api/generate" not in seen["url"]
+    assert "11434" in seen["url"]
+
+
+def test_remote_auth_header_and_model_are_role_bound(monkeypatch):
+    import json
+    import urllib.request
+
+    from raios.neuro_lingua.qwen_runtime import generate
+
+    monkeypatch.setenv("RAIOS_CORTEX_ENDPOINT", "LIGHTNING_WORKER")
+    monkeypatch.setenv("RAIOS_CORTEX_BASE_URL", "https://lightning-worker.test/v1")
+    monkeypatch.setenv("RAIOS_CORTEX_MODEL", "lightning-remote-model")
+    monkeypatch.setenv("RAIOS_CORTEX_API_KEY", "lightning-secret")
+    seen: dict[str, str] = {}
+
+    class FakeResp:
+        status = 200
+
+        def __enter__(self):
+            return self
+
+        def __exit__(self, *args):
+            return False
+
+        def read(self):
+            return json.dumps({"choices": [{"message": {"content": "lightning-ok"}}]}).encode("utf-8")
+
+    def fake_urlopen(req, timeout=0):
+        seen["url"] = getattr(req, "full_url", str(req))
+        seen["auth"] = req.headers.get("Authorization") or req.get_header("Authorization")
+        body = json.loads(req.data.decode("utf-8"))
+        seen["model"] = body.get("model")
+        return FakeResp()
+
+    monkeypatch.setattr(urllib.request, "urlopen", fake_urlopen)
+    rec = generate("hello")
+    assert rec["ok"] is True
+    assert rec["model"] == "lightning-remote-model"
+    assert seen["model"] == "lightning-remote-model"
+    assert seen["auth"] == "Bearer lightning-secret"
+    assert seen["url"].endswith("/v1/chat/completions")
+    assert "11434" not in seen["url"]
+    assert rec["endpoint_kind"] == "LIGHTNING_WORKER"
+
+
+def test_code_model_reuses_same_endpoint_resolver_without_second_router(monkeypatch):
+    from raios.neuro_lingua.cortex import resolve_endpoint, resolve_role
+    from raios.neuro_lingua.router import ProviderRouter
+
+    monkeypatch.setenv("RAIOS_CODE_ENDPOINT", "LIGHTNING_WORKER")
+    monkeypatch.setenv("RAIOS_CODE_BASE_URL", "https://lightning-code.test/v1")
+    monkeypatch.setenv("RAIOS_CODE_MODEL", "code-remote")
+    monkeypatch.setenv("RAIOS_CODE_API_KEY", "code-secret")
+    role = resolve_role("CODE_MODEL")
+    endpoint = resolve_endpoint("CODE_MODEL")
+    assert role["bridge"] == "opencode"
+    assert role["model"] == "code-remote"
+    assert endpoint["kind"] == "LIGHTNING_WORKER"
+    assert endpoint["model"] == "code-remote"
+    assert endpoint["api_key_present"] is True
+    assert endpoint["duplicate_router"] is False
+    assert endpoint["duplicate_registry"] is False
+    assert endpoint["chat_url"].endswith("/v1/chat/completions")
+    software = ProviderRouter()
+    assert software.route.__func__.__qualname__.startswith("ProviderRouter")
+
+
+def test_mcp_get_head_surfaces_opencode_seam_without_new_tools():
+    import shutil
+
+    from raios.neuro_lingua.cortex import ROLE_KEYS, execution_bridges
+    from raios_mcp.gateway import V1_TOOLS, mcp_to_opencode_seam
+
+    assert len(V1_TOOLS) == 8
+    assert "opencode" not in V1_TOOLS
+    seam = mcp_to_opencode_seam(ROOT)
+    assert seam["control_tool"] == "get_head"
+    assert seam["execution"] == "opencode"
+    assert seam["uses_role"] == "CODE_MODEL"
+    assert seam["new_mcp_tools"] is False
+    assert seam["shell_via_mcp"] is False
+    assert seam["execution_proven"] is False
+    assert seam["install"] is False
+    assert seam["mcp_tool_count"] == 8
+    assert seam["present"] is (shutil.which("opencode") is not None)
+    bridges = execution_bridges()
+    assert bridges["mcp_to_opencode"]["control_tool"] == "get_head"
+    assert bridges["mcp_to_opencode"]["execution_proven"] is False
+    assert bridges["execution"]["mcp_seam"] == "get_head"
+    assert set(ROLE_KEYS) == {
+        "ROUTER_MODEL",
+        "CORTEX_MODEL",
+        "CODE_MODEL",
+        "REASONING_MODEL",
+        "EMBEDDING_MODEL",
+        "RERANKER_MODEL",
+        "FRONTIER_TEACHER_MODEL",
+    }
+
+
+def test_python_bind_does_not_hardcode_ollama_localhost():
+    cortex = (ROOT / "src" / "raios" / "neuro_lingua" / "cortex.py").read_text(encoding="utf-8")
+    runtime = (ROOT / "src" / "raios" / "neuro_lingua" / "qwen_runtime.py").read_text(encoding="utf-8")
+    assert "127.0.0.1:11434" not in cortex
+    assert "127.0.0.1:11434" not in runtime
+    assert "localhost:11434" not in cortex
+    assert "localhost:11434" not in runtime

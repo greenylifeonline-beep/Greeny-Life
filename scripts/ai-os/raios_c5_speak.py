@@ -13,7 +13,7 @@ ROOT = Path(__file__).resolve().parents[2]
 sys.path.insert(0, str(ROOT / "src"))
 sys.path.insert(0, str(Path(__file__).resolve().parent))
 
-from raios.neuro_lingua.cortex import CORTEX_IDENTITY, named_cortex_model, resolve_endpoint, resolve_role  # noqa: E402
+from raios.neuro_lingua.cortex import named_cortex_candidate, named_cortex_model, resolve_endpoint, resolve_role  # noqa: E402
 from raios.neuro_lingua.customer import COMPANIES  # noqa: E402
 from raios.neuro_lingua.kernel import NeuroLingua  # noqa: E402
 from raios.neuro_lingua.customer import speak as customer_speak  # noqa: E402
@@ -132,7 +132,7 @@ async def chat(text: str) -> dict:
         model_name_bound = False
     role = resolve_role("CORTEX_MODEL")
     endpoint = resolve_endpoint("CORTEX_MODEL")
-    named = str(endpoint.get("model") or role.get("model") or routed.get("model") or named_cortex_model() or CORTEX_IDENTITY)
+    named = str(endpoint.get("model") or role.get("model") or routed.get("model") or named_cortex_model() or named_cortex_candidate())
     rec = {
         "schema": "raios.c5-chat.v1",
         "ts": utc(),
