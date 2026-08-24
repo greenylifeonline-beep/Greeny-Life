@@ -139,7 +139,7 @@ class WorkStealingScheduler:
         """Read resource evidence only. The scheduler MUST NOT probe cloud providers."""
         import json
         from pathlib import Path
-        target = Path(path) if path else (Path(__file__).resolve().parents[4] / ".ai-os" / "learning" / "FREE-RESOURCES.json")
+        target = Path(path) if path else (Path(__file__).resolve().parents[4] / ".ai-os" / "learning" / "RESOURCE-PROJECTION.json")
         if not target.exists():
             return {"schema": "raios.resource-projection.v1", "records": [], "state": "NOT_PROVEN"}
         return json.loads(target.read_text(encoding="utf-8"))

@@ -5,6 +5,7 @@ from dataclasses import dataclass
 from typing import Any
 
 from . import LIFECYCLE, LAWS
+from .provider_contract import UNKNOWN
 
 
 @dataclass(frozen=True)
@@ -14,6 +15,8 @@ class WorkerContract:
     account_bound: bool
     is_c5: bool = False
     persistent_brain: bool = False
+    workspace: str = UNKNOWN
+    declared_capabilities: tuple[str, ...] = ()
 
     def as_dict(self) -> dict[str, Any]:
         if self.is_c5 or self.persistent_brain:
@@ -24,6 +27,8 @@ class WorkerContract:
             "account_bound": self.account_bound,
             "is_c5": False,
             "persistent_brain": False,
+            "workspace": self.workspace,
+            "declared_capabilities": list(self.declared_capabilities),
             "lifecycle": list(LIFECYCLE),
             "law": list(LAWS),
         }
