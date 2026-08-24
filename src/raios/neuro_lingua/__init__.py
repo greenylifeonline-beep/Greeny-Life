@@ -9,11 +9,19 @@ from .kernel import InterpretResult, NeuroLingua, RealizeResult, interpret, real
 from .layers import auto_pipeline
 from .ops_compile import auto_compile
 from .schema import CognitiveMeaningPacket, KnowledgeState, RiskLevel
+from .sensory_contract import (
+    CognitiveTurn,
+    SensoryCapability,
+    SensoryEvent,
+    detect_lightweight_language,
+)
 from .training import TrainingDecision, decide_training
 from .wal import ExistingCognitiveWALWriter
 
 __all__ = [
     "CognitiveMeaningPacket",
+    "CognitiveResourceGovernor",
+    "CognitiveTurn",
     "ExistingCognitiveWALWriter",
     "InterpretResult",
     "KnowledgeState",
@@ -21,35 +29,17 @@ __all__ = [
     "NeuroLingua",
     "RealizeResult",
     "RiskLevel",
+    "SensoryCapability",
+    "SensoryEvent",
     "TrainingDecision",
+    "assimilate_knowledge",
     "auto_compile",
     "auto_pipeline",
     "classify_gap",
-    "CognitiveResourceGovernor",
     "decide_training",
+    "detect_lightweight_language",
+    "experience_confidence",
     "interpret",
     "realize",
     "speak_to_customer",
-    "experience_confidence",
-    "assimilate_knowledge",
-]
-
-__all__ = [
-    "CognitiveMeaningPacket",
-    "ExistingCognitiveWALWriter",
-    "InterpretResult",
-    "KnowledgeState",
-    "LearningGap",
-    "NeuroLingua",
-    "RealizeResult",
-    "RiskLevel",
-    "TrainingDecision",
-    "classify_gap",
-    "CognitiveResourceGovernor",
-    "decide_training",
-    "interpret",
-    "realize",
-    "speak_to_customer",
-    "experience_confidence",
-    "assimilate_knowledge",
 ]
