@@ -350,3 +350,7 @@ Runtime resolves `RAIOS_<ROLE>_MODEL` / role env / provider endpoint before the 
 ## D-074 C5 has a shared screen and a C1-only console, still one C5
 DISCOVERED, C1 ordered, not CANONICAL: `PUBLIC_SCREEN_NE_C1_CONSOLE`. `C1_CONSOLE_NE_SECOND_C5`.
 Port `8765` is the shared screen for everyone (customers and team): multilingual chat, flipped keyboard, no founder ops dump. Port `8876` is the C1-only console: identity, MCP, named cortex, OpenCode seam, PowerShell `-Go`. Same process, `duplicate_c5=false`, separate history files. Optional `RAIOS_C1_SCREEN_TOKEN` fail-closes the C1 lane when set. Durable start on Windows: `powershell -File scripts/ai-os/raios_c5_screen.ps1 -Go`. No new MCP tools. Does not close GL-005.
+
+## D-075 Identity before action; C6–C10 stay unseated; founder paste is the inbound transport
+DISCOVERED, C1 ordered, not CANONICAL: `IDENTITY_BEFORE_ACTION`. `C6_C10_NE_LIVE`. `C6_PACKET_NE_LIVE_SEAT`. `PASTED_CHAT_NE_MCP_ROUND_TRIP`.
+Live seats remain C1–C5. C0 is abolished. C6–C10 questions get an honest unseated card on the existing C5 screen (PUBLIC 8765 / C1 8876), not `MODEL_MISSING` and not a minted live seat. `c6_inbound_state()` reads `.ai-os/mcp/packets.jsonl` only (no write, no ack). Packet seen ≠ live seat. MCP stays 8 tools. No `.ai-os/control`. No second bus. `LOCAL_MCP_RENDEZVOUS_NE_REMOTE_MEETING`. `FOUNDER_RELAY_IS_THE_INBOUND_TRANSPORT`. `C6_LIVE=false`. `MCP_PACKET_RECEIVED=false` until a real MCP round-trip is proven. Does not close GL-005.

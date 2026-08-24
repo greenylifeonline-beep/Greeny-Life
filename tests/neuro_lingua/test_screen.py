@@ -9,6 +9,7 @@ from raios_c5_screen import (  # noqa: E402
     LANE_PUBLIC,
     PAGE,
     PAGE_C1,
+    c6_inbound_state,
     history_path,
     lane_of_port,
     load_history,
@@ -195,6 +196,10 @@ def test_same_c5_dual_bind_and_honest_health():
     assert rec["MAIN_CORTEX"] is rec["main_cortex"]
     assert rec["LOCAL_WINNER"] is False
     assert rec["ROLE"] == "CORTEX_MODEL"
+    assert rec["C6_LIVE"] is False
+    assert rec["c6_live"] is False
+    assert rec["c6_inbound"] in {"waiting", "seen"}
+    assert rec["mcp_packet_received"] is False
     assert rec["LAPTOP_IS_MODEL_HOST"] is False
     assert rec["OLLAMA_IS_DEV_FALLBACK"] is True
     assert rec["TRANSPORT"] == "openai-compatible"
@@ -223,3 +228,46 @@ def test_serve_args_honor_host_flag_and_keep_dual_bind():
     host2, ports2 = resolve_serve_args(["raios_c5_screen.py", "--serve"])
     assert host2 in {"127.0.0.1", "0.0.0.0"} or host2
     assert ports2 == (8765, 8876)
+
+
+def test_unseated_c6_card_is_ground_not_model_missing():
+    who = teach_reply("مين أنت")
+    assert who["kind"] == "whoami"
+    assert "son of C1" not in who["answer"]
+    rec = teach_reply("ما دور C6")
+    assert rec["kind"] == "ground"
+    assert rec["gl005_proven"] is False
+    assert rec["wal_written"] is False
+    assert "C6_C10_NE_LIVE" in rec["answer"]
+    assert "C6_LIVE=false" in rec["answer"]
+    assert "MCP_PACKET_RECEIVED=false" in rec["answer"]
+    assert "MODEL_MISSING" not in rec["answer"]
+    named = teach_reply("مين C6")
+    assert named["kind"] == "ground"
+    assert "C6_LIVE=false" in named["answer"]
+    bare = teach_reply("C6")
+    assert bare["kind"] == "ground"
+    assert "C6_C10_NE_LIVE" in bare["answer"]
+    nb = teach_reply("Hva er C6s rolle")
+    assert nb["kind"] == "ground"
+    assert nb["locale"] == "nb-NO"
+    assert "C6_C10_NE_LIVE" in nb["answer"]
+    c0 = teach_reply("ما دور C0")
+    assert c0["kind"] == "ground"
+    assert "C0" in c0["answer"]
+    assert "ملغى" in c0["answer"] or "abolished" in c0["answer"].lower() or "ملغي" in c0["answer"]
+    c4 = teach_reply("ما دور C4 في المجلس")
+    assert c4["kind"] == "ground"
+    assert "ASSESSOR" in c4["answer"] or "مقيّم" in c4["answer"] or "DeepSeek" in c4["answer"]
+    inbound = c6_inbound_state()
+    assert inbound["C6_LIVE"] is False
+    assert inbound["mcp_packet_received"] is False
+    assert inbound["c6_inbound"] in {"waiting", "seen"}
+    assert inbound["c6_packets_seen"] >= 0
+    assert "chip_c6" in PAGE_C1
+    assert "data-i18n=\"chip_c6\"" in PAGE_C1
+    assert "c1-only" in PAGE_C1
+    status = teach_reply("حالة الشاشة", lane=LANE_C1)
+    assert status["kind"] == "status"
+    assert "C6_LIVE=false" in status["answer"]
+    assert "MCP_PACKET_RECEIVED=false" in status["answer"]

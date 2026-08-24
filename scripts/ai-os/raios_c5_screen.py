@@ -26,6 +26,7 @@ HISTORY = ROOT / ".ai-os" / "learning" / "C5-SCREEN.jsonl"
 HISTORY_C1 = ROOT / ".ai-os" / "learning" / "C5-SCREEN-C1.jsonl"
 OUT_DIR = ROOT / ".ai-os" / "receipts" / "c5-screen"
 SEAT_MAP = ROOT / ".ai-os" / "mcp" / "SEAT-MAP.json"
+PACKETS = ROOT / ".ai-os" / "mcp" / "packets.jsonl"
 DEFAULT_HOST = "127.0.0.1"
 DEFAULT_PORT = 8765
 C1_PORT = 8876
@@ -101,13 +102,21 @@ SEAT_MARKS = (
     "مقعد",
     "من هو",
     "مين هو",
+    "مين",
+    "ما هو",
     "seat",
     "who is",
+    "what is",
+    "hva er",
     "rolle",
+    "role",
     "rådet",
     "council",
     "role of",
 )
+SEAT_CODE_RE = re.compile(r"\bC(?:10|[0-9])s?\b", re.I)
+UNSEATED_CODES = ("C6", "C7", "C8", "C9", "C10")
+ABOLISHED_CODES = ("C0",)
 I18N = {
     "ar-EG": {
         "dir": "rtl",
@@ -379,15 +388,27 @@ LANE_I18N = {
         "ps1_v": "raios_c5_screen.ps1 -Go",
         "chip_status": "حالة النظام",
         "fill_status": "حالة الشاشة",
+        "chip_c6": "ما دور C6",
+        "fill_c6": "ما دور C6",
+        "c6_k": "وارد C6",
+        "c6_v": "C6_LIVE=false",
         "public_whoami": (
             "أنا C5 — مساعد RAIOS للجميع. أردّ بالمصري والخليجي والإنجليزي والنرويجي من الملفات المحلية.\n"
-            "مش OpenAI ومش LangChain. شاشة المؤسس منفصلة."
+            "مش OpenAI ومش LangChain. شاشة المؤسس منفصلة.\n"
+            "الدور: شاشة C5 للجميع. المقاعد الحية C1–C5. C6_C10_NE_LIVE. IDENTITY_BEFORE_ACTION."
         ),
         "public_hello": "أهلاً. أنا C5 على شاشة الجميع.\nاكتب بالمصري أو الخليجي أو الإنجليزي أو النرويجي، أو بالكيبورد المقلوب.",
         "public_screen": (
             "هذه شاشة C5 للجميع على السيرفر المحلي. اللغات: ar-EG، ar-GULF، en، nb-NO.\n"
             "الربط 127.0.0.1:8765. الكيبورد المقلوب يُفك هنا. السجل محلي.\n"
             "ليس LangChain وليس OpenAI. شاشة C1 الخاصة على المنفذ 8876."
+        ),
+        "unseated": "{code} غير جالس. القانون C6_C10_NE_LIVE. المقاعد الحية: C1–C5. لا نختلق مقعد عشان الشكل.",
+        "abolished": "C0 ملغى. سلطة المالك على C1. لا يوجد مقعد C0 حي.",
+        "unseated_wait": (
+            "في انتظار حزمة على MCP الحالي (8 أدوات: send_packet/ack_packet). "
+            "LOCAL_MCP_RENDEZVOUS_NE_REMOTE_MEETING. FOUNDER_RELAY_IS_THE_INBOUND_TRANSPORT. "
+            "PASTED_CHAT_NE_MCP_ROUND_TRIP. C6_PACKET_NE_LIVE_SEAT. NO_NEW_MCP_TOOL."
         ),
     },
     "ar-GULF": {
@@ -413,14 +434,26 @@ LANE_I18N = {
         "ps1_v": "raios_c5_screen.ps1 -Go",
         "chip_status": "حالة النظام",
         "fill_status": "حالة الشاشة",
+        "chip_c6": "ما دور C6",
+        "fill_c6": "ما دور C6",
+        "c6_k": "وارد C6",
+        "c6_v": "C6_LIVE=false",
         "public_whoami": (
             "أنا C5 — مساعد RAIOS للجميع. أرد بالخليجي والمصري والإنجليزي والنرويجي من الملفات المحلية.\n"
-            "مو OpenAI ومو LangChain. شاشة المؤسس منفصلة."
+            "مو OpenAI ومو LangChain. شاشة المؤسس منفصلة.\n"
+            "الدور: شاشة C5 للجميع. المقاعد الحية C1–C5. C6_C10_NE_LIVE. IDENTITY_BEFORE_ACTION."
         ),
         "public_hello": "حياك. أنا C5 على شاشة الجميع.\nاكتب بالخليجي أو المصري أو الإنجليزي أو النرويجي.",
         "public_screen": (
             "هذي شاشة C5 للجميع على السيرفر المحلي. اللغات: ar-EG، ar-GULF، en، nb-NO.\n"
             "الربط 127.0.0.1:8765. مو LangChain ومو OpenAI. شاشة C1 على 8876."
+        ),
+        "unseated": "{code} مو جالس. القانون C6_C10_NE_LIVE. المقاعد الحية: C1–C5. ما نختلق مقعد.",
+        "abolished": "C0 ملغي. السلطة عند C1. ما فيه مقعد C0 حي.",
+        "unseated_wait": (
+            "ننتظر حزمة على MCP الحالي (8 أدوات: send_packet/ack_packet). "
+            "LOCAL_MCP_RENDEZVOUS_NE_REMOTE_MEETING. FOUNDER_RELAY_IS_THE_INBOUND_TRANSPORT. "
+            "PASTED_CHAT_NE_MCP_ROUND_TRIP. C6_PACKET_NE_LIVE_SEAT. NO_NEW_MCP_TOOL."
         ),
     },
     "en": {
@@ -446,14 +479,26 @@ LANE_I18N = {
         "ps1_v": "raios_c5_screen.ps1 -Go",
         "chip_status": "system status",
         "fill_status": "screen status",
+        "chip_c6": "C6 role",
+        "fill_c6": "What is C6's role",
+        "c6_k": "C6 inbound",
+        "c6_v": "C6_LIVE=false",
         "public_whoami": (
             "I am C5 — the shared RAIOS assistant. I answer in Egyptian, Gulf Arabic, English, and Norwegian from local files.\n"
-            "Not OpenAI. Not LangChain. The founder console is separate."
+            "Not OpenAI. Not LangChain. The founder console is separate.\n"
+            "Role: shared C5 screen. Live seats C1–C5. C6_C10_NE_LIVE. IDENTITY_BEFORE_ACTION."
         ),
         "public_hello": "Hello. I am C5 on the shared screen.\nWrite in Egyptian, Gulf Arabic, English, or Norwegian — flipped keyboard is decoded.",
         "public_screen": (
             "This is the shared C5 screen on the local control-plane host. Locales: ar-EG, ar-GULF, en, nb-NO.\n"
             "Bind 127.0.0.1:8765. Not LangChain. Not OpenAI. The C1 console is on port 8876."
+        ),
+        "unseated": "{code} is not seated. Law C6_C10_NE_LIVE. Live seats are C1–C5. We do not invent a seat to look complete.",
+        "abolished": "C0 is abolished. Owner authority lives on C1. There is no live C0 seat.",
+        "unseated_wait": (
+            "Waiting on the existing MCP bus (8 tools: send_packet/ack_packet). "
+            "LOCAL_MCP_RENDEZVOUS_NE_REMOTE_MEETING. FOUNDER_RELAY_IS_THE_INBOUND_TRANSPORT. "
+            "PASTED_CHAT_NE_MCP_ROUND_TRIP. C6_PACKET_NE_LIVE_SEAT. NO_NEW_MCP_TOOL."
         ),
     },
     "nb-NO": {
@@ -479,14 +524,26 @@ LANE_I18N = {
         "ps1_v": "raios_c5_screen.ps1 -Go",
         "chip_status": "systemstatus",
         "fill_status": "skjermstatus",
+        "chip_c6": "C6s rolle",
+        "fill_c6": "Hva er C6s rolle",
+        "c6_k": "C6 innkommende",
+        "c6_v": "C6_LIVE=false",
         "public_whoami": (
             "Jeg er C5 — den delte RAIOS-assistenten. Jeg svarer på egyptisk, gulf-arabisk, engelsk og norsk fra lokale filer.\n"
-            "Ikke OpenAI. Ikke LangChain. Grunnleggerkonsollen er separat."
+            "Ikke OpenAI. Ikke LangChain. Grunnleggerkonsollen er separat.\n"
+            "Rolle: delt C5-skjerm. Levende seter C1–C5. C6_C10_NE_LIVE. IDENTITY_BEFORE_ACTION."
         ),
         "public_hello": "Hei. Jeg er C5 på den delte skjermen.\nSkriv på egyptisk, gulf-arabisk, engelsk eller norsk.",
         "public_screen": (
             "Dette er den delte C5-skjermen på den lokale control-plane-verten. Språk: ar-EG, ar-GULF, en, nb-NO.\n"
             "Binding 127.0.0.1:8765. Ikke LangChain. Ikke OpenAI. C1-konsollen er på port 8876."
+        ),
+        "unseated": "{code} er ikke satt. Lov C6_C10_NE_LIVE. Levende seter er C1–C5. Vi finner ikke opp et sete for å se komplette ut.",
+        "abolished": "C0 er avskaffet. Eierautoritet ligger hos C1. Det finnes ikke et levende C0-sete.",
+        "unseated_wait": (
+            "Venter på eksisterende MCP-buss (8 verktøy: send_packet/ack_packet). "
+            "LOCAL_MCP_RENDEZVOUS_NE_REMOTE_MEETING. FOUNDER_RELAY_IS_THE_INBOUND_TRANSPORT. "
+            "PASTED_CHAT_NE_MCP_ROUND_TRIP. C6_PACKET_NE_LIVE_SEAT. NO_NEW_MCP_TOOL."
         ),
     },
 }
@@ -525,6 +582,35 @@ def c1_request_allowed(handler: BaseHTTPRequestHandler) -> bool:
 
 def wal_mtime():
     return WAL.stat().st_mtime if WAL.exists() else None
+
+
+def c6_inbound_state() -> dict:
+    """Read-only inbound census. Packet seen ≠ live seat. Does not ack."""
+    seen = 0
+    last_id = None
+    if PACKETS.is_file():
+        for line in PACKETS.read_text(encoding="utf-8").splitlines():
+            if not line.strip():
+                continue
+            try:
+                row = json.loads(line)
+            except json.JSONDecodeError:
+                continue
+            head = str(row.get("from") or "").strip().split("/", 1)[0].upper()
+            if head == "C6":
+                seen += 1
+                last_id = row.get("packet_id") or last_id
+    inbound = "seen" if seen else "waiting"
+    return {
+        "c6_live": False,
+        "C6_LIVE": False,
+        "c6_inbound": inbound,
+        "C6_INBOUND": inbound,
+        "c6_packets_seen": seen,
+        "c6_last_packet_id": last_id,
+        "mcp_packet_received": False,
+        "mcp_round_trip": False,
+    }
 
 
 def screen_health(*, host: str = DEFAULT_HOST, port: int | None = None) -> dict:
@@ -585,11 +671,24 @@ def screen_health(*, host: str = DEFAULT_HOST, port: int | None = None) -> dict:
         "C5_SCREEN_NE_CURSOR_SESSION",
         "C5_SCREEN_LIVES_ON_CONTROL_PLANE",
         "CURSOR_SCREEN_IS_SESSION_TEMP",
+        "IDENTITY_BEFORE_ACTION",
+        "C6_C10_NE_LIVE",
+        "C6_PACKET_NE_LIVE_SEAT",
+        "PASTED_CHAT_NE_MCP_ROUND_TRIP",
+        "LOCAL_MCP_RENDEZVOUS_NE_REMOTE_MEETING",
+        "FOUNDER_RELAY_IS_THE_INBOUND_TRANSPORT",
+        "NO_NEW_MCP_TOOL",
     ]
     rec["screen_home"] = bind.get("screen_home")
     rec["screen_durable"] = bool(bind.get("screen_durable"))
     rec["cursor_session_ne_c5"] = True
     rec["this_host_is_cursor_cloud"] = bool(bind.get("this_host_is_cursor_cloud"))
+    inbound = c6_inbound_state()
+    rec.update(inbound)
+    rec["C6_LIVE"] = False
+    rec["c6_live"] = False
+    rec["mcp_packet_received"] = False
+    rec["mcp_round_trip"] = False
     return rec
 
 
@@ -736,34 +835,79 @@ def _hello_reply(locale: str, lane: str = LANE_PUBLIC) -> str:
     return ui["hello"] if lane == LANE_C1 else ui["public_hello"]
 
 
+def _seat_codes(query: str) -> list[str]:
+    codes: list[str] = []
+    for raw in SEAT_CODE_RE.findall(query or ""):
+        digits = re.search(r"\d+", raw)
+        if not digits:
+            continue
+        codes.append("C" + digits.group(0))
+    return list(dict.fromkeys(codes))
+
+
+def _seat_intent(query: str) -> bool:
+    blob = f"{query} {(query or '').lower()}"
+    return any(mark.lower() in blob.lower() or mark in (query or "") for mark in SEAT_MARKS)
+
+
 def _seat_card(query: str, locale: str = "ar-EG") -> str | None:
-    codes = [c.upper().rstrip("S") for c in re.findall(r"\bC[0-5]s?\b", query or "", re.I)]
+    codes = _seat_codes(query)
     if not codes:
         return None
-    lowered = (query or "").lower()
-    if not any(mark.lower() in lowered or mark in (query or "") for mark in SEAT_MARKS):
-        return None
-    if not SEAT_MAP.is_file():
-        return None
-    try:
-        seats = json.loads(SEAT_MAP.read_text(encoding="utf-8")).get("seats") or {}
-    except json.JSONDecodeError:
-        return None
+    intent = _seat_intent(query)
     ui = pack(locale)
+    inbound = c6_inbound_state()
+    seats: dict = {}
+    if SEAT_MAP.is_file():
+        try:
+            seats = json.loads(SEAT_MAP.read_text(encoding="utf-8")).get("seats") or {}
+        except json.JSONDecodeError:
+            seats = {}
+    capability = {
+        "C1": "founder / CONTROL_PLANE_ONLY. does not impersonate C5 or C6.",
+        "C2": "consultant. MCP or mail. not C5. not C6. packet alias C2/CURSOR is executor, not a new live seat.",
+        "C3": "consultant peer. not Repair. not C5. not C6.",
+        "C4": "assessor. MCP or mail. does not execute. not C5. not C6.",
+        "C5": "RAIOS. shared PUBLIC screen + C1 console. MCP 8 tools. not a second C5. not C6.",
+    }
     blocks: list[str] = []
-    for code in dict.fromkeys(codes):
+    for code in codes:
+        if code in ABOLISHED_CODES:
+            blocks.append(ui["abolished"] + "\nIDENTITY_BEFORE_ACTION. C0_SEAT_ABOLISHED.")
+            continue
+        if code in UNSEATED_CODES:
+            wait = ui.get("unseated_wait") or (
+                "Waiting on the existing MCP bus (8 tools: send_packet/ack_packet). "
+                "LOCAL_MCP_RENDEZVOUS_NE_REMOTE_MEETING. FOUNDER_RELAY_IS_THE_INBOUND_TRANSPORT. "
+                "PASTED_CHAT_NE_MCP_ROUND_TRIP. C6_PACKET_NE_LIVE_SEAT. NO_NEW_MCP_TOOL."
+            )
+            blocks.append(
+                f"{ui['unseated'].format(code=code)}\n"
+                f"C6_LIVE=false. C6_C10_NE_LIVE. IDENTITY_BEFORE_ACTION.\n"
+                f"C6_INBOUND={inbound.get('c6_inbound')}. packets_seen={inbound.get('c6_packets_seen')}. "
+                f"MCP_PACKET_RECEIVED=false.\n"
+                f"{wait}"
+            )
+            continue
+        if not intent:
+            continue
         row = seats.get(code) or {}
         if not row:
             continue
         name = row.get("name_en") if locale in {"en", "nb-NO"} else (row.get("name_ar") or row.get("name_en"))
         mail = ui["yes"] if row.get("mail") else ui["no"]
         notes = str(row.get("notes") or "").strip()
+        tools = ", ".join(str(t) for t in (row.get("tools") or [])[:8])
         block = (
             f"{code} — {name or code}\n"
             f"{ui['seat_role']}: {row.get('actor_role')} · {row.get('instance_role')}\n"
             f"{ui['seat_where']}: {row.get('where') or '—'}\n"
-            f"{ui['seat_mail']}: {mail}"
+            f"{ui['seat_mail']}: {mail}\n"
+            f"IDENTITY_BEFORE_ACTION. capability: {capability.get(code, row.get('actor_role'))}. "
+            f"live seats = C1-C5. C6_C10_NE_LIVE."
         )
+        if tools:
+            block += f"\n{ui['tools_k']}: {tools}"
         if notes:
             block += f"\n{ui['seat_note']}: {notes}"
         blocks.append(block)
@@ -823,7 +967,9 @@ def _status_reply(locale: str, lane: str) -> str:
         f"MCP: {rec.get('mcp_endpoint') or 'http://127.0.0.1:8787/mcp'} tools={rec.get('mcp_tool_count')}\n"
         f"SCREEN_HOME={rec.get('screen_home')} durable={str(bool(rec.get('screen_durable'))).lower()}\n"
         f"MAIN_CORTEX={str(bool(rec.get('MAIN_CORTEX'))).lower()} MODEL={rec.get('MODEL')}\n"
-        f"PERMANENT_IDENTITY=false LOCAL_WINNER=false GL005_PROVEN=false duplicate_c5=false"
+        f"PERMANENT_IDENTITY=false LOCAL_WINNER=false GL005_PROVEN=false duplicate_c5=false\n"
+        f"IDENTITY_BEFORE_ACTION. C6_LIVE=false C6_INBOUND={rec.get('c6_inbound')} "
+        f"packets_seen={rec.get('c6_packets_seen')} MCP_PACKET_RECEIVED=false"
     )
 
 
@@ -929,6 +1075,10 @@ def teach_reply(message: str, locale: str | None = None, lane: str | None = None
             "FILE_DISCOVERY_NE_FILE_ASSIMILATION",
             "RETRIEVAL_RESULT_NE_COGNITIVE_ANSWER",
             "ROLE_IDENTITY_NE_MODEL_IDENTITY",
+            "IDENTITY_BEFORE_ACTION",
+            "C6_C10_NE_LIVE",
+            "C6_PACKET_NE_LIVE_SEAT",
+            "PASTED_CHAT_NE_MCP_ROUND_TRIP",
         ],
     }
     if kind == "speak":
@@ -1242,6 +1392,7 @@ PAGE = """<!DOCTYPE html>
         <div class="row c1-only"><div class="k" data-i18n="cortex_k">قشرة مرشحة</div><div class="v" data-i18n="cortex_v">qwen3.6:35b-a3b · ليست دائمة</div></div>
         <div class="row c1-only"><div class="k" data-i18n="opencode_k">OpenCode</div><div class="v" data-i18n="opencode_v">CODE_MODEL · جسر تنفيذ</div></div>
         <div class="row c1-only"><div class="k" data-i18n="ps1_k">تثبيت ويندوز</div><div class="v">raios_c5_screen.ps1 -Go</div></div>
+        <div class="row c1-only"><div class="k" data-i18n="c6_k">وارد C6</div><div class="v" id="live-c6" data-i18n="c6_v">C6_LIVE=false</div></div>
         <p class="note public-only" data-i18n="public_note">هذه شاشة C5 للجميع: عملاء وفريق. متعددة اللغات. مش شاشة المؤسس.</p>
         <p class="note c1-only" data-i18n="c1_note">هذه شاشتك أنت يا C1. المنفذ 8876. شاشة الجميع على 8765. نفس C5، مش C5 تاني. ويندوز: powershell -File scripts/ai-os/raios_c5_screen.ps1 -Go</p>
         <p class="note" data-i18n="note">هذه القناة على حلقة الجهاز نفسه. إذا رفض المتصفح الاتصال، فأنت على localhost جهاز آخر. استخدم تمرير منفذ Cursor إلى 8765.</p>
@@ -1260,6 +1411,7 @@ PAGE = """<!DOCTYPE html>
               <button type="button" data-fill="ما دور C4 في المجلس" data-i18n="chip_c4">دور C4</button>
               <button type="button" data-fill="DULG AHAM" data-i18n="chip_flip">كيبورد مقلوب</button>
               <button type="button" class="c1-only" data-fill="حالة الشاشة" data-i18n="chip_status">حالة النظام</button>
+              <button type="button" class="c1-only" data-fill="ما دور C6" data-i18n="chip_c6">ما دور C6</button>
             </div>
           </div>
         </div>
@@ -1272,6 +1424,7 @@ PAGE = """<!DOCTYPE html>
               <button type="button" data-fill="ما دور C4 في المجلس" data-i18n="chip_c4">دور C4</button>
               <button type="button" data-fill="DULG AHAM" data-i18n="chip_flip">كيبورد مقلوب</button>
               <button type="button" class="c1-only" data-fill="حالة الشاشة" data-i18n="chip_status">حالة النظام</button>
+              <button type="button" class="c1-only" data-fill="ما دور C6" data-i18n="chip_c6">ما دور C6</button>
             </span>
             <span data-i18n="hint">Enter للإرسال · Shift+Enter سطر جديد · ليست LangChain وليست OpenAI</span>
           </div>
@@ -1320,6 +1473,7 @@ PAGE = """<!DOCTYPE html>
       document.querySelectorAll("[data-i18n='chip_c4']").forEach((n) => n.setAttribute("data-fill", ui.fill_c4));
       document.querySelectorAll("[data-i18n='chip_flip']").forEach((n) => n.setAttribute("data-fill", ui.fill_flip));
       document.querySelectorAll("[data-i18n='chip_status']").forEach((n) => n.setAttribute("data-fill", ui.fill_status));
+      document.querySelectorAll("[data-i18n='chip_c6']").forEach((n) => n.setAttribute("data-fill", ui.fill_c6));
       box.placeholder = ui.placeholder;
       box.setAttribute("aria-label", ui.placeholder);
       document.querySelectorAll("#lang-switch [data-locale]").forEach((n) => {
@@ -1389,6 +1543,10 @@ PAGE = """<!DOCTYPE html>
         if (d.languages_customer_live_count) {
           const ui = I18N[currentLocale] || I18N["ar-EG"];
           lang.textContent = ui.langs_chip + " " + d.languages_customer_live_count;
+        }
+        const c6 = document.getElementById("live-c6");
+        if (c6) {
+          c6.textContent = "C6_LIVE=false · inbound " + (d.c6_inbound || "waiting") + " · packets=" + (d.c6_packets_seen || 0);
         }
       } catch (err) {
         dot.classList.add("off");
@@ -1551,6 +1709,7 @@ class Handler(BaseHTTPRequestHandler):
         if path == "/api/status":
             card = whoami()
             bind = card.get("c5_bind") or {}
+            inbound = c6_inbound_state()
             payload = json.dumps(
                 {
                     "ok": True,
@@ -1577,6 +1736,11 @@ class Handler(BaseHTTPRequestHandler):
                     "paid_api": False,
                     "gl005_proven": False,
                     "duplicate_c5": False,
+                    "c6_live": False,
+                    "C6_LIVE": False,
+                    "c6_inbound": inbound.get("c6_inbound"),
+                    "c6_packets_seen": inbound.get("c6_packets_seen"),
+                    "mcp_packet_received": False,
                     "law": [
                         "C5_SCREEN_LIVES_ON_CONTROL_PLANE",
                         "CURSOR_SCREEN_IS_SESSION_TEMP",
@@ -1584,6 +1748,10 @@ class Handler(BaseHTTPRequestHandler):
                         "SCREEN_IS_MULTILINGUAL",
                         "PUBLIC_SCREEN_NE_C1_CONSOLE",
                         "C1_CONSOLE_NE_SECOND_C5",
+                        "IDENTITY_BEFORE_ACTION",
+                        "C6_C10_NE_LIVE",
+                        "C6_PACKET_NE_LIVE_SEAT",
+                        "PASTED_CHAT_NE_MCP_ROUND_TRIP",
                     ],
                 },
                 ensure_ascii=False,
