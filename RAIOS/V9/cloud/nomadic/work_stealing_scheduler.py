@@ -1,5 +1,6 @@
 """Work-stealing scheduler. Local simulation is not Kaggle proof."""
 from __future__ import annotations
+import math
 
 import time
 from typing import Any
@@ -131,6 +132,202 @@ class WorkStealingScheduler:
             "worker_id": worker_id,
             "job_id": job_id,
             "law": list(LAWS),
+        }
+
+    # RESOURCE_INTELLIGENCE_ROUTING_V1
+    def load_resource_projection(self, path: str | None = None) -> dict[str, Any]:
+        """Read resource evidence only. The scheduler MUST NOT probe cloud providers."""
+        import json
+        from pathlib import Path
+        target = Path(path) if path else (Path(__file__).resolve().parents[4] / ".ai-os" / "learning" / "FREE-RESOURCES.json")
+        if not target.exists():
+            return {"schema": "raios.resource-projection.v1", "records": [], "state": "NOT_PROVEN"}
+        return json.loads(target.read_text(encoding="utf-8"))
+
+    def resource_selection_factors(self) -> list[str]:
+        """Reuse A14 selection semantics without activating A14 as a second scheduler."""
+        import json
+        from pathlib import Path
+        factors = ["capability_fit", "verified_availability", "historical_success", "failure_rate", "latency", "cost_observation"]
+        root = Path(__file__).resolve().parents[4]
+        router = root / "RAIOS" / "V9" / "agents" / "a14" / "routing" / "CAPABILITY-FIRST-ROUTER.json"
+        if router.exists():
+            try:
+                data = json.loads(router.read_text(encoding="utf-8"))
+                candidate = data.get("selection_factors")
+                if isinstance(candidate, list) and candidate:
+                    factors = list(candidate)
+            except Exception:
+                pass
+        for name in ("verified_accuracy", "freshness", "resource_scarcity", "credit_runway", "risk_budget", "data_locality"):
+            if name not in factors:
+                factors.append(name)
+        return factors
+
+    def route_resource_task(
+        self,
+        task_fingerprint: dict[str, Any],
+        *,
+        projection: dict[str, Any] | None = None,
+        projection_path: str | None = None,
+    ) -> dict[str, Any]:
+        """Capability/risk eligibility first. Economics only rank workers that are already eligible."""
+        UNKNOWN = "UNKNOWN"
+
+        def number(value: Any) -> float | None:
+            if isinstance(value, bool) or not isinstance(value, (int, float)):
+                return None
+            result = float(value)
+            if not math.isfinite(result):
+                return None
+            return result
+
+        data = projection if projection is not None else self.load_resource_projection(projection_path)
+        records = list((data or {}).get("records", []))
+        required_capability = str(task_fingerprint.get("capability", ""))
+        risk_class = str(task_fingerprint.get("risk_class", "NORMAL")).upper()
+
+        raw_min_accuracy = task_fingerprint.get("min_verified_accuracy")
+        if isinstance(raw_min_accuracy, bool):
+            return {"ok": False, "reason": "INVALID_MIN_VERIFIED_ACCURACY", "worker_id": None}
+        if isinstance(raw_min_accuracy, (int, float)) and not math.isfinite(float(raw_min_accuracy)):
+            return {"ok": False, "reason": "INVALID_MIN_VERIFIED_ACCURACY", "worker_id": None}
+
+        minimum_accuracy = number(raw_min_accuracy)
+        risk_budget = number(task_fingerprint.get("risk_budget"))
+        if minimum_accuracy is None and risk_budget is not None:
+            minimum_accuracy = max(0.0, min(1.0, 1.0 - risk_budget))
+        if risk_class in {"HIGH", "CRITICAL"} and minimum_accuracy is None:
+            return {
+                "ok": False,
+                "reason": "RISK_ACCURACY_REQUIREMENT_UNPROVEN",
+                "eligible": [],
+                "rejected": [],
+                "selection_factors": self.resource_selection_factors(),
+            }
+
+        eligible: list[dict[str, Any]] = []
+        rejected: list[dict[str, Any]] = []
+        for row in records:
+            auth_state = str(row.get("auth_state", UNKNOWN)).upper()
+            if auth_state == "REVOKED":
+                continue
+            capacity_state = str(row.get("physical_capacity_state", UNKNOWN)).upper()
+            if capacity_state == "RUNTIME_UNCERTAIN":
+                continue
+
+            worker = row.get("worker_id", UNKNOWN)
+            reason = None
+            if worker in {None, "", UNKNOWN}:
+                reason = "NO_EXECUTION_WORKER"
+            elif str(row.get("freshness", UNKNOWN)).upper() != "FRESH":
+                reason = "STALE_OR_UNPROVEN_EVIDENCE"
+            elif str(row.get("availability", UNKNOWN)).upper() != "READY":
+                reason = "WORKER_NOT_READY"
+            else:
+                classes = row.get("task_classes", [])
+                if not isinstance(classes, list):
+                    classes = []
+                if required_capability and required_capability not in classes:
+                    reason = "CAPABILITY_MISMATCH"
+
+            if reason is None and minimum_accuracy is not None:
+                actual = number(row.get("verified_accuracy"))
+                if actual is None:
+                    reason = "VERIFIED_ACCURACY_UNPROVEN"
+                elif actual < minimum_accuracy:
+                    reason = "VERIFIED_ACCURACY_BELOW_THRESHOLD"
+
+            confidence = number(row.get("confidence"))
+            if reason is None and confidence is None:
+                reason = "EVIDENCE_CONFIDENCE_UNPROVEN"
+
+            runway = number(row.get("projected_runway"))
+            if reason is None and runway is not None and runway <= 0:
+                reason = "CREDIT_RUNWAY_EXHAUSTED"
+
+            if reason is not None:
+                rejected.append({"worker_id": worker, "provider": row.get("provider"), "reason": reason})
+                continue
+            eligible.append(row)
+
+        if not eligible:
+            return {
+                "ok": False,
+                "reason": "NO_ELIGIBLE_WORKER",
+                "eligible": [],
+                "rejected": rejected,
+                "selection_factors": self.resource_selection_factors(),
+            }
+
+        priced_currencies = {
+            str(row.get("currency")).upper()
+            for row in eligible
+            if row.get("currency") not in {None, "", UNKNOWN}
+            and (number(row.get("price_cpu_second")) is not None or number(row.get("price_gpu_second")) is not None)
+        }
+        if len(priced_currencies) > 1:
+            return {
+                "ok": False,
+                "reason": "CROSS_CURRENCY_COST_COMPARISON_UNPROVEN",
+                "eligible": [],
+                "rejected": rejected,
+                "currencies": sorted(priced_currencies),
+                "selection_factors": self.resource_selection_factors(),
+            }
+
+        requested_locality = task_fingerprint.get("data_locality")
+        gpu_required = bool(task_fingerprint.get("gpu_required", False))
+
+        def score(row: dict[str, Any]) -> tuple[Any, ...]:
+            accuracy = number(row.get("verified_accuracy"))
+            success = number(row.get("task_success_rate"))
+            failure = number(row.get("failure_rate"))
+            confidence = number(row.get("confidence"))
+            latency = number(row.get("observed_latency"))
+            cpu_cost = number(row.get("price_cpu_second"))
+            gpu_cost = number(row.get("price_gpu_second"))
+            expected_cost = gpu_cost if gpu_required else cpu_cost
+            concurrency = number(row.get("max_concurrency"))
+            runway = number(row.get("projected_runway"))
+            locality = row.get("data_locality")
+            locality_match = 0
+            if requested_locality not in {None, UNKNOWN}:
+                if locality == requested_locality:
+                    locality_match = 1
+                elif isinstance(locality, list) and requested_locality in locality:
+                    locality_match = 1
+            return (
+                accuracy if accuracy is not None else -1.0,
+                confidence if confidence is not None else -1.0,
+                success if success is not None else -1.0,
+                -(failure if failure is not None else 2.0),
+                locality_match,
+                1 if expected_cost is not None else 0,
+                -(expected_cost if expected_cost is not None else float("inf")),
+                1 if latency is not None else 0,
+                -(latency if latency is not None else float("inf")),
+                concurrency if concurrency is not None else -1.0,
+                runway if runway is not None else -1.0,
+                str(row.get("worker_id")),
+            )
+
+        winner = max(eligible, key=score)
+        return {
+            "ok": True,
+            "worker_id": winner.get("worker_id"),
+            "provider": winner.get("provider"),
+            "record": winner,
+            "eligible_count": len(eligible),
+            "rejected": rejected,
+            "selection_factors": self.resource_selection_factors(),
+            "task_fingerprint": dict(task_fingerprint),
+            "law": [
+                "QUALITY_BEFORE_COST",
+                "STALE_EVIDENCE_MUST_NOT_ROUTE",
+                "PROVIDER_NAME_DOES_NOT_DETERMINE_ROUTING",
+                "SCHEDULER_MUST_NOT_PROBE_PROVIDERS",
+            ],
         }
 
 
