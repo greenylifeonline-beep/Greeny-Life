@@ -1,0 +1,507 @@
+{
+  "schema": "raios.unrepairable-gc.v1",
+  "ts": "2026-08-24T17:49:07.866156+00:00",
+  "from": "C2",
+  "c5": "git",
+  "order": "امسح الملفات الفاسده الغير قابلة للاصلاح",
+  "decision": "D-077",
+  "deleted_count": 60,
+  "skipped_count": 36,
+  "deleted": [
+    {
+      "path": "ImageInventory.csv",
+      "size": 0,
+      "class": "ZERO_BYTE_HUSK"
+    },
+    {
+      "path": "app/js/script.js",
+      "size": 0,
+      "class": "ZERO_BYTE_HUSK"
+    },
+    {
+      "path": "app/views/products.html",
+      "size": 0,
+      "class": "ZERO_BYTE_HUSK"
+    },
+    {
+      "path": "application/customer/commands/customer-command.ts",
+      "size": 0,
+      "class": "ZERO_BYTE_HUSK"
+    },
+    {
+      "path": "application/customer/queries/customer-query.ts",
+      "size": 0,
+      "class": "ZERO_BYTE_HUSK"
+    },
+    {
+      "path": "application/customer/workflows/customer-workflow.ts",
+      "size": 0,
+      "class": "ZERO_BYTE_HUSK"
+    },
+    {
+      "path": "application/inventory/commands/inventory-command.ts",
+      "size": 0,
+      "class": "ZERO_BYTE_HUSK"
+    },
+    {
+      "path": "application/inventory/queries/inventory-query.ts",
+      "size": 0,
+      "class": "ZERO_BYTE_HUSK"
+    },
+    {
+      "path": "application/inventory/workflows/inventory-workflow.ts",
+      "size": 0,
+      "class": "ZERO_BYTE_HUSK"
+    },
+    {
+      "path": "application/logistics/commands/logistics-command.ts",
+      "size": 0,
+      "class": "ZERO_BYTE_HUSK"
+    },
+    {
+      "path": "application/logistics/queries/logistics-query.ts",
+      "size": 0,
+      "class": "ZERO_BYTE_HUSK"
+    },
+    {
+      "path": "application/logistics/workflows/logistics-workflow.ts",
+      "size": 0,
+      "class": "ZERO_BYTE_HUSK"
+    },
+    {
+      "path": "application/product/commands/product-command.ts",
+      "size": 0,
+      "class": "ZERO_BYTE_HUSK"
+    },
+    {
+      "path": "application/product/queries/product-query.ts",
+      "size": 0,
+      "class": "ZERO_BYTE_HUSK"
+    },
+    {
+      "path": "application/product/workflows/product-workflow.ts",
+      "size": 0,
+      "class": "ZERO_BYTE_HUSK"
+    },
+    {
+      "path": "application/quality/commands/quality-command.ts",
+      "size": 0,
+      "class": "ZERO_BYTE_HUSK"
+    },
+    {
+      "path": "application/quality/queries/quality-query.ts",
+      "size": 0,
+      "class": "ZERO_BYTE_HUSK"
+    },
+    {
+      "path": "application/quality/workflows/quality-workflow.ts",
+      "size": 0,
+      "class": "ZERO_BYTE_HUSK"
+    },
+    {
+      "path": "application/supplier/commands/supplier-command.ts",
+      "size": 0,
+      "class": "ZERO_BYTE_HUSK"
+    },
+    {
+      "path": "application/supplier/queries/supplier-query.ts",
+      "size": 0,
+      "class": "ZERO_BYTE_HUSK"
+    },
+    {
+      "path": "application/supplier/workflows/supplier-workflow.ts",
+      "size": 0,
+      "class": "ZERO_BYTE_HUSK"
+    },
+    {
+      "path": "archive/old_folders/unified-intelligence/scripts/phase-2-capability-discovery.ps1",
+      "size": 0,
+      "class": "ZERO_BYTE_HUSK"
+    },
+    {
+      "path": "data/03_packaging_system.json",
+      "size": 0,
+      "class": "ZERO_BYTE_HUSK"
+    },
+    {
+      "path": "data/legacy/packaging.json",
+      "size": 0,
+      "class": "ZERO_BYTE_HUSK"
+    },
+    {
+      "path": "data/migrated_products.json",
+      "size": 0,
+      "class": "ZERO_BYTE_HUSK"
+    },
+    {
+      "path": "database/connections/index.ts",
+      "size": 0,
+      "class": "ZERO_BYTE_HUSK"
+    },
+    {
+      "path": "database/indexes/README.md",
+      "size": 0,
+      "class": "ZERO_BYTE_HUSK"
+    },
+    {
+      "path": "database/models/entities.ts",
+      "size": 0,
+      "class": "ZERO_BYTE_HUSK"
+    },
+    {
+      "path": "database/models/index.ts",
+      "size": 0,
+      "class": "ZERO_BYTE_HUSK"
+    },
+    {
+      "path": "database/repositories/index.ts",
+      "size": 0,
+      "class": "ZERO_BYTE_HUSK"
+    },
+    {
+      "path": "database/repositories/repository-contracts.ts",
+      "size": 0,
+      "class": "ZERO_BYTE_HUSK"
+    },
+    {
+      "path": "database/schemas/core/enterprise-schema.ts",
+      "size": 0,
+      "class": "ZERO_BYTE_HUSK"
+    },
+    {
+      "path": "database/schemas/domain/domain-schema.ts",
+      "size": 0,
+      "class": "ZERO_BYTE_HUSK"
+    },
+    {
+      "path": "database/schemas/index.ts",
+      "size": 0,
+      "class": "ZERO_BYTE_HUSK"
+    },
+    {
+      "path": "domain/customer/entities/customer-entity.ts",
+      "size": 0,
+      "class": "ZERO_BYTE_HUSK"
+    },
+    {
+      "path": "domain/customer/rules/customer-rules.ts",
+      "size": 0,
+      "class": "ZERO_BYTE_HUSK"
+    },
+    {
+      "path": "domain/customer/services/customer-service.ts",
+      "size": 0,
+      "class": "ZERO_BYTE_HUSK"
+    },
+    {
+      "path": "domain/inventory/entities/inventory-entity.ts",
+      "size": 0,
+      "class": "ZERO_BYTE_HUSK"
+    },
+    {
+      "path": "domain/inventory/rules/inventory-rules.ts",
+      "size": 0,
+      "class": "ZERO_BYTE_HUSK"
+    },
+    {
+      "path": "domain/inventory/services/inventory-service.ts",
+      "size": 0,
+      "class": "ZERO_BYTE_HUSK"
+    },
+    {
+      "path": "domain/logistics/entities/logistics-entity.ts",
+      "size": 0,
+      "class": "ZERO_BYTE_HUSK"
+    },
+    {
+      "path": "domain/logistics/rules/logistics-rules.ts",
+      "size": 0,
+      "class": "ZERO_BYTE_HUSK"
+    },
+    {
+      "path": "domain/logistics/services/logistics-service.ts",
+      "size": 0,
+      "class": "ZERO_BYTE_HUSK"
+    },
+    {
+      "path": "domain/product/entities/product-entity.ts",
+      "size": 0,
+      "class": "ZERO_BYTE_HUSK"
+    },
+    {
+      "path": "domain/product/rules/product-rules.ts",
+      "size": 0,
+      "class": "ZERO_BYTE_HUSK"
+    },
+    {
+      "path": "domain/product/services/product-service.ts",
+      "size": 0,
+      "class": "ZERO_BYTE_HUSK"
+    },
+    {
+      "path": "domain/quality/entities/quality-entity.ts",
+      "size": 0,
+      "class": "ZERO_BYTE_HUSK"
+    },
+    {
+      "path": "domain/quality/rules/quality-rules.ts",
+      "size": 0,
+      "class": "ZERO_BYTE_HUSK"
+    },
+    {
+      "path": "domain/quality/services/quality-service.ts",
+      "size": 0,
+      "class": "ZERO_BYTE_HUSK"
+    },
+    {
+      "path": "domain/supplier/entities/supplier-entity.ts",
+      "size": 0,
+      "class": "ZERO_BYTE_HUSK"
+    },
+    {
+      "path": "domain/supplier/rules/supplier-rules.ts",
+      "size": 0,
+      "class": "ZERO_BYTE_HUSK"
+    },
+    {
+      "path": "domain/supplier/services/supplier-service.ts",
+      "size": 0,
+      "class": "ZERO_BYTE_HUSK"
+    },
+    {
+      "path": "eos-core/master-data/master-data/contracts/master-data-contracts.ts",
+      "size": 0,
+      "class": "ZERO_BYTE_HUSK"
+    },
+    {
+      "path": "eos-core/master-data/master-data/events/master-data-events.ts",
+      "size": 0,
+      "class": "ZERO_BYTE_HUSK"
+    },
+    {
+      "path": "eos-core/master-data/master-data/mapping/entity-mapping.ts",
+      "size": 0,
+      "class": "ZERO_BYTE_HUSK"
+    },
+    {
+      "path": "eos-core/master-data/master-data/schemas/master-data-schema.ts",
+      "size": 0,
+      "class": "ZERO_BYTE_HUSK"
+    },
+    {
+      "path": "eos-core/master-data/master-data/validation/master-data-rules.ts",
+      "size": 0,
+      "class": "ZERO_BYTE_HUSK"
+    },
+    {
+      "path": "how HEAD.env  Select-Object -First 20",
+      "size": 16384,
+      "class": "POWERSHELL_COMMAND_CAPTURE"
+    },
+    {
+      "path": "run_brain_cli.py",
+      "size": 4,
+      "class": "BOM_ONLY_EMPTY_CLI"
+    },
+    {
+      "path": "scripts/repair-canonical-products.ps1",
+      "size": 0,
+      "class": "ZERO_BYTE_HUSK"
+    }
+  ],
+  "skipped": [
+    {
+      "path": ".ai-os/evidence/.gitkeep",
+      "size": 0,
+      "why": "GITKEEP"
+    },
+    {
+      "path": ".ai-os/handoffs/.gitkeep",
+      "size": 0,
+      "why": "GITKEEP"
+    },
+    {
+      "path": ".ai-os/reports/.gitkeep",
+      "size": 0,
+      "why": "GITKEEP"
+    },
+    {
+      "path": ".ai-os/snapshots/.gitkeep",
+      "size": 0,
+      "why": "GITKEEP"
+    },
+    {
+      "path": "RAIOS/V9/evidence/diagnostics/a2-search/git.stderr.txt",
+      "size": 0,
+      "why": "A15_EVIDENCE_OR_QUARANTINE"
+    },
+    {
+      "path": "RAIOS/V9/evidence/diagnostics/a2-search/git.stdout.txt",
+      "size": 0,
+      "why": "A15_EVIDENCE_OR_QUARANTINE"
+    },
+    {
+      "path": "RAIOS/V9/evidence/diagnostics/a2-search/lexical.stderr.txt",
+      "size": 0,
+      "why": "A15_EVIDENCE_OR_QUARANTINE"
+    },
+    {
+      "path": "RAIOS/V9/evidence/diagnostics/a2-search/lexical.stdout.txt",
+      "size": 0,
+      "why": "A15_EVIDENCE_OR_QUARANTINE"
+    },
+    {
+      "path": "RAIOS/V9/evidence/diagnostics/a2-search/read.stderr.txt",
+      "size": 0,
+      "why": "A15_EVIDENCE_OR_QUARANTINE"
+    },
+    {
+      "path": "RAIOS/V9/evidence/diagnostics/a2-search/read.stdout.txt",
+      "size": 0,
+      "why": "A15_EVIDENCE_OR_QUARANTINE"
+    },
+    {
+      "path": "RAIOS/V9/evidence/observations/A3-confidence-70.stderr.txt",
+      "size": 0,
+      "why": "A15_EVIDENCE_OR_QUARANTINE"
+    },
+    {
+      "path": "RAIOS/V9/evidence/observations/A3-confidence-70.stdout.txt",
+      "size": 0,
+      "why": "A15_EVIDENCE_OR_QUARANTINE"
+    },
+    {
+      "path": "RAIOS/V9/evidence/quarantined-certifications/raios_v9.ZERO-BYTE.e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855.py",
+      "size": 0,
+      "why": "A15_EVIDENCE_OR_QUARANTINE"
+    },
+    {
+      "path": "_raios-authoritative-certifier/diagnostics/CERTIFIER-20260820-103020.stdout.txt",
+      "size": 0,
+      "why": "CERTIFIER_EVIDENCE"
+    },
+    {
+      "path": "canonical/data/administration-master.json",
+      "size": 0,
+      "why": "GL-003"
+    },
+    {
+      "path": "canonical/data/compliance-master.json",
+      "size": 0,
+      "why": "GL-003"
+    },
+    {
+      "path": "docs/calibration/improvement_claim_ledger.jsonl",
+      "size": 0,
+      "why": "VALID_EMPTY_LEDGER"
+    },
+    {
+      "path": "greenlines_brain/__init__.py",
+      "size": 0,
+      "why": "GL-003"
+    },
+    {
+      "path": "greenlines_brain/capability.py",
+      "size": 0,
+      "why": "GL-003"
+    },
+    {
+      "path": "greenlines_brain/decision.py",
+      "size": 0,
+      "why": "GL-003"
+    },
+    {
+      "path": "greenlines_brain/dna/schema.json",
+      "size": 0,
+      "why": "GL-003"
+    },
+    {
+      "path": "greenlines_brain/evidence.py",
+      "size": 0,
+      "why": "GL-003"
+    },
+    {
+      "path": "greenlines_brain/memory.py",
+      "size": 0,
+      "why": "GL-003"
+    },
+    {
+      "path": "greenlines_brain/reasoning.py",
+      "size": 0,
+      "why": "GL-003"
+    },
+    {
+      "path": "greenlines_brain/repository/__init__.py",
+      "size": 0,
+      "why": "GL-003"
+    },
+    {
+      "path": "guardrails/guardrails.jsonl",
+      "size": 0,
+      "why": "VALID_EMPTY_LEDGER"
+    },
+    {
+      "path": "guardrails/links.jsonl",
+      "size": 0,
+      "why": "VALID_EMPTY_LEDGER"
+    },
+    {
+      "path": "guardrails/references.jsonl",
+      "size": 0,
+      "why": "VALID_EMPTY_LEDGER"
+    },
+    {
+      "path": "intelligence/intelligence/analytics/index.ts",
+      "size": 0,
+      "why": "GL-003"
+    },
+    {
+      "path": "intelligence/intelligence/decision-support/index.ts",
+      "size": 0,
+      "why": "GL-003"
+    },
+    {
+      "path": "intelligence/intelligence/metrics/index.ts",
+      "size": 0,
+      "why": "GL-003"
+    },
+    {
+      "path": "intelligence/intelligence/recommendations/index.ts",
+      "size": 0,
+      "why": "GL-003"
+    },
+    {
+      "path": "intelligence/intelligence/reporting/index.ts",
+      "size": 0,
+      "why": "GL-003"
+    },
+    {
+      "path": "intelligence/intelligence/scanners/system-scanner.ts",
+      "size": 0,
+      "why": "GL-003"
+    },
+    {
+      "path": "intelligence/scripts/phase-2-capability-discovery.ps1",
+      "size": 0,
+      "why": "GL-003"
+    },
+    {
+      "path": "tests/performance/__init__.py",
+      "size": 0,
+      "why": "VALID_EMPTY_PACKAGE"
+    }
+  ],
+  "new_engine_created": false,
+  "new_bus_created": false,
+  "wal_written": false,
+  "wal_mtime": "2026-08-20T23:49:44.499160+00:00",
+  "gl005_proven": false,
+  "law": [
+    "UNREPAIRABLE_NE_UNUSED",
+    "EMPTY_JSONL_NE_CORRUPT",
+    "ZERO_BYTE_CODE_NE_KEEPER",
+    "NO_FABRICATE_EMPTY_JSON",
+    "GL003_EMPTIES_UNTOUCHED",
+    "D-077"
+  ]
+}

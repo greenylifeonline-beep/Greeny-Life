@@ -360,3 +360,7 @@ DISCOVERED, C1 ordered, not CANONICAL: `ONE_CAPABILITY_ONE_KEEPER`. `SIMILAR_NAM
 Bind similar live parts onto existing keepers: train mesh, self-inspection package `inspect`, whoami→screen, phase0→p0, marketing mill → `SYSTEM_ARCHITECTURE.md`, `run_all.ps1`/`fix_brain.py`/`run_audit_hack.py` fail-closed onto train (brain.py stays DO_NOT_RUN).
 Do not merge Cognitive WAL with JobLedger. Do not merge nomadic `provider_contract` with NeuroLingua `provider_contracts`. Do not merge `greenlines_brain.kernel` with NeuroLingua kernel. Byte-identical files with different functions (mutation before/after, a10 snapshot vs state, a11 acts, product-set labels) stay unmerged.
 Canonical GELS KEEP-PACKAGE vs `legacy-data` and brand-doc aliases are same-function; file rewrite under `canonical/` waits on GL-003 lock. Grind already mills the architecture keeper. Does not close GL-005.
+
+## D-077 Delete unrepairable files only; empty ledgers and locked trees stay
+DISCOVERED, C1 ordered, not CANONICAL: `UNREPAIRABLE_NE_UNUSED`. `EMPTY_JSONL_NE_CORRUPT`. `ZERO_BYTE_CODE_NE_KEEPER`.
+Delete zero-byte code/json/html/csv husks whose payload cannot be recovered, plus the PowerShell command-string capture at repo root. Do not invent `{}` into empty JSON. Do not delete `.gitkeep`, valid empty JSONL ledgers, A15 diagnostic empties, or the quarantined ZERO-BYTE proof hash. Canonical / greenlines_brain / intelligence empties wait on GL-003. Does not close GL-005.
