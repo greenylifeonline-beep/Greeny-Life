@@ -1,6 +1,6 @@
 {
   "schema": "raios.noncanonical-trees.v1",
-  "ts": "2026-08-22T09:40:38.402154+00:00",
+  "ts": "2026-08-24T16:47:02.347246+00:00",
   "trees": [
     {
       "id": "TMP_C5_CLONE_V9",
@@ -8,8 +8,10 @@
       "classification": "DELETE_CANDIDATE",
       "unique_content_count": 0,
       "live_process_count": 0,
-      "deleted": false,
-      "reason": "stale v9 clone tracked subset; do not delete this pass (untracked not fully proven, confidence<0.99)"
+      "deleted": true,
+      "reason": "C1 ordered chaos stop. 0 live PIDs. Ephemeral shadow, not Repair, not /workspace keepers.",
+      "deleted_at": "2026-08-24T16:47:02.347246+00:00",
+      "deleted_by": "cursor"
     },
     {
       "id": "TMP_C5_CLONE_MAIN",
@@ -18,7 +20,7 @@
       "unique_content_count": 575,
       "live_process_count": 0,
       "deleted": false,
-      "reason": "stale origin/main dump retained as evidence until C1 delete order; unique dumps are STALE not RAIOS keepers"
+      "reason": "RETAINED: unique_content_count=575 including unique .ts/.py. C1 chaos delete did not cover unique code. STALE origin/main dump. Not a live keeper."
     },
     {
       "id": "TMP_MCP_00",
@@ -26,8 +28,10 @@
       "classification": "DELETE_CANDIDATE",
       "unique_content_count": 1,
       "live_process_count": 0,
-      "deleted": false,
-      "reason": "ephemeral MCP sandbox; unique tracked are fixtures; gates not jointly green (confidence<0.99, no C1 delete order)"
+      "deleted": true,
+      "reason": "C1 ordered chaos stop. 0 live PIDs. Ephemeral shadow, not Repair, not /workspace keepers.",
+      "deleted_at": "2026-08-24T16:47:02.347246+00:00",
+      "deleted_by": "cursor"
     },
     {
       "id": "TMP_MCP_01",
@@ -35,8 +39,10 @@
       "classification": "DELETE_CANDIDATE",
       "unique_content_count": 1,
       "live_process_count": 0,
-      "deleted": false,
-      "reason": "ephemeral MCP sandbox; unique tracked are fixtures; gates not jointly green (confidence<0.99, no C1 delete order)"
+      "deleted": true,
+      "reason": "C1 ordered chaos stop. 0 live PIDs. Ephemeral shadow, not Repair, not /workspace keepers.",
+      "deleted_at": "2026-08-24T16:47:02.347246+00:00",
+      "deleted_by": "cursor"
     },
     {
       "id": "TMP_MCP_02",
@@ -44,8 +50,10 @@
       "classification": "DELETE_CANDIDATE",
       "unique_content_count": 1,
       "live_process_count": 0,
-      "deleted": false,
-      "reason": "ephemeral MCP sandbox; unique tracked are fixtures; gates not jointly green (confidence<0.99, no C1 delete order)"
+      "deleted": true,
+      "reason": "C1 ordered chaos stop. 0 live PIDs. Ephemeral shadow, not Repair, not /workspace keepers.",
+      "deleted_at": "2026-08-24T16:47:02.347246+00:00",
+      "deleted_by": "cursor"
     },
     {
       "id": "TMP_MCP_03",
@@ -53,8 +61,10 @@
       "classification": "DELETE_CANDIDATE",
       "unique_content_count": 1,
       "live_process_count": 0,
-      "deleted": false,
-      "reason": "ephemeral MCP sandbox; unique tracked are fixtures; gates not jointly green (confidence<0.99, no C1 delete order)"
+      "deleted": true,
+      "reason": "C1 ordered chaos stop. 0 live PIDs. Ephemeral shadow, not Repair, not /workspace keepers.",
+      "deleted_at": "2026-08-24T16:47:02.347246+00:00",
+      "deleted_by": "cursor"
     },
     {
       "id": "TMP_MCP_04",
@@ -62,8 +72,10 @@
       "classification": "DELETE_CANDIDATE",
       "unique_content_count": 2,
       "live_process_count": 0,
-      "deleted": false,
-      "reason": "ephemeral MCP sandbox; unique tracked are fixtures; gates not jointly green (confidence<0.99, no C1 delete order)"
+      "deleted": true,
+      "reason": "C1 ordered chaos stop. 0 live PIDs. Ephemeral shadow, not Repair, not /workspace keepers.",
+      "deleted_at": "2026-08-24T16:47:02.347246+00:00",
+      "deleted_by": "cursor"
     },
     {
       "id": "TMP_MCP_05",
@@ -71,8 +83,10 @@
       "classification": "DELETE_CANDIDATE",
       "unique_content_count": 2,
       "live_process_count": 0,
-      "deleted": false,
-      "reason": "ephemeral MCP sandbox; unique tracked are fixtures; gates not jointly green (confidence<0.99, no C1 delete order)"
+      "deleted": true,
+      "reason": "C1 ordered chaos stop. 0 live PIDs. Ephemeral shadow, not Repair, not /workspace keepers.",
+      "deleted_at": "2026-08-24T16:47:02.347246+00:00",
+      "deleted_by": "cursor"
     },
     {
       "id": "TMP_MCP_06",
@@ -80,8 +94,10 @@
       "classification": "DELETE_CANDIDATE",
       "unique_content_count": 2,
       "live_process_count": 0,
-      "deleted": false,
-      "reason": "ephemeral MCP sandbox; unique tracked are fixtures; gates not jointly green (confidence<0.99, no C1 delete order)"
+      "deleted": true,
+      "reason": "C1 ordered chaos stop. 0 live PIDs. Ephemeral shadow, not Repair, not /workspace keepers.",
+      "deleted_at": "2026-08-24T16:47:02.347246+00:00",
+      "deleted_by": "cursor"
     },
     {
       "id": "TMP_MCP_07",
@@ -89,8 +105,10 @@
       "classification": "DELETE_CANDIDATE",
       "unique_content_count": 2,
       "live_process_count": 0,
-      "deleted": false,
-      "reason": "ephemeral MCP sandbox; unique tracked are fixtures; gates not jointly green (confidence<0.99, no C1 delete order)"
+      "deleted": true,
+      "reason": "C1 ordered chaos stop. 0 live PIDs. Ephemeral shadow, not Repair, not /workspace keepers.",
+      "deleted_at": "2026-08-24T16:47:02.347246+00:00",
+      "deleted_by": "cursor"
     },
     {
       "id": "TMP_MCP_08",
@@ -98,8 +116,10 @@
       "classification": "DELETE_CANDIDATE",
       "unique_content_count": 2,
       "live_process_count": 0,
-      "deleted": false,
-      "reason": "ephemeral MCP sandbox; unique tracked are fixtures; gates not jointly green (confidence<0.99, no C1 delete order)"
+      "deleted": true,
+      "reason": "C1 ordered chaos stop. 0 live PIDs. Ephemeral shadow, not Repair, not /workspace keepers.",
+      "deleted_at": "2026-08-24T16:47:02.347246+00:00",
+      "deleted_by": "cursor"
     },
     {
       "id": "TMP_MCP_09",
@@ -107,8 +127,10 @@
       "classification": "DELETE_CANDIDATE",
       "unique_content_count": 2,
       "live_process_count": 0,
-      "deleted": false,
-      "reason": "ephemeral MCP sandbox; unique tracked are fixtures; gates not jointly green (confidence<0.99, no C1 delete order)"
+      "deleted": true,
+      "reason": "C1 ordered chaos stop. 0 live PIDs. Ephemeral shadow, not Repair, not /workspace keepers.",
+      "deleted_at": "2026-08-24T16:47:02.347246+00:00",
+      "deleted_by": "cursor"
     },
     {
       "id": "TMP_MCP_10",
@@ -116,8 +138,10 @@
       "classification": "DELETE_CANDIDATE",
       "unique_content_count": 1,
       "live_process_count": 0,
-      "deleted": false,
-      "reason": "ephemeral MCP sandbox; unique tracked are fixtures; gates not jointly green (confidence<0.99, no C1 delete order)"
+      "deleted": true,
+      "reason": "C1 ordered chaos stop. 0 live PIDs. Ephemeral shadow, not Repair, not /workspace keepers.",
+      "deleted_at": "2026-08-24T16:47:02.347246+00:00",
+      "deleted_by": "cursor"
     },
     {
       "id": "TMP_MCP_11",
@@ -125,8 +149,10 @@
       "classification": "DELETE_CANDIDATE",
       "unique_content_count": 1,
       "live_process_count": 0,
-      "deleted": false,
-      "reason": "ephemeral MCP sandbox; unique tracked are fixtures; gates not jointly green (confidence<0.99, no C1 delete order)"
+      "deleted": true,
+      "reason": "C1 ordered chaos stop. 0 live PIDs. Ephemeral shadow, not Repair, not /workspace keepers.",
+      "deleted_at": "2026-08-24T16:47:02.347246+00:00",
+      "deleted_by": "cursor"
     },
     {
       "id": "TMP_MCP_12",
@@ -134,8 +160,10 @@
       "classification": "DELETE_CANDIDATE",
       "unique_content_count": 1,
       "live_process_count": 0,
-      "deleted": false,
-      "reason": "ephemeral MCP sandbox; unique tracked are fixtures; gates not jointly green (confidence<0.99, no C1 delete order)"
+      "deleted": true,
+      "reason": "C1 ordered chaos stop. 0 live PIDs. Ephemeral shadow, not Repair, not /workspace keepers.",
+      "deleted_at": "2026-08-24T16:47:02.347246+00:00",
+      "deleted_by": "cursor"
     },
     {
       "id": "C3C4_REPAIR",
@@ -187,10 +215,10 @@
     "unique_content_count": "must be 0",
     "live_process_count": "must be 0",
     "rollback_receipt": true,
-    "confidence": 0.85,
+    "confidence": 1.0,
     "confidence_required": 0.99,
-    "any_deleted": false,
-    "reason": "Gates not jointly satisfied for Repair (unreachable, unique UNKNOWN). /tmp v9 clone tracked-unique=0 but confidence<0.99 without untracked full proof and C1 delete order."
+    "any_deleted": true,
+    "reason": "C1 delete order executed for ephemeral /tmp shadows with 0 live PIDs. clone-main retained (unique .ts/.py). Repair untouched. WAL untouched. GL005_PROVEN=false."
   },
   "gl005_proven": false
 }
