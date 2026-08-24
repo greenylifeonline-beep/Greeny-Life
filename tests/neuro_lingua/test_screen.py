@@ -2,7 +2,20 @@ import sys
 from pathlib import Path
 
 sys.path.insert(0, str(Path(__file__).resolve().parents[2] / "scripts" / "ai-os"))
-from raios_c5_screen import BIND_PORTS, C1_PORT, PAGE, load_history, present_answer, screen_health, teach_reply  # noqa: E402
+from raios_c5_screen import (  # noqa: E402
+    BIND_PORTS,
+    C1_PORT,
+    LANE_C1,
+    LANE_PUBLIC,
+    PAGE,
+    PAGE_C1,
+    history_path,
+    lane_of_port,
+    load_history,
+    present_answer,
+    screen_health,
+    teach_reply,
+)
 
 ROOT = Path(__file__).resolve().parents[2]
 WAL = ROOT / "RAIOS" / "V9" / "wal" / "cognitive-events.jsonl"
@@ -21,7 +34,7 @@ def test_screen_is_standard_rtl_and_does_not_touch_wal():
     assert "C5" in rec["answer"]
     assert rec["kind"] == "whoami"
     assert "dir=\"rtl\"" in PAGE
-    assert "شاشة النظام" in PAGE
+    assert "شاشة الجميع" in PAGE
     assert "LangChain" in PAGE
     assert "127.0.0.1:8765" in PAGE
     assert "control-plane" in PAGE
@@ -31,8 +44,9 @@ def test_screen_is_standard_rtl_and_does_not_touch_wal():
     assert "إرسال" in PAGE
     assert "data-fill=\"مين أنت\"" in PAGE
     assert "nb-NO" in PAGE
-    assert "Systemskjerm" in PAGE
+    assert "Delt skjerm" in PAGE
     assert "data-locale=\"nb-NO\"" in PAGE
+    assert "lane-PUBLIC" in PAGE
     assert (ROOT / "scripts" / "ai-os" / "raios_c5_screen.ps1").is_file()
 
 
@@ -110,21 +124,24 @@ def test_screen_norwegian_and_english_identity():
     nb = teach_reply("Hvem er du")
     assert nb["kind"] == "whoami"
     assert nb["locale"] == "nb-NO"
+    assert nb["lane"] == LANE_PUBLIC
     assert nb["flipped"] is False
-    assert "sønn" in nb["answer"] or "RAIOS" in nb["answer"]
+    assert "RAIOS" in nb["answer"]
     assert "LangChain" in nb["answer"]
+    assert "sønn" not in nb["answer"]
     en = teach_reply("Who are you")
     assert en["kind"] == "whoami"
     assert en["locale"] == "en"
+    assert en["lane"] == LANE_PUBLIC
     assert en["flipped"] is False
-    assert "son of C1" in en["answer"]
+    assert "son of C1" not in en["answer"]
+    assert "shared" in en["answer"].lower() or "C5" in en["answer"]
     gulf = teach_reply("شلونك من أنت")
     assert gulf["kind"] == "whoami"
     assert gulf["locale"] == "ar-GULF"
     mixed = teach_reply("Hvem er du", locale="en")
     assert mixed["kind"] == "whoami"
     assert mixed["locale"] == "nb-NO"
-    assert "sønn" in mixed["answer"]
     council = teach_reply("Hva er C4s rolle i rådet")
     assert council["kind"] == "ground"
     assert council["locale"] == "nb-NO"
@@ -139,14 +156,36 @@ def test_screen_norwegian_and_english_identity():
     assert "hit_count=" not in nb_seat[-1]["answer"]
 
 
+def test_c1_console_keeps_founder_identity_and_separate_history():
+    c1 = teach_reply("Who are you", lane=LANE_C1)
+    assert c1["kind"] == "whoami"
+    assert c1["lane"] == LANE_C1
+    assert "son of C1" in c1["answer"]
+    nb = teach_reply("Hvem er du", lane=LANE_C1)
+    assert "sønn" in nb["answer"] or "RAIOS" in nb["answer"]
+    status = teach_reply("حالة الشاشة", lane=LANE_C1)
+    assert status["kind"] == "status"
+    assert "8876" in status["answer"]
+    assert "duplicate_c5=false" in status["answer"]
+    c1_rows = load_history(lane=LANE_C1)
+    assert any(row.get("kind") == "whoami" for row in c1_rows)
+    assert any(row.get("kind") == "status" for row in c1_rows)
+    assert history_path(LANE_C1) != history_path(LANE_PUBLIC)
+
+
 def test_same_c5_dual_bind_and_honest_health():
     assert BIND_PORTS == (8765, 8876)
     assert C1_PORT == 8876
+    assert lane_of_port(8765) == LANE_PUBLIC
+    assert lane_of_port(8876) == LANE_C1
     rec = screen_health(port=8876)
     assert rec["ok"] is True
     assert rec["http"] == 200
     assert rec["from"] == "C5"
+    assert rec["lane"] == LANE_C1
     assert rec["duplicate_c5"] is False
+    assert rec["public_url"].endswith(":8765")
+    assert rec["c1_url"].endswith(":8876")
     assert rec["MODEL"] == "qwen3.6:35b-a3b"
     assert rec["NAMED_CANDIDATE"] == "qwen3.6:35b-a3b"
     assert rec["BOUND_MODEL"] == "qwen3.6:35b-a3b"
@@ -163,10 +202,15 @@ def test_same_c5_dual_bind_and_honest_health():
     assert rec["screen_home"] in {"SESSION_TEMP", "CONTROL_PLANE"}
     assert rec["duplicate_c5"] is False
     assert "127.0.0.1:8765" in PAGE
+    assert "lane-PUBLIC" in PAGE
+    assert "lane-C1" in PAGE_C1
+    assert "c1-only" in PAGE_C1
     ps1 = (ROOT / "scripts" / "ai-os" / "raios_c5_screen.ps1").read_text(encoding="utf-8")
     assert "RAIOS-C5-SCREEN" in ps1
     assert "-Install" in ps1
     assert "-Ensure" in ps1
+    assert "-Go" in ps1
+    assert "http://127.0.0.1:8876" in ps1
     assert (ROOT / "scripts" / "ai-os" / "raios_c5_screen_ensure.sh").is_file()
 
 

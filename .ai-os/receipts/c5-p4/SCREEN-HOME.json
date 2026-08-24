@@ -1,6 +1,6 @@
 {
   "schema": "raios.c5-screen-home.v1",
-  "ts": "2026-08-23T01:43:48.517270+00:00",
+  "ts": "2026-08-24T14:17:48.915828+00:00",
   "from": "C5",
   "parent": "C1",
   "ok": true,
@@ -11,6 +11,11 @@
   "bind_host": "127.0.0.1",
   "open": "http://127.0.0.1:8765",
   "c1": "http://127.0.0.1:8876",
+  "lanes": {
+    "PUBLIC": 8765,
+    "C1": 8876
+  },
+  "go_windows": "powershell -ExecutionPolicy Bypass -File scripts/ai-os/raios_c5_screen.ps1 -Go",
   "mcp": "http://127.0.0.1:8787/mcp",
   "install_windows": "powershell -File scripts/ai-os/raios_c5_screen.ps1 -Install",
   "ensure_windows": "powershell -File scripts/ai-os/raios_c5_screen.ps1 -Ensure",
@@ -26,6 +31,8 @@
     "C5_SCREEN_LIVES_ON_CONTROL_PLANE",
     "CURSOR_SCREEN_IS_SESSION_TEMP",
     "NO_DUPLICATE_C5",
+    "PUBLIC_SCREEN_NE_C1_CONSOLE",
+    "C1_CONSOLE_NE_SECOND_C5",
     "NO_NEW_MCP_TOOLS"
   ]
 }

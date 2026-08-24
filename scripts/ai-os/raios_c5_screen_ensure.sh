@@ -10,6 +10,7 @@ ROOT="$(cd "$(dirname "$0")/../.." && pwd)"
 cd "$ROOT"
 
 SCREEN_PORT=8765
+C1_PORT=8876
 MCP_PORT=8787
 BIND_HOST="${RAIOS_C5_SCREEN_HOST:-127.0.0.1}"
 MCP_HOST="${RAIOS_MCP_HOST:-$BIND_HOST}"
@@ -47,10 +48,14 @@ else
 fi
 
 if port_up "$SCREEN_PORT"; then
-  echo "SCREEN_UP :$SCREEN_PORT"
+  echo "SCREEN_UP :$SCREEN_PORT PUBLIC"
 else
   nohup "$PY" scripts/ai-os/raios_c5_screen.py --serve >>/tmp/raios-c5-screen.log 2>&1 &
   echo "SCREEN_STARTED $!"
+fi
+
+if port_up "$C1_PORT"; then
+  echo "SCREEN_UP :$C1_PORT C1"
 fi
 
 if port_up "$MCP_PORT"; then
@@ -62,7 +67,8 @@ fi
 
 echo "SCREEN_HOME=$SCREEN_HOME"
 echo "DURABLE=$DURABLE"
-echo "OPEN=http://127.0.0.1:8765"
+echo "PUBLIC=http://127.0.0.1:8765"
+echo "C1=http://127.0.0.1:8876"
 echo "MCP=http://127.0.0.1:8787/mcp"
 echo "CURSOR_SESSION_NE_C5=true"
 echo "NEW_MCP_TOOLS=false"

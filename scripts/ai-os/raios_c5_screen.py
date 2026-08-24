@@ -4,13 +4,14 @@ from __future__ import annotations
 
 import asyncio
 import json
+import os
 import re
 import sys
 import threading
 from datetime import datetime, timezone
 from http.server import BaseHTTPRequestHandler, ThreadingHTTPServer
 from pathlib import Path
-from urllib.parse import urlparse
+from urllib.parse import parse_qs, urlparse
 
 ROOT = Path(__file__).resolve().parents[2]
 sys.path.insert(0, str(ROOT / "src"))
@@ -22,12 +23,16 @@ from raios_c5_whoami import c5_bind, control_plane_runtime, whoami  # noqa: E402
 
 WAL = ROOT / "RAIOS" / "V9" / "wal" / "cognitive-events.jsonl"
 HISTORY = ROOT / ".ai-os" / "learning" / "C5-SCREEN.jsonl"
+HISTORY_C1 = ROOT / ".ai-os" / "learning" / "C5-SCREEN-C1.jsonl"
 OUT_DIR = ROOT / ".ai-os" / "receipts" / "c5-screen"
 SEAT_MAP = ROOT / ".ai-os" / "mcp" / "SEAT-MAP.json"
 DEFAULT_HOST = "127.0.0.1"
 DEFAULT_PORT = 8765
 C1_PORT = 8876
 BIND_PORTS = (DEFAULT_PORT, C1_PORT)
+LANE_PUBLIC = "PUBLIC"
+LANE_C1 = "C1"
+PUBLIC_PORT = DEFAULT_PORT
 HEX_DUMP_RE = re.compile(r"[a-f0-9]{40,}", re.I)
 TELEMETRY_RE = re.compile(
     r"hit_count=|model_call=|ollama_used=|GL005_PROVEN=|الثقة:",
@@ -350,9 +355,172 @@ I18N = {
     },
 }
 
+LANE_I18N = {
+    "ar-EG": {
+        "you": "زائر",
+        "lane_public": "للجميع",
+        "lane_c1": "لـ C1 فقط",
+        "thread": "شاشة الجميع",
+        "thread_c1": "شاشة C1",
+        "public_note": "هذه شاشة C5 للجميع: عملاء وفريق. متعددة اللغات. مش شاشة المؤسس.",
+        "c1_note": "هذه شاشتك أنت يا C1. المنفذ 8876. شاشة الجميع على 8765. نفس C5، مش C5 تاني. ويندوز: powershell -File scripts/ai-os/raios_c5_screen.ps1 -Go",
+        "c1_panel_h": "لوحة المؤسس",
+        "public_url_k": "شاشة الجميع",
+        "public_url_v": "http://127.0.0.1:8765",
+        "c1_url_k": "شاشة C1",
+        "c1_url_v": "http://127.0.0.1:8876",
+        "mcp_k": "MCP",
+        "mcp_v": "http://127.0.0.1:8787/mcp · 8 أدوات",
+        "cortex_k": "قشرة مرشحة",
+        "cortex_v": "qwen3.6:35b-a3b · ليست دائمة",
+        "opencode_k": "OpenCode",
+        "opencode_v": "CODE_MODEL · جسر تنفيذ",
+        "ps1_k": "تثبيت ويندوز",
+        "ps1_v": "raios_c5_screen.ps1 -Go",
+        "chip_status": "حالة النظام",
+        "fill_status": "حالة الشاشة",
+        "public_whoami": (
+            "أنا C5 — مساعد RAIOS للجميع. أردّ بالمصري والخليجي والإنجليزي والنرويجي من الملفات المحلية.\n"
+            "مش OpenAI ومش LangChain. شاشة المؤسس منفصلة."
+        ),
+        "public_hello": "أهلاً. أنا C5 على شاشة الجميع.\nاكتب بالمصري أو الخليجي أو الإنجليزي أو النرويجي، أو بالكيبورد المقلوب.",
+        "public_screen": (
+            "هذه شاشة C5 للجميع على السيرفر المحلي. اللغات: ar-EG، ar-GULF، en، nb-NO.\n"
+            "الربط 127.0.0.1:8765. الكيبورد المقلوب يُفك هنا. السجل محلي.\n"
+            "ليس LangChain وليس OpenAI. شاشة C1 الخاصة على المنفذ 8876."
+        ),
+    },
+    "ar-GULF": {
+        "you": "زائر",
+        "lane_public": "للجميع",
+        "lane_c1": "لـ C1 بس",
+        "thread": "شاشة الجميع",
+        "thread_c1": "شاشة C1",
+        "public_note": "هذي شاشة C5 للجميع: عملاء وفريق. مو شاشة المؤسس.",
+        "c1_note": "هذي شاشتك يا C1 على 8876. شاشة الجميع 8765. نفس C5. ويندوز: powershell -File scripts/ai-os/raios_c5_screen.ps1 -Go",
+        "c1_panel_h": "لوحة المؤسس",
+        "public_url_k": "شاشة الجميع",
+        "public_url_v": "http://127.0.0.1:8765",
+        "c1_url_k": "شاشة C1",
+        "c1_url_v": "http://127.0.0.1:8876",
+        "mcp_k": "MCP",
+        "mcp_v": "http://127.0.0.1:8787/mcp · 8 أدوات",
+        "cortex_k": "قشرة مرشحة",
+        "cortex_v": "qwen3.6:35b-a3b · مو دائمة",
+        "opencode_k": "OpenCode",
+        "opencode_v": "CODE_MODEL · جسر تنفيذ",
+        "ps1_k": "تثبيت ويندوز",
+        "ps1_v": "raios_c5_screen.ps1 -Go",
+        "chip_status": "حالة النظام",
+        "fill_status": "حالة الشاشة",
+        "public_whoami": (
+            "أنا C5 — مساعد RAIOS للجميع. أرد بالخليجي والمصري والإنجليزي والنرويجي من الملفات المحلية.\n"
+            "مو OpenAI ومو LangChain. شاشة المؤسس منفصلة."
+        ),
+        "public_hello": "حياك. أنا C5 على شاشة الجميع.\nاكتب بالخليجي أو المصري أو الإنجليزي أو النرويجي.",
+        "public_screen": (
+            "هذي شاشة C5 للجميع على السيرفر المحلي. اللغات: ar-EG، ar-GULF، en، nb-NO.\n"
+            "الربط 127.0.0.1:8765. مو LangChain ومو OpenAI. شاشة C1 على 8876."
+        ),
+    },
+    "en": {
+        "you": "You",
+        "lane_public": "for everyone",
+        "lane_c1": "C1 only",
+        "thread": "Shared screen",
+        "thread_c1": "C1 console",
+        "public_note": "This is the shared C5 screen for customers and the team. The founder console is separate.",
+        "c1_note": "This is your C1 console on 8876. Shared screen is 8765. Same C5, not a second C5. Windows: powershell -File scripts/ai-os/raios_c5_screen.ps1 -Go",
+        "c1_panel_h": "Founder panel",
+        "public_url_k": "Shared screen",
+        "public_url_v": "http://127.0.0.1:8765",
+        "c1_url_k": "C1 screen",
+        "c1_url_v": "http://127.0.0.1:8876",
+        "mcp_k": "MCP",
+        "mcp_v": "http://127.0.0.1:8787/mcp · 8 tools",
+        "cortex_k": "Named cortex",
+        "cortex_v": "qwen3.6:35b-a3b · not permanent",
+        "opencode_k": "OpenCode",
+        "opencode_v": "CODE_MODEL execution bridge",
+        "ps1_k": "Windows install",
+        "ps1_v": "raios_c5_screen.ps1 -Go",
+        "chip_status": "system status",
+        "fill_status": "screen status",
+        "public_whoami": (
+            "I am C5 — the shared RAIOS assistant. I answer in Egyptian, Gulf Arabic, English, and Norwegian from local files.\n"
+            "Not OpenAI. Not LangChain. The founder console is separate."
+        ),
+        "public_hello": "Hello. I am C5 on the shared screen.\nWrite in Egyptian, Gulf Arabic, English, or Norwegian — flipped keyboard is decoded.",
+        "public_screen": (
+            "This is the shared C5 screen on the local control-plane host. Locales: ar-EG, ar-GULF, en, nb-NO.\n"
+            "Bind 127.0.0.1:8765. Not LangChain. Not OpenAI. The C1 console is on port 8876."
+        ),
+    },
+    "nb-NO": {
+        "you": "Du",
+        "lane_public": "for alle",
+        "lane_c1": "kun C1",
+        "thread": "Delt skjerm",
+        "thread_c1": "C1-konsoll",
+        "public_note": "Dette er den delte C5-skjermen for kunder og team. Grunnleggerkonsollen er separat.",
+        "c1_note": "Dette er C1-konsollen på 8876. Delt skjerm er 8765. Samme C5, ikke en nr. 2. Windows: powershell -File scripts/ai-os/raios_c5_screen.ps1 -Go",
+        "c1_panel_h": "Grunnleggerpanel",
+        "public_url_k": "Delt skjerm",
+        "public_url_v": "http://127.0.0.1:8765",
+        "c1_url_k": "C1-skjerm",
+        "c1_url_v": "http://127.0.0.1:8876",
+        "mcp_k": "MCP",
+        "mcp_v": "http://127.0.0.1:8787/mcp · 8 verktøy",
+        "cortex_k": "Navngitt cortex",
+        "cortex_v": "qwen3.6:35b-a3b · ikke permanent",
+        "opencode_k": "OpenCode",
+        "opencode_v": "CODE_MODEL-kjøringsbro",
+        "ps1_k": "Windows-installasjon",
+        "ps1_v": "raios_c5_screen.ps1 -Go",
+        "chip_status": "systemstatus",
+        "fill_status": "skjermstatus",
+        "public_whoami": (
+            "Jeg er C5 — den delte RAIOS-assistenten. Jeg svarer på egyptisk, gulf-arabisk, engelsk og norsk fra lokale filer.\n"
+            "Ikke OpenAI. Ikke LangChain. Grunnleggerkonsollen er separat."
+        ),
+        "public_hello": "Hei. Jeg er C5 på den delte skjermen.\nSkriv på egyptisk, gulf-arabisk, engelsk eller norsk.",
+        "public_screen": (
+            "Dette er den delte C5-skjermen på den lokale control-plane-verten. Språk: ar-EG, ar-GULF, en, nb-NO.\n"
+            "Binding 127.0.0.1:8765. Ikke LangChain. Ikke OpenAI. C1-konsollen er på port 8876."
+        ),
+    },
+}
+for _loc, _extra in LANE_I18N.items():
+    I18N[_loc].update(_extra)
+
 
 def utc() -> str:
     return datetime.now(timezone.utc).isoformat()
+
+
+def lane_of_port(port: int | None) -> str:
+    return LANE_C1 if int(port or DEFAULT_PORT) == C1_PORT else LANE_PUBLIC
+
+
+def history_path(lane: str | None = None) -> Path:
+    return HISTORY_C1 if lane == LANE_C1 else HISTORY
+
+
+def c1_token_expected() -> str:
+    return (os.environ.get("RAIOS_C1_SCREEN_TOKEN") or "").strip()
+
+
+def c1_request_allowed(handler: BaseHTTPRequestHandler) -> bool:
+    expected = c1_token_expected()
+    if not expected:
+        return True
+    if handler.headers.get("X-RAIOS-C1-Token") == expected:
+        return True
+    query = parse_qs(urlparse(handler.path).query)
+    if (query.get("token") or [""])[0] == expected:
+        return True
+    cookie = handler.headers.get("Cookie") or ""
+    return f"raios_c1={expected}" in cookie
 
 
 def wal_mtime():
@@ -363,14 +531,19 @@ def screen_health(*, host: str = DEFAULT_HOST, port: int | None = None) -> dict:
     """Same C5 process health. Honest cortex flag from probe(), not a printed MAIN_CORTEX."""
     bind = c5_bind()
     ports = list(bind.get("c5_screen_ports") or BIND_PORTS)
+    bound_port = DEFAULT_PORT if port is None else int(port)
+    lane = lane_of_port(bound_port)
     rec = {
         "schema": "raios.c5-health.v1",
         "ok": True,
         "from": "C5",
         "http": 200,
         "host": host,
-        "port": DEFAULT_PORT if port is None else port,
-        "bind": f"{host}:{DEFAULT_PORT if port is None else port}",
+        "port": bound_port,
+        "lane": lane,
+        "public_url": f"http://{host}:{PUBLIC_PORT}",
+        "c1_url": f"http://{host}:{C1_PORT}",
+        "bind": f"{host}:{bound_port}",
         "ports": ports,
         "urls": [f"http://{host}:{p}" for p in ports],
         "duplicate_c5": False,
@@ -393,6 +566,8 @@ def screen_health(*, host: str = DEFAULT_HOST, port: int | None = None) -> dict:
     rec["TRANSPORT"] = "openai-compatible"
     rec["law"] = [
         "SAME_C5_DUAL_BIND",
+        "PUBLIC_SCREEN_NE_C1_CONSOLE",
+        "C1_CONSOLE_NE_SECOND_C5",
         "HEALTH_200_NE_CORTEX_LIVE",
         "PROBE_IS_CORTEX_TRUTH",
         "STUDENT_NE_CORTEX",
@@ -454,11 +629,12 @@ def present_answer(answer: str) -> str:
     return text
 
 
-def load_history(limit: int = 24) -> list[dict]:
-    if not HISTORY.exists():
+def load_history(limit: int = 24, lane: str | None = None) -> list[dict]:
+    path = history_path(lane)
+    if not path.exists():
         return []
     rows: list[dict] = []
-    for line in HISTORY.read_text(encoding="utf-8").splitlines():
+    for line in path.read_text(encoding="utf-8").splitlines():
         if not line.strip():
             continue
         try:
@@ -502,9 +678,10 @@ def load_history(limit: int = 24) -> list[dict]:
     return list(reversed(uniq))
 
 
-def append_history(row: dict) -> None:
-    HISTORY.parent.mkdir(parents=True, exist_ok=True)
-    with HISTORY.open("a", encoding="utf-8") as handle:
+def append_history(row: dict, lane: str | None = None) -> None:
+    path = history_path(lane)
+    path.parent.mkdir(parents=True, exist_ok=True)
+    with path.open("a", encoding="utf-8") as handle:
         handle.write(json.dumps(row, ensure_ascii=False) + "\n")
 
 
@@ -535,22 +712,28 @@ def pack(locale: str) -> dict:
     return I18N.get(locale) or I18N["ar-EG"]
 
 
-def _identity_reply(card: dict, locale: str) -> str:
+def _identity_reply(card: dict, locale: str, lane: str = LANE_PUBLIC) -> str:
     langs = "، ".join(str(x) for x in card.get("languages_customer_live") or []) if locale.startswith("ar") else ", ".join(str(x) for x in card.get("languages_customer_live") or [])
     engine = card["engine_now"]["inject"]
-    return pack(locale)["whoami"].format(
-        engine=engine,
-        n=card.get("languages_customer_live_count"),
-        langs=langs,
-    )
+    key = "whoami" if lane == LANE_C1 else "public_whoami"
+    text = pack(locale)[key]
+    if "{engine}" in text:
+        return text.format(
+            engine=engine,
+            n=card.get("languages_customer_live_count"),
+            langs=langs,
+        )
+    return text
 
 
-def _screen_reply(locale: str) -> str:
-    return pack(locale)["screen"]
+def _screen_reply(locale: str, lane: str = LANE_PUBLIC) -> str:
+    ui = pack(locale)
+    return ui["screen"] if lane == LANE_C1 else ui["public_screen"]
 
 
-def _hello_reply(locale: str) -> str:
-    return pack(locale)["hello"]
+def _hello_reply(locale: str, lane: str = LANE_PUBLIC) -> str:
+    ui = pack(locale)
+    return ui["hello"] if lane == LANE_C1 else ui["public_hello"]
 
 
 def _seat_card(query: str, locale: str = "ar-EG") -> str | None:
@@ -618,8 +801,35 @@ def _is_hello(text: str) -> bool:
     return t in HELLO_MARKS
 
 
-def teach_reply(message: str, locale: str | None = None) -> dict:
+def _is_status(text: str) -> bool:
+    t = (text or "").strip().lower().rstrip("!؟?.")
+    return t in {
+        "حالة الشاشة",
+        "حالة النظام",
+        "screen status",
+        "system status",
+        "skjermstatus",
+        "status",
+    }
+
+
+def _status_reply(locale: str, lane: str) -> str:
+    rec = screen_health(port=C1_PORT if lane == LANE_C1 else PUBLIC_PORT)
+    ui = pack(locale)
+    return (
+        f"{ui['lane_c1'] if lane == LANE_C1 else ui['lane_public']}\n"
+        f"{ui['public_url_k']}: {rec.get('public_url')}\n"
+        f"{ui['c1_url_k']}: {rec.get('c1_url')}\n"
+        f"MCP: {rec.get('mcp_endpoint') or 'http://127.0.0.1:8787/mcp'} tools={rec.get('mcp_tool_count')}\n"
+        f"SCREEN_HOME={rec.get('screen_home')} durable={str(bool(rec.get('screen_durable'))).lower()}\n"
+        f"MAIN_CORTEX={str(bool(rec.get('MAIN_CORTEX'))).lower()} MODEL={rec.get('MODEL')}\n"
+        f"PERMANENT_IDENTITY=false LOCAL_WINNER=false GL005_PROVEN=false duplicate_c5=false"
+    )
+
+
+def teach_reply(message: str, locale: str | None = None, lane: str | None = None) -> dict:
     wal_before = wal_mtime()
+    lane = LANE_C1 if lane == LANE_C1 else LANE_PUBLIC
     original = (message or "").strip()
     kb = decode_flipped_keyboard(original)
     text = teach_text(original)
@@ -635,6 +845,7 @@ def teach_reply(message: str, locale: str | None = None) -> dict:
             "from": "C5",
             "parent": "C1",
             "kind": "empty",
+            "lane": lane,
             "locale": loc,
             "original": message,
             "decoded": text,
@@ -652,23 +863,28 @@ def teach_reply(message: str, locale: str | None = None) -> dict:
         return rec
     identity = _is_identity(orig_norm) or _is_identity(lowered)
     hello = _is_hello(orig_norm) or _is_hello(lowered)
+    status = lane == LANE_C1 and (_is_status(orig_norm) or _is_status(lowered))
     screen = any(mark in lowered for mark in SCREEN_MARKS) or any(
         mark in lowered.lower() or mark in orig_norm.lower() for mark in SCREEN_MARKS
     )
     if identity:
         loc = detect_locale(orig_norm, locale)
         ui = pack(loc)
-        answer = _identity_reply(whoami(), loc)
+        answer = _identity_reply(whoami(), loc, lane)
         kind = "whoami"
     elif hello:
         loc = detect_locale(orig_norm, locale)
         ui = pack(loc)
-        answer = _hello_reply(loc)
+        answer = _hello_reply(loc, lane)
         kind = "hello"
+    elif status:
+        loc = detect_locale(orig_norm, locale)
+        answer = _status_reply(loc, lane)
+        kind = "status"
     elif screen:
         loc = detect_locale(orig_norm if not kb.get("applied") else text, locale)
         ui = pack(loc)
-        answer = _screen_reply(loc)
+        answer = _screen_reply(loc, lane)
         kind = "screen"
     else:
         query = text if kb.get("applied") else orig_norm
@@ -689,11 +905,12 @@ def teach_reply(message: str, locale: str | None = None) -> dict:
         "from": "C5",
         "parent": "C1",
         "kind": kind,
+        "lane": lane,
         "locale": loc,
         "original": message,
         "decoded": text,
         "flipped": bool(kb.get("applied")),
-        "answer": answer if kind == "speak" else (present_answer(answer) or answer),
+        "answer": answer if kind in {"speak", "status"} else (present_answer(answer) or answer),
         "paid_api": False,
         "wal_written": False,
         "gl005_proven": False,
@@ -703,6 +920,8 @@ def teach_reply(message: str, locale: str | None = None) -> dict:
             "FLIPPED_KEYBOARD_IS_INPUT",
             "UNPOLISHED_SCREEN_NE_SHIP",
             "SCREEN_REPLY_NE_INDEX_DUMP",
+            "PUBLIC_SCREEN_NE_C1_CONSOLE",
+            "C1_CONSOLE_NE_SECOND_C5",
             "C5_SCREEN_LIVES_ON_CONTROL_PLANE",
             "CURSOR_SCREEN_IS_SESSION_TEMP",
             "HUNT_FREE_NE_PAID_API",
@@ -742,7 +961,7 @@ def teach_reply(message: str, locale: str | None = None) -> dict:
     rec["wal_mtime_unchanged"] = True
     rec["ok"] = True
     rec["stored"] = True
-    append_history(rec)
+    append_history(rec, lane)
     OUT_DIR.mkdir(parents=True, exist_ok=True)
     (OUT_DIR / "LAST.json").write_text(json.dumps(rec, indent=2, ensure_ascii=False) + "\n", encoding="utf-8")
     return rec
@@ -974,15 +1193,18 @@ PAGE = """<!DOCTYPE html>
       aside { display: none; }
       .thread-head span { display: none; }
     }
+    body.lane-PUBLIC .c1-only { display: none !important; }
+    body.lane-C1 .public-only { display: none !important; }
+    body.lane-C1 { --accent: #c9a227; --accent-dim: #3d3414; }
   </style>
 </head>
-<body>
+<body class="lane-__LANE__">
   <div class="app">
     <header class="top">
       <div class="brand">
         <span id="live-dot" class="pulse" title="حي"></span>
         <div>
-          <h1>C5 · RAIOS</h1>
+          <h1 id="live-title">C5 · RAIOS</h1>
           <small data-i18n="brand_sub">الابن المساعد المخلص · منحة دائمة</small>
         </div>
       </div>
@@ -994,7 +1216,9 @@ PAGE = """<!DOCTYPE html>
       </nav>
       <div class="chips">
         <span class="chip"><span data-i18n="bind">ربط</span> <strong id="live-bind">127.0.0.1:8765</strong></span>
-        <span class="chip">GL005 <strong>false</strong></span>
+        <span class="chip public-only" data-i18n="lane_public">للجميع</span>
+        <span class="chip c1-only" data-i18n="lane_c1">لـ C1 فقط</span>
+        <span class="chip c1-only">GL005 <strong>false</strong></span>
         <span class="chip">paid_api <strong>false</strong></span>
         <span class="chip" id="live-lang">لغات العملاء 4</span>
       </div>
@@ -1002,18 +1226,30 @@ PAGE = """<!DOCTYPE html>
     <div class="shell">
       <aside>
         <h2 data-i18n="identity_h">هوية التشغيل</h2>
-        <div class="row"><div class="k" data-i18n="father_k">الأب</div><div class="v" data-i18n="father_v">C1 المالك</div></div>
-        <div class="row"><div class="k" data-i18n="where_k">المكان</div><div class="v" data-i18n="where_v">git · ليس جلسة Cursor</div></div>
-        <div class="row"><div class="k" data-i18n="engine_k">محرك التعلّم</div><div class="v" data-i18n="engine_v">mind-fill → INDEX → NeuroLingua</div></div>
-        <div class="row"><div class="k" data-i18n="customer_k">كلام العملاء</div><div class="v" data-i18n="customer_v">ar-EG · ar-GULF · en · nb-NO</div></div>
-        <div class="row"><div class="k" data-i18n="tools_k">الأدوات</div><div class="v" data-i18n="tools_v">Python stdlib · git · Ollama محلي</div></div>
-        <div class="row"><div class="k" data-i18n="forbid_k">ممنوع</div><div class="v" data-i18n="forbid_v">LangChain · OpenAI · Chroma · PASS</div></div>
+        <div class="row public-only"><div class="k" data-i18n="customer_k">كلام العملاء</div><div class="v" data-i18n="customer_v">ar-EG · ar-GULF · en · nb-NO</div></div>
+        <div class="row public-only"><div class="k" data-i18n="tools_k">الأدوات</div><div class="v" data-i18n="tools_v">Python stdlib · git · Ollama محلي</div></div>
+        <div class="row public-only"><div class="k" data-i18n="forbid_k">ممنوع</div><div class="v" data-i18n="forbid_v">LangChain · OpenAI · Chroma · PASS</div></div>
+        <div class="row c1-only"><div class="k" data-i18n="father_k">الأب</div><div class="v" data-i18n="father_v">C1 المالك</div></div>
+        <div class="row c1-only"><div class="k" data-i18n="where_k">المكان</div><div class="v" data-i18n="where_v">git · ليس جلسة Cursor</div></div>
+        <div class="row c1-only"><div class="k" data-i18n="engine_k">محرك التعلّم</div><div class="v" data-i18n="engine_v">mind-fill → INDEX → NeuroLingua</div></div>
+        <div class="row c1-only"><div class="k" data-i18n="customer_k">كلام العملاء</div><div class="v" data-i18n="customer_v">ar-EG · ar-GULF · en · nb-NO</div></div>
+        <div class="row c1-only"><div class="k" data-i18n="tools_k">الأدوات</div><div class="v" data-i18n="tools_v">Python stdlib · git · Ollama محلي</div></div>
+        <div class="row c1-only"><div class="k" data-i18n="forbid_k">ممنوع</div><div class="v" data-i18n="forbid_v">LangChain · OpenAI · Chroma · PASS</div></div>
+        <h2 class="c1-only" data-i18n="c1_panel_h">لوحة المؤسس</h2>
+        <div class="row c1-only"><div class="k" data-i18n="public_url_k">شاشة الجميع</div><div class="v" data-i18n="public_url_v">http://127.0.0.1:8765</div></div>
+        <div class="row c1-only"><div class="k" data-i18n="c1_url_k">شاشة C1</div><div class="v" data-i18n="c1_url_v">http://127.0.0.1:8876</div></div>
+        <div class="row c1-only"><div class="k" data-i18n="mcp_k">MCP</div><div class="v" data-i18n="mcp_v">http://127.0.0.1:8787/mcp · 8 أدوات</div></div>
+        <div class="row c1-only"><div class="k" data-i18n="cortex_k">قشرة مرشحة</div><div class="v" data-i18n="cortex_v">qwen3.6:35b-a3b · ليست دائمة</div></div>
+        <div class="row c1-only"><div class="k" data-i18n="opencode_k">OpenCode</div><div class="v" data-i18n="opencode_v">CODE_MODEL · جسر تنفيذ</div></div>
+        <div class="row c1-only"><div class="k" data-i18n="ps1_k">تثبيت ويندوز</div><div class="v">raios_c5_screen.ps1 -Go</div></div>
+        <p class="note public-only" data-i18n="public_note">هذه شاشة C5 للجميع: عملاء وفريق. متعددة اللغات. مش شاشة المؤسس.</p>
+        <p class="note c1-only" data-i18n="c1_note">هذه شاشتك أنت يا C1. المنفذ 8876. شاشة الجميع على 8765. نفس C5، مش C5 تاني. ويندوز: powershell -File scripts/ai-os/raios_c5_screen.ps1 -Go</p>
         <p class="note" data-i18n="note">هذه القناة على حلقة الجهاز نفسه. إذا رفض المتصفح الاتصال، فأنت على localhost جهاز آخر. استخدم تمرير منفذ Cursor إلى 8765.</p>
       </aside>
       <main>
         <div class="thread-head">
-          <strong data-i18n="thread">شاشة النظام</strong>
-          <span data-i18n="thread_sub">الكيبورد المقلوب يُفك تلقائيًا · السجل يُكمَّل لما ترجع</span>
+          <strong data-i18n="thread">شاشة الجميع</strong>
+          <span data-i18n="thread_sub">الكيبورد المقلوب يُفك تلقائيًا · السجل يُكمَّل لما ترجع · متعدد اللغات</span>
         </div>
         <div id="log" role="log" aria-live="polite">
           <div class="empty" id="empty">
@@ -1023,6 +1259,7 @@ PAGE = """<!DOCTYPE html>
               <button type="button" data-fill="مين أنت" data-i18n="chip_who">مين أنت</button>
               <button type="button" data-fill="ما دور C4 في المجلس" data-i18n="chip_c4">دور C4</button>
               <button type="button" data-fill="DULG AHAM" data-i18n="chip_flip">كيبورد مقلوب</button>
+              <button type="button" class="c1-only" data-fill="حالة الشاشة" data-i18n="chip_status">حالة النظام</button>
             </div>
           </div>
         </div>
@@ -1034,6 +1271,7 @@ PAGE = """<!DOCTYPE html>
               <button type="button" data-fill="مين أنت" data-i18n="chip_who">مين أنت</button>
               <button type="button" data-fill="ما دور C4 في المجلس" data-i18n="chip_c4">دور C4</button>
               <button type="button" data-fill="DULG AHAM" data-i18n="chip_flip">كيبورد مقلوب</button>
+              <button type="button" class="c1-only" data-fill="حالة الشاشة" data-i18n="chip_status">حالة النظام</button>
             </span>
             <span data-i18n="hint">Enter للإرسال · Shift+Enter سطر جديد · ليست LangChain وليست OpenAI</span>
           </div>
@@ -1043,6 +1281,7 @@ PAGE = """<!DOCTYPE html>
   </div>
   <script>
     const I18N = __I18N__;
+    const LANE = "__LANE__";
     const log = document.getElementById("log");
     const form = document.getElementById("f");
     const box = document.getElementById("t");
@@ -1069,13 +1308,18 @@ PAGE = """<!DOCTYPE html>
       currentLocale = code;
       document.documentElement.lang = ui.html_lang;
       document.documentElement.dir = ui.dir;
+      const title = document.getElementById("live-title");
+      if (title) title.textContent = LANE === "C1" ? "C1 · C5" : "C5 · RAIOS";
+      document.title = LANE === "C1" ? "C1 · C5" : "C5 · RAIOS";
       document.querySelectorAll("[data-i18n]").forEach((node) => {
         const key = node.getAttribute("data-i18n");
-        if (ui[key]) node.textContent = ui[key];
+        const useKey = (key === "thread" && LANE === "C1") ? "thread_c1" : key;
+        if (ui[useKey]) node.textContent = ui[useKey];
       });
       document.querySelectorAll("[data-i18n='chip_who']").forEach((n) => n.setAttribute("data-fill", ui.fill_who));
       document.querySelectorAll("[data-i18n='chip_c4']").forEach((n) => n.setAttribute("data-fill", ui.fill_c4));
       document.querySelectorAll("[data-i18n='chip_flip']").forEach((n) => n.setAttribute("data-fill", ui.fill_flip));
+      document.querySelectorAll("[data-i18n='chip_status']").forEach((n) => n.setAttribute("data-fill", ui.fill_status));
       box.placeholder = ui.placeholder;
       box.setAttribute("aria-label", ui.placeholder);
       document.querySelectorAll("#lang-switch [data-locale]").forEach((n) => {
@@ -1100,8 +1344,12 @@ PAGE = """<!DOCTYPE html>
       const empty = document.getElementById("empty");
       if (empty) empty.remove();
     }
-    function bubble(role, text, flip, ts) {
-      const wrap = el("div", "msg " + (role === "C1" ? "me" : "him"));
+    function userRole() {
+      const ui = I18N[currentLocale] || I18N["ar-EG"];
+      return LANE === "C1" ? "C1" : (ui.you || "You");
+    }
+    function bubble(role, text, flip, ts, mine) {
+      const wrap = el("div", "msg " + (mine ? "me" : "him"));
       const meta = el("div", "meta");
       meta.appendChild(el("span", "", role));
       const when = clock(ts);
@@ -1153,8 +1401,8 @@ PAGE = """<!DOCTYPE html>
         const data = await r.json();
         const turns = data.turns || [];
         for (const row of turns) {
-          bubble("C1", row.decoded || row.original || "", row.flipped, row.ts);
-          bubble("C5", row.answer || "", false, row.ts);
+          bubble(userRole(), row.decoded || row.original || "", row.flipped, row.ts, true);
+          bubble("C5", row.answer || "", false, row.ts, false);
         }
       } catch (err) {
         bubble("C5", (I18N[currentLocale] || I18N["ar-EG"]).conn_err, false);
@@ -1169,7 +1417,7 @@ PAGE = """<!DOCTYPE html>
       box.value = "";
       btn.disabled = true;
       btn.textContent = ui.sending;
-      const mine = bubble("C1", text, false, new Date().toISOString());
+      const mine = bubble(userRole(), text, false, new Date().toISOString(), true);
       typing(true);
       try {
         const r = await fetch("/api/chat", {
@@ -1187,7 +1435,7 @@ PAGE = """<!DOCTYPE html>
           const meta = mine.querySelector(".meta");
           if (meta && !meta.querySelector(".flip")) meta.appendChild(el("span", "flip", (I18N[currentLocale] || I18N["ar-EG"]).flip));
         }
-        bubble("C5", data.answer || ui.ground_empty, false, data.ts);
+        bubble("C5", data.answer || ui.ground_empty, false, data.ts, false);
       } catch (err) {
         typing(false);
         bubble("C5", ui.conn_err, false);
@@ -1221,13 +1469,39 @@ PAGE = """<!DOCTYPE html>
 </body>
 </html>
 """
-PAGE = PAGE.replace("__I18N__", json.dumps(I18N, ensure_ascii=False))
+PAGE_TEMPLATE = PAGE
+
+
+def render_page(lane: str = LANE_PUBLIC) -> str:
+    lane = LANE_C1 if lane == LANE_C1 else LANE_PUBLIC
+    return PAGE_TEMPLATE.replace("__I18N__", json.dumps(I18N, ensure_ascii=False)).replace("__LANE__", lane)
+
+
+PAGE = None
+PAGE_PUBLIC = None
+PAGE_C1 = None
+
+
+def pages() -> tuple[str, str]:
+    global PAGE, PAGE_PUBLIC, PAGE_C1
+    if PAGE_PUBLIC is None:
+        PAGE_PUBLIC = render_page(LANE_PUBLIC)
+        PAGE_C1 = render_page(LANE_C1)
+        PAGE = PAGE_PUBLIC
+    return PAGE_PUBLIC, PAGE_C1
+
+
+pages()
 
 
 class Handler(BaseHTTPRequestHandler):
     bind_host = DEFAULT_HOST
     bind_port = DEFAULT_PORT
     bind_ports = BIND_PORTS
+
+    @property
+    def lane(self) -> str:
+        return lane_of_port(getattr(self, "bind_port", DEFAULT_PORT))
 
     def log_message(self, fmt: str, *args) -> None:
         sys.stderr.write("C5-SCREEN " + (fmt % args) + "\n")
@@ -1240,21 +1514,38 @@ class Handler(BaseHTTPRequestHandler):
         self.end_headers()
         self.wfile.write(body)
 
+    def _gate_c1(self) -> bool:
+        if self.lane != LANE_C1:
+            return True
+        if c1_request_allowed(self):
+            return True
+        rec = {"ok": False, "from": "C5", "lane": LANE_C1, "error": "C1_TOKEN_REQUIRED", "gl005_proven": False}
+        self._send(403, json.dumps(rec, ensure_ascii=False).encode("utf-8"), "application/json; charset=utf-8")
+        return False
+
     def do_GET(self) -> None:
+        if not self._gate_c1():
+            return
         path = urlparse(self.path).path
+        public_html, c1_html = pages()
         if path in {"/", "/index.html"}:
-            self._send(200, PAGE.encode("utf-8"), "text/html; charset=utf-8")
+            html = c1_html if self.lane == LANE_C1 else public_html
+            self._send(200, html.encode("utf-8"), "text/html; charset=utf-8")
             return
         if path in {"/health", "/api/health"}:
             rec = screen_health(host=self.bind_host, port=self.bind_port)
             rec["port"] = self.bind_port
+            rec["lane"] = self.lane
             rec["bind"] = f"{self.bind_host}:{self.bind_port}"
             rec["ports"] = list(getattr(self, "bind_ports", BIND_PORTS))
             payload = json.dumps(rec, ensure_ascii=False).encode("utf-8")
             self._send(200, payload, "application/json; charset=utf-8")
             return
         if path == "/api/history":
-            payload = json.dumps({"turns": load_history(), "gl005_proven": False}, ensure_ascii=False).encode("utf-8")
+            payload = json.dumps(
+                {"turns": load_history(lane=self.lane), "lane": self.lane, "gl005_proven": False},
+                ensure_ascii=False,
+            ).encode("utf-8")
             self._send(200, payload, "application/json; charset=utf-8")
             return
         if path == "/api/status":
@@ -1266,27 +1557,33 @@ class Handler(BaseHTTPRequestHandler):
                     "from": "C5",
                     "host": self.bind_host,
                     "port": self.bind_port,
+                    "lane": self.lane,
                     "bind": f"{self.bind_host}:{self.bind_port}",
                     "ports": list(getattr(self, "bind_ports", BIND_PORTS)),
+                    "public_url": f"http://{self.bind_host}:{PUBLIC_PORT}",
+                    "c1_url": f"http://{self.bind_host}:{C1_PORT}",
                     "languages_customer_live_count": card.get("languages_customer_live_count"),
                     "languages_customer_live": card.get("languages_customer_live"),
                     "locales": list(LIVE_LOCALES),
-                    "main_cortex": bool(bind.get("main_cortex")),
-                    "cortex_model": bind.get("cortex_model"),
-                    "mcp_reachable": bind.get("mcp_reachable"),
-                    "council_seat_map": bind.get("council_seat_map"),
-                    "model_registry": bind.get("model_registry"),
+                    "main_cortex": bool(bind.get("main_cortex")) if self.lane == LANE_C1 else False,
+                    "cortex_model": bind.get("cortex_model") if self.lane == LANE_C1 else None,
+                    "mcp_reachable": bind.get("mcp_reachable") if self.lane == LANE_C1 else None,
+                    "council_seat_map": bind.get("council_seat_map") if self.lane == LANE_C1 else None,
+                    "model_registry": bind.get("model_registry") if self.lane == LANE_C1 else None,
                     "screen_home": bind.get("screen_home"),
                     "screen_durable": bool(bind.get("screen_durable")),
                     "cursor_session_ne_c5": True,
                     "this_host_is_cursor_cloud": bool(bind.get("this_host_is_cursor_cloud")),
                     "paid_api": False,
                     "gl005_proven": False,
+                    "duplicate_c5": False,
                     "law": [
                         "C5_SCREEN_LIVES_ON_CONTROL_PLANE",
                         "CURSOR_SCREEN_IS_SESSION_TEMP",
                         "UNPOLISHED_SCREEN_NE_SHIP",
                         "SCREEN_IS_MULTILINGUAL",
+                        "PUBLIC_SCREEN_NE_C1_CONSOLE",
+                        "C1_CONSOLE_NE_SECOND_C5",
                     ],
                 },
                 ensure_ascii=False,
@@ -1296,6 +1593,8 @@ class Handler(BaseHTTPRequestHandler):
         self._send(404, b"not found", "text/plain")
 
     def do_POST(self) -> None:
+        if not self._gate_c1():
+            return
         if urlparse(self.path).path != "/api/chat":
             self._send(404, b"not found", "text/plain")
             return
@@ -1303,9 +1602,13 @@ class Handler(BaseHTTPRequestHandler):
         raw = self.rfile.read(min(length, 80_000)).decode("utf-8")
         try:
             data = json.loads(raw or "{}")
-            rec = teach_reply(str(data.get("text") or ""), locale=(str(data.get("locale") or "") or None))
+            rec = teach_reply(
+                str(data.get("text") or ""),
+                locale=(str(data.get("locale") or "") or None),
+                lane=self.lane,
+            )
         except Exception as exc:
-            rec = {"ok": False, "from": "C5", "answer": "تعذر الرد.", "error": type(exc).__name__, "gl005_proven": False}
+            rec = {"ok": False, "from": "C5", "lane": self.lane, "answer": "تعذر الرد.", "error": type(exc).__name__, "gl005_proven": False}
             self._send(200, json.dumps(rec, ensure_ascii=False).encode("utf-8"), "application/json; charset=utf-8")
             return
         self._send(200, json.dumps(rec, ensure_ascii=False).encode("utf-8"), "application/json; charset=utf-8")
@@ -1352,7 +1655,10 @@ def serve(host: str | None = None, ports: tuple[int, ...] | list[int] | None = N
                     "ok": True,
                     "url": f"http://{host}:{port}",
                     "from": "C5",
+                    "lane": lane_of_port(port),
                     "ports": list(wanted),
+                    "public_url": f"http://{host}:{PUBLIC_PORT}",
+                    "c1_url": f"http://{host}:{C1_PORT}",
                     "duplicate_c5": False,
                     "screen_home": home["screen_home"],
                     "screen_durable": bool(home["durable"]),
