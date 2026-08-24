@@ -27,7 +27,7 @@ sys.path.insert(0, str(ROOT / "gym" / "kaggle"))
 from hardware_probe import probe as hardware_probe  # noqa: E402
 from raios_c5_cloud import git_remote, ollama_generate, ollama_tags, strip_userinfo  # noqa: E402
 
-from autonomic.self_inspection.engine import inspect as self_inspect  # noqa: E402
+from autonomic.self_inspection import inspect as self_inspect  # noqa: E402
 from cloud.nomadic.provider_contract import catalog as provider_catalog  # noqa: E402
 from cloud.nomadic.work_stealing_scheduler import simulate_pair_failover  # noqa: E402
 from cloud.storage.future_s3_backend import FutureS3Backend, detect_object_store_refs  # noqa: E402

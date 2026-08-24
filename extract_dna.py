@@ -1,10 +1,7 @@
 ﻿#!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 
-"""
-مستخرج الحمض النووي من brain.py
-يستخرج الكيانات، القواعد، البيانات الرئيسية، والقدرات.
-"""
+"""DNA extract CLI keeper. Uses greenlines_brain.dna.extractor. Not a second extractor."""
 
 import sys
 import json

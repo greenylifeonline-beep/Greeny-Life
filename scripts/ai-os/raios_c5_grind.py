@@ -45,7 +45,7 @@ DOMAINS = (
     },
     {
         "id": "marketing",
-        "keepers": ("canonical/docs/migrated_brand.md",),
+        "keepers": ("canonical/docs/architecture/SYSTEM_ARCHITECTURE.md",),
         "thin": True,
     },
 )

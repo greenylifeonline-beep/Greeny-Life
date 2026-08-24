@@ -354,3 +354,9 @@ Port `8765` is the shared screen for everyone (customers and team): multilingual
 ## D-075 Identity before action; C6–C10 stay unseated; founder paste is the inbound transport
 DISCOVERED, C1 ordered, not CANONICAL: `IDENTITY_BEFORE_ACTION`. `C6_C10_NE_LIVE`. `C6_PACKET_NE_LIVE_SEAT`. `PASTED_CHAT_NE_MCP_ROUND_TRIP`.
 Live seats remain C1–C5. C0 is abolished. C6–C10 questions get an honest unseated card on the existing C5 screen (PUBLIC 8765 / C1 8876), not `MODEL_MISSING` and not a minted live seat. `c6_inbound_state()` reads `.ai-os/mcp/packets.jsonl` only (no write, no ack). Packet seen ≠ live seat. MCP stays 8 tools. No `.ai-os/control`. No second bus. `LOCAL_MCP_RENDEZVOUS_NE_REMOTE_MEETING`. `FOUNDER_RELAY_IS_THE_INBOUND_TRANSPORT`. `C6_LIVE=false`. `MCP_PACKET_RECEIVED=false` until a real MCP round-trip is proven. Does not close GL-005.
+
+## D-076 Same-function parts bind to one live keeper; different jobs stay specialized
+DISCOVERED, C1 ordered, not CANONICAL: `ONE_CAPABILITY_ONE_KEEPER`. `SIMILAR_NAME_NE_SAME_JOB`. `NO_NEW_MERGE_ENGINE`. `NO_SECOND_WAL`.
+Bind similar live parts onto existing keepers: train mesh, self-inspection package `inspect`, whoami→screen, phase0→p0, marketing mill → `SYSTEM_ARCHITECTURE.md`, `run_all.ps1`/`fix_brain.py`/`run_audit_hack.py` fail-closed onto train (brain.py stays DO_NOT_RUN).
+Do not merge Cognitive WAL with JobLedger. Do not merge nomadic `provider_contract` with NeuroLingua `provider_contracts`. Do not merge `greenlines_brain.kernel` with NeuroLingua kernel. Byte-identical files with different functions (mutation before/after, a10 snapshot vs state, a11 acts, product-set labels) stay unmerged.
+Canonical GELS KEEP-PACKAGE vs `legacy-data` and brand-doc aliases are same-function; file rewrite under `canonical/` waits on GL-003 lock. Grind already mills the architecture keeper. Does not close GL-005.

@@ -1,22 +1,13 @@
-﻿# fix_brain.py - إصلاح المسافة البادئة في brain.py
-import re
+﻿#!/usr/bin/env python3
+"""Historical indent patcher. Not a merge launcher.
 
-# قراءة الملف
-with open('brain.py', 'r', encoding='utf-8') as f:
-    content = f.read()
+DO_NOT_RUN. Keeper: python3 scripts/ai-os/raios_c5_train.py
+brain.py discover_and_merge_intelligence stays DO_NOT_RUN (D-068).
+"""
+from __future__ import annotations
 
-# إصلاح المسافة البادئة للفواصل التي تسبق execute_full_pipeline
-pattern = r'^# -------------------------------------------------------------------------$\n^# AGENT 22: FULL PIPELINE ORCHESTRATOR$'
+import sys
 
-# نستبدله بنفس الفواصل ولكن مع 4 مسافات بادئة
-replacement = r'    # -------------------------------------------------------------------------\n    # AGENT 22: FULL PIPELINE ORCHESTRATOR'
-
-# تطبيق الاستبدال
-new_content = re.sub(pattern, replacement, content, flags=re.MULTILINE)
-
-# حفظ الملف المعدل
-with open('brain_fixed.py', 'w', encoding='utf-8') as f:
-    f.write(new_content)
-
-print("✅ تم إنشاء brain_fixed.py مع المسافات البادئة المصححة.")
-print("🚀 قم بتشغيل: python brain_fixed.py --repo . --full-audit")
+print("DO_NOT_RUN: fix_brain.py is not a merge launcher.", file=sys.stderr)
+print("KEEPER: python3 scripts/ai-os/raios_c5_train.py", file=sys.stderr)
+raise SystemExit(2)

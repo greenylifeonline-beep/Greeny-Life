@@ -1,0 +1,92 @@
+{
+  "schema": "raios.same-function-bind.v1",
+  "ts": "2026-08-24T17:35:00+00:00",
+  "from": "C2",
+  "c5": "git",
+  "order": "جمع وتكامل تام بين أجزاء النظام المتشابهة",
+  "new_engine_created": false,
+  "new_bus_created": false,
+  "wal_written": false,
+  "gl005_proven": false,
+  "bound": [
+    {
+      "family": "training_mesh",
+      "keeper": "scripts/ai-os/raios_c5_train.py",
+      "bound": ["scripts/ai-os/raios_c5_*.py keepers listed in KEEPERS", "run_all.ps1", "fix_brain.py", "run_audit_hack.py"]
+    },
+    {
+      "family": "self_inspection",
+      "keeper": "RAIOS/V9/autonomic/self_inspection/engine.py",
+      "bound": ["RAIOS/V9/autonomic/self_inspection/__init__.py inspect export", "census shims", "raios_c5_wave_ccn.py"]
+    },
+    {
+      "family": "c5_identity",
+      "keeper": "scripts/ai-os/raios_c5_whoami.py",
+      "bound": ["scripts/ai-os/raios_c5_screen.py", "scripts/ai-os/raios_c5_cloud.py", "scripts/ai-os/raios_c5_book.py"]
+    },
+    {
+      "family": "p0_gates",
+      "keeper": "scripts/ai-os/raios_c5_p0.py",
+      "bound": ["scripts/ai-os/raios_c5_phase0.py", "scripts/ai-os/raios_c5_reality.py", "scripts/ai-os/raios_c5_wave1.py", "scripts/ai-os/raios_c5_book.py"]
+    },
+    {
+      "family": "gl_dos_vision_text",
+      "keeper": "canonical/docs/architecture/SYSTEM_ARCHITECTURE.md",
+      "bound": ["scripts/ai-os/raios_c5_grind.py marketing domain"],
+      "pending_file_alias_under_gl003": [
+        "canonical/docs/legacy_brand.md",
+        "canonical/docs/migrated_brand.md"
+      ]
+    },
+    {
+      "family": "dna_extract_cli",
+      "keeper": "extract_dna.py",
+      "bound": ["greenlines_brain.dna.extractor.DNAExtractor"]
+    },
+    {
+      "family": "legacy_brain_launchers",
+      "keeper": "scripts/ai-os/raios_c5_train.py",
+      "bound": ["run_all.ps1", "fix_brain.py", "run_audit_hack.py"],
+      "pending_file_alias_under_gl003": [
+        "canonical/run_all.ps1",
+        "canonical/fix_brain.py",
+        "canonical/fix_indent.py"
+      ]
+    }
+  ],
+  "specialized_not_merged": [
+    {
+      "a": "RAIOS/V9/runtime/cognitive_event_bus.py",
+      "b": "RAIOS/V9/cloud/nomadic/job_ledger.py",
+      "why": "COGNITIVE_EVENT_WAL_NE_JOB_LEDGER"
+    },
+    {
+      "a": "RAIOS/V9/cloud/nomadic/provider_contract.py",
+      "b": "src/raios/neuro_lingua/provider_contracts.py",
+      "why": "COMPUTE_HOST_NE_LANGUAGE_PROVIDER"
+    },
+    {
+      "a": "src/raios/neuro_lingua/kernel.py",
+      "b": "greenlines_brain/kernel.py",
+      "why": "NEUROLINGUA_NE_GREENLINES_BRAIN"
+    },
+    {
+      "a": ".ai-os/receipts/gl005-mutation-before.json",
+      "b": ".ai-os/receipts/gl005-mutation-after.json",
+      "why": "BEFORE_NE_AFTER_PROOF_PAIR"
+    },
+    {
+      "a": "gym/kaggle/KAGGLE-A-HARDWARE-PROBE.py",
+      "b": "gym/kaggle/KAGGLE-B-HARDWARE-PROBE.py",
+      "why": "WORKER_A_NE_WORKER_B"
+    }
+  ],
+  "law": [
+    "ONE_CAPABILITY_ONE_KEEPER",
+    "SIMILAR_NAME_NE_SAME_JOB",
+    "NO_NEW_MERGE_ENGINE",
+    "NO_SECOND_WAL",
+    "BRAIN_PY_BROAD_MERGE_DO_NOT_RUN",
+    "D-076"
+  ]
+}
