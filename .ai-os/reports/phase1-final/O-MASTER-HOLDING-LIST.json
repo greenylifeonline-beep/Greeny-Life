@@ -1,0 +1,76 @@
+{
+  "schema": "raios.phase1-final.master-holding-list.v1",
+  "ts": "2026-08-25T17:38:17.605088+00:00",
+  "items": [
+    {
+      "id": "H-001",
+      "hold": "Do not merge TREE-001/AG into /workspace",
+      "why": "12603d0 absent; dirty local tree; FILE_NEWER_NE_BETTER"
+    },
+    {
+      "id": "H-002",
+      "hold": "Do not restore the 60 deleted husks",
+      "why": "DELETE_CONFIRMED; restore needs new founder order"
+    },
+    {
+      "id": "H-003",
+      "hold": "Do not copy origin/main nonempty data/*.json over deleted husks",
+      "why": "different lineage; FILE_NEWER_NE_BETTER"
+    },
+    {
+      "id": "H-004",
+      "hold": "Do not merge RAIOS-COGNITIVE-LEARNING-FABRIC-REFERENCE-V2 from TREE-CURSOR",
+      "why": "reference package; would be a second fabric"
+    },
+    {
+      "id": "H-005",
+      "hold": "Do not mint GL005_PROVEN or Assimilation",
+      "why": "CI_PASS_NE_ASSIMILATION"
+    },
+    {
+      "id": "H-006",
+      "hold": "Do not write Cognitive WAL",
+      "why": "A15 ACTIVE"
+    },
+    {
+      "id": "H-007",
+      "hold": "Do not mint tokens.local.json",
+      "why": "C1-only issuer"
+    },
+    {
+      "id": "H-008",
+      "hold": "Do not rebind SEAT-MAP C2",
+      "why": "founder order: bridge not rebind"
+    },
+    {
+      "id": "H-009",
+      "hold": "Do not start second C5 or ninth MCP tool",
+      "why": "ONE_CAPABILITY_ONE_KEEPER"
+    },
+    {
+      "id": "H-010",
+      "hold": "Do not merge nomadic provider_contract with NeuroLingua provider_contracts",
+      "why": "D-076"
+    },
+    {
+      "id": "H-011",
+      "hold": "Do not treat /tmp/c5-clone-main as live keeper",
+      "why": "stale origin/main dump; ARCHIVE_READONLY"
+    },
+    {
+      "id": "H-012",
+      "hold": "Do not merge TREE-C5-DONOR f7354c24",
+      "why": "orphan cline checkpoint; no merge-base with TREE-001 (AG attest); absent here"
+    },
+    {
+      "id": "H-013",
+      "hold": "Stale ACTIVE locks remain on deleted paths",
+      "why": "application/domain/database/data/run_brain_cli.py/ImageInventory.csv still ACTIVE; do not unlock without order"
+    },
+    {
+      "id": "H-014",
+      "hold": "Do not claim C5_PUBLIC_CHANNEL_PROVEN across hosts",
+      "why": "AG attest vs Cloud POST not run"
+    }
+  ]
+}

@@ -1,0 +1,22 @@
+{
+  "schema": "raios.phase1-final.coverage-proof.v1",
+  "ts": "2026-08-25T17:38:17.605088+00:00",
+  "re_verified": [
+    "CI d17335a",
+    "CI ff36677",
+    "git diff-tree 60 D",
+    "WAL blob parent==d17335a",
+    "protected paths at HEAD",
+    "C5/MCP health GET",
+    "pytest 8 passed"
+  ],
+  "not_re_scanned": [
+    "AG disk",
+    "OneDrive",
+    "f7354c24 objects",
+    "C1 local JSON file"
+  ],
+  "hashed_this_host_tracked_lt_8mb": 2247,
+  "tests": "8 passed command_fabric + unrepairable_gc",
+  "omitted_register_nonempty": true
+}
