@@ -5,12 +5,14 @@ on:
       - scripts/ai-os/raios_c5_screen.py
       - scripts/ai-os/raios_c5_whoami.py
       - tests/c5_screen/**
+      - .ai-os/receipts/c5-screen/C5-PUBLIC-CHANNEL-CLOUD-SESSION.json
       - .github/workflows/c5-screen-identity.yml
   push:
     paths:
       - scripts/ai-os/raios_c5_screen.py
       - scripts/ai-os/raios_c5_whoami.py
       - tests/c5_screen/**
+      - .ai-os/receipts/c5-screen/C5-PUBLIC-CHANNEL-CLOUD-SESSION.json
       - .github/workflows/c5-screen-identity.yml
 jobs:
   identity-without-pydantic:
