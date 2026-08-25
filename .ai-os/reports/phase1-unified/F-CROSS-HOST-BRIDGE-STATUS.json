@@ -1,0 +1,27 @@
+{
+  "schema": "raios.phase1-unified.cross-host-bridge-status.v1",
+  "ts": "2026-08-25T18:36:36.100038+00:00",
+  "ag_bridge_files_unread": true,
+  "ag_build_report_attested_sha256": "9660c977d15718dd7824e08e7f598e26a803c842c46b7c5b1ce4f5caa996f7ab",
+  "ag_tests_attested": [
+    "compile",
+    "fail-closed without token",
+    "signed export",
+    "signed local import",
+    "replay rejection",
+    "invalid schema",
+    "invalid signature",
+    "cursor-agent path discovery"
+  ],
+  "exported_not_transported_ne_connection": true,
+  "cloud_adapter_present": true,
+  "wire_compatible_with_ag": "UNPROVEN",
+  "cross_host_test_executed": false,
+  "reason_not_executed": "C1 token absent; no automatic AG↔Cloud transport",
+  "issuer": {
+    "who": "C1/owner",
+    "store": ".ai-os/mcp/tokens.local.json",
+    "gitignored": true,
+    "values_in_this_report": false
+  }
+}

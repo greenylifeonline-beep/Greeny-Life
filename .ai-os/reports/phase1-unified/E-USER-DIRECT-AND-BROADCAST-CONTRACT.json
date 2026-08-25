@@ -1,0 +1,50 @@
+{
+  "schema": "raios.phase1-unified.user-direct-broadcast-contract.v1",
+  "ts": "2026-08-25T18:36:36.100038+00:00",
+  "syntax": [
+    "TO=C5-PUBLIC",
+    "TO=C5-FOUNDER",
+    "TO=C2",
+    "TO=C6",
+    "TO=C1",
+    "TO=ALL"
+  ],
+  "required_per_message": [
+    "message_id",
+    "correlation_id",
+    "target",
+    "auth context",
+    "ACK",
+    "receipt",
+    "return path"
+  ],
+  "ALL_is_not_file_copy": true,
+  "results_this_host": {
+    "TO=C5-PUBLIC": {
+      "status": "LOCAL_ONLY",
+      "http": 200,
+      "correlation_id": null,
+      "gap": "C5 response has no correlation_id"
+    },
+    "TO=C5-FOUNDER": {
+      "status": "BLOCKED_ROUTING",
+      "adapter": "fail-closed",
+      "cloud_8876_is_not_ag_founder": true
+    },
+    "TO=C2": {
+      "status": "LOCAL_ONLY",
+      "isolated_and_adapter_tests": true,
+      "live_token": false
+    },
+    "TO=C6": {
+      "status": "ABSENT"
+    },
+    "TO=C1": {
+      "status": "BLOCKED_AUTH"
+    },
+    "TO=ALL": {
+      "status": "UNPROVEN",
+      "file_copy": false
+    }
+  }
+}

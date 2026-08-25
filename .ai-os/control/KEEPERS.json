@@ -18,7 +18,11 @@
     "leases": "RAIOS/V9/cloud/nomadic/lease_manager.py",
     "idempotency": "RAIOS/V9/cloud/nomadic/idempotency.py",
     "c5_screen": "scripts/ai-os/raios_c5_screen.py",
-    "c5_train": "scripts/ai-os/raios_c5_train.py"
+    "c5_train": "scripts/ai-os/raios_c5_train.py",
+    "cross_host_adapter": "scripts/ai-os/raios_mcp/cross_host_adapter.py",
+    "cross_host_packet_schema": ".ai-os/mcp/CROSS-HOST-PACKET.schema.json",
+    "route_registry": ".ai-os/mcp/ROUTE-REGISTRY.json",
+    "envelope_schema": ".ai-os/mcp/ENVELOPE.schema.json"
   },
   "missing_on_this_host": {
     "cursor-agent": true,

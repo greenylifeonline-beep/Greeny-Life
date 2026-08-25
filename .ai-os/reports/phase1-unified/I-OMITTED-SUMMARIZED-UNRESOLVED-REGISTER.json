@@ -1,0 +1,290 @@
+{
+  "schema": "raios.phase1-unified.omitted.v1",
+  "ts": "2026-08-25T18:36:36.100038+00:00",
+  "empty": false,
+  "count": 35,
+  "items": [
+    {
+      "id": "OD-001",
+      "class": "NOT_EXAMINED_FILE_BY_FILE",
+      "item": "AG Repair worktree at 12603d0",
+      "reason": "object absent; host AG not mounted",
+      "bind": {
+        "HOST": "AG",
+        "DEVICE": "AG",
+        "TREE_ID": "TREE-001",
+        "ROOT": "C:\\Users\\Ghanam\\Documents\\Codex\\Greeny-Life-Repair",
+        "BRANCH": "phase2a/class-a-20260822-232109",
+        "FULL_SHA": "12603d02253547c7727bc84ce68c318e8e9258bc",
+        "DATE": "2026-08-25",
+        "STATE": "EXTERNAL_ATTESTATION_PENDING_CROSS_HOST_BIND",
+        "object_in_this_store": false,
+        "dirty_tree_attested": true
+      }
+    },
+    {
+      "id": "OD-002",
+      "class": "EXTERNAL_ATTESTATION_NOT_READ",
+      "item": ".ai-os/reports/command-fabric/C5-TREE-COMPARISON-AND-COMM-REPAIR-20260825.json",
+      "attested_sha256": "b2dd45a12ef6a9d99f537ed801d12404097014cd13526b576b52a2896be8c1aa",
+      "reason": "file not on /workspace; not hashed here"
+    },
+    {
+      "id": "OD-003",
+      "class": "UNREACHABLE_HOST_PATH",
+      "item": "OneDrive\\Skrivebord\\pic"
+    },
+    {
+      "id": "OD-004",
+      "class": "UNREACHABLE_HOST_PATH",
+      "item": "OneDrive\\Skrivebord\\Ny mappe"
+    },
+    {
+      "id": "OD-005",
+      "class": "UNREACHABLE_HOST_PATH",
+      "item": "OneDrive cloud-only placeholders"
+    },
+    {
+      "id": "OD-006",
+      "class": "UNREACHABLE_HOST_PATH",
+      "item": "remaining dated Codex folders on AG"
+    },
+    {
+      "id": "OD-007",
+      "class": "UNREACHABLE_HOST_PATH",
+      "item": "project ZIPs / nested archives on AG/OneDrive"
+    },
+    {
+      "id": "OD-008",
+      "class": "UNREACHABLE_HOST_PATH",
+      "item": "Norwegian desktop (Skrivebord)"
+    },
+    {
+      "id": "OD-009",
+      "class": "UNREACHABLE_HOST_PATH",
+      "item": "Greeny-Life/EOS/GL-DOS/GELS/RAIOS/NeuroLingua/Product/Supplier/Inventory/CRM/Logistics/Database/Domain/Honey/Labels/Exports on AG/OneDrive"
+    },
+    {
+      "id": "OD-010",
+      "class": "GIT_ONLY_ABSENT_OBJECT",
+      "item": "TREE-C5-DONOR f7354c24dc1d4bf237574abb1a89379b125e86da"
+    },
+    {
+      "id": "OD-011",
+      "class": "GIT_ONLY_ABSENT_OBJECT",
+      "item": "TREE-RETIRED fd2775e3"
+    },
+    {
+      "id": "OD-012",
+      "class": "GIT_ONLY_ABSENT_OBJECT",
+      "item": "TREE-001 12603d02253547c7727bc84ce68c318e8e9258bc"
+    },
+    {
+      "id": "OD-013",
+      "class": "HASH_SKIPPED_SIZE_GT_8MB",
+      "item": "30 tracked files on /workspace",
+      "paths": [
+        ".ai-os/learning/DIGESTS.jsonl",
+        "ALL_SOURCE_CODE.txt",
+        "E3-REPOSITORY-MANIFEST.json",
+        "NO_CURRENT_EQUIVALENT_PROVEN/archive/generated-reports/e3-p4-dependency-caller-trace/2026-08-14_010528/E3-P4-DEPENDENCY-CALLER-TRACE.csv",
+        "NO_CURRENT_EQUIVALENT_PROVEN/archive/generated-reports/e3-p4-dependency-caller-trace/2026-08-14_010528/E3-P4-DEPENDENCY-CALLER-TRACE.json",
+        "archive/derived-report-preservation/2026-08-13_192255/E3-REPOSITORY-MANIFEST.json",
+        "archive/generated-reports/e3-full-legacy-classification/2026-08-14_004314/E3-P3-LEGACY-UNDERSTANDING-LINEAGE.csv",
+        "archive/generated-reports/e3-p10-full-legacy-system-truth/2026-08-14_015942/E3-FULL-LEGACY-SYSTEM-TRUTH-MATRIX.csv",
+        "archive/generated-reports/e3-p10-full-legacy-system-truth/2026-08-14_020047/E3-FULL-LEGACY-SYSTEM-TRUTH-MATRIX.csv",
+        "archive/generated-reports/e3-p4-dependency-caller-trace/2026-08-14_011451/E3-P4-DEPENDENCY-CALLER-TRACE.csv",
+        "archive/generated-reports/e3-p4-dependency-caller-trace/2026-08-14_011451/E3-P4-DEPENDENCY-CALLER-TRACE.json",
+        "archive/generated-reports/e3-p5-data-business-lineage/2026-08-14_012933/E3-P5-DATA-BUSINESS-LINEAGE.csv",
+        "archive/generated-reports/e3-p6-current-comparison/2026-08-14_013628/E3-P6-CURRENT-COMPARISON.csv",
+        "archive/generated-reports/e3-p6-current-comparison/p6-tracked-baseline-2026-08-14_015153/E3-P6-TRACKED-CURRENT-COMPARISON.csv",
+        "archive/generated-reports/e3-p8-value-replacement-recovery/2026-08-14_015942/E3-P8-VALUE-REPLACEMENT-RECOVERY-MATRIX.csv",
+        "archive/generated-reports/e3-p8-value-replacement-recovery/2026-08-14_020047/E3-P8-VALUE-REPLACEMENT-RECOVERY-MATRIX.csv",
+        "archive/generated-reports/e3-p9-treatment-decision/2026-08-14_015942/E3-P9-TREATMENT-DECISION-MATRIX.csv",
+        "archive/generated-reports/e3-p9-treatment-decision/2026-08-14_020047/E3-P9-TREATMENT-DECISION-MATRIX.csv",
+        "archive/generated-reports/e3-phase-1-primary-full-inventory/2026-08-14_002855/E3-PHASE-1-PRIMARY-LEGACY-FILES.csv",
+        "archive/generated-reports/e3-phase-2-primary-classification/2026-08-14_003259/E3-PHASE-2-PRIMARY-LEGACY-CLASSIFICATION.csv",
+        "archive/generated-reports/legacy-review/full-manifest-2026-08-13_145136/E3-LEGACY-FULL-MANIFEST-ANALYSIS.json",
+        "archive/generated-reports/legacy-review/full-manifest-2026-08-13_145250/E3-LEGACY-FULL-MANIFEST-ANALYSIS.json",
+        "archive/historical/GREENY-LIFE-EOS-KNOWLEDGE-BASE-V1/Architecture/architecture-extraction.csv",
+        "archive/old_folders/GREENY-LIFE-EOS/governance/eos-system-registry-v1.json",
+        "archive/old_folders/unified-intelligence/reports/architecture/phase-22/knowledge-merge-analysis-20260726-180626.json",
+        "archive/old_folders/unified-intelligence/reports/enterprise-audit/repository-inventory-20260726-181303.json",
+        "archive/old_folders/unified-intelligence/reports/enterprise-master-audit/01-complete-file-inventory-20260726-182726.json",
+        "archive/old_folders/unified-intelligence/reports/enterprise-master-audit/05-duplicate-decision-analysis-20260726-182726.json",
+        "intelligence/ast_enriched_findings.json",
+        "intelligence/ast_enriched_findings_v2.json"
+      ]
+    },
+    {
+      "id": "OD-014",
+      "class": "ENV_ARCHIVE_NOT_PROJECT",
+      "item": "105 files under /home/ubuntu/go plus /tmp/powershell.tgz and /tmp/ollama-install/ollama-linux-amd64.tgz",
+      "reason": "toolchain/env; members not indexed as project archives"
+    },
+    {
+      "id": "OD-015",
+      "class": "UNTRACKED_NOT_FULLY_HASHED",
+      "item": "127 untracked files",
+      "sample": [
+        ".ai-os/learning/C5-SCREEN-C1.jsonl",
+        ".ai-os/learning/C5-SCREEN.jsonl",
+        ".ai-os/learning/MEMORY.json",
+        ".ai-os/learning/MEMORY.md",
+        ".ai-os/receipts/c5-cloud/LAST.json",
+        ".ai-os/receipts/c5-cortex/LAST.json",
+        ".ai-os/receipts/c5-cortex/LAST.md",
+        ".ai-os/receipts/c5-cortex/LAST.txt",
+        ".ai-os/receipts/c5-cross-tree/LAST.json",
+        ".ai-os/receipts/c5-experience/LAST.json",
+        ".ai-os/receipts/c5-experience/LAST.md",
+        ".ai-os/receipts/c5-failure/LAST.json",
+        ".ai-os/receipts/c5-foundation/LAST.json",
+        ".ai-os/receipts/c5-foundation/LAST.txt",
+        ".ai-os/receipts/c5-kae/LAST.json",
+        ".ai-os/receipts/c5-kae/LAST.md",
+        ".ai-os/receipts/c5-kae/LIBRARIES.json",
+        ".ai-os/receipts/c5-kae/LIBRARIES.md",
+        ".ai-os/receipts/c5-merge-engines/LAST.json",
+        ".ai-os/receipts/c5-mind-fill/LAST.json",
+        ".ai-os/receipts/c5-mind-fill/LAST.md",
+        ".ai-os/receipts/c5-p0/LAST.json",
+        ".ai-os/receipts/c5-p0/LAST.txt",
+        ".ai-os/receipts/c5-phase0/LAST.json",
+        ".ai-os/receipts/c5-phase0/LAST.txt",
+        ".ai-os/receipts/c5-qwen/LAST.json",
+        ".ai-os/receipts/c5-qwen/LAST.md",
+        ".ai-os/receipts/c5-screen/LAST.json",
+        ".ai-os/receipts/c5-tools/LAST.json",
+        ".ai-os/receipts/c5-tools/LAST.md",
+        ".ai-os/receipts/c5-trace/LAST.json",
+        ".ai-os/receipts/c5-trace/LAST.md",
+        ".ai-os/receipts/c5-trace/LAST.txt",
+        ".ai-os/receipts/c5-wave-ccn/LAST.json",
+        ".ai-os/receipts/c5-whoami/LAST.json",
+        ".ai-os/receipts/c5-whoami/LAST.md",
+        "RAIOS/V9/evidence/events/0135e5e6-c87a-4f3c-9cfe-682a3eefa5dc.json",
+        "RAIOS/V9/evidence/events/02ad6a3a-6559-49ab-86c5-3cfa8f9b0841.json",
+        "RAIOS/V9/evidence/events/04e0865b-cda7-49ab-8953-49d736953c11.json",
+        "RAIOS/V9/evidence/events/069d0f68-d12b-4905-8a66-ffb77621ac77.json"
+      ],
+      "reason": "receipts/learning/events; not Phase-1 estate on AG"
+    },
+    {
+      "id": "OD-016",
+      "class": "SENSITIVE_NOT_READ",
+      "item": ".ai-os/mcp/tokens.local.json",
+      "reason": "absent; would not dump values if present"
+    },
+    {
+      "id": "OD-017",
+      "class": "SENSITIVE_NAME_ONLY",
+      "item": ".ai-os/receipts/GL005-C3-REPAIR-CREDENTIAL-GATE.json",
+      "reason": "presence listed; values not copied into this report"
+    },
+    {
+      "id": "OD-018",
+      "class": "SUMMARIZED_CATEGORY",
+      "item": "CROSS-TREE-MANIFEST.json keeper process snapshot from 2026-08-22",
+      "reason": "historical; PIDs not re-enumerated as live truth"
+    },
+    {
+      "id": "OD-019",
+      "class": "FILTER_CAP",
+      "item": "duplicate group path lists truncated to identity; full groups in F",
+      "reason": "20 nonempty groups listed in full"
+    },
+    {
+      "id": "OD-020",
+      "class": "OUTSIDE_WORKSPACE",
+      "item": "any path not under /workspace except noted /tmp clones and env zips"
+    },
+    {
+      "id": "OD-021",
+      "class": "PLACEHOLDER_ONEDRIVE",
+      "item": "OneDrive cloud-only placeholders",
+      "reason": "this VM has no OneDrive"
+    },
+    {
+      "id": "OD-022",
+      "class": "ZIP_MEMBERS_NOT_INDEXED",
+      "item": "no Greeny-Life project zip found on this VM"
+    },
+    {
+      "id": "OD-023",
+      "class": "C1_LOCAL_CONSOLE_FIX_NOT_IN_THIS_TREE",
+      "item": ".ai-os/control/RAIOS-C5-PERMANENT-CONSOLE.py /api/chat payload text+locale",
+      "reason": "attested on AG; file absent under /workspace/.ai-os/control"
+    },
+    {
+      "id": "OD-024",
+      "class": "DIRTY_WAL_NOT_REHASHED_AS_TRUTH",
+      "item": "on-disk WAL extra lines vs HEAD blob",
+      "reason": "A15; not committed; content not treated as new cognitive events"
+    },
+    {
+      "id": "OD-025",
+      "class": "SEAT_MAP_NOT_REWRITTEN",
+      "item": "C2 instance_role=chatgpt-primary vs executor C2-OBS",
+      "reason": "label only; no rebind"
+    },
+    {
+      "id": "OD-026",
+      "class": "EXTERNAL_ATTESTATION_NOT_READ",
+      "item": ".ai-os/control/RAIOS-CROSS-HOST-BRIDGE-V1.py",
+      "host": "AG"
+    },
+    {
+      "id": "OD-027",
+      "class": "EXTERNAL_ATTESTATION_NOT_READ",
+      "item": ".ai-os/control/C2-CURSOR-BRIDGE-V1.py",
+      "host": "AG"
+    },
+    {
+      "id": "OD-028",
+      "class": "EXTERNAL_ATTESTATION_NOT_READ",
+      "item": ".ai-os/control/RAIOS-CONTROL-PLANE-V1.py",
+      "host": "AG"
+    },
+    {
+      "id": "OD-029",
+      "class": "EXTERNAL_ATTESTATION_NOT_READ",
+      "item": ".ai-os/control/RAIOS-C5-PERMANENT-CONSOLE.py",
+      "host": "AG"
+    },
+    {
+      "id": "OD-030",
+      "class": "EXTERNAL_ATTESTATION_NOT_READ",
+      "item": "_raios-communication-fabric/",
+      "host": "AG"
+    },
+    {
+      "id": "OD-031",
+      "class": "EXTERNAL_ATTESTATION_NOT_READ",
+      "item": ".ai-os/reports/command-fabric/COMMAND-FABRIC-BUILD-20260825.json",
+      "attested_sha256": "9660c977d15718dd7824e08e7f598e26a803c842c46b7c5b1ce4f5caa996f7ab"
+    },
+    {
+      "id": "OD-032",
+      "class": "C6_SCOPE_NOT_THIS_HOST",
+      "item": "AG local census OneDrive/Skrivebord/ZIP/nested archives/desktop"
+    },
+    {
+      "id": "OD-033",
+      "class": "WIRE_COMPAT_UNPROVEN",
+      "item": "Cloud raios.cross-host-packet.v1 vs AG RAIOS-CROSS-HOST-BRIDGE-V1.py"
+    },
+    {
+      "id": "OD-034",
+      "class": "GAP",
+      "item": "C5 /api/chat response lacks correlation_id and message_id"
+    },
+    {
+      "id": "OD-035",
+      "class": "CROSS_HOST_TEST_NOT_RUN",
+      "item": "section 7 deferred: no C1 token, no automatic transport"
+    }
+  ],
+  "law": "DO_NOT_SAY_COMPLETE_WHILE_NONEMPTY",
+  "prior_count": 25
+}
