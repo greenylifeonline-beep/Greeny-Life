@@ -11,7 +11,29 @@ import uuid
 from pathlib import Path
 from typing import Any
 
-REPAIR = Path(r"C:\Users\Ghanam\Documents\Codex\Greeny-Life-Repair").resolve()
+WINDOWS_REPAIR = Path(r"C:\Users\Ghanam\Documents\Codex\Greeny-Life-Repair")
+
+
+def resolve_repair_root() -> Path:
+    env = os.environ.get("RAIOS_REPAIR_ROOT", "").strip()
+    if env:
+        return Path(env).resolve()
+    if WINDOWS_REPAIR.exists():
+        return WINDOWS_REPAIR.resolve()
+    try:
+        top = subprocess.check_output(
+            ["git", "rev-parse", "--show-toplevel"],
+            text=True,
+            stderr=subprocess.DEVNULL,
+        ).strip()
+        if top:
+            return Path(top).resolve()
+    except (OSError, subprocess.CalledProcessError):
+        pass
+    return Path(__file__).resolve().parents[2]
+
+
+REPAIR = resolve_repair_root()
 
 ROOT = REPAIR / "_raios-authoritative-certifier"
 REPORTS = ROOT / "reports"
@@ -102,6 +124,46 @@ def require(condition: bool, code: str, detail: Any = None) -> None:
         raise RuntimeError(
             f"{code}::{json.dumps(detail, ensure_ascii=False, default=str)}"
         )
+
+
+# Nested safety.* flags are authoritative. Top-level current_goal_overwritten
+# (and siblings) are not on the receipt schema; reading them with
+# ``.get(key) is False`` treats a missing key (None) as overwrite.
+SAFETY_FALSE_GATES: tuple[tuple[str, str], ...] = (
+    ("stale_locks_reactivated", "STALE_LOCK_REACTIVATION_DETECTED"),
+    (
+        "authoritative_current_goal_overwritten",
+        "CURRENT_GOAL_OVERWRITE_DETECTED",
+    ),
+    (
+        "authoritative_active_wave_overwritten",
+        "ACTIVE_WAVE_OVERWRITE_DETECTED",
+    ),
+    (
+        "legacy_provider_binding_restored",
+        "LEGACY_PROVIDER_BINDING_RESTORED",
+    ),
+)
+
+
+def evaluate_execution_safety(exec_receipt: Any) -> dict[str, bool]:
+    """Fail closed on explicit True. Missing nested key is schema, not overwrite."""
+    require(isinstance(exec_receipt, dict), "EXECUTION_RECEIPT_NOT_OBJECT")
+    safety = exec_receipt.get("safety")
+    require(isinstance(safety, dict), "SAFETY_BLOCK_MISSING")
+
+    results: dict[str, bool] = {}
+    for key, code in SAFETY_FALSE_GATES:
+        if key not in safety:
+            require(
+                False,
+                "SAFETY_SCHEMA_PATH_MISSING",
+                {"key": key, "gate": code},
+            )
+        value = safety[key]
+        require(value is False, code, {key: value})
+        results[key] = False
+    return results
 
 
 def run(cmd: list[str], cwd: Path | None = None) -> dict[str, Any]:
@@ -289,25 +351,7 @@ def main() -> int:
             exec_receipt,
         )
 
-        require(
-            exec_receipt.get("safety", {}).get("stale_locks_reactivated") is False,
-            "STALE_LOCK_REACTIVATION_DETECTED",
-        )
-
-        require(
-            exec_receipt.get("current_goal_overwritten") is False,
-            "CURRENT_GOAL_OVERWRITE_DETECTED",
-        )
-
-        require(
-            exec_receipt.get("active_wave_overwritten") is False,
-            "ACTIVE_WAVE_OVERWRITE_DETECTED",
-        )
-
-        require(
-            exec_receipt.get("legacy_provider_binding_restored") is False,
-            "LEGACY_PROVIDER_BINDING_RESTORED",
-        )
+        safety_flags = evaluate_execution_safety(exec_receipt)
 
         local_agent_hash = sha256(LOCAL_AGENT)
 
@@ -417,6 +461,9 @@ def main() -> int:
             "gl003": compile_gl003,
         }
 
+        evidence["repair_root"] = str(REPAIR)
+        evidence["safety_flags"] = safety_flags
+
         checks = {
             "repository_identity": True,
             "final14_original_cases": 14,
@@ -427,10 +474,16 @@ def main() -> int:
             "local_agent_compile": True,
             "gl003_compile": True,
             "state_json_readback": True,
-            "legacy_provider_binding_restored": False,
-            "stale_lock_reactivated": False,
-            "current_goal_overwritten": False,
-            "active_wave_overwritten": False,
+            "legacy_provider_binding_restored": safety_flags[
+                "legacy_provider_binding_restored"
+            ],
+            "stale_lock_reactivated": safety_flags["stale_locks_reactivated"],
+            "current_goal_overwritten": safety_flags[
+                "authoritative_current_goal_overwritten"
+            ],
+            "active_wave_overwritten": safety_flags[
+                "authoritative_active_wave_overwritten"
+            ],
         }
 
         receipt = {
