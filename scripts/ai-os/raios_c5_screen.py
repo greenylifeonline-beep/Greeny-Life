@@ -398,6 +398,10 @@ LANE_I18N = {
             "الدور: شاشة C5 للجميع. المقاعد الحية C1–C5. C6_C10_NE_LIVE. IDENTITY_BEFORE_ACTION."
         ),
         "public_hello": "أهلاً. أنا C5 على شاشة الجميع.\nاكتب بالمصري أو الخليجي أو الإنجليزي أو النرويجي، أو بالكيبورد المقلوب.",
+        "speak_unavailable": (
+            "محرك كلام العملاء غير محمّل على هذه الجلسة. لا أختلق سعرًا ولا مخزونًا. "
+            "IDENTITY_BEFORE_ACTION. MODEL_MISSING."
+        ),
         "public_screen": (
             "هذه شاشة C5 للجميع على السيرفر المحلي. اللغات: ar-EG، ar-GULF، en، nb-NO.\n"
             "الربط 127.0.0.1:8765. الكيبورد المقلوب يُفك هنا. السجل محلي.\n"
@@ -444,6 +448,10 @@ LANE_I18N = {
             "الدور: شاشة C5 للجميع. المقاعد الحية C1–C5. C6_C10_NE_LIVE. IDENTITY_BEFORE_ACTION."
         ),
         "public_hello": "حياك. أنا C5 على شاشة الجميع.\nاكتب بالخليجي أو المصري أو الإنجليزي أو النرويجي.",
+        "speak_unavailable": (
+            "محرك كلام العملاء مو محمّل على هالجلسة. ما أخترع سعر ولا مخزون. "
+            "IDENTITY_BEFORE_ACTION. MODEL_MISSING."
+        ),
         "public_screen": (
             "هذي شاشة C5 للجميع على السيرفر المحلي. اللغات: ar-EG، ar-GULF، en، nb-NO.\n"
             "الربط 127.0.0.1:8765. مو LangChain ومو OpenAI. شاشة C1 على 8876."
@@ -489,6 +497,10 @@ LANE_I18N = {
             "Role: shared C5 screen. Live seats C1–C5. C6_C10_NE_LIVE. IDENTITY_BEFORE_ACTION."
         ),
         "public_hello": "Hello. I am C5 on the shared screen.\nWrite in Egyptian, Gulf Arabic, English, or Norwegian — flipped keyboard is decoded.",
+        "speak_unavailable": (
+            "The customer-language engine is not loaded in this session. I will not invent a price or stock figure. "
+            "IDENTITY_BEFORE_ACTION. MODEL_MISSING."
+        ),
         "public_screen": (
             "This is the shared C5 screen on the local control-plane host. Locales: ar-EG, ar-GULF, en, nb-NO.\n"
             "Bind 127.0.0.1:8765. Not LangChain. Not OpenAI. The C1 console is on port 8876."
@@ -534,6 +546,10 @@ LANE_I18N = {
             "Rolle: delt C5-skjerm. Levende seter C1–C5. C6_C10_NE_LIVE. IDENTITY_BEFORE_ACTION."
         ),
         "public_hello": "Hei. Jeg er C5 på den delte skjermen.\nSkriv på egyptisk, gulf-arabisk, engelsk eller norsk.",
+        "speak_unavailable": (
+            "Kundemotoren er ikke lastet i denne økten. Jeg finner ikke opp pris eller lager. "
+            "IDENTITY_BEFORE_ACTION. MODEL_MISSING."
+        ),
         "public_screen": (
             "Dette er den delte C5-skjermen på den lokale control-plane-verten. Språk: ar-EG, ar-GULF, en, nb-NO.\n"
             "Binding 127.0.0.1:8765. Ikke LangChain. Ikke OpenAI. C1-konsollen er på port 8876."
@@ -1016,7 +1032,17 @@ def teach_reply(message: str, locale: str | None = None, lane: str | None = None
     if identity:
         loc = detect_locale(orig_norm, locale)
         ui = pack(loc)
-        answer = _identity_reply(whoami(), loc, lane)
+        try:
+            card = whoami()
+        except SystemExit:
+            raise
+        except Exception:
+            card = {
+                "engine_now": {"inject": "scripts/ai-os/raios_c5_mind_fill.ps1"},
+                "languages_customer_live": list(LIVE_LOCALES),
+                "languages_customer_live_count": len(LIVE_LOCALES),
+            }
+        answer = _identity_reply(card, loc, lane)
         kind = "whoami"
     elif hello:
         loc = detect_locale(orig_norm, locale)
@@ -1040,11 +1066,36 @@ def teach_reply(message: str, locale: str | None = None, lane: str | None = None
             kind = "ground"
             chat_rec = None
         else:
-            from raios_c5_speak import chat
+            try:
+                from raios_c5_speak import chat
 
-            chat_rec = asyncio.run(chat(query))
-            answer = str(chat_rec.get("answer") or "")
-            kind = "speak"
+                chat_rec = asyncio.run(chat(query))
+                answer = str(chat_rec.get("answer") or "")
+                kind = "speak"
+            except SystemExit:
+                raise
+            except (ModuleNotFoundError, ImportError) as exc:
+                chat_rec = {
+                    "ok": False,
+                    "answer": ui.get("speak_unavailable") or "MODEL_MISSING",
+                    "error": "MODEL_MISSING",
+                    "missing_runtime": getattr(exc, "name", None) or type(exc).__name__,
+                    "model": None,
+                    "cortex_model": None,
+                    "role": "CORTEX_MODEL",
+                    "role_bound": False,
+                    "model_agnostic": True,
+                    "endpoint_kind": None,
+                    "endpoint_configured": False,
+                    "transport": "openai-compatible",
+                    "model_name_bound": False,
+                    "llm_executed": False,
+                    "real_llm_execution": False,
+                    "provider_execute_called": False,
+                    "provider_to_model": False,
+                }
+                answer = str(chat_rec["answer"])
+                kind = "speak"
     rec = {
         "schema": "raios.c5-screen-turn.v1",
         "ts": utc(),
@@ -1776,7 +1827,15 @@ class Handler(BaseHTTPRequestHandler):
                 lane=self.lane,
             )
         except Exception as exc:
-            rec = {"ok": False, "from": "C5", "lane": self.lane, "answer": "تعذر الرد.", "error": type(exc).__name__, "gl005_proven": False}
+            rec = {
+                "ok": False,
+                "from": "C5",
+                "lane": self.lane,
+                "answer": "تعذر الرد.",
+                "error": type(exc).__name__,
+                "error_name": getattr(exc, "name", None),
+                "gl005_proven": False,
+            }
             self._send(200, json.dumps(rec, ensure_ascii=False).encode("utf-8"), "application/json; charset=utf-8")
             return
         self._send(200, json.dumps(rec, ensure_ascii=False).encode("utf-8"), "application/json; charset=utf-8")

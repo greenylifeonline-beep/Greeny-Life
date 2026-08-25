@@ -82,7 +82,125 @@ def load_json(path: Path) -> dict:
     return json.loads(path.read_text(encoding="utf-8"))
 
 
-def c5_bind() -> dict:
+# Law: eight V1 tools. Copied so identity/status survive when MCP modules are mid-edit or pydantic is absent.
+V1_TOOLS_FALLBACK = (
+    "get_head",
+    "read_board",
+    "read_inbox",
+    "read_receipt",
+    "get_diff",
+    "post_opinion",
+    "send_packet",
+    "ack_packet",
+)
+
+
+def named_cortex_from_registry() -> str:
+    """Named candidate from MODEL-REGISTRY.json. Does not import NeuroLingua or pydantic."""
+    registry = load_json(REGISTRY)
+    row = (registry.get("roles") or {}).get("CORTEX_MODEL") or {}
+    named = str(row.get("named_candidate") or "").strip()
+    if named:
+        return named
+    models = registry.get("models") or {}
+    primary = models.get("raios-main-cortex") if isinstance(models.get("raios-main-cortex"), dict) else {}
+    return str((primary or {}).get("model") or "").strip()
+
+
+def _c5_bind_degraded(reason: str) -> dict:
+    """Identity/status bind without NeuroLingua, pydantic, or MCP Python imports. Does not probe :8787."""
+    home = control_plane_runtime()
+    registry = load_json(REGISTRY)
+    models = registry.get("models") or {}
+    cortex_row = models.get("raios-main-cortex") if isinstance(models.get("raios-main-cortex"), dict) else {}
+    named = str((cortex_row or {}).get("model") or named_cortex_from_registry() or "").strip() or None
+    workers = sorted(
+        key
+        for key, row in models.items()
+        if isinstance(row, dict)
+        and (row.get("class") in {"FAST_WORKER", "FAST_WORKER_EMBEDDING", "INTERACTIVE_FAST"} or row.get("not_cortex"))
+    )
+    tools = list(V1_TOOLS_FALLBACK)
+    return {
+        "c5_screen_ports": list(SCREEN_PORTS),
+        "c5_base_c1": home["c1"],
+        "c5_screen_default": home["open"],
+        "c5_screen_public": home["open"],
+        "c5_screen_c1": home["c1"],
+        "lanes": {"PUBLIC": 8765, "C1": 8876},
+        "bind_host": home["bind_host"],
+        "screen_home": home["screen_home"],
+        "screen_durable": bool(home["durable"]),
+        "cursor_session_ne_c5": True,
+        "this_host_is_cursor_cloud": bool(home["this_host_is_cursor_cloud"]),
+        "install_windows": home["install_windows"],
+        "ensure_windows": home["ensure_windows"],
+        "ensure_linux": home["ensure_linux"],
+        "duplicate_c5": False,
+        "mcp_endpoint": MCP_ENDPOINT,
+        "mcp_health": MCP_HEALTH_URL,
+        "mcp_reachable": False,
+        "mcp_tools": tools,
+        "mcp_tool_count": len(tools),
+        "duplicate_mcp": False,
+        "council_seat_map": ".ai-os/mcp/SEAT-MAP.json",
+        "council_seat_map_present": SEAT_MAP.is_file(),
+        "council_census": "scripts/ai-os/raios_c5_council.py census",
+        "duplicate_council": False,
+        "model_registry": ".ai-os/MODEL-REGISTRY.json",
+        "model_lab": "RAIOS/V9/evolution/model_lab/model_registry.py",
+        "duplicate_registry": False,
+        "cortex_model": named,
+        "bound_model": named,
+        "named_candidate": named_cortex_from_registry() or named,
+        "permanent_identity": False,
+        "cortex_registry_model": (cortex_row or {}).get("model"),
+        "cortex_registry_bound": bool((cortex_row or {}).get("model")),
+        "cortex_local_winner": False,
+        "local_winner": False,
+        "winner_final": False,
+        "winners_are_final": False,
+        "model_agnostic": True,
+        "laptop_is_model_host": False,
+        "laptop_role": "CONTROL_PLANE_ONLY",
+        "local_ollama_is": "DEV_FALLBACK",
+        "local_ollama_ne_cortex_criterion": True,
+        "local_ram_ne_cortex_criterion": True,
+        "source_patch_required": False,
+        "transport": "openai-compatible",
+        "chat_path": "/v1/chat/completions",
+        "endpoint_kinds": ["LOCAL_DEV", "KAGGLE_WORKER", "LIGHTNING_WORKER", "HF_ENDPOINT", "FRONTIER_PROVIDER"],
+        "endpoint": {
+            "kind": None,
+            "configured": False,
+            "unbound": True,
+            "reason": reason,
+            "base_url": None,
+            "chat_url": None,
+            "api_key_present": False,
+            "api_key_env": None,
+            "model": named,
+            "dev_fallback": True,
+            "remote": False,
+        },
+        "arenas": list(registry.get("arenas") or []),
+        "roles": {},
+        "bridges": {},
+        "fast_workers": workers,
+        "main_cortex": False,
+        "cortex_live": False,
+        "ollama_models": [],
+        "gate": reason,
+        "gate_admitted": False,
+        "student_substituted": False,
+        "interactive_ne_cortex": True,
+        "gl005_proven": False,
+        "bind_degraded": True,
+        "missing_runtime": reason,
+    }
+
+
+def _c5_bind_live() -> dict:
     """Surface existing Council, MCP, and Model Registry on C5. No duplicate systems."""
     from raios.neuro_lingua.cortex import (
         ENDPOINT_KINDS,
@@ -190,7 +308,18 @@ def c5_bind() -> dict:
         "student_substituted": False,
         "interactive_ne_cortex": True,
         "gl005_proven": False,
+        "bind_degraded": False,
     }
+
+
+def c5_bind() -> dict:
+    """Live bind when NeuroLingua imports; registry-only bind if pydantic/MCP imports fail."""
+    try:
+        return _c5_bind_live()
+    except SystemExit:
+        raise
+    except (ModuleNotFoundError, ImportError, SyntaxError) as exc:
+        return _c5_bind_degraded(f"{type(exc).__name__}: {exc}")
 
 
 def write_p4_receipt(bind: dict | None = None) -> dict:
@@ -400,9 +529,14 @@ def parse_language_profiles(text: str) -> tuple[list[str], list[str]]:
 
 
 def whoami() -> dict:
-    from raios.neuro_lingua.cortex import named_cortex_candidate
-
     wal_before = wal_mtime()
+    candidate = named_cortex_from_registry()
+    try:
+        from raios.neuro_lingua.cortex import named_cortex_candidate
+
+        candidate = named_cortex_candidate() or candidate
+    except (ModuleNotFoundError, ImportError, SyntaxError):
+        pass
     grant = load_json(GRANT)
     foundation = (load_json(FOUNDATION).get("facts") or {})
     foundation = {
@@ -428,7 +562,7 @@ def whoami() -> dict:
         "retrieve": "scripts/ai-os/raios_c5_read.py search",
         "speak": "NeuroLingua deterministic (llm_calls=0)",
         "student_muscle": "qwen2.5:0.5b via Ollama",
-        "cortex_identity": f"{named_cortex_candidate()} (named candidate only; C1 treat/run/throw; not permanent; not loaded here)",
+        "cortex_identity": f"{candidate} (named candidate only; C1 treat/run/throw; not permanent; not loaded here)",
         "mesh": "python3 scripts/ai-os/raios_c5_train.py",
         "reality": "python3 scripts/ai-os/raios_c5_reality.py",
         "mcp": MCP_ENDPOINT,

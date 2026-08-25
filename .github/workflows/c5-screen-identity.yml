@@ -1,0 +1,30 @@
+name: c5-screen-identity
+on:
+  pull_request:
+    paths:
+      - scripts/ai-os/raios_c5_screen.py
+      - scripts/ai-os/raios_c5_whoami.py
+      - tests/c5_screen/**
+      - .github/workflows/c5-screen-identity.yml
+  push:
+    paths:
+      - scripts/ai-os/raios_c5_screen.py
+      - scripts/ai-os/raios_c5_whoami.py
+      - tests/c5_screen/**
+      - .github/workflows/c5-screen-identity.yml
+jobs:
+  identity-without-pydantic:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - name: pytest only — no pydantic
+        run: pip install pytest
+      - name: prove pydantic absent
+        run: python3 -c "import importlib.util; assert importlib.util.find_spec('pydantic') is None, 'pydantic must not be installed for this gate'"
+      - name: public identity replies without NeuroLingua
+        run: python3 -m pytest tests/c5_screen -q
+      - name: notice
+        run: echo "This is a C5 screen identity gate. It does not set GL005_PROVEN and does not touch MCP."
