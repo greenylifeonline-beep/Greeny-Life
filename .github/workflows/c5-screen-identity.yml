@@ -7,6 +7,8 @@ on:
       - tests/c5_screen/**
       - .ai-os/receipts/c5-screen/C5-PUBLIC-CHANNEL-CLOUD-SESSION.json
       - .ai-os/receipts/c5-screen/D081-CI-COMMIT-IDENTITY.json
+      - .ai-os/receipts/command-fabric/D082-STAGE0-NO-CHALLENGE.json
+      - .ai-os/receipts/command-fabric/D083-STAGE0-FABRIC-DISCOVERY.json
       - .github/workflows/c5-screen-identity.yml
   push:
     paths:
@@ -15,6 +17,8 @@ on:
       - tests/c5_screen/**
       - .ai-os/receipts/c5-screen/C5-PUBLIC-CHANNEL-CLOUD-SESSION.json
       - .ai-os/receipts/c5-screen/D081-CI-COMMIT-IDENTITY.json
+      - .ai-os/receipts/command-fabric/D082-STAGE0-NO-CHALLENGE.json
+      - .ai-os/receipts/command-fabric/D083-STAGE0-FABRIC-DISCOVERY.json
       - .github/workflows/c5-screen-identity.yml
 jobs:
   identity-without-pydantic:

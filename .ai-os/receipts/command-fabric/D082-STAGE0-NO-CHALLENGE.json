@@ -1,0 +1,78 @@
+{
+  "schema": "raios.d082-stage0-no-challenge.v1",
+  "ts": "2026-08-25T23:29:00+00:00",
+  "from": "C5",
+  "parent": "C1",
+  "decision": "D-082",
+  "ok": true,
+  "stage": 0,
+  "challenge_run": false,
+  "secrets_present": false,
+  "ag_port_scan_class": "EXTERNAL_ATTESTATION",
+  "this_host": "cursor",
+  "this_host_is_cursor_cloud": true,
+  "COMMAND_FABRIC_STATUS": "PRESENT_NOT_PROVEN",
+  "INTERNAL_COMMS_STATUS": "PARTIAL",
+  "EXTERNAL_COMMS_STATUS": "PRESENT_NOT_PROVEN",
+  "SAFE_TO_BUILD_NEW_COMMAND_FABRIC": false,
+  "REUSE_EXISTING": true,
+  "WRAP_EXISTING": true,
+  "MERGE_REQUIRED": false,
+  "NEW_BUILD_REQUIRED": false,
+  "do_not_create_bridge_on_8788": true,
+  "cloud_mcp_ne_ag_mcp": true,
+  "ag_ports": {
+    "8766": {"process": "Python", "identity": "C5 local", "status": "LOCAL_ONLY"},
+    "8788": {"process": "Python", "identity": "AG local MCP, 8 tools", "status": "LOCAL_ONLY"},
+    "52093": {"process": "Ollama", "identity": "local model runtime", "status": "LOCAL_ONLY"},
+    "8787": {"process": "not visible on AG", "identity": "C2 Cloud MCP", "status": "BLOCKED_ROUTING"}
+  },
+  "cursor_cloud_vm_listen": {
+    "8765": true,
+    "8876": true,
+    "8787": true,
+    "8766": false,
+    "8788": false,
+    "52093": false
+  },
+  "reason_no_challenge": "send_packet on AG 127.0.0.1:8788 stays inside AG; C2 Cloud 8787 is BLOCKED_ROUTING on AG; PowerShell cannot create the Cursor Cloud agent session",
+  "powershell_cannot_create_c2_cloud_session": true,
+  "required_before_challenge": [
+    "Cursor Desktop agent session visible or reopened from agent URL/id",
+    "documented forwarding of C2 Cloud MCP onto AG loopback",
+    "PORT_FORWARD_8787_PROVEN=true"
+  ],
+  "COMMAND_FABRIC_PROVEN": false,
+  "INTERNAL_COMMS_PROVEN": false,
+  "EXTERNAL_COMMS_PROVEN": false,
+  "PORT_FORWARD_8787_PROVEN": false,
+  "C2_JOIN_PROVEN": false,
+  "COMMAND_FABRIC_E2E_PROVEN": false,
+  "CROSS_HOST_ROUND_TRIP_PROVEN": false,
+  "WAL_WRITTEN": false,
+  "GL005_PROVEN": false,
+  "C5_FOUNDER_CHANNEL_PROVEN": false,
+  "C5_MAIN_CORTEX_PROVEN": false,
+  "canonical_components": [
+    "AG local MCP on 127.0.0.1:8788",
+    "send_packet",
+    "ack_packet",
+    "raios.cross-host-packet.v1",
+    "cross_host_adapter.py"
+  ],
+  "reuse_files": [
+    "scripts/ai-os/raios_mcp/server.py",
+    "scripts/ai-os/raios_mcp/cross_host_adapter.py",
+    ".ai-os/mcp/tokens.local.json"
+  ],
+  "law": [
+    "STAGE0_NO_CHALLENGE",
+    "AG_8788_NE_C2_CLOUD",
+    "CURSOR_8787_NE_AG_8787",
+    "POWERSHELL_NE_CLOUD_AGENT_SESSION",
+    "NO_SECOND_BRIDGE_ON_8788",
+    "REUSE_EXISTING_MCP",
+    "PASTED_CHAT_NE_MCP_ROUND_TRIP",
+    "CI_PASS_NE_GL005"
+  ]
+}
