@@ -364,3 +364,7 @@ Canonical GELS KEEP-PACKAGE vs `legacy-data` and brand-doc aliases are same-func
 ## D-077 Delete unrepairable files only; empty ledgers and locked trees stay
 DISCOVERED, C1 ordered, not CANONICAL: `UNREPAIRABLE_NE_UNUSED`. `EMPTY_JSONL_NE_CORRUPT`. `ZERO_BYTE_CODE_NE_KEEPER`.
 Delete zero-byte code/json/html/csv husks whose payload cannot be recovered, plus the PowerShell command-string capture at repo root. Do not invent `{}` into empty JSON. Do not delete `.gitkeep`, valid empty JSONL ledgers, A15 diagnostic empties, or the quarantined ZERO-BYTE proof hash. Canonical / greenlines_brain / intelligence empties wait on GL-003. Does not close GL-005.
+
+## D-078 C2-OBS joins existing MCP/mail keepers; Repair Command Fabric remains unreachable
+DISCOVERED, C1 ordered, not CANONICAL: `NO_ALTERNATE_CONTROL_PLANE`. `ENVELOPE_NE_BUS`. `CI_PASS_NE_ASSIMILATION`.
+`d17335a` lives on this Cursor Cloud clone (`hostname=cursor`, bcId `bc-dd60b5cf-95bd-4f24-9237-cc1b2225f013`). CI(d17335a) govern+c5-week success is not GL-005. Repair `12603d0` is absent. `.ai-os/control` runtime from Repair is not in git. C2-OBS bound onto existing MCP V1 (8 tools), mail, aios locks, nomadic lease/idempotency, and C5 watchdog. Isolated channel proven. Live `remote_c2_ready=false` (no token). `cursor-agent` missing. `raios_multimodal_gateway.py` missing. `C2_JOIN_PROVEN=false`. `COMMAND_FABRIC_E2E_PROVEN=false`. Does not close GL-005.
