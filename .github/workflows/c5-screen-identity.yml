@@ -6,6 +6,7 @@ on:
       - scripts/ai-os/raios_c5_whoami.py
       - tests/c5_screen/**
       - .ai-os/receipts/c5-screen/C5-PUBLIC-CHANNEL-CLOUD-SESSION.json
+      - .ai-os/receipts/c5-screen/D081-CI-COMMIT-IDENTITY.json
       - .github/workflows/c5-screen-identity.yml
   push:
     paths:
@@ -13,6 +14,7 @@ on:
       - scripts/ai-os/raios_c5_whoami.py
       - tests/c5_screen/**
       - .ai-os/receipts/c5-screen/C5-PUBLIC-CHANNEL-CLOUD-SESSION.json
+      - .ai-os/receipts/c5-screen/D081-CI-COMMIT-IDENTITY.json
       - .github/workflows/c5-screen-identity.yml
 jobs:
   identity-without-pydantic:
