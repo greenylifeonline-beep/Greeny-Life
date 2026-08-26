@@ -1,0 +1,155 @@
+{
+  "schema": "raios.total-estate.engine-tool-agent.v1",
+  "ALL_DISCOVERED_ENGINES_CLASSIFIED": true,
+  "ALL_DISCOVERED_TOOLS_CLASSIFIED": true,
+  "NOTE": "1464 CICF tools statically classified from existing inventory+AST join. P0 remaining=46 (empty files + 1 garbage path). No live execution of the 1464.",
+  "CICF_TOOL_CANDIDATES_P0": 46,
+  "CICF_INVENTORY": "C:\\Users\\Ghanam\\Documents\\Codex\\Greeny-Life-Repair\\_raios-wave2-post-retirement\\reports\\CICF-CAPABILITY-INVENTORY.json",
+  "assets": [
+    {
+      "ASSET_ID": "E-C5-GW",
+      "NAME": "C5 multimodal gateway",
+      "CATEGORY": "GATEWAY",
+      "PATH": "C:\\Users\\Ghanam\\Documents\\Codex\\Greeny-Life-Repair\\_raios-communication-fabric\\src\\raios_multimodal_gateway.py",
+      "RUNNING": true,
+      "PID_IF_RUNNING": 29160,
+      "PORT_IF_LISTENING": 8766,
+      "MODEL_IF_ANY": "qwen3:0.6b",
+      "RUNTIME_PROOF_LEVEL": "P5_RUNTIME_OBSERVED",
+      "PROOF": "GET /health 200 2026-08-26T19:02:26Z",
+      "UNIQUE_VALUE": "CRITICAL_UNIQUE",
+      "ACTION": "KEEP_RUNTIME"
+    },
+    {
+      "ASSET_ID": "E-MCP",
+      "NAME": "RAIOS MCP gateway",
+      "CATEGORY": "GATEWAY",
+      "PATH": "C:\\Users\\Ghanam\\Documents\\Codex\\Greeny-Life-Repair\\scripts\\ai-os\\raios_mcp\\gateway.py",
+      "RUNNING": true,
+      "PID_IF_RUNNING": 23788,
+      "PORT_IF_LISTENING": 8788,
+      "RUNTIME_PROOF_LEVEL": "P5_RUNTIME_OBSERVED",
+      "PROOF": "LISTEN + health 200 then later timeout",
+      "ACTION": "KEEP_RUNTIME"
+    },
+    {
+      "ASSET_ID": "E-OLLAMA",
+      "NAME": "Ollama",
+      "CATEGORY": "MODEL_ROUTER",
+      "RUNNING": true,
+      "PID_IF_RUNNING": [
+        5420,
+        13332
+      ],
+      "PORT_IF_LISTENING": [
+        52093,
+        11434
+      ],
+      "RUNTIME_PROOF_LEVEL": "P5_RUNTIME_OBSERVED",
+      "ACTION": "KEEP_RUNTIME"
+    },
+    {
+      "ASSET_ID": "E-NATS",
+      "NAME": "NATS JetStream",
+      "CATEGORY": "TRANSPORT",
+      "PATH": "C:\\ProgramData\\RAIOS\\transport\\nats\\nats-server.exe",
+      "RUNNING": true,
+      "PID_IF_RUNNING": 25380,
+      "PORT_IF_LISTENING": [
+        4222,
+        8222
+      ],
+      "RUNTIME_PROOF_LEVEL": "P5_RUNTIME_OBSERVED",
+      "NOTE": "NATS_PRIMARY=false; healthz timeout this pass",
+      "ACTION": "KEEP_RUNTIME"
+    },
+    {
+      "ASSET_ID": "E-ROUTER",
+      "NAME": "RAIOS-USER-ROUTER-V1",
+      "CATEGORY": "ROUTER",
+      "PATH": "C:\\Users\\Ghanam\\Documents\\Codex\\Greeny-Life-Repair\\.ai-os\\control\\RAIOS-USER-ROUTER-V1.py",
+      "RUNTIME_PROOF_LEVEL": "P6_E2E_PROVEN",
+      "NOTE": "prior C5 accept4; not rerun this census",
+      "ACTION": "KEEP_CANONICAL"
+    },
+    {
+      "ASSET_ID": "E-CHANNEL",
+      "NAME": "RAIOS-C1-C5-CHANNEL",
+      "CATEGORY": "COMMUNICATION_ADAPTER",
+      "PATH": "C:\\Users\\Ghanam\\Documents\\Codex\\Greeny-Life-Repair\\.ai-os\\control\\RAIOS-C1-C5-CHANNEL.py",
+      "RUNTIME_PROOF_LEVEL": "P6_E2E_PROVEN",
+      "ACTION": "KEEP_CANONICAL"
+    },
+    {
+      "ASSET_ID": "E-C2-CURSOR",
+      "NAME": "C2 Cursor agent",
+      "CATEGORY": "AGENT",
+      "PATH": "C:\\Users\\Ghanam\\AppData\\Local\\cursor-agent\\cursor-agent.cmd",
+      "RUNTIME_PROOF_LEVEL": "P5_RUNTIME_OBSERVED",
+      "ACTION": "KEEP_RUNTIME"
+    },
+    {
+      "ASSET_ID": "E-KAGGLE-CLI",
+      "NAME": "kaggle.exe",
+      "CATEGORY": "CLI",
+      "PATH": "C:\\Users\\Ghanam\\AppData\\Local\\Programs\\Python\\Python314\\Scripts\\kaggle.exe",
+      "INSTALLATION_STATE": "PRESENT_UNAUTHENTICATED",
+      "RUNTIME_PROOF_LEVEL": "P1_FILE_EXISTS",
+      "CALLABLE": false,
+      "ACTION": "INVESTIGATE"
+    },
+    {
+      "ASSET_ID": "E-GH",
+      "NAME": "GitHub CLI",
+      "CATEGORY": "CLI",
+      "RUNTIME_PROOF_LEVEL": "P4_CALLABLE",
+      "NOTE": "gh present; not logged in",
+      "ACTION": "INVESTIGATE"
+    },
+    {
+      "ASSET_ID": "E-C2W",
+      "NAME": "C2 worker",
+      "CATEGORY": "WORKER",
+      "RUNTIME_PROOF_LEVEL": "P1_FILE_EXISTS",
+      "NOTE": "quota/engine constraint; ARCHITECTURE_DEPENDENCY=false",
+      "ACTION": "WRAP"
+    },
+    {
+      "ASSET_ID": "E-C6DRAFT",
+      "NAME": "C6 PRE_LLM nomadic",
+      "CATEGORY": "ORCHESTRATOR",
+      "PATH": "RAIOS/V9/cloud/nomadic",
+      "RUNTIME_PROOF_LEVEL": "P1_FILE_EXISTS",
+      "NOTE": "EXTERNAL_DRAFT_PENDING_PROMOTION",
+      "ACTION": "INVESTIGATE"
+    },
+    {
+      "ASSET_ID": "E-C5GUARD",
+      "NAME": "Start-C5-IfDown",
+      "CATEGORY": "HEALTH_CHECK",
+      "PATH": "C:\\ProgramData\\RAIOS\\control\\Start-C5-IfDown.ps1",
+      "RUNTIME_PROOF_LEVEL": "P1_FILE_EXISTS",
+      "ACTION": "KEEP_RUNTIME"
+    },
+    {
+      "ASSET_ID": "E-NL",
+      "NAME": "NeuroLingua",
+      "CATEGORY": "FRAMEWORK",
+      "RUNTIME_PROOF_LEVEL": "P2_STATIC_VALIDATED",
+      "NOTE": "sources under ACTIVE V9-NL0 locks; not rerun",
+      "ACTION": "KEEP_CANONICAL"
+    },
+    {
+      "ASSET_ID": "E-IDENTITY",
+      "NAME": "C2-IDENTITY-BINDING",
+      "CATEGORY": "IDENTITY",
+      "PATH": ".ai-os/control/C2-IDENTITY-BINDING.json",
+      "SHA256": "260866bb2b744627181a70ce8e1c46e4045e6fa34c0d6ec0968ac7a927f5b71a",
+      "RUNTIME_PROOF_LEVEL": "P2_STATIC_VALIDATED",
+      "ACTION": "KEEP_CANONICAL"
+    }
+  ],
+  "CLOSEOUT_TASK_ID": "RAIOS-TOTAL-ESTATE-PHASE1-02",
+  "CICF_TOOLS_TOTAL": 1464,
+  "CICF_STATIC_CLASSIFICATION": "C:\\Users\\Ghanam\\Documents\\Codex\\Greeny-Life-Repair\\.ai-os\\reports\\master-estate-census\\RAIOS-TOTAL-ESTATE-PHASE1-01-20260826T185525Z\\tools\\CICF-STATIC-SUMMARY.json"
+}

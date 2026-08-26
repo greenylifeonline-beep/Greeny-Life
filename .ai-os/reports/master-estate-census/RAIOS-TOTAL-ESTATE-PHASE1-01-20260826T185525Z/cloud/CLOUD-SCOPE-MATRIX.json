@@ -1,0 +1,22 @@
+{
+  "schema": "raios.cloud-scope-matrix.v1",
+  "TASK_ID": "RAIOS-TOTAL-ESTATE-PHASE1-02",
+  "generated_at": "2026-08-26T20:13:36Z",
+  "GENERIC_CLOUD_ACCESS_PROVEN": null,
+  "NOTE": "Do not collapse these flags into CLOUD_ACCESS_PROVEN=true from git ls-remote alone.",
+  "PUBLIC_GITHUB_READ_ACCESS_PROVEN": true,
+  "PUBLIC_GITHUB_EVIDENCE": "git ls-remote origin HEAD/main da67f44963fafde67df52cb62ab32f75fe725df0",
+  "PRIVATE_GITHUB_ACCESS_PROVEN": false,
+  "PRIVATE_GITHUB_EVIDENCE": "gh auth status = not logged in",
+  "CURSOR_CLOUD_ACCESS_PROVEN": false,
+  "CURSOR_CLOUD_EVIDENCE": "EXTERNAL_EVIDENCE_UNBOUND",
+  "KAGGLE_ACCESS_PROVEN": false,
+  "KAGGLE_EVIDENCE": "C2/C6 have no authorized Kaggle channel. C1 UI observation bound separately; does not prove C2/C6 access.",
+  "C1_KAGGLE_UI_OBSERVATION_BOUND": true,
+  "C2_KAGGLE_DIRECT_ACCESS_PROVEN": false,
+  "C6_KAGGLE_DIRECT_ACCESS_PROVEN": false,
+  "ONEDRIVE_CLOUD_CONTENT_ACCESS_PROVEN": false,
+  "ONEDRIVE_EVIDENCE": "ReparsePoint/metadata listing only; no hydrate this run",
+  "OTHER_CLOUD_ACCESS_PROVEN": false,
+  "OTHER_CLOUD_EVIDENCE": "none independently proven"
+}

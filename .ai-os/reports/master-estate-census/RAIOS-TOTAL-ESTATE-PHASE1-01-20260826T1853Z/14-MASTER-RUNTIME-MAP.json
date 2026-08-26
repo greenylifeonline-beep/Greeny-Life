@@ -1,0 +1,12 @@
+{
+  "schema": "raios.total-estate.runtime-map.v1",
+  "TASK_ID": "RAIOS-TOTAL-ESTATE-PHASE1-01",
+  "NO_C5_RESTART": true,
+  "listeners_reused_not_reprobed": [
+    {"PORT": 8766, "ROLE": "C5 HTTP", "PRIOR_PID": "12692 then claimed 29160", "PROOF_THIS_RUN": "not re-probed; live grounding turn classified PASS"},
+    {"PORT": 8788, "ROLE": "MCP", "PRIOR": "S31"},
+    {"PORT": 4222, "ROLE": "NATS", "NATS_PRIMARY": false},
+    {"PORT": 8222, "ROLE": "NATS healthz"},
+    {"PORT": 52093, "ROLE": "Ollama"}
+  ]
+}

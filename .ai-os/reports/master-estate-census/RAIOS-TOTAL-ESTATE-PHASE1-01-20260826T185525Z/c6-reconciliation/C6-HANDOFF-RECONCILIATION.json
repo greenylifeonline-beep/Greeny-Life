@@ -1,0 +1,25 @@
+{
+  "schema": "raios.c6-handoff-reconciliation.v1",
+  "TASK_ID": "RAIOS-TOTAL-ESTATE-PHASE1-02",
+  "generated_at": "2026-08-26T20:13:36Z",
+  "C6_ROLE_THIS_CLOSEOUT": "OFF_HOST_EVIDENCE_RECONCILER",
+  "NOT": "DIRECT_AG_AND_KAGGLE_OBSERVER",
+  "C6_AG_ACCESS_PROVEN": false,
+  "C6_KAGGLE_ACCESS_PROVEN": false,
+  "C6_AG_AND_KAGGLE_BOUND": false,
+  "C6_RECONCILIATION_FROM_HANDOFF": true,
+  "RECONCILIATION_FROM_HANDOFF": true,
+  "C6_HANDOFF_SIGNED_BY_C6": false,
+  "NOTE": "C6 may reconcile hashed C2 manifests without AG access. Off-host processing of copies is not AG access. Processing C2-provided Kaggle text is not Kaggle access.",
+  "handoffs": [
+    {
+      "NAME": "C2_LOCAL_MANIFEST",
+      "PATH": "C:\\Users\\Ghanam\\Documents\\Codex\\Greeny-Life-Repair\\.ai-os\\reports\\master-estate-census\\RAIOS-TOTAL-ESTATE-PHASE1-01-20260826T185525Z",
+      "SCOPE": "RAIOS-TOTAL-ESTATE-PHASE1-01-20260826T185525Z",
+      "EXCLUSIONS": "no hydrate; no secret values; no live Kaggle; no model inference",
+      "ACTOR": "C2@AG",
+      "TIMESTAMP": "2026-08-26T20:13:36Z",
+      "SHA256": "see FILES-SHA256.txt after this write"
+    }
+  ]
+}

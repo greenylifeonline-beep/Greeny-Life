@@ -1,0 +1,16 @@
+{
+  "schema": "raios.total-estate.business-assets.v1",
+  "NOTE": "Canonical/domain files exist; runtime E3 unproven. Do not treat canonical as live.",
+  "domains": [
+    {"NAME": "Product", "SOURCE_STRUCTURE": true, "RUNTIME_CONNECTED": false, "CLASS": "UNPROVEN"},
+    {"NAME": "Supplier", "SOURCE_STRUCTURE": true, "RUNTIME_CONNECTED": false, "CLASS": "UNPROVEN"},
+    {"NAME": "Inventory", "SOURCE_STRUCTURE": true, "RUNTIME_CONNECTED": false, "CLASS": "UNPROVEN"},
+    {"NAME": "CRM/Customer", "SOURCE_STRUCTURE": true, "RUNTIME_CONNECTED": false, "CLASS": "UNPROVEN"},
+    {"NAME": "Sales/Orders", "SOURCE_STRUCTURE": true, "RUNTIME_CONNECTED": false, "CLASS": "UNPROVEN"},
+    {"NAME": "Logistics", "SOURCE_STRUCTURE": true, "RUNTIME_CONNECTED": false, "CLASS": "UNPROVEN"},
+    {"NAME": "Finance", "SOURCE_STRUCTURE": "UNKNOWN", "RUNTIME_CONNECTED": false, "CLASS": "UNPROVEN"},
+    {"NAME": "Compliance/Certificates", "SOURCE_STRUCTURE": "PARTIAL", "RUNTIME_CONNECTED": false, "CLASS": "UNPROVEN"},
+    {"NAME": "Database/Prisma", "SOURCE_STRUCTURE": true, "RUNTIME_CONNECTED": false, "CLASS": "PARTIAL", "NOTE": "direct Prisma in some API routes historically"},
+    {"NAME": "Honey/Labels/GELS/Packaging/Traceability", "SOURCE_STRUCTURE": "PARTIAL", "RUNTIME_CONNECTED": false, "CLASS": "UNPROVEN"}
+  ]
+}

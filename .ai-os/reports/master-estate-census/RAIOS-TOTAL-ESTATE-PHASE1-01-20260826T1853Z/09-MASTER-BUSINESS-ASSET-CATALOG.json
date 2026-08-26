@@ -1,0 +1,16 @@
+{
+  "schema": "raios.total-estate.business-asset-catalog.v1",
+  "TASK_ID": "RAIOS-TOTAL-ESTATE-PHASE1-01",
+  "note": "E3_ROUTE_FILES_PRESENT=true; E3_RUNTIME_PROVEN=false; E3_E2E_PROVEN=false. Canonical != runtime.",
+  "domains": [
+    {"NAME": "Product", "RUNTIME": "UNPROVEN"},
+    {"NAME": "Supplier", "RUNTIME": "UNPROVEN"},
+    {"NAME": "Inventory", "RUNTIME": "UNPROVEN"},
+    {"NAME": "Customer/CRM", "RUNTIME": "UNPROVEN"},
+    {"NAME": "Sales/Orders", "RUNTIME": "UNPROVEN"},
+    {"NAME": "Logistics", "RUNTIME": "UNPROVEN"},
+    {"NAME": "Quality", "RUNTIME": "UNPROVEN"},
+    {"NAME": "Prisma/Database", "RUNTIME": "UNPROVEN"},
+    {"NAME": "Workflow", "RUNTIME": "UNPROVEN"}
+  ]
+}

@@ -1,0 +1,245 @@
+{
+  "schema": "raios.total-estate.runtime-map.v1",
+  "CLOSEOUT_TASK_ID": "RAIOS-TOTAL-ESTATE-PHASE1-02",
+  "C5_LIVE_GROUNDING_TURN_PASS": true,
+  "FOUR_TURN_INFERRED_FROM_C1_MESSAGE": false,
+  "HTTP_PRIMARY": true,
+  "NATS_PRIMARY": false,
+  "listeners": [
+    {
+      "PORT": 8766,
+      "PID": 29160,
+      "PROCESS": "uvicorn raios_multimodal_gateway",
+      "HEALTH": "200 qwen3:0.6b",
+      "RUNTIME_ID": "C5@AG",
+      "ENGINE_ID": "C5-HTTP"
+    },
+    {
+      "PORT": 8788,
+      "PID": 23788,
+      "PROCESS": "MCP gateway",
+      "HEALTH": "200 then timeout",
+      "RUNTIME_ID": "MCP@AG"
+    },
+    {
+      "PORT": 4222,
+      "PID": 25380,
+      "PROCESS": "nats-server",
+      "HEALTH": "listen only"
+    },
+    {
+      "PORT": 8222,
+      "PID": 25380,
+      "PROCESS": "nats-server",
+      "HEALTH": "healthz timeout this pass"
+    },
+    {
+      "PORT": 52093,
+      "PID": 5420,
+      "PROCESS": "ollama",
+      "HEALTH": "listen"
+    },
+    {
+      "PORT": 11434,
+      "PID": 13332,
+      "PROCESS": "ollama",
+      "HEALTH": "listen"
+    },
+    {
+      "PORT": 8765,
+      "PID": null,
+      "HEALTH": "NOLISTEN"
+    },
+    {
+      "PORT": 8876,
+      "PID": null,
+      "HEALTH": "NOLISTEN"
+    }
+  ],
+  "definitions": [
+    {
+      "IDENTITY": "C1",
+      "KIND": "ROLE",
+      "IMPLEMENTATION": "owner/final authority (human)",
+      "ENGINE_BINDING": null,
+      "STATUS": "ACTIVE_ROLE_NOT_A_PROCESS",
+      "PROOF_LEVEL": "P2_STATIC_VALIDATED",
+      "CURRENT_USE": "AUTHORITY"
+    },
+    {
+      "IDENTITY": "C2@AG",
+      "KIND": "RUNTIME",
+      "IMPLEMENTATION": "Cursor Grok session executor",
+      "ENGINE_BINDING": "cursor-agent / C2-CURSOR",
+      "STATUS": "LIVE_THIS_SESSION",
+      "PROOF_LEVEL": "P5_RUNTIME_OBSERVED",
+      "CURRENT_USE": "PRIMARY_EXECUTOR"
+    },
+    {
+      "IDENTITY": "C2",
+      "KIND": "ROLE",
+      "IMPLEMENTATION": "C2-IDENTITY-BINDING.json",
+      "ENGINE_BINDING": "C2@AG",
+      "STATUS": "ACTIVE_CANONICAL",
+      "PROOF_LEVEL": "P2_STATIC_VALIDATED",
+      "CURRENT_USE": "PRIMARY_EXECUTOR"
+    },
+    {
+      "IDENTITY": "C3",
+      "KIND": "ROLE",
+      "IMPLEMENTATION": "ChatGPT reviewer (no AG shell)",
+      "ENGINE_BINDING": null,
+      "STATUS": "EXTERNAL_REVIEWER",
+      "PROOF_LEVEL": "P2_STATIC_VALIDATED",
+      "CURRENT_USE": "REVIEWER"
+    },
+    {
+      "IDENTITY": "C5@AG",
+      "KIND": "RUNTIME",
+      "IMPLEMENTATION": "_raios-communication-fabric/src/raios_multimodal_gateway.py",
+      "ENGINE_BINDING": "C5-HTTP :8766",
+      "MODEL": "qwen3:0.6b",
+      "STATUS": "LIVE",
+      "PROOF_LEVEL": "P5_RUNTIME_OBSERVED",
+      "CURRENT_USE": "LOCAL_COGNITIVE_WORKER",
+      "PID": 29160
+    },
+    {
+      "IDENTITY": "C5",
+      "KIND": "ROLE",
+      "IMPLEMENTATION": "local cognitive worker",
+      "ENGINE_BINDING": "C5@AG",
+      "STATUS": "LIVE",
+      "PROOF_LEVEL": "P5_RUNTIME_OBSERVED",
+      "CURRENT_USE": "LOCAL_COGNITIVE_WORKER"
+    },
+    {
+      "IDENTITY": "C6",
+      "KIND": "ROLE",
+      "IMPLEMENTATION": "RAIOS/V9/cloud/nomadic PRE_LLM draft",
+      "ENGINE_BINDING": null,
+      "STATUS": "EXTERNAL_DRAFT_PENDING_PROMOTION",
+      "PROOF_LEVEL": "P2_STATIC_VALIDATED",
+      "CURRENT_USE": "OFF_HOST_EVIDENCE_RECONCILER_NOT_DIRECT_OBSERVER"
+    },
+    {
+      "IDENTITY": "C6-LOCAL",
+      "KIND": "WORKER",
+      "IMPLEMENTATION": "WORKER-REGISTRY.json",
+      "ENGINE_BINDING": "DECLARED_BY_RUNTIME",
+      "STATUS": "STALE_REGISTRY_CLAIM",
+      "PROOF_LEVEL": "P1_FILE_EXISTS",
+      "CURRENT_USE": "NONE_PROVEN; lease expired 2026-08-25T19:36:40Z; not AG access"
+    },
+    {
+      "IDENTITY": "CHATGPT-ORCH",
+      "KIND": "WORKER",
+      "IMPLEMENTATION": "WORKER-REGISTRY.json",
+      "STATUS": "STALE_REGISTRY_CLAIM",
+      "PROOF_LEVEL": "P1_FILE_EXISTS",
+      "CURRENT_USE": "NONE_PROVEN"
+    },
+    {
+      "IDENTITY": "C2-OBS",
+      "KIND": "WORKER",
+      "IMPLEMENTATION": "WORKER-REGISTRY.json",
+      "STATUS": "STALE_REGISTRY_CLAIM",
+      "PROOF_LEVEL": "P1_FILE_EXISTS",
+      "CURRENT_USE": "NONE_PROVEN"
+    },
+    {
+      "IDENTITY": "RAIOS-CORTEX",
+      "KIND": "WORKER",
+      "IMPLEMENTATION": "WORKER-REGISTRY.json",
+      "STATUS": "STALE_REGISTRY_CLAIM",
+      "PROOF_LEVEL": "P1_FILE_EXISTS",
+      "CURRENT_USE": "NONE_PROVEN"
+    },
+    {
+      "IDENTITY": "002E-REPAIR",
+      "KIND": "WORKER",
+      "IMPLEMENTATION": "WORKER-REGISTRY.json",
+      "STATUS": "STALE_REGISTRY_CLAIM",
+      "PROOF_LEVEL": "P1_FILE_EXISTS",
+      "CURRENT_USE": "NONE_PROVEN"
+    },
+    {
+      "IDENTITY": "RAIOS-USER-ROUTER-V1",
+      "KIND": "ADAPTER",
+      "IMPLEMENTATION": ".ai-os/control/RAIOS-USER-ROUTER-V1.py",
+      "ENGINE_BINDING": "command fabric",
+      "STATUS": "CANONICAL_ON_DISK",
+      "PROOF_LEVEL": "P6_E2E_PROVEN",
+      "CURRENT_USE": "KEEP_CANONICAL"
+    },
+    {
+      "IDENTITY": "RAIOS-C1-C5-CHANNEL",
+      "KIND": "ADAPTER",
+      "IMPLEMENTATION": ".ai-os/control/RAIOS-C1-C5-CHANNEL.py",
+      "STATUS": "CANONICAL_ON_DISK",
+      "PROOF_LEVEL": "P6_E2E_PROVEN",
+      "CURRENT_USE": "KEEP_CANONICAL"
+    },
+    {
+      "IDENTITY": "MCP@AG",
+      "KIND": "ENGINE",
+      "IMPLEMENTATION": "scripts/ai-os/raios_mcp/gateway.py",
+      "ENGINE_BINDING": ":8788 PID 23788",
+      "STATUS": "LISTEN_HEALTH_FLAKY",
+      "PROOF_LEVEL": "P5_RUNTIME_OBSERVED",
+      "CURRENT_USE": "KEEP_RUNTIME"
+    },
+    {
+      "IDENTITY": "NATS",
+      "KIND": "ENGINE",
+      "IMPLEMENTATION": "C:\\ProgramData\\RAIOS\\transport\\nats\\nats-server.exe",
+      "ENGINE_BINDING": ":4222/:8222 PID 25380",
+      "STATUS": "LISTEN_NOT_PRIMARY",
+      "PROOF_LEVEL": "P5_RUNTIME_OBSERVED",
+      "CURRENT_USE": "TRANSPORT_SECONDARY"
+    },
+    {
+      "IDENTITY": "OLLAMA",
+      "KIND": "ENGINE",
+      "IMPLEMENTATION": "ollama",
+      "ENGINE_BINDING": ":52093 PID 5420; :11434 PID 13332",
+      "STATUS": "LIVE",
+      "PROOF_LEVEL": "P5_RUNTIME_OBSERVED",
+      "CURRENT_USE": "MODEL_RUNTIME"
+    },
+    {
+      "IDENTITY": "goose",
+      "KIND": "ENGINE",
+      "IMPLEMENTATION": "listed in GL-002 worktree status dump",
+      "STATUS": "EVIDENCE_ONLY_NO_SOURCE_ON_TREE001",
+      "PROOF_LEVEL": "P1_FILE_EXISTS",
+      "CURRENT_USE": "NONE"
+    },
+    {
+      "IDENTITY": "native-agent",
+      "KIND": "ENGINE",
+      "IMPLEMENTATION": "listed in GL-002 worktree status dump",
+      "STATUS": "EVIDENCE_ONLY_NO_SOURCE_ON_TREE001",
+      "PROOF_LEVEL": "P1_FILE_EXISTS",
+      "CURRENT_USE": "NONE"
+    },
+    {
+      "IDENTITY": "kaggle.exe",
+      "KIND": "ADAPTER",
+      "IMPLEMENTATION": "C:\\Users\\Ghanam\\AppData\\Local\\Programs\\Python\\Python314\\Scripts\\kaggle.exe",
+      "STATUS": "PRESENT_UNAUTHENTICATED",
+      "PROOF_LEVEL": "P1_FILE_EXISTS",
+      "CURRENT_USE": "NONE"
+    }
+  ],
+  "AGENT_RUNTIME_CANDIDATES_TOTAL": 20,
+  "AGENT_RUNTIME_CANDIDATES_DESCRIBED": 20,
+  "SEPARATION": [
+    "ROLE",
+    "RUNTIME",
+    "ENGINE",
+    "MODEL",
+    "WORKER",
+    "ADAPTER"
+  ]
+}

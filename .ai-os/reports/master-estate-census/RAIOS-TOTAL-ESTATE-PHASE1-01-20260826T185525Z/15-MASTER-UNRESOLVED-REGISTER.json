@@ -1,0 +1,129 @@
+{
+  "schema": "raios.total-estate.unresolved.v1",
+  "CLOSEOUT_TASK_ID": "RAIOS-TOTAL-ESTATE-PHASE1-02",
+  "UNRESOLVED_ITEMS_HAVE_EXACT_REASON": true,
+  "UNRESOLVED_TOTAL": 26,
+  "items": [
+    {
+      "ID": "U-GL002",
+      "SURFACE": "S06",
+      "REASON": "worktree path missing; GL002_CLASSIFICATION=HISTORICAL_IMPLEMENTATION_FOUND"
+    },
+    {
+      "ID": "U-GL003",
+      "SURFACE": "S07",
+      "REASON": "worktree path missing; GL003_CLASSIFICATION=EVIDENCE_ONLY_NO_SOURCE"
+    },
+    {
+      "ID": "U-C6-PRELLM",
+      "SURFACE": "S35",
+      "REASON": "EXTERNAL_DRAFT_PENDING_PROMOTION; inventoried not promoted"
+    },
+    {
+      "ID": "U-C1-COMMIT",
+      "REASON": "C1 reported commit+push not in Repair, P0 worktree, Retired, or inspected GitHub refs"
+    },
+    {
+      "ID": "U-KAGGLE-CHANNEL",
+      "REASON": "BLOCKER=AUTHORIZED_KAGGLE_ACCESS_CHANNEL_ABSENT"
+    },
+    {
+      "ID": "U-KAGGLE_ACCOUNT",
+      "SURFACE": "S57",
+      "REASON": "AUTHORIZED_KAGGLE_ACCESS_CHANNEL_ABSENT"
+    },
+    {
+      "ID": "U-KAGGLE_NOTEBOOKS",
+      "SURFACE": "S58",
+      "REASON": "S58 surface observed by C1 UI; assets KAG-NB-001/KAG-NB-002 existence proven; CONTENT_BOUND=false; VERSION_BOUND=false; not API/content/version evidence"
+    },
+    {
+      "ID": "U-KAGGLE_NOTEBOOK_VERSIONS",
+      "SURFACE": "S59",
+      "REASON": "AUTHORIZED_KAGGLE_ACCESS_CHANNEL_ABSENT"
+    },
+    {
+      "ID": "U-KAGGLE_DATASETS",
+      "SURFACE": "S60",
+      "REASON": "AUTHORIZED_KAGGLE_ACCESS_CHANNEL_ABSENT"
+    },
+    {
+      "ID": "U-KAGGLE_INPUT_DATASETS",
+      "SURFACE": "S61",
+      "REASON": "AUTHORIZED_KAGGLE_ACCESS_CHANNEL_ABSENT"
+    },
+    {
+      "ID": "U-KAGGLE_OUTPUTS",
+      "SURFACE": "S62",
+      "REASON": "AUTHORIZED_KAGGLE_ACCESS_CHANNEL_ABSENT"
+    },
+    {
+      "ID": "U-KAGGLE_WORKING_DIRECTORIES",
+      "SURFACE": "S63",
+      "REASON": "AUTHORIZED_KAGGLE_ACCESS_CHANNEL_ABSENT"
+    },
+    {
+      "ID": "U-KAGGLE_MODEL_ARTIFACTS",
+      "SURFACE": "S64",
+      "REASON": "AUTHORIZED_KAGGLE_ACCESS_CHANNEL_ABSENT"
+    },
+    {
+      "ID": "U-KAGGLE_CHECKPOINTS",
+      "SURFACE": "S65",
+      "REASON": "AUTHORIZED_KAGGLE_ACCESS_CHANNEL_ABSENT"
+    },
+    {
+      "ID": "U-KAGGLE_GIT_CLONES",
+      "SURFACE": "S66",
+      "REASON": "AUTHORIZED_KAGGLE_ACCESS_CHANNEL_ABSENT"
+    },
+    {
+      "ID": "U-KAGGLE_GIT_REFS",
+      "SURFACE": "S67",
+      "REASON": "AUTHORIZED_KAGGLE_ACCESS_CHANNEL_ABSENT"
+    },
+    {
+      "ID": "U-KAGGLE_GITHUB_PUSH_RELATIONSHIPS",
+      "SURFACE": "S68",
+      "REASON": "AUTHORIZED_KAGGLE_ACCESS_CHANNEL_ABSENT"
+    },
+    {
+      "ID": "U-KAGGLE_ARCHIVES",
+      "SURFACE": "S69",
+      "REASON": "AUTHORIZED_KAGGLE_ACCESS_CHANNEL_ABSENT"
+    },
+    {
+      "ID": "U-KAGGLE_RAIOS_STATE",
+      "SURFACE": "S70",
+      "REASON": "AUTHORIZED_KAGGLE_ACCESS_CHANNEL_ABSENT"
+    },
+    {
+      "ID": "U-PRIVATE-GH",
+      "REASON": "PRIVATE_GITHUB_ACCESS_PROVEN=false; gh not logged in"
+    },
+    {
+      "ID": "U-CURSOR-CLOUD",
+      "REASON": "CURSOR_CLOUD_ACCESS_PROVEN=false; EXTERNAL_EVIDENCE_UNBOUND"
+    },
+    {
+      "ID": "U-ONEDRIVE-CONTENT",
+      "REASON": "ONEDRIVE_CLOUD_CONTENT_ACCESS_PROVEN=false; metadata/ReparsePoint only"
+    },
+    {
+      "ID": "U-C6-AG",
+      "REASON": "C6_AG_ACCESS_PROVEN=false; C6 is OFF_HOST_EVIDENCE_RECONCILER"
+    },
+    {
+      "ID": "U-C6-KIT-HASH",
+      "REASON": "canonical C6 ZIP sha de88023d not verified on AG; OneDrive kit is ReparsePoint"
+    },
+    {
+      "ID": "U-CICF-CALLGRAPH",
+      "REASON": "IMPORTERS_CALLERS_COUNT not computed; static family/AST only"
+    },
+    {
+      "ID": "U-CICF-P0",
+      "REASON": "CICF_P0_NAME_ONLY_REMAINING=46 empty+garbage paths"
+    }
+  ]
+}

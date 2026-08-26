@@ -1,0 +1,64 @@
+{
+  "schema": "raios.total-estate.actor-access-matrix.v1",
+  "TASK_ID": "RAIOS-TOTAL-ESTATE-PHASE1-01",
+  "RUN_ID": "RAIOS-TOTAL-ESTATE-PHASE1-01-20260826T1853Z",
+  "generated_at": "2026-08-26T18:54:27+00:00",
+  "LANE": "C2_LOCAL_CENSUS",
+  "RUNTIME_ID": "C2@AG",
+  "C5_LIVE_GROUNDING_TURN_PASS": true,
+  "C5_LIVE_CORRELATION": "COR-C1C5-2026-08-26T175847.280630+0000",
+  "C5_TURN_NOTE": "Do not infer four-turn acceptance solely from the live turn. Four-turn JSON exists separately; PID/model fields missing from that JSON.",
+  "actors": [
+    {
+      "ACTOR": "C2_LOCAL",
+      "LOCAL_ACCESS_PROVEN": true,
+      "CLOUD_ACCESS_PROVEN": true,
+      "LOCAL_AND_CLOUD_BOUND": false,
+      "RUNTIME_ID": "C2@AG",
+      "HOST": "AG",
+      "PROCESS_OR_TERMINAL_EVIDENCE": "PowerShell PID 11476; PS 5.1.26100.9168; user ag\\ghanam",
+      "ROOT_ACCESS_TEST": "Test-Path true for Repair, Retired, Bridge, Codex, Desktop, ProgramData\\RAIOS, C:\\temp worktree",
+      "READ_TEST_PATH": "C:\\Users\\Ghanam\\Documents\\Codex\\Greeny-Life-Repair\\.ai-os\\control\\C2-IDENTITY-BINDING.json",
+      "READ_TEST_SHA256": "260866bb2b744627181a70ce8e1c46e4045e6fa34c0d6ec0968ac7a927f5b71a",
+      "CLOUD_PROVIDER_OR_WORKSPACE": "GitHub",
+      "REMOTE_RESOURCE_ID": "greenylifeonline-beep/Greeny-Life",
+      "REMOTE_RESOURCE_REF": "refs/heads/main",
+      "REMOTE_OBSERVED_SHA_OR_REVISION": "da67f44963fafde67df52cb62ab32f75fe725df0",
+      "EVIDENCE_TIMESTAMP": "2026-08-26T18:42:30+00:00",
+      "RECEIPT_OR_TOOL_RESULT": "git ls-remote --heads origin (no fetch); phase2a branch absent; 12603d0 not an advertised tip",
+      "PRIVATE_GITHUB_SCOPE_VERIFIED": false,
+      "CURSOR_CLOUD_STATE": "EXTERNAL_EVIDENCE_UNBOUND",
+      "KAGGLE_ACCESS_PROVEN": false,
+      "KAGGLE_STATE": "KNOWN_SURFACE_UNBOUND",
+      "KAGGLE_ACTOR_RUNTIME": "C2@AG",
+      "KAGGLE_ACCOUNT_OR_WORKSPACE_ID": null,
+      "ACCESS_METHOD": "none; kaggle CLI not present in PATH this run",
+      "note": "LOCAL_AND_CLOUD_BOUND=false: C6 cross-surface receipt not produced by this lane. GitHub ls-remote is C2 cloud read, not a C6 dual-canary."
+    },
+    {
+      "ACTOR": "C2_CLOUD",
+      "LOCAL_ACCESS_PROVEN": false,
+      "CLOUD_ACCESS_PROVEN": true,
+      "note": "Same C2@AG process performed ls-remote; no separate cloud runtime."
+    },
+    {
+      "ACTOR": "C6_LOCAL",
+      "LOCAL_ACCESS_PROVEN": false,
+      "note": "Not proven in this lane."
+    },
+    {
+      "ACTOR": "C6_CLOUD",
+      "CLOUD_ACCESS_PROVEN": false,
+      "note": "Not proven in this lane."
+    },
+    {
+      "ACTOR": "C3",
+      "C3_REMOTE_ACCESS_PROVEN": false,
+      "C3_DIRECT_PROJECT_ACCESS": false
+    }
+  ],
+  "LOCKS_JSON_WRITTEN": false,
+  "LOCK_WRITE_SKIPPED_REASON": "Census writes only unique report dir. .ai-os/state/LOCKS.json is dirty and owned by other ACTIVE tasks; no second lock system created.",
+  "PHASE1_COMPLETE": false,
+  "READY_FOR_PHASE2": false
+}

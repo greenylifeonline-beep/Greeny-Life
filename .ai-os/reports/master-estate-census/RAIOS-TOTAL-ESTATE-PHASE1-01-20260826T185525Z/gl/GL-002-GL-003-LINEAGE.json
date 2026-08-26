@@ -1,0 +1,42 @@
+{
+  "schema": "raios.gl002-gl003.lineage.v1",
+  "TASK_ID": "RAIOS-TOTAL-ESTATE-PHASE1-02",
+  "GL002_CLASSIFICATION": "HISTORICAL_IMPLEMENTATION_FOUND",
+  "GL002_EVIDENCE": [
+    {
+      "KIND": "git_branch",
+      "REF": "raios/gl-002-main-brain",
+      "SHA": "c336fc88019a68dba9a79531d4c9d3269e85b02d",
+      "SUBJECT": "docs(raios): close GL-002 authority phase and defer missing bridges"
+    },
+    {
+      "KIND": "current_tree_doc",
+      "PATH": "migration\\strong-validation\\GL-002-AUTHORITY-CLOSEOUT.md",
+      "SHA256": "5826bda1b45385567fcb936cbf5f2191183ad5c577ee0bd21ce768bd7884c35f"
+    },
+    {
+      "KIND": "current_tree_doc",
+      "PATH": "migration\\strong-validation\\GL-002-IMPLEMENTATION-GATES.md",
+      "SHA256": "d72c679e0ce830876093b1103635240b900b0a3daa65bbee7bcf1afc69a37923"
+    },
+    {
+      "KIND": "archive_status",
+      "PATH": "archive\\repair-leftovers\\controlled-retirement-evidence-20260824\\evidence\\GL-002-Main-Brain.status.txt",
+      "SHA256": "d14e41c4f4b5ede2c087f96d865b9e7e9c1a7d3f3b4d1842471cbf6c9109e7c4"
+    }
+  ],
+  "GL002_CURRENT_WORKTREE_PATH": "C:\\Users\\Ghanam\\Documents\\Codex\\Greeny-Life-Worktrees\\GL-002-Main-Brain",
+  "GL002_CURRENT_WORKTREE_PRESENT": false,
+  "GL003_CLASSIFICATION": "EVIDENCE_ONLY_NO_SOURCE",
+  "GL003_EVIDENCE": [
+    {
+      "KIND": "archive_status",
+      "PATH": "archive\\repair-leftovers\\controlled-retirement-evidence-20260824\\evidence\\GL-003-Project-Brains.status.txt",
+      "SHA256": "8716826fc49c8c484d15b0e4a5d5ffb1409108050d677a59376d443047b2e946",
+      "NOTE": "lists untracked migration/gl-003/* in a missing worktree; those paths are absent on TREE-001 now; no raios/gl-003 branch found"
+    }
+  ],
+  "GL003_CURRENT_WORKTREE_PATH": "C:\\Users\\Ghanam\\Documents\\Codex\\Greeny-Life-Worktrees\\GL-003-Project-Brains",
+  "GL003_CURRENT_WORKTREE_PRESENT": false,
+  "NO_RECONSTRUCTION": true
+}

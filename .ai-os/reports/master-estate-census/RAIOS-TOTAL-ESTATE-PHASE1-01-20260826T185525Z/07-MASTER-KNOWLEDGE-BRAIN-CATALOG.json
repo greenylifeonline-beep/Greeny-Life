@@ -1,0 +1,18 @@
+{
+  "schema": "raios.total-estate.knowledge-brain.v1",
+  "assets": [
+    {"ID": "KB-LIVE-BRAIN", "NAME": "Live Brain", "CLASS": "DESIGN_ONLY", "PROOF_LEVEL": "P0_NAME_ONLY"},
+    {"ID": "KB-EVOLUTION-BRAIN", "NAME": "Evolution Brain", "CLASS": "DESIGN_ONLY", "PROOF_LEVEL": "P0_NAME_ONLY"},
+    {"ID": "KB-AUTONOMIC", "NAME": "Autonomic Core", "CLASS": "IMPLEMENTED", "PATH": "RAIOS/V9/autonomic", "PROOF_LEVEL": "P2_STATIC_VALIDATED", "NOTE": "code present; not runtime-proven this pass"},
+    {"ID": "KB-ENTERPRISE", "NAME": "Enterprise Brain / EOS", "CLASS": "IMPLEMENTED", "PROOF_LEVEL": "P2_STATIC_VALIDATED", "NOTE": "API/Prisma MIXED; E3_E2E_PROVEN=false"},
+    {"ID": "KB-MAIN-CORTEX", "NAME": "Main Cortex", "CLASS": "RUNNING", "BINDING": "qwen3:0.6b via C5 8766", "PROOF_LEVEL": "P5_RUNTIME_OBSERVED"},
+    {"ID": "KB-RIF", "NAME": "RIF", "CLASS": "DESIGN_ONLY", "PROOF_LEVEL": "P0_NAME_ONLY"},
+    {"ID": "KB-WAL", "NAME": "Cognitive WAL", "CLASS": "STATIC_DATA", "PATH": "RAIOS/V9/wal", "PROOF_LEVEL": "P1_FILE_EXISTS", "WAL_WRITTEN": false},
+    {"ID": "KB-DISC-VAL-CAN", "NAME": "DISCOVERED/VALIDATED/CANONICAL promotion", "CLASS": "DESIGN_ONLY", "PROOF_LEVEL": "P0_NAME_ONLY"},
+    {"ID": "KB-C5-LEARN", "NAME": "C5 learning/mind files", "CLASS": "STATIC_DATA", "PATH": ".ai-os/learning", "PROOF_LEVEL": "P1_FILE_EXISTS", "NOTE": "dirty in P0 worktree"},
+    {"ID": "KB-KAGGLE-STATE", "NAME": "Kaggle RAIOS state", "CLASS": "UNKNOWN", "PROOF_LEVEL": "P0_NAME_ONLY", "KAGGLE_ACCESS_PROVEN": false},
+    {"ID": "KB-GL002", "NAME": "GL-002 Main Brain", "CLASS": "HISTORICAL_IMPLEMENTATION_FOUND", "PROOF_LEVEL": "P2_STATIC_VALIDATED", "REF": "raios/gl-002-main-brain c336fc88", "NOTE": "worktree path missing; not CURRENT_IMPLEMENTATION_FOUND"},
+    {"ID": "KB-GL003", "NAME": "GL-003 Project Brains", "CLASS": "EVIDENCE_ONLY_NO_SOURCE", "PROOF_LEVEL": "P1_FILE_EXISTS", "EVIDENCE_SHA256": "8716826fc49c8c484d15b0e4a5d5ffb1409108050d677a59376d443047b2e946", "NOTE": "worktree path missing; no gl-003 branch on TREE-001"},
+    {"ID": "KB-S35", "NAME": "C6 PRE_LLM nomadic", "CLASS": "EXTERNAL_DRAFT_PENDING_PROMOTION", "PROOF_LEVEL": "P2_STATIC_VALIDATED", "PATH": "RAIOS/V9/cloud/nomadic", "PACKAGE_SHA256": "7bab6851039c3274d63791b02dc145bce7457013cdcd51f5506abb73817d14f7", "NOTE": "inventoried; do not promote during census"}
+  ]
+}

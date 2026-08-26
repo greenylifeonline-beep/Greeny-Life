@@ -1,0 +1,29 @@
+{
+  "schema": "raios.total-estate.engine-tool-agent-catalog.v1",
+  "TASK_ID": "RAIOS-TOTAL-ESTATE-PHASE1-01",
+  "ALL_DISCOVERED_ENGINES_CLASSIFIED": false,
+  "ALL_DISCOVERED_TOOLS_CLASSIFIED": false,
+  "REUSED_FROM": {
+    "path": ".ai-os/reports/architecture-audit/RAIOS-ARCH-ASSET-01-20260826T171200Z/01-RAIOS-ASSET-CATALOG.json",
+    "sha256": "3e440747670c4cd8fbd29dd68e0e12b9c9e447a8c06706ba8acf6def9fab2403",
+    "asset_count": 24
+  },
+  "assets_this_run_delta": [
+    {
+      "ASSET_ID": "A-C2-CURSOR-AG",
+      "NAME": "C2@AG Cursor executor",
+      "CATEGORY": "AGENT",
+      "PROOF_LEVEL": "P5_RUNTIME_OBSERVED",
+      "HOST": "AG"
+    },
+    {
+      "ASSET_ID": "A-C5-GW",
+      "NAME": "C5 multimodal gateway",
+      "CATEGORY": "GATEWAY",
+      "PROOF_LEVEL": "P5_RUNTIME_OBSERVED",
+      "PORT_IF_LISTENING": 8766
+    }
+  ],
+  "AGENTS": ["C1", "C2@AG", "C3", "C5@AG", "C6-unproven-this-lane"],
+  "KAGGLE_NOTEBOOK_AS_ENGINE": "UNBOUND"
+}

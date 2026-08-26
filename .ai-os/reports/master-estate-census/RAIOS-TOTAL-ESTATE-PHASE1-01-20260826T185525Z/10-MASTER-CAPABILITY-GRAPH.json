@@ -1,0 +1,111 @@
+{
+  "schema": "raios.total-estate.capability-graph.v1",
+  "ALL_DISCOVERED_CAPABILITIES_MAPPED": true,
+  "capabilities": [
+    {
+      "CAPABILITY_ID": "CAP-C5-CHAT",
+      "NAME": "C1-C5 HTTP chat",
+      "PROOF_LEVEL": "P6_E2E_PROVEN",
+      "ACTIVE_IMPLEMENTATION": "E-C5-GW",
+      "KAGGLE_IMPLEMENTATION": null,
+      "GITHUB_IMPLEMENTATION": null,
+      "LOCAL_IMPLEMENTATION": "_raios-communication-fabric/src/raios_multimodal_gateway.py",
+      "UNIQUE_VALUE_LOCATION": "LOCAL_RUNTIME",
+      "KAGGLE_HASH": null,
+      "LOCAL_SHA": "823653c11cd5d84be6ae7fd4db1e7e281b742d248132353271af444e3cedc023"
+    },
+    {
+      "CAPABILITY_ID": "CAP-FABRIC",
+      "NAME": "Command fabric send/ack/receipt",
+      "PROOF_LEVEL": "P4_CALLABLE",
+      "ACTIVE_IMPLEMENTATION": "E-ROUTER",
+      "UNIQUE_VALUE_LOCATION": "LOCAL"
+    },
+    {
+      "CAPABILITY_ID": "CAP-MCP",
+      "NAME": "Local MCP 8 tools",
+      "PROOF_LEVEL": "P5_RUNTIME_OBSERVED",
+      "ACTIVE_IMPLEMENTATION": "E-MCP",
+      "UNIQUE_VALUE_LOCATION": "LOCAL_RUNTIME"
+    },
+    {
+      "CAPABILITY_ID": "CAP-C2",
+      "NAME": "C2 executor",
+      "PROOF_LEVEL": "P5_RUNTIME_OBSERVED",
+      "ACTIVE_IMPLEMENTATION": "E-C2-CURSOR",
+      "UNIQUE_VALUE_LOCATION": "LOCAL"
+    },
+    {
+      "CAPABILITY_ID": "CAP-C6",
+      "NAME": "C6 PRE_LLM / nomadic",
+      "PROOF_LEVEL": "P1_FILE_EXISTS",
+      "ACTIVE_IMPLEMENTATION": null,
+      "KAGGLE_IMPLEMENTATION": "UNBOUND",
+      "UNIQUE_VALUE_LOCATION": "UNKNOWN"
+    },
+    {
+      "CAPABILITY_ID": "CAP-NATS",
+      "NAME": "NATS transport",
+      "PROOF_LEVEL": "P5_RUNTIME_OBSERVED",
+      "ACTIVE_IMPLEMENTATION": "E-NATS",
+      "NOTE": "not primary"
+    },
+    {
+      "CAPABILITY_ID": "CAP-WAL",
+      "NAME": "Cognitive WAL",
+      "PROOF_LEVEL": "P1_FILE_EXISTS",
+      "WAL_WRITTEN": false
+    },
+    {
+      "CAPABILITY_ID": "CAP-GL005",
+      "NAME": "GL-005 orchestrator",
+      "PROOF_LEVEL": "P0_NAME_ONLY",
+      "GL005_PROVEN": false
+    },
+    {
+      "CAPABILITY_ID": "CAP-ERP",
+      "NAME": "GREENY-LIFE EOS APIs",
+      "PROOF_LEVEL": "P2_STATIC_VALIDATED",
+      "E3_E2E_PROVEN": false
+    },
+    {
+      "CAPABILITY_ID": "CAP-NL",
+      "NAME": "NeuroLingua",
+      "PROOF_LEVEL": "P2_STATIC_VALIDATED"
+    },
+    {
+      "CAPABILITY_ID": "CAP-KAGGLE-NOMADS",
+      "NAME": "Kaggle nomadic compute",
+      "PROOF_LEVEL": "P0_NAME_ONLY",
+      "KAGGLE_ACCESS_PROVEN": false,
+      "GITHUB_IMPLEMENTATION": "commit b940e909 Add Kaggle nomadic worker contracts",
+      "UNIQUE_VALUE_LOCATION": "UNKNOWN"
+    },
+    {
+      "CAPABILITY_ID": "CAP-GL002",
+      "NAME": "GL-002 Main Brain",
+      "PROOF_LEVEL": "P2_STATIC_VALIDATED",
+      "CLASSIFICATION": "HISTORICAL_IMPLEMENTATION_FOUND",
+      "ACTIVE_IMPLEMENTATION": null
+    },
+    {
+      "CAPABILITY_ID": "CAP-GL003",
+      "NAME": "GL-003 Project Brains",
+      "PROOF_LEVEL": "P1_FILE_EXISTS",
+      "CLASSIFICATION": "EVIDENCE_ONLY_NO_SOURCE",
+      "ACTIVE_IMPLEMENTATION": null
+    }
+  ],
+  "CLOSEOUT_TASK_ID": "RAIOS-TOTAL-ESTATE-PHASE1-02",
+  "CICF_CROSSWALK": {
+    "SOURCE": "C:\\Users\\Ghanam\\Documents\\Codex\\Greeny-Life-Repair\\.ai-os\\reports\\master-estate-census\\RAIOS-TOTAL-ESTATE-PHASE1-01-20260826T185525Z\\tools\\CICF-STATIC-CLASSIFICATION.jsonl",
+    "RELATIONS": {
+      "UNRELATED": 1188,
+      "TESTS": 25,
+      "SUPPORTS": 93,
+      "MIGRATES": 149,
+      "IMPLEMENTS": 9
+    },
+    "NOTE": "Map TOOL_ID -> CAPABILITY_ID, CAPABILITY_RELATION in the jsonl. UNRELATED is an explicit relation."
+  }
+}

@@ -1,0 +1,10 @@
+{
+  "schema": "raios.total-estate.composition.v1",
+  "opportunities": [
+    {"COMPOSITION_ID": "CMP-C5-ROUTER", "PART_A": "E-C5-GW", "PART_B": "E-ROUTER", "OPTIONAL_PARTS": ["E-CHANNEL"], "VALUE": "HIGH_UNIQUE", "NEW_CODE_AVOIDED_ESTIMATE": "do not rewrite chat path", "RISK": "LOW", "RECOMMENDATION": "COMPOSE"},
+    {"COMPOSITION_ID": "CMP-RECEIPT-LEASE", "PART_A": "Command fabric receipts", "PART_B": "nomadic leases/checkpoints", "VALUE": "REUSABLE", "RISK": "MEDIUM", "RECOMMENDATION": "WAIT_C6"},
+    {"COMPOSITION_ID": "CMP-MCP-AUTH", "PART_A": "E-MCP", "PART_B": "identity binding", "VALUE": "REUSABLE", "RISK": "MEDIUM", "RECOMMENDATION": "WRAP"},
+    {"COMPOSITION_ID": "CMP-OLLAMA-C5", "PART_A": "E-OLLAMA", "PART_B": "E-C5-GW", "VALUE": "CRITICAL_UNIQUE", "RISK": "LOW", "RECOMMENDATION": "KEEP"},
+    {"COMPOSITION_ID": "CMP-KAGGLE-NOMADS", "PART_A": "Kaggle notebooks unbound", "PART_B": "RAIOS/V9/cloud/nomadic", "VALUE": "UNKNOWN", "RISK": "HIGH", "RECOMMENDATION": "INVESTIGATE_AFTER_KAGGLE_ACCESS"}
+  ]
+}

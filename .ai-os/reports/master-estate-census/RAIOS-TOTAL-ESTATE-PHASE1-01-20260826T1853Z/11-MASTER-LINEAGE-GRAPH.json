@@ -1,0 +1,25 @@
+{
+  "schema": "raios.total-estate.lineage-graph.v1",
+  "TASK_ID": "RAIOS-TOTAL-ESTATE-PHASE1-01",
+  "edges": [
+    {
+      "FROM": "KAGGLE_NOTEBOOK:notebook8c2d6a9080",
+      "TO": "GIT_COMMIT:da67f44963fafde67df52cb62ab32f75fe725df0",
+      "RELATION": "KAGGLE_PUSHED",
+      "EVIDENCE": "GitHub commit subject 'Kaggle Notebook | notebook8c2d6a9080 | Version 3'; refs/heads/main matches SHA via ls-remote",
+      "KAGGLE_API_CONFIRMED": false
+    },
+    {
+      "FROM": "GIT_COMMIT:da67f44963fafde67df52cb62ab32f75fe725df0",
+      "TO": "GITHUB_REF:refs/heads/main",
+      "RELATION": "GITHUB_IMPORTED",
+      "EVIDENCE": "ls-remote origin refs/heads/main"
+    },
+    {
+      "FROM": "GITHUB_REF:refs/heads/main",
+      "TO": "LOCAL_TREE:Repair origin/main",
+      "RELATION": "LOCAL_IMPORTED",
+      "EVIDENCE": "local origin/main == da67f449; Repair HEAD 12603d0 DIVERGED"
+    }
+  ]
+}

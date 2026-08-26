@@ -1,0 +1,13 @@
+{
+  "schema": "raios.total-estate.lineage-graph.v1",
+  "edges": [
+    {"FROM": "KAGGLE_NOTEBOOK notebook8c2d6a9080 (unbound live)", "TO": "GIT_COMMIT da67f449", "RELATION": "KAGGLE_PUSHED", "EVIDENCE": "GitHub commit subject + origin/main SHA; live Kaggle version not read", "PROVEN": "GITHUB_SIDE_ONLY"},
+    {"FROM": "GIT_COMMIT aace3d8", "TO": "GIT_COMMIT da67f449", "RELATION": "KAGGLE_MODIFIED", "EVIDENCE": "Version 2 then Version 3 subjects; both touch notebook8c2d6a9080.ipynb"},
+    {"FROM": "GIT_COMMIT da67f449", "TO": "GITHUB_REF refs/heads/main", "RELATION": "KAGGLE_PUSHED", "EVIDENCE": "ls-remote origin HEAD/main"},
+    {"FROM": "GITHUB_REF refs/heads/main", "TO": "LOCAL_TREE TREE-001", "RELATION": "UNRELATED", "EVIDENCE": "not ancestor of 12603d0; merge-base --is-ancestor exit 1"},
+    {"FROM": "RETIRED fd2775e3", "TO": "TREE-001 12603d0", "RELATION": "FORKED_FROM", "EVIDENCE": "same origin URL; independent object dbs; LOCAL_OBJECT_RELATIONSHIP_UNRESOLVED"},
+    {"FROM": "TREE-C5-DONOR f7354c24", "TO": "live C5 gateway", "RELATION": "PARTIALLY_INCORPORATES", "EVIDENCE": "28 git-only fabric paths absent from TREE-001"},
+    {"FROM": "unified-intelligence-restore zip", "TO": "_raios-kaggle-census local extract", "RELATION": "LOCAL_IMPORTED", "EVIDENCE": "path collection-for-understand"},
+    {"FROM": "C6 kit zip OneDrive", "TO": "C6 canonical ZIP de88023d", "RELATION": "UNKNOWN", "EVIDENCE": "placeholder; LANE_A hash mismatch report"}
+  ]
+}

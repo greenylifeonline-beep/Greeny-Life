@@ -1,0 +1,50 @@
+{
+  "schema": "raios.kaggle-notebook-version-index.v1",
+  "KAGGLE_ACCESS_PROVEN": false,
+  "C2_KAGGLE_DIRECT_ACCESS_PROVEN": false,
+  "C6_KAGGLE_DIRECT_ACCESS_PROVEN": false,
+  "KAGGLE_NOTEBOOKS_EXISTENCE_PROVEN": true,
+  "KAGGLE_NOTEBOOKS_COUNT_PROVEN": 2,
+  "KAGGLE_NOTEBOOK_CONTENT_BOUND": false,
+  "KAGGLE_NOTEBOOK_VERSIONS_BOUND": false,
+  "KAGGLE_NOTEBOOKS_TOTAL": 2,
+  "SOURCE_OF_COUNT": "C1_DIRECT_UI_OBSERVATION",
+  "NOTE": "C1 UI proves existence and count only. Do not treat GitHub commit subjects as Kaggle versions. Do not infer Git relationship from notebook IDs/titles.",
+  "c1_ui_notebooks": [
+    {
+      "ASSET_ID": "KAG-NB-001",
+      "KAGGLE_NOTEBOOK_ID": "notebook8c2d6a9080",
+      "PARENT_SURFACE_ID": "S58",
+      "OWNER_UI": "greenylife",
+      "PRIVACY_UI": "PRIVATE",
+      "UPDATED_UI": "5_days_ago",
+      "DRAFT_UI": false,
+      "CURRENT_VERSION": null,
+      "CONTENT_BOUND": false,
+      "VERSION_BOUND": false
+    },
+    {
+      "ASSET_ID": "KAG-NB-002",
+      "KAGGLE_NOTEBOOK_ID": "notebook8d96bf4e18",
+      "PARENT_SURFACE_ID": "S58",
+      "OWNER_UI": "greenylife",
+      "PRIVACY_UI": "PRIVATE",
+      "UPDATED_UI": "5_days_ago",
+      "DRAFT_UI": true,
+      "CURRENT_VERSION": null,
+      "CONTENT_BOUND": false,
+      "VERSION_BOUND": false
+    }
+  ],
+  "github_side_only_not_kaggle_versions": {
+    "NOTE": "Retained from prior census. Not promoted by this C1 UI delta.",
+    "KAGGLE_GITHUB_PUSH_RELATIONSHIPS_PROVEN": 0,
+    "items": [
+      {
+        "LABEL_FROM_COMMIT_SUBJECT": "notebook8c2d6a9080",
+        "GIT_SHA": "da67f44963fafde67df52cb62ab32f75fe725df0",
+        "NOT_A_KAGGLE_API_RECEIPT": true
+      }
+    ]
+  }
+}

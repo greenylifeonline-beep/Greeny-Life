@@ -1,0 +1,63 @@
+{
+  "schema": "raios.s35.nomadic.v1",
+  "SURFACE_ID": "S35",
+  "STATE": "EXTERNAL_DRAFT_PENDING_PROMOTION",
+  "INTENDED_CANONICAL_PATHS": [
+    "RAIOS/V9/cloud/nomadic/__init__.py",
+    "RAIOS/V9/cloud/nomadic/checkpoint_store.py",
+    "RAIOS/V9/cloud/nomadic/idempotency.py",
+    "RAIOS/V9/cloud/nomadic/job_ledger.py",
+    "RAIOS/V9/cloud/nomadic/lease_manager.py",
+    "RAIOS/V9/cloud/nomadic/provider_contract.py",
+    "RAIOS/V9/cloud/nomadic/receipt_writer.py",
+    "RAIOS/V9/cloud/nomadic/reconciliation.py",
+    "RAIOS/V9/cloud/nomadic/work_stealing_scheduler.py",
+    "RAIOS/V9/cloud/nomadic/worker_contract.py"
+  ],
+  "CONTENTS": [
+    {
+      "NAME": "__init__.py",
+      "SHA256": "7c4e55ee0fac76add993cfda32c1b48b7df91196a107f1bc9458dfe0a7a3a585"
+    },
+    {
+      "NAME": "checkpoint_store.py",
+      "SHA256": "d7ec6447b300cfe96b22810b07acc0417294e668b1de09ee75cf5a5953be7570"
+    },
+    {
+      "NAME": "idempotency.py",
+      "SHA256": "1a7ec75f578960da2c7c06b3b637ef1b86d90cd7336f5a9d30539ce9555a479f"
+    },
+    {
+      "NAME": "job_ledger.py",
+      "SHA256": "526870071da7f90e9c6c9fcd7666fa1654025acbebb6667fde1abc7dc0aeb01f"
+    },
+    {
+      "NAME": "lease_manager.py",
+      "SHA256": "47bc639c0f04b226ff1e24e2065ca76244c21c1bb17a855d26abb627d789f28e"
+    },
+    {
+      "NAME": "provider_contract.py",
+      "SHA256": "07c7a73d00e9b47cbbd0eef21ee535fbd9d7ee33d2cf03579a329a1e60cc09d0"
+    },
+    {
+      "NAME": "receipt_writer.py",
+      "SHA256": "68c61d6cf2e4e16663e10d854ea1bc4089154eb2df6141d5fae5c52e66bf3823"
+    },
+    {
+      "NAME": "reconciliation.py",
+      "SHA256": "75b16c461186cfb7d72feb9948a62e10fe7808a50bb81cf47282ac1623431c39"
+    },
+    {
+      "NAME": "work_stealing_scheduler.py",
+      "SHA256": "4703fd5ff336589d026482b143590191875dd52f5b362eb4cb3bc4676e1a9bf5"
+    },
+    {
+      "NAME": "worker_contract.py",
+      "SHA256": "7442e3ab2e120f70f71e030170159d9e2e4845af9fd3682a423774dab39182b8"
+    }
+  ],
+  "PACKAGE_SHA256": "7bab6851039c3274d63791b02dc145bce7457013cdcd51f5506abb73817d14f7",
+  "PACKAGE_SHA256_METHOD": "SHA256 of sorted 'name hash\\n' lines",
+  "C3_REVIEW_BINDING_SHA256": "881c7a03908396d3cfee6f847a74e015c8821d77e79646bb4145f4d8130266c2",
+  "RELATION_TO_EXISTING_ASSETS": "REUSE_CANDIDATE for CAP-C6; do not install/promote during census; C6-LOCAL worker registry claim is stale and is not AG access"
+}

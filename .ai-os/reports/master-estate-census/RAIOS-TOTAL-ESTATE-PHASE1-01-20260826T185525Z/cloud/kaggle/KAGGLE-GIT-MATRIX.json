@@ -1,0 +1,32 @@
+{
+  "schema": "raios.kaggle-git-matrix.v1",
+  "KAGGLE_ACCESS_PROVEN": false,
+  "KAGGLE_GIT_REPOS": null,
+  "C1_REPORTED_COMMIT_FOUND": false,
+  "C1_REPORTED_COMMIT_SOURCE": null,
+  "NOTE": "GitHub origin/main da67f449 is a Kaggle-notebook-labeled commit, not a Kaggle API census. PUSH_EVIDENCE_PRESENT on GitHub does not prove KAGGLE_GITHUB_PUSH_RELATIONSHIP.",
+  "relationships": [
+    {
+      "KAGGLE_NOTEBOOK_ID": "notebook8c2d6a9080",
+      "KAGGLE_VERSION_ID": "unbound",
+      "REPO_ROOT": "GitHub origin greenylifeonline-beep/Greeny-Life",
+      "REMOTE_URL_REDACTED": "https://github.com/greenylifeonline-beep/Greeny-Life.git",
+      "BRANCH": "main",
+      "LOCAL_HEAD_SHA": "not on TREE-001 HEAD; object present as da67f44963fafde67df52cb62ab32f75fe725df0",
+      "REMOTE_TRACKING_SHA_IF_PRESENT": "da67f44963fafde67df52cb62ab32f75fe725df0",
+      "PUSH_CAPABILITY_CONFIGURED": null,
+      "PUSH_EVIDENCE_PRESENT": true,
+      "PUSHED_REF": "refs/heads/main",
+      "PUSHED_SHA": "da67f44963fafde67df52cb62ab32f75fe725df0",
+      "PUSH_TIMESTAMP": "2026-08-18T02:05:25+02:00",
+      "EVIDENCE": "git ls-remote origin HEAD/main equals this SHA; commit subject names Kaggle Notebook Version 3; single file notebook8c2d6a9080.ipynb",
+      "INFERRED_FROM_CREDENTIALS_ONLY": false,
+      "KAGGLE_LIVE_CLONE_INSPECTED": false,
+      "KAGGLE_API_RECEIPT": false,
+      "RELATIONSHIP_PROVEN": false
+    }
+  ],
+  "KAGGLE_GITHUB_RELATIONSHIPS_PROVEN": 0,
+  "KAGGLE_GITHUB_PUSH_RELATIONSHIPS_PROVEN": 0,
+  "GITHUB_KAGGLE_LABELED_COMMIT_OBSERVED": 1
+}

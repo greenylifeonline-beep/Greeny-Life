@@ -1,0 +1,24 @@
+{
+  "schema": "raios.total-estate.composition-opportunities.v1",
+  "TASK_ID": "RAIOS-TOTAL-ESTATE-PHASE1-01",
+  "items": [
+    {
+      "COMPOSITION_ID": "COMP-ROUTER-C5",
+      "PART_A": "RAIOS-USER-ROUTER",
+      "PART_B": "C5 gateway :8766",
+      "RECOMMENDATION": "KEEP; do not rewrite chat path"
+    },
+    {
+      "COMPOSITION_ID": "COMP-IDENTITY-MCP",
+      "PART_A": "C2-IDENTITY-BINDING.json ACTIVE_CANONICAL",
+      "PART_B": "SEAT-MAP/POLICY HISTORICAL",
+      "RECOMMENDATION": "WRAP historical MCP files; do not delete"
+    },
+    {
+      "COMPOSITION_ID": "COMP-C6-NOMADIC",
+      "PART_A": "PRE_LLM nomadic draft",
+      "PART_B": "existing worker/receipt patterns",
+      "RECOMMENDATION": "INVESTIGATE after canonical ZIP hash match; no promote now"
+    }
+  ]
+}

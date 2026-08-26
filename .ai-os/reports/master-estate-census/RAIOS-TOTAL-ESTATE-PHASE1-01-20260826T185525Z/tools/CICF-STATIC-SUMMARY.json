@@ -1,0 +1,71 @@
+{
+  "schema": "raios.cicf.static-classification.v1",
+  "source": "C:\\Users\\Ghanam\\Documents\\Codex\\Greeny-Life-Repair\\_raios-wave2-post-retirement\\reports\\CICF-CAPABILITY-INVENTORY.json",
+  "cicf_head_note": {
+    "branch": "v9-neurolingua-semantic-kernel",
+    "head": "18feb6326a51e26cf353d810165a25e4da65342b"
+  },
+  "counts": {
+    "CICF_TOOLS_TOTAL": 1464,
+    "CICF_P0_NAME_ONLY_REMAINING": 46,
+    "CICF_P1": 0,
+    "CICF_P2": 1418,
+    "CICF_ACTIVE_OR_REFERENCED": 133,
+    "CICF_UNIQUE": 1384,
+    "CICF_DUPLICATE": 27,
+    "CICF_GENERATED": 55,
+    "CICF_SUPERSEDED": 262,
+    "CICF_UNKNOWN": 7,
+    "ALL_RUNTIME_REFERENCED_TOOLS_STATICALLY_UNDERSTOOD": true,
+    "ALL_UNIQUE_TOOL_CANDIDATES_STATICALLY_UNDERSTOOD": true,
+    "P0_REASONS": {
+      "EMPTY": 45,
+      "GARBAGE_PATH": 1
+    },
+    "FAMILY": {
+      "validation": 188,
+      "knowledge": 196,
+      "ERP": 43,
+      "testing": 27,
+      "model": 68,
+      "archive": 264,
+      "business": 59,
+      "self-repair": 18,
+      "retrieval": 4,
+      "transport": 2,
+      "agent": 191,
+      "observability": 11,
+      "auth": 5,
+      "learning": 259,
+      "state": 7,
+      "generated": 55,
+      "compute": 1,
+      "migration": 56,
+      "identity": 2,
+      "unknown": 6,
+      "router": 2
+    },
+    "PROOF": {
+      "P2_STATIC_VALIDATED": 1418,
+      "P0_NAME_ONLY": 46
+    },
+    "RELATION": {
+      "UNRELATED": 1188,
+      "TESTS": 25,
+      "SUPPORTS": 93,
+      "MIGRATES": 149,
+      "IMPLEMENTS": 9
+    },
+    "STATUS": {
+      "CLASSIFIED": 958,
+      "EMPTY": 45,
+      "ACTIVE_OR_REFERENCED": 132,
+      "SUPERSEDED": 262,
+      "DUPLICATE": 11,
+      "GENERATED": 55,
+      "UNKNOWN": 1
+    },
+    "METHOD": "CICF inventory fields + python_capabilities AST join + path/family heuristics; no LLM; no live execution of the 1464",
+    "IMPORTERS_NOTE": "IMPORTERS_CALLERS_COUNT not computed; full-repo call graph out of scope for static closeout"
+  }
+}
