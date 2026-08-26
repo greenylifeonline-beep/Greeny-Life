@@ -1,0 +1,203 @@
+{
+  "schema": "raios.kaggle.nb-decision-01.v1",
+  "TASK_ID": "RAIOS-KAGGLE-NB-DECISION-01",
+  "AUTHORITY": "C1",
+  "REVIEWER": "C3",
+  "PARENT": "RAIOS-TOTAL-ESTATE-PHASE1-02",
+  "MODE": [
+    "DECISION_EXECUTION",
+    "DELTA_ONLY",
+    "NO_RESCAN",
+    "NO_MODEL_RUN",
+    "NO_DELETE",
+    "NO_MERGE",
+    "NO_CANONICAL_RUNTIME_PROMOTION"
+  ],
+  "EVIDENCE_CLASS": "C3_EVIDENCE_DECISION",
+  "NOT_PROMOTED_TO": [
+    "KAGGLE_DIRECT_API_EVIDENCE",
+    "KAGGLE_CONTENT_EVIDENCE",
+    "KAGGLE_VERSION_EVIDENCE",
+    "CURRENT_CANONICAL_SOURCE_OF_TRUTH",
+    "RAIOS_RUNTIME_CANONICAL"
+  ],
+  "C2_KAGGLE_DIRECT_ACCESS_PROVEN": false,
+  "C6_KAGGLE_DIRECT_ACCESS_PROVEN": false,
+  "KAGGLE_ACCESS_PROVEN": false,
+  "KAGGLE_NOTEBOOK_CONTENT_BOUND": false,
+  "KAGGLE_NOTEBOOK_VERSIONS_BOUND": false,
+  "HASH_COMPARE_LIMITATION": "C3 reported UNIQUE_HASHES and file counts; those hashes are not present in Phase-1 FILES/CICF manifests (CICF SHA256 mostly null). Exact match classes therefore remain 0. Name/path presence in CICF, archive index, and git branch list is the compare scope.",
+  "MASTER_SURFACES_TOTAL_UNCHANGED": 71,
+  "ASSIMILATE_AUTOMATICALLY": false,
+  "notebooks": {
+    "KAG-NB-001": {
+      "ASSET_ID": "KAG-NB-001",
+      "NOTEBOOK_ID": "notebook8c2d6a9080",
+      "DECISION": "KEEP_PRIMARY_KAGGLE_FORENSIC_WORKSPACE",
+      "CLASSIFICATION": "RAIOS_KAGGLE_FORENSIC_CONTINUITY_WORKSPACE",
+      "VALUE": "HIGH_UNIQUE",
+      "ACTION": "KEEP",
+      "KAGGLE_FORENSIC_PRIMARY": true,
+      "RAIOS_RUNTIME_CANONICAL": false,
+      "DELETE_ELIGIBLE": false,
+      "C3_FILES_TOTAL": 259,
+      "C3_INPUT_FILES": 255,
+      "C3_UNIQUE_HASHES": 257,
+      "UNIQUE_OBSERVED_VALUE": [
+        "raios-greeny-continuity-evidence",
+        "CURRENT-STATE",
+        "TASKS",
+        "LOCKS",
+        "CONTINUITY-EVIDENCE-MANIFEST",
+        "GL-003 handoff",
+        "shared raios-cognitive-state"
+      ],
+      "KAG_NB_001_DECISION_BOUND": true
+    },
+    "KAG-NB-002": {
+      "ASSET_ID": "KAG-NB-002",
+      "NOTEBOOK_ID": "notebook8d96bf4e18",
+      "DECISION": "ARCHIVE_CANDIDATE_V8_RECOVERY_WORKSPACE",
+      "CLASSIFICATION": "RAIOS_V8_COGNITIVE_STATE_RECOVERY_WORKSPACE",
+      "VALUE": "REFERENCE_HIGH",
+      "ACTION": "ARCHIVE_CANDIDATE",
+      "DELETE_ELIGIBLE": false,
+      "C3_FILES_TOTAL": 128,
+      "C3_INPUT_FILES": 124,
+      "C3_UNIQUE_HASHES": 127,
+      "REASON": "mounted-state content appears substantially contained in the broader Kaggle estate, but notebook source/version history has not yet been proven redundant. Runtime filesystem inspection does not prove notebook source equivalence.",
+      "NB2_DELETE_GATE": {
+        "SOURCE_UNIQUE_VALUE": "unproven",
+        "VERSION_UNIQUE_VALUE": "unproven",
+        "OUTPUT_UNIQUE_VALUE": "unproven",
+        "DEPENDENCY_UNIQUE_VALUE": "unproven",
+        "PROVENANCE_PRESERVED": false,
+        "NB1_OR_CANONICAL_REPLACEMENT_PROVEN": false
+      },
+      "KAG_NB_002_DECISION_BOUND": true
+    }
+  },
+  "datasets": {
+    "KAG-DS-COGNITIVE-STATE": {
+      "ASSET_ID": "KAG-DS-COGNITIVE-STATE",
+      "NAME": "raios-cognitive-state",
+      "PARENT_SURFACE_ID": "S60",
+      "ALSO_OBSERVED_AS_INPUT_ON": "S61",
+      "DECISION": "CRITICAL_UNIQUE_COGNITIVE_HERITAGE",
+      "CLASSIFICATION": "RAIOS_COGNITIVE_HERITAGE_STATE",
+      "VALUE": "CRITICAL_UNIQUE",
+      "ACTION": "PRESERVE_AND_RECONCILE_FOR_REUSE",
+      "REUSE_CANDIDATE": true,
+      "ASSIMILATE_AUTOMATICALLY": false,
+      "COPY_BLINDLY_INTO_CURRENT_RUNTIME": false,
+      "OBSERVED_STRUCTURES": [
+        "CURRENT remote pointer",
+        "RECOVERY-CONTRACT",
+        "DURABLE-MANIFEST",
+        "SOURCE-OF-TRUTH",
+        "routing policies",
+        "skills",
+        "semantic corpora",
+        "experiences",
+        "foundational experience",
+        "learning ledger",
+        "checkpoints"
+      ],
+      "OBSERVED_CHECKPOINT_LINEAGE": [
+        "V8.0.0-bootstrap",
+        "V8.2.1-self-healing-replay",
+        "V8.2.2-metric-integrity",
+        "V8.3.1-selective-zero-llm",
+        "V8.4.1-fingerprint-migration",
+        "V8.5-semantic-generalization-shadow",
+        "V8.5.4-targeted-resume",
+        "V8.6-canonical-generalization"
+      ],
+      "COGNITIVE_STATE_ASSET_BOUND": true
+    },
+    "KAG-DS-CONTINUITY-EVIDENCE": {
+      "ASSET_ID": "KAG-DS-CONTINUITY-EVIDENCE",
+      "NAME": "raios-greeny-continuity-evidence",
+      "PARENT_SURFACE_ID": "S60",
+      "ALSO_OBSERVED_AS_INPUT_ON": "S61",
+      "DECISION": "HIGH_UNIQUE_PROVENANCE_HERITAGE",
+      "CLASSIFICATION": "RAIOS_CONTINUITY_PROVENANCE_HERITAGE",
+      "VALUE": "HIGH_UNIQUE",
+      "ACTION": "PRESERVE_AND_RECONCILE",
+      "REUSE_CANDIDATE": true,
+      "ASSIMILATE_AUTOMATICALLY": false,
+      "NOT_CURRENT_OPERATIONAL_TRUTH": [
+        "TASKS",
+        "LOCKS",
+        "CURRENT-STATE"
+      ],
+      "LOCAL_NAME_COLOCATED": {
+        "ARCHIVE_ID": "A-ZIP-CONT",
+        "PATH": "RAIOS-GREENY-CONTINUITY-EVIDENCE.zip",
+        "SHA256": "f8a103991d30a6ecc2b3cbdc2c75532a494e7682b43cd5d5d76b3ae270e186ba",
+        "MEMBER_COUNT": 8,
+        "RELATION": "UNKNOWN",
+        "NOTE": "Local zip is Phase-1 archive-indexed. Byte identity with the Kaggle dataset is not proven (Kaggle hashes absent from Phase-1 manifests)."
+      },
+      "CONTINUITY_EVIDENCE_ASSET_BOUND": true
+    }
+  },
+  "state_semantics": {
+    "KAGGLE_SOURCE_OF_TRUTH_BRANCH": "raios/gl-005-convergence",
+    "CLASSIFICATION": "HISTORICAL_SOURCE_OF_TRUTH_POINTER",
+    "NOT": "CURRENT_CANONICAL_SOURCE_OF_TRUTH",
+    "POINTER_TARGET_GIT": "EXACT_GIT_MATCH",
+    "GIT_REF": "raios/gl-005-convergence",
+    "GIT_REF_EVIDENCE": "02-MASTER-GIT-ESTATE.json TREE-001 LOCAL_BRANCHES",
+    "GL005_PROVEN": false
+  },
+  "model_semantics": {
+    "MODEL_USAGE_HISTORY_PRESENT": true,
+    "EXPERIENCE_RECORD_MODEL": "qwen3:14b-q4_K_M",
+    "REFERENCES": [
+      "Qwen",
+      "Granite",
+      "DeepSeek"
+    ],
+    "MODEL_CHECKPOINT_CANDIDATES": 0,
+    "MODEL_WEIGHTS_PRESENT_IN_NOTEBOOK": false,
+    "EXTRACTED_QWEN_GRANITE": false,
+    "SAFE_TO_REMOVE_SOURCE": false,
+    "LOCAL_OLLAMA_HAS_QWEN3_14B": false
+  },
+  "gl_lineage": {
+    "GL002_CLASSIFICATION": "HISTORICAL_IMPLEMENTATION_FOUND",
+    "GL002_RECONSTRUCTED_FROM_KAGGLE": false,
+    "GL003_CLASSIFICATION": "EVIDENCE_ONLY_NO_SOURCE",
+    "KAGGLE_GL003_HANDOFF_EVIDENCE_PRESENT": true,
+    "GL003_KAGGLE_HANDOFF_BOUND": true,
+    "GL004": "HISTORICAL_REFERENCES_ONLY",
+    "GL005": "HISTORICAL_CONVERGENCE_STATE_EVIDENCE_ONLY",
+    "GL005_PROVEN": false
+  },
+  "KAG_NB_001_DECISION_BOUND": true,
+  "KAG_NB_002_DECISION_BOUND": true,
+  "COGNITIVE_STATE_ASSET_BOUND": true,
+  "CONTINUITY_EVIDENCE_ASSET_BOUND": true,
+  "COGNITIVE_ASSETS_TOTAL": 23,
+  "COGNITIVE_EXACT_LOCAL_MATCH": 0,
+  "COGNITIVE_EXACT_RETIRED_MATCH": 0,
+  "COGNITIVE_KAGGLE_ONLY": 14,
+  "COGNITIVE_LOCAL_NEWER": 0,
+  "COGNITIVE_KAGGLE_NEWER": 0,
+  "COGNITIVE_DIVERGED": 3,
+  "COGNITIVE_UNKNOWN": 6,
+  "REUSE_CANDIDATES_TOTAL": 16,
+  "GL003_KAGGLE_HANDOFF_BOUND": true,
+  "NB2_DELETE_ELIGIBLE": false,
+  "FILES_DELETED": "none",
+  "MERGE_EXECUTED": false,
+  "MODEL_EXECUTION": false,
+  "GL005_PROVEN": false,
+  "EXTRACTED_QWEN_GRANITE": false,
+  "SAFE_TO_REMOVE_SOURCE": false,
+  "PHASE1_COMPLETE": false,
+  "READY_FOR_PHASE2": false,
+  "FINAL_VERDICT": "KAGGLE_NOTEBOOK_DECISION_EXECUTED_READY_FOR_RECONCILIATION",
+  "COGNITIVE_EXACT_GIT_MATCH": 1
+}

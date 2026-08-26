@@ -1,0 +1,197 @@
+{
+  "schema": "raios.kaggle.cognitive-heritage-reconciliation.v1",
+  "TASK_ID": "RAIOS-KAGGLE-NB-DECISION-01",
+  "PARENT": "RAIOS-TOTAL-ESTATE-PHASE1-02",
+  "COMPARE_SCOPE": "existing Phase-1 CICF names/paths (SHA256 mostly null), 04-MASTER-ARCHIVE-INDEX, 02-MASTER-GIT-ESTATE local branches. No broad rescan. No Kaggle file hashes in Phase-1 manifests.",
+  "ASSIMILATE_AUTOMATICALLY": false,
+  "DUPLICATE_COPY": false,
+  "COPY_BLINDLY_INTO_CURRENT_RUNTIME": false,
+  "assets": [
+    {
+      "FAMILY": "skills",
+      "RELATION": "UNKNOWN",
+      "REUSE_CANDIDATE": false,
+      "NOTE": "Local skill-named CICF entries exist; Kaggle hashes not in Phase-1 manifests. Not EXACT_LOCAL_MATCH."
+    },
+    {
+      "FAMILY": "experiences",
+      "RELATION": "UNKNOWN",
+      "REUSE_CANDIDATE": false,
+      "NOTE": "Local experience/episode files in CICF; hashes uncompared"
+    },
+    {
+      "FAMILY": "semantic-corpus",
+      "RELATION": "KAGGLE_ONLY",
+      "REUSE_CANDIDATE": true,
+      "NOTE": "Name not found in Phase-1 CICF classification"
+    },
+    {
+      "FAMILY": "learning-ledger",
+      "RELATION": "UNKNOWN",
+      "REUSE_CANDIDATE": false,
+      "LOCAL_NAME": "_raios-state-probe/RAIOS-STATE-LATEST/RAIOS/raios-cognitive-factory/state/manifests/learning-ledger.json",
+      "LOCAL_SHA256_IN_CICF": null
+    },
+    {
+      "FAMILY": "checkpoints",
+      "RELATION": "KAGGLE_ONLY",
+      "REUSE_CANDIDATE": true,
+      "ROLLUP": true,
+      "NAMED_LINEAGE": [
+        "V8.0.0-bootstrap",
+        "V8.2.1-self-healing-replay",
+        "V8.2.2-metric-integrity",
+        "V8.3.1-selective-zero-llm",
+        "V8.4.1-fingerprint-migration",
+        "V8.5-semantic-generalization-shadow",
+        "V8.5.4-targeted-resume",
+        "V8.6-canonical-generalization"
+      ],
+      "NOTE": "None of these checkpoint names appear in Phase-1 CICF. Counted as family plus 8 children in COGNITIVE_ASSETS_TOTAL."
+    },
+    {
+      "FAMILY": "routing-policies",
+      "RELATION": "KAGGLE_ONLY",
+      "REUSE_CANDIDATE": true,
+      "NOTE": "Kaggle routing-policies corpus name absent from CICF. Local USER-ROUTER/POLICY is current operational routing, not proven byte-equal."
+    },
+    {
+      "FAMILY": "recovery-contract",
+      "RELATION": "KAGGLE_ONLY",
+      "REUSE_CANDIDATE": true,
+      "NOTE": "RECOVERY-CONTRACT not in Phase-1 CICF names"
+    },
+    {
+      "FAMILY": "durable-manifest",
+      "RELATION": "UNKNOWN",
+      "REUSE_CANDIDATE": false,
+      "LOCAL_NAME": "_raios-state-probe/RAIOS-STATE-LATEST/RAIOS/DURABLE-MANIFEST.json",
+      "LOCAL_SHA256_IN_CICF": null
+    },
+    {
+      "FAMILY": "foundational-experience",
+      "RELATION": "KAGGLE_ONLY",
+      "REUSE_CANDIDATE": true
+    },
+    {
+      "FAMILY": "SOURCE-OF-TRUTH.json",
+      "RELATION": "KAGGLE_ONLY",
+      "REUSE_CANDIDATE": true,
+      "POINTER_TARGET_BRANCH": {
+        "REF": "raios/gl-005-convergence",
+        "RELATION": "EXACT_GIT_MATCH",
+        "CLASSIFICATION": "HISTORICAL_SOURCE_OF_TRUTH_POINTER",
+        "NOT": "CURRENT_CANONICAL_SOURCE_OF_TRUTH",
+        "GL005_PROVEN": false,
+        "EVIDENCE": "02-MASTER-GIT-ESTATE.json TREE-001 LOCAL_BRANCHES includes raios/gl-005-convergence. The SOURCE-OF-TRUTH.json file itself is not in CICF."
+      }
+    },
+    {
+      "FAMILY": "CURRENT-STATE",
+      "RELATION": "DIVERGED",
+      "REUSE_CANDIDATE": false,
+      "NOTE": "Local CURRENT-STATE is operational; Kaggle copy is historical evidence unless exact current binding proves otherwise"
+    },
+    {
+      "FAMILY": "TASKS",
+      "RELATION": "DIVERGED",
+      "REUSE_CANDIDATE": false,
+      "NOTE": "Kaggle TASKS are historical evidence, not current operational truth"
+    },
+    {
+      "FAMILY": "LOCKS",
+      "RELATION": "DIVERGED",
+      "REUSE_CANDIDATE": false,
+      "NOTE": "Kaggle LOCKS are historical evidence, not current operational truth"
+    },
+    {
+      "FAMILY": "CONTINUITY-EVIDENCE-MANIFEST",
+      "RELATION": "UNKNOWN",
+      "REUSE_CANDIDATE": false,
+      "LOCAL_NAME": "RAIOS-CONTINUITY-EVIDENCE/CONTINUITY-EVIDENCE-MANIFEST.json",
+      "LOCAL_ARCHIVE": "A-ZIP-CONT RAIOS-GREENY-CONTINUITY-EVIDENCE.zip sha256 f8a103991d30a6ecc2b3cbdc2c75532a494e7682b43cd5d5d76b3ae270e186ba",
+      "LOCAL_SHA256_IN_CICF": null
+    },
+    {
+      "FAMILY": "GL-003-handoff",
+      "RELATION": "UNKNOWN",
+      "REUSE_CANDIDATE": false,
+      "KAGGLE_GL003_HANDOFF_EVIDENCE_PRESENT": true,
+      "LOCAL_NAME": "archive/retired-worktree-preservation/20260820-095437/GL-003-Project-Brains/.ai-os/handoffs/20260815-230006-deepseek-local-GL-003.md",
+      "LOCAL_SHA256_IN_CICF": null,
+      "NOTE": "Does not change GL003_CLASSIFICATION=EVIDENCE_ONLY_NO_SOURCE. Do not reconstruct from Kaggle text."
+    }
+  ],
+  "checkpoint_children": [
+    {
+      "NAME": "V8.0.0-bootstrap",
+      "RELATION": "KAGGLE_ONLY",
+      "REUSE_CANDIDATE": true
+    },
+    {
+      "NAME": "V8.2.1-self-healing-replay",
+      "RELATION": "KAGGLE_ONLY",
+      "REUSE_CANDIDATE": true
+    },
+    {
+      "NAME": "V8.2.2-metric-integrity",
+      "RELATION": "KAGGLE_ONLY",
+      "REUSE_CANDIDATE": true
+    },
+    {
+      "NAME": "V8.3.1-selective-zero-llm",
+      "RELATION": "KAGGLE_ONLY",
+      "REUSE_CANDIDATE": true
+    },
+    {
+      "NAME": "V8.4.1-fingerprint-migration",
+      "RELATION": "KAGGLE_ONLY",
+      "REUSE_CANDIDATE": true
+    },
+    {
+      "NAME": "V8.5-semantic-generalization-shadow",
+      "RELATION": "KAGGLE_ONLY",
+      "REUSE_CANDIDATE": true
+    },
+    {
+      "NAME": "V8.5.4-targeted-resume",
+      "RELATION": "KAGGLE_ONLY",
+      "REUSE_CANDIDATE": true
+    },
+    {
+      "NAME": "V8.6-canonical-generalization",
+      "RELATION": "KAGGLE_ONLY",
+      "REUSE_CANDIDATE": true
+    }
+  ],
+  "counts": {
+    "COGNITIVE_ASSETS_TOTAL": 23,
+    "COGNITIVE_EXACT_LOCAL_MATCH": 0,
+    "COGNITIVE_EXACT_RETIRED_MATCH": 0,
+    "COGNITIVE_EXACT_GIT_MATCH_POINTER_ONLY": 1,
+    "COGNITIVE_KAGGLE_ONLY": 14,
+    "COGNITIVE_LOCAL_NEWER": 0,
+    "COGNITIVE_KAGGLE_NEWER": 0,
+    "COGNITIVE_DIVERGED": 3,
+    "COGNITIVE_UNKNOWN": 6,
+    "REUSE_CANDIDATES_COGNITIVE": 14,
+    "REUSE_CANDIDATES_DATASETS": 2,
+    "REUSE_CANDIDATES_TOTAL": 16,
+    "COGNITIVE_EXACT_GIT_MATCH": 1
+  },
+  "count_method": "23 rows = 15 family/named rows + 8 checkpoint children. Relation tally is additive over those 23: KAGGLE_ONLY=14 (6 families including checkpoints rollup + 8 children) + DIVERGED=3 + UNKNOWN=6 = 23. EXACT_LOCAL/RETIRED/NEWER=0. EXACT_GIT_MATCH is the gl-005 branch pointer target only and is excluded from the 23. REUSE_CANDIDATES_TOTAL=16 = 14 KAGGLE_ONLY cognitive rows + 2 dataset assets (KAG-DS-COGNITIVE-STATE, KAG-DS-CONTINUITY-EVIDENCE). Datasets are not in the 23 cognitive rows. No automatic assimilate. No duplicate-copy.",
+  "EXACT_DUPLICATES_RECORDED": [],
+  "PROVENANCE_RELATIONSHIPS": [
+    {
+      "FROM": "Kaggle SOURCE-OF-TRUTH.json pointer",
+      "TO": "git branch raios/gl-005-convergence",
+      "RELATION": "HISTORICAL_SOURCE_OF_TRUTH_POINTER",
+      "PROVEN": "EXACT_GIT_MATCH_FOR_REF_NAME_ONLY"
+    },
+    {
+      "FROM": "KAG-DS-CONTINUITY-EVIDENCE",
+      "TO": "A-ZIP-CONT RAIOS-GREENY-CONTINUITY-EVIDENCE.zip",
+      "RELATION": "NAME_COLOCATED_UNKNOWN_BYTES"
+    }
+  ]
+}

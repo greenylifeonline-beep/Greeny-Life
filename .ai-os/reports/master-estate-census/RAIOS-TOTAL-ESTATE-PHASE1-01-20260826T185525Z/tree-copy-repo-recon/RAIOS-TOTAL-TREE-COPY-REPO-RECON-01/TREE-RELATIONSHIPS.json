@@ -1,0 +1,95 @@
+{
+  "schema": "raios.tree-copy-repo-recon.relationships.v1",
+  "TASK_ID": "RAIOS-TOTAL-TREE-COPY-REPO-RECON-01",
+  "NO_FETCH": true,
+  "IMPLICIT_PROMISOR_CONTACT_ON_MISSING_REF": "merge-base TREE-001 vs fd2775e3 contacted origin; upload-pack not our ref; FETCH_SUCCEEDED=false",
+  "pairs": [
+    {
+      "A": "TA-TREE-001",
+      "B": "TA-TREE-001-PHASE2A-REF",
+      "CLASS": "DESCENDANT",
+      "EVIDENCE": "merge-base(8e57fdb,12603d0)=12603d0; rev-list 12603d0..HEAD count=1 commit 8e57fdb",
+      "PROVEN": true
+    },
+    {
+      "A": "TA-TREE-001",
+      "B": "TA-WT-P0",
+      "CLASS": "DIVERGED",
+      "EVIDENCE": "same object db; merge-base(8e57fdb,30637e)=e1dfd7c; 30637e..12603d0=1; 12603d0..30637e=118",
+      "PROVEN": true
+    },
+    {
+      "A": "TA-WT-P0",
+      "B": "phase2a/12603d0",
+      "CLASS": "DIVERGED",
+      "EVIDENCE": "merge-base(12603d0,30637e)=e1dfd7c neither ancestor of the other",
+      "PROVEN": true
+    },
+    {
+      "A": "TA-TREE-001",
+      "B": "TA-RETIRED",
+      "CLASS": "RELATIONSHIP_UNRESOLVED",
+      "EVIDENCE": "same origin URL and same branch NAME; TREE-001 lacks fd2775e3; Retired lacks 8e57fdb/12603d0/da67f449. Do not infer UNRELATED from missing objects.",
+      "PROVEN": false
+    },
+    {
+      "A": "TA-RETIRED",
+      "B": "TA-GITHUB-ORIGIN main",
+      "CLASS": "RELATIONSHIP_UNRESOLVED",
+      "EVIDENCE": "Retired missing da67f449; no merge-base",
+      "PROVEN": false
+    },
+    {
+      "A": "TA-TREE-001",
+      "B": "TA-GITHUB-ORIGIN main",
+      "CLASS": "DIVERGED",
+      "EVIDENCE": "Phase-1 merge-base --is-ancestor failed vs 12603d0; da67f449 object exists locally; origin/main is Kaggle notebook commit; local HEAD 8e57fdb is census commit on different branch",
+      "PROVEN": true,
+      "NOTE": "Not SAME_GIT_HISTORY with origin/main tip"
+    },
+    {
+      "A": "TA-TREE-001 HEAD",
+      "B": "origin/ai-evolution-202608051809",
+      "CLASS": "SAME_GIT_HISTORY",
+      "EVIDENCE": "ls-remote SHA equals local HEAD 8e57fdb",
+      "PROVEN": true
+    },
+    {
+      "A": "local v9-neurolingua-semantic-kernel",
+      "B": "origin v9-neurolingua-semantic-kernel",
+      "CLASS": "ANCESTOR",
+      "EVIDENCE": "local b877a232 is ancestor of origin 165b7262; remote +5 commits",
+      "PROVEN": true
+    },
+    {
+      "A": "TA-TREE-001",
+      "B": "TA-DESKTOP-BUNDLE",
+      "CLASS": "PARTIAL_OVERLAP",
+      "EVIDENCE": "bundle verify okay; 68 refs including 12603d0 phase2a-working, gl-002, gl-005, local-gl-003, local-gl-004; not imported",
+      "PROVEN": true
+    },
+    {
+      "A": "TA-GL-004 leftover",
+      "B": "TA-TREE-001",
+      "CLASS": "UNRELATED",
+      "EVIDENCE": "non-git .next leftover vs git worktree; not byte compared",
+      "PROVEN": true,
+      "NOTE": "content hash not computed; classified UNRELATED as different TYPE not as content proof"
+    },
+    {
+      "A": "TA-BRIDGE",
+      "B": "TA-TREE-001",
+      "CLASS": "UNRELATED",
+      "EVIDENCE": "governance overlay not a git product repo",
+      "PROVEN": true
+    },
+    {
+      "A": "TA-ONEDRIVE-GREENY-ZIP",
+      "B": "TA-TREE-001",
+      "CLASS": "RELATIONSHIP_UNRESOLVED",
+      "EVIDENCE": "CLOUD_PLACEHOLDER CONTENT_NOT_LOCAL; no hydrate",
+      "PROVEN": false
+    }
+  ],
+  "UNRESOLVED_RELATIONSHIPS": 3
+}

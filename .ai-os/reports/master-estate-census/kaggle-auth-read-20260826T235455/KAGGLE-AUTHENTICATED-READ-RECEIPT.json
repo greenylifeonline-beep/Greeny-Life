@@ -1,0 +1,53 @@
+﻿{
+    "schema":  "raios.kaggle.authenticated-read-gate.v1",
+    "TASK_ID":  "RAIOS-KAGGLE-AUTH-READ-GATE-01",
+    "generated_at":  "2026-08-26T21:57:14.7670223Z",
+    "account_expected":  "greenylife",
+    "authenticated_session_present":  true,
+    "notebook_1":  {
+                       "id":  "greenylife/notebook8c2d6a9080",
+                       "files_received":  2,
+                       "read_pass":  true
+                   },
+    "notebook_2":  {
+                       "id":  "greenylife/notebook8d96bf4e18",
+                       "files_received":  2,
+                       "read_pass":  true
+                   },
+    "datasets":  [
+                     {
+                         "Dataset":  "greenylife/raios-greeny-continuity-evidence",
+                         "MetadataFiles":  1,
+                         "ReadPass":  true
+                     },
+                     {
+                         "Dataset":  "greenylife/collection-for-understand",
+                         "MetadataFiles":  1,
+                         "ReadPass":  true
+                     },
+                     {
+                         "Dataset":  "greenylife/raios-version-evidence",
+                         "MetadataFiles":  1,
+                         "ReadPass":  true
+                     },
+                     {
+                         "Dataset":  "greenylife/greeny-life",
+                         "MetadataFiles":  1,
+                         "ReadPass":  true
+                     },
+                     {
+                         "Dataset":  "greenylife/raios-cognitive-state",
+                         "MetadataFiles":  1,
+                         "ReadPass":  true
+                     }
+                 ],
+    "datasets_expected":  5,
+    "datasets_read_pass":  5,
+    "authenticated_read_gate_pass":  true,
+    "mutations":  {
+                      "push":  false,
+                      "delete":  false,
+                      "notebook_run":  false,
+                      "dataset_payload_download":  false
+                  }
+}

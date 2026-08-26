@@ -1,0 +1,131 @@
+{
+  "schema": "raios.tree-copy-repo-recon.canonicalization.v1",
+  "TASK_ID": "RAIOS-TOTAL-TREE-COPY-REPO-RECON-01",
+  "MERGE_EXECUTED": false,
+  "NO_CANONICAL_WRITE": true,
+  "table": [
+    {
+      "ASSET_ID": "TA-TREE-001",
+      "DECISION": "KEEP_CANONICAL",
+      "ALSO": "DO_NOT_TOUCH",
+      "NOTE": "C2A active writer. Live HEAD 8e57fdb. Frozen 12603d0 remains historical snapshot."
+    },
+    {
+      "ASSET_ID": "TA-WT-P0",
+      "DECISION": "KEEP_RUNTIME",
+      "NOTE": "linked dirty worktree"
+    },
+    {
+      "ASSET_ID": "TA-PROGRAMDATA-RAIOS",
+      "DECISION": "KEEP_RUNTIME"
+    },
+    {
+      "ASSET_ID": "TA-TEMP-MCP",
+      "DECISION": "KEEP_RUNTIME"
+    },
+    {
+      "ASSET_ID": "TA-RETIRED",
+      "DECISION": "DONOR_CANDIDATE",
+      "NOTE": "do not merge this lane; objects unavailable vs Repair"
+    },
+    {
+      "ASSET_ID": "TA-C5-DONOR",
+      "DECISION": "DONOR_CANDIDATE"
+    },
+    {
+      "ASSET_ID": "TA-DESKTOP-BUNDLE",
+      "DECISION": "DONOR_CANDIDATE"
+    },
+    {
+      "ASSET_ID": "TA-BRIDGE",
+      "DECISION": "DO_NOT_TOUCH",
+      "NOTE": "governance overlay"
+    },
+    {
+      "ASSET_ID": "TA-C6-NOMADIC",
+      "DECISION": "DO_NOT_TOUCH",
+      "NOTE": "C6 owned draft"
+    },
+    {
+      "ASSET_ID": "TA-LEGACY-REVIEW",
+      "DECISION": "ARCHIVE_CANDIDATE"
+    },
+    {
+      "ASSET_ID": "TA-GL-004",
+      "DECISION": "ARCHIVE_CANDIDATE"
+    },
+    {
+      "ASSET_ID": "TA-GL-005",
+      "DECISION": "ARCHIVE_CANDIDATE"
+    },
+    {
+      "ASSET_ID": "TA-GL-WORKTREES",
+      "DECISION": "ARCHIVE_CANDIDATE"
+    },
+    {
+      "ASSET_ID": "TA-RAIOS-EVIDENCE",
+      "DECISION": "ARCHIVE_CANDIDATE"
+    },
+    {
+      "ASSET_ID": "TA-DESKTOP-C3-PACK",
+      "DECISION": "ARCHIVE_CANDIDATE"
+    },
+    {
+      "ASSET_ID": "TA-ONEDRIVE-C6-KIT",
+      "DECISION": "UNRESOLVED",
+      "NOTE": "CLOUD_PLACEHOLDER"
+    },
+    {
+      "ASSET_ID": "TA-ONEDRIVE-GREENY-ZIP",
+      "DECISION": "UNRESOLVED"
+    },
+    {
+      "ASSET_ID": "TA-ONEDRIVE-E3-ZIP",
+      "DECISION": "UNRESOLVED"
+    },
+    {
+      "ASSET_ID": "TA-ONEDRIVE-RAIOS",
+      "DECISION": "UNRESOLVED"
+    },
+    {
+      "ASSET_ID": "TA-GL-002",
+      "DECISION": "UNRESOLVED",
+      "NOTE": "HISTORICAL_IMPLEMENTATION_FOUND; task READY is operational drift"
+    },
+    {
+      "ASSET_ID": "TA-GL-003",
+      "DECISION": "UNRESOLVED",
+      "NOTE": "EVIDENCE_ONLY_NO_SOURCE; task IN_PROGRESS is operational drift"
+    },
+    {
+      "ASSET_ID": "TA-GITHUB-ORIGIN",
+      "DECISION": "KEEP_CANONICAL",
+      "NOTE": "remote reference only; not local canonical tree"
+    },
+    {
+      "ASSET_ID": "TA-CODEX-GIT",
+      "DECISION": "DO_NOT_TOUCH"
+    },
+    {
+      "ASSET_ID": "TA-ONEDRIVE-GREENY-LIFE-PATH",
+      "DECISION": "UNRESOLVED"
+    }
+  ],
+  "DELETE_ELIGIBLE_AFTER_PROOF": [],
+  "merge_candidates": [
+    {
+      "DECISION": "MERGE_CANDIDATE",
+      "SOURCE": "TA-WT-P0",
+      "TARGET_CANDIDATE": "TA-TREE-001",
+      "UNIQUE_FILES": "UNCOMPUTED_BLOB_NONE",
+      "UNIQUE_COMMITS": 118,
+      "UNIQUE_BRANCHES": [
+        "DETACHED@30637e"
+      ],
+      "CONFLICTS": "UNRESOLVED_NO_MERGE",
+      "RUNTIME_DEPENDENCIES": true,
+      "PROVENANCE_DEPENDENCIES": true,
+      "MERGE_METHOD_RECOMMENDATION": "DO_NOT_MERGE_THIS_LANE. Inspect unique commits only after authorized object fetch. No octopus. No C2B execution."
+    }
+  ]
+}

@@ -1,0 +1,67 @@
+{
+  "schema": "raios.tree-copy-repo-recon.contradictions.v1",
+  "TASK_ID": "RAIOS-TOTAL-TREE-COPY-REPO-RECON-01",
+  "HISTORICAL_12603d0_SNAPSHOT_REWRITTEN": false,
+  "DO_NOT_MUTATE_TASKS_JSON": true,
+  "GL002_CLASSIFICATION": "HISTORICAL_IMPLEMENTATION_FOUND",
+  "GL003_CLASSIFICATION": "EVIDENCE_ONLY_NO_SOURCE",
+  "GL005_PROVEN": false,
+  "items": [
+    {
+      "ID": "CX-001",
+      "CLASS": "CONTRADICTORY",
+      "SUBJECT": "TA-TREE-001 HEAD vs frozen S01",
+      "FROZEN": "HEAD 12603d0 on phase2a dirty 219 staged 11",
+      "LIVE": "HEAD 8e57fdb on ai-evolution-202608051809 dirty 233 staged 0",
+      "RESOLUTION": "DELTA_ONLY. Frozen snapshot remains historical. Live HEAD descendant of 12603d0."
+    },
+    {
+      "ID": "CX-002",
+      "CLASS": "CONTRADICTORY",
+      "SUBJECT": "Same branch name different HEADs",
+      "LIVE": "TREE-001=8e57fdb Retired=fd2775e3 origin/ai-evolution=8e57fdb",
+      "RESOLUTION": "RELATIONSHIP_UNRESOLVED. Do not infer UNRELATED."
+    },
+    {
+      "ID": "CX-003",
+      "CLASS": "CONTRADICTORY",
+      "SUBJECT": "origin advertises local census commit",
+      "LIVE": "ls-remote ai-evolution-202608051809=8e57fdb",
+      "RESOLUTION": "PRIOR_PUSH_CANDIDATE. GITHUB_PUSH_PROVEN=false this lane."
+    },
+    {
+      "ID": "GL002_TASK_STATUS_READY_VS_HISTORICAL_IMPLEMENTATION_FOUND",
+      "CLASS": "TASK_STATE_EVIDENCE_DRIFT",
+      "TASK_STATUS": "READY",
+      "CAPABILITY_TRUTH": "GL002_CLASSIFICATION=HISTORICAL_IMPLEMENTATION_FOUND",
+      "NOTE": "Do not interpret READY as current capability."
+    },
+    {
+      "ID": "GL003_TASK_IN_PROGRESS_VS_CURRENT_SOURCE_ABSENT",
+      "CLASS": "TASK_STATE_EVIDENCE_DRIFT",
+      "TASK_STATUS": "IN_PROGRESS",
+      "CLAIMED_BY": "deepseek-local",
+      "CAPABILITY_TRUTH": "GL003_CLASSIFICATION=EVIDENCE_ONLY_NO_SOURCE",
+      "NOTE": "claimed_by is lineage only."
+    },
+    {
+      "ID": "GL005_TASK_READY_VS_DEPENDENCIES_NOT_PROVEN_COMPLETE",
+      "CLASS": "TASK_STATE_EVIDENCE_DRIFT",
+      "TASK_STATUS": "READY",
+      "CAPABILITY_TRUTH": "GL005_PROVEN=false",
+      "NOTE": "Dependencies GL-002/003/004 not proven complete."
+    },
+    {
+      "ID": "GL004_TASK_IN_PROGRESS_VS_NON_GIT_LEFTOVER",
+      "CLASS": "TASK_STATE_EVIDENCE_DRIFT",
+      "TASK_STATUS": "IN_PROGRESS",
+      "CLAIMED_BY": "cursor",
+      "CAPABILITY_TRUTH": "GL-004-Runtime is non-git leftover .next"
+    }
+  ],
+  "TASK_STATE_DRIFT_FOUND": true,
+  "TASK_STATE_DRIFT_COUNT": 4,
+  "GL002_TASK_STATE_DRIFT": true,
+  "GL003_TASK_STATE_DRIFT": true,
+  "GL005_TASK_STATE_DRIFT": true
+}

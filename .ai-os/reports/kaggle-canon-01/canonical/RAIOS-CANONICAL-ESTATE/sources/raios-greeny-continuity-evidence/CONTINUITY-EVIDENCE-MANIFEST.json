@@ -1,0 +1,73 @@
+﻿{
+    "schema":  "raios.greeny.project-continuity-evidence.v1",
+    "generatedAtUtc":  "2026-08-17T22:34:56.5073063Z",
+    "repository":  {
+                       "branch":  "codex-clean",
+                       "head":  "fb130e232246a00b531835f529f25e4edfae2854"
+                   },
+    "purpose":  [
+                    "Teach RAIOS how Greeny-Life coordinates persistent AI developers.",
+                    "Extract project-level state, handoff, task and lock behavior.",
+                    "Reuse existing coordination instead of rebuilding it."
+                ],
+    "requiredCapabilityOutcome":  [
+                                      "PROJECT_SESSION_REHYDRATION",
+                                      "CURRENT_TASK_POINTER",
+                                      "AGENT_HANDOFF",
+                                      "TASK_COORDINATION",
+                                      "PATH_LOCK_OR_LEASE",
+                                      "RESUME_POINT",
+                                      "CONFLICT_AVOIDANCE"
+                                  ],
+    "files":  [
+                  {
+                      "sourcePath":  ".ai-os/CORE-CONTRACT.md",
+                      "packagedAs":  ".ai-os__CORE-CONTRACT.md",
+                      "bytes":  666,
+                      "sha256":  "2d538d6ec24ab73a131e174d74b531a9c9cd389b42156c9fa5e45860ccaa36eb",
+                      "modifiedUtc":  "2026-08-15T11:32:36.0000000Z"
+                  },
+                  {
+                      "sourcePath":  ".ai-os/ROUTING.md",
+                      "packagedAs":  ".ai-os__ROUTING.md",
+                      "bytes":  429,
+                      "sha256":  "2bfab769b9042f428477b2a24010032190fdf8424556b941042d50414361d874",
+                      "modifiedUtc":  "2026-08-15T11:32:36.0000000Z"
+                  },
+                  {
+                      "sourcePath":  ".ai-os/state/CURRENT-STATE.json",
+                      "packagedAs":  ".ai-os__state__CURRENT-STATE.json",
+                      "bytes":  1561,
+                      "sha256":  "700616a6d82fb4e4cb971a0bd5683e6b078a751fc47d7a74671aa63e61b215a3",
+                      "modifiedUtc":  "2026-08-15T15:17:14.8675227Z"
+                  },
+                  {
+                      "sourcePath":  ".ai-os/state/LOCKS.json",
+                      "packagedAs":  ".ai-os__state__LOCKS.json",
+                      "bytes":  2746,
+                      "sha256":  "3872165f58b06db07516cce4cbbd9a20d870fee763c56db6fb4f83691ab9fb99",
+                      "modifiedUtc":  "2026-08-15T20:12:05.5841099Z"
+                  },
+                  {
+                      "sourcePath":  ".ai-os/state/TASKS.json",
+                      "packagedAs":  ".ai-os__state__TASKS.json",
+                      "bytes":  5864,
+                      "sha256":  "238d611303c8a958a23447994e2b37cea63e0ce4d277a8f0c960cd363d584c1a",
+                      "modifiedUtc":  "2026-08-15T20:12:04.2814862Z"
+                  },
+                  {
+                      "sourcePath":  ".ai-os/handoffs/20260815-171701-gemini-cli-GL-001.md",
+                      "packagedAs":  ".ai-os__handoffs__20260815-171701-gemini-cli-GL-001.md",
+                      "bytes":  551,
+                      "sha256":  "c9f2d67f5d9473ad492d0c8b2a8bb11f93c8c8f20750f1353b0444e49bcb2e2f",
+                      "modifiedUtc":  "2026-08-15T15:17:01.7433138Z"
+                  },
+                  {
+                      "sourcePath":  ".ai-os/handoffs/20260815-173642-gemini-cli-GL-003.md",
+                      "packagedAs":  ".ai-os__handoffs__20260815-173642-gemini-cli-GL-003.md",
+                      "bytes":  453,
+                      "sha256":  "d8639268c0f26f32f9def0c4c7873d4c999be95c09fc5d0471d80b18ab41068d",
+                      "modifiedUtc":  "2026-08-15T15:36:42.2791288Z"
+                  }
+              ]
+}

@@ -1,0 +1,141 @@
+{
+  "schema": "raios.tree-copy-repo-recon.duplicate-unique.v1",
+  "TASK_ID": "RAIOS-TOTAL-TREE-COPY-REPO-RECON-01",
+  "NO_FULL_RESCAN": true,
+  "SAFE_TO_REMOVE": false,
+  "DELETE_ELIGIBLE_AFTER_PROOF": 0,
+  "NOTE": "SAFE_TO_REMOVE requires CONTENT_REDUNDANT FUNCTION_REDUNDANT NO_UNIQUE_GIT_HISTORY NO_RUNTIME_DEPENDENCY NO_PROVENANCE_DEPENDENCY NO_RECOVERY_VALUE CANONICAL_REPLACEMENT_PROVEN. None meet all. C1 deletion authorization does not apply.",
+  "items": [
+    {
+      "ASSET_ID": "TA-TREE-001",
+      "CLASS": "UNIQUE_VALUE_PROVEN",
+      "REASON": "canonical candidate; live dirty work; unique HEAD 8e57fdb descendant of frozen 12603d0"
+    },
+    {
+      "ASSET_ID": "TA-WT-P0",
+      "CLASS": "RUNTIME_REQUIRED",
+      "REASON": "linked worktree detached 30637e; 118 unique commits vs 12603d0"
+    },
+    {
+      "ASSET_ID": "TA-RETIRED",
+      "CLASS": "DONOR_VALUE_PRESENT",
+      "REASON": "independent object db; 4906 tracked vs 1921; HISTORY relationship unresolved"
+    },
+    {
+      "ASSET_ID": "TA-GITHUB-ORIGIN",
+      "CLASS": "PROVENANCE_ONLY",
+      "REASON": "public refs; origin/main Kaggle-labeled; not local canonical tip"
+    },
+    {
+      "ASSET_ID": "TA-DESKTOP-BUNDLE",
+      "CLASS": "DONOR_VALUE_PRESENT",
+      "REASON": "68 refs including phase2a and missing GL-003/004 archive tips; recovery value not disproven"
+    },
+    {
+      "ASSET_ID": "TA-GL-002",
+      "CLASS": "PROVENANCE_ONLY",
+      "REASON": "path missing; historical branch exists"
+    },
+    {
+      "ASSET_ID": "TA-GL-003",
+      "CLASS": "PROVENANCE_ONLY",
+      "REASON": "path missing; evidence-only"
+    },
+    {
+      "ASSET_ID": "TA-GL-004",
+      "CLASS": "SUPERSEDED_CANDIDATE",
+      "REASON": "non-git leftover .next; not proven content-redundant"
+    },
+    {
+      "ASSET_ID": "TA-GL-005",
+      "CLASS": "SUPERSEDED_CANDIDATE",
+      "REASON": "non-git leftover node_modules ReparsePoint; GL005_PROVEN=false"
+    },
+    {
+      "ASSET_ID": "TA-BRIDGE",
+      "CLASS": "UNIQUE_VALUE_PROVEN",
+      "REASON": "governance overlay continuation context"
+    },
+    {
+      "ASSET_ID": "TA-LEGACY-REVIEW",
+      "CLASS": "PROVENANCE_ONLY",
+      "REASON": "legacy snapshot 20260814-221919"
+    },
+    {
+      "ASSET_ID": "TA-CODEX-GIT",
+      "CLASS": "UNKNOWN",
+      "REASON": "empty scaffold"
+    },
+    {
+      "ASSET_ID": "TA-PROGRAMDATA-RAIOS",
+      "CLASS": "RUNTIME_REQUIRED",
+      "REASON": "control/runtime files"
+    },
+    {
+      "ASSET_ID": "TA-C5-DONOR",
+      "CLASS": "DONOR_VALUE_PRESENT",
+      "REASON": "git-only fabric paths"
+    },
+    {
+      "ASSET_ID": "TA-C6-NOMADIC",
+      "CLASS": "UNKNOWN",
+      "REASON": "external draft pending promotion"
+    },
+    {
+      "ASSET_ID": "TA-TEMP-MCP",
+      "CLASS": "RUNTIME_REQUIRED",
+      "REASON": "temp C2 MCP execution tree"
+    },
+    {
+      "ASSET_ID": "TA-ONEDRIVE-RAIOS",
+      "CLASS": "UNKNOWN",
+      "REASON": "CLOUD_PLACEHOLDER"
+    },
+    {
+      "ASSET_ID": "TA-ONEDRIVE-C6-KIT",
+      "CLASS": "UNKNOWN",
+      "REASON": "CLOUD_PLACEHOLDER CONTENT_NOT_LOCAL"
+    },
+    {
+      "ASSET_ID": "TA-ONEDRIVE-GREENY-ZIP",
+      "CLASS": "UNKNOWN",
+      "REASON": "CLOUD_PLACEHOLDER CONTENT_NOT_LOCAL"
+    },
+    {
+      "ASSET_ID": "TA-ONEDRIVE-E3-ZIP",
+      "CLASS": "UNKNOWN",
+      "REASON": "CLOUD_PLACEHOLDER CONTENT_NOT_LOCAL"
+    },
+    {
+      "ASSET_ID": "TA-RAIOS-EVIDENCE",
+      "CLASS": "PROVENANCE_ONLY",
+      "REASON": "validation snapshot dir"
+    },
+    {
+      "ASSET_ID": "TA-DESKTOP-C3-PACK",
+      "CLASS": "PROVENANCE_ONLY",
+      "REASON": "contains bundle"
+    },
+    {
+      "ASSET_ID": "TA-GL-WORKTREES",
+      "CLASS": "SUPERSEDED_CANDIDATE",
+      "REASON": "container of leftovers"
+    },
+    {
+      "ASSET_ID": "TA-ONEDRIVE-GREENY-LIFE-PATH",
+      "CLASS": "UNKNOWN",
+      "REASON": "path missing"
+    }
+  ],
+  "EXACT_DUPLICATES": 0,
+  "FUNCTIONAL_DUPLICATE_CANDIDATES": 1,
+  "FUNCTIONAL_DUPLICATE_CANDIDATE_NOTE": "TA-RETIRED vs TA-TREE-001 share origin URL and branch NAME but are not proven functional duplicates (different HEADs, tracked counts, unresolved object relation).",
+  "UNIQUE_FILES_TOTAL": "UNCOMPUTED_BLOB_NONE_NO_FULL_RESCAN",
+  "UNIQUE_COMMITS_PROVEN_LOCAL": {
+    "12603d0_to_8e57fdb": 1,
+    "30637e_not_in_12603d0": 118,
+    "12603d0_not_in_30637e": 1,
+    "origin_v9_not_in_local_v9": 5,
+    "retired_vs_repair": "UNRESOLVED"
+  }
+}
