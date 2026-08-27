@@ -1,0 +1,22 @@
+{
+  "schema": "raios.semantic-seal.provenance-delta.v1",
+  "BASE_COMMIT": "3b07ced897d68febacaa68d7e9b45db3bbe536a0",
+  "SUPER_TASK_ID": "RAIOS-PRECANONICAL-SEMANTIC-SEAL-02C",
+  "PREVIOUS_BUNDLES_PRESERVED": [
+    ".ai-os/reports/precannonical-wave/RAIOS-PRECANONICAL-CLOSEOUT-VERIFY-BUNDLE-02",
+    ".ai-os/reports/precannonical-wave/RAIOS-PRECANONICAL-CLOSEOUT-VERIFY-BUNDLE-02B"
+  ],
+  "HISTORICAL_WORK_REEXECUTED": false,
+  "C7_AG_SUITE_RERUN": false,
+  "LIVE_UCP_RERUN": false,
+  "SEAT_INFRASTRUCTURE_REBUILT": false,
+  "ROUTING_GUARD_FILE_FABRICATED": false,
+  "IDENTITY_FILE_OVERWRITTEN": false,
+  "SOURCE_DELTA": [
+    "src/raios/c1c5/receipt_identity.py",
+    "src/raios/c1c5/receipts.py",
+    "src/raios/c1c5/ucp_live.py",
+    ".ai-os/control/RAIOS-CONTROL-PLANE-V1.py",
+    "tests/c1c5/test_receipt_identity.py"
+  ]
+}

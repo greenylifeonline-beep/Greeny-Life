@@ -46,6 +46,8 @@ def correlated_send_ack(
     return {
         "KIND": "LIVE_UCP_SEND_ACK",
         "MESSAGE_ID": msg["message_id"],
+        "RECEIPT_ID": msg["message_id"],
+        "RECEIPT_ID_EQUALS_MESSAGE_ID": True,
         "CORRELATION_ID": msg.get("correlation_id") or correlation_id,
         "SENDER": sender,
         "TARGET": target,

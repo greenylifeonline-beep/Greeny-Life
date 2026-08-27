@@ -1,0 +1,35 @@
+{
+  "schema": "raios.semantic-seal.receipt-identity-binding.v1",
+  "TASK_ID": "RAIOS-PRECANONICAL-SEMANTIC-SEAL-02C",
+  "LIVE_UCP_RERUN": false,
+  "HISTORICAL_RECEIPT_MUTATED": false,
+  "HISTORICAL_INTERPRETATION": "receipt_id := message_id when receipt_id absent",
+  "IMPLEMENTATION": "src/raios/c1c5/receipt_identity.py",
+  "FUTURE_PRODUCERS": [
+    ".ai-os/control/RAIOS-CONTROL-PLANE-V1.py:send",
+    ".ai-os/control/RAIOS-CONTROL-PLANE-V1.py:ack",
+    "src/raios/c1c5/receipts.py:build",
+    "src/raios/c1c5/ucp_live.py:correlated_send_ack return RECEIPT_ID"
+  ],
+  "HISTORICAL_ACK": {
+    "path": ".ai-os/receipts/command-fabric/MSG-1787844821137190-c621b602.C2-OBS.ack.receipt.json",
+    "sha256": "c2fa2d061fc1125d11adaf49adedcb061fabc0d19fc0008dfdb65e85c0e9ccff",
+    "message_id": "MSG-1787844821137190-c621b602",
+    "receipt_id_field_present": false,
+    "unique_message_id": true,
+    "stable": true,
+    "bound_to_inbox_send_ack_chain": true,
+    "included_in_ack_bytes_hash": true,
+    "bound_to_correlation": "COR-UCP-PROOF-01A",
+    "bound_to_task": "RAIOS-C1-C5-TASK-DISPATCH-01A-LIVE-03"
+  },
+  "SCOPE_NOTE": "message_id is unique per message chain (inbox+send+ack share it). It is not unique per receipt file.",
+  "RECEIPT_IDENTITY_STABLE": true,
+  "RECEIPT_ID_COMPATIBILITY_BINDING": "receipt_id:=message_id",
+  "TESTS": [
+    "tests.c1c5.test_receipt_identity.test_MESSAGE_ID_COMPAT_ALIAS_NE_NEW_RECEIPT",
+    "tests.c1c5.test_receipt_identity.test_RECEIPT_ID_BOUND_TO_TASK_AND_CORRELATION"
+  ],
+  "TESTS_THIS_WAVE": {"executed": 2, "pass": 2, "fail": 0},
+  "LIVE_UCP_BOUND_RECEIPT_PROVEN": true
+}

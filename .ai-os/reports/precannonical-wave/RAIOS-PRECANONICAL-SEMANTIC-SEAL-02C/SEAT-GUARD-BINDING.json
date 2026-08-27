@@ -1,0 +1,28 @@
+{
+  "schema": "raios.semantic-seal.seat-guard-binding.v1",
+  "TASK_ID": "RAIOS-PRECANONICAL-SEMANTIC-SEAL-02C",
+  "concept_id": "RAIOS-SEAT-ROUTING-GUARD-01",
+  "authority_source": ".ai-os/control/C2-IDENTITY-BINDING.json",
+  "authority_source_hash": "260866bb2b744627181a70ce8e1c46e4045e6fa34c0d6ec0968ac7a927f5b71a",
+  "enforcement_sources": [
+    "src/raios/a2a/cards.py",
+    "src/raios/a2a/gateway.py"
+  ],
+  "enforcement_source_hashes": {
+    "src/raios/a2a/cards.py": "1bd6a090d6b61260986831f28f6760e6acb2e76f692aaf0aa73da0bb4ba55c54",
+    "src/raios/a2a/gateway.py": "a51db895fd23df6d0aa1367a351d1008434818e0660e38f2becb5f9f2353367a"
+  },
+  "enforcement_symbols": [
+    "src/raios/a2a/cards.py:FORBIDDEN_PUBLIC_AGENTS",
+    "src/raios/a2a/cards.py:reject_seat_as_agent",
+    "src/raios/a2a/cards.py:assert_card_not_operational_seat",
+    "src/raios/a2a/gateway.py:_identity"
+  ],
+  "test_refs": ["T34", "T35"],
+  "test_capture": ".ai-os/reports/precannonical-wave/RAIOS-PRECANONICAL-CLOSEOUT-VERIFY-BUNDLE-02/TEST-RESULTS.json",
+  "status": "IMPLEMENTATION_BOUND",
+  "SEAT_ROUTING_GUARD_CONCEPT_BOUND_TO_IMPLEMENTATION": true,
+  "RAIOS_SEAT_ROUTING_GUARD_PHYSICAL_FILE_REQUIRED": false,
+  "PHYSICAL_FILE_FABRICATED": false,
+  "NEW_SEAT_REGISTRY_CREATED": false
+}

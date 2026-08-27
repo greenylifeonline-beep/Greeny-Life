@@ -1,0 +1,11 @@
+# Handoff
+- Agent: cursor
+- Seat: C2-KAGGLE-CONTROL
+- Task: RAIOS-PRECANONICAL-SEMANTIC-SEAL-02C
+- Status: READY_FOR_INDEPENDENT_REVIEW
+- Files: .ai-os/reports/precannonical-wave/RAIOS-PRECANONICAL-SEMANTIC-SEAL-02C
+- Validation: concept RAIOS-SEAT-ROUTING-GUARD-01 bound to C2-IDENTITY-BINDING.json + cards.py/gateway._identity; C6 role overlay without identity rewrite; C7 AG execution classified without rerun; receipt_id:=message_id compat + 2/2 new tests; COMMAND_FABRIC_E2E remains false (NATS_PRIMARY_AND_LEASE_ACQUIRE)
+- Evidence: this directory
+- Next: C6 or another independent AG-capable verifier
+- Branch: ai-evolution-202608051809
+- BASE_COMMIT: 3b07ced897d68febacaa68d7e9b45db3bbe536a0

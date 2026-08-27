@@ -8,6 +8,8 @@ from datetime import datetime, timezone
 from pathlib import Path
 from typing import Any
 
+from .receipt_identity import producer_receipt_identity
+
 ROOT = Path(__file__).resolve().parents[3]
 RECEIPT_DIR = ROOT / ".ai-os" / "receipts" / "command-fabric" / "c1c5-task"
 EXISTING_RECEIPT_ROOT = ".ai-os/receipts/command-fabric"
@@ -42,8 +44,18 @@ def build(
     capability: dict[str, Any] | None,
     status: str,
 ) -> dict[str, Any]:
+    ident = producer_receipt_identity(
+        message_id=env.get("message_id") if isinstance(env.get("message_id"), str) else None,
+        task_id=env.get("task_id"),
+        correlation_id=env.get("correlation_id"),
+        idempotency_key=env.get("idempotency_key"),
+    )
     return {
         "schema": "raios.c1c5.task-receipt.v1",
+        "receipt_id": ident["receipt_id"],
+        "message_id": ident["message_id"],
+        "RECEIPT_ID_EQUALS_MESSAGE_ID": ident["RECEIPT_ID_EQUALS_MESSAGE_ID"],
+        "RECEIPT_ID_SOURCE": ident["RECEIPT_ID_SOURCE"],
         "TASK_ID": env.get("task_id"),
         "CORRELATION_ID": env.get("correlation_id"),
         "IDEMPOTENCY_KEY": env.get("idempotency_key"),

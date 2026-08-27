@@ -1,0 +1,22 @@
+{
+  "schema": "raios.semantic-seal.command-fabric-gate.v1",
+  "TASK_ID": "RAIOS-PRECANONICAL-SEMANTIC-SEAL-02C",
+  "REPLAY": false,
+  "RECEIPT_ID_NAMING_WAS_NOT_THE_ONLY_GAP": true,
+  "DEFINED_SEGMENTS": {
+    "INTERNAL_BUS_SEND": true,
+    "INTERNAL_BUS_ACK": true,
+    "CORRELATION_ID": true,
+    "INBOX_ARTIFACT": true,
+    "HTTP_PRIMARY": true,
+    "LIVE_UCP_NO_ACQUIRE": true,
+    "LEASE_ACQUIRE": false,
+    "NATS_PRIMARY": false,
+    "WAL_WRITTEN": false
+  },
+  "PRIOR_DOCUMENTED_GAP": "Live UCP is send/ack only. No acquire. NATS_PRIMARY=false.",
+  "GAP_SOURCE": ".ai-os/reports/precannonical-wave/RAIOS-PRECANONICAL-CLOSEOUT-VERIFY-BUNDLE-02/KNOWN-GAPS.json id=COMMAND_FABRIC_E2E_UNPROVEN",
+  "COMMAND_FABRIC_E2E_PROVEN": false,
+  "COMMAND_FABRIC_EXACT_MISSING_SEGMENT": "NATS_PRIMARY_AND_LEASE_ACQUIRE",
+  "DO_NOT_INFER_PASS": true
+}
