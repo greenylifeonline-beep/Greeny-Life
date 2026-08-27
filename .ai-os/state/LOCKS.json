@@ -286,6 +286,31 @@
       "agent": "cursor",
       "scope": ".ai-os/reports/precannonical-readiness",
       "status": "ACTIVE"
+    },
+    {
+      "id": "LOCK-20260827190100",
+      "task_id": "RAIOS-COMMAND-FABRIC-E2E-CLOSEOUT-WAVE-01",
+      "agent": "cursor",
+      "owner": "C2-PRIMARY-EXECUTOR",
+      "scope": "src/raios/command_fabric",
+      "status": "ACTIVE",
+      "files_or_subsystem": "CommandLeaseAdapter + NATS primary route wrap; no A2A flags, no V9, no census"
+    },
+    {
+      "id": "LOCK-20260827190101",
+      "task_id": "RAIOS-COMMAND-FABRIC-E2E-CLOSEOUT-WAVE-01",
+      "agent": "cursor",
+      "owner": "C2-PRIMARY-EXECUTOR",
+      "scope": "tests/command_fabric",
+      "status": "ACTIVE"
+    },
+    {
+      "id": "LOCK-20260827190102",
+      "task_id": "RAIOS-COMMAND-FABRIC-E2E-CLOSEOUT-WAVE-01",
+      "agent": "cursor",
+      "owner": "C2-PRIMARY-EXECUTOR",
+      "scope": ".ai-os/reports/command-fabric/RAIOS-COMMAND-FABRIC-E2E-SEAL-01",
+      "status": "ACTIVE"
     }
   ]
 }

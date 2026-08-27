@@ -1,0 +1,33 @@
+{
+  "schema": "raios.command-fabric.provenance-delta.v1",
+  "BASE_COMMIT": "11d235969b8f40e737ecfd30f79cda7094f4b9bc",
+  "SUPER_TASK_ID": "RAIOS-COMMAND-FABRIC-E2E-CLOSEOUT-WAVE-01",
+  "PREVIOUS_BUNDLES_PRESERVED": [
+    ".ai-os/reports/precannonical-wave/RAIOS-PRECANONICAL-CLOSEOUT-VERIFY-BUNDLE-02",
+    ".ai-os/reports/precannonical-wave/RAIOS-PRECANONICAL-CLOSEOUT-VERIFY-BUNDLE-02B",
+    ".ai-os/reports/precannonical-wave/RAIOS-PRECANONICAL-SEMANTIC-SEAL-02C"
+  ],
+  "HISTORICAL_WORK_REEXECUTED": false,
+  "NO_CENSUS_REPLAY": true,
+  "NO_TREE_RECON_REPLAY": true,
+  "NO_A2A_REPLAY": true,
+  "NO_C1C5_REPLAY": true,
+  "NO_C7_REPLAY": true,
+  "NO_UCP_HTTP_REPLAY_UNLESS_REQUIRED_BY_NEW_NATS_CANARY": true,
+  "NATS_INFRASTRUCTURE_REBUILT": false,
+  "UCP_REBUILT": false,
+  "SOURCE_DELTA": [
+    "src/raios/command_fabric/__init__.py",
+    "src/raios/command_fabric/lease.py",
+    "src/raios/command_fabric/route.py",
+    "src/raios/command_fabric/fake_transport.py",
+    "src/raios/command_fabric/pipeline.py",
+    "src/raios/command_fabric/live_canary.py",
+    "tests/command_fabric/test_control_fabric.py",
+    ".ai-os/state/LOCKS.json"
+  ],
+  "EVIDENCE_DELTA": [
+    ".ai-os/reports/command-fabric/RAIOS-COMMAND-FABRIC-E2E-SEAL-01",
+    ".ai-os/receipts/command-fabric/c1c5-task/45decc6b06dde220b5313531.receipt.json"
+  ]
+}

@@ -1,0 +1,37 @@
+{
+  "schema": "raios.command-fabric.lease-evidence.v1",
+  "SUPER_TASK_ID": "RAIOS-COMMAND-FABRIC-E2E-CLOSEOUT-WAVE-01",
+  "EXISTING_LOCK_SYSTEM_REUSED": true,
+  "SECOND_LOCK_SYSTEM_CREATED": false,
+  "LOCKS_JSON_IS_AGENT_FILE_SCOPE_NOT_EXECUTION_LEASE": true,
+  "LEASE_ADAPTER": "CommandLeaseAdapter",
+  "LEASES_DIR": ".ai-os/state/command-fabric/leases",
+  "SCHEMA": "raios.write-lease.v2",
+  "LEASE_ACQUIRE_PROVEN": true,
+  "LEASE_RELEASE_PROVEN": true,
+  "LEASE_CONFLICT_DENIAL_PROVEN": true,
+  "LEASE_IDEMPOTENCY_PROVEN": true,
+  "LEASE_IDEMPOTENCY_PROOF": "CF007_SAME_TASK_IDEMPOTENT_REACQUIRE",
+  "LEASE_CONFLICT_PROOF": "CF005_SINGLE_ACTIVE_LEASE,CF006_CONFLICTING_TASK_LEASE_DENIED",
+  "LEASE_ACQUIRE_NE_AUTHORITY_GRANT": true,
+  "LEASE_RELEASE_DOES_NOT_ERASE_PROVENANCE": true,
+  "LIVE_FIRST_LEASE": {
+    "lease_id": "L-1787852306584208-6fc3484c",
+    "task_id": "RAIOS-COMMAND-FABRIC-E2E-CANARY-01",
+    "correlation_id": "COR-CF-NATS-CANARY-01",
+    "owner_identity": "C1@AG",
+    "capability": "c5.self_inspect.health",
+    "resource_or_target": "C5",
+    "acquired_at": "2026-08-27T17:38:26.584208+00:00",
+    "expires_at": "2026-08-27T17:39:26.584208+00:00",
+    "state": "RELEASED",
+    "idempotency_key": "idem-cf-nats-canary-01",
+    "provenance_ref": "RAIOS-COMMAND-FABRIC-E2E-CLOSEOUT-WAVE-01",
+    "released_at": "2026-08-27T17:38:26.712674+00:00"
+  },
+  "LIVE_REPLAY_LEASE": {
+    "lease_id": "L-1787852306738340-574363fa",
+    "note": "First lease already RELEASED; replay acquired a new lease then released. Command idempotency is UCP+NATS MSG_ID, not lease reacquire after release.",
+    "state": "RELEASED"
+  }
+}

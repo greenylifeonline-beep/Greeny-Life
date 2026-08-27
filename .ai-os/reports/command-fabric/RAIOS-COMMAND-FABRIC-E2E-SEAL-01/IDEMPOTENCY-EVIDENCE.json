@@ -1,0 +1,27 @@
+{
+  "schema": "raios.command-fabric.idempotency-evidence.v1",
+  "SUPER_TASK_ID": "RAIOS-COMMAND-FABRIC-E2E-CLOSEOUT-WAVE-01",
+  "NATS_AT_LEAST_ONCE": true,
+  "RAIOS_IDEMPOTENCY": true,
+  "EXACTLY_ONCE_CLAIMED": false,
+  "IDEMPOTENCY_KEY": "idem-cf-nats-canary-01",
+  "NATS_MSG_ID": "raios:cmd:RAIOS-COMMAND-FABRIC-E2E-CANARY-01:idem-cf-nats-canary-01",
+  "FIRST": {
+    "STATUS": "COMPLETED",
+    "UCP_STATUS": "ACCEPTED_DRY_RUN",
+    "CAPABILITY_INVOKED": true,
+    "DUPLICATE_FLAG": null,
+    "SEQUENCE": "24"
+  },
+  "REPLAY": {
+    "STATUS": "ALREADY_APPLIED",
+    "UCP_STATUS": "ALREADY_APPLIED",
+    "CAPABILITY_INVOKED": false,
+    "DUPLICATE_FLAG": true,
+    "SEQUENCE": "24",
+    "SAME_STREAM_SEQUENCE": true
+  },
+  "NO_DUPLICATE_SIDE_EFFECT": true,
+  "LIVE_CANARY_IDEMPOTENCY_PROVEN": true,
+  "DETERMINISTIC_PROOF": "CF011_DUPLICATE_NATS_DELIVERY_NO_DUPLICATE_EFFECT"
+}

@@ -1,0 +1,12 @@
+# Handoff
+- Agent: cursor
+- Seat: C2-KAGGLE-CONTROL
+- Task: RAIOS-COMMAND-FABRIC-E2E-CLOSEOUT-WAVE-01
+- Status: READY_FOR_INDEPENDENT_REVIEW
+- Files: .ai-os/reports/command-fabric/RAIOS-COMMAND-FABRIC-E2E-SEAL-01
+- Validation: reused existing RAIOS_FABRIC / raios.fabric.commands.C5 / command-fabric leases; CommandLeaseAdapter wrap only; CF001-CF024 24/24; live C5 health canary NATS seq 24 COMPLETED then ALREADY_APPLIED; COMMAND_FABRIC_E2E_PROVEN=true
+- Evidence: this directory; LIVE-CANARY-RAW.json; .ai-os/receipts/command-fabric/c1c5-task/45decc6b06dde220b5313531.receipt.json
+- Next: C6 or another independent AG-capable verifier; READY_FOR_CANONICALIZATION remains false
+- Branch: ai-evolution-202608051809
+- BASE_COMMIT: 11d235969b8f40e737ecfd30f79cda7094f4b9bc
+- Preserve: VERIFY-BUNDLE-02, VERIFY-BUNDLE-02B, SEMANTIC-SEAL-02C
