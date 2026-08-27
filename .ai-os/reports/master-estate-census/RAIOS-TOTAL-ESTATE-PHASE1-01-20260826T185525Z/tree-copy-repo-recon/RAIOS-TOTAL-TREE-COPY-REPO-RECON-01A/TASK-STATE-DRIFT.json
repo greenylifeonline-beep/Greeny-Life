@@ -1,0 +1,213 @@
+{
+  "schema": "raios.tree-copy-repo-recon.task-state-drift.v1a",
+  "TASK_ID": "RAIOS-TOTAL-TREE-COPY-REPO-RECON-01A",
+  "LINEAGE": {
+    "PREVIOUS_PACKAGE": "RAIOS-TOTAL-TREE-COPY-REPO-RECON-01",
+    "PREVIOUS_FILE": "TASK-STATE-EVIDENCE.json"
+  },
+  "SOURCE_PATH": "C:\\Users\\Ghanam\\Documents\\Codex\\Greeny-Life-Repair\\.ai-os\\state\\TASKS.json",
+  "TASKS_SOURCE_SHA256": "6275cccf82825b7fc3f993d468d481bf180ba832529d05520365201f83a54ca2",
+  "SOURCE_SHA256": "6275cccf82825b7fc3f993d468d481bf180ba832529d05520365201f83a54ca2",
+  "SOURCE_BYTES": 7340,
+  "DO_NOT_MUTATE_TASKS_JSON": true,
+  "TASKS_JSON_MUTATED": false,
+  "CLASS": "OPERATIONAL_STATE_EVIDENCE",
+  "NOT": "CURRENT_CAPABILITY_TRUTH",
+  "GL002_CLASSIFICATION": "HISTORICAL_IMPLEMENTATION_FOUND",
+  "GL003_CLASSIFICATION": "EVIDENCE_ONLY_NO_SOURCE",
+  "GL004_TASK_STATE_DRIFT": true,
+  "GL005_PROVEN": false,
+  "observed_at": "2026-08-27T00:30:00Z",
+  "tasks": [
+    {
+      "id": "GL-001",
+      "status": "DONE",
+      "claimed_by": "gemini-cli",
+      "lane": null,
+      "evidence": "migration/GL-001-EVIDENCE.md; six required migration reports completed and Gemini handoff recorded.",
+      "title": "Old to Codex migration map",
+      "dependencies": [],
+      "CLASS": "OPERATIONAL_STATE_EVIDENCE",
+      "NOT": "CURRENT_CAPABILITY_TRUTH"
+    },
+    {
+      "id": "GL-002",
+      "status": "READY",
+      "claimed_by": null,
+      "lane": null,
+      "evidence": null,
+      "title": "Main intelligence brain",
+      "dependencies": [
+        "GL-001"
+      ],
+      "CLASS": "OPERATIONAL_STATE_EVIDENCE",
+      "NOT": "CURRENT_CAPABILITY_TRUTH"
+    },
+    {
+      "id": "GL-003",
+      "status": "IN_PROGRESS",
+      "claimed_by": "deepseek-local",
+      "lane": null,
+      "evidence": null,
+      "title": "Three project brains",
+      "dependencies": [
+        "GL-001"
+      ],
+      "CLASS": "OPERATIONAL_STATE_EVIDENCE",
+      "NOT": "CURRENT_CAPABILITY_TRUTH"
+    },
+    {
+      "id": "GL-004",
+      "status": "IN_PROGRESS",
+      "claimed_by": "cursor",
+      "lane": null,
+      "evidence": null,
+      "title": "Runtime and tests",
+      "dependencies": [
+        "GL-001"
+      ],
+      "CLASS": "OPERATIONAL_STATE_EVIDENCE",
+      "NOT": "CURRENT_CAPABILITY_TRUTH"
+    },
+    {
+      "id": "GL-005",
+      "status": "READY",
+      "claimed_by": null,
+      "lane": null,
+      "evidence": null,
+      "title": "Unified orchestrator",
+      "dependencies": [
+        "GL-002",
+        "GL-003",
+        "GL-004"
+      ],
+      "CLASS": "OPERATIONAL_STATE_EVIDENCE",
+      "NOT": "CURRENT_CAPABILITY_TRUTH"
+    },
+    {
+      "id": "V9-A14.1",
+      "status": "DONE",
+      "claimed_by": "cursor",
+      "lane": null,
+      "evidence": "RAIOS/V9/evidence/observations/V9.0-A14.1-BASELINE-PRESERVATION-RECEIPT.json",
+      "title": "A14.1 baseline preservation / continuity rebind",
+      "dependencies": [
+        "GL-001"
+      ],
+      "CLASS": "OPERATIONAL_STATE_EVIDENCE",
+      "NOT": "CURRENT_CAPABILITY_TRUTH"
+    },
+    {
+      "id": "V9-A15",
+      "status": "IN_PROGRESS",
+      "claimed_by": "cursor",
+      "lane": null,
+      "evidence": null,
+      "title": "A15 collaborative execution fabric / task exchange gateway",
+      "dependencies": [
+        "V9-A14.1"
+      ],
+      "CLASS": "OPERATIONAL_STATE_EVIDENCE",
+      "NOT": "CURRENT_CAPABILITY_TRUTH"
+    },
+    {
+      "id": "V9-NL0",
+      "status": "IN_PROGRESS",
+      "claimed_by": "cursor",
+      "lane": null,
+      "evidence": null,
+      "title": "NeuroLingua Semantic Kernel NL-0",
+      "dependencies": [
+        "V9-A14.1"
+      ],
+      "CLASS": "OPERATIONAL_STATE_EVIDENCE",
+      "NOT": "CURRENT_CAPABILITY_TRUTH"
+    },
+    {
+      "id": "WAVE2-GAP-RES",
+      "status": "IN_PROGRESS",
+      "claimed_by": "cursor",
+      "lane": null,
+      "evidence": null,
+      "title": "Wave2 targeted GL-004/GL-005 estate resolution",
+      "dependencies": [],
+      "CLASS": "OPERATIONAL_STATE_EVIDENCE",
+      "NOT": "CURRENT_CAPABILITY_TRUTH"
+    },
+    {
+      "id": "BRANCH-UNIFY-20260824",
+      "status": "DONE",
+      "claimed_by": "cursor",
+      "lane": null,
+      "evidence": "archive/repair-leftovers/branch-filter-20260824.json; .ai-os/handoffs/20260824-223000-cursor-BRANCH-UNIFY-20260824.md",
+      "title": "Unify and filter Git branches without octopus merge",
+      "dependencies": [],
+      "CLASS": "OPERATIONAL_STATE_EVIDENCE",
+      "NOT": "CURRENT_CAPABILITY_TRUTH"
+    },
+    {
+      "id": "RAIOS-TOTAL-ESTATE-PHASE1-01",
+      "status": "IN_PROGRESS",
+      "claimed_by": "C2@AG",
+      "lane": "C2_LOCAL_CENSUS",
+      "evidence": null,
+      "title": "Master total estate census phase 1",
+      "dependencies": [],
+      "CLASS": "OPERATIONAL_STATE_EVIDENCE",
+      "NOT": "CURRENT_CAPABILITY_TRUTH"
+    }
+  ],
+  "drifts": [
+    {
+      "ID": "GL002_TASK_STATUS_READY_VS_HISTORICAL_IMPLEMENTATION_FOUND",
+      "TASK_ID": "GL-002",
+      "TASK_STATUS": "READY",
+      "CLAIMED_BY": null,
+      "CAPABILITY_TRUTH": "GL002_CLASSIFICATION=HISTORICAL_IMPLEMENTATION_FOUND",
+      "CLASS": "TASK_STATE_EVIDENCE_DRIFT",
+      "GL002_CLASSIFICATION": "HISTORICAL_IMPLEMENTATION_FOUND",
+      "NOTE": "READY is operational queue state. Worktree path missing. Branch raios/gl-002-main-brain exists. Not CURRENT_IMPLEMENTATION_FOUND."
+    },
+    {
+      "ID": "GL003_TASK_IN_PROGRESS_VS_CURRENT_SOURCE_ABSENT",
+      "TASK_ID": "GL-003",
+      "TASK_STATUS": "IN_PROGRESS",
+      "CLAIMED_BY": "deepseek-local",
+      "CAPABILITY_TRUTH": "GL003_CLASSIFICATION=EVIDENCE_ONLY_NO_SOURCE",
+      "CLASS": "TASK_STATE_EVIDENCE_DRIFT",
+      "GL003_CLASSIFICATION": "EVIDENCE_ONLY_NO_SOURCE",
+      "NOTE": "claimed_by is lineage evidence only. Current worktree path missing. Do not reconstruct source."
+    },
+    {
+      "ID": "GL005_TASK_READY_VS_DEPENDENCIES_NOT_PROVEN_COMPLETE",
+      "TASK_ID": "GL-005",
+      "TASK_STATUS": "READY",
+      "CLAIMED_BY": null,
+      "CAPABILITY_TRUTH": "GL005_PROVEN=false",
+      "CLASS": "TASK_STATE_EVIDENCE_DRIFT",
+      "GL005_PROVEN": false,
+      "DEPENDENCIES": [
+        "GL-002",
+        "GL-003",
+        "GL-004"
+      ],
+      "NOTE": "READY does not prove orchestrator. Dependencies not proven complete. Leftover node_modules ReparsePoint is not GL005_PROVEN."
+    },
+    {
+      "ID": "GL004_TASK_IN_PROGRESS_VS_NON_GIT_LEFTOVER",
+      "TASK_ID": "GL-004",
+      "TASK_STATUS": "IN_PROGRESS",
+      "CLAIMED_BY": "cursor",
+      "CAPABILITY_TRUTH": "GL-004-Runtime leftover non-git; child .next only",
+      "CLASS": "TASK_STATE_EVIDENCE_DRIFT",
+      "NOTE": "claimed_by=cursor is lineage. Directory is skeleton leftover, not a git worktree."
+    }
+  ],
+  "TASK_STATE_EVIDENCE_BOUND": true,
+  "TASK_STATE_DRIFT_FOUND": true,
+  "TASK_STATE_DRIFT_COUNT": 4,
+  "GL002_TASK_STATE_DRIFT": true,
+  "GL003_TASK_STATE_DRIFT": true,
+  "GL005_TASK_STATE_DRIFT": true,
+  "TASK_STATE_DRIFT_RECONCILED": true
+}

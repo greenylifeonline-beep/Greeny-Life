@@ -1,0 +1,273 @@
+{
+  "schema": "raios.rif.c7.file-classification.v1",
+  "TASK_ID": "RAIOS-RIF-C7-INTEGRATION-RECON-02A",
+  "EXTRACTED_FILES_TOTAL": 29,
+  "INTERNAL_MANIFEST_COVERS": 22,
+  "INTERNAL_HASHES_PASS": 22,
+  "INFERRED_29_OF_29": false,
+  "EXCLUDED_7_INTENTIONAL": true,
+  "EXCLUDED_7_REASON": "package-meta self-referential artifacts (manifest, hash list, ledger, graphs, gaps, handoff, integration-map JSON). Hashing the hasher is circular. Donor file_count=22 is the payload set. The 7 remaining are packaging metadata.",
+  "files": [
+    {
+      "path": "01-capability-registry/RIF-CAPABILITY-REGISTRY-v1.0.md",
+      "in_internal_hash_manifest": true,
+      "sha256": "dcc25ed8576528e6390432386f364a76f9e651c3afbcbe463624ee192b421fce",
+      "bytes": 945,
+      "hash_result": "PASS",
+      "source_class": "TEXT_MATERIALIZED_SOURCE",
+      "exclusion_reason": null
+    },
+    {
+      "path": "02-contract-schemas/RIF-ADAPTER-CONTRACTS-v1.1.md",
+      "in_internal_hash_manifest": true,
+      "sha256": "deee743a4259b1318d1f9992d9a09a15deee2dea59860663cdd2b3688a026ff6",
+      "bytes": 4780,
+      "hash_result": "PASS",
+      "source_class": "TEXT_MATERIALIZED_SOURCE",
+      "exclusion_reason": null
+    },
+    {
+      "path": "02-contract-schemas/RIF-CONTRACT-SCHEMAS-v1.md",
+      "in_internal_hash_manifest": true,
+      "sha256": "52a8cc0b3c9a535e4c9b9a5a82eff95de202ad2f8f3db1efdf55aa12d4393746",
+      "bytes": 1008,
+      "hash_result": "PASS",
+      "source_class": "TEXT_MATERIALIZED_SOURCE",
+      "exclusion_reason": null
+    },
+    {
+      "path": "03-runtime-stategraph/RIF-EVALUATION-STATE-MACHINE-v1.1.md",
+      "in_internal_hash_manifest": true,
+      "sha256": "b475d9b2e356f26f925b1aaeb45ee02027a93974e272938ff726f623bddc57b1",
+      "bytes": 3389,
+      "hash_result": "PASS",
+      "source_class": "TEXT_MATERIALIZED_SOURCE",
+      "exclusion_reason": null
+    },
+    {
+      "path": "03-runtime-stategraph/RIF-RUNTIME-STATEGRAPH-v1.md",
+      "in_internal_hash_manifest": true,
+      "sha256": "3ffa8817a5c8656f15817e117284f152b3b777e5e4c0993d723a3d3c0e4b0878",
+      "bytes": 1301,
+      "hash_result": "PASS",
+      "source_class": "TEXT_MATERIALIZED_SOURCE",
+      "exclusion_reason": null
+    },
+    {
+      "path": "04-evidence-claim-lifecycle/RIF-EVIDENCE-CLAIM-LIFECYCLE-v1.md",
+      "in_internal_hash_manifest": true,
+      "sha256": "402aefb0a3ffb6c3cd733d182c62de6f92632a547ebd32119c6b513f34b0b6bf",
+      "bytes": 1002,
+      "hash_result": "PASS",
+      "source_class": "TEXT_MATERIALIZED_SOURCE",
+      "exclusion_reason": null
+    },
+    {
+      "path": "04-evidence-claim-lifecycle/RIF-EVIDENCE-CLAIM-MERGE-v1.1.md",
+      "in_internal_hash_manifest": true,
+      "sha256": "162049166c13f18de386335fe3319589276ae183726053649e0f43cd77bf2c03",
+      "bytes": 1654,
+      "hash_result": "PASS",
+      "source_class": "TEXT_MATERIALIZED_SOURCE",
+      "exclusion_reason": null
+    },
+    {
+      "path": "05-risk-promotion-policy/RIF-RISK-ASSESSMENT-DONOR-v1.1.md",
+      "in_internal_hash_manifest": true,
+      "sha256": "e521af45e45357df60ab00dc6b73733e4fc281c2f2afa7c832659f9bd6e958ec",
+      "bytes": 2249,
+      "hash_result": "PASS",
+      "source_class": "TEXT_MATERIALIZED_SOURCE",
+      "exclusion_reason": null
+    },
+    {
+      "path": "05-risk-promotion-policy/RIF-RISK-PROMOTION-POLICY-v1.md",
+      "in_internal_hash_manifest": true,
+      "sha256": "c5afe6d6012cc75fff8e5ae92546581c5ef7ff74615d34f791b9161673e0766e",
+      "bytes": 983,
+      "hash_result": "PASS",
+      "source_class": "TEXT_MATERIALIZED_SOURCE",
+      "exclusion_reason": null
+    },
+    {
+      "path": "05A-governor-cap002/RIF-GOVERNOR-CAP002-PROTOTYPE-v1.md",
+      "in_internal_hash_manifest": true,
+      "sha256": "fd0a10fa0f5f13d73336c8a750b1b0cf03782abeb01d2bfaedf82551990d65e8",
+      "bytes": 991,
+      "hash_result": "PASS",
+      "source_class": "TEXT_MATERIALIZED_SOURCE",
+      "exclusion_reason": null
+    },
+    {
+      "path": "05A-governor-cap002/RIF-GOVERNOR-CAP002-v1.1.md",
+      "in_internal_hash_manifest": true,
+      "sha256": "ec819fcae9c48d734a593d96fd3ef5ce484949bd8e7aa56bf75004c58f6a56a4",
+      "bytes": 3094,
+      "hash_result": "PASS",
+      "source_class": "TEXT_MATERIALIZED_SOURCE",
+      "exclusion_reason": null
+    },
+    {
+      "path": "06-m001-model-selection/RIF-M001-FOUNDATION-MODEL-SELECTION-v1.md",
+      "in_internal_hash_manifest": true,
+      "sha256": "ecd3adf3be6c3d2cbb45d9405f5c8a9edf8a51a1cf5981925daf4df2ce475211",
+      "bytes": 1040,
+      "hash_result": "PASS",
+      "source_class": "TEXT_MATERIALIZED_SOURCE",
+      "exclusion_reason": null
+    },
+    {
+      "path": "06-m001-model-selection/RIF-M001-SPEC-HARNESS-v1.1.md",
+      "in_internal_hash_manifest": true,
+      "sha256": "3638d4229b12409db09355b0005af09b2c4ef14a928cfa8e513f5ef75e1e4575",
+      "bytes": 3282,
+      "hash_result": "PASS",
+      "source_class": "TEXT_MATERIALIZED_SOURCE",
+      "exclusion_reason": null
+    },
+    {
+      "path": "07-observability-provenance/RIF-OBSERVABILITY-PROVENANCE-v1.1.md",
+      "in_internal_hash_manifest": true,
+      "sha256": "24c79ddee2c98774cfcf3163da736953b24155aa9242288eba2cad1eb7b2e541",
+      "bytes": 2290,
+      "hash_result": "PASS",
+      "source_class": "TEXT_MATERIALIZED_SOURCE",
+      "exclusion_reason": null
+    },
+    {
+      "path": "d-b-compatibility-delta/RIF-RAIOS-COMPATIBILITY-DELTA-v1.1.md",
+      "in_internal_hash_manifest": true,
+      "sha256": "6233c5f6beb3fa5cba5a30b65f3761505a1d303ed91482ce6603ecc9cd70eab0",
+      "bytes": 3977,
+      "hash_result": "PASS",
+      "source_class": "TEXT_MATERIALIZED_SOURCE",
+      "exclusion_reason": null
+    },
+    {
+      "path": "d-f-a2a-semantic-bridge/RIF-A2A-SEMANTIC-BRIDGE-v1.md",
+      "in_internal_hash_manifest": true,
+      "sha256": "c5187616553b624030bc610eaf907455480a8536dd0f0a5d4dff53f4563b6d41",
+      "bytes": 2736,
+      "hash_result": "PASS",
+      "source_class": "TEXT_MATERIALIZED_SOURCE",
+      "exclusion_reason": null
+    },
+    {
+      "path": "d-g-threat-invariants/RIF-INVARIANTS-v1.md",
+      "in_internal_hash_manifest": true,
+      "sha256": "4cf595e4efc84f4f8010621dd22e2bc4ad6e548700e6a9a29db9d55e09ec4471",
+      "bytes": 5106,
+      "hash_result": "PASS",
+      "source_class": "TEXT_MATERIALIZED_SOURCE",
+      "exclusion_reason": null
+    },
+    {
+      "path": "d-g-threat-invariants/RIF-THREAT-MODEL-v1.md",
+      "in_internal_hash_manifest": true,
+      "sha256": "533294d9b45e41401e4f49700014a9a4e9f67b4d6f0db29537496e1020d5df53",
+      "bytes": 5635,
+      "hash_result": "PASS",
+      "source_class": "TEXT_MATERIALIZED_SOURCE",
+      "exclusion_reason": null
+    },
+    {
+      "path": "deterministic-test-suite/RIF-DETERMINISTIC-TEST-SUITE-v1.1.json",
+      "in_internal_hash_manifest": true,
+      "sha256": "ba9f9a371387e65d2a09d171e4137193f9e61e6ffec0ff0837c8c728d294b21b",
+      "bytes": 22990,
+      "hash_result": "PASS",
+      "source_class": "TEST_DEFINED_ONLY",
+      "exclusion_reason": null
+    },
+    {
+      "path": "deterministic-test-suite/RIF-DETERMINISTIC-TEST-SUITE-v1.1.md",
+      "in_internal_hash_manifest": true,
+      "sha256": "67809fff6533aea5ac524065523d1cd05c3dbfdef1f807abbadf241ef2896107",
+      "bytes": 1869,
+      "hash_result": "PASS",
+      "source_class": "TEXT_MATERIALIZED_SOURCE",
+      "exclusion_reason": null
+    },
+    {
+      "path": "integration-map/RIF-RAIOS-INTEGRATION-MAP-v1.1.md",
+      "in_internal_hash_manifest": true,
+      "sha256": "34a2f790a716c0d7523a8ed815409785721f9cd6817a8e80637768fd5e319a0e",
+      "bytes": 6504,
+      "hash_result": "PASS",
+      "source_class": "TEXT_MATERIALIZED_SOURCE",
+      "exclusion_reason": null
+    },
+    {
+      "path": "package-meta/RIF-DONOR-PACKAGE-META-v1.1.md",
+      "in_internal_hash_manifest": true,
+      "sha256": "05d8647ee34f8066de6ad455b6f58edbe7037777209360db82c6cd8a677edd06",
+      "bytes": 3074,
+      "hash_result": "PASS",
+      "source_class": "TEXT_MATERIALIZED_SOURCE",
+      "exclusion_reason": null
+    },
+    {
+      "path": "package-meta/RIF-DONOR-DEPENDENCY-GRAPH.json",
+      "in_internal_hash_manifest": false,
+      "sha256": "242479feb1c7df49f08364f7f605b1f0c48e11d376ba714c458a3b447752be38",
+      "bytes": 3975,
+      "hash_result": "EXCLUDED_BY_DONOR_MANIFEST",
+      "source_class": "TEXT_MATERIALIZED_SOURCE",
+      "exclusion_reason": "SELF_REFERENTIAL_PACKAGE_METADATA"
+    },
+    {
+      "path": "package-meta/RIF-DONOR-FILES-SHA256.txt",
+      "in_internal_hash_manifest": false,
+      "sha256": "149658f483ada685a32ac0ca4b4a9b490850b381df96cd35ce5efe33acdadb7e",
+      "bytes": 2667,
+      "hash_result": "EXCLUDED_BY_DONOR_MANIFEST",
+      "source_class": "TEXT_MATERIALIZED_SOURCE",
+      "exclusion_reason": "SELF_REFERENTIAL_HASH_MANIFEST"
+    },
+    {
+      "path": "package-meta/RIF-DONOR-HANDOFF.md",
+      "in_internal_hash_manifest": false,
+      "sha256": "fb001500b0d822451fb225395803e99fa5abca61dbb021371492e1261b4814e5",
+      "bytes": 3035,
+      "hash_result": "EXCLUDED_BY_DONOR_MANIFEST",
+      "source_class": "TEXT_MATERIALIZED_SOURCE",
+      "exclusion_reason": "SELF_REFERENTIAL_PACKAGE_METADATA"
+    },
+    {
+      "path": "package-meta/RIF-DONOR-INTEGRATION-MAP.json",
+      "in_internal_hash_manifest": false,
+      "sha256": "c64a8303260fad4c6484ecc0ef00a210485889e336d753a83942d8a40c7588b8",
+      "bytes": 2190,
+      "hash_result": "EXCLUDED_BY_DONOR_MANIFEST",
+      "source_class": "TEXT_MATERIALIZED_SOURCE",
+      "exclusion_reason": "SELF_REFERENTIAL_PACKAGE_METADATA"
+    },
+    {
+      "path": "package-meta/RIF-DONOR-KNOWN-GAPS.json",
+      "in_internal_hash_manifest": false,
+      "sha256": "09da67aa19abb1fadf8c5187d2c81392fc5f65c0e9f5a76e527b843445c1ed80",
+      "bytes": 2069,
+      "hash_result": "EXCLUDED_BY_DONOR_MANIFEST",
+      "source_class": "TEXT_MATERIALIZED_SOURCE",
+      "exclusion_reason": "SELF_REFERENTIAL_PACKAGE_METADATA"
+    },
+    {
+      "path": "package-meta/RIF-DONOR-MANIFEST.json",
+      "in_internal_hash_manifest": false,
+      "sha256": "6c9c5ae38797484e9086fd6711521e07882ae265da52163d76675a332d41898a",
+      "bytes": 4801,
+      "hash_result": "EXCLUDED_BY_DONOR_MANIFEST",
+      "source_class": "TEXT_MATERIALIZED_SOURCE",
+      "exclusion_reason": "SELF_REFERENTIAL_HASH_MANIFEST"
+    },
+    {
+      "path": "package-meta/RIF-DONOR-TEST-LEDGER.json",
+      "in_internal_hash_manifest": false,
+      "sha256": "9c21d5a8bf6846ed8849baa486109623b16ba91b61f0ef5d69faa9f40bc46ee4",
+      "bytes": 1757,
+      "hash_result": "EXCLUDED_BY_DONOR_MANIFEST",
+      "source_class": "TEXT_MATERIALIZED_SOURCE",
+      "exclusion_reason": "SELF_REFERENTIAL_PACKAGE_METADATA"
+    }
+  ]
+}

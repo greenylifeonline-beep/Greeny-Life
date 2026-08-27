@@ -1,0 +1,27 @@
+{
+  "schema": "raios.rif.c7.governor-check.v1",
+  "TASK_ID": "RAIOS-RIF-C7-INTEGRATION-RECON-01",
+  "GENERATED_AT": "2026-08-27T03:30:00Z",
+  "C7_GOVERNOR_SOURCE_PRESENT": false,
+  "GOVERNOR_COMPATIBLE": false,
+  "LLM_CALLS": 0,
+  "EXISTING_TREE001_GOVERNOR": {
+    "CLASS": "CognitiveResourceGovernor",
+    "PATH": "src/raios/neuro_lingua/governor.py",
+    "FUNCTION": "RAM/admission; not iteration/cost/evidence stop-code governor"
+  },
+  "REQUIRED_STOP_CODES": {
+    "MAX_ITERATIONS": {"C7_TEST": "NOT_EXECUTED", "TREE001": "ABSENT", "RESULT": "NOT_PASS"},
+    "MAX_COST": {"C7_TEST": "NOT_EXECUTED", "TREE001": "ABSENT", "RESULT": "NOT_PASS"},
+    "MAX_TIME": {"C7_TEST": "NOT_EXECUTED", "TREE001": "ABSENT", "RESULT": "NOT_PASS"},
+    "NO_NEW_EVIDENCE": {"C7_TEST": "NOT_EXECUTED", "TREE001": "ABSENT", "RESULT": "NOT_PASS"},
+    "NO_CONFIDENCE_GAIN": {"C7_TEST": "NOT_EXECUTED", "TREE001": "ABSENT", "RESULT": "NOT_PASS"},
+    "REPEATED_STATE": {"C7_TEST": "NOT_EXECUTED", "TREE001": "ABSENT", "RESULT": "NOT_PASS"},
+    "CRITICAL_CONTRADICTION": {"C7_TEST": "NOT_EXECUTED", "TREE001": "ABSENT", "RESULT": "NOT_PASS"},
+    "AUTHORITY_REQUIRED": {"C7_TEST": "NOT_EXECUTED", "TREE001": "PRESENT src/raios/a2a/failclosed.py", "RESULT": "NOT_PASS_AS_C7_GOVERNOR"},
+    "POLICY_DENIED": {"C7_TEST": "NOT_EXECUTED", "TREE001": "RISK_POLICY_DENIED in failclosed.py", "RESULT": "NOT_PASS_AS_C7_GOVERNOR"},
+    "GOAL_ACHIEVED": {"C7_TEST": "NOT_EXECUTED", "TREE001": "ABSENT", "RESULT": "NOT_PASS"},
+    "UNKNOWN_RISK": {"C7_TEST": "NOT_EXECUTED", "TREE001": "PARTIAL _raios-model-escalation UNKNOWN_RISK_CLASS", "RESULT": "NOT_PASS_AS_C7_GOVERNOR"}
+  },
+  "NOTE": "Do not report (when executed) as PASS. C7 governor suite was not present and was not executed."
+}

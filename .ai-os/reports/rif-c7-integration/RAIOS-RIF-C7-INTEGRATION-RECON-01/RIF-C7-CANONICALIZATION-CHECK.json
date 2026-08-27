@@ -1,0 +1,24 @@
+{
+  "schema": "raios.rif.c7.canonicalization-check.v1",
+  "TASK_ID": "RAIOS-RIF-C7-INTEGRATION-RECON-01",
+  "GENERATED_AT": "2026-08-27T03:30:00Z",
+  "C7_FINGERPRINT_NAME": "SANDBOX_REFERENCE_CANONICALIZATION",
+  "C7_FINGERPRINT_BYTES_PRESENT": false,
+  "C7_FINGERPRINT_COMPATIBLE": false,
+  "EXISTING_CANONICALIZATION_REUSED": true,
+  "ADAPTER_REQUIRED": true,
+  "SECOND_CANONICALIZATION_SYSTEM_CREATED": false,
+  "EXISTING_SYSTEM": {
+    "PATH": ".ai-os/reports/architecture-audit/RAIOS-ARCH-ASSET-01-20260826T171200Z/10-RAIOS-CANONICALIZATION-PLAN.json",
+    "SCHEMA": "raios.canonicalization-plan.v1",
+    "MODE": "CURRENT_CANONICAL_CANDIDATE + KEEP/COMPOSE/RESEARCH_MORE",
+    "AUTONOMOUS_LIVE_CANONICAL": false
+  },
+  "TREE001_SEMANTIC_FINGERPRINT": {
+    "PATH": "src/raios/a2a/semantic.py",
+    "KIND": "SHA256 sorted-key semantic contract fingerprint",
+    "NOT": "RIF sandbox canonical fingerprint"
+  },
+  "LAW": "C7 sandbox fingerprint may later be stored as donor evidence. It must not authorize live CANONICAL promotion or replace 10-RAIOS-CANONICALIZATION-PLAN.json.",
+  "CANONICAL_PROMOTION_EXECUTED": false
+}

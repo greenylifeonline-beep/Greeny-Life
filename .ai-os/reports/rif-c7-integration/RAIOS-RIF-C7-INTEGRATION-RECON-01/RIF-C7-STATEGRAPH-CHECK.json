@@ -1,0 +1,30 @@
+{
+  "schema": "raios.rif.c7.stategraph-check.v1",
+  "TASK_ID": "RAIOS-RIF-C7-INTEGRATION-RECON-01",
+  "GENERATED_AT": "2026-08-27T03:30:00Z",
+  "C7_STATEGRAPH_SOURCE_PRESENT": false,
+  "STATEGRAPH_COMPATIBLE": false,
+  "TREE001_LIFECYCLE": {
+    "ENUM": ["DISCOVERED", "VALIDATED", "CANONICAL"],
+    "PATH": "src/raios/neuro_lingua/schema.py:KnowledgeState",
+    "KERNEL_WRITES": "DISCOVERED only (src/raios/neuro_lingua/kernel.py)",
+    "WAL_CANONICAL_BLOCK": "DIRECT_CANONICAL_PROMOTION_FORBIDDEN"
+  },
+  "PROBES": {
+    "append_learning_CANONICAL": {
+      "EXECUTED": true,
+      "WAL_WRITTEN": false,
+      "RESULT": "ValueError DIRECT_CANONICAL_PROMOTION_FORBIDDEN",
+      "PASS": true
+    }
+  },
+  "CHECKS": {
+    "illegal_transition_fail_closed": "TREE001_PARTIAL; C7 graph UNVERIFIED",
+    "risk_gates": "TREE001 via NeuroLingua RiskLevel + A2A policy_bridge; C7 UNVERIFIED",
+    "evidence_gates": "TREE001 lattice reports only; C7 UNVERIFIED",
+    "abstention": "not a named StateGraph state on TREE-001",
+    "escalation": "_raios-model-escalation exists; not wired as RIF StateGraph",
+    "canonical_candidate_boundary": "ENFORCED on NL WAL adapter; C7 must not autonomously produce live CANONICAL"
+  },
+  "C7_MUST_NOT_AUTONOMOUSLY_PRODUCE_LIVE_CANONICAL": true
+}

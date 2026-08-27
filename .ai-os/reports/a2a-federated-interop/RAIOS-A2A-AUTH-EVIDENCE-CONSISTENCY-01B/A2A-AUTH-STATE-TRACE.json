@@ -1,0 +1,40 @@
+{
+  "schema": "raios.a2a.auth-state-trace.v1",
+  "TASK_ID": "RAIOS-A2A-AUTH-EVIDENCE-CONSISTENCY-01B",
+  "GENERATED_AT": "2026-08-27T09:45:00Z",
+  "BLOCKER_CLASSIFICATION": "REPORTING_ONLY_BUG",
+  "PATH": [
+    {"step": "request", "component": "A2ARequest", "note": "granted_scopes/role/admin/C1 are REQUEST_DATA_ONLY"},
+    {"step": "trust", "component": "trust.verify", "note": "SIGNATURE_VALID / ISSUER_TRUSTED only. Pre-fix required_scope was hardcoded raios.a2a.task, so TrustResult.SCOPE_AUTHORIZED was false whenever the principal held only raios.a2a.high_risk."},
+    {"step": "principal_binding", "component": "Gateway._bound_principal", "note": "issuer in trusted_issuers -> principal_by_issuer"},
+    {"step": "server_side_scopes", "component": "authority.server_scopes_for", "note": "scopes_by_principal[principal]; caller granted_scopes unused"},
+    {"step": "capability_authorization", "component": "authority.capability_allowed_for_scopes", "note": "high_risk_mutate requires raios.a2a.high_risk. This was already true in the C6 case."},
+    {"step": "risk_policy", "component": "policy_bridge.evaluate(effective_authority)", "note": "uses AuthorityDecision.EFFECTIVE_AUTHORITY_GRANTED"},
+    {"step": "effective_authority", "component": "authority.derive", "note": "chain + high_risk_principals (C1 task gate). Authorization was already correct."},
+    {"step": "serialized_AuthResult", "component": "gateway.handle AUTH_RESULT", "divergence": true, "note": "FIRST DIVERGENCE: copied trust.SCOPE_AUTHORIZED instead of AuthorityDecision.SCOPE_AUTHORIZED."},
+    {"step": "receipt_evidence", "component": "receipt_bridge.build_receipt", "note": "faithfully stored the already-divergent AUTH_RESULT dict."}
+  ],
+  "FIRST_DIVERGENCE_COMPONENT": "src/raios/a2a/gateway.py:handle AUTH_RESULT.SCOPE_AUTHORIZED <- trust.SCOPE_AUTHORIZED",
+  "PRE_FIX_HIGH_RISK_EXAMPLE": {
+    "server_scopes": ["raios.a2a.high_risk"],
+    "trust.required_scope": "raios.a2a.task",
+    "trust.SCOPE_AUTHORIZED": false,
+    "decision.CAPABILITY_AUTHORIZED": true,
+    "decision.EFFECTIVE_AUTHORITY": true
+  },
+  "POST_FIX_HIGH_RISK_EXAMPLE": {
+    "SCOPE_AUTHORIZED": true,
+    "CAPABILITY_AUTHORIZED": true,
+    "EFFECTIVE_AUTHORITY": true,
+    "AUTHORITY_SOURCE": "EXPLICIT_C1_TASK_GATE",
+    "AUTHORIZED_SCOPES": ["raios.a2a.high_risk"],
+    "EXECUTED": false,
+    "A2A_RESULT": "ACCEPTED_DRY_RUN"
+  },
+  "FIX": [
+    "AuthorityDecision.SCOPE_AUTHORIZED derived from issuer_trusted AND principal_bound AND capability_allowed_for_scopes (server-side).",
+    "Protected EFFECTIVE_AUTHORITY=true requires SCOPE_AUTHORIZED and CAPABILITY_AUTHORIZED (fail-closed in derive).",
+    "Gateway serializes one AuthorityDecision.as_auth_result() into policy_evidence, handle auth_result, and receipt AUTH_RESULT (same object).",
+    "trust.verify required_scope now uses authority.required_scope_token(capability) so TrustResult is not internally contradictory; AuthResult still does not copy TrustResult.SCOPE_AUTHORIZED."
+  ]
+}

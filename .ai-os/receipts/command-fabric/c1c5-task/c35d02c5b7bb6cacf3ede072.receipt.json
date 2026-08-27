@@ -1,0 +1,28 @@
+{
+  "schema": "raios.c1c5.task-receipt.v1",
+  "TASK_ID": "RAIOS-C1-C5-TASK-DISPATCH-01",
+  "CORRELATION_ID": "COR-C1C5-TASK-LIVE-01",
+  "IDEMPOTENCY_KEY": "idem-c1c5-live-health-01",
+  "ACTOR_BOUND": "C1@AG",
+  "AUTHORITY_SOURCE": "SERVER_SIDE_FOUNDER_SESSION",
+  "TARGET": "C5",
+  "REQUESTED_CAPABILITY": "c5.self_inspect.health",
+  "AUTH_RESULT": {
+    "EFFECTIVE_AUTHORITY": true,
+    "AUTHORITY_SOURCE": "SERVER_SIDE_FOUNDER_SESSION",
+    "PRINCIPAL": "C1@AG"
+  },
+  "POLICY_RESULT": "ALLOW",
+  "RISK_CLASS": "LOW",
+  "UCP_STATUS": "ALREADY_APPLIED",
+  "UCP_NO_OP": true,
+  "CAPABILITY_INVOKED": false,
+  "STATUS": "ALREADY_APPLIED",
+  "TIMESTAMP": "2026-08-27T10:04:04Z",
+  "EVIDENCE_REFS": [
+    ".ai-os/receipts/command-fabric",
+    "src/raios/a2a/ucp_adapter.py"
+  ],
+  "WAL_WRITTEN": false,
+  "CANONICAL_MUTATION": false
+}

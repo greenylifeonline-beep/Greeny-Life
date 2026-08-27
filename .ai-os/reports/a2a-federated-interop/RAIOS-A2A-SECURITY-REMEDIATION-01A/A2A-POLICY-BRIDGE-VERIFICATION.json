@@ -1,0 +1,80 @@
+{
+  "schema": "raios.a2a.policy-bridge-verification.v1",
+  "TASK_ID": "RAIOS-A2A-SECURITY-REMEDIATION-01A",
+  "GENERATED_AT": "2026-08-27T03:15:00Z",
+  "POLICY_BRIDGE_VERIFIED": true,
+  "ENGINE": "WRAP src/raios/a2a/policy_bridge.py + src/raios/neuro_lingua/schema.py RiskLevel + src/raios/a2a/authority.py",
+  "SECOND_POLICY_ENGINE": false,
+  "EFFECTIVE_AUTHORITY_SOURCE": "server-side AuthorityDecision; caller authority/role/admin/scope/trusted fields are REQUEST_DATA_ONLY",
+  "FAIL_CLOSED": true,
+  "SECRETS_LOGGED": false,
+  "EVIDENCE_KEYS_REQUIRED": [
+    "AUTH_INPUT",
+    "TRUST_RESULT",
+    "SCOPE_RESULT",
+    "CAPABILITY_RESULT",
+    "RISK_RESULT",
+    "AUTHORITY_RESULT",
+    "DENIAL_REASON"
+  ],
+  "ALLOW_PATH_EVIDENCE_EXAMPLE": {
+    "test": "T32_TRUSTED_SCOPED_LOW_RISK_ALLOWED",
+    "A2A_RESULT": "ACCEPTED_DRY_RUN",
+    "EXECUTED": false,
+    "policy_evidence": {
+      "AUTH_INPUT": {
+        "agent_id": "peer.alpha",
+        "issuer": "issuer-trusted",
+        "capability_id": "raios.foundation.noop_intent",
+        "action": "NOOP",
+        "REQUESTED_AUTHORITY": {
+          "authority_present": false,
+          "granted_scopes": [],
+          "requested_authority": null,
+          "requested_role": null,
+          "NOTE": "REQUEST_DATA_ONLY; REQUESTED_AUTHORITY!=GRANTED_AUTHORITY"
+        }
+      },
+      "TRUST_RESULT": {
+        "SIGNATURE_VALID": true,
+        "ISSUER_IDENTIFIED": true,
+        "ISSUER_TRUSTED": true
+      },
+      "SCOPE_RESULT": {
+        "AUTHORIZED_SCOPES": ["raios.a2a.task"],
+        "AUTHORIZED_SCOPE_PRESENT": true
+      },
+      "CAPABILITY_RESULT": {
+        "CAPABILITY_ID": "raios.foundation.noop_intent",
+        "CAPABILITY_AUTHORIZED": true
+      },
+      "RISK_RESULT": {
+        "RISK_CLASS": "LOW",
+        "RISK_POLICY_ALLOWED": true
+      },
+      "AUTHORITY_RESULT": {
+        "EFFECTIVE_AUTHORITY_GRANTED": false,
+        "PRINCIPAL_BOUND": true,
+        "principal": "principal-t32"
+      },
+      "DENIAL_REASON": null
+    }
+  },
+  "DENY_PATHS": {
+    "T14_HIGH_RISK_UNTRUSTED": "AUTHORITY_REQUIRED",
+    "T15_CRITICAL_WITHOUT_AUTHORITY": "AUTHORITY_REQUIRED or RISK_POLICY_DENIED",
+    "T28_UNTRUSTED_ISSUER_ASSERTED_ADMIN": "AUTHORITY_REQUIRED:UNTRUSTED_ISSUER",
+    "T29_TRUSTED_NO_SCOPE": "AUTH_SCOPE_MISSING",
+    "T30_SELF_ASSERTED_ADMIN": "AUTHORITY_REQUIRED:UNTRUSTED_ISSUER",
+    "T31_UNRELATED_SCOPE": "CAPABILITY_NOT_AUTHORIZED",
+    "T33_HIGH_RISK_NO_SERVER_GRANT": "AUTHORITY_REQUIRED"
+  },
+  "DESTRUCTIVE_ACTIONS_REQUIRE_SERVER_GRANT": [
+    "DELETE",
+    "FORCE_PUSH",
+    "CANONICAL_REPLACEMENT",
+    "IRREVERSIBLE_MIGRATION",
+    "SECRET_ROTATION"
+  ],
+  "HIGH_CRITICAL_CALLER_ASSERTION_INSUFFICIENT": true
+}

@@ -1,0 +1,38 @@
+{
+  "schema": "raios.tree-copy-repo-recon.semantic-remediation.v1b",
+  "TASK_ID": "RAIOS-TOTAL-TREE-COPY-REPO-RECON-01B",
+  "MODE": "REPORT_SEMANTIC_REMEDIATION_ONLY",
+  "SOURCE_PACKAGES_MUTATED": false,
+  "REGISTRY_MUTATED": false,
+  "TASKS_JSON_MUTATED": false,
+  "A2A_IMPLEMENTATION_MUTATED": false,
+  "CANONICAL_PROJECT_STATE_MUTATED": false,
+  "RESCAN": false,
+  "FETCH": false,
+  "MERGE": false,
+  "DELETE": false,
+  "COMMIT": false,
+  "PUSH": false,
+  "SEMANTIC_STALE_LABELS_BEFORE": 19,
+  "SEMANTIC_STALE_LABELS_AFTER": 0,
+  "REMEDIATION": "01 and 01A preserved as historical evidence. Current reading of every inventoried label is this 01B package. 01B itself does not assert C2A/C2B as independent seats, does not assert EXACT_SEAT_ACK_NOT_AVAILABLE as current, and does not treat C2-ESTATE-RECON as a second live C2 conversation.",
+  "CURRENT_SEAT_LINEAGE": {
+    "SEAT_ID_CANONICAL": "C2-PRIMARY-EXECUTOR",
+    "SEAT_ID_COMPATIBILITY": "C2-KAGGLE-CONTROL",
+    "C2A_C2B_INDEPENDENT_SEATS": false,
+    "C2_SESSION_STATE_SHARED": true,
+    "C2A_C2B_DISTINCTION_RETIRED": true,
+    "C6_AG_REMOTE_RECON_INDEPENDENT": true,
+    "AUTHOR": "C2",
+    "REVIEWER": "C6",
+    "C6_AUTHOR_OF_01B": false
+  },
+  "BLOCKING_UNRESOLVED": "none",
+  "OUT_OF_SCOPE_RETAINED_IN_01A": [
+    "TA-TREE-001 vs TA-RETIRED RELATIONSHIP_UNRESOLVED BLOCKER=MISSING_LOCAL_GIT_OBJECTS",
+    "TA-TREE-001 vs origin/main DIVERGENCE_UNPROVEN under shallow/partial clone",
+    "GIT_OBJECT_HASH_SETS_COMPLETE=false",
+    "01 SUMMARY.md hash drift (historical, not overwritten)"
+  ],
+  "OUT_OF_SCOPE_NOTE": "Those 01A relationship/object blockers are not semantic-label defects and were not reopened. They are not 01B blocking unresolved items."
+}

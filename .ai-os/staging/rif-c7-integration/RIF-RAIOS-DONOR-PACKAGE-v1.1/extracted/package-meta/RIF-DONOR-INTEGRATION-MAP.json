@@ -1,0 +1,97 @@
+{
+  "raios_reuse": [
+    {
+      "system": "NeuroLingua",
+      "adapter": "SemanticResolverAdapter",
+      "binding": "wrap"
+    },
+    {
+      "system": "WAL Adapter",
+      "adapter": "WALAdapter",
+      "binding": "reuse"
+    },
+    {
+      "system": "Unified Control Plane",
+      "adapter": "ControlPlaneAdapter",
+      "binding": "reuse"
+    },
+    {
+      "system": "NATS",
+      "adapter": "TransportAdapter",
+      "binding": "reuse"
+    },
+    {
+      "system": "MCP",
+      "adapter": "MCPToolAdapter",
+      "binding": "reuse"
+    }
+  ],
+  "raios_wrap": [
+    {
+      "system": "Capability Registry",
+      "adapter": "ModelEcologyAdapter",
+      "binding": "wrap"
+    },
+    {
+      "system": "Contracts",
+      "adapter": "PolicyAdapter",
+      "binding": "wrap"
+    },
+    {
+      "system": "StateGraph",
+      "adapter": "ControlPlaneAdapter",
+      "binding": "wrap"
+    },
+    {
+      "system": "Risk Policy",
+      "adapter": "PolicyAdapter",
+      "binding": "wrap"
+    },
+    {
+      "system": "Observability",
+      "adapter": "ObservabilitySinkAdapter",
+      "binding": "wrap"
+    },
+    {
+      "system": "RKG",
+      "adapter": "ModelEcologyAdapter",
+      "binding": "wrap"
+    },
+    {
+      "system": "Model Ecology",
+      "adapter": "ModelEcologyAdapter",
+      "binding": "wrap"
+    },
+    {
+      "system": "Model Factory",
+      "adapter": "ModelFactoryAdapter",
+      "binding": "wrap"
+    }
+  ],
+  "raios_merge": [
+    {
+      "c7_component": "Claim/Evidence Lifecycle",
+      "raios_component": "Evidence-Trust-Lattice",
+      "merge_type": "logical_view_over_store",
+      "c7_provides": "evaluation_view, claim_scope, evidence_requirements",
+      "raios_provides": "canonical_storage, trust_lattice, provenance_chain"
+    }
+  ],
+  "donor_only": [
+    {
+      "component": "Governor Stop Logic",
+      "type": "pure_decision_logic"
+    },
+    {
+      "component": "M001 Selection Logic",
+      "type": "spec_harness"
+    }
+  ],
+  "conflicts_resolved": [
+    {
+      "conflict": "SANDBOX_REFERENCE_CANONICALIZATION",
+      "resolution": "RAIOS_canonicalization_wins",
+      "c7_change": "canonical_fingerprint_retired_to_sandbox_reference"
+    }
+  ]
+}

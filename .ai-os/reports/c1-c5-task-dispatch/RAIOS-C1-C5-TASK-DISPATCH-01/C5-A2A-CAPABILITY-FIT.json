@@ -1,0 +1,32 @@
+{
+  "schema": "raios.c5.a2a-capability-fit.v1",
+  "TASK_ID": "RAIOS-C1-C5-TASK-DISPATCH-01",
+  "GENERATED_AT": "2026-08-27T10:12:00Z",
+  "C5_PUBLICLY_EXPOSED": false,
+  "A2A_PUBLIC_LISTENER_ENABLED": false,
+  "PUBLICATION_EXECUTED": false,
+  "C5_STABLE_SERVICE_IDENTITY_SUITABLE": false,
+  "C5_PUBLIC_AGENT_CARD_RECOMMENDED": false,
+  "C5_AUTHENTICATED_AGENT_CARD_RECOMMENDED": true,
+  "NOTE": "C5 remains LOCAL_COGNITIVE_WORKER. Recommendations are not publication. Only LIVE_PROVEN capabilities are mapped.",
+  "LIVE_PROVEN_CAPABILITIES": [
+    {
+      "CAPABILITY_ID": "c5.self_inspect.health",
+      "PROOF": "GET http://127.0.0.1:8766/health -> 200 {status:ONLINE,gateway:true,main_cortex:true} at 2026-08-27T10:04:04Z and again during live task envelope 2026-08-27T10:06:02Z",
+      "PUBLIC_SAFE_SUBSET": false,
+      "SIDE_EFFECTS": false,
+      "RISK_CLASS": "LOW"
+    }
+  ],
+  "NOT_MAPPED_AS_A2A_CAPABILITY": [
+    {
+      "PATH": "POST /api/chat",
+      "CLASS": "MESSAGE_TRANSPORT",
+      "PROVEN_E2E_AS_CHAT": true,
+      "TASK_DISPATCH": false
+    }
+  ],
+  "HTTP_PRIMARY": true,
+  "NATS_PRIMARY": false,
+  "COMMAND_FABRIC_E2E_PROVEN": false
+}

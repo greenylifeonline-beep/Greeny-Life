@@ -1,0 +1,49 @@
+{
+  "schema": "raios.tree-copy-repo-recon.seat-lineage-delta.v1a",
+  "TASK_ID": "RAIOS-TOTAL-TREE-COPY-REPO-RECON-01A",
+  "PREVIOUS_PACKAGE_SEAT_LINEAGE": "STALE_NOT_REUSED",
+  "PERMANENT_SEAT_LINEAGE_RECONCILED": "PARTIAL",
+  "seats": [
+    {
+      "SEAT_ID": "C2-ESTATE-RECON",
+      "BINDING": "EXACT",
+      "ROLE": "ESTATE_RECON_EXECUTOR",
+      "CURRENT_LANE": "TREE_COPY_REPOSITORY_RECON",
+      "AG_ACCESS": true,
+      "CANONICAL_WRITE_AUTHORIZED": false,
+      "MISROUTING_GUARD_ACTIVE": true,
+      "SOURCE": "C1 TO_SEAT command for 01A"
+    },
+    {
+      "SEAT_ID": "C6-AG-REMOTE-RECON",
+      "BINDING": "EXACT",
+      "ROLE": "INDEPENDENT_RECONCILER",
+      "CURRENT_LANE": "EVIDENCE_REVIEW_AND_RECONCILIATION",
+      "AG_ACCESS": true,
+      "CANONICAL_WRITE_AUTHORIZED": false,
+      "MISROUTING_GUARD_ACTIVE": true,
+      "C6_AG_ACCESS_PROVEN": true,
+      "C6_OFF_HOST_ONLY": false,
+      "C6_CAN_EXECUTE_ON_AG": true,
+      "C6_KAGGLE_ACCESS_PROVEN": null,
+      "C6_GITHUB_WRITE_PROVEN": null,
+      "C6_CANONICAL_WRITE_AUTHORIZED": null,
+      "NOT_INFERRED": [
+        "C6_KAGGLE_ACCESS_PROVEN",
+        "C6_GITHUB_WRITE_PROVEN",
+        "C6_CANONICAL_WRITE_AUTHORIZED"
+      ],
+      "SOURCE": "C1 command current access truth"
+    },
+    {
+      "SEAT_ID": "C2-KAGGLE-CONTROL",
+      "C2_KAGGLE_CONTROL_SEAT_BINDING": "PARTIAL",
+      "REASON": "EXACT_SEAT_ACK_NOT_AVAILABLE",
+      "LOCKS_VISIBLE_C2AG": [
+        "LOCK-20260826185525 RAIOS-TOTAL-ESTATE-PHASE1-01 ACTIVE owner=C2_LOCAL_CENSUS agent=C2@AG",
+        "LOCK-20260826201336 RAIOS-TOTAL-ESTATE-PHASE1-02 ACTIVE owner=C2_LOCAL_CENSUS agent=C2@AG"
+      ],
+      "NOTE": "Census locks prove C2@AG census ownership, not an exact C2-KAGGLE-CONTROL seat ACK. Do not guess."
+    }
+  ]
+}

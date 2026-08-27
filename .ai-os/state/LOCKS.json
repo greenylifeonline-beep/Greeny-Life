@@ -124,6 +124,126 @@
       "agent": "cursor",
       "scope": "_raios-wave2-gap-resolution",
       "status": "ACTIVE"
+    },
+    {
+      "id": "LOCK-20260824222858",
+      "task_id": "BRANCH-UNIFY-20260824",
+      "agent": "cursor",
+      "scope": "archive/repair-leftovers",
+      "status": "RELEASED"
+    },
+    {
+      "id": "LOCK-20260824222859",
+      "task_id": "BRANCH-UNIFY-20260824",
+      "agent": "cursor",
+      "scope": "migration/strong-validation",
+      "status": "RELEASED"
+    },
+    {
+      "id": "LOCK-20260826181700",
+      "task_id": "C2-CONCURRENCY-SYNC-01",
+      "agent": "C2@AG",
+      "owner": "LANE_B",
+      "scope": ".ai-os/reports/architecture-audit",
+      "files_or_subsystem": "architecture-audit C3 review binding; identity overlay on C2-IDENTITY-BINDING/SEAT-MAP/POLICY; no V9 nomadic",
+      "start_head": "12603d02253547c7727bc84ce68c318e8e9258bc",
+      "status": "ACTIVE"
+    },
+    {
+      "id": "LOCK-20260826181701",
+      "task_id": "RAIOS-ARCH-ASSET-01A",
+      "agent": "C2@AG",
+      "owner": "LANE_B",
+      "scope": ".ai-os/reports/architecture-audit/RAIOS-ARCH-ASSET-01-20260826T171200Z",
+      "files_or_subsystem": "C3-REVIEW-PACKAGE.zip and 01A binding sidecars; do not rewrite the 14 audit artifacts",
+      "start_head": "12603d02253547c7727bc84ce68c318e8e9258bc",
+      "status": "COMPLETED"
+    },
+    {
+      "id": "LOCK-20260826185525",
+      "task_id": "RAIOS-TOTAL-ESTATE-PHASE1-01",
+      "agent": "C2@AG",
+      "owner": "C2_LOCAL_CENSUS",
+      "lane": "C2_LOCAL_CENSUS",
+      "scope": ".ai-os/reports/master-estate-census/RAIOS-TOTAL-ESTATE-PHASE1-01-20260826T185525Z",
+      "files_or_subsystem": "master estate census report dir only; no product/runtime/V9 writes",
+      "start_head": "12603d02253547c7727bc84ce68c318e8e9258bc",
+      "status": "ACTIVE"
+    },
+    {
+      "id": "LOCK-20260826201336",
+      "task_id": "RAIOS-TOTAL-ESTATE-PHASE1-02",
+      "agent": "C2@AG",
+      "owner": "C2_LOCAL_CENSUS",
+      "lane": "C2_LOCAL_CENSUS",
+      "scope": ".ai-os/reports/master-estate-census/RAIOS-TOTAL-ESTATE-PHASE1-01-20260826T185525Z",
+      "files_or_subsystem": "delta closeout of existing PHASE1-01 run only; no product/runtime/V9 writes; no second master estate",
+      "start_head": "12603d02253547c7727bc84ce68c318e8e9258bc",
+      "status": "ACTIVE"
+    },
+    {
+      "id": "LOCK-20260827101200",
+      "task_id": "RAIOS-PRECANONICAL-EXECUTION-WAVE-01",
+      "agent": "cursor",
+      "scope": "src/raios/c1c5",
+      "status": "ACTIVE",
+      "files_or_subsystem": "C1-C5 task envelope dispatcher; no neuro_lingua/V9/census writes"
+    },
+    {
+      "id": "LOCK-20260827101201",
+      "task_id": "RAIOS-PRECANONICAL-EXECUTION-WAVE-01",
+      "agent": "cursor",
+      "scope": "tests/c1c5",
+      "status": "ACTIVE"
+    },
+    {
+      "id": "LOCK-20260827101202",
+      "task_id": "RAIOS-PRECANONICAL-EXECUTION-WAVE-01",
+      "agent": "cursor",
+      "scope": ".ai-os/reports/c1-c5-task-dispatch",
+      "status": "ACTIVE"
+    },
+    {
+      "id": "LOCK-20260827101203",
+      "task_id": "RAIOS-PRECANONICAL-EXECUTION-WAVE-01",
+      "agent": "cursor",
+      "scope": ".ai-os/reports/precannonical-wave",
+      "status": "ACTIVE"
+    },
+    {
+      "id": "LOCK-20260827101204",
+      "task_id": "RAIOS-PRECANONICAL-EXECUTION-WAVE-01",
+      "agent": "cursor",
+      "scope": ".ai-os/reports/rif-c7-integration/RAIOS-RIF-C7-INTEGRATION-RECON-02",
+      "status": "ACTIVE"
+    },
+    {
+      "id": "LOCK-20260827150500",
+      "task_id": "RAIOS-RIF-C7-INTEGRATION-RECON-02A",
+      "agent": "cursor",
+      "scope": ".ai-os/reports/rif-c7-integration/RAIOS-RIF-C7-INTEGRATION-RECON-02A",
+      "status": "ACTIVE"
+    },
+    {
+      "id": "LOCK-20260827150501",
+      "task_id": "RAIOS-RIF-C7-INTEGRATION-RECON-02A",
+      "agent": "cursor",
+      "scope": ".ai-os/staging/rif-c7-integration/ag-runner",
+      "status": "ACTIVE"
+    },
+    {
+      "id": "LOCK-20260827150502",
+      "task_id": "RAIOS-RIF-C7-INTEGRATION-RECON-02A",
+      "agent": "cursor",
+      "scope": "tests/rif_donor",
+      "status": "ACTIVE"
+    },
+    {
+      "id": "LOCK-20260827150503",
+      "task_id": "RAIOS-PRECANONICAL-EXECUTION-WAVE-01",
+      "agent": "cursor",
+      "scope": ".ai-os/reports/precannonical-wave/RAIOS-PRECANONICAL-EXECUTION-WAVE-01-DELTA-D",
+      "status": "ACTIVE"
     }
   ]
 }

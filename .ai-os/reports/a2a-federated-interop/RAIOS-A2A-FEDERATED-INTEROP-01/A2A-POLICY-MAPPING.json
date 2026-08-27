@@ -1,0 +1,21 @@
+{
+  "TASK_ID": "RAIOS-A2A-FEDERATED-INTEROP-01",
+  "ENGINE": "WRAP src/raios/neuro_lingua/schema.py RiskLevel + src/raios/neuro_lingua/risk.py verification_plan",
+  "SECOND_POLICY_ENGINE": false,
+  "CLASSES": ["LOW", "MEDIUM", "HIGH", "CRITICAL"],
+  "HIGH_CRITICAL_MUTATION": "AUTHORITY_REQUIRED",
+  "DESTRUCTIVE_ALWAYS_AUTHORITY": [
+    "DELETE",
+    "FORCE_PUSH",
+    "CANONICAL_REPLACEMENT",
+    "IRREVERSIBLE_MIGRATION",
+    "SECRET_ROTATION"
+  ],
+  "C1_BYPASS": false,
+  "A2A_INDEPENDENT_MUTATION_AUTHORITY": false,
+  "MAP": {
+    "raios.foundation.noop_intent": { "RISK_CLASS": "LOW", "AUTHORITY_CLASS": "FOUNDATION" },
+    "raios.foundation.high_risk_mutate": { "RISK_CLASS": "HIGH", "AUTHORITY_CLASS": "C1_GATE" },
+    "raios.foundation.critical_delete": { "RISK_CLASS": "CRITICAL", "AUTHORITY_CLASS": "C1_GATE" }
+  }
+}

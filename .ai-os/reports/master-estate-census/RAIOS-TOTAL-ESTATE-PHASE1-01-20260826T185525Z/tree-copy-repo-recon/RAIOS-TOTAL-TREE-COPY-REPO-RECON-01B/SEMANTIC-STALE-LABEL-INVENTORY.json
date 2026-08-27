@@ -1,0 +1,181 @@
+{
+  "schema": "raios.tree-copy-repo-recon.semantic-stale-label-inventory.v1b",
+  "TASK_ID": "RAIOS-TOTAL-TREE-COPY-REPO-RECON-01B",
+  "SCOPE": "stale historical labels in 01 and 01A tree/copy/repository reports only",
+  "SOURCE_PACKAGES_OVERWRITTEN": false,
+  "NO_RESCAN": true,
+  "SEMANTIC_STALE_LABELS_BEFORE": 19,
+  "labels": [
+    {
+      "ID": "SL-01",
+      "PACKAGE": "RAIOS-TOTAL-TREE-COPY-REPO-RECON-01",
+      "FILE": "TREE-ASSET-REGISTRY.json",
+      "FIELD": "C2A_ACTIVE_WRITER",
+      "HISTORICAL_VALUE": true,
+      "WHY_STALE_AS_CURRENT": "Treats C2A as an independent writer seat. C1 later determined C2A and C2B are two views of the same C2 session.",
+      "CURRENT_READING": "HISTORICAL_VIEW_LABEL. Same C2 session. C2A_C2B_INDEPENDENT_SEATS=false."
+    },
+    {
+      "ID": "SL-02",
+      "PACKAGE": "RAIOS-TOTAL-TREE-COPY-REPO-RECON-01",
+      "FILE": "TREE-ASSET-REGISTRY.json",
+      "FIELD": "C2B_TOUCHED_C2A_HEAD",
+      "HISTORICAL_VALUE": false,
+      "WHY_STALE_AS_CURRENT": "Implies C2B is a distinct actor who might touch C2A HEAD.",
+      "CURRENT_READING": "HISTORICAL_VIEW_LABEL. Distinction retired. TREE-001 write-safety remains."
+    },
+    {
+      "ID": "SL-03",
+      "PACKAGE": "RAIOS-TOTAL-TREE-COPY-REPO-RECON-01",
+      "FILE": "TREE-ASSET-REGISTRY.json",
+      "FIELD": "assets[TA-TREE-001].NOTE",
+      "HISTORICAL_VALUE": "C2A checkout+commit after frozen census. Historical 12603d0 snapshot not rewritten. Live HEAD descendant of 12603d0. DO_NOT_TOUCH C2A active state.",
+      "WHY_STALE_AS_CURRENT": "C2A named as independent active state owner.",
+      "CURRENT_READING": "HEAD lineage facts remain historical evidence. Seat wording remaps to this C2 session. DO_NOT_TOUCH TREE-001 canonical state is write-safety, not a C2A/C2B split."
+    },
+    {
+      "ID": "SL-04",
+      "PACKAGE": "RAIOS-TOTAL-TREE-COPY-REPO-RECON-01",
+      "FILE": "CANONICALIZATION-CANDIDATES.json",
+      "FIELD": "NOTE",
+      "HISTORICAL_VALUE": "C2A active writer. Live HEAD 8e57fdb. Frozen 12603d0 remains historical snapshot.",
+      "WHY_STALE_AS_CURRENT": "C2A independent writer label.",
+      "CURRENT_READING": "HEAD 8e57fdb at 01 remains historical. Writer = this C2 session, not a second seat."
+    },
+    {
+      "ID": "SL-05",
+      "PACKAGE": "RAIOS-TOTAL-TREE-COPY-REPO-RECON-01",
+      "FILE": "CANONICALIZATION-CANDIDATES.json",
+      "FIELD": "MERGE_METHOD_RECOMMENDATION",
+      "HISTORICAL_VALUE": "DO_NOT_MERGE_THIS_LANE. Inspect unique commits only after authorized object fetch. No octopus. No C2B execution.",
+      "WHY_STALE_AS_CURRENT": "No C2B execution is a retired independent-seat prohibition.",
+      "CURRENT_READING": "No merge / no octopus / no unauthorized fetch remain. Independent C2B executor does not exist."
+    },
+    {
+      "ID": "SL-06",
+      "PACKAGE": "RAIOS-TOTAL-TREE-COPY-REPO-RECON-01",
+      "FILE": "SUMMARY.md",
+      "FIELD": "Closure wait",
+      "HISTORICAL_VALUE": "C2B package (this), C6 reconciliation of this package, C3 final combined gate.",
+      "WHY_STALE_AS_CURRENT": "Names this package as a C2B seat product.",
+      "CURRENT_READING": "01 was produced by this same C2 session under a now-retired C2B lane label. C6 remains independent reviewer. C3 governance unchanged."
+    },
+    {
+      "ID": "SL-07",
+      "PACKAGE": "RAIOS-TOTAL-TREE-COPY-REPO-RECON-01A",
+      "FILE": "TREE-ASSET-REGISTRY.json",
+      "FIELD": "C2A_ACTIVE_WRITER",
+      "HISTORICAL_VALUE": true,
+      "WHY_STALE_AS_CURRENT": "Same C2A independent-seat field as 01, carried into 01A.",
+      "CURRENT_READING": "HISTORICAL_VIEW_LABEL. C2A_C2B_INDEPENDENT_SEATS=false."
+    },
+    {
+      "ID": "SL-08",
+      "PACKAGE": "RAIOS-TOTAL-TREE-COPY-REPO-RECON-01A",
+      "FILE": "TREE-ASSET-REGISTRY.json",
+      "FIELD": "C2B_TOUCHED_C2A_HEAD",
+      "HISTORICAL_VALUE": false,
+      "WHY_STALE_AS_CURRENT": "Implies distinct C2B actor.",
+      "CURRENT_READING": "HISTORICAL_VIEW_LABEL. Distinction retired."
+    },
+    {
+      "ID": "SL-09",
+      "PACKAGE": "RAIOS-TOTAL-TREE-COPY-REPO-RECON-01A",
+      "FILE": "TREE-ASSET-REGISTRY.json",
+      "FIELD": "assets[TA-TREE-001].NOTE",
+      "HISTORICAL_VALUE": "C2A active writer. Live HEAD 50c5da28 descendant of 01 HEAD 8e57fdb and frozen 12603d0. Historical 12603d0 snapshot not rewritten. DO_NOT_TOUCH C2A active state.",
+      "WHY_STALE_AS_CURRENT": "C2A independent writer + C2A active state.",
+      "CURRENT_READING": "HEAD lineage 12603d0 -> 8e57fdb -> 50c5da28 remains 01A evidence. Seat wording remaps to this C2 session. TREE-001 write-safety preserved."
+    },
+    {
+      "ID": "SL-10",
+      "PACKAGE": "RAIOS-TOTAL-TREE-COPY-REPO-RECON-01A",
+      "FILE": "TREE-ASSET-REGISTRY.json",
+      "FIELD": "REFERENCE_REGISTRY_CHANGE_PROVENANCE",
+      "HISTORICAL_VALUE": "C2A Kaggle live-delta / NB-decision / C1 UI delta on existing 71-surface file; not labeled tampering",
+      "WHY_STALE_AS_CURRENT": "Attributes registry change to independent C2A seat.",
+      "CURRENT_READING": "Provenance task RAIOS-PHASE1-KAGGLE-LIVE-DELTA-02 and 71-surface file remain. Actor = this C2 session, historically labeled C2A."
+    },
+    {
+      "ID": "SL-11",
+      "PACKAGE": "RAIOS-TOTAL-TREE-COPY-REPO-RECON-01A",
+      "FILE": "TREE-ASSET-REGISTRY.json",
+      "FIELD": "REFERENCE_REGISTRY_LOCK_NOTE",
+      "HISTORICAL_VALUE": "LOCK-20260826185525 and LOCK-20260826201336 ACTIVE on census dir; registry SHA unchanged vs C6 review a607a5b7; C2B did not write registry",
+      "WHY_STALE_AS_CURRENT": "C2B did not write registry implies a distinct C2B.",
+      "CURRENT_READING": "Lock IDs and registry SHA a607a5b7 remain. No second independent C2 seat wrote the registry."
+    },
+    {
+      "ID": "SL-12",
+      "PACKAGE": "RAIOS-TOTAL-TREE-COPY-REPO-RECON-01A",
+      "FILE": "CANONICALIZATION-CANDIDATES.json",
+      "FIELD": "NOTE",
+      "HISTORICAL_VALUE": "Live HEAD 50c5da28. Frozen 12603d0 historical. C2A active writer.",
+      "WHY_STALE_AS_CURRENT": "C2A independent writer.",
+      "CURRENT_READING": "HEAD facts remain. Writer = this C2 session."
+    },
+    {
+      "ID": "SL-13",
+      "PACKAGE": "RAIOS-TOTAL-TREE-COPY-REPO-RECON-01A",
+      "FILE": "CANONICALIZATION-CANDIDATES.json",
+      "FIELD": "MERGE_METHOD_RECOMMENDATION",
+      "HISTORICAL_VALUE": "DO_NOT_MERGE_THIS_LANE. Inspect unique commits only after authorized object fetch. No octopus. No C2B execution.",
+      "WHY_STALE_AS_CURRENT": "No C2B execution as independent-seat rule.",
+      "CURRENT_READING": "Merge/fetch/octopus prohibitions remain. Independent C2B executor does not exist."
+    },
+    {
+      "ID": "SL-14",
+      "PACKAGE": "RAIOS-TOTAL-TREE-COPY-REPO-RECON-01A",
+      "FILE": "SUMMARY.md",
+      "FIELD": "C2_KAGGLE_CONTROL_SEAT_BINDING",
+      "HISTORICAL_VALUE": "PARTIAL REASON=EXACT_SEAT_ACK_NOT_AVAILABLE",
+      "WHY_STALE_AS_CURRENT": "True at 01A observation time. This same session later ACKed as C2-KAGGLE-CONTROL and executed A2A. C1 then set canonical SEAT_ID=C2-PRIMARY-EXECUTOR.",
+      "CURRENT_READING": "EXACT_SEAT_ACK_NOW_AVAILABLE for C2-KAGGLE-CONTROL on this session. Canonical current identity C2-PRIMARY-EXECUTOR. Compatibility alias C2-KAGGLE-CONTROL."
+    },
+    {
+      "ID": "SL-15",
+      "PACKAGE": "RAIOS-TOTAL-TREE-COPY-REPO-RECON-01A",
+      "FILE": "SEAT-LINEAGE-DELTA.json",
+      "FIELD": "seats[C2-ESTATE-RECON].BINDING",
+      "HISTORICAL_VALUE": "EXACT as independent estate-recon seat",
+      "WHY_STALE_AS_CURRENT": "01A TO_SEAT was C2-ESTATE-RECON on this same conversation. C1 later rebound this conversation to C2-KAGGLE-CONTROL and retired C2A/C2B independence.",
+      "CURRENT_READING": "HISTORICAL_TO_SEAT_AT_01A. Not a second live independent C2 conversation. Canonical now C2-PRIMARY-EXECUTOR."
+    },
+    {
+      "ID": "SL-16",
+      "PACKAGE": "RAIOS-TOTAL-TREE-COPY-REPO-RECON-01A",
+      "FILE": "SEAT-LINEAGE-DELTA.json",
+      "FIELD": "seats[C2-KAGGLE-CONTROL]",
+      "HISTORICAL_VALUE": "C2_KAGGLE_CONTROL_SEAT_BINDING=PARTIAL REASON=EXACT_SEAT_ACK_NOT_AVAILABLE",
+      "WHY_STALE_AS_CURRENT": "ACK and A2A execution now exist in this session.",
+      "CURRENT_READING": "ACK available. Compatibility TO_SEAT=C2-KAGGLE-CONTROL. Canonical C2-PRIMARY-EXECUTOR."
+    },
+    {
+      "ID": "SL-17",
+      "PACKAGE": "RAIOS-TOTAL-TREE-COPY-REPO-RECON-01A",
+      "FILE": "AGENT-WORK-LINEAGE.json",
+      "FIELD": "rows[AGENT=C2-ESTATE-RECON]",
+      "HISTORICAL_VALUE": "AGENT=C2-ESTATE-RECON TASK=RAIOS-TOTAL-TREE-COPY-REPO-RECON-01A SOURCE=C1-command-01A CONFIDENCE=HIGH",
+      "WHY_STALE_AS_CURRENT": "Correct as 01A command addressing. Stale if read as a still-separate live seat from this session.",
+      "CURRENT_READING": "01A authorship remains this C2 session under historical TO_SEAT=C2-ESTATE-RECON. Session later rebound."
+    },
+    {
+      "ID": "SL-18",
+      "PACKAGE": "RAIOS-TOTAL-TREE-COPY-REPO-RECON-01A",
+      "FILE": "AGENT-WORK-LINEAGE.json",
+      "FIELD": "rows[AGENT=C2-KAGGLE-CONTROL]",
+      "HISTORICAL_VALUE": "CONFIDENCE=NONE SOURCE=absent C2_KAGGLE_CONTROL_SEAT_BINDING=PARTIAL REASON=EXACT_SEAT_ACK_NOT_AVAILABLE",
+      "WHY_STALE_AS_CURRENT": "ACK now exists; A2A executed on this session.",
+      "CURRENT_READING": "CONFIDENCE=HIGH for later ACK/A2A on this session. Does not rewrite 01A row; supersedes it for current reading."
+    },
+    {
+      "ID": "SL-19",
+      "PACKAGE": "RAIOS-TOTAL-TREE-COPY-REPO-RECON-01A",
+      "FILE": "KNOWN-ASSET-CARRY-FORWARD.json",
+      "FIELD": "VS_KAGGLE_CANON_01.class",
+      "HISTORICAL_VALUE": "C2A_CONSOLIDATION_EVIDENCE_PACKAGE",
+      "WHY_STALE_AS_CURRENT": "Class name encodes retired independent C2A seat.",
+      "CURRENT_READING": "Path .ai-os/reports/kaggle-canon-01 remains distinct from S71. Class remaps to C2 session consolidation evidence. not_the_same_as_S71 remains true."
+    }
+  ]
+}

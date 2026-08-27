@@ -1,0 +1,29 @@
+{
+  "TASK_ID": "RAIOS-A2A-FEDERATED-INTEROP-01",
+  "POLICY_ID": "raios.a2a.trust.foundation.v1",
+  "TRUSTED_ORGANIZATION_DEFAULT": false,
+  "PRODUCTION_TRUSTED_ISSUERS": [],
+  "SELF_SIGNED_IS_PRODUCTION_TRUST": false,
+  "SEPARATE_FLAGS": [
+    "SIGNATURE_VALID",
+    "ISSUER_IDENTIFIED",
+    "ISSUER_TRUSTED",
+    "SCOPE_AUTHORIZED"
+  ],
+  "JWS": {
+    "OFFICIAL_MODULE": "a2a.utils.signing",
+    "OPTIONAL_EXTRA": "a2a-sdk[signing]",
+    "AVAILABLE_IN_VENV": false,
+    "REASON": "PyJWT not installed; foundation request auth uses HMAC. Cryptographic validity still does not imply TRUSTED_ORGANIZATION."
+  },
+  "DENYLIST": [],
+  "KEY_ROTATION": {
+    "SUPPORTED_AS_POLICY": true,
+    "PRODUCTION_KEYS_PRESENT": false,
+    "ROTATION_EPOCH": 0
+  },
+  "AUTH_SCOPES": ["raios.a2a.task"],
+  "PUBLIC_NOOP_UNAUTHENTICATED": true,
+  "EXTENDED_CARD_REQUIRES_AUTH": true,
+  "NON_PUBLIC_CAPABILITY_REQUIRES_SIGNATURE": true
+}

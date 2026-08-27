@@ -1,0 +1,49 @@
+{
+  "schema": "raios.tree-copy-repo-recon.previous-package-integrity.v1b",
+  "TASK_ID": "RAIOS-TOTAL-TREE-COPY-REPO-RECON-01B",
+  "MODE": "READ_ONLY_HASH_VERIFY",
+  "NO_OVERWRITE_OF_PREVIOUS_PACKAGES": true,
+  "observed_at": "2026-08-27T02:00:00Z",
+  "packages": [
+    {
+      "PACKAGE": "RAIOS-TOTAL-TREE-COPY-REPO-RECON-01",
+      "PATH": "C:\\Users\\Ghanam\\Documents\\Codex\\Greeny-Life-Repair\\.ai-os\\reports\\master-estate-census\\RAIOS-TOTAL-ESTATE-PHASE1-01-20260826T185525Z\\tree-copy-repo-recon\\RAIOS-TOTAL-TREE-COPY-REPO-RECON-01",
+      "HAS_MANIFEST_JSON": false,
+      "FILES_SHA256_TXT_SHA256": "9656f3e82a0b568882fc70d89304170c101f4f9d51404469292b251fb066d43a",
+      "LISTED": 9,
+      "MATCHED": 8,
+      "MISMATCH": [
+        {
+          "name": "SUMMARY.md",
+          "expected": "e76843ce2253a84fb79813a7d2b13a3f57720d276572796f988d474043e9f930",
+          "actual": "0fb2161773afd16e2949a6df3dc92a988575afddbd9e8d2e993ec0709cfb5ab6",
+          "bytes": 2289
+        }
+      ],
+      "MISSING": [],
+      "PACKAGE_FILES_HASH_VERIFIED": "8/9",
+      "PREVIOUS_PACKAGE_SUMMARY_HASH_DRIFT": true,
+      "DRIFT_RESOLUTION": "Recorded not overwritten. Historical 01 package preserved. Same drift already documented by 01A CONTRADICTIONS CX-01-SUMMARY-HASH-DRIFT."
+    },
+    {
+      "PACKAGE": "RAIOS-TOTAL-TREE-COPY-REPO-RECON-01A",
+      "PATH": "C:\\Users\\Ghanam\\Documents\\Codex\\Greeny-Life-Repair\\.ai-os\\reports\\master-estate-census\\RAIOS-TOTAL-ESTATE-PHASE1-01-20260826T185525Z\\tree-copy-repo-recon\\RAIOS-TOTAL-TREE-COPY-REPO-RECON-01A",
+      "HAS_MANIFEST_JSON": true,
+      "FILES_SHA256_TXT_SHA256": "de7310a65a669a4e602cb83b98ef27630d6dd210302be3ef4634c5d24662d5b7",
+      "MANIFEST_SHA256": "e4a9b663c74e19cf022ded79c8e620acef44eac878989d7fed122e1b1367b435",
+      "LISTED": 12,
+      "MATCHED": 12,
+      "MISMATCH": [],
+      "MISSING": [],
+      "PACKAGE_FILES_HASH_VERIFIED": "100%",
+      "PREVIOUS_PACKAGE_PRESERVED": true
+    }
+  ],
+  "TASKS_JSON": {
+    "PATH": "C:\\Users\\Ghanam\\Documents\\Codex\\Greeny-Life-Repair\\.ai-os\\state\\TASKS.json",
+    "SHA256": "6275cccf82825b7fc3f993d468d481bf180ba832529d05520365201f83a54ca2",
+    "BYTES": 7340,
+    "UNCHANGED_VS_01_AND_01A": true,
+    "MUTATED_THIS_TASK": false
+  }
+}

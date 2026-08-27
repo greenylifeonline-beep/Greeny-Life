@@ -1,0 +1,173 @@
+{
+  "schema": "raios.rif.c7.overlap-map.v1",
+  "TASK_ID": "RAIOS-RIF-C7-INTEGRATION-RECON-01",
+  "TREE": "TA-TREE-001",
+  "GENERATED_AT": "2026-08-27T03:30:00Z",
+  "C7_SOURCE_PACKAGE_BOUND": false,
+  "EXISTING_RAIOS_OVERLAPS_FOUND": true,
+  "NO_DUPLICATE_INFRASTRUCTURE": true,
+  "SEARCHED_CONCEPTS": [
+    "Claim",
+    "Evidence",
+    "Provenance",
+    "StateGraph",
+    "Risk Policy",
+    "Governor",
+    "Capability Registry",
+    "Canonicalization",
+    "Observability",
+    "Model Ecology",
+    "Model Factory",
+    "RKG",
+    "NeuroLingua",
+    "Cognitive WAL",
+    "UCP",
+    "NATS",
+    "MCP"
+  ],
+  "OVERLAPS": [
+    {
+      "CONCEPT": "Claim/Evidence lifecycle",
+      "C7_COMPONENT": "04 RIF-EVIDENCE-CLAIM-LIFECYCLE",
+      "TREE001_STATUS": "ABSENT_AS_RELATION_ENGINE",
+      "TREE001_PATHS": [
+        ".ai-os/reports/evidence-trust-lattice/WAVE-002B-FAILURE-CONTRACT-MATRIX.json",
+        "src/raios/neuro_lingua/schema.py:ConfidenceAtom"
+      ],
+      "NOTE": "SUPPORTS/REFUTES/QUALIFIES/CONTRADICTS/DUPLICATES/SUPERSEDES/DERIVED_FROM/INSUFFICIENT_FOR not implemented as a live engine. Lattice law: UNKNOWN_NE_ZERO, NO_SIGNAL_NE_REPOSITORY_WIDE_ABSENCE. ConfidenceAtom None=UNKNOWN, never fabricated."
+    },
+    {
+      "CONCEPT": "Provenance",
+      "C7_COMPONENT": "07 RIF-OBSERVABILITY-PROVENANCE",
+      "TREE001_STATUS": "PARTIAL",
+      "TREE001_PATHS": [
+        "src/raios/neuro_lingua/schema.py:ConfidenceProvenance",
+        "src/raios/a2a/receipt_bridge.py",
+        "scripts/ai-os/raios_transport/evidence.py",
+        ".ai-os/receipts/command-fabric"
+      ]
+    },
+    {
+      "CONCEPT": "StateGraph",
+      "C7_COMPONENT": "03 RIF-RUNTIME-STATEGRAPH",
+      "TREE001_STATUS": "PARTIAL",
+      "TREE001_PATHS": [
+        "src/raios/neuro_lingua/schema.py:KnowledgeState",
+        "src/raios/neuro_lingua/wal.py",
+        "src/raios/neuro_lingua/kernel.py"
+      ],
+      "NOTE": "DISCOVERED→VALIDATED→CANONICAL enum. wal.append_learning(CANONICAL) raises DIRECT_CANONICAL_PROMOTION_FORBIDDEN. Kernel writes DISCOVERED only. No named StateGraph product. C7 must not autonomously produce live CANONICAL."
+    },
+    {
+      "CONCEPT": "Risk Policy",
+      "C7_COMPONENT": "05 RIF-RISK-PROMOTION-POLICY",
+      "TREE001_STATUS": "PARTIAL",
+      "TREE001_PATHS": [
+        "src/raios/neuro_lingua/schema.py:RiskLevel",
+        "src/raios/neuro_lingua/risk.py",
+        "src/raios/a2a/policy_bridge.py",
+        "src/raios/a2a/authority.py"
+      ]
+    },
+    {
+      "CONCEPT": "Governor",
+      "C7_COMPONENT": "05A RIF-GOVERNOR-CAP002",
+      "TREE001_STATUS": "ABSENT_STOP_CODE_SET",
+      "TREE001_PATHS": [
+        "src/raios/neuro_lingua/governor.py:CognitiveResourceGovernor"
+      ],
+      "NOTE": "Existing governor is RAM/admission only. Named stop codes MAX_ITERATIONS/MAX_COST/MAX_TIME/NO_NEW_EVIDENCE/NO_CONFIDENCE_GAIN/REPEATED_STATE/CRITICAL_CONTRADICTION/GOAL_ACHIEVED not present as a C7-style governor. AUTHORITY_REQUIRED/RISK_POLICY_DENIED exist in src/raios/a2a/failclosed.py."
+    },
+    {
+      "CONCEPT": "Capability Registry",
+      "C7_COMPONENT": "01 RIF-CAPABILITY-REGISTRY",
+      "TREE001_STATUS": "PARTIAL_MULTIPLE_REGISTRIES",
+      "TREE001_PATHS": [
+        ".ai-os/reports/architecture-audit/RAIOS-ARCH-ASSET-01-20260826T171200Z/02-RAIOS-CAPABILITY-CATALOG.json",
+        "src/raios/a2a/capability.py",
+        "src/raios/neuro_lingua/provider_contracts.py",
+        "RAIOS/V9/agents/a13/registry/UNIFIED-AGENT-CAPABILITY-REGISTRY.json"
+      ],
+      "NOTE": "No CAP-RIF in catalog. Architecture-audit and V9 registry are locked; do not rewrite. C7 registry if later bound must wrap these, not duplicate."
+    },
+    {
+      "CONCEPT": "Canonicalization",
+      "C7_COMPONENT": "SANDBOX_REFERENCE_CANONICALIZATION",
+      "TREE001_STATUS": "EXISTS_PLAN_CANDIDATES_ONLY",
+      "TREE001_PATHS": [
+        ".ai-os/reports/architecture-audit/RAIOS-ARCH-ASSET-01-20260826T171200Z/10-RAIOS-CANONICALIZATION-PLAN.json",
+        "src/raios/a2a/semantic.py"
+      ],
+      "NOTE": "Existing plan uses CURRENT_CANONICAL_CANDIDATE / KEEP/COMPOSE/RESEARCH_MORE. Not a live auto-promoter. C7 fingerprint is sandbox-reference only and must not become a second canonicalizer."
+    },
+    {
+      "CONCEPT": "Observability",
+      "C7_COMPONENT": "07 RIF-OBSERVABILITY-PROVENANCE",
+      "TREE001_STATUS": "PARTIAL",
+      "TREE001_PATHS": [
+        ".ai-os/receipts/command-fabric",
+        "scripts/ai-os/raios_mcp/gateway.py",
+        ".ai-os/reports/architecture-audit/RAIOS-ARCH-ASSET-01-20260826T171200Z/02-RAIOS-CAPABILITY-CATALOG.json:CAP-OTEL"
+      ],
+      "NOTE": "CAP-OTEL EXISTS=false. Receipts are local JSON."
+    },
+    {
+      "CONCEPT": "Model Ecology",
+      "C7_COMPONENT": "06 RIF-M001-FOUNDATION-MODEL-SELECTION",
+      "TREE001_STATUS": "NAME_ONLY_ARCHIVED",
+      "TREE001_PATHS": [
+        "archive/repair-leftovers/communication-fabric-retirement-20260824/config/MODEL-ECOLOGY.json"
+      ]
+    },
+    {
+      "CONCEPT": "Model Factory",
+      "C7_COMPONENT": "06 RIF-M001-FOUNDATION-MODEL-SELECTION",
+      "TREE001_STATUS": "PARTIAL_PROBE_SNAPSHOT",
+      "TREE001_PATHS": [
+        "_raios-state-probe/RAIOS-STATE-LATEST/RAIOS/raios-cognitive-factory"
+      ]
+    },
+    {
+      "CONCEPT": "RKG",
+      "C7_COMPONENT": null,
+      "TREE001_STATUS": "P0_NAME_ONLY",
+      "TREE001_PATHS": [
+        ".ai-os/reports/a2a-federated-interop/RAIOS-A2A-FEDERATED-INTEROP-01/A2A-EXISTING-ASSET-REUSE-MAP.json",
+        "src/raios/a2a/semantic.py"
+      ]
+    },
+    {
+      "CONCEPT": "NeuroLingua",
+      "C7_COMPONENT": "02 RIF-CONTRACT-SCHEMAS / 03 / 05",
+      "TREE001_STATUS": "EXISTS_LOCKED_V9_NL0",
+      "TREE001_PATHS": ["src/raios/neuro_lingua"]
+    },
+    {
+      "CONCEPT": "Cognitive WAL",
+      "C7_COMPONENT": "03 RIF-RUNTIME-STATEGRAPH",
+      "TREE001_STATUS": "PARTIAL_WAL_WRITTEN_FALSE",
+      "TREE001_PATHS": [
+        "src/raios/neuro_lingua/wal.py",
+        "RAIOS/V9/wal/cognitive-events.jsonl"
+      ]
+    },
+    {
+      "CONCEPT": "UCP",
+      "C7_COMPONENT": null,
+      "TREE001_STATUS": "EXISTS",
+      "TREE001_PATHS": [".ai-os/control/RAIOS-CONTROL-PLANE-V1.py", "src/raios/a2a/ucp_adapter.py"]
+    },
+    {
+      "CONCEPT": "NATS",
+      "C7_COMPONENT": null,
+      "TREE001_STATUS": "EXISTS_SUPPORT_NOT_PRIMARY",
+      "TREE001_PATHS": ["scripts/ai-os/raios_transport/nats_provider.py", "src/raios/a2a/nats_bridge.py"]
+    },
+    {
+      "CONCEPT": "MCP",
+      "C7_COMPONENT": null,
+      "TREE001_STATUS": "EXISTS",
+      "TREE001_PATHS": ["scripts/ai-os/raios_mcp/gateway.py", "src/raios/a2a/mcp_bridge.py"]
+    }
+  ]
+}

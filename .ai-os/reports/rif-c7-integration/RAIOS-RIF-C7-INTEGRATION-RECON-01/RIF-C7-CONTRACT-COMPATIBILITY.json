@@ -1,0 +1,47 @@
+{
+  "schema": "raios.rif.c7.contract-compatibility.v1",
+  "TASK_ID": "RAIOS-RIF-C7-INTEGRATION-RECON-01",
+  "GENERATED_AT": "2026-08-27T03:30:00Z",
+  "C7_SCHEMAS_AVAILABLE": false,
+  "C7_CONTRACT_COMPARE_EXECUTED": false,
+  "COMPATIBILITY": "UNVERIFIED_C7_SOURCE_UNBOUND",
+  "TREE001_CONTRACT_SURFACES_TO_WRAP": [
+    {
+      "SURFACE": "NeuroLingua RiskLevel + VerificationPlan",
+      "PATH": "src/raios/neuro_lingua/schema.py, risk.py",
+      "C7_TARGET": "05 RIF-RISK-PROMOTION-POLICY"
+    },
+    {
+      "SURFACE": "KnowledgeState DISCOVERED/VALIDATED/CANONICAL",
+      "PATH": "src/raios/neuro_lingua/schema.py",
+      "C7_TARGET": "03 RIF-RUNTIME-STATEGRAPH"
+    },
+    {
+      "SURFACE": "ConfidenceAtom None=UNKNOWN",
+      "PATH": "src/raios/neuro_lingua/schema.py",
+      "C7_TARGET": "04 RIF-EVIDENCE-CLAIM-LIFECYCLE"
+    },
+    {
+      "SURFACE": "A2A capability contracts",
+      "PATH": "src/raios/a2a/capability.py",
+      "C7_TARGET": "01 RIF-CAPABILITY-REGISTRY"
+    },
+    {
+      "SURFACE": "ProviderCapability",
+      "PATH": "src/raios/neuro_lingua/provider_contracts.py",
+      "C7_TARGET": "01/02"
+    },
+    {
+      "SURFACE": "UCP lease/command",
+      "PATH": ".ai-os/control/RAIOS-CONTROL-PLANE-V1.py",
+      "C7_TARGET": "execution authority; C7 must not bypass"
+    }
+  ],
+  "REQUIRED_WHEN_C7_BINDS": [
+    "REQUESTED_AUTHORITY != GRANTED_AUTHORITY",
+    "No second policy engine",
+    "No second WAL",
+    "No second canonicalization system",
+    "No public A2A identity for C7-CLOUD-SANDBOX"
+  ]
+}

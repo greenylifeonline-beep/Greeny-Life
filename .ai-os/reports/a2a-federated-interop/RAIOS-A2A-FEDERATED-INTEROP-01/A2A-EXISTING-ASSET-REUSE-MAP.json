@@ -1,0 +1,146 @@
+{
+  "TASK_ID": "RAIOS-A2A-FEDERATED-INTEROP-01",
+  "GENERATED_AT": "2026-08-27T01:30:00Z",
+  "DISCOVERY_MODE": "TARGETED",
+  "EXISTING_A2A_IMPLEMENTATION": false,
+  "CAP_A2A_CATALOG": {
+    "PATH": ".ai-os/reports/architecture-audit/RAIOS-ARCH-ASSET-01-20260826T171200Z/02-RAIOS-CAPABILITY-CATALOG.json",
+    "EXISTS": false,
+    "REUSE_DECISION": "DO_NOT_MUTATE",
+    "REASON": "Historical catalog is under architecture-audit lock; CAP-A2A recorded EXISTS=false. Foundation package is new bounded wrap, not a catalog rewrite."
+  },
+  "ASSETS": [
+    {
+      "ASSET": "Official A2A Python SDK",
+      "PATH": ".venv/Lib/site-packages/a2a",
+      "CURRENT_PURPOSE": "Linux Foundation / Google A2A protocol types, JSON-RPC models, AgentCard protobuf, well-known path constants, optional JWS signing helper",
+      "CAPABILITY": "A2A v1.x types and protocol surface",
+      "STATUS": "INSTALLED_IN_PROJECT_VENV",
+      "REUSE_DECISION": "ADOPT",
+      "REASON": "Official package a2a-sdk==1.1.2 from PyPI / github.com/a2aproject/a2a-python, Author-email Google LLC. Not python-a2a.",
+      "WRAP_REQUIRED": true,
+      "GAP": "SDK HTTP/gRPC server not started. Optional a2a-sdk[signing]/PyJWT not installed; JWS architecture wrapped but HMAC used for foundation tests."
+    },
+    {
+      "ASSET": "Unified Control Plane",
+      "PATH": ".ai-os/control/RAIOS-CONTROL-PLANE-V1.py",
+      "CURRENT_PURPOSE": "Existing execution authority, leases, command-fabric inbox/outbox/receipts",
+      "CAPABILITY": "CAP-UCP / command fabric",
+      "STATUS": "EXISTS",
+      "REUSE_DECISION": "WRAP",
+      "REASON": "A2A must converge through UCP. DryRunUCP adapter does not call acquire() and does not start a second fabric.",
+      "WRAP_REQUIRED": true,
+      "GAP": "Live UCP not proven by this task. UNIFIED_CONTROL_PLANE_PROVEN remains false."
+    },
+    {
+      "ASSET": "Command Fabric receipts",
+      "PATH": ".ai-os/receipts/command-fabric",
+      "CURRENT_PURPOSE": "Existing evidence/receipt store",
+      "CAPABILITY": "Evidence Fabric",
+      "STATUS": "EXISTS",
+      "REUSE_DECISION": "WRAP",
+      "REASON": "Receipt bridge maps A2A task/context onto existing receipt fields. No second WAL.",
+      "WRAP_REQUIRED": true,
+      "GAP": "Foundation receipts are in-process objects; live fabric write not required for dry-run noop."
+    },
+    {
+      "ASSET": "MCP gateway",
+      "PATH": "scripts/ai-os/raios_mcp/gateway.py",
+      "CURRENT_PURPOSE": "Agent/system-to-tools/data",
+      "CAPABILITY": "MCP",
+      "STATUS": "EXISTS",
+      "REUSE_DECISION": "WRAP",
+      "REASON": "A2A must not replace or bypass MCP. mcp_bridge.forbid_direct enforces path A2A -> policy/control -> capability -> MCP -> tool.",
+      "WRAP_REQUIRED": true,
+      "GAP": "Foundation noop has TOOLS_REQUIRED=[]. Live MCP invocation deferred to UCP."
+    },
+    {
+      "ASSET": "NATS JetStream provider",
+      "PATH": "scripts/ai-os/raios_transport/nats_provider.py",
+      "CURRENT_PURPOSE": "Internal transport/event fabric",
+      "CAPABILITY": "NATS",
+      "STATUS": "EXISTS",
+      "REUSE_DECISION": "WRAP",
+      "REASON": "A2A is external edge only. No new NATS subjects. HTTP_PRIMARY preserved. NATS_PRIMARY remains false.",
+      "WRAP_REQUIRED": true,
+      "GAP": "A2A does not attach to live NATS in this foundation phase."
+    },
+    {
+      "ASSET": "NeuroLingua ProviderCapability",
+      "PATH": "src/raios/neuro_lingua/provider_contracts.py",
+      "CURRENT_PURPOSE": "Existing provider capability shape",
+      "CAPABILITY": "Provider Capability Contract",
+      "STATUS": "EXISTS_LOCKED_V9_NL0",
+      "REUSE_DECISION": "WRAP",
+      "REASON": "A2A capability contracts conceptually extend ProviderCapability. NL0 files not mutated.",
+      "WRAP_REQUIRED": true,
+      "GAP": "NL ProviderCapability fields differ from A2A governed contract; A2A contract is a compatible extension recorded separately."
+    },
+    {
+      "ASSET": "NeuroLingua RiskLevel / verification_plan",
+      "PATH": "src/raios/neuro_lingua/schema.py; src/raios/neuro_lingua/risk.py",
+      "CURRENT_PURPOSE": "LOW/MEDIUM/HIGH/CRITICAL risk and verification plan",
+      "CAPABILITY": "Policy/Risk",
+      "STATUS": "EXISTS_LOCKED_V9_NL0",
+      "REUSE_DECISION": "WRAP",
+      "REASON": "policy_bridge maps A2A tasks onto existing RiskLevel. No second policy engine.",
+      "WRAP_REQUIRED": true,
+      "GAP": "None for foundation risk classes."
+    },
+    {
+      "ASSET": "RKG",
+      "PATH": "named in catalogs; no runtime resolver package under src/raios",
+      "CURRENT_PURPOSE": "Governed knowledge graph (design/name)",
+      "CAPABILITY": "Semantic resolution",
+      "STATUS": "P0_NAME_ONLY",
+      "REUSE_DECISION": "WRAP",
+      "REASON": "No second semantic knowledge system created. Narrow fixture resolver in semantic.py.",
+      "WRAP_REQUIRED": true,
+      "GAP": "No live RKG implementation to wrap."
+    },
+    {
+      "ASSET": "RIF",
+      "PATH": "catalog KB-RIF",
+      "CURRENT_PURPOSE": "Trust/identity fabric (design)",
+      "CAPABILITY": "Trust",
+      "STATUS": "DESIGN_ONLY",
+      "REUSE_DECISION": "WRAP",
+      "REASON": "Trust abstraction implemented in trust.py without fabricating organization trust.",
+      "WRAP_REQUIRED": true,
+      "GAP": "No production trusted issuers. PRODUCTION_TRUSTED_ISSUERS empty."
+    },
+    {
+      "ASSET": "NeuroLingua semantic kernel",
+      "PATH": "src/raios/neuro_lingua",
+      "CURRENT_PURPOSE": "Governed semantic processing",
+      "CAPABILITY": "Semantic context",
+      "STATUS": "EXISTS_LOCKED_V9_NL0",
+      "REUSE_DECISION": "WRAP",
+      "REASON": "A2A semantic contract is RAIOS-owned extension urn:raios:a2a:semantic-context:v1. NL0 not forked.",
+      "WRAP_REQUIRED": true,
+      "GAP": "No existing A2A semantic schema; new schema is small extension."
+    },
+    {
+      "ASSET": "C5 Python gateway/runtime",
+      "PATH": "scripts/ai-os; START-RAIOS-C5.ps1",
+      "CURRENT_PURPOSE": "Existing Python-oriented runtime",
+      "CAPABILITY": "Runtime",
+      "STATUS": "EXISTS",
+      "REUSE_DECISION": "COMPOSE",
+      "REASON": "Python chosen for A2A integration because C5/runtime is Python-oriented. C5 not mutated.",
+      "WRAP_REQUIRED": false,
+      "GAP": "A2A not wired into live C5 this phase."
+    },
+    {
+      "ASSET": "Existing A2A agent card / agent.json",
+      "PATH": "none",
+      "CURRENT_PURPOSE": "n/a",
+      "CAPABILITY": "A2A",
+      "STATUS": "ABSENT",
+      "REUSE_DECISION": "BUILD_FROM_SCRATCH",
+      "REASON": "No prior A2A card/gateway in TREE. Bounded new package src/raios/a2a using official SDK types.",
+      "WRAP_REQUIRED": false,
+      "GAP": "Foundation Agent Card only. Candidate class agents not auto-published."
+    }
+  ]
+}

@@ -1,0 +1,166 @@
+{
+  "schema": "raios.tree-copy-repo-recon.relationships.v1a",
+  "TASK_ID": "RAIOS-TOTAL-TREE-COPY-REPO-RECON-01A",
+  "LINEAGE": {
+    "PREVIOUS_PACKAGE": "RAIOS-TOTAL-TREE-COPY-REPO-RECON-01",
+    "UNSUPPORTED_CLASSIFICATIONS_BEFORE": 4,
+    "UNSUPPORTED_CLASSIFICATIONS_AFTER": 0
+  },
+  "NO_FETCH": true,
+  "IMPLICIT_PROMISOR_CONTACT_ON_MISSING_REF": "Not repeated this package. Prior 01 note retained as historical: merge-base TREE-001 vs fd2775e3 contacted origin; FETCH_SUCCEEDED=false",
+  "pairs": [
+    {
+      "A": "TA-TREE-001",
+      "B": "TA-TREE-001-PHASE2A-REF",
+      "CLASS": "DESCENDANT",
+      "EVIDENCE": "merge-base(50c5da28a4f2,12603d022535)=12603d02253547c7727bc84ce68c318e8e9258bc; --is-ancestor 12603d0 of live HEAD exit 0",
+      "PROVEN": true
+    },
+    {
+      "A": "TA-TREE-001",
+      "B": "TA-TREE-001-HEAD-AT-01",
+      "CLASS": "DESCENDANT",
+      "EVIDENCE": "merge-base(50c5da28,8e57fdb)=8e57fdb; rev-list 8e57fdb..50c5da28 count=1",
+      "PROVEN": true
+    },
+    {
+      "A": "TA-TREE-001",
+      "B": "TA-WT-P0",
+      "CLASS": "DIVERGED",
+      "EVIDENCE": "same object db; merge-base(8e57fdb,30637e)=e1dfd7c proven in 01; live HEAD still descendant of e1dfd7c",
+      "PROVEN": true
+    },
+    {
+      "A": "TA-TREE-001",
+      "B": "TA-RETIRED",
+      "CLASS": "RELATIONSHIP_UNRESOLVED",
+      "COMMON_BASE_PROVEN": false,
+      "ANCESTRY_PROVEN": false,
+      "CONTENT_OVERLAP_PROVEN": false,
+      "RELATIONSHIP_CLASS": "RELATIONSHIP_UNRESOLVED",
+      "BLOCKER": "MISSING_LOCAL_GIT_OBJECTS",
+      "EVIDENCE": "Repair lacks fd2775e3; Retired lacks 8e57fdb/12603d0/da67f449/50c5da28. Missing objects are not evidence of unrelated history. No fetch.",
+      "PROVEN": false
+    },
+    {
+      "A": "TA-TREE-001",
+      "B": "TA-GITHUB-ORIGIN main",
+      "CLASS": "DIVERGENCE_UNPROVEN",
+      "RELATIONSHIP_CLASS": "DIVERGENCE_UNPROVEN",
+      "EVIDENCE": "Both tip objects exist on Repair (cat-file -e da67f449 and live HEAD). git merge-base live HEAD da67f449 exit 1 empty. Repository is shallow+partial. Do not classify DIVERGED without common-base proof. Do not invent ancestry.",
+      "PROVEN": false,
+      "BLOCKER": "MERGE_BASE_EMPTY_UNDER_SHALLOW_PARTIAL_CLONE"
+    },
+    {
+      "A": "TA-TREE-001 HEAD",
+      "B": "origin/ai-evolution-202608051809",
+      "CLASS": "SAME_GIT_HISTORY",
+      "EVIDENCE": "ls-remote SHA equals local HEAD 50c5da28",
+      "PROVEN": true
+    },
+    {
+      "A": "local v9-neurolingua-semantic-kernel",
+      "B": "origin v9-neurolingua-semantic-kernel",
+      "CLASS": "ANCESTOR",
+      "EVIDENCE": "01 evidence: local b877a232 ancestor of origin 165b7262; remote +5. Not re-fetched this package.",
+      "PROVEN": true,
+      "CARRIED_FORWARD_FROM": "RAIOS-TOTAL-TREE-COPY-REPO-RECON-01"
+    },
+    {
+      "A": "TA-TREE-001",
+      "B": "TA-DESKTOP-BUNDLE",
+      "CLASS": "PARTIAL_OVERLAP",
+      "EVIDENCE": "bundle verify okay; 68 refs; all 68 tip objects locally available; not imported",
+      "PROVEN": true
+    },
+    {
+      "A": "TA-GL-004 leftover",
+      "B": "TA-TREE-001",
+      "CLASS": "RELATIONSHIP_UNRESOLVED",
+      "RELATIONSHIP_CLASS": "RELATIONSHIP_UNRESOLVED",
+      "PREVIOUS_UNSUPPORTED_CLASS": "UNRELATED",
+      "FILE_COUNT": 0,
+      "HASHABLE_FILES": 0,
+      "HASH_SET": [],
+      "OVERLAP_WITH_TREE001": "UNPROVEN_NO_HASHABLE_FILES",
+      "UNIQUE_LOCAL_FILES": [],
+      "CONTENT_CLASSIFICATION": "RUNTIME_CACHE_LEFTOVER_NO_HASHABLE_FILES",
+      "EVIDENCE": "Targeted inventory of known leftover only. Directories exist (.next tree). 0 regular files hashable. Nested ReparsePoint. Cannot prove SUBSET/SUPERSET/PARTIAL_OVERLAP/BYTE_EXACT. Not classified UNRELATED merely because non-git.",
+      "PROVEN": false
+    },
+    {
+      "A": "TA-GL-005 leftover",
+      "B": "TA-TREE-001",
+      "CLASS": "RELATIONSHIP_UNRESOLVED",
+      "FILE_COUNT": 0,
+      "HASHABLE_FILES": 0,
+      "HASH_SET": [],
+      "OVERLAP_WITH_TREE001": "UNPROVEN_NO_HASHABLE_FILES",
+      "UNIQUE_LOCAL_FILES": [],
+      "CONTENT_CLASSIFICATION": "NODE_MODULES_REPARSE_PLACEHOLDER",
+      "LOCAL_PLACEHOLDER": true,
+      "CONTENT_BOUND": false,
+      "CLOUD_CONTENT_UNRESOLVED": true,
+      "GL005_PROVEN": false,
+      "EVIDENCE": "node_modules ReparsePoint. No hydrate. No runtime capability inferred.",
+      "PROVEN": false
+    },
+    {
+      "A": "TA-BRIDGE",
+      "B": "TA-TREE-001",
+      "CLASS": "PARTIAL_OVERLAP",
+      "RELATIONSHIP_CLASS": "PARTIAL_OVERLAP",
+      "ROLE": "GOVERNANCE_OVERLAY",
+      "PREVIOUS_UNSUPPORTED_CLASS": "UNRELATED",
+      "EVIDENCE": "Role classified separately as GOVERNANCE_OVERLAY. Path/hash compare: AGENTS.md/CLAUDE.md/GEMINI.md exist in both with DIFFERENT SHA256. Bridge unique files: README-FIRST.md, INSTALL-*.ps1, AI-CONTINUATION-CONTEXT/*, scripts/ai/*. TREE-001 lacks README-FIRST.md and AI-CONTINUATION-CONTEXT. Not UNRELATED. Not BYTE_EXACT_DUPLICATE.",
+      "NAME_OVERLAP_DIFFERENT_BYTES": [
+        {
+          "path": "AGENTS.md",
+          "bridge_sha256": "ed6d608b1a695da56a29a9a75aadbb667aea1fc5faa39cd3c6da1d61af35e05f",
+          "tree001_sha256": "d3311ba7c4c7cf92b422a9f2c01c15a82d164c8b15a06a8d6e1d7e6ff551ff56",
+          "bridge_bytes": 576,
+          "tree001_bytes": 197
+        },
+        {
+          "path": "CLAUDE.md",
+          "bridge_sha256": "dca8e517a083cbb3968d922465747c31f9df955a97c2c52cb2f91c0dc3db2a23",
+          "tree001_sha256": "ac3c6472e734412ec8d4a1b9f93677bcb0ae6ebf1780fb67284057287bd5464a",
+          "bridge_bytes": 496,
+          "tree001_bytes": 151
+        },
+        {
+          "path": "GEMINI.md",
+          "bridge_sha256": "7732170b454b4cd6ef1b360c59b026ba3268a954ed464c2ba495ecad5cee1358",
+          "tree001_sha256": "97bbc736509944bf1f1691478e080cb65ae66522ac8b53a0a387f1ccf7707143",
+          "bridge_bytes": 499,
+          "tree001_bytes": 125
+        }
+      ],
+      "UNIQUE_BRIDGE_FILES": [
+        "INSTALL-GREENY-LIFE-MULTI-AGENT.ps1",
+        "README-FIRST.md",
+        "AI-CONTINUATION-CONTEXT/AGENT-CORE.md",
+        "AI-CONTINUATION-CONTEXT/C3-AND-OWNER-SESSION-REPORT.md",
+        "AI-CONTINUATION-CONTEXT/CURRENT-STATE.md",
+        "AI-CONTINUATION-CONTEXT/DECISIONS.md",
+        "AI-CONTINUATION-CONTEXT/HANDOFF.md",
+        "AI-CONTINUATION-CONTEXT/README.md",
+        "scripts/ai/agent-context.ps1",
+        "scripts/ai/agent-handoff.ps1"
+      ],
+      "PROVEN": true
+    },
+    {
+      "A": "TA-ONEDRIVE-GREENY-ZIP",
+      "B": "TA-TREE-001",
+      "CLASS": "RELATIONSHIP_UNRESOLVED",
+      "LOCAL_PLACEHOLDER": true,
+      "CONTENT_BOUND": false,
+      "CLOUD_CONTENT_UNRESOLVED": true,
+      "EVIDENCE": "CLOUD_PLACEHOLDER; no hydrate",
+      "PROVEN": false
+    }
+  ],
+  "UNRESOLVED_RELATIONSHIPS": 5,
+  "UNSUPPORTED_CLASSIFICATIONS_AFTER": 0
+}

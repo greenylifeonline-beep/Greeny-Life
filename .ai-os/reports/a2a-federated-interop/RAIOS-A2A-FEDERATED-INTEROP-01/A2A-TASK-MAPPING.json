@@ -1,0 +1,19 @@
+{
+  "TASK_ID": "RAIOS-A2A-FEDERATED-INTEROP-01",
+  "SECOND_TASK_STORE": false,
+  "MAP": {
+    "A2A_TASK_ID": "intent.A2A_TASK_ID; contributes to COMMAND_ID via sha256 prefix CMD-A2A-",
+    "A2A_CONTEXT_ID": "CORRELATION_ID",
+    "A2A_MESSAGE_ID": "message.A2A_MESSAGE_ID correlated by CORRELATION_ID",
+    "A2A_ARTIFACT_ID": "artifact.A2A_ARTIFACT_ID correlated by A2A_TASK_ID + CORRELATION_ID",
+    "IDEMPOTENCY_KEY": "intent.IDEMPOTENCY_KEY; UCP DryRun uses this for ALREADY_APPLIED / NO_OP",
+    "DESIRED_STATE": "intent.DESIRED_STATE",
+    "ACTOR": "external agent_id (not a seat identity)",
+    "INTENT": "CAPABILITY_ID",
+    "TARGET_SELECTOR": "raios.foundation.local-dry-run",
+    "RISK_CLASS": "mapped RiskLevel.value",
+    "CREATED_AT": "UTC Z timestamp; excluded from semantic fingerprint"
+  },
+  "EXISTING_IDS_REPLACED": false,
+  "SECRETS_IN_INTENT": false
+}

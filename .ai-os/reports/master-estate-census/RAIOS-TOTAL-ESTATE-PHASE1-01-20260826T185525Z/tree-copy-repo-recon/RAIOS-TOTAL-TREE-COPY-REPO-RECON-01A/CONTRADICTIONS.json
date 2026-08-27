@@ -1,0 +1,92 @@
+{
+  "schema": "raios.tree-copy-repo-recon.contradictions.v1a",
+  "TASK_ID": "RAIOS-TOTAL-TREE-COPY-REPO-RECON-01A",
+  "HISTORICAL_12603d0_SNAPSHOT_REWRITTEN": false,
+  "DO_NOT_MUTATE_TASKS_JSON": true,
+  "GL002_CLASSIFICATION": "HISTORICAL_IMPLEMENTATION_FOUND",
+  "GL003_CLASSIFICATION": "EVIDENCE_ONLY_NO_SOURCE",
+  "GL005_PROVEN": false,
+  "items": [
+    {
+      "ID": "CX-001",
+      "CLASS": "CONTRADICTORY",
+      "SUBJECT": "TA-TREE-001 HEAD vs frozen S01",
+      "FROZEN": "HEAD 12603d0 on phase2a dirty 219 staged 11",
+      "LIVE": "HEAD 8e57fdb on ai-evolution-202608051809 dirty 233 staged 0",
+      "RESOLUTION": "DELTA_ONLY. Frozen snapshot remains historical. Live HEAD descendant of 12603d0."
+    },
+    {
+      "ID": "CX-002",
+      "CLASS": "CONTRADICTORY",
+      "SUBJECT": "Same branch name different HEADs",
+      "LIVE": "TREE-001=8e57fdb Retired=fd2775e3 origin/ai-evolution=8e57fdb",
+      "RESOLUTION": "RELATIONSHIP_UNRESOLVED. Do not infer UNRELATED."
+    },
+    {
+      "ID": "CX-003",
+      "CLASS": "CONTRADICTORY",
+      "SUBJECT": "origin advertises local census commit",
+      "LIVE": "ls-remote ai-evolution-202608051809=8e57fdb",
+      "RESOLUTION": "PRIOR_PUSH_CANDIDATE. GITHUB_PUSH_PROVEN=false this lane."
+    },
+    {
+      "ID": "GL002_TASK_STATUS_READY_VS_HISTORICAL_IMPLEMENTATION_FOUND",
+      "CLASS": "TASK_STATE_EVIDENCE_DRIFT",
+      "TASK_STATUS": "READY",
+      "CAPABILITY_TRUTH": "GL002_CLASSIFICATION=HISTORICAL_IMPLEMENTATION_FOUND",
+      "NOTE": "Do not interpret READY as current capability."
+    },
+    {
+      "ID": "GL003_TASK_IN_PROGRESS_VS_CURRENT_SOURCE_ABSENT",
+      "CLASS": "TASK_STATE_EVIDENCE_DRIFT",
+      "TASK_STATUS": "IN_PROGRESS",
+      "CLAIMED_BY": "deepseek-local",
+      "CAPABILITY_TRUTH": "GL003_CLASSIFICATION=EVIDENCE_ONLY_NO_SOURCE",
+      "NOTE": "claimed_by is lineage only."
+    },
+    {
+      "ID": "GL005_TASK_READY_VS_DEPENDENCIES_NOT_PROVEN_COMPLETE",
+      "CLASS": "TASK_STATE_EVIDENCE_DRIFT",
+      "TASK_STATUS": "READY",
+      "CAPABILITY_TRUTH": "GL005_PROVEN=false",
+      "NOTE": "Dependencies GL-002/003/004 not proven complete."
+    },
+    {
+      "ID": "GL004_TASK_IN_PROGRESS_VS_NON_GIT_LEFTOVER",
+      "CLASS": "TASK_STATE_EVIDENCE_DRIFT",
+      "TASK_STATUS": "IN_PROGRESS",
+      "CLAIMED_BY": "cursor",
+      "CAPABILITY_TRUTH": "GL-004-Runtime is non-git leftover .next"
+    },
+    {
+      "ID": "CX-01-SUMMARY-HASH-DRIFT",
+      "CLASS": "PACKAGE_INTEGRITY",
+      "SUBJECT": "01 SUMMARY.md vs FILES-SHA256.txt",
+      "EXPECTED": "e76843ce2253a84fb79813a7d2b13a3f57720d276572796f988d474043e9f930",
+      "ACTUAL": "0fb2161773afd16e2949a6df3dc92a988575afddbd9e8d2e993ec0709cfb5ab6",
+      "RESOLUTION": "Recorded not overwritten. SUMMARY.md mtime after FILES-SHA256.txt. 01 preserved as historical. 01A hashes generated after final files; manifest last."
+    },
+    {
+      "ID": "CX-HEAD-01-VS-01A",
+      "CLASS": "DELTA_AFTER_01",
+      "SUBJECT": "TA-TREE-001 HEAD",
+      "AT_01": "8e57fdb63286555c11f917739a4b0b74588c89ce",
+      "AT_01A": "50c5da28a4f25b80ac813fc5acb2a046e18b54d8",
+      "RESOLUTION": "Live HEAD is +1 descendant of 01 HEAD. Not a rewrite of 01. PROTECT_ACTIVE_TREE001=true."
+    },
+    {
+      "ID": "CX-REGISTRY-SHA-01-VS-C6",
+      "CLASS": "REFERENCE_DRIFT_RECONCILED",
+      "SUBJECT": "01-MASTER-SURFACE-REGISTRY.json",
+      "PREVIOUS_EXPECTED": "51110e5f93aa6a2d567a50eacbd9273a7ec14cf90ea38f81721f03dba135adbc",
+      "C6_AND_01A_CURRENT": "a607a5b783c7dfbb2b7cb5b8e354932149ac54e414f2807905408d86abd8a040",
+      "RESOLUTION": "Not labeled tampering. Change provenance=RAIOS-PHASE1-KAGGLE-LIVE-DELTA-02 on existing 71-surface file. Bound current SHA. MASTER_SURFACES_TOTAL=71."
+    }
+  ],
+  "TASK_STATE_DRIFT_FOUND": true,
+  "TASK_STATE_DRIFT_COUNT": 4,
+  "GL002_TASK_STATE_DRIFT": true,
+  "GL003_TASK_STATE_DRIFT": true,
+  "GL005_TASK_STATE_DRIFT": true,
+  "PREVIOUS_PACKAGE_SUMMARY_HASH_DRIFT": true
+}

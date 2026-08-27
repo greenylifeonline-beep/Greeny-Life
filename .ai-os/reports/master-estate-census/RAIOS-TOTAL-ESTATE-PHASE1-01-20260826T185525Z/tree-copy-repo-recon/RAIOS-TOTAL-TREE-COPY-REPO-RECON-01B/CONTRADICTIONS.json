@@ -1,0 +1,40 @@
+{
+  "schema": "raios.tree-copy-repo-recon.contradictions.v1b",
+  "TASK_ID": "RAIOS-TOTAL-TREE-COPY-REPO-RECON-01B",
+  "DO_NOT_MUTATE_TASKS_JSON": true,
+  "HISTORICAL_01_AND_01A_REWRITTEN": false,
+  "items": [
+    {
+      "ID": "CX-01B-001",
+      "CLASS": "SEMANTIC_STALE_LABEL",
+      "SUBJECT": "C2A/C2B independent-seat fields in 01 and 01A",
+      "FROZEN": "C2A_ACTIVE_WRITER=true; C2B_TOUCHED_C2A_HEAD=false; No C2B execution; C2B package",
+      "CURRENT": "C2A_C2B_INDEPENDENT_SEATS=false; C2_SESSION_STATE_SHARED=true; distinction retired",
+      "RESOLUTION": "DELTA_ONLY. 01/01A preserved. Current reading is 01B SEAT-MODEL-CORRECTION.json."
+    },
+    {
+      "ID": "CX-01B-002",
+      "CLASS": "SEMANTIC_STALE_LABEL",
+      "SUBJECT": "C2-KAGGLE-CONTROL EXACT_SEAT_ACK_NOT_AVAILABLE in 01A",
+      "FROZEN": "PARTIAL / CONFIDENCE=NONE / SOURCE=absent",
+      "CURRENT": "This session ACKed C2-KAGGLE-CONTROL, executed A2A, then received canonical SEAT_ID=C2-PRIMARY-EXECUTOR",
+      "RESOLUTION": "DELTA_ONLY. 01A row remains historical observation at 01A time."
+    },
+    {
+      "ID": "CX-01B-003",
+      "CLASS": "SEMANTIC_STALE_LABEL",
+      "SUBJECT": "C2-ESTATE-RECON EXACT independent seat in 01A",
+      "FROZEN": "SEAT_ID=C2-ESTATE-RECON BINDING=EXACT ROLE=ESTATE_RECON_EXECUTOR",
+      "CURRENT": "Historical TO_SEAT on this same session at 01A; rebound; not a second live C2 conversation",
+      "RESOLUTION": "DELTA_ONLY. Do not invent a separate C2-ESTATE-RECON session from 01A labels."
+    },
+    {
+      "ID": "CX-01-SUMMARY-HASH-DRIFT",
+      "CLASS": "PACKAGE_INTEGRITY_CARRIED_FORWARD",
+      "SUBJECT": "01 SUMMARY.md vs FILES-SHA256.txt",
+      "EXPECTED": "e76843ce2253a84fb79813a7d2b13a3f57720d276572796f988d474043e9f930",
+      "ACTUAL": "0fb2161773afd16e2949a6df3dc92a988575afddbd9e8d2e993ec0709cfb5ab6",
+      "RESOLUTION": "Still present. Not overwritten. Not a 01B semantic blocker."
+    }
+  ]
+}

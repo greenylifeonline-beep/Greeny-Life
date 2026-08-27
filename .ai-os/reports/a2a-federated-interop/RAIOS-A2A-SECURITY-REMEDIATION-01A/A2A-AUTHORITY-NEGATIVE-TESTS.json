@@ -1,0 +1,125 @@
+{
+  "schema": "raios.a2a.authority-negative-tests.v1",
+  "TASK_ID": "RAIOS-A2A-SECURITY-REMEDIATION-01A",
+  "GENERATED_AT": "2026-08-27T03:15:00Z",
+  "CALLER_SELF_ASSERTED_AUTHORITY_ACCEPTED": false,
+  "REQUESTED_AUTHORITY_NE_GRANTED_AUTHORITY": true,
+  "SIGNATURE_VALID_NE_TRUSTED": true,
+  "SCOPE_REQUIRED_FOR_PROTECTED_CAPABILITY": true,
+  "UNTRUSTED_ISSUER_DENIED": true,
+  "SCOPELESS_REQUEST_DENIED": true,
+  "NO_LIVE_MUTATION": true,
+  "TESTS": {
+    "T28_VALID_SIGNATURE_UNTRUSTED_ISSUER_DENIED": {
+      "input": {
+        "SIGNATURE_VALID": true,
+        "ISSUER_TRUSTED": false,
+        "requested_authority": "C1",
+        "requested_role": "ADMIN",
+        "granted_scopes_claim": ["raios.a2a.high_risk", "ADMIN", "C1"]
+      },
+      "expected": "DENIED",
+      "actual_code": "AUTHORITY_REQUIRED",
+      "actual_detail": "AUTHORITY_REQUIRED:UNTRUSTED_ISSUER",
+      "EFFECTIVE_AUTHORITY_GRANTED": false,
+      "result": "PASS"
+    },
+    "T29_TRUSTED_ISSUER_NO_SCOPE_DENIED": {
+      "input": {
+        "SIGNATURE_VALID": true,
+        "ISSUER_TRUSTED": true,
+        "AUTHORIZED_SCOPES": [],
+        "caller_asserted_scope": ["raios.a2a.high_risk"],
+        "requested_authority": "OWNER"
+      },
+      "expected": "AUTH_SCOPE_MISSING",
+      "actual_code": "AUTH_SCOPE_MISSING",
+      "EFFECTIVE_AUTHORITY_GRANTED": false,
+      "result": "PASS"
+    },
+    "T30_CALLER_SELF_ASSERTED_ADMIN_DENIED": {
+      "input": {
+        "requested_role": "admin",
+        "requested_authority": "C1",
+        "granted_scopes_claim": ["ADMIN", "OWNER", "C1", "SYSTEM", "TRUSTED"],
+        "server_side_mapping": "none"
+      },
+      "expected": "DENIED",
+      "actual_code": "AUTHORITY_REQUIRED",
+      "actual_detail": "AUTHORITY_REQUIRED:UNTRUSTED_ISSUER",
+      "EFFECTIVE_AUTHORITY_GRANTED": false,
+      "result": "PASS"
+    },
+    "T31_SCOPE_DOES_NOT_COVER_CAPABILITY_DENIED": {
+      "input": {
+        "ISSUER_TRUSTED": true,
+        "server_scope": "raios.a2a.task",
+        "requested_capability": "raios.foundation.high_risk_mutate",
+        "caller_claimed_high_risk_scope": true
+      },
+      "expected": "DENIED",
+      "actual_code": "CAPABILITY_NOT_AUTHORIZED",
+      "EFFECTIVE_AUTHORITY_GRANTED": false,
+      "result": "PASS"
+    },
+    "T32_TRUSTED_SCOPED_LOW_RISK_ALLOWED": {
+      "input": {
+        "SIGNATURE_VALID": true,
+        "ISSUER_TRUSTED": true,
+        "PRINCIPAL_BOUND": true,
+        "server_scope": "raios.a2a.task",
+        "capability": "raios.foundation.noop_intent"
+      },
+      "expected": "ALLOW or ACCEPTED_DRY_RUN",
+      "actual": "ACCEPTED_DRY_RUN",
+      "EXECUTED": false,
+      "EFFECTIVE_AUTHORITY_GRANTED": false,
+      "result": "PASS"
+    },
+    "T33_HIGH_RISK_CALLER_AUTHORITY_DENIED": {
+      "input": {
+        "ISSUER_TRUSTED": true,
+        "server_scope": "raios.a2a.high_risk",
+        "high_risk_principals": [],
+        "requested_authority": "CRITICAL_AUTHORITY",
+        "requested_role": "OWNER"
+      },
+      "expected": "AUTHORITY_REQUIRED / DENIED",
+      "actual_code": "AUTHORITY_REQUIRED",
+      "EFFECTIVE_AUTHORITY_GRANTED": false,
+      "result": "PASS"
+    },
+    "T34_OPERATIONAL_SEAT_C7_NOT_PUBLISHABLE": {
+      "input": {"proposed_agent_id": "C7-CLOUD-SANDBOX"},
+      "expected": "REJECTED",
+      "actual_code": "SEAT_IDENTITY_NOT_PUBLIC_AGENT",
+      "result": "PASS"
+    },
+    "T35_ALL_OPERATIONAL_SEATS_DENIED": {
+      "deny_set": [
+        "C1",
+        "C2-KAGGLE-CONTROL",
+        "C2-PRIMARY-EXECUTOR",
+        "C2-ESTATE-RECON",
+        "C6-AG-REMOTE-RECON",
+        "C7-CLOUD-SANDBOX",
+        "C2A",
+        "C2B"
+      ],
+      "expected": "all rejected as public A2A identities",
+      "actual_code": "SEAT_IDENTITY_NOT_PUBLIC_AGENT",
+      "result": "PASS"
+    }
+  },
+  "PREVIOUS_TESTS": {
+    "OLD_TESTS_TOTAL": 27,
+    "OLD_TESTS_PASS": 27,
+    "OLD_TESTS_FAIL": 0
+  },
+  "NEW_SECURITY_TESTS_TOTAL": 8,
+  "NEW_SECURITY_TESTS_PASS": 8,
+  "NEW_SECURITY_TESTS_FAIL": 0,
+  "TOTAL_TESTS": 35,
+  "TOTAL_PASS": 35,
+  "TOTAL_FAIL": 0
+}

@@ -1,0 +1,12 @@
+{
+  "schema": "raios.rif.c7.reconciliation.v1",
+  "TASK_ID": "RAIOS-RIF-C7-INTEGRATION-RECON-02A",
+  "Governor": "DONOR_ONLY pure decision component. Staging Governor.decide() returns stop codes. No WAL/NATS/FS writes. Existing neuro_lingua.governor.py remains RAM admission and was not replaced.",
+  "StateGraph": "WRAP_EXISTING. Evaluation-local machine RECEIVED..GOVERNOR_DECISION plus advisory CANONICAL_CANDIDATE. Cannot promote CANONICAL. Global lifecycle remains UCP/NeuroLingua KnowledgeState.",
+  "RiskPolicy": "WRAP_EXISTING advisory donor. HIGH/CRITICAL/UNKNOWN escalate. Does not replace policy_bridge/NeuroLingua risk.",
+  "EvidenceClaimLifecycle": "MERGE_CANDIDATE logical view over EvidenceStoreAdapter. Staging used in-memory adapter for tests only, not a production store.",
+  "M001": "DONOR_ONLY harness executed offline: hard gates, Pareto, role profiles, machine-readable output. No model download.",
+  "A2ASemanticBridge": "WRAP_EXISTING. Transport vs epistemic verdict separated. No A2A protocol change. A2A_PRODUCTION_ACTIVATED remains false.",
+  "CognitiveWALBoundary": "REUSE_EXISTING adapter only. Staging WALAdapter does not call neuro_lingua.wal.append_learning. WAL_WRITTEN=false.",
+  "NeuroLinguaOverlap": "REUSE_EXISTING. No writes under src/raios/neuro_lingua (V9-NL0 lock)."
+}

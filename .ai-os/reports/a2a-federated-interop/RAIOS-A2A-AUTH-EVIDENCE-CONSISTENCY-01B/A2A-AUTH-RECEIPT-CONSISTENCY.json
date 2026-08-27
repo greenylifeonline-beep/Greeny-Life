@@ -1,0 +1,37 @@
+{
+  "schema": "raios.a2a.auth-receipt-consistency.v1",
+  "TASK_ID": "RAIOS-A2A-AUTH-EVIDENCE-CONSISTENCY-01B",
+  "GENERATED_AT": "2026-08-27T09:45:00Z",
+  "AUTH_RESULT_POLICY_CONSISTENT": true,
+  "RECEIPT_AUTH_RESULT_CONSISTENT": true,
+  "SAME_OBJECT": true,
+  "FEED": [
+    "AuthorityDecision.as_auth_result() -> Gateway.handle auth_result",
+    "same dict -> policy_evidence.AUTH_RESULT -> policy_bridge.evaluate evidence merge",
+    "same dict -> receipt_bridge.build_receipt AUTH_RESULT"
+  ],
+  "POST_FIX_PROTECTED_ALLOW_AUTH_RESULT": {
+    "SIGNATURE_VALID": true,
+    "ISSUER_IDENTIFIED": true,
+    "ISSUER_TRUSTED": true,
+    "SCOPE_AUTHORIZED": true,
+    "TRUSTED_ORGANIZATION": false,
+    "PRINCIPAL_BOUND": true,
+    "AUTHORIZED_SCOPES": ["raios.a2a.high_risk"],
+    "CAPABILITY_AUTHORIZED": true,
+    "EFFECTIVE_AUTHORITY": true,
+    "EFFECTIVE_AUTHORITY_GRANTED": true,
+    "AUTHORITY_SOURCE": "EXPLICIT_C1_TASK_GATE",
+    "AUTHORITY_SOURCE_PROVENANCE": {
+      "principal": "principal-c1",
+      "issuer": "issuer-trusted",
+      "server_scopes": ["raios.a2a.high_risk"],
+      "c1_task_gate": true,
+      "task_id": "trace",
+      "NOTE": "SERVER_SIDE_ONLY; caller granted_scopes/role/admin ignored"
+    },
+    "DENIAL_REASON": null
+  },
+  "CALLER_CLAIMS_IN_AUTHORIZED_SCOPES": false,
+  "EXECUTED": false
+}

@@ -1,0 +1,26 @@
+{
+  "schema": "raios.c1c5.dispatch-tests.v1",
+  "TASK_ID": "RAIOS-C1-C5-TASK-DISPATCH-01",
+  "GENERATED_AT": "2026-08-27T10:12:00Z",
+  "MODULE": "tests.c1c5.test_dispatch + tests.c1c5.test_control_integration",
+  "COMMAND": "PYTHONPATH=src NO_LLM_CALLS=true .venv/Scripts/python.exe -m unittest tests.c1c5.test_dispatch tests.c1c5.test_control_integration",
+  "TOTAL_TESTS": 11,
+  "TOTAL_PASS": 11,
+  "TOTAL_FAIL": 0,
+  "LLM_CALLS": 0,
+  "GPU_USED": false,
+  "PAID_API_CALLS": 0,
+  "TESTS": {
+    "T01_PLAIN_CHAT_NOT_TASK": "PASS",
+    "T02_MALFORMED_REJECT": "PASS",
+    "T03_MISSING_AUTH_REJECT": "PASS",
+    "T04_UNKNOWN_CAPABILITY_REJECT": "PASS",
+    "T05_WRITES_FALSE_MUTATING_REJECT": "PASS",
+    "T06_HIGH_RISK_WITHOUT_AUTHORITY_REJECT": "PASS",
+    "T07_IDEMPOTENCY_NO_OP": "PASS",
+    "T08_NO_RECEIPT_NOT_PROVEN": "PASS",
+    "T09_POSITIVE_HEALTH_BOUND": "PASS",
+    "T10_ACTOR_STRING_IS_NOT_AUTHORITY": "PASS",
+    "T11_ONE_COMMAND_DRY_RUN_IDEMPOTENT": "PASS"
+  }
+}

@@ -1,0 +1,186 @@
+{
+  "nodes": [
+    {
+      "id": "01-capability-registry",
+      "type": "historical",
+      "version": "v1.0\u2192v1.1"
+    },
+    {
+      "id": "02-contract-schemas",
+      "type": "historical",
+      "version": "v1.0\u2192v1.1"
+    },
+    {
+      "id": "03-runtime-stategraph",
+      "type": "historical",
+      "version": "v1.0\u2192v1.1"
+    },
+    {
+      "id": "04-evidence-claim-lifecycle",
+      "type": "historical",
+      "version": "v1.0\u2192v1.1"
+    },
+    {
+      "id": "05-risk-promotion-policy",
+      "type": "historical",
+      "version": "v1.0\u2192v1.1"
+    },
+    {
+      "id": "05A-governor-cap002",
+      "type": "historical",
+      "version": "v1.0\u2192v1.1"
+    },
+    {
+      "id": "06-m001-model-selection",
+      "type": "historical",
+      "version": "v1.0\u2192v1.1"
+    },
+    {
+      "id": "07-observability-provenance",
+      "type": "new",
+      "version": "v1.1"
+    },
+    {
+      "id": "d-b-compatibility-delta",
+      "type": "new",
+      "version": "v1.1"
+    },
+    {
+      "id": "d-c-adapter-contracts",
+      "type": "new",
+      "version": "v1.1"
+    },
+    {
+      "id": "d-f-a2a-semantic-bridge",
+      "type": "new",
+      "version": "v1"
+    },
+    {
+      "id": "d-g-threat-invariants",
+      "type": "new",
+      "version": "v1"
+    },
+    {
+      "id": "deterministic-test-suite",
+      "type": "new",
+      "version": "v1.1"
+    },
+    {
+      "id": "integration-map",
+      "type": "new",
+      "version": "v1.1"
+    },
+    {
+      "id": "package-meta",
+      "type": "new",
+      "version": "v1.1"
+    }
+  ],
+  "edges": [
+    {
+      "from": "d-b-compatibility-delta",
+      "to": "01-capability-registry",
+      "type": "adapts"
+    },
+    {
+      "from": "d-b-compatibility-delta",
+      "to": "02-contract-schemas",
+      "type": "adapts"
+    },
+    {
+      "from": "d-b-compatibility-delta",
+      "to": "03-runtime-stategraph",
+      "type": "adapts"
+    },
+    {
+      "from": "d-b-compatibility-delta",
+      "to": "04-evidence-claim-lifecycle",
+      "type": "adapts"
+    },
+    {
+      "from": "d-b-compatibility-delta",
+      "to": "05-risk-promotion-policy",
+      "type": "adapts"
+    },
+    {
+      "from": "d-b-compatibility-delta",
+      "to": "05A-governor-cap002",
+      "type": "adapts"
+    },
+    {
+      "from": "d-b-compatibility-delta",
+      "to": "06-m001-model-selection",
+      "type": "adapts"
+    },
+    {
+      "from": "d-c-adapter-contracts",
+      "to": "d-b-compatibility-delta",
+      "type": "implements"
+    },
+    {
+      "from": "03-runtime-stategraph",
+      "to": "d-c-adapter-contracts",
+      "type": "uses"
+    },
+    {
+      "from": "04-evidence-claim-lifecycle",
+      "to": "d-c-adapter-contracts",
+      "type": "uses"
+    },
+    {
+      "from": "05-risk-promotion-policy",
+      "to": "d-c-adapter-contracts",
+      "type": "uses"
+    },
+    {
+      "from": "05A-governor-cap002",
+      "to": "d-c-adapter-contracts",
+      "type": "uses"
+    },
+    {
+      "from": "06-m001-model-selection",
+      "to": "d-c-adapter-contracts",
+      "type": "uses"
+    },
+    {
+      "from": "07-observability-provenance",
+      "to": "d-c-adapter-contracts",
+      "type": "uses"
+    },
+    {
+      "from": "d-f-a2a-semantic-bridge",
+      "to": "d-c-adapter-contracts",
+      "type": "uses"
+    },
+    {
+      "from": "deterministic-test-suite",
+      "to": "d-g-threat-invariants",
+      "type": "verifies"
+    },
+    {
+      "from": "deterministic-test-suite",
+      "to": "03-runtime-stategraph",
+      "type": "tests"
+    },
+    {
+      "from": "deterministic-test-suite",
+      "to": "04-evidence-claim-lifecycle",
+      "type": "tests"
+    },
+    {
+      "from": "deterministic-test-suite",
+      "to": "05A-governor-cap002",
+      "type": "tests"
+    },
+    {
+      "from": "integration-map",
+      "to": "d-c-adapter-contracts",
+      "type": "documents"
+    },
+    {
+      "from": "package-meta",
+      "to": "deterministic-test-suite",
+      "type": "references"
+    }
+  ]
+}

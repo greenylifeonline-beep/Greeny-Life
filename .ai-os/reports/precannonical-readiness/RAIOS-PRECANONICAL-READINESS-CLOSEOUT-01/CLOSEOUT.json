@@ -1,0 +1,38 @@
+{
+  "schema": "raios.precannonical.readiness-closeout.v1",
+  "TASK_ID": "RAIOS-PRECANONICAL-READINESS-CLOSEOUT-01",
+  "GENERATED_AT": "2026-08-27T10:12:00Z",
+  "HISTORICAL_REPORTS_REWRITTEN": false,
+  "DELTA_ONLY": true,
+  "SOURCES": {
+    "A2A_FOUNDATION": ".ai-os/reports/a2a-federated-interop/RAIOS-A2A-FEDERATED-INTEROP-01",
+    "A2A_SECURITY_01A": ".ai-os/reports/a2a-federated-interop/RAIOS-A2A-SECURITY-REMEDIATION-01A",
+    "A2A_AUTH_01B": ".ai-os/reports/a2a-federated-interop/RAIOS-A2A-AUTH-EVIDENCE-CONSISTENCY-01B",
+    "TREE_01B": ".ai-os/reports/master-estate-census/RAIOS-TOTAL-ESTATE-PHASE1-01-20260826T185525Z/tree-copy-repo-recon/RAIOS-TOTAL-TREE-COPY-REPO-RECON-01B",
+    "C1_C5_DISPATCH": "C:\\Users\\Ghanam\\Documents\\Codex\\Greeny-Life-Repair\\.ai-os\\reports\\c1-c5-task-dispatch\\RAIOS-C1-C5-TASK-DISPATCH-01",
+    "C7_02": "C:\\Users\\Ghanam\\Documents\\Codex\\Greeny-Life-Repair\\.ai-os\\reports\\rif-c7-integration\\RAIOS-RIF-C7-INTEGRATION-RECON-02",
+    "UCP_PROOF": "C:\\Users\\Ghanam\\Documents\\Codex\\Greeny-Life-Repair\\.ai-os\\reports\\precannonical-control-integration\\RAIOS-PRECANONICAL-CONTROL-INTEGRATION-PROOF-01"
+  },
+  "PHASE_A": "PASS",
+  "PHASE_B": "PASS",
+  "PHASE_C": "PASS",
+  "PHASE_D": "PENDING_DEPENDENCY:C7_SOURCE_PACKAGE_UNBOUND",
+  "PHASE_E": "PASS",
+  "PHASE_F": "PASS",
+  "BLOCKING_UNRESOLVED": [
+    "C7_SOURCE_PACKAGE_UNBOUND"
+  ],
+  "BOUNDED_UNRESOLVED": [
+    "D-059=BLOCKED",
+    "GL005_PROVEN=false",
+    "EXTRACTED_QWEN_GRANITE=false",
+    "WAL_WRITTEN=false",
+    "COMMAND_FABRIC_E2E_PROVEN=false",
+    "NATS_PRIMARY=false",
+    "A2A_PRODUCTION_ACTIVATED=false",
+    "RIF_CANONICAL_PROMOTION_EXECUTED=false"
+  ],
+  "PHASE1_COMPLETE": false,
+  "READY_FOR_CANONICALIZATION": false,
+  "FINAL_VERDICT": "PRECANONICAL_EXECUTION_WAVE_PARTIAL:C7_SOURCE_PACKAGE_UNBOUND"
+}

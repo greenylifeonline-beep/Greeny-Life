@@ -1,0 +1,29 @@
+{
+  "schema": "raios.c1c5.bound-receipt.v1",
+  "TASK_ID": "RAIOS-C1-C5-TASK-DISPATCH-01",
+  "GENERATED_AT": "2026-08-27T10:12:00Z",
+  "C1_C5_TASK_BOUND": true,
+  "C1_C5_RECEIPT_BOUND": true,
+  "C1_C5_IDEMPOTENCY_PROVEN": true,
+  "IDEMPOTENCY_SCOPE": "IN_PROCESS_DRY_RUN_UCP",
+  "DURABLE_WAL_IDEMPOTENCY": false,
+  "LIVE_PROOF": {
+    "TASK_ID": "RAIOS-C1-C5-TASK-DISPATCH-01",
+    "CORRELATION_ID": "COR-C1C5-TASK-LIVE-02",
+    "IDEMPOTENCY_KEY": "idem-c1c5-live-health-02",
+    "FIRST_STATUS": "COMPLETED",
+    "FIRST_UCP_STATUS": "ACCEPTED_DRY_RUN",
+    "FIRST_TOOL_OR_CAPABILITY_INVOKED": true,
+    "SECOND_STATUS": "ALREADY_APPLIED",
+    "SECOND_TOOL_OR_CAPABILITY_INVOKED": false,
+    "RECEIPT_PATH": "C:\\Users\\Ghanam\\Documents\\Codex\\Greeny-Life-Repair\\.ai-os\\receipts\\command-fabric\\c1c5-task\\4220ac6daaee643d84d61ad8.receipt.json",
+    "RECEIPT_STATUS_PRESERVED": "COMPLETED",
+    "AUTHORITY_SOURCE": "SERVER_SIDE_FOUNDER_SESSION",
+    "CAPABILITY": "c5.self_inspect.health",
+    "C5_HEALTH_LIVE": true,
+    "CANONICAL_MUTATION": false,
+    "WAL_WRITTEN": false,
+    "PROVEN": true
+  },
+  "RESULT_WITHOUT_RECEIPT_NOT_PROVEN": true
+}

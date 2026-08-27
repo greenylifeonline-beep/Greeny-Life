@@ -1,0 +1,128 @@
+{
+  "schema": "raios.rif.c7.reuse-decisions.v1",
+  "TASK_ID": "RAIOS-RIF-C7-INTEGRATION-RECON-01",
+  "GENERATED_AT": "2026-08-27T03:30:00Z",
+  "C7_SOURCE_PACKAGE_BOUND": false,
+  "NO_DUPLICATE_INFRASTRUCTURE": true,
+  "CANONICAL_PROMOTION_EXECUTED": false,
+  "COUNTS": {
+    "REUSE_EXISTING": 5,
+    "WRAP_EXISTING": 8,
+    "MERGE_WITH_EXISTING": 1,
+    "C7_DONOR_ONLY": 2,
+    "C7_BETTER_CANDIDATE": 0,
+    "CONFLICT": 1,
+    "UNKNOWN": 0
+  },
+  "NOTE": "C7 internals remain UNBOUND. Classes are intended integration posture against TREE-001, not endorsement of unseen C7 code.",
+  "DECISIONS": [
+    {
+      "COMPONENT": "01 RIF-CAPABILITY-REGISTRY",
+      "CLASS": "WRAP_EXISTING",
+      "WRAP": [
+        ".ai-os/reports/architecture-audit/RAIOS-ARCH-ASSET-01-20260826T171200Z/02-RAIOS-CAPABILITY-CATALOG.json",
+        "src/raios/a2a/capability.py",
+        "src/raios/neuro_lingua/provider_contracts.py"
+      ],
+      "DO_NOT": "Create a second live capability database or rewrite locked catalogs."
+    },
+    {
+      "COMPONENT": "02 RIF-CONTRACT-SCHEMAS",
+      "CLASS": "WRAP_EXISTING",
+      "WRAP": ["src/raios/neuro_lingua/schema.py", "src/raios/a2a/"],
+      "DO_NOT": "Fork NeuroLingua schema into a parallel RIF type system."
+    },
+    {
+      "COMPONENT": "03 RIF-RUNTIME-STATEGRAPH",
+      "CLASS": "WRAP_EXISTING",
+      "WRAP": ["src/raios/neuro_lingua/schema.py:KnowledgeState", "src/raios/neuro_lingua/wal.py"],
+      "DO_NOT": "Autonomous live CANONICAL. C7 graph if bound must fail-closed on illegal transitions and stop at canonical-candidate boundary."
+    },
+    {
+      "COMPONENT": "04 RIF-EVIDENCE-CLAIM-LIFECYCLE",
+      "CLASS": "MERGE_WITH_EXISTING",
+      "WRAP": [".ai-os/reports/evidence-trust-lattice/", "src/raios/neuro_lingua/schema.py:ConfidenceAtom"],
+      "DONOR_VOCABULARY": ["SUPPORTS", "REFUTES", "QUALIFIES", "CONTRADICTS", "DUPLICATES", "SUPERSEDES", "DERIVED_FROM", "INSUFFICIENT_FOR"],
+      "LAWS": [
+        "correlated evidence must not inflate confidence",
+        "absence_of_evidence != evidence_of_absence",
+        "UNKNOWN_NE_ZERO",
+        "NO_SIGNAL_NE_REPOSITORY_WIDE_ABSENCE"
+      ]
+    },
+    {
+      "COMPONENT": "05 RIF-RISK-PROMOTION-POLICY",
+      "CLASS": "WRAP_EXISTING",
+      "WRAP": ["src/raios/neuro_lingua/risk.py", "src/raios/a2a/policy_bridge.py", "src/raios/a2a/authority.py"],
+      "DO_NOT": "Create a second policy engine."
+    },
+    {
+      "COMPONENT": "05A RIF-GOVERNOR-CAP002",
+      "CLASS": "C7_DONOR_ONLY",
+      "WRAP_ALSO": "src/raios/neuro_lingua/governor.py remains RAM admission; do not replace it with a second resource governor.",
+      "DONOR": "Named cognitive stop-code governor is absent on TREE-001. If C7 source later binds, merge stop codes via adapter; do not bypass UCP/A2A authority gates."
+    },
+    {
+      "COMPONENT": "06 RIF-M001-FOUNDATION-MODEL-SELECTION",
+      "CLASS": "C7_DONOR_ONLY",
+      "WRAP_ALSO": ["archived MODEL-ECOLOGY.json", "_raios-state-probe/.../raios-cognitive-factory"],
+      "CONSTRAINT": "Selection/spec/harness only. No model download. No live factory promotion."
+    },
+    {
+      "COMPONENT": "07 RIF-OBSERVABILITY-PROVENANCE",
+      "CLASS": "WRAP_EXISTING",
+      "WRAP": [".ai-os/receipts/command-fabric", "src/raios/a2a/receipt_bridge.py", "scripts/ai-os/raios_transport/evidence.py"],
+      "DO_NOT": "Stand up a second OTel/WAL/receipt fabric. CAP-OTEL remains absent."
+    },
+    {
+      "COMPONENT": "SANDBOX_REFERENCE_CANONICALIZATION",
+      "CLASS": "CONFLICT",
+      "REASON": "C7 fingerprint is sandbox-reference only. TREE-001 already has 10-RAIOS-CANONICALIZATION-PLAN.json. A second canonicalization system is forbidden. Adapter required if C7 fingerprint is later bound as a donor hash, not as live canonical truth."
+    },
+    {
+      "COMPONENT": "NeuroLingua",
+      "CLASS": "REUSE_EXISTING",
+      "PATH": "src/raios/neuro_lingua",
+      "LOCK": "V9-NL0 ACTIVE; wrap only."
+    },
+    {
+      "COMPONENT": "Cognitive WAL",
+      "CLASS": "REUSE_EXISTING",
+      "PATH": "src/raios/neuro_lingua/wal.py -> RAIOS/V9/wal",
+      "CONSTRAINT": "WAL_WRITTEN=false this recon. No second WAL."
+    },
+    {
+      "COMPONENT": "UCP",
+      "CLASS": "REUSE_EXISTING",
+      "PATH": ".ai-os/control/RAIOS-CONTROL-PLANE-V1.py"
+    },
+    {
+      "COMPONENT": "NATS",
+      "CLASS": "REUSE_EXISTING",
+      "PATH": "scripts/ai-os/raios_transport/nats_provider.py",
+      "CONSTRAINT": "NATS_PRIMARY=false"
+    },
+    {
+      "COMPONENT": "MCP",
+      "CLASS": "REUSE_EXISTING",
+      "PATH": "scripts/ai-os/raios_mcp/gateway.py"
+    },
+    {
+      "COMPONENT": "RKG",
+      "CLASS": "WRAP_EXISTING",
+      "PATH": "P0_NAME_ONLY; fixture resolver in src/raios/a2a/semantic.py",
+      "DO_NOT": "Create a second knowledge graph."
+    },
+    {
+      "COMPONENT": "Model Ecology",
+      "CLASS": "WRAP_EXISTING",
+      "PATH": "archive/repair-leftovers/communication-fabric-retirement-20260824/config/MODEL-ECOLOGY.json"
+    },
+    {
+      "COMPONENT": "Model Factory",
+      "CLASS": "WRAP_EXISTING",
+      "PATH": "_raios-state-probe/RAIOS-STATE-LATEST/RAIOS/raios-cognitive-factory",
+      "DO_NOT": "Promote probe snapshot to canonical factory."
+    }
+  ]
+}

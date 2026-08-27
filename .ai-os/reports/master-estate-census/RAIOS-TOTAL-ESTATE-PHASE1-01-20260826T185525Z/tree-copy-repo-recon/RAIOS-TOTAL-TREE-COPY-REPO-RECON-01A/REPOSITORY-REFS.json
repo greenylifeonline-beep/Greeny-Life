@@ -1,0 +1,1713 @@
+{
+  "schema": "raios.tree-copy-repo-recon.repository-refs.v1a",
+  "TASK_ID": "RAIOS-TOTAL-TREE-COPY-REPO-RECON-01A",
+  "repository": "greenylifeonline-beep/Greeny-Life",
+  "remote_url": "https://github.com/greenylifeonline-beep/Greeny-Life.git",
+  "default_branch": "main",
+  "HEAD_symref": "ref: refs/heads/main",
+  "HEAD": "da67f44963fafde67df52cb62ab32f75fe725df0",
+  "GITHUB_BRANCHES_VISIBLE": 22,
+  "GITHUB_TAGS_VISIBLE": 0,
+  "tags": [],
+  "branches": {
+    "refs/heads/ai-evolution-202608051809": "50c5da28a4f25b80ac813fc5acb2a046e18b54d8",
+    "refs/heads/codex-clean": "98b952417c19d61d269a5681ef0ccc4aba959738",
+    "refs/heads/cursor/a17-cursor-parallel-f3c7": "b2a1645d32c5de8e8fb19d14445b6585c875653e",
+    "refs/heads/cursor/a17-integration-wave-f3c7": "4475a1cff3c506883848242fe2d4b060f33a47e5",
+    "refs/heads/cursor/a18-ccee-foundation-f3c7": "edb344eac48a010f18a0ecdb2b7fd4c8b1e58fb5",
+    "refs/heads/cursor/c2-evidence-reuse-preparation-4247": "c36906757f7dce17cbcbb2d3cf9fcb5c8f53f6cc",
+    "refs/heads/cursor/c5-screen-identity-4540": "f48e80b63d405a5483cf21822aa4ac618888bd55",
+    "refs/heads/cursor/file-intelligence-authority-f3c7": "223386b53be5b6c6e4b9cf65b74f97fa4fc48605",
+    "refs/heads/cursor/file-intelligence-fabric-f3c7": "a6e121e8fbdededaf44507dd3387a2f48565a950",
+    "refs/heads/cursor/file-intelligence-parallel-f3c7": "79569cde5573fdd24da2268481f22f43aa74b0dd",
+    "refs/heads/cursor/neurolingua-semantic-kernel-4f9d": "0c9b4f6a64255e64aa73d90cb178774623e3eb01",
+    "refs/heads/cursor/raios-certifier-safety-schema-4540": "2a834cc86c05642d59e3e2837e411751190aa7b4",
+    "refs/heads/cursor/raios-false-pass-training-147d": "4b0b51af31685b49df181641c2e88d16f4b8c3d3",
+    "refs/heads/cursor/raios-live-assimilation-147d": "2d41ef264bdda70b1ba0f0588585ee740aea3ff2",
+    "refs/heads/cursor/raios-repair-boot-41f5": "c2847e28a2d2b09e04b57684eee65236c96427a7",
+    "refs/heads/cursor/setup-dev-environment-ee89": "31449c23905ab02f43360762ababbe4bca759997",
+    "refs/heads/main": "da67f44963fafde67df52cb62ab32f75fe725df0",
+    "refs/heads/pr/authoritative-certifier-forensic": "d2ab122fe25e3ab16b91afbc3267cd47778f6dba",
+    "refs/heads/pr/cairo-shipment-origin-salvage": "7031ffc1de5f34ddefc77d622d8eedc8cb12892d",
+    "refs/heads/pr/nl0-semantic-kernel": "f7c23759b59be72456af59a87d8c48b13827fa7b",
+    "refs/heads/raios/gl-005-convergence": "3d9f58136d318ba07d743e127ab1e433605ce1ea",
+    "refs/heads/v9-neurolingua-semantic-kernel": "165b7262ff1f4f71d6d4862e3584a38b8cab9576"
+  },
+  "known_kaggle_labeled_commits": [
+    {
+      "SHA": "da67f44963fafde67df52cb62ab32f75fe725df0",
+      "SUBJECT": "Kaggle Notebook | notebook8c2d6a9080 | Version 3",
+      "DATE": "2026-08-18T02:05:25+02:00",
+      "REF": "refs/heads/main",
+      "NOTE": "Do not equate commit subject with push route. KAGGLE_GITHUB_PUSH_RELATIONSHIPS_PROVEN=0"
+    }
+  ],
+  "known_raios_gl_branches": {
+    "origin/raios/gl-005-convergence": "3d9f58136d318ba07d743e127ab1e433605ce1ea",
+    "local/raios/gl-002-main-brain": "c336fc88019a68dba9a79531d4c9d3269e85b02d",
+    "local/phase2a/class-a-20260822-232109": "12603d02253547c7727bc84ce68c318e8e9258bc",
+    "NOT_ON_ORIGIN": [
+      "raios/gl-002-main-brain",
+      "phase2a/class-a-20260822-232109"
+    ]
+  },
+  "PUBLIC_READ_PROVEN": true,
+  "AUTHENTICATED_READ_PROVEN": false,
+  "WRITE_PROVEN": false,
+  "PUSH_PROVEN": false,
+  "PRIOR_PUSH_CANDIDATE": {
+    "REF": "refs/heads/ai-evolution-202608051809",
+    "SHA": "50c5da28a4f25b80ac813fc5acb2a046e18b54d8",
+    "NOTE": "ls-remote advertises 50c5da28 matching local HEAD. Push command not observed this 01A lane. 01 recorded 8e57fdb as prior-push candidate."
+  },
+  "local_tree001_branches": [
+    "ai-evolution-202608051809",
+    "codex-clean",
+    "phase2a/class-a-20260822-232109",
+    "pr/authoritative-certifier-forensic",
+    "pr/cairo-shipment-origin-salvage",
+    "pr/nl0-semantic-kernel",
+    "raios/gl-002-main-brain",
+    "raios/gl-005-convergence",
+    "v9-neurolingua-semantic-kernel"
+  ],
+  "local_main_missing": true,
+  "FETCH_EXECUTED": false,
+  "REMOTE_MUTATED": false,
+  "LINEAGE": {
+    "PREVIOUS_PACKAGE": "RAIOS-TOTAL-TREE-COPY-REPO-RECON-01"
+  },
+  "ls_remote_at_01A": {
+    "exit": 0,
+    "heads": 22,
+    "origin_ai_evolution": "50c5da28a4f25b80ac813fc5acb2a046e18b54d8",
+    "origin_main": "da67f44963fafde67df52cb62ab32f75fe725df0",
+    "FETCH_EXECUTED": false,
+    "REMOTE_MUTATED": false
+  },
+  "desktop_bundle": {
+    "PATH": "C:\\Users\\Ghanam\\Desktop\\RAIOS-C3-EXECUTION-PACK\\RAIOS-TREE001.bundle",
+    "IMPORTED": false,
+    "REF_COUNT": 68,
+    "OBJECT_LOCALLY_AVAILABLE": 68,
+    "UNRESOLVED_OBJECT": 0,
+    "UNIQUE_TIP_AFTER_WORKTREE_CORRECTION": 0,
+    "DUPLICATE_TIP": 68,
+    "ANCESTRY_BOUND_VS_TREE001_HEAD": 61,
+    "ANCESTRY_UNBOUND": [
+      "refs/archive/20260825/c2-command-fabric-2a834cc",
+      "refs/remotes/origin/HEAD",
+      "refs/remotes/origin/cursor/c2-evidence-reuse-preparation-4247",
+      "refs/remotes/origin/cursor/neurolingua-semantic-kernel-4f9d",
+      "refs/remotes/origin/cursor/raios-certifier-safety-schema-4540",
+      "refs/remotes/origin/cursor/setup-dev-environment-ee89",
+      "refs/remotes/origin/main"
+    ],
+    "refs": [
+      {
+        "REF": "refs/archive/20260824/cursor-stack-tip",
+        "TIP_SHA": "2d41ef264bdda70b1ba0f0588585ee740aea3ff2",
+        "OBJECT_LOCALLY_AVAILABLE": true,
+        "OBJECT_IN_REPAIR": true,
+        "OBJECT_IN_RETIRED": false,
+        "DUPLICATE_TIP": true,
+        "UNIQUE_TIP": false,
+        "SEEN_IN_REPAIR_REFS": [
+          "refs/archive/20260824/cursor-stack-tip",
+          "refs/remotes/origin/cursor/raios-live-assimilation-147d"
+        ],
+        "SEEN_IN_RETIRED_REFS": [],
+        "SEEN_IN_ORIGIN_LS_REMOTE": [
+          "refs/heads/cursor/raios-live-assimilation-147d"
+        ],
+        "BUNDLE_REF_ALIASES": [
+          "refs/archive/20260824/cursor-stack-tip",
+          "refs/remotes/origin/cursor/raios-live-assimilation-147d"
+        ],
+        "ANCESTRY_BOUND": true,
+        "COMMON_BASE_VS_TREE001_HEAD": "d3f5ca69b858843dcf626f74fa13cf83d3e2e20c",
+        "UNRESOLVED": false,
+        "NOTE": "merge-base_ok"
+      },
+      {
+        "REF": "refs/archive/20260824/gl-002",
+        "TIP_SHA": "c336fc88019a68dba9a79531d4c9d3269e85b02d",
+        "OBJECT_LOCALLY_AVAILABLE": true,
+        "OBJECT_IN_REPAIR": true,
+        "OBJECT_IN_RETIRED": false,
+        "DUPLICATE_TIP": true,
+        "UNIQUE_TIP": false,
+        "SEEN_IN_REPAIR_REFS": [
+          "refs/archive/20260824/gl-002",
+          "refs/heads/raios/gl-002-main-brain"
+        ],
+        "SEEN_IN_RETIRED_REFS": [],
+        "SEEN_IN_ORIGIN_LS_REMOTE": [],
+        "BUNDLE_REF_ALIASES": [
+          "refs/archive/20260824/gl-002",
+          "refs/heads/raios/gl-002-main-brain"
+        ],
+        "ANCESTRY_BOUND": true,
+        "COMMON_BASE_VS_TREE001_HEAD": "d4ca29b8dfb42837bfb8869cea2929ba1d74b4a0",
+        "UNRESOLVED": false,
+        "NOTE": "merge-base_ok"
+      },
+      {
+        "REF": "refs/archive/20260824/gl-005",
+        "TIP_SHA": "3d9f58136d318ba07d743e127ab1e433605ce1ea",
+        "OBJECT_LOCALLY_AVAILABLE": true,
+        "OBJECT_IN_REPAIR": true,
+        "OBJECT_IN_RETIRED": false,
+        "DUPLICATE_TIP": true,
+        "UNIQUE_TIP": false,
+        "SEEN_IN_REPAIR_REFS": [
+          "refs/archive/20260824/gl-005",
+          "refs/heads/raios/gl-005-convergence",
+          "refs/remotes/origin/raios/gl-005-convergence"
+        ],
+        "SEEN_IN_RETIRED_REFS": [],
+        "SEEN_IN_ORIGIN_LS_REMOTE": [
+          "refs/heads/raios/gl-005-convergence"
+        ],
+        "BUNDLE_REF_ALIASES": [
+          "refs/archive/20260824/gl-005",
+          "refs/heads/raios/gl-005-convergence",
+          "refs/remotes/origin/raios/gl-005-convergence"
+        ],
+        "ANCESTRY_BOUND": true,
+        "COMMON_BASE_VS_TREE001_HEAD": "d4ca29b8dfb42837bfb8869cea2929ba1d74b4a0",
+        "UNRESOLVED": false,
+        "NOTE": "merge-base_ok"
+      },
+      {
+        "REF": "refs/archive/20260824/local-backup-pre-split",
+        "TIP_SHA": "18feb6326a51e26cf353d810165a25e4da65342b",
+        "OBJECT_LOCALLY_AVAILABLE": true,
+        "OBJECT_IN_REPAIR": true,
+        "OBJECT_IN_RETIRED": false,
+        "DUPLICATE_TIP": true,
+        "UNIQUE_TIP": false,
+        "SEEN_IN_REPAIR_REFS": [
+          "refs/archive/20260824/local-backup-pre-split"
+        ],
+        "SEEN_IN_RETIRED_REFS": [],
+        "SEEN_IN_ORIGIN_LS_REMOTE": [],
+        "BUNDLE_REF_ALIASES": [
+          "refs/archive/20260824/local-backup-pre-split"
+        ],
+        "ANCESTRY_BOUND": true,
+        "COMMON_BASE_VS_TREE001_HEAD": "18feb6326a51e26cf353d810165a25e4da65342b",
+        "UNRESOLVED": false,
+        "NOTE": "merge-base_ok"
+      },
+      {
+        "REF": "refs/archive/20260824/local-gl-003",
+        "TIP_SHA": "d4ca29b8dfb42837bfb8869cea2929ba1d74b4a0",
+        "OBJECT_LOCALLY_AVAILABLE": true,
+        "OBJECT_IN_REPAIR": true,
+        "OBJECT_IN_RETIRED": true,
+        "DUPLICATE_TIP": true,
+        "UNIQUE_TIP": false,
+        "SEEN_IN_REPAIR_REFS": [
+          "refs/archive/20260824/local-gl-003"
+        ],
+        "SEEN_IN_RETIRED_REFS": [],
+        "SEEN_IN_ORIGIN_LS_REMOTE": [],
+        "BUNDLE_REF_ALIASES": [
+          "refs/archive/20260824/local-gl-003"
+        ],
+        "ANCESTRY_BOUND": true,
+        "COMMON_BASE_VS_TREE001_HEAD": "d4ca29b8dfb42837bfb8869cea2929ba1d74b4a0",
+        "UNRESOLVED": false,
+        "NOTE": "merge-base_ok"
+      },
+      {
+        "REF": "refs/archive/20260824/local-gl-004",
+        "TIP_SHA": "324cda829f14569f552f1f5a193671f473ac8b3c",
+        "OBJECT_LOCALLY_AVAILABLE": true,
+        "OBJECT_IN_REPAIR": true,
+        "OBJECT_IN_RETIRED": false,
+        "DUPLICATE_TIP": true,
+        "UNIQUE_TIP": false,
+        "SEEN_IN_REPAIR_REFS": [
+          "refs/archive/20260824/local-gl-004"
+        ],
+        "SEEN_IN_RETIRED_REFS": [],
+        "SEEN_IN_ORIGIN_LS_REMOTE": [],
+        "BUNDLE_REF_ALIASES": [
+          "refs/archive/20260824/local-gl-004"
+        ],
+        "ANCESTRY_BOUND": true,
+        "COMMON_BASE_VS_TREE001_HEAD": "d4ca29b8dfb42837bfb8869cea2929ba1d74b4a0",
+        "UNRESOLVED": false,
+        "NOTE": "merge-base_ok"
+      },
+      {
+        "REF": "refs/archive/20260824/local-master-was",
+        "TIP_SHA": "d0326d82a0ddd35ba4ca874f1e64d6f02a21be1d",
+        "OBJECT_LOCALLY_AVAILABLE": true,
+        "OBJECT_IN_REPAIR": true,
+        "OBJECT_IN_RETIRED": true,
+        "DUPLICATE_TIP": true,
+        "UNIQUE_TIP": false,
+        "SEEN_IN_REPAIR_REFS": [
+          "refs/archive/20260824/local-master-was"
+        ],
+        "SEEN_IN_RETIRED_REFS": [],
+        "SEEN_IN_ORIGIN_LS_REMOTE": [],
+        "BUNDLE_REF_ALIASES": [
+          "refs/archive/20260824/local-master-was"
+        ],
+        "ANCESTRY_BOUND": true,
+        "COMMON_BASE_VS_TREE001_HEAD": "d0326d82a0ddd35ba4ca874f1e64d6f02a21be1d",
+        "UNRESOLVED": false,
+        "NOTE": "merge-base_ok"
+      },
+      {
+        "REF": "refs/archive/20260824/phase2a-working",
+        "TIP_SHA": "12603d02253547c7727bc84ce68c318e8e9258bc",
+        "OBJECT_LOCALLY_AVAILABLE": true,
+        "OBJECT_IN_REPAIR": true,
+        "OBJECT_IN_RETIRED": false,
+        "DUPLICATE_TIP": true,
+        "UNIQUE_TIP": false,
+        "SEEN_IN_REPAIR_REFS": [
+          "refs/archive/20260824/phase2a-working",
+          "refs/heads/phase2a/class-a-20260822-232109"
+        ],
+        "SEEN_IN_RETIRED_REFS": [],
+        "SEEN_IN_ORIGIN_LS_REMOTE": [],
+        "BUNDLE_REF_ALIASES": [
+          "refs/archive/20260824/phase2a-working",
+          "refs/heads/phase2a/class-a-20260822-232109",
+          "HEAD"
+        ],
+        "ANCESTRY_BOUND": true,
+        "COMMON_BASE_VS_TREE001_HEAD": "12603d02253547c7727bc84ce68c318e8e9258bc",
+        "UNRESOLVED": false,
+        "NOTE": "merge-base_ok"
+      },
+      {
+        "REF": "refs/archive/20260824/pr-cairo",
+        "TIP_SHA": "7031ffc1de5f34ddefc77d622d8eedc8cb12892d",
+        "OBJECT_LOCALLY_AVAILABLE": true,
+        "OBJECT_IN_REPAIR": true,
+        "OBJECT_IN_RETIRED": false,
+        "DUPLICATE_TIP": true,
+        "UNIQUE_TIP": false,
+        "SEEN_IN_REPAIR_REFS": [
+          "refs/archive/20260824/pr-cairo",
+          "refs/heads/pr/cairo-shipment-origin-salvage",
+          "refs/remotes/origin/pr/cairo-shipment-origin-salvage"
+        ],
+        "SEEN_IN_RETIRED_REFS": [],
+        "SEEN_IN_ORIGIN_LS_REMOTE": [
+          "refs/heads/pr/cairo-shipment-origin-salvage"
+        ],
+        "BUNDLE_REF_ALIASES": [
+          "refs/archive/20260824/pr-cairo",
+          "refs/heads/pr/cairo-shipment-origin-salvage",
+          "refs/remotes/origin/pr/cairo-shipment-origin-salvage"
+        ],
+        "ANCESTRY_BOUND": true,
+        "COMMON_BASE_VS_TREE001_HEAD": "d3f5ca69b858843dcf626f74fa13cf83d3e2e20c",
+        "UNRESOLVED": false,
+        "NOTE": "merge-base_ok"
+      },
+      {
+        "REF": "refs/archive/20260824/pr-certifier",
+        "TIP_SHA": "d2ab122fe25e3ab16b91afbc3267cd47778f6dba",
+        "OBJECT_LOCALLY_AVAILABLE": true,
+        "OBJECT_IN_REPAIR": true,
+        "OBJECT_IN_RETIRED": false,
+        "DUPLICATE_TIP": true,
+        "UNIQUE_TIP": false,
+        "SEEN_IN_REPAIR_REFS": [
+          "refs/archive/20260824/pr-certifier",
+          "refs/heads/pr/authoritative-certifier-forensic",
+          "refs/remotes/origin/pr/authoritative-certifier-forensic"
+        ],
+        "SEEN_IN_RETIRED_REFS": [],
+        "SEEN_IN_ORIGIN_LS_REMOTE": [
+          "refs/heads/pr/authoritative-certifier-forensic"
+        ],
+        "BUNDLE_REF_ALIASES": [
+          "refs/archive/20260824/pr-certifier",
+          "refs/heads/pr/authoritative-certifier-forensic",
+          "refs/remotes/origin/pr/authoritative-certifier-forensic"
+        ],
+        "ANCESTRY_BOUND": true,
+        "COMMON_BASE_VS_TREE001_HEAD": "d3f5ca69b858843dcf626f74fa13cf83d3e2e20c",
+        "UNRESOLVED": false,
+        "NOTE": "merge-base_ok"
+      },
+      {
+        "REF": "refs/archive/20260824/pr-nl0",
+        "TIP_SHA": "f7c23759b59be72456af59a87d8c48b13827fa7b",
+        "OBJECT_LOCALLY_AVAILABLE": true,
+        "OBJECT_IN_REPAIR": true,
+        "OBJECT_IN_RETIRED": false,
+        "DUPLICATE_TIP": true,
+        "UNIQUE_TIP": false,
+        "SEEN_IN_REPAIR_REFS": [
+          "refs/archive/20260824/pr-nl0",
+          "refs/heads/pr/nl0-semantic-kernel",
+          "refs/remotes/origin/pr/nl0-semantic-kernel"
+        ],
+        "SEEN_IN_RETIRED_REFS": [],
+        "SEEN_IN_ORIGIN_LS_REMOTE": [
+          "refs/heads/pr/nl0-semantic-kernel"
+        ],
+        "BUNDLE_REF_ALIASES": [
+          "refs/archive/20260824/pr-nl0",
+          "refs/heads/pr/nl0-semantic-kernel",
+          "refs/remotes/origin/pr/nl0-semantic-kernel"
+        ],
+        "ANCESTRY_BOUND": true,
+        "COMMON_BASE_VS_TREE001_HEAD": "d3f5ca69b858843dcf626f74fa13cf83d3e2e20c",
+        "UNRESOLVED": false,
+        "NOTE": "merge-base_ok"
+      },
+      {
+        "REF": "refs/archive/20260824/v9-cloud",
+        "TIP_SHA": "b877a232a486f539691112e9114997acb4a3a21e",
+        "OBJECT_LOCALLY_AVAILABLE": true,
+        "OBJECT_IN_REPAIR": true,
+        "OBJECT_IN_RETIRED": false,
+        "DUPLICATE_TIP": true,
+        "UNIQUE_TIP": false,
+        "SEEN_IN_REPAIR_REFS": [
+          "refs/archive/20260824/v9-cloud",
+          "refs/heads/v9-neurolingua-semantic-kernel",
+          "refs/remotes/origin/v9-neurolingua-semantic-kernel"
+        ],
+        "SEEN_IN_RETIRED_REFS": [],
+        "SEEN_IN_ORIGIN_LS_REMOTE": [],
+        "BUNDLE_REF_ALIASES": [
+          "refs/archive/20260824/v9-cloud",
+          "refs/heads/v9-neurolingua-semantic-kernel",
+          "refs/remotes/origin/v9-neurolingua-semantic-kernel"
+        ],
+        "ANCESTRY_BOUND": true,
+        "COMMON_BASE_VS_TREE001_HEAD": "e1dfd7c235b0bd4ba1a58ab6dfea47bd00173370",
+        "UNRESOLVED": false,
+        "NOTE": "merge-base_ok"
+      },
+      {
+        "REF": "refs/archive/20260825/c2-command-fabric-2a834cc",
+        "TIP_SHA": "2a834cc86c05642d59e3e2837e411751190aa7b4",
+        "OBJECT_LOCALLY_AVAILABLE": true,
+        "OBJECT_IN_REPAIR": true,
+        "OBJECT_IN_RETIRED": false,
+        "DUPLICATE_TIP": true,
+        "UNIQUE_TIP": false,
+        "SEEN_IN_REPAIR_REFS": [
+          "refs/archive/20260825/c2-command-fabric-2a834cc",
+          "refs/remotes/origin/cursor/raios-certifier-safety-schema-4540"
+        ],
+        "SEEN_IN_RETIRED_REFS": [],
+        "SEEN_IN_ORIGIN_LS_REMOTE": [
+          "refs/heads/cursor/raios-certifier-safety-schema-4540"
+        ],
+        "BUNDLE_REF_ALIASES": [
+          "refs/archive/20260825/c2-command-fabric-2a834cc",
+          "refs/remotes/origin/cursor/raios-certifier-safety-schema-4540"
+        ],
+        "ANCESTRY_BOUND": false,
+        "COMMON_BASE_VS_TREE001_HEAD": null,
+        "UNRESOLVED": false,
+        "NOTE": "merge-base_empty_or_fail_no_fetch"
+      },
+      {
+        "REF": "refs/backup/pre-split-20260820111304",
+        "TIP_SHA": "f18ae12f1d93ea12fc754a54a2e4a02eecf24c71",
+        "OBJECT_LOCALLY_AVAILABLE": true,
+        "OBJECT_IN_REPAIR": true,
+        "OBJECT_IN_RETIRED": false,
+        "DUPLICATE_TIP": true,
+        "UNIQUE_TIP": false,
+        "SEEN_IN_REPAIR_REFS": [
+          "refs/backup/pre-split-20260820111304"
+        ],
+        "SEEN_IN_RETIRED_REFS": [],
+        "SEEN_IN_ORIGIN_LS_REMOTE": [],
+        "BUNDLE_REF_ALIASES": [
+          "refs/backup/pre-split-20260820111304"
+        ],
+        "ANCESTRY_BOUND": true,
+        "COMMON_BASE_VS_TREE001_HEAD": "18feb6326a51e26cf353d810165a25e4da65342b",
+        "UNRESOLVED": false,
+        "NOTE": "merge-base_ok"
+      },
+      {
+        "REF": "refs/cline/checkpoints/1786889675273_zu3gr/1",
+        "TIP_SHA": "a8b2e1a71d1c0c78010cb81f2f17f43f043897bc",
+        "OBJECT_LOCALLY_AVAILABLE": true,
+        "OBJECT_IN_REPAIR": true,
+        "OBJECT_IN_RETIRED": false,
+        "DUPLICATE_TIP": true,
+        "UNIQUE_TIP": false,
+        "SEEN_IN_REPAIR_REFS": [
+          "refs/cline/checkpoints/1786889675273_zu3gr/1"
+        ],
+        "SEEN_IN_RETIRED_REFS": [],
+        "SEEN_IN_ORIGIN_LS_REMOTE": [],
+        "BUNDLE_REF_ALIASES": [
+          "refs/cline/checkpoints/1786889675273_zu3gr/1"
+        ],
+        "ANCESTRY_BOUND": true,
+        "COMMON_BASE_VS_TREE001_HEAD": "d4ca29b8dfb42837bfb8869cea2929ba1d74b4a0",
+        "UNRESOLVED": false,
+        "NOTE": "merge-base_ok"
+      },
+      {
+        "REF": "refs/cline/checkpoints/1786889675273_zu3gr/2",
+        "TIP_SHA": "12d62e20f1682531afbb848cc53105ab3a02d611",
+        "OBJECT_LOCALLY_AVAILABLE": true,
+        "OBJECT_IN_REPAIR": true,
+        "OBJECT_IN_RETIRED": false,
+        "DUPLICATE_TIP": true,
+        "UNIQUE_TIP": false,
+        "SEEN_IN_REPAIR_REFS": [
+          "refs/cline/checkpoints/1786889675273_zu3gr/2"
+        ],
+        "SEEN_IN_RETIRED_REFS": [],
+        "SEEN_IN_ORIGIN_LS_REMOTE": [],
+        "BUNDLE_REF_ALIASES": [
+          "refs/cline/checkpoints/1786889675273_zu3gr/2"
+        ],
+        "ANCESTRY_BOUND": true,
+        "COMMON_BASE_VS_TREE001_HEAD": "d4ca29b8dfb42837bfb8869cea2929ba1d74b4a0",
+        "UNRESOLVED": false,
+        "NOTE": "merge-base_ok"
+      },
+      {
+        "REF": "refs/cline/checkpoints/1786889675273_zu3gr/3",
+        "TIP_SHA": "b3ee3d025d1af84858eed8b73b72d900f8b0685b",
+        "OBJECT_LOCALLY_AVAILABLE": true,
+        "OBJECT_IN_REPAIR": true,
+        "OBJECT_IN_RETIRED": false,
+        "DUPLICATE_TIP": true,
+        "UNIQUE_TIP": false,
+        "SEEN_IN_REPAIR_REFS": [
+          "refs/cline/checkpoints/1786889675273_zu3gr/3"
+        ],
+        "SEEN_IN_RETIRED_REFS": [],
+        "SEEN_IN_ORIGIN_LS_REMOTE": [],
+        "BUNDLE_REF_ALIASES": [
+          "refs/cline/checkpoints/1786889675273_zu3gr/3"
+        ],
+        "ANCESTRY_BOUND": true,
+        "COMMON_BASE_VS_TREE001_HEAD": "d4ca29b8dfb42837bfb8869cea2929ba1d74b4a0",
+        "UNRESOLVED": false,
+        "NOTE": "merge-base_ok"
+      },
+      {
+        "REF": "refs/cline/checkpoints/1786891298054_2ef0f/1",
+        "TIP_SHA": "9cb3d2dbfdc9c1c3fb01a518d8468260f4caa468",
+        "OBJECT_LOCALLY_AVAILABLE": true,
+        "OBJECT_IN_REPAIR": true,
+        "OBJECT_IN_RETIRED": false,
+        "DUPLICATE_TIP": true,
+        "UNIQUE_TIP": false,
+        "SEEN_IN_REPAIR_REFS": [
+          "refs/cline/checkpoints/1786891298054_2ef0f/1"
+        ],
+        "SEEN_IN_RETIRED_REFS": [],
+        "SEEN_IN_ORIGIN_LS_REMOTE": [],
+        "BUNDLE_REF_ALIASES": [
+          "refs/cline/checkpoints/1786891298054_2ef0f/1"
+        ],
+        "ANCESTRY_BOUND": true,
+        "COMMON_BASE_VS_TREE001_HEAD": "d4ca29b8dfb42837bfb8869cea2929ba1d74b4a0",
+        "UNRESOLVED": false,
+        "NOTE": "merge-base_ok"
+      },
+      {
+        "REF": "refs/cline/checkpoints/1787348777638_ys1li/1",
+        "TIP_SHA": "f5e51ab6d1b498fca3ed2db2b76c68e2d3b24ec6",
+        "OBJECT_LOCALLY_AVAILABLE": true,
+        "OBJECT_IN_REPAIR": true,
+        "OBJECT_IN_RETIRED": false,
+        "DUPLICATE_TIP": true,
+        "UNIQUE_TIP": false,
+        "SEEN_IN_REPAIR_REFS": [
+          "refs/cline/checkpoints/1787348777638_ys1li/1"
+        ],
+        "SEEN_IN_RETIRED_REFS": [],
+        "SEEN_IN_ORIGIN_LS_REMOTE": [],
+        "BUNDLE_REF_ALIASES": [
+          "refs/cline/checkpoints/1787348777638_ys1li/1"
+        ],
+        "ANCESTRY_BOUND": true,
+        "COMMON_BASE_VS_TREE001_HEAD": "e1dfd7c235b0bd4ba1a58ab6dfea47bd00173370",
+        "UNRESOLVED": false,
+        "NOTE": "merge-base_ok"
+      },
+      {
+        "REF": "refs/cline/checkpoints/1787348788404_axxl9/1",
+        "TIP_SHA": "6b16d238a39f54fb4bb79671b82d9abded228e99",
+        "OBJECT_LOCALLY_AVAILABLE": true,
+        "OBJECT_IN_REPAIR": true,
+        "OBJECT_IN_RETIRED": false,
+        "DUPLICATE_TIP": true,
+        "UNIQUE_TIP": false,
+        "SEEN_IN_REPAIR_REFS": [
+          "refs/cline/checkpoints/1787348788404_axxl9/1"
+        ],
+        "SEEN_IN_RETIRED_REFS": [],
+        "SEEN_IN_ORIGIN_LS_REMOTE": [],
+        "BUNDLE_REF_ALIASES": [
+          "refs/cline/checkpoints/1787348788404_axxl9/1"
+        ],
+        "ANCESTRY_BOUND": true,
+        "COMMON_BASE_VS_TREE001_HEAD": "e1dfd7c235b0bd4ba1a58ab6dfea47bd00173370",
+        "UNRESOLVED": false,
+        "NOTE": "merge-base_ok"
+      },
+      {
+        "REF": "refs/cline/checkpoints/1787348974964_s3uoj/1",
+        "TIP_SHA": "df3fe784d963881b57686b881d3571132f8a9b2b",
+        "OBJECT_LOCALLY_AVAILABLE": true,
+        "OBJECT_IN_REPAIR": true,
+        "OBJECT_IN_RETIRED": false,
+        "DUPLICATE_TIP": true,
+        "UNIQUE_TIP": false,
+        "SEEN_IN_REPAIR_REFS": [
+          "refs/cline/checkpoints/1787348974964_s3uoj/1"
+        ],
+        "SEEN_IN_RETIRED_REFS": [],
+        "SEEN_IN_ORIGIN_LS_REMOTE": [],
+        "BUNDLE_REF_ALIASES": [
+          "refs/cline/checkpoints/1787348974964_s3uoj/1"
+        ],
+        "ANCESTRY_BOUND": true,
+        "COMMON_BASE_VS_TREE001_HEAD": "e1dfd7c235b0bd4ba1a58ab6dfea47bd00173370",
+        "UNRESOLVED": false,
+        "NOTE": "merge-base_ok"
+      },
+      {
+        "REF": "refs/cline/checkpoints/1787348984830_nze4g/1",
+        "TIP_SHA": "fb03cf71de36beeb86e2b18049fae0b444e99ced",
+        "OBJECT_LOCALLY_AVAILABLE": true,
+        "OBJECT_IN_REPAIR": true,
+        "OBJECT_IN_RETIRED": false,
+        "DUPLICATE_TIP": true,
+        "UNIQUE_TIP": false,
+        "SEEN_IN_REPAIR_REFS": [
+          "refs/cline/checkpoints/1787348984830_nze4g/1"
+        ],
+        "SEEN_IN_RETIRED_REFS": [],
+        "SEEN_IN_ORIGIN_LS_REMOTE": [],
+        "BUNDLE_REF_ALIASES": [
+          "refs/cline/checkpoints/1787348984830_nze4g/1"
+        ],
+        "ANCESTRY_BOUND": true,
+        "COMMON_BASE_VS_TREE001_HEAD": "e1dfd7c235b0bd4ba1a58ab6dfea47bd00173370",
+        "UNRESOLVED": false,
+        "NOTE": "merge-base_ok"
+      },
+      {
+        "REF": "refs/cline/checkpoints/1787349060204_ld3nk/1",
+        "TIP_SHA": "12dd1dc15d9d33bf53db5b7c63033ee59d5ec077",
+        "OBJECT_LOCALLY_AVAILABLE": true,
+        "OBJECT_IN_REPAIR": true,
+        "OBJECT_IN_RETIRED": false,
+        "DUPLICATE_TIP": true,
+        "UNIQUE_TIP": false,
+        "SEEN_IN_REPAIR_REFS": [
+          "refs/cline/checkpoints/1787349060204_ld3nk/1"
+        ],
+        "SEEN_IN_RETIRED_REFS": [],
+        "SEEN_IN_ORIGIN_LS_REMOTE": [],
+        "BUNDLE_REF_ALIASES": [
+          "refs/cline/checkpoints/1787349060204_ld3nk/1"
+        ],
+        "ANCESTRY_BOUND": true,
+        "COMMON_BASE_VS_TREE001_HEAD": "e1dfd7c235b0bd4ba1a58ab6dfea47bd00173370",
+        "UNRESOLVED": false,
+        "NOTE": "merge-base_ok"
+      },
+      {
+        "REF": "refs/cline/checkpoints/1787349211220_yzwm2/1",
+        "TIP_SHA": "cb3c5023164f303f524072e41e755dc80ad2cca7",
+        "OBJECT_LOCALLY_AVAILABLE": true,
+        "OBJECT_IN_REPAIR": true,
+        "OBJECT_IN_RETIRED": false,
+        "DUPLICATE_TIP": true,
+        "UNIQUE_TIP": false,
+        "SEEN_IN_REPAIR_REFS": [
+          "refs/cline/checkpoints/1787349211220_yzwm2/1"
+        ],
+        "SEEN_IN_RETIRED_REFS": [],
+        "SEEN_IN_ORIGIN_LS_REMOTE": [],
+        "BUNDLE_REF_ALIASES": [
+          "refs/cline/checkpoints/1787349211220_yzwm2/1"
+        ],
+        "ANCESTRY_BOUND": true,
+        "COMMON_BASE_VS_TREE001_HEAD": "e1dfd7c235b0bd4ba1a58ab6dfea47bd00173370",
+        "UNRESOLVED": false,
+        "NOTE": "merge-base_ok"
+      },
+      {
+        "REF": "refs/cline/checkpoints/1787349219388_uuz4d/1",
+        "TIP_SHA": "ade2be16100ecbbef5e8e38d51bf4cd71adecf1a",
+        "OBJECT_LOCALLY_AVAILABLE": true,
+        "OBJECT_IN_REPAIR": true,
+        "OBJECT_IN_RETIRED": false,
+        "DUPLICATE_TIP": true,
+        "UNIQUE_TIP": false,
+        "SEEN_IN_REPAIR_REFS": [
+          "refs/cline/checkpoints/1787349219388_uuz4d/1"
+        ],
+        "SEEN_IN_RETIRED_REFS": [],
+        "SEEN_IN_ORIGIN_LS_REMOTE": [],
+        "BUNDLE_REF_ALIASES": [
+          "refs/cline/checkpoints/1787349219388_uuz4d/1"
+        ],
+        "ANCESTRY_BOUND": true,
+        "COMMON_BASE_VS_TREE001_HEAD": "e1dfd7c235b0bd4ba1a58ab6dfea47bd00173370",
+        "UNRESOLVED": false,
+        "NOTE": "merge-base_ok"
+      },
+      {
+        "REF": "refs/cline/checkpoints/1787364371266_5xzty/1",
+        "TIP_SHA": "9f197bf4ae8c1252530ce0092ee31eec6dd99308",
+        "OBJECT_LOCALLY_AVAILABLE": true,
+        "OBJECT_IN_REPAIR": true,
+        "OBJECT_IN_RETIRED": false,
+        "DUPLICATE_TIP": true,
+        "UNIQUE_TIP": false,
+        "SEEN_IN_REPAIR_REFS": [
+          "refs/cline/checkpoints/1787364371266_5xzty/1"
+        ],
+        "SEEN_IN_RETIRED_REFS": [],
+        "SEEN_IN_ORIGIN_LS_REMOTE": [],
+        "BUNDLE_REF_ALIASES": [
+          "refs/cline/checkpoints/1787364371266_5xzty/1"
+        ],
+        "ANCESTRY_BOUND": true,
+        "COMMON_BASE_VS_TREE001_HEAD": "e1dfd7c235b0bd4ba1a58ab6dfea47bd00173370",
+        "UNRESOLVED": false,
+        "NOTE": "merge-base_ok"
+      },
+      {
+        "REF": "refs/cline/checkpoints/1787690807417_llz97/1",
+        "TIP_SHA": "8d734340ed5d880ee558f16bba78bdb4dd20782c",
+        "OBJECT_LOCALLY_AVAILABLE": true,
+        "OBJECT_IN_REPAIR": true,
+        "OBJECT_IN_RETIRED": false,
+        "DUPLICATE_TIP": true,
+        "UNIQUE_TIP": false,
+        "SEEN_IN_REPAIR_REFS": [
+          "refs/cline/checkpoints/1787690807417_llz97/1"
+        ],
+        "SEEN_IN_RETIRED_REFS": [],
+        "SEEN_IN_ORIGIN_LS_REMOTE": [],
+        "BUNDLE_REF_ALIASES": [
+          "refs/cline/checkpoints/1787690807417_llz97/1"
+        ],
+        "ANCESTRY_BOUND": true,
+        "COMMON_BASE_VS_TREE001_HEAD": "12603d02253547c7727bc84ce68c318e8e9258bc",
+        "UNRESOLVED": false,
+        "NOTE": "merge-base_ok"
+      },
+      {
+        "REF": "refs/heads/codex-clean",
+        "TIP_SHA": "98b952417c19d61d269a5681ef0ccc4aba959738",
+        "OBJECT_LOCALLY_AVAILABLE": true,
+        "OBJECT_IN_REPAIR": true,
+        "OBJECT_IN_RETIRED": false,
+        "DUPLICATE_TIP": true,
+        "UNIQUE_TIP": false,
+        "SEEN_IN_REPAIR_REFS": [
+          "refs/heads/codex-clean",
+          "refs/remotes/origin/codex-clean"
+        ],
+        "SEEN_IN_RETIRED_REFS": [],
+        "SEEN_IN_ORIGIN_LS_REMOTE": [
+          "refs/heads/codex-clean"
+        ],
+        "BUNDLE_REF_ALIASES": [
+          "refs/heads/codex-clean",
+          "refs/remotes/origin/codex-clean"
+        ],
+        "ANCESTRY_BOUND": true,
+        "COMMON_BASE_VS_TREE001_HEAD": "d3f5ca69b858843dcf626f74fa13cf83d3e2e20c",
+        "UNRESOLVED": false,
+        "NOTE": "merge-base_ok"
+      },
+      {
+        "REF": "refs/heads/phase2a/class-a-20260822-232109",
+        "TIP_SHA": "12603d02253547c7727bc84ce68c318e8e9258bc",
+        "OBJECT_LOCALLY_AVAILABLE": true,
+        "OBJECT_IN_REPAIR": true,
+        "OBJECT_IN_RETIRED": false,
+        "DUPLICATE_TIP": true,
+        "UNIQUE_TIP": false,
+        "SEEN_IN_REPAIR_REFS": [
+          "refs/archive/20260824/phase2a-working",
+          "refs/heads/phase2a/class-a-20260822-232109"
+        ],
+        "SEEN_IN_RETIRED_REFS": [],
+        "SEEN_IN_ORIGIN_LS_REMOTE": [],
+        "BUNDLE_REF_ALIASES": [
+          "refs/archive/20260824/phase2a-working",
+          "refs/heads/phase2a/class-a-20260822-232109",
+          "HEAD"
+        ],
+        "ANCESTRY_BOUND": true,
+        "COMMON_BASE_VS_TREE001_HEAD": "12603d02253547c7727bc84ce68c318e8e9258bc",
+        "UNRESOLVED": false,
+        "NOTE": "merge-base_ok"
+      },
+      {
+        "REF": "refs/heads/pr/authoritative-certifier-forensic",
+        "TIP_SHA": "d2ab122fe25e3ab16b91afbc3267cd47778f6dba",
+        "OBJECT_LOCALLY_AVAILABLE": true,
+        "OBJECT_IN_REPAIR": true,
+        "OBJECT_IN_RETIRED": false,
+        "DUPLICATE_TIP": true,
+        "UNIQUE_TIP": false,
+        "SEEN_IN_REPAIR_REFS": [
+          "refs/archive/20260824/pr-certifier",
+          "refs/heads/pr/authoritative-certifier-forensic",
+          "refs/remotes/origin/pr/authoritative-certifier-forensic"
+        ],
+        "SEEN_IN_RETIRED_REFS": [],
+        "SEEN_IN_ORIGIN_LS_REMOTE": [
+          "refs/heads/pr/authoritative-certifier-forensic"
+        ],
+        "BUNDLE_REF_ALIASES": [
+          "refs/archive/20260824/pr-certifier",
+          "refs/heads/pr/authoritative-certifier-forensic",
+          "refs/remotes/origin/pr/authoritative-certifier-forensic"
+        ],
+        "ANCESTRY_BOUND": true,
+        "COMMON_BASE_VS_TREE001_HEAD": "d3f5ca69b858843dcf626f74fa13cf83d3e2e20c",
+        "UNRESOLVED": false,
+        "NOTE": "merge-base_ok"
+      },
+      {
+        "REF": "refs/heads/pr/cairo-shipment-origin-salvage",
+        "TIP_SHA": "7031ffc1de5f34ddefc77d622d8eedc8cb12892d",
+        "OBJECT_LOCALLY_AVAILABLE": true,
+        "OBJECT_IN_REPAIR": true,
+        "OBJECT_IN_RETIRED": false,
+        "DUPLICATE_TIP": true,
+        "UNIQUE_TIP": false,
+        "SEEN_IN_REPAIR_REFS": [
+          "refs/archive/20260824/pr-cairo",
+          "refs/heads/pr/cairo-shipment-origin-salvage",
+          "refs/remotes/origin/pr/cairo-shipment-origin-salvage"
+        ],
+        "SEEN_IN_RETIRED_REFS": [],
+        "SEEN_IN_ORIGIN_LS_REMOTE": [
+          "refs/heads/pr/cairo-shipment-origin-salvage"
+        ],
+        "BUNDLE_REF_ALIASES": [
+          "refs/archive/20260824/pr-cairo",
+          "refs/heads/pr/cairo-shipment-origin-salvage",
+          "refs/remotes/origin/pr/cairo-shipment-origin-salvage"
+        ],
+        "ANCESTRY_BOUND": true,
+        "COMMON_BASE_VS_TREE001_HEAD": "d3f5ca69b858843dcf626f74fa13cf83d3e2e20c",
+        "UNRESOLVED": false,
+        "NOTE": "merge-base_ok"
+      },
+      {
+        "REF": "refs/heads/pr/nl0-semantic-kernel",
+        "TIP_SHA": "f7c23759b59be72456af59a87d8c48b13827fa7b",
+        "OBJECT_LOCALLY_AVAILABLE": true,
+        "OBJECT_IN_REPAIR": true,
+        "OBJECT_IN_RETIRED": false,
+        "DUPLICATE_TIP": true,
+        "UNIQUE_TIP": false,
+        "SEEN_IN_REPAIR_REFS": [
+          "refs/archive/20260824/pr-nl0",
+          "refs/heads/pr/nl0-semantic-kernel",
+          "refs/remotes/origin/pr/nl0-semantic-kernel"
+        ],
+        "SEEN_IN_RETIRED_REFS": [],
+        "SEEN_IN_ORIGIN_LS_REMOTE": [
+          "refs/heads/pr/nl0-semantic-kernel"
+        ],
+        "BUNDLE_REF_ALIASES": [
+          "refs/archive/20260824/pr-nl0",
+          "refs/heads/pr/nl0-semantic-kernel",
+          "refs/remotes/origin/pr/nl0-semantic-kernel"
+        ],
+        "ANCESTRY_BOUND": true,
+        "COMMON_BASE_VS_TREE001_HEAD": "d3f5ca69b858843dcf626f74fa13cf83d3e2e20c",
+        "UNRESOLVED": false,
+        "NOTE": "merge-base_ok"
+      },
+      {
+        "REF": "refs/heads/raios/gl-002-main-brain",
+        "TIP_SHA": "c336fc88019a68dba9a79531d4c9d3269e85b02d",
+        "OBJECT_LOCALLY_AVAILABLE": true,
+        "OBJECT_IN_REPAIR": true,
+        "OBJECT_IN_RETIRED": false,
+        "DUPLICATE_TIP": true,
+        "UNIQUE_TIP": false,
+        "SEEN_IN_REPAIR_REFS": [
+          "refs/archive/20260824/gl-002",
+          "refs/heads/raios/gl-002-main-brain"
+        ],
+        "SEEN_IN_RETIRED_REFS": [],
+        "SEEN_IN_ORIGIN_LS_REMOTE": [],
+        "BUNDLE_REF_ALIASES": [
+          "refs/archive/20260824/gl-002",
+          "refs/heads/raios/gl-002-main-brain"
+        ],
+        "ANCESTRY_BOUND": true,
+        "COMMON_BASE_VS_TREE001_HEAD": "d4ca29b8dfb42837bfb8869cea2929ba1d74b4a0",
+        "UNRESOLVED": false,
+        "NOTE": "merge-base_ok"
+      },
+      {
+        "REF": "refs/heads/raios/gl-005-convergence",
+        "TIP_SHA": "3d9f58136d318ba07d743e127ab1e433605ce1ea",
+        "OBJECT_LOCALLY_AVAILABLE": true,
+        "OBJECT_IN_REPAIR": true,
+        "OBJECT_IN_RETIRED": false,
+        "DUPLICATE_TIP": true,
+        "UNIQUE_TIP": false,
+        "SEEN_IN_REPAIR_REFS": [
+          "refs/archive/20260824/gl-005",
+          "refs/heads/raios/gl-005-convergence",
+          "refs/remotes/origin/raios/gl-005-convergence"
+        ],
+        "SEEN_IN_RETIRED_REFS": [],
+        "SEEN_IN_ORIGIN_LS_REMOTE": [
+          "refs/heads/raios/gl-005-convergence"
+        ],
+        "BUNDLE_REF_ALIASES": [
+          "refs/archive/20260824/gl-005",
+          "refs/heads/raios/gl-005-convergence",
+          "refs/remotes/origin/raios/gl-005-convergence"
+        ],
+        "ANCESTRY_BOUND": true,
+        "COMMON_BASE_VS_TREE001_HEAD": "d4ca29b8dfb42837bfb8869cea2929ba1d74b4a0",
+        "UNRESOLVED": false,
+        "NOTE": "merge-base_ok"
+      },
+      {
+        "REF": "refs/heads/v9-neurolingua-semantic-kernel",
+        "TIP_SHA": "b877a232a486f539691112e9114997acb4a3a21e",
+        "OBJECT_LOCALLY_AVAILABLE": true,
+        "OBJECT_IN_REPAIR": true,
+        "OBJECT_IN_RETIRED": false,
+        "DUPLICATE_TIP": true,
+        "UNIQUE_TIP": false,
+        "SEEN_IN_REPAIR_REFS": [
+          "refs/archive/20260824/v9-cloud",
+          "refs/heads/v9-neurolingua-semantic-kernel",
+          "refs/remotes/origin/v9-neurolingua-semantic-kernel"
+        ],
+        "SEEN_IN_RETIRED_REFS": [],
+        "SEEN_IN_ORIGIN_LS_REMOTE": [],
+        "BUNDLE_REF_ALIASES": [
+          "refs/archive/20260824/v9-cloud",
+          "refs/heads/v9-neurolingua-semantic-kernel",
+          "refs/remotes/origin/v9-neurolingua-semantic-kernel"
+        ],
+        "ANCESTRY_BOUND": true,
+        "COMMON_BASE_VS_TREE001_HEAD": "e1dfd7c235b0bd4ba1a58ab6dfea47bd00173370",
+        "UNRESOLVED": false,
+        "NOTE": "merge-base_ok"
+      },
+      {
+        "REF": "refs/remotes/origin/HEAD",
+        "TIP_SHA": "da67f44963fafde67df52cb62ab32f75fe725df0",
+        "OBJECT_LOCALLY_AVAILABLE": true,
+        "OBJECT_IN_REPAIR": true,
+        "OBJECT_IN_RETIRED": false,
+        "DUPLICATE_TIP": true,
+        "UNIQUE_TIP": false,
+        "SEEN_IN_REPAIR_REFS": [
+          "refs/remotes/origin/HEAD",
+          "refs/remotes/origin/main"
+        ],
+        "SEEN_IN_RETIRED_REFS": [],
+        "SEEN_IN_ORIGIN_LS_REMOTE": [
+          "refs/heads/main"
+        ],
+        "BUNDLE_REF_ALIASES": [
+          "refs/remotes/origin/HEAD",
+          "refs/remotes/origin/main"
+        ],
+        "ANCESTRY_BOUND": false,
+        "COMMON_BASE_VS_TREE001_HEAD": null,
+        "UNRESOLVED": false,
+        "NOTE": "merge-base_empty_or_fail_no_fetch"
+      },
+      {
+        "REF": "refs/remotes/origin/codex-clean",
+        "TIP_SHA": "98b952417c19d61d269a5681ef0ccc4aba959738",
+        "OBJECT_LOCALLY_AVAILABLE": true,
+        "OBJECT_IN_REPAIR": true,
+        "OBJECT_IN_RETIRED": false,
+        "DUPLICATE_TIP": true,
+        "UNIQUE_TIP": false,
+        "SEEN_IN_REPAIR_REFS": [
+          "refs/heads/codex-clean",
+          "refs/remotes/origin/codex-clean"
+        ],
+        "SEEN_IN_RETIRED_REFS": [],
+        "SEEN_IN_ORIGIN_LS_REMOTE": [
+          "refs/heads/codex-clean"
+        ],
+        "BUNDLE_REF_ALIASES": [
+          "refs/heads/codex-clean",
+          "refs/remotes/origin/codex-clean"
+        ],
+        "ANCESTRY_BOUND": true,
+        "COMMON_BASE_VS_TREE001_HEAD": "d3f5ca69b858843dcf626f74fa13cf83d3e2e20c",
+        "UNRESOLVED": false,
+        "NOTE": "merge-base_ok"
+      },
+      {
+        "REF": "refs/remotes/origin/cursor/a17-cursor-parallel-f3c7",
+        "TIP_SHA": "b2a1645d32c5de8e8fb19d14445b6585c875653e",
+        "OBJECT_LOCALLY_AVAILABLE": true,
+        "OBJECT_IN_REPAIR": true,
+        "OBJECT_IN_RETIRED": false,
+        "DUPLICATE_TIP": true,
+        "UNIQUE_TIP": false,
+        "SEEN_IN_REPAIR_REFS": [
+          "refs/remotes/origin/cursor/a17-cursor-parallel-f3c7"
+        ],
+        "SEEN_IN_RETIRED_REFS": [],
+        "SEEN_IN_ORIGIN_LS_REMOTE": [
+          "refs/heads/cursor/a17-cursor-parallel-f3c7"
+        ],
+        "BUNDLE_REF_ALIASES": [
+          "refs/remotes/origin/cursor/a17-cursor-parallel-f3c7"
+        ],
+        "ANCESTRY_BOUND": true,
+        "COMMON_BASE_VS_TREE001_HEAD": "d3f5ca69b858843dcf626f74fa13cf83d3e2e20c",
+        "UNRESOLVED": false,
+        "NOTE": "merge-base_ok"
+      },
+      {
+        "REF": "refs/remotes/origin/cursor/a17-integration-wave-f3c7",
+        "TIP_SHA": "4475a1cff3c506883848242fe2d4b060f33a47e5",
+        "OBJECT_LOCALLY_AVAILABLE": true,
+        "OBJECT_IN_REPAIR": true,
+        "OBJECT_IN_RETIRED": false,
+        "DUPLICATE_TIP": true,
+        "UNIQUE_TIP": false,
+        "SEEN_IN_REPAIR_REFS": [
+          "refs/remotes/origin/cursor/a17-integration-wave-f3c7"
+        ],
+        "SEEN_IN_RETIRED_REFS": [],
+        "SEEN_IN_ORIGIN_LS_REMOTE": [
+          "refs/heads/cursor/a17-integration-wave-f3c7"
+        ],
+        "BUNDLE_REF_ALIASES": [
+          "refs/remotes/origin/cursor/a17-integration-wave-f3c7"
+        ],
+        "ANCESTRY_BOUND": true,
+        "COMMON_BASE_VS_TREE001_HEAD": "d3f5ca69b858843dcf626f74fa13cf83d3e2e20c",
+        "UNRESOLVED": false,
+        "NOTE": "merge-base_ok"
+      },
+      {
+        "REF": "refs/remotes/origin/cursor/a18-ccee-foundation-f3c7",
+        "TIP_SHA": "edb344eac48a010f18a0ecdb2b7fd4c8b1e58fb5",
+        "OBJECT_LOCALLY_AVAILABLE": true,
+        "OBJECT_IN_REPAIR": true,
+        "OBJECT_IN_RETIRED": false,
+        "DUPLICATE_TIP": true,
+        "UNIQUE_TIP": false,
+        "SEEN_IN_REPAIR_REFS": [
+          "refs/remotes/origin/cursor/a18-ccee-foundation-f3c7"
+        ],
+        "SEEN_IN_RETIRED_REFS": [],
+        "SEEN_IN_ORIGIN_LS_REMOTE": [
+          "refs/heads/cursor/a18-ccee-foundation-f3c7"
+        ],
+        "BUNDLE_REF_ALIASES": [
+          "refs/remotes/origin/cursor/a18-ccee-foundation-f3c7"
+        ],
+        "ANCESTRY_BOUND": true,
+        "COMMON_BASE_VS_TREE001_HEAD": "d3f5ca69b858843dcf626f74fa13cf83d3e2e20c",
+        "UNRESOLVED": false,
+        "NOTE": "merge-base_ok"
+      },
+      {
+        "REF": "refs/remotes/origin/cursor/c2-evidence-reuse-preparation-4247",
+        "TIP_SHA": "c36906757f7dce17cbcbb2d3cf9fcb5c8f53f6cc",
+        "OBJECT_LOCALLY_AVAILABLE": true,
+        "OBJECT_IN_REPAIR": true,
+        "OBJECT_IN_RETIRED": false,
+        "DUPLICATE_TIP": true,
+        "UNIQUE_TIP": false,
+        "SEEN_IN_REPAIR_REFS": [
+          "refs/remotes/origin/cursor/c2-evidence-reuse-preparation-4247"
+        ],
+        "SEEN_IN_RETIRED_REFS": [],
+        "SEEN_IN_ORIGIN_LS_REMOTE": [
+          "refs/heads/cursor/c2-evidence-reuse-preparation-4247"
+        ],
+        "BUNDLE_REF_ALIASES": [
+          "refs/remotes/origin/cursor/c2-evidence-reuse-preparation-4247"
+        ],
+        "ANCESTRY_BOUND": false,
+        "COMMON_BASE_VS_TREE001_HEAD": null,
+        "UNRESOLVED": false,
+        "NOTE": "merge-base_empty_or_fail_no_fetch"
+      },
+      {
+        "REF": "refs/remotes/origin/cursor/file-intelligence-authority-f3c7",
+        "TIP_SHA": "223386b53be5b6c6e4b9cf65b74f97fa4fc48605",
+        "OBJECT_LOCALLY_AVAILABLE": true,
+        "OBJECT_IN_REPAIR": true,
+        "OBJECT_IN_RETIRED": false,
+        "DUPLICATE_TIP": true,
+        "UNIQUE_TIP": false,
+        "SEEN_IN_REPAIR_REFS": [
+          "refs/remotes/origin/cursor/file-intelligence-authority-f3c7"
+        ],
+        "SEEN_IN_RETIRED_REFS": [],
+        "SEEN_IN_ORIGIN_LS_REMOTE": [
+          "refs/heads/cursor/file-intelligence-authority-f3c7"
+        ],
+        "BUNDLE_REF_ALIASES": [
+          "refs/remotes/origin/cursor/file-intelligence-authority-f3c7"
+        ],
+        "ANCESTRY_BOUND": true,
+        "COMMON_BASE_VS_TREE001_HEAD": "d3f5ca69b858843dcf626f74fa13cf83d3e2e20c",
+        "UNRESOLVED": false,
+        "NOTE": "merge-base_ok"
+      },
+      {
+        "REF": "refs/remotes/origin/cursor/file-intelligence-fabric-f3c7",
+        "TIP_SHA": "a6e121e8fbdededaf44507dd3387a2f48565a950",
+        "OBJECT_LOCALLY_AVAILABLE": true,
+        "OBJECT_IN_REPAIR": true,
+        "OBJECT_IN_RETIRED": false,
+        "DUPLICATE_TIP": true,
+        "UNIQUE_TIP": false,
+        "SEEN_IN_REPAIR_REFS": [
+          "refs/remotes/origin/cursor/file-intelligence-fabric-f3c7"
+        ],
+        "SEEN_IN_RETIRED_REFS": [],
+        "SEEN_IN_ORIGIN_LS_REMOTE": [
+          "refs/heads/cursor/file-intelligence-fabric-f3c7"
+        ],
+        "BUNDLE_REF_ALIASES": [
+          "refs/remotes/origin/cursor/file-intelligence-fabric-f3c7"
+        ],
+        "ANCESTRY_BOUND": true,
+        "COMMON_BASE_VS_TREE001_HEAD": "d3f5ca69b858843dcf626f74fa13cf83d3e2e20c",
+        "UNRESOLVED": false,
+        "NOTE": "merge-base_ok"
+      },
+      {
+        "REF": "refs/remotes/origin/cursor/file-intelligence-parallel-f3c7",
+        "TIP_SHA": "79569cde5573fdd24da2268481f22f43aa74b0dd",
+        "OBJECT_LOCALLY_AVAILABLE": true,
+        "OBJECT_IN_REPAIR": true,
+        "OBJECT_IN_RETIRED": false,
+        "DUPLICATE_TIP": true,
+        "UNIQUE_TIP": false,
+        "SEEN_IN_REPAIR_REFS": [
+          "refs/remotes/origin/cursor/file-intelligence-parallel-f3c7"
+        ],
+        "SEEN_IN_RETIRED_REFS": [],
+        "SEEN_IN_ORIGIN_LS_REMOTE": [
+          "refs/heads/cursor/file-intelligence-parallel-f3c7"
+        ],
+        "BUNDLE_REF_ALIASES": [
+          "refs/remotes/origin/cursor/file-intelligence-parallel-f3c7"
+        ],
+        "ANCESTRY_BOUND": true,
+        "COMMON_BASE_VS_TREE001_HEAD": "d3f5ca69b858843dcf626f74fa13cf83d3e2e20c",
+        "UNRESOLVED": false,
+        "NOTE": "merge-base_ok"
+      },
+      {
+        "REF": "refs/remotes/origin/cursor/neurolingua-semantic-kernel-4f9d",
+        "TIP_SHA": "0c9b4f6a64255e64aa73d90cb178774623e3eb01",
+        "OBJECT_LOCALLY_AVAILABLE": true,
+        "OBJECT_IN_REPAIR": true,
+        "OBJECT_IN_RETIRED": false,
+        "DUPLICATE_TIP": true,
+        "UNIQUE_TIP": false,
+        "SEEN_IN_REPAIR_REFS": [
+          "refs/remotes/origin/cursor/neurolingua-semantic-kernel-4f9d"
+        ],
+        "SEEN_IN_RETIRED_REFS": [],
+        "SEEN_IN_ORIGIN_LS_REMOTE": [
+          "refs/heads/cursor/neurolingua-semantic-kernel-4f9d"
+        ],
+        "BUNDLE_REF_ALIASES": [
+          "refs/remotes/origin/cursor/neurolingua-semantic-kernel-4f9d"
+        ],
+        "ANCESTRY_BOUND": false,
+        "COMMON_BASE_VS_TREE001_HEAD": null,
+        "UNRESOLVED": false,
+        "NOTE": "merge-base_empty_or_fail_no_fetch"
+      },
+      {
+        "REF": "refs/remotes/origin/cursor/raios-certifier-safety-schema-4540",
+        "TIP_SHA": "2a834cc86c05642d59e3e2837e411751190aa7b4",
+        "OBJECT_LOCALLY_AVAILABLE": true,
+        "OBJECT_IN_REPAIR": true,
+        "OBJECT_IN_RETIRED": false,
+        "DUPLICATE_TIP": true,
+        "UNIQUE_TIP": false,
+        "SEEN_IN_REPAIR_REFS": [
+          "refs/archive/20260825/c2-command-fabric-2a834cc",
+          "refs/remotes/origin/cursor/raios-certifier-safety-schema-4540"
+        ],
+        "SEEN_IN_RETIRED_REFS": [],
+        "SEEN_IN_ORIGIN_LS_REMOTE": [
+          "refs/heads/cursor/raios-certifier-safety-schema-4540"
+        ],
+        "BUNDLE_REF_ALIASES": [
+          "refs/archive/20260825/c2-command-fabric-2a834cc",
+          "refs/remotes/origin/cursor/raios-certifier-safety-schema-4540"
+        ],
+        "ANCESTRY_BOUND": false,
+        "COMMON_BASE_VS_TREE001_HEAD": null,
+        "UNRESOLVED": false,
+        "NOTE": "merge-base_empty_or_fail_no_fetch"
+      },
+      {
+        "REF": "refs/remotes/origin/cursor/raios-false-pass-training-147d",
+        "TIP_SHA": "4b0b51af31685b49df181641c2e88d16f4b8c3d3",
+        "OBJECT_LOCALLY_AVAILABLE": true,
+        "OBJECT_IN_REPAIR": true,
+        "OBJECT_IN_RETIRED": false,
+        "DUPLICATE_TIP": true,
+        "UNIQUE_TIP": false,
+        "SEEN_IN_REPAIR_REFS": [
+          "refs/remotes/origin/cursor/raios-false-pass-training-147d"
+        ],
+        "SEEN_IN_RETIRED_REFS": [],
+        "SEEN_IN_ORIGIN_LS_REMOTE": [
+          "refs/heads/cursor/raios-false-pass-training-147d"
+        ],
+        "BUNDLE_REF_ALIASES": [
+          "refs/remotes/origin/cursor/raios-false-pass-training-147d"
+        ],
+        "ANCESTRY_BOUND": true,
+        "COMMON_BASE_VS_TREE001_HEAD": "d3f5ca69b858843dcf626f74fa13cf83d3e2e20c",
+        "UNRESOLVED": false,
+        "NOTE": "merge-base_ok"
+      },
+      {
+        "REF": "refs/remotes/origin/cursor/raios-live-assimilation-147d",
+        "TIP_SHA": "2d41ef264bdda70b1ba0f0588585ee740aea3ff2",
+        "OBJECT_LOCALLY_AVAILABLE": true,
+        "OBJECT_IN_REPAIR": true,
+        "OBJECT_IN_RETIRED": false,
+        "DUPLICATE_TIP": true,
+        "UNIQUE_TIP": false,
+        "SEEN_IN_REPAIR_REFS": [
+          "refs/archive/20260824/cursor-stack-tip",
+          "refs/remotes/origin/cursor/raios-live-assimilation-147d"
+        ],
+        "SEEN_IN_RETIRED_REFS": [],
+        "SEEN_IN_ORIGIN_LS_REMOTE": [
+          "refs/heads/cursor/raios-live-assimilation-147d"
+        ],
+        "BUNDLE_REF_ALIASES": [
+          "refs/archive/20260824/cursor-stack-tip",
+          "refs/remotes/origin/cursor/raios-live-assimilation-147d"
+        ],
+        "ANCESTRY_BOUND": true,
+        "COMMON_BASE_VS_TREE001_HEAD": "d3f5ca69b858843dcf626f74fa13cf83d3e2e20c",
+        "UNRESOLVED": false,
+        "NOTE": "merge-base_ok"
+      },
+      {
+        "REF": "refs/remotes/origin/cursor/raios-repair-boot-41f5",
+        "TIP_SHA": "c2847e28a2d2b09e04b57684eee65236c96427a7",
+        "OBJECT_LOCALLY_AVAILABLE": true,
+        "OBJECT_IN_REPAIR": true,
+        "OBJECT_IN_RETIRED": false,
+        "DUPLICATE_TIP": true,
+        "UNIQUE_TIP": false,
+        "SEEN_IN_REPAIR_REFS": [
+          "refs/remotes/origin/cursor/raios-repair-boot-41f5"
+        ],
+        "SEEN_IN_RETIRED_REFS": [],
+        "SEEN_IN_ORIGIN_LS_REMOTE": [
+          "refs/heads/cursor/raios-repair-boot-41f5"
+        ],
+        "BUNDLE_REF_ALIASES": [
+          "refs/remotes/origin/cursor/raios-repair-boot-41f5"
+        ],
+        "ANCESTRY_BOUND": true,
+        "COMMON_BASE_VS_TREE001_HEAD": "d3f5ca69b858843dcf626f74fa13cf83d3e2e20c",
+        "UNRESOLVED": false,
+        "NOTE": "merge-base_ok"
+      },
+      {
+        "REF": "refs/remotes/origin/cursor/setup-dev-environment-ee89",
+        "TIP_SHA": "31449c23905ab02f43360762ababbe4bca759997",
+        "OBJECT_LOCALLY_AVAILABLE": true,
+        "OBJECT_IN_REPAIR": true,
+        "OBJECT_IN_RETIRED": false,
+        "DUPLICATE_TIP": true,
+        "UNIQUE_TIP": false,
+        "SEEN_IN_REPAIR_REFS": [
+          "refs/remotes/origin/cursor/setup-dev-environment-ee89"
+        ],
+        "SEEN_IN_RETIRED_REFS": [],
+        "SEEN_IN_ORIGIN_LS_REMOTE": [
+          "refs/heads/cursor/setup-dev-environment-ee89"
+        ],
+        "BUNDLE_REF_ALIASES": [
+          "refs/remotes/origin/cursor/setup-dev-environment-ee89"
+        ],
+        "ANCESTRY_BOUND": false,
+        "COMMON_BASE_VS_TREE001_HEAD": null,
+        "UNRESOLVED": false,
+        "NOTE": "merge-base_empty_or_fail_no_fetch"
+      },
+      {
+        "REF": "refs/remotes/origin/main",
+        "TIP_SHA": "da67f44963fafde67df52cb62ab32f75fe725df0",
+        "OBJECT_LOCALLY_AVAILABLE": true,
+        "OBJECT_IN_REPAIR": true,
+        "OBJECT_IN_RETIRED": false,
+        "DUPLICATE_TIP": true,
+        "UNIQUE_TIP": false,
+        "SEEN_IN_REPAIR_REFS": [
+          "refs/remotes/origin/HEAD",
+          "refs/remotes/origin/main"
+        ],
+        "SEEN_IN_RETIRED_REFS": [],
+        "SEEN_IN_ORIGIN_LS_REMOTE": [
+          "refs/heads/main"
+        ],
+        "BUNDLE_REF_ALIASES": [
+          "refs/remotes/origin/HEAD",
+          "refs/remotes/origin/main"
+        ],
+        "ANCESTRY_BOUND": false,
+        "COMMON_BASE_VS_TREE001_HEAD": null,
+        "UNRESOLVED": false,
+        "NOTE": "merge-base_empty_or_fail_no_fetch"
+      },
+      {
+        "REF": "refs/remotes/origin/pr/authoritative-certifier-forensic",
+        "TIP_SHA": "d2ab122fe25e3ab16b91afbc3267cd47778f6dba",
+        "OBJECT_LOCALLY_AVAILABLE": true,
+        "OBJECT_IN_REPAIR": true,
+        "OBJECT_IN_RETIRED": false,
+        "DUPLICATE_TIP": true,
+        "UNIQUE_TIP": false,
+        "SEEN_IN_REPAIR_REFS": [
+          "refs/archive/20260824/pr-certifier",
+          "refs/heads/pr/authoritative-certifier-forensic",
+          "refs/remotes/origin/pr/authoritative-certifier-forensic"
+        ],
+        "SEEN_IN_RETIRED_REFS": [],
+        "SEEN_IN_ORIGIN_LS_REMOTE": [
+          "refs/heads/pr/authoritative-certifier-forensic"
+        ],
+        "BUNDLE_REF_ALIASES": [
+          "refs/archive/20260824/pr-certifier",
+          "refs/heads/pr/authoritative-certifier-forensic",
+          "refs/remotes/origin/pr/authoritative-certifier-forensic"
+        ],
+        "ANCESTRY_BOUND": true,
+        "COMMON_BASE_VS_TREE001_HEAD": "d3f5ca69b858843dcf626f74fa13cf83d3e2e20c",
+        "UNRESOLVED": false,
+        "NOTE": "merge-base_ok"
+      },
+      {
+        "REF": "refs/remotes/origin/pr/cairo-shipment-origin-salvage",
+        "TIP_SHA": "7031ffc1de5f34ddefc77d622d8eedc8cb12892d",
+        "OBJECT_LOCALLY_AVAILABLE": true,
+        "OBJECT_IN_REPAIR": true,
+        "OBJECT_IN_RETIRED": false,
+        "DUPLICATE_TIP": true,
+        "UNIQUE_TIP": false,
+        "SEEN_IN_REPAIR_REFS": [
+          "refs/archive/20260824/pr-cairo",
+          "refs/heads/pr/cairo-shipment-origin-salvage",
+          "refs/remotes/origin/pr/cairo-shipment-origin-salvage"
+        ],
+        "SEEN_IN_RETIRED_REFS": [],
+        "SEEN_IN_ORIGIN_LS_REMOTE": [
+          "refs/heads/pr/cairo-shipment-origin-salvage"
+        ],
+        "BUNDLE_REF_ALIASES": [
+          "refs/archive/20260824/pr-cairo",
+          "refs/heads/pr/cairo-shipment-origin-salvage",
+          "refs/remotes/origin/pr/cairo-shipment-origin-salvage"
+        ],
+        "ANCESTRY_BOUND": true,
+        "COMMON_BASE_VS_TREE001_HEAD": "d3f5ca69b858843dcf626f74fa13cf83d3e2e20c",
+        "UNRESOLVED": false,
+        "NOTE": "merge-base_ok"
+      },
+      {
+        "REF": "refs/remotes/origin/pr/nl0-semantic-kernel",
+        "TIP_SHA": "f7c23759b59be72456af59a87d8c48b13827fa7b",
+        "OBJECT_LOCALLY_AVAILABLE": true,
+        "OBJECT_IN_REPAIR": true,
+        "OBJECT_IN_RETIRED": false,
+        "DUPLICATE_TIP": true,
+        "UNIQUE_TIP": false,
+        "SEEN_IN_REPAIR_REFS": [
+          "refs/archive/20260824/pr-nl0",
+          "refs/heads/pr/nl0-semantic-kernel",
+          "refs/remotes/origin/pr/nl0-semantic-kernel"
+        ],
+        "SEEN_IN_RETIRED_REFS": [],
+        "SEEN_IN_ORIGIN_LS_REMOTE": [
+          "refs/heads/pr/nl0-semantic-kernel"
+        ],
+        "BUNDLE_REF_ALIASES": [
+          "refs/archive/20260824/pr-nl0",
+          "refs/heads/pr/nl0-semantic-kernel",
+          "refs/remotes/origin/pr/nl0-semantic-kernel"
+        ],
+        "ANCESTRY_BOUND": true,
+        "COMMON_BASE_VS_TREE001_HEAD": "d3f5ca69b858843dcf626f74fa13cf83d3e2e20c",
+        "UNRESOLVED": false,
+        "NOTE": "merge-base_ok"
+      },
+      {
+        "REF": "refs/remotes/origin/raios/gl-005-convergence",
+        "TIP_SHA": "3d9f58136d318ba07d743e127ab1e433605ce1ea",
+        "OBJECT_LOCALLY_AVAILABLE": true,
+        "OBJECT_IN_REPAIR": true,
+        "OBJECT_IN_RETIRED": false,
+        "DUPLICATE_TIP": true,
+        "UNIQUE_TIP": false,
+        "SEEN_IN_REPAIR_REFS": [
+          "refs/archive/20260824/gl-005",
+          "refs/heads/raios/gl-005-convergence",
+          "refs/remotes/origin/raios/gl-005-convergence"
+        ],
+        "SEEN_IN_RETIRED_REFS": [],
+        "SEEN_IN_ORIGIN_LS_REMOTE": [
+          "refs/heads/raios/gl-005-convergence"
+        ],
+        "BUNDLE_REF_ALIASES": [
+          "refs/archive/20260824/gl-005",
+          "refs/heads/raios/gl-005-convergence",
+          "refs/remotes/origin/raios/gl-005-convergence"
+        ],
+        "ANCESTRY_BOUND": true,
+        "COMMON_BASE_VS_TREE001_HEAD": "d4ca29b8dfb42837bfb8869cea2929ba1d74b4a0",
+        "UNRESOLVED": false,
+        "NOTE": "merge-base_ok"
+      },
+      {
+        "REF": "refs/remotes/origin/v9-neurolingua-semantic-kernel",
+        "TIP_SHA": "b877a232a486f539691112e9114997acb4a3a21e",
+        "OBJECT_LOCALLY_AVAILABLE": true,
+        "OBJECT_IN_REPAIR": true,
+        "OBJECT_IN_RETIRED": false,
+        "DUPLICATE_TIP": true,
+        "UNIQUE_TIP": false,
+        "SEEN_IN_REPAIR_REFS": [
+          "refs/archive/20260824/v9-cloud",
+          "refs/heads/v9-neurolingua-semantic-kernel",
+          "refs/remotes/origin/v9-neurolingua-semantic-kernel"
+        ],
+        "SEEN_IN_RETIRED_REFS": [],
+        "SEEN_IN_ORIGIN_LS_REMOTE": [],
+        "BUNDLE_REF_ALIASES": [
+          "refs/archive/20260824/v9-cloud",
+          "refs/heads/v9-neurolingua-semantic-kernel",
+          "refs/remotes/origin/v9-neurolingua-semantic-kernel"
+        ],
+        "ANCESTRY_BOUND": true,
+        "COMMON_BASE_VS_TREE001_HEAD": "e1dfd7c235b0bd4ba1a58ab6dfea47bd00173370",
+        "UNRESOLVED": false,
+        "NOTE": "merge-base_ok"
+      },
+      {
+        "REF": "refs/tags/pre-consolidation-20260820-144126",
+        "TIP_SHA": "e1dfd7c235b0bd4ba1a58ab6dfea47bd00173370",
+        "OBJECT_LOCALLY_AVAILABLE": true,
+        "OBJECT_IN_REPAIR": true,
+        "OBJECT_IN_RETIRED": false,
+        "DUPLICATE_TIP": true,
+        "UNIQUE_TIP": false,
+        "SEEN_IN_REPAIR_REFS": [
+          "refs/tags/pre-consolidation-20260820-144126",
+          "refs/tags/safety/pre-consolidation-e1dfd7c",
+          "refs/tags/safety/wave2-proof-e1dfd7c2-20260820-152641",
+          "refs/tags/safety/wave2-proof-e1dfd7c2-20260820-153605"
+        ],
+        "SEEN_IN_RETIRED_REFS": [],
+        "SEEN_IN_ORIGIN_LS_REMOTE": [],
+        "BUNDLE_REF_ALIASES": [
+          "refs/tags/pre-consolidation-20260820-144126",
+          "refs/tags/safety/pre-consolidation-e1dfd7c",
+          "refs/tags/safety/wave2-proof-e1dfd7c2-20260820-152641",
+          "refs/tags/safety/wave2-proof-e1dfd7c2-20260820-153605"
+        ],
+        "ANCESTRY_BOUND": true,
+        "COMMON_BASE_VS_TREE001_HEAD": "e1dfd7c235b0bd4ba1a58ab6dfea47bd00173370",
+        "UNRESOLVED": false,
+        "NOTE": "merge-base_ok"
+      },
+      {
+        "REF": "refs/tags/raios-gl-002-authority-closeout",
+        "TIP_SHA": "8a64defe5b9651f6800378ca2bfb86b68dae7c21",
+        "OBJECT_LOCALLY_AVAILABLE": true,
+        "OBJECT_IN_REPAIR": true,
+        "OBJECT_IN_RETIRED": false,
+        "DUPLICATE_TIP": true,
+        "UNIQUE_TIP": false,
+        "SEEN_IN_REPAIR_REFS": [
+          "refs/tags/raios-gl-002-authority-closeout"
+        ],
+        "SEEN_IN_RETIRED_REFS": [],
+        "SEEN_IN_ORIGIN_LS_REMOTE": [],
+        "BUNDLE_REF_ALIASES": [
+          "refs/tags/raios-gl-002-authority-closeout"
+        ],
+        "ANCESTRY_BOUND": true,
+        "COMMON_BASE_VS_TREE001_HEAD": "d4ca29b8dfb42837bfb8869cea2929ba1d74b4a0",
+        "UNRESOLVED": false,
+        "NOTE": "merge-base_ok"
+      },
+      {
+        "REF": "refs/tags/raios-gl-004-real-db-proof",
+        "TIP_SHA": "15db326f7a6e0d4a96394ccdec5351d22783b610",
+        "OBJECT_LOCALLY_AVAILABLE": true,
+        "OBJECT_IN_REPAIR": true,
+        "OBJECT_IN_RETIRED": false,
+        "DUPLICATE_TIP": true,
+        "UNIQUE_TIP": false,
+        "SEEN_IN_REPAIR_REFS": [
+          "refs/tags/raios-gl-004-real-db-proof"
+        ],
+        "SEEN_IN_RETIRED_REFS": [],
+        "SEEN_IN_ORIGIN_LS_REMOTE": [],
+        "BUNDLE_REF_ALIASES": [
+          "refs/tags/raios-gl-004-real-db-proof"
+        ],
+        "ANCESTRY_BOUND": true,
+        "COMMON_BASE_VS_TREE001_HEAD": "d4ca29b8dfb42837bfb8869cea2929ba1d74b4a0",
+        "UNRESOLVED": false,
+        "NOTE": "merge-base_ok"
+      },
+      {
+        "REF": "refs/tags/raios-gl-005-authenticated-api",
+        "TIP_SHA": "8df1f9728c8da52a7987f7f4bbfbf2ec07228ec4",
+        "OBJECT_LOCALLY_AVAILABLE": true,
+        "OBJECT_IN_REPAIR": true,
+        "OBJECT_IN_RETIRED": false,
+        "DUPLICATE_TIP": true,
+        "UNIQUE_TIP": false,
+        "SEEN_IN_REPAIR_REFS": [
+          "refs/tags/raios-gl-005-authenticated-api"
+        ],
+        "SEEN_IN_RETIRED_REFS": [],
+        "SEEN_IN_ORIGIN_LS_REMOTE": [],
+        "BUNDLE_REF_ALIASES": [
+          "refs/tags/raios-gl-005-authenticated-api"
+        ],
+        "ANCESTRY_BOUND": true,
+        "COMMON_BASE_VS_TREE001_HEAD": "d4ca29b8dfb42837bfb8869cea2929ba1d74b4a0",
+        "UNRESOLVED": false,
+        "NOTE": "merge-base_ok"
+      },
+      {
+        "REF": "refs/tags/raios-gl-005-authenticated-e2e",
+        "TIP_SHA": "a5462c9367226e4e6eb7553370b64cc34c4675d5",
+        "OBJECT_LOCALLY_AVAILABLE": true,
+        "OBJECT_IN_REPAIR": true,
+        "OBJECT_IN_RETIRED": false,
+        "DUPLICATE_TIP": true,
+        "UNIQUE_TIP": false,
+        "SEEN_IN_REPAIR_REFS": [
+          "refs/tags/raios-gl-005-authenticated-e2e"
+        ],
+        "SEEN_IN_RETIRED_REFS": [],
+        "SEEN_IN_ORIGIN_LS_REMOTE": [],
+        "BUNDLE_REF_ALIASES": [
+          "refs/tags/raios-gl-005-authenticated-e2e"
+        ],
+        "ANCESTRY_BOUND": true,
+        "COMMON_BASE_VS_TREE001_HEAD": "d4ca29b8dfb42837bfb8869cea2929ba1d74b4a0",
+        "UNRESOLVED": false,
+        "NOTE": "merge-base_ok"
+      },
+      {
+        "REF": "refs/tags/raios-gl-005-first-functional-slice",
+        "TIP_SHA": "9bf2d827568f7c030b00e3b6a85dff3f400770a0",
+        "OBJECT_LOCALLY_AVAILABLE": true,
+        "OBJECT_IN_REPAIR": true,
+        "OBJECT_IN_RETIRED": false,
+        "DUPLICATE_TIP": true,
+        "UNIQUE_TIP": false,
+        "SEEN_IN_REPAIR_REFS": [
+          "refs/tags/raios-gl-005-first-functional-slice"
+        ],
+        "SEEN_IN_RETIRED_REFS": [],
+        "SEEN_IN_ORIGIN_LS_REMOTE": [],
+        "BUNDLE_REF_ALIASES": [
+          "refs/tags/raios-gl-005-first-functional-slice"
+        ],
+        "ANCESTRY_BOUND": true,
+        "COMMON_BASE_VS_TREE001_HEAD": "d4ca29b8dfb42837bfb8869cea2929ba1d74b4a0",
+        "UNRESOLVED": false,
+        "NOTE": "merge-base_ok"
+      },
+      {
+        "REF": "refs/tags/raios-gl-005-multi-source-2",
+        "TIP_SHA": "7866efbb6df9c83956d0f595c92231f08b31bfc5",
+        "OBJECT_LOCALLY_AVAILABLE": true,
+        "OBJECT_IN_REPAIR": true,
+        "OBJECT_IN_RETIRED": false,
+        "DUPLICATE_TIP": true,
+        "UNIQUE_TIP": false,
+        "SEEN_IN_REPAIR_REFS": [
+          "refs/tags/raios-gl-005-multi-source-2"
+        ],
+        "SEEN_IN_RETIRED_REFS": [],
+        "SEEN_IN_ORIGIN_LS_REMOTE": [],
+        "BUNDLE_REF_ALIASES": [
+          "refs/tags/raios-gl-005-multi-source-2"
+        ],
+        "ANCESTRY_BOUND": true,
+        "COMMON_BASE_VS_TREE001_HEAD": "d4ca29b8dfb42837bfb8869cea2929ba1d74b4a0",
+        "UNRESOLVED": false,
+        "NOTE": "merge-base_ok"
+      },
+      {
+        "REF": "refs/tags/safety/pre-consolidation-e1dfd7c",
+        "TIP_SHA": "e1dfd7c235b0bd4ba1a58ab6dfea47bd00173370",
+        "OBJECT_LOCALLY_AVAILABLE": true,
+        "OBJECT_IN_REPAIR": true,
+        "OBJECT_IN_RETIRED": false,
+        "DUPLICATE_TIP": true,
+        "UNIQUE_TIP": false,
+        "SEEN_IN_REPAIR_REFS": [
+          "refs/tags/pre-consolidation-20260820-144126",
+          "refs/tags/safety/pre-consolidation-e1dfd7c",
+          "refs/tags/safety/wave2-proof-e1dfd7c2-20260820-152641",
+          "refs/tags/safety/wave2-proof-e1dfd7c2-20260820-153605"
+        ],
+        "SEEN_IN_RETIRED_REFS": [],
+        "SEEN_IN_ORIGIN_LS_REMOTE": [],
+        "BUNDLE_REF_ALIASES": [
+          "refs/tags/pre-consolidation-20260820-144126",
+          "refs/tags/safety/pre-consolidation-e1dfd7c",
+          "refs/tags/safety/wave2-proof-e1dfd7c2-20260820-152641",
+          "refs/tags/safety/wave2-proof-e1dfd7c2-20260820-153605"
+        ],
+        "ANCESTRY_BOUND": true,
+        "COMMON_BASE_VS_TREE001_HEAD": "e1dfd7c235b0bd4ba1a58ab6dfea47bd00173370",
+        "UNRESOLVED": false,
+        "NOTE": "merge-base_ok"
+      },
+      {
+        "REF": "refs/tags/safety/wave2-proof-e1dfd7c2-20260820-152641",
+        "TIP_SHA": "e1dfd7c235b0bd4ba1a58ab6dfea47bd00173370",
+        "OBJECT_LOCALLY_AVAILABLE": true,
+        "OBJECT_IN_REPAIR": true,
+        "OBJECT_IN_RETIRED": false,
+        "DUPLICATE_TIP": true,
+        "UNIQUE_TIP": false,
+        "SEEN_IN_REPAIR_REFS": [
+          "refs/tags/pre-consolidation-20260820-144126",
+          "refs/tags/safety/pre-consolidation-e1dfd7c",
+          "refs/tags/safety/wave2-proof-e1dfd7c2-20260820-152641",
+          "refs/tags/safety/wave2-proof-e1dfd7c2-20260820-153605"
+        ],
+        "SEEN_IN_RETIRED_REFS": [],
+        "SEEN_IN_ORIGIN_LS_REMOTE": [],
+        "BUNDLE_REF_ALIASES": [
+          "refs/tags/pre-consolidation-20260820-144126",
+          "refs/tags/safety/pre-consolidation-e1dfd7c",
+          "refs/tags/safety/wave2-proof-e1dfd7c2-20260820-152641",
+          "refs/tags/safety/wave2-proof-e1dfd7c2-20260820-153605"
+        ],
+        "ANCESTRY_BOUND": true,
+        "COMMON_BASE_VS_TREE001_HEAD": "e1dfd7c235b0bd4ba1a58ab6dfea47bd00173370",
+        "UNRESOLVED": false,
+        "NOTE": "merge-base_ok"
+      },
+      {
+        "REF": "refs/tags/safety/wave2-proof-e1dfd7c2-20260820-153605",
+        "TIP_SHA": "e1dfd7c235b0bd4ba1a58ab6dfea47bd00173370",
+        "OBJECT_LOCALLY_AVAILABLE": true,
+        "OBJECT_IN_REPAIR": true,
+        "OBJECT_IN_RETIRED": false,
+        "DUPLICATE_TIP": true,
+        "UNIQUE_TIP": false,
+        "SEEN_IN_REPAIR_REFS": [
+          "refs/tags/pre-consolidation-20260820-144126",
+          "refs/tags/safety/pre-consolidation-e1dfd7c",
+          "refs/tags/safety/wave2-proof-e1dfd7c2-20260820-152641",
+          "refs/tags/safety/wave2-proof-e1dfd7c2-20260820-153605"
+        ],
+        "SEEN_IN_RETIRED_REFS": [],
+        "SEEN_IN_ORIGIN_LS_REMOTE": [],
+        "BUNDLE_REF_ALIASES": [
+          "refs/tags/pre-consolidation-20260820-144126",
+          "refs/tags/safety/pre-consolidation-e1dfd7c",
+          "refs/tags/safety/wave2-proof-e1dfd7c2-20260820-152641",
+          "refs/tags/safety/wave2-proof-e1dfd7c2-20260820-153605"
+        ],
+        "ANCESTRY_BOUND": true,
+        "COMMON_BASE_VS_TREE001_HEAD": "e1dfd7c235b0bd4ba1a58ab6dfea47bd00173370",
+        "UNRESOLVED": false,
+        "NOTE": "merge-base_ok"
+      },
+      {
+        "REF": "HEAD",
+        "TIP_SHA": "12603d02253547c7727bc84ce68c318e8e9258bc",
+        "OBJECT_LOCALLY_AVAILABLE": true,
+        "OBJECT_IN_REPAIR": true,
+        "OBJECT_IN_RETIRED": false,
+        "DUPLICATE_TIP": true,
+        "UNIQUE_TIP": false,
+        "SEEN_IN_REPAIR_REFS": [
+          "refs/archive/20260824/phase2a-working",
+          "refs/heads/phase2a/class-a-20260822-232109"
+        ],
+        "SEEN_IN_RETIRED_REFS": [],
+        "SEEN_IN_ORIGIN_LS_REMOTE": [],
+        "BUNDLE_REF_ALIASES": [
+          "refs/archive/20260824/phase2a-working",
+          "refs/heads/phase2a/class-a-20260822-232109",
+          "HEAD"
+        ],
+        "ANCESTRY_BOUND": true,
+        "COMMON_BASE_VS_TREE001_HEAD": "12603d02253547c7727bc84ce68c318e8e9258bc",
+        "UNRESOLVED": false,
+        "NOTE": "merge-base_ok"
+      },
+      {
+        "REF": "worktrees/RAIOS-P0-EXEC-30637e/HEAD",
+        "TIP_SHA": "30637e7821c0c58d16e2ef57e902428a14396be1",
+        "OBJECT_LOCALLY_AVAILABLE": true,
+        "OBJECT_IN_REPAIR": true,
+        "OBJECT_IN_RETIRED": false,
+        "DUPLICATE_TIP": true,
+        "UNIQUE_TIP": false,
+        "SEEN_IN_REPAIR_REFS": [
+          "worktree:TA-WT-P0/HEAD"
+        ],
+        "SEEN_IN_RETIRED_REFS": [],
+        "SEEN_IN_ORIGIN_LS_REMOTE": [],
+        "BUNDLE_REF_ALIASES": [
+          "worktrees/RAIOS-P0-EXEC-30637e/HEAD"
+        ],
+        "ANCESTRY_BOUND": true,
+        "COMMON_BASE_VS_TREE001_HEAD": "e1dfd7c235b0bd4ba1a58ab6dfea47bd00173370",
+        "UNRESOLVED": false,
+        "NOTE": "bundle worktree HEAD equals live TA-WT-P0; not a unique unknown tip"
+      }
+    ],
+    "NOTE": "No checkout, merge, fetch, or ref mutation. 30637e classified duplicate of TA-WT-P0 HEAD."
+  }
+}

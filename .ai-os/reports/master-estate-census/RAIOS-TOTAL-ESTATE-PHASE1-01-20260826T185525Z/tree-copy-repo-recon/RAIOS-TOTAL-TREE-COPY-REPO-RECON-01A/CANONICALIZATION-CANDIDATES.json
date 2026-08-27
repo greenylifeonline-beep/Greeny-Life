@@ -1,0 +1,246 @@
+{
+  "schema": "raios.tree-copy-repo-recon.canonicalization.v1a",
+  "TASK_ID": "RAIOS-TOTAL-TREE-COPY-REPO-RECON-01A",
+  "MERGE_EXECUTED": false,
+  "NO_CANONICAL_WRITE": true,
+  "table": [
+    {
+      "ASSET_ID": "TA-TREE-001",
+      "DECISION": "KEEP_CANONICAL",
+      "ALSO": "DO_NOT_TOUCH",
+      "NOTE": "Live HEAD 50c5da28. Frozen 12603d0 historical. C2A active writer."
+    },
+    {
+      "ASSET_ID": "TA-WT-P0",
+      "DECISION": "KEEP_RUNTIME",
+      "NOTE": "linked dirty worktree"
+    },
+    {
+      "ASSET_ID": "TA-PROGRAMDATA-RAIOS",
+      "DECISION": "KEEP_RUNTIME",
+      "NOTE": "Preserve runtime dependencies."
+    },
+    {
+      "ASSET_ID": "TA-TEMP-MCP",
+      "DECISION": "KEEP_RUNTIME",
+      "NOTE": "PROGRAMDATA/TEMP MCP runtime dependency preserved."
+    },
+    {
+      "ASSET_ID": "TA-RETIRED",
+      "DECISION": "KEEP_DONOR",
+      "NOTE": "Donor/reference until unique value resolved. Objects unavailable vs Repair."
+    },
+    {
+      "ASSET_ID": "TA-C5-DONOR",
+      "DECISION": "KEEP_DONOR"
+    },
+    {
+      "ASSET_ID": "TA-DESKTOP-BUNDLE",
+      "DECISION": "KEEP_DONOR",
+      "NOTE": "68 refs accounted; not imported."
+    },
+    {
+      "ASSET_ID": "TA-BRIDGE",
+      "DECISION": "DO_NOT_TOUCH",
+      "NOTE": "governance overlay"
+    },
+    {
+      "ASSET_ID": "TA-C6-NOMADIC",
+      "DECISION": "DO_NOT_TOUCH",
+      "NOTE": "C6 owned draft"
+    },
+    {
+      "ASSET_ID": "TA-LEGACY-REVIEW",
+      "DECISION": "ARCHIVE_CANDIDATE"
+    },
+    {
+      "ASSET_ID": "TA-GL-004",
+      "DECISION": "ARCHIVE_CANDIDATE"
+    },
+    {
+      "ASSET_ID": "TA-GL-005",
+      "DECISION": "ARCHIVE_CANDIDATE"
+    },
+    {
+      "ASSET_ID": "TA-GL-WORKTREES",
+      "DECISION": "ARCHIVE_CANDIDATE"
+    },
+    {
+      "ASSET_ID": "TA-RAIOS-EVIDENCE",
+      "DECISION": "ARCHIVE_CANDIDATE"
+    },
+    {
+      "ASSET_ID": "TA-DESKTOP-C3-PACK",
+      "DECISION": "ARCHIVE_CANDIDATE"
+    },
+    {
+      "ASSET_ID": "TA-ONEDRIVE-C6-KIT",
+      "DECISION": "UNRESOLVED",
+      "NOTE": "CLOUD_PLACEHOLDER"
+    },
+    {
+      "ASSET_ID": "TA-ONEDRIVE-GREENY-ZIP",
+      "DECISION": "UNRESOLVED"
+    },
+    {
+      "ASSET_ID": "TA-ONEDRIVE-E3-ZIP",
+      "DECISION": "UNRESOLVED"
+    },
+    {
+      "ASSET_ID": "TA-ONEDRIVE-RAIOS",
+      "DECISION": "UNRESOLVED"
+    },
+    {
+      "ASSET_ID": "TA-GL-002",
+      "DECISION": "UNRESOLVED",
+      "NOTE": "HISTORICAL_IMPLEMENTATION_FOUND; task READY is operational drift"
+    },
+    {
+      "ASSET_ID": "TA-GL-003",
+      "DECISION": "UNRESOLVED",
+      "NOTE": "EVIDENCE_ONLY_NO_SOURCE; task IN_PROGRESS is operational drift"
+    },
+    {
+      "ASSET_ID": "TA-GITHUB-ORIGIN",
+      "DECISION": "KEEP_REFERENCE",
+      "NOTE": "GITHUB_ROLE=REFERENCE_ONLY. Not proven authoritative canonical."
+    },
+    {
+      "ASSET_ID": "TA-CODEX-GIT",
+      "DECISION": "DO_NOT_TOUCH"
+    },
+    {
+      "ASSET_ID": "TA-ONEDRIVE-GREENY-LIFE-PATH",
+      "DECISION": "UNRESOLVED"
+    }
+  ],
+  "DELETE_ELIGIBLE_AFTER_PROOF": [],
+  "merge_candidates": [
+    {
+      "DECISION": "MERGE_CANDIDATE",
+      "SOURCE": "TA-WT-P0",
+      "TARGET_CANDIDATE": "TA-TREE-001",
+      "UNIQUE_FILES": "UNCOMPUTED_BLOB_NONE",
+      "UNIQUE_COMMITS": 118,
+      "UNIQUE_BRANCHES": [
+        "DETACHED@30637e"
+      ],
+      "CONFLICTS": "UNRESOLVED_NO_MERGE",
+      "RUNTIME_DEPENDENCIES": true,
+      "PROVENANCE_DEPENDENCIES": true,
+      "MERGE_METHOD_RECOMMENDATION": "DO_NOT_MERGE_THIS_LANE. Inspect unique commits only after authorized object fetch. No octopus. No C2B execution."
+    }
+  ],
+  "PROTECT_ACTIVE_TREE001": true,
+  "GITHUB_ROLE": "REFERENCE_ONLY",
+  "DELETE_ELIGIBLE": 0,
+  "FILES_DELETED": "none",
+  "CANONICAL_STATE_WRITTEN": false,
+  "delete_blockers": [
+    {
+      "ASSET_ID": "TA-TREE-001",
+      "DELETE_ELIGIBLE": false,
+      "BLOCKERS": [
+        "UNIQUE_HISTORY",
+        "RUNTIME_DEPENDENCY",
+        "PROVENANCE_DEPENDENCY",
+        "RECOVERY_VALUE",
+        "CANONICAL_REPLACEMENT"
+      ]
+    },
+    {
+      "ASSET_ID": "TA-WT-P0",
+      "DELETE_ELIGIBLE": false,
+      "BLOCKERS": [
+        "UNIQUE_HISTORY",
+        "RUNTIME_DEPENDENCY",
+        "PROVENANCE_DEPENDENCY"
+      ]
+    },
+    {
+      "ASSET_ID": "TA-RETIRED",
+      "DELETE_ELIGIBLE": false,
+      "BLOCKERS": [
+        "UNIQUE_HISTORY",
+        "PROVENANCE_DEPENDENCY",
+        "RECOVERY_VALUE",
+        "CONTENT_REDUNDANCY"
+      ]
+    },
+    {
+      "ASSET_ID": "TA-DESKTOP-BUNDLE",
+      "DELETE_ELIGIBLE": false,
+      "BLOCKERS": [
+        "UNIQUE_HISTORY",
+        "RECOVERY_VALUE",
+        "PROVENANCE_DEPENDENCY"
+      ]
+    },
+    {
+      "ASSET_ID": "TA-GL-004",
+      "DELETE_ELIGIBLE": false,
+      "BLOCKERS": [
+        "CONTENT_REDUNDANCY",
+        "FUNCTIONAL_REDUNDANCY",
+        "RECOVERY_VALUE"
+      ]
+    },
+    {
+      "ASSET_ID": "TA-GL-005",
+      "DELETE_ELIGIBLE": false,
+      "BLOCKERS": [
+        "CONTENT_REDUNDANCY",
+        "CLOUD_CONTENT_UNRESOLVED"
+      ]
+    },
+    {
+      "ASSET_ID": "TA-BRIDGE",
+      "DELETE_ELIGIBLE": false,
+      "BLOCKERS": [
+        "UNIQUE_HISTORY",
+        "PROVENANCE_DEPENDENCY"
+      ]
+    },
+    {
+      "ASSET_ID": "TA-PROGRAMDATA-RAIOS",
+      "DELETE_ELIGIBLE": false,
+      "BLOCKERS": [
+        "RUNTIME_DEPENDENCY"
+      ]
+    },
+    {
+      "ASSET_ID": "TA-TEMP-MCP",
+      "DELETE_ELIGIBLE": false,
+      "BLOCKERS": [
+        "RUNTIME_DEPENDENCY"
+      ]
+    },
+    {
+      "ASSET_ID": "TA-C5-DONOR",
+      "DELETE_ELIGIBLE": false,
+      "BLOCKERS": [
+        "PROVENANCE_DEPENDENCY",
+        "RECOVERY_VALUE"
+      ]
+    },
+    {
+      "ASSET_ID": "TA-ONEDRIVE-GREENY-ZIP",
+      "DELETE_ELIGIBLE": false,
+      "BLOCKERS": [
+        "CONTENT_REDUNDANCY",
+        "CLOUD_CONTENT_UNRESOLVED"
+      ]
+    }
+  ],
+  "decision_counts": {
+    "KEEP_CANONICAL": 1,
+    "KEEP_REFERENCE": 1,
+    "KEEP_RUNTIME": 3,
+    "KEEP_DONOR": 3,
+    "MERGE_CANDIDATE": 1,
+    "ARCHIVE_CANDIDATE": 6,
+    "DELETE_ELIGIBLE_AFTER_PROOF": 0,
+    "DO_NOT_TOUCH": 3,
+    "UNRESOLVED": 7
+  }
+}

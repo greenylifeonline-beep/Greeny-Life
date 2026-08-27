@@ -1,0 +1,60 @@
+{
+  "gaps": [
+    {
+      "id": "GAP-001",
+      "category": "implementation",
+      "description": "Physical adapter implementations not provided - interfaces only",
+      "impact": "Requires RAIOS-side binding",
+      "mitigation": "Well-defined interfaces with clear contracts",
+      "priority": "HIGH"
+    },
+    {
+      "id": "GAP-002",
+      "category": "testing",
+      "description": "56 tests defined but 0 executed - no test harness in sandbox",
+      "impact": "Test correctness unverified",
+      "mitigation": "Tests are deterministic, can run in any harness",
+      "priority": "HIGH"
+    },
+    {
+      "id": "GAP-003",
+      "category": "performance",
+      "description": "Performance benchmarks not included",
+      "impact": "Performance characteristics unknown",
+      "mitigation": "Add performance test suite in next wave",
+      "priority": "MEDIUM"
+    },
+    {
+      "id": "GAP-004",
+      "category": "integration",
+      "description": "No integration test with live RAIOS systems",
+      "impact": "Integration issues may surface during C2/C6 work",
+      "mitigation": "Integration map provides clear binding points",
+      "priority": "HIGH"
+    },
+    {
+      "id": "GAP-005",
+      "category": "security",
+      "description": "Cryptographic receipt binding specified but not implemented",
+      "impact": "Receipt tampering possible without crypto binding",
+      "mitigation": "Specification complete, implementation in next wave",
+      "priority": "MEDIUM"
+    },
+    {
+      "id": "GAP-006",
+      "category": "migration",
+      "description": "Migration path from v1.0 documented but not automated",
+      "impact": "Manual migration required",
+      "mitigation": "Clear delta documentation",
+      "priority": "LOW"
+    },
+    {
+      "id": "GAP-007",
+      "category": "compliance",
+      "description": "A2A protocol compliance testing not performed",
+      "impact": "A2A bridge may have undetected compatibility issues",
+      "mitigation": "Semantic bridge specification is explicit",
+      "priority": "MEDIUM"
+    }
+  ]
+}

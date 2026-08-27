@@ -1,0 +1,122 @@
+{
+  "schema": "raios.rif.c7.component-classification.v1",
+  "TASK_ID": "RAIOS-RIF-C7-INTEGRATION-RECON-02A",
+  "TAXONOMY": [
+    "REUSE_EXISTING",
+    "WRAP_EXISTING",
+    "MERGE_CANDIDATE",
+    "DONOR_ONLY",
+    "CONFLICT_RISK",
+    "REJECT"
+  ],
+  "OVERLAP_DISCOVERY_RESTARTED": false,
+  "REUSED_TREE001_COUNTS": {
+    "REUSE_EXISTING": 5,
+    "WRAP_EXISTING": 8,
+    "MERGE_CANDIDATE": 1,
+    "DONOR_ONLY": 2,
+    "CONFLICT_RISK": 1,
+    "REJECT": 0
+  },
+  "COMPONENTS": [
+    {
+      "COMPONENT": "NeuroLingua",
+      "CLASS": "REUSE_EXISTING",
+      "PATH": "src/raios/neuro_lingua",
+      "NOTE": "V9-NL0 locked; wrap via SemanticResolverAdapter only."
+    },
+    {
+      "COMPONENT": "Cognitive WAL",
+      "CLASS": "REUSE_EXISTING",
+      "PATH": "src/raios/neuro_lingua/wal.py",
+      "NOTE": "WALAdapter only. WAL_WRITTEN=false this task. No second WAL."
+    },
+    {
+      "COMPONENT": "UCP",
+      "CLASS": "REUSE_EXISTING",
+      "PATH": ".ai-os/control/RAIOS-CONTROL-PLANE-V1.py"
+    },
+    {
+      "COMPONENT": "NATS",
+      "CLASS": "REUSE_EXISTING",
+      "CONSTRAINT": "NATS_PRIMARY=false"
+    },
+    {
+      "COMPONENT": "MCP",
+      "CLASS": "REUSE_EXISTING"
+    },
+    {
+      "COMPONENT": "01 Capability Registry",
+      "CLASS": "WRAP_EXISTING"
+    },
+    {
+      "COMPONENT": "02 Contract Schemas / Adapter Contracts",
+      "CLASS": "WRAP_EXISTING"
+    },
+    {
+      "COMPONENT": "03 Runtime StateGraph",
+      "CLASS": "WRAP_EXISTING",
+      "NOTE": "Evaluation-local state machine only. UCP remains global authority."
+    },
+    {
+      "COMPONENT": "05 Risk Promotion Policy",
+      "CLASS": "WRAP_EXISTING",
+      "NOTE": "Advisory donor into PolicyAdapter. Not policy authority."
+    },
+    {
+      "COMPONENT": "07 Observability Provenance",
+      "CLASS": "WRAP_EXISTING"
+    },
+    {
+      "COMPONENT": "RKG",
+      "CLASS": "WRAP_EXISTING"
+    },
+    {
+      "COMPONENT": "Model Ecology",
+      "CLASS": "WRAP_EXISTING"
+    },
+    {
+      "COMPONENT": "Model Factory",
+      "CLASS": "WRAP_EXISTING"
+    },
+    {
+      "COMPONENT": "D-F A2A Semantic Bridge",
+      "CLASS": "WRAP_EXISTING",
+      "WRAP": "src/raios/a2a"
+    },
+    {
+      "COMPONENT": "04 Evidence/Claim Lifecycle",
+      "CLASS": "MERGE_CANDIDATE",
+      "MERGE_WITH": "evidence-trust-lattice",
+      "LAWS": [
+        "absence_of_evidence != evidence_of_absence",
+        "UNKNOWN != ZERO",
+        "correlated evidence must not inflate independent-source count"
+      ]
+    },
+    {
+      "COMPONENT": "05A Governor CAP002",
+      "CLASS": "DONOR_ONLY",
+      "NOTE": "Pure decide(). Never writes CANONICAL or WAL directly."
+    },
+    {
+      "COMPONENT": "06 M001",
+      "CLASS": "DONOR_ONLY",
+      "NOTE": "Spec/harness only. No download/train/paid API."
+    },
+    {
+      "COMPONENT": "D-G Threat/Invariants",
+      "CLASS": "DONOR_ONLY"
+    },
+    {
+      "COMPONENT": "SANDBOX_REFERENCE_CANONICALIZATION",
+      "CLASS": "CONFLICT_RISK",
+      "STATUS": "MITIGATED_IN_DONOR_V1_1",
+      "RESOLUTION": "C7 fingerprint retired to sandbox reference. RAIOS canonicalization remains exclusive. SECOND_CANONICALIZER_CREATED=false."
+    },
+    {
+      "COMPONENT": "Second evidence store / second policy / second WAL / second canonicalizer",
+      "CLASS": "REJECT"
+    }
+  ]
+}

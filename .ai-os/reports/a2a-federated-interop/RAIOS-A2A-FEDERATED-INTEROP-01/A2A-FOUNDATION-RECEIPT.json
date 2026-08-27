@@ -1,0 +1,102 @@
+{
+  "schema": "raios.a2a.foundation-receipt.v1",
+  "TASK_ID": "RAIOS-A2A-FEDERATED-INTEROP-01",
+  "SEAT_ID": "C2-KAGGLE-CONTROL",
+  "GENERATED_AT": "2026-08-27T01:34:22Z",
+  "A2A_MODE": "FOUNDATION_ONLY",
+  "LOCAL_ONLY": true,
+  "READ_ONLY_OR_NOOP": true,
+  "NO_MODEL": true,
+  "NO_GPU": true,
+  "NO_INTERNET_REQUIRED": true,
+  "NO_CANONICAL_MUTATION": true,
+  "A2A_FOUNDATION_IMPLEMENTED": true,
+  "A2A_PRODUCTION_ACTIVATED": false,
+  "A2A_PUBLIC_LISTENER_ENABLED": false,
+  "A2A_EXTERNAL_MUTATION_ALLOWED": false,
+  "AP2_IMPLEMENTED": false,
+  "AP2_ACTIVATED": false,
+  "HTTP_PRIMARY": true,
+  "NATS_PRIMARY": false,
+  "NATS_REPLACED": false,
+  "HTTP_FALLBACK_PRESERVED": true,
+  "DIRECT_A2A_EXECUTION_FORBIDDEN": true,
+  "MCP_BYPASS_FORBIDDEN": true,
+  "PUBLIC_LISTENER_CREATED": false,
+  "EXTERNAL_MUTATION_EXECUTED": false,
+  "IDEMPOTENCY_PROVEN": true,
+  "SECOND_EXECUTION_NO_OP": true,
+  "A2A_IDEMPOTENCY_PROVEN": true,
+  "PROTOTYPE_FLOW": {
+    "TEST_REMOTE_AGENT": "TEST_REMOTE_AGENT",
+    "CAPABILITY": "raios.foundation.noop_intent",
+    "FIRST": {
+      "A2A_RESULT": "ACCEPTED_DRY_RUN",
+      "NO_OP": false,
+      "EXECUTED": false
+    },
+    "SECOND": {
+      "A2A_RESULT": "ALREADY_APPLIED",
+      "NO_OP": true,
+      "EXECUTED": false
+    },
+    "RECEIPT": {
+      "A2A_TASK_ID": "proto-1",
+      "A2A_CONTEXT_ID": "proto-ctx",
+      "COMMAND_ID": "CMD-A2A-b9595e424683f76c",
+      "CHANGE_ID": "CHG-A2A-24744f87ec1567c5",
+      "CORRELATION_ID": "proto-ctx",
+      "ACTOR": "TEST_REMOTE_AGENT",
+      "AGENT_ID": "TEST_REMOTE_AGENT",
+      "CAPABILITY_ID": "raios.foundation.noop_intent",
+      "SEMANTIC_CONTRACT_ID": "urn:raios:a2a:semantic-context:v1",
+      "SEMANTIC_FINGERPRINT": "c9e616812a2b68935003d851f2b00d5937d5d41e300899fb2e9d2f49f5c71737",
+      "AUTH_RESULT": {
+        "SIGNATURE_VALID": false,
+        "ISSUER_IDENTIFIED": false,
+        "ISSUER_TRUSTED": false,
+        "SCOPE_AUTHORIZED": false,
+        "TRUSTED_ORGANIZATION": false
+      },
+      "POLICY_RESULT": "ALLOW",
+      "RISK_CLASS": "LOW",
+      "TARGET": "raios.foundation.local-dry-run",
+      "PRE_STATE_HASH": "NOT_APPLICABLE",
+      "ACTION": "raios.foundation.noop_intent",
+      "POST_STATE_HASH": "NOT_APPLICABLE",
+      "STATUS": "ACCEPTED_DRY_RUN",
+      "TIMESTAMP": "2026-08-27T01:34:22Z",
+      "EVIDENCE_REFS": [
+        "raios.a2a.foundation",
+        ".ai-os/receipts/command-fabric"
+      ],
+      "ROLLBACK_AVAILABLE": false
+    }
+  },
+  "PRODUCTION_GATES": {
+    "CANONICAL_BOUNDARIES_APPROVED": false,
+    "UNIFIED_CONTROL_PLANE_PROVEN": false,
+    "SEMANTIC_CONTEXT_PROVEN": true,
+    "IDENTITY_TRUST_POLICY_PROVEN": true,
+    "A2A_LOCAL_CONFORMANCE_PASS": true,
+    "A2A_SECRET_LEAKAGE_GUARD_PASS": true,
+    "A2A_AUTHORITY_GATE_PASS": true,
+    "C1_PRODUCTION_ACTIVATION_APPROVED": false
+  },
+  "FLAGS": {
+    "A2A_ARCHITECTURE_BOUND": true,
+    "A2A_OFFICIAL_SDK_BOUND": true,
+    "A2A_AGENT_CARD_PROVEN": true,
+    "A2A_EXTENDED_CARD_PROVEN": true,
+    "A2A_SECRET_GUARD_PROVEN": true,
+    "A2A_CAPABILITY_CONTRACT_PROVEN": true,
+    "A2A_SEMANTIC_CONTEXT_PROVEN": true,
+    "A2A_SEMANTIC_FINGERPRINT_PROVEN": true,
+    "A2A_TASK_BRIDGE_PROVEN": true,
+    "A2A_POLICY_BRIDGE_PROVEN": true,
+    "A2A_RECEIPT_BRIDGE_PROVEN": true,
+    "A2A_LOCAL_CONFORMANCE_PASS": true,
+    "A2A_IDEMPOTENCY_PROVEN": true,
+    "A2A_FOUNDATION_IMPLEMENTED": true
+  }
+}

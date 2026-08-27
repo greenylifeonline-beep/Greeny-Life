@@ -1,0 +1,120 @@
+{
+  "package_name": "RIF-RAIOS-DONOR-PACKAGE-v1.1",
+  "super_task_id": "RAIOS-RIF-DONOR-HARDENING-WAVE-02",
+  "seat_id": "C7-CLOUD-SANDBOX",
+  "authority": "C1",
+  "architecture_direction": "C3",
+  "created_at": "2026-08-27T14:27:02.939093+00:00",
+  "classification": "IMPLEMENTATION_READY_DONOR_PACKAGE",
+  "status": {
+    "canonical": false,
+    "production_proven": false,
+    "ag_proven": false,
+    "ag_execution_proven": false,
+    "canonical_integration_proven": false,
+    "production_runtime_proven": false
+  },
+  "phases_completed": {
+    "D_A_SOURCE_EXPORT": "COMPLETE",
+    "D_B_COMPATIBILITY_DELTA": "COMPLETE",
+    "D_C_ADAPTER_CONTRACTS": "COMPLETE",
+    "D_D_RUNTIME_ADAPTATION": "COMPLETE",
+    "D_E_M001_HARDENING": "COMPLETE",
+    "D_F_A2A_RIF_BRIDGE": "COMPLETE",
+    "D_G_THREAT_INVARIANTS": "COMPLETE",
+    "D_H_TEST_EXPANSION": "COMPLETE",
+    "D_I_FINAL_PACKAGE": "COMPLETE"
+  },
+  "file_count": 22,
+  "total_size_bytes": 79899,
+  "files": {
+    "01-capability-registry/RIF-CAPABILITY-REGISTRY-v1.0.md": {
+      "sha256": "dcc25ed8576528e6390432386f364a76f9e651c3afbcbe463624ee192b421fce",
+      "size": 945
+    },
+    "02-contract-schemas/RIF-ADAPTER-CONTRACTS-v1.1.md": {
+      "sha256": "deee743a4259b1318d1f9992d9a09a15deee2dea59860663cdd2b3688a026ff6",
+      "size": 4780
+    },
+    "02-contract-schemas/RIF-CONTRACT-SCHEMAS-v1.md": {
+      "sha256": "52a8cc0b3c9a535e4c9b9a5a82eff95de202ad2f8f3db1efdf55aa12d4393746",
+      "size": 1008
+    },
+    "03-runtime-stategraph/RIF-EVALUATION-STATE-MACHINE-v1.1.md": {
+      "sha256": "b475d9b2e356f26f925b1aaeb45ee02027a93974e272938ff726f623bddc57b1",
+      "size": 3389
+    },
+    "03-runtime-stategraph/RIF-RUNTIME-STATEGRAPH-v1.md": {
+      "sha256": "3ffa8817a5c8656f15817e117284f152b3b777e5e4c0993d723a3d3c0e4b0878",
+      "size": 1301
+    },
+    "04-evidence-claim-lifecycle/RIF-EVIDENCE-CLAIM-LIFECYCLE-v1.md": {
+      "sha256": "402aefb0a3ffb6c3cd733d182c62de6f92632a547ebd32119c6b513f34b0b6bf",
+      "size": 1002
+    },
+    "04-evidence-claim-lifecycle/RIF-EVIDENCE-CLAIM-MERGE-v1.1.md": {
+      "sha256": "162049166c13f18de386335fe3319589276ae183726053649e0f43cd77bf2c03",
+      "size": 1654
+    },
+    "05-risk-promotion-policy/RIF-RISK-ASSESSMENT-DONOR-v1.1.md": {
+      "sha256": "e521af45e45357df60ab00dc6b73733e4fc281c2f2afa7c832659f9bd6e958ec",
+      "size": 2249
+    },
+    "05-risk-promotion-policy/RIF-RISK-PROMOTION-POLICY-v1.md": {
+      "sha256": "c5afe6d6012cc75fff8e5ae92546581c5ef7ff74615d34f791b9161673e0766e",
+      "size": 983
+    },
+    "05A-governor-cap002/RIF-GOVERNOR-CAP002-PROTOTYPE-v1.md": {
+      "sha256": "fd0a10fa0f5f13d73336c8a750b1b0cf03782abeb01d2bfaedf82551990d65e8",
+      "size": 991
+    },
+    "05A-governor-cap002/RIF-GOVERNOR-CAP002-v1.1.md": {
+      "sha256": "ec819fcae9c48d734a593d96fd3ef5ce484949bd8e7aa56bf75004c58f6a56a4",
+      "size": 3094
+    },
+    "06-m001-model-selection/RIF-M001-FOUNDATION-MODEL-SELECTION-v1.md": {
+      "sha256": "ecd3adf3be6c3d2cbb45d9405f5c8a9edf8a51a1cf5981925daf4df2ce475211",
+      "size": 1040
+    },
+    "06-m001-model-selection/RIF-M001-SPEC-HARNESS-v1.1.md": {
+      "sha256": "3638d4229b12409db09355b0005af09b2c4ef14a928cfa8e513f5ef75e1e4575",
+      "size": 3282
+    },
+    "07-observability-provenance/RIF-OBSERVABILITY-PROVENANCE-v1.1.md": {
+      "sha256": "24c79ddee2c98774cfcf3163da736953b24155aa9242288eba2cad1eb7b2e541",
+      "size": 2290
+    },
+    "d-b-compatibility-delta/RIF-RAIOS-COMPATIBILITY-DELTA-v1.1.md": {
+      "sha256": "6233c5f6beb3fa5cba5a30b65f3761505a1d303ed91482ce6603ecc9cd70eab0",
+      "size": 3977
+    },
+    "d-f-a2a-semantic-bridge/RIF-A2A-SEMANTIC-BRIDGE-v1.md": {
+      "sha256": "c5187616553b624030bc610eaf907455480a8536dd0f0a5d4dff53f4563b6d41",
+      "size": 2736
+    },
+    "d-g-threat-invariants/RIF-INVARIANTS-v1.md": {
+      "sha256": "4cf595e4efc84f4f8010621dd22e2bc4ad6e548700e6a9a29db9d55e09ec4471",
+      "size": 5106
+    },
+    "d-g-threat-invariants/RIF-THREAT-MODEL-v1.md": {
+      "sha256": "533294d9b45e41401e4f49700014a9a4e9f67b4d6f0db29537496e1020d5df53",
+      "size": 5635
+    },
+    "deterministic-test-suite/RIF-DETERMINISTIC-TEST-SUITE-v1.1.json": {
+      "sha256": "ba9f9a371387e65d2a09d171e4137193f9e61e6ffec0ff0837c8c728d294b21b",
+      "size": 22990
+    },
+    "deterministic-test-suite/RIF-DETERMINISTIC-TEST-SUITE-v1.1.md": {
+      "sha256": "67809fff6533aea5ac524065523d1cd05c3dbfdef1f807abbadf241ef2896107",
+      "size": 1869
+    },
+    "integration-map/RIF-RAIOS-INTEGRATION-MAP-v1.1.md": {
+      "sha256": "34a2f790a716c0d7523a8ed815409785721f9cd6817a8e80637768fd5e319a0e",
+      "size": 6504
+    },
+    "package-meta/RIF-DONOR-PACKAGE-META-v1.1.md": {
+      "sha256": "05d8647ee34f8066de6ad455b6f58edbe7037777209360db82c6cd8a677edd06",
+      "size": 3074
+    }
+  }
+}

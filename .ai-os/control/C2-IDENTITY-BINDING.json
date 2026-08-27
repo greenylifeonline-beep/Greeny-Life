@@ -1,0 +1,49 @@
+{
+  "schema": "raios.actor-identity-binding.v1",
+  "operational_status": "ACTIVE_CANONICAL",
+  "identity_authority": "C1",
+  "council_role_model": {
+    "C1": "FINAL_AUTHORITY",
+    "C2": "PRIMARY_EXECUTOR",
+    "C6": "PARALLEL_EXECUTOR",
+    "C3": "REVIEWER/ARCHITECT/EXECUTION_ADVISOR",
+    "C5": "LOCAL_COGNITIVE_WORKER"
+  },
+  "council_runtimes": {
+    "C1": "C1@AG",
+    "C2": "C2@AG",
+    "C3": "C3 ChatGPT reviewer (no AG shell)",
+    "C5": "C5@AG HTTP 127.0.0.1:8766",
+    "C6": "C6 parallel executor; PRE_LLM EXTERNAL_DRAFT_PENDING_PROMOTION"
+  },
+  "stale_identity_artifacts": [
+    ".ai-os/mcp/SEAT-MAP.json",
+    ".ai-os/mcp/POLICY.json"
+  ],
+  "seat": "C2",
+  "runtime_id": "C2@AG",
+  "engine_id": "C2-CURSOR",
+  "engine": "cursor-agent CLI",
+  "engine_path": "C:\\Users\\Ghanam\\AppData\\Local\\cursor-agent\\cursor-agent.cmd",
+  "mapped_route": "C2-OBS",
+  "agent": "CURSOR",
+  "worker_id": "C2-OBS",
+  "role": "PRIMARY_EXECUTOR",
+  "execution_mode": "ASK_READONLY_ON_COUNCIL_CHANNEL",
+  "authority": "NON_FINAL",
+  "reports_to": "C1",
+  "reviewer": "C3",
+  "identity_source": "C2-IDENTITY-BINDING.json",
+  "communication": {
+    "internal_bus": true,
+    "ack_required": true,
+    "receipt_required": true,
+    "heartbeat_required": true
+  },
+  "safety": {
+    "single_writer_multi_reader": true,
+    "production_write_without_lease": false,
+    "paid_cloud_without_explicit_authorization": false,
+    "model_text_is_not_identity": true
+  }
+}

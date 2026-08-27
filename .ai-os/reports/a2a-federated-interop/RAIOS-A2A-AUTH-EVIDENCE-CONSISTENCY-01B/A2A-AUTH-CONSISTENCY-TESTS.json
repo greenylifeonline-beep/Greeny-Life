@@ -1,0 +1,26 @@
+{
+  "schema": "raios.a2a.auth-consistency-tests.v1",
+  "TASK_ID": "RAIOS-A2A-AUTH-EVIDENCE-CONSISTENCY-01B",
+  "GENERATED_AT": "2026-08-27T09:45:00Z",
+  "MODULE": "tests.a2a.test_auth_evidence_consistency",
+  "OLD_TESTS_TOTAL": 35,
+  "OLD_TESTS_PASS": 35,
+  "OLD_TESTS_FAIL": 0,
+  "NEW_TESTS_TOTAL": 5,
+  "NEW_TESTS_PASS": 5,
+  "NEW_TESTS_FAIL": 0,
+  "TOTAL_TESTS": 40,
+  "TOTAL_PASS": 40,
+  "TOTAL_FAIL": 0,
+  "TESTS": {
+    "T36_EFFECTIVE_AUTHORITY_IMPLIES_SCOPE_AUTHORIZED": "PASS",
+    "T37_SCOPE_FALSE_CANNOT_EFFECTIVE_TRUE": "PASS",
+    "T38_EXPLICIT_C1_GATE_SERVER_SIDE_PROVENANCE": "PASS",
+    "T39_AUTH_RESULT_MATCHES_POLICY_DECISION": "PASS",
+    "T40_RECEIPT_MATCHES_AUTH_RESULT": "PASS"
+  },
+  "COMMAND": "PYTHONPATH=src NO_LLM_CALLS=true .venv/Scripts/python.exe -m unittest tests.a2a.test_foundation tests.a2a.test_security_remediation tests.a2a.test_auth_evidence_consistency",
+  "LLM_CALLS": 0,
+  "GPU_USED": false,
+  "PAID_API_CALLS": 0
+}

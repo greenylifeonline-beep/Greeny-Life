@@ -1,0 +1,203 @@
+{
+  "schema": "raios.tree-copy-repo-recon.known-asset-carry-forward.v1a",
+  "TASK_ID": "RAIOS-TOTAL-TREE-COPY-REPO-RECON-01A",
+  "NO_BROAD_RESCAN": true,
+  "SOURCE": "C:\\Users\\Ghanam\\Documents\\Codex\\Greeny-Life-Repair\\.ai-os\\reports\\master-estate-census\\RAIOS-TOTAL-ESTATE-PHASE1-01-20260826T185525Z\\01-MASTER-SURFACE-REGISTRY.json",
+  "SOURCE_SHA256": "a607a5b783c7dfbb2b7cb5b8e354932149ac54e414f2807905408d86abd8a040",
+  "MISSING_KNOWN_ASSET_GROUPS_BEFORE": 9,
+  "MISSING_KNOWN_ASSET_GROUPS_AFTER": 0,
+  "groups": [
+    {
+      "GROUP_ID": "S04_CURSOR_CLOUD_C2",
+      "SURFACE_ID": "S04",
+      "MASTER_STATUS": "CLOUD_METADATA_ONLY",
+      "TREE_RECON_RELEVANCE": "OUT_OF_SCOPE_BUT_ACCOUNTED",
+      "SOURCE_EVIDENCE": "/workspace | CURSOR_CLOUD_STATE=EXTERNAL_EVIDENCE_UNBOUND",
+      "CURRENT_VISIBILITY": "CLOUD_METADATA_ONLY",
+      "UNIQUE_VALUE_STATUS": "UNBOUND_EXTERNAL",
+      "DEPENDENCY_STATUS": "NONE_PROVEN_THIS_LANE",
+      "WHY_NOT_SCANNED_IF_NOT_SCANNED": "Cloud /workspace not bound on this AG seat. No broad rescan. Carried from master registry."
+    },
+    {
+      "GROUP_ID": "S16_CODEX_DATED_SESSIONS",
+      "SURFACE_ID": "S16",
+      "MASTER_STATUS": "SCANNED_CURRENT",
+      "TREE_RECON_RELEVANCE": "OUT_OF_SCOPE_BUT_ACCOUNTED",
+      "SOURCE_EVIDENCE": "C:\\Users\\Ghanam\\Documents\\Codex | 2026-07-18 through 2026-08-24 names listed; interiors not recrawled",
+      "CURRENT_VISIBILITY": "NAMES_ONLY_PRIOR",
+      "UNIQUE_VALUE_STATUS": "SESSION_ARTIFACTS_NOT_PRODUCT_TREE",
+      "DEPENDENCY_STATUS": "NONE_PROVEN_THIS_LANE",
+      "WHY_NOT_SCANNED_IF_NOT_SCANNED": "Interiors not recrawled in Phase-1; 01A does not broad-rescan."
+    },
+    {
+      "GROUP_ID": "S20_CLINE_HOME",
+      "SURFACE_ID": "S20",
+      "MASTER_STATUS": "REUSED_UNCHANGED_EVIDENCE",
+      "TREE_RECON_RELEVANCE": "REFERENCE_ONLY",
+      "SOURCE_EVIDENCE": "C:\\Users\\Ghanam\\.cline | prior 9 session hashes; exists=true this pass",
+      "CURRENT_VISIBILITY": "REUSED_PHASE1",
+      "UNIQUE_VALUE_STATUS": "AGENT_SESSION_HOME",
+      "DEPENDENCY_STATUS": "BUNDLE_HAS_CLINE_CHECKPOINT_REFS_NOT_IMPORTED",
+      "WHY_NOT_SCANNED_IF_NOT_SCANNED": "Reused Phase-1 evidence. Desktop bundle contains cline checkpoint refs; not imported."
+    },
+    {
+      "GROUP_ID": "S22_UNREACHABLE_GIT_OBJECTS",
+      "SURFACE_ID": "S22",
+      "MASTER_STATUS": "GIT_INSPECTED",
+      "TREE_RECON_RELEVANCE": "IN_SCOPE",
+      "SOURCE_EVIDENCE": "TREE-001 git db | reused; 184 classified; 173 unknown relevance",
+      "CURRENT_VISIBILITY": "GIT_DB_REUSED",
+      "UNIQUE_VALUE_STATUS": "UNREACHABLE_OBJECTS_RECOVERY_VALUE_NOT_DISPROVEN",
+      "DEPENDENCY_STATUS": "SAME_OBJECT_DB_AS_TA_TREE_001",
+      "WHY_NOT_SCANNED_IF_NOT_SCANNED": "No git-db rescan. Carried from master registry GIT_INSPECTED counts."
+    },
+    {
+      "GROUP_ID": "S23-S30_INDEXED_PROJECT_ARCHIVES",
+      "SURFACE_ID": [
+        "S23",
+        "S24",
+        "S25",
+        "S26",
+        "S27",
+        "S28",
+        "S29",
+        "S30"
+      ],
+      "MASTER_STATUS": "ARCHIVE_INDEXED",
+      "TREE_RECON_RELEVANCE": "IN_SCOPE",
+      "SOURCE_EVIDENCE": "TREE-001 zip children; REUSE_PRIOR_MEMBER_INDEX shas 44699b26/b3f84a2d/ac2a7562/6ba12cc7/f8a10399/24ed4d85/67cac4fd/354461e1",
+      "CURRENT_VISIBILITY": "ARCHIVE_INDEXED_ON_TREE001",
+      "UNIQUE_VALUE_STATUS": "INDEXED_ARCHIVES_INSIDE_CANONICAL_TREE_NOT_NEW_SURFACES",
+      "DEPENDENCY_STATUS": "CHILDREN_OF_TA_TREE_001",
+      "WHY_NOT_SCANNED_IF_NOT_SCANNED": "Member indexes reused. No zip re-extract. Not new master surfaces.",
+      "CHILDREN": [
+        {
+          "SURFACE_ID": "S23",
+          "NAME": "C9-EPISTEMIC-AUDIT-PACKET.zip",
+          "INDEX_SHA_PREFIX": "44699b26",
+          "MEMBERS": 77
+        },
+        {
+          "SURFACE_ID": "S24",
+          "NAME": "E3-SOURCE-TRACE-PACKAGE.zip",
+          "INDEX_SHA_PREFIX": "b3f84a2d",
+          "MEMBERS": 36
+        },
+        {
+          "SURFACE_ID": "S25",
+          "NAME": "GreenyLifeEOS_Review.zip",
+          "INDEX_SHA_PREFIX": "ac2a7562",
+          "MEMBERS": 931
+        },
+        {
+          "SURFACE_ID": "S26",
+          "NAME": "RAIOS-GREENY-CAPABILITY-BRIDGE.zip",
+          "INDEX_SHA_PREFIX": "6ba12cc7",
+          "MEMBERS": 2
+        },
+        {
+          "SURFACE_ID": "S27",
+          "NAME": "RAIOS-GREENY-CONTINUITY-EVIDENCE.zip",
+          "INDEX_SHA_PREFIX": "f8a10399",
+          "MEMBERS": 8
+        },
+        {
+          "SURFACE_ID": "S28",
+          "NAME": "RAIOS-GREENY-DEEP-EVIDENCE.zip",
+          "INDEX_SHA_PREFIX": "24ed4d85",
+          "MEMBERS": 10
+        },
+        {
+          "SURFACE_ID": "S29",
+          "NAME": "RAIOS-GREENY-MISSION-PACKAGE.zip",
+          "INDEX_SHA_PREFIX": "67cac4fd",
+          "MEMBERS": 5
+        },
+        {
+          "SURFACE_ID": "S30",
+          "NAME": "unified-intelligence-restore-5946c6bc.zip",
+          "INDEX_SHA_PREFIX": "354461e1",
+          "MEMBERS": 117
+        }
+      ]
+    },
+    {
+      "GROUP_ID": "S49_ONEDRIVE_OTHER_PROJECT_ZIPS",
+      "SURFACE_ID": "S49",
+      "MASTER_STATUS": "CLOUD_METADATA_ONLY",
+      "TREE_RECON_RELEVANCE": "OUT_OF_SCOPE_BUT_ACCOUNTED",
+      "SOURCE_EVIDENCE": "C:\\Users\\Ghanam\\OneDrive\\projects | files.zip intelligence.zip _GREENY_DIAGNOSTIC zip; ReparsePoint",
+      "CURRENT_VISIBILITY": "CLOUD_PLACEHOLDER",
+      "UNIQUE_VALUE_STATUS": "CONTENT_UNBOUND",
+      "DEPENDENCY_STATUS": "NONE_PROVEN",
+      "LOCAL_PLACEHOLDER": true,
+      "CONTENT_BOUND": false,
+      "CLOUD_CONTENT_UNRESOLVED": true,
+      "WHY_NOT_SCANNED_IF_NOT_SCANNED": "No hydrate. Metadata-only carry-forward."
+    },
+    {
+      "GROUP_ID": "S50_CURSOR_LOCAL_PROJECTS",
+      "SURFACE_ID": "S50",
+      "MASTER_STATUS": "SCANNED_CURRENT",
+      "TREE_RECON_RELEVANCE": "REFERENCE_ONLY",
+      "SOURCE_EVIDENCE": "C:\\Users\\Ghanam\\.cursor\\projects | 10 project dirs listed including Repair and OneDrive-projects and GL-004",
+      "CURRENT_VISIBILITY": "DIR_NAMES_PRIOR",
+      "UNIQUE_VALUE_STATUS": "EDITOR_PROJECT_CACHE",
+      "DEPENDENCY_STATUS": "MAY_REFERENCE_GL004_AND_TREE001",
+      "WHY_NOT_SCANNED_IF_NOT_SCANNED": "No interior rescan of .cursor/projects."
+    },
+    {
+      "GROUP_ID": "S53_C3_REVIEW_PACKAGE",
+      "SURFACE_ID": "S53",
+      "MASTER_STATUS": "ARCHIVE_INDEXED",
+      "TREE_RECON_RELEVANCE": "REFERENCE_ONLY",
+      "SOURCE_EVIDENCE": ".ai-os\\reports\\architecture-audit\\...\\C3-REVIEW-PACKAGE.zip | sha f9be2ced members 15; size 27961",
+      "CURRENT_VISIBILITY": "ARCHIVE_INDEXED",
+      "UNIQUE_VALUE_STATUS": "C3_REVIEW_EVIDENCE_PACK",
+      "DEPENDENCY_STATUS": "ARCHITECTURE_AUDIT_LANE",
+      "WHY_NOT_SCANNED_IF_NOT_SCANNED": "Index reused. No unzip."
+    },
+    {
+      "GROUP_ID": "S71_LOCAL_RAIOS_KAGGLE_CENSUS_COPY",
+      "SURFACE_ID": "S71",
+      "MASTER_STATUS": "SCANNED_CURRENT",
+      "TREE_RECON_RELEVANCE": "IN_SCOPE",
+      "SOURCE_EVIDENCE": "C:\\Users\\Ghanam\\Documents\\Codex\\Greeny-Life-Repair\\_raios-kaggle-census | local extracted copies of E3-SOURCE-TRACE-PACKAGE and unified-intelligence-restore; not live Kaggle",
+      "CURRENT_VISIBILITY": "LOCAL_EXTRACT_DIRS_PRESENT",
+      "UNIQUE_VALUE_STATUS": "LOCAL_EXTRACT_DUPLICATE_CANDIDATE_OF_S24_AND_S30",
+      "DEPENDENCY_STATUS": "NOT_LIVE_KAGGLE; SEPARATE_FROM_kaggle-canon-01_CONSOLIDATION_PACKAGE",
+      "S71_RECONCILED": true,
+      "TARGETED_LISTING": {
+        "path": "C:\\Users\\Ghanam\\Documents\\Codex\\Greeny-Life-Repair\\_raios-kaggle-census",
+        "child": "collection-for-understand",
+        "grandchildren": [
+          "E3-SOURCE-TRACE-PACKAGE",
+          "unified-intelligence-restore-5946c6bc"
+        ],
+        "reparse": false
+      },
+      "VS_KAGGLE_CANON_01": {
+        "path": "C:\\Users\\Ghanam\\Documents\\Codex\\Greeny-Life-Repair\\.ai-os\\reports\\kaggle-canon-01",
+        "class": "C2A_CONSOLIDATION_EVIDENCE_PACKAGE",
+        "not_the_same_as_S71": true,
+        "top_level_names": [
+          "c6-handoff",
+          "canonical",
+          "CELL-CONFLICTS.json",
+          "CELL-LINEAGE.json",
+          "historical-outputs",
+          "KAGGLE-CANONICAL-CONSOLIDATION-CLOSEOUT.json",
+          "logs",
+          "NOTEBOOK-MERGE-MANIFEST.json",
+          "PATH-REWRITE-MANIFEST.json",
+          "publish",
+          "receipts",
+          "SOURCE-ACQUISITION-FREEZE.json",
+          "sources",
+          "tools"
+        ]
+      },
+      "WHY_NOT_SCANNED_IF_NOT_SCANNED": "Targeted listing only. Interiors not recrawled. Not live Kaggle API. Not ignored."
+    }
+  ]
+}

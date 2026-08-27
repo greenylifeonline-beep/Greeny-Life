@@ -1,0 +1,48 @@
+{
+  "schema": "raios.a2a.operational-seat-guard.v1",
+  "TASK_ID": "RAIOS-A2A-SECURITY-REMEDIATION-01A",
+  "GENERATED_AT": "2026-08-27T03:15:00Z",
+  "C7_OPERATIONAL_SEAT_DENY_GUARD": true,
+  "ALL_OPERATIONAL_SEATS_DENY_GUARD": true,
+  "OPERATIONAL_SEAT_DENY_GUARD_PROVEN": true,
+  "AGENT_CARD_VERIFIED": true,
+  "EXTENDED_CARD_VERIFIED": true,
+  "FORBIDDEN_PUBLIC_AGENTS": [
+    "C1",
+    "C2-KAGGLE-CONTROL",
+    "C2-PRIMARY-EXECUTOR",
+    "C2-ESTATE-RECON",
+    "C6-AG-REMOTE-RECON",
+    "C7-CLOUD-SANDBOX",
+    "C2A",
+    "C2B"
+  ],
+  "LEGACY_ALIASES_INCLUDED": ["C2A", "C2B"],
+  "IMPLEMENTATION": "src/raios/a2a/cards.py:FORBIDDEN_PUBLIC_AGENTS + reject_seat_as_agent + assert_card_not_operational_seat; src/raios/a2a/gateway.py:_identity",
+  "PUBLIC_FOUNDATION_IDENTITY": "RAIOS Foundation Agent",
+  "PUBLIC_AGENT_ID": "raios.foundation.agent",
+  "ALLOWED_PUBLIC_SKILL": ["raios.foundation.noop_intent"],
+  "PUBLIC_CARD": {
+    "name": "RAIOS Foundation Agent",
+    "skills": ["raios.foundation.noop_intent"],
+    "operational_seat_strings_published": false
+  },
+  "EXTENDED_CARD": {
+    "unauthenticated": {"code": "AUTH_FAILED"},
+    "authenticated_skills": [
+      "raios.foundation.noop_intent",
+      "raios.foundation.high_risk_mutate"
+    ],
+    "authentication_gated": true,
+    "operational_seat_strings_published": false
+  },
+  "T34": {
+    "input": "C7-CLOUD-SANDBOX as proposed Agent Card / request identity",
+    "code": "SEAT_IDENTITY_NOT_PUBLIC_AGENT",
+    "result": "REJECTED"
+  },
+  "T35": {
+    "all_forbidden_rejected": true,
+    "code": "SEAT_IDENTITY_NOT_PUBLIC_AGENT"
+  }
+}

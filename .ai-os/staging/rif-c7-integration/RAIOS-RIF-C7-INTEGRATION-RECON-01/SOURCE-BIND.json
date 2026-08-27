@@ -1,0 +1,34 @@
+{
+  "schema": "raios.rif.c7.source-bind.v1",
+  "TASK_ID": "RAIOS-RIF-C7-INTEGRATION-RECON-01",
+  "SOURCE_TASK": "RAIOS-RIF-SANDBOX-FOUNDATION-01",
+  "SOURCE_SEAT": "C7-CLOUD-SANDBOX",
+  "TREE": "TA-TREE-001",
+  "GENERATED_AT": "2026-08-27T03:30:00Z",
+  "C7_SOURCE_PACKAGE_BOUND": false,
+  "C7_ARTIFACTS_FOUND": 0,
+  "C7_TEXT_ONLY_ARTIFACTS_MATERIALIZED": false,
+  "MATERIALIZATION_BLOCKED": true,
+  "MISSING_SOURCE": [
+    "01 RIF-CAPABILITY-REGISTRY",
+    "02 RIF-CONTRACT-SCHEMAS",
+    "03 RIF-RUNTIME-STATEGRAPH",
+    "04 RIF-EVIDENCE-CLAIM-LIFECYCLE",
+    "05 RIF-RISK-PROMOTION-POLICY",
+    "05A RIF-GOVERNOR-CAP002",
+    "06 RIF-M001-FOUNDATION-MODEL-SELECTION",
+    "07 RIF-OBSERVABILITY-PROVENANCE",
+    "deterministic test suite",
+    "integration map",
+    "package metadata/handoff"
+  ],
+  "FILENAME_WALK_HITS": [],
+  "ZIP_MEMBER_HITS": [],
+  "NOT_THE_PACKAGE": [
+    "C7-RESOURCE-REDTEAM-SOURCE-PACKET.md",
+    "src/raios/a2a/cards.py C7-CLOUD-SANDBOX deny-guard",
+    "RAIOS/V9/runtime/a10/canary/sandbox-state.json"
+  ],
+  "STAGING_ONLY": true,
+  "CANONICAL_RIF_PATHS_WRITTEN": false
+}

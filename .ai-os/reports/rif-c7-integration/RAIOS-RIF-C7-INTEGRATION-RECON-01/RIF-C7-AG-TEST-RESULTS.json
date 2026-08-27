@@ -1,0 +1,31 @@
+{
+  "schema": "raios.rif.c7.ag-test-results.v1",
+  "TASK_ID": "RAIOS-RIF-C7-INTEGRATION-RECON-01",
+  "GENERATED_AT": "2026-08-27T03:30:00Z",
+  "LLM_CALLS": 0,
+  "GPU_USED": false,
+  "PAID_API_CALLS": 0,
+  "NO_MODEL_DOWNLOAD": true,
+  "NO_EXTERNAL_MUTATION": true,
+  "WAL_WRITTEN": false,
+  "C7_TEST_SUITE_PRESENT": false,
+  "TESTS_DISCOVERED": 0,
+  "TESTS_EXECUTED": 0,
+  "TESTS_PASS": 0,
+  "TESTS_FAIL": 0,
+  "NOTE": "C7 deterministic suite was not on AG and was not materialized. Zero C7 tests were executed. (when executed) is not reported as PASS.",
+  "TREE001_EXISTING_PROBES_NOT_COUNTED_AS_C7": {
+    "pytest tests/neuro_lingua/test_risk.py tests/neuro_lingua/test_schema.py": {
+      "executed": 3,
+      "pass": 3,
+      "fail": 0,
+      "purpose": "TREE-001 RiskLevel/schema still importable; not C7 suite"
+    },
+    "in_memory_CANONICAL_wal_block": {
+      "executed": 1,
+      "pass": 1,
+      "fail": 0,
+      "purpose": "DIRECT_CANONICAL_PROMOTION_FORBIDDEN without WAL write"
+    }
+  }
+}

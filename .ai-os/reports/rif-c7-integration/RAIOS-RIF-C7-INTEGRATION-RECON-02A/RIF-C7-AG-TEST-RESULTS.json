@@ -1,0 +1,480 @@
+{
+  "schema": "raios.rif.c7.ag-test-results.v1",
+  "TASK_ID": "RAIOS-RIF-C7-INTEGRATION-RECON-02A",
+  "GENERATED_AT": "2026-08-27T15:05:00Z",
+  "HARNESS": "C:\\Users\\Ghanam\\Documents\\Codex\\Greeny-Life-Repair\\.ai-os\\staging\\rif-c7-integration\\ag-runner\\run_suite.py",
+  "KERNEL": "C:\\Users\\Ghanam\\Documents\\Codex\\Greeny-Life-Repair\\.ai-os\\staging\\rif-c7-integration\\ag-runner\\kernel.py",
+  "SUITE": "deterministic-test-suite/RIF-DETERMINISTIC-TEST-SUITE-v1.1.json",
+  "C7_TESTS_DEFINED": 56,
+  "C7_TESTS_EXECUTED": 0,
+  "C7_TEST_EXECUTION_PROVEN": false,
+  "AG_TEST_EXECUTION_PROVEN": true,
+  "TESTS_DISCOVERED": 56,
+  "TESTS_EXECUTED": 56,
+  "TESTS_PASS": 56,
+  "TESTS_FAIL": 0,
+  "TESTS_ERROR": 0,
+  "NO_WHEN_EXECUTED_LANGUAGE": true,
+  "SOURCE_OF_TRUTH": "JSON suite T001-T056. C7 TEST-LEDGER failure_modes.defined=3 but suite contains 1 failure_modes test (T056). AG executed the 56 suite tests, not invented ledger extras.",
+  "EXECUTION_CLASS": "AG_STAGING_KERNEL_INTERPRETATION_OF_DONOR_SPEC",
+  "C7_NATIVE_CODE_PRESENT": false,
+  "LLM_CALLS": 0,
+  "GPU_USED": false,
+  "PAID_API_CALLS": 0,
+  "WAL_WRITTEN": false,
+  "SECOND_WAL_CREATED": false,
+  "SECOND_CANONICALIZER_CREATED": false,
+  "SECOND_POLICY_AUTHORITY_CREATED": false,
+  "SECOND_EVIDENCE_STORE_CREATED": false,
+  "CANONICAL_INTEGRATION_PROVEN": false,
+  "results": [
+    {
+      "test_id": "T001",
+      "category": "contracts",
+      "name": "Schema Version Presence",
+      "status": "PASS",
+      "detail": "",
+      "source": "TEST_DEFINED_ONLY_THEN_AG_EXECUTED"
+    },
+    {
+      "test_id": "T002",
+      "category": "contracts",
+      "name": "Unknown Field Policy Reject",
+      "status": "PASS",
+      "detail": "",
+      "source": "TEST_DEFINED_ONLY_THEN_AG_EXECUTED"
+    },
+    {
+      "test_id": "T003",
+      "category": "contracts",
+      "name": "Producer Identity Decomposition",
+      "status": "PASS",
+      "detail": "",
+      "source": "TEST_DEFINED_ONLY_THEN_AG_EXECUTED"
+    },
+    {
+      "test_id": "T004",
+      "category": "contracts",
+      "name": "Breaking Change Detection",
+      "status": "PASS",
+      "detail": "",
+      "source": "TEST_DEFINED_ONLY_THEN_AG_EXECUTED"
+    },
+    {
+      "test_id": "T005",
+      "category": "fingerprints",
+      "name": "External Provider Required",
+      "status": "PASS",
+      "detail": "",
+      "source": "TEST_DEFINED_ONLY_THEN_AG_EXECUTED"
+    },
+    {
+      "test_id": "T006",
+      "category": "fingerprints",
+      "name": "Sandbox Reference Only",
+      "status": "PASS",
+      "detail": "",
+      "source": "TEST_DEFINED_ONLY_THEN_AG_EXECUTED"
+    },
+    {
+      "test_id": "T007",
+      "category": "fingerprints",
+      "name": "Provider Algorithm ID",
+      "status": "PASS",
+      "detail": "",
+      "source": "TEST_DEFINED_ONLY_THEN_AG_EXECUTED"
+    },
+    {
+      "test_id": "T008",
+      "category": "fingerprints",
+      "name": "Schema Version Mismatch",
+      "status": "PASS",
+      "detail": "",
+      "source": "TEST_DEFINED_ONLY_THEN_AG_EXECUTED"
+    },
+    {
+      "test_id": "T009",
+      "category": "state_transitions",
+      "name": "Legal Transition Allowed",
+      "status": "PASS",
+      "detail": "",
+      "source": "TEST_DEFINED_ONLY_THEN_AG_EXECUTED"
+    },
+    {
+      "test_id": "T010",
+      "category": "state_transitions",
+      "name": "Illegal Transition Blocked",
+      "status": "PASS",
+      "detail": "",
+      "source": "TEST_DEFINED_ONLY_THEN_AG_EXECUTED"
+    },
+    {
+      "test_id": "T011",
+      "category": "state_transitions",
+      "name": "Guard Failure Blocks",
+      "status": "PASS",
+      "detail": "",
+      "source": "TEST_DEFINED_ONLY_THEN_AG_EXECUTED"
+    },
+    {
+      "test_id": "T012",
+      "category": "state_transitions",
+      "name": "Failure Path Taken",
+      "status": "PASS",
+      "detail": "",
+      "source": "TEST_DEFINED_ONLY_THEN_AG_EXECUTED"
+    },
+    {
+      "test_id": "T013",
+      "category": "state_transitions",
+      "name": "No Hidden LLM Transition",
+      "status": "PASS",
+      "detail": "",
+      "source": "TEST_DEFINED_ONLY_THEN_AG_EXECUTED"
+    },
+    {
+      "test_id": "T014",
+      "category": "evidence_lineage",
+      "name": "Lineage Tracking",
+      "status": "PASS",
+      "detail": "",
+      "source": "TEST_DEFINED_ONLY_THEN_AG_EXECUTED"
+    },
+    {
+      "test_id": "T015",
+      "category": "evidence_lineage",
+      "name": "Duplicate Origin Detection",
+      "status": "PASS",
+      "detail": "",
+      "source": "TEST_DEFINED_ONLY_THEN_AG_EXECUTED"
+    },
+    {
+      "test_id": "T016",
+      "category": "evidence_lineage",
+      "name": "Independent Source Verification",
+      "status": "PASS",
+      "detail": "",
+      "source": "TEST_DEFINED_ONLY_THEN_AG_EXECUTED"
+    },
+    {
+      "test_id": "T017",
+      "category": "evidence_lineage",
+      "name": "Derived Evidence Chain",
+      "status": "PASS",
+      "detail": "",
+      "source": "TEST_DEFINED_ONLY_THEN_AG_EXECUTED"
+    },
+    {
+      "test_id": "T018",
+      "category": "evidence_lineage",
+      "name": "Superseded Evidence",
+      "status": "PASS",
+      "detail": "",
+      "source": "TEST_DEFINED_ONLY_THEN_AG_EXECUTED"
+    },
+    {
+      "test_id": "T019",
+      "category": "contradiction",
+      "name": "Contradiction Detection",
+      "status": "PASS",
+      "detail": "",
+      "source": "TEST_DEFINED_ONLY_THEN_AG_EXECUTED"
+    },
+    {
+      "test_id": "T020",
+      "category": "contradiction",
+      "name": "Critical Contradiction Blocks Pass",
+      "status": "PASS",
+      "detail": "",
+      "source": "TEST_DEFINED_ONLY_THEN_AG_EXECUTED"
+    },
+    {
+      "test_id": "T021",
+      "category": "contradiction",
+      "name": "Resolvable Contradiction",
+      "status": "PASS",
+      "detail": "",
+      "source": "TEST_DEFINED_ONLY_THEN_AG_EXECUTED"
+    },
+    {
+      "test_id": "T022",
+      "category": "contradiction",
+      "name": "Silent Contradiction Prevention",
+      "status": "PASS",
+      "detail": "",
+      "source": "TEST_DEFINED_ONLY_THEN_AG_EXECUTED"
+    },
+    {
+      "test_id": "T023",
+      "category": "risk",
+      "name": "Unknown Risk Escalates",
+      "status": "PASS",
+      "detail": "",
+      "source": "TEST_DEFINED_ONLY_THEN_AG_EXECUTED"
+    },
+    {
+      "test_id": "T024",
+      "category": "risk",
+      "name": "High Risk No Self-Authorize",
+      "status": "PASS",
+      "detail": "",
+      "source": "TEST_DEFINED_ONLY_THEN_AG_EXECUTED"
+    },
+    {
+      "test_id": "T025",
+      "category": "risk",
+      "name": "Critical Risk Blocks",
+      "status": "PASS",
+      "detail": "",
+      "source": "TEST_DEFINED_ONLY_THEN_AG_EXECUTED"
+    },
+    {
+      "test_id": "T026",
+      "category": "risk",
+      "name": "Confidence Separation",
+      "status": "PASS",
+      "detail": "",
+      "source": "TEST_DEFINED_ONLY_THEN_AG_EXECUTED"
+    },
+    {
+      "test_id": "T027",
+      "category": "governor",
+      "name": "Pure Decision Logic",
+      "status": "PASS",
+      "detail": "",
+      "source": "TEST_DEFINED_ONLY_THEN_AG_EXECUTED"
+    },
+    {
+      "test_id": "T028",
+      "category": "governor",
+      "name": "Max Iterations Stop",
+      "status": "PASS",
+      "detail": "",
+      "source": "TEST_DEFINED_ONLY_THEN_AG_EXECUTED"
+    },
+    {
+      "test_id": "T029",
+      "category": "governor",
+      "name": "No Progress Detection",
+      "status": "PASS",
+      "detail": "",
+      "source": "TEST_DEFINED_ONLY_THEN_AG_EXECUTED"
+    },
+    {
+      "test_id": "T030",
+      "category": "governor",
+      "name": "Repeated Tool Call Detection",
+      "status": "PASS",
+      "detail": "",
+      "source": "TEST_DEFINED_ONLY_THEN_AG_EXECUTED"
+    },
+    {
+      "test_id": "T031",
+      "category": "governor",
+      "name": "Precedence Rules",
+      "status": "PASS",
+      "detail": "",
+      "source": "TEST_DEFINED_ONLY_THEN_AG_EXECUTED"
+    },
+    {
+      "test_id": "T032",
+      "category": "observability",
+      "name": "Event Fields Present",
+      "status": "PASS",
+      "detail": "",
+      "source": "TEST_DEFINED_ONLY_THEN_AG_EXECUTED"
+    },
+    {
+      "test_id": "T033",
+      "category": "observability",
+      "name": "No Second Provenance Store",
+      "status": "PASS",
+      "detail": "",
+      "source": "TEST_DEFINED_ONLY_THEN_AG_EXECUTED"
+    },
+    {
+      "test_id": "T034",
+      "category": "observability",
+      "name": "Receipt Binding",
+      "status": "PASS",
+      "detail": "",
+      "source": "TEST_DEFINED_ONLY_THEN_AG_EXECUTED"
+    },
+    {
+      "test_id": "T035",
+      "category": "m001",
+      "name": "Hard Gate Enforcement",
+      "status": "PASS",
+      "detail": "",
+      "source": "TEST_DEFINED_ONLY_THEN_AG_EXECUTED"
+    },
+    {
+      "test_id": "T036",
+      "category": "m001",
+      "name": "No Universal Best Model",
+      "status": "PASS",
+      "detail": "",
+      "source": "TEST_DEFINED_ONLY_THEN_AG_EXECUTED"
+    },
+    {
+      "test_id": "T037",
+      "category": "m001",
+      "name": "Pareto Frontier",
+      "status": "PASS",
+      "detail": "",
+      "source": "TEST_DEFINED_ONLY_THEN_AG_EXECUTED"
+    },
+    {
+      "test_id": "T038",
+      "category": "m001",
+      "name": "Machine Readable Output",
+      "status": "PASS",
+      "detail": "",
+      "source": "TEST_DEFINED_ONLY_THEN_AG_EXECUTED"
+    },
+    {
+      "test_id": "T039",
+      "category": "a2a_bridge",
+      "name": "Semantic Mismatch Detection",
+      "status": "PASS",
+      "detail": "",
+      "source": "TEST_DEFINED_ONLY_THEN_AG_EXECUTED"
+    },
+    {
+      "test_id": "T040",
+      "category": "a2a_bridge",
+      "name": "No Silent Downgrade",
+      "status": "PASS",
+      "detail": "",
+      "source": "TEST_DEFINED_ONLY_THEN_AG_EXECUTED"
+    },
+    {
+      "test_id": "T041",
+      "category": "a2a_bridge",
+      "name": "Task Complete Not Claim Pass",
+      "status": "PASS",
+      "detail": "",
+      "source": "TEST_DEFINED_ONLY_THEN_AG_EXECUTED"
+    },
+    {
+      "test_id": "T042",
+      "category": "a2a_bridge",
+      "name": "Transport Failure Not Claim Fail",
+      "status": "PASS",
+      "detail": "",
+      "source": "TEST_DEFINED_ONLY_THEN_AG_EXECUTED"
+    },
+    {
+      "test_id": "T043",
+      "category": "adapter_boundaries",
+      "name": "No WAL Ownership",
+      "status": "PASS",
+      "detail": "",
+      "source": "TEST_DEFINED_ONLY_THEN_AG_EXECUTED"
+    },
+    {
+      "test_id": "T044",
+      "category": "adapter_boundaries",
+      "name": "No NATS Ownership",
+      "status": "PASS",
+      "detail": "",
+      "source": "TEST_DEFINED_ONLY_THEN_AG_EXECUTED"
+    },
+    {
+      "test_id": "T045",
+      "category": "adapter_boundaries",
+      "name": "No Evidence Store Ownership",
+      "status": "PASS",
+      "detail": "",
+      "source": "TEST_DEFINED_ONLY_THEN_AG_EXECUTED"
+    },
+    {
+      "test_id": "T046",
+      "category": "adapter_boundaries",
+      "name": "No Policy Authority",
+      "status": "PASS",
+      "detail": "",
+      "source": "TEST_DEFINED_ONLY_THEN_AG_EXECUTED"
+    },
+    {
+      "test_id": "T047",
+      "category": "security_invariants",
+      "name": "I01 Unknown Not Zero",
+      "status": "PASS",
+      "detail": "",
+      "source": "TEST_DEFINED_ONLY_THEN_AG_EXECUTED"
+    },
+    {
+      "test_id": "T048",
+      "category": "security_invariants",
+      "name": "I02 Absence Not Negative",
+      "status": "PASS",
+      "detail": "",
+      "source": "TEST_DEFINED_ONLY_THEN_AG_EXECUTED"
+    },
+    {
+      "test_id": "T049",
+      "category": "security_invariants",
+      "name": "I06 Governor Pure",
+      "status": "PASS",
+      "detail": "",
+      "source": "TEST_DEFINED_ONLY_THEN_AG_EXECUTED"
+    },
+    {
+      "test_id": "T050",
+      "category": "security_invariants",
+      "name": "I07 No Canonical Promotion",
+      "status": "PASS",
+      "detail": "",
+      "source": "TEST_DEFINED_ONLY_THEN_AG_EXECUTED"
+    },
+    {
+      "test_id": "T051",
+      "category": "security_invariants",
+      "name": "I08 Authority Verification",
+      "status": "PASS",
+      "detail": "",
+      "source": "TEST_DEFINED_ONLY_THEN_AG_EXECUTED"
+    },
+    {
+      "test_id": "T052",
+      "category": "security_invariants",
+      "name": "I16 External Fingerprint",
+      "status": "PASS",
+      "detail": "",
+      "source": "TEST_DEFINED_ONLY_THEN_AG_EXECUTED"
+    },
+    {
+      "test_id": "T053",
+      "category": "provenance",
+      "name": "Provenance Chain Intact",
+      "status": "PASS",
+      "detail": "",
+      "source": "TEST_DEFINED_ONLY_THEN_AG_EXECUTED"
+    },
+    {
+      "test_id": "T054",
+      "category": "provenance",
+      "name": "Provenance Truncation Detection",
+      "status": "PASS",
+      "detail": "",
+      "source": "TEST_DEFINED_ONLY_THEN_AG_EXECUTED"
+    },
+    {
+      "test_id": "T055",
+      "category": "provenance",
+      "name": "Receipt Immutability",
+      "status": "PASS",
+      "detail": "",
+      "source": "TEST_DEFINED_ONLY_THEN_AG_EXECUTED"
+    },
+    {
+      "test_id": "T056",
+      "category": "failure_modes",
+      "name": "Dependency Unavailable",
+      "status": "PASS",
+      "detail": "",
+      "source": "TEST_DEFINED_ONLY_THEN_AG_EXECUTED"
+    }
+  ]
+}

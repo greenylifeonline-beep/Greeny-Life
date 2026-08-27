@@ -1,0 +1,33 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "urn:raios:a2a:semantic-context:v1",
+  "title": "A2A-SEMANTIC-CONTEXT",
+  "type": "object",
+  "additionalProperties": true,
+  "required": [
+    "semantic_contract_id",
+    "semantic_version",
+    "concept_set_hash",
+    "schema_hash",
+    "provenance_policy",
+    "authority_domain",
+    "tenant",
+    "context_fingerprint"
+  ],
+  "properties": {
+    "semantic_contract_id": { "type": "string", "const": "urn:raios:a2a:semantic-context:v1" },
+    "semantic_version": { "type": "string" },
+    "concept_set_hash": { "type": "string", "minLength": 64, "maxLength": 64 },
+    "schema_hash": { "type": "string", "minLength": 64, "maxLength": 64 },
+    "provenance_policy": { "type": "string" },
+    "authority_domain": { "type": "string" },
+    "tenant": { "type": "string" },
+    "context_fingerprint": { "type": "string", "minLength": 64, "maxLength": 64 },
+    "time_basis": { "type": "string" },
+    "units": { "type": "string" },
+    "inclusion_rules": { "type": "array", "items": { "type": "string" } },
+    "exclusion_rules": { "type": "array", "items": { "type": "string" } },
+    "source_authority": { "type": "string" },
+    "confidence_requirements": { "type": "string" }
+  }
+}
