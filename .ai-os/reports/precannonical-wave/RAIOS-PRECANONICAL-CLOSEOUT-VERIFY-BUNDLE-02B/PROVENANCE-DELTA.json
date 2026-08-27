@@ -1,0 +1,24 @@
+{
+  "schema": "raios.closeout.provenance-delta-02b.v1",
+  "BASE_COMMIT": "300dc72708766e9598e20a28f24af52fdee27b91",
+  "PARENT_OF_BASE": "5ae96d04b6dca7c871ad5b836609780cc48d17ef",
+  "HEAD_RELATION_TO_5AE96D0": "DESCENDANT",
+  "PROVENANCE_GRAPH_REUSED": true,
+  "HISTORICAL_WORK_REEXECUTED": false,
+  "TREE_CENSUS_REPLAYED": false,
+  "TREE_RECON_REPLAYED": false,
+  "HASH_CENSUS_REPLAYED": false,
+  "GIT_LINEAGE_RECONSTRUCTED": false,
+  "UCP_LIVE_RERUN": false,
+  "C7_OUTER_HASH_REVERIFIED": false,
+  "C7_INTERNAL_22_22_REVERIFIED": false,
+  "A2A_40_40_RERUN": false,
+  "C7_AG_SUITE_RERUN": false,
+  "PRECANONICAL_SEAL_WAVE_02A_EXECUTED_FROM_SCRATCH": false,
+  "DELTA_THIS_WAVE": [
+    "bind C2-IDENTITY-BINDING.json as operational seat authority source",
+    "bind existing RIF-C7-AG-TEST-RESULTS.json by path+sha256",
+    "reference existing UCP evidence without rerun",
+    "create VERIFY-BUNDLE-02B without overwriting VERIFY-BUNDLE-02"
+  ]
+}

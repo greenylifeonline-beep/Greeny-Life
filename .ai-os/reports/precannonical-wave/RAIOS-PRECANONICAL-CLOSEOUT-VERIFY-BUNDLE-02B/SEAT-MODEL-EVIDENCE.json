@@ -1,0 +1,81 @@
+{
+  "schema": "raios.closeout.seat-model-evidence-02b.v1",
+  "TASK_ID": "RAIOS-PRECANONICAL-SEAL-DELTA-WAVE-02B",
+  "BASE_COMMIT": "300dc72708766e9598e20a28f24af52fdee27b91",
+  "PREVIOUS_PACKAGE_PRESERVED": ".ai-os/reports/precannonical-wave/RAIOS-SEAT-MODEL-AUTHORITY-BIND-01C",
+  "PREVIOUS_PACKAGE_NOT_OVERWRITTEN": true,
+  "NEW_SEAT_REGISTRY_CREATED": false,
+  "NEW_AUTHORITY_SUBSYSTEM_CREATED": false,
+  "NEW_ROUTING_GUARD_FILE_FABRICATED": false,
+  "RAIOS_SEAT_ROUTING_GUARD_01": {
+    "HASHABLE_FILE_IN_TREE": false,
+    "GLOB_SEAT_ROUTING": 0,
+    "SOURCE_CLASS": "C1_CHAT_POLICY_ID_NOT_A_TREE_FILE",
+    "NOT_FABRICATED_AS_FILE": true
+  },
+  "ACTUAL_OPERATIONAL_SOURCES_CONSUMED": {
+    "identity_artifact": {
+      "path": ".ai-os/control/C2-IDENTITY-BINDING.json",
+      "sha256": "260866bb2b744627181a70ce8e1c46e4045e6fa34c0d6ec0968ac7a927f5b71a",
+      "git_tracked_at_base": true,
+      "identity_authority": "C1",
+      "operational_seat": "C2",
+      "runtime_id": "C2@AG",
+      "engine_id": "C2-CURSOR",
+      "reports_to": "C1",
+      "C2A_C2B_LISTED_AS_INDEPENDENT_SEATS": false,
+      "NOTE": "Single operational seat field is C2. C2A/C2B are absent as authority identities."
+    },
+    "a2a_enforcement_source": {
+      "path": "src/raios/a2a/cards.py",
+      "sha256": "1bd6a090d6b61260986831f28f6760e6acb2e76f692aaf0aa73da0bb4ba55c54",
+      "symbols": ["FORBIDDEN_PUBLIC_AGENTS", "reject_seat_as_agent", "assert_card_not_operational_seat"],
+      "gateway_identity_check": "src/raios/a2a/gateway.py:_identity"
+    },
+    "a2a_enforcement_report": {
+      "path": ".ai-os/reports/a2a-federated-interop/RAIOS-A2A-SECURITY-REMEDIATION-01A/A2A-OPERATIONAL-SEAT-GUARD.json",
+      "sha256": "28c914f450a1acc31aa4158191a249d0f2351d4570bab0d0a7d557780de1319e",
+      "CLASS": "PUBLIC_AGENT_DENY_LIST_NOT_A_SECOND_SEAT_REGISTRY"
+    }
+  },
+  "C1_REQUIRED_CURRENT_SEAT_TRUTH": {
+    "C1": "FINAL_AUTHORITY",
+    "C2": "ONE_OPERATIONAL_EXECUTION_SEAT",
+    "C2A_C2B_INDEPENDENT_SEATS": false,
+    "C2_SESSION_STATE_SHARED": true,
+    "C6": "INDEPENDENT_VERIFIER_BUT_CURRENTLY_OFFLINE",
+    "C7": "INDEPENDENT_CLOUD_SANDBOX",
+    "C5": "LOCAL_COGNITIVE_RUNTIME_WORKER",
+    "C3": "REVIEW_ARCHITECTURE_ROLE_NO_DIRECT_PROJECT_AUTHORITY",
+    "HISTORICAL_C2A_C2B": "PROVENANCE_LABELS_NOT_ACTIVE_AUTHORITY_IDENTITIES"
+  },
+  "IDENTITY_ARTIFACT_DRIFT_VS_C1_02B": {
+    "C2-IDENTITY-BINDING.json council_role_model.C6": "PARALLEL_EXECUTOR",
+    "C1_02B_C6": "INDEPENDENT_VERIFIER_BUT_CURRENTLY_OFFLINE",
+    "IDENTITY_FILE_REWRITTEN": false,
+    "DRIFT_RECORDED_NOT_RESOLVED_BY_NEW_REGISTRY": true
+  },
+  "SEAT_MODEL_AUTHORITY_SOURCE": ".ai-os/control/C2-IDENTITY-BINDING.json",
+  "SEAT_MODEL_AUTHORITY_SOURCE_HASH": "260866bb2b744627181a70ce8e1c46e4045e6fa34c0d6ec0968ac7a927f5b71a",
+  "SEAT_MODEL_ENFORCEMENT_SOURCE": "src/raios/a2a/cards.py+src/raios/a2a/gateway.py:_identity",
+  "SEAT_MODEL_ENFORCEMENT_SOURCE_HASH": "1bd6a090d6b61260986831f28f6760e6acb2e76f692aaf0aa73da0bb4ba55c54",
+  "SEAT_MODEL_AUTHORITY_SOURCE_BOUND": true,
+  "C2_SINGLE_OPERATIONAL_SEAT_PROVEN": true,
+  "SECOND_VISIBLE_C2_WINDOW_NE_SECOND_AUTHORITY": true,
+  "WRONG_SEAT_GUARD": {
+    "CLASS": "A2A_PUBLIC_AGENT_IDENTITY_DENY_NOT_BUS_ROUTING",
+    "C2_TO_C6_WRONG_SEAT_BLOCKED": true,
+    "C6_TO_C2_WRONG_SEAT_BLOCKED": true,
+    "C7_SELF_CLAIM_CANONICAL_WRITE_DENIED": true,
+    "EVIDENCE": {
+      "T34": "reject_seat_as_agent(C7-CLOUD-SANDBOX) and Gateway.handle agent_id=C7-CLOUD-SANDBOX -> SEAT_IDENTITY_NOT_PUBLIC_AGENT",
+      "T35": "all FORBIDDEN_PUBLIC_AGENTS including C2-KAGGLE-CONTROL and C6-AG-REMOTE-RECON rejected as public agent identity",
+      "CAPTURE": ".ai-os/reports/precannonical-wave/RAIOS-PRECANONICAL-CLOSEOUT-VERIFY-BUNDLE-02/TEST-RESULTS.json T34/T35 ok; HISTORICAL_SUITE_RERUN=false this wave",
+      "C7_CANONICAL_WRITE": "C7 cannot enter Gateway as agent_id; C7_NATIVE_CODE_PRESENT=false; AG T050 I07 No Canonical Promotion in bound AG results; no WAL write path for C7 native code"
+    },
+    "WRONG_SEAT_GUARD_REGRESSION_PASS": true,
+    "REGRESSION_RERUN_THIS_WAVE": false
+  },
+  "AUTHORITY_SOURCE_01C_UNBOUND_SUPERSEDED_FOR_OPS_BIND": true,
+  "01C_REMAINS_HISTORICAL_FINDING_THAT_POLICY_ID_HAS_NO_FILE": true
+}

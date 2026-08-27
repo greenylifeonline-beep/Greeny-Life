@@ -1,0 +1,11 @@
+# Handoff
+- Agent: cursor
+- Seat: C2-KAGGLE-CONTROL
+- Task: RAIOS-PRECANONICAL-SEAL-DELTA-WAVE-02B
+- Status: READY_FOR_INDEPENDENT_REVIEW
+- Files: .ai-os/reports/precannonical-wave/RAIOS-PRECANONICAL-CLOSEOUT-VERIFY-BUNDLE-02B
+- Validation: delta-only; bundle 02 preserved; C7 AG d62d4ce5 bound without rerun; seat source C2-IDENTITY-BINDING.json sha256 260866bb; UCP reused; no A2A/C1C5/C7 package replay
+- Evidence: this directory
+- Next: C6 or another independent AG-capable verifier; READY_FOR_CANONICALIZATION remains false
+- Branch: ai-evolution-202608051809
+- BASE_COMMIT: 300dc72708766e9598e20a28f24af52fdee27b91
