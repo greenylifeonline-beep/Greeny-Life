@@ -42,7 +42,7 @@ CALLER_AUTHORITY_FIELDS = (
 
 REUSED_AUTHORITY_SOURCES = (
     "src/raios/a2a/trust.py:trusted_issuers",
-    "src/raios/a2a/authority.py:principal_by_issuer+scopes_by_principal+high_risk_principals",
+    "src/raios/a2a/authority.py:principal_by_issuer+scopes_by_principal+high_risk_principals+high_risk_task_grants",
     "src/raios/neuro_lingua/schema.py:RiskLevel",
     "src/raios/a2a/policy_bridge.py",
     ".ai-os/control/RAIOS-CONTROL-PLANE-V1.py:DryRunUCP wrap (no A2A authority DB)",
@@ -136,6 +136,22 @@ def required_scope_token(capability_id: str) -> str:
     return sorted(required)[0]
 
 
+def task_gate_granted(
+    *,
+    principal: str | None,
+    task_id: str | None,
+    high_risk_principals: frozenset[str],
+    high_risk_task_grants: dict[str, tuple[str, ...]] | None,
+) -> bool:
+    """Principal membership is eligibility only. Grant is (principal, task_id)."""
+    if not principal or principal not in high_risk_principals:
+        return False
+    if not task_id:
+        return False
+    allowed = (high_risk_task_grants or {}).get(principal) or ()
+    return task_id in allowed
+
+
 def derive(
     *,
     capability_id: str,
@@ -151,6 +167,7 @@ def derive(
     high_risk_principals: frozenset[str],
     requested: dict[str, Any],
     task_id: str | None = None,
+    high_risk_task_grants: dict[str, tuple[str, ...]] | None = None,
 ) -> AuthorityDecision:
     principal_bound = bool(principal)
     scope_present = bool(authorized_scopes)
@@ -158,9 +175,14 @@ def derive(
     needs_authority = needs_server_authority(action, risk, side_effects=side_effects)
     # Caller claims never satisfy the gate.
     _ = requested
-    server_high_risk = bool(principal and principal in high_risk_principals)
-    # SCOPE_AUTHORIZED is server-side capability coverage (or C1 task-gate
-    # represented as a trusted effective grant), never TrustResult's generic token.
+    principal_eligible = bool(principal and principal in high_risk_principals)
+    server_high_risk = task_gate_granted(
+        principal=principal,
+        task_id=task_id,
+        high_risk_principals=high_risk_principals,
+        high_risk_task_grants=high_risk_task_grants,
+    )
+    # SCOPE_AUTHORIZED is server-side capability coverage, never TrustResult's generic token.
     scope_authorized = bool(issuer_trusted and principal_bound and cap_ok)
     chain = (
         signature_valid
@@ -211,9 +233,12 @@ def derive(
         "principal": principal,
         "issuer": issuer,
         "server_scopes": list(authorized_scopes),
+        "principal_eligible_for_task_gate": principal_eligible,
         "c1_task_gate": bool(server_high_risk),
+        "task_scoped": bool(server_high_risk),
+        "granted_task_id": task_id if server_high_risk else None,
         "task_id": task_id,
-        "NOTE": "SERVER_SIDE_ONLY; caller granted_scopes/role/admin ignored",
+        "NOTE": "SERVER_SIDE_ONLY; EXPLICIT_C1_TASK_GATE requires (principal, a2a_task_id) grant; caller granted_scopes/role/admin ignored",
     }
 
     return AuthorityDecision(

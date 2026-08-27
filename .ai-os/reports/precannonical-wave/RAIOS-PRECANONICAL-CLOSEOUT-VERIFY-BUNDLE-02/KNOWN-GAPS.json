@@ -1,0 +1,53 @@
+{
+  "schema": "raios.closeout.known-gaps.v1",
+  "READY_FOR_CANONICALIZATION": false,
+  "INDEPENDENT_VERIFICATION_PROVEN": false,
+  "C6_VERIFICATION_PENDING": true,
+  "C6_SERVICE_AVAILABLE": false,
+  "gaps": [
+    {
+      "id": "SEAT_MODEL_AUTHORITY_UNBOUND",
+      "blocking_canonicalization": true,
+      "detail": "RAIOS-SEAT-ROUTING-GUARD-01 not hashable in tree; 01B collapse unsupported as authority"
+    },
+    {
+      "id": "C7_NATIVE_CODE_ABSENT",
+      "blocking_canonicalization": true,
+      "detail": "Donor is TEXT_MATERIALIZED_SOURCE. C7_TEST_EXECUTION_PROVEN=false. AG 56/56 is spec interpretation."
+    },
+    {
+      "id": "C6_HAS_NOT_VERIFIED_5AE96D0_OR_REMEDIATE",
+      "blocking_canonicalization": true,
+      "detail": "C6 independent review HEAD was 50c5da28. C6 currently unavailable."
+    },
+    {
+      "id": "HMAC_REMEDIATIONS_NOT_IN_5AE96D0",
+      "blocking_canonicalization": false,
+      "detail": "Task-scoped A2A and HMAC founder bind are uncommitted working-tree changes. Independent reviewer must hash worktree files, not assume they are in 5ae96d0."
+    },
+    {
+      "id": "COMMAND_FABRIC_E2E_UNPROVEN",
+      "blocking_canonicalization": false,
+      "detail": "Live UCP is send/ack only. No acquire. NATS_PRIMARY=false."
+    },
+    {
+      "id": "PHASE2A_LOCAL_REF_ABSENT",
+      "blocking_canonicalization": false,
+      "detail": "refs/heads/phase2a/class-a-20260822-232109 not present locally. Not fetched."
+    },
+    {
+      "id": "D-059_GL005",
+      "blocking_canonicalization": true,
+      "detail": "D-059=BLOCKED GL005_PROVEN=false WAL_WRITTEN=false"
+    }
+  ],
+  "BOUNDED_UNRESOLVED_REUSED_FROM_C6_NOT_RESCANNED": [
+    "REPAIR_VS_RETIRED_MISSING_LOCAL_GIT_OBJECTS",
+    "TREE001_ORIGIN_MAIN_SHALLOW_MERGE_BASE",
+    "GL004_GL005_NO_HASHABLE_FILES",
+    "ONEDRIVE_PLACEHOLDERS",
+    "TREE001_12_MISSING_TRACKED_FILES",
+    "BUNDLE_7_TIPS_ANCESTRY_UNBOUND",
+    "PACKAGE_01_SUMMARY_HASH_DRIFT"
+  ]
+}

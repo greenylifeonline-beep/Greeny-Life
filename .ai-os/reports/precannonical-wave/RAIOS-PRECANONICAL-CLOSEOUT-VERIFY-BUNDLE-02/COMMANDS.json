@@ -1,0 +1,44 @@
+{
+  "schema": "raios.closeout.commands.v1",
+  "HISTORICAL_COMMANDS_REPLAYED": false,
+  "commands_used_for_this_closeout_observation": [
+    "python scripts/ai-os/aios.py status",
+    "git rev-parse HEAD",
+    "git branch --show-current",
+    "git rev-parse 5ae96d0",
+    "git show --no-patch --format=fuller 5ae96d0",
+    "git diff-tree --no-commit-id --name-status -r 5ae96d0",
+    "git rev-parse --verify origin/ai-evolution-202608051809",
+    "git cat-file -t 50c5da28",
+    "git cat-file -t 8e57fdb",
+    "git cat-file -t 12603d0",
+    "git merge-base --is-ancestor 5ae96d0 HEAD",
+    "git merge-base --is-ancestor HEAD 5ae96d0",
+    "git merge-base --is-ancestor 50c5da28 5ae96d0",
+    "git merge-base --is-ancestor 8e57fdb 5ae96d0",
+    "git merge-base --is-ancestor 12603d0 5ae96d0",
+    "git merge-base 5ae96d0 50c5da28",
+    "git merge-base 5ae96d0 8e57fdb",
+    "git merge-base 5ae96d0 12603d0",
+    "git rev-parse --verify refs/heads/phase2a/class-a-20260822-232109",
+    "git diff --name-status HEAD -- <closeout paths>",
+    "git ls-files --others --exclude-standard -- <closeout paths>",
+    "git status --short | Measure-Object -Line"
+  ],
+  "prior_commands_reused_not_replayed": [
+    "$env:NO_LLM_CALLS='true'; $env:PYTHONPATH='src'; .\\.venv\\Scripts\\python.exe -m unittest tests.a2a.test_foundation tests.a2a.test_security_remediation tests.a2a.test_auth_evidence_consistency tests.c1c5.test_dispatch tests.c1c5.test_control_integration -v",
+    "GET http://127.0.0.1:8766/health",
+    "dispatch HMAC envelope RAIOS-C1-C5-TASK-DISPATCH-01A-LIVE-03 / idem-c1c5-live-health-03",
+    "correlated_send_ack COR-UCP-PROOF-01A (unittest T16)"
+  ],
+  "not_executed": [
+    "git fetch",
+    "git merge",
+    "git reset",
+    "git checkout/switch",
+    "git commit",
+    "estate census",
+    "C7 AG suite rerun",
+    "unittest rerun for this bundle"
+  ]
+}

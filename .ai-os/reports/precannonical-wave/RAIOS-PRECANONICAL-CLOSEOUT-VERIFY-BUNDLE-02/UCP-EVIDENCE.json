@@ -1,0 +1,39 @@
+{
+  "schema": "raios.closeout.ucp-evidence.v1",
+  "LIVE_UCP_RERUN_FOR_BUNDLE": false,
+  "task_id": "RAIOS-C1-C5-TASK-DISPATCH-01A-LIVE-03",
+  "correlation_id": "COR-UCP-PROOF-01A",
+  "command_id": "RAIOS-C1-C5-TASK-DISPATCH-01A-LIVE-03",
+  "message_id": "MSG-1787844821137190-c621b602",
+  "target": "C2-OBS",
+  "c5_target": "C5",
+  "kind": "TASK_DRY_RUN",
+  "adapter": "src/raios/a2a/ucp_adapter.py:DryRunUCP (C5 task path); live send/ack via .ai-os/control/RAIOS-CONTROL-PLANE-V1.py send+ack",
+  "transport": "INTERNAL_BUS",
+  "HTTP_PRIMARY": true,
+  "NATS_PRIMARY": false,
+  "authorization": "HMAC_FOUNDER_SESSION on correlated C5 envelope; UCP send is local control-plane write without acquire",
+  "execution": {
+    "LEASE_ACQUIRED": false,
+    "WAL_WRITTEN": false,
+    "CANONICAL_MUTATION": false,
+    "COMMAND_FABRIC_E2E_PROVEN": false,
+    "first_c5": "COMPLETED",
+    "replay_c5": "ALREADY_APPLIED",
+    "ucp_ack": "ACKNOWLEDGED"
+  },
+  "result_fingerprint": {
+    "inbox_sha256": "22afc55aa7c73864229b9c2cb02a6e2c48f3d69129058fbef5cc96d20482a802",
+    "send_receipt_sha256": "93ba4ccf2c0bb71b0c27cff430775b8a28a022f6349be4e9e8e9a7ad0e00f511",
+    "ack_receipt_sha256": "c2fa2d061fc1125d11adaf49adedcb061fabc0d19fc0008dfdb65e85c0e9ccff",
+    "c5_bound_receipt_sha256": "a289ce8e28817259b333994c9a061b66cb81d4c7afba8293707aadb20fa56342"
+  },
+  "receipt_hash": "c2fa2d061fc1125d11adaf49adedcb061fabc0d19fc0008dfdb65e85c0e9ccff",
+  "paths": {
+    "inbox": ".ai-os/state/command-fabric/inbox/MSG-1787844821137190-c621b602.json",
+    "send": ".ai-os/receipts/command-fabric/MSG-1787844821137190-c621b602.send.json",
+    "ack": ".ai-os/receipts/command-fabric/MSG-1787844821137190-c621b602.C2-OBS.ack.receipt.json",
+    "c5_receipt": ".ai-os/receipts/command-fabric/c1c5-task/415717063d4bdd51caba7583.receipt.json"
+  },
+  "UCP_REBUILT": false
+}

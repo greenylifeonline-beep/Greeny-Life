@@ -18,7 +18,7 @@ from raios.a2a.authority import (
     AUTHORITY_SOURCE_C1_TASK_GATE,
     derive,
 )
-from raios.a2a.failclosed import AUTH_SCOPE_MISSING, FailClosed
+from raios.a2a.failclosed import AUTH_SCOPE_MISSING, AUTHORITY_REQUIRED, FailClosed
 from raios.a2a.gateway import A2ARequest, Gateway
 from raios.neuro_lingua.schema import RiskLevel
 from raios.a2a.semantic import complete_contract, default_contract
@@ -31,6 +31,9 @@ def _sem() -> dict:
     return complete_contract(default_contract())
 
 
+PROTECTED_TASKS = ("t36", "t38", "t39", "t40")
+
+
 def _protected_gw() -> Gateway:
     return Gateway(
         hmac_secrets={"issuer-trusted": b"test-hmac-secret"},
@@ -38,6 +41,7 @@ def _protected_gw() -> Gateway:
         principal_by_issuer={"issuer-trusted": "principal-c1"},
         scopes_by_principal={"principal-c1": ("raios.a2a.high_risk",)},
         high_risk_principals=("principal-c1",),
+        high_risk_task_grants={"principal-c1": PROTECTED_TASKS},
     )
 
 
@@ -86,6 +90,7 @@ class AuthEvidenceConsistencyTests(unittest.TestCase):
             principal="principal-c1",
             authorized_scopes=(),
             high_risk_principals=frozenset({"principal-c1"}),
+            high_risk_task_grants={"principal-c1": ("t37",)},
             requested={"authority_present": True, "requested_authority": "C1"},
             task_id="t37",
         )
@@ -127,6 +132,9 @@ class AuthEvidenceConsistencyTests(unittest.TestCase):
         self.assertEqual(auth["AUTHORIZED_SCOPES"], ["raios.a2a.high_risk"])
         self.assertEqual(auth["AUTHORITY_SOURCE"], AUTHORITY_SOURCE_C1_TASK_GATE)
         self.assertTrue(auth["AUTHORITY_SOURCE_PROVENANCE"]["c1_task_gate"])
+        self.assertTrue(auth["AUTHORITY_SOURCE_PROVENANCE"]["task_scoped"])
+        self.assertEqual(auth["AUTHORITY_SOURCE_PROVENANCE"]["granted_task_id"], "t38")
+        self.assertEqual(auth["AUTHORITY_SOURCE_PROVENANCE"]["task_id"], "t38")
         self.assertEqual(auth["AUTHORITY_SOURCE_PROVENANCE"]["principal"], "principal-c1")
         self.assertTrue(auth["SCOPE_AUTHORIZED"])
         self.assertTrue(auth["CAPABILITY_AUTHORIZED"])
@@ -165,6 +173,41 @@ class AuthEvidenceConsistencyTests(unittest.TestCase):
         self.assertEqual(out["receipt"]["AUTH_RESULT"], out["auth_result"])
         self.assertEqual(out["receipt"]["POLICY_RESULT"], "ALLOW")
         self.assertFalse(out["EXECUTED"])
+
+    def test_T41_SAME_PRINCIPAL_UNGRANTED_TASK_DENIED(self):
+        with self.assertRaises(FailClosed) as ctx:
+            _protected_gw().handle(
+                _protected_req(
+                    a2a_task_id="t41",
+                    idempotency_key="t41",
+                    signature=sign_bytes(b"peer.alpha:t41:t41", b"test-hmac-secret"),
+                )
+            )
+        self.assertEqual(ctx.exception.code, AUTHORITY_REQUIRED)
+
+    def test_T42_TASK_GATE_LABEL_REQUIRES_TASK_ID_MATCH(self):
+        granted = _protected_gw().handle(
+            _protected_req(
+                a2a_task_id="t38",
+                idempotency_key="t38",
+                signature=sign_bytes(b"peer.alpha:t38:t38", b"test-hmac-secret"),
+            )
+        )
+        denied = None
+        with self.assertRaises(FailClosed):
+            denied = _protected_gw().handle(
+                _protected_req(
+                    a2a_task_id="ungranted-task",
+                    idempotency_key="ungranted-task",
+                    signature=sign_bytes(b"peer.alpha:ungranted-task:ungranted-task", b"test-hmac-secret"),
+                )
+            )
+        self.assertIsNone(denied)
+        prov = granted["auth_result"]["AUTHORITY_SOURCE_PROVENANCE"]
+        self.assertTrue(prov["principal_eligible_for_task_gate"])
+        self.assertTrue(prov["task_scoped"])
+        self.assertEqual(prov["granted_task_id"], "t38")
+        self.assertEqual(granted["auth_result"]["AUTHORITY_SOURCE"], AUTHORITY_SOURCE_C1_TASK_GATE)
 
 
 if __name__ == "__main__":

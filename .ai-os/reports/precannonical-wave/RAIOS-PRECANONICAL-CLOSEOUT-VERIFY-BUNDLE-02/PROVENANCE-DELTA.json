@@ -1,0 +1,59 @@
+{
+  "schema": "raios.closeout.provenance-delta.v1",
+  "HISTORICAL_PROVENANCE_REPLAYED": false,
+  "HISTORICAL_SCAN_REPEATED": false,
+  "PROVENANCE_GRAPH_REUSED": true,
+  "PRECANONICAL_COMMIT_PRESENT": true,
+  "PRECANONICAL_COMMIT_CONTENT_BOUND": true,
+  "PRECANONICAL_BRANCH_BOUND": true,
+  "REMOTE_REF_MATCH": true,
+  "HEAD_RELATION_TO_5AE96D0": "EQUAL",
+  "PRIOR_BRANCH_RELATION": "DESCENDANT_OF_TREE001_LINEAGE_12603d0_8e57fdb_50c5da28",
+  "observation": {
+    "HEAD": "5ae96d04b6dca7c871ad5b836609780cc48d17ef",
+    "branch": "ai-evolution-202608051809",
+    "rev_parse_5ae96d0": "5ae96d04b6dca7c871ad5b836609780cc48d17ef",
+    "origin/ai-evolution-202608051809": "5ae96d04b6dca7c871ad5b836609780cc48d17ef",
+    "AuthorDate": "Thu Aug 27 17:04:57 2026 +0200",
+    "subject": "Record precanonical wave: A2A, C1-C5 task dispatch, and C7 RIF staging.",
+    "merge_base_is_ancestor": {
+      "5ae96d0_of_HEAD": true,
+      "HEAD_of_5ae96d0": true,
+      "50c5da28_of_5ae96d0": true,
+      "8e57fdb_of_5ae96d0": true,
+      "12603d0_of_5ae96d0": true
+    },
+    "TREE001_prior_heads_reused_not_rescanned": [
+      "12603d02253547c7727bc84ce68c318e8e9258bc",
+      "8e57fdb63286555c11f917739a4b0b74588c89ce",
+      "50c5da28a4f25b80ac813fc5acb2a046e18b54d8"
+    ],
+    "phase2a/class-a-20260822-232109_local_ref": "ABSENT",
+    "FETCH_EXECUTED": false
+  },
+  "nodes_linked_not_rebuilt": {
+    "commit_ref": "5ae96d04b6dca7c871ad5b836609780cc48d17ef",
+    "branch_ref": "ai-evolution-202608051809",
+    "precannonical_wave_ref": ".ai-os/reports/precannonical-wave/RAIOS-PRECANONICAL-EXECUTION-WAVE-01",
+    "C7_package_ref": ".ai-os/reports/rif-c7-integration/RAIOS-RIF-C7-INTEGRATION-RECON-02A",
+    "TREE001_lineage_ref": ".ai-os/reports/master-estate-census/RAIOS-TOTAL-ESTATE-PHASE1-01-20260826T185525Z/tree-copy-repo-recon/RAIOS-TOTAL-TREE-COPY-REPO-RECON-01A",
+    "historical_HEAD_observations": ["12603d0", "8e57fdb", "50c5da28", "5ae96d0"],
+    "receipt_hash_refs": [
+      "a289ce8e28817259b333994c9a061b66cb81d4c7afba8293707aadb20fa56342",
+      "c2fa2d061fc1125d11adaf49adedcb061fabc0d19fc0008dfdb65e85c0e9ccff",
+      "c65b671d31b4984f5e2634f2a1054383fc0cd301bb91ac1bdb2951aaca1e62db"
+    ]
+  },
+  "NEW_PROVENANCE_NODES_ADDED": [
+    "RAIOS-PRECANONICAL-CLOSEOUT-VERIFY-BUNDLE-02",
+    "this HEAD==5ae96d0 origin-match observation",
+    "uncommitted closeout-remediation working-tree delta vs 5ae96d0"
+  ],
+  "PROVENANCE_CONTRADICTIONS_FOUND": [
+    "HMAC/task-scope remediations exist in working tree and are NOT in commit 5ae96d0; live HMAC receipt is worktree/receipt evidence, not commit content",
+    "C6 reviewed 50c5da28; 5ae96d0 is a descendant that C6 has not independently verified",
+    "01B seat-model collapse vs RAIOS-SEAT-ROUTING-GUARD-01 chat policy remains unresolved as authority"
+  ],
+  "REPORTED_WAVE_UNSTAGED_REMAINDER": false,
+  "NOTE": "5ae96d0 wave files are committed. Subsequent closeout remediations are uncommitted. Unrelated dirty files preserved (752 short-status lines)."
+}

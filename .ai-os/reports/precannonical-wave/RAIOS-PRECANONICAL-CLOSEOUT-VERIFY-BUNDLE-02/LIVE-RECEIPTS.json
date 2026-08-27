@@ -1,0 +1,53 @@
+{
+  "schema": "raios.closeout.live-receipts.v1",
+  "LIVE_DISPATCH_RERUN_FOR_BUNDLE": false,
+  "C1_C5_AUTHENTICATED_BOUND_RECEIPT": {
+    "path": ".ai-os/receipts/command-fabric/c1c5-task/415717063d4bdd51caba7583.receipt.json",
+    "sha256": "a289ce8e28817259b333994c9a061b66cb81d4c7afba8293707aadb20fa56342",
+    "TASK_ID": "RAIOS-C1-C5-TASK-DISPATCH-01A-LIVE-03",
+    "CORRELATION_ID": "COR-UCP-PROOF-01A",
+    "IDEMPOTENCY_KEY": "idem-c1c5-live-health-03",
+    "AUTHORITY_SOURCE": "HMAC_FOUNDER_SESSION",
+    "FIRST_EXECUTION_STATUS": "COMPLETED",
+    "REPLAY_STATUS": "ALREADY_APPLIED",
+    "REPLAY_TOOL_OR_CAPABILITY_INVOKED": false,
+    "CAPABILITY_INVOKED_FIRST": true,
+    "TARGET": "C5",
+    "REQUESTED_CAPABILITY": "c5.self_inspect.health",
+    "C5_HEALTH_HTTP": 200,
+    "C5_HEALTH_STATUS": "ONLINE",
+    "WAL_WRITTEN": false,
+    "CANONICAL_MUTATION": false,
+    "receipt_body": {
+      "schema": "raios.c1c5.task-receipt.v1",
+      "TASK_ID": "RAIOS-C1-C5-TASK-DISPATCH-01A-LIVE-03",
+      "CORRELATION_ID": "COR-UCP-PROOF-01A",
+      "IDEMPOTENCY_KEY": "idem-c1c5-live-health-03",
+      "ACTOR_BOUND": "C1@AG",
+      "AUTHORITY_SOURCE": "HMAC_FOUNDER_SESSION",
+      "TARGET": "C5",
+      "REQUESTED_CAPABILITY": "c5.self_inspect.health",
+      "AUTH_RESULT": {
+        "EFFECTIVE_AUTHORITY": true,
+        "AUTHORITY_SOURCE": "HMAC_FOUNDER_SESSION",
+        "PRINCIPAL": "C1@AG"
+      },
+      "POLICY_RESULT": "ALLOW",
+      "RISK_CLASS": "LOW",
+      "UCP_STATUS": "ACCEPTED_DRY_RUN",
+      "UCP_NO_OP": false,
+      "CAPABILITY_INVOKED": true,
+      "STATUS": "COMPLETED",
+      "TIMESTAMP": "2026-08-27T15:36:47Z",
+      "WAL_WRITTEN": false,
+      "CANONICAL_MUTATION": false
+    }
+  },
+  "PRIOR_BEARER_RECEIPTS_NOT_THIS_PROOF": [
+    {
+      "path": ".ai-os/receipts/command-fabric/c1c5-task/4220ac6daaee643d84d61ad8.receipt.json",
+      "AUTHORITY_SOURCE": "SERVER_SIDE_FOUNDER_SESSION",
+      "NOTE": "pre-HMAC; C6 rejected as impersonation-capable bind"
+    }
+  ]
+}

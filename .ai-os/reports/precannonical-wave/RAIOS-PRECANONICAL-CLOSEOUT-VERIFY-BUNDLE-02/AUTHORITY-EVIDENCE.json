@@ -1,0 +1,41 @@
+{
+  "schema": "raios.closeout.authority-evidence.v1",
+  "A2A_TASK_SCOPED_AUTHORITY": {
+    "implementation": [
+      "src/raios/a2a/authority.py:task_gate_granted",
+      "src/raios/a2a/gateway.py:high_risk_task_grants"
+    ],
+    "rule": "principal in high_risk_principals is eligibility only; grant is (principal, a2a_task_id) in high_risk_task_grants",
+    "EXPLICIT_C1_TASK_GATE_REQUIRES_TASK_ID_MATCH": true,
+    "CALLER_SELF_ASSERTED_AUTHORITY_ACCEPTED": false,
+    "EMPTY_GRANT_MAP_FAIL_CLOSED": true,
+    "tests": {
+      "T41_SAME_PRINCIPAL_UNGRANTED_TASK_DENIED": {"result": "FailClosed AUTHORITY_REQUIRED", "pass": true},
+      "T42_TASK_GATE_LABEL_REQUIRES_TASK_ID_MATCH": {"granted_task_id": "t38", "AUTHORITY_SOURCE": "EXPLICIT_C1_TASK_GATE", "ungranted_denied": true, "pass": true}
+    },
+    "package": ".ai-os/reports/a2a-federated-interop/RAIOS-A2A-AUTH-TASK-SCOPE-01C",
+    "LIVE_PUBLIC_LISTENER": false,
+    "A2A_PRODUCTION_ACTIVATED": false,
+    "NOTE": "A2A remains in-process only. Task-scoped proof is Gateway.handle unit execution T41/T42, not a public listener."
+  },
+  "C1_C5_AUTHENTICATED_FOUNDER_CONTEXT": {
+    "HMAC_ALG": "HMAC-SHA256",
+    "HMAC_MESSAGE": "session_id\\ntask_id\\nidempotency_key\\ncorrelation_id",
+    "SECRET_LOCATION": "session.founder_secret server-side",
+    "STATIC_C1_REF": "raios.identity.C1.ACTIVE_CANONICAL",
+    "STATIC_C1_REF_IS_GRANT": false,
+    "SESSION_ID_ALONE_IS_GRANT": false,
+    "ACTOR_STRING_IS_GRANT": false,
+    "CHANNEL_ATTESTED_IGNORES_ENVELOPE_REF": true,
+    "implementation": ["src/raios/c1c5/identity.py", "src/raios/c1c5/dispatch.py", ".ai-os/control/RAIOS-C1-C5-CHANNEL.py"]
+  },
+  "NEGATIVE_AUTHORIZATION_PROBES": {
+    "T11_STATIC_C1_IDENTITY_STRING_REJECT": {"expected": "AUTH_FAILED", "observed": "DENIED", "pass": true},
+    "T12_SESSION_ID_WITHOUT_HMAC_REJECT": {"expected": "AUTH_FAILED", "observed": "DENIED", "pass": true},
+    "T13_WRONG_HMAC_REJECT": {"expected": "AUTH_FAILED", "observed": "DENIED", "pass": true},
+    "T15_HMAC_NOT_REUSABLE_ON_OTHER_TASK": {"expected": "AUTH_FAILED", "observed": "DENIED", "pass": true},
+    "T10_ACTOR_STRING_IS_NOT_AUTHORITY": {"expected": "AUTH_FAILED", "observed": "DENIED", "pass": true},
+    "T41_UNGRANTED_A2A_TASK": {"expected": "AUTHORITY_REQUIRED", "observed": "DENIED", "pass": true}
+  },
+  "STATIC_FAKE_C1_IMPERSONATION": "DENIED"
+}

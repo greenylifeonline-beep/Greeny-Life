@@ -1,0 +1,17 @@
+{
+  "schema": "raios.c1c5.dispatch-tests-01a.v1",
+  "TASK_ID": "RAIOS-C1-C5-TASK-DISPATCH-01A",
+  "LLM_CALLS": 0,
+  "GPU_USED": false,
+  "PAID_API_CALLS": 0,
+  "T01_T10_STILL_PASS": true,
+  "T11_STATIC_C1_IDENTITY_STRING_REJECT": true,
+  "T12_SESSION_ID_WITHOUT_HMAC_REJECT": true,
+  "T13_WRONG_HMAC_REJECT": true,
+  "T14_CHANNEL_ATTESTED_IGNORES_STATIC_REF": true,
+  "T15_HMAC_NOT_REUSABLE_ON_OTHER_TASK": true,
+  "T11_DRY_RUN_IDEMPOTENT": true,
+  "T16_LIVE_UCP_SEND_ACK_NO_LEASE": true,
+  "DISPATCH_FILE": "tests/c1c5/test_dispatch.py",
+  "CONTROL_FILE": "tests/c1c5/test_control_integration.py"
+}

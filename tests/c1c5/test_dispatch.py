@@ -20,13 +20,16 @@ from raios.a2a.failclosed import AUTH_FAILED, AUTHORITY_REQUIRED, CAPABILITY_UNK
 from raios.a2a.ucp_adapter import DryRunUCP
 from raios.c1c5.dispatch import dispatch, maybe_dispatch
 from raios.c1c5.envelope import SCHEMA_VERSION
-from raios.c1c5.identity import trusted_founder_contexts
+from raios.c1c5.identity import STATIC_C1_REF, founder_binding, trusted_founder_contexts
+
+SECRET = "ab" * 32
 
 
 def _session() -> dict:
     return {
         "session_id": "COR-TEST-C1C5-TASK-01",
         "correlation_id": "COR-TEST-C1C5-TASK-01",
+        "founder_secret": SECRET,
     }
 
 
@@ -50,6 +53,19 @@ def _env(**kw) -> dict:
     return base
 
 
+def _attach_binding(env: dict, session: dict) -> dict:
+    out = dict(env)
+    ref = str(out.get("authority_context_reference") or session["session_id"])
+    out["founder_binding"] = founder_binding(
+        secret=session["founder_secret"],
+        session_id=ref,
+        task_id=str(out.get("task_id") or ""),
+        idempotency_key=str(out.get("idempotency_key") or ""),
+        correlation_id=str(out.get("correlation_id") or ""),
+    )
+    return out
+
+
 def _text(env: dict) -> str:
     return json.dumps(env, ensure_ascii=False)
 
@@ -65,13 +81,19 @@ class C1C5DispatchTests(unittest.TestCase):
         self.session = _session()
 
     def _go(self, env, **kw):
+        bind = kw.pop("bind", True)
+        channel_attested = kw.pop("channel_attested", False)
+        payload = dict(env)
+        if bind and payload.get("authority_context_reference") and not channel_attested:
+            payload = _attach_binding(payload, self.session)
         return dispatch(
-            _text(env),
+            _text(payload),
             session=self.session,
             ucp=kw.get("ucp", self.ucp),
             health=kw.get("health", _health),
             receipt_dir=self.tmp,
             persist_receipt=kw.get("persist_receipt", True),
+            channel_attested=channel_attested,
         )
 
     def test_T01_PLAIN_CHAT_NOT_TASK(self):
@@ -85,16 +107,16 @@ class C1C5DispatchTests(unittest.TestCase):
     def test_T02_MALFORMED_REJECT(self):
         env = _env()
         del env["task_id"]
-        out = self._go(env)
+        out = self._go(env, bind=False)
         self.assertEqual(out["STATUS"], "REJECTED")
         self.assertEqual(out["FAIL_CLOSED"], "TASK_ENVELOPE_MALFORMED")
         self.assertFalse(out["TASK_BOUND"])
         self.assertFalse(out["PROVEN"])
 
     def test_T03_MISSING_AUTH_REJECT(self):
-        out = self._go(_env(authority_context_reference=""))
+        out = self._go(_env(authority_context_reference=""), bind=False)
         self.assertEqual(out["FAIL_CLOSED"], AUTH_FAILED)
-        out2 = self._go(_env(authority_context_reference="ACTOR=C1"))
+        out2 = self._go(_env(authority_context_reference="ACTOR=C1"), bind=False)
         self.assertEqual(out2["FAIL_CLOSED"], AUTH_FAILED)
 
     def test_T04_UNKNOWN_CAPABILITY_REJECT(self):
@@ -106,7 +128,7 @@ class C1C5DispatchTests(unittest.TestCase):
         self.assertEqual(out["FAIL_CLOSED"], RISK_POLICY_DENIED)
 
     def test_T06_HIGH_RISK_WITHOUT_AUTHORITY_REJECT(self):
-        unauth = self._go(_env(risk_class="HIGH", intent="DELETE", authority_context_reference=""))
+        unauth = self._go(_env(risk_class="HIGH", intent="DELETE", authority_context_reference=""), bind=False)
         self.assertEqual(unauth["FAIL_CLOSED"], AUTH_FAILED)
         high = self._go(_env(risk_class="HIGH", intent="SELF_INSPECT"))
         self.assertEqual(high["FAIL_CLOSED"], AUTHORITY_REQUIRED)
@@ -146,11 +168,56 @@ class C1C5DispatchTests(unittest.TestCase):
         self.assertFalse(out["CANONICAL_MUTATION"])
         self.assertFalse(out["WAL_WRITTEN"])
         self.assertFalse(out["COMMAND_FABRIC_E2E_PROVEN"])
+        self.assertEqual(out["AUTH"]["AUTHORITY_SOURCE"], "HMAC_FOUNDER_SESSION")
         self.assertTrue(Path(out["RECEIPT_PATH"]).is_file())
 
     def test_T10_ACTOR_STRING_IS_NOT_AUTHORITY(self):
         self.assertIn("COR-TEST-C1C5-TASK-01", trusted_founder_contexts(session=self.session))
-        out = self._go(_env(actor="C1", authority_context_reference="not-a-server-bind"))
+        out = self._go(_env(actor="C1", authority_context_reference="not-a-server-bind"), bind=False)
+        self.assertEqual(out["FAIL_CLOSED"], AUTH_FAILED)
+
+    def test_T11_STATIC_C1_IDENTITY_STRING_REJECT(self):
+        out = self._go(_env(authority_context_reference=STATIC_C1_REF), bind=False)
+        self.assertEqual(out["FAIL_CLOSED"], AUTH_FAILED)
+        self.assertFalse(out["TASK_BOUND"])
+        self.assertNotIn(STATIC_C1_REF, trusted_founder_contexts(session=self.session))
+
+    def test_T12_SESSION_ID_WITHOUT_HMAC_REJECT(self):
+        out = self._go(_env(), bind=False)
+        self.assertEqual(out["FAIL_CLOSED"], AUTH_FAILED)
+        self.assertFalse(out["TASK_BOUND"])
+
+    def test_T13_WRONG_HMAC_REJECT(self):
+        env = _env()
+        env["founder_binding"] = "00" * 32
+        out = dispatch(
+            _text(env),
+            session=self.session,
+            ucp=self.ucp,
+            health=_health,
+            receipt_dir=self.tmp,
+        )
+        self.assertEqual(out["FAIL_CLOSED"], AUTH_FAILED)
+
+    def test_T14_CHANNEL_ATTESTED_IGNORES_STATIC_REF(self):
+        out = self._go(_env(authority_context_reference=STATIC_C1_REF), bind=False, channel_attested=True)
+        self.assertTrue(out["TASK_BOUND"])
+        self.assertEqual(out["AUTH"]["AUTHORITY_SOURCE"], "CHANNEL_ATTESTED_FOUNDER_SESSION")
+        self.assertEqual(out["AUTH"]["authority_context_reference"], "COR-TEST-C1C5-TASK-01")
+        self.assertTrue(out["PROVEN"])
+
+    def test_T15_HMAC_NOT_REUSABLE_ON_OTHER_TASK(self):
+        first = _attach_binding(_env(), self.session)
+        stolen = dict(first)
+        stolen["task_id"] = "RAIOS-C1-C5-OTHER-TASK"
+        stolen["idempotency_key"] = "idem-other-task"
+        out = dispatch(
+            _text(stolen),
+            session=self.session,
+            ucp=self.ucp,
+            health=_health,
+            receipt_dir=self.tmp,
+        )
         self.assertEqual(out["FAIL_CLOSED"], AUTH_FAILED)
 
 

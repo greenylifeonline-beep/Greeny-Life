@@ -1,0 +1,36 @@
+{
+  "schema": "raios.closeout.c7-rif-evidence.v1",
+  "AG_SUITE_RERUN_FOR_BUNDLE": false,
+  "path": ".ai-os/staging/rif-c7-integration/incoming/RIF-RAIOS-DONOR-PACKAGE-v1.1.zip",
+  "outer_sha256": "c65b671d31b4984f5e2634f2a1054383fc0cd301bb91ac1bdb2951aaca1e62db",
+  "outer_sha256_source": "RAIOS-RIF-C7-INTEGRATION-RECON-02A/RIF-C7-SOURCE-BIND.json observed_sha256; not recomputed for this bundle",
+  "source_bind_receipt": ".ai-os/staging/rif-c7-integration/RIF-RAIOS-DONOR-PACKAGE-v1.1/SOURCE-BIND-AG.json",
+  "source_bind_receipt_sha256": "00877184d53b96e168d6d1f2a92da8f15f30255b7c6f967a131eaf98c369bcc0",
+  "PACKAGE_SHA256_MATCH": true,
+  "manifest": ".ai-os/staging/rif-c7-integration/RIF-RAIOS-DONOR-PACKAGE-v1.1/extracted/package-meta/RIF-DONOR-MANIFEST.json",
+  "internal_hash_coverage": {
+    "EXTRACTED_FILES_TOTAL": 29,
+    "INTERNAL_HASHES_CHECKED": 22,
+    "INTERNAL_HASHES_PASS": 22,
+    "INTERNAL_HASHES_FAIL": 0,
+    "DO_NOT_INFER_29_OF_29": true,
+    "EXCLUDED_FROM_INTERNAL_MANIFEST": 7,
+    "EXCLUSION_CLASS": "intentionally excluded self-referential package-meta artifacts"
+  },
+  "AG_TEST_RESULTS": {
+    "file": ".ai-os/reports/rif-c7-integration/RAIOS-RIF-C7-INTEGRATION-RECON-02A/RIF-C7-AG-TEST-RESULTS.json",
+    "sha256": "d62d4ce5436dc530997773bf9bb294afbb8cdf52912971ed6aa872874c8fbda2",
+    "TESTS_DISCOVERED": 56,
+    "TESTS_EXECUTED": 56,
+    "TESTS_PASS": 56,
+    "TESTS_FAIL": 0,
+    "EXECUTION_CLASS": "AG_STAGING_KERNEL_INTERPRETATION_OF_DONOR_SPEC",
+    "C7_NATIVE_CODE_PRESENT": false,
+    "C7_TESTS_EXECUTED": 0,
+    "C7_TEST_EXECUTION_PROVEN": false,
+    "AG_TEST_EXECUTION_PROVEN": true
+  },
+  "CANONICAL_INTEGRATION_PROVEN": false,
+  "DONOR_REBUILT": false,
+  "C6_INDEPENDENT_BIND": false
+}

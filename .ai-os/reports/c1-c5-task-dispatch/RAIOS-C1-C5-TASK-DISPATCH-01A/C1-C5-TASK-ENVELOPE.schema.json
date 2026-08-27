@@ -1,0 +1,76 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "raios.c1c5.task-envelope.v1",
+  "title": "RAIOS C1-C5 task envelope (01A HMAC bind)",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schema_version",
+    "task_id",
+    "actor",
+    "target",
+    "mode",
+    "intent",
+    "risk_class",
+    "writes_allowed",
+    "correlation_id",
+    "idempotency_key",
+    "requested_capability",
+    "parameters",
+    "authority_context_reference"
+  ],
+  "properties": {
+    "schema_version": {
+      "const": "raios.c1c5.task-envelope.v1"
+    },
+    "task_id": {
+      "type": "string",
+      "minLength": 1
+    },
+    "actor": {
+      "type": "string",
+      "description": "Request data only. Never a grant."
+    },
+    "target": {
+      "type": "string",
+      "enum": ["C5", "C5@AG", "C5-PUBLIC"]
+    },
+    "mode": {
+      "type": "string",
+      "enum": ["READ_ONLY", "NOOP"]
+    },
+    "intent": {
+      "type": "string"
+    },
+    "risk_class": {
+      "type": "string",
+      "enum": ["LOW", "MEDIUM", "HIGH", "CRITICAL"]
+    },
+    "writes_allowed": {
+      "type": "boolean"
+    },
+    "correlation_id": {
+      "type": "string",
+      "minLength": 1
+    },
+    "idempotency_key": {
+      "type": "string",
+      "minLength": 1
+    },
+    "requested_capability": {
+      "type": "string",
+      "minLength": 1
+    },
+    "parameters": {
+      "type": "object"
+    },
+    "authority_context_reference": {
+      "type": "string",
+      "description": "For HMAC path must equal live session_id. Static raios.identity.C1.ACTIVE_CANONICAL is never a grant. CHANNEL attested path ignores this field."
+    },
+    "founder_binding": {
+      "type": "string",
+      "description": "HMAC-SHA256 hex over session_id|task_id|idempotency_key|correlation_id using server-side founder_secret. Required for non-channel dispatch. Missing/wrong is AUTH_FAILED, not MALFORMED."
+    }
+  }
+}

@@ -1,0 +1,23 @@
+{
+  "schema": "raios.a2a.auth-task-scope-tests.v1",
+  "TASK_ID": "RAIOS-A2A-AUTH-TASK-SCOPE-01C",
+  "LLM_CALLS": 0,
+  "GPU_USED": false,
+  "PAID_API_CALLS": 0,
+  "COMMAND": "python -m unittest tests.a2a.test_foundation tests.a2a.test_security_remediation tests.a2a.test_auth_evidence_consistency",
+  "T36_T40_STILL_PASS": true,
+  "T38_NOW_ASSERTS_TASK_SCOPED_AND_GRANTED_TASK_ID": true,
+  "T41": {
+    "name": "SAME_PRINCIPAL_UNGRANTED_TASK_DENIED",
+    "input": "principal-c1 eligible and scoped; a2a_task_id=t41 not in high_risk_task_grants",
+    "result": "FailClosed AUTHORITY_REQUIRED",
+    "pass": true
+  },
+  "T42": {
+    "name": "TASK_GATE_LABEL_REQUIRES_TASK_ID_MATCH",
+    "granted_task_id": "t38",
+    "AUTHORITY_SOURCE": "EXPLICIT_C1_TASK_GATE",
+    "ungranted_task_denied": true,
+    "pass": true
+  }
+}

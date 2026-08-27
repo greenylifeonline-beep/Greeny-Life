@@ -71,6 +71,7 @@ def dispatch(
     health: capabilities.HealthFn | None = None,
     receipt_dir=None,
     persist_receipt: bool = True,
+    channel_attested: bool = False,
 ) -> dict[str, Any]:
     parsed = envelope.parse(text)
     if parsed is None:
@@ -92,7 +93,10 @@ def dispatch(
         auth = identity.bind_founder(
             actor=str(parsed.get("actor") or ""),
             authority_context_reference=str(parsed.get("authority_context_reference") or ""),
+            env=parsed,
             session=session,
+            channel_attested=channel_attested,
+            founder_binding_hex=str(parsed.get("founder_binding") or ""),
         )
     except PermissionError:
         return _reject(AUTH_FAILED, "authority_context_reference is not a server-side founder bind")

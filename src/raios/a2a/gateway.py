@@ -73,6 +73,7 @@ class Gateway:
         principal_by_issuer: dict[str, str] | None = None,
         scopes_by_principal: dict[str, tuple[str, ...]] | None = None,
         high_risk_principals: tuple[str, ...] = (),
+        high_risk_task_grants: dict[str, tuple[str, ...]] | None = None,
         ucp: DryRunUCP | None = None,
     ) -> None:
         self.hmac_secrets = hmac_secrets or {}
@@ -80,6 +81,7 @@ class Gateway:
         self.principal_by_issuer = principal_by_issuer or {}
         self.scopes_by_principal = scopes_by_principal or {}
         self.high_risk_principals = frozenset(high_risk_principals)
+        self.high_risk_task_grants = dict(high_risk_task_grants or {})
         self.ucp = ucp or DryRunUCP()
         self.semantics = SemanticRegistry()
 
@@ -182,6 +184,7 @@ class Gateway:
             principal=principal,
             authorized_scopes=authorized_scopes,
             high_risk_principals=self.high_risk_principals,
+            high_risk_task_grants=self.high_risk_task_grants,
             requested=requested,
             task_id=req.a2a_task_id,
         )

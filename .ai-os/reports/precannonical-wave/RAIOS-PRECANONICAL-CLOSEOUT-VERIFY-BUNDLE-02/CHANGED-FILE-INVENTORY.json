@@ -1,0 +1,53 @@
+{
+  "schema": "raios.closeout.changed-file-inventory.v1",
+  "versus": "HEAD=5ae96d04b6dca7c871ad5b836609780cc48d17ef",
+  "scope": "closeout remediations only; unrelated dirty files not listed as closeout inventory",
+  "modified_tracked": [
+    {"status": "M", "path": ".ai-os/control/RAIOS-C1-C5-CHANNEL.py"},
+    {"status": "M", "path": ".ai-os/state/LOCKS.json"},
+    {"status": "M", "path": "src/raios/a2a/authority.py"},
+    {"status": "M", "path": "src/raios/a2a/gateway.py"},
+    {"status": "M", "path": "src/raios/c1c5/dispatch.py"},
+    {"status": "M", "path": "src/raios/c1c5/identity.py"},
+    {"status": "M", "path": "tests/a2a/test_auth_evidence_consistency.py"},
+    {"status": "M", "path": "tests/c1c5/test_control_integration.py"},
+    {"status": "M", "path": "tests/c1c5/test_dispatch.py"}
+  ],
+  "untracked_closeout": [
+    ".ai-os/handoffs/20260827-174208-cursor-RAIOS-PRECANONICAL-INDEPENDENT-VERIFY-REMEDIATE-01.md",
+    ".ai-os/receipts/command-fabric/c1c5-task/415717063d4bdd51caba7583.receipt.json",
+    ".ai-os/reports/a2a-federated-interop/RAIOS-A2A-AUTH-TASK-SCOPE-01C/A2A-AUTH-TASK-SCOPE-01C.json",
+    ".ai-os/reports/a2a-federated-interop/RAIOS-A2A-AUTH-TASK-SCOPE-01C/A2A-AUTH-TASK-SCOPE-TESTS.json",
+    ".ai-os/reports/a2a-federated-interop/RAIOS-A2A-AUTH-TASK-SCOPE-01C/C6-HANDOFF.md",
+    ".ai-os/reports/a2a-federated-interop/RAIOS-A2A-AUTH-TASK-SCOPE-01C/FILES-SHA256.txt",
+    ".ai-os/reports/a2a-federated-interop/RAIOS-A2A-AUTH-TASK-SCOPE-01C/MANIFEST.json",
+    ".ai-os/reports/c1-c5-task-dispatch/RAIOS-C1-C5-TASK-DISPATCH-01A/C1-C5-DISPATCH-TESTS.json",
+    ".ai-os/reports/c1-c5-task-dispatch/RAIOS-C1-C5-TASK-DISPATCH-01A/C1-C5-IMPERSONATION-REMEDIATION.json",
+    ".ai-os/reports/c1-c5-task-dispatch/RAIOS-C1-C5-TASK-DISPATCH-01A/C1-C5-TASK-ENVELOPE.schema.json",
+    ".ai-os/reports/c1-c5-task-dispatch/RAIOS-C1-C5-TASK-DISPATCH-01A/C6-HANDOFF.md",
+    ".ai-os/reports/c1-c5-task-dispatch/RAIOS-C1-C5-TASK-DISPATCH-01A/FILES-SHA256.txt",
+    ".ai-os/reports/c1-c5-task-dispatch/RAIOS-C1-C5-TASK-DISPATCH-01A/MANIFEST.json",
+    ".ai-os/reports/precannonical-control-integration/RAIOS-PRECANONICAL-CONTROL-INTEGRATION-PROOF-01A/C6-HANDOFF.md",
+    ".ai-os/reports/precannonical-control-integration/RAIOS-PRECANONICAL-CONTROL-INTEGRATION-PROOF-01A/CONTROL-INTEGRATION-PROOF-01A.json",
+    ".ai-os/reports/precannonical-control-integration/RAIOS-PRECANONICAL-CONTROL-INTEGRATION-PROOF-01A/FILES-SHA256.txt",
+    ".ai-os/reports/precannonical-control-integration/RAIOS-PRECANONICAL-CONTROL-INTEGRATION-PROOF-01A/MANIFEST.json",
+    ".ai-os/reports/precannonical-wave/RAIOS-PRECANONICAL-INDEPENDENT-VERIFY-REMEDIATE-01/C6-HANDOFF.md",
+    ".ai-os/reports/precannonical-wave/RAIOS-PRECANONICAL-INDEPENDENT-VERIFY-REMEDIATE-01/C7-HEAD-LAG-POINTER.json",
+    ".ai-os/reports/precannonical-wave/RAIOS-PRECANONICAL-INDEPENDENT-VERIFY-REMEDIATE-01/FILES-SHA256.txt",
+    ".ai-os/reports/precannonical-wave/RAIOS-PRECANONICAL-INDEPENDENT-VERIFY-REMEDIATE-01/INDEPENDENT-VERIFY-REMEDIATE-01.json",
+    ".ai-os/reports/precannonical-wave/RAIOS-PRECANONICAL-INDEPENDENT-VERIFY-REMEDIATE-01/MANIFEST.json",
+    ".ai-os/reports/precannonical-wave/RAIOS-SEAT-MODEL-AUTHORITY-BIND-01C/C6-HANDOFF.md",
+    ".ai-os/reports/precannonical-wave/RAIOS-SEAT-MODEL-AUTHORITY-BIND-01C/FILES-SHA256.txt",
+    ".ai-os/reports/precannonical-wave/RAIOS-SEAT-MODEL-AUTHORITY-BIND-01C/MANIFEST.json",
+    ".ai-os/reports/precannonical-wave/RAIOS-SEAT-MODEL-AUTHORITY-BIND-01C/SEAT-MODEL-AUTHORITY-BIND-01C.json",
+    "src/raios/c1c5/ucp_live.py"
+  ],
+  "unrelated_untracked_seen_in_same_ls_not_inventoried": [
+    ".ai-os/handoffs/20260818-122844-cursor-V9-A14.1.md",
+    ".ai-os/handoffs/20260818-130815-cursor-V9-A15.md",
+    ".ai-os/handoffs/20260824-223000-cursor-BRANCH-UNIFY-20260824.md",
+    ".ai-os/handoffs/20260825-182400-cursor-PHASE1-C25-RECOVERY.md",
+    ".ai-os/handoffs/20260825-191300-chatgpt-C5-TREE-COMM-REPAIR.md"
+  ],
+  "commit_5ae96d0_name_status": "see git diff-tree --no-commit-id --name-status -r 5ae96d0; already recorded in terminal capture; not recopied as census"
+}

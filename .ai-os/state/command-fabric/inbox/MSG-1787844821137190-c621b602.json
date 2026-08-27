@@ -1,0 +1,20 @@
+{
+  "schema": "raios.message.v1",
+  "message_id": "MSG-1787844821137190-c621b602",
+  "correlation_id": "COR-UCP-PROOF-01A",
+  "sender": "C1@AG",
+  "target": "C2-OBS",
+  "kind": "TASK_DRY_RUN",
+  "channel": "INTERNAL_BUS",
+  "payload": {
+    "correlation_id": "COR-UCP-PROOF-01A",
+    "text": "harmless READ_ONLY SELF_INSPECT dry-run",
+    "mode": "READ_ONLY",
+    "writes_allowed": false,
+    "intent": "SELF_INSPECT",
+    "risk_class": "LOW"
+  },
+  "created_at": "2026-08-27T15:33:41.137241+00:00",
+  "head": "5ae96d04b6dca7c871ad5b836609780cc48d17ef",
+  "ack_required": true
+}

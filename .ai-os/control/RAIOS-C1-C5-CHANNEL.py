@@ -6,6 +6,7 @@ import importlib.util
 import json
 import os
 import re
+import secrets
 import subprocess
 import sys
 from datetime import datetime, timezone
@@ -360,6 +361,7 @@ def new_session():
     return {
         "session_id": corr,
         "correlation_id": corr,
+        "founder_secret": secrets.token_hex(32),
         "last_activity": ts,
         "GROUNDING_REFRESHED_AT": ts,
         "last_c1": "",
@@ -390,6 +392,10 @@ def load_session():
         save_session(sess)
         return sess
     sess.setdefault("session_id", sess.get("correlation_id"))
+    secret = sess.get("founder_secret")
+    if not isinstance(secret, str) or len(secret) < 32:
+        sess["founder_secret"] = secrets.token_hex(32)
+        save_session(sess)
     return sess
 
 
@@ -416,7 +422,7 @@ def _task_dispatch(text, sess):
                 "BOUND_RECEIPT": False,
             }
         return None
-    return maybe_dispatch(text, session=sess)
+    return maybe_dispatch(text, session=sess, channel_attested=True)
 
 
 def one_turn(router, text, sess):
