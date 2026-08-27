@@ -1,0 +1,25 @@
+{
+  "schema": "raios.resource-fabric.wave02.test-results.v1",
+  "TARGETED_TESTS_EXECUTED": 131,
+  "TARGETED_TESTS_PASS": 131,
+  "TARGETED_TESTS_FAIL": 0,
+  "FOUNDATION_REGRESSION": 116,
+  "LIVE_BINDING_TESTS": 15,
+  "command": "python -m unittest tests.resource_fabric.test_live_binding tests.resource_fabric.test_resource_fabric",
+  "RAIOS_RESOURCE_LIVE": "0",
+  "elapsed_s": 8.34,
+  "invariants": {
+    "account_isolation": true,
+    "secret_redaction": true,
+    "provider_failure_isolation": true,
+    "auth_required_ne_absent": true,
+    "catalog_ne_live_capacity": true,
+    "unknown_ne_zero": true,
+    "quota_observation_scoped": true,
+    "pricing_time_scoped": true,
+    "credit_expiry_respected": true,
+    "no_paid_activation": true,
+    "no_model_migration": true,
+    "ninerouter_ne_resource_authority": true
+  }
+}

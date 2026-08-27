@@ -26,7 +26,16 @@ _BEARER = re.compile(r"(?i)bearer\s+[a-z0-9\-._~+/]+=*")
 
 
 def is_credential_ref(value: str) -> bool:
-    prefixes = ("env:", "windows-credential-manager:", "file-ref:", "existing-receipt:", "existing:")
+    prefixes = (
+        "env:",
+        "windows-credential-manager:",
+        "file-ref:",
+        "existing-receipt:",
+        "existing-session:",
+        "existing:",
+        "cli-profile:",
+        "raios-secret:",
+    )
     return isinstance(value, str) and value.startswith(prefixes)
 
 

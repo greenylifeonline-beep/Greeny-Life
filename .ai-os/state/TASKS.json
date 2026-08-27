@@ -185,6 +185,79 @@
       "validation": "WAVE2-TARGETED-GAP-RESOLUTION.json with real process exit 0",
       "status": "IN_PROGRESS",
       "claimed_by": "cursor"
+    },
+    {
+      "id": "BRANCH-UNIFY-20260824",
+      "title": "Unify and filter Git branches without octopus merge",
+      "objective": "Collapse duplicate local refs, archive unique tips, import unique unlocked files only, never merge unrelated or locked V9 histories.",
+      "scope": [
+        "archive/repair-leftovers",
+        "migration/strong-validation",
+        ".ai-os/state/DECISIONS.md",
+        ".ai-os/handoffs"
+      ],
+      "dependencies": [],
+      "allowed_agents": [
+        "cursor"
+      ],
+      "validation": "Ledger KEEP/FILTER/SUPERSEDED; local duplicate branches deleted only after archive refs; no origin delete; no merge into RAIOS/V9.",
+      "status": "DONE",
+      "claimed_by": "cursor",
+      "evidence": "archive/repair-leftovers/branch-filter-20260824.json; .ai-os/handoffs/20260824-223000-cursor-BRANCH-UNIFY-20260824.md"
+    },
+    {
+      "id": "RAIOS-TOTAL-ESTATE-PHASE1-01",
+      "title": "Master total estate census phase 1",
+      "objective": "Evidence-backed inventory of RAIOS/GREENY-LIFE assets across authorized local and cloud surfaces. No delete/merge/promotion.",
+      "scope": [
+        ".ai-os/reports/master-estate-census/RAIOS-TOTAL-ESTATE-PHASE1-01-20260826T185525Z"
+      ],
+      "dependencies": [],
+      "allowed_agents": [
+        "cursor",
+        "C2@AG"
+      ],
+      "validation": "Master 00-19 artifacts + FILES-SHA256; C3 review required; PHASE1_COMPLETE remains false until C6 reconciliation and C3/C1.",
+      "status": "IN_PROGRESS",
+      "claimed_by": "C2@AG",
+      "lane": "C2_LOCAL_CENSUS"
+    },
+    {
+      "id": "RAIOS-RESOURCE-FABRIC-LIVE-ACCOUNT-BINDING-WAVE-02",
+      "title": "Bind live cloud accounts to Resource Fabric",
+      "objective": "Replace catalog/UNKNOWN Resource Fabric slots with current read-only account observations for owned/authorized accounts. No paid activation, no model migration, no new provider registry.",
+      "scope": [
+        "src/raios/resource_fabric",
+        "tests/resource_fabric",
+        ".ai-os/reports/resource-fabric/RAIOS-RESOURCE-FABRIC-LIVE-ACCOUNT-BINDING-WAVE-02",
+        "RAIOS-RESOURCE.ps1"
+      ],
+      "dependencies": [
+        "RAIOS-RESOURCE-FABRIC-FOUNDATION-WAVE-01"
+      ],
+      "allowed_agents": [
+        "cursor"
+      ],
+      "validation": "Wave-02 evidence package + targeted live-binding tests; AUTH_REQUIRED != ABSENT; KAGGLE_C1/KAGGLE_PARTNER isolated.",
+      "status": "IN_PROGRESS",
+      "claimed_by": "cursor"
+    },
+    {
+      "id": "RAIOS-RESOURCE-FABRIC-GIT-DELIVERY-REPAIR-WAVE-01",
+      "title": "Deliver Resource Fabric Wave-02 without oversized archives",
+      "objective": "Push a clean delivery lineage from origin 50f243a containing Wave-02 Resource Fabric source and evidence, excluding historical tarballs. Do not rewrite local 7f3c4672/b0491b5.",
+      "scope": [
+        ".ai-os/reports/resource-fabric/RAIOS-RESOURCE-FABRIC-GIT-DELIVERY-REPAIR-WAVE-01"
+      ],
+      "dependencies": [
+        "RAIOS-RESOURCE-FABRIC-FOUNDATION-WAVE-01"
+      ],
+      "allowed_agents": [
+        "cursor"
+      ],
+      "validation": "Clean delivery commit fast-forwarded to origin/ai-evolution-202608051809; no file >=100MB in pushed ancestry after 50f243a; ORIGINAL_LOCAL_LINEAGE_REWRITTEN=false",
+      "status": "IN_PROGRESS",
+      "claimed_by": "cursor"
     }
   ]
 }

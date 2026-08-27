@@ -1,0 +1,48 @@
+{
+  "schema": "raios.resource-fabric.git-delivery-repair.wave01.oversized-archives.v1",
+  "classification": "LOCAL_PROVENANCE_ONLY",
+  "EXTERNAL_ARTIFACT_REQUIRED": false,
+  "include_in_github_delivery": false,
+  "git_lfs_upload": false,
+  "deleted_from_local_disk": false,
+  "origin_commit": "7f3c4672f743ca90f62434a1a452694c83cd1b42",
+  "preservation": {
+    "local_git_commit": "7f3c4672f743ca90f62434a1a452694c83cd1b42",
+    "local_wave02_descendant": "b0491b5b982e7d12e8ff37e13e72d3a97b854f5c",
+    "note": "Blobs remain in the original local lineage and git object store. Not copied into the clean delivery ancestry after 50f243a."
+  },
+  "archives": [
+    {
+      "path": "archive/repair-leftovers/remaining-historical-roots-20260824/remaining-historical-roots.tar",
+      "size_bytes": 581793280,
+      "sha256": "84167206b2a5ba44ffed6dd06973993fa9775a301ad26998167367727532d245",
+      "git_blob_sha1": "59114b30c66696ec4224db8b58c347052e310b05",
+      "origin_commit": "7f3c4672f743ca90f62434a1a452694c83cd1b42",
+      "purpose": "Historical remaining-roots snapshot from 2026-08-24 repair leftovers. Provenance/artifact object, not Resource Fabric source.",
+      "classification": "LOCAL_PROVENANCE_ONLY",
+      "path_class": "HISTORICAL_ARCHIVE"
+    },
+    {
+      "path": "archive/repair-leftovers/controlled-retirement-evidence-20260824/snapshots/GL-005-Convergence.tar.gz",
+      "size_bytes": 254256185,
+      "sha256": "60d0ef3e0328161d54ca3d63725f27be1d86736851ee24becbcfc4c8f2d6b7d8",
+      "git_blob_sha1": "141dd4b0f6a27ee793f3aff83dd18ed1e39c5664",
+      "origin_commit": "7f3c4672f743ca90f62434a1a452694c83cd1b42",
+      "purpose": "Controlled-retirement snapshot of the GL-005 Convergence worktree. Provenance/artifact object, not Resource Fabric source.",
+      "classification": "LOCAL_PROVENANCE_ONLY",
+      "path_class": "HISTORICAL_ARCHIVE"
+    },
+    {
+      "path": "archive/repair-leftovers/remaining-historical-roots-20260824/remaining-historical-roots.tar.gz",
+      "size_bytes": 163407642,
+      "sha256": "32b5e0e3df36450318c0e0cac0e5b0e70e083370d6ba7f40fcb8c4a9d0302b1c",
+      "git_blob_sha1": "1ac52a6fc37b78a37dcac9408d1ac93456733bd0",
+      "origin_commit": "7f3c4672f743ca90f62434a1a452694c83cd1b42",
+      "purpose": "Compressed remaining-roots snapshot from 2026-08-24 repair leftovers. Provenance/artifact object, not Resource Fabric source.",
+      "classification": "LOCAL_PROVENANCE_ONLY",
+      "path_class": "HISTORICAL_ARCHIVE"
+    }
+  ],
+  "total_bytes": 999457107,
+  "count": 3
+}

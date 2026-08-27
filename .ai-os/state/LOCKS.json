@@ -318,7 +318,7 @@
       "agent": "cursor",
       "owner": "C2-PRIMARY-EXECUTOR",
       "scope": "src/raios/resource_fabric",
-      "status": "ACTIVE",
+      "status": "COMPLETED",
       "files_or_subsystem": "new resource fabric surface; do not alter frozen precanonical, A2A, C1C5, command-fabric, V9"
     },
     {
@@ -327,7 +327,7 @@
       "agent": "cursor",
       "owner": "C2-PRIMARY-EXECUTOR",
       "scope": "tests/resource_fabric",
-      "status": "ACTIVE"
+      "status": "COMPLETED"
     },
     {
       "id": "LOCK-20260827214602",
@@ -335,7 +335,7 @@
       "agent": "cursor",
       "owner": "C2-PRIMARY-EXECUTOR",
       "scope": ".ai-os/reports/resource-fabric",
-      "status": "ACTIVE"
+      "status": "COMPLETED"
     },
     {
       "id": "LOCK-20260827214603",
@@ -343,6 +343,72 @@
       "agent": "cursor",
       "owner": "C2-PRIMARY-EXECUTOR",
       "scope": "RAIOS-RESOURCE.ps1",
+      "status": "COMPLETED"
+    },
+    {
+      "id": "LOCK-20260827233500",
+      "task_id": "RAIOS-RESOURCE-FABRIC-LIVE-ACCOUNT-BINDING-WAVE-02",
+      "agent": "cursor",
+      "owner": "C2-KAGGLE-CONTROL",
+      "scope": "src/raios/resource_fabric",
+      "status": "ACTIVE",
+      "files_or_subsystem": "live account overlay on existing fabric; no new registry/census engine; no frozen precanonical"
+    },
+    {
+      "id": "LOCK-20260827233501",
+      "task_id": "RAIOS-RESOURCE-FABRIC-LIVE-ACCOUNT-BINDING-WAVE-02",
+      "agent": "cursor",
+      "owner": "C2-KAGGLE-CONTROL",
+      "scope": "tests/resource_fabric",
+      "status": "ACTIVE"
+    },
+    {
+      "id": "LOCK-20260827233502",
+      "task_id": "RAIOS-RESOURCE-FABRIC-LIVE-ACCOUNT-BINDING-WAVE-02",
+      "agent": "cursor",
+      "owner": "C2-KAGGLE-CONTROL",
+      "scope": ".ai-os/reports/resource-fabric/RAIOS-RESOURCE-FABRIC-LIVE-ACCOUNT-BINDING-WAVE-02",
+      "status": "ACTIVE"
+    },
+    {
+      "id": "LOCK-20260827233503",
+      "task_id": "RAIOS-RESOURCE-FABRIC-LIVE-ACCOUNT-BINDING-WAVE-02",
+      "agent": "cursor",
+      "owner": "C2-KAGGLE-CONTROL",
+      "scope": "RAIOS-RESOURCE.ps1",
+      "status": "ACTIVE"
+    },
+    {
+      "id": "LOCK-20260827221000",
+      "task_id": "RAIOS-9ROUTER-DISCOVER-AUDIT-INSTALL-RUN-WAVE-01",
+      "agent": "cursor",
+      "owner": "C2-PRIMARY-EXECUTOR",
+      "scope": ".ai-os/staging/9router-audit",
+      "status": "ACTIVE",
+      "files_or_subsystem": "9Router audit/staging only; no frozen precanonical, no C5/NATS/MCP rebind"
+    },
+    {
+      "id": "LOCK-20260827221001",
+      "task_id": "RAIOS-9ROUTER-DISCOVER-AUDIT-INSTALL-RUN-WAVE-01",
+      "agent": "cursor",
+      "owner": "C2-PRIMARY-EXECUTOR",
+      "scope": ".ai-os/reports/9router",
+      "status": "ACTIVE"
+    },
+    {
+      "id": "LOCK-20260827221002",
+      "task_id": "RAIOS-9ROUTER-DISCOVER-AUDIT-INSTALL-RUN-WAVE-01",
+      "agent": "cursor",
+      "owner": "C2-PRIMARY-EXECUTOR",
+      "scope": "tests/9router",
+      "status": "ACTIVE"
+    },
+    {
+      "id": "LOCK-20260828005729",
+      "task_id": "RAIOS-RESOURCE-FABRIC-GIT-DELIVERY-REPAIR-WAVE-01",
+      "agent": "cursor",
+      "owner": "C2-KAGGLE-CONTROL",
+      "scope": ".ai-os/reports/resource-fabric/RAIOS-RESOURCE-FABRIC-GIT-DELIVERY-REPAIR-WAVE-01",
       "status": "ACTIVE"
     }
   ]

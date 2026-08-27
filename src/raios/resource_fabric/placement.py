@@ -270,6 +270,61 @@ def compare_owned_vs_market(owned_effective: Any, market: Any) -> dict[str, Any]
     }
 
 
+def recompose_v2(world: dict[str, Any]) -> dict[str, Any]:
+    base = recompose(world)
+    acc_status = {a.get("account_id"): a.get("status") for a in world.get("accounts") or []}
+    live_gpu = [
+        g
+        for g in world.get("accelerators") or []
+        if g.get("gpu_class") in {"CURRENT_ALLOCATABLE_GPU", "ACCOUNT_ELIGIBLE_GPU", "ACTIVE_SESSION_GPU"}
+        and g.get("available") is True
+    ]
+    catalog_gpu = [g for g in world.get("accelerators") or [] if g.get("gpu_class") == "CATALOG_GPU"]
+    stores = [
+        s
+        for s in world.get("storage") or []
+        if s.get("persistent")
+        and s.get("model_weights_suitable")
+        and s.get("account_id") != "LOCAL_AG"
+        and acc_status.get(s.get("account_id")) in {"REACHABLE", "REACHABLE_CREDENTIAL_PRESENT", "PARTIAL"}
+    ]
+
+    def _free(s: dict[str, Any]) -> tuple[int, float]:
+        n = numeric_or_unknown(s.get("capacity_free_gb"))
+        if n is UNKNOWN:
+            return (1, 0.0)
+        return (0, -float(n))
+
+    ranked_store = sorted(stores, key=_free)
+    burst = live_gpu[0] if live_gpu else (catalog_gpu[0] if catalog_gpu else None)
+    heavy = None
+    for g in live_gpu + catalog_gpu:
+        vram = numeric_or_unknown(g.get("gpu_vram_gb"))
+        if vram is not UNKNOWN and float(vram) >= 24:
+            heavy = g
+            break
+    local_ok = acc_status.get("LOCAL_AG") in {"REACHABLE", "REACHABLE_CREDENTIAL_PRESENT", None, "DECLARED"}
+    return {
+        **base,
+        "kind": "RESOURCE-RECOMPOSITION-V2",
+        "CONTROL": "AG",
+        "PERSISTENT_CONTROL": "LOCAL_AG" if local_ok else UNKNOWN,
+        "MODEL_WAREHOUSE": (ranked_store[0].get("storage_id") if ranked_store else UNKNOWN),
+        "HEAVY_INFERENCE": (heavy.get("resource_id") if heavy else UNKNOWN),
+        "LIGHT_INFERENCE": "LOCAL_AG",
+        "GPU_BURST": (burst.get("resource_id") if burst else UNKNOWN),
+        "EMBEDDING": "LOCAL_AG",
+        "BACKUP": base.get("BACKUP"),
+        "FAILOVER": base.get("FAILOVER"),
+        "CATALOG_NE_LIVE": True,
+        "MULTI_PROVIDER": True,
+        "PLANNING_ONLY": True,
+        "PAID_RESOURCE_ACTIVATED": False,
+        "MODEL_MIGRATION_EXECUTED": False,
+        "NINEROUTER_IS_RESOURCE_AUTHORITY": False,
+    }
+
+
 def recompose(world: dict[str, Any]) -> dict[str, Any]:
     stores = [s for s in world.get("storage") or [] if s.get("persistent") and s.get("model_weights_suitable")]
     gpus = list(world.get("accelerators") or [])

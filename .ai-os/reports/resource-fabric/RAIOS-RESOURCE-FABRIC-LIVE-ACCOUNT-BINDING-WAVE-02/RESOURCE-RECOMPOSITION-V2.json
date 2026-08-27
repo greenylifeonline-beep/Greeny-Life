@@ -1,0 +1,21 @@
+{
+  "kind": "RESOURCE-RECOMPOSITION-V2",
+  "CONTROL_NODE": "AG",
+  "MODEL_STORAGE": "ORACLE_01:object_storage",
+  "HEAVY_INFERENCE": "UNKNOWN",
+  "BURST_GPU": "KAGGLE_C1:gpu-p100-catalog",
+  "BACKUP": "ORACLE_01:object_storage",
+  "FAILOVER": "KAGGLE_C1:gpu-t4-catalog",
+  "PLANNING_ONLY": true,
+  "PAID_RESOURCE_ACTIVATED": false,
+  "MODEL_MIGRATION_EXECUTED": false,
+  "CONTROL": "AG",
+  "PERSISTENT_CONTROL": "LOCAL_AG",
+  "MODEL_WAREHOUSE": "KAGGLE_C1:dataset_storage",
+  "LIGHT_INFERENCE": "LOCAL_AG",
+  "GPU_BURST": "KAGGLE_C1:gpu-eligible-live",
+  "EMBEDDING": "LOCAL_AG",
+  "CATALOG_NE_LIVE": true,
+  "MULTI_PROVIDER": true,
+  "NINEROUTER_IS_RESOURCE_AUTHORITY": false
+}

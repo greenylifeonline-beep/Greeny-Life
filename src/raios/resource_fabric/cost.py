@@ -9,6 +9,7 @@ from .schema import UNKNOWN, is_unknown, numeric_or_unknown
 
 SCENARIOS = (
     "COST_IDLE",
+    "COST_1H",
     "COST_1H_DAY",
     "COST_8H_DAY",
     "COST_24_7",
@@ -30,6 +31,7 @@ SCENARIOS = (
 
 HOURS = {
     "COST_IDLE": 0.0,
+    "COST_1H": 1.0,
     "COST_1H_DAY": 1.0 * 30,
     "COST_8H_DAY": 8.0 * 30,
     "COST_24_7": 24.0 * 30,

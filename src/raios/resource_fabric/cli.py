@@ -9,7 +9,8 @@ from pathlib import Path
 from typing import Any
 
 from .census import collect_world, run_safe_probes, snapshots, status_view, write_package
-from .placement import decide, placement_request
+from .live import build_wave02_views, write_wave02_package
+from .placement import decide, placement_request, recompose_v2
 from .secrets import assert_no_secrets, mask_record
 
 ROOT = Path(__file__).resolve().parents[3]
@@ -48,6 +49,7 @@ def main(argv: list[str] | None = None) -> int:
         run_safe_probes(world)
     cmd = args.command.lower()
     snaps = snapshots(world)
+    views = build_wave02_views(world) if world.get("live_state") else {}
     table = {
         "status": status_view(world),
         "providers": world["providers"],
@@ -63,8 +65,11 @@ def main(argv: list[str] | None = None) -> int:
         "services": world["services"],
         "quota": world["quotas"],
         "credits": world["credits"],
+        "pricing": world["pricing"],
+        "recomposition": recompose_v2(world),
         "cost": snaps["COST-SAMPLES.json"],
-        "models": {"warehouse": "RAIOS_MODEL_WAREHOUSE", "MODEL_WEIGHTS_LOCAL": False},
+        "models": views.get("MODEL-HOSTING-FIT.json")
+        or {"warehouse": "RAIOS_MODEL_WAREHOUSE", "MODEL_WEIGHTS_LOCAL": False, "ninerouter": (world.get("gateways") or [None])[0]},
         "health": world.get("probes") or [],
         "census": snaps["RESOURCE-CENSUS.json"],
     }
@@ -76,6 +81,9 @@ def main(argv: list[str] | None = None) -> int:
     if cmd == "write-package":
         write_package(PACKAGE, snaps)
         return _emit({"PACKAGE": str(PACKAGE), "FILES": sorted(snaps)}, human=args.human, json_mode=args.json_mode)
+    if cmd in {"write-wave02", "write-package-wave02"}:
+        out = write_wave02_package(world)
+        return _emit(out, human=args.human, json_mode=args.json_mode)
     payload = table.get(cmd)
     if payload is None:
         return _emit({"error": "UNKNOWN_COMMAND", "command": cmd}, human=args.human, json_mode=True)

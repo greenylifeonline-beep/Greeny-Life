@@ -9,6 +9,8 @@ from typing import Any
 
 from .adapters import ADAPTERS
 from .cost import estimate
+from .live import bind_live_accounts
+from .observations import observation
 from .placement import decide, placement_request, recompose
 from .probe import ResourceProbeRunner
 from .projection import classify_unused, project_accelerator, project_compute, project_service, project_storage, scores
@@ -57,71 +59,29 @@ def collect_world(adapters: dict[str, Any] | None = None) -> dict[str, Any]:
     return world
 
 
-def run_safe_probes(world: dict[str, Any], runner: ResourceProbeRunner | None = None) -> list[dict[str, Any]]:
+def run_safe_probes(world: dict[str, Any], runner: ResourceProbeRunner | None = None, *, live: bool | None = None) -> list[dict[str, Any]]:
     runner = runner or ResourceProbeRunner(timeout_seconds=3.0)
     probes = [runner.probe_local_control()]
-    home = Path.home()
-    probes.append(
-        runner.probe_credential_presence(
-            provider="KAGGLE",
-            account="KAGGLE_C1",
-            env_name=None,
-            file_ref=home / ".kaggle" / "kaggle.json",
+    bind_live_accounts(world, live=live)
+    live_probes = world.get("live_probes") if isinstance(world.get("live_probes"), dict) else {}
+    for account_id, rec in live_probes.items():
+        if not isinstance(rec, dict):
+            continue
+        wrapped = observation(
+            provider=str(rec.get("provider") or rec.get("account_id") or "unknown"),
+            account=str(account_id),
+            resource_or_service=f"probe:{account_id}",
+            value={"status": rec.get("status"), "UNOBSERVED_NE_ABSENT": True, "KAGGLE_JSON_ABSENT_NE_ACCOUNT_ABSENT": True},
+            source="live.bind_live_accounts",
+            probe_id=str(account_id),
+            confidence="MEDIUM" if rec.get("status") == "REACHABLE" else "LOW",
         )
-    )
-    probes.append(
-        runner.probe_credential_presence(
-            provider="KAGGLE",
-            account="KAGGLE_PARTNER",
-            env_name="KAGGLE_CONFIG_B",
-            file_ref=None,
-        )
-    )
-    probes.append(
-        runner.probe_credential_presence(
-            provider="ORACLE_CLOUD",
-            account="ORACLE_01",
-            env_name="OCI_CLI_PROFILE",
-            file_ref=home / ".oci" / "config",
-        )
-    )
-    probes.append(
-        runner.probe_credential_presence(
-            provider="LIGHTNING",
-            account="LIGHTNING_01",
-            env_name="LIGHTNING_USER_ID",
-            file_ref=None,
-        )
-    )
-    probes.append(
-        runner.probe_credential_presence(
-            provider="MODAL",
-            account="MODAL_01",
-            env_name="MODAL_TOKEN_ID",
-            file_ref=None,
-        )
-    )
-    probes.append(
-        runner.probe_credential_presence(
-            provider="COLAB",
-            account="COLAB_01",
-            env_name="COLAB_SESSION_REF",
-            file_ref=None,
-        )
-    )
+        wrapped["status"] = rec.get("status") or "UNKNOWN"
+        wrapped["PROBE_FAIL_NE_ABSENT"] = True
+        probes.append(wrapped)
     for p in probes:
         assert_no_secrets(p)
     world["probes"] = probes
-    by_account = {p.get("account"): p for p in probes}
-    for acc in world["accounts"]:
-        pr = by_account.get(acc["account_id"])
-        if pr and pr.get("status") == "AUTH_REQUIRED":
-            acc["status"] = "AUTH_REQUIRED"
-        elif pr and pr.get("status") in {"SUCCESS", "PARTIAL"}:
-            acc["status"] = "REACHABLE_CREDENTIAL_PRESENT"
-            acc["last_verified_at"] = utc()
-        else:
-            acc["status"] = acc.get("status") or "DECLARED"
     return probes
 
 
@@ -155,8 +115,9 @@ def unused_capabilities(world: dict[str, Any]) -> list[dict[str, Any]]:
 
 def status_view(world: dict[str, Any]) -> dict[str, Any]:
     probes = world.get("probes") or []
-    reachable = sum(1 for a in world["accounts"] if a.get("status") in {"REACHABLE_CREDENTIAL_PRESENT"})
+    reachable = sum(1 for a in world["accounts"] if a.get("status") in {"REACHABLE_CREDENTIAL_PRESENT", "REACHABLE"})
     auth_req = sum(1 for a in world["accounts"] if a.get("status") == "AUTH_REQUIRED")
+    partial = sum(1 for a in world["accounts"] if a.get("status") == "PARTIAL")
     cpu = [c.get("vcpu") for c in world["compute"] if c.get("vcpu") not in (None, UNKNOWN)]
     ram = [c.get("ram_gb") for c in world["compute"] if c.get("ram_gb") not in (None, UNKNOWN)]
     vram = [g.get("gpu_vram_gb") for g in world["accelerators"] if g.get("gpu_vram_gb") not in (None, UNKNOWN)]
@@ -181,6 +142,7 @@ def status_view(world: dict[str, Any]) -> dict[str, Any]:
         "accounts_total": len(world["accounts"]),
         "accounts_reachable": reachable,
         "accounts_auth_required": auth_req,
+        "accounts_partial": partial,
         "cpu_total": _sum(cpu),
         "ram_total": _sum(ram),
         "gpu_resources_total": len(world["accelerators"]),

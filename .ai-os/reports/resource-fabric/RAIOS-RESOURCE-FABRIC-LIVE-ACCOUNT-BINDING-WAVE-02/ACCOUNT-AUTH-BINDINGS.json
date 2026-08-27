@@ -1,0 +1,66 @@
+[
+  {
+    "account_id": "KAGGLE_C1",
+    "provider": "KAGGLE",
+    "credential_ref": "existing-session:kaggle-cli-oauth",
+    "auth_method": "KAGGLE_CLI_OAUTH",
+    "session_state": "REACHABLE",
+    "kaggle_json_present": false,
+    "kaggle_oauth_credentials_present": true,
+    "cli_present": true,
+    "KAGGLE_JSON_ABSENT_NE_ACCOUNT_ABSENT": true,
+    "last_verified": "2026-08-27T22:16:31.506505+00:00"
+  },
+  {
+    "account_id": "KAGGLE_PARTNER",
+    "provider": "KAGGLE",
+    "credential_ref": "env:KAGGLE_CONFIG_B",
+    "auth_method": "ENV_REFERENCE",
+    "session_state": "AUTH_REQUIRED",
+    "isolated_from": "KAGGLE_C1",
+    "last_verified": "UNKNOWN"
+  },
+  {
+    "account_id": "ORACLE_01",
+    "provider": "ORACLE_CLOUD",
+    "credential_ref": "cli-profile:oci",
+    "auth_method": "OCI_CLI_PROFILE",
+    "session_state": "AUTH_REQUIRED",
+    "cli_present": false,
+    "last_verified": "UNKNOWN"
+  },
+  {
+    "account_id": "LIGHTNING_01",
+    "provider": "LIGHTNING",
+    "credential_ref": "file-ref:%USERPROFILE%/.lightning/credentials.json",
+    "auth_method": "LIGHTNING_API_BASIC",
+    "session_state": "REACHABLE",
+    "cli_present": false,
+    "last_verified": "2026-08-27T22:16:31.506505+00:00"
+  },
+  {
+    "account_id": "MODAL_01",
+    "provider": "MODAL",
+    "credential_ref": "file-ref:%USERPROFILE%/.modal.toml",
+    "auth_method": "MODAL_TOML_TOKEN",
+    "session_state": "PARTIAL",
+    "cli_present": false,
+    "last_verified": "2026-08-27T22:16:31.506505+00:00"
+  },
+  {
+    "account_id": "COLAB_01",
+    "provider": "COLAB",
+    "credential_ref": "env:COLAB_SESSION_REF",
+    "auth_method": "GOOGLE_SESSION",
+    "session_state": "AUTH_REQUIRED",
+    "last_verified": "UNKNOWN"
+  },
+  {
+    "account_id": "LOCAL_AG",
+    "provider": "GENERIC_HTTP_INFERENCE",
+    "credential_ref": "existing:OWNER_LOCAL_CONTROL_PLANE",
+    "auth_method": "LOCAL",
+    "session_state": "REACHABLE",
+    "last_verified": "2026-08-27T22:16:31.506505+00:00"
+  }
+]

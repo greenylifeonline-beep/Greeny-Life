@@ -3,6 +3,7 @@
 from .schema import SCHEMA, UNKNOWN, EXISTING_LEASE_SYSTEM
 from .adapters import ADAPTERS
 from .census import collect_world, run_safe_probes, snapshots
+from .live import bind_live_accounts
 
 __all__ = [
     "SCHEMA",
@@ -12,4 +13,5 @@ __all__ = [
     "collect_world",
     "run_safe_probes",
     "snapshots",
+    "bind_live_accounts",
 ]

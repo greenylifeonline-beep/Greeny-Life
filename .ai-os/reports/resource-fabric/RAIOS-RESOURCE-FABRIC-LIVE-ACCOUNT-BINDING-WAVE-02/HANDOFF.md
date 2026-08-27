@@ -1,0 +1,12 @@
+# Handoff
+- Agent: cursor
+- Seat: C2-KAGGLE-CONTROL
+- Task: RAIOS-RESOURCE-FABRIC-LIVE-ACCOUNT-BINDING-WAVE-02
+- Status: LIVE_BINDING_RECORDED
+- Files: src/raios/resource_fabric/live.py, tests/resource_fabric/test_live_binding.py, this package, RAIOS-RESOURCE.ps1 commands pricing/recomposition
+- Validation: 131/131 targeted tests (116 foundation regression including COST_1H + 15 live-binding)
+- Evidence: .ai-os/reports/resource-fabric/RAIOS-RESOURCE-FABRIC-LIVE-ACCOUNT-BINDING-WAVE-02/
+- Live: KAGGLE_C1 OAuth quota GPU 28.94h remaining; LIGHTNING_01 30 credits; LOCAL_AG RAM 7.8GB; 9Router 691 catalog models LOCAL_ONLY
+- Next: Oracle/Colab/Kaggle-partner auth if C1 provides; Modal SDK optional for account credits; Qwen 35B migration only after C1 sees this package
+- Frozen precanonical: 3add0aa7a5c7de9d1e6ab473df1e720cf1f06a60
+- Branch: ai-evolution-202608051809
