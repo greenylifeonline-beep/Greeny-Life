@@ -1,0 +1,32 @@
+{
+  "schema": "raios.resource-fabric.provider-contract.v1",
+  "READ_ONLY": true,
+  "MUTATING_METHODS": [],
+  "CAPABILITIES": [
+    "IDENTIFY",
+    "DISCOVER_ACCOUNTS",
+    "DISCOVER_REGIONS",
+    "DISCOVER_COMPUTE",
+    "DISCOVER_ACCELERATORS",
+    "DISCOVER_STORAGE",
+    "DISCOVER_SERVICES",
+    "DISCOVER_QUOTAS",
+    "DISCOVER_CREDITS",
+    "DISCOVER_USAGE",
+    "DISCOVER_PRICING",
+    "HEALTH",
+    "CAPABILITIES",
+    "PLAN_PLACEMENT"
+  ],
+  "PROVIDERS": [
+    "ORACLE_CLOUD",
+    "KAGGLE",
+    "LIGHTNING",
+    "COLAB",
+    "MODAL",
+    "GENERIC_SSH",
+    "GENERIC_HTTP_INFERENCE",
+    "GENERIC_OBJECT_STORAGE"
+  ],
+  "ACCOUNT_NE_PROVIDER": true
+}

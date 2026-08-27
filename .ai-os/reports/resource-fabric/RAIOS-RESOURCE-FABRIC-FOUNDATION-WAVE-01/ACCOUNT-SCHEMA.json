@@ -1,0 +1,13 @@
+{
+  "schema": "raios.resource-fabric.account-schema.v1",
+  "REQUIRED": [
+    "account_id",
+    "provider_id",
+    "account_alias",
+    "owner_alias",
+    "credential_ref"
+  ],
+  "FORBIDDEN_INLINE": ["password", "token", "private_key", "session_cookie"],
+  "MULTIPLEXING": "same provider_id may have many account_id values; quotas/credits/storage/usage must not merge",
+  "KNOWN_SLOTS": ["ORACLE_01", "KAGGLE_C1", "KAGGLE_PARTNER", "LIGHTNING_01", "COLAB_01", "MODAL_01", "LOCAL_AG"]
+}

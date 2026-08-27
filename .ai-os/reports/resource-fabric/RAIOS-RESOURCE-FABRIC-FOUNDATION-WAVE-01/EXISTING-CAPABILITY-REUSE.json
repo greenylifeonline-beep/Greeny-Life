@@ -1,0 +1,65 @@
+{
+  "schema": "raios.resource-fabric.reuse.v1",
+  "DISCOVERY": "targeted",
+  "BROAD_ESTATE_RESCAN": false,
+  "REUSE": [
+    {
+      "path": "RAIOS/V9/cloud/nomadic/provider_contract.py",
+      "class": "WRAP",
+      "note": "ProviderContract + ResourceCapabilityRecord + UNKNOWN law; V9 lock ACTIVE so not imported or modified"
+    },
+    {
+      "path": "RAIOS/V9/cloud/nomadic/worker_contract.py",
+      "class": "WRAP",
+      "note": "KAGGLE_A / KAGGLE_B account multiplexing aliases"
+    },
+    {
+      "path": "RAIOS/V9/cloud/nomadic/job_ledger.py",
+      "class": "REUSE",
+      "note": "Existing job ledger remains authority; Resource Fabric does not create a second ledger"
+    },
+    {
+      "path": "RAIOS/V9/cloud/nomadic/work_stealing_scheduler.py",
+      "class": "REUSE",
+      "note": "Existing scheduler not replaced; placement is planning only"
+    },
+    {
+      "path": "RAIOS/V9/autonomic/self_inspection/cloud_capacity_census.py",
+      "class": "WRAP",
+      "note": "initial_proven_records bootstrap aliases; UNOBSERVED != ABSENT"
+    },
+    {
+      "path": ".ai-os/learning/FREE-RESOURCES.json",
+      "class": "WRAP",
+      "note": "Existing resource projection v1 records as provenance refs"
+    },
+    {
+      "path": "src/raios/command_fabric/lease.py",
+      "class": "WRAP",
+      "note": "ResourceLease points at existing command-fabric leases; WAVE01_NO_ACQUIRE"
+    },
+    {
+      "path": ".ai-os/receipts/command-fabric",
+      "class": "REUSE",
+      "note": "Existing receipt root; no second receipt store"
+    },
+    {
+      "path": ".ai-os/state/TASKS.json",
+      "class": "REUSE",
+      "note": "Existing task registry not duplicated"
+    }
+  ],
+  "EXTENDED": [],
+  "NEW": [
+    "src/raios/resource_fabric",
+    "tests/resource_fabric",
+    "RAIOS-RESOURCE.ps1"
+  ],
+  "MISSING": [
+    "live remaining quota/credits per account",
+    "ECG scheduler executable bind",
+    "virtual compute reservoir runtime",
+    "warm asset affinity runtime",
+    "compute harvesting runtime"
+  ]
+}

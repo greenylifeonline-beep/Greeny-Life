@@ -1,0 +1,154 @@
+[
+  {
+    "schema": "raios.resource-fabric.v1",
+    "kind": "Account",
+    "account_id": "ORACLE_01",
+    "provider_id": "ORACLE_CLOUD",
+    "account_alias": "ORACLE_01",
+    "owner_alias": "C1",
+    "credential_ref": "env:OCI_CONFIG_ORACLE_01",
+    "billing_mode": "UNKNOWN",
+    "plan": "UNKNOWN",
+    "status": "AUTH_REQUIRED",
+    "free_tier_status": "UNKNOWN",
+    "trial_status": "UNKNOWN",
+    "default_region": "eu-stockholm-1",
+    "available_regions": [
+      "eu-stockholm-1"
+    ],
+    "last_verified_at": "UNKNOWN",
+    "provenance_refs": [
+      "RAIOS/V9/autonomic/self_inspection/cloud_capacity_census.py:oracle-primary",
+      ".ai-os/learning/FREE-RESOURCES.json"
+    ],
+    "CREDENTIALS_INLINE": false
+  },
+  {
+    "schema": "raios.resource-fabric.v1",
+    "kind": "Account",
+    "account_id": "KAGGLE_C1",
+    "provider_id": "KAGGLE",
+    "account_alias": "KAGGLE_C1",
+    "owner_alias": "C1",
+    "credential_ref": "existing-receipt:KAGGLE-AUTHENTICATED-READ-RECEIPT",
+    "billing_mode": "UNKNOWN",
+    "plan": "UNKNOWN",
+    "status": "AUTH_REQUIRED",
+    "free_tier_status": "UNKNOWN",
+    "trial_status": "UNKNOWN",
+    "default_region": "UNKNOWN",
+    "available_regions": [],
+    "last_verified_at": "UNKNOWN",
+    "provenance_refs": [
+      "RAIOS/V9/cloud/nomadic/worker_contract.py:KAGGLE_A",
+      "RAIOS/V9/autonomic/self_inspection/cloud_capacity_census.py:kaggle-a:greenylife",
+      ".ai-os/reports/master-estate-census/RAIOS-TOTAL-ESTATE-PHASE1-01-20260826T185525Z/cloud/kaggle/KAGGLE-BINDING.json"
+    ],
+    "CREDENTIALS_INLINE": false
+  },
+  {
+    "schema": "raios.resource-fabric.v1",
+    "kind": "Account",
+    "account_id": "KAGGLE_PARTNER",
+    "provider_id": "KAGGLE",
+    "account_alias": "KAGGLE_PARTNER",
+    "owner_alias": "PARTNER",
+    "credential_ref": "env:KAGGLE_CONFIG_B",
+    "billing_mode": "UNKNOWN",
+    "plan": "UNKNOWN",
+    "status": "AUTH_REQUIRED",
+    "free_tier_status": "UNKNOWN",
+    "trial_status": "UNKNOWN",
+    "default_region": "UNKNOWN",
+    "available_regions": [],
+    "last_verified_at": "UNKNOWN",
+    "provenance_refs": [
+      "RAIOS/V9/cloud/nomadic/worker_contract.py:KAGGLE_B"
+    ],
+    "CREDENTIALS_INLINE": false
+  },
+  {
+    "schema": "raios.resource-fabric.v1",
+    "kind": "Account",
+    "account_id": "LIGHTNING_01",
+    "provider_id": "LIGHTNING",
+    "account_alias": "LIGHTNING_01",
+    "owner_alias": "C1",
+    "credential_ref": "env:LIGHTNING_USER_ID",
+    "billing_mode": "UNKNOWN",
+    "plan": "UNKNOWN",
+    "status": "AUTH_REQUIRED",
+    "free_tier_status": "UNKNOWN",
+    "trial_status": "UNKNOWN",
+    "default_region": "UNKNOWN",
+    "available_regions": [],
+    "last_verified_at": "UNKNOWN",
+    "provenance_refs": [
+      "RAIOS/V9/autonomic/self_inspection/cloud_capacity_census.py:lightning:greenylifeonline-org"
+    ],
+    "CREDENTIALS_INLINE": false
+  },
+  {
+    "schema": "raios.resource-fabric.v1",
+    "kind": "Account",
+    "account_id": "COLAB_01",
+    "provider_id": "COLAB",
+    "account_alias": "COLAB_01",
+    "owner_alias": "C1",
+    "credential_ref": "env:COLAB_SESSION_REF",
+    "billing_mode": "UNKNOWN",
+    "plan": "UNKNOWN",
+    "status": "AUTH_REQUIRED",
+    "free_tier_status": "UNKNOWN",
+    "trial_status": "UNKNOWN",
+    "default_region": "UNKNOWN",
+    "available_regions": [],
+    "last_verified_at": "UNKNOWN",
+    "provenance_refs": [
+      "RAIOS/V9/autonomic/self_inspection/cloud_capacity_census.py:colab"
+    ],
+    "CREDENTIALS_INLINE": false
+  },
+  {
+    "schema": "raios.resource-fabric.v1",
+    "kind": "Account",
+    "account_id": "MODAL_01",
+    "provider_id": "MODAL",
+    "account_alias": "MODAL_01",
+    "owner_alias": "C1",
+    "credential_ref": "env:MODAL_TOKEN_ID",
+    "billing_mode": "UNKNOWN",
+    "plan": "UNKNOWN",
+    "status": "AUTH_REQUIRED",
+    "free_tier_status": "UNKNOWN",
+    "trial_status": "UNKNOWN",
+    "default_region": "UNKNOWN",
+    "available_regions": [],
+    "last_verified_at": "UNKNOWN",
+    "provenance_refs": [
+      "RAIOS/V9/autonomic/self_inspection/cloud_capacity_census.py:modal"
+    ],
+    "CREDENTIALS_INLINE": false
+  },
+  {
+    "schema": "raios.resource-fabric.v1",
+    "kind": "Account",
+    "account_id": "LOCAL_AG",
+    "provider_id": "GENERIC_HTTP_INFERENCE",
+    "account_alias": "LOCAL_AG",
+    "owner_alias": "C1",
+    "credential_ref": "existing:OWNER_LOCAL_CONTROL_PLANE",
+    "billing_mode": "UNKNOWN",
+    "plan": "UNKNOWN",
+    "status": "REACHABLE_CREDENTIAL_PRESENT",
+    "free_tier_status": "UNKNOWN",
+    "trial_status": "UNKNOWN",
+    "default_region": "UNKNOWN",
+    "available_regions": [],
+    "last_verified_at": "2026-08-27T19:58:46.244589+00:00",
+    "provenance_refs": [
+      ".ai-os/learning/FREE-RESOURCES.json:founder-laptop"
+    ],
+    "CREDENTIALS_INLINE": false
+  }
+]

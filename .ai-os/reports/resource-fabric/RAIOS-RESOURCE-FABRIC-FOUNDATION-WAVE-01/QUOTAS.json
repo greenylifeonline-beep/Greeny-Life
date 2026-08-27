@@ -1,0 +1,53 @@
+[
+  {
+    "schema": "raios.resource-fabric.v1",
+    "kind": "Quota",
+    "quota_id": "ORACLE_01:a1-ocpu",
+    "provider_id": "ORACLE_CLOUD",
+    "account_id": "ORACLE_01",
+    "service_id": "ORACLE_01:compute",
+    "resource_type": "ocpu",
+    "limit": "UNKNOWN",
+    "used": "UNKNOWN",
+    "remaining": "UNKNOWN",
+    "unit": "OCPU",
+    "reset_period": "UNKNOWN",
+    "reset_at": "UNKNOWN",
+    "hard_or_soft": "HARD",
+    "ZERO_REMAINING_NE_SERVICE_ABSENT": true
+  },
+  {
+    "schema": "raios.resource-fabric.v1",
+    "kind": "Quota",
+    "quota_id": "KAGGLE_C1:gpu-weekly",
+    "provider_id": "KAGGLE",
+    "account_id": "KAGGLE_C1",
+    "service_id": "KAGGLE_C1:notebook",
+    "resource_type": "gpu_hours",
+    "limit": "UNKNOWN",
+    "used": "UNKNOWN",
+    "remaining": "UNKNOWN",
+    "unit": "hours",
+    "reset_period": "WEEKLY",
+    "reset_at": "UNKNOWN",
+    "hard_or_soft": "HARD",
+    "ZERO_REMAINING_NE_SERVICE_ABSENT": true
+  },
+  {
+    "schema": "raios.resource-fabric.v1",
+    "kind": "Quota",
+    "quota_id": "KAGGLE_PARTNER:gpu-weekly",
+    "provider_id": "KAGGLE",
+    "account_id": "KAGGLE_PARTNER",
+    "service_id": "KAGGLE_PARTNER:notebook",
+    "resource_type": "gpu_hours",
+    "limit": "UNKNOWN",
+    "used": "UNKNOWN",
+    "remaining": "UNKNOWN",
+    "unit": "hours",
+    "reset_period": "WEEKLY",
+    "reset_at": "UNKNOWN",
+    "hard_or_soft": "HARD",
+    "ZERO_REMAINING_NE_SERVICE_ABSENT": true
+  }
+]

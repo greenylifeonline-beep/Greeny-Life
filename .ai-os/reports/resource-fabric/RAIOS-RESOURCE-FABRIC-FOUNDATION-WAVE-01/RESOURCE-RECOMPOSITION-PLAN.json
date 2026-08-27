@@ -1,0 +1,12 @@
+{
+  "kind": "RESOURCE-RECOMPOSITION-PLAN",
+  "CONTROL_NODE": "AG",
+  "MODEL_STORAGE": "ORACLE_01:object_storage",
+  "HEAVY_INFERENCE": "KAGGLE_C1:gpu-p100-catalog",
+  "BURST_GPU": "KAGGLE_C1:gpu-p100-catalog",
+  "BACKUP": "ORACLE_01:object_storage",
+  "FAILOVER": "KAGGLE_C1:gpu-t4-catalog",
+  "PLANNING_ONLY": true,
+  "PAID_RESOURCE_ACTIVATED": false,
+  "MODEL_MIGRATION_EXECUTED": false
+}

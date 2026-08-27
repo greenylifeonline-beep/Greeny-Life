@@ -1,0 +1,1203 @@
+[
+  {
+    "resource": "ORACLE_01:ampere-a1-catalog",
+    "account": "ORACLE_01",
+    "classes": [
+      "PERSISTENT_CONTROL_NODE",
+      "HEAVY_COMPUTE",
+      "PUBLIC_ENDPOINT",
+      "PRIVATE_ENDPOINT"
+    ],
+    "scores": {
+      "availability_score": "UNKNOWN",
+      "cost_score": "UNKNOWN",
+      "persistence_score": 1.0,
+      "compute_score": "UNKNOWN",
+      "gpu_score": "UNKNOWN",
+      "storage_score": "UNKNOWN",
+      "network_score": "UNKNOWN",
+      "service_score": "UNKNOWN",
+      "reliability_score": "UNKNOWN",
+      "quota_score": "UNKNOWN",
+      "credit_score": "UNKNOWN",
+      "RAIOS_VALUE_SCORE": 1.0,
+      "OPAQUE_SINGLE_SCORE_ONLY": false
+    }
+  },
+  {
+    "resource": "KAGGLE_C1:notebook-session",
+    "account": "KAGGLE_C1",
+    "classes": [
+      "LIGHT_COMPUTE",
+      "CI_WORKER",
+      "PRIVATE_ENDPOINT"
+    ],
+    "scores": {
+      "availability_score": "UNKNOWN",
+      "cost_score": "UNKNOWN",
+      "persistence_score": 0.0,
+      "compute_score": "UNKNOWN",
+      "gpu_score": "UNKNOWN",
+      "storage_score": "UNKNOWN",
+      "network_score": "UNKNOWN",
+      "service_score": "UNKNOWN",
+      "reliability_score": "UNKNOWN",
+      "quota_score": "UNKNOWN",
+      "credit_score": "UNKNOWN",
+      "RAIOS_VALUE_SCORE": 0.0,
+      "OPAQUE_SINGLE_SCORE_ONLY": false
+    }
+  },
+  {
+    "resource": "KAGGLE_PARTNER:notebook-session",
+    "account": "KAGGLE_PARTNER",
+    "classes": [
+      "LIGHT_COMPUTE",
+      "CI_WORKER",
+      "PRIVATE_ENDPOINT"
+    ],
+    "scores": {
+      "availability_score": "UNKNOWN",
+      "cost_score": "UNKNOWN",
+      "persistence_score": 0.0,
+      "compute_score": "UNKNOWN",
+      "gpu_score": "UNKNOWN",
+      "storage_score": "UNKNOWN",
+      "network_score": "UNKNOWN",
+      "service_score": "UNKNOWN",
+      "reliability_score": "UNKNOWN",
+      "quota_score": "UNKNOWN",
+      "credit_score": "UNKNOWN",
+      "RAIOS_VALUE_SCORE": 0.0,
+      "OPAQUE_SINGLE_SCORE_ONLY": false
+    }
+  },
+  {
+    "resource": "LIGHTNING_01:studio",
+    "account": "LIGHTNING_01",
+    "classes": [
+      "PERSISTENT_CONTROL_NODE",
+      "HEAVY_COMPUTE",
+      "PRIVATE_ENDPOINT"
+    ],
+    "scores": {
+      "availability_score": "UNKNOWN",
+      "cost_score": "UNKNOWN",
+      "persistence_score": 1.0,
+      "compute_score": "UNKNOWN",
+      "gpu_score": "UNKNOWN",
+      "storage_score": "UNKNOWN",
+      "network_score": "UNKNOWN",
+      "service_score": "UNKNOWN",
+      "reliability_score": "UNKNOWN",
+      "quota_score": "UNKNOWN",
+      "credit_score": "UNKNOWN",
+      "RAIOS_VALUE_SCORE": 1.0,
+      "OPAQUE_SINGLE_SCORE_ONLY": false
+    }
+  },
+  {
+    "resource": "COLAB_01:runtime",
+    "account": "COLAB_01",
+    "classes": [
+      "LIGHT_COMPUTE",
+      "CI_WORKER",
+      "PRIVATE_ENDPOINT"
+    ],
+    "scores": {
+      "availability_score": "UNKNOWN",
+      "cost_score": "UNKNOWN",
+      "persistence_score": 0.0,
+      "compute_score": "UNKNOWN",
+      "gpu_score": "UNKNOWN",
+      "storage_score": "UNKNOWN",
+      "network_score": "UNKNOWN",
+      "service_score": "UNKNOWN",
+      "reliability_score": "UNKNOWN",
+      "quota_score": "UNKNOWN",
+      "credit_score": "UNKNOWN",
+      "RAIOS_VALUE_SCORE": 0.0,
+      "OPAQUE_SINGLE_SCORE_ONLY": false
+    }
+  },
+  {
+    "resource": "MODAL_01:function",
+    "account": "MODAL_01",
+    "classes": [
+      "LIGHT_COMPUTE",
+      "CI_WORKER",
+      "PRIVATE_ENDPOINT"
+    ],
+    "scores": {
+      "availability_score": "UNKNOWN",
+      "cost_score": "UNKNOWN",
+      "persistence_score": 0.0,
+      "compute_score": "UNKNOWN",
+      "gpu_score": "UNKNOWN",
+      "storage_score": "UNKNOWN",
+      "network_score": "UNKNOWN",
+      "service_score": "UNKNOWN",
+      "reliability_score": "UNKNOWN",
+      "quota_score": "UNKNOWN",
+      "credit_score": "UNKNOWN",
+      "RAIOS_VALUE_SCORE": 0.0,
+      "OPAQUE_SINGLE_SCORE_ONLY": false
+    }
+  },
+  {
+    "resource": "LOCAL_AG:control-node",
+    "account": "LOCAL_AG",
+    "classes": [
+      "PERSISTENT_CONTROL_NODE",
+      "HEAVY_COMPUTE",
+      "PRIVATE_ENDPOINT"
+    ],
+    "scores": {
+      "availability_score": "UNKNOWN",
+      "cost_score": "UNKNOWN",
+      "persistence_score": 1.0,
+      "compute_score": "UNKNOWN",
+      "gpu_score": "UNKNOWN",
+      "storage_score": "UNKNOWN",
+      "network_score": "UNKNOWN",
+      "service_score": "UNKNOWN",
+      "reliability_score": "UNKNOWN",
+      "quota_score": "UNKNOWN",
+      "credit_score": "UNKNOWN",
+      "RAIOS_VALUE_SCORE": 1.0,
+      "OPAQUE_SINGLE_SCORE_ONLY": false
+    }
+  },
+  {
+    "resource": "ORACLE_01:gpu-catalog",
+    "account": "ORACLE_01",
+    "classes": [
+      "GPU_BURST",
+      "GPU_PERSISTENT"
+    ],
+    "scores": {
+      "availability_score": "UNKNOWN",
+      "cost_score": "UNKNOWN",
+      "persistence_score": "UNKNOWN",
+      "compute_score": "UNKNOWN",
+      "gpu_score": "UNKNOWN",
+      "storage_score": "UNKNOWN",
+      "network_score": "UNKNOWN",
+      "service_score": "UNKNOWN",
+      "reliability_score": "UNKNOWN",
+      "quota_score": "UNKNOWN",
+      "credit_score": "UNKNOWN",
+      "RAIOS_VALUE_SCORE": "UNKNOWN",
+      "OPAQUE_SINGLE_SCORE_ONLY": false
+    }
+  },
+  {
+    "resource": "KAGGLE_C1:gpu-p100-catalog",
+    "account": "KAGGLE_C1",
+    "classes": [
+      "GPU_BURST",
+      "LIGHT_INFERENCE",
+      "EMBEDDING",
+      "GPU_PERSISTENT"
+    ],
+    "scores": {
+      "availability_score": "UNKNOWN",
+      "cost_score": "UNKNOWN",
+      "persistence_score": "UNKNOWN",
+      "compute_score": "UNKNOWN",
+      "gpu_score": 0.2,
+      "storage_score": "UNKNOWN",
+      "network_score": "UNKNOWN",
+      "service_score": "UNKNOWN",
+      "reliability_score": "UNKNOWN",
+      "quota_score": "UNKNOWN",
+      "credit_score": "UNKNOWN",
+      "RAIOS_VALUE_SCORE": 0.2,
+      "OPAQUE_SINGLE_SCORE_ONLY": false
+    }
+  },
+  {
+    "resource": "KAGGLE_C1:gpu-t4-catalog",
+    "account": "KAGGLE_C1",
+    "classes": [
+      "GPU_BURST",
+      "LIGHT_INFERENCE",
+      "EMBEDDING",
+      "GPU_PERSISTENT"
+    ],
+    "scores": {
+      "availability_score": "UNKNOWN",
+      "cost_score": "UNKNOWN",
+      "persistence_score": "UNKNOWN",
+      "compute_score": "UNKNOWN",
+      "gpu_score": 0.2,
+      "storage_score": "UNKNOWN",
+      "network_score": "UNKNOWN",
+      "service_score": "UNKNOWN",
+      "reliability_score": "UNKNOWN",
+      "quota_score": "UNKNOWN",
+      "credit_score": "UNKNOWN",
+      "RAIOS_VALUE_SCORE": 0.2,
+      "OPAQUE_SINGLE_SCORE_ONLY": false
+    }
+  },
+  {
+    "resource": "KAGGLE_C1:tpu-catalog",
+    "account": "KAGGLE_C1",
+    "classes": [
+      "GPU_BURST",
+      "GPU_PERSISTENT"
+    ],
+    "scores": {
+      "availability_score": "UNKNOWN",
+      "cost_score": "UNKNOWN",
+      "persistence_score": "UNKNOWN",
+      "compute_score": "UNKNOWN",
+      "gpu_score": "UNKNOWN",
+      "storage_score": "UNKNOWN",
+      "network_score": "UNKNOWN",
+      "service_score": "UNKNOWN",
+      "reliability_score": "UNKNOWN",
+      "quota_score": "UNKNOWN",
+      "credit_score": "UNKNOWN",
+      "RAIOS_VALUE_SCORE": "UNKNOWN",
+      "OPAQUE_SINGLE_SCORE_ONLY": false
+    }
+  },
+  {
+    "resource": "KAGGLE_PARTNER:gpu-p100-catalog",
+    "account": "KAGGLE_PARTNER",
+    "classes": [
+      "GPU_BURST",
+      "LIGHT_INFERENCE",
+      "EMBEDDING",
+      "GPU_PERSISTENT"
+    ],
+    "scores": {
+      "availability_score": "UNKNOWN",
+      "cost_score": "UNKNOWN",
+      "persistence_score": "UNKNOWN",
+      "compute_score": "UNKNOWN",
+      "gpu_score": 0.2,
+      "storage_score": "UNKNOWN",
+      "network_score": "UNKNOWN",
+      "service_score": "UNKNOWN",
+      "reliability_score": "UNKNOWN",
+      "quota_score": "UNKNOWN",
+      "credit_score": "UNKNOWN",
+      "RAIOS_VALUE_SCORE": 0.2,
+      "OPAQUE_SINGLE_SCORE_ONLY": false
+    }
+  },
+  {
+    "resource": "KAGGLE_PARTNER:gpu-t4-catalog",
+    "account": "KAGGLE_PARTNER",
+    "classes": [
+      "GPU_BURST",
+      "LIGHT_INFERENCE",
+      "EMBEDDING",
+      "GPU_PERSISTENT"
+    ],
+    "scores": {
+      "availability_score": "UNKNOWN",
+      "cost_score": "UNKNOWN",
+      "persistence_score": "UNKNOWN",
+      "compute_score": "UNKNOWN",
+      "gpu_score": 0.2,
+      "storage_score": "UNKNOWN",
+      "network_score": "UNKNOWN",
+      "service_score": "UNKNOWN",
+      "reliability_score": "UNKNOWN",
+      "quota_score": "UNKNOWN",
+      "credit_score": "UNKNOWN",
+      "RAIOS_VALUE_SCORE": 0.2,
+      "OPAQUE_SINGLE_SCORE_ONLY": false
+    }
+  },
+  {
+    "resource": "KAGGLE_PARTNER:tpu-catalog",
+    "account": "KAGGLE_PARTNER",
+    "classes": [
+      "GPU_BURST",
+      "GPU_PERSISTENT"
+    ],
+    "scores": {
+      "availability_score": "UNKNOWN",
+      "cost_score": "UNKNOWN",
+      "persistence_score": "UNKNOWN",
+      "compute_score": "UNKNOWN",
+      "gpu_score": "UNKNOWN",
+      "storage_score": "UNKNOWN",
+      "network_score": "UNKNOWN",
+      "service_score": "UNKNOWN",
+      "reliability_score": "UNKNOWN",
+      "quota_score": "UNKNOWN",
+      "credit_score": "UNKNOWN",
+      "RAIOS_VALUE_SCORE": "UNKNOWN",
+      "OPAQUE_SINGLE_SCORE_ONLY": false
+    }
+  },
+  {
+    "resource": "LIGHTNING_01:studio-gpu",
+    "account": "LIGHTNING_01",
+    "classes": [
+      "GPU_BURST",
+      "GPU_PERSISTENT"
+    ],
+    "scores": {
+      "availability_score": "UNKNOWN",
+      "cost_score": "UNKNOWN",
+      "persistence_score": "UNKNOWN",
+      "compute_score": "UNKNOWN",
+      "gpu_score": "UNKNOWN",
+      "storage_score": "UNKNOWN",
+      "network_score": "UNKNOWN",
+      "service_score": "UNKNOWN",
+      "reliability_score": "UNKNOWN",
+      "quota_score": "UNKNOWN",
+      "credit_score": "UNKNOWN",
+      "RAIOS_VALUE_SCORE": "UNKNOWN",
+      "OPAQUE_SINGLE_SCORE_ONLY": false
+    }
+  },
+  {
+    "resource": "COLAB_01:colab-gpu",
+    "account": "COLAB_01",
+    "classes": [
+      "GPU_BURST",
+      "GPU_PERSISTENT"
+    ],
+    "scores": {
+      "availability_score": "UNKNOWN",
+      "cost_score": "UNKNOWN",
+      "persistence_score": "UNKNOWN",
+      "compute_score": "UNKNOWN",
+      "gpu_score": "UNKNOWN",
+      "storage_score": "UNKNOWN",
+      "network_score": "UNKNOWN",
+      "service_score": "UNKNOWN",
+      "reliability_score": "UNKNOWN",
+      "quota_score": "UNKNOWN",
+      "credit_score": "UNKNOWN",
+      "RAIOS_VALUE_SCORE": "UNKNOWN",
+      "OPAQUE_SINGLE_SCORE_ONLY": false
+    }
+  },
+  {
+    "resource": "MODAL_01:modal-gpu",
+    "account": "MODAL_01",
+    "classes": [
+      "GPU_BURST",
+      "GPU_PERSISTENT"
+    ],
+    "scores": {
+      "availability_score": "UNKNOWN",
+      "cost_score": "UNKNOWN",
+      "persistence_score": "UNKNOWN",
+      "compute_score": "UNKNOWN",
+      "gpu_score": "UNKNOWN",
+      "storage_score": "UNKNOWN",
+      "network_score": "UNKNOWN",
+      "service_score": "UNKNOWN",
+      "reliability_score": "UNKNOWN",
+      "quota_score": "UNKNOWN",
+      "credit_score": "UNKNOWN",
+      "RAIOS_VALUE_SCORE": "UNKNOWN",
+      "OPAQUE_SINGLE_SCORE_ONLY": false
+    }
+  },
+  {
+    "resource": "ORACLE_01:persistent_block",
+    "account": "ORACLE_01",
+    "classes": [
+      "ARTIFACT_STORAGE"
+    ],
+    "scores": {
+      "availability_score": "UNKNOWN",
+      "cost_score": "UNKNOWN",
+      "persistence_score": 1.0,
+      "compute_score": 0.3,
+      "gpu_score": "UNKNOWN",
+      "storage_score": "UNKNOWN",
+      "network_score": "UNKNOWN",
+      "service_score": "UNKNOWN",
+      "reliability_score": "UNKNOWN",
+      "quota_score": "UNKNOWN",
+      "credit_score": "UNKNOWN",
+      "RAIOS_VALUE_SCORE": 0.65,
+      "OPAQUE_SINGLE_SCORE_ONLY": false
+    }
+  },
+  {
+    "resource": "ORACLE_01:object_storage",
+    "account": "ORACLE_01",
+    "classes": [
+      "MODEL_STORAGE",
+      "ARTIFACT_STORAGE",
+      "BACKUP_STORAGE",
+      "ARCHIVE",
+      "FAILOVER"
+    ],
+    "scores": {
+      "availability_score": "UNKNOWN",
+      "cost_score": "UNKNOWN",
+      "persistence_score": 1.0,
+      "compute_score": 0.3,
+      "gpu_score": "UNKNOWN",
+      "storage_score": "UNKNOWN",
+      "network_score": "UNKNOWN",
+      "service_score": "UNKNOWN",
+      "reliability_score": "UNKNOWN",
+      "quota_score": "UNKNOWN",
+      "credit_score": "UNKNOWN",
+      "RAIOS_VALUE_SCORE": 0.65,
+      "OPAQUE_SINGLE_SCORE_ONLY": false
+    }
+  },
+  {
+    "resource": "ORACLE_01:backup_storage",
+    "account": "ORACLE_01",
+    "classes": [
+      "ARTIFACT_STORAGE",
+      "BACKUP_STORAGE",
+      "ARCHIVE",
+      "FAILOVER"
+    ],
+    "scores": {
+      "availability_score": "UNKNOWN",
+      "cost_score": "UNKNOWN",
+      "persistence_score": 1.0,
+      "compute_score": 0.3,
+      "gpu_score": "UNKNOWN",
+      "storage_score": "UNKNOWN",
+      "network_score": "UNKNOWN",
+      "service_score": "UNKNOWN",
+      "reliability_score": "UNKNOWN",
+      "quota_score": "UNKNOWN",
+      "credit_score": "UNKNOWN",
+      "RAIOS_VALUE_SCORE": 0.65,
+      "OPAQUE_SINGLE_SCORE_ONLY": false
+    }
+  },
+  {
+    "resource": "ORACLE_01:archive_storage",
+    "account": "ORACLE_01",
+    "classes": [
+      "ARTIFACT_STORAGE",
+      "BACKUP_STORAGE",
+      "ARCHIVE",
+      "FAILOVER"
+    ],
+    "scores": {
+      "availability_score": "UNKNOWN",
+      "cost_score": "UNKNOWN",
+      "persistence_score": 1.0,
+      "compute_score": 0.3,
+      "gpu_score": "UNKNOWN",
+      "storage_score": "UNKNOWN",
+      "network_score": "UNKNOWN",
+      "service_score": "UNKNOWN",
+      "reliability_score": "UNKNOWN",
+      "quota_score": "UNKNOWN",
+      "credit_score": "UNKNOWN",
+      "RAIOS_VALUE_SCORE": 0.65,
+      "OPAQUE_SINGLE_SCORE_ONLY": false
+    }
+  },
+  {
+    "resource": "ORACLE_01:snapshot_storage",
+    "account": "ORACLE_01",
+    "classes": [
+      "ARTIFACT_STORAGE"
+    ],
+    "scores": {
+      "availability_score": "UNKNOWN",
+      "cost_score": "UNKNOWN",
+      "persistence_score": 1.0,
+      "compute_score": 0.3,
+      "gpu_score": "UNKNOWN",
+      "storage_score": "UNKNOWN",
+      "network_score": "UNKNOWN",
+      "service_score": "UNKNOWN",
+      "reliability_score": "UNKNOWN",
+      "quota_score": "UNKNOWN",
+      "credit_score": "UNKNOWN",
+      "RAIOS_VALUE_SCORE": 0.65,
+      "OPAQUE_SINGLE_SCORE_ONLY": false
+    }
+  },
+  {
+    "resource": "KAGGLE_C1:dataset_storage",
+    "account": "KAGGLE_C1",
+    "classes": [
+      "MODEL_STORAGE",
+      "ARTIFACT_STORAGE"
+    ],
+    "scores": {
+      "availability_score": "UNKNOWN",
+      "cost_score": "UNKNOWN",
+      "persistence_score": 1.0,
+      "compute_score": 0.3,
+      "gpu_score": "UNKNOWN",
+      "storage_score": "UNKNOWN",
+      "network_score": "UNKNOWN",
+      "service_score": "UNKNOWN",
+      "reliability_score": "UNKNOWN",
+      "quota_score": "UNKNOWN",
+      "credit_score": "UNKNOWN",
+      "RAIOS_VALUE_SCORE": 0.65,
+      "OPAQUE_SINGLE_SCORE_ONLY": false
+    }
+  },
+  {
+    "resource": "KAGGLE_C1:notebook_storage",
+    "account": "KAGGLE_C1",
+    "classes": [],
+    "scores": {
+      "availability_score": "UNKNOWN",
+      "cost_score": "UNKNOWN",
+      "persistence_score": 0.0,
+      "compute_score": "UNKNOWN",
+      "gpu_score": "UNKNOWN",
+      "storage_score": "UNKNOWN",
+      "network_score": "UNKNOWN",
+      "service_score": "UNKNOWN",
+      "reliability_score": "UNKNOWN",
+      "quota_score": "UNKNOWN",
+      "credit_score": "UNKNOWN",
+      "RAIOS_VALUE_SCORE": 0.0,
+      "OPAQUE_SINGLE_SCORE_ONLY": false
+    }
+  },
+  {
+    "resource": "KAGGLE_C1:model_storage",
+    "account": "KAGGLE_C1",
+    "classes": [
+      "MODEL_STORAGE"
+    ],
+    "scores": {
+      "availability_score": "UNKNOWN",
+      "cost_score": "UNKNOWN",
+      "persistence_score": 1.0,
+      "compute_score": 0.3,
+      "gpu_score": "UNKNOWN",
+      "storage_score": "UNKNOWN",
+      "network_score": "UNKNOWN",
+      "service_score": "UNKNOWN",
+      "reliability_score": "UNKNOWN",
+      "quota_score": "UNKNOWN",
+      "credit_score": "UNKNOWN",
+      "RAIOS_VALUE_SCORE": 0.65,
+      "OPAQUE_SINGLE_SCORE_ONLY": false
+    }
+  },
+  {
+    "resource": "KAGGLE_C1:artifact_storage",
+    "account": "KAGGLE_C1",
+    "classes": [
+      "ARTIFACT_STORAGE"
+    ],
+    "scores": {
+      "availability_score": "UNKNOWN",
+      "cost_score": "UNKNOWN",
+      "persistence_score": 1.0,
+      "compute_score": 0.3,
+      "gpu_score": "UNKNOWN",
+      "storage_score": "UNKNOWN",
+      "network_score": "UNKNOWN",
+      "service_score": "UNKNOWN",
+      "reliability_score": "UNKNOWN",
+      "quota_score": "UNKNOWN",
+      "credit_score": "UNKNOWN",
+      "RAIOS_VALUE_SCORE": 0.65,
+      "OPAQUE_SINGLE_SCORE_ONLY": false
+    }
+  },
+  {
+    "resource": "KAGGLE_PARTNER:dataset_storage",
+    "account": "KAGGLE_PARTNER",
+    "classes": [
+      "MODEL_STORAGE",
+      "ARTIFACT_STORAGE"
+    ],
+    "scores": {
+      "availability_score": "UNKNOWN",
+      "cost_score": "UNKNOWN",
+      "persistence_score": 1.0,
+      "compute_score": 0.3,
+      "gpu_score": "UNKNOWN",
+      "storage_score": "UNKNOWN",
+      "network_score": "UNKNOWN",
+      "service_score": "UNKNOWN",
+      "reliability_score": "UNKNOWN",
+      "quota_score": "UNKNOWN",
+      "credit_score": "UNKNOWN",
+      "RAIOS_VALUE_SCORE": 0.65,
+      "OPAQUE_SINGLE_SCORE_ONLY": false
+    }
+  },
+  {
+    "resource": "KAGGLE_PARTNER:notebook_storage",
+    "account": "KAGGLE_PARTNER",
+    "classes": [],
+    "scores": {
+      "availability_score": "UNKNOWN",
+      "cost_score": "UNKNOWN",
+      "persistence_score": 0.0,
+      "compute_score": "UNKNOWN",
+      "gpu_score": "UNKNOWN",
+      "storage_score": "UNKNOWN",
+      "network_score": "UNKNOWN",
+      "service_score": "UNKNOWN",
+      "reliability_score": "UNKNOWN",
+      "quota_score": "UNKNOWN",
+      "credit_score": "UNKNOWN",
+      "RAIOS_VALUE_SCORE": 0.0,
+      "OPAQUE_SINGLE_SCORE_ONLY": false
+    }
+  },
+  {
+    "resource": "KAGGLE_PARTNER:model_storage",
+    "account": "KAGGLE_PARTNER",
+    "classes": [
+      "MODEL_STORAGE"
+    ],
+    "scores": {
+      "availability_score": "UNKNOWN",
+      "cost_score": "UNKNOWN",
+      "persistence_score": 1.0,
+      "compute_score": 0.3,
+      "gpu_score": "UNKNOWN",
+      "storage_score": "UNKNOWN",
+      "network_score": "UNKNOWN",
+      "service_score": "UNKNOWN",
+      "reliability_score": "UNKNOWN",
+      "quota_score": "UNKNOWN",
+      "credit_score": "UNKNOWN",
+      "RAIOS_VALUE_SCORE": 0.65,
+      "OPAQUE_SINGLE_SCORE_ONLY": false
+    }
+  },
+  {
+    "resource": "KAGGLE_PARTNER:artifact_storage",
+    "account": "KAGGLE_PARTNER",
+    "classes": [
+      "ARTIFACT_STORAGE"
+    ],
+    "scores": {
+      "availability_score": "UNKNOWN",
+      "cost_score": "UNKNOWN",
+      "persistence_score": 1.0,
+      "compute_score": 0.3,
+      "gpu_score": "UNKNOWN",
+      "storage_score": "UNKNOWN",
+      "network_score": "UNKNOWN",
+      "service_score": "UNKNOWN",
+      "reliability_score": "UNKNOWN",
+      "quota_score": "UNKNOWN",
+      "credit_score": "UNKNOWN",
+      "RAIOS_VALUE_SCORE": 0.65,
+      "OPAQUE_SINGLE_SCORE_ONLY": false
+    }
+  },
+  {
+    "resource": "LIGHTNING_01:file_storage",
+    "account": "LIGHTNING_01",
+    "classes": [
+      "MODEL_STORAGE"
+    ],
+    "scores": {
+      "availability_score": "UNKNOWN",
+      "cost_score": "UNKNOWN",
+      "persistence_score": 1.0,
+      "compute_score": 0.3,
+      "gpu_score": "UNKNOWN",
+      "storage_score": "UNKNOWN",
+      "network_score": "UNKNOWN",
+      "service_score": "UNKNOWN",
+      "reliability_score": "UNKNOWN",
+      "quota_score": "UNKNOWN",
+      "credit_score": "UNKNOWN",
+      "RAIOS_VALUE_SCORE": 0.65,
+      "OPAQUE_SINGLE_SCORE_ONLY": false
+    }
+  },
+  {
+    "resource": "COLAB_01:ephemeral_disk",
+    "account": "COLAB_01",
+    "classes": [],
+    "scores": {
+      "availability_score": "UNKNOWN",
+      "cost_score": "UNKNOWN",
+      "persistence_score": 0.0,
+      "compute_score": "UNKNOWN",
+      "gpu_score": "UNKNOWN",
+      "storage_score": "UNKNOWN",
+      "network_score": "UNKNOWN",
+      "service_score": "UNKNOWN",
+      "reliability_score": "UNKNOWN",
+      "quota_score": "UNKNOWN",
+      "credit_score": "UNKNOWN",
+      "RAIOS_VALUE_SCORE": 0.0,
+      "OPAQUE_SINGLE_SCORE_ONLY": false
+    }
+  },
+  {
+    "resource": "MODAL_01:volume",
+    "account": "MODAL_01",
+    "classes": [
+      "MODEL_STORAGE"
+    ],
+    "scores": {
+      "availability_score": "UNKNOWN",
+      "cost_score": "UNKNOWN",
+      "persistence_score": 1.0,
+      "compute_score": 0.3,
+      "gpu_score": "UNKNOWN",
+      "storage_score": "UNKNOWN",
+      "network_score": "UNKNOWN",
+      "service_score": "UNKNOWN",
+      "reliability_score": "UNKNOWN",
+      "quota_score": "UNKNOWN",
+      "credit_score": "UNKNOWN",
+      "RAIOS_VALUE_SCORE": 0.65,
+      "OPAQUE_SINGLE_SCORE_ONLY": false
+    }
+  },
+  {
+    "resource": "LOCAL_AG:workspace-disk",
+    "account": "LOCAL_AG",
+    "classes": [],
+    "scores": {
+      "availability_score": "UNKNOWN",
+      "cost_score": "UNKNOWN",
+      "persistence_score": 1.0,
+      "compute_score": 0.3,
+      "gpu_score": "UNKNOWN",
+      "storage_score": "UNKNOWN",
+      "network_score": "UNKNOWN",
+      "service_score": "UNKNOWN",
+      "reliability_score": "UNKNOWN",
+      "quota_score": "UNKNOWN",
+      "credit_score": "UNKNOWN",
+      "RAIOS_VALUE_SCORE": 0.65,
+      "OPAQUE_SINGLE_SCORE_ONLY": false
+    }
+  },
+  {
+    "resource": "ORACLE_01:compute",
+    "account": "ORACLE_01",
+    "classes": [],
+    "scores": {
+      "availability_score": 0.7,
+      "cost_score": "UNKNOWN",
+      "persistence_score": 1.0,
+      "compute_score": 0.3,
+      "gpu_score": "UNKNOWN",
+      "storage_score": "UNKNOWN",
+      "network_score": "UNKNOWN",
+      "service_score": 0.5,
+      "reliability_score": "UNKNOWN",
+      "quota_score": "UNKNOWN",
+      "credit_score": "UNKNOWN",
+      "RAIOS_VALUE_SCORE": 0.625,
+      "OPAQUE_SINGLE_SCORE_ONLY": false
+    }
+  },
+  {
+    "resource": "ORACLE_01:object-storage",
+    "account": "ORACLE_01",
+    "classes": [],
+    "scores": {
+      "availability_score": 0.7,
+      "cost_score": "UNKNOWN",
+      "persistence_score": 1.0,
+      "compute_score": 0.3,
+      "gpu_score": "UNKNOWN",
+      "storage_score": "UNKNOWN",
+      "network_score": "UNKNOWN",
+      "service_score": 0.5,
+      "reliability_score": "UNKNOWN",
+      "quota_score": "UNKNOWN",
+      "credit_score": "UNKNOWN",
+      "RAIOS_VALUE_SCORE": 0.625,
+      "OPAQUE_SINGLE_SCORE_ONLY": false
+    }
+  },
+  {
+    "resource": "ORACLE_01:block-storage",
+    "account": "ORACLE_01",
+    "classes": [],
+    "scores": {
+      "availability_score": 0.7,
+      "cost_score": "UNKNOWN",
+      "persistence_score": 1.0,
+      "compute_score": 0.3,
+      "gpu_score": "UNKNOWN",
+      "storage_score": "UNKNOWN",
+      "network_score": "UNKNOWN",
+      "service_score": 0.5,
+      "reliability_score": "UNKNOWN",
+      "quota_score": "UNKNOWN",
+      "credit_score": "UNKNOWN",
+      "RAIOS_VALUE_SCORE": 0.625,
+      "OPAQUE_SINGLE_SCORE_ONLY": false
+    }
+  },
+  {
+    "resource": "ORACLE_01:functions",
+    "account": "ORACLE_01",
+    "classes": [],
+    "scores": {
+      "availability_score": 0.7,
+      "cost_score": "UNKNOWN",
+      "persistence_score": 1.0,
+      "compute_score": 0.3,
+      "gpu_score": "UNKNOWN",
+      "storage_score": "UNKNOWN",
+      "network_score": "UNKNOWN",
+      "service_score": 0.5,
+      "reliability_score": "UNKNOWN",
+      "quota_score": "UNKNOWN",
+      "credit_score": "UNKNOWN",
+      "RAIOS_VALUE_SCORE": 0.625,
+      "OPAQUE_SINGLE_SCORE_ONLY": false
+    }
+  },
+  {
+    "resource": "ORACLE_01:oke",
+    "account": "ORACLE_01",
+    "classes": [],
+    "scores": {
+      "availability_score": 0.7,
+      "cost_score": "UNKNOWN",
+      "persistence_score": 1.0,
+      "compute_score": 0.3,
+      "gpu_score": "UNKNOWN",
+      "storage_score": "UNKNOWN",
+      "network_score": "UNKNOWN",
+      "service_score": 0.5,
+      "reliability_score": "UNKNOWN",
+      "quota_score": "UNKNOWN",
+      "credit_score": "UNKNOWN",
+      "RAIOS_VALUE_SCORE": 0.625,
+      "OPAQUE_SINGLE_SCORE_ONLY": false
+    }
+  },
+  {
+    "resource": "ORACLE_01:adb",
+    "account": "ORACLE_01",
+    "classes": [
+      "DATABASE"
+    ],
+    "scores": {
+      "availability_score": 0.7,
+      "cost_score": "UNKNOWN",
+      "persistence_score": 1.0,
+      "compute_score": 0.3,
+      "gpu_score": "UNKNOWN",
+      "storage_score": "UNKNOWN",
+      "network_score": "UNKNOWN",
+      "service_score": 0.5,
+      "reliability_score": "UNKNOWN",
+      "quota_score": "UNKNOWN",
+      "credit_score": "UNKNOWN",
+      "RAIOS_VALUE_SCORE": 0.625,
+      "OPAQUE_SINGLE_SCORE_ONLY": false
+    }
+  },
+  {
+    "resource": "ORACLE_01:queue",
+    "account": "ORACLE_01",
+    "classes": [
+      "QUEUE"
+    ],
+    "scores": {
+      "availability_score": 0.7,
+      "cost_score": "UNKNOWN",
+      "persistence_score": 1.0,
+      "compute_score": 0.3,
+      "gpu_score": "UNKNOWN",
+      "storage_score": "UNKNOWN",
+      "network_score": "UNKNOWN",
+      "service_score": 0.5,
+      "reliability_score": "UNKNOWN",
+      "quota_score": "UNKNOWN",
+      "credit_score": "UNKNOWN",
+      "RAIOS_VALUE_SCORE": 0.625,
+      "OPAQUE_SINGLE_SCORE_ONLY": false
+    }
+  },
+  {
+    "resource": "ORACLE_01:logging",
+    "account": "ORACLE_01",
+    "classes": [],
+    "scores": {
+      "availability_score": 0.7,
+      "cost_score": "UNKNOWN",
+      "persistence_score": 1.0,
+      "compute_score": 0.3,
+      "gpu_score": "UNKNOWN",
+      "storage_score": "UNKNOWN",
+      "network_score": "UNKNOWN",
+      "service_score": 0.5,
+      "reliability_score": "UNKNOWN",
+      "quota_score": "UNKNOWN",
+      "credit_score": "UNKNOWN",
+      "RAIOS_VALUE_SCORE": 0.625,
+      "OPAQUE_SINGLE_SCORE_ONLY": false
+    }
+  },
+  {
+    "resource": "ORACLE_01:iam",
+    "account": "ORACLE_01",
+    "classes": [],
+    "scores": {
+      "availability_score": 0.7,
+      "cost_score": "UNKNOWN",
+      "persistence_score": 1.0,
+      "compute_score": 0.3,
+      "gpu_score": "UNKNOWN",
+      "storage_score": "UNKNOWN",
+      "network_score": "UNKNOWN",
+      "service_score": 0.5,
+      "reliability_score": "UNKNOWN",
+      "quota_score": "UNKNOWN",
+      "credit_score": "UNKNOWN",
+      "RAIOS_VALUE_SCORE": 0.625,
+      "OPAQUE_SINGLE_SCORE_ONLY": false
+    }
+  },
+  {
+    "resource": "ORACLE_01:vault",
+    "account": "ORACLE_01",
+    "classes": [],
+    "scores": {
+      "availability_score": 0.7,
+      "cost_score": "UNKNOWN",
+      "persistence_score": 1.0,
+      "compute_score": 0.3,
+      "gpu_score": "UNKNOWN",
+      "storage_score": "UNKNOWN",
+      "network_score": "UNKNOWN",
+      "service_score": 0.5,
+      "reliability_score": "UNKNOWN",
+      "quota_score": "UNKNOWN",
+      "credit_score": "UNKNOWN",
+      "RAIOS_VALUE_SCORE": 0.625,
+      "OPAQUE_SINGLE_SCORE_ONLY": false
+    }
+  },
+  {
+    "resource": "KAGGLE_C1:notebook",
+    "account": "KAGGLE_C1",
+    "classes": [
+      "GPU_BURST",
+      "LIGHT_INFERENCE"
+    ],
+    "scores": {
+      "availability_score": 0.7,
+      "cost_score": "UNKNOWN",
+      "persistence_score": 1.0,
+      "compute_score": 0.3,
+      "gpu_score": "UNKNOWN",
+      "storage_score": "UNKNOWN",
+      "network_score": "UNKNOWN",
+      "service_score": 0.5,
+      "reliability_score": "UNKNOWN",
+      "quota_score": "UNKNOWN",
+      "credit_score": "UNKNOWN",
+      "RAIOS_VALUE_SCORE": 0.625,
+      "OPAQUE_SINGLE_SCORE_ONLY": false
+    }
+  },
+  {
+    "resource": "KAGGLE_C1:datasets",
+    "account": "KAGGLE_C1",
+    "classes": [],
+    "scores": {
+      "availability_score": 0.7,
+      "cost_score": "UNKNOWN",
+      "persistence_score": 1.0,
+      "compute_score": 0.3,
+      "gpu_score": "UNKNOWN",
+      "storage_score": "UNKNOWN",
+      "network_score": "UNKNOWN",
+      "service_score": 0.5,
+      "reliability_score": "UNKNOWN",
+      "quota_score": "UNKNOWN",
+      "credit_score": "UNKNOWN",
+      "RAIOS_VALUE_SCORE": 0.625,
+      "OPAQUE_SINGLE_SCORE_ONLY": false
+    }
+  },
+  {
+    "resource": "KAGGLE_C1:models",
+    "account": "KAGGLE_C1",
+    "classes": [],
+    "scores": {
+      "availability_score": 0.7,
+      "cost_score": "UNKNOWN",
+      "persistence_score": 1.0,
+      "compute_score": 0.3,
+      "gpu_score": "UNKNOWN",
+      "storage_score": "UNKNOWN",
+      "network_score": "UNKNOWN",
+      "service_score": 0.5,
+      "reliability_score": "UNKNOWN",
+      "quota_score": "UNKNOWN",
+      "credit_score": "UNKNOWN",
+      "RAIOS_VALUE_SCORE": 0.625,
+      "OPAQUE_SINGLE_SCORE_ONLY": false
+    }
+  },
+  {
+    "resource": "KAGGLE_PARTNER:notebook",
+    "account": "KAGGLE_PARTNER",
+    "classes": [
+      "GPU_BURST",
+      "LIGHT_INFERENCE"
+    ],
+    "scores": {
+      "availability_score": 0.7,
+      "cost_score": "UNKNOWN",
+      "persistence_score": 1.0,
+      "compute_score": 0.3,
+      "gpu_score": "UNKNOWN",
+      "storage_score": "UNKNOWN",
+      "network_score": "UNKNOWN",
+      "service_score": 0.5,
+      "reliability_score": "UNKNOWN",
+      "quota_score": "UNKNOWN",
+      "credit_score": "UNKNOWN",
+      "RAIOS_VALUE_SCORE": 0.625,
+      "OPAQUE_SINGLE_SCORE_ONLY": false
+    }
+  },
+  {
+    "resource": "KAGGLE_PARTNER:datasets",
+    "account": "KAGGLE_PARTNER",
+    "classes": [],
+    "scores": {
+      "availability_score": 0.7,
+      "cost_score": "UNKNOWN",
+      "persistence_score": 1.0,
+      "compute_score": 0.3,
+      "gpu_score": "UNKNOWN",
+      "storage_score": "UNKNOWN",
+      "network_score": "UNKNOWN",
+      "service_score": 0.5,
+      "reliability_score": "UNKNOWN",
+      "quota_score": "UNKNOWN",
+      "credit_score": "UNKNOWN",
+      "RAIOS_VALUE_SCORE": 0.625,
+      "OPAQUE_SINGLE_SCORE_ONLY": false
+    }
+  },
+  {
+    "resource": "KAGGLE_PARTNER:models",
+    "account": "KAGGLE_PARTNER",
+    "classes": [],
+    "scores": {
+      "availability_score": 0.7,
+      "cost_score": "UNKNOWN",
+      "persistence_score": 1.0,
+      "compute_score": 0.3,
+      "gpu_score": "UNKNOWN",
+      "storage_score": "UNKNOWN",
+      "network_score": "UNKNOWN",
+      "service_score": 0.5,
+      "reliability_score": "UNKNOWN",
+      "quota_score": "UNKNOWN",
+      "credit_score": "UNKNOWN",
+      "RAIOS_VALUE_SCORE": 0.625,
+      "OPAQUE_SINGLE_SCORE_ONLY": false
+    }
+  },
+  {
+    "resource": "LIGHTNING_01:studio",
+    "account": "LIGHTNING_01",
+    "classes": [],
+    "scores": {
+      "availability_score": 0.7,
+      "cost_score": "UNKNOWN",
+      "persistence_score": 1.0,
+      "compute_score": 0.3,
+      "gpu_score": "UNKNOWN",
+      "storage_score": "UNKNOWN",
+      "network_score": "UNKNOWN",
+      "service_score": 0.5,
+      "reliability_score": "UNKNOWN",
+      "quota_score": "UNKNOWN",
+      "credit_score": "UNKNOWN",
+      "RAIOS_VALUE_SCORE": 0.625,
+      "OPAQUE_SINGLE_SCORE_ONLY": false
+    }
+  },
+  {
+    "resource": "COLAB_01:notebook",
+    "account": "COLAB_01",
+    "classes": [
+      "GPU_BURST",
+      "LIGHT_INFERENCE"
+    ],
+    "scores": {
+      "availability_score": 0.7,
+      "cost_score": "UNKNOWN",
+      "persistence_score": 1.0,
+      "compute_score": 0.3,
+      "gpu_score": "UNKNOWN",
+      "storage_score": "UNKNOWN",
+      "network_score": "UNKNOWN",
+      "service_score": 0.5,
+      "reliability_score": "UNKNOWN",
+      "quota_score": "UNKNOWN",
+      "credit_score": "UNKNOWN",
+      "RAIOS_VALUE_SCORE": 0.625,
+      "OPAQUE_SINGLE_SCORE_ONLY": false
+    }
+  },
+  {
+    "resource": "MODAL_01:functions",
+    "account": "MODAL_01",
+    "classes": [],
+    "scores": {
+      "availability_score": 0.7,
+      "cost_score": "UNKNOWN",
+      "persistence_score": 1.0,
+      "compute_score": 0.3,
+      "gpu_score": "UNKNOWN",
+      "storage_score": "UNKNOWN",
+      "network_score": "UNKNOWN",
+      "service_score": 0.5,
+      "reliability_score": "UNKNOWN",
+      "quota_score": "UNKNOWN",
+      "credit_score": "UNKNOWN",
+      "RAIOS_VALUE_SCORE": 0.625,
+      "OPAQUE_SINGLE_SCORE_ONLY": false
+    }
+  },
+  {
+    "resource": "LOCAL_AG:c5-http",
+    "account": "LOCAL_AG",
+    "classes": [
+      "LIGHT_INFERENCE",
+      "PRIVATE_ENDPOINT"
+    ],
+    "scores": {
+      "availability_score": 0.7,
+      "cost_score": "UNKNOWN",
+      "persistence_score": 1.0,
+      "compute_score": 0.3,
+      "gpu_score": "UNKNOWN",
+      "storage_score": "UNKNOWN",
+      "network_score": "UNKNOWN",
+      "service_score": 0.5,
+      "reliability_score": "UNKNOWN",
+      "quota_score": "UNKNOWN",
+      "credit_score": "UNKNOWN",
+      "RAIOS_VALUE_SCORE": 0.625,
+      "OPAQUE_SINGLE_SCORE_ONLY": false
+    }
+  }
+]

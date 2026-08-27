@@ -1,0 +1,11 @@
+# Handoff
+- Agent: cursor
+- Seat: C2-KAGGLE-CONTROL
+- Task: RAIOS-RESOURCE-FABRIC-FOUNDATION-WAVE-01
+- Status: FOUNDATION_EXECUTABLE
+- Files: src/raios/resource_fabric, tests/resource_fabric, RAIOS-RESOURCE.ps1, this package
+- Validation: 115/115 resource-fabric tests; live TCP probe of local 8766 SUCCESS; other account slots AUTH_REQUIRED not ABSENT
+- Evidence: this directory
+- Next: live authenticated quota/credit probes without paid activation; do not unfreeze precanonical
+- Frozen precanonical: 3add0aa7a5c7de9d1e6ab473df1e720cf1f06a60
+- Branch: ai-evolution-202608051809
