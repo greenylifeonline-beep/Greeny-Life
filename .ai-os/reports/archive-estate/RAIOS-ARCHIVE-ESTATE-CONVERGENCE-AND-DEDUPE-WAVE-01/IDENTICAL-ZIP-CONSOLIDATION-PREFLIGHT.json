@@ -1,0 +1,86 @@
+﻿{
+    "schema":  "raios.archive.identical-zip-consolidation.v1",
+    "super_task_id":  "RAIOS-ARCHIVE-ESTATE-CONVERGENCE-AND-DEDUPE-WAVE-01",
+    "approval":  "APPROVE_EXACT_ZIP_DEDUPE_WAVE_01",
+    "generated_at":  "2026-08-28T11:58:57.7711384Z",
+    "backup_copies_created":  0,
+    "new_zips_created":  0,
+    "new_tars_created":  0,
+    "new_project_copies_created":  0,
+    "groups":  4,
+    "redundant_copies_planned":  6,
+    "actions":  [
+                    {
+                        "group":  "EOS_REVIEW",
+                        "canonical_sor":  "C:\\Users\\Ghanam\\Documents\\Codex\\Greeny-Life-Repair\\GreenyLifeEOS_Review.zip",
+                        "deleted_path":  "C:\\Users\\Ghanam\\Documents\\Codex\\Greeny-Life-Legacy-Review\\20260814-221919\\GreenyLifeEOS_Review.zip",
+                        "sha256":  "AC2A7562954707BD5E1A19D8912D09CD0B5CE0854DDBBA5D3F2A11AB75919172",
+                        "bytes":  21265973,
+                        "runtime_required":  false,
+                        "recovery_proven":  true,
+                        "recovery_proof":  "Canonical tracked SOR in Current plus Git object history.",
+                        "verified_before_delete":  true,
+                        "deleted":  false
+                    },
+                    {
+                        "group":  "EOS_REVIEW",
+                        "canonical_sor":  "C:\\Users\\Ghanam\\Documents\\Codex\\Greeny-Life-Repair\\GreenyLifeEOS_Review.zip",
+                        "deleted_path":  "C:\\Users\\Ghanam\\OneDrive\\projects\\Greeny-Life-RETIRED-20260820-084036\\GreenyLifeEOS_Review.zip",
+                        "sha256":  "AC2A7562954707BD5E1A19D8912D09CD0B5CE0854DDBBA5D3F2A11AB75919172",
+                        "bytes":  21265973,
+                        "runtime_required":  false,
+                        "recovery_proven":  true,
+                        "recovery_proof":  "Canonical tracked SOR in Current plus Git object history.",
+                        "verified_before_delete":  true,
+                        "deleted":  false
+                    },
+                    {
+                        "group":  "E3_SOURCE_TRACE",
+                        "canonical_sor":  "C:\\Users\\Ghanam\\Documents\\Codex\\Greeny-Life-Repair\\E3-SOURCE-TRACE-PACKAGE.zip",
+                        "deleted_path":  "C:\\Users\\Ghanam\\Documents\\Codex\\Greeny-Life-Legacy-Review\\20260814-221919\\E3-SOURCE-TRACE-PACKAGE.zip",
+                        "sha256":  "B3F84A2D24085CCBA6BD260BE39CA79DBE5EE4EFEA34072F318EB06517390B88",
+                        "bytes":  59654,
+                        "runtime_required":  false,
+                        "recovery_proven":  true,
+                        "recovery_proof":  "Canonical tracked SOR in Current plus Git object history.",
+                        "verified_before_delete":  true,
+                        "deleted":  false
+                    },
+                    {
+                        "group":  "E3_SOURCE_TRACE",
+                        "canonical_sor":  "C:\\Users\\Ghanam\\Documents\\Codex\\Greeny-Life-Repair\\E3-SOURCE-TRACE-PACKAGE.zip",
+                        "deleted_path":  "C:\\Users\\Ghanam\\OneDrive\\projects\\Greeny-Life-RETIRED-20260820-084036\\E3-SOURCE-TRACE-PACKAGE.zip",
+                        "sha256":  "B3F84A2D24085CCBA6BD260BE39CA79DBE5EE4EFEA34072F318EB06517390B88",
+                        "bytes":  59654,
+                        "runtime_required":  false,
+                        "recovery_proven":  true,
+                        "recovery_proof":  "Canonical tracked SOR in Current plus Git object history.",
+                        "verified_before_delete":  true,
+                        "deleted":  false
+                    },
+                    {
+                        "group":  "KAGGLE_CANONICAL_ESTATE",
+                        "canonical_sor":  "C:\\Users\\Ghanam\\Documents\\Codex\\Greeny-Life-Repair\\.ai-os\\reports\\kaggle-canon-01\\canonical\\RAIOS-CANONICAL-ESTATE.zip",
+                        "deleted_path":  "C:\\Users\\Ghanam\\Documents\\Codex\\Greeny-Life-Repair\\.ai-os\\reports\\kaggle-canon-01\\publish\\dataset\\RAIOS-CANONICAL-ESTATE.zip",
+                        "sha256":  "BE155E4B008C8686CFECB885C5BCEA389CDC3F29C32A3AC34408B31669ADD4F6",
+                        "bytes":  3692555,
+                        "runtime_required":  false,
+                        "recovery_proven":  true,
+                        "recovery_proof":  "Canonical dataset payload is the manifest-bound SOR; deleted tracked copy remains recoverable from Git.",
+                        "verified_before_delete":  true,
+                        "deleted":  false
+                    },
+                    {
+                        "group":  "RIF_SANDBOX_FOUNDATION",
+                        "canonical_sor":  "C:\\Users\\Ghanam\\Documents\\Codex\\Greeny-Life-Repair\\.ai-os\\staging\\rif-c7-integration\\RIF-SANDBOX-FOUNDATION-PACKAGE-v1.zip",
+                        "deleted_path":  "C:\\Users\\Ghanam\\Documents\\Codex\\Greeny-Life-Repair\\.ai-os\\staging\\rif-c7-integration\\incoming\\RIF-SANDBOX-FOUNDATION-PACKAGE-v1.zip",
+                        "sha256":  "936C55A758F2DC00CADE36DCAFACD821379B17858D18ADF5106498079AA9F783",
+                        "bytes":  60461,
+                        "runtime_required":  false,
+                        "recovery_proven":  true,
+                        "recovery_proof":  "Single staging-root SOR retained; deleted tracked incoming copy remains recoverable from Git.",
+                        "verified_before_delete":  true,
+                        "deleted":  false
+                    }
+                ]
+}

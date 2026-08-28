@@ -146,12 +146,14 @@ class ResourceFactory(unittest.TestCase):
     def test_g_oracle_auth_required(self):
         req = resource_request(workload_class="LONG_RUNNING_SERVICE", request_id="G")
         dec = place(req, self.world)
-        self.assertIn("AUTH_REQUIRED", _reasons(dec, "ORACLE_01"))
+        self.assertIn("BLOCKED_C1_ACTION", _reasons(dec, "ORACLE_01"))
 
     def test_h_colab_google_auth_setup_required(self):
         req = resource_request(workload_class="GPU_BURST", request_id="H")
         dec = place(req, self.world)
-        self.assertIn("GOOGLE_AUTH_SETUP_REQUIRED", _reasons(dec, "COLAB_01"))
+        reasons = _reasons(dec, "COLAB_01")
+        self.assertIn("BLOCKED_C1_ACTION", reasons)
+        self.assertIn("GOOGLE_AUTH_SETUP_REQUIRED", reasons)
 
     def test_i_modal_cpu_short_job_eligible(self):
         req = resource_request(workload_class="BATCH_CPU", request_id="I")

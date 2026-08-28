@@ -1,0 +1,52 @@
+{
+  "schema": "raios.archive.recovery-proofs.v3",
+  "generated_at": "2026-08-28T15:45:00Z",
+  "deletion_checkpoint_recovery_proven": true,
+  "exact_zip_groups": {
+    "groups": 4,
+    "copies_deleted": 6,
+    "redundant_remaining": 0
+  },
+  "raw_tar": {
+    "stream_equivalence": true,
+    "raw_deleted": true,
+    "gzip_sor_verified": true
+  },
+  "derived_reports": {
+    "deleted": 24,
+    "redundancy_remaining": 0
+  },
+  "c3": {
+    "entries": 2141,
+    "unknown": 0,
+    "terminal_state": "CANONICAL_RECOVERY_ASSET",
+    "recovery_role_proven": true
+  },
+  "tree001": {
+    "bundle_verified": true,
+    "hash_verified": true,
+    "unique_commits": 0,
+    "recovery_tips": 16,
+    "expected_tips_found": "16/16",
+    "objects_readable": "16/16",
+    "remote_pinned": 0,
+    "bundle_preserved": 16,
+    "recovery_test_pass": true,
+    "terminal_state": "CANONICAL_RECOVERY_ASSET",
+    "remote_durability": false,
+    "canonical_bundle_recovery_durability": true
+  },
+  "onedrive": {
+    "unresolved": 0
+  },
+  "kaggle_s69": {
+    "auth_probe": true,
+    "datasets": 6,
+    "files": 77,
+    "archives": 0,
+    "unresolved": false
+  },
+  "unknown": 0,
+  "unresolved": 0,
+  "recovery_proven": true
+}

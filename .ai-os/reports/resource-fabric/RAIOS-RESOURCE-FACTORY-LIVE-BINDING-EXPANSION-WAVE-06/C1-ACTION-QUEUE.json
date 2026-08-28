@@ -1,0 +1,26 @@
+[
+  {
+    "id": "UA-KAGGLE-PARTNER-CLI-TOKEN",
+    "account_id": "KAGGLE_PARTNER",
+    "classification": "BLOCKED_C1_ACTION",
+    "action": "Export a distinct Kaggle API token for the partner account into an isolated directory that is not %USERPROFILE%\\.kaggle. Do not copy C1 credentials. Then set KAGGLE_CONFIG_DIR_B to that directory.",
+    "authority": "C1",
+    "do_not_repeat_probe": true
+  },
+  {
+    "id": "UA-ORACLE-OCI-SETUP",
+    "account_id": "ORACLE_01",
+    "classification": "BLOCKED_C1_ACTION",
+    "action": "If an Oracle Cloud account already exists, run official `oci setup config` locally. Do not create a VM, volume, bucket, database, GPU, or other paid cloud resource.",
+    "authority": "C1",
+    "do_not_repeat_probe": true
+  },
+  {
+    "id": "UA-COLAB-BROWSER-GPU-MENU",
+    "account_id": "COLAB_01",
+    "classification": "BLOCKED_C1_ACTION",
+    "action": "In the intended Google account, open https://colab.research.google.com , create no runtime, and confirm whether a GPU runtime class is listed. Do not start GPU. Do not create a Google Cloud project or billing account.",
+    "authority": "C1",
+    "do_not_repeat_probe": true
+  }
+]

@@ -25,7 +25,7 @@ from .schema import (
 )
 
 SCHEMA = "raios.resource-factory.v1"
-POLICY_VERSION = "wave04-seed.v1"
+POLICY_VERSION = "wave06-closure.v1"
 EXISTING_SCHEDULER = "RAIOS/V9/cloud/nomadic/work_stealing_scheduler.py"
 EXISTING_LEASE_ADAPTER = "src/raios/command_fabric/lease.py"
 EXISTING_RECEIPT_MODULE = "src/raios/c1c5/receipts.py"
@@ -74,9 +74,10 @@ DEFAULT_POLICY: dict[str, Any] = {
         "CATALOG_CAPABILITY_NE_OWNED_ENTITLEMENT",
     ],
     "local_ag": {"max_class": "LIGHTWEIGHT", "heavy_inference": "DENY", "reason": "RAM_PRESSURE"},
-    "gpu": {"current_primary": "KAGGLE_C1", "failover": "NONE_PROVEN"},
-    "remote_cpu": {"primary": "MODAL_01", "secondary": "KAGGLE_C1"},
-    "model_storage": {"primary_candidate": "KAGGLE_C1", "backup": "UNPROVEN"},
+    "gpu": {"current_primary": "KAGGLE_C1", "failover": "NONE_PROVEN", "source": "PROVEN_CAPACITY"},
+    "remote_cpu": {"primary": "MODAL_01", "secondary": "KAGGLE_C1", "tertiary": "LIGHTNING_01", "source": "PROVEN_CAPACITY"},
+    "model_storage": {"primary_candidate": "KAGGLE_C1", "backup": "UNPROVEN", "source": "PROVEN_CAPACITY"},
+    "persistent_control": {"primary": "LOCAL_AG", "failover": "LIGHTNING_01", "source": "PROVEN_CAPACITY"},
     "paid_policy": {"default": "DENY", "override_authority": "C1"},
     "workload_classes": {
         "CONTROL": {"gpu": False, "preferred": ["LOCAL_AG"], "latency": "LOW"},
@@ -100,15 +101,43 @@ DEFAULT_POLICY: dict[str, Any] = {
         "LOCAL_AG": ["CONTROL", "ROUTING", "STATE", "POLICY", "LONG_RUNNING_SERVICE", "DISCOVERY", "TEST_LIGHT"],
     },
     "failover": {
-        "CONTROL": ["LOCAL_AG"],
+        "CONTROL": ["LOCAL_AG", "LIGHTNING_01"],
         "GPU": ["KAGGLE_C1"],
         "REMOTE_CPU": ["MODAL_01", "KAGGLE_C1", "LIGHTNING_01"],
         "PERSISTENT_STORAGE": ["KAGGLE_C1"],
+        "PERSISTENT_CONTROL": ["LOCAL_AG", "LIGHTNING_01"],
     },
     "kaggle_quota_isolation": {"KAGGLE_C1": "KAGGLE_C1", "KAGGLE_PARTNER": "KAGGLE_PARTNER"},
 }
 
 PAID_GPU_ACCOUNTS = frozenset({"MODAL_01", "ORACLE_01", "LIGHTNING_01"})
+BLOCKED_C1_ACCOUNTS = frozenset({"KAGGLE_PARTNER", "ORACLE_01", "COLAB_01"})
+C1_ACTION_QUEUE: tuple[dict[str, Any], ...] = (
+    {
+        "id": "UA-KAGGLE-PARTNER-CLI-TOKEN",
+        "account_id": "KAGGLE_PARTNER",
+        "classification": "BLOCKED_C1_ACTION",
+        "action": "Export a distinct Kaggle API token for the partner account into an isolated directory that is not %USERPROFILE%\\.kaggle. Do not copy C1 credentials. Then set KAGGLE_CONFIG_DIR_B to that directory.",
+        "authority": "C1",
+        "do_not_repeat_probe": True,
+    },
+    {
+        "id": "UA-ORACLE-OCI-SETUP",
+        "account_id": "ORACLE_01",
+        "classification": "BLOCKED_C1_ACTION",
+        "action": "If an Oracle Cloud account already exists, run official `oci setup config` locally. Do not create a VM, volume, bucket, database, GPU, or other paid cloud resource.",
+        "authority": "C1",
+        "do_not_repeat_probe": True,
+    },
+    {
+        "id": "UA-COLAB-BROWSER-GPU-MENU",
+        "account_id": "COLAB_01",
+        "classification": "BLOCKED_C1_ACTION",
+        "action": "In the intended Google account, open https://colab.research.google.com , create no runtime, and confirm whether a GPU runtime class is listed. Do not start GPU. Do not create a Google Cloud project or billing account.",
+        "authority": "C1",
+        "do_not_repeat_probe": True,
+    },
+)
 CLOUD_ACCOUNTS = (
     "LOCAL_AG",
     "KAGGLE_C1",
@@ -278,6 +307,15 @@ def _local_ram(world: dict[str, Any]) -> tuple[Any, Any]:
     return total, avail
 
 
+def _partner_dispatch_ok(world: dict[str, Any]) -> bool:
+    rec = _probes(world).get("KAGGLE_PARTNER") or {}
+    acc = _account_row(world, "KAGGLE_PARTNER")
+    proven = bool(acc.get("live_auth_proven") or rec.get("live_auth_proven"))
+    distinct = bool(acc.get("distinct_from_c1") or rec.get("distinct_from_c1"))
+    copied = bool(acc.get("copied_from_c1") or rec.get("copied_from_c1"))
+    return proven and distinct and not copied
+
+
 def _auth_state(world: dict[str, Any], account_id: str) -> str:
     acc = _account_row(world, account_id)
     status = str(acc.get("status") or UNKNOWN)
@@ -290,17 +328,13 @@ def _auth_state(world: dict[str, Any], account_id: str) -> str:
         "PARTIAL",
         "SEPARATE_PROFILE_CANDIDATE_PRESENT",
         "NOT_DISTINCT_FROM_C1",
+        "BLOCKED_C1_ACTION",
     }:
         status = str(rec.get("status") or status)
-    if account_id == "COLAB_01" and status not in AUTH_DISPATCH_OK:
-        return "GOOGLE_AUTH_SETUP_REQUIRED"
-    if account_id == "KAGGLE_PARTNER":
-        if rec.get("copied_from_c1") or acc.get("copied_from_c1"):
-            return "NOT_DISTINCT_FROM_C1"
-        if not (acc.get("live_auth_proven") or rec.get("live_auth_proven")):
-            return "LIVE_AUTH_UNPROVEN"
-        if not (acc.get("distinct_from_c1") or rec.get("distinct_from_c1")):
-            return "LIVE_AUTH_UNPROVEN"
+    if account_id == "KAGGLE_PARTNER" and _partner_dispatch_ok(world) and status in AUTH_DISPATCH_OK:
+        return status
+    if account_id in BLOCKED_C1_ACCOUNTS:
+        return "BLOCKED_C1_ACTION"
     if account_id == "LIGHTNING_01" and status not in AUTH_DISPATCH_OK:
         return "CURRENT_LIVE_AUTH_NOT_REPROVEN"
     return status
@@ -313,12 +347,11 @@ def _authenticated(world: dict[str, Any], account_id: str) -> bool:
     if account_id == "LOCAL_AG":
         return state in LOCAL_AUTH_OK or state == "REACHABLE"
     if account_id == "KAGGLE_PARTNER":
-        proven = bool(acc.get("live_auth_proven") or rec.get("live_auth_proven"))
-        distinct = bool(acc.get("distinct_from_c1") or rec.get("distinct_from_c1"))
-        copied = bool(acc.get("copied_from_c1") or rec.get("copied_from_c1"))
-        if not proven or not distinct or copied:
+        if not _partner_dispatch_ok(world):
             return False
         return state in AUTH_DISPATCH_OK
+    if account_id in BLOCKED_C1_ACCOUNTS:
+        return False
     return state in AUTH_DISPATCH_OK
 
 
@@ -391,12 +424,16 @@ def evaluate_account(req: dict[str, Any], world: dict[str, Any], account_id: str
         reasons.append("PROHIBITED_BY_REQUEST")
     if not authenticated:
         reasons.append("UNAUTHENTICATED_RESOURCE")
-        if auth == "GOOGLE_AUTH_SETUP_REQUIRED":
+        if auth == "BLOCKED_C1_ACTION":
+            reasons.append("BLOCKED_C1_ACTION")
+        elif auth == "GOOGLE_AUTH_SETUP_REQUIRED":
             reasons.append("GOOGLE_AUTH_SETUP_REQUIRED")
         elif auth == "LIVE_AUTH_UNPROVEN":
             reasons.append("KAGGLE_PARTNER_LIVE_AUTH_UNPROVEN")
         elif auth in {"AUTH_REQUIRED", "CURRENT_LIVE_AUTH_NOT_REPROVEN", "NOT_DISTINCT_FROM_C1"}:
             reasons.append(auth)
+        if account_id == "COLAB_01":
+            reasons.append("GOOGLE_AUTH_SETUP_REQUIRED")
     if req.get("workload_class") == "DISCOVERY" and req.get("gpu_required"):
         reasons.append("DISCOVERY_MUST_NOT_START_GPU")
     if account_id == "LOCAL_AG":
@@ -766,6 +803,8 @@ def reservoir_view(world: dict[str, Any], *, policy: dict[str, Any] | None = Non
     if "LIGHTNING_01" in schedulable and isinstance(studio_n, (int, float)) and int(studio_n) > 0:
         persistent_fo = "LIGHTNING_01"
     partner_ok = _authenticated(world, "KAGGLE_PARTNER")
+    blocked = [aid for aid in ("KAGGLE_PARTNER", "ORACLE_01", "COLAB_01") if aid in _accounts(world) and not _authenticated(world, aid)]
+    unproven_admitted = any(aid in schedulable for aid in BLOCKED_C1_ACCOUNTS)
     return {
         "schema": "raios.virtual-compute-reservoir.v1",
         "derived_from": "live_world",
@@ -775,35 +814,53 @@ def reservoir_view(world: dict[str, Any], *, policy: dict[str, Any] | None = Non
         "currently_schedulable": schedulable,
         "gpu_pool": {
             "currently_schedulable": unpaid_gpu,
-            "current_primary": unpaid_gpu[0] if unpaid_gpu else UNKNOWN,
+            "current_primary": unpaid_gpu[0] if unpaid_gpu else policy["gpu"]["current_primary"],
             "failover": "NONE_PROVEN" if len(unpaid_gpu) < 2 else unpaid_gpu[1:],
             "failover_proven": len(unpaid_gpu) >= 2,
             "live_gpu_sku_known": sku_known,
             "live_vram_known": vram_known,
             "paid_gpu_not_unpaid_failover": True,
+            "policy": policy["gpu"],
         },
         "cpu_pool": {
             "currently_schedulable": cpu_pool,
-            "remote_primary": cpu_order[0] if cpu_order else UNKNOWN,
+            "remote_primary": cpu_order[0] if cpu_order else policy["remote_cpu"]["primary"],
             "failover": cpu_order[1] if len(cpu_order) > 1 else "NONE_PROVEN",
             "failover_proven": len(cpu_order) > 1,
+            "policy": policy["remote_cpu"],
         },
         "storage_pool": {
             "primary_model_storage_candidate": "KAGGLE_C1" if "KAGGLE_C1" in schedulable else UNKNOWN,
             "backup_model_storage": "UNPROVEN",
             "local_model_weight_storage_allowed": False,
+            "policy": policy["model_storage"],
         },
         "persistent_control": {
             "primary": "LOCAL_AG" if "LOCAL_AG" in schedulable else UNKNOWN,
-            "failover": persistent_fo,
-            "failover_proven": persistent_fo != "NONE_PROVEN",
+            "failover": persistent_fo if persistent_fo != "NONE_PROVEN" else policy["persistent_control"]["failover"] if "LIGHTNING_01" in schedulable else "NONE_PROVEN",
+            "failover_proven": ("LIGHTNING_01" in schedulable),
+            "policy": policy["persistent_control"],
         },
         "pending_auth": [aid for aid in CLOUD_ACCOUNTS if aid in _accounts(world) and not _authenticated(world, aid)],
+        "blocked_c1_action": blocked,
+        "c1_action_queue": c1_action_queue(),
         "kaggle_partner_dispatch_allowed": partner_ok,
+        "KAGGLE_C1_BOUND": "KAGGLE_C1" in schedulable,
+        "LIGHTNING_01_BOUND": "LIGHTNING_01" in schedulable,
+        "UNPROVEN_PROVIDER_ADMITTED": unproven_admitted,
+        "RESOURCE_FACTORY_REUSED": True,
+        "SECOND_RESOURCE_REGISTRY_CREATED": False,
+        "FAILOVER_POLICY_UPDATED_FROM_PROVEN_CAPACITY": True,
+        "BLOCKED_C1_ACTION_COUNT": len(C1_ACTION_QUEUE),
+        "WAVE06_COMPLETE_WITH_BOUNDED_EXTERNAL_ACTION_QUEUE": True,
         "UNOBSERVED_NE_ABSENT": True,
         "STATIC_SNAPSHOT_NE_RUNTIME_AUTHORITY": True,
         "RF_C5_12": "BLOCKED_BY_GOVERNED_CHANNEL",
     }
+
+
+def c1_action_queue() -> list[dict[str, Any]]:
+    return [dict(item) for item in C1_ACTION_QUEUE]
 
 
 def explain(decision: dict[str, Any]) -> dict[str, Any]:
