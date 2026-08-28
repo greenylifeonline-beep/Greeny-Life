@@ -1,0 +1,35 @@
+{
+  "primary_entrypoints": [
+    {
+      "entrypoint": ".ai-os/control/RAIOS-CONTROL-PLANE-V1.py",
+      "target": "RAIOS control plane",
+      "type": "CLI"
+    },
+    {
+      "entrypoint": "run_brain_cli.py",
+      "target": "brain.GreenyLifeBrain",
+      "type": "CLI"
+    },
+    {
+      "entrypoint": "src/raios/resource_fabric/__main__.py",
+      "target": "resource_fabric.cli",
+      "type": "CLI"
+    },
+    {
+      "entrypoint": "scripts/ai-os/raios_transport/stage04.py",
+      "target": "LocalFabricBridge/NatsJetStreamProvider",
+      "type": "CLI_SERVICE"
+    },
+    {
+      "entrypoint": "scripts/ai-os/raios_mcp/server.py",
+      "target": "RAIOS MCP gateway",
+      "type": "SERVICE"
+    },
+    {
+      "entrypoint": "canonical/lib/workflowEngine.ts",
+      "target": "workflow runtime",
+      "type": "LIBRARY_API"
+    }
+  ],
+  "multiple_primary_entrypoints_same_capability": 0
+}

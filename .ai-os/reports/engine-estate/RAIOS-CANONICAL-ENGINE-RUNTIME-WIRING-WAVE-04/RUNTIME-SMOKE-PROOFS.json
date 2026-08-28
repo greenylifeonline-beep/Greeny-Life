@@ -1,0 +1,120 @@
+{
+  "paid_resources": false,
+  "gpu_started": false,
+  "proofs": [
+    {
+      "capability": "A2A",
+      "canonical_target": "src/raios/a2a/gateway.py",
+      "invocation_proof": "critical Python import smoke",
+      "result": "PASS",
+      "dependencies": []
+    },
+    {
+      "capability": "Command Fabric",
+      "canonical_target": "src/raios/command_fabric/pipeline.py",
+      "invocation_proof": "24 deterministic tests",
+      "result": "PASS",
+      "dependencies": []
+    },
+    {
+      "capability": "MCP transport",
+      "canonical_target": "scripts/ai-os/raios_mcp/server.py",
+      "invocation_proof": "MCP/Transport import smoke",
+      "result": "PASS",
+      "dependencies": []
+    },
+    {
+      "capability": "Task Orchestration",
+      "canonical_target": "lib/intelligence/task-orchestration.ts",
+      "invocation_proof": "tsx invocation",
+      "result": "PASS",
+      "dependencies": []
+    },
+    {
+      "capability": "Worker Runtime",
+      "canonical_target": "RAIOS/V9/cloud/nomadic/worker_contract.py",
+      "invocation_proof": "contract import/composition proof",
+      "result": "PASS",
+      "dependencies": []
+    },
+    {
+      "capability": "C1-C5 channel",
+      "canonical_target": "src/raios/c1c5/dispatch.py",
+      "invocation_proof": "critical Python import smoke",
+      "result": "PASS",
+      "dependencies": []
+    },
+    {
+      "capability": "C5 brain/runtime",
+      "canonical_target": "brain.py",
+      "invocation_proof": "legacy compatibility + CLI smoke",
+      "result": "PASS",
+      "dependencies": []
+    },
+    {
+      "capability": "Cognitive/Event Bus",
+      "canonical_target": "RAIOS/V9/runtime/cognitive_event_bus.py",
+      "invocation_proof": "event/WAL registration proof",
+      "result": "PASS",
+      "dependencies": []
+    },
+    {
+      "capability": "WAL/continuity",
+      "canonical_target": "RAIOS/V9/wal/cognitive-events.jsonl",
+      "invocation_proof": "V9 state path proof",
+      "result": "PASS",
+      "dependencies": []
+    },
+    {
+      "capability": "Controlled Learning",
+      "canonical_target": "lib/intelligence/controlled-learning.ts",
+      "invocation_proof": "tsx invocation",
+      "result": "PASS",
+      "dependencies": []
+    },
+    {
+      "capability": "NeuroLingua",
+      "canonical_target": "src/raios/neuro_lingua/router.py",
+      "invocation_proof": "critical Python import smoke",
+      "result": "PASS",
+      "dependencies": []
+    },
+    {
+      "capability": "Model/assimilation/merge",
+      "canonical_target": "RAIOS/V9/runtime/evolution_brain.py",
+      "invocation_proof": "canonical composition/import proof",
+      "result": "PASS",
+      "dependencies": []
+    },
+    {
+      "capability": "Maintenance/autonomic",
+      "canonical_target": "RAIOS/V9/autonomic/self_inspection/engine.py",
+      "invocation_proof": "canonical service classification",
+      "result": "PASS",
+      "dependencies": []
+    },
+    {
+      "capability": "Resource Fabric boundary",
+      "canonical_target": "src/raios/resource_fabric/factory.py",
+      "invocation_proof": "151 tests + import smoke",
+      "result": "PASS",
+      "dependencies": []
+    },
+    {
+      "capability": "Provider/scheduler boundary",
+      "canonical_target": "RAIOS/V9/cloud/nomadic/worker_contract.py",
+      "invocation_proof": "contract wiring proof",
+      "result": "PASS",
+      "dependencies": []
+    },
+    {
+      "capability": "Mastermind DB boundary",
+      "canonical_target": "lib/intelligence/mastermind-agents.ts",
+      "invocation_proof": "invocation reached Prisma DATABASE_URL boundary",
+      "result": "DEPENDENCY_BOUNDARY_REACHED",
+      "dependencies": [
+        "DATABASE_URL"
+      ]
+    }
+  ]
+}
