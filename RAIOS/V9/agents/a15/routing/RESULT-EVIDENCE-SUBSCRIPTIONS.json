@@ -1,0 +1,20 @@
+{
+  "schema": "raios.a15.result-evidence-subscriptions.v1",
+  "subscriptions": {
+    "filesystem_read": [
+      "LOCAL_DETERMINISTIC",
+      "RAIOS_INTERNAL"
+    ],
+    "independent_review": [
+      "GEMINI",
+      "RAIOS_INTERNAL"
+    ],
+    "governance": [
+      "RAIOS_INTERNAL"
+    ],
+    "test_execution": [
+      "LOCAL_DETERMINISTIC"
+    ]
+  },
+  "rescan_repository_forbidden": true
+}

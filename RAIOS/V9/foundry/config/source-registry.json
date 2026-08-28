@@ -1,0 +1,62 @@
+﻿{
+  "schema": "c5-expert-foundry-source-registry/v0.1",
+  "policy": {
+    "default_state": "DISCOVERED",
+    "remote_fetch_default": false,
+    "official_url_ne_verified_claim": true,
+    "stale_law_ne_current_law": true,
+    "no_hidden_reasoning_extraction": true,
+    "no_secret_extraction": true,
+    "no_auth_bypass": true
+  },
+  "domains": [
+    {
+      "id": "trade-egypt",
+      "domain": "international_trade",
+      "jurisdiction": "EGYPT",
+      "corridors": ["EGYPT_GCC","GCC_EGYPT","EGYPT_EU","EU_EGYPT"],
+      "sources": [
+        {
+          "source_id": "EG-GOEIC",
+          "kind": "official_web",
+          "url": "https://www.goeic.gov.eg/",
+          "state": "DISCOVERED"
+        },
+        {
+          "source_id": "EG-NAFEZA",
+          "kind": "official_web",
+          "url": "https://www.nafeza.gov.eg/",
+          "state": "DISCOVERED"
+        }
+      ]
+    },
+    {
+      "id": "trade-eu",
+      "domain": "international_trade",
+      "jurisdiction": "EU",
+      "corridors": ["EGYPT_EU","EU_EGYPT","GCC_EU","EU_GCC"],
+      "sources": [
+        {
+          "source_id": "EU-ACCESS2MARKETS",
+          "kind": "official_web",
+          "url": "https://trade.ec.europa.eu/access-to-markets/",
+          "state": "DISCOVERED"
+        }
+      ]
+    },
+    {
+      "id": "trade-gcc",
+      "domain": "international_trade",
+      "jurisdiction": "GCC",
+      "corridors": ["EGYPT_GCC","GCC_EGYPT","GCC_EU","EU_GCC","INTRA_GCC"],
+      "sources": [
+        {
+          "source_id": "GCC-SECRETARIAT",
+          "kind": "official_web",
+          "url": "https://www.gcc-sg.org/",
+          "state": "DISCOVERED"
+        }
+      ]
+    }
+  ]
+}

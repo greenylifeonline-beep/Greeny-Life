@@ -1,0 +1,73 @@
+{
+  "schema": "raios.c5.source-registry.v0.1",
+  "knowledge_state": "DISCOVERED",
+  "domain": "INTERNATIONAL_TRADE_LOGISTICS",
+  "repository_head": "e1dfd7c235b0bd4ba1a58ab6dfea47bd00173370",
+  "branch": "v9-neurolingua-semantic-kernel",
+  "authoritative_learning_store": "COGNITIVE_WAL",
+  "this_registry_is_learning_authority": false,
+  "sources": [
+    {
+      "source_id": "EGYPT_GOEIC_LAWS",
+      "authority": "GOEIC",
+      "authority_level": "TIER0_PRIMARY",
+      "jurisdiction": "EGYPT",
+      "language": "ar",
+      "document_type": "REGULATORY_INDEX",
+      "url": "https://www.goeic.gov.eg/ar/laws-and-decisions/list",
+      "domain": [
+        "trade",
+        "import",
+        "export",
+        "regulation"
+      ]
+    },
+    {
+      "source_id": "EU_ACCESS2MARKETS_IMPORT",
+      "authority": "EUROPEAN_COMMISSION",
+      "authority_level": "TIER0_PRIMARY",
+      "jurisdiction": "EU",
+      "language": "en",
+      "document_type": "OFFICIAL_GUIDANCE",
+      "url": "https://policy.trade.ec.europa.eu/help-exporters-and-importers/importing-eu_en",
+      "domain": [
+        "trade",
+        "customs",
+        "tariffs",
+        "origin",
+        "compliance"
+      ]
+    },
+    {
+      "source_id": "GCC_CUSTOMS_UNION",
+      "authority": "GCC_SECRETARIAT",
+      "authority_level": "TIER0_PRIMARY",
+      "jurisdiction": "GCC",
+      "language": "ar",
+      "document_type": "CUSTOMS_UNION_RULES",
+      "url": "https://gcc-sg.org/ar/JointGulf/Cooperation/TheCustomsUnion/Pages/Practicalproceduresfortheestab.aspx",
+      "domain": [
+        "trade",
+        "customs",
+        "gcc",
+        "logistics"
+      ]
+    },
+    {
+      "source_id": "WTO_TRADE_FACILITATION",
+      "authority": "WTO",
+      "authority_level": "TIER0_PRIMARY",
+      "jurisdiction": "INTERNATIONAL",
+      "language": "en",
+      "document_type": "INTERNATIONAL_TRADE_REFERENCE",
+      "url": "https://www.wto.org/english/tratop_e/tradfa_e/tradfa_e.htm",
+      "domain": [
+        "trade",
+        "facilitation",
+        "customs",
+        "international"
+      ]
+    }
+  ],
+  "created_at": "2026-08-21T01:05:32.900060+00:00"
+}

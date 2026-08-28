@@ -1,0 +1,11 @@
+{
+  "schema": "raios.a15.budget-credit-guard.v1",
+  "never_call": [
+    "logged_out_executor",
+    "unavailable_executor",
+    "duplicate_executor",
+    "expensive_executor_when_deterministic_sufficient"
+  ],
+  "unknown_cost_policy": "UNKNOWN_MUST_REMAIN_UNKNOWN",
+  "certification_spends_model_credits": false
+}

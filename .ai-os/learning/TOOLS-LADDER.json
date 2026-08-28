@@ -1,0 +1,199 @@
+{
+  "schema": "raios.c5-tools-ladder.v1",
+  "from": "C5",
+  "parent": "C1",
+  "knowledge_state": "DISCOVERED",
+  "canonical": false,
+  "gl005_proven": false,
+  "wal_written": false,
+  "law": [
+    "INJECT_BEFORE_EXECUTE",
+    "NO_SOUND_EXECUTE_WITHOUT_LIVE_MEMORY",
+    "PROMOTE_THEN_RETIRE_TRAINER",
+    "MINUTE_EXAM_NE_SECOND_WAL",
+    "GENIUS_IS_COMPRESSION_NE_DISK_FILL"
+  ],
+  "inject_before_execute": true,
+  "learn_from_system": [
+    {
+      "id": "get_head",
+      "kind": "mcp",
+      "status": "LEARNING"
+    },
+    {
+      "id": "read_board",
+      "kind": "mcp",
+      "status": "LEARNING"
+    },
+    {
+      "id": "read_inbox",
+      "kind": "mcp",
+      "status": "LEARNING"
+    },
+    {
+      "id": "read_receipt",
+      "kind": "mcp",
+      "status": "LEARNING"
+    },
+    {
+      "id": "get_diff",
+      "kind": "mcp",
+      "status": "LEARNING"
+    },
+    {
+      "id": "post_opinion",
+      "kind": "mcp",
+      "status": "LEARNING"
+    },
+    {
+      "id": "send_packet",
+      "kind": "mcp",
+      "status": "LEARNING"
+    },
+    {
+      "id": "ack_packet",
+      "kind": "mcp",
+      "status": "LEARNING"
+    },
+    {
+      "id": "hunt",
+      "kind": "internal",
+      "path": "scripts/ai-os/raios_c5_hunt.py",
+      "status": "LEARNING"
+    },
+    {
+      "id": "absorb",
+      "kind": "internal",
+      "path": "scripts/ai-os/raios_absorb.py",
+      "status": "LEARNING"
+    },
+    {
+      "id": "ingest",
+      "kind": "internal",
+      "path": "scripts/ai-os/raios_learn_ingest.py",
+      "status": "LEARNING"
+    },
+    {
+      "id": "week",
+      "kind": "internal",
+      "path": "scripts/ai-os/raios_c5_week.py",
+      "status": "LEARNING"
+    },
+    {
+      "id": "practice-teach",
+      "kind": "internal",
+      "path": "scripts/ai-os/raios_c5_council.py",
+      "status": "LEARNING"
+    },
+    {
+      "id": "minute-exam",
+      "kind": "internal",
+      "path": "scripts/ai-os/raios_c5_minute.py",
+      "status": "LEARNING"
+    },
+    {
+      "id": "grind",
+      "kind": "internal",
+      "path": "scripts/ai-os/raios_c5_grind.py",
+      "status": "LEARNING"
+    },
+    {
+      "id": "plan-falsify",
+      "kind": "internal",
+      "path": "scripts/ai-os/raios_c5_plan.py",
+      "status": "LEARNING"
+    },
+    {
+      "id": "proof-gate",
+      "kind": "internal",
+      "path": "scripts/ai-os/raios_c5_proof.py",
+      "status": "LEARNING"
+    },
+    {
+      "id": "speak",
+      "kind": "internal",
+      "path": "scripts/ai-os/raios_c5_speak.py",
+      "status": "LEARNING"
+    },
+    {
+      "id": "experience",
+      "kind": "internal",
+      "path": "scripts/ai-os/raios_c5_experience.py",
+      "status": "LEARNING"
+    },
+    {
+      "id": "steward",
+      "kind": "internal",
+      "path": "scripts/ai-os/raios_c5_steward.py",
+      "status": "LEARNING"
+    },
+    {
+      "id": "train-mesh",
+      "kind": "internal",
+      "path": "scripts/ai-os/raios_c5_train.py",
+      "status": "LEARNING"
+    },
+    {
+      "id": "mind-fill",
+      "kind": "internal",
+      "path": "scripts/ai-os/raios_c5_mind_fill.py",
+      "status": "LEARNING"
+    },
+    {
+      "id": "whoami",
+      "kind": "internal",
+      "path": "scripts/ai-os/raios_c5_whoami.py",
+      "status": "LEARNING"
+    },
+    {
+      "id": "keyboard",
+      "kind": "internal",
+      "path": "scripts/ai-os/raios_c5_keyboard.py",
+      "status": "LEARNING"
+    },
+    {
+      "id": "screen",
+      "kind": "internal",
+      "path": "scripts/ai-os/raios_c5_screen.py",
+      "status": "LEARNING"
+    }
+  ],
+  "never": [
+    "shell",
+    "set_proven",
+    "promote",
+    "run_build",
+    "write_product"
+  ],
+  "retired_trainers": [
+    {
+      "id": "PASTE-CASE-003",
+      "reason": "CASE-008 consult does not gate; C3/C4 helper optional",
+      "keep_file": true,
+      "invoke": false
+    },
+    {
+      "id": "PASTE-CASE-007",
+      "reason": "empire plan falsified; helpers temporary; mill live",
+      "keep_file": true,
+      "invoke": false
+    }
+  ],
+  "measure": [
+    "practice_ratio>=0.85",
+    "knowledge_state",
+    "wal_mtime_unchanged",
+    "gl005_proven=false",
+    "contradiction_count",
+    "CLAIM_NE_EVIDENCE_NE_OBSERVATION",
+    "week_slot_ok_or_blocked",
+    "minute_exam",
+    "retired_trainer_not_invoked"
+  ],
+  "space": {
+    "workspace_gb": 1.4,
+    "disk_free_gb": 229,
+    "install_hf_weights": false,
+    "enough": true
+  }
+}

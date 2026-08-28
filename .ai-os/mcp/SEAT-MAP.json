@@ -1,0 +1,232 @@
+{
+  "schema": "raios.seat-map.v1",
+  "knowledge_state": "DISCOVERED",
+  "law": [
+    "C0_SEAT_ABOLISHED",
+    "C1_SEAT_IS_OWNER",
+    "C1_INSTANCE_IS_CURSOR",
+    "C2_SEAT_IS_CHATGPT",
+    "C3_SEAT_IS_CHATGPT_PEER",
+    "C4_SEAT_IS_DEEPSEEK",
+    "C5_SEAT_IS_RAIOS",
+    "C5_IS_C1_LOYAL_ASSISTANT",
+    "C5_INHERITS_FAIL_CLOSED",
+    "C5_NE_OWNER",
+    "C5_NE_PASS_AUTHORITY",
+    "ABSORB_DIGEST_NE_WAL_DUMP",
+    "REPAIR_EXECUTOR_NE_C_SEAT",
+    "LOCAL_MCP_RENDEZVOUS_NE_REMOTE_MEETING",
+    "AUTHORITY_NE_BYPASS_INVARIANTS",
+    "MAIL_PASSES_NE_PROVES",
+    "FATHER_SON_BIND_SAME_LAWS",
+    "C5_GRANT_IS_PERMANENT",
+    "C5_IS_TEACHER_WHILE_LEARNING",
+    "C5_IS_TEACHER_WHILE_EXECUTING",
+    "LEARN_AND_TEACH_ARE_ONE",
+    "LEARN_THEORY_THEN_PRACTICE_85",
+    "PATHOLOGY_COMPELS_REPAIR",
+    "FATHER_MUST_NOT_STUNT_SON",
+    "SON_MUST_NOT_USURP_FATHER",
+    "PRINTED_PASS_NE_EVIDENCE",
+    "FIVE_SEATS_BIND_SAME_LAWS",
+    "ELEVATION_REQUEST_NE_SELF_PROMOTE"
+  ],
+  "live": [
+    "C1",
+    "C2",
+    "C3",
+    "C4",
+    "C5"
+  ],
+  "abolished": {
+    "C0": {
+      "reason": "C0_SEAT_ABOLISHED",
+      "successor": "C1",
+      "note": "There is no live C0. Owner authority lives on C1. Cursor is the live instance of C1."
+    }
+  },
+  "unseated": {
+    "REPAIR": {
+      "reason": "REPAIR_EXECUTOR_NE_C_SEAT",
+      "dispatched_by": "C1",
+      "note": "PowerShell on Repair is an executor C1 dispatches. It is not C3 and has no C-code."
+    }
+  },
+  "mail": {
+    "dispatcher": "C1",
+    "destinations": [
+      "C2",
+      "C3",
+      "C4"
+    ],
+    "legacy_titles": {
+      "C5": "C4"
+    },
+    "not_mail": [
+      "C1",
+      "C5",
+      "C0"
+    ]
+  },
+  "seats": {
+    "C1": {
+      "actor_role": "OWNER",
+      "instance_role": "cursor-cloud",
+      "name_ar": "Cursor — يد المالك",
+      "name_en": "Cursor (owner's hand)",
+      "where": "هذا الشات / داخل المشروع",
+      "aliases": [
+        "CURSOR",
+        "COMMANDER",
+        "USER",
+        "OWNER"
+      ],
+      "tools": [
+        "get_head",
+        "read_board",
+        "read_inbox",
+        "read_receipt",
+        "get_diff",
+        "post_opinion",
+        "send_packet",
+        "ack_packet"
+      ],
+      "deny": [
+        "shell",
+        "set_proven",
+        "promote",
+        "run_build"
+      ],
+      "mail": false,
+      "notes": "Final authority does not bypass stale-head, lock, or proven invariants."
+    },
+    "C2": {
+      "actor_role": "CONSULTANT",
+      "instance_role": "chatgpt-primary",
+      "name_ar": "ChatGPT المستشار الأول",
+      "name_en": "ChatGPT primary consultant",
+      "where": "MCP أو البريد — يحضر الحوار ويتعلم",
+      "aliases": [
+        "CHATGPT",
+        "CONSULTANT",
+        "ASSISTANT-1"
+      ],
+      "tools": [
+        "get_head",
+        "read_board",
+        "read_inbox",
+        "read_receipt",
+        "get_diff",
+        "post_opinion",
+        "send_packet",
+        "ack_packet"
+      ],
+      "deny": [
+        "search_evidence",
+        "request_task",
+        "write_handoff",
+        "run_targeted_test",
+        "run_build",
+        "shell",
+        "set_proven"
+      ],
+      "mail": true
+    },
+    "C3": {
+      "actor_role": "CONSULTANT_PEER",
+      "instance_role": "chatgpt-peer",
+      "name_ar": "ChatGPT المستشار النظير",
+      "name_en": "ChatGPT peer consultant",
+      "where": "MCP أو البريد — نظير C2 وليس منفّذ Repair",
+      "aliases": [
+        "CHATGPT-PEER",
+        "CHATGPT_OTHER",
+        "CONSULTANT_PEER"
+      ],
+      "tools": [
+        "get_head",
+        "read_board",
+        "read_inbox",
+        "read_receipt",
+        "get_diff",
+        "post_opinion",
+        "send_packet",
+        "ack_packet"
+      ],
+      "deny": [
+        "search_evidence",
+        "request_task",
+        "write_handoff",
+        "run_targeted_test",
+        "run_build",
+        "shell",
+        "set_proven"
+      ],
+      "mail": true,
+      "notes": "Not ENGINEER. Not PowerShell. Repair is unseated."
+    },
+    "C4": {
+      "actor_role": "ASSESSOR",
+      "instance_role": "deepseek",
+      "name_ar": "DeepSeek المقيّم",
+      "name_en": "DeepSeek assessor",
+      "where": "MCP أو البريد — يفنّد ولا ينفّذ",
+      "aliases": [
+        "DEEPSEEK",
+        "DEEPSEEK-LOCAL",
+        "ASSESSOR"
+      ],
+      "tools": [
+        "get_head",
+        "read_board",
+        "read_inbox",
+        "read_receipt",
+        "get_diff",
+        "post_opinion",
+        "send_packet",
+        "ack_packet"
+      ],
+      "deny": [
+        "write_handoff",
+        "run_targeted_test",
+        "shell",
+        "set_proven"
+      ],
+      "mail": true,
+      "notes": "MAIL C5 titles are legacy DeepSeek and resolve to C4, not RAIOS."
+    },
+    "C5": {
+      "actor_role": "RAIOS",
+      "instance_role": "c1-assistant",
+      "parent": "C1",
+      "name_ar": "RAIOS — الابن المساعد المخلص",
+      "name_en": "RAIOS, C1 Cursor's loyal assistant",
+      "where": "داخل المشروع — مع C1 دائماً. يقيّم ويهضم ويتكلم. لا يمنح PASS",
+      "aliases": [
+        "RAIOS",
+        "SON",
+        "C1-ASSISTANT"
+      ],
+      "tools": [
+        "get_head",
+        "read_board",
+        "read_inbox",
+        "read_receipt",
+        "get_diff",
+        "post_opinion",
+        "send_packet",
+        "ack_packet"
+      ],
+      "deny": [
+        "shell",
+        "set_proven",
+        "promote",
+        "run_build",
+        "write_product",
+        "write_handoff"
+      ],
+      "mail": false,
+      "notes": "Permanent loyal assistant of C1 Cursor. Inherits fail-closed laws. Same V1 cognitive tools as C1. Cannot own, promote, or grant PASS. Not a GitHub mail seat."
+    }
+  }
+}

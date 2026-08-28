@@ -1,0 +1,167 @@
+{
+  "schema": "raios.a15.executor-admission-registry.v1",
+  "source_pre_discovery": "RAIOS\\V9\\agents\\a15\\discovery\\EXECUTOR-PRE-DISCOVERY.json",
+  "pre_discovery_reused": true,
+  "pre_discovery_overwritten": false,
+  "executors": {
+    "LOCAL_DETERMINISTIC": {
+      "executor_id": "LOCAL_DETERMINISTIC",
+      "states": [
+        "DISCOVERED",
+        "TOOL_EXECUTION_VERIFIED",
+        "GOVERNED_EXECUTOR"
+      ],
+      "live_admitted": true,
+      "sandbox_admitted": true,
+      "classification": "GOVERNED_SANDBOX",
+      "cost_class": "DETERMINISTIC_LOCAL",
+      "capabilities": [
+        "filesystem_read",
+        "repository_search",
+        "test_execution",
+        "implementation"
+      ],
+      "evidence": [
+        "python_runtime",
+        "git_cli"
+      ],
+      "live_inference_verified": false
+    },
+    "RAIOS_INTERNAL": {
+      "executor_id": "RAIOS_INTERNAL",
+      "states": [
+        "DISCOVERED",
+        "GOVERNED_EXECUTOR"
+      ],
+      "live_admitted": true,
+      "sandbox_admitted": true,
+      "classification": "GOVERNED_SANDBOX",
+      "cost_class": "INTERNAL",
+      "capabilities": [
+        "governance"
+      ],
+      "evidence": [
+        "continuity_kernel"
+      ],
+      "live_inference_verified": false
+    },
+    "CLAUDE_CODE": {
+      "executor_id": "CLAUDE_CODE",
+      "states": [
+        "DISCOVERED",
+        "CLI_AVAILABLE",
+        "UNAVAILABLE"
+      ],
+      "live_admitted": false,
+      "sandbox_admitted": false,
+      "classification": "NOT_AUTHENTICATED",
+      "cost_class": "EXTERNAL_MODEL",
+      "capabilities": [
+        "deep_debug",
+        "independent_review"
+      ],
+      "cli_version_observed": "2.1.219",
+      "auth": {
+        "loggedIn": false,
+        "authMethod": "none"
+      },
+      "evidence": [
+        "empirical_observation_cli_exists_logged_out"
+      ],
+      "live_inference_verified": false,
+      "note": "CLI exists but loggedIn=false; do not admit for live execution."
+    },
+    "GEMINI": {
+      "executor_id": "GEMINI",
+      "states": [
+        "DISCOVERED",
+        "CLI_AVAILABLE",
+        "DEGRADED"
+      ],
+      "live_admitted": false,
+      "sandbox_admitted": true,
+      "classification": "DEGRADED_BUT_OPERATIONAL",
+      "cost_class": "EXTERNAL_MODEL",
+      "capabilities": [
+        "independent_review",
+        "deep_debug"
+      ],
+      "cli_version_observed": "0.55.1",
+      "project_sessions_observed": 2,
+      "supports": [
+        "plan_read_only",
+        "sandbox",
+        "json_output",
+        "mcp",
+        "skills",
+        "hooks"
+      ],
+      "missing": [
+        "ripgrep"
+      ],
+      "fallback_tool": "GrepTool",
+      "evidence": [
+        "empirical_observation_cli_0_55_1"
+      ],
+      "live_inference_verified": false,
+      "note": "No live inference verification in this certification. Credits not spent."
+    },
+    "CURSOR": {
+      "executor_id": "CURSOR",
+      "states": [
+        "DISCOVERED",
+        "DESKTOP_AVAILABLE",
+        "SESSION_READY"
+      ],
+      "live_admitted": false,
+      "sandbox_admitted": true,
+      "classification": "DESKTOP_AVAILABLE_CLI_ABSENT",
+      "cost_class": "EXTERNAL_MODEL",
+      "capabilities": [
+        "implementation",
+        "repository_search",
+        "test_execution"
+      ],
+      "cli_on_path": false,
+      "desktop_available": true,
+      "evidence": [
+        "cursor_desktop_on_local_repo",
+        "pre_discovery_cli_absent"
+      ],
+      "live_inference_verified": false,
+      "note": "Desktop available; Cursor CLI not on PATH. Credits not spent."
+    },
+    "CLINE": {
+      "executor_id": "CLINE",
+      "states": [
+        "DISCOVERED"
+      ],
+      "live_admitted": false,
+      "sandbox_admitted": true,
+      "classification": "IDE_EXTENSION_PRESENT",
+      "cost_class": "EXTERNAL_MODEL",
+      "capabilities": [
+        "implementation",
+        "deep_debug",
+        "test_execution"
+      ],
+      "evidence": [
+        "vscode_extension_saoudrizwan.claude-dev"
+      ],
+      "live_inference_verified": false
+    }
+  },
+  "admission_counts": {
+    "DISCOVERED": 6,
+    "TOOL_EXECUTION_VERIFIED": 1,
+    "GOVERNED_EXECUTOR": 2,
+    "CLI_AVAILABLE": 2,
+    "UNAVAILABLE": 1,
+    "DEGRADED": 1,
+    "DESKTOP_AVAILABLE": 1,
+    "SESSION_READY": 1
+  },
+  "external_credits_consumed": false,
+  "production_activation": false,
+  "canonical_mutation": false
+}

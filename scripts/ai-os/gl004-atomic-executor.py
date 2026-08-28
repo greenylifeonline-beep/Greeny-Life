@@ -1,0 +1,466 @@
+#!/usr/bin/env python3
+"""Fail-closed Wave2 isolated proof. Does not spawn or kill a Next server.
+
+GL-004 required children: TYPECHECK, BUILD, TEST_CANONICAL, TEST_TASK_ORCHESTRATION, RUNTIME_TRACE.
+GL-005 required children: AIOS_STATUS, GL005_CONTROL_PLANE, TEST_TASK_ORCHESTRATION, GL005_ORCHESTRATION_DEMO.
+
+Verdicts are independent. Combined PARENT_EXIT is the worst of both gates.
+Epistemic states are recorded so NOT_RUN is not collapsed into FAILED.
+NEXT_CONFIG_FILE is not an isolation contract. Isolated distDir injection is.
+Proof receipts live in .ai-os/receipts, not a new _raios-* forest.
+"""
+from __future__ import annotations
+
+import hashlib
+import json
+import os
+import shutil
+import subprocess
+import sys
+import time
+from pathlib import Path
+
+sys.path.insert(0, str(Path(__file__).resolve().parent))
+from gl004_lib import (  # noqa: E402
+    GL005_CHILDREN,
+    REQUIRED_CHILDREN,
+    ROOT,
+    BindError,
+    bind_live,
+    classify_http,
+    epistemic_state,
+    fingerprint_dist,
+    git,
+    gl004_proven,
+    gl005_verdict,
+    http_probe,
+    parent_exit,
+    product_scoped_dirty,
+    utc,
+    write_json,
+)
+
+RECEIPT = ROOT / ".ai-os" / "receipts" / "GL004-ATOMIC.json"
+BIND_RECEIPT = ROOT / ".ai-os" / "receipts" / "GL004-RUNTIME-BIND.json"
+API_BODY = ROOT / ".ai-os" / "receipts" / "api-tasks-body.txt"
+
+
+def annotate(child: dict, **flags) -> dict:
+    child["epistemic"] = epistemic_state(child.get("exit"), **flags)
+    child["gate_open"] = child.get("exit") == 0 and child["epistemic"] == "PASS"
+    return child
+
+
+def run_child(name: str, argv: list[str], env: dict[str, str] | None = None, cwd: Path = ROOT, timeout: int = 600) -> dict:
+    t0 = time.time()
+    merged = os.environ.copy()
+    if env:
+        merged.update(env)
+    try:
+        proc = subprocess.run(argv, cwd=cwd, env=merged, text=True, capture_output=True, timeout=timeout)
+        return annotate(
+            {
+                "name": name,
+                "argv": argv,
+                "exit": int(proc.returncode),
+                "seconds": round(time.time() - t0, 3),
+                "stdout_tail": (proc.stdout or "")[-4000:],
+                "stderr_tail": (proc.stderr or "")[-4000:],
+            }
+        )
+    except subprocess.TimeoutExpired as err:
+        return annotate(
+            {
+                "name": name,
+                "argv": argv,
+                "exit": 124,
+                "seconds": round(time.time() - t0, 3),
+                "stdout_tail": (str(err.stdout or ""))[-4000:],
+                "stderr_tail": "TIMEOUT",
+            }
+        )
+    except FileNotFoundError:
+        return annotate({"name": name, "argv": argv, "exit": 127, "seconds": round(time.time() - t0, 3)}, unavailable=True)
+
+
+def child_runtime_trace() -> dict:
+    t0 = time.time()
+    try:
+        rec = bind_live()
+        rec["ok"] = True
+        digest = write_json(BIND_RECEIPT, rec)
+        Path(str(BIND_RECEIPT) + ".sha256").write_text(digest + "\n", encoding="utf-8")
+        return annotate(
+            {
+                "name": "RUNTIME_TRACE",
+                "argv": ["python3", "scripts/ai-os/gl004-runtime-bind.py"],
+                "exit": 0,
+                "seconds": round(time.time() - t0, 3),
+                "pid": rec["pid"],
+                "ppid": rec["ppid"],
+                "port": rec["listen_port"],
+                "mode": rec["mode"],
+                "start": rec.get("start"),
+                "http_root": rec["http"][0].get("status") if rec.get("http") else None,
+                "http_observations": [
+                    {"url": p.get("url"), "status": p.get("status"), "observation": p.get("observation")}
+                    for p in rec.get("http") or []
+                ],
+                "classification": "FRAMEWORK_LIVENESS" if rec["mode"] == "dev" else "PRODUCTION_RUNTIME_EQUIVALENCE",
+                "proven_as": "BINDABLE/PROVEN_AS_DEV_LIVENESS" if rec["mode"] == "dev" else "BINDABLE/PROVEN_AS_START",
+                "log": rec.get("log", {}).get("path"),
+                "receipt": str(BIND_RECEIPT),
+                "receipt_sha256": digest,
+                "spawned": False,
+            }
+        )
+    except BindError as err:
+        write_json(BIND_RECEIPT, {"ok": False, "exit": err.code, "reason": err.reason, **err.extra})
+        unavailable = err.code in (2, 8)
+        invalid = err.code in (3, 4, 6)
+        return annotate(
+            {
+                "name": "RUNTIME_TRACE",
+                "argv": ["python3", "scripts/ai-os/gl004-runtime-bind.py"],
+                "exit": int(err.code),
+                "seconds": round(time.time() - t0, 3),
+                "reason": err.reason,
+                "spawned": False,
+            },
+            unavailable=unavailable,
+            invalid=invalid,
+        )
+
+
+WORKTREE = Path("/tmp/gl004-isolated-build")
+
+
+def prepare_build_worktree() -> dict:
+    """Compile in a detached worktree so default distDir cannot touch live `.next`."""
+    if WORKTREE.exists():
+        subprocess.run(["git", "worktree", "remove", "--force", str(WORKTREE)], cwd=ROOT, capture_output=True, text=True)
+        shutil.rmtree(WORKTREE, ignore_errors=True)
+    added = subprocess.run(
+        ["git", "worktree", "add", "--detach", str(WORKTREE), "HEAD"],
+        cwd=ROOT,
+        text=True,
+        capture_output=True,
+    )
+    if added.returncode != 0:
+        return {"ok": False, "stderr": (added.stderr or added.stdout or "")[-2000:]}
+    nm = WORKTREE / "node_modules"
+    if nm.exists() or nm.is_symlink():
+        nm.unlink()
+    nm.symlink_to(ROOT / "node_modules")
+    return {"ok": True, "path": str(WORKTREE)}
+
+
+def child_build() -> dict:
+    scoped = product_scoped_dirty()
+    if scoped["dirty"]:
+        return annotate(
+            {
+                "name": "BUILD",
+                "exit": 102,
+                "reason": "TRACKED_PRODUCT_DIFFERS_FROM_HEAD",
+                "dirty_files": scoped["files"],
+                "listened": False,
+                "isolation": "not_started",
+            },
+            blocked=True,
+        )
+    before = fingerprint_dist()
+    before_top = set(before.get("dot_next_top") or [])
+    prep = prepare_build_worktree()
+    if not prep.get("ok"):
+        return annotate(
+            {
+                "name": "BUILD",
+                "exit": 2,
+                "reason": "WORKTREE_ADD_FAILED",
+                "stderr_tail": prep.get("stderr"),
+                "listened": False,
+                "isolation": "git_worktree",
+            },
+            blocked=True,
+        )
+    child = run_child(
+        "BUILD",
+        ["npx", "--no-install", "next", "build", "--webpack"],
+        cwd=WORKTREE,
+        env={"NODE_ENV": "production"},
+        timeout=900,
+    )
+    after = fingerprint_dist()
+    after_top = set(after.get("dot_next_top") or [])
+    grew = sorted(after_top - before_top)
+    child["worktree"] = str(WORKTREE)
+    child["listened"] = False
+    child["isolation"] = "git_worktree_default_distDir"
+    child["law"] = "ISOLATED_BUILD_NE_SECOND_RUNTIME"
+    child["rejected_isolation"] = [
+        "NEXT_CONFIG_FILE is not a Next.js contract on this version",
+        "in-repo distDir injection still leaked nft/server files into live .next",
+    ]
+    child["fingerprint_before"] = before
+    child["fingerprint_after"] = after
+    child["live_next_new_entries"] = grew
+    child["worktree_has_build_id"] = (WORKTREE / ".next" / "BUILD_ID").exists()
+    if grew:
+        child["exit"] = 2
+        child["reason"] = "ISOLATION_FAILED_LIVE_DOT_NEXT_GREW"
+        return annotate(child, invalid=True)
+    if child["exit"] == 0:
+        child["classification"] = "BUILD_VALIDITY"
+    return annotate(child)
+
+
+def child_aios() -> dict:
+    r = subprocess.run(["python3", "scripts/ai-os/aios.py", "status"], cwd=ROOT, text=True, capture_output=True)
+    return annotate(
+        {
+            "name": "AIOS_STATUS",
+            "argv": ["python3", "scripts/ai-os/aios.py", "status"],
+            "exit": int(r.returncode),
+            "stdout_tail": (r.stdout or "")[-2000:],
+        }
+    )
+
+
+def child_control_plane() -> dict:
+    ok = all((ROOT / p).exists() for p in [".ai-os/state/TASKS.json", ".ai-os/state/LOCKS.json", ".ai-os/handoffs"])
+    return annotate(
+        {
+            "name": "GL005_CONTROL_PLANE",
+            "exit": 0 if ok else 97,
+            "paths": {
+                "TASKS": (ROOT / ".ai-os/state/TASKS.json").exists(),
+                "LOCKS": (ROOT / ".ai-os/state/LOCKS.json").exists(),
+                "handoffs": (ROOT / ".ai-os/handoffs").exists(),
+            },
+        },
+        unavailable=not ok,
+    )
+
+
+def child_api_tasks(port: int | None) -> dict:
+    """Capture real /api/tasks body. 2xx is CAPABILITY_READINESS, not GL-005 PASS."""
+    if port is None:
+        return annotate(
+            {"name": "GL005_API_TASKS", "exit": 111, "reason": "NO_BOUND_PORT"},
+            unavailable=True,
+        )
+    probe = http_probe(f"http://127.0.0.1:{port}/api/tasks")
+    body = str(probe.get("body_prefix") or "")
+    if probe.get("error") and not body:
+        body = str(probe.get("error"))
+    API_BODY.parent.mkdir(parents=True, exist_ok=True)
+    full = body
+    caught = False
+    try:
+        import urllib.error
+        import urllib.request
+
+        req = urllib.request.Request(f"http://127.0.0.1:{port}/api/tasks", headers={"User-Agent": "gl005-demo"})
+        try:
+            with urllib.request.urlopen(req, timeout=15) as resp:
+                full = resp.read().decode("utf-8", "replace")
+                probe["status"] = int(resp.status)
+        except urllib.error.HTTPError as err:
+            full = err.read().decode("utf-8", "replace")
+            probe["status"] = int(err.code)
+    except Exception as err:
+        caught = True
+        full = full or str(err)
+    API_BODY.write_text(full, encoding="utf-8")
+    digest = hashlib.sha256(full.encode("utf-8")).hexdigest()
+    status = probe.get("status")
+    observation = classify_http(status)
+    details = None
+    try:
+        parsed = json.loads(full)
+        details = parsed.get("details") or parsed.get("error")
+    except Exception:
+        parsed = None
+    ok = isinstance(status, int) and 200 <= status < 300
+    if ok:
+        exit_code = 0
+    elif caught or status is None:
+        exit_code = 113
+    else:
+        exit_code = 112
+    return annotate(
+        {
+            "name": "GL005_API_TASKS",
+            "exit": exit_code,
+            "status": status,
+            "observation": observation,
+            "body_path": str(API_BODY),
+            "body_sha256": digest,
+            "body": full[:4000],
+            "details": details,
+            "discriminating_evidence": details,
+            "law": "HTTP_200_ON_ROOT_NE_APP_HEALTH; LIVENESS_NE_READINESS_NE_CORRECTNESS",
+        }
+    )
+
+
+def child_orchestration_demo(api: dict) -> dict:
+    """A live HTTP path is not autonomous multi-agent orchestration."""
+    return annotate(
+        {
+            "name": "GL005_ORCHESTRATION_DEMO",
+            "exit": 114,
+            "reason": "SUPPORTING_TEST_NE_ORCHESTRATION_DEMONSTRATION",
+            "api_child": "GL005_API_TASKS",
+            "api_status": api.get("status"),
+            "api_observation": api.get("observation"),
+            "law": "HTTP_2XX_NE_ORCHESTRATION; GL005_LIVE_PATH_PROVEN is not GL005_PROVEN",
+        },
+        blocked=True,
+    )
+
+
+def cleanup_worktree() -> None:
+    if WORKTREE.exists():
+        subprocess.run(
+            ["git", "worktree", "remove", "--force", str(WORKTREE)],
+            cwd=ROOT,
+            capture_output=True,
+            text=True,
+        )
+        shutil.rmtree(WORKTREE, ignore_errors=True)
+    subprocess.run(["git", "worktree", "prune"], cwd=ROOT, capture_output=True, text=True)
+
+
+def live_pid_alive(pid: int | None) -> bool:
+    return bool(pid) and Path(f"/proc/{int(pid)}").exists()
+
+
+def main() -> int:
+    safety = f"safety/pre-gl004-bind-{git('rev-parse', '--short', 'HEAD')}"
+    if not git("tag", "--list", safety):
+        subprocess.run(["git", "tag", safety], cwd=ROOT, check=False)
+
+    from gl004_lib import discover_next_pids
+
+    before_pids = discover_next_pids()
+    fp_before = fingerprint_dist()
+
+    runtime = child_runtime_trace()
+    typecheck = run_child("TYPECHECK", ["npm", "run", "type-check"], timeout=300)
+    canon = run_child("TEST_CANONICAL", ["npx", "--no-install", "tsx", "tests/canonical_intelligence_check.ts"], timeout=120)
+    orch = run_child("TEST_TASK_ORCHESTRATION", ["npx", "--no-install", "tsx", "tests/task_orchestration_check.ts"], timeout=120)
+    build = child_build()
+    aios = child_aios()
+    control = child_control_plane()
+    api = child_api_tasks(runtime.get("port"))
+    demo = child_orchestration_demo(api)
+    cleanup_worktree()
+
+    after_pids = discover_next_pids()
+    fp_after = fingerprint_dist()
+    pid = runtime.get("pid")
+    still = live_pid_alive(pid)
+
+    gl004_children = [typecheck, build, canon, orch, runtime]
+    gl005_children = [aios, control, orch, api, demo]
+    all_children = [runtime, typecheck, canon, orch, build, aios, control, api, demo]
+
+    gl004_parent = parent_exit(gl004_children, REQUIRED_CHILDREN)
+    gl005_parent = parent_exit(gl005_children, GL005_CHILDREN)
+    combined = parent_exit(
+        all_children,
+        REQUIRED_CHILDREN + ("AIOS_STATUS", "GL005_CONTROL_PLANE", "GL005_API_TASKS", "GL005_ORCHESTRATION_DEMO"),
+    )
+    proven4 = gl004_proven(gl004_children, gl004_parent)
+    verdict5 = gl005_verdict(
+        aios_ok=aios.get("exit") == 0,
+        control_ok=control.get("exit") == 0,
+        orch_ok=orch.get("exit") == 0,
+        api_ok=api.get("exit") == 0,
+    )
+    live_path = verdict5["gl005_live_path_proven"]
+    proven5 = verdict5["gl005_proven"]
+
+    payload = {
+        "schema": "raios.wave2.isolated-proof.v1",
+        "knowledge_state": "DISCOVERED",
+        "HEAD": git("rev-parse", "HEAD"),
+        "BRANCH": git("branch", "--show-current"),
+        "SAFETY_TAG": safety,
+        "bound_at": utc(),
+        "children": all_children,
+        "GL004_PARENT_EXIT": gl004_parent,
+        "GL005_PARENT_EXIT": gl005_parent,
+        "PARENT_EXIT": combined,
+        "RECEIPT": str(RECEIPT),
+        "GL004_PROVEN": proven4,
+        "GL004_PRODUCTION_RUNTIME_PROVEN": runtime.get("mode") == "start" and proven4,
+        "GL005_LIVE_PATH_PROVEN": live_path,
+        "GL005_PROVEN": proven5,
+        "GL005_reason": "SUPPORTING_TEST_NE_ORCHESTRATION_DEMONSTRATION; GL005_ORCHESTRATION_DEMO stays 114 even if /api/tasks is 2xx",
+        "RUNTIME_TRACE": runtime.get("proven_as"),
+        "spawned_second_runtime": False,
+        "killed_live_process": False,
+        "live_pid_still_alive": still,
+        "next_pids_before": before_pids,
+        "next_pids_after": after_pids,
+        "second_runtime_detected": sorted(set(after_pids) - set(before_pids)) != [],
+        "fingerprint_before": fp_before,
+        "fingerprint_after": fp_after,
+        "rejected": {
+            "NEXT_CONFIG_FILE": "not present in next@16.2.10; writing next.config.* would HMR the live server",
+            "_raios-wave2-atomic-proof": "proof forest rejected; runner is scripts/ai-os/gl004-atomic-executor.ps1",
+            "HTTP_200_499_AS_RUNTIME_TRACE": "RUNTIME_TRACE requires GET / == 200 and Next.js identity",
+            "npm run build in worktree": "next 16 defaults to turbopack; use next build --webpack after junction/symlink",
+            "git diff -- .": "heartbeat/WAL dirt must not BLOCK BUILD; scope to product paths",
+            "param $Pid": "PowerShell reserved automatic variable; use ProcessId",
+        },
+        "c1_contract_attack": {
+            "historical_gl004": "type-check + build + tests + runtime execution truth",
+            "does_not_say": "next start / production-runtime equivalence",
+            "ruling": "REJECT silent strengthening. Production equivalence is a new named child, not RUNTIME_TRACE.",
+            "dev_bind_may_satisfy_runtime_trace": True,
+            "isolated_build_may_satisfy_build": True,
+            "api_tasks_500": "ROUTE_EXECUTED/APPLICATION_FAILURE — orchestration path present, capability not ready",
+        },
+        "laws": [
+            "LIVE_PROCESS_CAN_SATISFY_RUNTIME_PROOF_IF_IDENTITY_AND_HTTP_EVIDENCE_ARE_BOUND",
+            "BIND_EXISTING_NE_SPAWN",
+            "DEV_LISTEN_NE_PRODUCTION_BUILD",
+            "HTTP_200_ON_ROOT_NE_APP_HEALTH",
+            "ISOLATED_BUILD_NE_SECOND_RUNTIME",
+            "NEXT_CONFIG_FILE_NE_ISOLATION_CONTRACT",
+            "LIVENESS_NE_READINESS_NE_CORRECTNESS_NE_PRODUCTION_EQUIVALENCE",
+            "GATE_CLOSED_NE_EPISTEMIC_FAILED",
+            "PARENT_SUCCESS_REQUIRES_ALL_REQUIRED_CHILDREN_SUCCESS",
+            "PROOF_FOREST_NE_RECEIPT",
+            "HTTP_2XX_NE_ORCHESTRATION",
+            "POWERSHELL_PID_IS_RESERVED",
+        ],
+    }
+    digest = write_json(RECEIPT, payload)
+    (ROOT / ".ai-os" / "receipts" / "GL004-ATOMIC.sha256").write_text(digest + "\n", encoding="utf-8")
+
+    block = {
+        "HEAD": payload["HEAD"],
+        "SAFETY_TAG": safety,
+        "children": [{"name": c["name"], "exit": c["exit"], "epistemic": c.get("epistemic")} for c in all_children],
+        "GL004_PARENT_EXIT": gl004_parent,
+        "GL005_PARENT_EXIT": gl005_parent,
+        "PARENT_EXIT": combined,
+        "RECEIPT": str(RECEIPT),
+        "RECEIPT_SHA256": digest,
+        "GL004_PROVEN": proven4,
+        "GL005_LIVE_PATH_PROVEN": live_path,
+        "GL005_PROVEN": proven5,
+        "live_pid_still_alive": still,
+    }
+    print(json.dumps(block, indent=2, ensure_ascii=False))
+    print(f"RECEIPT_SHA256={digest}")
+    return combined
+
+
+if __name__ == "__main__":
+    raise SystemExit(main())

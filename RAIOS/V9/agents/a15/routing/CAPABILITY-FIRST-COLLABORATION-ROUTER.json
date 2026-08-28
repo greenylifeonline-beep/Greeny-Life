@@ -1,0 +1,60 @@
+{
+  "schema": "raios.a15.capability-first-collaboration-router.v1",
+  "strategy": "CAPABILITY_FIRST_SINGLE_PRIMARY",
+  "source_router": "RAIOS\\V9\\agents\\a14\\routing\\CAPABILITY-FIRST-ROUTER.json",
+  "capability_map": {
+    "filesystem_read": [
+      "LOCAL_DETERMINISTIC",
+      "RAIOS_INTERNAL"
+    ],
+    "repository_search": [
+      "LOCAL_DETERMINISTIC",
+      "CLINE",
+      "CURSOR"
+    ],
+    "implementation": [
+      "CLINE",
+      "CURSOR",
+      "LOCAL_DETERMINISTIC"
+    ],
+    "deep_debug": [
+      "CLAUDE_CODE",
+      "CLINE",
+      "GEMINI"
+    ],
+    "independent_review": [
+      "GEMINI",
+      "CLAUDE_CODE"
+    ],
+    "governance": [
+      "RAIOS_INTERNAL"
+    ],
+    "test_execution": [
+      "LOCAL_DETERMINISTIC",
+      "CLINE",
+      "CURSOR"
+    ]
+  },
+  "selection_factors": [
+    "capability_fit",
+    "verified_availability",
+    "historical_success",
+    "latency",
+    "failure_rate",
+    "cost_budget",
+    "context_size",
+    "current_lease",
+    "verification_requirement"
+  ],
+  "rules": [
+    "Do not use a fixed vendor priority list.",
+    "One primary executor per task.",
+    "Logged-out executors are never selected for live execution.",
+    "Deterministic/local executor wins when capability-sufficient.",
+    "Independent verifier cannot equal primary.",
+    "Ambiguous routing must abstain."
+  ],
+  "automatic_promotion": false,
+  "canonical_mutation": false,
+  "production_activation": false
+}

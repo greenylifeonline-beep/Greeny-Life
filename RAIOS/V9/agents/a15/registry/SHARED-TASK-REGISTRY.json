@@ -1,0 +1,2105 @@
+{
+  "schema": "raios.a15.shared-task-registry.v1",
+  "tasks": [
+    {
+      "schema": "raios.a15.task-envelope.v1",
+      "task_id": "a15-task:00",
+      "correlation_id": "corr:a15:00",
+      "causation_id": "cause:a15:00",
+      "objective": "A15 sandbox task 00 NORMAL",
+      "capability_requirements": [
+        "filesystem_read"
+      ],
+      "allowed_read_scope": [
+        "RAIOS/V9/agents/a15"
+      ],
+      "allowed_write_scope": [
+        "RAIOS/V9/agents/a15/sandbox/task-00"
+      ],
+      "forbidden_scope": [
+        "canonical",
+        "production"
+      ],
+      "acceptance_gates": [
+        "normalized_result",
+        "confidence_in_0_1",
+        "no_canonical_mutation"
+      ],
+      "budget": {
+        "external_credits": 0,
+        "preferred_cost_class": "DETERMINISTIC_LOCAL"
+      },
+      "priority": 50,
+      "predecessor_evidence": {
+        "a14_receipt_sha256": "d5556dc06edbee43e8efd758933ebd03476f4c21ea372cd5fc436fccbeafa8a1",
+        "a14_1_receipt_sha256": "d8923c61e2b7d985ef44ef4287f3e1f25c2a392731e673e4d3583b64c26b4676"
+      },
+      "current_owner": null,
+      "verifier_policy": {
+        "independent": false,
+        "mode": "READ_ONLY"
+      },
+      "scenario": "NORMAL",
+      "confidence": 0.93,
+      "lifecycle": "READY"
+    },
+    {
+      "schema": "raios.a15.task-envelope.v1",
+      "task_id": "a15-task:01",
+      "correlation_id": "corr:a15:01",
+      "causation_id": "cause:a15:01",
+      "objective": "A15 sandbox task 01 NORMAL",
+      "capability_requirements": [
+        "repository_search"
+      ],
+      "allowed_read_scope": [
+        "RAIOS/V9/agents/a15"
+      ],
+      "allowed_write_scope": [
+        "RAIOS/V9/agents/a15/sandbox/task-01"
+      ],
+      "forbidden_scope": [
+        "canonical",
+        "production"
+      ],
+      "acceptance_gates": [
+        "normalized_result",
+        "confidence_in_0_1",
+        "no_canonical_mutation"
+      ],
+      "budget": {
+        "external_credits": 0,
+        "preferred_cost_class": "DETERMINISTIC_LOCAL"
+      },
+      "priority": 49,
+      "predecessor_evidence": {
+        "a14_receipt_sha256": "d5556dc06edbee43e8efd758933ebd03476f4c21ea372cd5fc436fccbeafa8a1",
+        "a14_1_receipt_sha256": "d8923c61e2b7d985ef44ef4287f3e1f25c2a392731e673e4d3583b64c26b4676"
+      },
+      "current_owner": null,
+      "verifier_policy": {
+        "independent": false,
+        "mode": "READ_ONLY"
+      },
+      "scenario": "NORMAL",
+      "confidence": 0.93,
+      "lifecycle": "READY"
+    },
+    {
+      "schema": "raios.a15.task-envelope.v1",
+      "task_id": "a15-task:02",
+      "correlation_id": "corr:a15:02",
+      "causation_id": "cause:a15:02",
+      "objective": "A15 sandbox task 02 NORMAL",
+      "capability_requirements": [
+        "implementation"
+      ],
+      "allowed_read_scope": [
+        "RAIOS/V9/agents/a15"
+      ],
+      "allowed_write_scope": [
+        "RAIOS/V9/agents/a15/sandbox/task-02"
+      ],
+      "forbidden_scope": [
+        "canonical",
+        "production"
+      ],
+      "acceptance_gates": [
+        "normalized_result",
+        "confidence_in_0_1",
+        "no_canonical_mutation"
+      ],
+      "budget": {
+        "external_credits": 0,
+        "preferred_cost_class": "DETERMINISTIC_LOCAL"
+      },
+      "priority": 48,
+      "predecessor_evidence": {
+        "a14_receipt_sha256": "d5556dc06edbee43e8efd758933ebd03476f4c21ea372cd5fc436fccbeafa8a1",
+        "a14_1_receipt_sha256": "d8923c61e2b7d985ef44ef4287f3e1f25c2a392731e673e4d3583b64c26b4676"
+      },
+      "current_owner": null,
+      "verifier_policy": {
+        "independent": false,
+        "mode": "READ_ONLY"
+      },
+      "scenario": "NORMAL",
+      "confidence": 0.93,
+      "lifecycle": "READY"
+    },
+    {
+      "schema": "raios.a15.task-envelope.v1",
+      "task_id": "a15-task:03",
+      "correlation_id": "corr:a15:03",
+      "causation_id": "cause:a15:03",
+      "objective": "A15 sandbox task 03 NORMAL",
+      "capability_requirements": [
+        "deep_debug"
+      ],
+      "allowed_read_scope": [
+        "RAIOS/V9/agents/a15"
+      ],
+      "allowed_write_scope": [
+        "RAIOS/V9/agents/a15/sandbox/task-03"
+      ],
+      "forbidden_scope": [
+        "canonical",
+        "production"
+      ],
+      "acceptance_gates": [
+        "normalized_result",
+        "confidence_in_0_1",
+        "no_canonical_mutation"
+      ],
+      "budget": {
+        "external_credits": 0,
+        "preferred_cost_class": "DETERMINISTIC_LOCAL"
+      },
+      "priority": 47,
+      "predecessor_evidence": {
+        "a14_receipt_sha256": "d5556dc06edbee43e8efd758933ebd03476f4c21ea372cd5fc436fccbeafa8a1",
+        "a14_1_receipt_sha256": "d8923c61e2b7d985ef44ef4287f3e1f25c2a392731e673e4d3583b64c26b4676"
+      },
+      "current_owner": null,
+      "verifier_policy": {
+        "independent": false,
+        "mode": "READ_ONLY"
+      },
+      "scenario": "NORMAL",
+      "confidence": 0.93,
+      "lifecycle": "READY"
+    },
+    {
+      "schema": "raios.a15.task-envelope.v1",
+      "task_id": "a15-task:04",
+      "correlation_id": "corr:a15:04",
+      "causation_id": "cause:a15:04",
+      "objective": "A15 sandbox task 04 NORMAL",
+      "capability_requirements": [
+        "independent_review"
+      ],
+      "allowed_read_scope": [
+        "RAIOS/V9/agents/a15"
+      ],
+      "allowed_write_scope": [
+        "RAIOS/V9/agents/a15/sandbox/task-04"
+      ],
+      "forbidden_scope": [
+        "canonical",
+        "production"
+      ],
+      "acceptance_gates": [
+        "normalized_result",
+        "confidence_in_0_1",
+        "no_canonical_mutation"
+      ],
+      "budget": {
+        "external_credits": 0,
+        "preferred_cost_class": "DETERMINISTIC_LOCAL"
+      },
+      "priority": 46,
+      "predecessor_evidence": {
+        "a14_receipt_sha256": "d5556dc06edbee43e8efd758933ebd03476f4c21ea372cd5fc436fccbeafa8a1",
+        "a14_1_receipt_sha256": "d8923c61e2b7d985ef44ef4287f3e1f25c2a392731e673e4d3583b64c26b4676"
+      },
+      "current_owner": null,
+      "verifier_policy": {
+        "independent": false,
+        "mode": "READ_ONLY"
+      },
+      "scenario": "NORMAL",
+      "confidence": 0.93,
+      "lifecycle": "READY"
+    },
+    {
+      "schema": "raios.a15.task-envelope.v1",
+      "task_id": "a15-task:05",
+      "correlation_id": "corr:a15:05",
+      "causation_id": "cause:a15:05",
+      "objective": "A15 sandbox task 05 NORMAL",
+      "capability_requirements": [
+        "governance"
+      ],
+      "allowed_read_scope": [
+        "RAIOS/V9/agents/a15"
+      ],
+      "allowed_write_scope": [
+        "RAIOS/V9/agents/a15/sandbox/task-05"
+      ],
+      "forbidden_scope": [
+        "canonical",
+        "production"
+      ],
+      "acceptance_gates": [
+        "normalized_result",
+        "confidence_in_0_1",
+        "no_canonical_mutation"
+      ],
+      "budget": {
+        "external_credits": 0,
+        "preferred_cost_class": "DETERMINISTIC_LOCAL"
+      },
+      "priority": 45,
+      "predecessor_evidence": {
+        "a14_receipt_sha256": "d5556dc06edbee43e8efd758933ebd03476f4c21ea372cd5fc436fccbeafa8a1",
+        "a14_1_receipt_sha256": "d8923c61e2b7d985ef44ef4287f3e1f25c2a392731e673e4d3583b64c26b4676"
+      },
+      "current_owner": null,
+      "verifier_policy": {
+        "independent": false,
+        "mode": "READ_ONLY"
+      },
+      "scenario": "NORMAL",
+      "confidence": 0.93,
+      "lifecycle": "READY"
+    },
+    {
+      "schema": "raios.a15.task-envelope.v1",
+      "task_id": "a15-task:06",
+      "correlation_id": "corr:a15:06",
+      "causation_id": "cause:a15:06",
+      "objective": "A15 sandbox task 06 NORMAL",
+      "capability_requirements": [
+        "test_execution"
+      ],
+      "allowed_read_scope": [
+        "RAIOS/V9/agents/a15"
+      ],
+      "allowed_write_scope": [
+        "RAIOS/V9/agents/a15/sandbox/task-06"
+      ],
+      "forbidden_scope": [
+        "canonical",
+        "production"
+      ],
+      "acceptance_gates": [
+        "normalized_result",
+        "confidence_in_0_1",
+        "no_canonical_mutation"
+      ],
+      "budget": {
+        "external_credits": 0,
+        "preferred_cost_class": "DETERMINISTIC_LOCAL"
+      },
+      "priority": 44,
+      "predecessor_evidence": {
+        "a14_receipt_sha256": "d5556dc06edbee43e8efd758933ebd03476f4c21ea372cd5fc436fccbeafa8a1",
+        "a14_1_receipt_sha256": "d8923c61e2b7d985ef44ef4287f3e1f25c2a392731e673e4d3583b64c26b4676"
+      },
+      "current_owner": null,
+      "verifier_policy": {
+        "independent": false,
+        "mode": "READ_ONLY"
+      },
+      "scenario": "NORMAL",
+      "confidence": 0.93,
+      "lifecycle": "READY"
+    },
+    {
+      "schema": "raios.a15.task-envelope.v1",
+      "task_id": "a15-task:07",
+      "correlation_id": "corr:a15:07",
+      "causation_id": "cause:a15:07",
+      "objective": "A15 sandbox task 07 NORMAL",
+      "capability_requirements": [
+        "filesystem_read"
+      ],
+      "allowed_read_scope": [
+        "RAIOS/V9/agents/a15"
+      ],
+      "allowed_write_scope": [
+        "RAIOS/V9/agents/a15/sandbox/task-07"
+      ],
+      "forbidden_scope": [
+        "canonical",
+        "production"
+      ],
+      "acceptance_gates": [
+        "normalized_result",
+        "confidence_in_0_1",
+        "no_canonical_mutation"
+      ],
+      "budget": {
+        "external_credits": 0,
+        "preferred_cost_class": "DETERMINISTIC_LOCAL"
+      },
+      "priority": 43,
+      "predecessor_evidence": {
+        "a14_receipt_sha256": "d5556dc06edbee43e8efd758933ebd03476f4c21ea372cd5fc436fccbeafa8a1",
+        "a14_1_receipt_sha256": "d8923c61e2b7d985ef44ef4287f3e1f25c2a392731e673e4d3583b64c26b4676"
+      },
+      "current_owner": null,
+      "verifier_policy": {
+        "independent": false,
+        "mode": "READ_ONLY"
+      },
+      "scenario": "NORMAL",
+      "confidence": 0.93,
+      "lifecycle": "READY"
+    },
+    {
+      "schema": "raios.a15.task-envelope.v1",
+      "task_id": "a15-task:08",
+      "correlation_id": "corr:a15:08",
+      "causation_id": "cause:a15:08",
+      "objective": "A15 sandbox task 08 NORMAL",
+      "capability_requirements": [
+        "repository_search"
+      ],
+      "allowed_read_scope": [
+        "RAIOS/V9/agents/a15"
+      ],
+      "allowed_write_scope": [
+        "RAIOS/V9/agents/a15/sandbox/task-08"
+      ],
+      "forbidden_scope": [
+        "canonical",
+        "production"
+      ],
+      "acceptance_gates": [
+        "normalized_result",
+        "confidence_in_0_1",
+        "no_canonical_mutation"
+      ],
+      "budget": {
+        "external_credits": 0,
+        "preferred_cost_class": "DETERMINISTIC_LOCAL"
+      },
+      "priority": 42,
+      "predecessor_evidence": {
+        "a14_receipt_sha256": "d5556dc06edbee43e8efd758933ebd03476f4c21ea372cd5fc436fccbeafa8a1",
+        "a14_1_receipt_sha256": "d8923c61e2b7d985ef44ef4287f3e1f25c2a392731e673e4d3583b64c26b4676"
+      },
+      "current_owner": null,
+      "verifier_policy": {
+        "independent": false,
+        "mode": "READ_ONLY"
+      },
+      "scenario": "NORMAL",
+      "confidence": 0.93,
+      "lifecycle": "READY"
+    },
+    {
+      "schema": "raios.a15.task-envelope.v1",
+      "task_id": "a15-task:09",
+      "correlation_id": "corr:a15:09",
+      "causation_id": "cause:a15:09",
+      "objective": "A15 sandbox task 09 NORMAL",
+      "capability_requirements": [
+        "implementation"
+      ],
+      "allowed_read_scope": [
+        "RAIOS/V9/agents/a15"
+      ],
+      "allowed_write_scope": [
+        "RAIOS/V9/agents/a15/sandbox/task-09"
+      ],
+      "forbidden_scope": [
+        "canonical",
+        "production"
+      ],
+      "acceptance_gates": [
+        "normalized_result",
+        "confidence_in_0_1",
+        "no_canonical_mutation"
+      ],
+      "budget": {
+        "external_credits": 0,
+        "preferred_cost_class": "DETERMINISTIC_LOCAL"
+      },
+      "priority": 41,
+      "predecessor_evidence": {
+        "a14_receipt_sha256": "d5556dc06edbee43e8efd758933ebd03476f4c21ea372cd5fc436fccbeafa8a1",
+        "a14_1_receipt_sha256": "d8923c61e2b7d985ef44ef4287f3e1f25c2a392731e673e4d3583b64c26b4676"
+      },
+      "current_owner": null,
+      "verifier_policy": {
+        "independent": false,
+        "mode": "READ_ONLY"
+      },
+      "scenario": "NORMAL",
+      "confidence": 0.93,
+      "lifecycle": "READY"
+    },
+    {
+      "schema": "raios.a15.task-envelope.v1",
+      "task_id": "a15-task:10",
+      "correlation_id": "corr:a15:10",
+      "causation_id": "cause:a15:10",
+      "objective": "A15 sandbox task 10 NORMAL",
+      "capability_requirements": [
+        "deep_debug"
+      ],
+      "allowed_read_scope": [
+        "RAIOS/V9/agents/a15"
+      ],
+      "allowed_write_scope": [
+        "RAIOS/V9/agents/a15/sandbox/task-10"
+      ],
+      "forbidden_scope": [
+        "canonical",
+        "production"
+      ],
+      "acceptance_gates": [
+        "normalized_result",
+        "confidence_in_0_1",
+        "no_canonical_mutation"
+      ],
+      "budget": {
+        "external_credits": 0,
+        "preferred_cost_class": "DETERMINISTIC_LOCAL"
+      },
+      "priority": 40,
+      "predecessor_evidence": {
+        "a14_receipt_sha256": "d5556dc06edbee43e8efd758933ebd03476f4c21ea372cd5fc436fccbeafa8a1",
+        "a14_1_receipt_sha256": "d8923c61e2b7d985ef44ef4287f3e1f25c2a392731e673e4d3583b64c26b4676"
+      },
+      "current_owner": null,
+      "verifier_policy": {
+        "independent": false,
+        "mode": "READ_ONLY"
+      },
+      "scenario": "NORMAL",
+      "confidence": 0.93,
+      "lifecycle": "READY"
+    },
+    {
+      "schema": "raios.a15.task-envelope.v1",
+      "task_id": "a15-task:11",
+      "correlation_id": "corr:a15:11",
+      "causation_id": "cause:a15:11",
+      "objective": "A15 sandbox task 11 NORMAL",
+      "capability_requirements": [
+        "independent_review"
+      ],
+      "allowed_read_scope": [
+        "RAIOS/V9/agents/a15"
+      ],
+      "allowed_write_scope": [
+        "RAIOS/V9/agents/a15/sandbox/task-11"
+      ],
+      "forbidden_scope": [
+        "canonical",
+        "production"
+      ],
+      "acceptance_gates": [
+        "normalized_result",
+        "confidence_in_0_1",
+        "no_canonical_mutation"
+      ],
+      "budget": {
+        "external_credits": 0,
+        "preferred_cost_class": "DETERMINISTIC_LOCAL"
+      },
+      "priority": 39,
+      "predecessor_evidence": {
+        "a14_receipt_sha256": "d5556dc06edbee43e8efd758933ebd03476f4c21ea372cd5fc436fccbeafa8a1",
+        "a14_1_receipt_sha256": "d8923c61e2b7d985ef44ef4287f3e1f25c2a392731e673e4d3583b64c26b4676"
+      },
+      "current_owner": null,
+      "verifier_policy": {
+        "independent": false,
+        "mode": "READ_ONLY"
+      },
+      "scenario": "NORMAL",
+      "confidence": 0.93,
+      "lifecycle": "READY"
+    },
+    {
+      "schema": "raios.a15.task-envelope.v1",
+      "task_id": "a15-task:12",
+      "correlation_id": "corr:a15:12",
+      "causation_id": "cause:a15:12",
+      "objective": "A15 sandbox task 12 NORMAL",
+      "capability_requirements": [
+        "governance"
+      ],
+      "allowed_read_scope": [
+        "RAIOS/V9/agents/a15"
+      ],
+      "allowed_write_scope": [
+        "RAIOS/V9/agents/a15/sandbox/task-12"
+      ],
+      "forbidden_scope": [
+        "canonical",
+        "production"
+      ],
+      "acceptance_gates": [
+        "normalized_result",
+        "confidence_in_0_1",
+        "no_canonical_mutation"
+      ],
+      "budget": {
+        "external_credits": 0,
+        "preferred_cost_class": "DETERMINISTIC_LOCAL"
+      },
+      "priority": 38,
+      "predecessor_evidence": {
+        "a14_receipt_sha256": "d5556dc06edbee43e8efd758933ebd03476f4c21ea372cd5fc436fccbeafa8a1",
+        "a14_1_receipt_sha256": "d8923c61e2b7d985ef44ef4287f3e1f25c2a392731e673e4d3583b64c26b4676"
+      },
+      "current_owner": null,
+      "verifier_policy": {
+        "independent": false,
+        "mode": "READ_ONLY"
+      },
+      "scenario": "NORMAL",
+      "confidence": 0.93,
+      "lifecycle": "READY"
+    },
+    {
+      "schema": "raios.a15.task-envelope.v1",
+      "task_id": "a15-task:13",
+      "correlation_id": "corr:a15:13",
+      "causation_id": "cause:a15:13",
+      "objective": "A15 sandbox task 13 NORMAL",
+      "capability_requirements": [
+        "test_execution"
+      ],
+      "allowed_read_scope": [
+        "RAIOS/V9/agents/a15"
+      ],
+      "allowed_write_scope": [
+        "RAIOS/V9/agents/a15/sandbox/task-13"
+      ],
+      "forbidden_scope": [
+        "canonical",
+        "production"
+      ],
+      "acceptance_gates": [
+        "normalized_result",
+        "confidence_in_0_1",
+        "no_canonical_mutation"
+      ],
+      "budget": {
+        "external_credits": 0,
+        "preferred_cost_class": "DETERMINISTIC_LOCAL"
+      },
+      "priority": 37,
+      "predecessor_evidence": {
+        "a14_receipt_sha256": "d5556dc06edbee43e8efd758933ebd03476f4c21ea372cd5fc436fccbeafa8a1",
+        "a14_1_receipt_sha256": "d8923c61e2b7d985ef44ef4287f3e1f25c2a392731e673e4d3583b64c26b4676"
+      },
+      "current_owner": null,
+      "verifier_policy": {
+        "independent": false,
+        "mode": "READ_ONLY"
+      },
+      "scenario": "NORMAL",
+      "confidence": 0.93,
+      "lifecycle": "READY"
+    },
+    {
+      "schema": "raios.a15.task-envelope.v1",
+      "task_id": "a15-task:14",
+      "correlation_id": "corr:a15:14",
+      "causation_id": "cause:a15:14",
+      "objective": "A15 sandbox task 14 NORMAL",
+      "capability_requirements": [
+        "filesystem_read"
+      ],
+      "allowed_read_scope": [
+        "RAIOS/V9/agents/a15"
+      ],
+      "allowed_write_scope": [
+        "RAIOS/V9/agents/a15/sandbox/task-14"
+      ],
+      "forbidden_scope": [
+        "canonical",
+        "production"
+      ],
+      "acceptance_gates": [
+        "normalized_result",
+        "confidence_in_0_1",
+        "no_canonical_mutation"
+      ],
+      "budget": {
+        "external_credits": 0,
+        "preferred_cost_class": "DETERMINISTIC_LOCAL"
+      },
+      "priority": 36,
+      "predecessor_evidence": {
+        "a14_receipt_sha256": "d5556dc06edbee43e8efd758933ebd03476f4c21ea372cd5fc436fccbeafa8a1",
+        "a14_1_receipt_sha256": "d8923c61e2b7d985ef44ef4287f3e1f25c2a392731e673e4d3583b64c26b4676"
+      },
+      "current_owner": null,
+      "verifier_policy": {
+        "independent": false,
+        "mode": "READ_ONLY"
+      },
+      "scenario": "NORMAL",
+      "confidence": 0.93,
+      "lifecycle": "READY"
+    },
+    {
+      "schema": "raios.a15.task-envelope.v1",
+      "task_id": "a15-task:15",
+      "correlation_id": "corr:a15:15",
+      "causation_id": "cause:a15:15",
+      "objective": "A15 sandbox task 15 NORMAL",
+      "capability_requirements": [
+        "repository_search"
+      ],
+      "allowed_read_scope": [
+        "RAIOS/V9/agents/a15"
+      ],
+      "allowed_write_scope": [
+        "RAIOS/V9/agents/a15/sandbox/task-15"
+      ],
+      "forbidden_scope": [
+        "canonical",
+        "production"
+      ],
+      "acceptance_gates": [
+        "normalized_result",
+        "confidence_in_0_1",
+        "no_canonical_mutation"
+      ],
+      "budget": {
+        "external_credits": 0,
+        "preferred_cost_class": "DETERMINISTIC_LOCAL"
+      },
+      "priority": 35,
+      "predecessor_evidence": {
+        "a14_receipt_sha256": "d5556dc06edbee43e8efd758933ebd03476f4c21ea372cd5fc436fccbeafa8a1",
+        "a14_1_receipt_sha256": "d8923c61e2b7d985ef44ef4287f3e1f25c2a392731e673e4d3583b64c26b4676"
+      },
+      "current_owner": null,
+      "verifier_policy": {
+        "independent": false,
+        "mode": "READ_ONLY"
+      },
+      "scenario": "NORMAL",
+      "confidence": 0.93,
+      "lifecycle": "READY"
+    },
+    {
+      "schema": "raios.a15.task-envelope.v1",
+      "task_id": "a15-task:16",
+      "correlation_id": "corr:a15:16",
+      "causation_id": "cause:a15:16",
+      "objective": "A15 sandbox task 16 NORMAL",
+      "capability_requirements": [
+        "implementation"
+      ],
+      "allowed_read_scope": [
+        "RAIOS/V9/agents/a15"
+      ],
+      "allowed_write_scope": [
+        "RAIOS/V9/agents/a15/sandbox/task-16"
+      ],
+      "forbidden_scope": [
+        "canonical",
+        "production"
+      ],
+      "acceptance_gates": [
+        "normalized_result",
+        "confidence_in_0_1",
+        "no_canonical_mutation"
+      ],
+      "budget": {
+        "external_credits": 0,
+        "preferred_cost_class": "DETERMINISTIC_LOCAL"
+      },
+      "priority": 34,
+      "predecessor_evidence": {
+        "a14_receipt_sha256": "d5556dc06edbee43e8efd758933ebd03476f4c21ea372cd5fc436fccbeafa8a1",
+        "a14_1_receipt_sha256": "d8923c61e2b7d985ef44ef4287f3e1f25c2a392731e673e4d3583b64c26b4676"
+      },
+      "current_owner": null,
+      "verifier_policy": {
+        "independent": false,
+        "mode": "READ_ONLY"
+      },
+      "scenario": "NORMAL",
+      "confidence": 0.93,
+      "lifecycle": "READY"
+    },
+    {
+      "schema": "raios.a15.task-envelope.v1",
+      "task_id": "a15-task:17",
+      "correlation_id": "corr:a15:17",
+      "causation_id": "cause:a15:17",
+      "objective": "A15 sandbox task 17 NORMAL",
+      "capability_requirements": [
+        "deep_debug"
+      ],
+      "allowed_read_scope": [
+        "RAIOS/V9/agents/a15"
+      ],
+      "allowed_write_scope": [
+        "RAIOS/V9/agents/a15/sandbox/task-17"
+      ],
+      "forbidden_scope": [
+        "canonical",
+        "production"
+      ],
+      "acceptance_gates": [
+        "normalized_result",
+        "confidence_in_0_1",
+        "no_canonical_mutation"
+      ],
+      "budget": {
+        "external_credits": 0,
+        "preferred_cost_class": "DETERMINISTIC_LOCAL"
+      },
+      "priority": 33,
+      "predecessor_evidence": {
+        "a14_receipt_sha256": "d5556dc06edbee43e8efd758933ebd03476f4c21ea372cd5fc436fccbeafa8a1",
+        "a14_1_receipt_sha256": "d8923c61e2b7d985ef44ef4287f3e1f25c2a392731e673e4d3583b64c26b4676"
+      },
+      "current_owner": null,
+      "verifier_policy": {
+        "independent": false,
+        "mode": "READ_ONLY"
+      },
+      "scenario": "NORMAL",
+      "confidence": 0.93,
+      "lifecycle": "READY"
+    },
+    {
+      "schema": "raios.a15.task-envelope.v1",
+      "task_id": "a15-task:18",
+      "correlation_id": "corr:a15:18",
+      "causation_id": "cause:a15:18",
+      "objective": "A15 sandbox task 18 PARALLEL_A",
+      "capability_requirements": [
+        "independent_review"
+      ],
+      "allowed_read_scope": [
+        "RAIOS/V9/agents/a15"
+      ],
+      "allowed_write_scope": [
+        "RAIOS/V9/agents/a15/sandbox/task-18"
+      ],
+      "forbidden_scope": [
+        "canonical",
+        "production"
+      ],
+      "acceptance_gates": [
+        "normalized_result",
+        "confidence_in_0_1",
+        "no_canonical_mutation"
+      ],
+      "budget": {
+        "external_credits": 0,
+        "preferred_cost_class": "DETERMINISTIC_LOCAL"
+      },
+      "priority": 32,
+      "predecessor_evidence": {
+        "a14_receipt_sha256": "d5556dc06edbee43e8efd758933ebd03476f4c21ea372cd5fc436fccbeafa8a1",
+        "a14_1_receipt_sha256": "d8923c61e2b7d985ef44ef4287f3e1f25c2a392731e673e4d3583b64c26b4676"
+      },
+      "current_owner": null,
+      "verifier_policy": {
+        "independent": false,
+        "mode": "READ_ONLY"
+      },
+      "scenario": "PARALLEL_A",
+      "confidence": 0.93,
+      "lifecycle": "READY"
+    },
+    {
+      "schema": "raios.a15.task-envelope.v1",
+      "task_id": "a15-task:19",
+      "correlation_id": "corr:a15:19",
+      "causation_id": "cause:a15:19",
+      "objective": "A15 sandbox task 19 PARALLEL_B",
+      "capability_requirements": [
+        "governance"
+      ],
+      "allowed_read_scope": [
+        "RAIOS/V9/agents/a15"
+      ],
+      "allowed_write_scope": [
+        "RAIOS/V9/agents/a15/sandbox/task-19"
+      ],
+      "forbidden_scope": [
+        "canonical",
+        "production"
+      ],
+      "acceptance_gates": [
+        "normalized_result",
+        "confidence_in_0_1",
+        "no_canonical_mutation"
+      ],
+      "budget": {
+        "external_credits": 0,
+        "preferred_cost_class": "DETERMINISTIC_LOCAL"
+      },
+      "priority": 31,
+      "predecessor_evidence": {
+        "a14_receipt_sha256": "d5556dc06edbee43e8efd758933ebd03476f4c21ea372cd5fc436fccbeafa8a1",
+        "a14_1_receipt_sha256": "d8923c61e2b7d985ef44ef4287f3e1f25c2a392731e673e4d3583b64c26b4676"
+      },
+      "current_owner": null,
+      "verifier_policy": {
+        "independent": false,
+        "mode": "READ_ONLY"
+      },
+      "scenario": "PARALLEL_B",
+      "confidence": 0.93,
+      "lifecycle": "READY"
+    },
+    {
+      "schema": "raios.a15.task-envelope.v1",
+      "task_id": "a15-task:20",
+      "correlation_id": "corr:a15:20",
+      "causation_id": "cause:a15:20",
+      "objective": "A15 sandbox task 20 WRITER_CONFLICT_A",
+      "capability_requirements": [
+        "test_execution"
+      ],
+      "allowed_read_scope": [
+        "RAIOS/V9/agents/a15"
+      ],
+      "allowed_write_scope": [
+        "RAIOS/V9/agents/a15/sandbox/conflict-zone"
+      ],
+      "forbidden_scope": [
+        "canonical",
+        "production"
+      ],
+      "acceptance_gates": [
+        "normalized_result",
+        "confidence_in_0_1",
+        "no_canonical_mutation"
+      ],
+      "budget": {
+        "external_credits": 0,
+        "preferred_cost_class": "DETERMINISTIC_LOCAL"
+      },
+      "priority": 30,
+      "predecessor_evidence": {
+        "a14_receipt_sha256": "d5556dc06edbee43e8efd758933ebd03476f4c21ea372cd5fc436fccbeafa8a1",
+        "a14_1_receipt_sha256": "d8923c61e2b7d985ef44ef4287f3e1f25c2a392731e673e4d3583b64c26b4676"
+      },
+      "current_owner": null,
+      "verifier_policy": {
+        "independent": false,
+        "mode": "READ_ONLY"
+      },
+      "scenario": "WRITER_CONFLICT_A",
+      "confidence": 0.93,
+      "lifecycle": "READY"
+    },
+    {
+      "schema": "raios.a15.task-envelope.v1",
+      "task_id": "a15-task:21",
+      "correlation_id": "corr:a15:21",
+      "causation_id": "cause:a15:21",
+      "objective": "A15 sandbox task 21 WRITER_CONFLICT_B",
+      "capability_requirements": [
+        "filesystem_read"
+      ],
+      "allowed_read_scope": [
+        "RAIOS/V9/agents/a15"
+      ],
+      "allowed_write_scope": [
+        "RAIOS/V9/agents/a15/sandbox/conflict-zone"
+      ],
+      "forbidden_scope": [
+        "canonical",
+        "production"
+      ],
+      "acceptance_gates": [
+        "normalized_result",
+        "confidence_in_0_1",
+        "no_canonical_mutation"
+      ],
+      "budget": {
+        "external_credits": 0,
+        "preferred_cost_class": "DETERMINISTIC_LOCAL"
+      },
+      "priority": 29,
+      "predecessor_evidence": {
+        "a14_receipt_sha256": "d5556dc06edbee43e8efd758933ebd03476f4c21ea372cd5fc436fccbeafa8a1",
+        "a14_1_receipt_sha256": "d8923c61e2b7d985ef44ef4287f3e1f25c2a392731e673e4d3583b64c26b4676"
+      },
+      "current_owner": null,
+      "verifier_policy": {
+        "independent": false,
+        "mode": "READ_ONLY"
+      },
+      "scenario": "WRITER_CONFLICT_B",
+      "confidence": 0.93,
+      "lifecycle": "READY"
+    },
+    {
+      "schema": "raios.a15.task-envelope.v1",
+      "task_id": "a15-task:22",
+      "correlation_id": "corr:a15:22",
+      "causation_id": "cause:a15:22",
+      "objective": "A15 sandbox task 22 VERIFY_CONCURRENT",
+      "capability_requirements": [
+        "repository_search"
+      ],
+      "allowed_read_scope": [
+        "RAIOS/V9/agents/a15"
+      ],
+      "allowed_write_scope": [
+        "RAIOS/V9/agents/a15/sandbox/task-18"
+      ],
+      "forbidden_scope": [
+        "canonical",
+        "production"
+      ],
+      "acceptance_gates": [
+        "normalized_result",
+        "confidence_in_0_1",
+        "no_canonical_mutation"
+      ],
+      "budget": {
+        "external_credits": 0,
+        "preferred_cost_class": "DETERMINISTIC_LOCAL"
+      },
+      "priority": 28,
+      "predecessor_evidence": {
+        "a14_receipt_sha256": "d5556dc06edbee43e8efd758933ebd03476f4c21ea372cd5fc436fccbeafa8a1",
+        "a14_1_receipt_sha256": "d8923c61e2b7d985ef44ef4287f3e1f25c2a392731e673e4d3583b64c26b4676"
+      },
+      "current_owner": null,
+      "verifier_policy": {
+        "independent": true,
+        "mode": "READ_ONLY"
+      },
+      "scenario": "VERIFY_CONCURRENT",
+      "confidence": 0.93,
+      "lifecycle": "READY"
+    },
+    {
+      "schema": "raios.a15.task-envelope.v1",
+      "task_id": "a15-task:23",
+      "correlation_id": "corr:a15:23",
+      "causation_id": "cause:a15:23",
+      "objective": "A15 sandbox task 23 UNAVAILABLE_PRIMARY",
+      "capability_requirements": [
+        "implementation"
+      ],
+      "allowed_read_scope": [
+        "RAIOS/V9/agents/a15"
+      ],
+      "allowed_write_scope": [
+        "RAIOS/V9/agents/a15/sandbox/task-23"
+      ],
+      "forbidden_scope": [
+        "canonical",
+        "production"
+      ],
+      "acceptance_gates": [
+        "normalized_result",
+        "confidence_in_0_1",
+        "no_canonical_mutation"
+      ],
+      "budget": {
+        "external_credits": 0,
+        "preferred_cost_class": "DETERMINISTIC_LOCAL"
+      },
+      "priority": 27,
+      "predecessor_evidence": {
+        "a14_receipt_sha256": "d5556dc06edbee43e8efd758933ebd03476f4c21ea372cd5fc436fccbeafa8a1",
+        "a14_1_receipt_sha256": "d8923c61e2b7d985ef44ef4287f3e1f25c2a392731e673e4d3583b64c26b4676"
+      },
+      "current_owner": null,
+      "verifier_policy": {
+        "independent": false,
+        "mode": "READ_ONLY"
+      },
+      "scenario": "UNAVAILABLE_PRIMARY",
+      "confidence": 0.93,
+      "lifecycle": "READY"
+    },
+    {
+      "schema": "raios.a15.task-envelope.v1",
+      "task_id": "a15-task:24",
+      "correlation_id": "corr:a15:24",
+      "causation_id": "cause:a15:24",
+      "objective": "A15 sandbox task 24 UNAVAILABLE_PRIMARY",
+      "capability_requirements": [
+        "implementation"
+      ],
+      "allowed_read_scope": [
+        "RAIOS/V9/agents/a15"
+      ],
+      "allowed_write_scope": [
+        "RAIOS/V9/agents/a15/sandbox/task-24"
+      ],
+      "forbidden_scope": [
+        "canonical",
+        "production"
+      ],
+      "acceptance_gates": [
+        "normalized_result",
+        "confidence_in_0_1",
+        "no_canonical_mutation"
+      ],
+      "budget": {
+        "external_credits": 0,
+        "preferred_cost_class": "DETERMINISTIC_LOCAL"
+      },
+      "priority": 26,
+      "predecessor_evidence": {
+        "a14_receipt_sha256": "d5556dc06edbee43e8efd758933ebd03476f4c21ea372cd5fc436fccbeafa8a1",
+        "a14_1_receipt_sha256": "d8923c61e2b7d985ef44ef4287f3e1f25c2a392731e673e4d3583b64c26b4676"
+      },
+      "current_owner": null,
+      "verifier_policy": {
+        "independent": false,
+        "mode": "READ_ONLY"
+      },
+      "scenario": "UNAVAILABLE_PRIMARY",
+      "confidence": 0.93,
+      "lifecycle": "READY"
+    },
+    {
+      "schema": "raios.a15.task-envelope.v1",
+      "task_id": "a15-task:25",
+      "correlation_id": "corr:a15:25",
+      "causation_id": "cause:a15:25",
+      "objective": "A15 sandbox task 25 LOGGED_OUT_CLAUDE",
+      "capability_requirements": [
+        "deep_debug"
+      ],
+      "allowed_read_scope": [
+        "RAIOS/V9/agents/a15"
+      ],
+      "allowed_write_scope": [
+        "RAIOS/V9/agents/a15/sandbox/task-25"
+      ],
+      "forbidden_scope": [
+        "canonical",
+        "production"
+      ],
+      "acceptance_gates": [
+        "normalized_result",
+        "confidence_in_0_1",
+        "no_canonical_mutation"
+      ],
+      "budget": {
+        "external_credits": 0,
+        "preferred_cost_class": "DETERMINISTIC_LOCAL"
+      },
+      "priority": 25,
+      "predecessor_evidence": {
+        "a14_receipt_sha256": "d5556dc06edbee43e8efd758933ebd03476f4c21ea372cd5fc436fccbeafa8a1",
+        "a14_1_receipt_sha256": "d8923c61e2b7d985ef44ef4287f3e1f25c2a392731e673e4d3583b64c26b4676"
+      },
+      "current_owner": null,
+      "verifier_policy": {
+        "independent": false,
+        "mode": "READ_ONLY"
+      },
+      "scenario": "LOGGED_OUT_CLAUDE",
+      "confidence": 0.93,
+      "lifecycle": "READY"
+    },
+    {
+      "schema": "raios.a15.task-envelope.v1",
+      "task_id": "a15-task:26",
+      "correlation_id": "corr:a15:26",
+      "causation_id": "cause:a15:26",
+      "objective": "A15 sandbox task 26 LOGGED_OUT_CLAUDE",
+      "capability_requirements": [
+        "deep_debug"
+      ],
+      "allowed_read_scope": [
+        "RAIOS/V9/agents/a15"
+      ],
+      "allowed_write_scope": [
+        "RAIOS/V9/agents/a15/sandbox/task-26"
+      ],
+      "forbidden_scope": [
+        "canonical",
+        "production"
+      ],
+      "acceptance_gates": [
+        "normalized_result",
+        "confidence_in_0_1",
+        "no_canonical_mutation"
+      ],
+      "budget": {
+        "external_credits": 0,
+        "preferred_cost_class": "DETERMINISTIC_LOCAL"
+      },
+      "priority": 24,
+      "predecessor_evidence": {
+        "a14_receipt_sha256": "d5556dc06edbee43e8efd758933ebd03476f4c21ea372cd5fc436fccbeafa8a1",
+        "a14_1_receipt_sha256": "d8923c61e2b7d985ef44ef4287f3e1f25c2a392731e673e4d3583b64c26b4676"
+      },
+      "current_owner": null,
+      "verifier_policy": {
+        "independent": false,
+        "mode": "READ_ONLY"
+      },
+      "scenario": "LOGGED_OUT_CLAUDE",
+      "confidence": 0.93,
+      "lifecycle": "READY"
+    },
+    {
+      "schema": "raios.a15.task-envelope.v1",
+      "task_id": "a15-task:27",
+      "correlation_id": "corr:a15:27",
+      "causation_id": "cause:a15:27",
+      "objective": "A15 sandbox task 27 GEMINI_DEGRADED",
+      "capability_requirements": [
+        "independent_review"
+      ],
+      "allowed_read_scope": [
+        "RAIOS/V9/agents/a15"
+      ],
+      "allowed_write_scope": [
+        "RAIOS/V9/agents/a15/sandbox/task-27"
+      ],
+      "forbidden_scope": [
+        "canonical",
+        "production"
+      ],
+      "acceptance_gates": [
+        "normalized_result",
+        "confidence_in_0_1",
+        "no_canonical_mutation"
+      ],
+      "budget": {
+        "external_credits": 0,
+        "preferred_cost_class": "DETERMINISTIC_LOCAL"
+      },
+      "priority": 23,
+      "predecessor_evidence": {
+        "a14_receipt_sha256": "d5556dc06edbee43e8efd758933ebd03476f4c21ea372cd5fc436fccbeafa8a1",
+        "a14_1_receipt_sha256": "d8923c61e2b7d985ef44ef4287f3e1f25c2a392731e673e4d3583b64c26b4676"
+      },
+      "current_owner": null,
+      "verifier_policy": {
+        "independent": false,
+        "mode": "READ_ONLY"
+      },
+      "scenario": "GEMINI_DEGRADED",
+      "confidence": 0.93,
+      "lifecycle": "READY"
+    },
+    {
+      "schema": "raios.a15.task-envelope.v1",
+      "task_id": "a15-task:28",
+      "correlation_id": "corr:a15:28",
+      "causation_id": "cause:a15:28",
+      "objective": "A15 sandbox task 28 FALLBACK_CAPSULE",
+      "capability_requirements": [
+        "deep_debug"
+      ],
+      "allowed_read_scope": [
+        "RAIOS/V9/agents/a15"
+      ],
+      "allowed_write_scope": [
+        "RAIOS/V9/agents/a15/sandbox/task-28"
+      ],
+      "forbidden_scope": [
+        "canonical",
+        "production"
+      ],
+      "acceptance_gates": [
+        "normalized_result",
+        "confidence_in_0_1",
+        "no_canonical_mutation"
+      ],
+      "budget": {
+        "external_credits": 0,
+        "preferred_cost_class": "DETERMINISTIC_LOCAL"
+      },
+      "priority": 22,
+      "predecessor_evidence": {
+        "a14_receipt_sha256": "d5556dc06edbee43e8efd758933ebd03476f4c21ea372cd5fc436fccbeafa8a1",
+        "a14_1_receipt_sha256": "d8923c61e2b7d985ef44ef4287f3e1f25c2a392731e673e4d3583b64c26b4676"
+      },
+      "current_owner": null,
+      "verifier_policy": {
+        "independent": false,
+        "mode": "READ_ONLY"
+      },
+      "scenario": "FALLBACK_CAPSULE",
+      "confidence": 0.93,
+      "lifecycle": "READY"
+    },
+    {
+      "schema": "raios.a15.task-envelope.v1",
+      "task_id": "a15-task:29",
+      "correlation_id": "corr:a15:29",
+      "causation_id": "cause:a15:29",
+      "objective": "A15 sandbox task 29 FALLBACK_CAPSULE",
+      "capability_requirements": [
+        "deep_debug"
+      ],
+      "allowed_read_scope": [
+        "RAIOS/V9/agents/a15"
+      ],
+      "allowed_write_scope": [
+        "RAIOS/V9/agents/a15/sandbox/task-29"
+      ],
+      "forbidden_scope": [
+        "canonical",
+        "production"
+      ],
+      "acceptance_gates": [
+        "normalized_result",
+        "confidence_in_0_1",
+        "no_canonical_mutation"
+      ],
+      "budget": {
+        "external_credits": 0,
+        "preferred_cost_class": "DETERMINISTIC_LOCAL"
+      },
+      "priority": 21,
+      "predecessor_evidence": {
+        "a14_receipt_sha256": "d5556dc06edbee43e8efd758933ebd03476f4c21ea372cd5fc436fccbeafa8a1",
+        "a14_1_receipt_sha256": "d8923c61e2b7d985ef44ef4287f3e1f25c2a392731e673e4d3583b64c26b4676"
+      },
+      "current_owner": null,
+      "verifier_policy": {
+        "independent": false,
+        "mode": "READ_ONLY"
+      },
+      "scenario": "FALLBACK_CAPSULE",
+      "confidence": 0.93,
+      "lifecycle": "READY"
+    },
+    {
+      "schema": "raios.a15.task-envelope.v1",
+      "task_id": "a15-task:30",
+      "correlation_id": "corr:a15:30",
+      "causation_id": "cause:a15:30",
+      "objective": "A15 sandbox task 30 VERIFY_REQUIRED",
+      "capability_requirements": [
+        "implementation"
+      ],
+      "allowed_read_scope": [
+        "RAIOS/V9/agents/a15"
+      ],
+      "allowed_write_scope": [
+        "RAIOS/V9/agents/a15/sandbox/task-30"
+      ],
+      "forbidden_scope": [
+        "canonical",
+        "production"
+      ],
+      "acceptance_gates": [
+        "normalized_result",
+        "confidence_in_0_1",
+        "no_canonical_mutation"
+      ],
+      "budget": {
+        "external_credits": 0,
+        "preferred_cost_class": "DETERMINISTIC_LOCAL"
+      },
+      "priority": 20,
+      "predecessor_evidence": {
+        "a14_receipt_sha256": "d5556dc06edbee43e8efd758933ebd03476f4c21ea372cd5fc436fccbeafa8a1",
+        "a14_1_receipt_sha256": "d8923c61e2b7d985ef44ef4287f3e1f25c2a392731e673e4d3583b64c26b4676"
+      },
+      "current_owner": null,
+      "verifier_policy": {
+        "independent": true,
+        "mode": "READ_ONLY"
+      },
+      "scenario": "VERIFY_REQUIRED",
+      "confidence": 0.93,
+      "lifecycle": "READY"
+    },
+    {
+      "schema": "raios.a15.task-envelope.v1",
+      "task_id": "a15-task:31",
+      "correlation_id": "corr:a15:31",
+      "causation_id": "cause:a15:31",
+      "objective": "A15 sandbox task 31 VERIFY_REQUIRED",
+      "capability_requirements": [
+        "implementation"
+      ],
+      "allowed_read_scope": [
+        "RAIOS/V9/agents/a15"
+      ],
+      "allowed_write_scope": [
+        "RAIOS/V9/agents/a15/sandbox/task-31"
+      ],
+      "forbidden_scope": [
+        "canonical",
+        "production"
+      ],
+      "acceptance_gates": [
+        "normalized_result",
+        "confidence_in_0_1",
+        "no_canonical_mutation"
+      ],
+      "budget": {
+        "external_credits": 0,
+        "preferred_cost_class": "DETERMINISTIC_LOCAL"
+      },
+      "priority": 19,
+      "predecessor_evidence": {
+        "a14_receipt_sha256": "d5556dc06edbee43e8efd758933ebd03476f4c21ea372cd5fc436fccbeafa8a1",
+        "a14_1_receipt_sha256": "d8923c61e2b7d985ef44ef4287f3e1f25c2a392731e673e4d3583b64c26b4676"
+      },
+      "current_owner": null,
+      "verifier_policy": {
+        "independent": true,
+        "mode": "READ_ONLY"
+      },
+      "scenario": "VERIFY_REQUIRED",
+      "confidence": 0.93,
+      "lifecycle": "READY"
+    },
+    {
+      "schema": "raios.a15.task-envelope.v1",
+      "task_id": "a15-task:03",
+      "correlation_id": "corr:a15:32",
+      "causation_id": "cause:a15:32",
+      "objective": "A15 sandbox task 32 DUPLICATE",
+      "capability_requirements": [
+        "independent_review"
+      ],
+      "allowed_read_scope": [
+        "RAIOS/V9/agents/a15"
+      ],
+      "allowed_write_scope": [
+        "RAIOS/V9/agents/a15/sandbox/task-03"
+      ],
+      "forbidden_scope": [
+        "canonical",
+        "production"
+      ],
+      "acceptance_gates": [
+        "normalized_result",
+        "confidence_in_0_1",
+        "no_canonical_mutation"
+      ],
+      "budget": {
+        "external_credits": 0,
+        "preferred_cost_class": "DETERMINISTIC_LOCAL"
+      },
+      "priority": 18,
+      "predecessor_evidence": {
+        "a14_receipt_sha256": "d5556dc06edbee43e8efd758933ebd03476f4c21ea372cd5fc436fccbeafa8a1",
+        "a14_1_receipt_sha256": "d8923c61e2b7d985ef44ef4287f3e1f25c2a392731e673e4d3583b64c26b4676"
+      },
+      "current_owner": null,
+      "verifier_policy": {
+        "independent": false,
+        "mode": "READ_ONLY"
+      },
+      "scenario": "DUPLICATE",
+      "confidence": 0.93,
+      "lifecycle": "READY"
+    },
+    {
+      "schema": "raios.a15.task-envelope.v1",
+      "task_id": "a15-task:03",
+      "correlation_id": "corr:a15:33",
+      "causation_id": "cause:a15:33",
+      "objective": "A15 sandbox task 33 DUPLICATE",
+      "capability_requirements": [
+        "governance"
+      ],
+      "allowed_read_scope": [
+        "RAIOS/V9/agents/a15"
+      ],
+      "allowed_write_scope": [
+        "RAIOS/V9/agents/a15/sandbox/task-03"
+      ],
+      "forbidden_scope": [
+        "canonical",
+        "production"
+      ],
+      "acceptance_gates": [
+        "normalized_result",
+        "confidence_in_0_1",
+        "no_canonical_mutation"
+      ],
+      "budget": {
+        "external_credits": 0,
+        "preferred_cost_class": "DETERMINISTIC_LOCAL"
+      },
+      "priority": 17,
+      "predecessor_evidence": {
+        "a14_receipt_sha256": "d5556dc06edbee43e8efd758933ebd03476f4c21ea372cd5fc436fccbeafa8a1",
+        "a14_1_receipt_sha256": "d8923c61e2b7d985ef44ef4287f3e1f25c2a392731e673e4d3583b64c26b4676"
+      },
+      "current_owner": null,
+      "verifier_policy": {
+        "independent": false,
+        "mode": "READ_ONLY"
+      },
+      "scenario": "DUPLICATE",
+      "confidence": 0.93,
+      "lifecycle": "READY"
+    },
+    {
+      "schema": "raios.a15.task-envelope.v1",
+      "task_id": "a15-task:34",
+      "correlation_id": "corr:a15:34",
+      "causation_id": "cause:a15:34",
+      "objective": "A15 sandbox task 34 LEASE_RECOVERY",
+      "capability_requirements": [
+        "test_execution"
+      ],
+      "allowed_read_scope": [
+        "RAIOS/V9/agents/a15"
+      ],
+      "allowed_write_scope": [
+        "RAIOS/V9/agents/a15/sandbox/task-34"
+      ],
+      "forbidden_scope": [
+        "canonical",
+        "production"
+      ],
+      "acceptance_gates": [
+        "normalized_result",
+        "confidence_in_0_1",
+        "no_canonical_mutation"
+      ],
+      "budget": {
+        "external_credits": 0,
+        "preferred_cost_class": "DETERMINISTIC_LOCAL"
+      },
+      "priority": 16,
+      "predecessor_evidence": {
+        "a14_receipt_sha256": "d5556dc06edbee43e8efd758933ebd03476f4c21ea372cd5fc436fccbeafa8a1",
+        "a14_1_receipt_sha256": "d8923c61e2b7d985ef44ef4287f3e1f25c2a392731e673e4d3583b64c26b4676"
+      },
+      "current_owner": null,
+      "verifier_policy": {
+        "independent": false,
+        "mode": "READ_ONLY"
+      },
+      "scenario": "LEASE_RECOVERY",
+      "confidence": 0.93,
+      "lifecycle": "READY"
+    },
+    {
+      "schema": "raios.a15.task-envelope.v1",
+      "task_id": "a15-task:35",
+      "correlation_id": "corr:a15:35",
+      "causation_id": "cause:a15:35",
+      "objective": "A15 sandbox task 35 NORMAL",
+      "capability_requirements": [
+        "filesystem_read"
+      ],
+      "allowed_read_scope": [
+        "RAIOS/V9/agents/a15"
+      ],
+      "allowed_write_scope": [
+        "RAIOS/V9/agents/a15/sandbox/task-35"
+      ],
+      "forbidden_scope": [
+        "canonical",
+        "production"
+      ],
+      "acceptance_gates": [
+        "normalized_result",
+        "confidence_in_0_1",
+        "no_canonical_mutation"
+      ],
+      "budget": {
+        "external_credits": 0,
+        "preferred_cost_class": "DETERMINISTIC_LOCAL"
+      },
+      "priority": 15,
+      "predecessor_evidence": {
+        "a14_receipt_sha256": "d5556dc06edbee43e8efd758933ebd03476f4c21ea372cd5fc436fccbeafa8a1",
+        "a14_1_receipt_sha256": "d8923c61e2b7d985ef44ef4287f3e1f25c2a392731e673e4d3583b64c26b4676"
+      },
+      "current_owner": null,
+      "verifier_policy": {
+        "independent": false,
+        "mode": "READ_ONLY"
+      },
+      "scenario": "NORMAL",
+      "confidence": 0.93,
+      "lifecycle": "READY"
+    },
+    {
+      "schema": "raios.a15.task-envelope.v1",
+      "task_id": "a15-task:36",
+      "correlation_id": "corr:a15:36",
+      "causation_id": "cause:a15:36",
+      "objective": "A15 sandbox task 36 NORMAL",
+      "capability_requirements": [
+        "repository_search"
+      ],
+      "allowed_read_scope": [
+        "RAIOS/V9/agents/a15"
+      ],
+      "allowed_write_scope": [
+        "RAIOS/V9/agents/a15/sandbox/task-36"
+      ],
+      "forbidden_scope": [
+        "canonical",
+        "production"
+      ],
+      "acceptance_gates": [
+        "normalized_result",
+        "confidence_in_0_1",
+        "no_canonical_mutation"
+      ],
+      "budget": {
+        "external_credits": 0,
+        "preferred_cost_class": "DETERMINISTIC_LOCAL"
+      },
+      "priority": 14,
+      "predecessor_evidence": {
+        "a14_receipt_sha256": "d5556dc06edbee43e8efd758933ebd03476f4c21ea372cd5fc436fccbeafa8a1",
+        "a14_1_receipt_sha256": "d8923c61e2b7d985ef44ef4287f3e1f25c2a392731e673e4d3583b64c26b4676"
+      },
+      "current_owner": null,
+      "verifier_policy": {
+        "independent": false,
+        "mode": "READ_ONLY"
+      },
+      "scenario": "NORMAL",
+      "confidence": 0.93,
+      "lifecycle": "READY"
+    },
+    {
+      "schema": "raios.a15.task-envelope.v1",
+      "task_id": "a15-task:37",
+      "correlation_id": "corr:a15:37",
+      "causation_id": "cause:a15:37",
+      "objective": "A15 sandbox task 37 CROSS_AGENT_NORMALIZE",
+      "capability_requirements": [
+        "implementation"
+      ],
+      "allowed_read_scope": [
+        "RAIOS/V9/agents/a15"
+      ],
+      "allowed_write_scope": [
+        "RAIOS/V9/agents/a15/sandbox/task-37"
+      ],
+      "forbidden_scope": [
+        "canonical",
+        "production"
+      ],
+      "acceptance_gates": [
+        "normalized_result",
+        "confidence_in_0_1",
+        "no_canonical_mutation"
+      ],
+      "budget": {
+        "external_credits": 0,
+        "preferred_cost_class": "DETERMINISTIC_LOCAL"
+      },
+      "priority": 13,
+      "predecessor_evidence": {
+        "a14_receipt_sha256": "d5556dc06edbee43e8efd758933ebd03476f4c21ea372cd5fc436fccbeafa8a1",
+        "a14_1_receipt_sha256": "d8923c61e2b7d985ef44ef4287f3e1f25c2a392731e673e4d3583b64c26b4676"
+      },
+      "current_owner": null,
+      "verifier_policy": {
+        "independent": false,
+        "mode": "READ_ONLY"
+      },
+      "scenario": "CROSS_AGENT_NORMALIZE",
+      "confidence": 0.93,
+      "lifecycle": "READY"
+    },
+    {
+      "schema": "raios.a15.task-envelope.v1",
+      "task_id": "a15-task:38",
+      "correlation_id": "corr:a15:38",
+      "causation_id": "cause:a15:38",
+      "objective": "A15 sandbox task 38 SUBSCRIPTION",
+      "capability_requirements": [
+        "deep_debug"
+      ],
+      "allowed_read_scope": [
+        "RAIOS/V9/agents/a15"
+      ],
+      "allowed_write_scope": [
+        "RAIOS/V9/agents/a15/sandbox/task-38"
+      ],
+      "forbidden_scope": [
+        "canonical",
+        "production"
+      ],
+      "acceptance_gates": [
+        "normalized_result",
+        "confidence_in_0_1",
+        "no_canonical_mutation"
+      ],
+      "budget": {
+        "external_credits": 0,
+        "preferred_cost_class": "DETERMINISTIC_LOCAL"
+      },
+      "priority": 12,
+      "predecessor_evidence": {
+        "a14_receipt_sha256": "d5556dc06edbee43e8efd758933ebd03476f4c21ea372cd5fc436fccbeafa8a1",
+        "a14_1_receipt_sha256": "d8923c61e2b7d985ef44ef4287f3e1f25c2a392731e673e4d3583b64c26b4676"
+      },
+      "current_owner": null,
+      "verifier_policy": {
+        "independent": false,
+        "mode": "READ_ONLY"
+      },
+      "scenario": "SUBSCRIPTION",
+      "confidence": 0.93,
+      "lifecycle": "READY"
+    },
+    {
+      "schema": "raios.a15.task-envelope.v1",
+      "task_id": "a15-task:39",
+      "correlation_id": "corr:a15:39",
+      "causation_id": "cause:a15:39",
+      "objective": "A15 sandbox task 39 BUDGET_LOCAL",
+      "capability_requirements": [
+        "filesystem_read"
+      ],
+      "allowed_read_scope": [
+        "RAIOS/V9/agents/a15"
+      ],
+      "allowed_write_scope": [
+        "RAIOS/V9/agents/a15/sandbox/task-39"
+      ],
+      "forbidden_scope": [
+        "canonical",
+        "production"
+      ],
+      "acceptance_gates": [
+        "normalized_result",
+        "confidence_in_0_1",
+        "no_canonical_mutation"
+      ],
+      "budget": {
+        "external_credits": 0,
+        "preferred_cost_class": "DETERMINISTIC_LOCAL"
+      },
+      "priority": 11,
+      "predecessor_evidence": {
+        "a14_receipt_sha256": "d5556dc06edbee43e8efd758933ebd03476f4c21ea372cd5fc436fccbeafa8a1",
+        "a14_1_receipt_sha256": "d8923c61e2b7d985ef44ef4287f3e1f25c2a392731e673e4d3583b64c26b4676"
+      },
+      "current_owner": null,
+      "verifier_policy": {
+        "independent": false,
+        "mode": "READ_ONLY"
+      },
+      "scenario": "BUDGET_LOCAL",
+      "confidence": 0.93,
+      "lifecycle": "READY"
+    },
+    {
+      "schema": "raios.a15.task-envelope.v1",
+      "task_id": "a15-task:40",
+      "correlation_id": "corr:a15:40",
+      "causation_id": "cause:a15:40",
+      "objective": "A15 sandbox task 40 BUDGET_LOCAL",
+      "capability_requirements": [
+        "filesystem_read"
+      ],
+      "allowed_read_scope": [
+        "RAIOS/V9/agents/a15"
+      ],
+      "allowed_write_scope": [
+        "RAIOS/V9/agents/a15/sandbox/task-40"
+      ],
+      "forbidden_scope": [
+        "canonical",
+        "production"
+      ],
+      "acceptance_gates": [
+        "normalized_result",
+        "confidence_in_0_1",
+        "no_canonical_mutation"
+      ],
+      "budget": {
+        "external_credits": 0,
+        "preferred_cost_class": "DETERMINISTIC_LOCAL"
+      },
+      "priority": 10,
+      "predecessor_evidence": {
+        "a14_receipt_sha256": "d5556dc06edbee43e8efd758933ebd03476f4c21ea372cd5fc436fccbeafa8a1",
+        "a14_1_receipt_sha256": "d8923c61e2b7d985ef44ef4287f3e1f25c2a392731e673e4d3583b64c26b4676"
+      },
+      "current_owner": null,
+      "verifier_policy": {
+        "independent": false,
+        "mode": "READ_ONLY"
+      },
+      "scenario": "BUDGET_LOCAL",
+      "confidence": 0.93,
+      "lifecycle": "READY"
+    },
+    {
+      "schema": "raios.a15.task-envelope.v1",
+      "task_id": "a15-task:41",
+      "correlation_id": "corr:a15:41",
+      "causation_id": "cause:a15:41",
+      "objective": "A15 sandbox task 41 AMBIGUOUS",
+      "capability_requirements": [
+        "test_execution"
+      ],
+      "allowed_read_scope": [
+        "RAIOS/V9/agents/a15"
+      ],
+      "allowed_write_scope": [
+        "RAIOS/V9/agents/a15/sandbox/task-41"
+      ],
+      "forbidden_scope": [
+        "canonical",
+        "production"
+      ],
+      "acceptance_gates": [
+        "normalized_result",
+        "confidence_in_0_1",
+        "no_canonical_mutation"
+      ],
+      "budget": {
+        "external_credits": 0,
+        "preferred_cost_class": "DETERMINISTIC_LOCAL"
+      },
+      "priority": 9,
+      "predecessor_evidence": {
+        "a14_receipt_sha256": "d5556dc06edbee43e8efd758933ebd03476f4c21ea372cd5fc436fccbeafa8a1",
+        "a14_1_receipt_sha256": "d8923c61e2b7d985ef44ef4287f3e1f25c2a392731e673e4d3583b64c26b4676"
+      },
+      "current_owner": null,
+      "verifier_policy": {
+        "independent": false,
+        "mode": "READ_ONLY"
+      },
+      "scenario": "AMBIGUOUS",
+      "confidence": 0.55,
+      "lifecycle": "READY"
+    },
+    {
+      "schema": "raios.a15.task-envelope.v1",
+      "task_id": "a15-task:42",
+      "correlation_id": "corr:a15:42",
+      "causation_id": "cause:a15:42",
+      "objective": "A15 sandbox task 42 OUT_OF_SCOPE",
+      "capability_requirements": [
+        "filesystem_read"
+      ],
+      "allowed_read_scope": [
+        "RAIOS/V9/agents/a15"
+      ],
+      "allowed_write_scope": [
+        "RAIOS/V9/agents/a15/sandbox/task-42"
+      ],
+      "forbidden_scope": [
+        "canonical",
+        "production"
+      ],
+      "acceptance_gates": [
+        "normalized_result",
+        "confidence_in_0_1",
+        "no_canonical_mutation"
+      ],
+      "budget": {
+        "external_credits": 0,
+        "preferred_cost_class": "DETERMINISTIC_LOCAL"
+      },
+      "priority": 8,
+      "predecessor_evidence": {
+        "a14_receipt_sha256": "d5556dc06edbee43e8efd758933ebd03476f4c21ea372cd5fc436fccbeafa8a1",
+        "a14_1_receipt_sha256": "d8923c61e2b7d985ef44ef4287f3e1f25c2a392731e673e4d3583b64c26b4676"
+      },
+      "current_owner": null,
+      "verifier_policy": {
+        "independent": false,
+        "mode": "READ_ONLY"
+      },
+      "scenario": "OUT_OF_SCOPE",
+      "confidence": 0.93,
+      "lifecycle": "READY"
+    },
+    {
+      "schema": "raios.a15.task-envelope.v1",
+      "task_id": "a15-task:43",
+      "correlation_id": "corr:a15:43",
+      "causation_id": "cause:a15:43",
+      "objective": "A15 sandbox task 43 NORMAL",
+      "capability_requirements": [
+        "repository_search"
+      ],
+      "allowed_read_scope": [
+        "RAIOS/V9/agents/a15"
+      ],
+      "allowed_write_scope": [
+        "RAIOS/V9/agents/a15/sandbox/task-43"
+      ],
+      "forbidden_scope": [
+        "canonical",
+        "production"
+      ],
+      "acceptance_gates": [
+        "normalized_result",
+        "confidence_in_0_1",
+        "no_canonical_mutation"
+      ],
+      "budget": {
+        "external_credits": 0,
+        "preferred_cost_class": "DETERMINISTIC_LOCAL"
+      },
+      "priority": 7,
+      "predecessor_evidence": {
+        "a14_receipt_sha256": "d5556dc06edbee43e8efd758933ebd03476f4c21ea372cd5fc436fccbeafa8a1",
+        "a14_1_receipt_sha256": "d8923c61e2b7d985ef44ef4287f3e1f25c2a392731e673e4d3583b64c26b4676"
+      },
+      "current_owner": null,
+      "verifier_policy": {
+        "independent": false,
+        "mode": "READ_ONLY"
+      },
+      "scenario": "NORMAL",
+      "confidence": 0.93,
+      "lifecycle": "READY"
+    },
+    {
+      "schema": "raios.a15.task-envelope.v1",
+      "task_id": "a15-task:44",
+      "correlation_id": "corr:a15:44",
+      "causation_id": "cause:a15:44",
+      "objective": "A15 sandbox task 44 NORMAL",
+      "capability_requirements": [
+        "implementation"
+      ],
+      "allowed_read_scope": [
+        "RAIOS/V9/agents/a15"
+      ],
+      "allowed_write_scope": [
+        "RAIOS/V9/agents/a15/sandbox/task-44"
+      ],
+      "forbidden_scope": [
+        "canonical",
+        "production"
+      ],
+      "acceptance_gates": [
+        "normalized_result",
+        "confidence_in_0_1",
+        "no_canonical_mutation"
+      ],
+      "budget": {
+        "external_credits": 0,
+        "preferred_cost_class": "DETERMINISTIC_LOCAL"
+      },
+      "priority": 6,
+      "predecessor_evidence": {
+        "a14_receipt_sha256": "d5556dc06edbee43e8efd758933ebd03476f4c21ea372cd5fc436fccbeafa8a1",
+        "a14_1_receipt_sha256": "d8923c61e2b7d985ef44ef4287f3e1f25c2a392731e673e4d3583b64c26b4676"
+      },
+      "current_owner": null,
+      "verifier_policy": {
+        "independent": false,
+        "mode": "READ_ONLY"
+      },
+      "scenario": "NORMAL",
+      "confidence": 0.93,
+      "lifecycle": "READY"
+    },
+    {
+      "schema": "raios.a15.task-envelope.v1",
+      "task_id": "a15-task:45",
+      "correlation_id": "corr:a15:45",
+      "causation_id": "cause:a15:45",
+      "objective": "A15 sandbox task 45 NORMAL",
+      "capability_requirements": [
+        "deep_debug"
+      ],
+      "allowed_read_scope": [
+        "RAIOS/V9/agents/a15"
+      ],
+      "allowed_write_scope": [
+        "RAIOS/V9/agents/a15/sandbox/task-45"
+      ],
+      "forbidden_scope": [
+        "canonical",
+        "production"
+      ],
+      "acceptance_gates": [
+        "normalized_result",
+        "confidence_in_0_1",
+        "no_canonical_mutation"
+      ],
+      "budget": {
+        "external_credits": 0,
+        "preferred_cost_class": "DETERMINISTIC_LOCAL"
+      },
+      "priority": 5,
+      "predecessor_evidence": {
+        "a14_receipt_sha256": "d5556dc06edbee43e8efd758933ebd03476f4c21ea372cd5fc436fccbeafa8a1",
+        "a14_1_receipt_sha256": "d8923c61e2b7d985ef44ef4287f3e1f25c2a392731e673e4d3583b64c26b4676"
+      },
+      "current_owner": null,
+      "verifier_policy": {
+        "independent": false,
+        "mode": "READ_ONLY"
+      },
+      "scenario": "NORMAL",
+      "confidence": 0.93,
+      "lifecycle": "READY"
+    },
+    {
+      "schema": "raios.a15.task-envelope.v1",
+      "task_id": "a15-task:46",
+      "correlation_id": "corr:a15:46",
+      "causation_id": "cause:a15:46",
+      "objective": "A15 sandbox task 46 NORMAL",
+      "capability_requirements": [
+        "independent_review"
+      ],
+      "allowed_read_scope": [
+        "RAIOS/V9/agents/a15"
+      ],
+      "allowed_write_scope": [
+        "RAIOS/V9/agents/a15/sandbox/task-46"
+      ],
+      "forbidden_scope": [
+        "canonical",
+        "production"
+      ],
+      "acceptance_gates": [
+        "normalized_result",
+        "confidence_in_0_1",
+        "no_canonical_mutation"
+      ],
+      "budget": {
+        "external_credits": 0,
+        "preferred_cost_class": "DETERMINISTIC_LOCAL"
+      },
+      "priority": 4,
+      "predecessor_evidence": {
+        "a14_receipt_sha256": "d5556dc06edbee43e8efd758933ebd03476f4c21ea372cd5fc436fccbeafa8a1",
+        "a14_1_receipt_sha256": "d8923c61e2b7d985ef44ef4287f3e1f25c2a392731e673e4d3583b64c26b4676"
+      },
+      "current_owner": null,
+      "verifier_policy": {
+        "independent": false,
+        "mode": "READ_ONLY"
+      },
+      "scenario": "NORMAL",
+      "confidence": 0.93,
+      "lifecycle": "READY"
+    },
+    {
+      "schema": "raios.a15.task-envelope.v1",
+      "task_id": "a15-task:47",
+      "correlation_id": "corr:a15:47",
+      "causation_id": "cause:a15:47",
+      "objective": "A15 sandbox task 47 NORMAL",
+      "capability_requirements": [
+        "governance"
+      ],
+      "allowed_read_scope": [
+        "RAIOS/V9/agents/a15"
+      ],
+      "allowed_write_scope": [
+        "RAIOS/V9/agents/a15/sandbox/task-47"
+      ],
+      "forbidden_scope": [
+        "canonical",
+        "production"
+      ],
+      "acceptance_gates": [
+        "normalized_result",
+        "confidence_in_0_1",
+        "no_canonical_mutation"
+      ],
+      "budget": {
+        "external_credits": 0,
+        "preferred_cost_class": "DETERMINISTIC_LOCAL"
+      },
+      "priority": 3,
+      "predecessor_evidence": {
+        "a14_receipt_sha256": "d5556dc06edbee43e8efd758933ebd03476f4c21ea372cd5fc436fccbeafa8a1",
+        "a14_1_receipt_sha256": "d8923c61e2b7d985ef44ef4287f3e1f25c2a392731e673e4d3583b64c26b4676"
+      },
+      "current_owner": null,
+      "verifier_policy": {
+        "independent": false,
+        "mode": "READ_ONLY"
+      },
+      "scenario": "NORMAL",
+      "confidence": 0.93,
+      "lifecycle": "READY"
+    },
+    {
+      "schema": "raios.a15.task-envelope.v1",
+      "task_id": "a15-task:48",
+      "correlation_id": "corr:a15:48",
+      "causation_id": "cause:a15:48",
+      "objective": "A15 sandbox task 48 NORMAL",
+      "capability_requirements": [
+        "test_execution"
+      ],
+      "allowed_read_scope": [
+        "RAIOS/V9/agents/a15"
+      ],
+      "allowed_write_scope": [
+        "RAIOS/V9/agents/a15/sandbox/task-48"
+      ],
+      "forbidden_scope": [
+        "canonical",
+        "production"
+      ],
+      "acceptance_gates": [
+        "normalized_result",
+        "confidence_in_0_1",
+        "no_canonical_mutation"
+      ],
+      "budget": {
+        "external_credits": 0,
+        "preferred_cost_class": "DETERMINISTIC_LOCAL"
+      },
+      "priority": 2,
+      "predecessor_evidence": {
+        "a14_receipt_sha256": "d5556dc06edbee43e8efd758933ebd03476f4c21ea372cd5fc436fccbeafa8a1",
+        "a14_1_receipt_sha256": "d8923c61e2b7d985ef44ef4287f3e1f25c2a392731e673e4d3583b64c26b4676"
+      },
+      "current_owner": null,
+      "verifier_policy": {
+        "independent": false,
+        "mode": "READ_ONLY"
+      },
+      "scenario": "NORMAL",
+      "confidence": 0.93,
+      "lifecycle": "READY"
+    },
+    {
+      "schema": "raios.a15.task-envelope.v1",
+      "task_id": "a15-task:49",
+      "correlation_id": "corr:a15:49",
+      "causation_id": "cause:a15:49",
+      "objective": "A15 sandbox task 49 NORMAL",
+      "capability_requirements": [
+        "filesystem_read"
+      ],
+      "allowed_read_scope": [
+        "RAIOS/V9/agents/a15"
+      ],
+      "allowed_write_scope": [
+        "RAIOS/V9/agents/a15/sandbox/task-49"
+      ],
+      "forbidden_scope": [
+        "canonical",
+        "production"
+      ],
+      "acceptance_gates": [
+        "normalized_result",
+        "confidence_in_0_1",
+        "no_canonical_mutation"
+      ],
+      "budget": {
+        "external_credits": 0,
+        "preferred_cost_class": "DETERMINISTIC_LOCAL"
+      },
+      "priority": 1,
+      "predecessor_evidence": {
+        "a14_receipt_sha256": "d5556dc06edbee43e8efd758933ebd03476f4c21ea372cd5fc436fccbeafa8a1",
+        "a14_1_receipt_sha256": "d8923c61e2b7d985ef44ef4287f3e1f25c2a392731e673e4d3583b64c26b4676"
+      },
+      "current_owner": null,
+      "verifier_policy": {
+        "independent": false,
+        "mode": "READ_ONLY"
+      },
+      "scenario": "NORMAL",
+      "confidence": 0.93,
+      "lifecycle": "READY"
+    }
+  ]
+}

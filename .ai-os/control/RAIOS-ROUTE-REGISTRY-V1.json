@@ -1,0 +1,18 @@
+{
+  "schema": "raios.route-registry.v1",
+  "canonical_tree": "TREE-001",
+  "routes": {
+    "C1": {"kind": "INTERNAL_BUS", "target": "CHATGPT-ORCH"},
+    "C2": {"kind": "CROSS_HOST_OR_LOCAL", "target": "C2-OBS", "remote_required_for_e2e": true},
+    "C5-PUBLIC": {"kind": "HTTP_WRAPPED", "target": "http://127.0.0.1:8766/api/chat", "lane": "PUBLIC"},
+    "C5-FOUNDER": {"kind": "HTTP_WRAPPED", "target": "http://127.0.0.1:8876/api/chat", "lane": "FOUNDER", "fail_closed": true},
+    "C6": {"kind": "INTERNAL_BUS", "target": "C6-LOCAL", "requires_registration": true},
+    "ALL": {"kind": "FANOUT", "members": ["C1", "C2", "C5-PUBLIC", "C5-FOUNDER", "C6"]}
+  },
+  "truth": {
+    "manual_copy_is_transport": false,
+    "local_ack_is_cross_host_ack": false,
+    "founder_falls_back_to_public": false,
+    "wal_write_allowed": false
+  }
+}
