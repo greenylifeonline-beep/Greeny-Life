@@ -1,0 +1,33 @@
+{
+  "schema": "raios.d059.test-results.v1",
+  "focused": {
+    "file": "tests/test_qwen_granite_assimilation.py",
+    "passed": 14,
+    "failed": 0
+  },
+  "acceptance_gate": {
+    "path": "tests/assimilation_acceptance",
+    "passed": 10,
+    "failed": 0
+  },
+  "resource_fabric_regression": {
+    "path": "tests/resource_fabric",
+    "passed": 172,
+    "failed": 0
+  },
+  "c5_canonical_growth": {
+    "path": "tests/test_c5_canonical_growth.py",
+    "passed": 2,
+    "failed": 3,
+    "capabilities_checked_unchanged": 7,
+    "failure_class": "SPARSE_WORKTREE_ENVIRONMENT",
+    "failures": [
+      "WAL file RAIOS/V9/wal/cognitive-events.jsonl absent in sparse worktree",
+      "subprocess import raios.a2a.pipeline requires third-party a2a package",
+      "CLI stdout decode cp1252 on Windows when importing brain.py"
+    ],
+    "caused_by_d059_seam": false,
+    "assimilated_key_does_not_change_capabilities_checked": true
+  },
+  "orchestration_tests_mutated": false
+}

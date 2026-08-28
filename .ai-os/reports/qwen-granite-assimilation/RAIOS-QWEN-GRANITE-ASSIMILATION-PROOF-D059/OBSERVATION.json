@@ -1,0 +1,50 @@
+{
+  "schema": "raios.d059.observation.v1",
+  "note": "Observation only. Live model presence is not assimilation proof.",
+  "c5_health": {
+    "url": "http://127.0.0.1:8766/health",
+    "status_code": 200,
+    "body": {
+      "status": "ONLINE",
+      "gateway": true,
+      "main_cortex": true,
+      "model": "qwen3:0.6b",
+      "timestamp": "2026-08-28T16:35:11.333006+00:00"
+    },
+    "used_as_assimilation_proof": false
+  },
+  "ollama_list_names": [
+    "qwen3-embedding:0.6b",
+    "qwen3:0.6b",
+    "qwen2.5:0.5b",
+    "granite-embedding:278m",
+    "granite-code:3b",
+    "granite3-dense:8b",
+    "granite3-dense:2b",
+    "qwen3.6:35b-a3b",
+    "granite4:3b",
+    "qwen2.5-coder:3b",
+    "deepseek-r1:1.5b"
+  ],
+  "ollama_used_as_assimilation_proof": false,
+  "qwen13_classification": {
+    "qwen:13b": "ABSENT_NOT_A_CAPABILITY",
+    "qwen3:14b-q4_K_M": "HISTORICAL_NAMED_NOT_INSTALLED_NOT_A_CAPABILITY",
+    "A17.13": "WAVE_ID_NOT_13B",
+    "live_c5_model": "qwen3:0.6b",
+    "compiled_qwen_teacher_identity": "qwen2.5-coder:3b",
+    "compiled_granite_teacher_identity": "granite4:3b"
+  },
+  "lineage_147d": {
+    "ref": "origin/cursor/raios-live-assimilation-147d",
+    "is_ancestor_of_HEAD": false,
+    "merged_or_cherry_picked_wholesale": false,
+    "reuse": "behavioral semantics only"
+  },
+  "fail_closed_observations": {
+    "missing_kb": "FAIL_CLOSED",
+    "stale_live_artifact": "FAIL_CLOSED",
+    "stale_reason": "STALE_HISTORICAL_LIVE_ARTIFACT",
+    "cortex_unavailable_does_not_falsify_compiled": true
+  }
+}

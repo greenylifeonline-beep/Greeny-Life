@@ -1,0 +1,71 @@
+{
+  "schema": "raios.enterprise-brain.assimilated-capability.v1",
+  "OLLAMA_REQUIRED": false,
+  "MODEL_WEIGHTS_STORED": false,
+  "HISTORICAL_RUNTIME_IMPORTED": false,
+  "runtime_requires_historical_tree": false,
+  "families": {
+    "qwen": {
+      "capability_ids": [
+        "brain.assimilated.qwen.CODE_REPAIR",
+        "brain.assimilated.qwen.SOURCE_AUTHORITY_REASONING",
+        "brain.assimilated.qwen.DEBUGGING",
+        "brain.assimilated.qwen.REPOSITORY_REASONING",
+        "brain.assimilated.qwen.FAIL_CLOSED_CERTIFICATION",
+        "brain.assimilated.qwen.SKILL_COMPILATION",
+        "brain.assimilated.qwen.ARCHITECTURE_REASONING",
+        "brain.assimilated.qwen.TOOL_USE",
+        "brain.assimilated.qwen.TEACHER_STUDENT_LEARNING",
+        "brain.assimilated.qwen.TEACHER_SELF_INVENTORY"
+      ],
+      "teacher_identity": "qwen2.5-coder:3b",
+      "teacher_id": "TEACHER_QWEN25_CODER_3B",
+      "canonical_location": "intelligence/knowledge_base/assimilated/QWEN.json",
+      "materialized_sha256": "1caa640079eb71bef9c2719ab17cce75fc6d2a4d5a9f0dbe486332fb520c8397",
+      "unit_source_sha256": [
+        "1b904a7cc4b30e2ec6df86bc7d1920f85fb7c2161c117e7e13238f8f3a201c79",
+        "5124f5edf8536debcd678b2ad68ec2d88659d9ce0ace3f2975ff7c672f3826b2",
+        "55716e0b7c795be31692e820cc7691f790fb71d0dcc5ee6b240350f2e99b9085",
+        "6cf2c4e8f80aebf8857765d22b60e07d2576571fa8f720812900e2bfefb55d13",
+        "89adad54ef962146b05717c81544e43daec2d0d314dcccd5a383c17fd821a624",
+        "a34673d701aeb3963e6887cd65d7f665da592d283b95978722ee93c63dd5f748",
+        "aae7f1e7fb40b94f2346bdadf081459342c8e7d3746d553117aa3cb0ab9979a7",
+        "b2f08b05c39511d2e4e94ddca53d804f5b65f84fa14a9ff071e26997935b37e7",
+        "e72b11a467933acbb1596c9524de818decc5bf6d5eca848962c45521883e17be",
+        "f4e8a035ec23d45385ce479c348cbcf6c80ee81a7be924b05c3b44095d2b6521"
+      ],
+      "distinct_from_other_family": true
+    },
+    "granite": {
+      "capability_ids": [
+        "brain.assimilated.granite.KNOWLEDGE_ASSIMILATION",
+        "brain.assimilated.granite.SOURCE_AUTHORITY_REASONING",
+        "brain.assimilated.granite.DEBUGGING",
+        "brain.assimilated.granite.REPOSITORY_REASONING",
+        "brain.assimilated.granite.FAIL_CLOSED_CERTIFICATION",
+        "brain.assimilated.granite.SKILL_COMPILATION",
+        "brain.assimilated.granite.ARCHITECTURE_REASONING",
+        "brain.assimilated.granite.TOOL_USE",
+        "brain.assimilated.granite.TEACHER_STUDENT_LEARNING",
+        "brain.assimilated.granite.TEACHER_SELF_INVENTORY"
+      ],
+      "teacher_identity": "granite4:3b",
+      "teacher_id": "TEACHER_GRANITE4_3B",
+      "canonical_location": "intelligence/knowledge_base/assimilated/GRANITE.json",
+      "materialized_sha256": "19dc09a1109fc0c758d29b5f6230ddf1448610a7756e39688ef2a1343af3e33e",
+      "unit_source_sha256": [
+        "196adb74627c5c97f4c2c64fe83959fb1ebbdf0492a61a1d651d7d5a90f4f0ed",
+        "1ada80460199a918ba3c42f85180b2320f952615347f2fdef1165eff20668ab8",
+        "40f400aa757f8c11d0dfee72a757c6a8481783e689b9dab49f192e10c3b7bde0",
+        "799c17a57e27f4a48740797ddc0a4551b3cda45245594bde721ef21308afce97",
+        "92e15b7088ceb50afc8be0c2e5f5ce881090ec38688ac3057093870b8a486c50",
+        "9c0ea3c39838b35c52aa1fb51dc19834ef5b063704d607862c4f16a1a174a51c",
+        "9c8ce71a6791062bf50058820782a53fd25e18b693fc7ab902b92a585e15ec64",
+        "abf18e2d2b3367c12afd9216f5539fc8afe8d4176536a1ab6120f35d6e871f7d",
+        "b83708cb4748fc31d14c5b38122df954e2a5b67b015521d60c068529deff0240",
+        "f354756d58866b219df8884f60a277e9c78580beae0ad8c6a4ee35eae61ab291"
+      ],
+      "distinct_from_other_family": true
+    }
+  }
+}

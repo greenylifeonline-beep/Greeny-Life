@@ -1,0 +1,56 @@
+{
+  "schema": "raios.enterprise-brain.assimilated-index.v1",
+    "canonical_locations": {
+      "qwen": "intelligence/knowledge_base/assimilated/QWEN.json",
+      "granite": "intelligence/knowledge_base/assimilated/GRANITE.json",
+      "capabilities": "intelligence/knowledge_base/assimilated/CAPABILITIES.json",
+      "index": "intelligence/knowledge_base/assimilated/INDEX.json",
+      "acceptance": "intelligence/knowledge_base/assimilated/D059-ACCEPTANCE.json"
+    },
+  "PAID_API": false,
+  "MODEL_WEIGHTS_STORED": false,
+  "OLLAMA_REQUIRED": false,
+  "source_package_on_delivery_branch": false,
+  "runtime_requires_historical_tree": false,
+  "mastery_claimed": false,
+  "HISTORICAL_LINEAGE_147D_MERGED": false,
+  "LIVE_INFERRED": false,
+  "families": {
+    "qwen": {
+      "teacher_model": "qwen2.5-coder:3b",
+      "teacher_id": "TEACHER_QWEN25_CODER_3B",
+      "capability_ids": [
+        "brain.assimilated.qwen.CODE_REPAIR",
+        "brain.assimilated.qwen.SOURCE_AUTHORITY_REASONING",
+        "brain.assimilated.qwen.DEBUGGING",
+        "brain.assimilated.qwen.REPOSITORY_REASONING",
+        "brain.assimilated.qwen.FAIL_CLOSED_CERTIFICATION",
+        "brain.assimilated.qwen.SKILL_COMPILATION",
+        "brain.assimilated.qwen.ARCHITECTURE_REASONING",
+        "brain.assimilated.qwen.TOOL_USE",
+        "brain.assimilated.qwen.TEACHER_STUDENT_LEARNING",
+        "brain.assimilated.qwen.TEACHER_SELF_INVENTORY"
+      ],
+      "file_sha256": "1caa640079eb71bef9c2719ab17cce75fc6d2a4d5a9f0dbe486332fb520c8397",
+      "unit_count": 10
+    },
+    "granite": {
+      "teacher_model": "granite4:3b",
+      "teacher_id": "TEACHER_GRANITE4_3B",
+      "capability_ids": [
+        "brain.assimilated.granite.KNOWLEDGE_ASSIMILATION",
+        "brain.assimilated.granite.SOURCE_AUTHORITY_REASONING",
+        "brain.assimilated.granite.DEBUGGING",
+        "brain.assimilated.granite.REPOSITORY_REASONING",
+        "brain.assimilated.granite.FAIL_CLOSED_CERTIFICATION",
+        "brain.assimilated.granite.SKILL_COMPILATION",
+        "brain.assimilated.granite.ARCHITECTURE_REASONING",
+        "brain.assimilated.granite.TOOL_USE",
+        "brain.assimilated.granite.TEACHER_STUDENT_LEARNING",
+        "brain.assimilated.granite.TEACHER_SELF_INVENTORY"
+      ],
+      "file_sha256": "19dc09a1109fc0c758d29b5f6230ddf1448610a7756e39688ef2a1343af3e33e",
+      "unit_count": 10
+    }
+  }
+}

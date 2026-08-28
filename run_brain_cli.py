@@ -5,6 +5,7 @@ import argparse
 import traceback
 from pathlib import Path
 from brain import GreenyLifeBrain
+from assimilated_brain import consult_assimilated
 
 def main():
     parser = argparse.ArgumentParser(
@@ -39,6 +40,7 @@ def main():
     mode_group.add_argument("--generate-labels-visual", action="store_true", help="Generate GELS labels.")
     mode_group.add_argument("--deep-packaging-audit", action="store_true", help="Deep audit packaging files.")
     mode_group.add_argument("--integrate-business-assets", action="store_true", help="Extract markets and specs.")
+    mode_group.add_argument("--consult-assimilated", metavar="QUERY", help="Consult distilled Qwen/Granite knowledge. No model weights.")
 
     parser.add_argument("--no-fix", action="store_true", help="Skip auto-remediation.")
     parser.add_argument("--no-pr", action="store_true", help="Skip GitHub PR creation.")
@@ -51,6 +53,11 @@ def main():
         logging.basicConfig(level=logging.DEBUG)
 
     try:
+        if args.consult_assimilated:
+            rec = consult_assimilated(args.consult_assimilated, repo_path=args.repo)
+            print(json.dumps(rec, indent=2, ensure_ascii=False))
+            return
+
         brain = GreenyLifeBrain(args.repo, args.config)
 
         if args.full_audit:

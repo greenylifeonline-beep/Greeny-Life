@@ -135,6 +135,13 @@ class FileInsight:
         )
 
 
+from assimilated_brain import (  # noqa: E402
+    c5_capability_surface,
+    consult_assimilated,
+    load_assimilated_knowledge,
+)
+
+
 # ============================================================================
 # Main Brain Class
 # ============================================================================
@@ -5194,8 +5201,31 @@ export default function () {
         with open(manifest_path, 'w', encoding='utf-8') as f:
             json.dump(result, f, indent=2, ensure_ascii=False)
 
-        self.logger.info(f"   Merged {len(result['tools_found'])} tools.")
+        assimilated = load_assimilated_knowledge(self.repo_path)
+        self.knowledge_base["assimilated"] = assimilated
+        qwen = (assimilated.get("families") or {}).get("qwen") or {}
+        granite = (assimilated.get("families") or {}).get("granite") or {}
+        result["merged_skills"] = {
+            "qwen_units": qwen.get("unit_count", 0),
+            "granite_units": granite.get("unit_count", 0),
+            "source_independent": True,
+        }
+        result["assimilated"] = assimilated.get("index")
+        self.logger.info(
+            f"   Merged {len(result['tools_found'])} tools; "
+            f"assimilated qwen={qwen.get('unit_count', 0)} granite={granite.get('unit_count', 0)}."
+        )
         return result
+
+    def load_assimilated_knowledge(self) -> Dict[str, Any]:
+        packed = load_assimilated_knowledge(self.repo_path)
+        self.knowledge_base["assimilated"] = packed
+        return packed
+
+    def consult_assimilated(self, query: str) -> Dict[str, Any]:
+        if "assimilated" not in self.knowledge_base:
+            self.load_assimilated_knowledge()
+        return consult_assimilated(query, self.knowledge_base.get("assimilated"), self.repo_path)
 
     def scan_project_metadata(self) -> Dict:
         self.logger.info("[Global Mapper] Scanning project...")
@@ -6132,6 +6162,7 @@ export default function () {
         self.logger.info("\n[Phase 5] Legacy Tools Integration")
         intel_result = self.discover_and_merge_intelligence()
         results["knowledge_base"]["intelligence_tools"] = intel_result
+        results["knowledge_base"]["assimilated"] = self.load_assimilated_knowledge()
 
         # Phase 6: Project Mapping
         self.logger.info("\n[Phase 6] Global Project Mapping")
@@ -6269,6 +6300,7 @@ Examples:
         mode_group.add_argument("--generate-labels-visual", action="store_true", help="Generate GELS labels with visual identity and packaging details.")
         mode_group.add_argument("--deep-packaging-audit", action="store_true", help="Deep audit of all packaging-related files across the project.") 
         mode_group.add_argument("--integrate-business-assets", action="store_true", help="Extract markets, quality specs, global specs, and website content from archive.")
+        mode_group.add_argument("--consult-assimilated", metavar="QUERY", help="Consult distilled Qwen/Granite knowledge. No model weights.")
     
 
 
@@ -6319,6 +6351,11 @@ Examples:
             logging.basicConfig(level=logging.DEBUG)
 
         try:
+            if getattr(args, "consult_assimilated", None):
+                rec = consult_assimilated(args.consult_assimilated, repo_path=args.repo)
+                print(json.dumps(rec, indent=2, ensure_ascii=False))
+                return
+
             brain = GreenyLifeBrain(args.repo, args.config)
 
             if args.full_audit:
@@ -6638,6 +6675,7 @@ def inspect_canonical_runtime_health(repo_path: str, text: str = "inspect C5 run
         "module_health": module_health,
         "component_health": component_health,
         "capabilities_checked": 7,
+        "assimilated": c5_capability_surface(root),
         "repair_action": "NONE_REQUIRED" if healthy else "GOVERNED_REPAIR_REQUIRED",
         "high_risk_self_promotion": False,
     }

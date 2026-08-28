@@ -1,0 +1,66 @@
+{
+  "schema": "raios.d059.runtime-invoke.v1",
+  "qwen": {
+    "status": "COMPILED_PROVEN",
+    "capability_id": "brain.assimilated.qwen.CODE_REPAIR",
+    "family": "qwen",
+    "teacher_model_identity": "qwen2.5-coder:3b",
+    "unit": {
+      "task_id": "SPECIAL-CODE-REPAIR",
+      "capability": "CODE_REPAIR",
+      "source_sha256": "55716e0b7c795be31692e820cc7691f790fb71d0dcc5ee6b240350f2e99b9085",
+      "skill_count": 0,
+      "procedure_count": 0
+    },
+    "SOURCE_INDEPENDENT": true,
+    "MODEL_WEIGHTS_LOADED": false,
+    "OLLAMA_REQUIRED": false,
+    "LIVE_INFERRED": false,
+    "cortex_available": false,
+    "cortex_absence_does_not_falsify_compiled": true,
+    "HISTORICAL_RUNTIME_IMPORTED": false
+  },
+  "granite": {
+    "status": "COMPILED_PROVEN",
+    "capability_id": "brain.assimilated.granite.KNOWLEDGE_ASSIMILATION",
+    "family": "granite",
+    "teacher_model_identity": "granite4:3b",
+    "unit": {
+      "task_id": "SPECIAL-KNOWLEDGE-ASSIMILATION",
+      "capability": "KNOWLEDGE_ASSIMILATION",
+      "source_sha256": "9c8ce71a6791062bf50058820782a53fd25e18b693fc7ab902b92a585e15ec64"
+    },
+    "SOURCE_INDEPENDENT": true,
+    "MODEL_WEIGHTS_LOADED": false,
+    "OLLAMA_REQUIRED": false,
+    "LIVE_INFERRED": false,
+    "cortex_available": false,
+    "cortex_absence_does_not_falsify_compiled": true,
+    "HISTORICAL_RUNTIME_IMPORTED": false
+  },
+  "qwen_consult": {
+    "status": "COMPILED_PROVEN",
+    "selected_family": "qwen",
+    "selected_teacher": "qwen2.5-coder:3b",
+    "HISTORICAL_RUNTIME_IMPORTED": false,
+    "OLLAMA_REQUIRED": false,
+    "LIVE_INFERRED": false
+  },
+  "granite_consult": {
+    "status": "COMPILED_PROVEN",
+    "selected_family": "granite",
+    "selected_teacher": "granite4:3b",
+    "HISTORICAL_RUNTIME_IMPORTED": false,
+    "OLLAMA_REQUIRED": false,
+    "LIVE_INFERRED": false
+  },
+  "c5_surface_status": "COMPILED_PROVEN",
+  "c5_surface_flags": {
+    "QWEN_BRAIN_WIRING_PROVEN": true,
+    "GRANITE_BRAIN_WIRING_PROVEN": true,
+    "QWEN_RUNTIME_PROVEN": true,
+    "GRANITE_RUNTIME_PROVEN": true,
+    "HISTORICAL_LINEAGE_147D_MERGED": false,
+    "OLLAMA_REQUIRED": false
+  }
+}

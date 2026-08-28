@@ -1,0 +1,61 @@
+{
+  "schema": "raios.d059.acceptance-evidence.v1",
+  "HISTORICAL_LINEAGE_147D_MERGED": false,
+  "OLLAMA_REQUIRED": false,
+  "MODEL_WEIGHTS_STORED": false,
+  "PAID_API": false,
+  "records": [
+    {
+      "family": "qwen",
+      "capability_ids": [
+        "brain.assimilated.qwen.CODE_REPAIR",
+        "brain.assimilated.qwen.SOURCE_AUTHORITY_REASONING",
+        "brain.assimilated.qwen.DEBUGGING",
+        "brain.assimilated.qwen.REPOSITORY_REASONING",
+        "brain.assimilated.qwen.FAIL_CLOSED_CERTIFICATION",
+        "brain.assimilated.qwen.SKILL_COMPILATION",
+        "brain.assimilated.qwen.ARCHITECTURE_REASONING",
+        "brain.assimilated.qwen.TOOL_USE",
+        "brain.assimilated.qwen.TEACHER_STUDENT_LEARNING",
+        "brain.assimilated.qwen.TEACHER_SELF_INVENTORY"
+      ],
+      "source_provenance": "sha256:1caa640079eb71bef9c2719ab17cce75fc6d2a4d5a9f0dbe486332fb520c8397;teacher=qwen2.5-coder:3b;teacher_id=TEACHER_QWEN25_CODER_3B;family=qwen",
+      "proof_kind": "capability",
+      "source_independent": true,
+      "brain_wiring_proven": true,
+      "runtime_proven": true,
+      "vault_only": false,
+      "local_model_weights_required": false,
+      "runtime_dependencies": [],
+      "teacher_identity": "qwen2.5-coder:3b",
+      "canonical_location": "intelligence/knowledge_base/assimilated/QWEN.json",
+      "distinctive_capability": "brain.assimilated.qwen.CODE_REPAIR"
+    },
+    {
+      "family": "granite",
+      "capability_ids": [
+        "brain.assimilated.granite.KNOWLEDGE_ASSIMILATION",
+        "brain.assimilated.granite.SOURCE_AUTHORITY_REASONING",
+        "brain.assimilated.granite.DEBUGGING",
+        "brain.assimilated.granite.REPOSITORY_REASONING",
+        "brain.assimilated.granite.FAIL_CLOSED_CERTIFICATION",
+        "brain.assimilated.granite.SKILL_COMPILATION",
+        "brain.assimilated.granite.ARCHITECTURE_REASONING",
+        "brain.assimilated.granite.TOOL_USE",
+        "brain.assimilated.granite.TEACHER_STUDENT_LEARNING",
+        "brain.assimilated.granite.TEACHER_SELF_INVENTORY"
+      ],
+      "source_provenance": "sha256:19dc09a1109fc0c758d29b5f6230ddf1448610a7756e39688ef2a1343af3e33e;teacher=granite4:3b;teacher_id=TEACHER_GRANITE4_3B;family=granite",
+      "proof_kind": "capability",
+      "source_independent": true,
+      "brain_wiring_proven": true,
+      "runtime_proven": true,
+      "vault_only": false,
+      "local_model_weights_required": false,
+      "runtime_dependencies": [],
+      "teacher_identity": "granite4:3b",
+      "canonical_location": "intelligence/knowledge_base/assimilated/GRANITE.json",
+      "distinctive_capability": "brain.assimilated.granite.KNOWLEDGE_ASSIMILATION"
+    }
+  ]
+}
