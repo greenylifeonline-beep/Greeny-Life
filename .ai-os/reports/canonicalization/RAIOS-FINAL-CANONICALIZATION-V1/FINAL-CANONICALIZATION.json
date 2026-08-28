@@ -1,0 +1,57 @@
+﻿{
+  "schema": "raios.final-canonicalization.v1",
+  "status": "PASS",
+
+  "reviewed_freeze": "ffd6b4194d3f753006aaaba5acb6f6e75ea20350",
+  "independent_precanonical_review": "PASS",
+  "ready_for_final_canonicalization": true,
+
+  "canonical_lineage": {
+    "d059_closeout": "ffd6b4194d3f753006aaaba5acb6f6e75ea20350",
+    "qwen_granite_assimilation": "bf756c917cb9f2205aa6277b673d26abc1b8459f",
+    "gl005_authenticated_orchestration": "3ac6a7c886b396eef0225d617cbad3f22a10c846",
+    "tree001_estate_convergence": "a72841064c7ba22b98d11b2776986cf1755428d5"
+  },
+
+  "d059": {
+    "status": "CLOSED",
+    "qwen_assimilation_proven": true,
+    "granite_assimilation_proven": true,
+    "source_independent_assimilation": true,
+    "authenticated_orchestration_proven": true
+  },
+
+  "tree001": {
+    "status": "CLOSED",
+    "terminal_state": "CANONICAL_RECOVERY_ASSET",
+    "sha256": "AA999AA872234E2694B21F74E0FDAA8B4BCE03F5CB90B944DB02AE125BC6532C",
+    "bundle_verify_pass": true,
+    "required_recovery_refs_accounted": "16/16",
+    "total_bundle_refs": 68
+  },
+
+  "transport": {
+    "provenance_valid": true,
+    "at_least_once": true,
+    "raios_idempotency": true,
+    "exactly_once_claimed": false
+  },
+
+  "governance": {
+    "no_competing_primary": true,
+    "no_runtime_resurrection": true,
+    "no_redundant_path_resurrection": true,
+    "historical_snapshots_preserved": true,
+    "historical_payload_overwrite": false,
+    "force_push": false,
+    "history_rewrite": false
+  },
+
+  "known_open_non_blocking_defects": [
+    {
+      "id": "CLI-CONSULT-ASSIMILATED-REACHABILITY",
+      "status": "OPEN_NON_BLOCKING",
+      "blocks_canonicalization": false
+    }
+  ]
+}
