@@ -4,7 +4,7 @@ import json
 from pathlib import Path
 from typing import Any
 
-from test_d059_contract import validate_pair
+from .test_d059_contract import validate_pair
 
 
 def load_evidence(path: str | Path) -> list[dict[str, Any]]:
@@ -59,3 +59,4 @@ def validate_evidence_file(
         "errors": errors,
         "accepted": not errors,
     }
+

@@ -3,7 +3,7 @@
 import json
 from pathlib import Path
 
-from d059_evidence_gate import (
+from .d059_evidence_gate import (
     load_evidence,
     validate_evidence_file,
 )
@@ -147,3 +147,4 @@ def test_runtime_dependency_on_old_tree_fails(
         in error
         for error in result["errors"]
     )
+
