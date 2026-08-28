@@ -1,0 +1,320 @@
+{
+  "capabilities": [
+    {
+      "capability": "AUDIT_ENGINE",
+      "components": [
+        "canonical/intelligence/intelligence/engines/audit-engine.ts"
+      ],
+      "roles": [
+        "CANONICAL_LIBRARY"
+      ],
+      "independent_primary_engines": 0,
+      "composition_valid": true
+    },
+    {
+      "capability": "BRAIN_CLI",
+      "components": [
+        "run_brain_cli.py"
+      ],
+      "roles": [
+        "RUNTIME_SERVICE"
+      ],
+      "independent_primary_engines": 1,
+      "composition_valid": true
+    },
+    {
+      "capability": "COGNITIVE_EVENT_BUS",
+      "components": [
+        "RAIOS/V9/runtime/cognitive_event_bus.py"
+      ],
+      "roles": [
+        "RUNTIME_SERVICE"
+      ],
+      "independent_primary_engines": 1,
+      "composition_valid": true
+    },
+    {
+      "capability": "COMMAND_FABRIC",
+      "components": [
+        "tests/command_fabric/test_control_fabric.py"
+      ],
+      "roles": [
+        "TEST_INFRASTRUCTURE"
+      ],
+      "independent_primary_engines": 0,
+      "composition_valid": true
+    },
+    {
+      "capability": "COMMERCIAL_CONTEXT_FABRIC",
+      "components": [
+        "lib/intelligence/commercial-context-fabric.ts",
+        "tests/commercial_context_fabric_check.ts"
+      ],
+      "roles": [
+        "RUNTIME_CORE",
+        "TEST_INFRASTRUCTURE"
+      ],
+      "independent_primary_engines": 1,
+      "composition_valid": true
+    },
+    {
+      "capability": "CONTROLLED_LEARNING",
+      "components": [
+        "lib/intelligence/controlled-learning.ts",
+        "tests/controlled_learning_check.ts"
+      ],
+      "roles": [
+        "RUNTIME_CORE",
+        "TEST_INFRASTRUCTURE"
+      ],
+      "independent_primary_engines": 1,
+      "composition_valid": true
+    },
+    {
+      "capability": "CONTROLLED_RUNTIME_ORCHESTRATOR",
+      "components": [
+        "canonical/intelligence/runtime/controlled-runtime-orchestrator.ts"
+      ],
+      "roles": [
+        "RUNTIME_CORE"
+      ],
+      "independent_primary_engines": 1,
+      "composition_valid": true
+    },
+    {
+      "capability": "CONTROL_PLANE",
+      "components": [
+        ".ai-os/control/RAIOS-CONTROL-PLANE-V1.py"
+      ],
+      "roles": [
+        "RUNTIME_SERVICE"
+      ],
+      "independent_primary_engines": 1,
+      "composition_valid": true
+    },
+    {
+      "capability": "DATA_INTEGRITY_ENGINE",
+      "components": [
+        "canonical/intelligence/intelligence/engines/data-integrity-engine.ts"
+      ],
+      "roles": [
+        "CANONICAL_LIBRARY"
+      ],
+      "independent_primary_engines": 0,
+      "composition_valid": true
+    },
+    {
+      "capability": "DATA_INTELLIGENCE_FABRIC",
+      "components": [
+        "lib/intelligence/data-intelligence-fabric.ts",
+        "tests/data_intelligence_fabric_check.ts"
+      ],
+      "roles": [
+        "RUNTIME_CORE",
+        "TEST_INFRASTRUCTURE"
+      ],
+      "independent_primary_engines": 1,
+      "composition_valid": true
+    },
+    {
+      "capability": "GREENY_LIFE_EGYPT_BRAIN",
+      "components": [
+        "lib/intelligence/greeny-life-egypt-brain.ts",
+        "tests/greeny_life_egypt_brain_authorization_check.ts",
+        "tests/greeny_life_egypt_brain_check.ts"
+      ],
+      "roles": [
+        "RUNTIME_CORE",
+        "TEST_INFRASTRUCTURE",
+        "TEST_INFRASTRUCTURE"
+      ],
+      "independent_primary_engines": 1,
+      "composition_valid": true
+    },
+    {
+      "capability": "LEGACY_BRAIN",
+      "components": [
+        "audit_brain_intelligence.py",
+        "audit_brain_intelligence_v2.py",
+        "brain.py",
+        "test_brain.py",
+        "test_brain_v2.py",
+        "test_brain_v3.py",
+        "canonical/fix_brain.py",
+        "tests/test_legacy_brain_runtime.py"
+      ],
+      "roles": [
+        "DEVELOPMENT_TOOL",
+        "DEVELOPMENT_TOOL",
+        "RUNTIME_CORE",
+        "TEST_INFRASTRUCTURE",
+        "TEST_INFRASTRUCTURE",
+        "TEST_INFRASTRUCTURE",
+        "DEVELOPMENT_TOOL",
+        "TEST_INFRASTRUCTURE"
+      ],
+      "independent_primary_engines": 1,
+      "composition_valid": true
+    },
+    {
+      "capability": "MASTERMIND_AGENTS",
+      "components": [
+        "lib/intelligence/mastermind-agents.ts",
+        "tests/mastermind_agents_check.ts"
+      ],
+      "roles": [
+        "RUNTIME_CORE",
+        "TEST_INFRASTRUCTURE"
+      ],
+      "independent_primary_engines": 1,
+      "composition_valid": true
+    },
+    {
+      "capability": "NEURO_LINGUA_ROUTER",
+      "components": [
+        "src/raios/neuro_lingua/router.py"
+      ],
+      "roles": [
+        "RUNTIME_CORE"
+      ],
+      "independent_primary_engines": 1,
+      "composition_valid": true
+    },
+    {
+      "capability": "RAIOS_MCP",
+      "components": [
+        "scripts/ai-os/raios_mcp/cross_host_adapter.py",
+        "scripts/ai-os/raios_mcp/gateway.py",
+        "scripts/ai-os/raios_mcp/server.py",
+        "scripts/ai-os/raios_mcp/__init__.py"
+      ],
+      "roles": [
+        "CANONICAL_ADAPTER",
+        "RUNTIME_SERVICE",
+        "RUNTIME_SERVICE",
+        "CANONICAL_LIBRARY"
+      ],
+      "independent_primary_engines": 1,
+      "composition_valid": true
+    },
+    {
+      "capability": "RESOURCE_FABRIC",
+      "components": [
+        "tests/resource_fabric/test_resource_fabric.py"
+      ],
+      "roles": [
+        "TEST_INFRASTRUCTURE"
+      ],
+      "independent_primary_engines": 0,
+      "composition_valid": true
+    },
+    {
+      "capability": "SEMANTIC_ENGINE",
+      "components": [
+        "RAIOS/V9/cognition/semantic/semantic_engine.py"
+      ],
+      "roles": [
+        "RUNTIME_CORE"
+      ],
+      "independent_primary_engines": 1,
+      "composition_valid": true
+    },
+    {
+      "capability": "TASK_ORCHESTRATION",
+      "components": [
+        "lib/intelligence/task-orchestration.ts",
+        "tests/task_orchestration_check.ts"
+      ],
+      "roles": [
+        "RUNTIME_CORE",
+        "TEST_INFRASTRUCTURE"
+      ],
+      "independent_primary_engines": 1,
+      "composition_valid": true
+    },
+    {
+      "capability": "THREE_OPERATING_BRAINS",
+      "components": [
+        "lib/intelligence/three-operating-brains.ts",
+        "tests/three_operating_brains_check.ts"
+      ],
+      "roles": [
+        "RUNTIME_CORE",
+        "TEST_INFRASTRUCTURE"
+      ],
+      "independent_primary_engines": 1,
+      "composition_valid": true
+    },
+    {
+      "capability": "TRANSPORT",
+      "components": [
+        "scripts/ai-os/raios_transport/evidence.py",
+        "scripts/ai-os/raios_transport/local_bridge.py",
+        "scripts/ai-os/raios_transport/nats_provider.py",
+        "scripts/ai-os/raios_transport/packet.py",
+        "scripts/ai-os/raios_transport/provider.py",
+        "scripts/ai-os/raios_transport/stage04.py",
+        "scripts/ai-os/raios_transport/__init__.py",
+        "scripts/ai-os/raios_transport/tests/test_stage04.py",
+        "scripts/ai-os/raios_transport/tests/__init__.py"
+      ],
+      "roles": [
+        "CANONICAL_LIBRARY",
+        "CANONICAL_ADAPTER",
+        "CANONICAL_ADAPTER",
+        "CANONICAL_LIBRARY",
+        "CANONICAL_LIBRARY",
+        "RUNTIME_SERVICE",
+        "CANONICAL_LIBRARY",
+        "TEST_INFRASTRUCTURE",
+        "TEST_INFRASTRUCTURE"
+      ],
+      "independent_primary_engines": 1,
+      "composition_valid": true
+    },
+    {
+      "capability": "V9_AUTONOMIC",
+      "components": [
+        "RAIOS/V9/autonomic/self_inspection/engine.py"
+      ],
+      "roles": [
+        "RUNTIME_SERVICE"
+      ],
+      "independent_primary_engines": 1,
+      "composition_valid": true
+    },
+    {
+      "capability": "V9_EVOLUTION",
+      "components": [
+        "RAIOS/V9/runtime/evolution_brain.py"
+      ],
+      "roles": [
+        "RUNTIME_SERVICE"
+      ],
+      "independent_primary_engines": 1,
+      "composition_valid": true
+    },
+    {
+      "capability": "WORKER_RUNTIME",
+      "components": [
+        "RAIOS/V9/cloud/nomadic/worker_contract.py"
+      ],
+      "roles": [
+        "RUNTIME_SERVICE"
+      ],
+      "independent_primary_engines": 1,
+      "composition_valid": true
+    },
+    {
+      "capability": "WORKFLOW_ENGINE",
+      "components": [
+        "canonical/lib/workflowEngine.ts"
+      ],
+      "roles": [
+        "RUNTIME_CORE"
+      ],
+      "independent_primary_engines": 1,
+      "composition_valid": true
+    }
+  ]
+}

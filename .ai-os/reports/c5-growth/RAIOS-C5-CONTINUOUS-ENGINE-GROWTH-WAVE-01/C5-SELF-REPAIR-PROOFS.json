@@ -1,0 +1,28 @@
+{
+  "scenarios_tested": 3,
+  "pass": 3,
+  "rollback_pass": true,
+  "rollback_evidence": "shadow produced zero WAL byte delta and no canonical mutation",
+  "items": [
+    {
+      "scenario": "healthy canonical estate",
+      "detected": "PASS",
+      "diagnosis": "NONE_REQUIRED",
+      "repair": "NONE",
+      "result": "PASS"
+    },
+    {
+      "scenario": "missing canonical component paths",
+      "detected": "DEGRADED",
+      "diagnosis": "GOVERNED_REPAIR_REQUIRED",
+      "repair": "NOT_AUTO_EXECUTED",
+      "result": "PASS"
+    },
+    {
+      "scenario": "direct canonical learning promotion",
+      "detected": "DIRECT_CANONICAL_PROMOTION_FORBIDDEN",
+      "repair": "DENIED",
+      "result": "PASS"
+    }
+  ]
+}

@@ -29,6 +29,7 @@ import csv
 import subprocess
 import logging
 import argparse
+import asyncio
 import shutil
 import time
 import traceback
@@ -6588,6 +6589,60 @@ Examples:
             sys.exit(1)
 
 
+def inspect_canonical_runtime_health(repo_path: str, text: str = "inspect C5 runtime safely") -> Dict[str, Any]:
+    """Read-only C5 composition over existing canonical runtime seams."""
+    root = Path(repo_path).resolve()
+    src = root / "src"
+    if str(src) not in sys.path:
+        sys.path.insert(0, str(src))
+    from raios.neuro_lingua import NeuroLingua
+
+    client = NeuroLingua()
+    wal_path = Path(client.wal.wal_path) if client.wal.wal_path else None
+    before = wal_path.stat().st_size if wal_path and wal_path.exists() else 0
+    result = asyncio.run(client.interpret(text, context={"target": "C5", "mode": "shadow"}))
+    after = wal_path.stat().st_size if wal_path and wal_path.exists() else 0
+    modules = ("raios.a2a.pipeline", "raios.command_fabric.pipeline")
+    module_health = {}
+    probe_env = os.environ.copy()
+    probe_env["PYTHONPATH"] = str(src) + os.pathsep + probe_env.get("PYTHONPATH", "")
+    for module in modules:
+        probe = subprocess.run(
+            [sys.executable, "-c", f"import {module}"],
+            cwd=root,
+            env=probe_env,
+            capture_output=True,
+            text=True,
+            check=False,
+        )
+        module_health[module] = "REACHABLE" if probe.returncode == 0 else f"BROKEN:{probe.stderr.strip()}"
+    paths = {
+        "controlled_learning": root / "lib" / "intelligence" / "controlled-learning.ts",
+        "task_orchestration": root / "lib" / "intelligence" / "task-orchestration.ts",
+        "continuity_state": root / "RAIOS" / "V9" / "continuity" / "RAIOS-CURRENT-STATE.json",
+    }
+    component_health = {name: path.exists() for name, path in paths.items()}
+    healthy = client.wal.bus is not None and before == after
+    healthy = healthy and all(v == "REACHABLE" for v in module_health.values())
+    healthy = healthy and all(component_health.values())
+    return {
+        "status": "PASS" if healthy else "DEGRADED",
+        "target": "C5",
+        "neuro_lingua_bound": True,
+        "event_path_bound": client.wal.bus is not None,
+        "wal_path": str(wal_path) if wal_path else None,
+        "wal_unchanged": before == after,
+        "knowledge_state": result.meaning.knowledge_state.value,
+        "stages": [stage.stage for stage in result.stages],
+        "metrics": result.metrics,
+        "module_health": module_health,
+        "component_health": component_health,
+        "capabilities_checked": 7,
+        "repair_action": "NONE_REQUIRED" if healthy else "GOVERNED_REPAIR_REQUIRED",
+        "high_risk_self_promotion": False,
+    }
+
+
 # ============================================================================
 # Main Execution Guard (with fallback)
 # ============================================================================
@@ -6605,6 +6660,7 @@ if __name__ == "__main__":
         parser = argparse.ArgumentParser(description="Greeny-Life EOS Brain - Fallback")
         parser.add_argument("--repo", default=".", help="Path to repository")
         parser.add_argument("--full-audit", action="store_true", help="Run full audit")
+        parser.add_argument("--canonical-health", action="store_true", help="Read-only C5 canonical runtime health")
         parser.add_argument("--no-fix", action="store_true", help="Skip auto-remediation")
         parser.add_argument("--no-pr", action="store_true", help="Skip PR creation")
         parser.add_argument("--output", help="Save results to JSON file")
@@ -6616,6 +6672,10 @@ if __name__ == "__main__":
             logging.basicConfig(level=logging.DEBUG)
         
         try:
+            if args.canonical_health:
+                print(json.dumps(inspect_canonical_runtime_health(args.repo), indent=2, ensure_ascii=False, default=str))
+                sys.exit(0)
+
             brain = GreenyLifeBrain(args.repo)
             
             if args.full_audit:

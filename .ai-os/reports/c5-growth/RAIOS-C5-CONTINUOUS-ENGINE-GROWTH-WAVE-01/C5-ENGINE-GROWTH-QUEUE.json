@@ -1,0 +1,132 @@
+{
+  "duplicates": 0,
+  "items": [
+    {
+      "id": "CG-001",
+      "capability": "NeuroLingua",
+      "canonical_source": "src/raios/neuro_lingua/kernel.py",
+      "current_utilization": "FULL",
+      "expected_gain": "deterministic interpretation",
+      "risk": "LOW",
+      "status": "VALIDATED",
+      "before_metrics": {
+        "c5_invocation": 0
+      },
+      "after_metrics": {
+        "c5_invocation": 1
+      },
+      "evidence": [
+        "5/5 growth tests"
+      ],
+      "promotion_state": "VALIDATED",
+      "blocked_by": null
+    },
+    {
+      "id": "CG-002",
+      "capability": "Cognitive Event Bus + WAL",
+      "canonical_source": "src/raios/neuro_lingua/wal.py",
+      "current_utilization": "FULL",
+      "expected_gain": "continuity binding",
+      "risk": "LOW",
+      "status": "VALIDATED",
+      "before_metrics": {
+        "bound": false
+      },
+      "after_metrics": {
+        "bound": true,
+        "shadow_bytes_delta": 0
+      },
+      "evidence": [
+        "WAL unchanged shadow proof"
+      ],
+      "promotion_state": "VALIDATED",
+      "blocked_by": null
+    },
+    {
+      "id": "CG-003",
+      "capability": "C5 canonical self-health skill",
+      "canonical_source": "brain.py --canonical-health",
+      "current_utilization": "PARTIAL",
+      "expected_gain": "manual probe cost decay",
+      "risk": "LOW",
+      "status": "VALIDATED",
+      "before_metrics": {
+        "manual_commands": 7
+      },
+      "after_metrics": {
+        "commands": 1,
+        "median_ms": 2979.8
+      },
+      "evidence": [
+        "CLI smoke",
+        "missing-path detection"
+      ],
+      "promotion_state": "VALIDATED",
+      "blocked_by": null
+    },
+    {
+      "id": "CG-004",
+      "capability": "Controlled Learning outcome promotion",
+      "canonical_source": "lib/intelligence/controlled-learning.ts",
+      "current_utilization": "PARTIAL",
+      "expected_gain": "validated outcome reuse",
+      "risk": "HIGH",
+      "status": "BLOCKED",
+      "before_metrics": {},
+      "after_metrics": {},
+      "evidence": [
+        "direct CANONICAL promotion denied"
+      ],
+      "promotion_state": "DISCOVERED",
+      "blocked_by": "C1 authority"
+    },
+    {
+      "id": "CG-005",
+      "capability": "Task Orchestration C5 submission",
+      "canonical_source": "lib/intelligence/task-orchestration.ts",
+      "current_utilization": "PARTIAL",
+      "expected_gain": "task success and routing",
+      "risk": "MEDIUM",
+      "status": "PROMOTION_READY",
+      "before_metrics": {},
+      "after_metrics": {},
+      "evidence": [
+        "task orchestration PASS"
+      ],
+      "promotion_state": "VALIDATED",
+      "blocked_by": null
+    },
+    {
+      "id": "CG-006",
+      "capability": "Worker/Resource execution",
+      "canonical_source": "RAIOS/V9/cloud/nomadic/worker_contract.py",
+      "current_utilization": "MINIMAL",
+      "expected_gain": "execution capacity",
+      "risk": "MEDIUM",
+      "status": "BLOCKED",
+      "before_metrics": {},
+      "after_metrics": {},
+      "evidence": [
+        "worker is explicitly not C5"
+      ],
+      "promotion_state": "DISCOVERED",
+      "blocked_by": "C2 Resource Fabric"
+    },
+    {
+      "id": "CG-007",
+      "capability": "Model assimilation promotion",
+      "canonical_source": "RAIOS/V9/runtime/evolution_brain.py",
+      "current_utilization": "NONE",
+      "expected_gain": "model improvement",
+      "risk": "HIGH",
+      "status": "BLOCKED",
+      "before_metrics": {},
+      "after_metrics": {},
+      "evidence": [
+        "no safe independent mutation"
+      ],
+      "promotion_state": "DISCOVERED",
+      "blocked_by": "C1 governance"
+    }
+  ]
+}

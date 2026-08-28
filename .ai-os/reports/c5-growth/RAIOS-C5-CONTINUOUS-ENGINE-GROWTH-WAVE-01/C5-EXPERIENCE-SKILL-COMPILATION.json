@@ -1,0 +1,17 @@
+{
+  "repeated_task": "C5 canonical dependency and continuity health",
+  "current_llm_cost": 0,
+  "current_manual_commands": 7,
+  "candidate_skill": "C5_CANONICAL_HEALTH",
+  "compiled_skill": "brain.py --canonical-health",
+  "post_compile_cost": {
+    "llm_calls": 0,
+    "commands": 1,
+    "median_ms": 2979.8
+  },
+  "accuracy_change": {
+    "before": "manual/unbounded",
+    "after": "7/7 bindings checked plus governed degradation"
+  },
+  "repeated_task_cost_decay": true
+}

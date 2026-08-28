@@ -1,0 +1,25 @@
+{
+  "tests_executed": 203,
+  "tests_pass": 203,
+  "tests_fail": 0,
+  "preserved_base_gates": 193,
+  "new_unique_safe_gates": 10,
+  "breakdown": {
+    "transport": 13,
+    "command_fabric": 24,
+    "resource_fabric": 151,
+    "legacy_brain": 2,
+    "base_domain_and_task": 2,
+    "brain_cli": 1,
+    "additional_typescript_runtime": 8,
+    "python_import_smokes": 2
+  },
+  "dependency_boundary_probes": [
+    {
+      "name": "mastermind_agents_check",
+      "result": "DEPENDENCY_BOUNDARY_REACHED",
+      "missing_external_config": "DATABASE_URL",
+      "counted_as_test_failure": false
+    }
+  ]
+}

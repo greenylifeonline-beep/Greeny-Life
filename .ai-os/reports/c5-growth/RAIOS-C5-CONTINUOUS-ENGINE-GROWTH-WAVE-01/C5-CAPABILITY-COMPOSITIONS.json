@@ -1,0 +1,46 @@
+{
+  "attempted": 4,
+  "validated": 4,
+  "rejected": 0,
+  "compositions": [
+    {
+      "id": "COMP-01",
+      "components": [
+        "NeuroLingua",
+        "ExistingCognitiveWALWriter",
+        "Cognitive Event Bus"
+      ],
+      "result": "VALIDATED",
+      "gain": "C5 interpretation plus continuity binding without WAL write"
+    },
+    {
+      "id": "COMP-02",
+      "components": [
+        "A2A pipeline",
+        "Command Fabric pipeline",
+        "C5 canonical health"
+      ],
+      "result": "VALIDATED",
+      "gain": "isolated broken-route detection"
+    },
+    {
+      "id": "COMP-03",
+      "components": [
+        "Controlled Learning",
+        "Task Orchestration",
+        "C5 health"
+      ],
+      "result": "VALIDATED_READ_ONLY",
+      "gain": "dependency visibility; promotion remains governed"
+    },
+    {
+      "id": "COMP-04",
+      "components": [
+        "C5 fallback CLI",
+        "canonical health function"
+      ],
+      "result": "VALIDATED",
+      "gain": "one deterministic command replaces seven manual probes"
+    }
+  ]
+}

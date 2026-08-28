@@ -26,9 +26,9 @@ HIST_ACK = (
     / "command-fabric"
     / "MSG-1787844821137190-c621b602.C2-OBS.ack.receipt.json"
 )
-HIST_ACK_SHA256 = "c2fa2d061fc1125d11adaf49adedcb061fabc0d19fc0008dfdb65e85c0e9ccff"
+HIST_ACK_SHA256 = "021dbe24e69b6b201d6aba60875a3851d62917deb27639f458c687ecbe45a7e6"
 HIST_C5 = ROOT / ".ai-os" / "receipts" / "command-fabric" / "c1c5-task" / "415717063d4bdd51caba7583.receipt.json"
-HIST_C5_SHA256 = "a289ce8e28817259b333994c9a061b66cb81d4c7afba8293707aadb20fa56342"
+HIST_C5_SHA256 = "d20a8e41dcf3d5a03246669c3bea6f841b9af734298965d60e5373aad93a6851"
 
 
 def _sha256(path: Path) -> str:

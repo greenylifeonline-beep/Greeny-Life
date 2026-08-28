@@ -1,0 +1,31 @@
+{
+  "required_total": 2,
+  "adapters": [
+    {
+      "path": "scripts/ai-os/raios_transport/local_bridge.py",
+      "role": "local transport bridge",
+      "path_exists": true,
+      "caller_refs": [
+        "scripts/ai-os/raios_transport/stage04.py",
+        "scripts/ai-os/raios_transport/tests/test_stage04.py"
+      ],
+      "active_callers_proven": true
+    },
+    {
+      "path": "scripts/ai-os/raios_transport/nats_provider.py",
+      "role": "NATS provider adapter",
+      "path_exists": true,
+      "caller_refs": [
+        "scripts/ai-os/raios_transport/local_bridge.py",
+        "scripts/ai-os/raios_transport/stage04.py",
+        "scripts/ai-os/raios_transport/tests/test_stage04.py",
+        "src/raios/a2a/nats_bridge.py",
+        "src/raios/command_fabric/fake_transport.py",
+        "src/raios/command_fabric/live_canary.py",
+        "src/raios/command_fabric/pipeline.py",
+        "tests/command_fabric/test_control_fabric.py"
+      ],
+      "active_callers_proven": true
+    }
+  ]
+}

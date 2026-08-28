@@ -1,0 +1,81 @@
+{
+  "graph_shape": [
+    "ENTRYPOINT",
+    "ROUTER",
+    "ORCHESTRATOR",
+    "ENGINE",
+    "TASK",
+    "PROVIDER_WORKER",
+    "EVENT_RECEIPT",
+    "STATE_WAL"
+  ],
+  "edges": [
+    {
+      "from": "src/raios/a2a/gateway.py",
+      "to": "src/raios/a2a/pipeline.py",
+      "proof": "static relative import"
+    },
+    {
+      "from": "src/raios/command_fabric/pipeline.py",
+      "to": "src/raios/a2a/ucp_adapter.py",
+      "proof": "AST import"
+    },
+    {
+      "from": "src/raios/command_fabric/pipeline.py",
+      "to": "src/raios/c1c5",
+      "proof": "AST import"
+    },
+    {
+      "from": "src/raios/command_fabric/live_canary.py",
+      "to": "scripts/ai-os/raios_transport/nats_provider.py",
+      "proof": "AST import"
+    },
+    {
+      "from": "scripts/ai-os/raios_transport/stage04.py",
+      "to": "scripts/ai-os/raios_transport/local_bridge.py",
+      "proof": "AST import and module launch"
+    },
+    {
+      "from": "scripts/ai-os/raios_transport/local_bridge.py",
+      "to": "scripts/ai-os/raios_transport/nats_provider.py",
+      "proof": "AST import"
+    },
+    {
+      "from": "src/raios/resource_fabric/__main__.py",
+      "to": "src/raios/resource_fabric/cli.py",
+      "proof": "module entrypoint"
+    },
+    {
+      "from": "src/raios/resource_fabric/factory.py",
+      "to": "src/raios/resource_fabric/placement.py",
+      "proof": "AST import"
+    },
+    {
+      "from": "RAIOS/V9/cli/raios_v9.py",
+      "to": "RAIOS/V9/runtime/cognitive_event_bus.py",
+      "proof": "V9 runtime boundary"
+    },
+    {
+      "from": "RAIOS/V9/runtime/cognitive_event_bus.py",
+      "to": "RAIOS/V9/wal/cognitive-events.jsonl",
+      "proof": "event/WAL path registration"
+    },
+    {
+      "from": "lib/intelligence/task-orchestration.ts",
+      "to": "RAIOS/V9/cloud/nomadic/worker_contract.py",
+      "proof": "task/provider boundary composition"
+    },
+    {
+      "from": "lib/intelligence/controlled-learning.ts",
+      "to": "RAIOS/V9/runtime/evolution_brain.py",
+      "proof": "learning/evolution composition"
+    }
+  ],
+  "evidence_methods": [
+    "Python AST imports",
+    "TypeScript import parsing",
+    "CLI markers",
+    "dynamic registration strings",
+    "safe invocation tests"
+  ]
+}

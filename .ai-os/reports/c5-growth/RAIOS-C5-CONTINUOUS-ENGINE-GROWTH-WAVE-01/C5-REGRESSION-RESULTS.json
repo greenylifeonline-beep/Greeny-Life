@@ -1,0 +1,18 @@
+{
+  "tests_executed": 47,
+  "tests_pass": 47,
+  "tests_fail": 0,
+  "breakdown": {
+    "c5_growth": 5,
+    "legacy_brain": 2,
+    "command_fabric": 24,
+    "transport": 13,
+    "task_orchestration": 1,
+    "controlled_learning": 1,
+    "domain_workflow": 1
+  },
+  "resource_fabric_boundary": "preserved from base 151/151; implementation untouched",
+  "regressions_found": 1,
+  "regressions_fixed": 1,
+  "fixed_regression": "pytest a2a namespace shadow isolated through subprocess reachability probes"
+}

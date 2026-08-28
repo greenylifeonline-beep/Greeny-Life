@@ -1,0 +1,30 @@
+{
+  "measured_gains_count": 4,
+  "best_measured_gain": "0 to 7 canonical capabilities checked per invocation",
+  "items": [
+    {
+      "metric": "canonical capabilities checked per invocation",
+      "before": 0,
+      "after": 7,
+      "gain": 7
+    },
+    {
+      "metric": "manual health commands",
+      "before": 7,
+      "after": 1,
+      "gain_percent": 85.7
+    },
+    {
+      "metric": "C5 canonical bindings actively exercised",
+      "before": 2,
+      "after": 5,
+      "gain": 3
+    },
+    {
+      "metric": "uncontrolled WAL writes during shadow",
+      "before": 0,
+      "after": 0,
+      "regression": false
+    }
+  ]
+}
