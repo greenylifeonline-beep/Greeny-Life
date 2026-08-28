@@ -1,0 +1,19 @@
+{
+  "schema": "raios.archive.competing-primary-audit.v1",
+  "generated_at": "2026-08-28T18:35:00Z",
+  "engine_families": 37,
+  "active_canonical": 50,
+  "active_paths_present": 50,
+  "active_paths_missing": 0,
+  "dead_canonical": 0,
+  "multiple_primary_entrypoints_same_capability": 0,
+  "multiple_primary_runtime_engines_same_capability": 0,
+  "orphan_canonical_modules": 0,
+  "competing_same_role": 0,
+  "competing_primary": 0,
+  "pass": true,
+  "source_gates": [
+    "RAIOS-CANONICAL-ENGINE-RUNTIME-WIRING-WAVE-04/WIRING-UNIQUENESS-GATE.json",
+    "RAIOS-ENGINE-ESTATE-PHYSICAL-CONVERGENCE-CLOSURE-WAVE-03/CAPABILITY-UNIQUENESS.json"
+  ]
+}

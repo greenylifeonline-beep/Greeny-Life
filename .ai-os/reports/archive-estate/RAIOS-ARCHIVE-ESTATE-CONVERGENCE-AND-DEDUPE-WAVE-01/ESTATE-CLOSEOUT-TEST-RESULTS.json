@@ -1,0 +1,27 @@
+{
+  "schema": "raios.archive.estate-closeout-test-results.v1",
+  "generated_at": "2026-08-28T18:35:00Z",
+  "suites": [
+    {
+      "name": "legacy-brain-and-resource-fabric",
+      "runner": "project venv pytest",
+      "executed": 174,
+      "pass": 174,
+      "fail": 0
+    },
+    {
+      "name": "transport-stage04",
+      "runner": "transport venv direct unittest",
+      "executed": 13,
+      "pass": 13,
+      "fail": 0
+    }
+  ],
+  "tests_executed": 187,
+  "tests_pass": 187,
+  "tests_fail": 0,
+  "environment_retry_not_counted_as_test": "Initial combined collection used project venv without nats; corrected by using the existing transport venv. No dependency mutation.",
+  "orchestration_tests_executed": false,
+  "gl005_reverified": false,
+  "pass": true
+}

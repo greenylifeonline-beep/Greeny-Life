@@ -1,28 +1,34 @@
-# Archive Estate Final Closure
+# Archive Estate Current-Primary Final Closure
 
 SUPER_TASK_ID=RAIOS-ARCHIVE-ESTATE-CONVERGENCE-AND-DEDUPE-WAVE-01
-CONTINUATION_ID=RAIOS-ARCHIVE-ESTATE-CODEX-RECOVERY-AND-FINAL-CLOSURE-01
-OWNER=C6-AG-REMOTE-RECON
+CURRENT_PRIMARY_BASE=3ac6a7c886b396eef0225d617cbad3f22a10c846
 
-## Final terminal decisions
+## Canonical recovery assets
 
-- 31/31 proof-backed deletions remain verified, totaling 751,221,675 bytes.
-- Raw TAR redundancy is closed by verified gzip stream equivalence.
-- C3 is indexed 2141/2141 with UNKNOWN=0 and retained as CANONICAL_RECOVERY_ASSET.
-- TREE001 SHA-256 and git bundle verification pass.
-- TREE001 contains all 16/16 expected recovery tips; all 16 objects are addressable/readable.
-- GitHub remote pinning was attempted and atomically rejected by GH001; partial refs created: 0.
-- TREE001 is the single canonical bundle copy; duplicate payload copies: 0.
-- TREE001 terminal state is CANONICAL_RECOVERY_ASSET. Deletion is not required.
-- Remote TREE001 durability remains false and is reported separately.
-- OneDrive unresolved: 0.
-- Kaggle S69 unresolved: false after authenticated metadata-only enumeration.
+- TREE001: C:\Users\Ghanam\Desktop\RAIOS-C3-EXECUTION-PACK\RAIOS-TREE001.bundle
+- TREE001 SHA-256: AA999AA872234E2694B21F74E0FDAA8B4BCE03F5CB90B944DB02AE125BC6532C
+- TREE001 copies across bounded Codex/Desktop/OneDrive roots: 1
+- Recovery tips accounted: 16/16
+- Remote pinning: 0/16, rejected by GitHub GH001
+- Terminal state: CANONICAL_RECOVERY_ASSET
+- C3 execution pack copies: 1
+- C3 terminal state: CANONICAL_RECOVERY_ASSET
+
+## Current-primary convergence
+
+- Prior deletion paths checked: 31
+- Resurrected paths: 0
+- Canonical SOR hashes checked: 30; missing/mismatch: 0
+- Redundant payloads: 0
+- Competing primary engines: 0
+- Active canonical paths: 50/50
+- Dead or orphan canonical engines: 0
+- Engine families consistent: 37
+- Tests: 187/187 pass
 
 UNKNOWN=0
 UNRESOLVED=0
-ARCHIVE_UNEXPLAINED_BYTES=0
-RECOVERY_PROVEN=true
-REMOTE_TREE001_RECOVERY_DURABILITY=false
-CANONICAL_BUNDLE_RECOVERY_DURABILITY=true
-PHYSICAL_ARCHIVE_CONVERGENCE_PASS=true
-FINAL_VERDICT=ARCHIVE_ESTATE_PHYSICALLY_CONVERGED_WITH_TREE001_CANONICAL_RECOVERY_RETENTION
+ANTI_RESURRECTION_PASS=true
+ARCHIVE_PHYSICAL_CONVERGENCE_PASS=true
+ESTATE_CONVERGENCE_PASS=true
+READY_FOR_INDEPENDENT_REVIEW=true
