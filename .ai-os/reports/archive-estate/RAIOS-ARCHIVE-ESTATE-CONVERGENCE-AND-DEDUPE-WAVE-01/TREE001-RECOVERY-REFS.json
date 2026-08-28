@@ -1,140 +1,25 @@
 {
-  "schema": "raios.archive.tree001-recovery-refs.v1",
-  "generated_at": "2026-08-28T15:10:00Z",
+  "schema": "raios.archive.tree001-recovery-refs.v2",
+  "generated_at": "2026-08-28T15:45:00Z",
   "remote": "https://github.com/greenylifeonline-beep/Greeny-Life.git",
-  "bundle_refs": 68,
-  "distinct_tips": 48,
-  "remote_reachable_tips": 32,
   "recovery_tips": 16,
-  "recovery_tips_durable": 0,
-  "custom_ref_push_attempted": true,
-  "push_atomic_result": "REJECTED",
-  "partial_refs_created": 0,
-  "rejection_class": "GITHUB_GH001_BLOB_OVER_100MB",
-  "rejected_blob_sizes_mb": [
-    242.48,
-    155.84,
-    270.46,
-    554.84
-  ],
-  "normal_branch_fallback_viable": false,
-  "normal_branch_fallback_reason": "The same GitHub pre-receive blob-size gate applies to refs/heads; changing ref namespace cannot remove historical blobs.",
-  "history_rewrite_executed": false,
-  "lfs_migration_executed": false,
-  "force_push_executed": false,
-  "tips": [
-    {
-      "ordinal": 1,
-      "sha256_object": "c336fc88019a68dba9a79531d4c9d3269e85b02d",
-      "proposed_ref": "refs/raios-recovery/tree001/01-gl-002",
-      "push_result": "REJECTED_PRE_RECEIVE_LARGE_BLOB_LIMIT",
-      "remote_verified": false
-    },
-    {
-      "ordinal": 2,
-      "sha256_object": "f18ae12f1d93ea12fc754a54a2e4a02eecf24c71",
-      "proposed_ref": "refs/raios-recovery/tree001/02-pre-split",
-      "push_result": "REJECTED_PRE_RECEIVE_LARGE_BLOB_LIMIT",
-      "remote_verified": false
-    },
-    {
-      "ordinal": 3,
-      "sha256_object": "a8b2e1a71d1c0c78010cb81f2f17f43f043897bc",
-      "proposed_ref": "refs/raios-recovery/tree001/03-cline-1786889675273-1",
-      "push_result": "REJECTED_PRE_RECEIVE_LARGE_BLOB_LIMIT",
-      "remote_verified": false
-    },
-    {
-      "ordinal": 4,
-      "sha256_object": "12d62e20f1682531afbb848cc53105ab3a02d611",
-      "proposed_ref": "refs/raios-recovery/tree001/04-cline-1786889675273-2",
-      "push_result": "REJECTED_PRE_RECEIVE_LARGE_BLOB_LIMIT",
-      "remote_verified": false
-    },
-    {
-      "ordinal": 5,
-      "sha256_object": "b3ee3d025d1af84858eed8b73b72d900f8b0685b",
-      "proposed_ref": "refs/raios-recovery/tree001/05-cline-1786889675273-3",
-      "push_result": "REJECTED_PRE_RECEIVE_LARGE_BLOB_LIMIT",
-      "remote_verified": false
-    },
-    {
-      "ordinal": 6,
-      "sha256_object": "9cb3d2dbfdc9c1c3fb01a518d8468260f4caa468",
-      "proposed_ref": "refs/raios-recovery/tree001/06-cline-1786891298054-1",
-      "push_result": "REJECTED_PRE_RECEIVE_LARGE_BLOB_LIMIT",
-      "remote_verified": false
-    },
-    {
-      "ordinal": 7,
-      "sha256_object": "f5e51ab6d1b498fca3ed2db2b76c68e2d3b24ec6",
-      "proposed_ref": "refs/raios-recovery/tree001/07-cline-1787348777638-1",
-      "push_result": "REJECTED_PRE_RECEIVE_LARGE_BLOB_LIMIT",
-      "remote_verified": false
-    },
-    {
-      "ordinal": 8,
-      "sha256_object": "6b16d238a39f54fb4bb79671b82d9abded228e99",
-      "proposed_ref": "refs/raios-recovery/tree001/08-cline-1787348788404-1",
-      "push_result": "REJECTED_PRE_RECEIVE_LARGE_BLOB_LIMIT",
-      "remote_verified": false
-    },
-    {
-      "ordinal": 9,
-      "sha256_object": "df3fe784d963881b57686b881d3571132f8a9b2b",
-      "proposed_ref": "refs/raios-recovery/tree001/09-cline-1787348974964-1",
-      "push_result": "REJECTED_PRE_RECEIVE_LARGE_BLOB_LIMIT",
-      "remote_verified": false
-    },
-    {
-      "ordinal": 10,
-      "sha256_object": "fb03cf71de36beeb86e2b18049fae0b444e99ced",
-      "proposed_ref": "refs/raios-recovery/tree001/10-cline-1787348984830-1",
-      "push_result": "REJECTED_PRE_RECEIVE_LARGE_BLOB_LIMIT",
-      "remote_verified": false
-    },
-    {
-      "ordinal": 11,
-      "sha256_object": "12dd1dc15d9d33bf53db5b7c63033ee59d5ec077",
-      "proposed_ref": "refs/raios-recovery/tree001/11-cline-1787349060204-1",
-      "push_result": "REJECTED_PRE_RECEIVE_LARGE_BLOB_LIMIT",
-      "remote_verified": false
-    },
-    {
-      "ordinal": 12,
-      "sha256_object": "cb3c5023164f303f524072e41e755dc80ad2cca7",
-      "proposed_ref": "refs/raios-recovery/tree001/12-cline-1787349211220-1",
-      "push_result": "REJECTED_PRE_RECEIVE_LARGE_BLOB_LIMIT",
-      "remote_verified": false
-    },
-    {
-      "ordinal": 13,
-      "sha256_object": "ade2be16100ecbbef5e8e38d51bf4cd71adecf1a",
-      "proposed_ref": "refs/raios-recovery/tree001/13-cline-1787349219388-1",
-      "push_result": "REJECTED_PRE_RECEIVE_LARGE_BLOB_LIMIT",
-      "remote_verified": false
-    },
-    {
-      "ordinal": 14,
-      "sha256_object": "9f197bf4ae8c1252530ce0092ee31eec6dd99308",
-      "proposed_ref": "refs/raios-recovery/tree001/14-cline-1787364371266-1",
-      "push_result": "REJECTED_PRE_RECEIVE_LARGE_BLOB_LIMIT",
-      "remote_verified": false
-    },
-    {
-      "ordinal": 15,
-      "sha256_object": "8d734340ed5d880ee558f16bba78bdb4dd20782c",
-      "proposed_ref": "refs/raios-recovery/tree001/15-cline-1787690807417-1",
-      "push_result": "REJECTED_PRE_RECEIVE_LARGE_BLOB_LIMIT",
-      "remote_verified": false
-    },
-    {
-      "ordinal": 16,
-      "sha256_object": "8a64defe5b9651f6800378ca2bfb86b68dae7c21",
-      "proposed_ref": "refs/raios-recovery/tree001/16-tag-gl002-authority",
-      "push_result": "REJECTED_PRE_RECEIVE_LARGE_BLOB_LIMIT",
-      "remote_verified": false
-    }
-  ],
-  "blocker": "REMOTE_REJECTS_REQUIRED_HISTORY_DUE_TO_EXISTING_BLOBS_OVER_100MB; approved rules forbid LFS migration/history rewrite."
+  "expected_tips_found": "16/16",
+  "expected_objects_readable": "16/16",
+  "remote_pinning_attempted": true,
+  "remote_pinning_result": "REJECTED_BY_GITHUB_GH001",
+  "remote_pinning_partial_refs_created": 0,
+  "recovery_tips_remote_pinned": 0,
+  "recovery_tips_bundle_preserved": 16,
+  "remote_git_durability": false,
+  "canonical_bundle_recovery_durability": true,
+  "github_native_pinning_not_possible_without_prohibited_transformation": true,
+  "prohibited_actions_executed": {
+    "history_rewrite": false,
+    "lfs_migration": false,
+    "bundle_repack": false,
+    "replacement_bundle": false,
+    "force_push": false
+  },
+  "resolved_retention_decision": true,
+  "terminal_state": "CANONICAL_RECOVERY_ASSET"
 }

@@ -18431,6 +18431,8 @@
                         "SOR":  "CURRENT_ARCHIVE_ESTATE",
                         "dependency":  "NO_RUNTIME_DEPENDENCY_PROVEN",
                         "runtime_required":  false,
+                        "dependency_required":  false,
+                        "source_required":  false,
                         "recovery_required":  true,
                         "provenance_required":  true,
                         "git_preserved":  false,
@@ -18439,9 +18441,15 @@
                         "canonical_replacement":  null,
                         "retention_class":  "CANONICAL_RECOVERY_ASSET",
                         "terminal_state":  "CANONICAL_RECOVERY_ASSET",
-                        "retention_reason":  "Minimum retained recovery/source payload; no proven equivalent recovery surface for deletion.",
+                        "retention_reason":  "GITHUB_GH001_PREVENTS_NATIVE_REMOTE_PINNING_OF_HISTORICAL_OBJECT_GRAPH",
+                        "recovery_tips":  16,
+                        "unique_commits_vs_current":  0,
+                        "remote_git_pinning":  false,
+                        "canonical_bundle_retained":  true,
+                        "duplicate_bundle_count":  0,
+                        "deletion_eligible":  false,
                         "deletion_proof":  null,
-                        "recovery_proof":  "This path is the retained minimum recovery payload."
+                        "recovery_proof":  "git bundle verify passed; SHA-256 verified; 16/16 expected tips represented and their objects readable."
                     },
                     {
                         "archive_id":  "OD-A15949EFE6E7",

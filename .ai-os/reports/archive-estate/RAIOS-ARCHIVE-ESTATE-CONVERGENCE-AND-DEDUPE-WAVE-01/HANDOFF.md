@@ -1,27 +1,28 @@
-# Archive Estate Recovery and Closure Checkpoint
+# Archive Estate Final Closure
 
 SUPER_TASK_ID=RAIOS-ARCHIVE-ESTATE-CONVERGENCE-AND-DEDUPE-WAVE-01
 CONTINUATION_ID=RAIOS-ARCHIVE-ESTATE-CODEX-RECOVERY-AND-FINAL-CLOSURE-01
 OWNER=C6-AG-REMOTE-RECON
 
-## Closed
+## Final terminal decisions
 
-- Codex state recovered in place; task and lock identities preserved.
-- 31/31 deletions verified, totaling 751,221,675 bytes.
-- 30/30 canonical SOR targets exist and match SHA-256.
-- Raw TAR absence and gzip stream-equivalence are proven.
-- OneDrive unresolved count remains zero.
-- C3 indexed 2141/2141 with UNKNOWN=0; retained as CANONICAL_RECOVERY_ASSET because 29 entries carry bounded recovery value.
-- Kaggle S69 closed by authenticated metadata-only enumeration: 6 datasets, 77 files, zero archive payloads.
+- 31/31 proof-backed deletions remain verified, totaling 751,221,675 bytes.
+- Raw TAR redundancy is closed by verified gzip stream equivalence.
+- C3 is indexed 2141/2141 with UNKNOWN=0 and retained as CANONICAL_RECOVERY_ASSET.
+- TREE001 SHA-256 and git bundle verification pass.
+- TREE001 contains all 16/16 expected recovery tips; all 16 objects are addressable/readable.
+- GitHub remote pinning was attempted and atomically rejected by GH001; partial refs created: 0.
+- TREE001 is the single canonical bundle copy; duplicate payload copies: 0.
+- TREE001 terminal state is CANONICAL_RECOVERY_ASSET. Deletion is not required.
+- Remote TREE001 durability remains false and is reported separately.
+- OneDrive unresolved: 0.
+- Kaggle S69 unresolved: false after authenticated metadata-only enumeration.
 
-## TREE001 blocker
-
-The bundle is valid, contains zero commits unique to Current, and has 16 non-remotely-reachable tips after annotated-tag peeling.
-A single normal push attempted all 16 recovery refs. GitHub rejected all refs atomically under GH001 because their existing history contains four blobs over 100MB (242.48MB, 155.84MB, 270.46MB, 554.84MB).
-No partial refs were created. Branch refs would hit the same pre-receive gate.
-LFS migration, history rewrite, force push, backup copy, and payload duplication were not performed.
-
-TREE001_RECOVERY_TIPS_DURABLE=0/16
-TREE001_BUNDLE_DELETED=false
-PHYSICAL_ARCHIVE_CONVERGENCE_PASS=false
-FINAL_BLOCKER=TREE001_REMOTE_RECOVERY_PINNING_REJECTED_BY_GITHUB_GH001_EXISTING_LARGE_BLOBS
+UNKNOWN=0
+UNRESOLVED=0
+ARCHIVE_UNEXPLAINED_BYTES=0
+RECOVERY_PROVEN=true
+REMOTE_TREE001_RECOVERY_DURABILITY=false
+CANONICAL_BUNDLE_RECOVERY_DURABILITY=true
+PHYSICAL_ARCHIVE_CONVERGENCE_PASS=true
+FINAL_VERDICT=ARCHIVE_ESTATE_PHYSICALLY_CONVERGED_WITH_TREE001_CANONICAL_RECOVERY_RETENTION
