@@ -1,0 +1,166 @@
+{
+  "first": {
+    "task_id": "RAIOS-COMMAND-FABRIC-E2E-CANARY-01",
+    "correlation_id": "COR-CF-NATS-CANARY-01",
+    "command_id": "RAIOS-COMMAND-FABRIC-E2E-CANARY-01",
+    "idempotency_key": "idem-cf-nats-canary-01",
+    "authenticated_principal_ref": "C1@AG",
+    "authority_result": "HMAC_FOUNDER_SESSION",
+    "UCP_STATUS": "ACCEPTED_DRY_RUN",
+    "UCP_IMPLEMENTATION": ".ai-os/control/RAIOS-CONTROL-PLANE-V1.py",
+    "lease_id": "L-1787928097976846-9c668b4a",
+    "lease_acquire_result": "ACQUIRED",
+    "lease_owner": "C1@AG",
+    "lease_scope": "C5:c5.self_inspect.health",
+    "lease_expiry": "2026-08-28T14:42:37.976846+00:00",
+    "lease_release_result": "RELEASED",
+    "selected_transport": "NATS",
+    "fallback_transport": "HTTP",
+    "nats_subject": "raios.fabric.commands.C5",
+    "nats_result_subject": "raios.fabric.results.COR-CF-NATS-CANARY-01",
+    "stream": "RAIOS_FABRIC",
+    "consumer": "fabric-commands-C5",
+    "publish_ack_or_delivery_ref": "31",
+    "NATS_HEALTH": {
+      "ok": true,
+      "transport_id": "nats-jetstream-fabric",
+      "runtime_id": "C2-CF-CANARY",
+      "role_id": "C2",
+      "NATS_CONNECTED": true,
+      "JETSTREAM_AVAILABLE": true,
+      "stream": "RAIOS_FABRIC"
+    },
+    "PUBLISH": {
+      "STORED": true,
+      "SEQUENCE": "31",
+      "DUPLICATE_FLAG": null,
+      "MSG_ID": "raios:cmd:RAIOS-COMMAND-FABRIC-E2E-CANARY-01:idem-cf-nats-canary-01"
+    },
+    "RESULT_PUBLISH": {
+      "STORED": true,
+      "SEQUENCE": "32",
+      "DUPLICATE_FLAG": null,
+      "MSG_ID": "raios:result:RAIOS-COMMAND-FABRIC-E2E-CANARY-01:idem-cf-nats-canary-01"
+    },
+    "DELIVERY": {
+      "stream_seq": "31",
+      "subject": "raios.fabric.commands.C5",
+      "packet_id": "13daec4cceef024a321d2aff",
+      "correlation_id": "COR-CF-NATS-CANARY-01",
+      "kind": "JETSTREAM_GET_MSG",
+      "envelope_schema": "raios.cross-host-packet.v1"
+    },
+    "target": "C5",
+    "adapter": "scripts/ai-os/raios_transport/nats_provider.py",
+    "capability": "c5.self_inspect.health",
+    "target_execution_result": {
+      "INVOKED": true,
+      "contract": {
+        "CAPABILITY_ID": "c5.self_inspect.health",
+        "RISK_CLASS": "LOW",
+        "SIDE_EFFECTS": false,
+        "PUBLIC_SAFE_SUBSET": false,
+        "MODE": "READ_ONLY",
+        "REVERSIBLE": true
+      },
+      "result": {
+        "LIVE": true,
+        "http_status": 200,
+        "body": {
+          "status": "ONLINE",
+          "gateway": true,
+          "main_cortex": true,
+          "model": "qwen3:0.6b",
+          "timestamp": "2026-08-28T14:41:38.487750+00:00"
+        }
+      }
+    },
+    "result_fingerprint": {
+      "publish_seq": "31",
+      "delivery_seq": "31",
+      "receipt_sha256": "0161459652c41b232c33f3371622e42a6b3ec02528822133c6e2d8e1aa464f00"
+    },
+    "receipt_id": "MSG-CF-CANARY-8178e3f4",
+    "message_id": "MSG-CF-CANARY-8178e3f4",
+    "receipt_sha256": "0161459652c41b232c33f3371622e42a6b3ec02528822133c6e2d8e1aa464f00",
+    "receipt_path": "C:\\Users\\Ghanam\\Documents\\Codex\\.raios-worktrees\\c1c3-integration\\.ai-os\\receipts\\command-fabric\\c1c5-task\\45decc6b06dde220b5313531.receipt.json",
+    "timestamp": "2026-08-28T14:41:38.551285+00:00",
+    "STATUS": "COMPLETED",
+    "CAPABILITY_INVOKED": true,
+    "COMMAND_FABRIC_E2E_PROVEN": true,
+    "EXACT_MISSING_SEGMENT": null,
+    "NATS_PRIMARY": true,
+    "NATS_AT_LEAST_ONCE": true,
+    "RAIOS_IDEMPOTENCY": true,
+    "EXACTLY_ONCE_CLAIMED": false
+  },
+  "second": {
+    "task_id": "RAIOS-COMMAND-FABRIC-E2E-CANARY-01",
+    "correlation_id": "COR-CF-NATS-CANARY-01",
+    "command_id": "RAIOS-COMMAND-FABRIC-E2E-CANARY-01",
+    "idempotency_key": "idem-cf-nats-canary-01",
+    "authenticated_principal_ref": "C1@AG",
+    "authority_result": "HMAC_FOUNDER_SESSION",
+    "UCP_STATUS": "ALREADY_APPLIED",
+    "UCP_IMPLEMENTATION": ".ai-os/control/RAIOS-CONTROL-PLANE-V1.py",
+    "lease_id": "L-1787928098554249-a15e800f",
+    "lease_acquire_result": "ACQUIRED",
+    "lease_owner": "C1@AG",
+    "lease_scope": "C5:c5.self_inspect.health",
+    "lease_expiry": "2026-08-28T14:42:38.554249+00:00",
+    "lease_release_result": "RELEASED",
+    "selected_transport": "NATS",
+    "fallback_transport": "HTTP",
+    "nats_subject": "raios.fabric.commands.C5",
+    "nats_result_subject": "raios.fabric.results.COR-CF-NATS-CANARY-01",
+    "stream": "RAIOS_FABRIC",
+    "consumer": "fabric-commands-C5",
+    "publish_ack_or_delivery_ref": "31",
+    "NATS_HEALTH": {
+      "ok": true,
+      "transport_id": "nats-jetstream-fabric",
+      "runtime_id": "C2-CF-CANARY",
+      "role_id": "C2",
+      "NATS_CONNECTED": true,
+      "JETSTREAM_AVAILABLE": true,
+      "stream": "RAIOS_FABRIC"
+    },
+    "PUBLISH": {
+      "STORED": true,
+      "SEQUENCE": "31",
+      "DUPLICATE_FLAG": true,
+      "MSG_ID": "raios:cmd:RAIOS-COMMAND-FABRIC-E2E-CANARY-01:idem-cf-nats-canary-01"
+    },
+    "RESULT_PUBLISH": {},
+    "DELIVERY": {
+      "stream_seq": "31",
+      "subject": "raios.fabric.commands.C5",
+      "packet_id": "13daec4cceef024a321d2aff",
+      "correlation_id": "COR-CF-NATS-CANARY-01",
+      "kind": "JETSTREAM_GET_MSG",
+      "envelope_schema": "raios.cross-host-packet.v1"
+    },
+    "target": "C5",
+    "adapter": "scripts/ai-os/raios_transport/nats_provider.py",
+    "capability": "c5.self_inspect.health",
+    "target_execution_result": null,
+    "result_fingerprint": {
+      "publish_seq": "31",
+      "delivery_seq": "31",
+      "receipt_sha256": "784da51317bfd990df8f8f9f3f44f9e654a3c14571b9990157d3c370f5daa272"
+    },
+    "receipt_id": "MSG-CF-CANARY-229086f2",
+    "message_id": "MSG-CF-CANARY-229086f2",
+    "receipt_sha256": "784da51317bfd990df8f8f9f3f44f9e654a3c14571b9990157d3c370f5daa272",
+    "receipt_path": "C:\\Users\\Ghanam\\Documents\\Codex\\.raios-worktrees\\c1c3-integration\\.ai-os\\receipts\\command-fabric\\c1c5-task\\45decc6b06dde220b5313531.receipt.json",
+    "timestamp": "2026-08-28T14:41:38.588218+00:00",
+    "STATUS": "ALREADY_APPLIED",
+    "CAPABILITY_INVOKED": false,
+    "COMMAND_FABRIC_E2E_PROVEN": true,
+    "EXACT_MISSING_SEGMENT": null,
+    "NATS_PRIMARY": true,
+    "NATS_AT_LEAST_ONCE": true,
+    "RAIOS_IDEMPOTENCY": true,
+    "EXACTLY_ONCE_CLAIMED": false
+  }
+}

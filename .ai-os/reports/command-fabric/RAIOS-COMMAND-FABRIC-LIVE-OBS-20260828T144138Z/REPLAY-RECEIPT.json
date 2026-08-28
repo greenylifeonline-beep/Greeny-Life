@@ -1,0 +1,32 @@
+{
+  "schema": "raios.c1c5.task-receipt.v1",
+  "receipt_id": "MSG-CF-CANARY-229086f2",
+  "message_id": "MSG-CF-CANARY-229086f2",
+  "RECEIPT_ID_EQUALS_MESSAGE_ID": true,
+  "RECEIPT_ID_SOURCE": "MESSAGE_ID",
+  "TASK_ID": "RAIOS-COMMAND-FABRIC-E2E-CANARY-01",
+  "CORRELATION_ID": "COR-CF-NATS-CANARY-01",
+  "IDEMPOTENCY_KEY": "idem-cf-nats-canary-01",
+  "ACTOR_BOUND": "C1@AG",
+  "AUTHORITY_SOURCE": "HMAC_FOUNDER_SESSION",
+  "TARGET": "C5",
+  "REQUESTED_CAPABILITY": "c5.self_inspect.health",
+  "AUTH_RESULT": {
+    "EFFECTIVE_AUTHORITY": true,
+    "AUTHORITY_SOURCE": "HMAC_FOUNDER_SESSION",
+    "PRINCIPAL": "C1@AG"
+  },
+  "POLICY_RESULT": "ALLOW",
+  "RISK_CLASS": "LOW",
+  "UCP_STATUS": "ALREADY_APPLIED",
+  "UCP_NO_OP": true,
+  "CAPABILITY_INVOKED": false,
+  "STATUS": "ALREADY_APPLIED",
+  "TIMESTAMP": "2026-08-28T14:41:38Z",
+  "EVIDENCE_REFS": [
+    ".ai-os/receipts/command-fabric",
+    "src/raios/a2a/ucp_adapter.py"
+  ],
+  "WAL_WRITTEN": false,
+  "CANONICAL_MUTATION": false
+}
