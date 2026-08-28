@@ -1,0 +1,185 @@
+{
+  "schema": "raios.orchestration.live-proof.v1",
+  "task_registration_proven": true,
+  "semantic_authorization": {
+    "AUTHORIZED": true,
+    "TASK_ID": "GL-005",
+    "TASK_STATUS": "READY",
+    "TARGET": "C5",
+    "CAPABILITY": "c5.self_inspect.health",
+    "SUBMITTING_AGENT": "chatgpt-main-brain",
+    "MATCHED_SCOPE": [
+      ".ai-os",
+      "brains",
+      "governance",
+      "intelligence"
+    ],
+    "RISK_CLASS": "LOW",
+    "MODE": "READ_ONLY"
+  },
+  "authenticated_orchestration_task_proven": true,
+  "first": {
+    "task_id": "GL-005",
+    "correlation_id": "COR-GL005-ORCH-LIVE-01",
+    "command_id": "GL-005",
+    "idempotency_key": "idem-gl005-orch-live-01",
+    "authenticated_principal_ref": "C1@AG",
+    "authority_result": "HMAC_FOUNDER_SESSION",
+    "UCP_STATUS": "ACCEPTED_DRY_RUN",
+    "UCP_IMPLEMENTATION": ".ai-os/control/RAIOS-CONTROL-PLANE-V1.py",
+    "lease_id": "L-1787932840559723-d4ec462b",
+    "lease_acquire_result": "ACQUIRED",
+    "lease_owner": "C1@AG",
+    "lease_scope": "C5:c5.self_inspect.health",
+    "lease_expiry": "2026-08-28T16:01:40.559723+00:00",
+    "lease_release_result": "RELEASED",
+    "selected_transport": "NATS",
+    "fallback_transport": "HTTP",
+    "nats_subject": "raios.fabric.commands.C5",
+    "nats_result_subject": "raios.fabric.results.COR-GL005-ORCH-LIVE-01",
+    "stream": "RAIOS_FABRIC",
+    "consumer": "fabric-commands-C5",
+    "publish_ack_or_delivery_ref": "33",
+    "NATS_HEALTH": {
+      "ok": true,
+      "transport_id": "nats-jetstream-fabric",
+      "runtime_id": "C2-CF-CANARY",
+      "role_id": "C2",
+      "NATS_CONNECTED": true,
+      "JETSTREAM_AVAILABLE": true,
+      "stream": "RAIOS_FABRIC"
+    },
+    "PUBLISH": {
+      "STORED": true,
+      "SEQUENCE": "33",
+      "DUPLICATE_FLAG": null,
+      "MSG_ID": "raios:cmd:GL-005:idem-gl005-orch-live-01"
+    },
+    "RESULT_PUBLISH": {
+      "STORED": true,
+      "SEQUENCE": "34",
+      "DUPLICATE_FLAG": null,
+      "MSG_ID": "raios:result:GL-005:idem-gl005-orch-live-01"
+    },
+    "DELIVERY": {
+      "stream_seq": "33",
+      "subject": "raios.fabric.commands.C5",
+      "packet_id": "c054b5a7658ed4597dbf80f5",
+      "correlation_id": "COR-GL005-ORCH-LIVE-01",
+      "kind": "JETSTREAM_GET_MSG",
+      "envelope_schema": "raios.cross-host-packet.v1"
+    },
+    "target": "C5",
+    "adapter": "scripts/ai-os/raios_transport/nats_provider.py",
+    "capability": "c5.self_inspect.health",
+    "target_execution_result": {
+      "INVOKED": true,
+      "contract": {
+        "CAPABILITY_ID": "c5.self_inspect.health",
+        "RISK_CLASS": "LOW",
+        "SIDE_EFFECTS": false,
+        "PUBLIC_SAFE_SUBSET": false,
+        "MODE": "READ_ONLY",
+        "REVERSIBLE": true
+      },
+      "result": {
+        "LIVE": true,
+        "http_status": 200,
+        "body": {
+          "status": "ONLINE",
+          "gateway": true,
+          "main_cortex": true,
+          "model": "qwen3:0.6b",
+          "timestamp": "2026-08-28T16:00:41.179752+00:00"
+        }
+      }
+    },
+    "result_fingerprint": {
+      "publish_seq": "33",
+      "delivery_seq": "33",
+      "receipt_sha256": "385105271e3d039e3e706bf37859441c90664f3bee0ad849b763a8d283b9f022"
+    },
+    "receipt_id": "MSG-CF-CANARY-1ee36800",
+    "message_id": "MSG-CF-CANARY-1ee36800",
+    "receipt_sha256": "385105271e3d039e3e706bf37859441c90664f3bee0ad849b763a8d283b9f022",
+    "receipt_path": "C:\\Users\\Ghanam\\Documents\\Codex\\.raios-worktrees\\c1c3-integration\\.ai-os\\receipts\\command-fabric\\c1c5-task\\1ae6e9f9dd024ea6f172e84a.receipt.json",
+    "timestamp": "2026-08-28T16:00:41.209939+00:00",
+    "STATUS": "COMPLETED",
+    "CAPABILITY_INVOKED": true,
+    "COMMAND_FABRIC_E2E_PROVEN": true,
+    "EXACT_MISSING_SEGMENT": null,
+    "NATS_PRIMARY": true,
+    "NATS_AT_LEAST_ONCE": true,
+    "RAIOS_IDEMPOTENCY": true,
+    "EXACTLY_ONCE_CLAIMED": false
+  },
+  "second": {
+    "task_id": "GL-005",
+    "correlation_id": "COR-GL005-ORCH-LIVE-01",
+    "command_id": "GL-005",
+    "idempotency_key": "idem-gl005-orch-live-01",
+    "authenticated_principal_ref": "C1@AG",
+    "authority_result": "HMAC_FOUNDER_SESSION",
+    "UCP_STATUS": "ALREADY_APPLIED",
+    "UCP_IMPLEMENTATION": ".ai-os/control/RAIOS-CONTROL-PLANE-V1.py",
+    "lease_id": "L-1787932841211973-119c0375",
+    "lease_acquire_result": "ACQUIRED",
+    "lease_owner": "C1@AG",
+    "lease_scope": "C5:c5.self_inspect.health",
+    "lease_expiry": "2026-08-28T16:01:41.211973+00:00",
+    "lease_release_result": "RELEASED",
+    "selected_transport": "NATS",
+    "fallback_transport": "HTTP",
+    "nats_subject": "raios.fabric.commands.C5",
+    "nats_result_subject": "raios.fabric.results.COR-GL005-ORCH-LIVE-01",
+    "stream": "RAIOS_FABRIC",
+    "consumer": "fabric-commands-C5",
+    "publish_ack_or_delivery_ref": "33",
+    "NATS_HEALTH": {
+      "ok": true,
+      "transport_id": "nats-jetstream-fabric",
+      "runtime_id": "C2-CF-CANARY",
+      "role_id": "C2",
+      "NATS_CONNECTED": true,
+      "JETSTREAM_AVAILABLE": true,
+      "stream": "RAIOS_FABRIC"
+    },
+    "PUBLISH": {
+      "STORED": true,
+      "SEQUENCE": "33",
+      "DUPLICATE_FLAG": true,
+      "MSG_ID": "raios:cmd:GL-005:idem-gl005-orch-live-01"
+    },
+    "RESULT_PUBLISH": {},
+    "DELIVERY": {
+      "stream_seq": "33",
+      "subject": "raios.fabric.commands.C5",
+      "packet_id": "c054b5a7658ed4597dbf80f5",
+      "correlation_id": "COR-GL005-ORCH-LIVE-01",
+      "kind": "JETSTREAM_GET_MSG",
+      "envelope_schema": "raios.cross-host-packet.v1"
+    },
+    "target": "C5",
+    "adapter": "scripts/ai-os/raios_transport/nats_provider.py",
+    "capability": "c5.self_inspect.health",
+    "target_execution_result": null,
+    "result_fingerprint": {
+      "publish_seq": "33",
+      "delivery_seq": "33",
+      "receipt_sha256": "0c5af1f48f89ca754a74bf221710ddd93c7fbc59bce273fbfc4f1bfcad455186"
+    },
+    "receipt_id": "MSG-CF-CANARY-952cbf10",
+    "message_id": "MSG-CF-CANARY-952cbf10",
+    "receipt_sha256": "0c5af1f48f89ca754a74bf221710ddd93c7fbc59bce273fbfc4f1bfcad455186",
+    "receipt_path": "C:\\Users\\Ghanam\\Documents\\Codex\\.raios-worktrees\\c1c3-integration\\.ai-os\\receipts\\command-fabric\\c1c5-task\\1ae6e9f9dd024ea6f172e84a.receipt.json",
+    "timestamp": "2026-08-28T16:00:41.244018+00:00",
+    "STATUS": "ALREADY_APPLIED",
+    "CAPABILITY_INVOKED": false,
+    "COMMAND_FABRIC_E2E_PROVEN": true,
+    "EXACT_MISSING_SEGMENT": null,
+    "NATS_PRIMARY": true,
+    "NATS_AT_LEAST_ONCE": true,
+    "RAIOS_IDEMPOTENCY": true,
+    "EXACTLY_ONCE_CLAIMED": false
+  }
+}
