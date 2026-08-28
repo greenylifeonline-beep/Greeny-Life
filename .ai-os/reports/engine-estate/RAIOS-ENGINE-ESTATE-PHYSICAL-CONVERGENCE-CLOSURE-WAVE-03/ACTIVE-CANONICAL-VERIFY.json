@@ -1,0 +1,406 @@
+{
+  "total": 50,
+  "all_paths_exist": true,
+  "items": [
+    {
+      "family_id": "COMMAND_FABRIC",
+      "path": "tests/command_fabric/test_control_fabric.py",
+      "path_exists": true,
+      "sha256": "557c37766bfb0cd8917c175c83001b6b3c5b405c90c8a8c8741de0e7a2b9d3a1",
+      "capability_mapping_exists": true,
+      "runtime_or_import_role_valid": true
+    },
+    {
+      "family_id": "CONTROL_PLANE",
+      "path": ".ai-os/control/RAIOS-CONTROL-PLANE-V1.py",
+      "path_exists": true,
+      "sha256": "6a84792fa98542886326b59b6edc9f62f2f6cf7ed5debac356e77617259e71e7",
+      "capability_mapping_exists": true,
+      "runtime_or_import_role_valid": true
+    },
+    {
+      "family_id": "RESOURCE_FABRIC",
+      "path": "tests/resource_fabric/test_resource_fabric.py",
+      "path_exists": true,
+      "sha256": "df8ca5439586ceaa8f1729a598b82bd07ab53a814320aa6c37cb6b6cf6f4d69b",
+      "capability_mapping_exists": true,
+      "runtime_or_import_role_valid": true
+    },
+    {
+      "family_id": "RAIOS_MCP",
+      "path": "scripts/ai-os/raios_mcp/cross_host_adapter.py",
+      "path_exists": true,
+      "sha256": "18c34028814996ea30728e4006a474dc0652d597cfa1ad4fc49dbf607dd4a6e1",
+      "capability_mapping_exists": true,
+      "runtime_or_import_role_valid": true
+    },
+    {
+      "family_id": "RAIOS_MCP",
+      "path": "scripts/ai-os/raios_mcp/gateway.py",
+      "path_exists": true,
+      "sha256": "035c20d8dc6f40a4f4be2ca67ee68bb5b3ae4de5760fb5bd5c341757bda43dca",
+      "capability_mapping_exists": true,
+      "runtime_or_import_role_valid": true
+    },
+    {
+      "family_id": "RAIOS_MCP",
+      "path": "scripts/ai-os/raios_mcp/server.py",
+      "path_exists": true,
+      "sha256": "dd7f6f301969c69dc9334ef800b249c439019bc0acc2d881e710b346a197a51d",
+      "capability_mapping_exists": true,
+      "runtime_or_import_role_valid": true
+    },
+    {
+      "family_id": "RAIOS_MCP",
+      "path": "scripts/ai-os/raios_mcp/__init__.py",
+      "path_exists": true,
+      "sha256": "555c49746ccca1b746f1590acea6467ad6f4aac4702257f00cf067b02576314b",
+      "capability_mapping_exists": true,
+      "runtime_or_import_role_valid": true
+    },
+    {
+      "family_id": "TRANSPORT",
+      "path": "scripts/ai-os/raios_transport/evidence.py",
+      "path_exists": true,
+      "sha256": "ae432125b444f2d0103266220913431e75f46621e0027cf371fafc6821e5597f",
+      "capability_mapping_exists": true,
+      "runtime_or_import_role_valid": true
+    },
+    {
+      "family_id": "TRANSPORT",
+      "path": "scripts/ai-os/raios_transport/local_bridge.py",
+      "path_exists": true,
+      "sha256": "881728fb5ef4f79f9d825f43c6f90713533422bee2614d40d0160e9b0e8cc950",
+      "capability_mapping_exists": true,
+      "runtime_or_import_role_valid": true
+    },
+    {
+      "family_id": "TRANSPORT",
+      "path": "scripts/ai-os/raios_transport/nats_provider.py",
+      "path_exists": true,
+      "sha256": "dfdcab3bc31faabaa3e3d56aeaf70b6ee3a85d3b4f1a0ff1eb4a4cdea892196d",
+      "capability_mapping_exists": true,
+      "runtime_or_import_role_valid": true
+    },
+    {
+      "family_id": "TRANSPORT",
+      "path": "scripts/ai-os/raios_transport/packet.py",
+      "path_exists": true,
+      "sha256": "64e563e5731c34142d0fce56ab24e0576499c1ce8547235b66acd797820ae96e",
+      "capability_mapping_exists": true,
+      "runtime_or_import_role_valid": true
+    },
+    {
+      "family_id": "TRANSPORT",
+      "path": "scripts/ai-os/raios_transport/provider.py",
+      "path_exists": true,
+      "sha256": "2f2793061f451e821589f633541c49835de3d9259d5717b43778c17687f38855",
+      "capability_mapping_exists": true,
+      "runtime_or_import_role_valid": true
+    },
+    {
+      "family_id": "TRANSPORT",
+      "path": "scripts/ai-os/raios_transport/stage04.py",
+      "path_exists": true,
+      "sha256": "0f7664687c55db1f519674ff7c784a7d5d1e2e1ae20e56288f2b1e662e510caf",
+      "capability_mapping_exists": true,
+      "runtime_or_import_role_valid": true
+    },
+    {
+      "family_id": "TRANSPORT",
+      "path": "scripts/ai-os/raios_transport/__init__.py",
+      "path_exists": true,
+      "sha256": "c6dd91b8dc707420cfd89fb7bac919a9338b93d8fee6daf6bb139e3d930a05e7",
+      "capability_mapping_exists": true,
+      "runtime_or_import_role_valid": true
+    },
+    {
+      "family_id": "TRANSPORT",
+      "path": "scripts/ai-os/raios_transport/tests/test_stage04.py",
+      "path_exists": true,
+      "sha256": "a7017bc77b37877f18edcf5e0cf1cf31c336dae011f387c7d301b52297ab64e4",
+      "capability_mapping_exists": true,
+      "runtime_or_import_role_valid": true
+    },
+    {
+      "family_id": "TRANSPORT",
+      "path": "scripts/ai-os/raios_transport/tests/__init__.py",
+      "path_exists": true,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "capability_mapping_exists": true,
+      "runtime_or_import_role_valid": true
+    },
+    {
+      "family_id": "WORKFLOW_ENGINE",
+      "path": "canonical/lib/workflowEngine.ts",
+      "path_exists": true,
+      "sha256": "51637007342ae10687f5282b3d7562ec1e886e767e8e44f41163b4a00e7fe10b",
+      "capability_mapping_exists": true,
+      "runtime_or_import_role_valid": true
+    },
+    {
+      "family_id": "CONTROLLED_RUNTIME_ORCHESTRATOR",
+      "path": "canonical/intelligence/runtime/controlled-runtime-orchestrator.ts",
+      "path_exists": true,
+      "sha256": "27cd4fdb2d7fbffd585f45199ab8f7481112d107f3b5098ff5cd810756e2dd61",
+      "capability_mapping_exists": true,
+      "runtime_or_import_role_valid": true
+    },
+    {
+      "family_id": "AUDIT_ENGINE",
+      "path": "canonical/intelligence/intelligence/engines/audit-engine.ts",
+      "path_exists": true,
+      "sha256": "6d3f6df5204a9132318f8dcbc882377372984918145ac7bbdec9d4ef441c6afc",
+      "capability_mapping_exists": true,
+      "runtime_or_import_role_valid": true
+    },
+    {
+      "family_id": "DATA_INTEGRITY_ENGINE",
+      "path": "canonical/intelligence/intelligence/engines/data-integrity-engine.ts",
+      "path_exists": true,
+      "sha256": "fcc6cce52c11e9f96b434ae57b95bba1ce28d2754f977b45f1efd85707a0ea2b",
+      "capability_mapping_exists": true,
+      "runtime_or_import_role_valid": true
+    },
+    {
+      "family_id": "DATA_INTELLIGENCE_FABRIC",
+      "path": "lib/intelligence/data-intelligence-fabric.ts",
+      "path_exists": true,
+      "sha256": "275883d43facbdfea4b233bd5e6cfe70f3f1dca8dec4d55e5f077521d5e61595",
+      "capability_mapping_exists": true,
+      "runtime_or_import_role_valid": true
+    },
+    {
+      "family_id": "DATA_INTELLIGENCE_FABRIC",
+      "path": "tests/data_intelligence_fabric_check.ts",
+      "path_exists": true,
+      "sha256": "17bd17e61dee116d6d7d06a418ca1c2d6081ba32eb8ae2985252b443c96cb26b",
+      "capability_mapping_exists": true,
+      "runtime_or_import_role_valid": true
+    },
+    {
+      "family_id": "GREENY_LIFE_EGYPT_BRAIN",
+      "path": "lib/intelligence/greeny-life-egypt-brain.ts",
+      "path_exists": true,
+      "sha256": "6c1f668dc1ed68506f3ce02a48640442456d561a96da3c4c574f3f9871884292",
+      "capability_mapping_exists": true,
+      "runtime_or_import_role_valid": true
+    },
+    {
+      "family_id": "GREENY_LIFE_EGYPT_BRAIN",
+      "path": "tests/greeny_life_egypt_brain_authorization_check.ts",
+      "path_exists": true,
+      "sha256": "f4e02ee5879dd414460e86ab7cf3950af5615b0523d0bc7b35c651736307b758",
+      "capability_mapping_exists": true,
+      "runtime_or_import_role_valid": true
+    },
+    {
+      "family_id": "GREENY_LIFE_EGYPT_BRAIN",
+      "path": "tests/greeny_life_egypt_brain_check.ts",
+      "path_exists": true,
+      "sha256": "3610fd0569bf05eff8592b89e6937170deedd82401d1fa872ee14985f42c8d06",
+      "capability_mapping_exists": true,
+      "runtime_or_import_role_valid": true
+    },
+    {
+      "family_id": "MASTERMIND_AGENTS",
+      "path": "lib/intelligence/mastermind-agents.ts",
+      "path_exists": true,
+      "sha256": "3a035ff59a38af572bf5648d16296f62dda861f1f939af6a4ceae8141bd4d0b5",
+      "capability_mapping_exists": true,
+      "runtime_or_import_role_valid": true
+    },
+    {
+      "family_id": "MASTERMIND_AGENTS",
+      "path": "tests/mastermind_agents_check.ts",
+      "path_exists": true,
+      "sha256": "a678bcd678d0282de0b26805fee63cfd3b6f569fb538f651d731bcb309717233",
+      "capability_mapping_exists": true,
+      "runtime_or_import_role_valid": true
+    },
+    {
+      "family_id": "LEGACY_BRAIN",
+      "path": "audit_brain_intelligence.py",
+      "path_exists": true,
+      "sha256": "fd11bb312e7dd959751cfe60a1ea02ba5f139e56f54b609f622fc1cc2fdd7da0",
+      "capability_mapping_exists": true,
+      "runtime_or_import_role_valid": true
+    },
+    {
+      "family_id": "LEGACY_BRAIN",
+      "path": "audit_brain_intelligence_v2.py",
+      "path_exists": true,
+      "sha256": "6802289da9fd353d926d42ec9860d629fc5d86a0be7b3761539e80fdd4305393",
+      "capability_mapping_exists": true,
+      "runtime_or_import_role_valid": true
+    },
+    {
+      "family_id": "LEGACY_BRAIN",
+      "path": "brain.py",
+      "path_exists": true,
+      "sha256": "96960f7a4c7380dedf8398179c488a8749794a9bad7296d59eb687adafd433dd",
+      "capability_mapping_exists": true,
+      "runtime_or_import_role_valid": true
+    },
+    {
+      "family_id": "LEGACY_BRAIN",
+      "path": "test_brain.py",
+      "path_exists": true,
+      "sha256": "90e83cfc0ee149cc6b7094838ad40f2bd2af286c7e0eaaef0671f0af2047c3fb",
+      "capability_mapping_exists": true,
+      "runtime_or_import_role_valid": true
+    },
+    {
+      "family_id": "LEGACY_BRAIN",
+      "path": "test_brain_v2.py",
+      "path_exists": true,
+      "sha256": "cb51bf8c83853fe3c10f626c2af89da9806193d9392a9b6d88e9c142209b82bf",
+      "capability_mapping_exists": true,
+      "runtime_or_import_role_valid": true
+    },
+    {
+      "family_id": "LEGACY_BRAIN",
+      "path": "test_brain_v3.py",
+      "path_exists": true,
+      "sha256": "6ebf6c15b52838747e1b2f02927b20cf514977679da12d3c4a8594620fa37ce4",
+      "capability_mapping_exists": true,
+      "runtime_or_import_role_valid": true
+    },
+    {
+      "family_id": "LEGACY_BRAIN",
+      "path": "canonical/fix_brain.py",
+      "path_exists": true,
+      "sha256": "3bc83bafacea15b16e44f659c73ab0d42dc4c0cdbc72817b8b26478d8017f36d",
+      "capability_mapping_exists": true,
+      "runtime_or_import_role_valid": true
+    },
+    {
+      "family_id": "LEGACY_BRAIN",
+      "path": "tests/test_legacy_brain_runtime.py",
+      "path_exists": true,
+      "sha256": "0de3df09de1b227f0ee1c2a470eedf7a9001c4bef3cab4dfe61d8ad81a4077b0",
+      "capability_mapping_exists": true,
+      "runtime_or_import_role_valid": true
+    },
+    {
+      "family_id": "BRAIN_CLI",
+      "path": "run_brain_cli.py",
+      "path_exists": true,
+      "sha256": "3bc1f2f68e4b7ab902bb4dfefad34002b482fa315cbf8a991cc1495ced037c7b",
+      "capability_mapping_exists": true,
+      "runtime_or_import_role_valid": true
+    },
+    {
+      "family_id": "V9_AUTONOMIC",
+      "path": "RAIOS/V9/autonomic/self_inspection/engine.py",
+      "path_exists": true,
+      "sha256": "ae4583fa5eb30f75d88f25c75eaf15e5bac89bcff1714f89041eaf9a435631a6",
+      "capability_mapping_exists": true,
+      "runtime_or_import_role_valid": true
+    },
+    {
+      "family_id": "V9_EVOLUTION",
+      "path": "RAIOS/V9/runtime/evolution_brain.py",
+      "path_exists": true,
+      "sha256": "dc8c358c900d19ea6756d0d9419fdb73305f376d3a66856bf09fe89a574187a4",
+      "capability_mapping_exists": true,
+      "runtime_or_import_role_valid": true
+    },
+    {
+      "family_id": "NEURO_LINGUA_ROUTER",
+      "path": "src/raios/neuro_lingua/router.py",
+      "path_exists": true,
+      "sha256": "80b6d70a233ada3553aa3b2e846b005e038e78552f8ac28d0696da8b4b8d50d0",
+      "capability_mapping_exists": true,
+      "runtime_or_import_role_valid": true
+    },
+    {
+      "family_id": "THREE_OPERATING_BRAINS",
+      "path": "lib/intelligence/three-operating-brains.ts",
+      "path_exists": true,
+      "sha256": "eb9cb6104ca26f9be2ef6205d3f776cae706c2310228c4be0b2e47a85b31de71",
+      "capability_mapping_exists": true,
+      "runtime_or_import_role_valid": true
+    },
+    {
+      "family_id": "THREE_OPERATING_BRAINS",
+      "path": "tests/three_operating_brains_check.ts",
+      "path_exists": true,
+      "sha256": "93ee4dcce0710285391641921521012f9928e263df1cfffac1636e659f1dd55f",
+      "capability_mapping_exists": true,
+      "runtime_or_import_role_valid": true
+    },
+    {
+      "family_id": "TASK_ORCHESTRATION",
+      "path": "lib/intelligence/task-orchestration.ts",
+      "path_exists": true,
+      "sha256": "9855a318dd0bddadef322d3e7881222d6693bf97ece7d31b963eb48f5ae32319",
+      "capability_mapping_exists": true,
+      "runtime_or_import_role_valid": true
+    },
+    {
+      "family_id": "TASK_ORCHESTRATION",
+      "path": "tests/task_orchestration_check.ts",
+      "path_exists": true,
+      "sha256": "106096b5fae635193ea28671bc31a577ab3e4a72bd69bc564d72b73911c49655",
+      "capability_mapping_exists": true,
+      "runtime_or_import_role_valid": true
+    },
+    {
+      "family_id": "CONTROLLED_LEARNING",
+      "path": "lib/intelligence/controlled-learning.ts",
+      "path_exists": true,
+      "sha256": "7b6096c3f803eb16c320ec21c3c9251b68d8891cb76ee6d639515ed339201b5f",
+      "capability_mapping_exists": true,
+      "runtime_or_import_role_valid": true
+    },
+    {
+      "family_id": "CONTROLLED_LEARNING",
+      "path": "tests/controlled_learning_check.ts",
+      "path_exists": true,
+      "sha256": "0751f8df6d1439a88107f6f4270aa6c0db488af089329763fa4fc5fc6b7cbd12",
+      "capability_mapping_exists": true,
+      "runtime_or_import_role_valid": true
+    },
+    {
+      "family_id": "COMMERCIAL_CONTEXT_FABRIC",
+      "path": "lib/intelligence/commercial-context-fabric.ts",
+      "path_exists": true,
+      "sha256": "d03216ed3396497b298b5755bdacf9929f92816753d85d7821b3f31e7d86b308",
+      "capability_mapping_exists": true,
+      "runtime_or_import_role_valid": true
+    },
+    {
+      "family_id": "COMMERCIAL_CONTEXT_FABRIC",
+      "path": "tests/commercial_context_fabric_check.ts",
+      "path_exists": true,
+      "sha256": "53577164c6bdd99f7780872d5fbad2b33d9705a0c589a8dde5081cb264142454",
+      "capability_mapping_exists": true,
+      "runtime_or_import_role_valid": true
+    },
+    {
+      "family_id": "WORKER_RUNTIME",
+      "path": "RAIOS/V9/cloud/nomadic/worker_contract.py",
+      "path_exists": true,
+      "sha256": "72a9b045a466f1db0c28a75ba432d96c63482b048b144e4d0441dbb4e0926e8a",
+      "capability_mapping_exists": true,
+      "runtime_or_import_role_valid": true
+    },
+    {
+      "family_id": "SEMANTIC_ENGINE",
+      "path": "RAIOS/V9/cognition/semantic/semantic_engine.py",
+      "path_exists": true,
+      "sha256": "375708e5a71643e09ff09195a861cc29f8e71ed7788a9216e7f9f1e944e4fc1f",
+      "capability_mapping_exists": true,
+      "runtime_or_import_role_valid": true
+    },
+    {
+      "family_id": "COGNITIVE_EVENT_BUS",
+      "path": "RAIOS/V9/runtime/cognitive_event_bus.py",
+      "path_exists": true,
+      "sha256": "6fdb5bdab7c70934b4fd962bff20820d3d8eece156d94280204021b59f922689",
+      "capability_mapping_exists": true,
+      "runtime_or_import_role_valid": true
+    }
+  ]
+}

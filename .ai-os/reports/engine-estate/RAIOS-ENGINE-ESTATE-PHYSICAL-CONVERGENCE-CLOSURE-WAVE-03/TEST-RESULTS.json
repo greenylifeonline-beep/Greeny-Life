@@ -1,0 +1,50 @@
+{
+  "tests_executed": 193,
+  "tests_pass": 193,
+  "tests_fail": 0,
+  "gates": [
+    {
+      "domain": "transport",
+      "executed": 13,
+      "pass": 13,
+      "fail": 0
+    },
+    {
+      "domain": "command_fabric",
+      "executed": 24,
+      "pass": 24,
+      "fail": 0
+    },
+    {
+      "domain": "resource_fabric",
+      "executed": 151,
+      "pass": 151,
+      "fail": 0
+    },
+    {
+      "domain": "legacy_brain",
+      "executed": 2,
+      "pass": 2,
+      "fail": 0
+    },
+    {
+      "domain": "brain_cli_smoke",
+      "executed": 1,
+      "pass": 1,
+      "fail": 0
+    },
+    {
+      "domain": "domain_workflow",
+      "executed": 1,
+      "pass": 1,
+      "fail": 0
+    },
+    {
+      "domain": "task_orchestration",
+      "executed": 1,
+      "pass": 1,
+      "fail": 0
+    }
+  ],
+  "note": "Each domain used its dependency-complete interpreter; no paid/live resource was invoked."
+}

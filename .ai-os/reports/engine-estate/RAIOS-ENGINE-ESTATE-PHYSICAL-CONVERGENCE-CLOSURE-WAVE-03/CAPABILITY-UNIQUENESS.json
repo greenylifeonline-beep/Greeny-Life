@@ -1,0 +1,324 @@
+{
+  "families_total": 37,
+  "competing_same_role": 0,
+  "capabilities": [
+    {
+      "capability": "AUDIT_ENGINE",
+      "canonical_engine": "AUDIT_ENGINE",
+      "canonical_entrypoints": [
+        "canonical/intelligence/intelligence/engines/audit-engine.ts"
+      ],
+      "required_adapters": [],
+      "retired_implementations": [
+        "_raios-wave2-session-proof/20260820-163547/isolated-build-source/canonical/intelligence/intelligence/engines/audit-engine.ts"
+      ],
+      "same_role_competitors": 0
+    },
+    {
+      "capability": "BRAIN_CLI",
+      "canonical_engine": "BRAIN_CLI",
+      "canonical_entrypoints": [
+        "run_brain_cli.py"
+      ],
+      "required_adapters": [],
+      "retired_implementations": [
+        "run_brain_cli_backup.py"
+      ],
+      "same_role_competitors": 0
+    },
+    {
+      "capability": "COGNITIVE_EVENT_BUS",
+      "canonical_engine": "COGNITIVE_EVENT_BUS",
+      "canonical_entrypoints": [
+        "RAIOS/V9/runtime/cognitive_event_bus.py"
+      ],
+      "required_adapters": [],
+      "retired_implementations": [],
+      "same_role_competitors": 0
+    },
+    {
+      "capability": "COMMAND_FABRIC",
+      "canonical_engine": "COMMAND_FABRIC",
+      "canonical_entrypoints": [
+        "tests/command_fabric/test_control_fabric.py"
+      ],
+      "required_adapters": [],
+      "retired_implementations": [
+        ".ai-os/control/COMMAND-FABRIC-SHADOW-TRIAL.py"
+      ],
+      "same_role_competitors": 0
+    },
+    {
+      "capability": "COMMERCIAL_CONTEXT_FABRIC",
+      "canonical_engine": "COMMERCIAL_CONTEXT_FABRIC",
+      "canonical_entrypoints": [
+        "lib/intelligence/commercial-context-fabric.ts",
+        "tests/commercial_context_fabric_check.ts"
+      ],
+      "required_adapters": [],
+      "retired_implementations": [
+        "_raios-wave2-session-proof/20260820-163547/isolated-build-source/lib/intelligence/commercial-context-fabric.ts"
+      ],
+      "same_role_competitors": 0
+    },
+    {
+      "capability": "CONTROLLED_LEARNING",
+      "canonical_engine": "CONTROLLED_LEARNING",
+      "canonical_entrypoints": [
+        "lib/intelligence/controlled-learning.ts",
+        "tests/controlled_learning_check.ts"
+      ],
+      "required_adapters": [],
+      "retired_implementations": [
+        "_raios-wave2-session-proof/20260820-163547/isolated-build-source/lib/intelligence/controlled-learning.ts"
+      ],
+      "same_role_competitors": 0
+    },
+    {
+      "capability": "CONTROLLED_RUNTIME_ORCHESTRATOR",
+      "canonical_engine": "CONTROLLED_RUNTIME_ORCHESTRATOR",
+      "canonical_entrypoints": [
+        "canonical/intelligence/runtime/controlled-runtime-orchestrator.ts"
+      ],
+      "required_adapters": [],
+      "retired_implementations": [
+        "archive/old_folders/unified-intelligence/runtime/controlled-runtime-orchestrator.ts",
+        "_raios-kaggle-census/collection-for-understand/unified-intelligence-restore-5946c6bc/unified-intelligence/runtime/controlled-runtime-orchestrator.ts",
+        "_raios-wave2-session-proof/20260820-163547/isolated-build-source/canonical/intelligence/runtime/controlled-runtime-orchestrator.ts"
+      ],
+      "same_role_competitors": 0
+    },
+    {
+      "capability": "CONTROL_PLANE",
+      "canonical_engine": "CONTROL_PLANE",
+      "canonical_entrypoints": [
+        ".ai-os/control/RAIOS-CONTROL-PLANE-V1.py"
+      ],
+      "required_adapters": [],
+      "retired_implementations": [
+        "_raios-cloud-control-plane-wave1.ps1",
+        ".ai-os/control/test_control_plane_v1.py"
+      ],
+      "same_role_competitors": 0
+    },
+    {
+      "capability": "DATA_INTEGRITY_ENGINE",
+      "canonical_engine": "DATA_INTEGRITY_ENGINE",
+      "canonical_entrypoints": [
+        "canonical/intelligence/intelligence/engines/data-integrity-engine.ts"
+      ],
+      "required_adapters": [],
+      "retired_implementations": [
+        "_raios-wave2-session-proof/20260820-163547/isolated-build-source/canonical/intelligence/intelligence/engines/data-integrity-engine.ts"
+      ],
+      "same_role_competitors": 0
+    },
+    {
+      "capability": "DATA_INTELLIGENCE_FABRIC",
+      "canonical_engine": "DATA_INTELLIGENCE_FABRIC",
+      "canonical_entrypoints": [
+        "lib/intelligence/data-intelligence-fabric.ts",
+        "tests/data_intelligence_fabric_check.ts"
+      ],
+      "required_adapters": [],
+      "retired_implementations": [
+        "_raios-wave2-session-proof/20260820-163547/isolated-build-source/lib/intelligence/data-intelligence-fabric.ts"
+      ],
+      "same_role_competitors": 0
+    },
+    {
+      "capability": "GREENY_LIFE_EGYPT_BRAIN",
+      "canonical_engine": "GREENY_LIFE_EGYPT_BRAIN",
+      "canonical_entrypoints": [
+        "lib/intelligence/greeny-life-egypt-brain.ts",
+        "tests/greeny_life_egypt_brain_authorization_check.ts",
+        "tests/greeny_life_egypt_brain_check.ts"
+      ],
+      "required_adapters": [],
+      "retired_implementations": [
+        "_raios-wave2-session-proof/20260820-163547/isolated-build-source/lib/intelligence/greeny-life-egypt-brain.ts"
+      ],
+      "same_role_competitors": 0
+    },
+    {
+      "capability": "LEGACY_BRAIN",
+      "canonical_engine": "LEGACY_BRAIN",
+      "canonical_entrypoints": [
+        "audit_brain_intelligence.py",
+        "audit_brain_intelligence_v2.py",
+        "brain.py",
+        "test_brain.py",
+        "test_brain_v2.py",
+        "test_brain_v3.py",
+        "canonical/fix_brain.py",
+        "tests/test_legacy_brain_runtime.py"
+      ],
+      "required_adapters": [],
+      "retired_implementations": [
+        "fix_brain.py",
+        "archive/generated-reports/legacy-review/brain-kernel-proof-2026-08-13_153933/brain_kernel_isolated_proof.py",
+        "archive/generated-reports/legacy-review/brain-kernel-proof-2026-08-13_153941/brain_kernel_isolated_proof.py",
+        "archive/generated-reports/legacy-review/brain-kernel-proof-2026-08-13_154110/brain_kernel_isolated_proof.py",
+        "archive/generated-reports/legacy-review/brain-wave-2-2026-08-13_154715/brain_wave_2.py",
+        "_raios-wave2-session-proof/20260820-163547/isolated-build-source/canonical/fix_brain.py"
+      ],
+      "same_role_competitors": 0
+    },
+    {
+      "capability": "MASTERMIND_AGENTS",
+      "canonical_engine": "MASTERMIND_AGENTS",
+      "canonical_entrypoints": [
+        "lib/intelligence/mastermind-agents.ts",
+        "tests/mastermind_agents_check.ts"
+      ],
+      "required_adapters": [],
+      "retired_implementations": [
+        "_raios-wave2-session-proof/20260820-163547/isolated-build-source/lib/intelligence/mastermind-agents.ts"
+      ],
+      "same_role_competitors": 0
+    },
+    {
+      "capability": "NEURO_LINGUA_ROUTER",
+      "canonical_engine": "NEURO_LINGUA_ROUTER",
+      "canonical_entrypoints": [
+        "src/raios/neuro_lingua/router.py"
+      ],
+      "required_adapters": [],
+      "retired_implementations": [
+        ".ai-os/control/RAIOS-USER-ROUTER-V1.py",
+        "_raios-wave2-session-proof/20260820-163547/isolated-build-source/src/raios/neuro_lingua/router.py"
+      ],
+      "same_role_competitors": 0
+    },
+    {
+      "capability": "RAIOS_MCP",
+      "canonical_engine": "RAIOS_MCP",
+      "canonical_entrypoints": [
+        "scripts/ai-os/raios_mcp/cross_host_adapter.py",
+        "scripts/ai-os/raios_mcp/gateway.py",
+        "scripts/ai-os/raios_mcp/server.py",
+        "scripts/ai-os/raios_mcp/__init__.py"
+      ],
+      "required_adapters": [],
+      "retired_implementations": [],
+      "same_role_competitors": 0
+    },
+    {
+      "capability": "RESOURCE_FABRIC",
+      "canonical_engine": "RESOURCE_FABRIC",
+      "canonical_entrypoints": [
+        "tests/resource_fabric/test_resource_fabric.py"
+      ],
+      "required_adapters": [],
+      "retired_implementations": [],
+      "same_role_competitors": 0
+    },
+    {
+      "capability": "SEMANTIC_ENGINE",
+      "canonical_engine": "SEMANTIC_ENGINE",
+      "canonical_entrypoints": [
+        "RAIOS/V9/cognition/semantic/semantic_engine.py"
+      ],
+      "required_adapters": [],
+      "retired_implementations": [],
+      "same_role_competitors": 0
+    },
+    {
+      "capability": "TASK_ORCHESTRATION",
+      "canonical_engine": "TASK_ORCHESTRATION",
+      "canonical_entrypoints": [
+        "lib/intelligence/task-orchestration.ts",
+        "tests/task_orchestration_check.ts"
+      ],
+      "required_adapters": [],
+      "retired_implementations": [
+        "_raios-wave2-session-proof/20260820-163547/isolated-build-source/lib/intelligence/task-orchestration.ts"
+      ],
+      "same_role_competitors": 0
+    },
+    {
+      "capability": "THREE_OPERATING_BRAINS",
+      "canonical_engine": "THREE_OPERATING_BRAINS",
+      "canonical_entrypoints": [
+        "lib/intelligence/three-operating-brains.ts",
+        "tests/three_operating_brains_check.ts"
+      ],
+      "required_adapters": [],
+      "retired_implementations": [
+        "_raios-wave2-session-proof/20260820-163547/isolated-build-source/lib/intelligence/three-operating-brains.ts"
+      ],
+      "same_role_competitors": 0
+    },
+    {
+      "capability": "TRANSPORT",
+      "canonical_engine": "TRANSPORT",
+      "canonical_entrypoints": [
+        "scripts/ai-os/raios_transport/evidence.py",
+        "scripts/ai-os/raios_transport/local_bridge.py",
+        "scripts/ai-os/raios_transport/nats_provider.py",
+        "scripts/ai-os/raios_transport/packet.py",
+        "scripts/ai-os/raios_transport/provider.py",
+        "scripts/ai-os/raios_transport/stage04.py",
+        "scripts/ai-os/raios_transport/__init__.py",
+        "scripts/ai-os/raios_transport/tests/test_stage04.py",
+        "scripts/ai-os/raios_transport/tests/__init__.py"
+      ],
+      "required_adapters": [
+        "scripts/ai-os/raios_transport/local_bridge.py",
+        "scripts/ai-os/raios_transport/nats_provider.py"
+      ],
+      "retired_implementations": [],
+      "same_role_competitors": 0
+    },
+    {
+      "capability": "V9_AUTONOMIC",
+      "canonical_engine": "V9_AUTONOMIC",
+      "canonical_entrypoints": [
+        "RAIOS/V9/autonomic/self_inspection/engine.py"
+      ],
+      "required_adapters": [],
+      "retired_implementations": [
+        "C9-EPISTEMIC-AUDIT-PACKET/FILES/RAIOS/V9/autonomic/self_inspection/engine.py"
+      ],
+      "same_role_competitors": 0
+    },
+    {
+      "capability": "V9_EVOLUTION",
+      "canonical_engine": "V9_EVOLUTION",
+      "canonical_entrypoints": [
+        "RAIOS/V9/runtime/evolution_brain.py"
+      ],
+      "required_adapters": [],
+      "retired_implementations": [],
+      "same_role_competitors": 0
+    },
+    {
+      "capability": "WORKER_RUNTIME",
+      "canonical_engine": "WORKER_RUNTIME",
+      "canonical_entrypoints": [
+        "RAIOS/V9/cloud/nomadic/worker_contract.py"
+      ],
+      "required_adapters": [],
+      "retired_implementations": [
+        ".ai-os/control/C2-WORKER-V1.py",
+        "C9-EPISTEMIC-AUDIT-PACKET/FILES/RAIOS/V9/cloud/nomadic/worker_contract.py"
+      ],
+      "same_role_competitors": 0
+    },
+    {
+      "capability": "WORKFLOW_ENGINE",
+      "canonical_engine": "WORKFLOW_ENGINE",
+      "canonical_entrypoints": [
+        "canonical/lib/workflowEngine.ts"
+      ],
+      "required_adapters": [],
+      "retired_implementations": [
+        "archive/historical/__tests__/workflowEngine.test.ts",
+        "_raios-old-business-salvage/shadow/FINAL2-20260820-062114515384/canonical/lib/workflowEngine.ts",
+        "_raios-wave2-session-proof/20260820-163547/isolated-build-source/canonical/lib/workflowEngine.ts",
+        "_raios-old-business-salvage/shadow/FINAL2-20260820-062114515384/canonical/lib/workflowEngine.ts"
+      ],
+      "same_role_competitors": 0
+    }
+  ]
+}
