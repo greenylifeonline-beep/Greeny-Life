@@ -1,0 +1,18 @@
+{
+  "from": "Wave-04 static reservoir JSON + Wave-01/02 placement.decide planning",
+  "to": "factory.place + factory.plan_dispatch DRY_RUN over live overlay",
+  "SECOND_PROVIDER_REGISTRY_CREATED": false,
+  "SECOND_SCHEDULER_CREATED": false,
+  "SECOND_TASK_REGISTRY_CREATED": false,
+  "SECOND_LEASE_SYSTEM_CREATED": false,
+  "SECOND_RECEIPT_SYSTEM_CREATED": false,
+  "SECOND_EVENT_BUS_CREATED": false,
+  "SECOND_WAL_CREATED": false,
+  "EXISTING_PROVIDER_SYSTEM_REUSED": true,
+  "EXISTING_SCHEDULER_REUSED": true,
+  "EXISTING_TASK_SYSTEM_REUSED": true,
+  "NINEROUTER_IS_RESOURCE_AUTHORITY": false,
+  "PLACEMENT_ENGINE": "raios.resource_fabric.placement.decide",
+  "PROVIDER_REGISTRY": "raios.resource_fabric.adapters.ADAPTERS",
+  "SCHEDULER_REF": "RAIOS/V9/cloud/nomadic/work_stealing_scheduler.py"
+}

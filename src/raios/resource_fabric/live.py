@@ -531,6 +531,9 @@ def apply_live_overlay(world: dict[str, Any], live_state: dict[str, Any]) -> dic
         if aid == "LOCAL_AG":
             acc["status"] = pr.get("status") or "REACHABLE"
             acc["ACCOUNT_REACHABLE"] = True
+        if aid == "KAGGLE_PARTNER":
+            acc["live_auth_proven"] = bool(pr.get("live_auth_proven"))
+            acc["DISPATCH_ALLOWED"] = False
 
     world["accelerators"] = [g for g in (world.get("accelerators") or []) if g.get("observation_kind") != "LIVE"]
     for gpu in world.get("accelerators") or []:
@@ -667,6 +670,8 @@ def apply_live_overlay(world: dict[str, Any], live_state: dict[str, Any]) -> dic
         for cmp in world.get("compute") or []:
             if cmp.get("account_id") == "LOCAL_AG":
                 cmp["ram_gb"] = loc.get("ram_total_gb", UNKNOWN)
+                cmp["ram_avail_gb"] = loc.get("ram_avail_gb", UNKNOWN)
+                cmp["execution_blocked_by_memory"] = bool(loc.get("execution_blocked_by_memory", True))
                 cmp["vcpu"] = UNKNOWN
                 cmp["observation_kind"] = "LIVE"
         for st in world.get("storage") or []:

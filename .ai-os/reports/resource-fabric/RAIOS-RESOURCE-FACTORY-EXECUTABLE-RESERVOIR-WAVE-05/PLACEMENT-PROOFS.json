@@ -1,0 +1,781 @@
+{
+  "recorded_at": "2026-08-28T10:20:36.387527+00:00",
+  "proofs": {
+    "A": {
+      "request_id": "A",
+      "workload_class": "CONTROL",
+      "result_class": "PLACED",
+      "selected_resource": "LOCAL_AG",
+      "eligible_resources": [
+        "LOCAL_AG",
+        "KAGGLE_C1",
+        "MODAL_01"
+      ],
+      "rejected": [
+        {
+          "account_id": "COLAB_01",
+          "reasons": [
+            "GOOGLE_AUTH_SETUP_REQUIRED",
+            "UNAUTHENTICATED_RESOURCE"
+          ]
+        },
+        {
+          "account_id": "KAGGLE_PARTNER",
+          "reasons": [
+            "KAGGLE_PARTNER_LIVE_AUTH_UNPROVEN",
+            "KAGGLE_QUOTA_ISOLATED_FROM_C1",
+            "UNAUTHENTICATED_RESOURCE"
+          ]
+        },
+        {
+          "account_id": "LIGHTNING_01",
+          "reasons": [
+            "CURRENT_LIVE_AUTH_NOT_REPROVEN",
+            "UNAUTHENTICATED_RESOURCE"
+          ]
+        },
+        {
+          "account_id": "ORACLE_01",
+          "reasons": [
+            "AUTH_REQUIRED",
+            "UNAUTHENTICATED_RESOURCE"
+          ]
+        }
+      ],
+      "conditional": [],
+      "decision_id": "PD-1e9a7115c2046e158b7b",
+      "dispatch_allowed": true,
+      "requires_capacity_probe": false,
+      "requires_c1_authorization": false,
+      "capacity_confidence": "LIVE",
+      "GPU_SESSION_STARTED": false,
+      "PAID_ACTIVATION": false
+    },
+    "B": {
+      "request_id": "B",
+      "workload_class": "GPU_BURST",
+      "result_class": "PLACED",
+      "selected_resource": "KAGGLE_C1",
+      "eligible_resources": [
+        "KAGGLE_C1"
+      ],
+      "rejected": [
+        {
+          "account_id": "LOCAL_AG",
+          "reasons": [
+            "LOCAL_AG_HEAVY_INFERENCE_DENIED",
+            "LOCAL_AG_NO_GPU",
+            "RAM_PRESSURE"
+          ]
+        },
+        {
+          "account_id": "COLAB_01",
+          "reasons": [
+            "CATALOG_CAPABILITY_NE_ENTITLEMENT",
+            "GOOGLE_AUTH_SETUP_REQUIRED",
+            "UNAUTHENTICATED_RESOURCE"
+          ]
+        },
+        {
+          "account_id": "KAGGLE_PARTNER",
+          "reasons": [
+            "CATALOG_CAPABILITY_NE_ENTITLEMENT",
+            "KAGGLE_PARTNER_LIVE_AUTH_UNPROVEN",
+            "KAGGLE_QUOTA_ISOLATED_FROM_C1",
+            "UNAUTHENTICATED_RESOURCE"
+          ]
+        },
+        {
+          "account_id": "LIGHTNING_01",
+          "reasons": [
+            "CURRENT_LIVE_AUTH_NOT_REPROVEN",
+            "PAID_DEFAULT_DENY",
+            "PAID_GPU_DENIED",
+            "UNAUTHENTICATED_RESOURCE"
+          ]
+        },
+        {
+          "account_id": "MODAL_01",
+          "reasons": [
+            "PAID_DEFAULT_DENY",
+            "PAID_GPU_DENIED"
+          ]
+        },
+        {
+          "account_id": "ORACLE_01",
+          "reasons": [
+            "AUTH_REQUIRED",
+            "PAID_DEFAULT_DENY",
+            "PAID_GPU_DENIED",
+            "UNAUTHENTICATED_RESOURCE"
+          ]
+        }
+      ],
+      "conditional": [
+        {
+          "account_id": "KAGGLE_C1",
+          "reasons": [
+            "LIVE_SKU_UNOBSERVED",
+            "LIVE_VRAM_UNOBSERVED"
+          ],
+          "auth_state": "REACHABLE"
+        }
+      ],
+      "decision_id": "PD-4be0fdec94b111c889a4",
+      "dispatch_allowed": true,
+      "requires_capacity_probe": false,
+      "requires_c1_authorization": false,
+      "capacity_confidence": "ELIGIBLE_VRAM_UNOBSERVED",
+      "GPU_SESSION_STARTED": false,
+      "PAID_ACTIVATION": false
+    },
+    "C": {
+      "request_id": "C",
+      "workload_class": "GPU_BURST",
+      "result_class": "PLACED",
+      "selected_resource": "KAGGLE_C1",
+      "eligible_resources": [
+        "KAGGLE_C1"
+      ],
+      "rejected": [
+        {
+          "account_id": "COLAB_01",
+          "reasons": [
+            "CATALOG_CAPABILITY_NE_ENTITLEMENT",
+            "GOOGLE_AUTH_SETUP_REQUIRED",
+            "UNAUTHENTICATED_RESOURCE"
+          ]
+        },
+        {
+          "account_id": "KAGGLE_PARTNER",
+          "reasons": [
+            "CATALOG_CAPABILITY_NE_ENTITLEMENT",
+            "KAGGLE_PARTNER_LIVE_AUTH_UNPROVEN",
+            "KAGGLE_QUOTA_ISOLATED_FROM_C1",
+            "UNAUTHENTICATED_RESOURCE"
+          ]
+        },
+        {
+          "account_id": "LIGHTNING_01",
+          "reasons": [
+            "CURRENT_LIVE_AUTH_NOT_REPROVEN",
+            "PAID_DEFAULT_DENY",
+            "PAID_GPU_DENIED",
+            "UNAUTHENTICATED_RESOURCE"
+          ]
+        },
+        {
+          "account_id": "LOCAL_AG",
+          "reasons": [
+            "LOCAL_AG_HEAVY_INFERENCE_DENIED",
+            "LOCAL_AG_NO_GPU",
+            "RAM_PRESSURE"
+          ]
+        },
+        {
+          "account_id": "MODAL_01",
+          "reasons": [
+            "PAID_DEFAULT_DENY",
+            "PAID_GPU_DENIED"
+          ]
+        },
+        {
+          "account_id": "ORACLE_01",
+          "reasons": [
+            "AUTH_REQUIRED",
+            "PAID_DEFAULT_DENY",
+            "PAID_GPU_DENIED",
+            "UNAUTHENTICATED_RESOURCE"
+          ]
+        }
+      ],
+      "conditional": [
+        {
+          "account_id": "KAGGLE_C1",
+          "reasons": [
+            "LIVE_SKU_UNOBSERVED",
+            "LIVE_VRAM_UNOBSERVED"
+          ],
+          "auth_state": "REACHABLE"
+        }
+      ],
+      "decision_id": "PD-fca656ff761b4d0153ac",
+      "dispatch_allowed": true,
+      "requires_capacity_probe": false,
+      "requires_c1_authorization": false,
+      "capacity_confidence": "ELIGIBLE_VRAM_UNOBSERVED",
+      "GPU_SESSION_STARTED": false,
+      "PAID_ACTIVATION": false
+    },
+    "D": {
+      "request_id": "D",
+      "workload_class": "GPU_BURST",
+      "result_class": "CAPACITY_PROBE_REQUIRED",
+      "selected_resource": "KAGGLE_C1",
+      "eligible_resources": [],
+      "rejected": [
+        {
+          "account_id": "COLAB_01",
+          "reasons": [
+            "CATALOG_CAPABILITY_NE_ENTITLEMENT",
+            "GOOGLE_AUTH_SETUP_REQUIRED",
+            "UNAUTHENTICATED_RESOURCE"
+          ]
+        },
+        {
+          "account_id": "KAGGLE_PARTNER",
+          "reasons": [
+            "CATALOG_CAPABILITY_NE_ENTITLEMENT",
+            "KAGGLE_PARTNER_LIVE_AUTH_UNPROVEN",
+            "KAGGLE_QUOTA_ISOLATED_FROM_C1",
+            "UNAUTHENTICATED_RESOURCE"
+          ]
+        },
+        {
+          "account_id": "LIGHTNING_01",
+          "reasons": [
+            "CURRENT_LIVE_AUTH_NOT_REPROVEN",
+            "PAID_DEFAULT_DENY",
+            "PAID_GPU_DENIED",
+            "UNAUTHENTICATED_RESOURCE"
+          ]
+        },
+        {
+          "account_id": "LOCAL_AG",
+          "reasons": [
+            "LOCAL_AG_HEAVY_INFERENCE_DENIED",
+            "LOCAL_AG_NO_GPU",
+            "RAM_PRESSURE"
+          ]
+        },
+        {
+          "account_id": "MODAL_01",
+          "reasons": [
+            "PAID_DEFAULT_DENY",
+            "PAID_GPU_DENIED"
+          ]
+        },
+        {
+          "account_id": "ORACLE_01",
+          "reasons": [
+            "AUTH_REQUIRED",
+            "PAID_DEFAULT_DENY",
+            "PAID_GPU_DENIED",
+            "UNAUTHENTICATED_RESOURCE"
+          ]
+        }
+      ],
+      "conditional": [
+        {
+          "account_id": "KAGGLE_C1",
+          "reasons": [
+            "CAPACITY_PROBE_REQUIRED",
+            "LIVE_SKU_UNOBSERVED",
+            "VRAM_UNOBSERVED"
+          ],
+          "auth_state": "REACHABLE"
+        }
+      ],
+      "decision_id": "PD-42d3911fa5298e19ab4a",
+      "dispatch_allowed": false,
+      "requires_capacity_probe": true,
+      "requires_c1_authorization": false,
+      "capacity_confidence": "ELIGIBLE_VRAM_UNOBSERVED",
+      "GPU_SESSION_STARTED": false,
+      "PAID_ACTIVATION": false
+    },
+    "E": {
+      "request_id": "E",
+      "workload_class": "MODEL_STORAGE",
+      "result_class": "PLACED",
+      "selected_resource": "KAGGLE_C1",
+      "eligible_resources": [
+        "KAGGLE_C1",
+        "MODAL_01"
+      ],
+      "rejected": [
+        {
+          "account_id": "COLAB_01",
+          "reasons": [
+            "GOOGLE_AUTH_SETUP_REQUIRED",
+            "NO_MODEL_STORAGE",
+            "UNAUTHENTICATED_RESOURCE"
+          ]
+        },
+        {
+          "account_id": "KAGGLE_PARTNER",
+          "reasons": [
+            "KAGGLE_PARTNER_LIVE_AUTH_UNPROVEN",
+            "KAGGLE_QUOTA_ISOLATED_FROM_C1",
+            "UNAUTHENTICATED_RESOURCE"
+          ]
+        },
+        {
+          "account_id": "LIGHTNING_01",
+          "reasons": [
+            "CURRENT_LIVE_AUTH_NOT_REPROVEN",
+            "UNAUTHENTICATED_RESOURCE"
+          ]
+        },
+        {
+          "account_id": "LOCAL_AG",
+          "reasons": [
+            "LOCAL_MODEL_STORAGE_PROHIBITED",
+            "PROHIBITED_BY_REQUEST"
+          ]
+        },
+        {
+          "account_id": "ORACLE_01",
+          "reasons": [
+            "AUTH_REQUIRED",
+            "UNAUTHENTICATED_RESOURCE"
+          ]
+        }
+      ],
+      "conditional": [],
+      "decision_id": "PD-9a1fc6fa3428a6e22fd1",
+      "dispatch_allowed": true,
+      "requires_capacity_probe": false,
+      "requires_c1_authorization": false,
+      "capacity_confidence": "UNOBSERVED",
+      "GPU_SESSION_STARTED": false,
+      "PAID_ACTIVATION": false
+    },
+    "F": {
+      "request_id": "F",
+      "workload_class": "GPU_BURST",
+      "result_class": "PLACED",
+      "selected_resource": "KAGGLE_C1",
+      "eligible_resources": [
+        "KAGGLE_C1"
+      ],
+      "rejected": [
+        {
+          "account_id": "COLAB_01",
+          "reasons": [
+            "CATALOG_CAPABILITY_NE_ENTITLEMENT",
+            "GOOGLE_AUTH_SETUP_REQUIRED",
+            "UNAUTHENTICATED_RESOURCE"
+          ]
+        },
+        {
+          "account_id": "KAGGLE_PARTNER",
+          "reasons": [
+            "CATALOG_CAPABILITY_NE_ENTITLEMENT",
+            "KAGGLE_PARTNER_LIVE_AUTH_UNPROVEN",
+            "KAGGLE_QUOTA_ISOLATED_FROM_C1",
+            "UNAUTHENTICATED_RESOURCE"
+          ]
+        },
+        {
+          "account_id": "LIGHTNING_01",
+          "reasons": [
+            "CURRENT_LIVE_AUTH_NOT_REPROVEN",
+            "PAID_DEFAULT_DENY",
+            "PAID_GPU_DENIED",
+            "UNAUTHENTICATED_RESOURCE"
+          ]
+        },
+        {
+          "account_id": "LOCAL_AG",
+          "reasons": [
+            "LOCAL_AG_HEAVY_INFERENCE_DENIED",
+            "LOCAL_AG_NO_GPU",
+            "RAM_PRESSURE"
+          ]
+        },
+        {
+          "account_id": "MODAL_01",
+          "reasons": [
+            "PAID_DEFAULT_DENY",
+            "PAID_GPU_DENIED"
+          ]
+        },
+        {
+          "account_id": "ORACLE_01",
+          "reasons": [
+            "AUTH_REQUIRED",
+            "PAID_DEFAULT_DENY",
+            "PAID_GPU_DENIED",
+            "UNAUTHENTICATED_RESOURCE"
+          ]
+        }
+      ],
+      "conditional": [
+        {
+          "account_id": "KAGGLE_C1",
+          "reasons": [
+            "LIVE_SKU_UNOBSERVED",
+            "LIVE_VRAM_UNOBSERVED"
+          ],
+          "auth_state": "REACHABLE"
+        }
+      ],
+      "decision_id": "PD-624b32ae9347512656df",
+      "dispatch_allowed": true,
+      "requires_capacity_probe": false,
+      "requires_c1_authorization": false,
+      "capacity_confidence": "ELIGIBLE_VRAM_UNOBSERVED",
+      "GPU_SESSION_STARTED": false,
+      "PAID_ACTIVATION": false
+    },
+    "G": {
+      "request_id": "G",
+      "workload_class": "LONG_RUNNING_SERVICE",
+      "result_class": "PLACED",
+      "selected_resource": "LOCAL_AG",
+      "eligible_resources": [
+        "LOCAL_AG",
+        "KAGGLE_C1",
+        "MODAL_01"
+      ],
+      "rejected": [
+        {
+          "account_id": "COLAB_01",
+          "reasons": [
+            "GOOGLE_AUTH_SETUP_REQUIRED",
+            "UNAUTHENTICATED_RESOURCE"
+          ]
+        },
+        {
+          "account_id": "KAGGLE_PARTNER",
+          "reasons": [
+            "KAGGLE_PARTNER_LIVE_AUTH_UNPROVEN",
+            "KAGGLE_QUOTA_ISOLATED_FROM_C1",
+            "UNAUTHENTICATED_RESOURCE"
+          ]
+        },
+        {
+          "account_id": "LIGHTNING_01",
+          "reasons": [
+            "CURRENT_LIVE_AUTH_NOT_REPROVEN",
+            "UNAUTHENTICATED_RESOURCE"
+          ]
+        },
+        {
+          "account_id": "ORACLE_01",
+          "reasons": [
+            "AUTH_REQUIRED",
+            "UNAUTHENTICATED_RESOURCE"
+          ]
+        }
+      ],
+      "conditional": [],
+      "decision_id": "PD-89f5765a196ef746be0a",
+      "dispatch_allowed": true,
+      "requires_capacity_probe": false,
+      "requires_c1_authorization": false,
+      "capacity_confidence": "LIVE",
+      "GPU_SESSION_STARTED": false,
+      "PAID_ACTIVATION": false
+    },
+    "H": {
+      "request_id": "H",
+      "workload_class": "GPU_BURST",
+      "result_class": "PLACED",
+      "selected_resource": "KAGGLE_C1",
+      "eligible_resources": [
+        "KAGGLE_C1"
+      ],
+      "rejected": [
+        {
+          "account_id": "COLAB_01",
+          "reasons": [
+            "CATALOG_CAPABILITY_NE_ENTITLEMENT",
+            "GOOGLE_AUTH_SETUP_REQUIRED",
+            "UNAUTHENTICATED_RESOURCE"
+          ]
+        },
+        {
+          "account_id": "KAGGLE_PARTNER",
+          "reasons": [
+            "CATALOG_CAPABILITY_NE_ENTITLEMENT",
+            "KAGGLE_PARTNER_LIVE_AUTH_UNPROVEN",
+            "KAGGLE_QUOTA_ISOLATED_FROM_C1",
+            "UNAUTHENTICATED_RESOURCE"
+          ]
+        },
+        {
+          "account_id": "LIGHTNING_01",
+          "reasons": [
+            "CURRENT_LIVE_AUTH_NOT_REPROVEN",
+            "PAID_DEFAULT_DENY",
+            "PAID_GPU_DENIED",
+            "UNAUTHENTICATED_RESOURCE"
+          ]
+        },
+        {
+          "account_id": "LOCAL_AG",
+          "reasons": [
+            "LOCAL_AG_HEAVY_INFERENCE_DENIED",
+            "LOCAL_AG_NO_GPU",
+            "RAM_PRESSURE"
+          ]
+        },
+        {
+          "account_id": "MODAL_01",
+          "reasons": [
+            "PAID_DEFAULT_DENY",
+            "PAID_GPU_DENIED"
+          ]
+        },
+        {
+          "account_id": "ORACLE_01",
+          "reasons": [
+            "AUTH_REQUIRED",
+            "PAID_DEFAULT_DENY",
+            "PAID_GPU_DENIED",
+            "UNAUTHENTICATED_RESOURCE"
+          ]
+        }
+      ],
+      "conditional": [
+        {
+          "account_id": "KAGGLE_C1",
+          "reasons": [
+            "LIVE_SKU_UNOBSERVED",
+            "LIVE_VRAM_UNOBSERVED"
+          ],
+          "auth_state": "REACHABLE"
+        }
+      ],
+      "decision_id": "PD-a7c4d0306eebc5a91ae9",
+      "dispatch_allowed": true,
+      "requires_capacity_probe": false,
+      "requires_c1_authorization": false,
+      "capacity_confidence": "ELIGIBLE_VRAM_UNOBSERVED",
+      "GPU_SESSION_STARTED": false,
+      "PAID_ACTIVATION": false
+    },
+    "I": {
+      "request_id": "I",
+      "workload_class": "BATCH_CPU",
+      "result_class": "PLACED",
+      "selected_resource": "MODAL_01",
+      "eligible_resources": [
+        "MODAL_01",
+        "KAGGLE_C1"
+      ],
+      "rejected": [
+        {
+          "account_id": "COLAB_01",
+          "reasons": [
+            "GOOGLE_AUTH_SETUP_REQUIRED",
+            "UNAUTHENTICATED_RESOURCE"
+          ]
+        },
+        {
+          "account_id": "KAGGLE_PARTNER",
+          "reasons": [
+            "KAGGLE_PARTNER_LIVE_AUTH_UNPROVEN",
+            "KAGGLE_QUOTA_ISOLATED_FROM_C1",
+            "UNAUTHENTICATED_RESOURCE"
+          ]
+        },
+        {
+          "account_id": "LIGHTNING_01",
+          "reasons": [
+            "CURRENT_LIVE_AUTH_NOT_REPROVEN",
+            "UNAUTHENTICATED_RESOURCE"
+          ]
+        },
+        {
+          "account_id": "LOCAL_AG",
+          "reasons": [
+            "LOCAL_RAM_PRESSURE_BATCH"
+          ]
+        },
+        {
+          "account_id": "ORACLE_01",
+          "reasons": [
+            "AUTH_REQUIRED",
+            "UNAUTHENTICATED_RESOURCE"
+          ]
+        }
+      ],
+      "conditional": [],
+      "decision_id": "PD-66407c3d192975ba538b",
+      "dispatch_allowed": true,
+      "requires_capacity_probe": false,
+      "requires_c1_authorization": false,
+      "capacity_confidence": "UNOBSERVED",
+      "GPU_SESSION_STARTED": false,
+      "PAID_ACTIVATION": false
+    },
+    "J": {
+      "request_id": "J",
+      "workload_class": "GPU_BURST",
+      "result_class": "C1_AUTH_REQUIRED",
+      "selected_resource": null,
+      "eligible_resources": [],
+      "rejected": [
+        {
+          "account_id": "MODAL_01",
+          "reasons": [
+            "C1_AUTH_REQUIRED",
+            "PAID_GPU_DENIED"
+          ]
+        },
+        {
+          "account_id": "KAGGLE_C1",
+          "reasons": [
+            "PROHIBITED_BY_REQUEST"
+          ]
+        },
+        {
+          "account_id": "COLAB_01",
+          "reasons": [
+            "CATALOG_CAPABILITY_NE_ENTITLEMENT",
+            "GOOGLE_AUTH_SETUP_REQUIRED",
+            "UNAUTHENTICATED_RESOURCE"
+          ]
+        },
+        {
+          "account_id": "KAGGLE_PARTNER",
+          "reasons": [
+            "CATALOG_CAPABILITY_NE_ENTITLEMENT",
+            "KAGGLE_PARTNER_LIVE_AUTH_UNPROVEN",
+            "KAGGLE_QUOTA_ISOLATED_FROM_C1",
+            "UNAUTHENTICATED_RESOURCE"
+          ]
+        },
+        {
+          "account_id": "LIGHTNING_01",
+          "reasons": [
+            "C1_AUTH_REQUIRED",
+            "CURRENT_LIVE_AUTH_NOT_REPROVEN",
+            "PAID_GPU_DENIED",
+            "UNAUTHENTICATED_RESOURCE"
+          ]
+        },
+        {
+          "account_id": "LOCAL_AG",
+          "reasons": [
+            "LOCAL_AG_HEAVY_INFERENCE_DENIED",
+            "LOCAL_AG_NO_GPU",
+            "PROHIBITED_BY_REQUEST",
+            "RAM_PRESSURE"
+          ]
+        },
+        {
+          "account_id": "ORACLE_01",
+          "reasons": [
+            "AUTH_REQUIRED",
+            "C1_AUTH_REQUIRED",
+            "PAID_GPU_DENIED",
+            "UNAUTHENTICATED_RESOURCE"
+          ]
+        }
+      ],
+      "conditional": [],
+      "decision_id": "PD-3f5d26bc289b4ca64b4b",
+      "dispatch_allowed": false,
+      "requires_capacity_probe": false,
+      "requires_c1_authorization": true,
+      "capacity_confidence": "UNOBSERVED",
+      "GPU_SESSION_STARTED": false,
+      "PAID_ACTIVATION": false
+    },
+    "K1": {
+      "request_id": "K",
+      "workload_class": "CONTROL",
+      "result_class": "PLACED",
+      "selected_resource": "LOCAL_AG",
+      "eligible_resources": [
+        "LOCAL_AG",
+        "KAGGLE_C1",
+        "MODAL_01"
+      ],
+      "rejected": [
+        {
+          "account_id": "COLAB_01",
+          "reasons": [
+            "GOOGLE_AUTH_SETUP_REQUIRED",
+            "UNAUTHENTICATED_RESOURCE"
+          ]
+        },
+        {
+          "account_id": "KAGGLE_PARTNER",
+          "reasons": [
+            "KAGGLE_PARTNER_LIVE_AUTH_UNPROVEN",
+            "KAGGLE_QUOTA_ISOLATED_FROM_C1",
+            "UNAUTHENTICATED_RESOURCE"
+          ]
+        },
+        {
+          "account_id": "LIGHTNING_01",
+          "reasons": [
+            "CURRENT_LIVE_AUTH_NOT_REPROVEN",
+            "UNAUTHENTICATED_RESOURCE"
+          ]
+        },
+        {
+          "account_id": "ORACLE_01",
+          "reasons": [
+            "AUTH_REQUIRED",
+            "UNAUTHENTICATED_RESOURCE"
+          ]
+        }
+      ],
+      "conditional": [],
+      "decision_id": "PD-79f5defeff5dd0c8549c",
+      "dispatch_allowed": true,
+      "requires_capacity_probe": false,
+      "requires_c1_authorization": false,
+      "capacity_confidence": "LIVE",
+      "GPU_SESSION_STARTED": false,
+      "PAID_ACTIVATION": false
+    },
+    "K2": {
+      "request_id": "K",
+      "workload_class": "CONTROL",
+      "result_class": "PLACED",
+      "selected_resource": "LOCAL_AG",
+      "eligible_resources": [
+        "LOCAL_AG",
+        "KAGGLE_C1",
+        "MODAL_01"
+      ],
+      "rejected": [
+        {
+          "account_id": "COLAB_01",
+          "reasons": [
+            "GOOGLE_AUTH_SETUP_REQUIRED",
+            "UNAUTHENTICATED_RESOURCE"
+          ]
+        },
+        {
+          "account_id": "KAGGLE_PARTNER",
+          "reasons": [
+            "KAGGLE_PARTNER_LIVE_AUTH_UNPROVEN",
+            "KAGGLE_QUOTA_ISOLATED_FROM_C1",
+            "UNAUTHENTICATED_RESOURCE"
+          ]
+        },
+        {
+          "account_id": "LIGHTNING_01",
+          "reasons": [
+            "CURRENT_LIVE_AUTH_NOT_REPROVEN",
+            "UNAUTHENTICATED_RESOURCE"
+          ]
+        },
+        {
+          "account_id": "ORACLE_01",
+          "reasons": [
+            "AUTH_REQUIRED",
+            "UNAUTHENTICATED_RESOURCE"
+          ]
+        }
+      ],
+      "conditional": [],
+      "decision_id": "PD-79f5defeff5dd0c8549c",
+      "dispatch_allowed": true,
+      "requires_capacity_probe": false,
+      "requires_c1_authorization": false,
+      "capacity_confidence": "LIVE",
+      "GPU_SESSION_STARTED": false,
+      "PAID_ACTIVATION": false
+    }
+  },
+  "K_DECISION_IDS_MATCH": true
+}

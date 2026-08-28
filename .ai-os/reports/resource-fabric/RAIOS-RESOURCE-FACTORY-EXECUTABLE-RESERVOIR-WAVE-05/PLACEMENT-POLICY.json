@@ -1,0 +1,150 @@
+{
+  "schema": "raios.resource-placement-policy.v1",
+  "version": "wave04-seed.v1",
+  "decision_order": [
+    "AUTHORITY",
+    "SAFETY",
+    "RESOURCE_FIT",
+    "FREE_QUOTA",
+    "WARM_ASSET_AFFINITY",
+    "LATENCY",
+    "FAILOVER",
+    "PAID_COST"
+  ],
+  "hard_rules": [
+    "DO_NOT_SCHEDULE_ON_UNAUTHENTICATED_ACCOUNT",
+    "DO_NOT_ASSUME_UNOBSERVED_CAPACITY",
+    "DO_NOT_START_GPU_FOR_DISCOVERY",
+    "DO_NOT_USE_PAID_GPU_WITHOUT_C1_AUTHORIZATION",
+    "DO_NOT_STORE_MODEL_WEIGHTS_ON_LOCAL_AG",
+    "DO_NOT_LOAD_HEAVY_MODELS_ON_LOCAL_AG_UNDER_CURRENT_RAM",
+    "DO_NOT_MERGE_KAGGLE_C1_AND_PARTNER_QUOTAS",
+    "DO_NOT_TREAT_AT_LEAST_ONCE_AS_EXACTLY_ONCE",
+    "UNOBSERVED_CAPACITY_NE_ABSENT_CAPACITY",
+    "CATALOG_CAPABILITY_NE_OWNED_ENTITLEMENT"
+  ],
+  "local_ag": {
+    "max_class": "LIGHTWEIGHT",
+    "heavy_inference": "DENY",
+    "reason": "RAM_PRESSURE"
+  },
+  "gpu": {
+    "current_primary": "KAGGLE_C1",
+    "failover": "NONE_PROVEN"
+  },
+  "remote_cpu": {
+    "primary": "MODAL_01",
+    "secondary": "KAGGLE_C1"
+  },
+  "model_storage": {
+    "primary_candidate": "KAGGLE_C1",
+    "backup": "UNPROVEN"
+  },
+  "paid_policy": {
+    "default": "DENY",
+    "override_authority": "C1"
+  },
+  "workload_classes": {
+    "CONTROL": {
+      "gpu": false,
+      "preferred": [
+        "LOCAL_AG"
+      ],
+      "latency": "LOW"
+    },
+    "DISCOVERY": {
+      "gpu": false,
+      "preferred": [
+        "LOCAL_AG",
+        "MODAL_01"
+      ],
+      "must_not_start_gpu": true
+    },
+    "TEST_LIGHT": {
+      "gpu": false,
+      "preferred": [
+        "LOCAL_AG",
+        "MODAL_01"
+      ]
+    },
+    "BATCH_CPU": {
+      "gpu": false,
+      "preferred": [
+        "MODAL_01",
+        "KAGGLE_C1"
+      ]
+    },
+    "GPU_BURST": {
+      "gpu": true,
+      "preferred": [
+        "KAGGLE_C1"
+      ]
+    },
+    "MODEL_STORAGE": {
+      "gpu": false,
+      "preferred": [
+        "KAGGLE_C1"
+      ],
+      "prohibited": [
+        "LOCAL_AG"
+      ],
+      "persistence": true
+    },
+    "MODEL_FACTORY": {
+      "gpu": true,
+      "preferred": [
+        "KAGGLE_C1"
+      ],
+      "failover": "NONE_PROVEN"
+    },
+    "LONG_RUNNING_SERVICE": {
+      "gpu": false,
+      "preferred": [
+        "LOCAL_AG"
+      ],
+      "persistence": true
+    }
+  },
+  "warm_asset_affinity": {
+    "KAGGLE_C1": [
+      "MODEL_STORAGE",
+      "MODEL_FACTORY",
+      "GPU_BURST"
+    ],
+    "MODAL_01": [
+      "REMOTE_CPU",
+      "SHORT_SERVERLESS_JOB",
+      "BATCH_CPU",
+      "TEST_LIGHT",
+      "DISCOVERY"
+    ],
+    "LOCAL_AG": [
+      "CONTROL",
+      "ROUTING",
+      "STATE",
+      "POLICY",
+      "LONG_RUNNING_SERVICE",
+      "DISCOVERY",
+      "TEST_LIGHT"
+    ]
+  },
+  "failover": {
+    "CONTROL": [
+      "LOCAL_AG"
+    ],
+    "GPU": [
+      "KAGGLE_C1"
+    ],
+    "REMOTE_CPU": [
+      "MODAL_01",
+      "KAGGLE_C1"
+    ],
+    "PERSISTENT_STORAGE": [
+      "KAGGLE_C1"
+    ]
+  },
+  "kaggle_quota_isolation": {
+    "KAGGLE_C1": "KAGGLE_C1",
+    "KAGGLE_PARTNER": "KAGGLE_PARTNER"
+  }
+}

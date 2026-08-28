@@ -1,0 +1,107 @@
+{
+  "schema": "raios.resource-factory.reuse.v1",
+  "SUPER_TASK_ID": "RAIOS-RESOURCE-FACTORY-EXECUTABLE-RESERVOIR-WAVE-05",
+  "recorded_at": "2026-08-28T10:20:36.387527+00:00",
+  "rows": [
+    {
+      "EXISTING_COMPONENT": "src/raios/resource_fabric/placement.py",
+      "EXISTING_SYMBOL/API": "decide / placement_request",
+      "REUSED_AS": "numeric fit engine under factory.place",
+      "EXTENSION_REQUIRED": "no; factory wraps and strips catalog VRAM",
+      "DUPLICATE_AVOIDED": "second placement solver"
+    },
+    {
+      "EXISTING_COMPONENT": "src/raios/resource_fabric/census.py",
+      "EXISTING_SYMBOL/API": "collect_world / run_safe_probes",
+      "REUSED_AS": "live world input to factory",
+      "EXTENSION_REQUIRED": "no",
+      "DUPLICATE_AVOIDED": "second census"
+    },
+    {
+      "EXISTING_COMPONENT": "src/raios/resource_fabric/live.py",
+      "EXISTING_SYMBOL/API": "apply_live_overlay / bind_live_accounts",
+      "REUSED_AS": "auth/capacity overlay; ram_avail_gb now copied",
+      "EXTENSION_REQUIRED": "small overlay fields only",
+      "DUPLICATE_AVOIDED": "second live registry"
+    },
+    {
+      "EXISTING_COMPONENT": "src/raios/resource_fabric/adapters.py",
+      "EXISTING_SYMBOL/API": "ADAPTERS",
+      "REUSED_AS": "provider/account registry",
+      "EXTENSION_REQUIRED": "no",
+      "DUPLICATE_AVOIDED": "second provider registry"
+    },
+    {
+      "EXISTING_COMPONENT": "src/raios/resource_fabric/schema.py",
+      "EXISTING_SYMBOL/API": "resource_lease / EXISTING_* constants",
+      "REUSED_AS": "planned lease envelope + provenance refs",
+      "EXTENSION_REQUIRED": "no",
+      "DUPLICATE_AVOIDED": "second lease schema"
+    },
+    {
+      "EXISTING_COMPONENT": "src/raios/resource_fabric/cost.py",
+      "EXISTING_SYMBOL/API": "estimate / price kinds",
+      "REUSED_AS": "cost_class PAID vs quota via catalog prices",
+      "EXTENSION_REQUIRED": "no",
+      "DUPLICATE_AVOIDED": "second cost engine"
+    },
+    {
+      "EXISTING_COMPONENT": "src/raios/command_fabric/lease.py",
+      "EXISTING_SYMBOL/API": "CommandLeaseAdapter",
+      "REUSED_AS": "referenced, not acquired in DRY_RUN",
+      "EXTENSION_REQUIRED": "no",
+      "DUPLICATE_AVOIDED": "second lease system"
+    },
+    {
+      "EXISTING_COMPONENT": "RAIOS/V9/cloud/nomadic/job_ledger.py",
+      "EXISTING_SYMBOL/API": "JobLedger",
+      "REUSED_AS": "job_id/op envelope; not enqueued in DRY_RUN",
+      "EXTENSION_REQUIRED": "no",
+      "DUPLICATE_AVOIDED": "second job ledger"
+    },
+    {
+      "EXISTING_COMPONENT": "RAIOS/V9/cloud/nomadic/work_stealing_scheduler.py",
+      "EXISTING_SYMBOL/API": "WorkStealingScheduler",
+      "REUSED_AS": "scheduler provenance ref only",
+      "EXTENSION_REQUIRED": "no",
+      "DUPLICATE_AVOIDED": "second scheduler"
+    },
+    {
+      "EXISTING_COMPONENT": "RAIOS/V9/cloud/nomadic/provider_contract.py",
+      "EXISTING_SYMBOL/API": "ProviderContract",
+      "REUSED_AS": "nomadic_contract ref",
+      "EXTENSION_REQUIRED": "no",
+      "DUPLICATE_AVOIDED": "second provider contract"
+    },
+    {
+      "EXISTING_COMPONENT": ".ai-os/state/TASKS.json",
+      "EXISTING_SYMBOL/API": "task registry",
+      "REUSED_AS": "task_registry field on dispatch plan",
+      "EXTENSION_REQUIRED": "no",
+      "DUPLICATE_AVOIDED": "second task system"
+    },
+    {
+      "EXISTING_COMPONENT": "src/raios/c1c5/receipts.py",
+      "EXISTING_SYMBOL/API": "receipt_path / idempotency_key",
+      "REUSED_AS": "receipt root + idempotency key; not written in DRY_RUN",
+      "EXTENSION_REQUIRED": "no",
+      "DUPLICATE_AVOIDED": "second receipt system"
+    },
+    {
+      "EXISTING_COMPONENT": "src/raios/resource_fabric/cli.py + RAIOS-RESOURCE.ps1",
+      "EXISTING_SYMBOL/API": "main / RAIOS-RESOURCE",
+      "REUSED_AS": "extended with reservoir/placement/plan/explain",
+      "EXTENSION_REQUIRED": "yes, existing CLI",
+      "DUPLICATE_AVOIDED": "second CLI"
+    },
+    {
+      "EXISTING_COMPONENT": "9Router 0.5.55",
+      "EXISTING_SYMBOL/API": "local routing gateway",
+      "REUSED_AS": "not used for placement authority",
+      "EXTENSION_REQUIRED": "no; not modified",
+      "DUPLICATE_AVOIDED": "9Router-as-scheduler"
+    }
+  ],
+  "NEW_MODULE": "src/raios/resource_fabric/factory.py",
+  "NEW_MODULE_REASON": "no existing executable request/policy/dispatch-plan seam; placement.decide remains planning fit only"
+}
