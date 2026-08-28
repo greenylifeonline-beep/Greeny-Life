@@ -1,0 +1,33 @@
+{
+  "schema": "raios.c5-growth-baseline.v1",
+  "super_task_id": "RAIOS-C5-CONTINUOUS-GROWTH-RESOURCE-LOOP-WAVE-01",
+  "observed_at": "2026-08-28T12:01:01.139307+00:00",
+  "c5_health": {
+    "LIVE": true,
+    "http_status": 200,
+    "status": "ONLINE",
+    "gateway": true,
+    "main_cortex": true,
+    "model": "qwen3:0.6b",
+    "body": {
+      "status": "ONLINE",
+      "gateway": true,
+      "main_cortex": true,
+      "model": "qwen3:0.6b",
+      "timestamp": "2026-08-28T12:00:53.027192+00:00"
+    }
+  },
+  "c5_runtime": "existing http://127.0.0.1:8766 raios_multimodal_gateway",
+  "SECOND_C5": false,
+  "resource_factory_present": true,
+  "naive_placement_accuracy": 0.6296296296296297,
+  "factory_placement_accuracy": 1.0,
+  "currently_schedulable": [
+    "LOCAL_AG",
+    "KAGGLE_C1",
+    "MODAL_01"
+  ],
+  "PAID_RESOURCE_CREATED": false,
+  "GPU_SESSION_STARTED": false,
+  "CANONICAL_HIGH_RISK_SELF_PROMOTION": false
+}

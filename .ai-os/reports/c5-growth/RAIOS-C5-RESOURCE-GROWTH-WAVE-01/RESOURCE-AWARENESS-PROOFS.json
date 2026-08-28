@@ -1,0 +1,161 @@
+{
+  "context": {
+    "schema": "raios.c5-resource-awareness.v1",
+    "seam": "raios.resource_fabric.factory",
+    "SECOND_RESOURCE_REGISTRY": false,
+    "SECOND_C5": false,
+    "NINEROUTER_IS_RESOURCE_AUTHORITY": false,
+    "PAID_RESOURCE_ALLOWED": false,
+    "GPU_SESSION_STARTED": false,
+    "REMOTE_MUTATION": false,
+    "currently_schedulable": [
+      "LOCAL_AG",
+      "KAGGLE_C1",
+      "MODAL_01"
+    ],
+    "gpu_primary": "KAGGLE_C1",
+    "gpu_failover": "NONE_PROVEN",
+    "gpu_failover_proven": false,
+    "remote_cpu_primary": "MODAL_01",
+    "model_storage_primary": "KAGGLE_C1",
+    "model_storage_backup": "UNPROVEN",
+    "accounts": [
+      {
+        "account_id": "LOCAL_AG",
+        "auth": "PROVEN",
+        "gpu_eligibility": "NOT_SUPPORTED",
+        "gpu_sku": "NOT_SUPPORTED",
+        "gpu_vram": "NOT_SUPPORTED",
+        "dispatch_allowed": true,
+        "result_hint": "PROVEN",
+        "quota_account": "LOCAL_AG",
+        "NINEROUTER_IS_RESOURCE_AUTHORITY": false,
+        "CATALOG_NE_ENTITLEMENT": true,
+        "UNOBSERVED_NE_ABSENT": true
+      },
+      {
+        "account_id": "KAGGLE_C1",
+        "auth": "PROVEN",
+        "gpu_eligibility": "PROVEN",
+        "gpu_sku": "UNOBSERVED",
+        "gpu_vram": "UNOBSERVED",
+        "dispatch_allowed": true,
+        "result_hint": "PROVEN",
+        "quota_account": "KAGGLE_C1",
+        "NINEROUTER_IS_RESOURCE_AUTHORITY": false,
+        "CATALOG_NE_ENTITLEMENT": true,
+        "UNOBSERVED_NE_ABSENT": true
+      },
+      {
+        "account_id": "KAGGLE_PARTNER",
+        "auth": "AUTH_REQUIRED",
+        "gpu_eligibility": "AUTH_REQUIRED",
+        "gpu_sku": "UNOBSERVED",
+        "gpu_vram": "UNOBSERVED",
+        "dispatch_allowed": false,
+        "result_hint": "AUTH_REQUIRED",
+        "quota_account": "KAGGLE_PARTNER",
+        "NINEROUTER_IS_RESOURCE_AUTHORITY": false,
+        "CATALOG_NE_ENTITLEMENT": true,
+        "UNOBSERVED_NE_ABSENT": true
+      },
+      {
+        "account_id": "MODAL_01",
+        "auth": "PROVEN",
+        "gpu_eligibility": "UNOBSERVED",
+        "gpu_sku": "UNOBSERVED",
+        "gpu_vram": "UNOBSERVED",
+        "dispatch_allowed": true,
+        "result_hint": "PROVEN",
+        "quota_account": "MODAL_01",
+        "NINEROUTER_IS_RESOURCE_AUTHORITY": false,
+        "CATALOG_NE_ENTITLEMENT": true,
+        "UNOBSERVED_NE_ABSENT": true
+      },
+      {
+        "account_id": "LIGHTNING_01",
+        "auth": "AUTH_REQUIRED",
+        "gpu_eligibility": "AUTH_REQUIRED",
+        "gpu_sku": "UNOBSERVED",
+        "gpu_vram": "UNOBSERVED",
+        "dispatch_allowed": false,
+        "result_hint": "AUTH_REQUIRED",
+        "quota_account": "LIGHTNING_01",
+        "NINEROUTER_IS_RESOURCE_AUTHORITY": false,
+        "CATALOG_NE_ENTITLEMENT": true,
+        "UNOBSERVED_NE_ABSENT": true
+      },
+      {
+        "account_id": "ORACLE_01",
+        "auth": "AUTH_REQUIRED",
+        "gpu_eligibility": "AUTH_REQUIRED",
+        "gpu_sku": "UNOBSERVED",
+        "gpu_vram": "UNOBSERVED",
+        "dispatch_allowed": false,
+        "result_hint": "AUTH_REQUIRED",
+        "quota_account": "ORACLE_01",
+        "NINEROUTER_IS_RESOURCE_AUTHORITY": false,
+        "CATALOG_NE_ENTITLEMENT": true,
+        "UNOBSERVED_NE_ABSENT": true
+      },
+      {
+        "account_id": "COLAB_01",
+        "auth": "AUTH_REQUIRED",
+        "gpu_eligibility": "AUTH_REQUIRED",
+        "gpu_sku": "UNOBSERVED",
+        "gpu_vram": "UNOBSERVED",
+        "dispatch_allowed": false,
+        "result_hint": "AUTH_REQUIRED",
+        "quota_account": "COLAB_01",
+        "NINEROUTER_IS_RESOURCE_AUTHORITY": false,
+        "CATALOG_NE_ENTITLEMENT": true,
+        "UNOBSERVED_NE_ABSENT": true
+      }
+    ],
+    "kaggle_partner_dispatch_allowed": false,
+    "pending_auth": [
+      "KAGGLE_PARTNER",
+      "LIGHTNING_01",
+      "ORACLE_01",
+      "COLAB_01"
+    ]
+  },
+  "contradictions": {
+    "conflicts": [
+      {
+        "projection": "FREE-RESOURCES.json:oracle-primary",
+        "claimed": "PROVEN",
+        "factory": "AUTH_REQUIRED",
+        "winner": "factory.place/live overlay",
+        "STATIC_SNAPSHOT_NE_RUNTIME_AUTHORITY": true
+      }
+    ],
+    "factory_wins": true,
+    "projection_is_source_of_truth": false,
+    "UNOBSERVED_NE_ABSENT": true
+  },
+  "chat_shadow": {
+    "ok": true,
+    "response": "EVIDENCE=NONE_AVAILABLE.",
+    "latency_seconds": 8.072,
+    "attempted": true,
+    "mentions_kaggle_c1": false,
+    "fabricates_oracle_gpu": false,
+    "claims_execution": false
+  },
+  "health": {
+    "LIVE": true,
+    "http_status": 200,
+    "status": "ONLINE",
+    "gateway": true,
+    "main_cortex": true,
+    "model": "qwen3:0.6b",
+    "body": {
+      "status": "ONLINE",
+      "gateway": true,
+      "main_cortex": true,
+      "model": "qwen3:0.6b",
+      "timestamp": "2026-08-28T12:00:53.027192+00:00"
+    }
+  }
+}

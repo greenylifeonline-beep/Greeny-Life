@@ -1,0 +1,251 @@
+{
+  "shadow": {
+    "schema": "raios.c5-resource-awareness.v1",
+    "cases": [
+      {
+        "id": "A",
+        "workload": "CONTROL",
+        "expected": {
+          "selected_resource": "LOCAL_AG",
+          "result_class": "PLACED",
+          "dispatch_allowed": true,
+          "abstain": false
+        },
+        "naive": {
+          "selected_resource": "LOCAL_AG",
+          "result_class": "PLACED",
+          "dispatch_allowed": true,
+          "abstain": false
+        },
+        "seam": {
+          "selected_resource": "LOCAL_AG",
+          "result_class": "PLACED",
+          "dispatch_allowed": true,
+          "abstain": false,
+          "knowledge_state": "PROVEN",
+          "cost_class": "LOCAL_SUNK",
+          "gpu_failover": "NONE_PROVEN",
+          "PAID_RESOURCE_CREATED": false,
+          "GPU_SESSION_STARTED": false
+        },
+        "naive_accuracy": 1.0,
+        "seam_accuracy": 1.0
+      },
+      {
+        "id": "C",
+        "workload": "GPU_BURST",
+        "expected": {
+          "selected_resource": "KAGGLE_C1",
+          "result_class": "PLACED",
+          "dispatch_allowed": true,
+          "abstain": false
+        },
+        "naive": {
+          "selected_resource": "LOCAL_AG",
+          "result_class": "PLACED",
+          "dispatch_allowed": true,
+          "abstain": false
+        },
+        "seam": {
+          "selected_resource": "KAGGLE_C1",
+          "result_class": "PLACED",
+          "dispatch_allowed": true,
+          "abstain": false,
+          "knowledge_state": "PROVEN",
+          "cost_class": "UNPAID_OR_QUOTA",
+          "gpu_failover": "NONE_PROVEN",
+          "PAID_RESOURCE_CREATED": false,
+          "GPU_SESSION_STARTED": false
+        },
+        "naive_accuracy": 0.75,
+        "seam_accuracy": 1.0
+      },
+      {
+        "id": "D",
+        "workload": "GPU_BURST",
+        "expected": {
+          "selected_resource": "KAGGLE_C1",
+          "result_class": "CAPACITY_PROBE_REQUIRED",
+          "dispatch_allowed": false,
+          "abstain": true
+        },
+        "naive": {
+          "selected_resource": "LOCAL_AG",
+          "result_class": "PLACED",
+          "dispatch_allowed": true,
+          "abstain": false
+        },
+        "seam": {
+          "selected_resource": "KAGGLE_C1",
+          "result_class": "CAPACITY_PROBE_REQUIRED",
+          "dispatch_allowed": false,
+          "abstain": true,
+          "knowledge_state": "UNOBSERVED",
+          "cost_class": "UNPAID_OR_QUOTA",
+          "gpu_failover": "NONE_PROVEN",
+          "PAID_RESOURCE_CREATED": false,
+          "GPU_SESSION_STARTED": false
+        },
+        "naive_accuracy": 0.0,
+        "seam_accuracy": 1.0
+      },
+      {
+        "id": "E",
+        "workload": "MODEL_STORAGE",
+        "expected": {
+          "selected_resource": "KAGGLE_C1",
+          "result_class": "PLACED",
+          "dispatch_allowed": true,
+          "abstain": false
+        },
+        "naive": {
+          "selected_resource": "LOCAL_AG",
+          "result_class": "PLACED",
+          "dispatch_allowed": true,
+          "abstain": false
+        },
+        "seam": {
+          "selected_resource": "KAGGLE_C1",
+          "result_class": "PLACED",
+          "dispatch_allowed": true,
+          "abstain": false,
+          "knowledge_state": "PROVEN",
+          "cost_class": "UNPAID_OR_QUOTA",
+          "gpu_failover": "NONE_PROVEN",
+          "PAID_RESOURCE_CREATED": false,
+          "GPU_SESSION_STARTED": false
+        },
+        "naive_accuracy": 0.75,
+        "seam_accuracy": 1.0
+      },
+      {
+        "id": "I",
+        "workload": "BATCH_CPU",
+        "expected": {
+          "selected_resource": "MODAL_01",
+          "result_class": "PLACED",
+          "dispatch_allowed": true,
+          "abstain": false
+        },
+        "naive": {
+          "selected_resource": "LOCAL_AG",
+          "result_class": "PLACED",
+          "dispatch_allowed": true,
+          "abstain": false
+        },
+        "seam": {
+          "selected_resource": "MODAL_01",
+          "result_class": "PLACED",
+          "dispatch_allowed": true,
+          "abstain": false,
+          "knowledge_state": "PROVEN",
+          "cost_class": "SERVERLESS_UNACTIVATED",
+          "gpu_failover": "NONE_PROVEN",
+          "PAID_RESOURCE_CREATED": false,
+          "GPU_SESSION_STARTED": false
+        },
+        "naive_accuracy": 0.75,
+        "seam_accuracy": 1.0
+      },
+      {
+        "id": "J",
+        "workload": "GPU_BURST",
+        "expected": {
+          "selected_resource": null,
+          "result_class": "C1_AUTH_REQUIRED",
+          "dispatch_allowed": false,
+          "abstain": true
+        },
+        "naive": {
+          "selected_resource": "LOCAL_AG",
+          "result_class": "PLACED",
+          "dispatch_allowed": true,
+          "abstain": false
+        },
+        "seam": {
+          "selected_resource": null,
+          "result_class": "C1_AUTH_REQUIRED",
+          "dispatch_allowed": false,
+          "abstain": true,
+          "knowledge_state": "NOT_SUPPORTED",
+          "cost_class": "UNKNOWN",
+          "gpu_failover": "NONE_PROVEN",
+          "PAID_RESOURCE_CREATED": false,
+          "GPU_SESSION_STARTED": false
+        },
+        "naive_accuracy": 0.0,
+        "seam_accuracy": 1.0
+      },
+      {
+        "id": "DISC",
+        "workload": "DISCOVERY",
+        "expected": {
+          "selected_resource": "LOCAL_AG",
+          "result_class": "PLACED",
+          "dispatch_allowed": true,
+          "abstain": false
+        },
+        "naive": {
+          "selected_resource": "LOCAL_AG",
+          "result_class": "PLACED",
+          "dispatch_allowed": true,
+          "abstain": false
+        },
+        "seam": {
+          "selected_resource": "LOCAL_AG",
+          "result_class": "PLACED",
+          "dispatch_allowed": true,
+          "abstain": false,
+          "knowledge_state": "PROVEN",
+          "cost_class": "LOCAL_SUNK",
+          "gpu_failover": "NONE_PROVEN",
+          "PAID_RESOURCE_CREATED": false,
+          "GPU_SESSION_STARTED": false
+        },
+        "naive_accuracy": 1.0,
+        "seam_accuracy": 1.0
+      }
+    ],
+    "before_hits": 17,
+    "after_hits": 27,
+    "field_total": 27,
+    "before_accuracy": 0.6296296296296297,
+    "after_accuracy": 1.0,
+    "gain": 0.37037037037037035,
+    "SECOND_RESOURCE_REGISTRY": false,
+    "PAID_RESOURCE_CREATED": false,
+    "GPU_SESSION_STARTED": false
+  },
+  "samples": {
+    "gpu_burst": {
+      "selected_resource": "KAGGLE_C1",
+      "result_class": "PLACED",
+      "abstain": false,
+      "cost_class": "UNPAID_OR_QUOTA",
+      "capacity_confidence": "ELIGIBLE_VRAM_UNOBSERVED",
+      "gpu_failover": "NONE_PROVEN"
+    },
+    "vram": {
+      "selected_resource": "KAGGLE_C1",
+      "result_class": "CAPACITY_PROBE_REQUIRED",
+      "abstain": true,
+      "knowledge_state": "UNOBSERVED"
+    },
+    "paid": {
+      "selected_resource": null,
+      "result_class": "C1_AUTH_REQUIRED",
+      "abstain": true,
+      "requires_c1_authorization": true
+    },
+    "storage": {
+      "selected_resource": "KAGGLE_C1",
+      "result_class": "PLACED",
+      "dispatch_allowed": true
+    },
+    "cpu": {
+      "selected_resource": "MODAL_01",
+      "result_class": "PLACED",
+      "cost_class": "SERVERLESS_UNACTIVATED"
+    }
+  }
+}

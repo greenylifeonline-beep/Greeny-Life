@@ -252,7 +252,7 @@ class ResourceFactory(unittest.TestCase):
         import io
         from contextlib import redirect_stdout
 
-        for cmd in ("reservoir", "placement", "plan", "explain"):
+        for cmd in ("reservoir", "placement", "plan", "explain", "c5-awareness"):
             buf = io.StringIO()
             with redirect_stdout(buf):
                 code = main([cmd, "--no-probe", "-Workload", "CONTROL"])

@@ -5,6 +5,7 @@ from .adapters import ADAPTERS
 from .census import collect_world, run_safe_probes, snapshots
 from .live import bind_live_accounts
 from .factory import place, plan_dispatch, reservoir_view, resource_request
+from .c5_awareness import reason as c5_reason, resource_context
 
 __all__ = [
     "SCHEMA",
@@ -19,4 +20,6 @@ __all__ = [
     "plan_dispatch",
     "reservoir_view",
     "resource_request",
+    "c5_reason",
+    "resource_context",
 ]

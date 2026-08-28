@@ -10,6 +10,7 @@ from typing import Any
 
 from .census import collect_world, run_safe_probes, snapshots, status_view, write_package
 from .factory import evaluate_workload, explain, place, plan_dispatch, reservoir_view, resource_request
+from .c5_awareness import reason as c5_reason, resource_context
 from .live import build_wave02_views, write_wave02_package
 from .placement import decide, placement_request, recompose_v2
 from .secrets import assert_no_secrets, mask_record
@@ -92,6 +93,8 @@ def main(argv: list[str] | None = None) -> int:
         "census": snaps["RESOURCE-CENSUS.json"],
         "reservoir": reservoir_view(world),
         "failover": reservoir_view(world).get("gpu_pool"),
+        "c5-awareness": resource_context(world),
+        "c5-reason": None,
     }
     if cmd in {"placement", "evaluate", "plan", "explain"}:
         req = _load_request(args)
@@ -119,6 +122,15 @@ def main(argv: list[str] | None = None) -> int:
         if cmd == "evaluate":
             return _emit(packed, human=args.human, json_mode=args.json_mode)
         return _emit(decision, human=args.human, json_mode=args.json_mode)
+    if cmd in {"c5-reason", "c5-awareness"}:
+        if cmd == "c5-awareness":
+            return _emit(resource_context(world), human=args.human, json_mode=args.json_mode)
+        req = _load_request(args)
+        rec = c5_reason(req.get("workload_class") or "CONTROL", world, **{k: req[k] for k in req if k not in {"schema", "kind", "placement_fit", "workload_class"}})
+        rec.pop("decision", None)
+        rec.pop("plan", None)
+        rec.pop("explain", None)
+        return _emit(rec, human=args.human, json_mode=args.json_mode)
     if cmd == "write-package":
         write_package(PACKAGE, snaps)
         return _emit({"PACKAGE": str(PACKAGE), "FILES": sorted(snaps)}, human=args.human, json_mode=args.json_mode)
