@@ -1,0 +1,52 @@
+﻿{
+  "schema": "raios.precanonical.closeout.v1",
+  "observation_scope": "current-primary",
+  "observed_head": "bf756c917cb9f2205aa6277b673d26abc1b8459f",
+
+  "d059": {
+    "status": "CLOSED",
+    "qwen_assimilation_proven": true,
+    "granite_assimilation_proven": true,
+    "source_independent_assimilation": true,
+    "assimilation_segment_proven": true,
+    "authenticated_orchestration_proven": true,
+
+    "assimilation_commit": "bf756c917cb9f2205aa6277b673d26abc1b8459f",
+    "gl005_commit": "3ac6a7c886b396eef0225d617cbad3f22a10c846",
+
+    "historical_gl005_flag_overwritten": false,
+    "historical_d059_snapshots_overwritten": false
+  },
+
+  "tree001": {
+    "status": "CLOSED",
+    "terminal_state": "CANONICAL_RECOVERY_ASSET",
+    "commit": "a72841064c7ba22b98d11b2776986cf1755428d5",
+    "canonical_asset": "C:\Users\Ghanam\Desktop\RAIOS-C3-EXECUTION-PACK\RAIOS-TREE001.bundle",
+    "sha256": "AA999AA872234E2694B21F74E0FDAA8B4BCE03F5CB90B944DB02AE125BC6532C",
+    "bundle_verify_pass": true,
+    "total_bundle_refs": 68,
+    "required_recovery_refs_accounted": "16/16",
+    "unknown": 0,
+    "unresolved": 0,
+    "competing_primary": 0
+  },
+
+  "known_non_blocking_defects": [
+    {
+      "id": "CLI-CONSULT-ASSIMILATED-REACHABILITY",
+      "status": "OPEN",
+      "classification": "NON_BLOCKING",
+      "reason": "rich parser exposes --consult-assimilated but active fallback parser does not"
+    }
+  ],
+
+  "governance": {
+    "whole_historical_assimilation_branch_merged": false,
+    "old_ccee_resurrected": false,
+    "old_wave_resurrected": false,
+    "old_parallel_resurrected": false,
+    "history_rewrite": false,
+    "force_push": false
+  }
+}
