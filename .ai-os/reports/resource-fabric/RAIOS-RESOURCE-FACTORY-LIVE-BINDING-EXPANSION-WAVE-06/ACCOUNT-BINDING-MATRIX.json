@@ -1,0 +1,54 @@
+{
+  "schema": "raios.wave06.account-binding-matrix.v1",
+  "REDACTED": true,
+  "RF_C5_12": "BLOCKED_BY_GOVERNED_CHANNEL",
+  "RESOURCE_FACTORY_REUSED": true,
+  "SECOND_RESOURCE_REGISTRY_CREATED": false,
+  "PAID_RESOURCE_CREATED": false,
+  "GPU_SESSION_STARTED": false,
+  "KAGGLE_QUOTAS_MERGED": false,
+  "accounts": {
+    "LOCAL_AG": {
+      "AUTH_RESULT": "REACHABLE",
+      "IDENTITY_PROOF": "LOCAL_CONTROL_PLANE",
+      "authenticated_for_dispatch": true,
+      "REDACTED": true
+    },
+    "KAGGLE_C1": {
+      "AUTH_RESULT": "REACHABLE",
+      "IDENTITY_PROOF": "greenylife",
+      "authenticated_for_dispatch": true,
+      "REDACTED": true
+    },
+    "KAGGLE_PARTNER": {
+      "AUTH_RESULT": "SEPARATE_PROFILE_CANDIDATE_PRESENT",
+      "IDENTITY_PROOF": "UNOBSERVED",
+      "authenticated_for_dispatch": false,
+      "REDACTED": true
+    },
+    "LIGHTNING_01": {
+      "AUTH_RESULT": "REACHABLE",
+      "IDENTITY_PROOF": "greenylifeonline-org",
+      "authenticated_for_dispatch": true,
+      "REDACTED": true
+    },
+    "MODAL_01": {
+      "AUTH_RESULT": "REACHABLE_CREDENTIAL_PRESENT",
+      "IDENTITY_PROOF": "profile:greenylife-online",
+      "authenticated_for_dispatch": true,
+      "REDACTED": true
+    },
+    "ORACLE_01": {
+      "AUTH_RESULT": "AUTH_REQUIRED",
+      "IDENTITY_PROOF": "UNOBSERVED",
+      "authenticated_for_dispatch": false,
+      "REDACTED": true
+    },
+    "COLAB_01": {
+      "AUTH_RESULT": "AUTH_REQUIRED",
+      "IDENTITY_PROOF": "UNOBSERVED",
+      "authenticated_for_dispatch": false,
+      "REDACTED": true
+    }
+  }
+}

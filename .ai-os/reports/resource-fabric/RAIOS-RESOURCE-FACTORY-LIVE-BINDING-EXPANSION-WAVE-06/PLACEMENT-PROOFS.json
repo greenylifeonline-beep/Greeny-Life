@@ -1,0 +1,25 @@
+{
+  "GPU_BURST": {
+    "selected": "KAGGLE_C1",
+    "result_class": "PLACED",
+    "gpu_failover": "NONE_PROVEN",
+    "dispatch_allowed": true
+  },
+  "BATCH_CPU": {
+    "selected": "MODAL_01",
+    "result_class": "PLACED",
+    "eligible": ["MODAL_01", "KAGGLE_C1", "LIGHTNING_01"]
+  },
+  "MODEL_STORAGE": {
+    "selected": "KAGGLE_C1",
+    "result_class": "PLACED"
+  },
+  "DISCOVERY": {
+    "GPU_SESSION_STARTED": false,
+    "gpu_required": false
+  },
+  "currently_schedulable": ["LOCAL_AG", "KAGGLE_C1", "MODAL_01", "LIGHTNING_01"],
+  "kaggle_partner_dispatch_allowed": false,
+  "RF_C5_12": "BLOCKED_BY_GOVERNED_CHANNEL",
+  "REDACTED": true
+}

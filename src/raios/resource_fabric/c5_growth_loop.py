@@ -542,7 +542,7 @@ def run_wave(world: dict[str, Any] | None = None, *, live_c5: bool = True) -> di
             actual_gain=None,
             evidence="HANDOFF.md",
             promotion_state="DISCOVERED",
-            blocked_by="C1_C5_CHANNEL_LOCK;C6_ENGINE_CONSOLIDATION",
+            blocked_by="BLOCKED_BY_GOVERNED_CHANNEL",
             record={
                 "CAPABILITY": "Ground C5 HTTP turns with factory.resource_context",
                 "CURRENT_BEHAVIOR": "C1-C5 channel grounding does not include Resource Factory",

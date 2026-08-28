@@ -20,10 +20,18 @@ from typing import Any
 from .cost import estimate
 from .observations import observation
 from .placement import MODEL_WEIGHTS_LOCAL, recompose_v2
-from .schema import UNKNOWN, credit, price, quota, utc
+from .schema import UNKNOWN, UNOBSERVED, credit, price, quota, utc
 from .secrets import assert_no_secrets, mask_record
 
 HOME = Path.home()
+C1_KAGGLE_DIR = HOME / ".kaggle"
+WAVE06_PACKAGE = (
+    Path(__file__).resolve().parents[3]
+    / ".ai-os"
+    / "reports"
+    / "resource-fabric"
+    / "RAIOS-RESOURCE-FACTORY-LIVE-BINDING-EXPANSION-WAVE-06"
+)
 TARGET_ACCOUNTS = (
     "ORACLE_01",
     "KAGGLE_C1",
@@ -59,6 +67,78 @@ def _exists(path: Path) -> bool:
         return path.exists()
     except OSError:
         return False
+
+
+def _is_c1_kaggle_dir(path: Path) -> bool:
+    try:
+        return path.resolve() == C1_KAGGLE_DIR.resolve()
+    except OSError:
+        return False
+
+
+def _sha256_file(path: Path) -> Any:
+    if not path.is_file():
+        return None
+    return hashlib.sha256(path.read_bytes()).hexdigest()
+
+
+def _partner_env_dir() -> Path | None:
+    for name in ("KAGGLE_CONFIG_DIR_B", "KAGGLE_PARTNER_CONFIG"):
+        raw = os.environ.get(name)
+        if not raw:
+            continue
+        p = Path(raw)
+        if p.is_file():
+            p = p.parent
+        if _is_c1_kaggle_dir(p):
+            continue
+        return p
+    raw = os.environ.get("KAGGLE_CONFIG_B")
+    if not raw:
+        return None
+    p = Path(raw)
+    if p.is_file():
+        p = p.parent
+    if _is_c1_kaggle_dir(p):
+        return None
+    return p
+
+
+def _partner_candidate_dirs() -> list[Path]:
+    seen: set[str] = set()
+    out: list[Path] = []
+    temp = Path(os.environ.get("TEMP") or os.environ.get("TMP") or (HOME / "AppData" / "Local" / "Temp"))
+    candidates: list[Path] = []
+    envd = _partner_env_dir()
+    if envd is not None:
+        candidates.append(envd)
+    candidates.extend((HOME / ".kaggle-partner", HOME / ".kaggle_b", temp / ".kaggle"))
+    for p in candidates:
+        if _is_c1_kaggle_dir(p):
+            continue
+        try:
+            key = str(p.resolve())
+        except OSError:
+            key = str(p)
+        if key in seen:
+            continue
+        seen.add(key)
+        out.append(p)
+    return out
+
+
+def _chrome_kaggle_profile_hint() -> Path:
+    return (
+        HOME
+        / "AppData"
+        / "Local"
+        / "Google"
+        / "Chrome"
+        / "User Data"
+        / "Profile 5"
+        / "IndexedDB"
+        / "https_www.kaggle.com_0.indexeddb.leveldb"
+    )
 
 
 def _tcp(host: str, port: int, timeout: float = 2.0) -> str:
@@ -153,10 +233,24 @@ def discover_auth() -> list[dict[str, Any]]:
         {
             "account_id": "KAGGLE_PARTNER",
             "provider": "KAGGLE",
-            "credential_ref": "env:KAGGLE_CONFIG_B",
-            "auth_method": "ENV_REFERENCE",
-            "session_state": "ENV_PRESENT" if _env_on("KAGGLE_CONFIG_B") else "AUTH_REQUIRED",
+            "credential_ref": "env:KAGGLE_CONFIG_DIR_B",
+            "auth_method": "ISOLATED_KAGGLE_PROFILE",
+            "session_state": (
+                "CREDENTIAL_FILE_PRESENT"
+                if any(
+                    (d / name).is_file()
+                    for d in _partner_candidate_dirs()
+                    for name in ("credentials.json", "kaggle.json")
+                )
+                else (
+                    "SEPARATE_PROFILE_CANDIDATE_PRESENT"
+                    if any(d.is_dir() for d in _partner_candidate_dirs()) or _chrome_kaggle_profile_hint().exists()
+                    else "AUTH_REQUIRED"
+                )
+            ),
             "isolated_from": "KAGGLE_C1",
+            "copied_from_c1": False,
+            "C1_KAGGLE_DIR_REFUSED": True,
         },
         {
             "account_id": "ORACLE_01",
@@ -276,6 +370,13 @@ def _probe_kaggle_c1() -> dict[str, Any]:
             "active_session_gpu": active,
             "account_eligible_gpu": gpu.get("remaining") not in (UNKNOWN, None) and float(gpu.get("remaining") or 0) > 0,
             "current_allocatable_gpu": UNKNOWN,
+            "accelerator_types": [n for n, q in (("GPU", gpu), ("TPU", tpu)) if q.get("limit") not in (UNKNOWN, None, "")],
+            "gpu_sku": UNOBSERVED,
+            "gpu_vram": UNOBSERVED,
+            "IDENTITY_PROOF": rec.get("username_bound") or UNOBSERVED,
+            "AUTH_RESULT": "REACHABLE" if quota_out.get("ok") or cfg.get("ok") else "PARTIAL",
+            "QUOTA_RESULT": {"gpu": gpu, "tpu": tpu, "dataset_count": ds_count, "dataset_used_bytes": used_bytes},
+            "REDACTED": True,
             "paid": False,
         }
     )
@@ -348,8 +449,20 @@ def _probe_lightning() -> dict[str, Any]:
             "studio_count": studios,
             "jobs": jobs,
             "deployments": deployments,
-            "gpu_model": UNKNOWN,
-            "current_allocatable_gpu": UNKNOWN,
+            "gpu_model": UNOBSERVED,
+            "gpu_sku": UNOBSERVED,
+            "gpu_vram": UNOBSERVED,
+            "current_allocatable_gpu": UNOBSERVED,
+            "account_eligible_gpu": False,
+            "IDENTITY_PROOF": org_name if org_name not in (UNKNOWN, None, "") else UNOBSERVED,
+            "AUTH_RESULT": "REACHABLE" if orgs.get("http") == 200 else "PARTIAL",
+            "QUOTA_RESULT": {
+                "credits_remaining": balance,
+                "storage_used_bytes": used_bytes,
+                "free_storage_bytes": free_store,
+                "studio_count": studios,
+            },
+            "REDACTED": True,
             "paid": False,
         }
     )
@@ -371,12 +484,185 @@ def _probe_modal_presence() -> dict[str, Any]:
         rec["token_fields_present"] = bool(sections) and bool(cp.get(sections[0], "token_id", fallback="")) and bool(
             cp.get(sections[0], "token_secret", fallback="")
         )
-        rec["status"] = "PARTIAL"
+        rec["status"] = "REACHABLE_CREDENTIAL_PRESENT" if rec["token_fields_present"] else "PARTIAL"
         rec["reason"] = "TOKEN_FILE_PRESENT_SDK_NOT_USED"
+        rec["gpu_catalog"] = list(MODAL_CATALOG_GPU_SEC)
+        rec["gpu_entitlement"] = UNOBSERVED
+        rec["gpu_sku"] = UNOBSERVED
+        rec["gpu_vram"] = UNOBSERVED
+        rec["IDENTITY_PROOF"] = f"profile:{rec['profile']}" if rec.get("profile") not in (UNKNOWN, None, "") else UNOBSERVED
+        rec["AUTH_RESULT"] = rec["status"]
+        rec["QUOTA_RESULT"] = {}
+        rec["REDACTED"] = True
         rec["paid"] = False
     except Exception as exc:
         rec["status"] = "PARTIAL"
         rec["reason"] = type(exc).__name__
+    return rec
+
+
+def _probe_kaggle_partner(*, live: bool = True) -> dict[str, Any]:
+    """Never uses %USERPROFILE%\\.kaggle. Does not copy or merge C1 credentials."""
+    rec: dict[str, Any] = {
+        "account_id": "KAGGLE_PARTNER",
+        "status": "AUTH_REQUIRED",
+        "isolated_from": "KAGGLE_C1",
+        "copied_from_c1": False,
+        "distinct_from_c1": False,
+        "live_auth_proven": False,
+        "browser_profile_is_not_cli_credential": True,
+        "C1_KAGGLE_DIR_REFUSED": True,
+        "IDENTITY_PROOF": UNOBSERVED,
+        "AUTH_RESULT": "AUTH_REQUIRED",
+        "QUOTA_RESULT": {},
+        "REDACTED": True,
+        "PROFILE_LABEL": "KAGGLE_PARTNER",
+        "gpu_sku": UNOBSERVED,
+        "gpu_vram": UNOBSERVED,
+        "account_eligible_gpu": False,
+    }
+    chrome = _chrome_kaggle_profile_hint()
+    rec["browser_profile_hint_present"] = chrome.exists()
+    dirs = _partner_candidate_dirs()
+    rec["candidate_dir_present"] = any(d.is_dir() for d in dirs)
+    cred_files = [d / name for d in dirs for name in ("credentials.json", "kaggle.json") if (d / name).is_file()]
+    c1_cred = C1_KAGGLE_DIR / "credentials.json"
+    c1_legacy = C1_KAGGLE_DIR / "kaggle.json"
+    c1_hashes = {h for h in (_sha256_file(c1_cred), _sha256_file(c1_legacy)) if h}
+    partner_hashes = []
+    for f in cred_files:
+        digest = _sha256_file(f)
+        if digest:
+            partner_hashes.append(digest)
+            if digest in c1_hashes:
+                rec["copied_from_c1"] = True
+    rec["credential_file_present"] = bool(cred_files)
+    if rec["copied_from_c1"]:
+        rec["status"] = "NOT_DISTINCT_FROM_C1"
+        rec["AUTH_RESULT"] = rec["status"]
+        rec["distinct_from_c1"] = False
+        rec["live_auth_proven"] = False
+        return rec
+    if rec["credential_file_present"] and live:
+        target = cred_files[0].parent
+        if _is_c1_kaggle_dir(target):
+            rec["status"] = "AUTH_REQUIRED"
+            rec["AUTH_RESULT"] = rec["status"]
+            rec["reason"] = "REFUSED_C1_KAGGLE_DIR"
+            return rec
+        env = os.environ.copy()
+        env.pop("KAGGLE_CONFIG_DIR", None)
+        env["KAGGLE_CONFIG_DIR"] = str(target)
+        cfg = _run_cli(["kaggle", "config", "view"], timeout=20, env=env)
+        quota_out = _run_cli(["kaggle", "quota", "--format", "json"], timeout=25, env=env)
+        if not quota_out.get("ok"):
+            quota_out = _run_cli(["kaggle", "quota"], timeout=25, env=env)
+        identity = UNOBSERVED
+        stdout = cfg.get("stdout") or ""
+        if cfg.get("ok"):
+            m = re.search(r"(?im)^username\s*[:=]\s*(\S+)", stdout)
+            if m:
+                identity = m.group(1)
+            elif "greenylife" in stdout and stdout.strip():
+                identity = "greenylife"
+        rec["IDENTITY_PROOF"] = identity
+        c1_identity = "greenylife"
+        if identity not in (UNOBSERVED, UNKNOWN, None, "") and identity != c1_identity:
+            rec["distinct_from_c1"] = True
+        if identity == c1_identity:
+            rec["distinct_from_c1"] = False
+            rec["status"] = "NOT_DISTINCT_FROM_C1"
+            rec["AUTH_RESULT"] = rec["status"]
+            rec["live_auth_proven"] = False
+            return rec
+        if rec["distinct_from_c1"] and (quota_out.get("ok") or cfg.get("ok")):
+            rec["status"] = "REACHABLE"
+            rec["live_auth_proven"] = True
+            rec["AUTH_RESULT"] = "REACHABLE"
+            rec["QUOTA_RESULT"] = {"quota_ok": bool(quota_out.get("ok"))}
+            return rec
+        rec["status"] = "PARTIAL"
+        rec["AUTH_RESULT"] = "PARTIAL"
+        rec["live_auth_proven"] = False
+        return rec
+    if rec["credential_file_present"]:
+        rec["status"] = "PARTIAL"
+        rec["AUTH_RESULT"] = "PARTIAL"
+        rec["reason"] = "CREDENTIAL_FILE_PRESENT_LIVE_PROBE_SKIPPED"
+        return rec
+    if rec["candidate_dir_present"] or rec["browser_profile_hint_present"]:
+        rec["status"] = "SEPARATE_PROFILE_CANDIDATE_PRESENT"
+        rec["AUTH_RESULT"] = "SEPARATE_PROFILE_CANDIDATE_PRESENT"
+        rec["live_auth_proven"] = False
+        rec["distinct_from_c1"] = False
+        return rec
+    rec["status"] = "AUTH_REQUIRED"
+    rec["AUTH_RESULT"] = "AUTH_REQUIRED"
+    return rec
+
+
+def _probe_oracle() -> dict[str, Any]:
+    cfg = HOME / ".oci" / "config"
+    rec: dict[str, Any] = {
+        "account_id": "ORACLE_01",
+        "status": "AUTH_REQUIRED",
+        "cli_present": bool(shutil.which("oci")),
+        "config_present": cfg.is_file(),
+        "catalog_ne_entitlement": True,
+        "gpu_sku": UNOBSERVED,
+        "gpu_vram": UNOBSERVED,
+        "IDENTITY_PROOF": UNOBSERVED,
+        "AUTH_RESULT": "AUTH_REQUIRED",
+        "QUOTA_RESULT": {},
+        "REDACTED": True,
+        "PROFILE_LABEL": "ORACLE_01",
+        "account_eligible_gpu": False,
+    }
+    if not cfg.is_file():
+        rec["reason"] = "OCI_CONFIG_ABSENT"
+        return rec
+    if not rec["cli_present"]:
+        rec["status"] = "PARTIAL"
+        rec["AUTH_RESULT"] = "PARTIAL"
+        rec["reason"] = "OCI_CONFIG_PRESENT_CLI_ABSENT"
+        return rec
+    ns = _run_cli(["oci", "os", "ns", "get"], timeout=20)
+    if ns.get("ok"):
+        rec["status"] = "REACHABLE"
+        rec["AUTH_RESULT"] = "REACHABLE"
+        rec["IDENTITY_PROOF"] = "oci-namespace-observed"
+        rec["live_auth_proven"] = True
+    else:
+        rec["status"] = "PARTIAL"
+        rec["AUTH_RESULT"] = "PARTIAL"
+        rec["reason"] = "OCI_NAMESPACE_PROBE_FAILED"
+    return rec
+
+
+def _probe_colab() -> dict[str, Any]:
+    adc_paths = [
+        HOME / "AppData" / "Roaming" / "gcloud" / "application_default_credentials.json",
+        HOME / ".config" / "gcloud" / "application_default_credentials.json",
+    ]
+    adc_present = any(p.is_file() for p in adc_paths)
+    rec: dict[str, Any] = {
+        "account_id": "COLAB_01",
+        "status": "AUTH_REQUIRED",
+        "GOOGLE_AUTH": "ADC_PRESENT" if adc_present else "ABSENT",
+        "GOOGLE_CLOUD_ACCESS": UNOBSERVED,
+        "COLAB_ACCESS": UNOBSERVED,
+        "COLAB_GPU_ENTITLEMENT": UNOBSERVED,
+        "gcloud_cli": bool(shutil.which("gcloud")),
+        "IDENTITY_PROOF": UNOBSERVED,
+        "AUTH_RESULT": "AUTH_REQUIRED",
+        "QUOTA_RESULT": {},
+        "REDACTED": True,
+        "PROFILE_LABEL": "COLAB_01",
+        "gpu_sku": UNOBSERVED,
+        "gpu_vram": UNOBSERVED,
+        "account_eligible_gpu": False,
+        "ADC_NE_COLAB_ACCESS": True,
+    }
     return rec
 
 
@@ -475,22 +761,24 @@ def run_live_probes(*, live: bool = True) -> dict[str, Any]:
         probes["KAGGLE_C1"] = _iso("KAGGLE_C1", _probe_kaggle_c1)
         probes["LIGHTNING_01"] = _iso("LIGHTNING_01", _probe_lightning)
         probes["MODAL_01"] = _iso("MODAL_01", _probe_modal_presence)
+        probes["ORACLE_01"] = _iso("ORACLE_01", _probe_oracle)
     else:
         probes["KAGGLE_C1"] = {"account_id": "KAGGLE_C1", "status": "SKIPPED"}
         probes["LIGHTNING_01"] = {"account_id": "LIGHTNING_01", "status": "SKIPPED"}
         probes["MODAL_01"] = {"account_id": "MODAL_01", "status": "SKIPPED"}
-    probes["KAGGLE_PARTNER"] = {
-        "account_id": "KAGGLE_PARTNER",
-        "status": "AUTH_REQUIRED" if by_id["KAGGLE_PARTNER"]["session_state"] == "AUTH_REQUIRED" else "PARTIAL",
-        "isolated_from": "KAGGLE_C1",
-        "copied_from_c1": False,
-    }
-    probes["ORACLE_01"] = {"account_id": "ORACLE_01", "status": by_id["ORACLE_01"]["session_state"]}
-    probes["COLAB_01"] = {"account_id": "COLAB_01", "status": by_id["COLAB_01"]["session_state"]}
+        probes["ORACLE_01"] = {"account_id": "ORACLE_01", "status": by_id["ORACLE_01"]["session_state"]}
+    probes["KAGGLE_PARTNER"] = _iso("KAGGLE_PARTNER", lambda: _probe_kaggle_partner(live=live))
+    probes["COLAB_01"] = _iso("COLAB_01", _probe_colab)
     now = _now()
+    verified_ok = {
+        "REACHABLE",
+        "PARTIAL",
+        "REACHABLE_CREDENTIAL_PRESENT",
+        "SEPARATE_PROFILE_CANDIDATE_PRESENT",
+    }
     for row in auth:
         live_rec = probes.get(row["account_id"]) or {}
-        if live_rec.get("status") in {"REACHABLE", "PARTIAL"}:
+        if live_rec.get("status") in verified_ok:
             row["last_verified"] = now
             row["session_state"] = live_rec.get("status")
     payload = mask_record({"auth": auth, "probes": probes, "observed_at": now, "PAID_RESOURCE_CREATED": False})
@@ -513,7 +801,14 @@ def apply_live_overlay(world: dict[str, Any], live_state: dict[str, Any]) -> dic
             status = "PARTIAL"
         if status in {"CONFIG_PRESENT", "CREDENTIAL_FILE_PRESENT", "ENV_PRESENT"}:
             status = "PARTIAL"
+        if aid == "MODAL_01" and (pr.get("token_fields_present") or status == "REACHABLE_CREDENTIAL_PRESENT"):
+            if status != "REACHABLE":
+                status = "REACHABLE_CREDENTIAL_PRESENT"
         if status == "FILE_ABSENT_NOT_PROOF_OF_NO_AUTH":
+            status = "AUTH_REQUIRED"
+        if status == "SEPARATE_PROFILE_CANDIDATE_PRESENT":
+            status = "PARTIAL"
+        if status == "NOT_DISTINCT_FROM_C1":
             status = "AUTH_REQUIRED"
         acc["status"] = status
         acc["auth_method"] = au.get("auth_method") or pr.get("auth_method") or UNKNOWN
@@ -525,15 +820,32 @@ def apply_live_overlay(world: dict[str, Any], live_state: dict[str, Any]) -> dic
         if aid == "KAGGLE_C1" and pr.get("username_bound") == "greenylife":
             acc["plan"] = "KAGGLE_FREE_OR_STANDARD"
             acc["free_tier_status"] = "GPU_QUOTA_OBSERVED"
+            acc["accelerator_types"] = pr.get("accelerator_types") or []
         if aid == "LIGHTNING_01" and pr.get("status") == "REACHABLE":
             acc["plan"] = "LIGHTNING_PERSONAL_ORG"
             acc["billing_mode"] = "CREDITS"
+            acc["studio_count"] = pr.get("studio_count")
         if aid == "LOCAL_AG":
             acc["status"] = pr.get("status") or "REACHABLE"
             acc["ACCOUNT_REACHABLE"] = True
         if aid == "KAGGLE_PARTNER":
             acc["live_auth_proven"] = bool(pr.get("live_auth_proven"))
-            acc["DISPATCH_ALLOWED"] = False
+            acc["distinct_from_c1"] = bool(pr.get("distinct_from_c1"))
+            acc["copied_from_c1"] = bool(pr.get("copied_from_c1"))
+            acc["DISPATCH_ALLOWED"] = bool(
+                acc["live_auth_proven"] and acc["distinct_from_c1"] and not acc["copied_from_c1"] and status in {"REACHABLE", "REACHABLE_CREDENTIAL_PRESENT"}
+            )
+        if aid == "COLAB_01":
+            acc["GOOGLE_AUTH"] = pr.get("GOOGLE_AUTH") or "ABSENT"
+            acc["GOOGLE_CLOUD_ACCESS"] = pr.get("GOOGLE_CLOUD_ACCESS") or UNOBSERVED
+            acc["COLAB_ACCESS"] = pr.get("COLAB_ACCESS") or UNOBSERVED
+            acc["COLAB_GPU_ENTITLEMENT"] = pr.get("COLAB_GPU_ENTITLEMENT") or UNOBSERVED
+            if pr.get("COLAB_ACCESS") not in {"PROVEN", "REACHABLE", True}:
+                acc["status"] = "AUTH_REQUIRED"
+                acc["ACCOUNT_REACHABLE"] = False
+        if aid == "MODAL_01":
+            acc["gpu_entitlement"] = pr.get("gpu_entitlement") or UNOBSERVED
+            acc["CATALOG_NE_ENTITLEMENT"] = True
 
     world["accelerators"] = [g for g in (world.get("accelerators") or []) if g.get("observation_kind") != "LIVE"]
     for gpu in world.get("accelerators") or []:
@@ -891,7 +1203,7 @@ def model_hosting_fit(world: dict[str, Any], live_state: dict[str, Any]) -> dict
                     "CAN_RUN_VLLM": UNKNOWN,
                 }
             )
-        if aid == "MODAL_01" and st in {"PARTIAL", "REACHABLE"}:
+        if aid == "MODAL_01" and st in {"PARTIAL", "REACHABLE", "REACHABLE_CREDENTIAL_PRESENT"}:
             row.update(
                 {
                     "CAN_STORE_MODEL_WEIGHTS": UNKNOWN,

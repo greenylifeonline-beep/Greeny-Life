@@ -96,12 +96,13 @@ DEFAULT_POLICY: dict[str, Any] = {
     "warm_asset_affinity": {
         "KAGGLE_C1": ["MODEL_STORAGE", "MODEL_FACTORY", "GPU_BURST"],
         "MODAL_01": ["REMOTE_CPU", "SHORT_SERVERLESS_JOB", "BATCH_CPU", "TEST_LIGHT", "DISCOVERY"],
+        "LIGHTNING_01": ["BATCH_CPU", "LONG_RUNNING_SERVICE"],
         "LOCAL_AG": ["CONTROL", "ROUTING", "STATE", "POLICY", "LONG_RUNNING_SERVICE", "DISCOVERY", "TEST_LIGHT"],
     },
     "failover": {
         "CONTROL": ["LOCAL_AG"],
         "GPU": ["KAGGLE_C1"],
-        "REMOTE_CPU": ["MODAL_01", "KAGGLE_C1"],
+        "REMOTE_CPU": ["MODAL_01", "KAGGLE_C1", "LIGHTNING_01"],
         "PERSISTENT_STORAGE": ["KAGGLE_C1"],
     },
     "kaggle_quota_isolation": {"KAGGLE_C1": "KAGGLE_C1", "KAGGLE_PARTNER": "KAGGLE_PARTNER"},
@@ -282,12 +283,24 @@ def _auth_state(world: dict[str, Any], account_id: str) -> str:
     status = str(acc.get("status") or UNKNOWN)
     probes = _probes(world)
     rec = probes.get(account_id) or {}
-    if rec.get("status") in {"REACHABLE", "AUTH_REQUIRED", "PARTIAL"}:
+    if rec.get("status") in {
+        "REACHABLE",
+        "REACHABLE_CREDENTIAL_PRESENT",
+        "AUTH_REQUIRED",
+        "PARTIAL",
+        "SEPARATE_PROFILE_CANDIDATE_PRESENT",
+        "NOT_DISTINCT_FROM_C1",
+    }:
         status = str(rec.get("status") or status)
     if account_id == "COLAB_01" and status not in AUTH_DISPATCH_OK:
         return "GOOGLE_AUTH_SETUP_REQUIRED"
-    if account_id == "KAGGLE_PARTNER" and not (acc.get("live_auth_proven") or rec.get("live_auth_proven")):
-        return "LIVE_AUTH_UNPROVEN"
+    if account_id == "KAGGLE_PARTNER":
+        if rec.get("copied_from_c1") or acc.get("copied_from_c1"):
+            return "NOT_DISTINCT_FROM_C1"
+        if not (acc.get("live_auth_proven") or rec.get("live_auth_proven")):
+            return "LIVE_AUTH_UNPROVEN"
+        if not (acc.get("distinct_from_c1") or rec.get("distinct_from_c1")):
+            return "LIVE_AUTH_UNPROVEN"
     if account_id == "LIGHTNING_01" and status not in AUTH_DISPATCH_OK:
         return "CURRENT_LIVE_AUTH_NOT_REPROVEN"
     return status
@@ -295,10 +308,17 @@ def _auth_state(world: dict[str, Any], account_id: str) -> str:
 
 def _authenticated(world: dict[str, Any], account_id: str) -> bool:
     state = _auth_state(world, account_id)
+    rec = _probes(world).get(account_id) or {}
+    acc = _account_row(world, account_id)
     if account_id == "LOCAL_AG":
         return state in LOCAL_AUTH_OK or state == "REACHABLE"
     if account_id == "KAGGLE_PARTNER":
-        return False
+        proven = bool(acc.get("live_auth_proven") or rec.get("live_auth_proven"))
+        distinct = bool(acc.get("distinct_from_c1") or rec.get("distinct_from_c1"))
+        copied = bool(acc.get("copied_from_c1") or rec.get("copied_from_c1"))
+        if not proven or not distinct or copied:
+            return False
+        return state in AUTH_DISPATCH_OK
     return state in AUTH_DISPATCH_OK
 
 
@@ -375,10 +395,8 @@ def evaluate_account(req: dict[str, Any], world: dict[str, Any], account_id: str
             reasons.append("GOOGLE_AUTH_SETUP_REQUIRED")
         elif auth == "LIVE_AUTH_UNPROVEN":
             reasons.append("KAGGLE_PARTNER_LIVE_AUTH_UNPROVEN")
-        elif auth in {"AUTH_REQUIRED", "CURRENT_LIVE_AUTH_NOT_REPROVEN"}:
+        elif auth in {"AUTH_REQUIRED", "CURRENT_LIVE_AUTH_NOT_REPROVEN", "NOT_DISTINCT_FROM_C1"}:
             reasons.append(auth)
-    if account_id == "KAGGLE_PARTNER":
-        reasons.append("KAGGLE_QUOTA_ISOLATED_FROM_C1")
     if req.get("workload_class") == "DISCOVERY" and req.get("gpu_required"):
         reasons.append("DISCOVERY_MUST_NOT_START_GPU")
     if account_id == "LOCAL_AG":
@@ -466,6 +484,7 @@ def evaluate_account(req: dict[str, Any], world: dict[str, Any], account_id: str
         "live_gpu_vram": live_vram if live_vram not in (UNKNOWN,) else UNOBSERVED,
         "gpu_eligibility_proven": gpu_elig,
         "quota_account": quota_account,
+        "KAGGLE_QUOTA_ISOLATED_FROM_C1": account_id == "KAGGLE_PARTNER",
         "warm_asset_affinity": [t for t in (DEFAULT_POLICY["warm_asset_affinity"].get(account_id) or []) if t == req.get("workload_class") or True][
             :3
         ],
@@ -731,11 +750,22 @@ def reservoir_view(world: dict[str, Any], *, policy: dict[str, Any] | None = Non
     policy = policy or DEFAULT_POLICY
     schedulable = [aid for aid in CLOUD_ACCOUNTS if aid in _accounts(world) and _authenticated(world, aid)]
     gpu_sched = [aid for aid in schedulable if _gpu_eligible(world, aid) and aid != "LOCAL_AG"]
+    unpaid_gpu = [aid for aid in gpu_sched if aid not in PAID_GPU_ACCOUNTS]
     sku_known = [aid for aid in gpu_sched if _live_sku(world, aid) not in (UNKNOWN, UNOBSERVED) and not is_unknown(_live_sku(world, aid))]
     vram_known = [
         aid for aid in gpu_sched if _live_vram(world, aid) not in (UNKNOWN, UNOBSERVED) and not is_unknown(_live_vram(world, aid))
     ]
     cpu_pool = [aid for aid in schedulable]
+    cpu_order = [aid for aid in ("MODAL_01", "KAGGLE_C1", "LIGHTNING_01") if aid in cpu_pool]
+    lightning = _account_row(world, "LIGHTNING_01")
+    lightning_probe = _probes(world).get("LIGHTNING_01") or {}
+    studio_n = lightning_probe.get("studio_count")
+    if studio_n is None:
+        studio_n = lightning.get("studio_count")
+    persistent_fo = "NONE_PROVEN"
+    if "LIGHTNING_01" in schedulable and isinstance(studio_n, (int, float)) and int(studio_n) > 0:
+        persistent_fo = "LIGHTNING_01"
+    partner_ok = _authenticated(world, "KAGGLE_PARTNER")
     return {
         "schema": "raios.virtual-compute-reservoir.v1",
         "derived_from": "live_world",
@@ -744,23 +774,35 @@ def reservoir_view(world: dict[str, Any], *, policy: dict[str, Any] | None = Non
         "control_plane": {"primary": "LOCAL_AG", "router": "9ROUTER", "NINEROUTER_IS_RESOURCE_AUTHORITY": False},
         "currently_schedulable": schedulable,
         "gpu_pool": {
-            "currently_schedulable": gpu_sched,
-            "current_primary": gpu_sched[0] if gpu_sched else UNKNOWN,
-            "failover": "NONE_PROVEN" if len(gpu_sched) < 2 else gpu_sched[1:],
-            "failover_proven": False,
+            "currently_schedulable": unpaid_gpu,
+            "current_primary": unpaid_gpu[0] if unpaid_gpu else UNKNOWN,
+            "failover": "NONE_PROVEN" if len(unpaid_gpu) < 2 else unpaid_gpu[1:],
+            "failover_proven": len(unpaid_gpu) >= 2,
             "live_gpu_sku_known": sku_known,
             "live_vram_known": vram_known,
+            "paid_gpu_not_unpaid_failover": True,
         },
-        "cpu_pool": {"currently_schedulable": cpu_pool, "remote_primary": "MODAL_01" if "MODAL_01" in cpu_pool else UNKNOWN},
+        "cpu_pool": {
+            "currently_schedulable": cpu_pool,
+            "remote_primary": cpu_order[0] if cpu_order else UNKNOWN,
+            "failover": cpu_order[1] if len(cpu_order) > 1 else "NONE_PROVEN",
+            "failover_proven": len(cpu_order) > 1,
+        },
         "storage_pool": {
             "primary_model_storage_candidate": "KAGGLE_C1" if "KAGGLE_C1" in schedulable else UNKNOWN,
             "backup_model_storage": "UNPROVEN",
             "local_model_weight_storage_allowed": False,
         },
+        "persistent_control": {
+            "primary": "LOCAL_AG" if "LOCAL_AG" in schedulable else UNKNOWN,
+            "failover": persistent_fo,
+            "failover_proven": persistent_fo != "NONE_PROVEN",
+        },
         "pending_auth": [aid for aid in CLOUD_ACCOUNTS if aid in _accounts(world) and not _authenticated(world, aid)],
-        "kaggle_partner_dispatch_allowed": False,
+        "kaggle_partner_dispatch_allowed": partner_ok,
         "UNOBSERVED_NE_ABSENT": True,
         "STATIC_SNAPSHOT_NE_RUNTIME_AUTHORITY": True,
+        "RF_C5_12": "BLOCKED_BY_GOVERNED_CHANNEL",
     }
 
 
