@@ -7,47 +7,55 @@
   "PAID_RESOURCE_CREATED": false,
   "GPU_SESSION_STARTED": false,
   "KAGGLE_QUOTAS_MERGED": false,
+  "UNPROVEN_PROVIDER_ADMITTED": false,
   "accounts": {
     "LOCAL_AG": {
       "AUTH_RESULT": "REACHABLE",
       "IDENTITY_PROOF": "LOCAL_CONTROL_PLANE",
       "authenticated_for_dispatch": true,
+      "classification": "PROVEN",
       "REDACTED": true
     },
     "KAGGLE_C1": {
       "AUTH_RESULT": "REACHABLE",
       "IDENTITY_PROOF": "greenylife",
       "authenticated_for_dispatch": true,
-      "REDACTED": true
-    },
-    "KAGGLE_PARTNER": {
-      "AUTH_RESULT": "SEPARATE_PROFILE_CANDIDATE_PRESENT",
-      "IDENTITY_PROOF": "UNOBSERVED",
-      "authenticated_for_dispatch": false,
+      "classification": "PROVEN",
       "REDACTED": true
     },
     "LIGHTNING_01": {
       "AUTH_RESULT": "REACHABLE",
       "IDENTITY_PROOF": "greenylifeonline-org",
       "authenticated_for_dispatch": true,
+      "classification": "PROVEN",
       "REDACTED": true
     },
     "MODAL_01": {
       "AUTH_RESULT": "REACHABLE_CREDENTIAL_PRESENT",
       "IDENTITY_PROOF": "profile:greenylife-online",
       "authenticated_for_dispatch": true,
+      "classification": "PROVEN_PREVIOUS_WAVE",
+      "REDACTED": true
+    },
+    "KAGGLE_PARTNER": {
+      "AUTH_RESULT": "BLOCKED_C1_ACTION",
+      "IDENTITY_PROOF": "UNOBSERVED",
+      "authenticated_for_dispatch": false,
+      "classification": "BLOCKED_C1_ACTION",
       "REDACTED": true
     },
     "ORACLE_01": {
-      "AUTH_RESULT": "AUTH_REQUIRED",
+      "AUTH_RESULT": "BLOCKED_C1_ACTION",
       "IDENTITY_PROOF": "UNOBSERVED",
       "authenticated_for_dispatch": false,
+      "classification": "BLOCKED_C1_ACTION",
       "REDACTED": true
     },
     "COLAB_01": {
-      "AUTH_RESULT": "AUTH_REQUIRED",
+      "AUTH_RESULT": "BLOCKED_C1_ACTION",
       "IDENTITY_PROOF": "UNOBSERVED",
       "authenticated_for_dispatch": false,
+      "classification": "BLOCKED_C1_ACTION",
       "REDACTED": true
     }
   }

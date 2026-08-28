@@ -33,6 +33,7 @@ AUTH_REQUIRED_STATES = frozenset(
         "LIVE_AUTH_UNPROVEN",
         "CURRENT_LIVE_AUTH_NOT_REPROVEN",
         "COLAB_ACCESS_UNPROVEN",
+        "BLOCKED_C1_ACTION",
     }
 )
 

@@ -746,7 +746,6 @@ def _probe_9router() -> dict[str, Any]:
 
 def run_live_probes(*, live: bool = True) -> dict[str, Any]:
     auth = discover_auth()
-    by_id = {r["account_id"]: r for r in auth}
     probes: dict[str, Any] = {}
 
     def _iso(account: str, fn: Any) -> dict[str, Any]:
@@ -761,14 +760,39 @@ def run_live_probes(*, live: bool = True) -> dict[str, Any]:
         probes["KAGGLE_C1"] = _iso("KAGGLE_C1", _probe_kaggle_c1)
         probes["LIGHTNING_01"] = _iso("LIGHTNING_01", _probe_lightning)
         probes["MODAL_01"] = _iso("MODAL_01", _probe_modal_presence)
-        probes["ORACLE_01"] = _iso("ORACLE_01", _probe_oracle)
     else:
         probes["KAGGLE_C1"] = {"account_id": "KAGGLE_C1", "status": "SKIPPED"}
         probes["LIGHTNING_01"] = {"account_id": "LIGHTNING_01", "status": "SKIPPED"}
         probes["MODAL_01"] = {"account_id": "MODAL_01", "status": "SKIPPED"}
-        probes["ORACLE_01"] = {"account_id": "ORACLE_01", "status": by_id["ORACLE_01"]["session_state"]}
-    probes["KAGGLE_PARTNER"] = _iso("KAGGLE_PARTNER", lambda: _probe_kaggle_partner(live=live))
-    probes["COLAB_01"] = _iso("COLAB_01", _probe_colab)
+    probes["KAGGLE_PARTNER"] = {
+        "account_id": "KAGGLE_PARTNER",
+        "status": "BLOCKED_C1_ACTION",
+        "AUTH_RESULT": "BLOCKED_C1_ACTION",
+        "PROBE_SKIPPED": True,
+        "isolated_from": "KAGGLE_C1",
+        "copied_from_c1": False,
+        "live_auth_proven": False,
+        "distinct_from_c1": False,
+        "reason": "WAVE06_CLOSURE_NO_REPEAT_PROBE",
+    }
+    probes["ORACLE_01"] = {
+        "account_id": "ORACLE_01",
+        "status": "BLOCKED_C1_ACTION",
+        "AUTH_RESULT": "BLOCKED_C1_ACTION",
+        "PROBE_SKIPPED": True,
+        "reason": "WAVE06_CLOSURE_NO_REPEAT_PROBE",
+    }
+    probes["COLAB_01"] = {
+        "account_id": "COLAB_01",
+        "status": "BLOCKED_C1_ACTION",
+        "AUTH_RESULT": "BLOCKED_C1_ACTION",
+        "PROBE_SKIPPED": True,
+        "GOOGLE_AUTH": "ABSENT",
+        "COLAB_ACCESS": UNOBSERVED,
+        "COLAB_GPU_ENTITLEMENT": UNOBSERVED,
+        "ADC_NE_COLAB_ACCESS": True,
+        "reason": "WAVE06_CLOSURE_NO_REPEAT_PROBE",
+    }
     now = _now()
     verified_ok = {
         "REACHABLE",
@@ -817,6 +841,9 @@ def apply_live_overlay(world: dict[str, Any], live_state: dict[str, Any]) -> dic
         acc["last_verified_at"] = au.get("last_verified") or acc.get("last_verified_at") or UNKNOWN
         acc["ACCOUNT_REACHABLE"] = status in {"REACHABLE", "REACHABLE_CREDENTIAL_PRESENT"}
         acc["AUTH_REQUIRED_NE_ABSENT"] = True
+        if status == "BLOCKED_C1_ACTION":
+            acc["BLOCKED_C1_ACTION"] = True
+            acc["ACCOUNT_REACHABLE"] = False
         if aid == "KAGGLE_C1" and pr.get("username_bound") == "greenylife":
             acc["plan"] = "KAGGLE_FREE_OR_STANDARD"
             acc["free_tier_status"] = "GPU_QUOTA_OBSERVED"
@@ -840,7 +867,10 @@ def apply_live_overlay(world: dict[str, Any], live_state: dict[str, Any]) -> dic
             acc["GOOGLE_CLOUD_ACCESS"] = pr.get("GOOGLE_CLOUD_ACCESS") or UNOBSERVED
             acc["COLAB_ACCESS"] = pr.get("COLAB_ACCESS") or UNOBSERVED
             acc["COLAB_GPU_ENTITLEMENT"] = pr.get("COLAB_GPU_ENTITLEMENT") or UNOBSERVED
-            if pr.get("COLAB_ACCESS") not in {"PROVEN", "REACHABLE", True}:
+            if pr.get("status") == "BLOCKED_C1_ACTION":
+                acc["status"] = "BLOCKED_C1_ACTION"
+                acc["ACCOUNT_REACHABLE"] = False
+            elif pr.get("COLAB_ACCESS") not in {"PROVEN", "REACHABLE", True}:
                 acc["status"] = "AUTH_REQUIRED"
                 acc["ACCOUNT_REACHABLE"] = False
         if aid == "MODAL_01":
