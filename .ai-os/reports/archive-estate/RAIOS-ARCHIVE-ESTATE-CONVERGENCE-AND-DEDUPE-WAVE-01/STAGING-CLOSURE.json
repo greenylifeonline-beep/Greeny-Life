@@ -1,0 +1,38 @@
+﻿{
+    "schema":  "raios.archive.staging-closure.v1",
+    "generated_at":  "2026-08-28T12:24:46.0433434Z",
+    "packages":  4,
+    "staging_review_final_count":  0,
+    "unknown":  0,
+    "rule":  "Staging inputs with unique or unproven recovery value are terminal CANONICAL_RECOVERY_ASSET, not REVIEW; exact duplicates were removed.",
+    "packages_detail":  [
+                            {
+                                "path":  "C:\\Users\\Ghanam\\Documents\\Codex\\Greeny-Life-Repair\\.ai-os\\staging\\9router-audit\\9router-0.5.55.tgz",
+                                "sha256":  "452C9AD34C40FD4BCB95323E1437862D0050E899DBE0A6A8AA336C8FA865FF2F",
+                                "bytes":  14244346,
+                                "terminal_state":  "CANONICAL_RECOVERY_ASSET",
+                                "reason":  "Minimum retained recovery/source payload; no proven equivalent recovery surface for deletion."
+                            },
+                            {
+                                "path":  "C:\\Users\\Ghanam\\Documents\\Codex\\Greeny-Life-Repair\\.ai-os\\staging\\rif-c7-integration\\incoming\\RIF-RAIOS-DONOR-PACKAGE-v1.1.zip",
+                                "sha256":  "C65B671D31B4984F5E2634F2A1054383FC0CD301BB91AC1BDB2951AACA1E62DB",
+                                "bytes":  41349,
+                                "terminal_state":  "CANONICAL_RECOVERY_ASSET",
+                                "reason":  "Minimum retained recovery/source payload; no proven equivalent recovery surface for deletion."
+                            },
+                            {
+                                "path":  "C:\\Users\\Ghanam\\Documents\\Codex\\Greeny-Life-Repair\\.ai-os\\staging\\rif-c7-integration\\RAIOS-C6-PHASE1-RECONCILIATION-KIT-20260826 (1).zip",
+                                "sha256":  "631D8F28E48491699EB6D438481AE65527BCB9EB7DEB52AB8715A355CD2F2CF0",
+                                "bytes":  58156,
+                                "terminal_state":  "CANONICAL_RECOVERY_ASSET",
+                                "reason":  "Minimum retained recovery/source payload; no proven equivalent recovery surface for deletion."
+                            },
+                            {
+                                "path":  "C:\\Users\\Ghanam\\Documents\\Codex\\Greeny-Life-Repair\\.ai-os\\staging\\rif-c7-integration\\RIF-SANDBOX-FOUNDATION-PACKAGE-v1.zip",
+                                "sha256":  "936C55A758F2DC00CADE36DCAFACD821379B17858D18ADF5106498079AA9F783",
+                                "bytes":  60461,
+                                "terminal_state":  "CANONICAL_RECOVERY_ASSET",
+                                "reason":  "Minimum retained recovery/source payload; no proven equivalent recovery surface for deletion."
+                            }
+                        ]
+}

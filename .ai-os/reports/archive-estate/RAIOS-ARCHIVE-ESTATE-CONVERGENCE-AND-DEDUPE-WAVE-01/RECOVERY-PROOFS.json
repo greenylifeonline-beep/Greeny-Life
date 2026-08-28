@@ -1,0 +1,44 @@
+{
+  "schema": "raios.archive.recovery-proofs.v2",
+  "generated_at": "2026-08-28T15:10:00Z",
+  "deletion_checkpoint_recovery_proven": true,
+  "exact_zip_groups": {
+    "groups": 4,
+    "copies_deleted": 6,
+    "redundant_remaining": 0
+  },
+  "raw_tar": {
+    "stream_equivalence": true,
+    "raw_deleted": true,
+    "gzip_sor_verified": true
+  },
+  "derived_reports": {
+    "deleted": 24,
+    "redundancy_remaining": 0
+  },
+  "c3": {
+    "entries": 2141,
+    "unknown": 0,
+    "terminal_state": "CANONICAL_RECOVERY_ASSET",
+    "recovery_required": true
+  },
+  "tree001": {
+    "verified": true,
+    "unique_commits": 0,
+    "recovery_tips": 16,
+    "durable_tips": 0,
+    "bundle_deleted": false,
+    "blocker": "GITHUB_GH001"
+  },
+  "onedrive": {
+    "unresolved": 0
+  },
+  "kaggle_s69": {
+    "auth_probe": true,
+    "datasets": 6,
+    "files": 77,
+    "archives": 0,
+    "unresolved": false
+  },
+  "recovery_proven": false
+}
