@@ -9,6 +9,17 @@ from pathlib import Path
 from typing import Any
 
 HEAVY_LOCAL_BYTES = 10 * 1024**3
+SIZE_UNITS = {"B": 1, "KB": 1024, "MB": 1024**2, "GB": 1024**3, "TB": 1024**4}
+
+
+def parse_size_text(value: str) -> int:
+    parts = value.strip().upper().split()
+    if len(parts) != 2 or parts[1] not in SIZE_UNITS:
+        return 0
+    try:
+        return int(float(parts[0]) * SIZE_UNITS[parts[1]])
+    except ValueError:
+        return 0
 
 
 def utc() -> str:
@@ -36,11 +47,18 @@ def ollama_models() -> list[dict[str, Any]]:
         return []
     if proc.returncode != 0:
         return []
-    return [
-        {"name": parts[0], "size_text": " ".join(parts[2:4])}
-        for line in proc.stdout.splitlines()[1:]
-        if (parts := line.split())
-    ]
+    records = []
+    for line in proc.stdout.splitlines()[1:]:
+        parts = line.split()
+        if len(parts) < 4:
+            continue
+        size_text = " ".join(parts[2:4])
+        records.append({
+            "name": parts[0],
+            "size_text": size_text,
+            "size_bytes": parse_size_text(size_text),
+        })
+    return records
 
 
 def classify_records(records: list[dict[str, Any]], *, runtime_model: str | None) -> list[dict[str, Any]]:
@@ -49,15 +67,24 @@ def classify_records(records: list[dict[str, Any]], *, runtime_model: str | None
         name = str(record.get("name") or "")
         size = int(record.get("size_bytes") or 0)
         required = bool(runtime_model and name == runtime_model)
+        heavy = size >= HEAVY_LOCAL_BYTES
+        migration_proven = bool(record.get("migration_proven", False))
+        if required:
+            role = "ACTIVE_RUNTIME_MODEL"
+        elif heavy:
+            role = "REMOTE_MIGRATION_CANDIDATE"
+        else:
+            role = "LOCAL_MODEL_ASSET_PENDING_BENCHMARK"
         output.append({
             **record,
             "name": name,
             "size_bytes": size,
-            "heavy_local": size >= HEAVY_LOCAL_BYTES,
+            "heavy_local": heavy,
             "runtime_required": required,
-            "remote_migration_required": size >= HEAVY_LOCAL_BYTES,
-            "source_removable": not required,
-            "canonical_role": "ACTIVE_RUNTIME_MODEL" if required else "LOCAL_MODEL_ASSET",
+            "remote_migration_required": heavy and not migration_proven,
+            "source_removable": migration_proven and not required,
+            "benchmark_required": not required,
+            "canonical_role": role,
         })
     return output
 

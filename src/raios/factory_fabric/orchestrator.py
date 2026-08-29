@@ -29,11 +29,15 @@ def runtime_root() -> Path:
     ).expanduser().resolve()
 
 
-def resource_factory_probe() -> dict[str, Any]:
+def resource_factory_probe(*, live: bool = False) -> dict[str, Any]:
     from raios.resource_fabric.census import collect_world
     from raios.resource_fabric.factory import evaluate_workload
+    from raios.resource_fabric.live import apply_live_overlay, run_live_probes
 
     world = collect_world()
+    live_state = run_live_probes(live=live)
+    apply_live_overlay(world, live_state)
+    world["live_state"] = live_state
     control = evaluate_workload("CONTROL", world, request_id="FACTORY-FABRIC-CONTROL")
     model = evaluate_workload("MODEL_FACTORY", world, request_id="FACTORY-FABRIC-MODEL")
     return {
@@ -52,6 +56,7 @@ def resource_factory_probe() -> dict[str, Any]:
             "gpu_session_started": model["plan"]["GPU_SESSION_STARTED"],
             "paid_resource_created": model["plan"]["PAID_RESOURCE_CREATED"],
         },
+        "live_probe": live,
     }
 
 
@@ -129,6 +134,22 @@ def foundry_probe(max_files: int = 120, case_limit: int = 120) -> dict[str, Any]
     }
 
 
+def model_ecology_probe() -> dict[str, Any]:
+    from .model_ecology import classify_local_models
+
+    result = classify_local_models(repo_root(), runtime_root())
+    return {
+        "factory": "MODEL_ECOLOGY",
+        "status": "PASS",
+        "local_model_count": result["local_model_count"],
+        "heavy_local_count": result["heavy_local_count"],
+        "runtime_dependency_count": result["runtime_dependency_count"],
+        "remote_migration_required_count": result["remote_migration_required_count"],
+        "source_removable_true_count": result["source_removable_true_count"],
+        "report_path": result["report_path"],
+    }
+
+
 def assimilation_probe() -> dict[str, Any]:
     rt = runtime_root()
     estate = import_factory_estate(rt)
@@ -149,16 +170,17 @@ def assimilation_probe() -> dict[str, Any]:
     }
 
 
-def run_all(*, max_files: int = 120, case_limit: int = 120) -> dict[str, Any]:
+def run_all(*, max_files: int = 120, case_limit: int = 120, live_resource: bool = False) -> dict[str, Any]:
     root = repo_root()
     rt = runtime_root()
     rt.mkdir(parents=True, exist_ok=True)
 
     results = {
-        "resource_factory": resource_factory_probe(),
+        "resource_factory": resource_factory_probe(live=live_resource),
         "assimilation_factory": assimilation_probe(),
         "training_factory": training_factory_probe(),
         "expert_foundry": foundry_probe(max_files=max_files, case_limit=case_limit),
+        "model_ecology": model_ecology_probe(),
     }
     all_pass = all(str(x.get("status", "")).startswith("PASS") for x in results.values())
     report = {

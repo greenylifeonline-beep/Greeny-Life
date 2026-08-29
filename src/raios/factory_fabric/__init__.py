@@ -1,12 +1,23 @@
-"""RAIOS Factory Fabric.
+"""Canonical orchestration package for RAIOS factory capabilities.
 
-Canonical orchestration layer over existing Resource Factory, Training Factory,
-Assimilation Factory, and Expert Foundry capabilities. Runtime state is externalized
-under ~/.raios/runtime/factory-fabric; it does not create a second scheduler,
-resource authority, or canonical promotion path.
+Submodules are loaded lazily so importing :mod:`raios.factory_fabric` never probes
+resources or initializes runtime state. The public API remains backward compatible.
 """
 
-from .orchestrator import run_all
-from .state_import import import_factory_estate
+from __future__ import annotations
+
+from typing import Any
 
 __all__ = ["run_all", "import_factory_estate"]
+
+
+def __getattr__(name: str) -> Any:
+    if name == "run_all":
+        from .orchestrator import run_all
+
+        return run_all
+    if name == "import_factory_estate":
+        from .state_import import import_factory_estate
+
+        return import_factory_estate
+    raise AttributeError(name)

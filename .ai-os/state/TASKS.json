@@ -280,6 +280,21 @@
       "status": "DONE",
       "claimed_by": "C6-AG-REMOTE-RECON",
       "evidence": ".ai-os/reports/global-estate/RAIOS-W4F-CAPABILITY-MAINTENANCE-CLOSURE-01"
+    },
+    {
+      "id": "RAIOS-W4FE-C3-SUPPLEMENT-AND-MODEL-ECOLOGY-CLOSURE-01",
+      "title": "Reconcile C3 factory supplement and complete model ecology",
+      "objective": "Selectively integrate nonduplicative C3 supplement, verify live resource overlay consumption, classify local models, and close W4FE evidence without modifying Resource Fabric ownership.",
+      "scope": [
+        "src/raios/factory_fabric;tests/factory_fabric;.ai-os/reports/global-estate/RAIOS-W4FE-C3-SUPPLEMENT-CLOSURE-01"
+      ],
+      "dependencies": [],
+      "allowed_agents": [
+        "C6-AG-REMOTE-RECON"
+      ],
+      "validation": "Supplement decisions explicit; factory tests pass; model ecology classified; no paid/GPU mutation",
+      "status": "IN_PROGRESS",
+      "claimed_by": "C6-AG-REMOTE-RECON"
     }
   ]
 }

@@ -1,0 +1,13 @@
+{
+  "task_id":"RAIOS-W4FE-C3-SUPPLEMENT-AND-MODEL-ECOLOGY-CLOSURE-01",
+  "source":"C3-FACTORY-FABRIC-SUPPLEMENT-20260829-2316",
+  "decisions":[
+    {"item":"model_ecology.py","decision":"SUBSUMED_THEN_CORRECTED","detail":"Already canonical at 10faced; size parsing and deletion safety corrected in this wave."},
+    {"item":"orchestrator model ecology probe","decision":"INTEGRATED","detail":"Model ecology is composed into run_all."},
+    {"item":"live Resource Factory overlay","decision":"INTEGRATED","detail":"Consumes canonical Resource Fabric API read-only; live mode explicit, safe default false."},
+    {"item":"lazy package init","decision":"INTEGRATED_WITH_COMPATIBILITY","detail":"Lazy loading added while preserving run_all and import_factory_estate public API."}
+  ],
+  "supplement_unresolved":0,
+  "second_factory_created":false,
+  "resource_fabric_modified":false
+}

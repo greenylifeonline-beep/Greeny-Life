@@ -124,7 +124,17 @@ def test_model_ecology_preserves_active_runtime_model():
     assert active["canonical_role"] == "ACTIVE_RUNTIME_MODEL"
     assert heavy["heavy_local"] is True
     assert heavy["remote_migration_required"] is True
-    assert heavy["source_removable"] is True
+    assert heavy["source_removable"] is False
+    assert heavy["benchmark_required"] is True
+    assert heavy["canonical_role"] == "REMOTE_MIGRATION_CANDIDATE"
+
+
+def test_model_ecology_parses_ollama_sizes_before_classification():
+    from raios.factory_fabric.model_ecology import parse_size_text
+
+    assert parse_size_text("23 GB") == 23 * 1024**3
+    assert parse_size_text("639 MB") == 639 * 1024**2
+    assert parse_size_text("unknown") == 0
 
 
 def test_orchestrator_model_ecology_module_is_present():
@@ -162,3 +172,24 @@ def test_trade_corridor_primitives_are_deterministic_and_conservative():
     assert scenario_documents({}, "MISSING_DOCUMENT")["ORIGIN_EVIDENCE"] is False
     assert evidence_risk_score([]) == 1.0
     assert evidence_risk_score([{"currentness_analysis": {"triage": "CURRENTNESS_UNKNOWN"}}]) == 1.0
+
+
+def test_package_import_is_lazy_and_public_api_is_compatible():
+    code = (
+        "import sys; import raios.factory_fabric as f; "
+        "assert 'raios.factory_fabric.orchestrator' not in sys.modules; "
+        "assert callable(f.run_all); assert callable(f.import_factory_estate)"
+    )
+    proc = subprocess.run([sys.executable, "-c", code], cwd=ROOT, text=True, capture_output=True)
+    assert proc.returncode == 0, proc.stderr
+
+
+def test_resource_factory_probe_defaults_to_non_live_overlay():
+    from raios.factory_fabric.orchestrator import resource_factory_probe
+
+    report = resource_factory_probe()
+    assert report["status"] == "PASS"
+    assert report["live_probe"] is False
+    assert report["control"]["provider_mutation"] is False
+    assert report["model_factory"]["gpu_session_started"] is False
+    assert report["model_factory"]["paid_resource_created"] is False
