@@ -75,10 +75,30 @@ def classify_records(records: list[dict[str, Any]], *, runtime_model: str | None
             role = "REMOTE_MIGRATION_CANDIDATE"
         else:
             role = "LOCAL_MODEL_ASSET_PENDING_BENCHMARK"
+        if heavy:
+            execution_class = "REMOTE_EXECUTION_REQUIRED"
+        elif size >= 4 * 1024**3:
+            execution_class = "LOCAL_MEMORY_RISK"
+        elif size >= 1500 * 1024**2:
+            execution_class = "LOCAL_CONSTRAINED"
+        else:
+            execution_class = "LOCAL_SAFE"
+        family = name.split(":", 1)[0].split("-", 1)[0]
         output.append({
             **record,
+            "model_id": name,
             "name": name,
+            "family": family,
+            "kind": "EMBEDDING" if "embedding" in name.lower() else "GENERATIVE",
+            "parameter_count": record.get("parameter_count", "UNOBSERVED"),
+            "quantization": record.get("quantization", "UNOBSERVED"),
             "size_bytes": size,
+            "storage_location": "OLLAMA_LOCAL",
+            "weight_present": True,
+            "runtime_present": True,
+            "currently_bound": required,
+            "local_execution_class": execution_class,
+            "assimilation_state": record.get("assimilation_state", "WEIGHT_PRESENT_NOT_ASSIMILATED"),
             "heavy_local": heavy,
             "runtime_required": required,
             "remote_migration_required": heavy and not migration_proven,

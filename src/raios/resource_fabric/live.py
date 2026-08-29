@@ -12,6 +12,7 @@ import shutil
 import socket
 import subprocess
 import urllib.error
+import urllib.parse
 import urllib.request
 from datetime import datetime, timezone
 from pathlib import Path
@@ -701,20 +702,29 @@ def _probe_local() -> dict[str, Any]:
         rec["ram_total_gb"] = UNKNOWN
         rec["ram_avail_gb"] = UNKNOWN
     rec["c5"] = _tcp("127.0.0.1", 8766)
-    rec["ollama"] = _tcp("127.0.0.1", 52093)
+    ollama_host = os.getenv("OLLAMA_HOST", "http://127.0.0.1:11434").rstrip("/")
+    ollama_url = ollama_host if "://" in ollama_host else f"http://{ollama_host}"
+    parsed_ollama = urllib.parse.urlparse(ollama_url)
+    ollama_port = parsed_ollama.port or (443 if parsed_ollama.scheme == "https" else 11434)
+    rec["ollama"] = _tcp(parsed_ollama.hostname or "127.0.0.1", ollama_port)
+    rec["ollama_endpoint"] = f"{parsed_ollama.scheme}://{parsed_ollama.hostname}:{ollama_port}"
     rec["mcp"] = _tcp("127.0.0.1", 8788)
     rec["ninerouter"] = _tcp("127.0.0.1", 20128)
     rec["execution_blocked_by_memory"] = True
     rec["model_storage_allowed"] = MODEL_WEIGHTS_LOCAL
     rec["qwen35_present"] = False
     try:
-        tags = _http_json("http://127.0.0.1:52093/api/tags", {})
+        tags = _http_json(f"{ollama_url}/api/tags", {})
         names = [m.get("name") for m in ((tags.get("json") or {}).get("models") or [])]
+        rec["ollama_http_status"] = tags.get("http")
         rec["ollama_model_count"] = len(names)
         rec["qwen35_present"] = any(QWEN_ID in str(n) for n in names)
         rec["ollama_names"] = names
-    except Exception:
+    except Exception as exc:
+        rec["ollama_http_status"] = "UNAVAILABLE"
+        rec["ollama_probe_error"] = type(exc).__name__
         rec["ollama_model_count"] = UNKNOWN
+        rec["ollama_names"] = []
     rec["status"] = "REACHABLE" if rec.get("c5") == "SUCCESS" else "PARTIAL"
     rec["paid"] = False
     return rec
@@ -728,6 +738,9 @@ def _probe_9router() -> dict[str, Any]:
         "health": UNKNOWN,
         "accounts_connected": UNKNOWN,
         "models_visible": UNKNOWN,
+        "catalog_model_names": UNKNOWN,
+        "locally_available_weights": 0,
+        "executable_routed_models": 0,
         "bind": "127.0.0.1:20128",
     }
     if _tcp("127.0.0.1", 20128) != "SUCCESS":
@@ -738,7 +751,10 @@ def _probe_9router() -> dict[str, Any]:
     models = _http_json("http://127.0.0.1:20128/v1/models", {})
     data = (models.get("json") or {}).get("data") or []
     rec["models_visible"] = len(data)
+    rec["catalog_model_names"] = len(data)
     rec["accounts_connected"] = 0
+    rec["locally_available_weights"] = 0
+    rec["executable_routed_models"] = 0
     rec["catalog_ne_connected_providers"] = True
     rec["paid_providers_connected"] = False
     return rec
