@@ -258,6 +258,27 @@
       "validation": "Clean delivery commit fast-forwarded to origin/ai-evolution-202608051809; no file >=100MB in pushed ancestry after 50f243a; ORIGINAL_LOCAL_LINEAGE_REWRITTEN=false",
       "status": "IN_PROGRESS",
       "claimed_by": "cursor"
+    },
+    {
+      "id": "RAIOS-W4F-CAPABILITY-MAINTENANCE-CLOSURE-01",
+      "title": "Close unpromoted factories skills tools and engines",
+      "objective": "Selectively integrate proven unique capability, reject generated/history, test and converge without overlapping active C2/C3 scopes.",
+      "scope": [
+        "src/raios/factory_fabric",
+        "src/raios/a2a_all_hands",
+        "tests/factory_fabric",
+        "tests/test_a2a_all_hands_bind.py",
+        "Weight-Merge-Lab",
+        "canonical/intelligence",
+        ".ai-os/reports/global-estate/RAIOS-W4F-CAPABILITY-MAINTENANCE-CLOSURE-01"
+      ],
+      "dependencies": [],
+      "allowed_agents": [
+        "C6-AG-REMOTE-RECON"
+      ],
+      "validation": "Affected tests pass; no blind state replacement; evidence and handoff recorded.",
+      "status": "IN_PROGRESS",
+      "claimed_by": "C6-AG-REMOTE-RECON"
     }
   ]
 }
