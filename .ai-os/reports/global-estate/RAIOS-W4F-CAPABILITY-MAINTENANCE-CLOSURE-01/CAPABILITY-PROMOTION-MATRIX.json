@@ -1,0 +1,16 @@
+{
+  "task_id": "RAIOS-W4F-CAPABILITY-MAINTENANCE-CLOSURE-01",
+  "canonical_base": "7ef49f76a6789f64dcb7f9082df537a7355caa60",
+  "scan": {"examined": 444, "promoted_native": 86, "promoted_elsewhere": 11, "same_path_different": 51, "unpromoted": 296},
+  "classification": {"generated_or_reference": 275, "historical_or_probe": 7, "logical_config_review": 38, "actionable_source_review": 27},
+  "promotions": [
+    {"capability":"A2A all-hands task binding","target":"src/raios/a2a_all_hands","decision":"PROMOTE","commit":"037f56b4b3b2c80a35e9ad3ef0da88a94a7acc9d"},
+    {"capability":"Factory estate import and assimilation","target":"src/raios/factory_fabric","decision":"PROMOTE","commit":"037f56b4b3b2c80a35e9ad3ef0da88a94a7acc9d"},
+    {"capability":"Factory model ecology","target":"src/raios/factory_fabric/model_ecology.py","decision":"PROMOTE","commit":"10faced82eb4c8e54a1b9ee2b485679b94c72930"},
+    {"capability":"Official-source evidence harvester","target":"src/raios/factory_fabric/official_source.py","decision":"PROMOTE_EVIDENCE_GATED"},
+    {"capability":"Trade-corridor simulation","target":"src/raios/factory_fabric/trade_corridor.py","decision":"PROMOTE_EXTERNALIZED_RUNTIME"},
+    {"capability":"C5 expert foundry donor","target":"src/raios/factory_fabric/foundry_engine.py","decision":"PROVEN_SUBSUMED"},
+    {"capability":"Weight-Merge-Lab CPU LINEAR and MergeKit repair","target":"RAIOS/V9/evolution/model_lab","decision":"BLOCKED","reason":"active V9 ownership lock; separate project resurrection rejected"}
+  ],
+  "non_source_policy": {"generated_reports_state_receipts":"REFERENCE_ONLY_OR_GENERATED","blind_config_overwrite":false,"parallel_foundational_system_created":false}
+}

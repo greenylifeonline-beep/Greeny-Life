@@ -131,3 +131,34 @@ def test_orchestrator_model_ecology_module_is_present():
     from raios.factory_fabric import model_ecology
 
     assert callable(model_ecology.classify_local_models)
+
+
+def test_official_source_extraction_and_units_are_evidence_gated():
+    from raios.factory_fabric.official_source import clean_lines, make_units
+
+    html = "<html><script>import forbidden</script><body><p>Official import customs evidence must be verified before operational use.</p></body></html>"
+    lines = clean_lines(html)
+    assert lines == ["Official import customs evidence must be verified before operational use."]
+    units = make_units([{
+        "source_id": "TEST-OFFICIAL",
+        "jurisdiction": "TEST",
+        "authority": "TEST AUTHORITY",
+        "domain": "customs",
+        "requested_url": "https://example.invalid/official",
+        "raw_sha256": "0" * 64,
+        "retrieved_at": "2026-08-29T00:00:00Z",
+        "semantic_lines": lines,
+    }])
+    assert len(units) == 1
+    assert units[0]["state"] == "DISCOVERED"
+    assert units[0]["verification_status"] == "UNVERIFIED_CURRENTNESS"
+    assert units[0]["execution_authority"] is False
+
+
+def test_trade_corridor_primitives_are_deterministic_and_conservative():
+    from raios.factory_fabric.trade_corridor import calculate_transport, evidence_risk_score, scenario_documents
+
+    assert calculate_transport("SEA_LCL", 500.0, 2.0, 1.0) == 230.0
+    assert scenario_documents({}, "MISSING_DOCUMENT")["ORIGIN_EVIDENCE"] is False
+    assert evidence_risk_score([]) == 1.0
+    assert evidence_risk_score([{"currentness_analysis": {"triage": "CURRENTNESS_UNKNOWN"}}]) == 1.0

@@ -1,0 +1,13 @@
+{
+  "blockers": [
+    {
+      "id":"ACTIVE_V9_LOCK_WEIGHT_MERGE",
+      "scope":"RAIOS/V9/evolution/model_lab",
+      "candidate_commit":"39493ccbace7a922790737f4e0befa85239927be",
+      "status":"BLOCKED_BY_ACTIVE_OWNER",
+      "safe_action_taken":"whole-project cherry-pick aborted; no resurrection and no competing merge engine created",
+      "minimal_next_action":"V9 owner independently compare CPU LINEAR and MergeKit repair against current canonical model_lab, then selectively integrate under its lock"
+    }
+  ],
+  "unresolved_within_owned_scope":0
+}
