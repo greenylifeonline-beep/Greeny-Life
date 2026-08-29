@@ -106,3 +106,28 @@ def test_foundry_small_run_uses_external_runtime(tmp_path):
     assert report["blind"]["execution_authorizations"] == 0
     assert report["promotion"]["automatic_canonical_promotion"] is False
     assert report["receipt"].startswith("runtime:")
+
+
+def test_model_ecology_preserves_active_runtime_model():
+    from raios.factory_fabric.model_ecology import classify_records
+
+    rows = classify_records(
+        [
+            {"name": "qwen3:0.6b", "size_bytes": 522653767},
+            {"name": "large:35b", "size_bytes": 12 * 1024**3},
+        ],
+        runtime_model="qwen3:0.6b",
+    )
+    active, heavy = rows
+    assert active["runtime_required"] is True
+    assert active["source_removable"] is False
+    assert active["canonical_role"] == "ACTIVE_RUNTIME_MODEL"
+    assert heavy["heavy_local"] is True
+    assert heavy["remote_migration_required"] is True
+    assert heavy["source_removable"] is True
+
+
+def test_orchestrator_model_ecology_module_is_present():
+    from raios.factory_fabric import model_ecology
+
+    assert callable(model_ecology.classify_local_models)
