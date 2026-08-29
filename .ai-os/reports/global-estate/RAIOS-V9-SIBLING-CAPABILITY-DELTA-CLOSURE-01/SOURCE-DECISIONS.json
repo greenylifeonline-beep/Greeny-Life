@@ -1,0 +1,40 @@
+{
+  "unique_source": [
+    {
+      "path": "foundry/c5_expert_foundry.py",
+      "decision": "SUBSUMED",
+      "canonical": "src/raios/factory_fabric/foundry_engine.py"
+    },
+    {
+      "path": "foundry/official_source_harvester.py",
+      "decision": "SUBSUMED",
+      "canonical": "src/raios/factory_fabric/official_source.py"
+    },
+    {
+      "path": "foundry/trade_corridor_simulator.py",
+      "decision": "SUBSUMED",
+      "canonical": "src/raios/factory_fabric/trade_corridor.py"
+    },
+    {
+      "path": "foundry/run-foundry.ps1",
+      "decision": "SUBSUMED_WRAPPER"
+    },
+    {
+      "path": "foundry/tests/test_foundry_invariants.py",
+      "decision": "SUBSUMED_TEST_INTENT"
+    },
+    {
+      "path": "council/waves/.../c3_parallel_research.py",
+      "decision": "HISTORICAL_ONLY"
+    },
+    {
+      "path": "council/waves/.../c4_counter_review.py",
+      "decision": "HISTORICAL_ONLY"
+    }
+  ],
+  "different_source_summary": {
+    "line_endings_or_semantically_equal": 11,
+    "canonical_materially_newer": 3,
+    "donor_materially_newer": 0
+  }
+}
