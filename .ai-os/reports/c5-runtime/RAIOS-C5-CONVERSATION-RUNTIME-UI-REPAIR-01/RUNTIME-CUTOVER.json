@@ -1,0 +1,14 @@
+{
+  "schema": "raios.c5.runtime-cutover.v1",
+  "runtime_root": "C:\\Users\\Ghanam\\.raios\\runtime\\c5",
+  "port": 8766,
+  "stage_port": 9766,
+  "stage_validation": true,
+  "old_listener_pid": 23244,
+  "new_listener_pid": 13456,
+  "post_deploy_http": 200,
+  "runtime_source": "CANONICAL_DEPLOYMENT",
+  "deployed_head": "a6765f4dafd52a9ad2f7f546c960c5f8a6395418",
+  "model": "qwen3:0.6b",
+  "old_listener_stopped_only_after_candidate_healthy": true
+}

@@ -1,0 +1,12 @@
+{
+  "schema": "raios.c5.ui-network-proof.v1",
+  "ui": "existing RAIOS-C5-DESKTOP-V2.ps1",
+  "bridge": "existing RAIOS-C5-DESKTOP-BRIDGE.py",
+  "channel": "existing RAIOS-C1-C5-CHANNEL.py",
+  "new_ui_created": false,
+  "probe_input": "Arabic UTF-8 text file",
+  "result": {"ok": true, "status": "PROVEN_E2E", "chars_received": 18, "lines_received": 1, "message_id_present": true, "correlation_id_present": true},
+  "gateway_health_during_probe": 200,
+  "canonical_gateway_head": "a6765f4dafd52a9ad2f7f546c960c5f8a6395418",
+  "note": "The existing operator UI/bridge was tested in place and not overwritten."
+}

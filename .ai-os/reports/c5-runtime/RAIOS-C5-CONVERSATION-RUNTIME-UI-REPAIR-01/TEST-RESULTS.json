@@ -1,0 +1,17 @@
+{
+  "schema": "raios.c5.test-results.v1",
+  "py_compile": "PASS",
+  "c5_gateway_tests": {"pass": 9, "fail": 0},
+  "runtime_contract_probe": {"pass": 6, "fail": 0},
+  "chat_contract": "PASS",
+  "arabic_direct_chat": "PASS",
+  "ui_bridge_chat": "PASS",
+  "error_mapping": "PASS",
+  "timeout_live": {"http": 504, "error": "MAIN_CORTEX_TIMEOUT", "pass": true},
+  "post_deploy_health": "PASS",
+  "post_deploy_chat": "PASS",
+  "learning_trace": {"before": 0, "after": 1, "delta": 1, "outside_git": true},
+  "tests_executed": 15,
+  "tests_pass": 15,
+  "tests_fail": 0
+}

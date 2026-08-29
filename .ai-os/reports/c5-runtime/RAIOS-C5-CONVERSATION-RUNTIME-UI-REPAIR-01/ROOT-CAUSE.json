@@ -1,0 +1,13 @@
+{
+  "schema": "raios.c5.root-cause.v1",
+  "task_id": "RAIOS-C5-CONVERSATION-RUNTIME-UI-REPAIR-AND-CANONICAL-CLOSURE-01",
+  "root_cause": "REQUEST_CONTRACT_MISMATCH",
+  "before": {"accepted_request_field": "text", "desktop_and_legacy_field": "message", "result": "HTTP_422"},
+  "contributing_risks": ["unbounded live model wait", "response consumers use multiple alias keys", "listener was stopped before candidate validation"],
+  "repair": ["accept text or message", "accept language or locale", "bounded timeout_seconds", "map upstream timeout to 504", "return response/content/reply", "validate staged listener before cutover"],
+  "second_gateway_created": false,
+  "second_ui_created": false,
+  "model_downloaded": false,
+  "gpu_started": false,
+  "paid_resource_created": false
+}
