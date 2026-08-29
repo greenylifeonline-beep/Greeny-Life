@@ -43,45 +43,66 @@ $deploy | ConvertTo-Json -Depth 8 | Set-Content -Path $Manifest -Encoding UTF8
 
 $old = Get-NetTCPConnection -LocalPort $Port -State Listen -ErrorAction SilentlyContinue
 $oldPid = if ($old) { $old.OwningProcess } else { $null }
-if ($oldPid) {
-    Stop-Process -Id $oldPid -Force -ErrorAction Stop
-    Start-Sleep -Seconds 2
+$stagePort = $Port + 1000
+if (Get-NetTCPConnection -LocalPort $stagePort -State Listen -ErrorAction SilentlyContinue) {
+    throw "C5_STAGE_PORT_IN_USE::$stagePort"
 }
+
 $env:RAIOS_MAIN_CORTEX = "qwen3:0.6b"
 $env:RAIOS_RUNTIME_ROOT = $RuntimeRoot
 $env:RAIOS_CANONICAL_HEAD = $Head
 $env:PYTHONPATH = $AppRoot
-$out = Join-Path $Logs "gateway.out.log"
-$err = Join-Path $Logs "gateway.err.log"
-$args = @(
-    "-m","uvicorn",
-    "raios.c5_gateway.gateway:app",
-    "--app-dir",$AppRoot,
-    "--host","127.0.0.1",
-    "--port","$Port"
-)
-$proc = Start-Process -FilePath $Python -ArgumentList $args -WindowStyle Hidden -RedirectStandardOutput $out -RedirectStandardError $err -PassThru
 
-$healthy = $false
-for ($i=0; $i -lt 30; $i++) {
-    Start-Sleep -Seconds 1
-    try {
-        $r = Invoke-RestMethod -Uri "http://127.0.0.1:$Port/health" -TimeoutSec 3
-        if ($r.status -eq "ONLINE" -and $r.runtime_source -eq "CANONICAL_DEPLOYMENT" -and $r.canonical_head -eq $Head) {
-            $healthy = $true
-            break
-        }
-    } catch {}
+function Start-C5Process([int]$ListenPort,[string]$Name) {
+    $out = Join-Path $Logs "$Name.out.log"
+    $err = Join-Path $Logs "$Name.err.log"
+    $args = @(
+        "-m","uvicorn",
+        "raios.c5_gateway.gateway:app",
+        "--app-dir",$AppRoot,
+        "--host","127.0.0.1",
+        "--port","$ListenPort"
+    )
+    return Start-Process -FilePath $Python -ArgumentList $args -WindowStyle Hidden -RedirectStandardOutput $out -RedirectStandardError $err -PassThru
 }
-if (-not $healthy) {
-    if (-not $proc.HasExited) {
-        Stop-Process -Id $proc.Id -Force -ErrorAction SilentlyContinue
+
+function Wait-C5Healthy([int]$ListenPort,[int]$ExpectedPid) {
+    for ($i=0; $i -lt 30; $i++) {
+        Start-Sleep -Seconds 1
+        if (-not (Get-Process -Id $ExpectedPid -ErrorAction SilentlyContinue)) { return $null }
+        try {
+            $health = Invoke-RestMethod -Uri "http://127.0.0.1:$ListenPort/health" -TimeoutSec 3
+            if ($health.status -eq "ONLINE" -and $health.runtime_source -eq "CANONICAL_DEPLOYMENT" -and $health.canonical_head -eq $Head) {
+                return $health
+            }
+        } catch {}
     }
-    throw "CANONICAL_C5_CUTOVER_FAILED::$err"
+    return $null
 }
 
-$r = Invoke-RestMethod -Uri "http://127.0.0.1:$Port/health" -TimeoutSec 5
+$stage = Start-C5Process -ListenPort $stagePort -Name "gateway.stage"
+$stageHealth = Wait-C5Healthy -ListenPort $stagePort -ExpectedPid $stage.Id
+if (-not $stageHealth) {
+    Stop-Process -Id $stage.Id -Force -ErrorAction SilentlyContinue
+    throw "CANONICAL_C5_STAGE_VALIDATION_FAILED::$Logs\gateway.stage.err.log"
+}
+Stop-Process -Id $stage.Id -Force -ErrorAction Stop
+Start-Sleep -Milliseconds 500
+
+if ($oldPid) {
+    Stop-Process -Id $oldPid -Force -ErrorAction Stop
+    Start-Sleep -Milliseconds 500
+}
+
+$proc = Start-C5Process -ListenPort $Port -Name "gateway"
+$r = Wait-C5Healthy -ListenPort $Port -ExpectedPid $proc.Id
+if (-not $r) {
+    Stop-Process -Id $proc.Id -Force -ErrorAction SilentlyContinue
+    throw "CANONICAL_C5_CUTOVER_FAILED::$Logs\gateway.err.log"
+}
+
 Write-Host "C5_CANONICAL_RUNTIME=true"
+Write-Host "C5_STAGE_VALIDATION=true"
 Write-Host "C5_HTTP=200"
 Write-Host "C5_PID=$($proc.Id)"
 Write-Host "C5_CANONICAL_HEAD=$($r.canonical_head)"

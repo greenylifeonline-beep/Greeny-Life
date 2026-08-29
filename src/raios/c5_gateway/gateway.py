@@ -16,7 +16,7 @@ from fastapi import (
     WebSocketDisconnect
 )
 
-from pydantic import BaseModel
+from pydantic import AliasChoices,BaseModel,Field,field_validator
 
 
 HERE=Path(__file__).resolve().parent
@@ -66,9 +66,16 @@ app=FastAPI(
 
 class ChatRequest(BaseModel):
 
-    text:str
+    text:str=Field(
+        validation_alias=AliasChoices("text","message"),
+        min_length=1,
+        max_length=200_000
+    )
 
-    language:str="auto"
+    language:str=Field(
+        default="auto",
+        validation_alias=AliasChoices("language","locale")
+    )
 
     conversation_id:str|None=None
 
@@ -77,6 +84,22 @@ class ChatRequest(BaseModel):
     teacher:str="HUMAN"
 
     training_mode:bool=False
+
+    stream:bool=False
+
+    timeout_seconds:float=Field(
+        default=120.0,
+        ge=1.0,
+        le=600.0
+    )
+
+    @field_validator("text")
+    @classmethod
+    def reject_blank_text(cls,value:str):
+        normalized=value.strip()
+        if not normalized:
+            raise ValueError("EMPTY_TEXT")
+        return normalized
 
 
 SYSTEM_PROMPT="""
@@ -103,7 +126,8 @@ def execute_chat(
     conversation_id,
     task_id,
     teacher,
-    training_mode
+    training_mode,
+    timeout_seconds=120.0
 ):
 
     cid=(
@@ -122,7 +146,9 @@ def execute_chat(
                 "role":"user",
                 "content":text
             }
-        ]
+        ],
+        stream=False,
+        timeout=timeout_seconds
     )
 
     if training_mode:
@@ -153,10 +179,22 @@ def execute_chat(
 
     if not result.ok:
 
+        timeout_failure=(
+            result.status_code is None
+            and
+            result.error
+            and
+            (
+                result.error.startswith("TimeoutError::")
+                or
+                result.error.startswith("socket.timeout::")
+            )
+        )
+
         raise HTTPException(
-            status_code=502,
+            status_code=504 if timeout_failure else 502,
             detail={
-                "error":"MAIN_CORTEX_FAILURE",
+                "error":"MAIN_CORTEX_TIMEOUT" if timeout_failure else "MAIN_CORTEX_FAILURE",
                 "model":result.model,
                 "cortex_request_id":
                     result.request_id,
@@ -177,6 +215,8 @@ def execute_chat(
         "model":result.model,
         "language":language,
         "response":result.content,
+        "content":result.content,
+        "reply":result.content,
         "latency_seconds":
             result.latency_seconds,
         "runtime_source":"CANONICAL_DEPLOYMENT",
@@ -242,7 +282,8 @@ def chat(req:ChatRequest):
         req.conversation_id,
         req.task_id,
         req.teacher,
-        req.training_mode
+        req.training_mode,
+        req.timeout_seconds
     )
 
 
@@ -297,6 +338,13 @@ async def ws_chat(ws:WebSocket):
                     msg.get(
                         "training_mode",
                         False
+                    ),
+                    min(
+                        max(
+                            float(msg.get("timeout_seconds",120.0)),
+                            1.0
+                        ),
+                        600.0
                     )
                 )
 
