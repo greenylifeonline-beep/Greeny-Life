@@ -1,0 +1,89 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "raios.cross-host-packet.v1",
+  "title": "RAIOS cross-host packet (Cloud Adapter contract)",
+  "description": "Maps onto existing raios.communication.envelope.v1 + MCP send_packet/ack_packet. Not a bus. Wire compatibility with AG RAIOS-CROSS-HOST-BRIDGE-V1.py is UNPROVEN until a signed package arrives. EXPORTED_NOT_TRANSPORTED is not a host connection.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schema",
+    "message_id",
+    "correlation_id",
+    "packet_id",
+    "actor",
+    "target",
+    "from_host",
+    "from_tree",
+    "to_host",
+    "to_tree",
+    "created_at",
+    "expires_at",
+    "nonce",
+    "payload",
+    "content_hash",
+    "signature",
+    "return_path",
+    "requires_ack"
+  ],
+  "properties": {
+    "schema": {"const": "raios.cross-host-packet.v1"},
+    "message_id": {"type": "string", "minLength": 1},
+    "correlation_id": {"type": "string", "minLength": 1},
+    "packet_id": {"type": "string", "minLength": 1},
+    "actor": {"type": "string", "minLength": 1},
+    "target": {
+      "type": "string",
+      "enum": ["C1", "C2", "C5-PUBLIC", "C5-FOUNDER", "C6", "ALL"]
+    },
+    "from_host": {"type": "string", "minLength": 1},
+    "from_tree": {"type": "string", "minLength": 1},
+    "from_root": {"type": "string"},
+    "from_ref": {"type": "string"},
+    "to_host": {"type": "string", "minLength": 1},
+    "to_tree": {"type": "string", "minLength": 1},
+    "to_root": {"type": "string"},
+    "to_ref": {"type": "string"},
+    "intent": {"type": "string"},
+    "created_at": {"type": "string", "minLength": 1},
+    "expires_at": {"type": "string", "minLength": 1},
+    "nonce": {"type": "string", "minLength": 8},
+    "payload": {"type": "object"},
+    "content_hash": {"type": "string", "pattern": "^[0-9a-f]{64}$"},
+    "signature": {"type": "string", "minLength": 32, "description": "HMAC-SHA256 hex over canonical unsigned packet. Not a bearer token."},
+    "return_path": {"type": "string", "minLength": 1},
+    "requires_ack": {"type": "boolean"},
+    "auth_context": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "method": {"type": "string", "enum": ["mcp-bearer-hmac", "none"]},
+        "actor_id": {"type": "string"},
+        "token_present": {"type": "boolean"},
+        "token_sha256": {"type": "string", "description": "Optional hash of grant; never the token value"}
+      }
+    }
+  },
+  "x-raios-laws": [
+    "ENVELOPE_NE_BUS",
+    "NO_ALTERNATE_CONTROL_PLANE",
+    "NO_NINTH_MCP_TOOL",
+    "ACK_IS_A_NEW_PACKET_NEVER_A_MOVE",
+    "EXPORTED_NOT_TRANSPORTED_NE_CONNECTION",
+    "PASTED_CHAT_NE_MCP_ROUND_TRIP",
+    "SECRET_NE_IN_GIT_LOG_PACKET",
+    "C5_FOUNDER_FAIL_CLOSED_UNTIL_PROVEN"
+  ],
+  "x-raios-issuer": {
+    "who": "C1/owner only",
+    "store": ".ai-os/mcp/tokens.local.json",
+    "gitignored": true,
+    "preferred": "OAuth/OIDC when remote MCP is registered; else scoped local bearer grant with expires_at",
+    "this_adapter": "HMAC-SHA256 keyed by the live actor bearer. Cloud Adapter must not mint or persist the key."
+  },
+  "x-raios-maps-to": {
+    "envelope": "raios.communication.envelope.v1",
+    "tools": ["send_packet", "ack_packet", "read_inbox", "read_receipt"],
+    "idempotency": "RAIOS/V9/cloud/nomadic/idempotency.py",
+    "lease": "RAIOS/V9/cloud/nomadic/lease_manager.py"
+  }
+}
