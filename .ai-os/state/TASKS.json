@@ -296,6 +296,21 @@
       "status": "DONE",
       "claimed_by": "C6-AG-REMOTE-RECON",
       "evidence": ".ai-os/reports/global-estate/RAIOS-W4FE-C3-SUPPLEMENT-CLOSURE-01"
+    },
+    {
+      "id": "RAIOS-WEIGHT-MERGE-SELECTIVE-CANONICAL-INTEGRATION-01",
+      "title": "Selective canonical Weight-Merge integration",
+      "objective": "Extract proven unique Weight-Merge value into canonical V9 model_lab and retire the redundant parallel project after zero-unresolved proof.",
+      "scope": [
+        "RAIOS/V9/evolution/model_lab;Weight-Merge-Lab"
+      ],
+      "dependencies": [],
+      "allowed_agents": [
+        "C6-AG-REMOTE-RECON"
+      ],
+      "validation": "Selective integration tests pass; provenance preserved; no parallel merge engine; unresolved unique value equals zero.",
+      "status": "IN_PROGRESS",
+      "claimed_by": "C6-AG-REMOTE-RECON"
     }
   ]
 }

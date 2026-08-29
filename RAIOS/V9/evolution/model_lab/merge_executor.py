@@ -1,10 +1,16 @@
-"""Merge executor. Refuses weight merge on this host."""
+"""Governed Model Lab executor; defaults to refusal and dry-run."""
 from __future__ import annotations
 
 from typing import Any
 
 
 def execute(plan: dict[str, Any]) -> dict[str, Any]:
+    strategy = str(plan.get("strategy") or "").upper()
+    if strategy == "LINEAR" and plan.get("inputs"):
+        from .weight_merge_runtime import execute_cpu_linear
+
+        result = execute_cpu_linear(plan)
+        return {"plan_id": plan.get("id"), "strategy": strategy, **result}
     return {
         "ok": False,
         "executed": False,
@@ -17,6 +23,6 @@ def execute(plan: dict[str, Any]) -> dict[str, Any]:
         "law": [
             "NO_NEW_LOCAL_MODEL_DOWNLOADS",
             "MERGE_DECLARATION_NE_MERGE_EXECUTION",
-            "DESTRUCTIVE_MERGE_FORBIDDEN",
+            "EXPLICIT_AUTHORITY_REQUIRED",
         ],
     }

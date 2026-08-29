@@ -1,0 +1,21 @@
+{
+  "donor":"Greeny-Life-Repair/Weight-Merge-Lab",
+  "donor_commit":"39493ccbace7a922790737f4e0befa85239927be",
+  "tracked_files":57,
+  "untracked_files":0,
+  "groups":[
+    {"group":"CPU LINEAR tensor merge","decision":"MERGED","canonical":"RAIOS/V9/evolution/model_lab/weight_merge_runtime.py"},
+    {"group":"MergeKit discovery","decision":"MERGED","canonical":"discover_mergekit"},
+    {"group":"fail-closed policy and receipts","decision":"MERGED","canonical":"execute_cpu_linear/build_receipt"},
+    {"group":"CLI","decision":"MERGED","canonical":"scripts/ai-os/raios_weight_merge.py"},
+    {"group":"compatibility analysis","decision":"SUBSUMED","canonical":"compatibility_intelligence.py"},
+    {"group":"model and artifact registries","decision":"SUBSUMED","canonical":"model_registry.py/canary_registry.py"},
+    {"group":"domain models and state machine","decision":"SUBSUMED","canonical":"experiment_generator.py/merge_strategy.py"},
+    {"group":"donor tests","decision":"PROVENANCE_ONLY","canonical":"tests/model_lab/test_weight_merge_runtime.py"},
+    {"group":"requirements and data gitkeep","decision":"GENERATED_OR_PROJECT_WRAPPER","canonical":null}
+  ],
+  "unknown":0,
+  "unresolved":0,
+  "parallel_engine_required":false,
+  "donor_delete_eligible_after_remote_binding":true
+}

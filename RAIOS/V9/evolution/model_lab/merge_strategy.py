@@ -29,10 +29,15 @@ TOOL_TOURNAMENT = (
 
 
 def declarations() -> dict[str, Any]:
+    from .weight_merge_runtime import discover_mergekit
+
     return {
         "strategies": list(STRATEGIES),
         "installed_blindly": False,
         "tools": list(TOOL_TOURNAMENT),
-        "execution": "FORBIDDEN_HERE",
+        "execution": "EXPLICIT_LOCAL_CPU_LINEAR_ONLY",
+        "cpu_linear_available": True,
+        "mergekit": discover_mergekit(),
+        "automatic_canonical_promotion": False,
         "gl005_proven": False,
     }

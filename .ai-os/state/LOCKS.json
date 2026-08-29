@@ -71,10 +71,16 @@
     },
     {
       "id": "LOCK-20260818130148",
-      "task_id": "V9-A15",
-      "agent": "cursor",
+      "task_id": "RAIOS-WEIGHT-MERGE-SELECTIVE-CANONICAL-INTEGRATION-01",
+      "agent": "C6-AG-REMOTE-RECON",
       "scope": "RAIOS/V9",
-      "status": "ACTIVE"
+      "status": "ACTIVE",
+      "owner": "C6-AG-REMOTE-RECON",
+      "ownership_transferred": true,
+      "transferred_from_owner": "cursor",
+      "transferred_from_task": "V9-A15",
+      "transferred_at": "2026-08-29T21:45:54.307843+00:00",
+      "transfer_authority": "C1"
     },
     {
       "id": "LOCK-20260820062957",
@@ -480,6 +486,13 @@
       "agent": "C6-AG-REMOTE-RECON",
       "scope": ".ai-os/reports/global-estate/RAIOS-W4FE-C3-SUPPLEMENT-CLOSURE-01",
       "status": "RELEASED"
+    },
+    {
+      "id": "LOCK-20260830001833",
+      "task_id": "RAIOS-WEIGHT-MERGE-SELECTIVE-CANONICAL-INTEGRATION-01",
+      "agent": "C6-AG-REMOTE-RECON",
+      "scope": "scripts/ai-os/raios_weight_merge.py",
+      "status": "ACTIVE"
     }
   ]
 }
