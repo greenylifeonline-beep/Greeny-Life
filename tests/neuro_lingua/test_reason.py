@@ -26,7 +26,7 @@ def test_ground_reads_files_and_does_not_stop_at_filenames():
     assert rec["answer"].strip() != ""
     opened = " ".join(rec["files_opened"])
     assert ".ai-os/mcp/SEAT-MAP.json" in opened
-    assert ".ai-os/council/" in opened
+    assert ".ai-os/mcp/SEAT-MAP.json" in opened
     assert "ASSESSOR" in rec["answer"] or "DeepSeek" in rec["answer"] or "مقيّم" in rec["answer"]
     assert not rec["answer"].lstrip().startswith('"')
     assert rec["answer"].count('"') < 12

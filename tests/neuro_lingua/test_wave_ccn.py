@@ -124,12 +124,12 @@ def test_merge_executor_refuses_and_probes_exist():
     for name in (
         "gym/kaggle/KAGGLE-A-HARDWARE-PROBE.py",
         "gym/kaggle/KAGGLE-B-HARDWARE-PROBE.py",
-        "gym/kaggle/KAGGLE-A-HARDWARE-PROBE.ipynb",
-        "gym/kaggle/KAGGLE-B-HARDWARE-PROBE.ipynb",
-        "RAIOS/V9/cloud/nomadic/lease_manager.py",
+        "gym/kaggle/hardware_probe.py",
+        "RAIOS/V9/cloud/storage/storage_contract.py",
         "RAIOS/V9/cloud/storage/hf_backend.py",
         "RAIOS/V9/evolution/model_lab/canary_registry.py",
-        "RAIOS/V9/autonomic/self_inspection/engine.py",
+        "RAIOS/V9/evolution/model_lab/model_registry.py",
+        "RAIOS/V9/autonomic/self_inspection/runtime_graph_census.py",
     ):
         assert (ROOT / name).is_file(), name
     assert CORPUS

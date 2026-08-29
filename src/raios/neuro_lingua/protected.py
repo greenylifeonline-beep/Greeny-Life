@@ -16,6 +16,7 @@ PATTERNS: list[tuple[str, re.Pattern[str]]] = [
     ("version", re.compile(r"\bv?\d+\.\d+(?:\.\d+)?\b")),
     ("hash", re.compile(r"\b(?:sha256:)?[a-fA-F0-9]{32,}\b")),
     ("id", re.compile(r"\b[A-Z]{2,}[-_][A-Z0-9-]{3,}\b")),
+    ("sku", re.compile(r"\b[HBSO]\d{3}\b")),
     ("qualified_ident", re.compile(r"\b[A-Za-z_][A-Za-z0-9_]*(?:\.[A-Za-z_][A-Za-z0-9_]*)+\b")),
     ("function", re.compile(r"\b[A-Za-z_][A-Za-z0-9_]*\(\)")),
     ("number", re.compile(r"\b\d+(?:[.,]\d+)?\b")),

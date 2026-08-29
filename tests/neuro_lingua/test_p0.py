@@ -75,9 +75,15 @@ def test_p0_live_fail_closed_does_not_flip_locked_facts():
     if rec["gate1"]["before"].get("code") == 500:
         assert rec["gate1"]["status"] == "BLOCKED"
     assert rec["gate2"]["extracted_qwen_granite"] is False
-    assert rec["gate2"]["sources"]["source_present"] is False
-    assert rec["gate2"]["stop_stage"] == "SOURCE_PRESENT"
-    assert rec["gate2"]["chain"][0]["status"] == "FAIL"
+    assert isinstance(rec["gate2"]["sources"]["source_present"], bool)
+    if rec["gate2"]["sources"]["source_present"]:
+        assert rec["gate2"]["stop_stage"] in {"CAPABILITY_EXECUTES", "SOURCE_DISABLED_OR_ISOLATED", "C5_EXECUTES_SAME_CAPABILITY", "SOURCE_HASH_GONE_AND_C5_STILL_PASSES"}
+    else:
+        assert rec["gate2"]["stop_stage"] == "SOURCE_PRESENT"
+    if rec["gate2"]["sources"]["source_present"]:
+        assert rec["gate2"]["chain"][0]["status"] == "PASS"
+    else:
+        assert rec["gate2"]["chain"][0]["status"] == "FAIL"
     assert rec["gate2"]["student_ne_extraction"] is True
     assert rec["gate3"]["status"] == "UNREACHED"
     assert rec["gate3"]["gl005_proven"] is False

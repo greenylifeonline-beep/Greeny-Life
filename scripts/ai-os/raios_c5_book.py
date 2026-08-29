@@ -37,10 +37,7 @@ BOOK = (
 )
 THEORY_FILES = (
     ".ai-os/CORE-CONTRACT.md",
-    ".ai-os/state/FOUNDATION.json",
     ".ai-os/state/DECISIONS.md",
-    ".ai-os/reports/RAIOS-PHASE-ZERO-MAP.md",
-    ".ai-os/council/CURRICULUM-CASE-003.md",
     ".ai-os/mcp/C5-LAWBOOK.json",
     ".ai-os/mcp/C5-GRANT.json",
 )

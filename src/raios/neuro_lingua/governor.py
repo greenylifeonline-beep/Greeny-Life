@@ -5,6 +5,8 @@ import os
 from dataclasses import dataclass
 from typing import Any
 
+from .cortex import CORTEX_IDENTITY, gate_run, public_fields, status as cortex_status
+
 
 @dataclass(frozen=True)
 class AdmissionDecision:
@@ -42,20 +44,58 @@ def _windows_memory() -> dict[str, float] | None:
         return None
 
 
-class CognitiveResourceGovernor:
-    """Admission control wrapping observed RAM/A17 snapshots. Does not redefine Main Cortex."""
+def _linux_memory() -> dict[str, float] | None:
+    try:
+        info: dict[str, float] = {}
+        with open("/proc/meminfo", encoding="utf-8") as handle:
+            for line in handle:
+                key, _, rest = line.partition(":")
+                parts = rest.split()
+                if not parts:
+                    continue
+                info[key] = float(parts[0]) / (1024 ** 2)
+        free_gb = info.get("MemAvailable")
+        if free_gb is None:
+            free_gb = info.get("MemFree")
+        if free_gb is None:
+            return None
+        return {
+            "total_gb": info.get("MemTotal"),
+            "free_gb": free_gb,
+            "load": None,
+        }
+    except Exception:
+        return None
 
-    def __init__(self, min_free_gb_for_cortex: float = 3.0):
+
+def _host_memory() -> dict[str, float] | None:
+    if os.name == "nt":
+        return _windows_memory()
+    return _linux_memory()
+
+
+class CognitiveResourceGovernor:
+    """Admission control. C1 owns treat/run/throw. Hold is not throw. Identity is not swapped."""
+
+    def __init__(self, min_free_gb_for_cortex: float = 24.0):
         self.min_free_gb_for_cortex = min_free_gb_for_cortex
-        self.main_cortex_identity = "RAIOS_MAIN_CORTEX"
+        self.main_cortex_identity = CORTEX_IDENTITY
+        self.cortex_isolated = False
 
     def snapshot(self) -> dict[str, Any]:
-        mem = _windows_memory() if os.name == "nt" else None
+        mem = _host_memory()
+        st = cortex_status(min_free_gb=self.min_free_gb_for_cortex)
         return {
             "memory": mem,
+            "cortex_identity": self.main_cortex_identity,
+            "cortex_owner": "C1",
+            "isolated_as_disposal": False,
+            "cortex_hold": st["hold"],
+            "cortex_isolated": False,
             "ollama_num_parallel": os.environ.get("OLLAMA_NUM_PARALLEL"),
             "ollama_max_loaded_models": os.environ.get("OLLAMA_MAX_LOADED_MODELS"),
             "keep_alive": os.environ.get("OLLAMA_KEEP_ALIVE"),
+            **public_fields(st),
         }
 
     def admit(self, capability: str, offline_ok: bool = True) -> AdmissionDecision:
@@ -70,13 +110,10 @@ class CognitiveResourceGovernor:
         }
         if capability not in cortex_caps:
             return AdmissionDecision(True, "DETERMINISTIC_OR_LOCAL", free_gb, None)
-        if free_gb is None:
-            return AdmissionDecision(False, "MEMORY_TELEMETRY_UNKNOWN", None, "deterministic_pipeline")
-        if free_gb < self.min_free_gb_for_cortex:
-            return AdmissionDecision(
-                False,
-                "MEMORY_CAPACITY_DENIED",
-                float(free_gb),
-                "deterministic_pipeline",
-            )
-        return AdmissionDecision(True, "CORTEX_ADMITTED", float(free_gb), None)
+        gate = gate_run(min_free_gb=self.min_free_gb_for_cortex)
+        return AdmissionDecision(
+            bool(gate["admitted"]),
+            str(gate["reason"]),
+            float(free_gb) if free_gb is not None else None,
+            gate.get("fallback"),
+        )

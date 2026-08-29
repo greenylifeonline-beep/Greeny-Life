@@ -175,6 +175,9 @@ def render(facts: dict, gl005: dict, sources: dict) -> str:
 def stamp() -> dict:
     wal_before = wal_mtime()
     foundation = load_foundation()
+    if not STATE.exists():
+        STATE.parent.mkdir(parents=True, exist_ok=True)
+        STATE.write_text(json.dumps(foundation, indent=2, ensure_ascii=False) + "\n", encoding="utf-8")
     gl005 = probe_gl005()
     sources = probe_sources()
     rec = {

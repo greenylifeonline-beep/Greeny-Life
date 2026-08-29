@@ -92,7 +92,11 @@ def _canon(query: str) -> list[str]:
     if re.search(r"\bC[0-5]\b", query or "", re.I):
         extra.append(".ai-os/mcp/SEAT-MAP.json")
     if "مجلس" in (query or "") or "council" in (query or "").lower():
-        extra.extend([".ai-os/council/METHOD.md", ".ai-os/council/ATTENDANCE.md"])
+        extra.extend([
+            ".ai-os/council/METHOD.md",
+            ".ai-os/council/ATTENDANCE.md",
+            ".ai-os/council/CURRICULUM-CASE-003.md",
+        ])
     return extra
 
 

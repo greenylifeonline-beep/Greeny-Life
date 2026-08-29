@@ -31,7 +31,7 @@ from raios_c5_watchdog import classify as watchdog_classify  # noqa: E402
 WAL = ROOT / "RAIOS" / "V9" / "wal" / "cognitive-events.jsonl"
 OUT = ROOT / ".ai-os" / "receipts" / "c5-wave1"
 REPORTS = ROOT / ".ai-os" / "reports"
-BOUND_HEAD = "f17b749"
+BOUND_HEAD = "3a7e1be601d3cf617f1bf305eb780a8feac4ac81"
 OLLAMA = "http://127.0.0.1:11434"
 ALLOWED_SOURCE = ".ai-os/CORE-CONTRACT.md"
 COMPRESS_PY = ROOT / "src" / "raios" / "neuro_lingua" / "compress.py"

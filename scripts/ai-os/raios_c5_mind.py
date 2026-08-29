@@ -12,6 +12,7 @@ ROOT = Path(__file__).resolve().parents[2]
 DECISIONS = ROOT / ".ai-os" / "state" / "DECISIONS.md"
 SEAT_MAP = ROOT / ".ai-os" / "mcp" / "SEAT-MAP.json"
 POLICY = ROOT / ".ai-os" / "mcp" / "POLICY.json"
+LAWBOOK = ROOT / ".ai-os" / "mcp" / "C5-LAWBOOK.json"
 BOARD = ROOT / ".ai-os" / "board" / "NOW.json"
 BOARD_MD = ROOT / ".ai-os" / "board" / "NOW.md"
 WAL = ROOT / "RAIOS" / "V9" / "wal" / "cognitive-events.jsonl"
@@ -92,6 +93,26 @@ def think() -> dict:
         "Repair is unseated: stash WAL, pull cookie-fix HEAD, then rebind 3107.",
         "GL-005 still needs authenticated POST → visible OrchestrationTask. C5 cannot mint that.",
     ]
+    laws_indexed = extract_laws(decisions)
+    if not laws_indexed and LAWBOOK.exists():
+        try:
+            lawbook = json.loads(LAWBOOK.read_text(encoding="utf-8"))
+            raw = []
+            for key in ("law", "laws"):
+                value = lawbook.get(key)
+                if isinstance(value, list):
+                    raw.extend(str(x) for x in value)
+                elif isinstance(value, dict):
+                    raw.extend(str(k) for k in value.keys())
+                    raw.extend(str(v) for v in value.values() if isinstance(v, str))
+                elif isinstance(value, str):
+                    raw.append(value)
+            for item in raw:
+                token = item.strip()
+                if re.fullmatch(r"[A-Z][A-Z0-9_]{5,}", token) and token not in laws_indexed:
+                    laws_indexed.append(token)
+        except (json.JSONDecodeError, OSError):
+            pass
     mind = {
         "schema": "raios.c5-mind.v1",
         "from": "C5",
@@ -99,8 +120,8 @@ def think() -> dict:
         "relation": "son-partner-assistant",
         "ts": utc(),
         "git_head": live_head,
-        "laws_indexed": extract_laws(decisions),
-        "law_count": len(extract_laws(decisions)),
+        "laws_indexed": laws_indexed,
+        "law_count": len(laws_indexed),
         "c5_tools": list(c5.get("tools") or []),
         "c5_instance": c5.get("instance_role"),
         "candidates": count_jsonl(CANDIDATES),

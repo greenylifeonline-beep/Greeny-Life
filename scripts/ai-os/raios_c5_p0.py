@@ -595,6 +595,13 @@ def stamp() -> dict:
     if wal_mtime() != wal_before:
         raise SystemExit("P0_WAL_VIOLATION")
     rec["wal_mtime_unchanged"] = True
+    state = foundation if isinstance(foundation, dict) else {}
+    state["schema"] = state.get("schema") or "raios.c1-foundation.v1"
+    state["facts"] = dict(rec["facts"])
+    state["p0"] = {"order": list(GATE_ORDER), "stop": rec["stop"], "gl005_proven": False}
+    state["p0_decision"] = "D-060"
+    FOUNDATION.parent.mkdir(parents=True, exist_ok=True)
+    FOUNDATION.write_text(json.dumps(state, indent=2, ensure_ascii=False) + "\n", encoding="utf-8")
     OUT.mkdir(parents=True, exist_ok=True)
     (OUT / "LAST.json").write_text(json.dumps(rec, indent=2, ensure_ascii=False) + "\n", encoding="utf-8")
     (OUT / "LAST.txt").write_text(rec["text"], encoding="utf-8")
