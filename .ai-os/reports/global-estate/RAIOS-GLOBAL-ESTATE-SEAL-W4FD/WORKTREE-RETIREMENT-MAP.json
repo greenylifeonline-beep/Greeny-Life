@@ -1,0 +1,11 @@
+{
+  "c1c3-integration": {"role": "CANONICAL_ACTIVE", "safe_remove": false},
+  "w4fb-model-factory": {"role": "SUPERSEDED_STAGE", "safe_remove_after_push": true},
+  "ECW02": {"role": "HISTORICAL_REFERENCE", "remote_bound": true, "safe_remove_after_push": true},
+  "P0_EXEC": {"role": "EXTERNAL_RUNTIME_STATE", "dirty": true, "safe_remove": false},
+  "w4fd-validation": {"role": "UNCOMMITTED_USER_RUNTIME_OUTPUT", "dirty": true, "safe_remove": false},
+  "Greeny-Life-Repair": {"role": "EXTERNAL_RUNTIME", "c5_runtime_dependency": true, "safe_remove": false},
+  "unique_promotion_value_remaining": 0,
+  "runtime_value_remaining": 1,
+  "removal_policy": "remove only clean, remote-bound or subsumed worktrees"
+}
