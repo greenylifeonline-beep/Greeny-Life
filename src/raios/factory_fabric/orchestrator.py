@@ -170,6 +170,19 @@ def assimilation_probe() -> dict[str, Any]:
     }
 
 
+def cognitive_factory_probe() -> dict[str, Any]:
+    from .cognitive import analyze_cognitive_estate
+
+    result = analyze_cognitive_estate(
+        runtime_root(),
+        write_runtime_artifacts=True,
+    )
+    return {
+        "factory": "COGNITIVE_FACTORY",
+        **result,
+    }
+
+
 def run_all(*, max_files: int = 120, case_limit: int = 120, live_resource: bool = False) -> dict[str, Any]:
     root = repo_root()
     rt = runtime_root()
@@ -178,6 +191,7 @@ def run_all(*, max_files: int = 120, case_limit: int = 120, live_resource: bool 
     results = {
         "resource_factory": resource_factory_probe(live=live_resource),
         "assimilation_factory": assimilation_probe(),
+        "cognitive_factory": cognitive_factory_probe(),
         "training_factory": training_factory_probe(),
         "expert_foundry": foundry_probe(max_files=max_files, case_limit=case_limit),
         "model_ecology": model_ecology_probe(),

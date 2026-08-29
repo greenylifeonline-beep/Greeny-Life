@@ -360,6 +360,27 @@
       "status": "DONE",
       "claimed_by": "C6-AG-REMOTE-RECON",
       "evidence": ".ai-os/reports/factory-fabric/RAIOS-FACTORY-FABRIC-CRITICAL-CLOSURE-C6-01"
+    },
+    {
+      "id": "RAIOS-COGNITIVE-FACTORY-CANONICAL-CAPABILITY-01",
+      "title": "Activate governed Cognitive Factory capability inside Factory Fabric",
+      "objective": "Convert imported cognitive estate into deterministic benchmark, skill, training, and governance review queues without a second foundational system.",
+      "scope": [
+        "src/raios/factory_fabric/cognitive.py",
+        "src/raios/factory_fabric/orchestrator.py",
+        "tests/factory_fabric/test_cognitive_factory.py",
+        ".ai-os/reports/factory-fabric/RAIOS-COGNITIVE-FACTORY-CANONICAL-CAPABILITY-01"
+      ],
+      "dependencies": [
+        "RAIOS-FACTORY-FABRIC-CRITICAL-CLOSURE-C6-01"
+      ],
+      "allowed_agents": [
+        "C6-AG-REMOTE-RECON"
+      ],
+      "validation": "Deterministic cognitive queues pass tests; no automatic training, promotion, WAL, event bus, or shared-runtime execution",
+      "status": "DONE",
+      "claimed_by": "C6-AG-REMOTE-RECON",
+      "evidence": ".ai-os/reports/factory-fabric/RAIOS-COGNITIVE-FACTORY-CANONICAL-CAPABILITY-01"
     }
   ]
 }

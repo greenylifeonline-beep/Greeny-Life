@@ -1,0 +1,20 @@
+{
+  "schema": "raios.cognitive.capability.map.v1",
+  "runtime_role": "CANONICAL_COGNITIVE_CAPABILITY",
+  "inputs": [
+    "CONTENT_ADDRESSED_FACTORY_ESTATE",
+    "ASSIMILATION_MATERIAL"
+  ],
+  "outputs": [
+    "BENCHMARK_CANDIDATE",
+    "SKILL_VALIDATION_CANDIDATE",
+    "TRAINING_REVIEW_CANDIDATE",
+    "ASSIMILATION_FEEDBACK",
+    "KNOWLEDGE_MATERIAL",
+    "GOVERNANCE_REFERENCE"
+  ],
+  "deterministic_identity": "sha256(source_sha256|category|capability)",
+  "duplicate_suppression": true,
+  "object_integrity_validation": true,
+  "integrated_in": "raios.factory_fabric.orchestrator.run_all"
+}
