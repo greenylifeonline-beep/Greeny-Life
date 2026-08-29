@@ -1,0 +1,12 @@
+{
+  "task_id": "RAIOS-FACTORY-FABRIC-CRITICAL-CLOSURE-C6-01",
+  "failing_test": "tests/factory_fabric/test_factory_fabric.py::test_package_import_is_lazy_and_public_api_is_compatible",
+  "reproduced": true,
+  "original_error": "ModuleNotFoundError: No module named 'raios'",
+  "root_cause": "Parent pytest added repo/src to sys.path only; subprocess starts a fresh interpreter and did not inherit that in PYTHONPATH.",
+  "runtime_defect": false,
+  "test_harness_defect": true,
+  "repair": "Pass an environment containing repo/src in PYTHONPATH to the child interpreter.",
+  "assertion_removed": false,
+  "lazy_import_contract_weakened": false
+}

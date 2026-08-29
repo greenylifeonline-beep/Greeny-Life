@@ -1,0 +1,41 @@
+{
+  "resource_factory": {
+    "status": "PASS",
+    "tests": "172/172",
+    "mutation": false
+  },
+  "assimilation_factory": {
+    "status": "PASS",
+    "input_bound": true,
+    "raw_events": 105,
+    "unique_materials": 105,
+    "assimilation_units": 14
+  },
+  "training_factory": {
+    "status": "PASS",
+    "runner": "NODE_NATIVE_TYPESCRIPT",
+    "external_dependency": false,
+    "auto_train": false,
+    "auto_promote": false
+  },
+  "c5_expert_foundry": {
+    "status": "PASS",
+    "executable": true,
+    "canonical_promotions": 0,
+    "execution_authorizations": 0,
+    "full_shared_runtime_rerun_this_task": false
+  },
+  "qwen_granite": {
+    "status": "PASS",
+    "tests": "14/14",
+    "source_independent": true
+  },
+  "weight_merge": {
+    "status": "PROVEN_EXISTING",
+    "scope_touched": false,
+    "next_use": "model compatibility and merge-candidate evaluation after model ecology classification"
+  },
+  "second_factory_created": false,
+  "second_ledger_created": false,
+  "second_promotion_system_created": false
+}

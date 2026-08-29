@@ -1,0 +1,40 @@
+{
+  "head_before": "e50dbf0006c911ce24592c413e5eedd3c74a037f",
+  "isolated_reproduction": {
+    "executed": 1,
+    "pass": 0,
+    "fail": 1,
+    "expected_failure": true
+  },
+  "isolated_after_repair": {
+    "executed": 1,
+    "pass": 1,
+    "fail": 0
+  },
+  "required_suites": {
+    "factory_fabric": {
+      "pass": 12,
+      "fail": 0
+    },
+    "resource_fabric": {
+      "pass": 172,
+      "fail": 0
+    },
+    "qwen_granite": {
+      "pass": 14,
+      "fail": 0
+    },
+    "assimilation_acceptance": {
+      "pass": 10,
+      "fail": 0
+    }
+  },
+  "required_suite_total": {
+    "executed": 208,
+    "pass": 208,
+    "fail": 0
+  },
+  "successful_post_repair_executions": 209,
+  "successful_post_repair_pass": 209,
+  "successful_post_repair_fail": 0
+}

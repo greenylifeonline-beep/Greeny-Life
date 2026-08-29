@@ -1,0 +1,14 @@
+{
+  "runner": "node v24.18.0 native TypeScript",
+  "command": "node scripts/runtime/verify-training-factory.mjs",
+  "exit_code": 0,
+  "status": "PASS",
+  "external_dependency": false,
+  "auto_train": false,
+  "auto_promote": false,
+  "warning": "MODULE_TYPELESS_PACKAGE_JSON",
+  "warning_status": "NON_BLOCKING_OBSERVED",
+  "root_type_module_added": false,
+  "reason_not_changed": "Adding type=module at repository root can alter Next.js/CommonJS package semantics; warning is performance-only and execution is correct.",
+  "future_minimal_option": "Isolate ESM typing to a dedicated package boundary only after compatibility tests."
+}

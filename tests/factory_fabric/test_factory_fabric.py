@@ -180,7 +180,18 @@ def test_package_import_is_lazy_and_public_api_is_compatible():
         "assert 'raios.factory_fabric.orchestrator' not in sys.modules; "
         "assert callable(f.run_all); assert callable(f.import_factory_estate)"
     )
-    proc = subprocess.run([sys.executable, "-c", code], cwd=ROOT, text=True, capture_output=True)
+    env = os.environ.copy()
+    source_root = str(ROOT / "src")
+    env["PYTHONPATH"] = os.pathsep.join(
+        part for part in (source_root, env.get("PYTHONPATH")) if part
+    )
+    proc = subprocess.run(
+        [sys.executable, "-c", code],
+        cwd=ROOT,
+        env=env,
+        text=True,
+        capture_output=True,
+    )
     assert proc.returncode == 0, proc.stderr
 
 
