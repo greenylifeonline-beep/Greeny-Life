@@ -1,0 +1,150 @@
+{
+  "schema": "raios.llm-estate-census.v1",
+  "task_id": "RAIOS-LLM-ESTATE-CENSUS-20260830",
+  "observed_at": "2026-08-29T23:15:00Z",
+  "observer": "C2@AG / C2-CURSOR",
+  "no_gpu_session_started": true,
+  "no_model_download": true,
+  "no_35b_inference": true,
+  "headline": {
+    "owned_kaggle_model_artifacts": 0,
+    "local_ollama_weights": 11,
+    "hf_hub_cached_models": 0,
+    "c5_live_model": "qwen3:0.6b",
+    "nine_router_catalog_aliases": 691,
+    "nine_router_providers_connected": false
+  },
+  "kaggle": {
+    "account": "greenylife",
+    "auth_method": "OAUTH",
+    "kaggle_json_keyfile": false,
+    "owned_models": [],
+    "owned_models_count": 0,
+    "owned_models_cli": "kaggle models list --owner greenylife -> No models found",
+    "public_hub_search_is_not_owned": true,
+    "public_hub_qwen_sample": [
+      "qwen-lm/qwen-3",
+      "qwen-lm/qwen-3-vl",
+      "qwen-lm/qwen-3-5",
+      "qwen-lm/qwen",
+      "qwen-lm/qwq-32b-preview",
+      "qwen-lm/qwen2.5",
+      "qwen-lm/qwen2.5-coder",
+      "qwen-lm/qwen-3-embedding",
+      "qwen-lm/qwen3-coder",
+      "qwen-lm/qwen3-tts"
+    ],
+    "notebooks": [
+      {
+        "ref": "greenylife/raios-canonical-workbench",
+        "status": "KernelWorkerStatus.COMPLETE",
+        "enable_gpu": false,
+        "enable_internet": false,
+        "last_run": "2026-08-26 22:21:25",
+        "output_files_first_page": "json/txt/md only; no gguf/safetensors/bin/pt"
+      },
+      {
+        "ref": "greenylife/notebook8c2d6a9080",
+        "status": "KernelWorkerStatus.COMPLETE",
+        "last_run": "2026-08-26 20:56:19",
+        "kernel_files_first_page": "empty listing"
+      },
+      {
+        "ref": "greenylife/notebook8d96bf4e18",
+        "status": "GetKernelSessionStatus 404",
+        "last_run": "2026-08-26 20:59:06",
+        "kernel_files_first_page": "empty listing"
+      }
+    ],
+    "datasets": [
+      {"ref": "greenylife/raios-canonical-estate", "size_bytes": 3691104, "class": "estate json/txt"},
+      {"ref": "greenylife/raios-cognitive-state", "size_bytes": 175447, "class": "cognitive json/py; usage history not weights"},
+      {"ref": "greenylife/collection-for-understand", "size_bytes": 3394708, "class": "source-trace txt"},
+      {"ref": "greenylife/greeny-life", "size_bytes": 12298, "class": "mission json/md"},
+      {"ref": "greenylife/raios-version-evidence", "size_bytes": 21953, "class": "version json"},
+      {"ref": "greenylife/raios-greeny-continuity-evidence", "size_bytes": 5967, "class": "continuity md/json"}
+    ],
+    "weight_files_on_owned_surfaces": 0,
+    "EXTRACTED_QWEN_GRANITE": false,
+    "MODEL_CHECKPOINT_CANDIDATES": 0,
+    "KAGGLE_MODEL_ASSETS": null,
+    "quota_live": {
+      "GPU": {"used_h": 0.0, "remaining_h": 30.0, "total_h": 30.0, "refresh_at": "2026-09-05T00:00:00"},
+      "TPU": {"used_h": 0.0, "remaining_h": 20.0, "total_h": 20.0, "refresh_at": "2026-09-05T00:00:00"}
+    },
+    "accelerators": {
+      "catalog": ["P100 16GB x1", "T4 16GB x2", "TPU catalog"],
+      "gpu_eligible_live": true,
+      "active_session_gpu": false,
+      "workbench_gpu_enabled": false
+    },
+    "stale_quota_note": "WAVE-02 resource fabric recorded remaining GPU 28.94h on 27-28 Aug; live CLI now 30.00h unused after weekly refresh window"
+  },
+  "local_machine": {
+    "manufacturer": "Acer",
+    "model": "Swift SF314-511",
+    "cpu": "11th Gen Intel Core i3-1115G4 @ 3.00GHz",
+    "cores": 2,
+    "threads": 4,
+    "ram_bytes": 8375296000,
+    "ram_gib": 7.8,
+    "nvidia_smi": "NOT_PRESENT",
+    "discrete_nvidia_gpu": false,
+    "igpu": "Intel Iris Xe (integrated; not CUDA)"
+  },
+  "local_ollama": {
+    "store": "C:\\Users\\Ghanam\\.ollama",
+    "store_bytes": 39749624475,
+    "store_gib": 37.02,
+    "models": [
+      {"id": "qwen3-embedding:0.6b", "ollama_id": "ac6da0dfba84", "size": "639 MB", "params": "595.78M", "quant": "Q8_0", "family": "qwen3-embed", "role": "embedder_unbound", "local_run": "FITS"},
+      {"id": "qwen3:0.6b", "ollama_id": "7df6b6e09427", "size": "522 MB", "params": "751.63M", "quant": "Q4_K_M", "family": "qwen3", "role": "C5_LIVE", "local_run": "FITS"},
+      {"id": "qwen2.5:0.5b", "ollama_id": "a8b0c5157701", "size": "397 MB", "params": "494.03M", "quant": "Q4_K_M", "family": "qwen2.5", "role": "installed_unbound", "local_run": "FITS"},
+      {"id": "granite-embedding:278m", "ollama_id": "1a37926bf842", "size": "562 MB", "params": "277.45M", "quant": "F16", "family": "granite-embed", "role": "embedder_unbound", "local_run": "FITS"},
+      {"id": "granite-code:3b", "ollama_id": "becc94fe1876", "size": "2.0 GB", "params": "3.5B", "quant": "Q4_0", "family": "granite-code", "role": "installed_unbound", "local_run": "TIGHT"},
+      {"id": "granite3-dense:8b", "ollama_id": "199456d876ee", "size": "4.9 GB", "params": "8.2B", "quant": "Q4_K_M", "family": "granite3", "role": "installed_unbound", "local_run": "RISKY_ON_8GB"},
+      {"id": "granite3-dense:2b", "ollama_id": "5c2e6f3112f4", "size": "1.6 GB", "params": "2.6B", "quant": "Q4_K_M", "family": "granite3", "role": "installed_unbound", "local_run": "FITS"},
+      {"id": "qwen3.6:35b-a3b", "ollama_id": "07d35212591f", "size": "23 GB", "params": "36.0B", "quant": "Q4_K_M", "family": "qwen35moe", "role": "installed_local_run_forbidden", "local_run": "BLOCKED_RAM"},
+      {"id": "granite4:3b", "ollama_id": "89962fcc7523", "size": "2.1 GB", "params": "3.4B", "quant": "Q4_K_M", "family": "granite4", "role": "installed_unbound", "local_run": "TIGHT"},
+      {"id": "qwen2.5-coder:3b", "ollama_id": "f72c60cabf62", "size": "1.9 GB", "params": "3.1B", "quant": "Q4_K_M", "family": "qwen2.5-coder", "role": "installed_unbound", "local_run": "TIGHT"},
+      {"id": "deepseek-r1:1.5b", "ollama_id": "e0979632db5a", "size": "1.1 GB", "params": "1.8B", "quant": "Q4_K_M", "family": "deepseek-r1", "role": "installed_unbound", "local_run": "FITS"}
+    ]
+  },
+  "c5": {
+    "health": "ONLINE",
+    "model": "qwen3:0.6b",
+    "runtime_source": "CANONICAL_DEPLOYMENT",
+    "canonical_head": "a6765f4dafd52a9ad2f7f546c960c5f8a6395418",
+    "url": "http://127.0.0.1:8766/health"
+  },
+  "huggingface_cache": {
+    "path": "C:\\Users\\Ghanam\\.cache\\huggingface",
+    "hub_dir_present": false,
+    "contents": ["token", "stored_tokens", "agent harness markers"],
+    "downloaded_model_repos": 0
+  },
+  "nine_router": {
+    "listen": "127.0.0.1:20128",
+    "api_health": {"ok": true},
+    "v1_models_count": 691,
+    "PROVIDERS_CONNECTED": false,
+    "note": "Catalog aliases are not loaded weights. Prefixes include tokenrouter, kr, bzl, openai, gh, siliconflow, ollama/* remote names such as ollama/gpt-oss:120b — not the local ollama list.",
+    "top_prefixes": [
+      {"prefix": "tokenrouter", "count": 110},
+      {"prefix": "kr", "count": 44},
+      {"prefix": "bzl", "count": 24},
+      {"prefix": "openai", "count": 20},
+      {"prefix": "gh", "count": 17},
+      {"prefix": "siliconflow", "count": 16}
+    ]
+  },
+  "named_not_installed": [
+    {"id": "Lion", "proof": "P0_NAME_ONLY"},
+    {"id": "qwen3:14b-q4_K_M", "proof": "P1_C3_EVIDENCE_DECISION", "note": "named in Kaggle cognitive-state history; weights not on notebook or local ollama"}
+  ],
+  "not_models": [
+    "Weight-Merge-Lab is a merge engine (numpy/MergeKit), not a loaded LLM",
+    "RAIOS-TREE001.bundle is a git recovery asset, not weights",
+    "Kaggle datasets are RAIOS state/source traces, not checkpoints"
+  ]
+}

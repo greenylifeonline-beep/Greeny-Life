@@ -1,0 +1,47 @@
+{
+  "schema": "raios.lock-release-proof.v1",
+  "task_id": "RAIOS-RESOURCE-FABRIC-LIVE-ACCOUNT-BINDING-WAVE-02",
+  "coordination_task": "RAIOS-MODEL-ESTATE-LIVE-BINDING-COORDINATION-01",
+  "from_seat": "C2",
+  "to_seat": "C3",
+  "authority": "C1",
+  "option": "OPTION_A",
+  "released_at": "2026-08-29T23:46:00Z",
+  "locks_json_sha256_after_release": "1204be557502ccfa5f6c2c970c49e191e1e0a00757ecaf6c28b8ec6c2efc07ff",
+  "active_overlap_after_release": 0,
+  "wave02_actual_status": "DONE",
+  "reason": "Execution completed 2026-08-27: 131/131 tests, LIVE_BINDING_RECORDED handoff, clean delivery 07813dd3 on origin ancestry. Wave-06 later DONE on same source paths. This C2 session is not editing live.py or resource_fabric tests. TASKS/LOCKS were stale IN_PROGRESS/ACTIVE.",
+  "wave02_final_commit": "07813dd3a14435752297268644e024310d36c8b5",
+  "wave02_original_local_commit": "b0491b5b982e7d12e8ff37e13e72d3a97b854f5c",
+  "wave02_final_commit_on_origin": true,
+  "remote_head": "0ffb99fd547e4e92bc19b1c6753ef2834a0f0c66",
+  "remote_branch": "origin/ai-evolution-202608051809",
+  "files_currently_edited": [],
+  "live_py_dirty": false,
+  "resource_tests_dirty": false,
+  "locks_released": [
+    "LOCK-20260827233500",
+    "LOCK-20260827233501",
+    "LOCK-20260827233502",
+    "LOCK-20260827233503"
+  ],
+  "scopes_released": [
+    "src/raios/resource_fabric",
+    "tests/resource_fabric",
+    ".ai-os/reports/resource-fabric/RAIOS-RESOURCE-FABRIC-LIVE-ACCOUNT-BINDING-WAVE-02",
+    "RAIOS-RESOURCE.ps1"
+  ],
+  "no_force_reset": true,
+  "no_gpu": true,
+  "no_model_download": true,
+  "c5_unchanged": true,
+  "ninerouter_unchanged": true,
+  "no_second_factory": true,
+  "c3_safe_to_proceed": true,
+  "c3_owns_pending_repairs": [
+    "RESOURCE_FABRIC_OLLAMA_PROBE_FALSE_NEGATIVE",
+    "MODEL_ESTATE_CANONICAL_BINDING",
+    "KAGGLE_ELIGIBILITY_NE_CURRENT_CAPACITY",
+    "NINEROUTER_CATALOG_NE_EXECUTABLE_WEIGHTS"
+  ]
+}

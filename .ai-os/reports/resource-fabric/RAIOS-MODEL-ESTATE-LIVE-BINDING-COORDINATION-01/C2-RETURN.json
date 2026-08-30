@@ -1,0 +1,38 @@
+{
+  "schema": "raios.c2-return.v1",
+  "task_id": "RAIOS-MODEL-ESTATE-LIVE-BINDING-COORDINATION-01",
+  "to_seat": "C3",
+  "from_seat": "C2",
+  "authority": "C1",
+  "option": "OPTION_A",
+  "WAVE02_ACTUAL_STATUS": "DONE",
+  "WAVE02_FINAL_COMMIT": "07813dd3a14435752297268644e024310d36c8b5",
+  "WAVE02_ORIGINAL_LOCAL_COMMIT": "b0491b5b982e7d12e8ff37e13e72d3a97b854f5c",
+  "REMOTE_HEAD": "0ffb99fd547e4e92bc19b1c6753ef2834a0f0c66",
+  "FILES_CURRENTLY_EDITED": "NONE",
+  "LIVE_PY_AVAILABLE_TO_C3": true,
+  "RESOURCE_TESTS_AVAILABLE_TO_C3": true,
+  "LOCKS_RELEASED": [
+    "LOCK-20260827233500:src/raios/resource_fabric",
+    "LOCK-20260827233501:tests/resource_fabric",
+    "LOCK-20260827233502:reports/WAVE-02",
+    "LOCK-20260827233503:RAIOS-RESOURCE.ps1"
+  ],
+  "OVERLAP_RESOLVED": true,
+  "C3_SAFE_TO_PROCEED": true,
+  "LOCK_RELEASE_PROOF": ".ai-os/reports/resource-fabric/RAIOS-RESOURCE-FABRIC-LIVE-ACCOUNT-BINDING-WAVE-02/LOCK-RELEASE-PROOF.json",
+  "LOCKS_JSON_SHA256_AFTER_RELEASE": "1204be557502ccfa5f6c2c970c49e191e1e0a00757ecaf6c28b8ec6c2efc07ff",
+  "evidence": {
+    "wave02_tests": "131/131",
+    "wave02_handoff": ".ai-os/reports/resource-fabric/RAIOS-RESOURCE-FABRIC-LIVE-ACCOUNT-BINDING-WAVE-02/HANDOFF.md",
+    "wave06_status": "DONE",
+    "wave06_head_when_closed": "0acd9ca18dc17e9a0ccbd6effa707e805f4fe532",
+    "local_repair_head_not_remote": "39493ccbace7a922790737f4e0befa85239927be"
+  },
+  "notes": [
+    "Wave-02 TASKS left IN_PROGRESS after delivery; this close is administrative with existing evidence.",
+    "C2 is not patching live.py ollama port 52093; C3 owns RESOURCE_FABRIC_OLLAMA_PROBE_FALSE_NEGATIVE after lock release.",
+    "Do not treat 9Router 691 catalog aliases as executable weights.",
+    "Kaggle GPU eligibility is not current session capacity; quota remaining is not an active GPU."
+  ]
+}
