@@ -9,7 +9,9 @@ from datetime import datetime, timedelta, timezone
 from pathlib import Path
 from typing import Any
 
-DEFAULT_SEATS=("C1","C2","C3","C4","C5","C6","C6-LOCAL","COMMAND_CENTER")
+COUNCIL_SEATS=tuple(f"C{i}" for i in range(1,13))
+ROUTING_TARGETS=COUNCIL_SEATS+("C6-LOCAL","COMMAND_CENTER")
+DEFAULT_SEATS=COUNCIL_SEATS
 def utc()->str:return datetime.now(timezone.utc).isoformat()
 def read_json(path:Path,default:Any=None)->Any:
     try:return json.loads(path.read_text(encoding="utf-8-sig"))
@@ -31,15 +33,15 @@ class MessageWorker:
         self.deliveries=self.fabric/"deliveries";self.dead=self.fabric/"dead-letter"
         self.state=self.runtime/"worker";self.poll_seconds=poll_seconds
         self.max_attempts=max_attempts;self.stop_event=threading.Event()
-        self.worker_id=f"COMMAND-CENTER@{socket.gethostname()}"
+        self.worker_id=f"RAIOS-WORKER@{socket.gethostname()}"
         for p in (self.inbox,self.outbox,self.receipts,self.deliveries,self.dead,self.state):
             p.mkdir(parents=True,exist_ok=True)
     def _targets(self,msg:dict[str,Any])->list[str]:
         payload=msg.get("payload") or {};raw=payload.get("to")
         if isinstance(raw,list):targets=[str(x).upper() for x in raw]
         else:targets=[str(msg.get("target") or "").upper()]
-        if "ALL" in targets:targets=list(DEFAULT_SEATS)
-        return list(dict.fromkeys(x for x in targets if x in DEFAULT_SEATS))
+        if "ALL" in targets:targets=list(COUNCIL_SEATS)
+        return list(dict.fromkeys(x for x in targets if x in ROUTING_TARGETS))
     def _record(self,mid:str,target:str,status:str,attempt:int,detail:str|None=None)->dict[str,Any]:
         row={"schema":"raios.delivery-ack.v1","receipt_id":f"{mid}.{target}.delivery",
              "message_id":mid,"actor":self.worker_id,"target":target,"status":status,
@@ -67,7 +69,7 @@ class MessageWorker:
     def enqueue(self,sender:str,targets:list[str],text:str,task_id:str|None=None)->dict[str,Any]:
         import uuid
         mid=f"MSG-{int(time.time()*1_000_000)}-{uuid.uuid4().hex[:8]}"
-        clean=list(dict.fromkeys(str(x).upper() for x in targets if str(x).upper() in DEFAULT_SEATS))
+        clean=list(dict.fromkeys(str(x).upper() for x in targets if str(x).upper() in ROUTING_TARGETS))
         if not clean:raise ValueError("NO_CANONICAL_TARGET")
         msg={"schema":"raios.message.v1","message_id":mid,"correlation_id":f"cc-{uuid.uuid4().hex[:12]}",
              "sender":sender,"target":"ALL" if len(clean)>1 else clean[0],"kind":"COMMAND",

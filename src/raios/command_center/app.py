@@ -6,7 +6,8 @@ from typing import Any
 from fastapi import FastAPI, Header, HTTPException
 from fastapi.responses import HTMLResponse
 from pydantic import BaseModel, Field
-from .message_worker import MessageWorker
+from .message_worker import COUNCIL_SEATS, ROUTING_TARGETS, MessageWorker
+from .council_board import CouncilBoard
 
 HERE=Path(__file__).resolve().parent
 REPO=Path(os.getenv("RAIOS_CANONICAL_REPO",str(HERE.parents[2]))).resolve()
@@ -16,6 +17,7 @@ C5=os.getenv("RAIOS_C5_URL","http://127.0.0.1:8766")
 CSRF=secrets.token_urlsafe(32)
 app=FastAPI(title="RAIOS Command Center",version="1.1",docs_url=None,redoc_url=None)
 MESSAGE_WORKER=MessageWorker(REPO,RUNTIME)
+COUNCIL_BOARD=CouncilBoard(REPO)
 
 @app.on_event("startup")
 def start_message_worker():MESSAGE_WORKER.start()
@@ -90,6 +92,7 @@ def overview():
 
 class ChatIn(BaseModel):text:str=Field(min_length=1,max_length=200000); conversation_id:str|None=None
 class CommandIn(BaseModel):text:str=Field(min_length=1,max_length=50000);targets:list[str];task_id:str|None=None
+class DispatchIn(BaseModel):task_id:str=Field(min_length=1,max_length=200);target:str=Field(min_length=2,max_length=20)
 
 def c1_gateway():
  sys.path.insert(0,str(REPO/"scripts/ai-os"))
@@ -109,6 +112,13 @@ def api_overview():return overview()
 def api_tasks():return tasks_state()
 @app.get("/api/council")
 def api_council():return council_state()
+@app.get("/api/council-board")
+def api_council_board():return COUNCIL_BOARD.snapshot()
+@app.post("/api/task-dispatch")
+def api_task_dispatch(req:DispatchIn,x_raios_csrf:str|None=Header(None)):
+ require_csrf(x_raios_csrf)
+ try:return COUNCIL_BOARD.dispatch(req.task_id,req.target,MESSAGE_WORKER)
+ except ValueError as exc:raise HTTPException(409,str(exc))
 @app.get("/api/models")
 def api_models():return model_state()
 @app.get("/api/receipts")
@@ -125,9 +135,9 @@ def chat(req:ChatIn,x_raios_csrf:str|None=Header(None)):
  return {"ok":True,**body}
 @app.post("/api/command")
 def command(req:CommandIn,x_raios_csrf:str|None=Header(None)):
- require_csrf(x_raios_csrf); allowed={"C1","C2","C3","C4","C5","C6","C6-LOCAL","COMMAND_CENTER"}; targets=[]
+ require_csrf(x_raios_csrf); allowed=set(ROUTING_TARGETS); targets=[]
  for t in req.targets:
-  u=t.upper(); targets.extend(sorted(allowed) if u=="ALL" else [u])
+  u=t.upper(); targets.extend(COUNCIL_SEATS if u=="ALL" else [u])
  targets=list(dict.fromkeys(targets))
  if not targets or any(t not in allowed for t in targets):raise HTTPException(400,"TARGET_NOT_LIVE_OR_UNKNOWN")
  try:msg=MESSAGE_WORKER.enqueue("C1@COMMAND_CENTER",targets,req.text,req.task_id)

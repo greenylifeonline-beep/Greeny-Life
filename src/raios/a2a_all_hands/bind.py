@@ -31,7 +31,7 @@ from raios.a2a.semantic import SEMANTIC_EXTENSION_URI, SemanticRegistry, default
 from raios.a2a.task_bridge import build_intent, map_artifact, map_message
 from raios.command_fabric.route import HTTP_FALLBACK, NATS, select_transport
 
-INTERNAL_SEATS = ("C1", "C2", "C3", "C4", "C5", "C6", "C7")
+INTERNAL_SEATS = tuple(f"C{i}" for i in range(1, 13))
 ENVELOPE_FIELDS = (
     "task_id",
     "context_id",

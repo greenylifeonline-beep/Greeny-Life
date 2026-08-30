@@ -32,10 +32,14 @@ class MessageWorkerTests(unittest.TestCase):
     def test_all_expands_canonical_seats(self):
         td,worker=self.make_worker()
         try:
-            msg=worker.enqueue("C1",["C1","C2","C3","C4","C5","C6","C6-LOCAL","COMMAND_CENTER"],"broadcast")
+            targets=[f"C{i}" for i in range(1,13)]
+            msg=worker.enqueue("C1",targets,"broadcast")
             worker.scan_once();mid=msg["message_id"]
             self.assertTrue((worker.deliveries/"C6"/f"{mid}.json").exists())
-            self.assertTrue((worker.deliveries/"COMMAND_CENTER"/f"{mid}.json").exists())
+            self.assertTrue((worker.deliveries/"C12"/f"{mid}.json").exists())
+            self.assertFalse((worker.deliveries/"RAIOS-WORKER"/f"{mid}.json").exists())
+            self.assertFalse((worker.deliveries/"COMMAND_CENTER"/f"{mid}.json").exists())
+            self.assertEqual(worker.worker_id.split("@",1)[0],"RAIOS-WORKER")
         finally:td.cleanup()
 
     def test_invalid_message_reaches_dead_letter(self):

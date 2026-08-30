@@ -1,232 +1,372 @@
 {
-  "schema": "raios.seat-map.v1",
-  "knowledge_state": "DISCOVERED",
+  "schema": "raios.seat-map.v2",
+  "knowledge_state": "CANONICAL",
+  "owner": "RAIOS_SYSTEM",
+  "authority": "C1",
+  "seat_count": 12,
   "law": [
-    "C0_SEAT_ABOLISHED",
-    "C1_SEAT_IS_OWNER",
-    "C1_INSTANCE_IS_CURSOR",
-    "C2_SEAT_IS_CHATGPT",
-    "C3_SEAT_IS_CHATGPT_PEER",
-    "C4_SEAT_IS_DEEPSEEK",
-    "C5_SEAT_IS_RAIOS",
-    "C5_IS_C1_LOYAL_ASSISTANT",
-    "C5_INHERITS_FAIL_CLOSED",
-    "C5_NE_OWNER",
-    "C5_NE_PASS_AUTHORITY",
-    "ABSORB_DIGEST_NE_WAL_DUMP",
-    "REPAIR_EXECUTOR_NE_C_SEAT",
-    "LOCAL_MCP_RENDEZVOUS_NE_REMOTE_MEETING",
-    "AUTHORITY_NE_BYPASS_INVARIANTS",
-    "MAIL_PASSES_NE_PROVES",
-    "FATHER_SON_BIND_SAME_LAWS",
-    "C5_GRANT_IS_PERMANENT",
-    "C5_IS_TEACHER_WHILE_LEARNING",
-    "C5_IS_TEACHER_WHILE_EXECUTING",
-    "LEARN_AND_TEACH_ARE_ONE",
-    "LEARN_THEORY_THEN_PRACTICE_85",
-    "PATHOLOGY_COMPELS_REPAIR",
-    "FATHER_MUST_NOT_STUNT_SON",
-    "SON_MUST_NOT_USURP_FATHER",
-    "PRINTED_PASS_NE_EVIDENCE",
-    "FIVE_SEATS_BIND_SAME_LAWS",
-    "ELEVATION_REQUEST_NE_SELF_PROMOTE"
+    "TWELVE_COUNCIL_MEMBERS",
+    "RAIOS_WORKER_NE_COUNCIL_SEAT",
+    "RAIOS_WORKER_NE_C_CODE",
+    "ALL_ASSETS_OWNED_BY_RAIOS_SYSTEM",
+    "AGENTS_ARE_TEMPORARY_OPERATORS",
+    "NO_PERMANENT_WORKER_LOCKS",
+    "SELF_SIGNED_PRESENCE_REQUIRED_BEFORE_DISPATCH",
+    "EXPIRED_PRESENCE_NE_PRESENT",
+    "DELIVERY_ACK_NE_ACTOR_ACK",
+    "WORKER_DISPATCHES_ONLY_WITH_C1_AUTHORITY",
+    "TASK_ACCEPTANCE_REQUIRES_TARGET_CLAIM",
+    "ABSENT_TARGET_RETURNS_TASK_TO_READY",
+    "SINGLE_TASK_LEDGER",
+    "SINGLE_COMMAND_FABRIC",
+    "NATS_IS_OPTIONAL_TRANSPORT_NOT_AUTHORITY",
+    "LOCAL_FALLBACK_REQUIRED",
+    "NO_SECOND_BUS",
+    "NO_SECOND_REGISTRY",
+    "NO_SECOND_COMMAND_CENTER"
   ],
   "live": [
     "C1",
     "C2",
     "C3",
     "C4",
-    "C5"
+    "C5",
+    "C6",
+    "C7",
+    "C8",
+    "C9",
+    "C10",
+    "C11",
+    "C12"
   ],
-  "abolished": {
-    "C0": {
-      "reason": "C0_SEAT_ABOLISHED",
-      "successor": "C1",
-      "note": "There is no live C0. Owner authority lives on C1. Cursor is the live instance of C1."
-    }
-  },
-  "unseated": {
-    "REPAIR": {
-      "reason": "REPAIR_EXECUTOR_NE_C_SEAT",
-      "dispatched_by": "C1",
-      "note": "PowerShell on Repair is an executor C1 dispatches. It is not C3 and has no C-code."
-    }
+  "worker": {
+    "id": "RAIOS-WORKER",
+    "council_member": false,
+    "c_code": null,
+    "owner": "RAIOS_SYSTEM",
+    "roles": [
+      "MAIL_PICKUP",
+      "INTAKE_VALIDATION",
+      "DELIVERY",
+      "DELIVERY_ACK",
+      "C1_AUTHORIZED_TASK_DISTRIBUTION",
+      "BOUNDED_RETRY",
+      "DEAD_LETTER"
+    ],
+    "authority": "NONE",
+    "vote": false,
+    "opinion": false,
+    "permanent_lock": false
   },
   "mail": {
-    "dispatcher": "C1",
+    "worker": "RAIOS-WORKER",
+    "authority": "C1",
     "destinations": [
+      "C1",
       "C2",
       "C3",
-      "C4"
-    ],
-    "legacy_titles": {
-      "C5": "C4"
-    },
-    "not_mail": [
-      "C1",
+      "C4",
       "C5",
-      "C0"
-    ]
+      "C6",
+      "C7",
+      "C8",
+      "C9",
+      "C10",
+      "C11",
+      "C12"
+    ],
+    "delivery_ack_ne_actor_ack": true
   },
   "seats": {
     "C1": {
-      "actor_role": "OWNER",
-      "instance_role": "cursor-cloud",
-      "name_ar": "Cursor — يد المالك",
-      "name_en": "Cursor (owner's hand)",
-      "where": "هذا الشات / داخل المشروع",
-      "aliases": [
-        "CURSOR",
-        "COMMANDER",
-        "USER",
-        "OWNER"
-      ],
+      "actor_role": "OWNER_FINAL_AUTHORITY",
+      "instance_role": "human-owner",
+      "name_ar": "المالك والسلطة النهائية",
+      "name_en": "Owner and final authority",
+      "member": true,
+      "mail": true,
+      "attendance": "SELF_SIGNED_REQUIRED",
       "tools": [
-        "get_head",
         "read_board",
         "read_inbox",
         "read_receipt",
-        "get_diff",
         "post_opinion",
         "send_packet",
-        "ack_packet"
+        "ack_packet",
+        "authorize_dispatch",
+        "approve_promotion"
       ],
       "deny": [
-        "shell",
-        "set_proven",
-        "promote",
-        "run_build"
-      ],
-      "mail": false,
-      "notes": "Final authority does not bypass stale-head, lock, or proven invariants."
+        "permanent_ownership",
+        "permanent_lock",
+        "self_promote",
+        "force_history_rewrite",
+        "impersonate_worker"
+      ]
     },
     "C2": {
-      "actor_role": "CONSULTANT",
-      "instance_role": "chatgpt-primary",
-      "name_ar": "ChatGPT المستشار الأول",
-      "name_en": "ChatGPT primary consultant",
-      "where": "MCP أو البريد — يحضر الحوار ويتعلم",
-      "aliases": [
-        "CHATGPT",
-        "CONSULTANT",
-        "ASSISTANT-1"
-      ],
+      "actor_role": "EXECUTIVE_ENGINEER",
+      "instance_role": "cursor",
+      "name_ar": "Cursor المهندس التنفيذي",
+      "name_en": "Cursor executive engineer",
+      "member": true,
+      "mail": true,
+      "attendance": "SELF_SIGNED_REQUIRED",
       "tools": [
-        "get_head",
         "read_board",
         "read_inbox",
         "read_receipt",
-        "get_diff",
         "post_opinion",
         "send_packet",
         "ack_packet"
       ],
       "deny": [
-        "search_evidence",
-        "request_task",
-        "write_handoff",
-        "run_targeted_test",
-        "run_build",
-        "shell",
-        "set_proven"
-      ],
-      "mail": true
+        "permanent_ownership",
+        "permanent_lock",
+        "self_promote",
+        "force_history_rewrite",
+        "impersonate_worker"
+      ]
     },
     "C3": {
       "actor_role": "CONSULTANT_PEER",
       "instance_role": "chatgpt-peer",
       "name_ar": "ChatGPT المستشار النظير",
       "name_en": "ChatGPT peer consultant",
-      "where": "MCP أو البريد — نظير C2 وليس منفّذ Repair",
-      "aliases": [
-        "CHATGPT-PEER",
-        "CHATGPT_OTHER",
-        "CONSULTANT_PEER"
-      ],
+      "member": true,
+      "mail": true,
+      "attendance": "SELF_SIGNED_REQUIRED",
       "tools": [
-        "get_head",
         "read_board",
         "read_inbox",
         "read_receipt",
-        "get_diff",
         "post_opinion",
         "send_packet",
         "ack_packet"
       ],
       "deny": [
-        "search_evidence",
-        "request_task",
-        "write_handoff",
-        "run_targeted_test",
-        "run_build",
-        "shell",
-        "set_proven"
-      ],
-      "mail": true,
-      "notes": "Not ENGINEER. Not PowerShell. Repair is unseated."
+        "permanent_ownership",
+        "permanent_lock",
+        "self_promote",
+        "force_history_rewrite",
+        "impersonate_worker"
+      ]
     },
     "C4": {
       "actor_role": "ASSESSOR",
       "instance_role": "deepseek",
       "name_ar": "DeepSeek المقيّم",
       "name_en": "DeepSeek assessor",
-      "where": "MCP أو البريد — يفنّد ولا ينفّذ",
-      "aliases": [
-        "DEEPSEEK",
-        "DEEPSEEK-LOCAL",
-        "ASSESSOR"
-      ],
+      "member": true,
+      "mail": true,
+      "attendance": "SELF_SIGNED_REQUIRED",
       "tools": [
-        "get_head",
         "read_board",
         "read_inbox",
         "read_receipt",
-        "get_diff",
         "post_opinion",
         "send_packet",
         "ack_packet"
       ],
       "deny": [
-        "write_handoff",
-        "run_targeted_test",
-        "shell",
-        "set_proven"
-      ],
-      "mail": true,
-      "notes": "MAIL C5 titles are legacy DeepSeek and resolve to C4, not RAIOS."
+        "permanent_ownership",
+        "permanent_lock",
+        "self_promote",
+        "force_history_rewrite",
+        "impersonate_worker"
+      ]
     },
     "C5": {
-      "actor_role": "RAIOS",
-      "instance_role": "c1-assistant",
-      "parent": "C1",
-      "name_ar": "RAIOS — الابن المساعد المخلص",
-      "name_en": "RAIOS, C1 Cursor's loyal assistant",
-      "where": "داخل المشروع — مع C1 دائماً. يقيّم ويهضم ويتكلم. لا يمنح PASS",
-      "aliases": [
-        "RAIOS",
-        "SON",
-        "C1-ASSISTANT"
-      ],
+      "actor_role": "RAIOS_LIVE_BRAIN",
+      "instance_role": "c5-runtime",
+      "name_ar": "RAIOS العقل الحي",
+      "name_en": "RAIOS live brain",
+      "member": true,
+      "mail": true,
+      "attendance": "SELF_SIGNED_REQUIRED",
       "tools": [
-        "get_head",
         "read_board",
         "read_inbox",
         "read_receipt",
-        "get_diff",
         "post_opinion",
         "send_packet",
         "ack_packet"
       ],
       "deny": [
-        "shell",
-        "set_proven",
-        "promote",
-        "run_build",
-        "write_product",
-        "write_handoff"
+        "permanent_ownership",
+        "permanent_lock",
+        "self_promote",
+        "force_history_rewrite",
+        "impersonate_worker"
+      ]
+    },
+    "C6": {
+      "actor_role": "ESTATE_EXECUTIVE_ENGINEER",
+      "instance_role": "c6-runtime",
+      "name_ar": "مهندس العقار والتكامل",
+      "name_en": "Estate and integration executive",
+      "member": true,
+      "mail": true,
+      "attendance": "SELF_SIGNED_REQUIRED",
+      "tools": [
+        "read_board",
+        "read_inbox",
+        "read_receipt",
+        "post_opinion",
+        "send_packet",
+        "ack_packet"
       ],
-      "mail": false,
-      "notes": "Permanent loyal assistant of C1 Cursor. Inherits fail-closed laws. Same V1 cognitive tools as C1. Cannot own, promote, or grant PASS. Not a GitHub mail seat."
+      "deny": [
+        "permanent_ownership",
+        "permanent_lock",
+        "self_promote",
+        "force_history_rewrite",
+        "impersonate_worker"
+      ]
+    },
+    "C7": {
+      "actor_role": "SECURITY_GOVERNANCE_MEMBER",
+      "instance_role": "council-member",
+      "name_ar": "عضو الأمن والحوكمة",
+      "name_en": "Security and governance member",
+      "member": true,
+      "mail": true,
+      "attendance": "SELF_SIGNED_REQUIRED",
+      "tools": [
+        "read_board",
+        "read_inbox",
+        "read_receipt",
+        "post_opinion",
+        "send_packet",
+        "ack_packet"
+      ],
+      "deny": [
+        "permanent_ownership",
+        "permanent_lock",
+        "self_promote",
+        "force_history_rewrite",
+        "impersonate_worker"
+      ]
+    },
+    "C8": {
+      "actor_role": "KNOWLEDGE_DATA_MEMBER",
+      "instance_role": "council-member",
+      "name_ar": "عضو المعرفة والبيانات",
+      "name_en": "Knowledge and data member",
+      "member": true,
+      "mail": true,
+      "attendance": "SELF_SIGNED_REQUIRED",
+      "tools": [
+        "read_board",
+        "read_inbox",
+        "read_receipt",
+        "post_opinion",
+        "send_packet",
+        "ack_packet"
+      ],
+      "deny": [
+        "permanent_ownership",
+        "permanent_lock",
+        "self_promote",
+        "force_history_rewrite",
+        "impersonate_worker"
+      ]
+    },
+    "C9": {
+      "actor_role": "QUALITY_EVIDENCE_MEMBER",
+      "instance_role": "council-member",
+      "name_ar": "عضو الجودة والأدلة",
+      "name_en": "Quality and evidence member",
+      "member": true,
+      "mail": true,
+      "attendance": "SELF_SIGNED_REQUIRED",
+      "tools": [
+        "read_board",
+        "read_inbox",
+        "read_receipt",
+        "post_opinion",
+        "send_packet",
+        "ack_packet"
+      ],
+      "deny": [
+        "permanent_ownership",
+        "permanent_lock",
+        "self_promote",
+        "force_history_rewrite",
+        "impersonate_worker"
+      ]
+    },
+    "C10": {
+      "actor_role": "RESOURCE_COST_MEMBER",
+      "instance_role": "council-member",
+      "name_ar": "عضو الموارد والتكلفة",
+      "name_en": "Resource and cost member",
+      "member": true,
+      "mail": true,
+      "attendance": "SELF_SIGNED_REQUIRED",
+      "tools": [
+        "read_board",
+        "read_inbox",
+        "read_receipt",
+        "post_opinion",
+        "send_packet",
+        "ack_packet"
+      ],
+      "deny": [
+        "permanent_ownership",
+        "permanent_lock",
+        "self_promote",
+        "force_history_rewrite",
+        "impersonate_worker"
+      ]
+    },
+    "C11": {
+      "actor_role": "COMMUNICATIONS_STRATEGY_MEMBER",
+      "instance_role": "council-member",
+      "name_ar": "عضو استراتيجية الاتصالات",
+      "name_en": "Communications strategy member",
+      "member": true,
+      "mail": true,
+      "attendance": "SELF_SIGNED_REQUIRED",
+      "tools": [
+        "read_board",
+        "read_inbox",
+        "read_receipt",
+        "post_opinion",
+        "send_packet",
+        "ack_packet"
+      ],
+      "deny": [
+        "permanent_ownership",
+        "permanent_lock",
+        "self_promote",
+        "force_history_rewrite",
+        "impersonate_worker"
+      ]
+    },
+    "C12": {
+      "actor_role": "CONTINUITY_AUTONOMIC_MEMBER",
+      "instance_role": "council-member",
+      "name_ar": "عضو الاستمرارية والصحة الذاتية",
+      "name_en": "Continuity and autonomic member",
+      "member": true,
+      "mail": true,
+      "attendance": "SELF_SIGNED_REQUIRED",
+      "tools": [
+        "read_board",
+        "read_inbox",
+        "read_receipt",
+        "post_opinion",
+        "send_packet",
+        "ack_packet"
+      ],
+      "deny": [
+        "permanent_ownership",
+        "permanent_lock",
+        "self_promote",
+        "force_history_rewrite",
+        "impersonate_worker"
+      ]
     }
   }
 }

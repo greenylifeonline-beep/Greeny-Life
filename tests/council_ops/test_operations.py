@@ -66,3 +66,17 @@ def test_audit_detects_cross_owner_overlap_without_second_systems(tmp_path):
  (repo/".ai-os/state/LOCKS.json").write_text(json.dumps(locks),encoding="utf-8")
  out=op.audit(); assert out["conflict_total"]==1
  assert all(out[k] is False for k in ("second_task_ledger","second_lock_system","second_bus","second_wal","second_receipt_system"))
+
+def test_presence_proof_refreshes_lease_and_expired_seat_cannot_claim(tmp_path):
+ op,_=setup(tmp_path); first=op.check_in(seat="C1",auth=auth("C1"),idem="in")
+ state=json.loads(op.presence_path.read_text(encoding="utf-8"))
+ state["seats"]["C1"]["lease_expires_at"]="2000-01-01T00:00:00Z"
+ op.presence_path.write_text(json.dumps(state),encoding="utf-8")
+ with pytest.raises(CouncilConflict,match="CHECK_IN_REQUIRED"):
+  op.claim(seat="C1",task_id="T1",auth=auth("C1"),idem="claim-expired")
+ with pytest.raises(CouncilConflict,match="CHECK_IN_REQUIRED"):
+  op.prove_presence(seat="C1",auth=auth("C1"),idem="proof-expired")
+ second=op.check_in(seat="C1",auth=auth("C1"),idem="recheck")
+ proof=op.prove_presence(seat="C1",auth=auth("C1"),idem="proof-live")
+ assert first["seat"]==second["seat"]==proof["seat"]=="C1"
+ assert proof["presence"]=="PRESENT" and proof["lease_expires_at"]>=second["lease_expires_at"]
