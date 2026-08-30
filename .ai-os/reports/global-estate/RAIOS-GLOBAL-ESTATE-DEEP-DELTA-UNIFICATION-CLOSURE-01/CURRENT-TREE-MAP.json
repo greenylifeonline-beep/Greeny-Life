@@ -1,33 +1,28 @@
 {
+  "schema": "raios.global-estate.current-tree-map.v2",
+  "generated_at": "2026-08-30T08:20:00Z",
   "canonical": {
-    "path": "C:\\Users\\Ghanam\\Documents\\Codex\\.raios-worktrees\\c1c3-integration",
-    "head": "e50dbf0006c911ce24592c413e5eedd3c74a037f",
+    "path": "C:/Users/Ghanam/Documents/Codex/Greeny-Life",
+    "head": "1d90f9f95d057057dd0930ee6a1d30c22e5deb39",
+    "remote_head_matches": true,
     "state": "CANONICAL_ACTIVE"
   },
-  "repair": {
-    "path": "C:\\Users\\Ghanam\\Documents\\Codex\\Greeny-Life-Repair",
-    "head": "39493ccbace7a922790737f4e0befa85239927be",
-    "state": "RETIREMENT_BLOCKED_ACTIVE_LOCKS",
-    "unclassified_unique_value": 0
+  "registered_worktrees_total": 1,
+  "repair": {"path": "C:/Users/Ghanam/Documents/Codex/Greeny-Life-Repair", "exists": false, "state": "RETIRED"},
+  "former_c1c3_worktree": {"path": "C:/Users/Ghanam/Documents/Codex/.raios-worktrees/c1c3-integration", "files_before": 0, "registered": false, "state": "REMOVED"},
+  "former_c3_worktree": {"path": "C:/Users/Ghanam/Documents/Codex/worktrees/c3-c5-conversation-repair", "files": 0, "registered": false, "state": "EMPTY_REMOVAL_BLOCKED_WINDOWS_OPEN_HANDLE"},
+  "empty_parent_git_metadata": {"path": "C:/Users/Ghanam/Documents/Codex/.git", "files_before": 0, "valid_repository": false, "state": "REMOVED"},
+  "retired_onedrive_recovery": {
+    "path": "C:/Users/Ghanam/OneDrive/projects/Greeny-Life-RETIRED-20260820-084036",
+    "state": "CANONICAL_RECOVERY_ASSET",
+    "working_payload_retired": true,
+    "commits_absent_from_current": 27,
+    "blobs_over_github_100mb": 2
   },
-  "w4fd": {
-    "state": "RETIRED",
-    "untracked_hashed": 102
-  },
-  "hi": {
-    "state": "RETIRED",
-    "remote_pin": "origin/main@da67f44963fafde67df52cb62ab32f75fe725df0"
-  },
-  "c3": {
-    "git_worktree_registered": false,
-    "remote_contained": true,
-    "physical_directory_removal": "BLOCKED_OPEN_HANDLE"
-  },
-  "p0": {
-    "state": "PREVIOUSLY_RETIRED"
-  },
-  "ecw02": {
-    "state": "ABSENT"
-  },
-  "registered_worktrees_total": 2
+  "conversation_provenance_roots": 9,
+  "c3_stream_hash_closure": {"path": "C:/Users/Ghanam/Documents/Codex/2026-08-11/referenced-chatgpt-conversation-this-is-an/outputs/RAIOS-C3-A2-STREAM-HASH-CLOSURE.json", "bytes": 23541, "state": "PRESERVED_ACCESS_DENIED"},
+  "remaining_project_zips": 16,
+  "remaining_zip_unknown": 0,
+  "remaining_zip_unresolved": 0,
+  "active_agent_generated_files_excluded_from_retirement": true
 }

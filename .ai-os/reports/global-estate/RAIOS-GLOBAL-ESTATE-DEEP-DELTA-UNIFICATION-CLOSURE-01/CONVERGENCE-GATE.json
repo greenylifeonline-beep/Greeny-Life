@@ -1,19 +1,28 @@
 {
-  "canonical_head": "e50dbf0006c911ce24592c413e5eedd3c74a037f",
+  "schema": "raios.global-estate.convergence-gate.v2",
+  "generated_at": "2026-08-30T08:20:00Z",
+  "canonical_head": "1d90f9f95d057057dd0930ee6a1d30c22e5deb39",
+  "remote_head_matches": true,
   "source_and_canonical_convergence": true,
   "zero_unclassified_unique_value": true,
-  "real_regressions": 0,
   "unknown": 0,
   "unresolved_semantic_value": 0,
-  "archive_created": false,
-  "copy_created": false,
+  "real_regressions_observed": 0,
+  "registered_worktrees_total": 1,
+  "repair_root_retired": true,
+  "former_c1c3_empty_worktree_removed": true,
+  "empty_parent_git_metadata_removed": true,
+  "archive_residual_cleanup_complete": true,
   "physical_retirement_complete": false,
   "blockers": [
-    "REPAIR_ACTIVE_C2_AND_COMMAND_CENTER_LOCKS",
-    "C3_PHYSICAL_DIRECTORY_OPEN_HANDLE",
-    "C2_RESEAL_EVIDENCE_IS_BOUND_TO_OLDER_HEAD_7ef49f76"
+    "C3_EMPTY_DIRECTORY_WINDOWS_OPEN_HANDLE",
+    "C3_STREAM_HASH_CLOSURE_PRESERVED_BUT_ACCESS_DENIED",
+    "C2_GLOBAL_RESEAL_NOT_BOUND_TO_HEAD_1d90f9f95d057057dd0930ee6a1d30c22e5deb39"
   ],
+  "blockers_are_known_and_terminally_classified": true,
   "c6_convergence": "QUALIFIED_PASS",
   "global_estate_seal_authority": "C2",
-  "ready_for_final_reseal": false
+  "ready_for_final_reseal": false,
+  "active_c2_c3_runtime_and_learning_outputs_excluded_from_cleanup": true,
+  "next_step": "Release C3 directory handle, restore read access without bypassing permissions, then request independent C2 reseal on the current head."
 }

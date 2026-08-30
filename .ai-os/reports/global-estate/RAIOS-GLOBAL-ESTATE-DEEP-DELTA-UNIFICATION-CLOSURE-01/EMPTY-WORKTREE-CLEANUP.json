@@ -1,0 +1,23 @@
+{
+  "schema": "raios.empty-worktree-cleanup.v1",
+  "task_id": "RAIOS-GLOBAL-ESTATE-DEEP-DELTA-UNIFICATION-CLOSURE-01",
+  "targets": [
+    {"path": "C:/Users/Ghanam/Documents/Codex/.raios-worktrees/c1c3-integration", "exists_before": true, "files_before": 0, "bytes_before": 0, "git_repository": false, "registered_worktree": false},
+    {"path": "C:/Users/Ghanam/Documents/Codex/worktrees/c3-c5-conversation-repair", "exists_before": true, "files_before": 0, "bytes_before": 0, "git_repository": false, "registered_worktree": false},
+    {"path": "C:/Users/Ghanam/Documents/Codex/.git", "exists_before": true, "files_before": 0, "bytes_before": 0, "git_repository": false, "registered_worktree": false}
+  ],
+  "parent_directories_contained_only_targets": true,
+  "conflicting_active_locks_before_claim": 0,
+  "deletion_mode": "exact empty directories, non-recursive",
+  "recovery_required": false,
+  "pre_delete_verified": true,
+  "c1c3_target_deleted": true,
+  "c1c3_parent_deleted": true,
+  "codex_empty_git_directory_deleted": true,
+  "c3_target_deleted": false,
+  "c3_target_still_empty": true,
+  "c3_blocker": "WINDOWS_OPEN_HANDLE",
+  "worktrees_parent_deleted": false,
+  "post_delete_verified": true,
+  "overall": "PARTIAL_SAFE_CLEANUP_WITH_KNOWN_BLOCKER"
+}
