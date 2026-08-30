@@ -10,19 +10,24 @@ from .layers import auto_pipeline
 from .ops_compile import auto_compile
 from .schema import CognitiveMeaningPacket, KnowledgeState, RiskLevel
 from .sensory_contract import (
+    AudioFrame,
     CognitiveTurn,
+    FasterWhisperAdapter,
     SensoryCapability,
     SensoryEvent,
+    UtteranceSegmenter,
     detect_lightweight_language,
 )
 from .training import TrainingDecision, decide_training
 from .wal import ExistingCognitiveWALWriter
 
 __all__ = [
+    "AudioFrame",
     "CognitiveMeaningPacket",
     "CognitiveResourceGovernor",
     "CognitiveTurn",
     "ExistingCognitiveWALWriter",
+    "FasterWhisperAdapter",
     "InterpretResult",
     "KnowledgeState",
     "LearningGap",
@@ -32,6 +37,7 @@ __all__ = [
     "SensoryCapability",
     "SensoryEvent",
     "TrainingDecision",
+    "UtteranceSegmenter",
     "assimilate_knowledge",
     "auto_compile",
     "auto_pipeline",
