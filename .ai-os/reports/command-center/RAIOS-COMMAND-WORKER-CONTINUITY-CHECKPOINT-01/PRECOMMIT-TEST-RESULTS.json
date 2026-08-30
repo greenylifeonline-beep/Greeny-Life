@@ -1,0 +1,19 @@
+{
+  "schema": "raios.command-worker-continuity-test-results.v1",
+  "phase": "PRECOMMIT",
+  "compile": "PASS",
+  "targeted_tests": {
+    "executed": 14,
+    "passed": 14,
+    "failed": 0,
+    "command": "python -m pytest tests/command_center/test_message_worker.py tests/command_center/test_council_board.py -q"
+  },
+  "app_import": "PASS",
+  "routes": 20,
+  "task_checkpoint_route": true,
+  "task_resume_route": true,
+  "seat_count": 12,
+  "worker_is_council_member": false,
+  "live_deployment": "PENDING_COMMITTED_SOURCE",
+  "live_end_to_end": "PENDING"
+}

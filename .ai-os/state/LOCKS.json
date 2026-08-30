@@ -861,6 +861,34 @@
       "agent": "C6-AG-REMOTE-RECON",
       "scope": ".ai-os/reports/command-center/RAIOS-CANONICAL-COMMAND-CENTER-AND-SELF-HEALTH-WAVE-01",
       "status": "RELEASED"
+    },
+    {
+      "id": "LOCK-20260830081825-01",
+      "task_id": "RAIOS-COMMAND-WORKER-CONTINUITY-CHECKPOINT-01",
+      "agent": "C6-AG-REMOTE-RECON",
+      "scope": "src/raios/command_center",
+      "status": "ACTIVE"
+    },
+    {
+      "id": "LOCK-20260830081825-02",
+      "task_id": "RAIOS-COMMAND-WORKER-CONTINUITY-CHECKPOINT-01",
+      "agent": "C6-AG-REMOTE-RECON",
+      "scope": "tests/command_center",
+      "status": "ACTIVE"
+    },
+    {
+      "id": "LOCK-20260830081825-03",
+      "task_id": "RAIOS-COMMAND-WORKER-CONTINUITY-CHECKPOINT-01",
+      "agent": "C6-AG-REMOTE-RECON",
+      "scope": ".ai-os/mcp/SEAT-MAP.json",
+      "status": "ACTIVE"
+    },
+    {
+      "id": "LOCK-20260830081826",
+      "task_id": "RAIOS-COMMAND-WORKER-CONTINUITY-CHECKPOINT-01",
+      "agent": "C6-AG-REMOTE-RECON",
+      "scope": ".ai-os/reports/command-center/RAIOS-COMMAND-WORKER-CONTINUITY-CHECKPOINT-01",
+      "status": "ACTIVE"
     }
   ]
 }

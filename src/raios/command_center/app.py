@@ -18,6 +18,7 @@ CSRF=secrets.token_urlsafe(32)
 app=FastAPI(title="RAIOS Command Center",version="1.1",docs_url=None,redoc_url=None)
 MESSAGE_WORKER=MessageWorker(REPO,RUNTIME)
 COUNCIL_BOARD=CouncilBoard(REPO)
+MESSAGE_WORKER.configure_workflow(COUNCIL_BOARD)
 
 @app.on_event("startup")
 def start_message_worker():MESSAGE_WORKER.start()
@@ -93,6 +94,32 @@ def overview():
 class ChatIn(BaseModel):text:str=Field(min_length=1,max_length=200000); conversation_id:str|None=None
 class CommandIn(BaseModel):text:str=Field(min_length=1,max_length=50000);targets:list[str];task_id:str|None=None
 class DispatchIn(BaseModel):task_id:str=Field(min_length=1,max_length=200);target:str=Field(min_length=2,max_length=20)
+class TaskAcceptIn(BaseModel):
+ task_id:str=Field(min_length=1,max_length=200)
+ actor:str=Field(min_length=2,max_length=20)
+ dispatch_id:str=Field(min_length=4,max_length=200)
+class TaskCheckpointIn(BaseModel):
+ task_id:str=Field(min_length=1,max_length=200)
+ actor:str=Field(min_length=2,max_length=20)
+ phase:str=Field(min_length=4,max_length=20)
+ summary:str=Field(min_length=1,max_length=50000)
+ completed_steps:list[str]=Field(default_factory=list,max_length=200)
+ changed_files:list[str]=Field(default_factory=list,max_length=500)
+ validation:list[str]=Field(default_factory=list,max_length=200)
+ evidence_refs:list[str]=Field(default_factory=list,max_length=100)
+ next_step:str=Field(min_length=1,max_length=50000)
+ blocker:str|None=Field(default=None,max_length=50000)
+class TaskReportIn(BaseModel):
+ task_id:str=Field(min_length=1,max_length=200)
+ actor:str=Field(min_length=2,max_length=20)
+ status:str=Field(min_length=4,max_length=20)
+ summary:str=Field(min_length=1,max_length=50000)
+ completed_steps:list[str]=Field(default_factory=list,max_length=200)
+ changed_files:list[str]=Field(default_factory=list,max_length=500)
+ validation:list[str]=Field(default_factory=list,max_length=200)
+ evidence_refs:list[str]=Field(default_factory=list,max_length=100)
+ next_step:str=Field(min_length=1,max_length=50000)
+ blocker:str|None=Field(default=None,max_length=50000)
 
 def c1_gateway():
  sys.path.insert(0,str(REPO/"scripts/ai-os"))
@@ -119,13 +146,35 @@ def api_task_dispatch(req:DispatchIn,x_raios_csrf:str|None=Header(None)):
  require_csrf(x_raios_csrf)
  try:return COUNCIL_BOARD.dispatch(req.task_id,req.target,MESSAGE_WORKER)
  except ValueError as exc:raise HTTPException(409,str(exc))
+@app.post("/api/task-accept")
+def api_task_accept(req:TaskAcceptIn,x_raios_csrf:str|None=Header(None)):
+ require_csrf(x_raios_csrf)
+ try:return COUNCIL_BOARD.accept_task(req.task_id,req.actor,req.dispatch_id)
+ except ValueError as exc:raise HTTPException(409,str(exc))
+@app.post("/api/task-checkpoint")
+def api_task_checkpoint(req:TaskCheckpointIn,x_raios_csrf:str|None=Header(None)):
+ require_csrf(x_raios_csrf)
+ try:return COUNCIL_BOARD.submit_checkpoint(req.task_id,req.actor,req.phase,req.summary,
+  req.completed_steps,req.changed_files,req.validation,req.evidence_refs,
+  req.next_step,req.blocker)
+ except ValueError as exc:raise HTTPException(409,str(exc))
+@app.get("/api/task-resume/{task_id}")
+def api_task_resume(task_id:str):
+ try:return COUNCIL_BOARD.resume_checkpoint(task_id)
+ except ValueError as exc:raise HTTPException(404,str(exc))
+@app.post("/api/task-report")
+def api_task_report(req:TaskReportIn,x_raios_csrf:str|None=Header(None)):
+ require_csrf(x_raios_csrf)
+ try:return COUNCIL_BOARD.submit_report(req.task_id,req.actor,req.status,req.summary,
+  req.evidence_refs,req.completed_steps,req.changed_files,req.validation,
+  req.next_step,req.blocker)
+ except ValueError as exc:raise HTTPException(409,str(exc))
 @app.get("/api/models")
 def api_models():return model_state()
 @app.get("/api/receipts")
 def api_receipts():return receipt_state()
 @app.get("/api/message-worker")
-def api_message_worker():
- return load(MESSAGE_WORKER.state/"heartbeat.json",{"worker_id":MESSAGE_WORKER.worker_id,"status":"STARTING"})
+def api_message_worker():return MESSAGE_WORKER.status()
 @app.get("/api/factories")
 def api_factories():return factory_state()
 @app.post("/api/chat")
@@ -149,4 +198,8 @@ def command(req:CommandIn,x_raios_csrf:str|None=Header(None)):
 def diagnose(x_raios_csrf:str|None=Header(None)):
  require_csrf(x_raios_csrf); data=overview(); return {"ok":True,"diagnosis":data["maintenance"],"actions_executed":[],"canonical_mutation":False}
 @app.get("/health")
-def health():return {"status":"ONLINE","service":"RAIOS_COMMAND_CENTER","canonical_head":git("rev-parse","HEAD"),"timestamp":utc()}
+def health():
+ worker=MESSAGE_WORKER.status();online=worker.get("healthy") is True
+ return {"status":"ONLINE" if online else "DEGRADED","service":"RAIOS_COMMAND_CENTER",
+  "canonical_head":git("rev-parse","HEAD"),"message_worker":worker,
+  "workflow_automation":worker.get("workflow_enabled") is True,"timestamp":utc()}

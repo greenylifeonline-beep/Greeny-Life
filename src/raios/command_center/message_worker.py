@@ -3,6 +3,7 @@ import hashlib
 import json
 import os
 import socket
+import uuid
 import threading
 import time
 from datetime import datetime, timedelta, timezone
@@ -19,8 +20,17 @@ def read_json(path:Path,default:Any=None)->Any:
 def atomic(path:Path,data:Any)->str:
     path.parent.mkdir(parents=True,exist_ok=True)
     raw=(json.dumps(data,ensure_ascii=False,indent=2)+"\n").encode()
-    tmp=path.with_suffix(path.suffix+".tmp")
-    tmp.write_bytes(raw);os.replace(tmp,path)
+    tmp=path.with_name(f"{path.name}.{os.getpid()}.{threading.get_ident()}.{uuid.uuid4().hex}.tmp")
+    try:
+        tmp.write_bytes(raw)
+        for attempt in range(6):
+            try:os.replace(tmp,path);break
+            except PermissionError:
+                if attempt==5:raise
+                time.sleep(.02*(2**attempt))
+    finally:
+        try:tmp.unlink(missing_ok=True)
+        except OSError:pass
     return hashlib.sha256(raw).hexdigest()
 class MessageWorker:
     def __init__(self,repo:Path,runtime:Path,poll_seconds:float=1.0,max_attempts:int=5):
@@ -34,6 +44,7 @@ class MessageWorker:
         self.state=self.runtime/"worker";self.poll_seconds=poll_seconds
         self.max_attempts=max_attempts;self.stop_event=threading.Event()
         self.worker_id=f"RAIOS-WORKER@{socket.gethostname()}"
+        self.workflow=None;self.thread=None;self.last_error=None;self.consecutive_errors=0
         for p in (self.inbox,self.outbox,self.receipts,self.deliveries,self.dead,self.state):
             p.mkdir(parents=True,exist_ok=True)
     def _targets(self,msg:dict[str,Any])->list[str]:
@@ -102,6 +113,7 @@ class MessageWorker:
                 if path.exists():atomic(self.dead/path.name,read_json(path,{"raw_path":str(path)}))
                 self._record(mid,"COMMAND_CENTER","DEAD_LETTER",state["attempts"],state["last_error"])
             atomic(self.state/f"{mid}.json",state);return state
+    def configure_workflow(self,workflow:Any)->None:self.workflow=workflow
     def scan_once(self)->dict[str,int]:
         result={"seen":0,"delivered":0,"retried":0,"dead_letter":0}
         for path in sorted(self.inbox.glob("MSG-*.json")):
@@ -116,11 +128,13 @@ class MessageWorker:
             state=self.process(path)
             key={"DELIVERED":"delivered","RETRY":"retried","DEAD_LETTER":"dead_letter"}[state["status"]]
             result[key]+=1
+        if self.workflow is not None:result.update(self.workflow.run_cycle(self))
         self.heartbeat(result);return result
     def heartbeat(self,last:dict[str,int]|None=None)->None:
         stamp=utc();expires=(datetime.now(timezone.utc)+timedelta(seconds=30)).isoformat();head=self._head()
         row={"schema":"raios.message-worker-heartbeat.v1","worker_id":self.worker_id,
-             "at":stamp,"head":head,"last_scan":last or {}}
+             "at":stamp,"lease_expires_at":expires,"head":head,"last_scan":last or {},
+             "consecutive_errors":self.consecutive_errors}
         atomic(self.state/"heartbeat.json",row)
         registry_path=self.fabric/"WORKER-REGISTRY.json"
         registry=read_json(registry_path,{"schema":"raios.worker-registry.v2","workers":[]})
@@ -132,8 +146,31 @@ class MessageWorker:
         atomic(registry_path,registry)
     def run(self)->None:
         while not self.stop_event.is_set():
-            self.scan_once();self.stop_event.wait(self.poll_seconds)
+            try:
+                self.scan_once();self.last_error=None;self.consecutive_errors=0
+            except Exception as exc:
+                self.consecutive_errors+=1
+                self.last_error=f"{type(exc).__name__}:{exc}"
+                try:atomic(self.state/"last-error.json",{"worker_id":self.worker_id,"at":utc(),
+                    "error":self.last_error,"consecutive_errors":self.consecutive_errors})
+                except Exception:pass
+            self.stop_event.wait(self.poll_seconds)
     def start(self)->threading.Thread:
-        thread=threading.Thread(target=self.run,name="raios-message-worker",daemon=True)
-        thread.start();return thread
+        if self.thread and self.thread.is_alive():return self.thread
+        self.stop_event.clear()
+        self.thread=threading.Thread(target=self.run,name="raios-message-worker",daemon=True)
+        self.thread.start();return self.thread
+    def status(self)->dict[str,Any]:
+        row=read_json(self.state/"heartbeat.json",{}) or {}
+        thread_alive=bool(self.thread and self.thread.is_alive());heartbeat_current=False
+        try:
+            expiry=datetime.fromisoformat(str(row.get("lease_expires_at") or "").replace("Z","+00:00"))
+            heartbeat_current=expiry>datetime.now(timezone.utc)
+        except (TypeError,ValueError):pass
+        healthy=thread_alive and heartbeat_current and self.last_error is None
+        row.update(worker_id=self.worker_id,thread_alive=thread_alive,heartbeat_current=heartbeat_current,
+                   healthy=healthy,state="ONLINE" if healthy else ("STARTING" if thread_alive and not row else "DEGRADED"),
+                   last_error=self.last_error,consecutive_errors=self.consecutive_errors,
+                   workflow_enabled=self.workflow is not None)
+        return row
     def stop(self)->None:self.stop_event.set()

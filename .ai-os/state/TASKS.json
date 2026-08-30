@@ -428,6 +428,24 @@
       "status": "DONE",
       "claimed_by": "C6-AG-REMOTE-RECON",
       "evidence": ".ai-os/reports/command-center/RAIOS-CANONICAL-COMMAND-CENTER-AND-SELF-HEALTH-WAVE-01"
+    },
+    {
+      "id": "RAIOS-COMMAND-WORKER-CONTINUITY-CHECKPOINT-01",
+      "title": "Command worker continuity and resumable checkpoints",
+      "objective": "Repair atomic worker registry races, keep the worker alive after bounded IO failures, expose truthful health, and persist resumable checkpoints for every task handoff.",
+      "scope": [
+        "src/raios/command_center",
+        "tests/command_center",
+        ".ai-os/mcp/SEAT-MAP.json",
+        ".ai-os/reports/command-center/RAIOS-COMMAND-WORKER-CONTINUITY-CHECKPOINT-01"
+      ],
+      "dependencies": [],
+      "allowed_agents": [
+        "C6-AG-REMOTE-RECON"
+      ],
+      "validation": "Atomic concurrency, IO survival, degraded health, checkpoint resume, targeted suite, live restart and delivery ACK all pass.",
+      "status": "IN_PROGRESS",
+      "claimed_by": "C6-AG-REMOTE-RECON"
     }
   ]
 }

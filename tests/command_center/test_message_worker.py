@@ -1,8 +1,10 @@
 import json
 import tempfile
+import threading
+import time
 import unittest
 from pathlib import Path
-from src.raios.command_center.message_worker import MessageWorker
+from src.raios.command_center.message_worker import MessageWorker, atomic
 
 class MessageWorkerTests(unittest.TestCase):
     def make_worker(self,max_attempts=3):
@@ -41,6 +43,41 @@ class MessageWorkerTests(unittest.TestCase):
             self.assertFalse((worker.deliveries/"COMMAND_CENTER"/f"{mid}.json").exists())
             self.assertEqual(worker.worker_id.split("@",1)[0],"RAIOS-WORKER")
         finally:td.cleanup()
+
+    def test_concurrent_atomic_writers_leave_valid_json(self):
+        td,worker=self.make_worker()
+        try:
+            path=worker.fabric/"race.json"
+            threads=[threading.Thread(target=atomic,args=(path,{"writer":i})) for i in range(20)]
+            [t.start() for t in threads];[t.join() for t in threads]
+            self.assertIn(json.loads(path.read_text())["writer"],range(20))
+            self.assertEqual(list(path.parent.glob("race.json.*.tmp")),[])
+        finally:td.cleanup()
+
+
+    def test_worker_survives_transient_io_failure_and_recovers_health(self):
+        td,worker=self.make_worker()
+        try:
+            original=worker.scan_once;calls={"count":0}
+            def flaky_scan():
+                calls["count"]+=1
+                if calls["count"]==1:raise PermissionError("simulated registry race")
+                return original()
+            worker.scan_once=flaky_scan
+            thread=worker.start()
+            deadline=time.time()+2
+            while calls["count"]<2 and time.time()<deadline:time.sleep(.01)
+            while not worker.status()["healthy"] and time.time()<deadline:time.sleep(.01)
+            status=worker.status()
+            self.assertTrue(thread.is_alive())
+            self.assertGreaterEqual(calls["count"],2)
+            self.assertTrue(status["heartbeat_current"])
+            self.assertTrue(status["healthy"])
+            self.assertIsNone(status["last_error"])
+        finally:
+            worker.stop()
+            if worker.thread:worker.thread.join(timeout=1)
+            td.cleanup()
 
     def test_invalid_message_reaches_dead_letter(self):
         td,worker=self.make_worker(max_attempts=1)
