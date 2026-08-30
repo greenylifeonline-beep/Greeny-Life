@@ -1,0 +1,26 @@
+{
+  "schema": "raios.archive.unique-provenance-retention.v1",
+  "method": "Stream each ZIP entry, compute Git blob OID, compare with all reachable Git objects; no extraction or copy.",
+  "archives": [
+    {
+      "path": "C:/Users/Ghanam/OneDrive/Skrivebord/New folder/REUSABLE-AI-ENGINEERING-OS.zip",
+      "sha256": "CE1A3753BE1D3078FA7572CBEC1E3B2746EB885D4BA35FFFF3703FFDBBE41851",
+      "files": 23,
+      "git_preserved": 15,
+      "unique_files": 8,
+      "unique_entries": ["INSTALL-RAIOS.ps1", "GREENY-LIFE-BOOTSTRAP.ps1", "README-FIRST.md", "template/.ai-os/PROJECT.json", "template/.ai-os/state/TASKS.json", "template/.ai-os/state/LOCKS.json", "template/.ai-os/state/CURRENT-STATE.json", "template/scripts/ai-os/aios.py"],
+      "terminal_state": "UNIQUE_PROVENANCE_RETAIN"
+    },
+    {
+      "path": "C:/Users/Ghanam/OneDrive/Skrivebord/New folder/GREENY-LIFE-MULTI-AGENT-BRIDGE.zip",
+      "sha256": "0EC77B67896D72A662483F57958B4CCBC9E3BF919D47EB9ACEAED7F8A1F06236",
+      "files": 13,
+      "git_preserved": 0,
+      "unique_files": 13,
+      "unique_entries": ["GEMINI.md", "AGENTS.md", "CLAUDE.md", "README-FIRST.md", "INSTALL-GREENY-LIFE-MULTI-AGENT.ps1", "AI-CONTINUATION-CONTEXT/CURRENT-STATE.md", "AI-CONTINUATION-CONTEXT/AGENT-CORE.md", "AI-CONTINUATION-CONTEXT/HANDOFF.md", "AI-CONTINUATION-CONTEXT/DECISIONS.md", "AI-CONTINUATION-CONTEXT/README.md", ".cursor/rules/greeny-life-core.mdc", "scripts/ai/agent-handoff.ps1", "scripts/ai/agent-context.ps1"],
+      "terminal_state": "UNIQUE_PROVENANCE_RETAIN"
+    }
+  ],
+  "deletion_authorized": false,
+  "reason": "Deleting either ZIP would destroy the only proven copy of historical source/provenance bytes."
+}

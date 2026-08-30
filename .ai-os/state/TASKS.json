@@ -523,6 +523,22 @@
       "evidence": ".ai-os/reports/command-center/RAIOS-COMMAND-WORKER-CONTINUITY-CHECKPOINT-01/LIVE-CANARY-STEP-1.json; .ai-os/reports/command-center/RAIOS-COMMAND-WORKER-CONTINUITY-CHECKPOINT-01/LIVE-CANARY-COMPLETION-EVIDENCE.json; .ai-os/receipts/command-fabric/MSG-1788073115939106-844aceb8.C6.delivery.ack.receipt.json; .ai-os/receipts/command-fabric/DSP-fff7354b778445be.C6.task-accept.receipt.json; .ai-os/receipts/command-fabric/CHK-eb6fcf2a94504cf5.checkpoint.receipt.json",
       "report_summary": "Live end-to-end worker loop proven: C1 authorization, presence-aware dispatch, delivery ACK, explicit acceptance, durable checkpoint, absence recovery, checkpoint resume, evidence-backed completion, and state update.",
       "completed_at": "2026-08-30T07:00:53.859353+00:00"
+    },
+    {
+      "id": "RAIOS-ARCHIVE-RESIDUAL-CLEANUP-20260830-01",
+      "title": "Close residual archive duplicates safely",
+      "objective": "Hash and classify every remaining project ZIP, delete only exact redundant copies with durable canonical recovery, and leave unique provenance/recovery assets explicitly retained.",
+      "scope": [
+        ".ai-os/reports/global-estate/RAIOS-ARCHIVE-RESIDUAL-CLEANUP-20260830-01;C:\\Users\\Ghanam\\Downloads\\RIF-RAIOS-DONOR-PACKAGE-v1.1.zip"
+      ],
+      "dependencies": [],
+      "allowed_agents": [
+        "C6-AG-REMOTE-RECON"
+      ],
+      "validation": "All remaining ZIPs terminally classified; exact duplicate deletion verified; canonical payload and worker health preserved; unknown and unresolved zero.",
+      "status": "DONE",
+      "claimed_by": "C6-AG-REMOTE-RECON",
+      "evidence": ".ai-os/reports/global-estate/RAIOS-ARCHIVE-RESIDUAL-CLEANUP-20260830-01"
     }
   ]
 }

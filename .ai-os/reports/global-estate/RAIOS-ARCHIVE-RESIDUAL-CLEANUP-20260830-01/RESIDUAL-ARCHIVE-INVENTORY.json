@@ -1,0 +1,20 @@
+{
+  "schema": "raios.archive.residual-inventory.v1",
+  "generated_at": "2026-08-30T07:19:00Z",
+  "project_zips": 17,
+  "classification_counts": {"CANONICAL_PROTECTED": 8, "CANONICAL_RECOVERY_ASSET": 1, "EXTERNAL_SOR_REFERENCE": 5, "UNIQUE_PROVENANCE_RETAIN": 2, "DELETE_REDUNDANT": 1},
+  "unknown": 0,
+  "unresolved": 0,
+  "delete_redundant": {"path": "C:/Users/Ghanam/Downloads/RIF-RAIOS-DONOR-PACKAGE-v1.1.zip", "bytes": 41349, "sha256": "C65B671D31B4984F5E2634F2A1054383FC0CD301BB91AC1BDB2951AACA1E62DB"},
+  "canonical_recovery_asset": {"path": "C:/Users/Ghanam/Desktop/RAIOS-C3-EXECUTION-PACK.zip", "bytes": 1763729934, "sha256": "6CA1084C649C55EC886E7CCC5D7F158D430562FF82BC2F0A73CC15813D711C0C", "unique_recovery_items": 29},
+  "unique_provenance_retain": [
+    {"path": "C:/Users/Ghanam/OneDrive/Skrivebord/New folder/REUSABLE-AI-ENGINEERING-OS.zip", "sha256": "CE1A3753BE1D3078FA7572CBEC1E3B2746EB885D4BA35FFFF3703FFDBBE41851", "files": 23, "git_preserved": 15},
+    {"path": "C:/Users/Ghanam/OneDrive/Skrivebord/New folder/GREENY-LIFE-MULTI-AGENT-BRIDGE.zip", "sha256": "0EC77B67896D72A662483F57958B4CCBC9E3BF919D47EB9ACEAED7F8A1F06236", "files": 13, "git_preserved": 0}
+  ],
+  "external_sor_reference_count": 5,
+  "external_sor_evidence": ".ai-os/reports/archive-estate/RAIOS-ARCHIVE-ESTATE-CONVERGENCE-AND-DEDUPE-WAVE-01/ONEDRIVE-CLOSURE.json",
+  "canonical_protected_count": 8,
+  "canonical_protected": "Eight tracked ZIPs under the canonical repository: unified-intelligence, RIF incoming, five Kaggle source datasets, and the canonical estate package.",
+  "c3_evidence": ".ai-os/reports/archive-estate/RAIOS-ARCHIVE-ESTATE-CONVERGENCE-AND-DEDUPE-WAVE-01/C3-EXECUTION-PACK-INDEX.json",
+  "deletion_policy": "Delete exact verified duplicate only; preserve canonical, recovery, external SOR, and unique provenance assets."
+}
