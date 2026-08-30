@@ -1,4 +1,5 @@
 import importlib
+from pathlib import Path
 from fastapi.testclient import TestClient
 cc=importlib.import_module("raios.command_center.app")
 client=TestClient(cc.app)
@@ -39,3 +40,9 @@ def test_maintenance_is_diagnostic_not_autonomous(monkeypatch):
  monkeypatch.setattr(cc,"overview",lambda:{"maintenance":{"health":"HEALTHY","auto_canonical_mutation":False}})
  out=client.post("/api/maintenance/diagnose",headers={"X-RAIOS-CSRF":cc.CSRF}).json()
  assert out["actions_executed"]==[] and out["canonical_mutation"] is False
+
+def test_deployer_writes_launcher_as_real_lines():
+ script=(Path(__file__).parents[2]/"scripts/runtime/Deploy-RAIOS-Command-Center.ps1").read_text(encoding="utf-8")
+ assert "[IO.File]::WriteAllText" in script
+ assert '$launcher=@"' in script
+ assert 'explorer.exe" "http://127.0.0.1:' in script

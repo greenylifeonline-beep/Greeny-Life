@@ -22,19 +22,20 @@ $live=Start-Center $Port "center";$health=Wait-Healthy $Port $live.Id
 if(-not$health){Stop-Process $live.Id -Force -ErrorAction SilentlyContinue;throw "COMMAND_CENTER_CUTOVER_FAILED"}
 $manifest=[ordered]@{schema="raios.command-center-deployment.v1";canonical_head=$Head;canonical_repo=$Repo;mcp_root=$McpRoot;runtime_root=$RuntimeRoot;port=$Port;pid=$live.Id;deployed_at=[DateTimeOffset]::UtcNow.ToString("o");auto_canonical_mutation=$false}
 $manifest|ConvertTo-Json -Depth 8|Set-Content(Join-Path $RuntimeRoot "deployment.json") -Encoding UTF8
-$launcher=@(
- '$env:RAIOS_CANONICAL_REPO="' + $Repo + '"',
- '$env:RAIOS_MCP_ROOT="' + $McpRoot + '"',
- '$env:RAIOS_COMMAND_CENTER_RUNTIME="' + $RuntimeRoot + '"',
- '$env:PYTHONPATH="' + $App + '"',
- '$conn=Get-NetTCPConnection -LocalPort ' + $Port + ' -State Listen -ErrorAction SilentlyContinue',
- 'if(-not $conn){',
- ' Start-Process "'+$Python+'" -ArgumentList @("-m","uvicorn","raios.command_center.app:app","--app-dir","'+$App+'","--host","127.0.0.1","--port","'+$Port+'") -WindowStyle Hidden -RedirectStandardOutput "'+$Logs+'\center.out.log" -RedirectStandardError "'+$Logs+'\center.err.log"',
- ' for($i=0;$i-lt 20;$i++){Start-Sleep -Milliseconds 500;try{$h=Invoke-RestMethod "http://127.0.0.1:'+$Port+'/health" -TimeoutSec 2;if($h.status-eq"ONLINE"){break}}catch{}}',
- '}',
- 'Start-Process "http://127.0.0.1:'+$Port+'/"'
-)
-$launcher|Set-Content(Join-Path $RuntimeRoot "Open-RAIOS-Command-Center.ps1") -Encoding UTF8
+$launcher=@"
+`$env:RAIOS_CANONICAL_REPO="$Repo"
+`$env:RAIOS_MCP_ROOT="$McpRoot"
+`$env:RAIOS_COMMAND_CENTER_RUNTIME="$RuntimeRoot"
+`$env:PYTHONPATH="$App"
+`$conn=Get-NetTCPConnection -LocalPort $Port -State Listen -ErrorAction SilentlyContinue
+if(-not `$conn){
+ Start-Process "$Python" -ArgumentList @("-m","uvicorn","raios.command_center.app:app","--app-dir","$App","--host","127.0.0.1","--port","$Port") -WindowStyle Hidden -RedirectStandardOutput "$Logs\center.out.log" -RedirectStandardError "$Logs\center.err.log"
+ for(`$i=0;`$i-lt 20;`$i++){Start-Sleep -Milliseconds 500;try{`$h=Invoke-RestMethod "http://127.0.0.1:$Port/health" -TimeoutSec 2;if(`$h.status-eq"ONLINE"){break}}catch{}}
+}
+Start-Process "`$env:SystemRoot\explorer.exe" "http://127.0.0.1:$Port/"
+"@
+$launcherPath=Join-Path $RuntimeRoot "Open-RAIOS-Command-Center.ps1"
+[IO.File]::WriteAllText($launcherPath,$launcher,[Text.UTF8Encoding]::new($false))
 $desktop=[Environment]::GetFolderPath("Desktop");$shortcut=Join-Path $desktop "RAIOS Command Center.lnk";$ws=New-Object -ComObject WScript.Shell;$lnk=$ws.CreateShortcut($shortcut)
 $lnk.TargetPath="$env:SystemRoot\System32\WindowsPowerShell\v1.0\powershell.exe";$lnk.Arguments="-NoProfile -ExecutionPolicy Bypass -File `"$RuntimeRoot\Open-RAIOS-Command-Center.ps1`"";$lnk.WorkingDirectory=$RuntimeRoot;$lnk.Save()
 Write-Host "COMMAND_CENTER_CANONICAL=true";Write-Host "COMMAND_CENTER_STAGE_PASS=true";Write-Host "COMMAND_CENTER_HTTP=200";Write-Host "COMMAND_CENTER_PID=$($live.Id)";Write-Host "COMMAND_CENTER_HEAD=$Head";Write-Host "SHORTCUT=$shortcut"
