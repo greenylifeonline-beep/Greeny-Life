@@ -1,0 +1,28 @@
+name: certifier-safety
+on:
+  pull_request:
+    paths:
+      - _raios-authoritative-certifier/**
+      - tests/authoritative_certifier/**
+      - pytest.ini
+      - .github/workflows/certifier-safety.yml
+  push:
+    paths:
+      - _raios-authoritative-certifier/**
+      - tests/authoritative_certifier/**
+      - pytest.ini
+      - .github/workflows/certifier-safety.yml
+jobs:
+  safety-schema:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - name: install pytest
+        run: pip install pytest
+      - name: nested safety flags
+        run: python3 -m pytest tests/authoritative_certifier -q
+      - name: notice
+        run: echo "This is a schema-path regression gate. It does not set GL005_PROVEN."
