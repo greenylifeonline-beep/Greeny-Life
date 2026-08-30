@@ -1,0 +1,19 @@
+﻿{
+    "schema":  "raios.command-center-architecture.v1",
+    "canonical_component":  "src/raios/command_center",
+    "runtime":  "C:\\Users\\Ghanam\\.raios\\runtime\\command-center",
+    "url":  "http://127.0.0.1:8770",
+    "surfaces":  [
+                     "RAIOS_CHAT",
+                     "COUNCIL_COMMANDS",
+                     "TASKS_LOCKS",
+                     "SERVICE_HEALTH",
+                     "FACTORIES_MODELS",
+                     "RECEIPTS",
+                     "MAINTENANCE"
+                 ],
+    "second_task_ledger":  false,
+    "second_lock_system":  false,
+    "second_bus":  false,
+    "second_receipt_system":  false
+}
