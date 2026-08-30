@@ -1,0 +1,35 @@
+{
+  "schema": "raios.task-checkpoint.v1",
+  "checkpoint_id": "CHK-eb6fcf2a94504cf5",
+  "task_id": "RAIOS-LIVE-E2E-CANARY-20260830-01",
+  "actor": "C6",
+  "phase": "IN_PROGRESS",
+  "summary": "C1-authorized automatic dispatch, absence recovery, checkpoint resume, delivery ACK, and explicit acceptance are proven live.",
+  "completed_steps": [
+    "Verified C1-only automatic-dispatch authorization",
+    "Observed automatic dispatch to present eligible C6",
+    "Observed lease expiry return to READY with durable interrupted checkpoint",
+    "Refreshed presence and received reassignment containing checkpoint and next step",
+    "Verified delivery acknowledgement and explicit task acceptance"
+  ],
+  "changed_files": [
+    ".ai-os/reports/command-center/RAIOS-COMMAND-WORKER-CONTINUITY-CHECKPOINT-01/LIVE-CANARY-STEP-1.json"
+  ],
+  "validation": [
+    "Worker remained ONLINE and healthy with zero consecutive errors",
+    "Canonical runtime head equals e65fa29f899321d92c64a9c0c23694ff0598dd45",
+    "Second delivery receipt, acceptance receipt, and interrupted checkpoint receipt exist"
+  ],
+  "evidence_refs": [
+    ".ai-os/reports/command-center/RAIOS-COMMAND-WORKER-CONTINUITY-CHECKPOINT-01/LIVE-CANARY-STEP-1.json",
+    ".ai-os/receipts/command-fabric/MSG-1788072973008437-d70792ac.C6.delivery.ack.receipt.json",
+    ".ai-os/receipts/command-fabric/DSP-867bbd99d9e44d54.C6.task-accept.receipt.json",
+    ".ai-os/receipts/command-fabric/DSP-fff7354b778445be.C6.task-accept.receipt.json",
+    ".ai-os/receipts/command-fabric/CHK-4583f08ac73a42f0.checkpoint.receipt.json"
+  ],
+  "next_step": "Submit evidence-backed completion report and verify DONE.",
+  "blocker": null,
+  "created_at": "2026-08-30T06:59:14.007320+00:00",
+  "status": "SAVED",
+  "single_task_ledger": true
+}

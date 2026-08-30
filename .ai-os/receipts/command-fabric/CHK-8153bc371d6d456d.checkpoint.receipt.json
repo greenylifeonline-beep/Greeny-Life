@@ -1,0 +1,42 @@
+{
+  "schema": "raios.task-checkpoint.v1",
+  "checkpoint_id": "CHK-8153bc371d6d456d",
+  "task_id": "RAIOS-LIVE-E2E-CANARY-20260830-01",
+  "actor": "C6",
+  "phase": "COMPLETE",
+  "summary": "Live end-to-end worker loop proven: C1 authorization, presence-aware dispatch, delivery ACK, explicit acceptance, durable checkpoint, absence recovery, checkpoint resume, evidence-backed completion, and state update.",
+  "completed_steps": [
+    "Applied C1-only automatic dispatch gate",
+    "Dispatched only to present eligible C6",
+    "Produced delivery acknowledgements",
+    "Recorded explicit acceptance receipts",
+    "Returned task safely when presence expired",
+    "Persisted interrupted and execution checkpoints in TASKS.json",
+    "Resumed from checkpoint after reassignment",
+    "Verified live worker health and canonical head",
+    "Submitted evidence-backed completion"
+  ],
+  "changed_files": [
+    ".ai-os/reports/command-center/RAIOS-COMMAND-WORKER-CONTINUITY-CHECKPOINT-01/LIVE-CANARY-STEP-1.json",
+    ".ai-os/reports/command-center/RAIOS-COMMAND-WORKER-CONTINUITY-CHECKPOINT-01/LIVE-CANARY-COMPLETION-EVIDENCE.json"
+  ],
+  "validation": [
+    "Resume API returned checkpoint CHK-eb6fcf2a94504cf5 and exact next_step",
+    "All referenced evidence and receipts exist",
+    "Command Center and worker were ONLINE with thread_alive=true, heartbeat_current=true, healthy=true, workflow_enabled=true, consecutive_errors=0",
+    "Canonical head equals e65fa29f899321d92c64a9c0c23694ff0598dd45"
+  ],
+  "evidence_refs": [
+    ".ai-os/reports/command-center/RAIOS-COMMAND-WORKER-CONTINUITY-CHECKPOINT-01/LIVE-CANARY-STEP-1.json",
+    ".ai-os/reports/command-center/RAIOS-COMMAND-WORKER-CONTINUITY-CHECKPOINT-01/LIVE-CANARY-COMPLETION-EVIDENCE.json",
+    ".ai-os/receipts/command-fabric/MSG-1788073115939106-844aceb8.C6.delivery.ack.receipt.json",
+    ".ai-os/receipts/command-fabric/DSP-fff7354b778445be.C6.task-accept.receipt.json",
+    ".ai-os/receipts/command-fabric/CHK-eb6fcf2a94504cf5.checkpoint.receipt.json"
+  ],
+  "next_step": "Council review, close the parent continuity task, then proceed to verified cleanup.",
+  "blocker": null,
+  "created_at": "2026-08-30T07:00:53.859324+00:00",
+  "status": "SAVED",
+  "source_report_id": "RPT-2de271f4bca74ce6",
+  "single_task_ledger": true
+}

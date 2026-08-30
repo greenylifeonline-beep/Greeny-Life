@@ -445,8 +445,84 @@
         "C6-AG-REMOTE-RECON"
       ],
       "validation": "Atomic concurrency, IO survival, degraded health, checkpoint resume, targeted suite, live restart and delivery ACK all pass.",
-      "status": "IN_PROGRESS",
-      "claimed_by": "C6-AG-REMOTE-RECON"
+      "status": "DONE",
+      "claimed_by": "C6-AG-REMOTE-RECON",
+      "evidence": ".ai-os/reports/command-center/RAIOS-COMMAND-WORKER-CONTINUITY-CHECKPOINT-01"
+    },
+    {
+      "id": "RAIOS-LIVE-E2E-CANARY-20260830-01",
+      "title": "Live worker resumable execution canary",
+      "objective": "Prove one C1-authorized task moves through automatic dispatch, explicit acceptance, checkpoint, evidence-backed completion, and ledger update on the live Command Center.",
+      "scope": [
+        ".ai-os/reports/command-center/RAIOS-COMMAND-WORKER-CONTINUITY-CHECKPOINT-01"
+      ],
+      "dependencies": [],
+      "allowed_agents": [
+        "C6"
+      ],
+      "validation": "Live delivery ACK, acceptance receipt, checkpoint receipt, completion receipt, DONE state, healthy worker, and canonical head all proven.",
+      "status": "DONE",
+      "automatic_dispatch": true,
+      "dispatch_authorized_by": "C1",
+      "authorization_provenance": "C1 direct instruction in the active 2026-08-30 session",
+      "dispatch_status": "COMPLETE_EVIDENCE_VERIFIED",
+      "system_owner": "RAIOS_SYSTEM",
+      "last_dispatch_target": "C6",
+      "last_dispatch_id": "DSP-867bbd99d9e44d54",
+      "last_claimed_by": "C6",
+      "returned_at": "2026-08-30T06:58:12.895613+00:00",
+      "return_reason": "TARGET_PRESENCE_ABSENT_OR_EXPIRED",
+      "resume_checkpoint": {
+        "schema": "raios.task-checkpoint.v1",
+        "checkpoint_id": "CHK-8153bc371d6d456d",
+        "task_id": "RAIOS-LIVE-E2E-CANARY-20260830-01",
+        "actor": "C6",
+        "phase": "COMPLETE",
+        "summary": "Live end-to-end worker loop proven: C1 authorization, presence-aware dispatch, delivery ACK, explicit acceptance, durable checkpoint, absence recovery, checkpoint resume, evidence-backed completion, and state update.",
+        "completed_steps": [
+          "Applied C1-only automatic dispatch gate",
+          "Dispatched only to present eligible C6",
+          "Produced delivery acknowledgements",
+          "Recorded explicit acceptance receipts",
+          "Returned task safely when presence expired",
+          "Persisted interrupted and execution checkpoints in TASKS.json",
+          "Resumed from checkpoint after reassignment",
+          "Verified live worker health and canonical head",
+          "Submitted evidence-backed completion"
+        ],
+        "changed_files": [
+          ".ai-os/reports/command-center/RAIOS-COMMAND-WORKER-CONTINUITY-CHECKPOINT-01/LIVE-CANARY-STEP-1.json",
+          ".ai-os/reports/command-center/RAIOS-COMMAND-WORKER-CONTINUITY-CHECKPOINT-01/LIVE-CANARY-COMPLETION-EVIDENCE.json"
+        ],
+        "validation": [
+          "Resume API returned checkpoint CHK-eb6fcf2a94504cf5 and exact next_step",
+          "All referenced evidence and receipts exist",
+          "Command Center and worker were ONLINE with thread_alive=true, heartbeat_current=true, healthy=true, workflow_enabled=true, consecutive_errors=0",
+          "Canonical head equals e65fa29f899321d92c64a9c0c23694ff0598dd45"
+        ],
+        "evidence_refs": [
+          ".ai-os/reports/command-center/RAIOS-COMMAND-WORKER-CONTINUITY-CHECKPOINT-01/LIVE-CANARY-STEP-1.json",
+          ".ai-os/reports/command-center/RAIOS-COMMAND-WORKER-CONTINUITY-CHECKPOINT-01/LIVE-CANARY-COMPLETION-EVIDENCE.json",
+          ".ai-os/receipts/command-fabric/MSG-1788073115939106-844aceb8.C6.delivery.ack.receipt.json",
+          ".ai-os/receipts/command-fabric/DSP-fff7354b778445be.C6.task-accept.receipt.json",
+          ".ai-os/receipts/command-fabric/CHK-eb6fcf2a94504cf5.checkpoint.receipt.json"
+        ],
+        "next_step": "Council review, close the parent continuity task, then proceed to verified cleanup.",
+        "blocker": null,
+        "created_at": "2026-08-30T07:00:53.859324+00:00"
+      },
+      "last_checkpoint_id": "CHK-8153bc371d6d456d",
+      "checkpoint_updated_at": "2026-08-30T07:00:53.859324+00:00",
+      "assigned_to": "C6",
+      "assigned_by": "C1",
+      "dispatched_by": "RAIOS-WORKER",
+      "dispatch_id": "DSP-fff7354b778445be",
+      "dispatched_at": "2026-08-30T06:58:35.935989+00:00",
+      "claimed_by": "C6",
+      "accepted_at": "2026-08-30T06:59:13.940126+00:00",
+      "evidence": ".ai-os/reports/command-center/RAIOS-COMMAND-WORKER-CONTINUITY-CHECKPOINT-01/LIVE-CANARY-STEP-1.json; .ai-os/reports/command-center/RAIOS-COMMAND-WORKER-CONTINUITY-CHECKPOINT-01/LIVE-CANARY-COMPLETION-EVIDENCE.json; .ai-os/receipts/command-fabric/MSG-1788073115939106-844aceb8.C6.delivery.ack.receipt.json; .ai-os/receipts/command-fabric/DSP-fff7354b778445be.C6.task-accept.receipt.json; .ai-os/receipts/command-fabric/CHK-eb6fcf2a94504cf5.checkpoint.receipt.json",
+      "report_summary": "Live end-to-end worker loop proven: C1 authorization, presence-aware dispatch, delivery ACK, explicit acceptance, durable checkpoint, absence recovery, checkpoint resume, evidence-backed completion, and state update.",
+      "completed_at": "2026-08-30T07:00:53.859353+00:00"
     }
   ]
 }
