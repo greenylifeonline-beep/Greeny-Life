@@ -51,14 +51,12 @@ try:
     PILLOW_AVAILABLE = True
 except ImportError:
     PILLOW_AVAILABLE = False
-    print("âš ï¸  Pillow not installed. Run: pip install Pillow")
 
 try:
     import pandas as pd
     PANDAS_AVAILABLE = True
 except ImportError:
     PANDAS_AVAILABLE = False
-    print("âš ï¸  Pandas not installed. Run: pip install pandas")
 
 # ============================================================================
 # Core Data Structures

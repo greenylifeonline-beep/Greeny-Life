@@ -1,0 +1,49 @@
+{
+  "files": {
+    "canonical": {
+      "path": "C:\\Users\\Ghanam\\Documents\\Codex\\Greeny-Life\\brain.py",
+      "lines": 6733,
+      "symbols": 88
+    },
+    "legacy": {
+      "path": "C:\\Users\\Ghanam\\Documents\\Codex\\Greeny-Life-Legacy-Review\\20260814-221919\\brain.py",
+      "lines": 6608,
+      "symbols": 85
+    },
+    "retired": {
+      "path": "C:\\Users\\Ghanam\\OneDrive\\projects\\Greeny-Life-RETIRED-20260820-084036\\brain.py",
+      "lines": 6294,
+      "symbols": 84
+    }
+  },
+  "comparisons": {
+    "legacy": {
+      "donor_only": [],
+      "canonical_only": [
+        "FunctionDef:consult_assimilated",
+        "FunctionDef:inspect_canonical_runtime_health",
+        "FunctionDef:load_assimilated_knowledge"
+      ],
+      "shared": 85,
+      "shared_structurally_identical": 81,
+      "shared_structurally_changed": 4
+    },
+    "retired": {
+      "donor_only": [],
+      "canonical_only": [
+        "FunctionDef:consult_assimilated",
+        "FunctionDef:inspect_canonical_runtime_health",
+        "FunctionDef:integrate_business_assets",
+        "FunctionDef:load_assimilated_knowledge"
+      ],
+      "shared": 84,
+      "shared_structurally_identical": 36,
+      "shared_structurally_changed": 48
+    }
+  },
+  "canonical_active": true,
+  "canonical_path": "brain.py",
+  "legacy_cli_decision": "SUBSUMED_SAFETY_HARDENED",
+  "brain_value_lost": false,
+  "targeted_tests": "12/12_PASS"
+}
