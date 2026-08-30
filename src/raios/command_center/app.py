@@ -6,6 +6,7 @@ from typing import Any
 from fastapi import FastAPI, Header, HTTPException
 from fastapi.responses import HTMLResponse
 from pydantic import BaseModel, Field
+from .message_worker import MessageWorker
 
 HERE=Path(__file__).resolve().parent
 REPO=Path(os.getenv("RAIOS_CANONICAL_REPO",str(HERE.parents[2]))).resolve()
@@ -13,7 +14,13 @@ MCP_ROOT=Path(os.getenv("RAIOS_MCP_ROOT",str(REPO))).resolve()
 RUNTIME=Path(os.getenv("RAIOS_COMMAND_CENTER_RUNTIME",str(Path.home()/".raios/runtime/command-center"))).resolve()
 C5=os.getenv("RAIOS_C5_URL","http://127.0.0.1:8766")
 CSRF=secrets.token_urlsafe(32)
-app=FastAPI(title="RAIOS Command Center",version="1.0",docs_url=None,redoc_url=None)
+app=FastAPI(title="RAIOS Command Center",version="1.1",docs_url=None,redoc_url=None)
+MESSAGE_WORKER=MessageWorker(REPO,RUNTIME)
+
+@app.on_event("startup")
+def start_message_worker():MESSAGE_WORKER.start()
+@app.on_event("shutdown")
+def stop_message_worker():MESSAGE_WORKER.stop()
 
 def utc(): return datetime.now(timezone.utc).isoformat()
 def load(path,default):
@@ -106,6 +113,9 @@ def api_council():return council_state()
 def api_models():return model_state()
 @app.get("/api/receipts")
 def api_receipts():return receipt_state()
+@app.get("/api/message-worker")
+def api_message_worker():
+ return load(MESSAGE_WORKER.state/"heartbeat.json",{"worker_id":MESSAGE_WORKER.worker_id,"status":"STARTING"})
 @app.get("/api/factories")
 def api_factories():return factory_state()
 @app.post("/api/chat")
@@ -115,23 +125,16 @@ def chat(req:ChatIn,x_raios_csrf:str|None=Header(None)):
  return {"ok":True,**body}
 @app.post("/api/command")
 def command(req:CommandIn,x_raios_csrf:str|None=Header(None)):
- require_csrf(x_raios_csrf); allowed={"C2","C3","C4","C5"}; targets=[]
+ require_csrf(x_raios_csrf); allowed={"C1","C2","C3","C4","C5","C6","C6-LOCAL","COMMAND_CENTER"}; targets=[]
  for t in req.targets:
-  u=t.upper(); targets.extend(["C2","C3","C4","C5"] if u=="ALL" else [u])
+  u=t.upper(); targets.extend(sorted(allowed) if u=="ALL" else [u])
  targets=list(dict.fromkeys(targets))
  if not targets or any(t not in allowed for t in targets):raise HTTPException(400,"TARGET_NOT_LIVE_OR_UNKNOWN")
- results=[]; mail=[t for t in targets if t in {"C2","C3","C4"}]
- if mail:
-  gw,actor,write_envelope=c1_gateway()
-  try:mcp_head=subprocess.check_output(["git","rev-parse","HEAD"],cwd=MCP_ROOT,text=True,stderr=subprocess.DEVNULL,timeout=8).strip()
-  except Exception:raise HTTPException(503,"MCP_HEAD_UNAVAILABLE")
-  env=write_envelope(actor,mcp_head,{"to":mail,"text":req.text,
-   "correlation_id":"cc-"+uuid.uuid4().hex[:12],"task_id":req.task_id,"canonical_head":git("rev-parse","HEAD"),"execution_intent":"NONE","promotion_intent":"NONE"})
-  rec=gw.call(actor,"send_packet",env); results.append({"targets":mail,"route":"MCP_SEND_PACKET","status":"SENT_NOT_ACKNOWLEDGED","receipt":rec})
- if "C5" in targets:
-  code,body=http_json(C5+"/v1/chat","POST",{"text":req.text,"task_id":req.task_id,"language":"auto"},130)
-  results.append({"targets":["C5"],"route":"C5_CANONICAL_HTTP","status":"RESPONDED" if code==200 else "FAILED","response":body})
- return {"ok":all(x["status"]!="FAILED" for x in results),"results":results,"executed":False,"promotion":False,"timestamp":utc()}
+ try:msg=MESSAGE_WORKER.enqueue("C1@COMMAND_CENTER",targets,req.text,req.task_id)
+ except ValueError as exc:raise HTTPException(400,str(exc))
+ return {"ok":True,"results":[{"targets":targets,"route":"CANONICAL_LOCAL_FABRIC",
+  "status":"SENT_PENDING_DELIVERY_ACK","message_id":msg["message_id"]}],
+  "executed":False,"promotion":False,"timestamp":utc()}
 @app.post("/api/maintenance/diagnose")
 def diagnose(x_raios_csrf:str|None=Header(None)):
  require_csrf(x_raios_csrf); data=overview(); return {"ok":True,"diagnosis":data["maintenance"],"actions_executed":[],"canonical_mutation":False}

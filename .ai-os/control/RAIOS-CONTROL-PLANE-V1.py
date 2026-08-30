@@ -2,7 +2,9 @@ from __future__ import annotations
 import hashlib, json, os, subprocess, sys, time, uuid
 from datetime import datetime, timedelta, timezone
 from pathlib import Path
-ROOT=Path(r"C:\Users\Ghanam\Documents\Codex\Greeny-Life-Repair")
+ROOT=Path(os.getenv("RAIOS_CANONICAL_REPO",Path(__file__).resolve().parents[2])).resolve()
+if ROOT.name.casefold()=="greeny-life-repair" or not (ROOT/".git").exists():
+    raise SystemExit(f"NON_CANONICAL_ROOT::{ROOT}")
 CTRL=ROOT/".ai-os"/"control"; STATE=ROOT/".ai-os"/"state"/"command-fabric"
 INBOX=STATE/"inbox"; OUTBOX=STATE/"outbox"; RECEIPTS=ROOT/".ai-os"/"receipts"/"command-fabric"
 for p in (STATE,INBOX,OUTBOX,RECEIPTS): p.mkdir(parents=True,exist_ok=True)

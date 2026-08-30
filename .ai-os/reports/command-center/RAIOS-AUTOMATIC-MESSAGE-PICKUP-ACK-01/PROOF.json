@@ -1,0 +1,60 @@
+{
+  "schema": "raios.automatic-message-pickup-ack-proof.v1",
+  "task_id": "RAIOS-AUTOMATIC-MESSAGE-PICKUP-ACK-01",
+  "generated_at_utc": "2026-08-30T05:36:02.467Z",
+  "canonical_tree": "C:\\Users\\Ghanam\\Documents\\Codex\\Greeny-Life",
+  "canonical_head_before": "bca78409d8c98cb1578f17db09f9e66704ecf329",
+  "implementation": {
+    "single_fabric": true,
+    "second_bus": false,
+    "second_registry": false,
+    "second_command_center": false,
+    "worker": "COMMAND-CENTER@AG",
+    "owner": "RAIOS_SYSTEM",
+    "permanent_lock": false,
+    "semantics": [
+      "DELIVERY_ACK != ACTOR_ACK",
+      "idempotent pickup",
+      "bounded exponential retry",
+      "dead-letter",
+      "runtime heartbeat",
+      "restart recovery"
+    ]
+  },
+  "tests": {
+    "py_compile": "PASS",
+    "message_worker_unittest": "3/3 PASS",
+    "legacy_test_app": "BLOCKED_MISSING_HTTPX2_NO_INSTALL",
+    "stage_deploy": "PASS",
+    "post_deploy_health": 200
+  },
+  "canary": {
+    "message_id": "MSG-1788068043151742-6781c6cc",
+    "targets": [
+      "C2",
+      "C6"
+    ],
+    "delivery_ack_count": 2,
+    "attempt": 1,
+    "status": "QUEUED_FOR_SEAT"
+  },
+  "runtime": {
+    "command_center": "ONLINE",
+    "head": "bca78409d8c98cb1578f17db09f9e66704ecf329",
+    "worker_registry_present": true,
+    "nats_required_for_local_delivery": false
+  },
+  "repaired": [
+    "retired Repair hardcode removed from control-plane",
+    "deploy MCP root forced to canonical repository",
+    "C1/C6/Command Center targets accepted",
+    "canonical local inbox is command route"
+  ],
+  "safety": {
+    "repair_reopened": false,
+    "gpu": false,
+    "model_download": false,
+    "paid_resource": false,
+    "force": false
+  }
+}

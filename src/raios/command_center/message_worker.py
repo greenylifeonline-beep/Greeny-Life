@@ -1,0 +1,137 @@
+from __future__ import annotations
+import hashlib
+import json
+import os
+import socket
+import threading
+import time
+from datetime import datetime, timedelta, timezone
+from pathlib import Path
+from typing import Any
+
+DEFAULT_SEATS=("C1","C2","C3","C4","C5","C6","C6-LOCAL","COMMAND_CENTER")
+def utc()->str:return datetime.now(timezone.utc).isoformat()
+def read_json(path:Path,default:Any=None)->Any:
+    try:return json.loads(path.read_text(encoding="utf-8-sig"))
+    except (OSError,json.JSONDecodeError):return default
+def atomic(path:Path,data:Any)->str:
+    path.parent.mkdir(parents=True,exist_ok=True)
+    raw=(json.dumps(data,ensure_ascii=False,indent=2)+"\n").encode()
+    tmp=path.with_suffix(path.suffix+".tmp")
+    tmp.write_bytes(raw);os.replace(tmp,path)
+    return hashlib.sha256(raw).hexdigest()
+class MessageWorker:
+    def __init__(self,repo:Path,runtime:Path,poll_seconds:float=1.0,max_attempts:int=5):
+        self.repo=repo.resolve();self.runtime=runtime.resolve()
+        if self.repo.name.casefold()=="greeny-life-repair" or not (self.repo/".git").exists():
+            raise RuntimeError(f"NON_CANONICAL_ROOT::{self.repo}")
+        self.fabric=self.repo/".ai-os/state/command-fabric"
+        self.inbox=self.fabric/"inbox";self.outbox=self.fabric/"outbox"
+        self.receipts=self.repo/".ai-os/receipts/command-fabric"
+        self.deliveries=self.fabric/"deliveries";self.dead=self.fabric/"dead-letter"
+        self.state=self.runtime/"worker";self.poll_seconds=poll_seconds
+        self.max_attempts=max_attempts;self.stop_event=threading.Event()
+        self.worker_id=f"COMMAND-CENTER@{socket.gethostname()}"
+        for p in (self.inbox,self.outbox,self.receipts,self.deliveries,self.dead,self.state):
+            p.mkdir(parents=True,exist_ok=True)
+    def _targets(self,msg:dict[str,Any])->list[str]:
+        payload=msg.get("payload") or {};raw=payload.get("to")
+        if isinstance(raw,list):targets=[str(x).upper() for x in raw]
+        else:targets=[str(msg.get("target") or "").upper()]
+        if "ALL" in targets:targets=list(DEFAULT_SEATS)
+        return list(dict.fromkeys(x for x in targets if x in DEFAULT_SEATS))
+    def _record(self,mid:str,target:str,status:str,attempt:int,detail:str|None=None)->dict[str,Any]:
+        row={"schema":"raios.delivery-ack.v1","receipt_id":f"{mid}.{target}.delivery",
+             "message_id":mid,"actor":self.worker_id,"target":target,"status":status,
+             "ack_type":"DELIVERY_ACK","attempt":attempt,"at":utc(),
+             "head":self._head(),"detail":detail}
+        atomic(self.outbox/f"{mid}.{target}.delivery.ack.json",row)
+        atomic(self.receipts/f"{mid}.{target}.delivery.ack.receipt.json",row)
+        return row
+    def _head(self)->str:
+        try:
+            import subprocess
+            return subprocess.check_output(["git","rev-parse","HEAD"],cwd=self.repo,text=True,
+                                           stderr=subprocess.DEVNULL,timeout=5).strip()
+        except Exception:return "UNKNOWN"
+    def _attempts(self,mid:str)->dict[str,Any]:
+        return read_json(self.state/f"{mid}.json",{"message_id":mid,"attempts":0}) or {"message_id":mid,"attempts":0}
+    def _validate(self,msg:Any,path:Path)->tuple[str,list[str]]:
+        if not isinstance(msg,dict) or msg.get("schema")!="raios.message.v1":
+            raise ValueError("INVALID_MESSAGE_SCHEMA")
+        mid=str(msg.get("message_id") or "")
+        if not mid or path.stem!=mid:raise ValueError("MESSAGE_ID_PATH_MISMATCH")
+        targets=self._targets(msg)
+        if not targets:raise ValueError("NO_CANONICAL_TARGET")
+        return mid,targets
+    def enqueue(self,sender:str,targets:list[str],text:str,task_id:str|None=None)->dict[str,Any]:
+        import uuid
+        mid=f"MSG-{int(time.time()*1_000_000)}-{uuid.uuid4().hex[:8]}"
+        clean=list(dict.fromkeys(str(x).upper() for x in targets if str(x).upper() in DEFAULT_SEATS))
+        if not clean:raise ValueError("NO_CANONICAL_TARGET")
+        msg={"schema":"raios.message.v1","message_id":mid,"correlation_id":f"cc-{uuid.uuid4().hex[:12]}",
+             "sender":sender,"target":"ALL" if len(clean)>1 else clean[0],"kind":"COMMAND",
+             "channel":"INTERNAL_BUS","payload":{"text":text,"to":clean,"task_id":task_id,
+             "ack_requested":True},"created_at":utc(),"head":self._head(),"ack_required":True}
+        digest=atomic(self.inbox/f"{mid}.json",msg)
+        atomic(self.receipts/f"{mid}.send.json",{"receipt_id":mid,"message_id":mid,
+          "RECEIPT_ID_EQUALS_MESSAGE_ID":True,"sha256":digest,"event":"SENT","at":utc(),
+          "targets":clean,"route":"CANONICAL_LOCAL_FABRIC"})
+        return msg
+
+    def process(self,path:Path)->dict[str,Any]:
+        msg=read_json(path);mid=path.stem;state=self._attempts(mid)
+        try:
+            mid,targets=self._validate(msg,path)
+            delivered=[]
+            for target in targets:
+                dst=self.deliveries/target/f"{mid}.json"
+                if not dst.exists():atomic(dst,msg)
+                self._record(mid,target,"QUEUED_FOR_SEAT",int(state["attempts"])+1)
+                delivered.append(target)
+            state.update(attempts=int(state["attempts"])+1,status="DELIVERED",
+                         targets=delivered,updated_at=utc(),last_error=None)
+            atomic(self.state/f"{mid}.json",state);return state
+        except Exception as exc:
+            state.update(attempts=int(state.get("attempts",0))+1,status="RETRY",
+                         updated_at=utc(),last_error=f"{type(exc).__name__}:{exc}")
+            if state["attempts"]>=self.max_attempts:
+                state["status"]="DEAD_LETTER"
+                if path.exists():atomic(self.dead/path.name,read_json(path,{"raw_path":str(path)}))
+                self._record(mid,"COMMAND_CENTER","DEAD_LETTER",state["attempts"],state["last_error"])
+            atomic(self.state/f"{mid}.json",state);return state
+    def scan_once(self)->dict[str,int]:
+        result={"seen":0,"delivered":0,"retried":0,"dead_letter":0}
+        for path in sorted(self.inbox.glob("MSG-*.json")):
+            result["seen"]+=1;state=self._attempts(path.stem)
+            if state.get("status")=="DELIVERED":continue
+            if state.get("status")=="RETRY":
+                delay=min(60,2**max(0,int(state.get("attempts",0))-1))
+                try:
+                    changed=datetime.fromisoformat(str(state["updated_at"]).replace("Z","+00:00"))
+                    if (datetime.now(timezone.utc)-changed).total_seconds()<delay:continue
+                except Exception:pass
+            state=self.process(path)
+            key={"DELIVERED":"delivered","RETRY":"retried","DEAD_LETTER":"dead_letter"}[state["status"]]
+            result[key]+=1
+        self.heartbeat(result);return result
+    def heartbeat(self,last:dict[str,int]|None=None)->None:
+        stamp=utc();expires=(datetime.now(timezone.utc)+timedelta(seconds=30)).isoformat();head=self._head()
+        row={"schema":"raios.message-worker-heartbeat.v1","worker_id":self.worker_id,
+             "at":stamp,"head":head,"last_scan":last or {}}
+        atomic(self.state/"heartbeat.json",row)
+        registry_path=self.fabric/"WORKER-REGISTRY.json"
+        registry=read_json(registry_path,{"schema":"raios.worker-registry.v2","workers":[]})
+        workers=[w for w in registry.get("workers",[]) if w.get("worker_id")!=self.worker_id]
+        workers.append({"worker_id":self.worker_id,"kind":"MESSAGE_PICKUP","liveness":"LIVE",
+                        "heartbeat":stamp,"lease_expires_at":expires,"head":head,
+                        "owner":"RAIOS_SYSTEM","permanent_lock":False})
+        registry.update(workers=workers,generated_at=stamp,head=head)
+        atomic(registry_path,registry)
+    def run(self)->None:
+        while not self.stop_event.is_set():
+            self.scan_once();self.stop_event.wait(self.poll_seconds)
+    def start(self)->threading.Thread:
+        thread=threading.Thread(target=self.run,name="raios-message-worker",daemon=True)
+        thread.start();return thread
+    def stop(self)->None:self.stop_event.set()

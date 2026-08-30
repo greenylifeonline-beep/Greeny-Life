@@ -1,8 +1,9 @@
 param([string]$RuntimeRoot="$HOME\.raios\runtime\command-center",[int]$Port=8770,[string]$McpRoot="")
 $ErrorActionPreference="Stop"
 $Repo=(Resolve-Path(Join-Path $PSScriptRoot "..\..")).Path;$Head=(git -C $Repo rev-parse HEAD).Trim()
-if(-not $McpRoot){$candidates=@($Repo,(Join-Path $HOME "Documents\Codex\Greeny-Life-Repair"),(Join-Path(Split-Path $Repo -Parent)"Greeny-Life-Repair"));$McpRoot=($candidates|Where-Object{Test-Path(Join-Path $_ ".ai-os\mcp\tokens.local.json")}|Select-Object -First 1)}
-if(-not $McpRoot){throw "MCP_CONTROL_ROOT_WITH_C1_GRANT_NOT_FOUND"}
+if(-not $McpRoot){$McpRoot=$Repo}
+$McpRoot=(Resolve-Path $McpRoot).Path
+if($McpRoot -ne $Repo){throw "MCP_ROOT_MUST_EQUAL_CANONICAL_REPO"}
 $App=Join-Path $RuntimeRoot "app";$Logs=Join-Path $RuntimeRoot "logs";$Pkg=Join-Path $App "raios\command_center";$Mcp=Join-Path $App "raios_mcp"
 $Python=Join-Path $HOME ".raios\runtime\c5\.venv\Scripts\python.exe";if(-not(Test-Path $Python)){throw "CANONICAL_C5_PYTHON_MISSING"}
 New-Item -ItemType Directory -Force -Path $Pkg,$Mcp,$Logs,(Join-Path $App "raios")|Out-Null
