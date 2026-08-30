@@ -1,0 +1,12 @@
+{
+  "truth_law": "catalog_or_account_eligibility_is_not_current_allocatable_capacity",
+  "required_common": ["current_identity", "auth", "provenance", "C1_verified_authority"],
+  "required_storage": ["storage_capacity_proven", "free_bytes_gte_request"],
+  "required_compute": ["current_capacity_proven", "capacity_units_gte_request"],
+  "required_gpu": ["current_capacity_proven", "gpu_sku", "gpu_vram"],
+  "required_paid": ["C1_paid_allowed"],
+  "required_execution": ["existing_canonical_mutation_adapter"],
+  "current_cloud_execution_allowed": false,
+  "reason": "NO_PROVIDER_HAS_COMPLETE_OPERATION_SPECIFIC_STORAGE_OR_CURRENT_GPU_CAPACITY_PROOF",
+  "fail_closed": true
+}

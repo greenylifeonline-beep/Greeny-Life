@@ -1,0 +1,11 @@
+{
+  "task_id": "RAIOS-RESOURCE-FABRIC-LIVE-ACCOUNT-BINDING-WAVE-02",
+  "providers": ["KAGGLE", "HUGGING_FACE", "ORACLE", "COLAB", "MODAL"],
+  "adapter_contract": ["probe_identity", "probe_storage", "probe_capacity", "stage", "execute"],
+  "stage_is_non_mutating": true,
+  "execution_requires_injected_canonical_mutation_adapter": true,
+  "second_provider_registry_created": false,
+  "paid_resource_created": false,
+  "gpu_session_started": false,
+  "model_transfer_executed": false
+}
