@@ -1,0 +1,29 @@
+﻿{
+    "schema":  "raios.unified-resource-registry-proof.v1",
+    "compute_pool":  [
+                         "LOCAL_AG",
+                         "KAGGLE_C1",
+                         "MODAL_01",
+                         "LIGHTNING_01",
+                         "ORACLE_01",
+                         "COLAB_01"
+                     ],
+    "model_registry_pool":  [
+                                "HUGGINGFACE",
+                                "KAGGLE_C1",
+                                "OLLAMA_LOCAL"
+                            ],
+    "source_pool":  [
+                        "GITHUB"
+                    ],
+    "storage_pool":  [
+                         "HUGGINGFACE",
+                         "KAGGLE_C1",
+                         "ORACLE_01",
+                         "ONEDRIVE"
+                     ],
+    "HF_AUTH_WHOAMI_PROVEN":  true,
+    "HF_IDENTITY":  "greenylifeonline",
+    "GITHUB_GIT_TRANSPORT_PROVEN":  true,
+    "catalog_ne_live_capacity":  true
+}

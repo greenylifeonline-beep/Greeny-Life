@@ -87,49 +87,91 @@
       "task_id": "V9-NL0",
       "agent": "cursor",
       "scope": "src/raios/neuro_lingua",
-      "status": "ACTIVE"
+      "status": "ACTIVE",
+      "previous_legal_owner": null,
+      "owner": "RAIOS-CONTROL-PLANE",
+      "legal_owner": "RAIOS-CONTROL-PLANE",
+      "lease_holder": "cursor",
+      "ownership_model": "SYSTEM_OWNED_AGENT_LEASED",
+      "absent_holder_transferable": true
     },
     {
       "id": "LOCK-20260820062957",
       "task_id": "V9-NL0",
       "agent": "cursor",
       "scope": "configs/neuro_lingua",
-      "status": "ACTIVE"
+      "status": "ACTIVE",
+      "previous_legal_owner": null,
+      "owner": "RAIOS-CONTROL-PLANE",
+      "legal_owner": "RAIOS-CONTROL-PLANE",
+      "lease_holder": "cursor",
+      "ownership_model": "SYSTEM_OWNED_AGENT_LEASED",
+      "absent_holder_transferable": true
     },
     {
       "id": "LOCK-20260820062957",
       "task_id": "V9-NL0",
       "agent": "cursor",
       "scope": "tests/neuro_lingua",
-      "status": "ACTIVE"
+      "status": "ACTIVE",
+      "previous_legal_owner": null,
+      "owner": "RAIOS-CONTROL-PLANE",
+      "legal_owner": "RAIOS-CONTROL-PLANE",
+      "lease_holder": "cursor",
+      "ownership_model": "SYSTEM_OWNED_AGENT_LEASED",
+      "absent_holder_transferable": true
     },
     {
       "id": "LOCK-20260820062957",
       "task_id": "V9-NL0",
       "agent": "cursor",
       "scope": "benchmarks/neuro_lingua",
-      "status": "ACTIVE"
+      "status": "ACTIVE",
+      "previous_legal_owner": null,
+      "owner": "RAIOS-CONTROL-PLANE",
+      "legal_owner": "RAIOS-CONTROL-PLANE",
+      "lease_holder": "cursor",
+      "ownership_model": "SYSTEM_OWNED_AGENT_LEASED",
+      "absent_holder_transferable": true
     },
     {
       "id": "LOCK-20260820062958",
       "task_id": "V9-NL0",
       "agent": "cursor",
       "scope": "reports",
-      "status": "ACTIVE"
+      "status": "ACTIVE",
+      "previous_legal_owner": null,
+      "owner": "RAIOS-CONTROL-PLANE",
+      "legal_owner": "RAIOS-CONTROL-PLANE",
+      "lease_holder": "cursor",
+      "ownership_model": "SYSTEM_OWNED_AGENT_LEASED",
+      "absent_holder_transferable": true
     },
     {
       "id": "LOCK-20260820062958",
       "task_id": "V9-NL0",
       "agent": "cursor",
       "scope": "docs/v9",
-      "status": "ACTIVE"
+      "status": "ACTIVE",
+      "previous_legal_owner": null,
+      "owner": "RAIOS-CONTROL-PLANE",
+      "legal_owner": "RAIOS-CONTROL-PLANE",
+      "lease_holder": "cursor",
+      "ownership_model": "SYSTEM_OWNED_AGENT_LEASED",
+      "absent_holder_transferable": true
     },
     {
       "id": "LOCK-20260820134633",
       "task_id": "WAVE2-GAP-RES",
       "agent": "cursor",
       "scope": "_raios-wave2-gap-resolution",
-      "status": "ACTIVE"
+      "status": "ACTIVE",
+      "previous_legal_owner": null,
+      "owner": "RAIOS-CONTROL-PLANE",
+      "legal_owner": "RAIOS-CONTROL-PLANE",
+      "lease_holder": "cursor",
+      "ownership_model": "SYSTEM_OWNED_AGENT_LEASED",
+      "absent_holder_transferable": true
     },
     {
       "id": "LOCK-20260824222858",
@@ -149,11 +191,16 @@
       "id": "LOCK-20260826181700",
       "task_id": "C2-CONCURRENCY-SYNC-01",
       "agent": "C2@AG",
-      "owner": "LANE_B",
+      "owner": "RAIOS-CONTROL-PLANE",
       "scope": ".ai-os/reports/architecture-audit",
       "files_or_subsystem": "architecture-audit C3 review binding; identity overlay on C2-IDENTITY-BINDING/SEAT-MAP/POLICY; no V9 nomadic",
       "start_head": "12603d02253547c7727bc84ce68c318e8e9258bc",
-      "status": "ACTIVE"
+      "status": "ACTIVE",
+      "previous_legal_owner": "LANE_B",
+      "legal_owner": "RAIOS-CONTROL-PLANE",
+      "lease_holder": "C2@AG",
+      "ownership_model": "SYSTEM_OWNED_AGENT_LEASED",
+      "absent_holder_transferable": true
     },
     {
       "id": "LOCK-20260826181701",
@@ -169,23 +216,33 @@
       "id": "LOCK-20260826185525",
       "task_id": "RAIOS-TOTAL-ESTATE-PHASE1-01",
       "agent": "C2@AG",
-      "owner": "C2_LOCAL_CENSUS",
+      "owner": "RAIOS-CONTROL-PLANE",
       "lane": "C2_LOCAL_CENSUS",
       "scope": ".ai-os/reports/master-estate-census/RAIOS-TOTAL-ESTATE-PHASE1-01-20260826T185525Z",
       "files_or_subsystem": "master estate census report dir only; no product/runtime/V9 writes",
       "start_head": "12603d02253547c7727bc84ce68c318e8e9258bc",
-      "status": "ACTIVE"
+      "status": "ACTIVE",
+      "previous_legal_owner": "C2_LOCAL_CENSUS",
+      "legal_owner": "RAIOS-CONTROL-PLANE",
+      "lease_holder": "C2@AG",
+      "ownership_model": "SYSTEM_OWNED_AGENT_LEASED",
+      "absent_holder_transferable": true
     },
     {
       "id": "LOCK-20260826201336",
       "task_id": "RAIOS-TOTAL-ESTATE-PHASE1-02",
       "agent": "C2@AG",
-      "owner": "C2_LOCAL_CENSUS",
+      "owner": "RAIOS-CONTROL-PLANE",
       "lane": "C2_LOCAL_CENSUS",
       "scope": ".ai-os/reports/master-estate-census/RAIOS-TOTAL-ESTATE-PHASE1-01-20260826T185525Z",
       "files_or_subsystem": "delta closeout of existing PHASE1-01 run only; no product/runtime/V9 writes; no second master estate",
       "start_head": "12603d02253547c7727bc84ce68c318e8e9258bc",
-      "status": "ACTIVE"
+      "status": "ACTIVE",
+      "previous_legal_owner": "C2_LOCAL_CENSUS",
+      "legal_owner": "RAIOS-CONTROL-PLANE",
+      "lease_holder": "C2@AG",
+      "ownership_model": "SYSTEM_OWNED_AGENT_LEASED",
+      "absent_holder_transferable": true
     },
     {
       "id": "LOCK-20260827101200",
@@ -193,130 +250,253 @@
       "agent": "cursor",
       "scope": "src/raios/c1c5",
       "status": "ACTIVE",
-      "files_or_subsystem": "C1-C5 task envelope dispatcher; no neuro_lingua/V9/census writes"
+      "files_or_subsystem": "C1-C5 task envelope dispatcher; no neuro_lingua/V9/census writes",
+      "previous_legal_owner": null,
+      "owner": "RAIOS-CONTROL-PLANE",
+      "legal_owner": "RAIOS-CONTROL-PLANE",
+      "lease_holder": "cursor",
+      "ownership_model": "SYSTEM_OWNED_AGENT_LEASED",
+      "absent_holder_transferable": true
     },
     {
       "id": "LOCK-20260827101201",
       "task_id": "RAIOS-PRECANONICAL-EXECUTION-WAVE-01",
       "agent": "cursor",
       "scope": "tests/c1c5",
-      "status": "ACTIVE"
+      "status": "ACTIVE",
+      "previous_legal_owner": null,
+      "owner": "RAIOS-CONTROL-PLANE",
+      "legal_owner": "RAIOS-CONTROL-PLANE",
+      "lease_holder": "cursor",
+      "ownership_model": "SYSTEM_OWNED_AGENT_LEASED",
+      "absent_holder_transferable": true
     },
     {
       "id": "LOCK-20260827101202",
       "task_id": "RAIOS-PRECANONICAL-EXECUTION-WAVE-01",
       "agent": "cursor",
       "scope": ".ai-os/reports/c1-c5-task-dispatch",
-      "status": "ACTIVE"
+      "status": "ACTIVE",
+      "previous_legal_owner": null,
+      "owner": "RAIOS-CONTROL-PLANE",
+      "legal_owner": "RAIOS-CONTROL-PLANE",
+      "lease_holder": "cursor",
+      "ownership_model": "SYSTEM_OWNED_AGENT_LEASED",
+      "absent_holder_transferable": true
     },
     {
       "id": "LOCK-20260827101203",
       "task_id": "RAIOS-PRECANONICAL-EXECUTION-WAVE-01",
       "agent": "cursor",
       "scope": ".ai-os/reports/precannonical-wave",
-      "status": "ACTIVE"
+      "status": "ACTIVE",
+      "previous_legal_owner": null,
+      "owner": "RAIOS-CONTROL-PLANE",
+      "legal_owner": "RAIOS-CONTROL-PLANE",
+      "lease_holder": "cursor",
+      "ownership_model": "SYSTEM_OWNED_AGENT_LEASED",
+      "absent_holder_transferable": true
     },
     {
       "id": "LOCK-20260827101204",
       "task_id": "RAIOS-PRECANONICAL-EXECUTION-WAVE-01",
       "agent": "cursor",
       "scope": ".ai-os/reports/rif-c7-integration/RAIOS-RIF-C7-INTEGRATION-RECON-02",
-      "status": "ACTIVE"
+      "status": "ACTIVE",
+      "previous_legal_owner": null,
+      "owner": "RAIOS-CONTROL-PLANE",
+      "legal_owner": "RAIOS-CONTROL-PLANE",
+      "lease_holder": "cursor",
+      "ownership_model": "SYSTEM_OWNED_AGENT_LEASED",
+      "absent_holder_transferable": true
     },
     {
       "id": "LOCK-20260827150500",
       "task_id": "RAIOS-RIF-C7-INTEGRATION-RECON-02A",
       "agent": "cursor",
       "scope": ".ai-os/reports/rif-c7-integration/RAIOS-RIF-C7-INTEGRATION-RECON-02A",
-      "status": "ACTIVE"
+      "status": "ACTIVE",
+      "previous_legal_owner": null,
+      "owner": "RAIOS-CONTROL-PLANE",
+      "legal_owner": "RAIOS-CONTROL-PLANE",
+      "lease_holder": "cursor",
+      "ownership_model": "SYSTEM_OWNED_AGENT_LEASED",
+      "absent_holder_transferable": true
     },
     {
       "id": "LOCK-20260827150501",
       "task_id": "RAIOS-RIF-C7-INTEGRATION-RECON-02A",
       "agent": "cursor",
       "scope": ".ai-os/staging/rif-c7-integration/ag-runner",
-      "status": "ACTIVE"
+      "status": "ACTIVE",
+      "previous_legal_owner": null,
+      "owner": "RAIOS-CONTROL-PLANE",
+      "legal_owner": "RAIOS-CONTROL-PLANE",
+      "lease_holder": "cursor",
+      "ownership_model": "SYSTEM_OWNED_AGENT_LEASED",
+      "absent_holder_transferable": true
     },
     {
       "id": "LOCK-20260827150502",
       "task_id": "RAIOS-RIF-C7-INTEGRATION-RECON-02A",
       "agent": "cursor",
       "scope": "tests/rif_donor",
-      "status": "ACTIVE"
+      "status": "ACTIVE",
+      "previous_legal_owner": null,
+      "owner": "RAIOS-CONTROL-PLANE",
+      "legal_owner": "RAIOS-CONTROL-PLANE",
+      "lease_holder": "cursor",
+      "ownership_model": "SYSTEM_OWNED_AGENT_LEASED",
+      "absent_holder_transferable": true
     },
     {
       "id": "LOCK-20260827150503",
       "task_id": "RAIOS-PRECANONICAL-EXECUTION-WAVE-01",
       "agent": "cursor",
       "scope": ".ai-os/reports/precannonical-wave/RAIOS-PRECANONICAL-EXECUTION-WAVE-01-DELTA-D",
-      "status": "ACTIVE"
+      "status": "ACTIVE",
+      "previous_legal_owner": null,
+      "owner": "RAIOS-CONTROL-PLANE",
+      "legal_owner": "RAIOS-CONTROL-PLANE",
+      "lease_holder": "cursor",
+      "ownership_model": "SYSTEM_OWNED_AGENT_LEASED",
+      "absent_holder_transferable": true
     },
     {
       "id": "LOCK-20260827172853",
       "task_id": "RAIOS-PRECANONICAL-INDEPENDENT-VERIFY-WAVE-01",
       "agent": "cursor",
       "scope": "src/raios/a2a",
-      "status": "ACTIVE"
+      "status": "ACTIVE",
+      "previous_legal_owner": null,
+      "owner": "RAIOS-CONTROL-PLANE",
+      "legal_owner": "RAIOS-CONTROL-PLANE",
+      "lease_holder": "cursor",
+      "ownership_model": "SYSTEM_OWNED_AGENT_LEASED",
+      "absent_holder_transferable": true
     },
     {
       "id": "LOCK-20260827172853",
       "task_id": "RAIOS-PRECANONICAL-INDEPENDENT-VERIFY-WAVE-01",
       "agent": "cursor",
       "scope": "tests/a2a",
-      "status": "ACTIVE"
+      "status": "ACTIVE",
+      "previous_legal_owner": null,
+      "owner": "RAIOS-CONTROL-PLANE",
+      "legal_owner": "RAIOS-CONTROL-PLANE",
+      "lease_holder": "cursor",
+      "ownership_model": "SYSTEM_OWNED_AGENT_LEASED",
+      "absent_holder_transferable": true
     },
     {
       "id": "LOCK-20260827172853",
       "task_id": "RAIOS-PRECANONICAL-INDEPENDENT-VERIFY-WAVE-01",
       "agent": "cursor",
       "scope": ".ai-os/reports/a2a-federated-interop",
-      "status": "ACTIVE"
+      "status": "ACTIVE",
+      "previous_legal_owner": null,
+      "owner": "RAIOS-CONTROL-PLANE",
+      "legal_owner": "RAIOS-CONTROL-PLANE",
+      "lease_holder": "cursor",
+      "ownership_model": "SYSTEM_OWNED_AGENT_LEASED",
+      "absent_holder_transferable": true
     },
     {
       "id": "LOCK-20260827172853",
       "task_id": "RAIOS-PRECANONICAL-INDEPENDENT-VERIFY-WAVE-01",
       "agent": "cursor",
       "scope": ".ai-os/reports/precannonical-control-integration",
-      "status": "ACTIVE"
+      "status": "ACTIVE",
+      "previous_legal_owner": null,
+      "owner": "RAIOS-CONTROL-PLANE",
+      "legal_owner": "RAIOS-CONTROL-PLANE",
+      "lease_holder": "cursor",
+      "ownership_model": "SYSTEM_OWNED_AGENT_LEASED",
+      "absent_holder_transferable": true
     },
     {
       "id": "LOCK-20260827172854",
       "task_id": "RAIOS-PRECANONICAL-INDEPENDENT-VERIFY-WAVE-01",
       "agent": "cursor",
       "scope": ".ai-os/control/RAIOS-C1-C5-CHANNEL.py",
-      "status": "ACTIVE"
+      "status": "ACTIVE",
+      "previous_legal_owner": null,
+      "owner": "RAIOS-CONTROL-PLANE",
+      "legal_owner": "RAIOS-CONTROL-PLANE",
+      "lease_holder": "cursor",
+      "ownership_model": "SYSTEM_OWNED_AGENT_LEASED",
+      "absent_holder_transferable": true
     },
     {
       "id": "LOCK-20260827172854",
       "task_id": "RAIOS-PRECANONICAL-INDEPENDENT-VERIFY-WAVE-01",
       "agent": "cursor",
       "scope": ".ai-os/reports/precannonical-readiness",
-      "status": "ACTIVE"
+      "status": "ACTIVE",
+      "previous_legal_owner": null,
+      "owner": "RAIOS-CONTROL-PLANE",
+      "legal_owner": "RAIOS-CONTROL-PLANE",
+      "lease_holder": "cursor",
+      "ownership_model": "SYSTEM_OWNED_AGENT_LEASED",
+      "absent_holder_transferable": true
     },
     {
       "id": "LOCK-20260827190100",
-      "task_id": "RAIOS-COMMAND-FABRIC-E2E-CLOSEOUT-WAVE-01",
-      "agent": "cursor",
-      "owner": "C2-PRIMARY-EXECUTOR",
+      "task_id": "RAIOS-RESOURCE-FABRIC-LIVE-ACCOUNT-BINDING-WAVE-02",
+      "agent": "C6-AG-REMOTE-RECON",
+      "owner": "RAIOS-CONTROL-PLANE",
       "scope": "src/raios/command_fabric",
       "status": "ACTIVE",
-      "files_or_subsystem": "CommandLeaseAdapter + NATS primary route wrap; no A2A flags, no V9, no census"
+      "files_or_subsystem": "CommandLeaseAdapter + NATS primary route wrap; no A2A flags, no V9, no census",
+      "previous_task_id": "RAIOS-COMMAND-FABRIC-E2E-CLOSEOUT-WAVE-01",
+      "previous_agent": "cursor",
+      "previous_owner": "C2-PRIMARY-EXECUTOR",
+      "transfer_authority": "C1",
+      "transfer_approved": true,
+      "lock_identity_preserved": true,
+      "rebind_reason": "HISTORICAL_TASK_RECORD_ABSENT;LOCK_REBOUND_TO_EXISTING_CANONICAL_CLOSURE_TASK",
+      "legal_owner": "RAIOS-CONTROL-PLANE",
+      "lease_holder": "C6-AG-REMOTE-RECON",
+      "ownership_model": "SYSTEM_OWNED_AGENT_LEASED",
+      "heartbeat_at": "2026-08-30T01:33:31.337272+00:00",
+      "expires_at": "2026-08-30T03:33:31.337272+00:00",
+      "absent_holder_transferable": true,
+      "previous_legal_owner": "RAIOS-CONTROL-PLANE"
     },
     {
       "id": "LOCK-20260827190101",
-      "task_id": "RAIOS-COMMAND-FABRIC-E2E-CLOSEOUT-WAVE-01",
-      "agent": "cursor",
-      "owner": "C2-PRIMARY-EXECUTOR",
+      "task_id": "RAIOS-RESOURCE-FABRIC-LIVE-ACCOUNT-BINDING-WAVE-02",
+      "agent": "C6-AG-REMOTE-RECON",
+      "owner": "RAIOS-CONTROL-PLANE",
       "scope": "tests/command_fabric",
-      "status": "ACTIVE"
+      "status": "ACTIVE",
+      "previous_task_id": "RAIOS-COMMAND-FABRIC-E2E-CLOSEOUT-WAVE-01",
+      "previous_agent": "cursor",
+      "previous_owner": "C2-PRIMARY-EXECUTOR",
+      "transfer_authority": "C1",
+      "transfer_approved": true,
+      "lock_identity_preserved": true,
+      "rebind_reason": "HISTORICAL_TASK_RECORD_ABSENT;LOCK_REBOUND_TO_EXISTING_CANONICAL_CLOSURE_TASK",
+      "legal_owner": "RAIOS-CONTROL-PLANE",
+      "lease_holder": "C6-AG-REMOTE-RECON",
+      "ownership_model": "SYSTEM_OWNED_AGENT_LEASED",
+      "heartbeat_at": "2026-08-30T01:33:31.337272+00:00",
+      "expires_at": "2026-08-30T03:33:31.337272+00:00",
+      "absent_holder_transferable": true,
+      "previous_legal_owner": "RAIOS-CONTROL-PLANE"
     },
     {
       "id": "LOCK-20260827190102",
       "task_id": "RAIOS-COMMAND-FABRIC-E2E-CLOSEOUT-WAVE-01",
       "agent": "cursor",
-      "owner": "C2-PRIMARY-EXECUTOR",
+      "owner": "RAIOS-CONTROL-PLANE",
       "scope": ".ai-os/reports/command-fabric/RAIOS-COMMAND-FABRIC-E2E-SEAL-01",
-      "status": "ACTIVE"
+      "status": "ACTIVE",
+      "previous_legal_owner": "C2-PRIMARY-EXECUTOR",
+      "legal_owner": "RAIOS-CONTROL-PLANE",
+      "lease_holder": "cursor",
+      "ownership_model": "SYSTEM_OWNED_AGENT_LEASED",
+      "absent_holder_transferable": true
     },
     {
       "id": "LOCK-20260827214600",
@@ -354,68 +534,124 @@
     {
       "id": "LOCK-20260827233500",
       "task_id": "RAIOS-RESOURCE-FABRIC-LIVE-ACCOUNT-BINDING-WAVE-02",
-      "agent": "cursor",
-      "owner": "C2-KAGGLE-CONTROL",
+      "agent": "C6-AG-REMOTE-RECON",
+      "owner": "RAIOS-CONTROL-PLANE",
       "scope": "src/raios/resource_fabric",
       "status": "ACTIVE",
-      "files_or_subsystem": "live account overlay on existing fabric; no new registry/census engine; no frozen precanonical"
+      "files_or_subsystem": "live account overlay on existing fabric; no new registry/census engine; no frozen precanonical",
+      "previous_task_id": "RAIOS-RESOURCE-FABRIC-LIVE-ACCOUNT-BINDING-WAVE-02",
+      "previous_agent": "cursor",
+      "previous_owner": "C2-KAGGLE-CONTROL",
+      "transfer_authority": "C1",
+      "transfer_approved": true,
+      "lock_identity_preserved": true,
+      "legal_owner": "RAIOS-CONTROL-PLANE",
+      "lease_holder": "C6-AG-REMOTE-RECON",
+      "ownership_model": "SYSTEM_OWNED_AGENT_LEASED",
+      "heartbeat_at": "2026-08-30T01:33:31.337272+00:00",
+      "expires_at": "2026-08-30T03:33:31.337272+00:00",
+      "absent_holder_transferable": true,
+      "previous_legal_owner": "RAIOS-CONTROL-PLANE"
     },
     {
       "id": "LOCK-20260827233501",
       "task_id": "RAIOS-RESOURCE-FABRIC-LIVE-ACCOUNT-BINDING-WAVE-02",
-      "agent": "cursor",
-      "owner": "C2-KAGGLE-CONTROL",
+      "agent": "C6-AG-REMOTE-RECON",
+      "owner": "RAIOS-CONTROL-PLANE",
       "scope": "tests/resource_fabric",
-      "status": "ACTIVE"
+      "status": "ACTIVE",
+      "previous_task_id": "RAIOS-RESOURCE-FABRIC-LIVE-ACCOUNT-BINDING-WAVE-02",
+      "previous_agent": "cursor",
+      "previous_owner": "C2-KAGGLE-CONTROL",
+      "transfer_authority": "C1",
+      "transfer_approved": true,
+      "lock_identity_preserved": true,
+      "legal_owner": "RAIOS-CONTROL-PLANE",
+      "lease_holder": "C6-AG-REMOTE-RECON",
+      "ownership_model": "SYSTEM_OWNED_AGENT_LEASED",
+      "heartbeat_at": "2026-08-30T01:33:31.337272+00:00",
+      "expires_at": "2026-08-30T03:33:31.337272+00:00",
+      "absent_holder_transferable": true,
+      "previous_legal_owner": "RAIOS-CONTROL-PLANE"
     },
     {
       "id": "LOCK-20260827233502",
       "task_id": "RAIOS-RESOURCE-FABRIC-LIVE-ACCOUNT-BINDING-WAVE-02",
       "agent": "cursor",
-      "owner": "C2-KAGGLE-CONTROL",
+      "owner": "RAIOS-CONTROL-PLANE",
       "scope": ".ai-os/reports/resource-fabric/RAIOS-RESOURCE-FABRIC-LIVE-ACCOUNT-BINDING-WAVE-02",
-      "status": "ACTIVE"
+      "status": "ACTIVE",
+      "previous_legal_owner": "C2-KAGGLE-CONTROL",
+      "legal_owner": "RAIOS-CONTROL-PLANE",
+      "lease_holder": "cursor",
+      "ownership_model": "SYSTEM_OWNED_AGENT_LEASED",
+      "absent_holder_transferable": true
     },
     {
       "id": "LOCK-20260827233503",
       "task_id": "RAIOS-RESOURCE-FABRIC-LIVE-ACCOUNT-BINDING-WAVE-02",
       "agent": "cursor",
-      "owner": "C2-KAGGLE-CONTROL",
+      "owner": "RAIOS-CONTROL-PLANE",
       "scope": "RAIOS-RESOURCE.ps1",
-      "status": "ACTIVE"
+      "status": "ACTIVE",
+      "previous_legal_owner": "C2-KAGGLE-CONTROL",
+      "legal_owner": "RAIOS-CONTROL-PLANE",
+      "lease_holder": "cursor",
+      "ownership_model": "SYSTEM_OWNED_AGENT_LEASED",
+      "absent_holder_transferable": true
     },
     {
       "id": "LOCK-20260827221000",
       "task_id": "RAIOS-9ROUTER-DISCOVER-AUDIT-INSTALL-RUN-WAVE-01",
       "agent": "cursor",
-      "owner": "C2-PRIMARY-EXECUTOR",
+      "owner": "RAIOS-CONTROL-PLANE",
       "scope": ".ai-os/staging/9router-audit",
       "status": "ACTIVE",
-      "files_or_subsystem": "9Router audit/staging only; no frozen precanonical, no C5/NATS/MCP rebind"
+      "files_or_subsystem": "9Router audit/staging only; no frozen precanonical, no C5/NATS/MCP rebind",
+      "previous_legal_owner": "C2-PRIMARY-EXECUTOR",
+      "legal_owner": "RAIOS-CONTROL-PLANE",
+      "lease_holder": "cursor",
+      "ownership_model": "SYSTEM_OWNED_AGENT_LEASED",
+      "absent_holder_transferable": true
     },
     {
       "id": "LOCK-20260827221001",
       "task_id": "RAIOS-9ROUTER-DISCOVER-AUDIT-INSTALL-RUN-WAVE-01",
       "agent": "cursor",
-      "owner": "C2-PRIMARY-EXECUTOR",
+      "owner": "RAIOS-CONTROL-PLANE",
       "scope": ".ai-os/reports/9router",
-      "status": "ACTIVE"
+      "status": "ACTIVE",
+      "previous_legal_owner": "C2-PRIMARY-EXECUTOR",
+      "legal_owner": "RAIOS-CONTROL-PLANE",
+      "lease_holder": "cursor",
+      "ownership_model": "SYSTEM_OWNED_AGENT_LEASED",
+      "absent_holder_transferable": true
     },
     {
       "id": "LOCK-20260827221002",
       "task_id": "RAIOS-9ROUTER-DISCOVER-AUDIT-INSTALL-RUN-WAVE-01",
       "agent": "cursor",
-      "owner": "C2-PRIMARY-EXECUTOR",
+      "owner": "RAIOS-CONTROL-PLANE",
       "scope": "tests/9router",
-      "status": "ACTIVE"
+      "status": "ACTIVE",
+      "previous_legal_owner": "C2-PRIMARY-EXECUTOR",
+      "legal_owner": "RAIOS-CONTROL-PLANE",
+      "lease_holder": "cursor",
+      "ownership_model": "SYSTEM_OWNED_AGENT_LEASED",
+      "absent_holder_transferable": true
     },
     {
       "id": "LOCK-20260828005729",
       "task_id": "RAIOS-RESOURCE-FABRIC-GIT-DELIVERY-REPAIR-WAVE-01",
       "agent": "cursor",
-      "owner": "C2-KAGGLE-CONTROL",
+      "owner": "RAIOS-CONTROL-PLANE",
       "scope": ".ai-os/reports/resource-fabric/RAIOS-RESOURCE-FABRIC-GIT-DELIVERY-REPAIR-WAVE-01",
-      "status": "ACTIVE"
+      "status": "ACTIVE",
+      "previous_legal_owner": "C2-KAGGLE-CONTROL",
+      "legal_owner": "RAIOS-CONTROL-PLANE",
+      "lease_holder": "cursor",
+      "ownership_model": "SYSTEM_OWNED_AGENT_LEASED",
+      "absent_holder_transferable": true
     },
     {
       "id": "LOCK-20260829231110",
@@ -520,7 +756,13 @@
       "task_id": "RAIOS-GLOBAL-ESTATE-DEEP-DELTA-UNIFICATION-CLOSURE-01",
       "agent": "C6-AG-REMOTE-RECON",
       "scope": ".ai-os/reports/global-estate/RAIOS-GLOBAL-ESTATE-DEEP-DELTA-UNIFICATION-CLOSURE-01",
-      "status": "ACTIVE"
+      "status": "ACTIVE",
+      "previous_legal_owner": null,
+      "owner": "RAIOS-CONTROL-PLANE",
+      "legal_owner": "RAIOS-CONTROL-PLANE",
+      "lease_holder": "C6-AG-REMOTE-RECON",
+      "ownership_model": "SYSTEM_OWNED_AGENT_LEASED",
+      "absent_holder_transferable": true
     },
     {
       "id": "LOCK-20260830011418",
