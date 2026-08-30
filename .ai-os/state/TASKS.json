@@ -381,6 +381,25 @@
       "status": "DONE",
       "claimed_by": "C6-AG-REMOTE-RECON",
       "evidence": ".ai-os/reports/factory-fabric/RAIOS-COGNITIVE-FACTORY-CANONICAL-CAPABILITY-01"
+    },
+    {
+      "id": "RAIOS-COUNCIL-OPERATIONS-ATTENDANCE-HANDOFF-CLOSURE-01",
+      "title": "Canonical council attendance task handoff and coordination",
+      "objective": "Bind authenticated check-in/out task claim handoff and contradiction prevention to existing TASKS LOCKS A2A and Command Fabric receipts",
+      "scope": [
+        "src/raios/council_ops",
+        "scripts/ai-os/raios_council_ops.py",
+        "tests/council_ops",
+        ".ai-os/reports/council-operations/RAIOS-COUNCIL-OPERATIONS-ATTENDANCE-HANDOFF-CLOSURE-01"
+      ],
+      "dependencies": [],
+      "allowed_agents": [
+        "C6-AG-REMOTE-RECON"
+      ],
+      "validation": "Council operations tests pass; no second task ledger lock system bus WAL or receipt system",
+      "status": "DONE",
+      "claimed_by": "C6-AG-REMOTE-RECON",
+      "evidence": ".ai-os/reports/council-operations/RAIOS-COUNCIL-OPERATIONS-ATTENDANCE-HANDOFF-CLOSURE-01"
     }
   ]
 }

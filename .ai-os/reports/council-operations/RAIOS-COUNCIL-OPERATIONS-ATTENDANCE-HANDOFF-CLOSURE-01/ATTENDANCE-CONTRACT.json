@@ -1,0 +1,36 @@
+{
+  "schema": "raios.council-attendance.v1",
+  "check_in_requires": [
+    "seat_id match",
+    "SIGNATURE_VALID",
+    "ISSUER_IDENTIFIED",
+    "ISSUER_TRUSTED",
+    "PRINCIPAL_BOUND",
+    "AUTHORITY_SOURCE_PROVENANCE"
+  ],
+  "check_out_requires": [
+    "authenticated seat",
+    "no active owned tasks OR handoff receipt"
+  ],
+  "claim_requires": [
+    "PRESENT",
+    "task exists",
+    "allowed seat",
+    "dependencies DONE",
+    "no conflicting active lock"
+  ],
+  "handoff_requires": [
+    "authenticated current owner",
+    "destination PRESENT",
+    "destination allowed",
+    "task IN_PROGRESS",
+    "evidence"
+  ],
+  "message_requires": [
+    "sender PRESENT",
+    "destination PRESENT",
+    "task/correlation/idempotency/provenance/receipt envelope"
+  ],
+  "idempotency_conflict": "FAIL_CLOSED",
+  "automatic_authority_grant": false
+}

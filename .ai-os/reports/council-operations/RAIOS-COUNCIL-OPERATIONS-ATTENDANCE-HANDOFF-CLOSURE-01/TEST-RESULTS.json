@@ -1,0 +1,14 @@
+{
+  "schema": "raios.test-results.v1",
+  "compile_pass": true,
+  "tests_executed": 37,
+  "tests_pass": 37,
+  "tests_fail": 0,
+  "suites": [
+    "tests/council_ops",
+    "tests/test_a2a_all_hands_bind.py",
+    "tests/command_fabric"
+  ],
+  "test_environment": "Repair venv with canonical src/scripts PYTHONPATH; All-Hands contract loaded first to provide its established A2A compatibility harness",
+  "transport_runtime_a2a_import_pass": true
+}

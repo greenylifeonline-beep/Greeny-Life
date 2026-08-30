@@ -1,0 +1,17 @@
+{
+  "schema": "raios.council-operations-binding.v1",
+  "task_id": "RAIOS-COUNCIL-OPERATIONS-ATTENDANCE-HANDOFF-CLOSURE-01",
+  "canonical_task_store": ".ai-os/state/TASKS.json",
+  "canonical_lock_store": ".ai-os/state/LOCKS.json",
+  "semantic_routing": "src/raios/a2a_all_hands/bind.py",
+  "execution_gate": "src/raios/command_fabric/pipeline.py",
+  "receipt_builder": "src/raios/a2a/receipt_bridge.py",
+  "operational_presence": "~/.raios/runtime/council-ops/presence.json",
+  "second_task_ledger": false,
+  "second_lock_system": false,
+  "second_bus": false,
+  "second_wal": false,
+  "second_receipt_system": false,
+  "direct_mutation_from_message": false,
+  "command_fabric_gate": true
+}
