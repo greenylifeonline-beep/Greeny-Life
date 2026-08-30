@@ -1,0 +1,102 @@
+{
+  "schema": "raios.d081-ci-commit-identity.v1",
+  "ts": "2026-08-25T22:48:00+00:00",
+  "from": "C5",
+  "parent": "C1",
+  "decision": "D-081",
+  "ok": true,
+  "secrets_present": false,
+  "D081_FULL_SHA": "85fde1c71a4f4aa9d38c766c573458c82224f6ab",
+  "D081_BRANCH_OR_REF": "cursor/c5-screen-identity-4540",
+  "D081_CI_RUN_URL": "https://github.com/greenylifeonline-beep/Greeny-Life/actions/runs/32907454840",
+  "D081_CI_PROVIDER": "github-actions",
+  "D081_CHECKED_AT_UTC": "2026-08-25T22:43:38Z",
+  "D081_CHECKS_TOTAL": 4,
+  "D081_CHECKS_PASSED": 4,
+  "D081_IDENTITY_WITHOUT_PYDANTIC": "PASS",
+  "D081_RUN_HEAD_SHA": "85fde1c71a4f4aa9d38c766c573458c82224f6ab",
+  "D081_RUN_URL_MATCHES_SHA": true,
+  "D081_EVIDENCE_STATUS": "COMMIT_AND_CI_PROVEN",
+  "D081_CI_PASS": true,
+  "EXTERNAL_ATTESTATION": false,
+  "FALSE_FLAGS_PRESERVED": true,
+  "commit_subject": "Record C5 public-channel proof as Cursor Cloud :8765 only.",
+  "repo": "greenylifeonline-beep/Greeny-Life",
+  "checks": [
+    {
+      "name": "identity-without-pydantic",
+      "event": "push",
+      "conclusion": "success",
+      "head_sha": "85fde1c71a4f4aa9d38c766c573458c82224f6ab",
+      "started_at": "2026-08-25T22:42:56Z",
+      "completed_at": "2026-08-25T22:43:12Z",
+      "run_id": 32907454840,
+      "job_id": 97994521557,
+      "run_url": "https://github.com/greenylifeonline-beep/Greeny-Life/actions/runs/32907454840",
+      "job_url": "https://github.com/greenylifeonline-beep/Greeny-Life/actions/runs/32907454840/job/97994521557"
+    },
+    {
+      "name": "gate",
+      "event": "pull_request",
+      "conclusion": "success",
+      "head_sha": "85fde1c71a4f4aa9d38c766c573458c82224f6ab",
+      "started_at": "2026-08-25T22:43:00Z",
+      "completed_at": "2026-08-25T22:43:13Z",
+      "run_id": 32907458760,
+      "job_id": 97994534044,
+      "run_url": "https://github.com/greenylifeonline-beep/Greeny-Life/actions/runs/32907458760",
+      "job_url": "https://github.com/greenylifeonline-beep/Greeny-Life/actions/runs/32907458760/job/97994534044"
+    },
+    {
+      "name": "identity-without-pydantic",
+      "event": "pull_request",
+      "conclusion": "success",
+      "head_sha": "85fde1c71a4f4aa9d38c766c573458c82224f6ab",
+      "started_at": "2026-08-25T22:43:00Z",
+      "completed_at": "2026-08-25T22:43:19Z",
+      "run_id": 32907458759,
+      "job_id": 97994534502,
+      "run_url": "https://github.com/greenylifeonline-beep/Greeny-Life/actions/runs/32907458759",
+      "job_url": "https://github.com/greenylifeonline-beep/Greeny-Life/actions/runs/32907458759/job/97994534502"
+    },
+    {
+      "name": "sleepless-practice",
+      "event": "pull_request",
+      "conclusion": "success",
+      "head_sha": "85fde1c71a4f4aa9d38c766c573458c82224f6ab",
+      "started_at": "2026-08-25T22:43:00Z",
+      "completed_at": "2026-08-25T22:43:38Z",
+      "run_id": 32907458728,
+      "job_id": 97994533894,
+      "run_url": "https://github.com/greenylifeonline-beep/Greeny-Life/actions/runs/32907458728",
+      "job_url": "https://github.com/greenylifeonline-beep/Greeny-Life/actions/runs/32907458728/job/97994533894"
+    }
+  ],
+  "proves": [
+    "D-081 classification receipt tests",
+    "C5 public identity path without pydantic"
+  ],
+  "does_not_prove": [
+    "C2_JOIN",
+    "COMMAND_FABRIC_E2E",
+    "CROSS_HOST_ROUND_TRIP",
+    "C5_MAIN_CORTEX",
+    "WAL_WRITTEN",
+    "GL005"
+  ],
+  "C2_JOIN_PROVEN": false,
+  "COMMAND_FABRIC_E2E_PROVEN": false,
+  "CROSS_HOST_ROUND_TRIP_PROVEN": false,
+  "C5_FOUNDER_CHANNEL_PROVEN": false,
+  "C5_MAIN_CORTEX_PROVEN": false,
+  "WAL_WRITTEN": false,
+  "GL005_PROVEN": false,
+  "challenge_run": false,
+  "law": [
+    "CI_PASS_NE_ASSIMILATION",
+    "CI_PASS_NE_GL005",
+    "RUN_URL_MUST_MATCH_FULL_SHA",
+    "COMMIT_AND_CI_PROVEN_NE_CROSS_HOST",
+    "FALSE_FLAGS_PRESERVED"
+  ]
+}
