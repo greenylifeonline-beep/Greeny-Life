@@ -56,6 +56,47 @@ def test_assimilation_consumes_imported_event_stream(tmp_path):
     assert report["source_dependency"] == "EXTERNALIZED_FACTORY_ESTATE"
 
 
+def test_estate_import_can_select_reference_files(tmp_path):
+    donor = tmp_path / "donor"
+    donor.mkdir()
+    (donor / "keep.md").write_text("valuable reference", encoding="utf-8")
+    (donor / "skip.bin").write_bytes(b"generated payload")
+
+    result = import_factory_estate(
+        tmp_path / "runtime",
+        [DonorRoot("REFERENCE", donor, frozenset({"keep.md"}))],
+    )
+
+    imported = [x for x in result["entries"] if x.get("status") == "IMPORTED"]
+    assert result["source_file_count"] == 1
+    assert imported[0]["source_relative"] == "keep.md"
+
+
+def test_imported_estate_survives_source_retirement(tmp_path):
+    donor = tmp_path / "donor"
+    donor.mkdir()
+    source = donor / "events.jsonl"
+    source.write_text(
+        json.dumps({"task_id": "T1", "capability": "continuity", "state": "VALIDATED"}) + "\n",
+        encoding="utf-8",
+    )
+    runtime = tmp_path / "runtime"
+    first = import_factory_estate(runtime, [DonorRoot("TEST", donor)])
+    source.unlink()
+    donor.rmdir()
+
+    second = import_factory_estate(runtime, [])
+    report = build_curriculum(runtime)
+
+    assert first["objects_copied"] == 1
+    assert second["retained_entries"] == 1
+    assert second["source_file_count"] == 1
+    assert report["raw_events"] == 1
+    assert "Greeny-Life-Repair" not in (
+        ROOT / "src" / "raios" / "factory_fabric" / "state_import.py"
+    ).read_text(encoding="utf-8")
+
+
 def test_foundry_is_externalized_and_donor_independent():
     text = (ROOT / "src" / "raios" / "factory_fabric" / "foundry_engine.py").read_text(encoding="utf-8")
     assert "RAIOS_FOUNDRY_RUNTIME_ROOT" in text

@@ -26,26 +26,24 @@ def sha256(path: Path) -> str:
 class DonorRoot:
     donor: str
     root: Path
+    include_relative: frozenset[str] | None = None
 
 
-DEFAULT_DONORS = (
-    DonorRoot(
-        "historical-cognitive-factory",
-        Path(r"C:\Users\Ghanam\Documents\Codex\Greeny-Life-Repair\_raios-state-probe\RAIOS-STATE-LATEST\RAIOS\raios-cognitive-factory\state"),
-    ),
-    DonorRoot(
-        "historical-foundry",
-        Path(r"C:\Users\Ghanam\Documents\Codex\Greeny-Life-Repair\RAIOS\V9\foundry"),
-    ),
-    DonorRoot(
-        "historical-learning-observatory",
-        Path(r"C:\Users\Ghanam\Documents\Codex\Greeny-Life-Repair\_raios-learning-observatory"),
-    ),
-    DonorRoot(
-        "c5-live-runtime",
-        Path.home() / ".raios" / "runtime" / "c5",
-    ),
-)
+def default_donors() -> tuple[DonorRoot, ...]:
+    """Resolve optional donor roots without binding runtime to a retired tree."""
+    configured: list[DonorRoot] = []
+    raw = os.getenv("RAIOS_FACTORY_ESTATE_DONORS", "").strip()
+    for item in filter(None, raw.split(os.pathsep)):
+        if "=" not in item:
+            continue
+        name, path = item.split("=", 1)
+        if name.strip() and path.strip():
+            configured.append(DonorRoot(name.strip(), Path(path.strip())))
+    configured.append(DonorRoot("c5-live-runtime", Path.home() / ".raios" / "runtime" / "c5"))
+    return tuple(configured)
+
+
+DEFAULT_DONORS = default_donors()
 
 
 SKIP_NAMES = {".git", "node_modules", "__pycache__", ".pytest_cache", ".venv", ".venv-multimodal"}
@@ -65,20 +63,41 @@ def iter_files(root: Path) -> Iterable[Path]:
 
 def import_factory_estate(
     runtime_root: str | Path,
-    donors: Iterable[DonorRoot] = DEFAULT_DONORS,
+    donors: Iterable[DonorRoot] | None = None,
 ) -> dict:
     runtime_root = Path(runtime_root).expanduser().resolve()
     cas = runtime_root / "estate" / "objects"
     manifest_dir = runtime_root / "estate" / "manifests"
+    manifest = manifest_dir / "FACTORY-ESTATE.json"
     cas.mkdir(parents=True, exist_ok=True)
     manifest_dir.mkdir(parents=True, exist_ok=True)
 
-    entries = []
+    entries: list[dict] = []
+    retained = 0
+    if manifest.is_file():
+        previous = json.loads(manifest.read_text(encoding="utf-8-sig"))
+        for item in previous.get("entries", []):
+            obj = Path(str(item.get("object_path") or ""))
+            digest = str(item.get("source_sha256") or "")
+            if (
+                item.get("status") == "IMPORTED"
+                and digest
+                and obj.is_file()
+                and obj.resolve().is_relative_to(cas)
+                and sha256(obj) == digest
+            ):
+                entries.append(item)
+                retained += 1
+
+    known = {
+        (item.get("donor"), item.get("source_relative"), item.get("source_sha256"))
+        for item in entries
+    }
     copied = 0
     reused = 0
-    total_bytes = 0
+    total_bytes = sum(int(item.get("size_bytes") or 0) for item in entries)
 
-    for donor in donors:
+    for donor in default_donors() if donors is None else donors:
         root = donor.root.expanduser().resolve()
         if not root.exists():
             entries.append({
@@ -90,10 +109,16 @@ def import_factory_estate(
 
         for source in iter_files(root):
             rel = source.relative_to(root).as_posix()
+            if donor.include_relative is not None and rel not in donor.include_relative:
+                continue
             digest = sha256(source)
             size = source.stat().st_size
             suffix = source.suffix.lower() or ".bin"
             object_path = cas / f"{digest}{suffix}"
+            key = (donor.donor, rel, digest)
+            if key in known:
+                reused += 1
+                continue
             if object_path.exists():
                 reused += 1
             else:
@@ -109,6 +134,7 @@ def import_factory_estate(
                 "object_path": str(object_path),
                 "status": "IMPORTED",
             })
+            known.add(key)
 
     unique_objects = {
         e["source_sha256"]
@@ -124,6 +150,7 @@ def import_factory_estate(
         "unique_object_count": len(unique_objects),
         "objects_copied": copied,
         "objects_reused": reused,
+        "retained_entries": retained,
         "source_bytes_indexed": total_bytes,
         "source_mutation": False,
         "canonical_repo_mutation": False,

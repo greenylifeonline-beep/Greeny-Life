@@ -1,0 +1,134 @@
+{
+  "schema": "raios.w4ff.physical-retirement-plan.v1",
+  "generated_at": "2026-08-30T05:42:17.862096+00:00",
+  "canonical_tree": "C:\\Users\\Ghanam\\Documents\\Codex\\Greeny-Life",
+  "canonical_head_before": "d562cee420f78b4f903ff5b84c25a422a792e0a2",
+  "roots": [
+    {
+      "source": "RETIRED",
+      "root": "C:\\Users\\Ghanam\\OneDrive\\projects\\Greeny-Life-RETIRED-20260820-084036",
+      "files_before": 64446,
+      "classified_matrix": 319,
+      "classified_physical_exclusion": 64127,
+      "unclassified": 0,
+      "disposition": "RETAIN_GIT_RECOVERY_METADATA_ONLY"
+    },
+    {
+      "source": "LEGACY_REVIEW",
+      "root": "C:\\Users\\Ghanam\\Documents\\Codex\\Greeny-Life-Legacy-Review",
+      "files_before": 673,
+      "classified_matrix": 644,
+      "classified_physical_exclusion": 29,
+      "unclassified": 0,
+      "disposition": "DELETE_AFTER_REMOTE_EVIDENCE_COMMIT"
+    },
+    {
+      "source": "C3_HISTORICAL_OUTPUTS",
+      "root": "C:\\Users\\Ghanam\\Documents\\Codex\\2026-08-11",
+      "files_before": 276,
+      "classified_matrix": 273,
+      "classified_physical_exclusion": 3,
+      "unclassified": 0,
+      "disposition": "DELETE_AFTER_REMOTE_EVIDENCE_COMMIT"
+    },
+    {
+      "source": "REUSABLE_RAIOS",
+      "root": "C:\\Users\\Ghanam\\Documents\\Codex\\RAIOS",
+      "files_before": 23,
+      "classified_matrix": 18,
+      "classified_physical_exclusion": 5,
+      "unclassified": 0,
+      "disposition": "DELETE_AFTER_REMOTE_EVIDENCE_COMMIT"
+    },
+    {
+      "source": "RAIOS_EVIDENCE",
+      "root": "C:\\Users\\Ghanam\\Documents\\Codex\\RAIOS-EVIDENCE",
+      "files_before": 8,
+      "classified_matrix": 8,
+      "classified_physical_exclusion": 0,
+      "unclassified": 0,
+      "disposition": "DELETE_AFTER_REMOTE_EVIDENCE_COMMIT"
+    },
+    {
+      "source": "CONSOLIDATION_ANALYSIS",
+      "root": "C:\\Users\\Ghanam\\Documents\\Codex\\GREENY-CONSOLIDATION-ANALYSIS",
+      "files_before": 36,
+      "classified_matrix": 36,
+      "classified_physical_exclusion": 0,
+      "unclassified": 0,
+      "disposition": "DELETE_AFTER_REMOTE_EVIDENCE_COMMIT"
+    },
+    {
+      "source": "SAFETY_201305",
+      "root": "C:\\Users\\Ghanam\\Documents\\Codex\\GREENY-SAFETY-20260815-201305",
+      "files_before": 3,
+      "classified_matrix": 2,
+      "classified_physical_exclusion": 1,
+      "unclassified": 0,
+      "disposition": "DELETE_AFTER_REMOTE_EVIDENCE_COMMIT"
+    },
+    {
+      "source": "SAFETY_202725",
+      "root": "C:\\Users\\Ghanam\\Documents\\Codex\\GREENY-SAFETY-20260815-202725",
+      "files_before": 5,
+      "classified_matrix": 3,
+      "classified_physical_exclusion": 2,
+      "unclassified": 0,
+      "disposition": "DELETE_AFTER_REMOTE_EVIDENCE_COMMIT"
+    },
+    {
+      "source": "SAFETY_WAVE2",
+      "root": "C:\\Users\\Ghanam\\Documents\\Codex\\GREENY-WAVE2-SAFETY-20260815-220423",
+      "files_before": 10,
+      "classified_matrix": 9,
+      "classified_physical_exclusion": 1,
+      "unclassified": 0,
+      "disposition": "DELETE_AFTER_REMOTE_EVIDENCE_COMMIT"
+    }
+  ],
+  "classification": {
+    "initial_matrix": 1312,
+    "excluded_high_value": 545,
+    "excluded_high_value_decisions": {
+      "PROVEN_DUPLICATE": 486,
+      "REFERENCE_ONLY_PRESERVED_IN_CAS": 50,
+      "CONFIG_REFERENCE_PRESERVED_IN_CAS": 4,
+      "GENERATED_OR_SECRET_CONFIG": 5
+    },
+    "unresolved": 0
+  },
+  "retired_git": {
+    "refs": 11,
+    "commits": 201,
+    "commits_missing_from_current": 27,
+    "blobs_over_github_100mb": 2,
+    "working_payload_runtime_required": false,
+    "git_metadata_terminal_state": "CANONICAL_RECOVERY_ASSET",
+    "github_native_pinning_possible": false
+  },
+  "env": {
+    "secret_values_recorded": false,
+    "retired_nonsecret_keys": [
+      "LLM_MODEL",
+      "LLM_PROVIDER"
+    ],
+    "decision": "OBSOLETE_RUNTIME_CONFIG; current C5 deployment owns model/runtime configuration"
+  },
+  "runtime_dependency_scan": {
+    "matching_live_processes": 0,
+    "registered_worktrees": [
+      "C:\\Users\\Ghanam\\Documents\\Codex\\Greeny-Life"
+    ],
+    "canonical_tree_only_active": true
+  },
+  "cas": {
+    "single_existing_store": "C:\\Users\\Ghanam\\.raios\\runtime\\factory-fabric\\estate\\objects",
+    "reference_entries_verified": 491,
+    "second_store_created": false
+  },
+  "deletion_precondition": {
+    "remote_evidence_commit_required": true,
+    "unresolved_zero": true,
+    "blind_delete": false
+  }
+}

@@ -1,7 +1,7 @@
 {
   "compile": "PASS",
-  "tests_executed": 236,
-  "tests_pass": 236,
+  "tests_executed": 237,
+  "tests_pass": 237,
   "tests_fail": 0,
   "import_mode": "importlib",
   "domains": [
@@ -9,6 +9,7 @@
     "evidence",
     "C5 canonical growth",
     "V9 weight merge",
+    "factory fabric",
     "resource fabric",
     "command fabric"
   ],
@@ -16,5 +17,7 @@
     "numpy==2.5.2",
     "safetensors==0.8.0"
   ],
-  "canonical_files_changed_by_dependency_install": false
+  "canonical_files_changed_by_dependency_install": false,
+  "test_runtime": "system Python + canonical repo/src + governed transport site-packages",
+  "repair_tree_dependency": false
 }
