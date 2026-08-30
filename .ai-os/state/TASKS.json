@@ -400,6 +400,24 @@
       "status": "DONE",
       "claimed_by": "C6-AG-REMOTE-RECON",
       "evidence": ".ai-os/reports/council-operations/RAIOS-COUNCIL-OPERATIONS-ATTENDANCE-HANDOFF-CLOSURE-01"
+    },
+    {
+      "id": "RAIOS-CANONICAL-COMMAND-CENTER-AND-SELF-HEALTH-WAVE-01",
+      "title": "Canonical RAIOS Command Center and governed self-health",
+      "objective": "Promote the desktop command center into a canonical bilingual management surface for RAIOS council tasks services factories models receipts and safe maintenance",
+      "scope": [
+        "src/raios/command_center",
+        "tests/command_center",
+        "scripts/runtime/Deploy-RAIOS-Command-Center.ps1",
+        ".ai-os/reports/command-center/RAIOS-CANONICAL-COMMAND-CENTER-AND-SELF-HEALTH-WAVE-01"
+      ],
+      "dependencies": [],
+      "allowed_agents": [
+        "C6-AG-REMOTE-RECON"
+      ],
+      "validation": "Bilingual UI APIs council receipts health and deployment tests pass; no autonomous canonical mutation or authority escalation",
+      "status": "IN_PROGRESS",
+      "claimed_by": "C6-AG-REMOTE-RECON"
     }
   ]
 }
