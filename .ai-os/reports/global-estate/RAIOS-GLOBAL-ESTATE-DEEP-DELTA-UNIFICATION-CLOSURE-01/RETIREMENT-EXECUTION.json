@@ -1,0 +1,43 @@
+{
+  "removed": [
+    {
+      "path": "C:\\temp\\RAIOS-C2-LOCAL-MCP-2a834cc",
+      "files": 6,
+      "bytes": 49160,
+      "recovery": "canonical schema + identical canonical files"
+    },
+    {
+      "path": "Greeny-Life-Repair/_raios-communication-fabric",
+      "files": 1678,
+      "bytes": 29382009,
+      "recovery": "Git commit 7f3c4672 + canonical src/raios/c5_gateway"
+    },
+    {
+      "path": "Greeny-Life-Repair.worktrees/hi",
+      "files": 617,
+      "bytes": 190893211,
+      "recovery": "origin/main@da67f44963fafde67df52cb62ab32f75fe725df0"
+    },
+    {
+      "path": ".raios-worktrees/w4fd-validation",
+      "untracked_files": 102,
+      "recovery": "hash manifest + authoritative W4 report chain"
+    }
+  ],
+  "total_known_files_removed": 2403,
+  "total_known_bytes_removed": 220324380,
+  "copies_created": 0,
+  "archives_created": 0,
+  "force_push": false,
+  "history_rewrite": false,
+  "blocked": [
+    {
+      "path": "worktrees/c3-c5-conversation-repair",
+      "reason": "OPEN_WINDOWS_HANDLE; Git registration already removed"
+    },
+    {
+      "path": "Greeny-Life-Repair",
+      "reason": "ACTIVE_C2_AND_COMMAND_CENTER_LOCKS"
+    }
+  ]
+}

@@ -1,0 +1,113 @@
+﻿{
+    "timestamp_utc":  "2026-08-30T01:48:09.4128885Z",
+    "mutation_executed":  false,
+    "gpu_started":  false,
+    "paid_resource_created":  false,
+    "model_uploaded":  false,
+    "providers":  {
+                      "KAGGLE":  {
+                                     "cli":  "C:\\Users\\Ghanam\\Documents\\Codex\\Greeny-Life-Repair\\.venv\\Scripts\\kaggle.exe",
+                                     "auth_proven":  true,
+                                     "identity_proven":  true,
+                                     "storage_inventory_proven":  true,
+                                     "storage_capacity_proven":  false,
+                                     "account_eligibility_proven":  false,
+                                     "current_capacity_proven":  false,
+                                     "active_gpu_session_proven":  false,
+                                     "gpu_sku_vram_proven":  false,
+                                     "config_probe":  {
+                                                          "success":  true,
+                                                          "exit_code":  0,
+                                                          "output":  "Configuration values from C:\\Users\\Ghanam\\.kaggle\r\n- username: greenylife\r\n- auth_method: OAUTH\r\n- path: None\r\n- proxy: None\r\n- competition: None"
+                                                      },
+                                     "dataset_probe":  {
+                                                           "success":  true,
+                                                           "exit_code":  0,
+                                                           "output":  "ref                                          title                                   size  lastUpdated                 downloadCount  voteCount  usabilityRating  \r\n-------------------------------------------  --------------------------------  ----------  --------------------------  -------------  ---------  ---------------  \r\ngreenylife/raios-cognitive-state             raios-cognitive-state                 175447  2026-08-17 06:46:50.353000              5          1  0.125            \r\ngreenylife/raios-greeny-continuity-evidence  RAIOS-GREENY-CONTINUITY-EVIDENCE        5967  2026-08-17 22:38:18.450000              1          0  0.125            \r\ngreenylife/collection-for-understand         COLLECTION FOR UNDERSTAND            3394708  2026-08-17 22:21:37.183000              2          0  0.125            \r\ngreenylife/raios-version-evidence            RAIOS-VERSION-EVIDENCE                 21953  2026-08-17 22:18:32.357000              1          0  0.125            \r\ngreenylife/greeny-life                       greeny life                            12298  2026-08-17 21:44:43.760000              1          0  0.125            \r\ngreenylife/raios-canonical-estate            raios-canonical-estate               3691104  2026-08-26 22:19:15.867000              0          0  0.3125"
+                                                       },
+                                     "kernel_probe":  {
+                                                          "success":  true,
+                                                          "exit_code":  0,
+                                                          "output":  "ref                                   title                      author       lastRunTime                 totalVotes  \r\n------------------------------------  -------------------------  -----------  --------------------------  ----------  \r\ngreenylife/raios-canonical-workbench  raios-canonical-workbench  Greeny Life  2026-08-26 22:21:25.030000           0  \r\ngreenylife/notebook8d96bf4e18         notebook8d96bf4e18         Greeny Life  2026-08-26 20:59:06.247000           0  \r\ngreenylife/notebook8c2d6a9080         notebook8c2d6a9080         Greeny Life  2026-08-26 20:56:19.787000           0"
+                                                      },
+                                     "execution_allowed":  false,
+                                     "execution_blocker":  "CURRENT_OPERATION_SPECIFIC_STORAGE_OR_CAPACITY_PROOF_MISSING"
+                                 },
+                      "HUGGING_FACE":  {
+                                           "cli":  "C:\\Users\\Ghanam\\Documents\\Codex\\Greeny-Life-Repair\\.venv\\Scripts\\hf.exe",
+                                           "token_present":  true,
+                                           "auth_proven":  true,
+                                           "identity_proven":  true,
+                                           "repository_inventory_proven":  false,
+                                           "storage_capacity_proven":  false,
+                                           "compute_capacity_proven":  false,
+                                           "whoami_probe":  {
+                                                                "success":  true,
+                                                                "exit_code":  0,
+                                                                "output":  "\u001b[32m[OK] Logged in\u001b[0m\r\n  user: greenylifeonline"
+                                                            },
+                                           "repository_probe":  {
+                                                                    "success":  false,
+                                                                    "exit_code":  1,
+                                                                    "output":  "python.exe : Traceback (most recent call last):\r\nAt line:12 char:9\r\n+         \u0026 $PY -c @\u0027\r\n+         ~~~~~~~~~~~\r\n    + CategoryInfo          : NotSpecified: (Traceback (most recent call last)::String) [ \r\n   ], RemoteException\r\n    + FullyQualifiedErrorId : NativeCommandError\r\n \r\n  File \"\u003cstring\u003e\", line 1, in \u003cmodule\u003e\r\n    from huggingface_hub import HfApi\r\nModuleNotFoundError: No module named \u0027huggingface_hub\u0027"
+                                                                },
+                                           "execution_allowed":  false,
+                                           "execution_blocker":  "CURRENT_OPERATION_SPECIFIC_STORAGE_OR_CAPACITY_PROOF_MISSING"
+                                       },
+                      "MODAL":  {
+                                    "cli":  "modal",
+                                    "credential_present":  true,
+                                    "auth_proven":  false,
+                                    "identity_proven":  false,
+                                    "storage_inventory_proven":  false,
+                                    "storage_capacity_proven":  false,
+                                    "current_cpu_capacity_proven":  false,
+                                    "current_gpu_capacity_proven":  false,
+                                    "credits_proven":  false,
+                                    "active_session_proven":  false,
+                                    "profile_probe":  {
+                                                          "success":  false,
+                                                          "exit_code":  1,
+                                                          "output":  "The term \u0027modal\u0027 is not recognized as the name of a cmdlet, function, script file, or operable program. Check the spelling of the name, or if a path was included, verify that the path is correct and try again."
+                                                      },
+                                    "volume_probe":  {
+                                                         "success":  false,
+                                                         "exit_code":  1,
+                                                         "output":  "The term \u0027modal\u0027 is not recognized as the name of a cmdlet, function, script file, or operable program. Check the spelling of the name, or if a path was included, verify that the path is correct and try again."
+                                                     },
+                                    "execution_allowed":  false,
+                                    "execution_blocker":  "CURRENT_OPERATION_SPECIFIC_STORAGE_OR_CAPACITY_PROOF_MISSING"
+                                },
+                      "ORACLE":  {
+                                     "cli":  "oci",
+                                     "config_present":  false,
+                                     "auth_proven":  false,
+                                     "identity_proven":  false,
+                                     "object_storage_namespace_proven":  false,
+                                     "bucket_inventory_proven":  false,
+                                     "storage_capacity_proven":  false,
+                                     "compute_capacity_proven":  false,
+                                     "region":  "eu-stockholm-1",
+                                     "execution_allowed":  false,
+                                     "execution_blocker":  "CURRENT_OPERATION_SPECIFIC_STORAGE_OR_CAPACITY_PROOF_MISSING"
+                                 },
+                      "COLAB":  {
+                                    "historical_binding_proven":  true,
+                                    "local_cli_expected":  false,
+                                    "active_session_proven":  false,
+                                    "identity_proven":  false,
+                                    "storage_capacity_proven":  false,
+                                    "compute_capacity_proven":  false,
+                                    "blocker":  "ACTIVE_COLAB_RUNTIME_MUST_REPORT_SIGNED_CAPACITY_RECEIPT",
+                                    "execution_allowed":  false,
+                                    "execution_blocker":  "CURRENT_OPERATION_SPECIFIC_STORAGE_OR_CAPACITY_PROOF_MISSING"
+                                }
+                  },
+    "local_head":  "613fd0d3b9b36e586215c0943c8ec784c8b7fb37",
+    "remote_head":  "613fd0d3b9b36e586215c0943c8ec784c8b7fb37",
+    "remote_match":  true,
+    "tests":  {
+                  "exit_code":  0,
+                  "pass":  true
+              }
+}
