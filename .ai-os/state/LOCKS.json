@@ -1,66 +1,367 @@
 {
-    "schema_version":  "1.0",
-    "locks":  [
-                  {
-                      "id":  "LOCK-20260815154753",
-                      "task_id":  "GL-001",
-                      "agent":  "gemini-cli",
-                      "scope":  "migration",
-                      "status":  "RELEASED"
-                  },
-                  {
-                      "id":  "LOCK-20260815173207",
-                      "task_id":  "GL-002",
-                      "agent":  "codex",
-                      "scope":  "governance",
-                      "status":  "RELEASED"
-                  },
-                  {
-                      "id":  "LOCK-20260815173219",
-                      "task_id":  "GL-002",
-                      "agent":  "codex",
-                      "scope":  "intelligence/main",
-                      "status":  "RELEASED"
-                  },
-                  {
-                      "id":  "LOCK-20260815173943",
-                      "task_id":  "GL-002",
-                      "agent":  "claude-code",
-                      "scope":  "governance",
-                      "status":  "SUPERSEDED_BY_WORKTREE",
-                      "superseded_at":  "2026-08-15T22:12:05.4910437+02:00"
-                  },
-                  {
-                      "id":  "LOCK-20260815173955",
-                      "task_id":  "GL-002",
-                      "agent":  "claude-code",
-                      "scope":  "intelligence/main",
-                      "status":  "SUPERSEDED_BY_WORKTREE",
-                      "superseded_at":  "2026-08-15T22:12:05.5111171+02:00"
-                  },
-                  {
-                      "id":  "LOCK-20260815192837",
-                      "task_id":  "GL-004",
-                      "agent":  "cursor",
-                      "scope":  "app",
-                      "status":  "SUPERSEDED_BY_WORKTREE",
-                      "superseded_at":  "2026-08-15T22:12:05.5131253+02:00"
-                  },
-                  {
-                      "id":  "LOCK-20260815192838",
-                      "task_id":  "GL-004",
-                      "agent":  "cursor",
-                      "scope":  "prisma",
-                      "status":  "SUPERSEDED_BY_WORKTREE",
-                      "superseded_at":  "2026-08-15T22:12:05.5131253+02:00"
-                  },
-                  {
-                      "id":  "LOCK-20260815192840",
-                      "task_id":  "GL-004",
-                      "agent":  "cursor",
-                      "scope":  "tests",
-                      "status":  "SUPERSEDED_BY_WORKTREE",
-                      "superseded_at":  "2026-08-15T22:12:05.5131253+02:00"
-                  }
-              ]
+  "schema_version": "1.0",
+  "locks": [
+    {
+      "id": "LOCK-20260815154753",
+      "task_id": "GL-001",
+      "agent": "gemini-cli",
+      "scope": "migration",
+      "status": "RELEASED"
+    },
+    {
+      "id": "LOCK-20260815173207",
+      "task_id": "GL-002",
+      "agent": "codex",
+      "scope": "governance",
+      "status": "RELEASED"
+    },
+    {
+      "id": "LOCK-20260815173219",
+      "task_id": "GL-002",
+      "agent": "codex",
+      "scope": "intelligence/main",
+      "status": "RELEASED"
+    },
+    {
+      "id": "LOCK-20260815173943",
+      "task_id": "GL-002",
+      "agent": "claude-code",
+      "scope": "governance",
+      "status": "SUPERSEDED_BY_WORKTREE",
+      "superseded_at": "2026-08-15T22:12:05.4910437+02:00"
+    },
+    {
+      "id": "LOCK-20260815173955",
+      "task_id": "GL-002",
+      "agent": "claude-code",
+      "scope": "intelligence/main",
+      "status": "SUPERSEDED_BY_WORKTREE",
+      "superseded_at": "2026-08-15T22:12:05.5111171+02:00"
+    },
+    {
+      "id": "LOCK-20260815192837",
+      "task_id": "GL-004",
+      "agent": "cursor",
+      "scope": "app",
+      "status": "SUPERSEDED_BY_WORKTREE",
+      "superseded_at": "2026-08-15T22:12:05.5131253+02:00"
+    },
+    {
+      "id": "LOCK-20260815192838",
+      "task_id": "GL-004",
+      "agent": "cursor",
+      "scope": "prisma",
+      "status": "SUPERSEDED_BY_WORKTREE",
+      "superseded_at": "2026-08-15T22:12:05.5131253+02:00"
+    },
+    {
+      "id": "LOCK-20260815192840",
+      "task_id": "GL-004",
+      "agent": "cursor",
+      "scope": "tests",
+      "status": "SUPERSEDED_BY_WORKTREE",
+      "superseded_at": "2026-08-15T22:12:05.5131253+02:00"
+    },
+    {
+      "id": "LOCK-20260818121953",
+      "task_id": "V9-A14.1",
+      "agent": "cursor",
+      "scope": "RAIOS/V9",
+      "status": "RELEASED"
+    },
+    {
+      "id": "LOCK-20260818130148",
+      "task_id": "V9-A15",
+      "agent": "cursor",
+      "scope": "RAIOS/V9",
+      "status": "ACTIVE"
+    },
+    {
+      "id": "LOCK-20260820062957",
+      "task_id": "V9-NL0",
+      "agent": "cursor",
+      "scope": "src/raios/neuro_lingua",
+      "status": "ACTIVE"
+    },
+    {
+      "id": "LOCK-20260820062957",
+      "task_id": "V9-NL0",
+      "agent": "cursor",
+      "scope": "configs/neuro_lingua",
+      "status": "ACTIVE"
+    },
+    {
+      "id": "LOCK-20260820062957",
+      "task_id": "V9-NL0",
+      "agent": "cursor",
+      "scope": "tests/neuro_lingua",
+      "status": "ACTIVE"
+    },
+    {
+      "id": "LOCK-20260820062957",
+      "task_id": "V9-NL0",
+      "agent": "cursor",
+      "scope": "benchmarks/neuro_lingua",
+      "status": "ACTIVE"
+    },
+    {
+      "id": "LOCK-20260820062958",
+      "task_id": "V9-NL0",
+      "agent": "cursor",
+      "scope": "reports",
+      "status": "ACTIVE"
+    },
+    {
+      "id": "LOCK-20260820062958",
+      "task_id": "V9-NL0",
+      "agent": "cursor",
+      "scope": "docs/v9",
+      "status": "ACTIVE"
+    },
+    {
+      "id": "LOCK-20260820134633",
+      "task_id": "WAVE2-GAP-RES",
+      "agent": "cursor",
+      "scope": "_raios-wave2-gap-resolution",
+      "status": "ACTIVE"
+    },
+    {
+      "id": "LOCK-20260820124113",
+      "task_id": "DRIVER-SYNC",
+      "agent": "cursor",
+      "scope": ".ai-os/handoffs",
+      "status": "RELEASED"
+    },
+    {
+      "id": "LOCK-20260820131522",
+      "task_id": "COMMAND-ORG",
+      "agent": "cursor",
+      "scope": ".ai-os/handoffs",
+      "status": "RELEASED"
+    },
+    {
+      "id": "LOCK-20260820131522",
+      "task_id": "COMMAND-ORG",
+      "agent": "cursor",
+      "scope": "scripts/ai-os",
+      "status": "RELEASED"
+    },
+    {
+      "id": "LOCK-20260820131522",
+      "task_id": "COMMAND-ORG",
+      "agent": "cursor",
+      "scope": "canonical/intelligence/intelligence",
+      "status": "RELEASED"
+    },
+    {
+      "id": "LOCK-20260820131522",
+      "task_id": "COMMAND-ORG",
+      "agent": "cursor",
+      "scope": "archive/duplicates",
+      "status": "RELEASED"
+    },
+    {
+      "id": "LOCK-20260820132602",
+      "task_id": "RAIOS-LINK",
+      "agent": "cursor",
+      "scope": ".ai-os/channel",
+      "status": "RELEASED"
+    },
+    {
+      "id": "LOCK-20260820132602",
+      "task_id": "RAIOS-LINK",
+      "agent": "cursor",
+      "scope": "scripts/ai-os",
+      "status": "RELEASED"
+    },
+    {
+      "id": "LOCK-20260820133012",
+      "task_id": "LEARN-QUAD",
+      "agent": "cursor",
+      "scope": ".ai-os/experience",
+      "status": "RELEASED"
+    },
+    {
+      "id": "LOCK-20260820133012",
+      "task_id": "LEARN-QUAD",
+      "agent": "cursor",
+      "scope": "scripts/ai-os",
+      "status": "RELEASED"
+    },
+    {
+      "id": "LOCK-20260820133012",
+      "task_id": "LEARN-QUAD",
+      "agent": "cursor",
+      "scope": ".ai-os/channel",
+      "status": "RELEASED"
+    },
+    {
+      "id": "LOCK-20260820133520",
+      "task_id": "BOARD-0",
+      "agent": "cursor",
+      "scope": ".ai-os/board",
+      "status": "RELEASED"
+    },
+    {
+      "id": "LOCK-20260820133520",
+      "task_id": "BOARD-0",
+      "agent": "cursor",
+      "scope": "scripts/ai-os",
+      "status": "RELEASED"
+    },
+    {
+      "id": "LOCK-20260820135742",
+      "task_id": "RELAY-REVIEW",
+      "agent": "cursor",
+      "scope": ".ai-os/handoffs",
+      "status": "RELEASED"
+    },
+    {
+      "id": "LOCK-20260820135742",
+      "task_id": "RELAY-REVIEW",
+      "agent": "cursor",
+      "scope": ".ai-os/experience",
+      "status": "RELEASED"
+    },
+    {
+      "id": "LOCK-20260820135742",
+      "task_id": "RELAY-REVIEW",
+      "agent": "cursor",
+      "scope": ".ai-os/board",
+      "status": "RELEASED"
+    },
+    {
+      "id": "LOCK-20260820142320",
+      "task_id": "GL-004",
+      "agent": "cursor",
+      "scope": "scripts/ai-os",
+      "status": "ACTIVE"
+    },
+    {
+      "id": "LOCK-20260820142323",
+      "task_id": "GL-004",
+      "agent": "cursor",
+      "scope": ".ai-os",
+      "status": "ACTIVE"
+    },
+    {
+      "id": "LOCK-20260820181055",
+      "task_id": "GL-004",
+      "agent": "cursor",
+      "scope": "lib",
+      "status": "ACTIVE"
+    },
+    {
+      "id": "LOCK-20260820181055",
+      "task_id": "GL-004",
+      "agent": "cursor",
+      "scope": "app/api/auth",
+      "status": "ACTIVE"
+    },
+    {
+      "id": "LOCK-20260820181055",
+      "task_id": "GL-004",
+      "agent": "cursor",
+      "scope": "tests/auth_security_check.ts",
+      "status": "ACTIVE"
+    },
+    {
+      "id": "LOCK-20260820183325",
+      "task_id": "GL-004",
+      "agent": "cursor",
+      "scope": ".github/ISSUE_TEMPLATE",
+      "status": "ACTIVE"
+    },
+    {
+      "id": "LOCK-20260820220438",
+      "task_id": "GL-004",
+      "agent": "cursor",
+      "scope": "gym",
+      "status": "ACTIVE"
+    },
+    {
+      "id": "LOCK-20260824172003",
+      "task_id": "GL-004",
+      "agent": "cursor",
+      "scope": "archive",
+      "status": "ACTIVE"
+    },
+    {
+      "id": "LOCK-20260824174809",
+      "task_id": "GL-004",
+      "agent": "cursor",
+      "scope": "application",
+      "status": "ACTIVE"
+    },
+    {
+      "id": "LOCK-20260824174809",
+      "task_id": "GL-004",
+      "agent": "cursor",
+      "scope": "domain",
+      "status": "ACTIVE"
+    },
+    {
+      "id": "LOCK-20260824174809",
+      "task_id": "GL-004",
+      "agent": "cursor",
+      "scope": "database",
+      "status": "ACTIVE"
+    },
+    {
+      "id": "LOCK-20260824174810",
+      "task_id": "GL-004",
+      "agent": "cursor",
+      "scope": "data",
+      "status": "ACTIVE"
+    },
+    {
+      "id": "LOCK-20260824174810",
+      "task_id": "GL-004",
+      "agent": "cursor",
+      "scope": "app/js",
+      "status": "ACTIVE"
+    },
+    {
+      "id": "LOCK-20260824174810",
+      "task_id": "GL-004",
+      "agent": "cursor",
+      "scope": "app/views",
+      "status": "ACTIVE"
+    },
+    {
+      "id": "LOCK-20260824174810",
+      "task_id": "GL-004",
+      "agent": "cursor",
+      "scope": "eos-core",
+      "status": "ACTIVE"
+    },
+    {
+      "id": "LOCK-20260824174810",
+      "task_id": "GL-004",
+      "agent": "cursor",
+      "scope": "run_brain_cli.py",
+      "status": "ACTIVE"
+    },
+    {
+      "id": "LOCK-20260824174810",
+      "task_id": "GL-004",
+      "agent": "cursor",
+      "scope": "ImageInventory.csv",
+      "status": "ACTIVE"
+    },
+    {
+      "id": "LOCK-20260824174810",
+      "task_id": "GL-004",
+      "agent": "cursor",
+      "scope": "scripts/repair-canonical-products.ps1",
+      "status": "ACTIVE"
+    },
+    {
+      "id": "LOCK-20260825164256",
+      "task_id": "GL-004",
+      "agent": "cursor",
+      "scope": "tests/command_fabric",
+      "status": "ACTIVE"
+    }
+  ]
 }

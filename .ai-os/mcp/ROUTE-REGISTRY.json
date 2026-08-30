@@ -1,0 +1,59 @@
+{
+  "schema": "raios.route-registry.v1",
+  "ts_note": "Alias/route map over existing keepers. Not a message bus. Not Repair control plane.",
+  "host": "cursor",
+  "root": "/workspace",
+  "tree_id": "C2-CLOUD",
+  "law": [
+    "ENVELOPE_NE_BUS",
+    "NO_ALTERNATE_CONTROL_PLANE",
+    "C5_FOUNDER_FAIL_CLOSED_UNTIL_PROVEN",
+    "ALL_IS_PER_TARGET_RECEIPT_NE_FILE_COPY",
+    "C6_C10_NE_LIVE"
+  ],
+  "targets": {
+    "C1": {
+      "keeper": "scripts/ai-os/raios_mcp/gateway.py send_packet to=C1",
+      "auth": "mcp-bearer",
+      "live_this_host": false,
+      "status": "BLOCKED_AUTH",
+      "reason": "tokens.local.json absent on Cloud; founder paste is SESSION_ONLY"
+    },
+    "C2": {
+      "keeper": "scripts/ai-os/raios_mcp/cross_host_adapter.py + existing C2 MCP actor",
+      "auth": "mcp-bearer-hmac",
+      "live_this_host": true,
+      "status": "LOCAL_ONLY",
+      "reason": "isolated/tmp adapter proven; live remote_c2_ready=false"
+    },
+    "C5-PUBLIC": {
+      "keeper": "scripts/ai-os/raios_c5_screen.py POST /api/chat lane=PUBLIC :8765",
+      "auth": "none-public-lane",
+      "live_this_host": true,
+      "status": "LOCAL_ONLY",
+      "reason": "same-host loopback; not AG Cursor.exe forward"
+    },
+    "C5-FOUNDER": {
+      "keeper": "scripts/ai-os/raios_c5_screen.py lane=C1 :8876",
+      "auth": "optional RAIOS_C1_SCREEN_TOKEN",
+      "live_this_host": false,
+      "status": "BLOCKED_ROUTING",
+      "reason": "fail-closed: Cloud 8876 is this VM C1 console, not AG founder channel"
+    },
+    "C6": {
+      "keeper": null,
+      "auth": "n/a",
+      "live_this_host": false,
+      "status": "ABSENT",
+      "reason": "C6 unseated on SEAT-MAP; AG C6 executor is not this host"
+    },
+    "ALL": {
+      "keeper": "per-target dispatch via this registry",
+      "auth": "per-target",
+      "live_this_host": false,
+      "status": "UNPROVEN",
+      "reason": "ALL requires message_id+correlation_id+target+auth+ACK+receipt+return_path per live seat; C5-FOUNDER fail-closed; C6 ABSENT; C1 BLOCKED_AUTH"
+    }
+  },
+  "gl005_proven": false
+}

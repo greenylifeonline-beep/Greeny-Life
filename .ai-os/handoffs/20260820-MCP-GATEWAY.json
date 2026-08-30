@@ -1,0 +1,54 @@
+{
+  "schema": "raios.mcp-gateway-v1.handoff",
+  "knowledge_state": "DISCOVERED",
+  "promoted": false,
+  "status": "VERTICAL_SLICE",
+  "laws": [
+    "MCP_GATEWAY_NE_TRUTH_AUTHORITY",
+    "MCP_GATEWAY_NE_RELAY_HUB",
+    "AUTHORITY_NE_BYPASS_INVARIANTS",
+    "VERTICAL_SLICE_BEFORE_EMPIRE",
+    "MAIL_PASSES_NE_PROVES",
+    "SQLITE_WAL_NE_COGNITIVE_WAL"
+  ],
+  "accepted_from_c2": {
+    "transport": "Streamable HTTP, not WebSocket",
+    "chatgpt": "ChatGPT Apps / Developer Mode remote MCP. Pro is read/fetch for custom MCP; write/modify on Business and Enterprise/Edu.",
+    "v1_tools": 8,
+    "no_sqlite_wal": true,
+    "no_evidence_cache": true,
+    "no_sandboxed_command": true,
+    "oauth_preferred": "scoped bearer with expires_at until remote app OAuth is registered",
+    "c0_invariants": "authority ≠ bypass"
+  },
+  "rejected": [
+    "Relay Hub as equal system",
+    "SQLite WAL",
+    "Redis/cache V1",
+    "JWT+HMAC plane",
+    "REST resource API",
+    "WebSocket",
+    "run_sandboxed_command",
+    "broadcast_message"
+  ],
+  "v1_tools": [
+    "get_head",
+    "read_board",
+    "read_inbox",
+    "read_receipt",
+    "get_diff",
+    "post_opinion",
+    "send_packet",
+    "ack_packet"
+  ],
+  "slice": "C2 read_board + read_receipt + post_opinion; C1 read C2 opinion",
+  "gl005_proven": false,
+  "wal_written_by_gateway": false,
+  "files": [
+    "scripts/ai-os/raios_mcp/gateway.py",
+    "scripts/ai-os/raios_mcp/server.py",
+    "scripts/ai-os/raios_mcp_check.py",
+    ".ai-os/mcp/POLICY.json"
+  ],
+  "next": "If slice tests pass, C0 can expose Streamable HTTP behind TLS/Secure MCP Tunnel and register ChatGPT App. Do not add phase-2 tools yet. Repair authenticated POST remains the only GL-005 mutation proof."
+}

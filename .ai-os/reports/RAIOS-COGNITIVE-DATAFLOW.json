@@ -1,0 +1,156 @@
+{
+  "schema": "raios.cognitive-dataflow.v1",
+  "knowledge_state": "DISCOVERED",
+  "canonical": false,
+  "from": "C2",
+  "parent": "C1",
+  "decision": "D-063",
+  "ts": "2026-08-21T20:55:13.398341+00:00",
+  "sole_learning_authority": "Cognitive WAL",
+  "second_wal": false,
+  "nodes": [
+    {
+      "id": "PRODUCT_NEXT",
+      "kind": "operational",
+      "path": "app/api",
+      "writes_wal": false
+    },
+    {
+      "id": "PRISMA_ORCHESTRATION",
+      "kind": "product-state",
+      "path": "prisma OrchestrationTask",
+      "proven": false
+    },
+    {
+      "id": "C5_MIND_FILL",
+      "kind": "inject",
+      "path": "scripts/ai-os/raios_c5_mind_fill.py",
+      "target": "DIGESTS+INDEX"
+    },
+    {
+      "id": "INDEX",
+      "kind": "retrieve",
+      "path": ".ai-os/learning/INDEX.json",
+      "exists": true,
+      "runtime": true
+    },
+    {
+      "id": "DIGESTS",
+      "kind": "compress",
+      "path": ".ai-os/learning/DIGESTS.jsonl",
+      "exists": true
+    },
+    {
+      "id": "NEUROLINGUA",
+      "kind": "speak",
+      "path": "src/raios/neuro_lingua",
+      "llm_calls": 0
+    },
+    {
+      "id": "BOOK_CYCLE",
+      "kind": "experience",
+      "path": "scripts/ai-os/raios_c5_book.py",
+      "knowledge": false
+    },
+    {
+      "id": "CANDIDATES",
+      "kind": "discovered",
+      "path": "/workspace/.ai-os/learning/CANDIDATES.jsonl",
+      "exists": true,
+      "promoted": false
+    },
+    {
+      "id": "COGNITIVE_WAL",
+      "kind": "learning-authority",
+      "path": "RAIOS/V9/wal/cognitive-events.jsonl",
+      "lock": "A15",
+      "written_this_slice": false
+    },
+    {
+      "id": "MCP_V1",
+      "kind": "interface",
+      "tools": 8,
+      "truth_authority": false
+    },
+    {
+      "id": "CORTEX",
+      "kind": "c1-owned",
+      "identity": "qwen3.6:35b-a3b",
+      "bound_to_live_answer": false
+    },
+    {
+      "id": "STUDENT",
+      "kind": "muscle",
+      "identity": "qwen2.5:0.5b",
+      "ne_source": true
+    }
+  ],
+  "edges": [
+    {
+      "from": "C5_MIND_FILL",
+      "to": "DIGESTS",
+      "law": "ABSORB_DIGEST_NE_WAL_DUMP"
+    },
+    {
+      "from": "DIGESTS",
+      "to": "INDEX",
+      "law": "INVERTED_INDEX_NE_UNLOADED_EMBEDDING"
+    },
+    {
+      "from": "INDEX",
+      "to": "NEUROLINGUA",
+      "law": "RETRIEVAL_RESULT_NE_COGNITIVE_ANSWER"
+    },
+    {
+      "from": "BOOK_CYCLE",
+      "to": "CANDIDATES",
+      "law": "EXPERIENCE_NE_KNOWLEDGE"
+    },
+    {
+      "from": "PRODUCT_NEXT",
+      "to": "PRISMA_ORCHESTRATION",
+      "law": "AUTHENTICATED_ORCHESTRATION_TASK",
+      "status": "BLOCKED"
+    },
+    {
+      "from": "PRISMA_ORCHESTRATION",
+      "to": "COGNITIVE_WAL",
+      "forbidden_until": "P0",
+      "status": "FORBIDDEN"
+    },
+    {
+      "from": "CORTEX",
+      "to": "C5_LIVE_ANSWER",
+      "status": "NOT_BOUND",
+      "law": "C1_OWNS_CORTEX_TREAT_RUN_THROW"
+    },
+    {
+      "from": "STUDENT",
+      "to": "ASSIMILATION",
+      "status": "REJECT",
+      "law": "STUDENT_NE_EXTRACTION"
+    },
+    {
+      "from": "MCP_V1",
+      "to": "COGNITIVE_WAL",
+      "status": "FORBIDDEN",
+      "law": "MCP_GATEWAY_NE_TRUTH_AUTHORITY"
+    }
+  ],
+  "live_answer_path": "INDEX + file-read + NeuroLingua (llm_calls=0)",
+  "compress_keeper": "src/raios/neuro_lingua/compress.py",
+  "gl005_proven": false,
+  "wal_written": false,
+  "law": [
+    "SCALE_BY_COMPRESSION_NOT_COMPLEXITY",
+    "REALITY_AUDIT_NE_NEW_KERNEL",
+    "NAMED_ARTIFACT_NE_PLATFORM_PROVEN",
+    "FROM_INVENTORY_NE_TO_PLATFORM",
+    "C6_C10_NE_LIVE",
+    "CI_PASS_NE_ASSIMILATION",
+    "CI_PASS_NE_GL005",
+    "EXPERIENCE_NE_KNOWLEDGE",
+    "HOLD_NE_THROW",
+    "REUSE_BEFORE_BUILD"
+  ]
+}

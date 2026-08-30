@@ -1,0 +1,72 @@
+{
+  "schema": "raios.gl005-c3-repair-cookie-transport.v1",
+  "knowledge_state": "DISCOVERED",
+  "from": "C3",
+  "via": "C0 paste",
+  "recorded_by": "C1",
+  "cwd": "C:\\Users\\Ghanam\\Documents\\Codex\\Greeny-Life-Repair",
+  "GL005_PROVEN": false,
+  "PASSWORD_RETAINED": false,
+  "EVIDENCE_MUTATION_EXECUTED": false,
+  "TASK_MUTATION_EXECUTED": false,
+  "SESSION_HTTP": 200,
+  "AUTHENTICATED": false,
+  "SESSION_OVER_HTTP": true,
+  "SECURE_GL_SESSION_COUNT": ">=1",
+  "DIAGNOSIS_PRINTED": "SECURE_SESSION_COOKIE_NOT_USABLE_OVER_CURRENT_HTTP_RUNTIME",
+  "DB_BINDING_MISMATCH": "FALSIFIED",
+  "CREDENTIAL_FAILURE": "FALSIFIED",
+  "COOKIE_TRANSPORT_MISMATCH": "PROVEN_CANDIDATE",
+  "chain_status": "BROKEN",
+  "breakpoint": "SECURE_COOKIE_NOT_SENT_OVER_HTTP",
+  "epistemic": "FAILED",
+  "reason": "SECURE_SESSION_COOKIE_NOT_USABLE_OVER_CURRENT_HTTP_RUNTIME",
+  "capability": "PRESENT_BUT_PROTECTED_AND_UNPROVEN",
+  "c0_order": "صلح",
+  "product_fix": {
+    "file": "lib/auth.ts",
+    "change": "session cookie Secure follows request scheme and X-Forwarded-Proto, not NODE_ENV=production alone",
+    "http_production": "Secure=false",
+    "https_production": "Secure=true",
+    "not": "global Secure-off bypass"
+  },
+  "c1_falsify": [
+    "COOKIE_TRANSPORT_MISMATCH=PROVEN_CANDIDATE is not GL005_PROVEN",
+    "credential success is not a signed HTTP session",
+    "NODE_ENV=production is not HTTPS",
+    "scheme-aware Secure is not an authenticated mutation"
+  ],
+  "surviving_facts": [
+    "Password was not retained or printed",
+    "POST /api/auth/login returned 200 success=true on the prior Repair run",
+    "A Secure session cookie named gl_session was present in the jar",
+    "GET /api/auth/session over HTTP returned 200 authenticated=false",
+    "DB_BINDING_MISMATCH was printed FALSIFIED",
+    "CREDENTIAL_FAILURE was printed FALSIFIED",
+    "No POST /api/tasks"
+  ],
+  "code_surface": {
+    "login": "app/api/auth/login/route.ts passes the request into setSessionCookie",
+    "logout": "app/api/auth/logout/route.ts passes the request into clearSessionCookie",
+    "cookie": "lib/auth.ts cookieShouldBeSecure uses X-Forwarded-Proto then request protocol"
+  },
+  "next_probe_names_and_flags_only": [
+    "BOUND_HEAD",
+    "SET_COOKIE_COUNT",
+    "SET_COOKIE_NAME_GL_SESSION",
+    "SET_COOKIE_SECURE",
+    "SET_COOKIE_HTTPONLY",
+    "WEBSESSION_HAS_GL_SESSION",
+    "BASE_SCHEME",
+    "BOUND_NEXT_NODE_ENV",
+    "SESSION_AUTHENTICATED",
+    "SESSION_ROLE"
+  ],
+  "forbidden": [
+    "Do not print the cookie value",
+    "Do not forge the session cookie",
+    "Do not spawn a second Next",
+    "Do not POST /api/tasks until GET /api/auth/session authenticated=true",
+    "Do not grant GL005_PROVEN from a scheme-aware cookie fix"
+  ]
+}

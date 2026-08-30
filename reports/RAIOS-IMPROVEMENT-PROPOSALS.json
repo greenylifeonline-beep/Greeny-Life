@@ -1,0 +1,172 @@
+{
+  "schema": "raios.improvement-proposals.v1",
+  "generated_at": "2026-08-20T06:54:49.317314+00:00",
+  "proposals": [
+    {
+      "issue_id": "ARCH-001",
+      "severity": "P0",
+      "component": "Qwen Main Cortex runtime",
+      "problem": "Main Cortex inference fails with HTTP 500 while weights hash-verify",
+      "root_cause": "MEMORY_CAPACITY_FAILURE on ~8GB RAM vs ~22GB blob",
+      "impact": "Student execution by Qwen unavailable; autonomy blocked",
+      "evidence": [
+        "QWEN36-FORENSIC-CERTIFICATION.json",
+        "QWEN-RUNTIME-ROOT-CAUSE.json"
+      ],
+      "recommended_solution": "Cognitive Resource Governor with single-residency, teacher preemption, context ladder; keep identity",
+      "reuse_possible": true,
+      "estimated_complexity": "HIGH",
+      "migration_risk": "MEDIUM",
+      "tests_required": [
+        "admission deny/allow",
+        "fallback interpret still works"
+      ],
+      "can_fix_now": false,
+      "open_source_candidates": []
+    },
+    {
+      "issue_id": "ARCH-002",
+      "severity": "P1",
+      "component": "package.json lint",
+      "problem": "npm run lint invokes next lint which Next 16 treats as a directory",
+      "root_cause": "Next 16 removed next lint; script not updated",
+      "impact": "Cannot use lint as regression evidence; false-pass risk if someone wraps it",
+      "evidence": [
+        "Invalid project directory provided, no such directory: ...\\lint",
+        "next ^16.2.10"
+      ],
+      "recommended_solution": "Replace script with eslint CLI or fail-closed message; do not print PASS",
+      "reuse_possible": true,
+      "estimated_complexity": "LOW",
+      "migration_risk": "LOW",
+      "tests_required": [
+        "lint script exit documented"
+      ],
+      "can_fix_now": true,
+      "open_source_candidates": []
+    },
+    {
+      "issue_id": "ARCH-003",
+      "severity": "P1",
+      "component": "engine audit",
+      "problem": "ENGINE-AUDIT-FINAL-REPORT status PASS includes venv duplicates",
+      "root_cause": "inventory crawler did not exclude .venv-multimodal/site-packages",
+      "impact": "False completeness; 1872 engines unusable as consolidation truth",
+      "evidence": [
+        "DUPLICATE-ENGINE-MAP.json idna/packaging site-packages groups"
+      ],
+      "recommended_solution": "Re-run audit with skip parts .venv node_modules site-packages",
+      "reuse_possible": true,
+      "estimated_complexity": "MEDIUM",
+      "migration_risk": "LOW",
+      "tests_required": [
+        "skip-list unit test"
+      ],
+      "can_fix_now": false,
+      "open_source_candidates": []
+    },
+    {
+      "issue_id": "ARCH-004",
+      "severity": "P1",
+      "component": "file intelligence",
+      "problem": "INTEGRATION-READINESS expects _raios-file-intelligence-parallel which is absent",
+      "root_cause": "Advertised path never materialized or was not copied",
+      "impact": "Agents search the wrong tree; recon slower",
+      "evidence": [
+        "Glob 0 files",
+        "INTEGRATION-READINESS.json"
+      ],
+      "recommended_solution": "Point readiness at unified_intelligence_fast.py as PRIMARY",
+      "reuse_possible": true,
+      "estimated_complexity": "LOW",
+      "migration_risk": "LOW",
+      "tests_required": [
+        "path exists gate"
+      ],
+      "can_fix_now": true,
+      "open_source_candidates": []
+    },
+    {
+      "issue_id": "ARCH-005",
+      "severity": "P1",
+      "component": "control plane",
+      "problem": "LOCKS.json has V9-NL0 locks but TASKS.json has no V9-NL0 task",
+      "root_cause": "Interrupted claim/lock earlier in session",
+      "impact": "Continuity divergence",
+      "evidence": [
+        "LOCKS.json LOCK-20260820062957",
+        "TASKS.json no V9-NL0"
+      ],
+      "recommended_solution": "Add V9-NL0 task record",
+      "reuse_possible": true,
+      "estimated_complexity": "LOW",
+      "migration_risk": "LOW",
+      "tests_required": [
+        "lock/task referential integrity"
+      ],
+      "can_fix_now": true,
+      "open_source_candidates": []
+    },
+    {
+      "issue_id": "ARCH-006",
+      "severity": "P2",
+      "component": "provider adapters",
+      "problem": "Ollama/Qwen model names hardcoded in runtime chat",
+      "root_cause": "Adapter predates capability contracts",
+      "impact": "Model becomes identity; contradicts replaceable cortex law",
+      "evidence": [
+        "_raios-cognitive-runtime/src/raios_chat.py MODEL=qwen3.6:35b-a3b"
+      ],
+      "recommended_solution": "Route by capability; binding JSON remains current provider",
+      "reuse_possible": true,
+      "estimated_complexity": "MEDIUM",
+      "migration_risk": "MEDIUM",
+      "tests_required": [
+        "no model string in NL public API"
+      ],
+      "can_fix_now": false,
+      "open_source_candidates": []
+    },
+    {
+      "issue_id": "ARCH-007",
+      "severity": "P2",
+      "component": "dual WAL",
+      "problem": "Cognitive JSONL WAL and communication sqlite WAL coexist",
+      "root_cause": "Different domains; naming collision risk",
+      "impact": "Future agents may create a third WAL",
+      "evidence": [
+        "cognitive-events.jsonl",
+        "CommunicationStore sqlite"
+      ],
+      "recommended_solution": "Keep both; document boundary in CORE-CONTRACT; NL must use cognitive WAL only",
+      "reuse_possible": true,
+      "estimated_complexity": "LOW",
+      "migration_risk": "LOW",
+      "tests_required": [
+        "NL wal path assertion"
+      ],
+      "can_fix_now": true,
+      "open_source_candidates": []
+    },
+    {
+      "issue_id": "IMP-LID",
+      "severity": "P2",
+      "component": "NeuroLingua LID",
+      "problem": "Tier 1 uses script/lexical heuristics only",
+      "recommended_solution": "Benchmark lingua-py or fastText lid.176.bin offline before adding",
+      "reuse_possible": true,
+      "open_source_candidates": [
+        {
+          "name": "lingua-py",
+          "class": "REFERENCE",
+          "reason": "not installed; benchmark first"
+        },
+        {
+          "name": "fastText LID",
+          "class": "REFERENCE",
+          "reason": "model download not allowed in NL-0 tests"
+        }
+      ]
+    }
+  ]
+}

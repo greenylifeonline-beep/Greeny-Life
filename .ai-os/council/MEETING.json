@@ -1,0 +1,52 @@
+{
+  "schema": "raios.council-meeting.v1",
+  "meeting_id": "GL-COUNCIL-4a11023c3c321b6f",
+  "session_id": "GL-FIVE-20260820",
+  "opened_by": "C1",
+  "facilitator": "C5",
+  "issued_at": "2026-08-20T19:26:45.200900+00:00",
+  "head": "64fa63f72cb457defb5118f29e88c789612c795f",
+  "case": "Prove REAL council connectivity with one meeting_id and one case_hash. C1 is owner. C5 is RAIOS. C2/C3/C4 must bind an unseen nonce. Do not close GL-005. Do not impersonate C1.",
+  "case_hash": "35b5cbde5a4ce4e66a9b29c9ef75697afabf830dc5f81ca1155c620654c26c6b",
+  "challenges": {
+    "C2": {
+      "target": "C2-CHATGPT-1-SUMMON",
+      "seat": "C2",
+      "challenge_id": "CHAL-c02ec6b915caac01",
+      "nonce": "62562351fbffc449650db9a817bd80d1",
+      "issued_at": "2026-08-20T19:26:45.200861+00:00",
+      "response_formula": "Echo nonce exactly. Invent origin_salt that is NOT in this file. Return bound seat code. Do not grant PASS. Do not claim CONNECTED.",
+      "expected_local_ack": null,
+      "precomputed_response": null
+    },
+    "C3": {
+      "target": "C3-CHATGPT-PEER-SUMMON",
+      "seat": "C3",
+      "challenge_id": "CHAL-639d162942d717ee",
+      "nonce": "6b7bc5cb54226790bf080a92397b53db",
+      "issued_at": "2026-08-20T19:26:45.200871+00:00",
+      "response_formula": "Echo nonce exactly. Invent origin_salt that is NOT in this file. Return bound seat code. Do not grant PASS. Do not claim CONNECTED.",
+      "expected_local_ack": null,
+      "precomputed_response": null
+    },
+    "C4": {
+      "target": "C4-DEEPSEEK-SUMMON",
+      "seat": "C4",
+      "challenge_id": "CHAL-f1396e7eeba2004c",
+      "nonce": "048cbd9d1eb8a2ba30448efb1b02cc96",
+      "issued_at": "2026-08-20T19:26:45.200873+00:00",
+      "response_formula": "Echo nonce exactly. Invent origin_salt that is NOT in this file. Return bound seat code. Do not grant PASS. Do not claim CONNECTED.",
+      "expected_local_ack": null,
+      "precomputed_response": null
+    }
+  },
+  "fetch": {
+    "blob": "https://github.com/greenylifeonline-beep/greeny-life/blob/v9-neurolingua-semantic-kernel/.ai-os/council/LIVE.md",
+    "raw": "https://raw.githubusercontent.com/greenylifeonline-beep/greeny-life/v9-neurolingua-semantic-kernel/.ai-os/council/LIVE.md"
+  },
+  "one_meeting": true,
+  "c1_final_authority": true,
+  "gl005_proven": false,
+  "council_operation_proven": false,
+  "wal_written": false
+}

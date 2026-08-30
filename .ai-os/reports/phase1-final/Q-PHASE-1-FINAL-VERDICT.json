@@ -1,0 +1,28 @@
+{
+  "schema": "raios.phase1-final.verdict.v1",
+  "ts": "2026-08-25T17:38:17.605088+00:00",
+  "flags": {
+    "D17335A_CI_PASS": true,
+    "FF36677_CI_PASS": true,
+    "C2_CLOUD_GUARDS_JOINED": true,
+    "C2_JOIN_PROVEN": false,
+    "COMMAND_FABRIC_E2E_PROVEN": false,
+    "CROSS_HOST_ROUND_TRIP_PROVEN": false,
+    "C5_PUBLIC_CHANNEL_PROVEN": false,
+    "C5_PUBLIC_CHANNEL_PROVEN_AG_ATTESTED": true,
+    "C5_PUBLIC_CHANNEL_PROVEN_C2_CLOUD": false,
+    "C5_FOUNDER_CHANNEL_PROVEN": false,
+    "C5_MAIN_CORTEX_PROVEN": false,
+    "WAL_WRITTEN": false,
+    "GL005_PROVEN": false,
+    "PHASE1_COMPLETE": false,
+    "READY_FOR_PHASE2": false,
+    "CI_PASS_NE_ASSIMILATION": true,
+    "ASSIMILATION_PROVEN": false
+  },
+  "phase1_complete": false,
+  "ready_for_phase2": false,
+  "why_not_complete": "OMITTED register nonempty; AG/OneDrive/donor objects unread; C2_JOIN_PROVEN=false; no cross-host round trip",
+  "merged_c1": "C1 AG results ingested as EXTERNAL_ATTESTATION_PENDING_CROSS_HOST_BIND only",
+  "smallest_safe_next": "C1 issues a scoped gitignored MCP grant and a documented bridge (public HTTPS on the SAME 8787 process, or nonce blob+founder relay already described in LAST-CENSUS). Do not rebind actors. Do not merge trees. Do not restore husks."
+}

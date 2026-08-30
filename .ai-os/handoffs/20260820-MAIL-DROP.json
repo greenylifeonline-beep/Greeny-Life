@@ -1,0 +1,23 @@
+{
+  "schema": "raios.mail-drop.v1",
+  "knowledge_state": "DISCOVERED",
+  "promoted": false,
+  "status": "DEGRADED_INBOX",
+  "law": "MAIL_PASSES_NE_PROVES",
+  "address": "https://github.com/greenylifeonline-beep/Greeny-Life/issues",
+  "outbox": "https://github.com/greenylifeonline-beep/Greeny-Life/blob/v9-neurolingua-semantic-kernel/.ai-os/mail/OUTBOX.md",
+  "dispatcher": "C1",
+  "commander": "C0",
+  "authority": "NOT_CONTROL_PLANE",
+  "preferred": "RAIOS MCP Streamable HTTP V1",
+  "not": [
+    "TASKS.json",
+    "LOCKS.json",
+    "GL005_PROVEN",
+    "Team Relay hub",
+    "Cognitive WAL"
+  ],
+  "identity": "GitHub login is envelope sender, not a RAIOS seat. MCP scoped bearer is the connector identity.",
+  "close_if": ["impersonation", "noise", "PASS claims", "secrets"],
+  "fallback": "GitHub Issues MAIL C2 / MAIL C5"
+}

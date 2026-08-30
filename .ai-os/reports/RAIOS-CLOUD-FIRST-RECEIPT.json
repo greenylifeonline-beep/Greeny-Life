@@ -1,0 +1,94 @@
+{
+  "schema": "raios.c5-cloud-first.v1",
+  "ts": "2026-08-21T23:47:01.977093+00:00",
+  "from": "C2",
+  "parent": "C1",
+  "wave": "C5-CLOUD-FIRST-MIGRATION",
+  "canonical": false,
+  "head": "e7bb5132d969939a8fb30b7ec82689948abb939c",
+  "steps": [
+    "CLOUD_STORAGE_REALITY_AUDIT",
+    "OLLAMA_LOCAL_VS_CLOUD_INVENTORY",
+    "STOP_NEW_LOCAL_MODEL_DOWNLOADS",
+    "BUILD_CLOUD_MODEL_GATEWAY",
+    "BUILD_C5_STORAGE_FABRIC",
+    "MOVE_TRAINING_BOOKS_WAL_TO_CLOUD",
+    "KEEP_LAPTOP_AS_CONTROL_PLANE",
+    "PROVE_REMOTE_WORK_WHILE_LAPTOP_CLIENT_DISCONNECTED"
+  ],
+  "artifacts": [
+    {
+      "name": "RAIOS-CLOUD-STORAGE-REALITY-AUDIT.json",
+      "sha256": "ee03e9e415a55884bef145b5bb7cf9c7f4c439c89cbeccc68abc327a539198ef"
+    },
+    {
+      "name": "RAIOS-OLLAMA-LOCAL-VS-CLOUD-INVENTORY.json",
+      "sha256": "b6fd26b0d39fe58a62a461165fb8638a321a26dfb1932af23ac8f44fe9aa457a"
+    },
+    {
+      "name": "RAIOS-STOP-NEW-LOCAL-MODEL-DOWNLOADS.json",
+      "sha256": "1cb3d71f3671e49a57820e2195fb789f808a4469e5615dc4f6d648258b032714"
+    },
+    {
+      "name": "RAIOS-CLOUD-MODEL-GATEWAY.json",
+      "sha256": "af7130a045f0b5445bd8c42ae674ce025300b533af30ca47a00c9257ed44db42"
+    },
+    {
+      "name": "RAIOS-C5-STORAGE-FABRIC.json",
+      "sha256": "e568dd7e4c9c65e870a6885e3260a297a1b4e16d89a0c58862963d252a42ddbe"
+    },
+    {
+      "name": "RAIOS-CLOUD-MOVE-TRAINING-BOOKS-WAL.json",
+      "sha256": "6e9e72073dd48e8ee12626d1aecf045fc644df1a80992918e33399baf43af791"
+    },
+    {
+      "name": "RAIOS-LAPTOP-CONTROL-PLANE.json",
+      "sha256": "767db63994ca17a9d77f2e0ca4fc72d69abbdfd1b01fdf06928f97c45867dcf3"
+    },
+    {
+      "name": "RAIOS-REMOTE-WORK-LAPTOP-DISCONNECTED.json",
+      "sha256": "d3172495d08183cd93bf9008218ce07b3d87445401f5d32443233545b89165c6"
+    }
+  ],
+  "hf_token_present": false,
+  "wal_moved": false,
+  "weight_downloaded": false,
+  "openai": false,
+  "remote_work_proven": true,
+  "cloud_migration_proven": false,
+  "cloud_gateway_built": true,
+  "storage_fabric_built": true,
+  "stop_new_local_model_downloads": true,
+  "laptop_is_control_plane": true,
+  "screen_multilingual": true,
+  "locales": [
+    "ar-EG",
+    "ar-GULF",
+    "nb-NO",
+    "en"
+  ],
+  "paid_api": false,
+  "extracted_qwen_granite": false,
+  "safe_to_remove_source": false,
+  "gl005_proven": false,
+  "next": "AUTHENTICATED_ORCHESTRATION_TASK",
+  "law": [
+    "SCREEN_IS_MULTILINGUAL",
+    "STOP_NEW_LOCAL_MODEL_DOWNLOADS",
+    "OLLAMA_PULL_FORBIDDEN_HERE",
+    "WAL_MOVE_BLOCKED_A15",
+    "HF_DATASET_NE_SECOND_WAL",
+    "LAPTOP_IS_CONTROL_PLANE",
+    "CURSOR_CLOUD_VM_NE_LAPTOP",
+    "REMOTE_KEEPER_RUN_NE_GL005",
+    "CLOUD_GATEWAY_NE_OPENAI",
+    "CLOUD_MIGRATION_NE_GL005",
+    "HUNT_FREE_NE_PAID_API",
+    "HOLD_NE_THROW",
+    "NO_WEIGHT_DOWNLOAD",
+    "SCALE_BY_COMPRESSION_NOT_COMPLEXITY"
+  ],
+  "wal_written": false,
+  "wal_mtime_unchanged": true,
+  "ok": true
+}

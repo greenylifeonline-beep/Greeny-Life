@@ -1,0 +1,117 @@
+{
+  "schema": "raios.wave1-receipt.v1",
+  "knowledge_state": "DISCOVERED",
+  "canonical": false,
+  "from": "C2",
+  "parent": "C1",
+  "c5": "git_not_this_session",
+  "decision": "D-064",
+  "bound_head": "f17b749",
+  "head": "98654f81aaffbde1471ce19556ed69bd9deb4455",
+  "bound_is_ancestor": true,
+  "no_reset": true,
+  "no_clean": true,
+  "no_stash": true,
+  "no_source_deletion": true,
+  "no_auto_canonical": true,
+  "no_fake_pass": true,
+  "ts": "2026-08-21T20:55:13.978700+00:00",
+  "facts": {
+    "CI_1e28f84": "PASS",
+    "CI_68af867": "PASS",
+    "EXTRACTED_QWEN_GRANITE": false,
+    "SAFE_TO_REMOVE_SOURCE": false,
+    "GL005_PROVEN": false,
+    "AUTHENTICATED_ORCHESTRATION_TASK": false
+  },
+  "llm_fabric_proven": false,
+  "assimilation_proven": false,
+  "rsic_proven": false,
+  "aemc_proven": false,
+  "cetd_proven": false,
+  "extracted_qwen_granite": false,
+  "safe_to_remove_source": false,
+  "authenticated_orchestration_task": false,
+  "gl005_proven": false,
+  "wal_written": false,
+  "student_generate_ok": true,
+  "granite_generate_ok": false,
+  "cortex_generate_ok": false,
+  "stop": "AUTHENTICATED_ORCHESTRATION_TASK",
+  "next": "AUTHENTICATED_ORCHESTRATION_TASK",
+  "artifacts": [
+    {
+      "name": "RAIOS-LLM-FABRIC-REALITY-AUDIT.json",
+      "path": ".ai-os/reports/RAIOS-LLM-FABRIC-REALITY-AUDIT.json",
+      "sha256": "a330f083272a8db3502203647f8aeae0222f0354131a5624730bcd18cab46b63"
+    },
+    {
+      "name": "RAIOS-ASSIMILATION-E2E-PROOF.json",
+      "path": ".ai-os/reports/RAIOS-ASSIMILATION-E2E-PROOF.json",
+      "sha256": "3451b4b560698144a24c52e6397d008650057335faa638070c1c3ceed4fa2469"
+    },
+    {
+      "name": "RAIOS-RSIC-REALITY.json",
+      "path": ".ai-os/reports/RAIOS-RSIC-REALITY.json",
+      "sha256": "e581d222fe10427853a91c5516c34a1e61d4c5490ae93e86c7e30cbf5ccaa263"
+    },
+    {
+      "name": "RAIOS-AEMC-REALITY.json",
+      "path": ".ai-os/reports/RAIOS-AEMC-REALITY.json",
+      "sha256": "3b3a9e1e848d6331a6279d9b205cedc6a63e7f89b32c62bbe15217e1e5ec5cf3"
+    },
+    {
+      "name": "RAIOS-CETD-REALITY.json",
+      "path": ".ai-os/reports/RAIOS-CETD-REALITY.json",
+      "sha256": "fcb8c465c5b31c6c7688331b85c0a92096c87d8da96dd0fd16fb7508633199e8"
+    },
+    {
+      "name": "RAIOS-ERP-REALITY-MATRIX.json",
+      "path": ".ai-os/reports/RAIOS-ERP-REALITY-MATRIX.json",
+      "sha256": "be09c00bf9c45b2458a126531433d9d4ccdc6a164e3ee2c585a2da6cc19033d5"
+    },
+    {
+      "name": "RAIOS-C5-MEMO-DECISION-MATRIX.json",
+      "path": ".ai-os/reports/RAIOS-C5-MEMO-DECISION-MATRIX.json",
+      "sha256": "32b1c0f1c3e06989a23ac427b9a126240091a19b2611ea04f858dfb54d95ba7f"
+    },
+    {
+      "name": "RAIOS-WAVE1-GAP-MATRIX.json",
+      "path": ".ai-os/reports/RAIOS-WAVE1-GAP-MATRIX.json",
+      "sha256": "c949da926d570db3b69fff542482dadf1eb93b7c3757ad8f176d528e3b55ed70"
+    },
+    {
+      "name": "RAIOS-WAVE1-EXECUTION-GRAPH.json",
+      "path": ".ai-os/reports/RAIOS-WAVE1-EXECUTION-GRAPH.json",
+      "sha256": "9c770227d395ad40137bc79153e1495e1248f5487cd80311227c2a77cdf76bb8"
+    }
+  ],
+  "sha256_critical": {
+    "runner": "06b8c66801377cafba1de7c2aa62260859612974acf4d2e429fcc454f672e533",
+    "p0": "84e202434884bf50e0ff01e3c1a9a8f1fb4b19765ce053bcecb03c08c6282ace",
+    "foundation": "c76e0eb43f304c13fcad40f87f35e8a7c9c04a8abfdd3043c8bdfa646a34eb14",
+    "allowed_source": "2d538d6ec24ab73a131e174d74b531a9c9cd389b42156c9fa5e45860ccaa36eb",
+    "model_registry": "36f1d7f4c91d0bcba499225794c7bcb880ca334687de8cf691cfb8ad9a53ddb9"
+  },
+  "listen": {
+    "next_3000": true,
+    "ollama_11434": true,
+    "postgres_5432": false
+  },
+  "law": [
+    "SCALE_BY_COMPRESSION_NOT_COMPLEXITY",
+    "CI_PASS_NE_ASSIMILATION",
+    "CI_PASS_NE_GL005",
+    "STORED_NE_ASSIMILATED",
+    "EMBEDDED_NE_ASSIMILATED",
+    "REPLAYED_NE_VALIDATED",
+    "HOLD_NE_THROW",
+    "STUDENT_NE_EXTRACTION",
+    "GRANITE_CANDIDATE_NE_SOVEREIGN_BACKBONE",
+    "NO_RESET_NO_STASH_NO_SOURCE_DELETION",
+    "PRINTED_PASS_NE_EVIDENCE",
+    "REUSE_BEFORE_BUILD",
+    "A15_WAL_LOCK"
+  ],
+  "ok": true
+}

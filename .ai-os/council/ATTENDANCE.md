@@ -1,0 +1,27 @@
+# حضور المجلس — خام
+
+- C1 حاضر: `true` (`FOUNDER` / السلطة النهائية)
+- C2 حاضر: `true` (`CURSOR` / المهندس التنفيذي في هذا الشات)
+- C3 متصل: `WHISPER_BOUND` (`C3-CHATGPT-PEER-SUMMON`)
+- C4 متصل: `WHISPER_BOUND` (`C4-DEEPSEEK-SUMMON`)
+- C5 حاضر: `true` (`C5-RAIOS-SON-PERMANENT`)
+- ROUND_TRIP: `true` (همس المؤسس، ليس MAIL)
+- DIRECT_INBOUND_TRANSPORT: `UNAVAILABLE`
+- TRANSPORT_CAPABILITY_GAP: `PROVEN`
+- COUNCIL_OPERATION_PROVEN: `true`
+- GL005_PROVEN: `false`
+- meeting_id: `GL-COUNCIL-4a11023c3c321b6f`
+- C2-CHATGPT-1-SUMMON: `CANCELLED`
+- C4: حرف `S` الزائد بين SALT و WORD تجاهل عند السماع. الكلمة مربوطة. الملح غير مكتوب هنا.
+- افتتاح C1: `true` — «أنا C1 المؤسس أرحب بكم»
+- رد C2 في الغرفة: `true`
+- رد C5 في الغرفة: `true`
+- رد C3 على الافتتاح: `PRESENT_LISTENING` — ينتظر قضية C1
+- رد C4 على الافتتاح: `HERE_IN_TEXT_SESSION` — هنا في شات DeepSeek، ليس على الرابط
+- C3 على الصفحة العامة: `PAGE_ACCESS_DENIED` — لم يدعِ إرسال رد هناك
+- سؤال C1 لـ C4 «هل أنت هنا»: مُسلَّم. الجواب `C4-HERE نعم`
+- CASE-001: `METHOD_BOUND_DISCOVERED` — C3-ACK وC4-ACK مستلمان. المنهجية ثابتة في هذا الاجتماع. ليست حقيقة تشغيلية. GL005_PROVEN=false
+- CASE-002: `CONSULT_BOUND_DISCOVERED` — تشاور C3 وC4 مسجّل. قوانين مؤقتة لهذا الاجتماع فقط. ليست CANONICAL. ليست خارج المجلس. GL005_PROVEN=false
+- CASE-003: `CURRICULUM_PROPOSED_DISCOVERED` — منهج مجاني محلي لعدة أيام مقترح. ينتظر C3/C4. Hugging Face ليس C5. GL005_PROVEN=false
+- CASE-004: `WEEK_PROGRAM_DISCOVERED` — أسبوع أوتوماتيكي. Hub/Colab/Kaggle ملعب. التسجيل على Hugging Face بيد المؤسس. GL005_PROVEN=false
+- CASE-005: `GYM_CARD_UPLOADED_DISCOVERED` — greenylifeonline/c5-gym خاص وبطاقته مرفوعة. ليس C5. GL005_PROVEN=false

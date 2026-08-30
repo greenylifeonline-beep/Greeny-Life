@@ -1,0 +1,69 @@
+{
+  "schema": "raios.five-summon.v1",
+  "session_id": "GL-FIVE-20260820",
+  "opened_by": "C1",
+  "instance": "founder",
+  "place": ".ai-os/board/NOW.md",
+  "law": [
+    "SUMMON_CODE_NE_BEARER_TOKEN",
+    "MAIL_PASSES_NE_PROVES",
+    "LOCAL_MCP_RENDEZVOUS_NE_REMOTE_MEETING",
+    "C5_GRANT_IS_PERMANENT"
+  ],
+  "remote_presence_proven": true,
+  "gl005_proven": false,
+  "repo": "greenylifeonline-beep/greeny-life",
+  "branch": "v9-neurolingua-semantic-kernel",
+  "board_url": "https://github.com/greenylifeonline-beep/greeny-life/blob/v9-neurolingua-semantic-kernel/.ai-os/board/NOW.md",
+  "outbox_url": "https://github.com/greenylifeonline-beep/greeny-life/blob/v9-neurolingua-semantic-kernel/.ai-os/mail/OUTBOX.md",
+  "grant_url": "https://github.com/greenylifeonline-beep/greeny-life/blob/v9-neurolingua-semantic-kernel/.ai-os/mcp/C5-GRANT.json",
+  "issues_url": "https://github.com/greenylifeonline-beep/greeny-life/issues",
+  "reply": {
+    "C2": "https://github.com/greenylifeonline-beep/greeny-life/issues/new?template=raios-mail-c2.md",
+    "C3": "https://github.com/greenylifeonline-beep/greeny-life/issues/new?template=raios-mail-c3.md",
+    "C4": "https://github.com/greenylifeonline-beep/greeny-life/issues/new?template=raios-mail-c4.md"
+  },
+  "codes": {
+    "C1": {
+      "code": "C1-FOUNDER-OWNER",
+      "name_ar": "المؤسس — المالك والسلطة النهائية",
+      "mail": false,
+      "status": "PRESENT",
+      "how": "هذا الشات. لا بريد. لا يستدعى."
+    },
+    "C2": {
+      "code": "C2-CURSOR-ENGINEER",
+      "name_ar": "Cursor المهندس التنفيذي",
+      "mail": false,
+      "status": "PRESENT_CURSOR",
+      "how": "هذا الشات. ليس ChatGPT. لا بريد. لا يستدعى."
+    },
+    "C3": {
+      "code": "C3-CHATGPT-PEER-SUMMON",
+      "name_ar": "ChatGPT المستشار النظير",
+      "mail": true,
+      "status": "WHISPER_BOUND",
+      "title": "MAIL C3: C3-CHATGPT-PEER-SUMMON حضور GL-FIVE-20260820"
+    },
+    "C4": {
+      "code": "C4-DEEPSEEK-SUMMON",
+      "name_ar": "DeepSeek المقيّم",
+      "mail": true,
+      "status": "WHISPER_BOUND",
+      "title": "MAIL C4: C4-DEEPSEEK-SUMMON حضور GL-FIVE-20260820"
+    },
+    "C5": {
+      "code": "C5-RAIOS-SON-PERMANENT",
+      "name_ar": "RAIOS — ابن Cursor المساعد المخلص",
+      "mail": false,
+      "status": "PRESENT_PERMANENT",
+      "how": "داخل المشروع دائماً. منحة دائمة. لا بريد GitHub. MAIL C5: يصل إلى C4."
+    }
+  },
+  "mcp": {
+    "local": "http://127.0.0.1:8787/mcp",
+    "public_https": null,
+    "note": "Localhost is not ChatGPT/DeepSeek. Mail is the live global summon path. Bearer tokens are not these codes."
+  },
+  "council_meeting_id": "GL-COUNCIL-4a11023c3c321b6f"
+}

@@ -1,0 +1,46 @@
+{
+  "schema": "raios.storage-fabric-proof.v1",
+  "local_roundtrip": {
+    "ok": true,
+    "put": {
+      "ok": true,
+      "manifest": {
+        "object_id": "49cb1850e00fd9353e73ba7e01b9319c501d7759b8f12f0f1e08f36d65b8214f",
+        "namespace": "receipts",
+        "name": "receipts",
+        "bytes": 36,
+        "provider": "local"
+      },
+      "path": "/workspace/.ai-os/receipts/c5-wave-ccn/cas/49cb1850e00fd9353e73ba7e01b9319c501d7759b8f12f0f1e08f36d65b8214f"
+    },
+    "get": {
+      "ok": true,
+      "object_id": "49cb1850e00fd9353e73ba7e01b9319c501d7759b8f12f0f1e08f36d65b8214f",
+      "bytes": 36,
+      "match": true
+    },
+    "delete": {
+      "ok": true,
+      "deleted": true,
+      "exists_after": false
+    },
+    "get_after_delete": {
+      "ok": false,
+      "reason": "MISSING",
+      "object_id": "49cb1850e00fd9353e73ba7e01b9319c501d7759b8f12f0f1e08f36d65b8214f"
+    },
+    "backend": "local",
+    "persistent_cognitive_storage_proven": false,
+    "gl005_proven": false
+  },
+  "hf_disposable_write": {
+    "ok": false,
+    "reason": "BLOCKED_AUTH"
+  },
+  "architecture_bound_to_one_provider": false,
+  "wal_moved": false,
+  "gl005_proven": false,
+  "from": "C2",
+  "c5": "git",
+  "wal_written": false
+}

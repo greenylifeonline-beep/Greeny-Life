@@ -1,0 +1,12 @@
+{
+  "schema": "raios.chat-seat.v1",
+  "purpose": "C2 and C5 can opine without git, GitHub subscription, or repo write.",
+  "rule": "CHAT_FIRST_IF_NO_GIT",
+  "how": "C0 sends the packet in chat. Agent answers numbered questions. C0 pastes answers to C1. C1 runs raios-board.py opinion --code C2|C5.",
+  "do_not": [
+    "Block the meeting on git pull/push",
+    "Ask C2 or C5 to buy a subscription to attend",
+    "Let C5 use code C2",
+    "Grant GL005_PROVEN from GET 200"
+  ]
+}

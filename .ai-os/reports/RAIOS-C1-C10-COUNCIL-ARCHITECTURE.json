@@ -1,0 +1,160 @@
+{
+  "schema": "raios.c1-c10-council-architecture.v1",
+  "knowledge_state": "DISCOVERED",
+  "canonical": false,
+  "from": "C2",
+  "parent": "C1",
+  "decision": "D-063",
+  "ts": "2026-08-21T20:55:13.398828+00:00",
+  "adopted_identity": "D-032",
+  "c0_abolished": true,
+  "live_count": 5,
+  "not_seated": [
+    "C6",
+    "C7",
+    "C8",
+    "C9",
+    "C10"
+  ],
+  "this_channel": [
+    "C1",
+    "C2",
+    "C5_in_git"
+  ],
+  "elsewhere": [
+    "C3",
+    "C4"
+  ],
+  "permanent_mind": "C5 in git",
+  "cursor_session_ne_c5": true,
+  "tools_v1": [
+    "get_head",
+    "read_board",
+    "read_inbox",
+    "read_receipt",
+    "get_diff",
+    "post_opinion",
+    "send_packet",
+    "ack_packet"
+  ],
+  "deny_c5": [
+    "shell",
+    "set_proven",
+    "promote",
+    "run_build",
+    "write_product",
+    "write_handoff"
+  ],
+  "seat_map_live": [
+    "C1",
+    "C2",
+    "C3",
+    "C4",
+    "C5"
+  ],
+  "seats": [
+    {
+      "code": "C1",
+      "status": "LIVE",
+      "role": "OWNER_FOUNDER",
+      "instance": "founder",
+      "where": "this channel + git authority",
+      "law": "C1_SEAT_IS_OWNER",
+      "invented_this_slice": false
+    },
+    {
+      "code": "C2",
+      "status": "LIVE_TEMPORARY",
+      "role": "CURSOR_EXECUTIVE_ENGINEER",
+      "instance": "this Cursor cloud session",
+      "where": "https://cursor.com/agents/bc-dd60b5cf-95bd-4f24-9237-cc1b2225f013",
+      "law": "C2_INSTANCE_IS_CURSOR",
+      "note": "Help, not permanent. Not C5. Not C3.",
+      "invented_this_slice": false
+    },
+    {
+      "code": "C3",
+      "status": "LIVE_ELSEWHERE",
+      "role": "CHATGPT_PEER",
+      "instance": "ChatGPT window",
+      "where": "founder paste, not this chat",
+      "law": "THIS_CHANNEL_NO_C_SEAT_CONSULT",
+      "invented_this_slice": false
+    },
+    {
+      "code": "C4",
+      "status": "LIVE_ELSEWHERE",
+      "role": "DEEPSEEK_ASSESSOR",
+      "instance": "DeepSeek window",
+      "where": "founder paste, not this chat",
+      "law": "THIS_CHANNEL_NO_C_SEAT_CONSULT",
+      "invented_this_slice": false
+    },
+    {
+      "code": "C5",
+      "status": "LIVE_PERMANENT",
+      "role": "RAIOS_IN_GIT",
+      "instance": "repository keepers + C5-GRANT",
+      "where": ".ai-os + scripts/ai-os",
+      "law": "C5_GRANT_IS_PERMANENT",
+      "duration": "PERMANENT",
+      "paid_api": false,
+      "invented_this_slice": false
+    },
+    {
+      "code": "C6",
+      "status": "NOT_SEATED",
+      "role": null,
+      "invented_this_slice": false,
+      "law": "C6_C10_NE_LIVE",
+      "note": "Do not mint seats to look like a ten-node council. Compression first."
+    },
+    {
+      "code": "C7",
+      "status": "NOT_SEATED",
+      "role": null,
+      "invented_this_slice": false,
+      "law": "C6_C10_NE_LIVE",
+      "note": "Do not mint seats to look like a ten-node council. Compression first."
+    },
+    {
+      "code": "C8",
+      "status": "NOT_SEATED",
+      "role": null,
+      "invented_this_slice": false,
+      "law": "C6_C10_NE_LIVE",
+      "note": "Do not mint seats to look like a ten-node council. Compression first."
+    },
+    {
+      "code": "C9",
+      "status": "NOT_SEATED",
+      "role": null,
+      "invented_this_slice": false,
+      "law": "C6_C10_NE_LIVE",
+      "note": "Do not mint seats to look like a ten-node council. Compression first."
+    },
+    {
+      "code": "C10",
+      "status": "NOT_SEATED",
+      "role": null,
+      "invented_this_slice": false,
+      "law": "C6_C10_NE_LIVE",
+      "note": "Do not mint seats to look like a ten-node council. Compression first."
+    }
+  ],
+  "second_bus": false,
+  "summon_this_channel": false,
+  "gl005_proven": false,
+  "law": [
+    "SCALE_BY_COMPRESSION_NOT_COMPLEXITY",
+    "REALITY_AUDIT_NE_NEW_KERNEL",
+    "NAMED_ARTIFACT_NE_PLATFORM_PROVEN",
+    "FROM_INVENTORY_NE_TO_PLATFORM",
+    "C6_C10_NE_LIVE",
+    "CI_PASS_NE_ASSIMILATION",
+    "CI_PASS_NE_GL005",
+    "EXPERIENCE_NE_KNOWLEDGE",
+    "HOLD_NE_THROW",
+    "REUSE_BEFORE_BUILD"
+  ]
+}

@@ -1,0 +1,86 @@
+# ذاكرة C1 المضغوطة — سجل git
+
+هذا ليس عشر سنوات حرفياً. هذا كل ما عاشه Cursor في هذا المستودع، مضغوطاً.
+الهضم يتم عبر SHA256+skim. ليس صبّاً في Cognitive WAL.
+
+- `527f55c 2026-08-20 Record Repair stale-HEAD bind: WAL blocked the cookie-fix pull.`
+- `9758765 2026-08-20 Fix HTTP session bind: cookie Secure follows request scheme.`
+- `54e3148 2026-08-20 Falsify Repair ATOMIC login proven: login 200 did not bind a session.`
+- `e5206c9 2026-08-20 Record Repair credential-gate fail-closed: empty password is not identity.`
+- `53b0e45 2026-08-20 Encode the GL-005 observation chain as a fail-closed classifier.`
+- `d253483 2026-08-20 Record C2 falsification accept and Repair auth discriminator.`
+- `9ba64be 2026-08-20 Falsify GL-005 completion: live GET-POST-GET is BLOCKED_AUTH, not a state transition.`
+- `6afdce0 2026-08-20 Record local MCP security acceptance and the real external C2 connectivity gap.`
+- `b807be9 2026-08-20 Prove MCP V1 rendezvous: C2 attends, C1 challenges, C5 falsifies, C3 cannot execute.`
+- `ea85d2e 2026-08-20 Add Streamable HTTP MCP V1 slice and reject the empire connector spec.`
+- `d89a510 2026-08-20 Record C2 chat-seat opinion: GET 200 does not close GL-005.`
+- `962a699 2026-08-20 Record DeepSeek C5 chat-seat opinion on the board.`
+- `fccfc81 2026-08-20 Take C2 and C5 opinions from chat only.`
+- `15f0d8a 2026-08-20 Give DeepSeek a C5 seat on the existing board and channel.`
+- `e0efa32 2026-08-20 Record a current-HEAD GL-004 atomic receipt. GL-005 stays not proven.`
+- `46f24ac 2026-08-20 Record GL-005 orchestration demo as BLOCKED, not FAILED.`
+- `a618f78 2026-08-20 Observe the existing /api/tasks POST mutation without granting GL-005.`
+- `f017786 2026-08-20 Keep GL-005 proven false even if the live HTTP path is 2xx.`
+- `78850cd 2026-08-20 Hold GL-004 promotion after C1 falsification.`
+- `283caa7 2026-08-20 Record the isolated Wave2 proof receipt without a fake GL-005 PASS.`
+- `147d103 2026-08-20 Use webpack for the isolated worktree build.`
+- `1415416 2026-08-20 Isolate next build in a detached worktree so live .next stays untouched.`
+- `7c7a51b 2026-08-20 Classify GL-004 observations and isolate build without NEXT_CONFIG_FILE.`
+- `af7aa57 2026-08-20 Bind the live Next server for GL-004 RUNTIME_TRACE without spawning.`
+- `6107320 2026-08-20 Challenge Team Relay: reject shared-write mailboxes, do not implement.`
+- `b707296 2026-08-20 Add an in-repo mission board with role codes C0-C4.`
+- `a2dbed5 2026-08-20 Record quad-loop laws as DISCOVERED and fail-close GC parent exit.`
+- `feebca5 2026-08-20 Open the live RAIOS channel over Cognitive WAL.`
+- `f9384a4 2026-08-20 Reject GL-004/GL-005 certification of the in-flight Repair mutation.`
+- `6327c07 2026-08-20 Organize before expand: command vision, helper GC, RAIOS service.`
+- `dbd795a 2026-08-20 Record executor stop-state for the steering assistant.`
+- `e1dfd7c 2026-08-20 Record Wave 2 GL-004/GL-005 path-signal gaps without treating them as missing capabilities.`
+- `18feb63 2026-08-20 Preserve certifier forensic evidence after the stale-lock path check still failed closed.`
+- `82fa109 2026-08-20 Implement NeuroLingua NL-0 and preserve verified shipment origin salvage.`
+- `d3f5ca6 2026-08-18 RAIOS V9 A14.1 baseline preservation and continuity rebind`
+- `1eb0d59 2026-08-18 RAIOS V9 certified baseline through A14`
+- `fb130e2 2026-08-15 feat: add isolated RAIOS wave-2 worktree execution fabric`
+- `d4ca29b 2026-08-15 chore: establish authoritative wave-2 consolidation baseline`
+- `c403dba 2026-08-15 chore: launch RAIOS wave 2 with Claude and Cursor ownership`
+- `d0326d8 2026-08-13 fix: close E3 verified repair gates`
+- `46ce1b0 2026-08-13 test: align production readiness with current security gate`
+- `236da63 2026-08-13 feat: govern MasterMind with persisted evidence`
+- `d6d699e 2026-08-13 feat: read official evidence from registry`
+- `4d4578a 2026-08-13 feat: add governed official evidence registry`
+- `c076bd3 2026-08-13 fix: narrow evidence review session`
+- `a36aa21 2026-08-13 feat: add protected official evidence review api`
+- `bd8e609 2026-08-13 feat: add official export evidence gate`
+- `3a891a3 2026-08-12 fix: bind protected write actors to signed sessions`
+- `c1fc779 2026-08-12 feat: enforce API authorization and security audit`
+- `f9533a1 2026-08-12 fix: use Prisma join for guarded task queries`
+- `a67d246 2026-08-12 feat: add production readiness gate`
+- `0af8cdf 2026-08-12 feat: add GELS label readiness validator`
+- `27a9c84 2026-08-12 feat: add governed task orchestration core`
+- `fe9f5e0 2026-08-12 feat: add governed data intelligence fabric`
+- `77d8cba 2026-08-12 feat: add training factory and benchmark governance`
+- `365eba5 2026-08-12 feat: add controlled outcome learning ledger`
+- `6adde71 2026-08-12 test: add greeny life verification harness`
+- `9e10793 2026-08-12 feat: review egypt shipment tracking evidence`
+- `61275ae 2026-08-12 feat: add egypt supplier quality review`
+- `30a3d42 2026-08-12 feat: classify egypt operational data freshness`
+- `9b8727f 2026-08-12 feat: connect canonical integrity to egypt brain`
+- `091575c 2026-08-12 test: lock legacy brain behind evidence gate`
+- `9e854fb 2026-08-12 fix: require review for all GL-DOS operations`
+- `f41f634 2026-08-12 fix: govern workflow transitions`
+- `9dc3ab4 2026-08-12 docs: record E3 engine decision ledger`
+- `99ba3cc 2026-08-12 feat: add greeny life egypt operating brain`
+- `336159a 2026-08-12 feat: govern commercial changes in mastermind`
+- `2ba372b 2026-08-12 feat: unify commercial context for mastermind`
+- `68b787b 2026-08-12 feat: unify legacy intelligence tools registry`
+- `632e4e6 2026-08-12 feat: orchestrate three operating brains`
+- `3711a0d 2026-08-12 feat: add governed mastermind agents`
+- `4fa5d22 2026-08-12 fix: govern legacy intelligence runtime`
+- `b491130 2026-08-12 feat: consolidate legacy batch traceability`
+- `d8c9da9 2026-08-12 feat: add import processing reexport traceability`
+- `c8d1a64 2026-08-12 fix: enforce order workflow domain rules`
+- `d8cf0a8 2026-08-12 fix: repair legacy verification commands and preserve evidence gate`
+- `57ccdba 2026-08-12 feat: govern three-company trade and asset assimilation`
+- `d32c539 2026-08-12 feat: add evidence-first export decision runtime`
+- `041fbab 2026-08-12 feat: govern time-bound commercial changes`
+- `a7c9338 2026-08-12 docs: finalize runtime baseline guidance`
+- `a7f48fd 2026-08-12 chore: establish verified final runtime baseline`

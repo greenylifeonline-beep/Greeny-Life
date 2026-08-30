@@ -1,0 +1,219 @@
+﻿schema_version: 1
+
+concepts:
+
+  - concept_id: raios.knowledge.canonical_promotion
+    layer: GLOBAL
+    version: 1
+    provenance: raios-core
+    canonical_semantics: knowledge_state_transition
+    canonical:
+      type: knowledge_state_transition
+      from: [DISCOVERED, VALIDATED]
+      to: [CANONICAL]
+    realizations:
+      en:
+        preferred: "canonical promotion"
+      ar:
+        formal: "الترقية إلى المعرفة المعتمدة"
+        technical: "Canonical Promotion"
+        ar-EG: "اعتماد المعرفة نهائياً داخل النظام"
+      nb-NO:
+        preferred: "kanonisk kunnskapsforfremmelse"
+      sv-SE:
+        preferred: "kanonisk kunskapspromovering"
+      da-DK:
+        preferred: "kanonisk videnspromovering"
+
+  - concept_id: raios.system.regression
+    layer: GLOBAL
+    version: 1
+    provenance: raios-core
+    canonical_semantics: "A previously working capability becomes incorrect after a change."
+    canonical:
+      type: software_quality_concept
+      meaning: "A previously working capability becomes incorrect after a change."
+    realizations:
+      en:
+        preferred: "regression"
+      ar:
+        formal: "تراجع وظيفي بعد التغيير"
+        ar-EG:
+          aliases:
+            - "الدنيا هتبوظ"
+            - "حاجة تتكسر"
+            - "المشروع يبوظ"
+            - "متبوظش حاجة"
+      nb-NO:
+        preferred: "regresjon"
+      sv-SE:
+        preferred: "regression"
+      da-DK:
+        preferred: "regression"
+
+  - concept_id: raios.pragmatics.politeness_not_condition
+    layer: GLOBAL
+    version: 1
+    provenance: nl0
+    canonical_semantics: "A politeness formula must not be interpreted as a logical condition."
+    aliases:
+      - "إذا ما عليك أمر"
+      - "اذا ما عليك امر"
+    realizations:
+      ar-GULF:
+        preferred: "إذا ما عليك أمر"
+      ar-EG:
+        preferred: "لو سمحت"
+      en:
+        preferred: "please"
+      nb-NO:
+        preferred: "vennligst"
+      sv-SE:
+        preferred: "snälla"
+      da-DK:
+        preferred: "venligst"
+
+  - concept_id: raios.action.resolve
+    layer: GLOBAL
+    version: 1
+    provenance: nl0
+    canonical_semantics: "Resolve or complete the outstanding matter."
+    aliases:
+      - "خلصه"
+      - "خلصلي"
+      - "شوف لنا الموضوع"
+    realizations:
+      ar-EG:
+        preferred: "خلصلي الموضوع"
+      ar-GULF:
+        preferred: "شوف لنا الموضوع"
+      en:
+        preferred: "resolve"
+      nb-NO:
+        preferred: "løse"
+      sv-SE:
+        preferred: "lösa"
+      da-DK:
+        preferred: "løse"
+
+  - concept_id: greeny.actor.supplier
+    layer: DOMAIN
+    version: 1
+    provenance: greeny-life
+    canonical_semantics: "Party that supplies goods."
+    aliases:
+      - "supplier"
+      - "المورد"
+      - "مورد"
+      - "leverandør"
+    realizations:
+      en:
+        preferred: "supplier"
+      ar:
+        formal: "المورد"
+      ar-EG:
+        preferred: "المورد"
+      ar-GULF:
+        preferred: "المورد"
+      nb-NO:
+        preferred: "leverandør"
+
+  - concept_id: greeny.actor.customer
+    layer: DOMAIN
+    version: 1
+    provenance: greeny-life
+    canonical_semantics: "Party that receives goods."
+    aliases:
+      - "customer"
+      - "العميل"
+      - "kunde"
+    realizations:
+      en:
+        preferred: "customer"
+      ar:
+        formal: "العميل"
+      ar-EG:
+        preferred: "العميل"
+      ar-GULF:
+        preferred: "العميل"
+      nb-NO:
+        preferred: "kunde"
+
+  - concept_id: greeny.object.product
+    layer: DOMAIN
+    version: 1
+    provenance: greeny-life
+    canonical_semantics: "Tradable goods item."
+    aliases:
+      - "product"
+      - "products"
+      - "المنتج"
+      - "المنتجات"
+      - "produkt"
+    realizations:
+      en:
+        preferred: "product"
+      ar:
+        formal: "المنتج"
+      ar-EG:
+        preferred: "المنتج"
+      nb-NO:
+        preferred: "produkt"
+
+  - concept_id: greeny.action.ship
+    layer: DOMAIN
+    version: 1
+    provenance: greeny-life
+    canonical_semantics: "Move goods toward a destination."
+    aliases:
+      - "ship"
+      - "shipped"
+      - "ships"
+      - "شحن"
+      - "يشحن"
+    realizations:
+      en:
+        preferred: "ship"
+      ar:
+        formal: "شحن"
+      ar-EG:
+        preferred: "شحن"
+      nb-NO:
+        preferred: "sende"
+
+  - concept_id: greeny.action.receive
+    layer: DOMAIN
+    version: 1
+    provenance: greeny-life
+    canonical_semantics: "Take delivery of goods."
+    aliases:
+      - "receive"
+      - "received"
+      - "استلم"
+      - "يستلم"
+    realizations:
+      en:
+        preferred: "receive"
+      ar:
+        formal: "استلام"
+      ar-EG:
+        preferred: "استلم"
+      nb-NO:
+        preferred: "motta"
+
+  - concept_id: greeny.place.norway
+    layer: DOMAIN
+    version: 1
+    provenance: greeny-life
+    canonical_semantics: "Norway as destination market."
+    aliases:
+      - "Norway"
+      - "النرويج"
+      - "Norge"
+    realizations:
+      en:
+        preferred: "Norway"
+      ar:
+        formal: "النرويج"
+      nb-NO:
+        preferred: "Norge"

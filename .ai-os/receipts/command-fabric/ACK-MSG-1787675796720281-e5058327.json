@@ -1,0 +1,25 @@
+{
+  "schema": "raios.command-fabric.ack.v1",
+  "ts": "2026-08-25T16:45:28.454458+00:00",
+  "message_id": "MSG-1787675796720281-e5058327",
+  "type": "COMMAND_FABRIC_JOIN_REPAIR",
+  "from": "C2-OBS",
+  "to": "C1",
+  "status": "READ",
+  "moved": false,
+  "idempotent": {
+    "duplicate": false,
+    "applied": true,
+    "idempotency_key": "7c181ee6998b3047675f5e48ebd8d445516ff9fd6564dee15df6634936d7688d"
+  },
+  "duplicate_retry": {
+    "duplicate": true,
+    "applied": false,
+    "prior_output_hash": "5a7c1c83e010cc99cbe4398640472772feb15333481963fd3b9bd9fb4615b27a",
+    "idempotency_key": "7c181ee6998b3047675f5e48ebd8d445516ff9fd6564dee15df6634936d7688d"
+  },
+  "correlation_id": "corr-5a7c1c83e010",
+  "causation_id": "MSG-1787675796720281-e5058327",
+  "law": "ACK_IS_A_NEW_PACKET_NEVER_A_MOVE",
+  "gl005_proven": false
+}

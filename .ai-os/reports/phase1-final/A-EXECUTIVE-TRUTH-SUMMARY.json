@@ -1,0 +1,118 @@
+{
+  "schema": "raios.phase1-final.executive.v1",
+  "ts": "2026-08-25T17:38:17.605088+00:00",
+  "from": "C2-OBS",
+  "host": {
+    "HOST": "cursor",
+    "TREE_ID": "C2-CLOUD",
+    "ROOT": "/workspace",
+    "BRANCH": "v9-neurolingua-semantic-kernel",
+    "FULL_SHA": "ff366772edaa823e154fc53b76f52dd6fdf5ceb5",
+    "DATE": "2026-08-25T17:38:17.605088+00:00",
+    "STATE": "ON_DISK",
+    "bcId": "bc-dd60b5cf-95bd-4f24-9237-cc1b2225f013",
+    "url": "https://cursor.com/agents/bc-dd60b5cf-95bd-4f24-9237-cc1b2225f013"
+  },
+  "ag": {
+    "HOST": "AG",
+    "DEVICE": "AG",
+    "TREE_ID": "TREE-001",
+    "ROOT": "C:\\Users\\Ghanam\\Documents\\Codex\\Greeny-Life-Repair",
+    "BRANCH": "phase2a/class-a-20260822-232109",
+    "FULL_SHA": "12603d02253547c7727bc84ce68c318e8e9258bc",
+    "DATE": "2026-08-25",
+    "STATE": "EXTERNAL_ATTESTATION_PENDING_CROSS_HOST_BIND",
+    "object_in_this_store": false,
+    "dirty_tree_attested": true
+  },
+  "truth": [
+    "Phase 1 is not closed.",
+    "This executor proved C2-OBS bind onto /workspace keepers (lease, heartbeat, isolated channel, 8 tests) and CI on d17335a and ff36677.",
+    "That is not C2_JOIN_PROVEN, not Command Fabric E2E, not AG↔Cloud round trip.",
+    "C1/AG C5 public chat is recorded as external attestation; the local evidence file was not read here.",
+    "60 deleted paths in d17335a are enumerated with parent blob sha1+sha256; 58 zero-byte, 1 BOM-only, 1 PowerShell capture; 0 RESTORE_REQUIRED.",
+    "WAL git blob unchanged parent→d17335a; on-disk WAL remains dirty vs HEAD under A15; WAL_WRITTEN=false.",
+    "GL005_PROVEN=false. No merge/restore/delete/WAL/secret this turn."
+  ],
+  "flags": {
+    "D17335A_CI_PASS": true,
+    "FF36677_CI_PASS": true,
+    "C2_CLOUD_GUARDS_JOINED": true,
+    "C2_JOIN_PROVEN": false,
+    "COMMAND_FABRIC_E2E_PROVEN": false,
+    "CROSS_HOST_ROUND_TRIP_PROVEN": false,
+    "C5_PUBLIC_CHANNEL_PROVEN": false,
+    "C5_PUBLIC_CHANNEL_PROVEN_AG_ATTESTED": true,
+    "C5_PUBLIC_CHANNEL_PROVEN_C2_CLOUD": false,
+    "C5_FOUNDER_CHANNEL_PROVEN": false,
+    "C5_MAIN_CORTEX_PROVEN": false,
+    "WAL_WRITTEN": false,
+    "GL005_PROVEN": false,
+    "PHASE1_COMPLETE": false,
+    "READY_FOR_PHASE2": false,
+    "CI_PASS_NE_ASSIMILATION": true,
+    "ASSIMILATION_PROVEN": false
+  },
+  "join_answers": {
+    "q1_why_not_full_join": "Workspace-keeper bind and an isolated tmp-repo channel are not membership in unified RAIOS. Live MCP authenticate() requires a bearer token; tokens.local.json is absent. Health JSON hardcodes remote_c2_ready=false. Repair 12603d0 is absent. Isolated CHANNEL.json used ephemeral tokens under /tmp/c2-obs-fabric-jp8ochpd, head 5b574e19, not live tokens.",
+    "q2_three_joins": {
+      "workspace_guards": "C2-OBS lease/heartbeat/ACK against keepers in /workspace (MCP 8787, mail, aios locks, nomadic LeaseManager, C5 watchdog). PROVEN on this host as C2_CLOUD_GUARDS_JOINED.",
+      "unified_raios": "Authenticated live seat on the five-seat control plane with live send_packet/ack_packet, not isolated tmp, not founder paste. UNPROVEN.",
+      "repair_ag_tree": "Reach the AG worktree at 12603d0 plus its Command Fabric runtime. ABSENT from this object store; no cursor-agent; no automatic transport."
+    },
+    "q3_same_repo_only": true,
+    "q4_ag_to_cloud_without_manual_copy": false,
+    "q5_cloud_to_ag_automatic": false,
+    "q6_missing_symbol": {
+      "name": "MCP actor bearer token for live Gateway.authenticate()",
+      "file": ".ai-os/mcp/tokens.local.json",
+      "present_this_host": false,
+      "health_flag_also_hardcoded_false": true,
+      "code": [
+        "scripts/ai-os/raios_mcp/gateway.py:authenticate",
+        "scripts/ai-os/raios_mcp/server.py remote_c2_ready hardcoded False"
+      ]
+    },
+    "q7_issuer": "C1/owner only (POLICY actors + gitignored local grant or OAuth when remote MCP is registered). This C2-OBS must not mint secrets.",
+    "q8_store_without_revealing_value": ".ai-os/mcp/tokens.local.json (gitignored). Receipts may store sha256 of token, never the value. ACTORS.example.json holds placeholders only.",
+    "q9_minimum_c2_join_proven": [
+      "C1-issued scoped grant exists in gitignored tokens.local.json on the live control-plane process",
+      "Authenticated live MCP send_packet + ack_packet on 127.0.0.1:8787 (not tmp repo)",
+      "ACK is a new packet, never a move; delivery receipt on live mail/MCP keepers",
+      "Still insufficient for CROSS_HOST_ROUND_TRIP or Repair 12603d0"
+    ],
+    "q10_rebind_or_bridge": "Documented bridge only. No Actor rebind / SEAT-MAP overwrite this phase. C2 instance_role remains chatgpt-primary; this process is labeled C2-OBS by founder order."
+  },
+  "ci": {
+    "d17335a": {
+      "sha": "d17335a8a1428acdd0b98849550e4c930c1d9e97",
+      "govern": {
+        "conclusion": "success",
+        "url": "https://github.com/greenylifeonline-beep/Greeny-Life/actions/runs/32758902679"
+      },
+      "c5_week": {
+        "conclusion": "success",
+        "url": "https://github.com/greenylifeonline-beep/Greeny-Life/actions/runs/32758902678"
+      },
+      "gl005_proven": false,
+      "assimilation": false,
+      "law": "CI_PASS_NE_ASSIMILATION"
+    },
+    "ff36677": {
+      "sha": "ff366772edaa823e154fc53b76f52dd6fdf5ceb5",
+      "govern": {
+        "conclusion": "success",
+        "url": "https://github.com/greenylifeonline-beep/Greeny-Life/actions/runs/32874007962"
+      },
+      "c5_week": {
+        "conclusion": "success",
+        "url": "https://github.com/greenylifeonline-beep/Greeny-Life/actions/runs/32874007974"
+      },
+      "gl005_proven": false,
+      "assimilation": false,
+      "law": "CI_PASS_NE_ASSIMILATION",
+      "verified_at": "2026-08-25T17:38:17.605088+00:00"
+    }
+  },
+  "smallest_safe_next": "C1 issues a scoped gitignored MCP grant and a documented bridge (public HTTPS on the SAME 8787 process, or nonce blob+founder relay already described in LAST-CENSUS). Do not rebind actors. Do not merge trees. Do not restore husks."
+}

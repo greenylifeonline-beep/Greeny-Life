@@ -1,0 +1,30 @@
+{
+  "schema": "raios.council-case.v1",
+  "id": "CASE-001",
+  "meeting_id": "GL-COUNCIL-4a11023c3c321b6f",
+  "from": "C1",
+  "ts": "2026-08-20T20:12:00+00:00",
+  "text": "القضية هي كيف نتشاور هنا بشكل دائم — كيفية التغلب على العدم الحديث / طريقة المشاورة الجماعية",
+  "status": "METHOD_BOUND_DISCOVERED",
+  "channel": "founder_whisper",
+  "public_url_required": false,
+  "operational_truth": false,
+  "gl005_proven": false,
+  "wal_written": false,
+  "method": [
+    "C1 founder chat is the only inbound bridge",
+    "C1 relays actor lines unmodified",
+    "each SAY carries MEETING_ID CASE_ID ACTOR_ID",
+    "FLOOR is shared log not a member and not operational truth",
+    "meeting SEAL binds identity; no new SEAL per opinion",
+    "pattern C1→actor→C1→council",
+    "consult does not grant PASS"
+  ],
+  "says": {
+    "C1": "relayed C3 and C4 ACK",
+    "C2": "RECORDED",
+    "C3": "ACK_RECEIVED",
+    "C4": "ACK_RECEIVED",
+    "C5": "RECORDED"
+  }
+}

@@ -1,0 +1,31 @@
+{
+  "schema": "raios.resource-governor-audit.v1",
+  "generated_at": "2026-08-20T06:54:49.317314+00:00",
+  "p0": "MEMORY_CAPACITY_FAILURE",
+  "evidence": [
+    "_raios-qwen-forensics/reports/QWEN36-FORENSIC-CERTIFICATION.json",
+    "_raios-learning-law/reports/QWEN-RUNTIME-ROOT-CAUSE.json",
+    "_raios-a17-native-cortex/evidence/a17-13/RESOURCE-SNAPSHOT.json"
+  ],
+  "findings": {
+    "weights_ok": true,
+    "operational_integrity": "NOT_PROVEN",
+    "model_blob_gb": 22.294,
+    "host_ram_gb": 7.8,
+    "free_ram_observed_prior": [
+      1.45,
+      0.17,
+      0.88
+    ],
+    "root_cause": "host RAM cannot resident qwen3.6:35b-a3b",
+    "do_not_replace_main_cortex_identity": true
+  },
+  "governor_implemented": {
+    "path": "src/raios/neuro_lingua/governor.py",
+    "admits_by_free_ram": true,
+    "fallback_deterministic": true,
+    "controls_ollama_keep_alive": false,
+    "controls_num_parallel": false
+  },
+  "status": "PARTIAL_REPAIR"
+}

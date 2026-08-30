@@ -20,4 +20,15 @@ assert.ok(taskConflicts.some((item) => item.kind === "DUPLICATE_TASK"));
 assert.ok(taskConflicts.some((item) => item.kind === "SELF_DEPENDENCY"));
 assert.equal(assessTaskInterestConflict({ requestedBy: "owner@greeny.life", proposedApprover: "OWNER@greeny.life" }).status, "BLOCKED_SELF_APPROVAL");
 assert.equal(assessTaskInterestConflict({ requestedBy: "owner@greeny.life", proposedApprover: "approver@greeny.life" }).status, "DISTINCT_APPROVER_REQUIRED");
+
+import { readFileSync } from "node:fs";
+const routeSource = readFileSync("app/api/tasks/route.ts", "utf8");
+assert.match(routeSource, /export async function GET/);
+assert.match(routeSource, /export async function POST/);
+assert.match(routeSource, /createTaskContract/);
+assert.equal(/export async function PATCH/.test(routeSource), false);
+assert.equal(/export async function PUT/.test(routeSource), false);
+assert.equal(/export async function DELETE/.test(routeSource), false);
+assert.match(routeSource, /INSERT INTO "OrchestrationTask"/);
+
 console.log("Task orchestration core: PASS");

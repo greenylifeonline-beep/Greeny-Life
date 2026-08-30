@@ -1,0 +1,24 @@
+{
+  "schema": "raios.v9.neurolingua.provider-map.v1",
+  "routing_order": [
+    "deterministic",
+    "cheap_local",
+    "specialized_local",
+    "main_cortex",
+    "optional_remote_burst"
+  ],
+  "providers": [
+    {
+      "provider_id": "deterministic-neuro-lingua",
+      "offline": true,
+      "hardcoded_model": false,
+      "capabilities": "all NL-0 stages currently"
+    },
+    {
+      "provider_id": "main-cortex-capability",
+      "offline": true,
+      "hardcoded_model": false,
+      "availability": "DENIED_BY_RAM_THIS_HOST"
+    }
+  ]
+}

@@ -1,0 +1,309 @@
+{
+  "schema": "raios.unique-asset-reconciliation.v1",
+  "ts": "2026-08-22T09:40:38.402148+00:00",
+  "reachable_unique_to_live_vs_clone_v9_tracked": 246,
+  "reachable_unique_to_clone_v9_tracked": 0,
+  "reachable_unique_to_clone_v9_paths": [],
+  "live_only_vs_clone_v9_sample": [
+    ".ai-os/council/BIND-CASE-007.md",
+    ".ai-os/council/BIND-CASE-012.md",
+    ".ai-os/council/BIND-CASE-013.md",
+    ".ai-os/council/BIND-CASE-014.md",
+    ".ai-os/council/BIND-CASE-016.md",
+    ".ai-os/council/BIND-CASE-017.md",
+    ".ai-os/council/BIND-CASE-018.md",
+    ".ai-os/council/BIND-CASE-021.md",
+    ".ai-os/council/BIND-CASE-022.md",
+    ".ai-os/council/CASE-006.json",
+    ".ai-os/council/CASE-007.json",
+    ".ai-os/council/CASE-008.json",
+    ".ai-os/council/CASE-009.json",
+    ".ai-os/council/CASE-012.json",
+    ".ai-os/council/CASE-013.json",
+    ".ai-os/council/CASE-014.json",
+    ".ai-os/council/CASE-016.json",
+    ".ai-os/council/CASE-017.json",
+    ".ai-os/council/CASE-018.json",
+    ".ai-os/council/CASE-021.json",
+    ".ai-os/council/CASE-022.json",
+    ".ai-os/council/MAP-CASE-006.md",
+    ".ai-os/council/PLAN-CASE-007.md",
+    ".ai-os/council/SAY-C3-CASE-007-CONSULT.json",
+    ".ai-os/council/packets/WAVE-CCN-C2.json",
+    ".ai-os/council/packets/WAVE-CCN-C3.json",
+    ".ai-os/council/packets/WAVE-CCN-C4.json",
+    ".ai-os/council/packets/WAVE-CCN-C5.json",
+    ".ai-os/handoffs/20260820-220628-cursor-GL-004.md",
+    ".ai-os/handoffs/20260820-221643-cursor-GL-004.md",
+    ".ai-os/handoffs/20260820-223136-cursor-GL-004.md",
+    ".ai-os/handoffs/20260820-223541-cursor-GL-004.md",
+    ".ai-os/handoffs/20260820-224106-cursor-GL-004.md",
+    ".ai-os/handoffs/20260820-231802-cursor-GL-004.md",
+    ".ai-os/handoffs/20260820-232410-cursor-GL-004.md",
+    ".ai-os/handoffs/20260820-235001-cursor-GL-004.md",
+    ".ai-os/handoffs/20260821-001638-cursor-GL-004.md",
+    ".ai-os/handoffs/20260821-013546-cursor-GL-004.md",
+    ".ai-os/handoffs/20260821-014947-cursor-GL-004.md",
+    ".ai-os/handoffs/20260821-020030-cursor-GL-004.md"
+  ],
+  "reachable_unique_to_repair": null,
+  "clone_main_unique_tracked": 575,
+  "clone_main_unique_top_dirs": {
+    "(.env": 1,
+    ".architecture-backups": 158,
+    "BOUND.md": 1,
+    "DOC_INDEX.txt": 1,
+    "DOC_METADATA.csv": 1,
+    "EOS-Connect-Brain.ps1": 1,
+    "EOS-HealthCheck.ps1": 1,
+    "EOS-Setup-Environment.ps1": 1,
+    "PROJECT_FILES.txt": 1,
+    "Project_Audit.txt": 1,
+    "Real_Project_Files.txt": 1,
+    "TECHNICAL_DEBT.txt": 1,
+    "__tests__": 1,
+    "app": 31,
+    "app_tree.txt": 1,
+    "backup": 86,
+    "components": 9,
+    "data": 36,
+    "docs": 22,
+    "eos-health-report.json": 1,
+    "eos_architecture": 2,
+    "folders_tree.txt": 1,
+    "full_report.json": 1,
+    "health.json": 1,
+    "health_report.json": 1,
+    "index.html": 1,
+    "initial_inspection.json": 1,
+    "intelligence": 32,
+    "legacy_audit_reports": 4,
+    "lib": 9,
+    "logo.png": 1,
+    "logs": 12,
+    "middleware.ts": 1,
+    "notebook8c2d6a9080.ipynb": 1,
+    "prisma": 2,
+    "products_data": 1,
+    "project-summary.txt": 1,
+    "project-tree.txt": 1,
+    "reports": 33,
+    "scripts": 20,
+    "services": 1,
+    "src": 9,
+    "sync_git.ps1": 1,
+    "test_db_entities.py": 1,
+    "unified-intelligence": 81
+  },
+  "clone_main_source_like_outside_backups": [
+    "BOUND.md",
+    "__tests__/workflowEngine.test.ts",
+    "components/layout/Footer.tsx",
+    "components/layout/Header.tsx",
+    "components/layout/Navigation.tsx",
+    "components/sections/Collections.tsx",
+    "components/sections/Contact.tsx",
+    "components/sections/Hero.tsx",
+    "components/ui/Loader.tsx",
+    "components/ui/Modal.tsx",
+    "components/ui/Toast.tsx",
+    "docs/README.md",
+    "docs/architecture/SYSTEM_ARCHITECTURE.md",
+    "docs/auto-generated/administration.md",
+    "docs/auto-generated/analytics.md",
+    "docs/auto-generated/compliance.md",
+    "docs/auto-generated/crm.md",
+    "docs/auto-generated/finance.md",
+    "docs/auto-generated/gl_dos.md",
+    "docs/auto-generated/logistics.md",
+    "docs/auto-generated/master_data.md",
+    "docs/auto-generated/operations.md",
+    "docs/legacy_brand.md",
+    "docs/migrated_brand.md",
+    "docs/packaging/PACKING_CODES.md",
+    "docs/packaging/packaging_master.md",
+    "docs/products/PRODUCT_CODE.md",
+    "docs/products/PRODUCT_DATABASE.md",
+    "docs/products/PRODUCT_LIBRARY.md",
+    "docs/products/PRODUCT_MASTER.md",
+    "docs/products/PRODUCT_TEMPLATE.md",
+    "docs/standards/01_BRAND_STANDARD.md",
+    "intelligence/core/confidence.ts",
+    "intelligence/core/engine-registry.ts",
+    "intelligence/core/report-writer.ts",
+    "intelligence/duplicate-engine.ts",
+    "intelligence/engines/audit-engine.ts",
+    "intelligence/engines/cleanup-engine.ts",
+    "intelligence/engines/data-integrity-engine.ts",
+    "intelligence/engines/duplicate-engine-v2.ts"
+  ],
+  "mcp_unique": [
+    {
+      "id": "TMP_MCP_00",
+      "path": "/tmp/raios-mcp-1_vt2eyf",
+      "unique_tracked": [
+        ".ai-os/receipts/SAMPLE.json"
+      ],
+      "copied": false
+    },
+    {
+      "id": "TMP_MCP_01",
+      "path": "/tmp/raios-mcp-3lmjycv5",
+      "unique_tracked": [
+        ".ai-os/receipts/SAMPLE.json"
+      ],
+      "copied": false
+    },
+    {
+      "id": "TMP_MCP_02",
+      "path": "/tmp/raios-mcp-60aunid1",
+      "unique_tracked": [
+        ".ai-os/receipts/SAMPLE.json"
+      ],
+      "copied": false
+    },
+    {
+      "id": "TMP_MCP_03",
+      "path": "/tmp/raios-mcp-_9cpdvai",
+      "unique_tracked": [
+        ".ai-os/receipts/SAMPLE.json"
+      ],
+      "copied": false
+    },
+    {
+      "id": "TMP_MCP_04",
+      "path": "/tmp/raios-mcp-accept-3ohu50ji",
+      "unique_tracked": [
+        ".ai-os/receipts/SAMPLE.json",
+        "app/secret.ts"
+      ],
+      "copied": false
+    },
+    {
+      "id": "TMP_MCP_05",
+      "path": "/tmp/raios-mcp-accept-n8kd30rr",
+      "unique_tracked": [
+        ".ai-os/receipts/SAMPLE.json",
+        "app/secret.ts"
+      ],
+      "copied": false
+    },
+    {
+      "id": "TMP_MCP_06",
+      "path": "/tmp/raios-mcp-accept-nxf9f0g1",
+      "unique_tracked": [
+        ".ai-os/receipts/SAMPLE.json",
+        "app/secret.ts"
+      ],
+      "copied": false
+    },
+    {
+      "id": "TMP_MCP_07",
+      "path": "/tmp/raios-mcp-accept-sdl8s2ch",
+      "unique_tracked": [
+        ".ai-os/receipts/SAMPLE.json",
+        "app/secret.ts"
+      ],
+      "copied": false
+    },
+    {
+      "id": "TMP_MCP_08",
+      "path": "/tmp/raios-mcp-accept-uv3y0q0j",
+      "unique_tracked": [
+        ".ai-os/receipts/SAMPLE.json",
+        "app/secret.ts"
+      ],
+      "copied": false
+    },
+    {
+      "id": "TMP_MCP_09",
+      "path": "/tmp/raios-mcp-accept-wcjsdvub",
+      "unique_tracked": [
+        ".ai-os/receipts/SAMPLE.json",
+        "app/secret.ts"
+      ],
+      "copied": false
+    },
+    {
+      "id": "TMP_MCP_10",
+      "path": "/tmp/raios-mcp-nmsjisib",
+      "unique_tracked": [
+        ".ai-os/receipts/SAMPLE.json"
+      ],
+      "copied": false
+    },
+    {
+      "id": "TMP_MCP_11",
+      "path": "/tmp/raios-mcp-u1j5psz_",
+      "unique_tracked": [
+        ".ai-os/receipts/SAMPLE.json"
+      ],
+      "copied": false
+    },
+    {
+      "id": "TMP_MCP_12",
+      "path": "/tmp/raios-mcp-y14kdw0f",
+      "unique_tracked": [
+        ".ai-os/receipts/SAMPLE.json"
+      ],
+      "copied": false
+    }
+  ],
+  "merge_batches": [
+    {
+      "batch": 1,
+      "pair": "C2C5_LIVE vs TMP_C5_CLONE_V9",
+      "action": "NO_COPY",
+      "reason": "stale clone is tracked subset; unique_tracked=0",
+      "hash_before_head": "c21dfd71e23b81a5758a8d99beddaac1228cc8ed",
+      "hash_after_head": "c21dfd71e23b81a5758a8d99beddaac1228cc8ed",
+      "copied_paths": [],
+      "tests": "pytest tests/neuro_lingua/test_cross_tree.py"
+    },
+    {
+      "batch": 2,
+      "pair": "C2C5_LIVE vs TMP_C5_CLONE_MAIN",
+      "action": "NO_COPY",
+      "reason": "origin/main dump: architecture-backups, images, 87MB project-summary, stale HTML site. Not unique RAIOS capability.",
+      "hash_before_head": "c21dfd71e23b81a5758a8d99beddaac1228cc8ed",
+      "hash_after_head": "c21dfd71e23b81a5758a8d99beddaac1228cc8ed",
+      "copied_paths": [],
+      "tests": "pytest tests/neuro_lingua/test_cross_tree.py"
+    },
+    {
+      "batch": 3,
+      "pair": "C2C5_LIVE vs TMP_MCP_*",
+      "action": "NO_COPY",
+      "reason": "ephemeral MCP accept sandboxes; unique app/secret.ts is `export const x = 1` fixture",
+      "copied_paths": []
+    },
+    {
+      "batch": 4,
+      "pair": "C2C5_LIVE vs C3C4_REPAIR",
+      "action": "HOLD",
+      "reason": "unreachable; unique work UNKNOWN; do not impersonate a merge",
+      "copied_paths": []
+    }
+  ],
+  "copied_paths": [],
+  "diverged_resolved": [
+    {
+      "pair": "C2C5_LIVE vs TMP_C5_CLONE_V9",
+      "resolution": "KEEP_LIVE_NEWER_SUPERSET",
+      "unique_on_stale_tracked": 0,
+      "hash_before_head": "c21dfd71e23b81a5758a8d99beddaac1228cc8ed",
+      "hash_after_head": "c21dfd71e23b81a5758a8d99beddaac1228cc8ed",
+      "copied": false
+    },
+    {
+      "pair": "C2C5_LIVE vs TMP_C5_CLONE_MAIN",
+      "resolution": "KEEP_LIVE_REJECT_STALE_MAIN_DUMP",
+      "copied": false
+    }
+  ],
+  "repair_unique_work": "UNKNOWN_UNREACHABLE",
+  "blind_copy_over": false,
+  "authorship_preserved": true,
+  "note": "No file copied. Stale /tmp clones are subset or main-dump. Repair unique uncommitted work cannot be merged until the tree is mounted or pushed.",
+  "gl005_proven": false
+}

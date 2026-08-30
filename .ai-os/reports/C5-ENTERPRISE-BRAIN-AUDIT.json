@@ -1,0 +1,45 @@
+{
+  "schema": "raios.c5-enterprise-brain-audit.v1",
+  "knowledge_state": "DISCOVERED",
+  "canonical": false,
+  "from": "C2",
+  "parent": "C1",
+  "head": "482e24584b6fc06fc3c487516eabf296a40b1d54",
+  "gl005_proven": false,
+  "destructive_delete": false,
+  "maturity": "HYBRID_RETRIEVAL_PLUS_TIER0_DETERMINISTIC",
+  "extracted_qwen_granite": false,
+  "host": {
+    "ram_gb_total": 15.64,
+    "gpu": false,
+    "host_reason": "HOST_NO_GPU"
+  },
+  "ollama_live_models": ["qwen2.5:0.5b"],
+  "generate": {
+    "qwen2.5:0.5b": "PASS pong 2480ms",
+    "qwen2.5:13b": "FAIL HTTP 404",
+    "qwen3.6:35b-a3b": "FAIL HTTP 404",
+    "qwq": "FAIL HTTP 404",
+    "granite4:3b": "FAIL HTTP 404",
+    "deepseek-r1:1.5b": "FAIL HTTP 404",
+    "qwen2.5-coder": "FAIL HTTP 404"
+  },
+  "index": {"docs": 3396, "granite": 0, "qwq": 0, "13b": 0, "matrix": 0},
+  "c5_live_answer": {
+    "ollama_used": false,
+    "model_call_count": 0,
+    "stop_stage": "ANSWER",
+    "cortex_bound": false
+  },
+  "remaining_small_named": ["granite4:3b", "qwen25_coder"],
+  "remaining_small_live": ["qwen2.5:0.5b"],
+  "safe_to_remove_any_source": false,
+  "pytest": "17 passed test_reason test_kae test_cortex test_whoami test_mind_fill",
+  "law": [
+    "ROLE_IDENTITY_NE_MODEL_IDENTITY",
+    "LOCAL_SOURCE_NE_LOCAL_MODEL_EXECUTION",
+    "RETRIEVAL_RESULT_NE_COGNITIVE_ANSWER",
+    "C1_OWNS_CORTEX_TREAT_RUN_THROW",
+    "HOLD_NE_THROW"
+  ]
+}

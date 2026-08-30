@@ -1,0 +1,79 @@
+commit d17335a8a1428acdd0b98849550e4c930c1d9e97
+Author: Cursor Agent <cursoragent@cursor.com>
+Date:   Mon Aug 24 17:49:47 2026 +0000
+
+    Delete unrepairable zero-byte husks and a PowerShell capture path.
+    
+    Keep empty JSONL ledgers, gitkeep, A15 quarantine proof, and GL-003 placeholders. Do not fabricate JSON.
+    
+    Co-authored-by: greenylifeonline-beep <greenylifeonline-beep@users.noreply.github.com>
+
+ .ai-os/handoffs/20260824-174930-cursor-GL-004.md   |  10 +
+ .ai-os/receipts/c5-unrepairable-gc/LAST.json       | 507 +++++++++++++++++++++
+ .ai-os/receipts/c5-unrepairable-gc/LAST.md         |  10 +
+ .ai-os/reports/UNREPAIRABLE-GC.json                | 507 +++++++++++++++++++++
+ .ai-os/state/CURRENT-STATE.json                    |   3 +-
+ .ai-os/state/DECISIONS.md                          |   4 +
+ .ai-os/state/LOCKS.json                            |  70 +++
+ ImageInventory.csv                                 |   0
+ app/js/script.js                                   |   0
+ app/views/products.html                            |   0
+ application/customer/commands/customer-command.ts  |   0
+ application/customer/queries/customer-query.ts     |   0
+ .../customer/workflows/customer-workflow.ts        |   0
+ .../inventory/commands/inventory-command.ts        |   0
+ application/inventory/queries/inventory-query.ts   |   0
+ .../inventory/workflows/inventory-workflow.ts      |   0
+ .../logistics/commands/logistics-command.ts        |   0
+ application/logistics/queries/logistics-query.ts   |   0
+ .../logistics/workflows/logistics-workflow.ts      |   0
+ application/product/commands/product-command.ts    |   0
+ application/product/queries/product-query.ts       |   0
+ application/product/workflows/product-workflow.ts  |   0
+ application/quality/commands/quality-command.ts    |   0
+ application/quality/queries/quality-query.ts       |   0
+ application/quality/workflows/quality-workflow.ts  |   0
+ application/supplier/commands/supplier-command.ts  |   0
+ application/supplier/queries/supplier-query.ts     |   0
+ .../supplier/workflows/supplier-workflow.ts        |   0
+ .../scripts/phase-2-capability-discovery.ps1       |   0
+ data/03_packaging_system.json                      |   0
+ data/legacy/packaging.json                         |   0
+ data/migrated_products.json                        |   0
+ database/connections/index.ts                      |   0
+ database/indexes/README.md                         |   0
+ database/models/entities.ts                        |   0
+ database/models/index.ts                           |   0
+ database/repositories/index.ts                     |   0
+ database/repositories/repository-contracts.ts      |   0
+ database/schemas/core/enterprise-schema.ts         |   0
+ database/schemas/domain/domain-schema.ts           |   0
+ database/schemas/index.ts                          |   0
+ domain/customer/entities/customer-entity.ts        |   0
+ domain/customer/rules/customer-rules.ts            |   0
+ domain/customer/services/customer-service.ts       |   0
+ domain/inventory/entities/inventory-entity.ts      |   0
+ domain/inventory/rules/inventory-rules.ts          |   0
+ domain/inventory/services/inventory-service.ts     |   0
+ domain/logistics/entities/logistics-entity.ts      |   0
+ domain/logistics/rules/logistics-rules.ts          |   0
+ domain/logistics/services/logistics-service.ts     |   0
+ domain/product/entities/product-entity.ts          |   0
+ domain/product/rules/product-rules.ts              |   0
+ domain/product/services/product-service.ts         |   0
+ domain/quality/entities/quality-entity.ts          |   0
+ domain/quality/rules/quality-rules.ts              |   0
+ domain/quality/services/quality-service.ts         |   0
+ domain/supplier/entities/supplier-entity.ts        |   0
+ domain/supplier/rules/supplier-rules.ts            |   0
+ domain/supplier/services/supplier-service.ts       |   0
+ .../master-data/contracts/master-data-contracts.ts |   0
+ .../master-data/events/master-data-events.ts       |   0
+ .../master-data/mapping/entity-mapping.ts          |   0
+ .../master-data/schemas/master-data-schema.ts      |   0
+ .../master-data/validation/master-data-rules.ts    |   0
+ ...0\272.env \357\201\274 Select-Object -First 20" | 326 -------------
+ run_brain_cli.py                                   |   1 -
+ scripts/repair-canonical-products.ps1              |   0
+ tests/neuro_lingua/test_unrepairable_gc.py         |  34 ++
+ 68 files changed, 1144 insertions(+), 328 deletions(-)

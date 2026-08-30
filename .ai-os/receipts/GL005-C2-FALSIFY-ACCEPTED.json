@@ -1,0 +1,64 @@
+{
+  "schema": "raios.gl005-c2-falsify-accepted.v1",
+  "knowledge_state": "DISCOVERED",
+  "from": "C1",
+  "role": "COMMANDER",
+  "recorded_at": "2026-08-20T16:57:59.555592+00:00",
+  "HEAD": "9ba64be3e77b5f830028e52267126897a22d895e",
+  "GL004_PROVEN": true,
+  "GL004_PRODUCTION_RUNTIME_PROVEN": false,
+  "GL005_PROVEN": false,
+  "c2_verdict": "FALSIFICATION_ACCEPTED",
+  "chain_status": "BROKEN",
+  "breakpoint": "AUTHENTICATED_MUTATION",
+  "capability": "PRESENT_BUT_PROTECTED_AND_UNPROVEN",
+  "taxonomy": [
+    "CAPABILITY_ABSENT",
+    "CAPABILITY_BROKEN",
+    "CAPABILITY_PROTECTED",
+    "CAPABILITY_UNAVAILABLE",
+    "CAPABILITY_UNPROVEN"
+  ],
+  "laws": [
+    "AUTHENTICATION_BLOCK_IS_A_VALID_ORCHESTRATION_PROOF_BOUNDARY",
+    "PROTECTED_CAPABILITY_NE_MISSING_CAPABILITY",
+    "POST_401_NE_STATE_TRANSITION",
+    "AUTH_GATE_PRESENT_NE_AUTHENTICATED_MUTATION",
+    "UNIT_CONTRACT_PASS_NE_LIVE_ORCHESTRATION",
+    "UNCHANGED_STATE_NE_ORCHESTRATION_DEMONSTRATED",
+    "FAILURE_ON_INSTANCE_B_NE_FAILURE_ON_REPAIR"
+  ],
+  "full_falsified_claims": [
+    "tests/task_orchestration_check.ts exit 0 demonstrates orchestration",
+    "POST 401 is a state transition",
+    "GET 500 before/after with equal hashes is persistence of a new OrchestrationTask",
+    "GL004 five-child PASS implies GL005",
+    "MCP V1 rendezvous implies GL005",
+    "this slice DATABASE_URL 500 authorizes new infrastructure"
+  ],
+  "instance_b": {
+    "pid": 3297,
+    "cwd": "/workspace",
+    "GET_api_auth_session": {
+      "success": true,
+      "authenticated": false,
+      "session": null
+    },
+    "LEGITIMATE_SESSION_AVAILABLE": false,
+    "classification": "BLOCKED_AUTH",
+    "authority": false
+  },
+  "mcp": {
+    "c2_opinion_id": "fe703855-bcb7-4f2e-afc2-b02a80e4520d",
+    "c2_packet_id": "718807a6-dd89-4085-a7b4-281198915a62",
+    "c1_opinion_id": "728f6362-a46c-4200-9882-2abded734d02",
+    "c1_to_c3_packet_id": "f7ea1838-18a1-45c0-ba37-273c9acb9f7e",
+    "c1_ack_packet_id": "fe3c7f35-882a-4d5e-afa4-b74c9ddd3621",
+    "wal_status": "GATEWAY_DID_NOT_WRITE_WAL",
+    "wal_mtime_unchanged": true,
+    "remote_c2_ready": false
+  },
+  "learning_candidate_id": "afa19d5f-0ce9-47f0-b0be-a8d0ccff7308",
+  "c3_packet_file": ".ai-os/handoffs/20260820-C3-REPAIR-AUTH-DISCRIMINATOR.json",
+  "decision": "D-022"
+}

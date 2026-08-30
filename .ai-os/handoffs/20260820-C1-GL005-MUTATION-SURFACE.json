@@ -1,0 +1,49 @@
+{
+  "schema": "raios.executive-review.v1",
+  "from": "EXECUTIVE_REVIEWER",
+  "to": "COMMANDER",
+  "status": "MUTATION_NOT_PROVEN",
+  "knowledge_state": "DISCOVERED",
+  "task": "GL-005",
+  "GL005_PROVEN": false,
+  "classification_repair": "LIVE_READ_PATH_PROVEN_EXECUTION_MUTATION_NOT_YET_PROVEN",
+  "classification_this_slice": "MUTATION_NOT_PROVEN",
+  "this_slice_observation": {
+    "pid": 3297,
+    "BEFORE_HTTP": 500,
+    "ACTION_HTTP": 401,
+    "AFTER_HTTP": 500,
+    "STATE_CHANGED": false,
+    "UNIT_TEST_EXIT": 0,
+    "RECEIPT_SHA256": "c64b4eee50752ce254b0f443a0b991811ab6876d05214279b144e9edcb734b6e",
+    "body_sha256_get": "2d83e3221adc6bf462804665918ddacda0bdaca78e97ccf140d5fc567879748d",
+    "pid_alive": true
+  },
+  "smallest_real_transition": {
+    "BEFORE_STATE": "GET /api/tasks semantic success:true with data[] on the bound Next process",
+    "ACTION": "POST /api/tasks through existing app/api/tasks/route.ts: authorizeRequest + createTaskContract + INSERT OrchestrationTask",
+    "ACTION_PROCESS_EXIT": "HTTP 201 and success:true (401 means surface present but identity missing; 500 is application failure)",
+    "AFTER_STATE": "GET returns the new id with status REVIEW_REQUIRED",
+    "STATE_CHANGED": "new OrchestrationTask row observed; GET-before ≠ GET-after",
+    "DOMAIN_INVARIANT_PRESERVED": "execution remains false; review-only; no commercial side effect; no second server",
+    "RECEIPT_SHA256": "c64b4eee50752ce254b0f443a0b991811ab6876d05214279b144e9edcb734b6e"
+  },
+  "surface": {
+    "GET": "read-only SELECT",
+    "POST": "only durable mutation in the three named files",
+    "PATCH_PUT_DELETE": "absent on /api/tasks",
+    "domain_module": "pure functions; no Prisma",
+    "unit_test": "no HTTP and no database",
+    "validateTaskTransition": "describes COMPLETED/VALIDATING; nothing applies it over HTTP"
+  },
+  "law_attack": {
+    "candidate": "ORCHESTRATION_DEMONSTRATED_REQUIRES_OBSERVED_STATE_TRANSITION",
+    "ruling": "ACCEPT_SCOPED_REJECT_STRENGTHENED"
+  },
+  "not_done": [
+    "No forged gl_session",
+    "No minted DATABASE_URL or APP_SESSION_SECRET",
+    "No Docker/Postgres provisioning from stale 500",
+    "No GL-005 PASS"
+  ]
+}

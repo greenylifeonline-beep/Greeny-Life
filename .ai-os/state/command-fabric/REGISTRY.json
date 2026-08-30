@@ -1,0 +1,28 @@
+{
+  "schema": "raios.command-fabric.registry.v1",
+  "ts": "2026-08-25T16:45:28.510442+00:00",
+  "workers": {
+    "C2-OBS": {
+      "status": "ALIVE",
+      "host": "cursor",
+      "kind": "cursor-cloud-observer"
+    },
+    "C5": {
+      "status": "LIVE_SCREEN",
+      "ports": [
+        8765,
+        8876
+      ]
+    },
+    "MCP": {
+      "status": "LIVE",
+      "port": 8787,
+      "authenticated_remote_c2": false
+    },
+    "REPAIR_WORKERS": {
+      "status": "UNREACHABLE",
+      "note": "12603d0 absent; reported STALE on Repair host"
+    }
+  },
+  "gl005_proven": false
+}

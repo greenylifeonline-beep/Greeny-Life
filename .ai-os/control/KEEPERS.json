@@ -1,0 +1,33 @@
+{
+  "schema": "raios.command-fabric.keepers.v1",
+  "law": [
+    "NO_ALTERNATE_CONTROL_PLANE",
+    "ENVELOPE_NE_BUS",
+    "MCP_GATEWAY_NE_TRUTH_AUTHORITY",
+    "ACK_IS_A_NEW_PACKET_NEVER_A_MOVE",
+    "MAIL_PASSES_NE_PROVES"
+  ],
+  "control_plane": "existing MCP V1 + mail + aios locks + nomadic lease/idempotency + c5 watchdog",
+  "not_created": "second bus, ninth MCP tool, second WAL, Repair .ai-os/control runtime",
+  "keepers": {
+    "mcp_gateway": "scripts/ai-os/raios_mcp/gateway.py",
+    "mcp_server": "scripts/ai-os/raios_mcp/server.py",
+    "mail": "scripts/ai-os/raios-mail.py",
+    "heartbeat": "scripts/ai-os/raios-service-heartbeat.py",
+    "watchdog": "scripts/ai-os/raios_c5_watchdog.py",
+    "leases": "RAIOS/V9/cloud/nomadic/lease_manager.py",
+    "idempotency": "RAIOS/V9/cloud/nomadic/idempotency.py",
+    "c5_screen": "scripts/ai-os/raios_c5_screen.py",
+    "c5_train": "scripts/ai-os/raios_c5_train.py",
+    "cross_host_adapter": "scripts/ai-os/raios_mcp/cross_host_adapter.py",
+    "cross_host_packet_schema": ".ai-os/mcp/CROSS-HOST-PACKET.schema.json",
+    "route_registry": ".ai-os/mcp/ROUTE-REGISTRY.json",
+    "envelope_schema": ".ai-os/mcp/ENVELOPE.schema.json"
+  },
+  "missing_on_this_host": {
+    "cursor-agent": true,
+    "raios_multimodal_gateway.py": true,
+    "repair_tree_12603d0": true,
+    ".ai-os/control runtime from Repair": true
+  }
+}

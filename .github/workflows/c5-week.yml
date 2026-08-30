@@ -1,0 +1,55 @@
+name: c5-week
+on:
+  workflow_dispatch:
+  schedule:
+    - cron: "0 */6 * * *"
+  pull_request:
+  push:
+    paths:
+      - scripts/ai-os/raios_c5_week.py
+      - scripts/ai-os/raios_c5_train.py
+      - scripts/ai-os/raios_c5_speak.py
+      - scripts/ai-os/raios_c5_experience.py
+      - scripts/ai-os/raios_c5_kae.py
+      - src/raios/neuro_lingua/**
+      - tests/neuro_lingua/**
+      - requirements-neurolingua.txt
+      - .github/workflows/c5-week.yml
+      - gym/**
+      - .ai-os/council/WEEK-CASE-004.md
+      - .ai-os/council/BIND-CASE-013.md
+      - .ai-os/council/BIND-CASE-017.md
+concurrency:
+  group: c5-week
+  cancel-in-progress: false
+jobs:
+  sleepless-practice:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - name: NeuroLingua deps
+        run: pip install -r requirements-neurolingua.txt
+      - name: C5 training mesh auto
+        run: python3 scripts/ai-os/raios_c5_train.py --auto
+      - name: KAE retile demo
+        run: python3 scripts/ai-os/raios_c5_kae.py --demo
+      - name: Watchdog
+        run: python3 scripts/ai-os/raios_c5_watchdog.py
+      - name: upload receipts
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: c5-train-receipt
+          path: |
+            .ai-os/receipts/c5-train/
+            .ai-os/receipts/c5-week/
+            .ai-os/receipts/c5-speak/
+            .ai-os/receipts/c5-experience/
+            .ai-os/receipts/c5-kae/
+      - name: notice
+        run: |
+          echo "Schedule on this workflow fires from the repository default branch (main)."
+          echo "This is a pulse, not a second WAL, and does not set GL005_PROVEN."

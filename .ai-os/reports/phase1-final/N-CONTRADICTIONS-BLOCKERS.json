@@ -1,0 +1,74 @@
+{
+  "schema": "raios.phase1-final.contradictions-blockers.v1",
+  "ts": "2026-08-25T17:38:17.605088+00:00",
+  "items": [
+    {
+      "id": "X-001",
+      "claim": "C2 joined fabric",
+      "vs": "C2_JOIN_PROVEN=false",
+      "resolution": "joined /workspace keepers + isolated tmp; not unified RAIOS"
+    },
+    {
+      "id": "X-002",
+      "claim": "CI pass on d17335a/ff36677",
+      "vs": "Assimilation/GL-005",
+      "resolution": "CI_PASS_NE_ASSIMILATION"
+    },
+    {
+      "id": "X-003",
+      "claim": "C5 public proven true on AG",
+      "vs": "unified C5_PUBLIC_CHANNEL_PROVEN",
+      "resolution": "split by host; Cloud POST /api/chat not run; GET 404 expected"
+    },
+    {
+      "id": "X-004",
+      "claim": "8876 health 200 on Cloud",
+      "vs": "founder channel on AG",
+      "resolution": "different loopbacks; AG 8876 not forwarded"
+    },
+    {
+      "id": "X-005",
+      "claim": "SEAT-MAP C2=chatgpt-primary",
+      "vs": "this executor C2-OBS",
+      "resolution": "observer label; no rebind"
+    },
+    {
+      "id": "X-006",
+      "claim": "60 files deleted",
+      "vs": "68 paths in commit stat",
+      "resolution": "60 D + 5 A + 3 M"
+    },
+    {
+      "id": "X-007",
+      "claim": "WAL unchanged in d17335a",
+      "vs": "on-disk WAL dirty vs HEAD",
+      "resolution": "git blob identical parent↔d17335a↔HEAD; worktree has extra lines under A15"
+    },
+    {
+      "id": "X-008",
+      "claim": "remote_c2_ready reflects token",
+      "vs": "hardcoded false in server.py",
+      "resolution": "even with a token, health would still print false until code changes; authenticate() still needs token"
+    },
+    {
+      "id": "X-009",
+      "claim": "TREE-V9 assimilate commit title",
+      "vs": "ASSIMILATION_PROVEN",
+      "resolution": "commit subject ≠ proven assimilation"
+    },
+    {
+      "id": "X-010",
+      "claim": "stale locks on deleted files",
+      "vs": "files gone",
+      "resolution": "HOLD; no unlock this phase"
+    }
+  ],
+  "blockers": [
+    "AG tree and OneDrive unreachable from Cursor Cloud",
+    "No live MCP token",
+    "No public HTTPS on 8787",
+    "A15 WAL lock",
+    "GL-003 lock on canonical",
+    "cursor not allowed_agents for GL-005"
+  ]
+}

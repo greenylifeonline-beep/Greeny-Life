@@ -1,0 +1,227 @@
+{
+  "schema": "raios.capability-gap-matrix.v1",
+  "knowledge_state": "DISCOVERED",
+  "canonical": false,
+  "from": "C2",
+  "parent": "C1",
+  "decision": "D-063",
+  "ladder_law": "NAMING_GATE_NE_PROOF_GATE",
+  "ts": "2026-08-21T20:55:13.210235+00:00",
+  "keepers_named": 20,
+  "rows": [
+    {
+      "claim": "AUTHENTICATED_ORCHESTRATION_TASK",
+      "existence": true,
+      "import_or_load": true,
+      "execution": true,
+      "real_io": false,
+      "live_guard": false,
+      "gl005": false,
+      "status": "BLOCKED",
+      "live": "BLOCKED",
+      "class": "CAPABILITY_PROTECTED",
+      "fill_from_this_slice": false
+    },
+    {
+      "claim": "QWEN_GRANITE_SOURCE_INDEPENDENT_ASSIMILATION",
+      "existence": false,
+      "import_or_load": false,
+      "execution": false,
+      "real_io": false,
+      "live_guard": false,
+      "gl005": false,
+      "status": "NOT_PROVEN",
+      "live": "FAIL",
+      "stop": "SOURCE_PRESENT",
+      "student_ne_extraction": true
+    },
+    {
+      "claim": "GL005_BRAIN_BEHAVIOR",
+      "existence": true,
+      "import_or_load": true,
+      "execution": false,
+      "real_io": false,
+      "live_guard": false,
+      "gl005": false,
+      "status": "BLOCKED",
+      "live": "UNREACHED",
+      "requires": [
+        "AUTHENTICATED_ORCHESTRATION_TASK",
+        "QWEN_GRANITE_SOURCE_INDEPENDENT_ASSIMILATION"
+      ]
+    },
+    {
+      "claim": "EGYPT_BRAIN_HTTP",
+      "existence": true,
+      "import_or_load": true,
+      "execution": true,
+      "real_io": true,
+      "live_guard": true,
+      "gl005": false,
+      "status": "LIVE_PARTIAL",
+      "http": {
+        "path": "/api/brains/greeny-life-egypt",
+        "http_code": 401,
+        "class": "CAPABILITY_PROTECTED"
+      },
+      "note": "401 is protected live route, not missing"
+    },
+    {
+      "claim": "UAE_BRAIN_NEXT_ROUTE",
+      "existence": false,
+      "import_or_load": false,
+      "execution": false,
+      "real_io": false,
+      "live_guard": false,
+      "gl005": false,
+      "status": "NOT_PROVEN",
+      "http": {
+        "path": "/api/brains/greens-nature-uae",
+        "http_code": 404,
+        "class": "CAPABILITY_ABSENT"
+      },
+      "owner_task": "GL-003",
+      "fill_from_this_slice": false
+    },
+    {
+      "claim": "NORWAY_BRAIN_NEXT_ROUTE",
+      "existence": false,
+      "import_or_load": false,
+      "execution": false,
+      "real_io": false,
+      "live_guard": false,
+      "gl005": false,
+      "status": "NOT_PROVEN",
+      "http": {
+        "path": "/api/brains/green-lines-norway-eu",
+        "http_code": 404,
+        "class": "CAPABILITY_ABSENT"
+      },
+      "python_keepers": [
+        "greenlines_brain/kernel.py",
+        "greenlines_brain/graph.py"
+      ],
+      "owner_task": "GL-003",
+      "fill_from_this_slice": false
+    },
+    {
+      "claim": "ERP_INVOICE_PAYMENT",
+      "existence": true,
+      "import_or_load": true,
+      "execution": false,
+      "real_io": false,
+      "live_guard": false,
+      "gl005": false,
+      "status": "BLOCKED",
+      "note": "Prisma models exist; no API routes; not Odoo"
+    },
+    {
+      "claim": "COGNITIVE_WAL_BIND_PRODUCT",
+      "existence": true,
+      "import_or_load": true,
+      "execution": false,
+      "real_io": false,
+      "live_guard": false,
+      "gl005": false,
+      "status": "BLOCKED",
+      "lock": "LOCK-20260818130148 A15 RAIOS/V9",
+      "forbidden_until": "P0"
+    },
+    {
+      "claim": "C5_BOOK_COMPILE_EXPERIENCE",
+      "existence": true,
+      "import_or_load": true,
+      "execution": true,
+      "real_io": true,
+      "live_guard": false,
+      "gl005": false,
+      "status": "PARTIAL",
+      "Ck": 0.6035,
+      "knowledge": false
+    },
+    {
+      "claim": "NEUROLINGUA_COMPRESS_SPEAK",
+      "existence": true,
+      "import_or_load": true,
+      "execution": true,
+      "real_io": true,
+      "live_guard": true,
+      "gl005": false,
+      "status": "LIVE_PARTIAL",
+      "keeper": "src/raios/neuro_lingua/compress.py",
+      "llm_calls": 0
+    },
+    {
+      "claim": "MCP_V1_EIGHT_TOOLS",
+      "existence": true,
+      "import_or_load": true,
+      "execution": true,
+      "real_io": false,
+      "live_guard": true,
+      "gl005": false,
+      "status": "BLOCKED",
+      "tools": [
+        "get_head",
+        "read_board",
+        "read_inbox",
+        "read_receipt",
+        "get_diff",
+        "post_opinion",
+        "send_packet",
+        "ack_packet"
+      ],
+      "second_tool_forbidden": true
+    },
+    {
+      "claim": "C6_C10_COUNCIL_SEATS",
+      "existence": false,
+      "import_or_load": false,
+      "execution": false,
+      "real_io": false,
+      "live_guard": false,
+      "gl005": false,
+      "status": "NOT_SEATED",
+      "invent": false
+    },
+    {
+      "claim": "CRON_ON_MAIN",
+      "existence": true,
+      "import_or_load": true,
+      "execution": false,
+      "real_io": false,
+      "live_guard": false,
+      "gl005": false,
+      "status": "BLOCKED",
+      "workflow": ".github/workflows/c5-week.yml",
+      "note": "file exists on branch; schedule fires from default main"
+    },
+    {
+      "claim": "CORTEX_RUN",
+      "existence": true,
+      "import_or_load": true,
+      "execution": false,
+      "real_io": false,
+      "live_guard": false,
+      "gl005": false,
+      "status": "BLOCKED",
+      "identity": "qwen3.6:35b-a3b",
+      "gate": "CORTEX_HOLD_AWAITING_C1_RUN"
+    }
+  ],
+  "gl005_proven": false,
+  "extracted_qwen_granite": false,
+  "platform_proven": false,
+  "fill_gl003_from_this_slice": false,
+  "law": [
+    "SCALE_BY_COMPRESSION_NOT_COMPLEXITY",
+    "REALITY_AUDIT_NE_NEW_KERNEL",
+    "NAMED_ARTIFACT_NE_PLATFORM_PROVEN",
+    "FROM_INVENTORY_NE_TO_PLATFORM",
+    "C6_C10_NE_LIVE",
+    "CI_PASS_NE_ASSIMILATION",
+    "CI_PASS_NE_GL005",
+    "EXPERIENCE_NE_KNOWLEDGE",
+    "HOLD_NE_THROW",
+    "REUSE_BEFORE_BUILD"
+  ]
+}

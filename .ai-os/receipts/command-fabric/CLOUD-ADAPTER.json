@@ -1,0 +1,18 @@
+{
+  "schema": "raios.command-fabric.cloud-adapter.receipt.v1",
+  "ts": "2026-08-25T18:30:00+00:00",
+  "from": "C2-OBS",
+  "job_id": "COMMAND_FABRIC_CLOUD_ADAPTER",
+  "worker_id": "C2-OBS",
+  "adapter": "scripts/ai-os/raios_mcp/cross_host_adapter.py",
+  "schema_path": ".ai-os/mcp/CROSS-HOST-PACKET.schema.json",
+  "route_registry": ".ai-os/mcp/ROUTE-REGISTRY.json",
+  "ninth_mcp_tool": false,
+  "new_bus_created": false,
+  "wal_written": false,
+  "cross_host_round_trip_proven": false,
+  "exported_not_transported_ne_connection": true,
+  "wire_compatible_with_ag_bridge": "UNPROVEN",
+  "tests_passed": 11,
+  "gl005_proven": false
+}

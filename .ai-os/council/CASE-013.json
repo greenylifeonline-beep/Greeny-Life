@@ -1,0 +1,35 @@
+{
+  "schema": "raios.council-case.v1",
+  "id": "CASE-013",
+  "meeting_id": "GL-COUNCIL-4a11023c3c321b6f",
+  "from": "C1",
+  "ts": "2026-08-20T22:54:00+00:00",
+  "text": "ربط كل مناطق ومنصات التدريب معا",
+  "status": "TRAIN_MESH_BOUND_DISCOVERED",
+  "knowledge_state": "DISCOVERED",
+  "canonical": false,
+  "gl005_proven": false,
+  "wal_written": false,
+  "consult_gate": false,
+  "council_seats_this_channel": false,
+  "command": "python3 scripts/ai-os/raios_c5_train.py",
+  "platforms": [
+    "cursor-vm",
+    "repair-windows",
+    "colab",
+    "kaggle",
+    "github-actions",
+    "huggingface-hub",
+    "huggingface-jobs",
+    "c5-git"
+  ],
+  "keepers": [
+    "grind",
+    "week",
+    "minute",
+    "speak",
+    "experience",
+    "steward",
+    "proof"
+  ]
+}

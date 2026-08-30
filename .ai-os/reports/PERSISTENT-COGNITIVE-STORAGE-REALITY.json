@@ -1,0 +1,139 @@
+{
+  "schema": "raios.persistent-cognitive-storage.v1",
+  "provider_bound": false,
+  "laptop_independent": false,
+  "kaggle_independent": true,
+  "kaggle_role": "WORKER_CACHE",
+  "namespaces": {
+    "HOT": [
+      "wal",
+      "jobs",
+      "leases",
+      "queues",
+      "runtime-state"
+    ],
+    "WARM": [
+      "knowledge",
+      "skills",
+      "experience",
+      "graphs",
+      "indexes",
+      "council-wal",
+      "receipts",
+      "checkpoints"
+    ],
+    "COLD": [
+      "books",
+      "raw-documents",
+      "datasets",
+      "research",
+      "model-artifacts",
+      "archives"
+    ]
+  },
+  "object_id": "SHA256(content)",
+  "backends": {
+    "local": {
+      "ok": true,
+      "put": {
+        "ok": true,
+        "manifest": {
+          "object_id": "49cb1850e00fd9353e73ba7e01b9319c501d7759b8f12f0f1e08f36d65b8214f",
+          "namespace": "receipts",
+          "name": "receipts",
+          "bytes": 36,
+          "provider": "local"
+        },
+        "path": "/workspace/.ai-os/receipts/c5-wave-ccn/cas/49cb1850e00fd9353e73ba7e01b9319c501d7759b8f12f0f1e08f36d65b8214f"
+      },
+      "get": {
+        "ok": true,
+        "object_id": "49cb1850e00fd9353e73ba7e01b9319c501d7759b8f12f0f1e08f36d65b8214f",
+        "bytes": 36,
+        "match": true
+      },
+      "delete": {
+        "ok": true,
+        "deleted": true,
+        "exists_after": false
+      },
+      "get_after_delete": {
+        "ok": false,
+        "reason": "MISSING",
+        "object_id": "49cb1850e00fd9353e73ba7e01b9319c501d7759b8f12f0f1e08f36d65b8214f"
+      },
+      "backend": "local",
+      "persistent_cognitive_storage_proven": false,
+      "gl005_proven": false
+    },
+    "hf": {
+      "backend": "huggingface",
+      "category": "DATASET_STORAGE",
+      "token_present": false,
+      "states": [
+        "REFERENCED",
+        "BLOCKED_AUTH",
+        "CAPACITY_UNKNOWN"
+      ],
+      "write_test": "SKIPPED_NO_CLEAR_WRITE_PERMISSION",
+      "persistent_brain": false,
+      "law": [
+        "NO_SECRET_PRINT",
+        "HF_DATASET_NE_SECOND_WAL",
+        "NO_WEIGHT_DOWNLOAD"
+      ]
+    },
+    "hf_whoami": {
+      "ok": false,
+      "code": null,
+      "reason": "BLOCKED_AUTH",
+      "authenticated": false
+    },
+    "kaggle": {
+      "backend": "kaggle",
+      "category": "EPHEMERAL_SCRATCH",
+      "on_kaggle_session": false,
+      "credential_present": false,
+      "states": [
+        "REFERENCED",
+        "WORKER_CACHE",
+        "BLOCKED_AUTH",
+        "CAPACITY_UNKNOWN"
+      ],
+      "role": "WORKER_CACHE",
+      "durable_writable_state": false,
+      "persistent_brain": false,
+      "law": [
+        "KAGGLE_NE_PERSISTENT_BRAIN",
+        "WORKER_NE_C5",
+        "ACCOUNT_CAPABILITY_NE_SESSION_GPU"
+      ]
+    },
+    "onedrive": {
+      "backend": "onedrive",
+      "category": "BACKUP",
+      "states": [
+        "REFERENCED",
+        "CAPACITY_UNKNOWN"
+      ],
+      "founder_claimed_path_count": 2,
+      "bound_on_this_host": false,
+      "persistent_brain": false,
+      "note": "Founder laptop claim only. This Cursor VM has no OneDrive mount."
+    },
+    "future_s3": {
+      "backend": "future-s3",
+      "category": "OBJECT_STORAGE",
+      "states": [
+        "ABSENT"
+      ],
+      "persistent_brain": false,
+      "note": "Placeholder. Do not bind architecture to one vendor."
+    }
+  },
+  "persistent_cognitive_storage_proven": false,
+  "gl005_proven": false,
+  "from": "C2",
+  "c5": "git",
+  "wal_written": false
+}

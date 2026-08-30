@@ -1,0 +1,81 @@
+{
+  "schema": "raios.phase1-final.c5-repair-channel.v1",
+  "ts": "2026-08-25T17:38:17.605088+00:00",
+  "host_cursor": {
+    "process": "python3 scripts/ai-os/raios_c5_screen.py --serve (attested earlier; health live)",
+    "8765": {
+      "http": 200,
+      "body_prefix": "{\"schema\": \"raios.c5-health.v1\", \"ok\": true, \"from\": \"C5\", \"http\": 200, \"host\": \"127.0.0.1\", \"port\": 8765, \"lane\": \"PUBLIC\", \"public_url\": \"http://127.0.0.1:8765\", \"c1_url\": \"http://127.0.0.1:8876\", \"bind\": \"127.0.0.1:8765\", \"ports\": [8765, 8876], \"urls\": [\"http://127.0.0.1:8765\", \"http://127.0.0.1:8876\"], \"duplicate_c5\": false, \"duplicate_router\": false, \"duplicate_mcp\": false, \"paid_api\": false, \"gl005_proven\": false, \"c5_screen_ports\": [8765, 8876], \"c5_base_c1\": \"http://127.0.0.1:8876\", \"c5_screen_default\": \"http://127.0.0.1:8765\", \"c5_screen_public\": \"http://127.0.0.1:8765\", \"c5_screen_c1"
+    },
+    "api_status": 200,
+    "api_history": 200,
+    "api_chat_GET": {
+      "http": null,
+      "error": "HTTPError: HTTP Error 404: Not Found"
+    },
+    "v1_chat_GET": {
+      "http": null,
+      "error": "HTTPError: HTTP Error 404: Not Found"
+    },
+    "8876_health": 200,
+    "mcp_8787": 200,
+    "POST_api_chat_this_turn": false,
+    "reason_no_post": "WAL_HOLD_AND_NOT_CLAIM_E2E; GET 404 is POST-only",
+    "C5_PUBLIC_CHANNEL_PROVEN": false,
+    "duplicate_c5": false,
+    "multimodal_gateway": false,
+    "control_runtime_repair": false,
+    "files_in_control": [
+      "KEEPERS.json",
+      "c2_obs.py"
+    ]
+  },
+  "host_AG_attestation": {
+    "status": "EXTERNAL_ATTESTATION_PENDING_CROSS_HOST_BIND",
+    "forward": "http://127.0.0.1:8765 via Cursor.exe",
+    "live_service": "not historical gateway",
+    "endpoints": [
+      "/health",
+      "/api/status",
+      "/api/history",
+      "/api/chat"
+    ],
+    "v1_chat": "absent on live screen",
+    "chat_proof": {
+      "health": 200,
+      "api_chat": "PASS",
+      "response_schema": "raios.c5-screen-turn.v1",
+      "ok": true,
+      "lane": "PUBLIC",
+      "wal_written": false,
+      "wal_mtime_unchanged": true,
+      "paid_api": false,
+      "gl005_proven": false
+    },
+    "C5_PUBLIC_CHANNEL_PROVEN": true,
+    "C5_FOUNDER_CHANNEL_PROVEN": false,
+    "founder_url": "http://127.0.0.1:8876",
+    "console_fix": ".ai-os/control/RAIOS-C5-PERMANENT-CONSOLE.py now /api/chat text+locale",
+    "donor": {
+      "ref": "f7354c24dc1d4bf237574abb1a89379b125e86da",
+      "state": "GIT_ONLY/ORPHAN CLINE",
+      "c5_paths": 31,
+      "merge_base_tree001": null
+    },
+    "recovered": [
+      "raios_multimodal_gateway.py",
+      "raios_ollama_client.py",
+      "raios_supervised_learning_trace.py"
+    ],
+    "recovery_venv": "_raios-communication-fabric/.venv-multimodal",
+    "training_mode_default": false,
+    "recovery_gateway_bound_8765": false,
+    "second_c5": false,
+    "local_report": ".ai-os/reports/command-fabric/C5-TREE-COMPARISON-AND-COMM-REPAIR-20260825.json",
+    "local_report_sha256_attested": "b2dd45a12ef6a9d99f537ed801d12404097014cd13526b576b52a2896be8c1aa",
+    "local_report_read_here": false
+  },
+  "C5_MAIN_CORTEX_PROVEN": false,
+  "WAL_WRITTEN": false,
+  "GL005_PROVEN": false
+}

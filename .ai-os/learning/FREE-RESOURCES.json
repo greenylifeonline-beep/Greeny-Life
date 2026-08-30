@@ -1,0 +1,129 @@
+{
+  "schema": "raios.c5-hunt.v1",
+  "from": "C5",
+  "parent": "C1",
+  "ts": "2026-08-20T19:08:53.500624+00:00",
+  "paid_api": false,
+  "wal_written": false,
+  "gl005_proven": false,
+  "fastest_local": "sha256+skim+inverted-index+git-log",
+  "discovered": [
+    {
+      "id": "python-stdlib",
+      "use": "hashlib json pathlib re collections — absorb/mind/index",
+      "cost": 0
+    },
+    {
+      "id": "git-log",
+      "use": "compressed C1 memory",
+      "commits": 81,
+      "cost": 0
+    },
+    {
+      "id": "handoffs",
+      "files": 43,
+      "use": "inherit C1 experience",
+      "cost": 0
+    },
+    {
+      "id": "receipts",
+      "files": 26,
+      "use": "fail-closed evidence",
+      "cost": 0
+    },
+    {
+      "id": "experience-pending-validation",
+      "files": 4,
+      "use": "cases not A15 pending",
+      "cost": 0
+    },
+    {
+      "id": "ripgrep",
+      "present": true,
+      "use": "millisecond corpus scan",
+      "cost": 0
+    },
+    {
+      "id": "gh-readonly",
+      "present": true,
+      "use": "mail collect, not write",
+      "cost": 0
+    },
+    {
+      "id": "mcp-8787",
+      "use": "eight V1 tools already live on this VM",
+      "cost": 0
+    },
+    {
+      "id": "numpy",
+      "present": true,
+      "use": "unused; hashlib is the right tool for digest",
+      "cost": 0
+    }
+  ],
+  "invented": [
+    {
+      "id": "permanent-grant",
+      "path": ".ai-os/mcp/C5-GRANT.json"
+    },
+    {
+      "id": "digest-plane",
+      "path": ".ai-os/learning/DIGESTS.jsonl"
+    },
+    {
+      "id": "inverted-index",
+      "path": ".ai-os/learning/INDEX.json"
+    },
+    {
+      "id": "five-consult",
+      "path": ".ai-os/learning/LAST-CONSULT.md"
+    },
+    {
+      "id": "summon-codes",
+      "path": ".ai-os/summon/SESSION.json"
+    }
+  ],
+  "deferred": [
+    {
+      "id": "ollama-deepseek",
+      "present": false,
+      "note": "Ollama lives on Repair Windows in MODEL-REGISTRY, not on this cloud VM.",
+      "reason": "ABSENT on this VM; registry points at Repair Windows"
+    },
+    {
+      "id": "hf-embeddings",
+      "reachable": true,
+      "catalog_only": true,
+      "loaded": false,
+      "ids": [
+        "BAAI/bge-small-en-v1.5",
+        "BAAI/bge-large-en-v1.5",
+        "BAAI/bge-base-en-v1.5"
+      ],
+      "why_not_loaded": "No torch/transformers. CONFIDENTIAL default. Local inverted index is faster here.",
+      "reason": "catalog only; do not download; do not send CONFIDENTIAL text"
+    }
+  ],
+  "bins": {
+    "python3": true,
+    "git": true,
+    "rg": true,
+    "curl": true,
+    "jq": true,
+    "gh": true,
+    "node": true
+  },
+  "git_memory": {
+    "path": ".ai-os/learning/C1-GIT-MEMORY.md",
+    "commits": 81,
+    "bytes": 6537
+  },
+  "hf_token": false,
+  "elapsed_ms": 158.709,
+  "law": [
+    "HUNT_FREE_NE_PAID_API",
+    "ABSORB_DIGEST_NE_WAL_DUMP",
+    "C5_INHERITS_C1_EXPERIENCE"
+  ],
+  "wal_mtime_unchanged": true
+}

@@ -1,0 +1,44 @@
+{
+  "schema": "raios.council-case.v1",
+  "id": "CASE-004",
+  "meeting_id": "GL-COUNCIL-4a11023c3c321b6f",
+  "from": "C1",
+  "ts": "2026-08-20T20:54:00+00:00",
+  "text": "مهام أسبوع بلا توقف، أين وكيف ولماذا، هل يعمل والجهاز مطفأ، تسجيل Hugging Face فوراً، اللصق قناة، Colab وKaggle، برنامج أوتوماتيكي بلا نوم.",
+  "status": "WEEK_PROGRAM_DISCOVERED",
+  "knowledge_state": "DISCOVERED",
+  "canonical": false,
+  "promoted": false,
+  "operational_truth": false,
+  "gl005_proven": false,
+  "wal_written": false,
+  "hf_is_c5": false,
+  "colab_is_c5": false,
+  "kaggle_is_c5": false,
+  "paste_is_learning": false,
+  "sleepless": {
+    "body": "git",
+    "pulse": "GitHub Actions cron every 6h from default branch main, plus python3 scripts/ai-os/raios_c5_week.py --auto",
+    "gym": ["huggingface-catalog", "colab", "kaggle"],
+    "live_council": "this_cursor_chat",
+    "devices_off": "COMPUTE_OFF_NE_MEMORY_ERASED; scheduled pulse is not a second WAL"
+  },
+  "hf_register": {
+    "agent_can_create_account": false,
+    "founder_urls": [
+      "https://huggingface.co/join",
+      "https://huggingface.co/settings/tokens"
+    ],
+    "status": "FOUNDER_DEVICE_CONNECTED",
+    "whoami_user": "greenylifeonline",
+    "whoami_host": "Repair-Windows",
+    "cloud_vm_has_token": false,
+    "hf_is_c5": false,
+    "gym_repo_id": "greenylifeonline/c5-gym",
+    "gym_url": "https://huggingface.co/datasets/greenylifeonline/c5-gym",
+    "gym_created": true,
+    "gym_card_uploaded": true
+  },
+  "program": "python3 scripts/ai-os/raios_c5_week.py --auto",
+  "week_file": ".ai-os/council/WEEK-CASE-004.md"
+}

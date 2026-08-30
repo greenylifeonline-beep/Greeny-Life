@@ -1,0 +1,244 @@
+{
+  "schema": "raios.phase1-final.communication-topology.v1",
+  "ts": "2026-08-25T17:38:17.605088+00:00",
+  "links": [
+    {
+      "id": "USER_C1_CHATGPT",
+      "SOURCE": "USER",
+      "TRANSPORT": "ChatGPT chat session",
+      "DESTINATION": "C1/ChatGPT",
+      "AUTH": "session",
+      "ACK": "human",
+      "RECEIPT": "none-machine",
+      "RETURN_PATH": "chat",
+      "STATUS": "SESSION_ONLY",
+      "EVIDENCE": "founder orders in this thread; not MCP"
+    },
+    {
+      "id": "USER_C2_CURSOR",
+      "SOURCE": "USER",
+      "TRANSPORT": "Cursor Cloud agent chat",
+      "DESTINATION": "C2-OBS hostname=cursor",
+      "AUTH": "Cursor run bc-dd60b5cf-95bd-4f24-9237-cc1b2225f013",
+      "ACK": "session",
+      "RECEIPT": "this report",
+      "RETURN_PATH": "chat",
+      "STATUS": "SESSION_ONLY",
+      "EVIDENCE": "https://cursor.com/agents/bc-dd60b5cf-95bd-4f24-9237-cc1b2225f013"
+    },
+    {
+      "id": "USER_C5_PUBLIC",
+      "SOURCE": "USER",
+      "TRANSPORT": "HTTP loopback 8765 / Cursor forward on AG",
+      "DESTINATION": "C5 public screen",
+      "AUTH": "none (public lane)",
+      "ACK": "HTTP",
+      "RECEIPT": "response_schema raios.c5-screen-turn.v1 on AG attested",
+      "RETURN_PATH": "HTTP body",
+      "STATUS": "LOCAL_ONLY",
+      "EVIDENCE": "C2 Cloud GET /health /api/status /api/history =200; GET /api/chat=404 (POST-only, POST not executed here). AG POST /api/chat=PASS is EXTERNAL_ATTESTATION_PENDING_CROSS_HOST_BIND"
+    },
+    {
+      "id": "USER_C5_FOUNDER",
+      "SOURCE": "USER",
+      "TRANSPORT": "HTTP 8876",
+      "DESTINATION": "C1 console / founder lane",
+      "AUTH": "optional RAIOS_C1_SCREEN_TOKEN",
+      "ACK": "HTTP",
+      "RECEIPT": "none E2E",
+      "RETURN_PATH": "HTTP",
+      "STATUS": "BLOCKED_ROUTING",
+      "EVIDENCE": "AG 8876 not forwarded (C1 attest). This VM 8876 /health=200 is THIS host C1 console, not AG founder channel."
+    },
+    {
+      "id": "C1_C2",
+      "SOURCE": "C1",
+      "TRANSPORT": "founder paste + isolated tmp MCP",
+      "DESTINATION": "C2-OBS",
+      "AUTH": "ephemeral tmp tokens OR none live",
+      "ACK": "ACK-MSG-1787675796720281-e5058327 isolated",
+      "RECEIPT": "DELIVERY.json isolated_not_live_mcp_token=true",
+      "RETURN_PATH": "paste / tmp outbox",
+      "STATUS": "SESSION_ONLY",
+      "EVIDENCE": ".ai-os/receipts/command-fabric/CHANNEL.json tmp=/tmp/c2-obs-fabric-jp8ochpd; live remote_c2_ready=false"
+    },
+    {
+      "id": "C1_C5",
+      "SOURCE": "C1",
+      "TRANSPORT": "local screen 8876/8765 on each host separately",
+      "DESTINATION": "C5",
+      "AUTH": "lane",
+      "ACK": "HTTP",
+      "RECEIPT": "AG chat attest; Cloud health",
+      "RETURN_PATH": "HTTP",
+      "STATUS": "LOCAL_ONLY",
+      "EVIDENCE": "no cross-host C1-C5"
+    },
+    {
+      "id": "C2_C5",
+      "SOURCE": "C2-OBS",
+      "TRANSPORT": "same-host HTTP 8765 + MCP 8787 health",
+      "DESTINATION": "C5/MCP on cursor VM",
+      "AUTH": "none for health; tools need bearer",
+      "ACK": "HTTP 200 health",
+      "RECEIPT": "health json gl005_proven=false",
+      "RETURN_PATH": "HTTP",
+      "STATUS": "LOCAL_ONLY",
+      "EVIDENCE": "8765 and 8787 on 127.0.0.1 this VM"
+    },
+    {
+      "id": "C2_CLOUD_REPAIR_AG",
+      "SOURCE": "C2 Cloud /workspace",
+      "TRANSPORT": "none",
+      "DESTINATION": "AG Repair 12603d0",
+      "AUTH": "n/a",
+      "ACK": "none",
+      "RECEIPT": "none",
+      "RETURN_PATH": "none",
+      "STATUS": "ABSENT",
+      "EVIDENCE": "git cat-file missing 12603d0; cursor-agent missing; repair_reachable=false"
+    },
+    {
+      "id": "C5_MCP",
+      "SOURCE": "C5 screen",
+      "TRANSPORT": "HTTP 8787/health declared in C5 health",
+      "DESTINATION": "raios-universal-mcp",
+      "AUTH": "health unauthenticated; tools Bearer",
+      "ACK": "health 200",
+      "RECEIPT": "mcp_tool_count=8",
+      "RETURN_PATH": "HTTP",
+      "STATUS": "LOCAL_ONLY",
+      "EVIDENCE": "C5 health mcp_reachable=true; tools unauthenticated remotely BLOCKED_AUTH"
+    },
+    {
+      "id": "C5_MAIL",
+      "SOURCE": "C5/C2 keepers",
+      "TRANSPORT": "scripts/ai-os/raios-mail.py files",
+      "DESTINATION": ".ai-os/mail",
+      "AUTH": "filesystem",
+      "ACK": "file write",
+      "RECEIPT": "COLLECT-RECEIPT.json inbox_total historically 0",
+      "RETURN_PATH": "OUTBOX.jsonl",
+      "STATUS": "LOCAL_ONLY",
+      "EVIDENCE": "INBOX.jsonl missing; OUTBOX.jsonl present; MAIL_PASSES_NE_PROVES"
+    },
+    {
+      "id": "C5_NOMADIC_LEASES",
+      "SOURCE": "C2-OBS",
+      "TRANSPORT": "RAIOS/V9/cloud/nomadic/lease_manager.py",
+      "DESTINATION": ".ai-os/state/command-fabric/LEASE.json",
+      "AUTH": "worker_id C2-OBS",
+      "ACK": "FAILOVER_CLAIM",
+      "RECEIPT": "receipts/command-fabric/LEASE.json",
+      "RETURN_PATH": "same host files",
+      "STATUS": "LOCAL_ONLY",
+      "EVIDENCE": "job COMMAND_FABRIC_JOIN_REPAIR; not a cross-host lease"
+    },
+    {
+      "id": "C5_WAL",
+      "SOURCE": "C5 teach_reply",
+      "TRANSPORT": "file RAIOS/V9/wal/cognitive-events.jsonl",
+      "DESTINATION": "Cognitive WAL",
+      "AUTH": "A15 lock ACTIVE",
+      "ACK": "mtime check",
+      "RECEIPT": "wal_written=false",
+      "RETURN_PATH": "none",
+      "STATUS": "BLOCKED_AUTH",
+      "EVIDENCE": "A15 lock; mtime 2026-08-20T23:49:44Z; blob unchanged parent→d17335a; POST /api/chat not run this turn"
+    },
+    {
+      "id": "C5_MAIN_CORTEX",
+      "SOURCE": "C5",
+      "TRANSPORT": "OpenAI-compat /v1/chat/completions",
+      "DESTINATION": "CORTEX_MODEL qwen3.6:35b-a3b named candidate",
+      "AUTH": "RAIOS_CORTEX_API_KEY absent",
+      "ACK": "none",
+      "RECEIPT": "endpoint unbound",
+      "RETURN_PATH": "none",
+      "STATUS": "UNPROVEN",
+      "EVIDENCE": "health main_cortex=false cortex_live=false ENDPOINT_UNBOUND"
+    },
+    {
+      "id": "C5_NEUROLINGUA",
+      "SOURCE": "C5",
+      "TRANSPORT": "src/raios/neuro_lingua in-process",
+      "DESTINATION": "NeuroLingua runtime",
+      "AUTH": "n/a",
+      "ACK": "unit tests exist",
+      "RECEIPT": "not E2E this turn",
+      "RETURN_PATH": "function return",
+      "STATUS": "LOCAL_ONLY",
+      "EVIDENCE": "code present on HEAD; no live cortex; customs_hold historically TESTED not E2E_PROVEN"
+    },
+    {
+      "id": "C5_GL005",
+      "SOURCE": "C5",
+      "TRANSPORT": "none live",
+      "DESTINATION": "GL-005 unified orchestrator",
+      "AUTH": "n/a",
+      "ACK": "none",
+      "RECEIPT": "GL005_PROVEN=false",
+      "RETURN_PATH": "none",
+      "STATUS": "UNPROVEN",
+      "EVIDENCE": "CI_PASS_NE_ASSIMILATION; cursor not in GL-005 allowed_agents"
+    }
+  ],
+  "join_answers": {
+    "q1_why_not_full_join": "Workspace-keeper bind and an isolated tmp-repo channel are not membership in unified RAIOS. Live MCP authenticate() requires a bearer token; tokens.local.json is absent. Health JSON hardcodes remote_c2_ready=false. Repair 12603d0 is absent. Isolated CHANNEL.json used ephemeral tokens under /tmp/c2-obs-fabric-jp8ochpd, head 5b574e19, not live tokens.",
+    "q2_three_joins": {
+      "workspace_guards": "C2-OBS lease/heartbeat/ACK against keepers in /workspace (MCP 8787, mail, aios locks, nomadic LeaseManager, C5 watchdog). PROVEN on this host as C2_CLOUD_GUARDS_JOINED.",
+      "unified_raios": "Authenticated live seat on the five-seat control plane with live send_packet/ack_packet, not isolated tmp, not founder paste. UNPROVEN.",
+      "repair_ag_tree": "Reach the AG worktree at 12603d0 plus its Command Fabric runtime. ABSENT from this object store; no cursor-agent; no automatic transport."
+    },
+    "q3_same_repo_only": true,
+    "q4_ag_to_cloud_without_manual_copy": false,
+    "q5_cloud_to_ag_automatic": false,
+    "q6_missing_symbol": {
+      "name": "MCP actor bearer token for live Gateway.authenticate()",
+      "file": ".ai-os/mcp/tokens.local.json",
+      "present_this_host": false,
+      "health_flag_also_hardcoded_false": true,
+      "code": [
+        "scripts/ai-os/raios_mcp/gateway.py:authenticate",
+        "scripts/ai-os/raios_mcp/server.py remote_c2_ready hardcoded False"
+      ]
+    },
+    "q7_issuer": "C1/owner only (POLICY actors + gitignored local grant or OAuth when remote MCP is registered). This C2-OBS must not mint secrets.",
+    "q8_store_without_revealing_value": ".ai-os/mcp/tokens.local.json (gitignored). Receipts may store sha256 of token, never the value. ACTORS.example.json holds placeholders only.",
+    "q9_minimum_c2_join_proven": [
+      "C1-issued scoped grant exists in gitignored tokens.local.json on the live control-plane process",
+      "Authenticated live MCP send_packet + ack_packet on 127.0.0.1:8787 (not tmp repo)",
+      "ACK is a new packet, never a move; delivery receipt on live mail/MCP keepers",
+      "Still insufficient for CROSS_HOST_ROUND_TRIP or Repair 12603d0"
+    ],
+    "q10_rebind_or_bridge": "Documented bridge only. No Actor rebind / SEAT-MAP overwrite this phase. C2 instance_role remains chatgpt-primary; this process is labeled C2-OBS by founder order."
+  },
+  "acks": {
+    "message_id": "MSG-1787675796720281-e5058327",
+    "ack_file": ".ai-os/receipts/command-fabric/ACK-MSG-1787675796720281-e5058327.json",
+    "delivery": ".ai-os/receipts/command-fabric/DELIVERY.json",
+    "channel_receipt_sha256": "b56b43e5503b7aeb11020449e983dc12081b2494e11b3b73c41131f235761e06",
+    "isolated_tmp": "/tmp/c2-obs-fabric-jp8ochpd",
+    "live_remote_c2_ready": false
+  },
+  "lease": {
+    "ok": true,
+    "reason": "FAILOVER_CLAIM",
+    "lease": {
+      "job_id": "COMMAND_FABRIC_JOIN_REPAIR",
+      "worker_id": "C2-OBS",
+      "token": "lease-2-COMMAND_FABRIC_JOIN_REPAIR",
+      "expires_at": 1787682748.7331078,
+      "claimed_at_epoch": 1787679148.7331078
+    },
+    "ts": "2026-08-25T17:32:28.733112+00:00",
+    "worker_id": "C2-OBS",
+    "job_id": "COMMAND_FABRIC_JOIN_REPAIR",
+    "fencing": "nomadic.LeaseManager",
+    "gl005_proven": false
+  },
+  "tests": {
+    "command_fabric_plus_unrepairable_gc": "8 passed",
+    "runner": "/tmp/pytest-nl/bin/python"
+  }
+}

@@ -1,0 +1,1 @@
+{"success":false,"error":"Unable to read tasks","details":"\nInvalid `prisma.$queryRaw()` invocation:\n\n\nerror: Environment variable not found: DATABASE_URL.\n  -->  schema.prisma:3\n   | \n 2 |   provider = \"postgresql\"\n 3 |   url      = env(\"DATABASE_URL\")\n   | \n\nValidation Error Count: 1"}

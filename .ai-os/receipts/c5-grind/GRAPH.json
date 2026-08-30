@@ -1,0 +1,156 @@
+{
+  "nodes": [
+    {
+      "id": "ERP",
+      "kind": "keeper",
+      "label": "Prisma + Next API"
+    },
+    {
+      "id": "COUNCIL",
+      "kind": "keeper",
+      "label": "RAIOS seats + 8 MCP tools"
+    },
+    {
+      "id": "KNOWLEDGE",
+      "kind": "keeper",
+      "label": "DIGESTS/INDEX/WAL/graph.py"
+    },
+    {
+      "id": "ETL",
+      "kind": "keeper",
+      "label": "absorb + ingest"
+    },
+    {
+      "id": "MASTERMIND",
+      "kind": "keeper",
+      "label": "MasterMind AI"
+    },
+    {
+      "id": "GREENY_LIFE_EGYPT",
+      "kind": "company",
+      "label": "Greeny-Life Egypt"
+    },
+    {
+      "id": "GREENS_NATURE_UAE",
+      "kind": "company",
+      "label": "Greens Nature UAE"
+    },
+    {
+      "id": "lib/intelligence/greens-nature-uae-brain.ts",
+      "kind": "gap",
+      "label": "lib/intelligence/greens-nature-uae-brain.ts"
+    },
+    {
+      "id": "app/api/brains/greens-nature-uae/route.ts",
+      "kind": "gap",
+      "label": "app/api/brains/greens-nature-uae/route.ts"
+    },
+    {
+      "id": "tests/greens_nature_uae_brain_check.ts",
+      "kind": "gap",
+      "label": "tests/greens_nature_uae_brain_check.ts"
+    },
+    {
+      "id": "GREEN_LINES_NORWAY_EU",
+      "kind": "company",
+      "label": "Green Lines Norway/EU"
+    },
+    {
+      "id": "lib/intelligence/greenlines-norway-brain.ts",
+      "kind": "gap",
+      "label": "lib/intelligence/greenlines-norway-brain.ts"
+    },
+    {
+      "id": "app/api/brains/greenlines-norway/route.ts",
+      "kind": "gap",
+      "label": "app/api/brains/greenlines-norway/route.ts"
+    },
+    {
+      "id": "tests/greenlines_norway_brain_check.ts",
+      "kind": "gap",
+      "label": "tests/greenlines_norway_brain_check.ts"
+    },
+    {
+      "id": "PRISMA_MODELS",
+      "kind": "count",
+      "label": "27 models"
+    },
+    {
+      "id": "API_ROUTES",
+      "kind": "count",
+      "label": "29 routes"
+    }
+  ],
+  "edges": [
+    {
+      "from": "MASTERMIND",
+      "to": "ERP",
+      "rel": "reads"
+    },
+    {
+      "from": "COUNCIL",
+      "to": "MASTERMIND",
+      "rel": "does_not_replace"
+    },
+    {
+      "from": "MASTERMIND",
+      "to": "GREENY_LIFE_EGYPT",
+      "rel": "coordinates"
+    },
+    {
+      "from": "GREENY_LIFE_EGYPT",
+      "to": "ERP",
+      "rel": "uses_if_route_exists"
+    },
+    {
+      "from": "MASTERMIND",
+      "to": "GREENS_NATURE_UAE",
+      "rel": "coordinates"
+    },
+    {
+      "from": "GREENS_NATURE_UAE",
+      "to": "ERP",
+      "rel": "uses_if_route_exists"
+    },
+    {
+      "from": "GREENS_NATURE_UAE",
+      "to": "lib/intelligence/greens-nature-uae-brain.ts",
+      "rel": "missing"
+    },
+    {
+      "from": "GREENS_NATURE_UAE",
+      "to": "app/api/brains/greens-nature-uae/route.ts",
+      "rel": "missing"
+    },
+    {
+      "from": "GREENS_NATURE_UAE",
+      "to": "tests/greens_nature_uae_brain_check.ts",
+      "rel": "missing"
+    },
+    {
+      "from": "MASTERMIND",
+      "to": "GREEN_LINES_NORWAY_EU",
+      "rel": "coordinates"
+    },
+    {
+      "from": "GREEN_LINES_NORWAY_EU",
+      "to": "ERP",
+      "rel": "uses_if_route_exists"
+    },
+    {
+      "from": "GREEN_LINES_NORWAY_EU",
+      "to": "lib/intelligence/greenlines-norway-brain.ts",
+      "rel": "missing"
+    },
+    {
+      "from": "GREEN_LINES_NORWAY_EU",
+      "to": "app/api/brains/greenlines-norway/route.ts",
+      "rel": "missing"
+    },
+    {
+      "from": "GREEN_LINES_NORWAY_EU",
+      "to": "tests/greenlines_norway_brain_check.ts",
+      "rel": "missing"
+    }
+  ]
+}

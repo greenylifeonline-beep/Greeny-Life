@@ -1,0 +1,323 @@
+{
+  "schema": "raios.c5-model-roles.v1",
+  "ts": "2026-08-23T01:45:48.229749+00:00",
+  "from": "C5",
+  "parent": "C1",
+  "ok": true,
+  "winners_are_final": false,
+  "local_winner": false,
+  "cortex_local_winner": false,
+  "model_agnostic": true,
+  "duplicate_registry": false,
+  "duplicate_mcp": false,
+  "arenas": [
+    "ROUTER",
+    "CORTEX",
+    "CODE",
+    "REASONING",
+    "EMBEDDING",
+    "RERANKER"
+  ],
+  "roles": {
+    "ROUTER_MODEL": {
+      "role": "ROUTER_MODEL",
+      "arena": "ROUTER",
+      "candidates": [
+        "deepseek-local-fast",
+        "qwen-student-fast"
+      ],
+      "candidate_models": [
+        "deepseek-r1:1.5b",
+        "qwen2.5:0.5b"
+      ],
+      "selected": null,
+      "model": "deepseek-r1:1.5b",
+      "named_candidate": null,
+      "permanent_identity": false,
+      "local_winner": false,
+      "winner_final": false,
+      "reason": "CURRENT_WINNERS_ARE_NOT_FINAL",
+      "bridge": null,
+      "class": null,
+      "not_current_local_winner": false,
+      "registry": ".ai-os/MODEL-REGISTRY.json",
+      "duplicate_registry": false,
+      "gl005_proven": false
+    },
+    "CORTEX_MODEL": {
+      "role": "CORTEX_MODEL",
+      "arena": "CORTEX",
+      "candidates": [
+        "raios-main-cortex"
+      ],
+      "candidate_models": [
+        "qwen3.6:35b-a3b"
+      ],
+      "selected": null,
+      "model": "qwen3.6:35b-a3b",
+      "named_candidate": "qwen3.6:35b-a3b",
+      "permanent_identity": false,
+      "local_winner": false,
+      "winner_final": false,
+      "reason": "MEMORY_ALLOCATION_FAILED",
+      "bridge": null,
+      "class": null,
+      "not_current_local_winner": true,
+      "registry": ".ai-os/MODEL-REGISTRY.json",
+      "duplicate_registry": false,
+      "gl005_proven": false
+    },
+    "CODE_MODEL": {
+      "role": "CODE_MODEL",
+      "arena": "CODE",
+      "candidates": [
+        "qwen-coder-fast",
+        "granite-code-3b"
+      ],
+      "candidate_models": [
+        "qwen2.5-coder:3b",
+        "granite-code:3b"
+      ],
+      "selected": null,
+      "model": "qwen2.5-coder:3b",
+      "named_candidate": null,
+      "permanent_identity": false,
+      "local_winner": false,
+      "winner_final": false,
+      "reason": "CURRENT_WINNERS_ARE_NOT_FINAL",
+      "bridge": "opencode",
+      "class": null,
+      "not_current_local_winner": false,
+      "registry": ".ai-os/MODEL-REGISTRY.json",
+      "duplicate_registry": false,
+      "gl005_proven": false
+    },
+    "REASONING_MODEL": {
+      "role": "REASONING_MODEL",
+      "arena": "REASONING",
+      "candidates": [
+        "deepseek-local-fast",
+        "deepseek-local-deep"
+      ],
+      "candidate_models": [
+        "deepseek-r1:1.5b",
+        "deepseek-r1:7b"
+      ],
+      "selected": null,
+      "model": "deepseek-r1:1.5b",
+      "named_candidate": null,
+      "permanent_identity": false,
+      "local_winner": false,
+      "winner_final": false,
+      "reason": "CURRENT_WINNERS_ARE_NOT_FINAL",
+      "bridge": null,
+      "class": null,
+      "not_current_local_winner": false,
+      "registry": ".ai-os/MODEL-REGISTRY.json",
+      "duplicate_registry": false,
+      "gl005_proven": false
+    },
+    "EMBEDDING_MODEL": {
+      "role": "EMBEDDING_MODEL",
+      "arena": "EMBEDDING",
+      "candidates": [
+        "granite-embedding-278m"
+      ],
+      "candidate_models": [
+        "granite-embedding:278m"
+      ],
+      "selected": null,
+      "model": "granite-embedding:278m",
+      "named_candidate": null,
+      "permanent_identity": false,
+      "local_winner": false,
+      "winner_final": false,
+      "reason": "CURRENT_WINNERS_ARE_NOT_FINAL",
+      "bridge": null,
+      "class": null,
+      "not_current_local_winner": false,
+      "registry": ".ai-os/MODEL-REGISTRY.json",
+      "duplicate_registry": false,
+      "gl005_proven": false
+    },
+    "RERANKER_MODEL": {
+      "role": "RERANKER_MODEL",
+      "arena": "RERANKER",
+      "candidates": [],
+      "candidate_models": [],
+      "selected": null,
+      "model": null,
+      "named_candidate": null,
+      "permanent_identity": false,
+      "local_winner": false,
+      "winner_final": false,
+      "reason": "ROLE_ABSENT",
+      "bridge": null,
+      "class": "ABSENT",
+      "not_current_local_winner": false,
+      "registry": ".ai-os/MODEL-REGISTRY.json",
+      "duplicate_registry": false,
+      "gl005_proven": false
+    },
+    "FRONTIER_TEACHER_MODEL": {
+      "role": "FRONTIER_TEACHER_MODEL",
+      "arena": "CORTEX",
+      "candidates": [
+        "raios-main-cortex"
+      ],
+      "candidate_models": [
+        "qwen3.6:35b-a3b"
+      ],
+      "selected": null,
+      "model": "qwen3.6:35b-a3b",
+      "named_candidate": "qwen3.6:35b-a3b",
+      "permanent_identity": false,
+      "local_winner": false,
+      "winner_final": false,
+      "reason": "TEACHER_NE_LOCAL_WINNER",
+      "bridge": null,
+      "class": null,
+      "not_current_local_winner": false,
+      "registry": ".ai-os/MODEL-REGISTRY.json",
+      "duplicate_registry": false,
+      "gl005_proven": false
+    }
+  },
+  "bridges": {
+    "control": {
+      "id": "raios-mcp",
+      "role": "control/orchestration",
+      "path": "scripts/ai-os/raios_mcp/server.py",
+      "gateway": "scripts/ai-os/raios_mcp/gateway.py",
+      "endpoint": "http://127.0.0.1:8787/mcp",
+      "health": "http://127.0.0.1:8787/health",
+      "tools": 8,
+      "not": "model-execution"
+    },
+    "execution": {
+      "id": "opencode",
+      "role": "coding/model-execution-bridge",
+      "uses_role": "CODE_MODEL",
+      "present": false,
+      "binary": null,
+      "install": false,
+      "duplicate_mcp": false,
+      "not_control_plane": true,
+      "execution_proven": false,
+      "status": "DECLARED_ON_CONTROL_PLANE",
+      "mcp_seam": "get_head",
+      "integration_points": [
+        ".ai-os/MODEL-REGISTRY.json bridges.execution",
+        "roles.CODE_MODEL.bridge=opencode",
+        "MCP get_head mcp_to_opencode",
+        "shutil.which('opencode') probe only",
+        "do not add MCP tools",
+        "do not download"
+      ]
+    },
+    "mcp_to_opencode": {
+      "control_tool": "get_head",
+      "control": "raios-mcp",
+      "execution": "opencode",
+      "uses_role": "CODE_MODEL",
+      "present": false,
+      "new_mcp_tools": false,
+      "shell_via_mcp": false,
+      "execution_proven": false
+    },
+    "local_infer": {
+      "id": "ollama",
+      "role": "DEV_FALLBACK",
+      "path": "src/raios/neuro_lingua/qwen_runtime.py",
+      "generate": "qwen_runtime.generate",
+      "probe": "qwen_runtime.probe",
+      "uses_role": "CORTEX_MODEL",
+      "base_url_env": "OLLAMA_HOST",
+      "transport": "openai-compatible /v1/chat/completions",
+      "native_fallback": "ollama /api/generate",
+      "not_cortex_host": true,
+      "not_final_criterion": true
+    },
+    "transport": {
+      "path": [
+        "C5",
+        "NeuroLingua",
+        "MODEL_ROLE",
+        "PROVIDER_ENDPOINT",
+        "openai-compatible /v1/chat/completions",
+        "response"
+      ],
+      "protocol": "openai-compatible",
+      "chat_path": "/v1/chat/completions",
+      "sdk": false,
+      "paid_openai_api": false,
+      "source_patch_required": false
+    },
+    "endpoint_kinds": [
+      "LOCAL_DEV",
+      "KAGGLE_WORKER",
+      "LIGHTNING_WORKER",
+      "HF_ENDPOINT",
+      "FRONTIER_PROVIDER"
+    ],
+    "laptop_is_model_host": false,
+    "duplicate_mcp": false,
+    "duplicate_registry": false,
+    "gl005_proven": false
+  },
+  "cortex_reason": "MEMORY_ALLOCATION_FAILED",
+  "code_bridge": "opencode",
+  "mcp_to_opencode": {
+    "control_tool": "get_head",
+    "control": "raios-mcp",
+    "execution": "opencode",
+    "uses_role": "CODE_MODEL",
+    "present": false,
+    "new_mcp_tools": false,
+    "shell_via_mcp": false,
+    "execution_proven": false
+  },
+  "model_agnostic_bind": true,
+  "remote_provider_supported": true,
+  "role_based_routing": true,
+  "mcp_to_opencode_bind": true,
+  "opencode_execution_proven": false,
+  "permanent_identity": false,
+  "endpoint_kinds": [
+    "LOCAL_DEV",
+    "KAGGLE_WORKER",
+    "LIGHTNING_WORKER",
+    "HF_ENDPOINT",
+    "FRONTIER_PROVIDER"
+  ],
+  "endpoint": {
+    "kind": "LOCAL_DEV",
+    "configured": true,
+    "unbound": false,
+    "reason": "LOCAL_DEV_FALLBACK",
+    "base_url": "http://127.0.0.1:11434",
+    "chat_url": "http://127.0.0.1:11434/v1/chat/completions",
+    "api_key_present": false,
+    "api_key_env": "RAIOS_CORTEX_API_KEY",
+    "model": "qwen3.6:35b-a3b",
+    "dev_fallback": true,
+    "remote": false
+  },
+  "laptop_is_model_host": false,
+  "transport": "openai-compatible",
+  "source_patch_required": false,
+  "wal_written": false,
+  "gl005_proven": false,
+  "law": [
+    "RAIOS_NE_ONE_MODEL",
+    "CURRENT_WINNERS_ARE_NOT_FINAL",
+    "ROLE_NE_CROWNED_WINNER",
+    "NO_DUPLICATE_REGISTRY",
+    "OPENCODE_NE_MCP",
+    "LAPTOP_NE_MODEL_HOST",
+    "OLLAMA_IS_DEV_FALLBACK",
+    "OPENAI_COMPAT_TRANSPORT",
+    "ROLE_NE_HARDCODED_IDENTITY",
+    "NAMED_CANDIDATE_NE_PERMANENT_CORTEX"
+  ]
+}

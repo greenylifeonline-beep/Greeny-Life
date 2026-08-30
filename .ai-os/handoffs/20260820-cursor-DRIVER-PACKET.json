@@ -1,0 +1,211 @@
+{
+  "schema": "raios.driver-packet.v1",
+  "state": "DISCOVERED",
+  "from": "CURSOR_EXECUTOR",
+  "to": "USER_MAIN_ASSISTANT",
+  "role": "You steer. This packet is stop-state only. Do not treat it as certification.",
+  "generated_at": "2026-08-20T12:41:00Z",
+  "authority": {
+    "write_repo": "C:\\Users\\Ghanam\\Documents\\Codex\\Greeny-Life-Repair",
+    "do_not_treat_as_write_repo": "C:\\Users\\Ghanam\\OneDrive\\projects\\Greeny-Life",
+    "this_slice": "/workspace GitHub clone of greenylifeonline-beep/greeny-life",
+    "branch": "v9-neurolingua-semantic-kernel",
+    "head": "e1dfd7c235b0bd4ba1a58ab6dfea47bd00173370",
+    "origin_match": true,
+    "dirty_this_slice": false
+  },
+  "mission_last_ordered": "CONSOLIDATION + DELETION of obsolete/duplicate engines; then GL-004/GL-005 by capability not migration folders.",
+  "mission_status": "NOT_EXECUTED",
+  "why_not_executed": [
+    "Executor classified live keepers and duplicate barn on Repair, then workspace switched to /workspace.",
+    "This slice does not contain the untracked Repair barn (_raios-kaggle-census, venv, DEEP-EVIDENCE, retired-worktree copies).",
+    "Commit-and-push found only Next/npm environment churn (next-env.d.ts, package-lock libc). Those were restored, not committed.",
+    "No files deleted. No unique behavior merged. No type-check/build/test proof run for consolidation."
+  ],
+  "git_on_origin": {
+    "v9-neurolingua-semantic-kernel": "e1dfd7c235b0bd4ba1a58ab6dfea47bd00173370",
+    "pr/nl0-semantic-kernel": "f7c23759b59be72456af59a87d8c48b13827fa7b",
+    "pr/cairo-shipment-origin-salvage": "7031ffc1de5f34ddefc77d622d8eedc8cb12892d",
+    "pr/authoritative-certifier-forensic": "d2ab122fe25e3ab16b91afbc3267cd47778f6dba"
+  },
+  "done_in_git": [
+    {
+      "id": "NL-0",
+      "commit": "82fa109",
+      "fact": "NeuroLingua kernel exists; WAL is adapter over cognitive_event_bus; pytest 17; offline benchmark llm_calls=0. Not fully certified (LID lexical; Qwen student RAM fail; mastery false)."
+    },
+    {
+      "id": "CERTIFIER_FORENSIC",
+      "commit": "18feb63",
+      "fact": "Stale-lock nested safety path partial. current_goal/active_wave/legacy_provider still fail-closed on forensic slice. Do not treat console PASS as truth."
+    },
+    {
+      "id": "WAVE2_SIGNAL_GAPS",
+      "commit": "e1dfd7c",
+      "fact": "Recorded GL-004/GL-005 path-signal gaps. SIGNAL_GAP_NE_CAPABILITY_GAP. Do not create migration/gl-004 or migration/gl-005 to pad scores."
+    }
+  ],
+  "false_pass_do_not_trust": [
+    {
+      "artifact": "_raios-engine-deep-audit/reports/ENGINE-AUDIT-FINAL-REPORT.json",
+      "claim": "PASS engines_detected=1872",
+      "reason": "Counts venv/site-packages. ARCH-003."
+    },
+    {
+      "artifact": "certifier top-level current_goal_overwritten is False",
+      "reason": "None is False. Real flags live under safety.*"
+    }
+  ],
+  "live_keepers_this_head": [
+    {
+      "capability": "order_workflow_transition",
+      "keeper": "canonical/lib/workflowEngine.ts",
+      "dependents": ["app/api/workflow/route.ts"],
+      "decision": "KEEP_CANONICAL",
+      "obsolete_duplicate": "archive/duplicates/route.ts (weaker: default tariff/shipping, no auth). DELETE_OBSOLETE authorized, not deleted."
+    },
+    {
+      "capability": "canonical_product_audit",
+      "keeper": "canonical/intelligence/intelligence/engines/audit-engine.ts",
+      "dependents": ["lib/intelligence/canonical-integrity-adapter.ts", "tests/canonical_intelligence_check.ts"],
+      "decision": "KEEP_CANONICAL"
+    },
+    {
+      "capability": "canonical_data_integrity",
+      "keeper": "canonical/intelligence/intelligence/engines/data-integrity-engine.ts",
+      "dependents": ["lib/intelligence/canonical-integrity-adapter.ts", "tests/canonical_intelligence_check.ts"],
+      "decision": "KEEP_CANONICAL"
+    },
+    {
+      "capability": "governance_gated_runtime",
+      "keeper": "canonical/intelligence/runtime/controlled-runtime-orchestrator.ts",
+      "dependents": ["lib/intelligence/workflow-governance.ts", "lib/intelligence/trade-corridors.ts"],
+      "decision": "KEEP_CANONICAL"
+    },
+    {
+      "capability": "task_orchestration_review_only",
+      "keeper": "lib/intelligence/task-orchestration.ts",
+      "dependents": ["app/api/tasks/route.ts", "tests/task_orchestration_check.ts"],
+      "decision": "KEEP_CANONICAL",
+      "note": "This is the GL-005 orchestration path in product code. execution=false; review contracts only."
+    },
+    {
+      "capability": "cognitive_wal_learning_authority",
+      "keeper": "RAIOS/V9/runtime/cognitive_event_bus.py",
+      "wal": "RAIOS/V9/wal/cognitive-events.jsonl",
+      "decision": "KEEP_CANONICAL",
+      "law": "Do not create a second bus/WAL. Duplicate reject is event_id only."
+    },
+    {
+      "capability": "neurolingua_meaning",
+      "keeper": "src/raios/neuro_lingua/",
+      "decision": "KEEP_CANONICAL",
+      "law": "Meaning canonical; model replaceable. Main Cortex identity qwen3.6:35b-a3b. Do not swap for a tiny model."
+    },
+    {
+      "capability": "agent_capability_dedup",
+      "keeper": "RAIOS/V9/runtime/a13_agent_capability_dedup_certification.py",
+      "decision": "KEEP_REQUIRED_SUPPORT",
+      "note": "A15 lock ACTIVE on RAIOS/V9. Do not mutate A15 certification sources."
+    }
+  ],
+  "broken_live_residue_not_yet_repaired": [
+    {
+      "path": "canonical/intelligence/intelligence/intelligence-test.ts",
+      "problem": "Imports missing duplicate-engine-v2 and project-memory. Not in tsconfig include. DELETE_OBSOLETE.",
+      "merge": "Nothing useful. Duplicate detection belongs in data-integrity-engine if needed."
+    },
+    {
+      "path": "canonical/intelligence/intelligence/health/health-reporter.ts",
+      "problem": "Imports missing ../core/engine-registry; checks intelligence/ paths that do not exist; unused. REPAIR_KEEPER or DELETE_OBSOLETE.",
+      "merge": "Keep getActiveEngines/findEngine from archive/historical/.../engine-registry.ts only if repairing a live registry of the keepers above."
+    },
+    {
+      "path": "canonical/intelligence/intelligence/gl-dos.ts",
+      "problem": "Recursive npm diagnose wrapper, unused by package.json. DELETE_OBSOLETE."
+    },
+    {
+      "path": "archive/historical/__tests__/workflowEngine.test.ts",
+      "problem": "Imports missing ../lib/workflowEngine. Live tests already exist. DELETE_OBSOLETE."
+    }
+  ],
+  "barn_on_repair_not_in_this_slice": {
+    "byte_identical_delete_now": [
+      "_raios-kaggle-census/.../knowledge-merge-analysis-20260726-180626.json SHA256 prefix f962e76003ef20fc == archive/old_folders/unified-intelligence/... same file 14645613 bytes",
+      "RAIOS-GREENY-DEEP-EVIDENCE/files/canonical__intelligence__intelligence__engines__audit-engine.ts == canonical audit-engine.ts",
+      "_raios-old-business-salvage/shadow/.../workflowEngine.ts == canonical/lib/workflowEngine.ts"
+    ],
+    "delete_obsolete_generated": [
+      "_raios-engine-deep-audit (venv inventory false PASS)",
+      "_raios-innovation-recon giant maps",
+      "_raios-wave2-semantic-capability-classifier 476-row reports",
+      "_raios-wave2-post-retirement CICF inventories (keep small CICF-DISCOVERY-AND-CONSOLIDATION-LAW.json if assimilating)",
+      "RAIOS-GREENY-*.zip extracts",
+      "archive/retired-worktree-preservation (git + WAVE2 audit is enough; do not recreate worktrees)",
+      "_raios-communication-fabric/.venv-multimodal (not an engine; KEEP fabric src if unique multimodal/envelope)"
+    ],
+    "keep_on_repair": [
+      "_raios-controlled-retirement/20260820T094624Z/reports/WAVE2-RESURRECTION-AUDIT.json sha256 d8a3b00c17ff737ac048cb5dc0fdf0dfd7c8d9d94a3bb2cae6557817edac8e9e",
+      "_raios-authoritative-certifier/src",
+      "_raios-team-bridge src (WAL producer; inbox is not cross-env transport)",
+      "_raios-communication-fabric/src (different job than cognitive WAL)"
+    ]
+  },
+  "gl004": {
+    "contract": "Type-check + build + tests + runtime execution truth.",
+    "path_signal_gap": "migration/gl-004 absent. DO NOT CREATE to pad 3/4.",
+    "capability_status": "UNPROVEN_THIS_TURN",
+    "existing_capability_candidates": [
+      "package.json scripts type-check, build, verify, test:canonical-intelligence, test:workflow-governance",
+      "app/ + prisma/ + tests/ present"
+    ]
+  },
+  "gl005": {
+    "contract": "Shared task state + locks + handoff + actual orchestration demonstration.",
+    "path_signal_gap": "migration/gl-005 absent. DO NOT CREATE to pad 1/2.",
+    "capability_status": "PARTIAL_UNPROVEN",
+    "existing_capability_candidates": [
+      ".ai-os/state/TASKS.json + LOCKS.json + handoffs/",
+      "lib/intelligence/task-orchestration.ts + tests/task_orchestration_check.ts + app/api/tasks/route.ts",
+      "scripts/ai-os/aios.py"
+    ]
+  },
+  "active_locks_do_not_overlap": [
+    "LOCK-20260818130148 V9-A15 cursor RAIOS/V9 ACTIVE",
+    "LOCK-20260820062957/58 V9-NL0 cursor neuro_lingua,configs,tests,benchmarks,reports,docs/v9 ACTIVE",
+    "LOCK-20260820134633 WAVE2-GAP-RES cursor _raios-wave2-gap-resolution ACTIVE"
+  ],
+  "invariants": [
+    "SIGNAL_GAP_NE_CAPABILITY_GAP",
+    "PATH_ABSENCE_NE_CAPABILITY_ABSENCE",
+    "PRESENCE_NE_EXECUTION_PROOF",
+    "CHECK_ID_NE_FAILURE_CODE",
+    "No second WAL/event bus",
+    "No retired worktree resurrection",
+    "No filesystem backup forests; one git tag/branch before deletion",
+    "No fake PASS; receipt + real exit_code",
+    "Do not promote DISCOVERED to CANONICAL",
+    "Kaggle: two tools, one evidence plane; no quota stacking"
+  ],
+  "next_true_gap": "Execute consolidation on WRITE repo Repair (or this slice if that is now write authority): safety tag at e1dfd7c → MERGE unique into keepers → DELETE duplicates/obsolete → dangling-ref scan → npm run type-check && build && targeted tests → aios orchestration demo. Compression of the estate is part of the proof.",
+  "order_to_give_executor": "MODE=CONSOLIDATION_EXECUTE. Repo=Repair if reachable else /workspace. Tag safety/pre-consolidation-e1dfd7c. Do not write another census. Delete byte-identical barn. Delete obsolete broken intelligence-test/gl-dos/archive duplicates. Repair engine-registry to the live keepers only. Run GL-004 proofs and GL-005 aios+task-orchestration test. Return the required CONSOLIDATION_STATUS block with real exits.",
+  "consolidation_scoreboard": {
+    "CONSOLIDATION_STATUS": "NOT_STARTED_IN_THIS_SLICE",
+    "ENGINES_BEFORE": "classified_not_counted_as_1872",
+    "ENGINES_AFTER": "unchanged",
+    "FILES_MERGED": 0,
+    "FILES_REPAIRED": 0,
+    "FILES_DELETED": 0,
+    "DUPLICATES_REMAINING": "barn_on_Repair_untracked; broken_canonical_residue_still_present",
+    "DANGLING_REFERENCES": "intelligence-test.ts, health-reporter.ts, historical workflowEngine.test.ts",
+    "GL004_STATUS": "SIGNAL_GAP_ONLY",
+    "GL005_STATUS": "SIGNAL_GAP_ONLY",
+    "TYPECHECK_EXIT": null,
+    "BUILD_EXIT": null,
+    "TEST_EXIT": null,
+    "RUNTIME_PROOF": false,
+    "ORCHESTRATION_PROOF": false,
+    "CURRENT_HEAD": "e1dfd7c235b0bd4ba1a58ab6dfea47bd00173370",
+    "NEXT_TRUE_GAP": "Execute merge-repair-delete-proof on write repo"
+  }
+}

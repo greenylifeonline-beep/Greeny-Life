@@ -1,0 +1,36 @@
+{
+  "schema": "raios.phase1-unified.contradictions.v1",
+  "ts": "2026-08-25T18:36:36.100038+00:00",
+  "items": [
+    {
+      "id": "X-011",
+      "claim": "TREE-001 is canonical build",
+      "vs": "unreadable on Cloud",
+      "resolution": "declared by C1, unproven here"
+    },
+    {
+      "id": "X-012",
+      "claim": "8876 chat 200 on Cloud",
+      "vs": "founder channel",
+      "resolution": "C1 console this VM; founder fail-closed"
+    },
+    {
+      "id": "X-013",
+      "claim": "C5 public HTTP 200",
+      "vs": "USER_TO_C5_PUBLIC_PROVEN",
+      "resolution": "missing correlation_id/ACK/return-path contract fields"
+    },
+    {
+      "id": "X-014",
+      "claim": "Cloud Adapter exists",
+      "vs": "AG bridge wire compat",
+      "resolution": "UNPROVEN until signed package"
+    },
+    {
+      "id": "X-008",
+      "claim": "remote_c2_ready",
+      "vs": "hardcoded false",
+      "resolution": "unchanged"
+    }
+  ]
+}

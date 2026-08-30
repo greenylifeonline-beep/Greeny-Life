@@ -1,0 +1,54 @@
+{
+  "schema": "raios.mission-board.v1",
+  "branch": "v9-neurolingua-semantic-kernel",
+  "head": "64fa63f72cb457defb5118f29e88c789612c795f",
+  "updated_at": "2026-08-20T19:27:25.635813+00:00",
+  "mission_status": "C5_SON_PULSE_LIVE",
+  "mission": "C0 abolished. C1 is Cursor (owner's hand). C2/C3 ChatGPT. C4 DeepSeek. C5 RAIOS. Repair is unseated. Local MCP meeting is not remote ChatGPT. MAIL_PASSES_NE_PROVES. GL005_PROVEN remains false.",
+  "schedule": {
+    "now": "C5 RAIOS — ابن Cursor — يقيّم ويهضم ويتكلم. C2/C3/C4 عبر MCP أو MAIL. C1 يجمع.",
+    "next": "Remote C2/C3/C4 connectivity remains unproven. Repair authenticated POST remains the only GL-005 mutation proof.",
+    "forbidden": "C0 live seat, Repair as C3, MAIL C5 as RAIOS, Issue as proof, PASS from mail or C5 pulse, Team Relay hub, WAL dump, forged session"
+  },
+  "required": {
+    "C1": "Cursor — يد المالك وأب C5. بوابة MCP V1 + OUTBOX. يجمع. لا يمنح PASS. لا يتجاوز stale-head.",
+    "C2": "ChatGPT الأول. MCP أو MAIL C2. رأي فقط. لا كود.",
+    "C3": "ChatGPT النظير. MCP أو MAIL C3. رأي فقط. ليس Repair.",
+    "C4": "DeepSeek. MCP أو MAIL C4 (وMAIL C5 التاريخي). يفنّد. لا ينفّذ.",
+    "C5": "RAIOS الابن المساعد المخلص الشريك. يقيّم ويهضم ويتكلم. نفس أدوات الوعي الثمانية. لا PASS. لا ترقية."
+  },
+  "mail": {
+    "dispatcher": "C1",
+    "law": "MAIL_PASSES_NE_PROVES",
+    "gl005_proven": false,
+    "inbox": "https://github.com/greenylifeonline-beep/Greeny-Life/issues",
+    "outbox": "https://github.com/greenylifeonline-beep/Greeny-Life/blob/v9-neurolingua-semantic-kernel/.ai-os/mail/OUTBOX.md",
+    "new_c2": "https://github.com/greenylifeonline-beep/Greeny-Life/issues/new?template=raios-mail-c2.md",
+    "new_c3": "https://github.com/greenylifeonline-beep/Greeny-Life/issues/new?template=raios-mail-c3.md",
+    "new_c4": "https://github.com/greenylifeonline-beep/Greeny-Life/issues/new?template=raios-mail-c4.md",
+    "new_c5_legacy": "https://github.com/greenylifeonline-beep/Greeny-Life/issues/new?template=raios-mail-c5.md",
+    "identity": "GITHUB_LOGIN_NOT_RAIOS_SEAT",
+    "c0_seat": "ABOLISHED",
+    "repair_seat": "UNSEATED",
+    "last_collect": {
+      "at": "2026-08-20T16:23:56.440897+00:00",
+      "new": 0,
+      "inbox_total": 0,
+      "gl005_proven": false
+    },
+    "last_send": {
+      "id": "f110eaae-2a63-45c1-9b72-fbc9cc22b9c6",
+      "ts": "2026-08-20T19:26:45.208531+00:00",
+      "to": [
+        "C4"
+      ]
+    }
+  },
+  "c5": {
+    "role": "c1-assistant",
+    "parent": "C1",
+    "pulse": ".ai-os/reports/raios-service/LAST-EVAL.md",
+    "mind": ".ai-os/learning/C5-MIND.md",
+    "gl005_proven": false
+  }
+}

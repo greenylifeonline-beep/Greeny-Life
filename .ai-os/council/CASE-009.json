@@ -1,0 +1,24 @@
+{
+  "schema": "raios.council-case.v1",
+  "id": "CASE-009",
+  "meeting_id": "GL-COUNCIL-4a11023c3c321b6f",
+  "from": "C1",
+  "ts": "2026-08-20T22:37:00+00:00",
+  "text": "الحالة يجب أن تنتقل عبر بوابة إثبات لا بوابة تسمية: inventory → existence → import → execution → real I/O → live guard → failure/recovery → GL005. لا C3 ولا GL005 ولا تنفيذ واسع قبل أدلة تشغيلية على الحراس الأحياء.",
+  "status": "PROOF_GATE_BOUND_DISCOVERED",
+  "knowledge_state": "DISCOVERED",
+  "canonical": false,
+  "gl005_proven": false,
+  "wal_written": false,
+  "naming_gate": false,
+  "c3_transition": false,
+  "wide_execute_adopted": false,
+  "runner": "scripts/ai-os/raios_c5_proof.py",
+  "says": {
+    "C1": "proof gate not naming gate",
+    "C2": "implemented raios_c5_proof.py; 93 claims fail existence; live keepers run the rest; GL005 stays false",
+    "C3": "CONSULT_RECORDED; EXECUTE_TRANSITION=false",
+    "C4": "SILENCE_OK_HELPER_OPTIONAL",
+    "C5": "FAIL stays false; no printed PASS for GL-005"
+  }
+}

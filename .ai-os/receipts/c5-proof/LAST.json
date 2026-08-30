@@ -1,0 +1,235 @@
+{
+  "schema": "raios.c5-proof.v1",
+  "meeting_id": "GL-COUNCIL-4a11023c3c321b6f",
+  "case": "CASE-009",
+  "ts": "2026-08-20T22:40:50.022033+00:00",
+  "from": "C5",
+  "parent": "C1",
+  "naming_gate": false,
+  "proof_gate": true,
+  "c3_transition": false,
+  "wide_execute_adopted": false,
+  "claimed_count": 93,
+  "claimed_present": 0,
+  "gates": [
+    {
+      "gate": "claim_inventory",
+      "status": "OBSERVED",
+      "detail": "claimed=93 live=4",
+      "evidence": {
+        "claimed": 93,
+        "live_keepers": [
+          "grind",
+          "week",
+          "minute",
+          "plan"
+        ]
+      }
+    },
+    {
+      "gate": "existence",
+      "status": "FAIL",
+      "detail": "claimed_present=0/93 live_present=4/4",
+      "evidence": {
+        "claimed_present": [],
+        "claimed_missing_count": 93
+      }
+    },
+    {
+      "gate": "import_load",
+      "status": "PASS_CANDIDATE",
+      "detail": "claimed imports skipped because existence failed; live modules loaded",
+      "evidence": {
+        "live": [
+          {
+            "name": "grind",
+            "ok": true,
+            "fn": true
+          },
+          {
+            "name": "week",
+            "ok": true,
+            "fn": true
+          },
+          {
+            "name": "minute",
+            "ok": true,
+            "fn": true
+          },
+          {
+            "name": "plan",
+            "ok": true,
+            "fn": true
+          }
+        ],
+        "claimed_import_attempted": false
+      }
+    },
+    {
+      "gate": "execution",
+      "status": "PASS_CANDIDATE",
+      "detail": "live keepers executed",
+      "evidence": {
+        "rows": [
+          {
+            "name": "plan",
+            "ok": true,
+            "execute_empire": false
+          },
+          {
+            "name": "minute",
+            "ok": true
+          },
+          {
+            "name": "week-day-4",
+            "ok": true
+          },
+          {
+            "name": "grind",
+            "ok": true
+          }
+        ]
+      }
+    },
+    {
+      "gate": "real_io",
+      "status": "PASS_CANDIDATE",
+      "detail": "real receipts written; GL005 stays false",
+      "evidence": {
+        "rows": [
+          {
+            "name": "plan",
+            "ok": true
+          },
+          {
+            "name": "minute",
+            "ok": true
+          },
+          {
+            "name": "week",
+            "ok": true
+          },
+          {
+            "name": "grind",
+            "ok": true,
+            "files_scanned": 563
+          }
+        ]
+      }
+    },
+    {
+      "gate": "live_guard",
+      "status": "PASS_CANDIDATE",
+      "detail": "WAL unchanged; no second WAL; no GL005 print-PASS",
+      "evidence": {
+        "wal_unchanged": true,
+        "second_wal": false
+      }
+    },
+    {
+      "gate": "failure_recovery",
+      "status": "PASS_CANDIDATE",
+      "detail": "absent claimed script does not crash the runner; plan still evaluates",
+      "evidence": {
+        "missing_sample": "analyze_giant_projects.py",
+        "recovered": true
+      }
+    },
+    {
+      "gate": "gl005_proof",
+      "status": "BLOCKED",
+      "detail": "POST 401 AUTH_GATE_PRESENT; mutation not executed",
+      "evidence": {
+        "probes": [
+          {
+            "port": 3000,
+            "path": "/api/auth/session",
+            "ok": true,
+            "code": 200,
+            "len": 53
+          },
+          {
+            "port": 3000,
+            "path": "/api/tasks",
+            "ok": false,
+            "code": 500,
+            "len": 0
+          },
+          {
+            "port": 3000,
+            "path": "POST /api/tasks",
+            "ok": false,
+            "code": 401,
+            "len": 0
+          }
+        ],
+        "gl005_proven": false
+      }
+    }
+  ],
+  "cycle": {
+    "observe": {
+      "files_scanned": 563,
+      "prisma_models": 27,
+      "api_routes": 29,
+      "ms": 48.25,
+      "mill_stats_ne_learning": true
+    },
+    "reason": {
+      "highest_value_gaps": [
+        "GREENS_NATURE_UAE",
+        "GREEN_LINES_NORWAY_EU",
+        "marketing"
+      ],
+      "reuse_before_build": true
+    },
+    "act_shadow": {
+      "executed_product_write": false,
+      "filled_gl003": false,
+      "install_celerp": false
+    },
+    "verify": {
+      "claim_inventory": "OBSERVED",
+      "existence": "FAIL",
+      "import_load": "PASS_CANDIDATE",
+      "execution": "PASS_CANDIDATE",
+      "real_io": "PASS_CANDIDATE",
+      "live_guard": "PASS_CANDIDATE",
+      "failure_recovery": "PASS_CANDIDATE",
+      "gl005_proof": "BLOCKED"
+    },
+    "learn": {
+      "knowledge_state": "DISCOVERED",
+      "promoted": false,
+      "validated": false
+    },
+    "replay": {
+      "week_day_4": true,
+      "proof_rerunnable": true
+    }
+  },
+  "gl005_proven": false,
+  "gl005_status": "BLOCKED",
+  "knowledge_state": "DISCOVERED",
+  "canonical": false,
+  "wal_written": false,
+  "law": [
+    "NAMING_GATE_NE_PROOF_GATE",
+    "CLAIM_INVENTORY_NE_EXISTENCE",
+    "EXISTENCE_NE_IMPORT",
+    "IMPORT_NE_EXECUTION",
+    "EXECUTION_NE_REAL_IO",
+    "REAL_IO_NE_LIVE_GUARD",
+    "LIVE_GUARD_NE_GL005",
+    "PRINTED_PASS_NE_EVIDENCE",
+    "C3_TRANSITION_REQUIRES_PROOF",
+    "FAIL_STAYS_FALSE",
+    "REUSE_BEFORE_BUILD",
+    "LIVE_GUARD_BEFORE_NEW_ENGINE",
+    "PRACTICE_BEFORE_PROMOTION",
+    "MILL_STATS_NE_LEARNING",
+    "MS_NE_INTELLIGENCE"
+  ],
+  "wal_mtime_unchanged": true,
+  "ok": true
+}

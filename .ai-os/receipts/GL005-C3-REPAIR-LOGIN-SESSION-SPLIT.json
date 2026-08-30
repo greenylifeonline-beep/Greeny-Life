@@ -1,0 +1,65 @@
+{
+  "schema": "raios.gl005-c3-repair-login-session-split.v1",
+  "knowledge_state": "DISCOVERED",
+  "from": "C3",
+  "via": "C0 paste",
+  "recorded_by": "C1",
+  "cwd": "C:\\Users\\Ghanam\\Documents\\Codex\\Greeny-Life-Repair",
+  "GL005_PROVEN": false,
+  "TEMP_PASSWORD_PRINTED": false,
+  "PASSWORD_RETAINED": false,
+  "PROVISION_EXIT": 0,
+  "DOCUMENTED_PROVISION_PRINTED": "PROVEN",
+  "CLI_VERIFY_SUCCESS": true,
+  "CLI_USER_FOUND": true,
+  "CLI_ROLE": "ADMIN",
+  "CLI_PASSWORD_MATCH": true,
+  "RUNTIME_LOGIN_HTTP": 200,
+  "RUNTIME_LOGIN_SUCCESS": true,
+  "SESSION_HTTP": 200,
+  "AUTHENTICATED": false,
+  "SIGNED_ADMIN_SESSION_PRINTED": false,
+  "ATOMIC_CREDENTIAL_LOGIN_PROVEN_PRINTED": true,
+  "EVIDENCE_MUTATION_EXECUTED": false,
+  "TASK_MUTATION_EXECUTED": false,
+  "chain_status": "BROKEN",
+  "breakpoint": "SIGNED_SESSION_COOKIE_NOT_BOUND",
+  "epistemic": "FAILED",
+  "reason": "LOGIN_HTTP_200_NE_SIGNED_SESSION",
+  "capability": "PRESENT_BUT_PROTECTED_AND_UNPROVEN",
+  "c1_falsify": [
+    "DOCUMENTED_PROVISION=PROVEN is not orchestration",
+    "ATOMIC_CREDENTIAL_LOGIN_PROVEN is falsified by AUTHENTICATED=false",
+    "CLI hash match is not a runtime session",
+    "login HTTP 200 is not a signed gl_session"
+  ],
+  "surviving_facts": [
+    "Password value was not printed",
+    "provision-admin.ts upserted admin@greeny-life.local ADMIN",
+    "CLI verifyPassword matched the stored hash",
+    "POST /api/auth/login returned 200 success=true",
+    "GET /api/auth/session returned 200 authenticated=false",
+    "SIGNED_ADMIN_SESSION=PROVEN was not printed",
+    "No POST /api/tasks"
+  ],
+  "code_surface": {
+    "login": "app/api/auth/login/route.ts sets gl_session after verifyPassword",
+    "session": "app/api/auth/session/route.ts reads gl_session via readSession",
+    "cookie": "lib/auth.ts setSessionCookie httpOnly SameSite=Lax Secure iff NODE_ENV=production"
+  },
+  "next_probe_names_and_flags_only": [
+    "SET_COOKIE_COUNT",
+    "SET_COOKIE_NAME_GL_SESSION",
+    "SET_COOKIE_SECURE",
+    "SET_COOKIE_HTTPONLY",
+    "WEBSESSION_HAS_GL_SESSION",
+    "BASE_SCHEME",
+    "BOUND_NEXT_NODE_ENV"
+  ],
+  "forbidden": [
+    "Do not print the cookie value",
+    "Do not forge gl_session",
+    "Do not POST /api/tasks until GET /api/auth/session authenticated=true",
+    "Do not grant GL005_PROVEN"
+  ]
+}

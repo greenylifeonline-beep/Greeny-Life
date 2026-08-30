@@ -1,0 +1,543 @@
+{
+  "schema": "raios.phase1-final.archive-zip-member-index.v1",
+  "ts": "2026-08-25T17:38:17.605088+00:00",
+  "project_zips_on_this_vm": [],
+  "env_archives_not_indexed": [
+    {
+      "path": "/tmp/powershell.tgz",
+      "size": 71645796,
+      "mtime": "2026-08-20T23:47:40.769686+00:00"
+    },
+    {
+      "path": "/tmp/ollama-install/ollama-linux-amd64.tgz",
+      "size": 1312192627,
+      "mtime": "2026-08-20T23:06:34.061159+00:00"
+    },
+    {
+      "path": "/home/ubuntu/go/pkg/mod/cache/download/github.com/!burnt!sushi/toml/@v/v1.4.1-0.20240526193622-a339e1f7089c.zip",
+      "size": 397057,
+      "mtime": "1970-01-01T00:00:00+00:00"
+    },
+    {
+      "path": "/home/ubuntu/go/pkg/mod/cache/download/github.com/!burnt!sushi/toml/@v/v1.5.0.zip",
+      "size": 352548,
+      "mtime": "1970-01-01T00:00:00+00:00"
+    },
+    {
+      "path": "/home/ubuntu/go/pkg/mod/cache/download/github.com/fatih/camelcase/@v/v1.0.0.zip",
+      "size": 4266,
+      "mtime": "1970-01-01T00:00:00+00:00"
+    },
+    {
+      "path": "/home/ubuntu/go/pkg/mod/cache/download/github.com/fatih/gomodifytags/@v/v1.17.1-0.20250423142747-f3939df9aa3c.zip",
+      "size": 86172,
+      "mtime": "1970-01-01T00:00:00+00:00"
+    },
+    {
+      "path": "/home/ubuntu/go/pkg/mod/cache/download/github.com/fatih/structtag/@v/v1.2.0.zip",
+      "size": 6770,
+      "mtime": "1970-01-01T00:00:00+00:00"
+    },
+    {
+      "path": "/home/ubuntu/go/pkg/mod/cache/download/github.com/fsnotify/fsnotify/@v/v1.9.0.zip",
+      "size": 116946,
+      "mtime": "1970-01-01T00:00:00+00:00"
+    },
+    {
+      "path": "/home/ubuntu/go/pkg/mod/cache/download/github.com/google/go-cmp/@v/v0.7.0.zip",
+      "size": 130179,
+      "mtime": "1970-01-01T00:00:00+00:00"
+    },
+    {
+      "path": "/home/ubuntu/go/pkg/mod/cache/download/github.com/google/jsonschema-go/@v/v0.3.0.zip",
+      "size": 111594,
+      "mtime": "1970-01-01T00:00:00+00:00"
+    },
+    {
+      "path": "/home/ubuntu/go/pkg/mod/cache/download/github.com/modelcontextprotocol/go-sdk/@v/v0.8.0.zip",
+      "size": 326789,
+      "mtime": "1970-01-01T00:00:00+00:00"
+    },
+    {
+      "path": "/home/ubuntu/go/pkg/mod/cache/download/github.com/yosida95/uritemplate/v3/@v/v3.0.2.zip",
+      "size": 20849,
+      "mtime": "1970-01-01T00:00:00+00:00"
+    },
+    {
+      "path": "/home/ubuntu/go/pkg/mod/cache/download/golang.org/toolchain/@v/v0.0.1-go1.25.9.linux-amd64.zip",
+      "size": 64362206,
+      "mtime": "1970-01-01T00:00:00+00:00"
+    },
+    {
+      "path": "/home/ubuntu/go/pkg/mod/cache/download/golang.org/x/exp/@v/v0.0.0-20231110203233-9a3e6036ecaa.zip",
+      "size": 463712,
+      "mtime": "1970-01-01T00:00:00+00:00"
+    },
+    {
+      "path": "/home/ubuntu/go/pkg/mod/cache/download/golang.org/x/exp/typeparams/@v/v0.0.0-20231108232855-2478ac86f678.zip",
+      "size": 47446,
+      "mtime": "1970-01-01T00:00:00+00:00"
+    },
+    {
+      "path": "/home/ubuntu/go/pkg/mod/cache/download/golang.org/x/exp/typeparams/@v/v0.0.0-20251023183803-a4bb9ffd2546.zip",
+      "size": 47492,
+      "mtime": "1970-01-01T00:00:00+00:00"
+    },
+    {
+      "path": "/home/ubuntu/go/pkg/mod/cache/download/golang.org/x/mod/@v/v0.30.0.zip",
+      "size": 172652,
+      "mtime": "1970-01-01T00:00:00+00:00"
+    },
+    {
+      "path": "/home/ubuntu/go/pkg/mod/cache/download/golang.org/x/mod/@v/v0.31.0.zip",
+      "size": 172422,
+      "mtime": "1970-01-01T00:00:00+00:00"
+    },
+    {
+      "path": "/home/ubuntu/go/pkg/mod/cache/download/golang.org/x/sync/@v/v0.18.0.zip",
+      "size": 25708,
+      "mtime": "1970-01-01T00:00:00+00:00"
+    },
+    {
+      "path": "/home/ubuntu/go/pkg/mod/cache/download/golang.org/x/sync/@v/v0.19.0.zip",
+      "size": 25714,
+      "mtime": "1970-01-01T00:00:00+00:00"
+    },
+    {
+      "path": "/home/ubuntu/go/pkg/mod/cache/download/golang.org/x/sys/@v/v0.38.0.zip",
+      "size": 2002991,
+      "mtime": "1970-01-01T00:00:00+00:00"
+    },
+    {
+      "path": "/home/ubuntu/go/pkg/mod/cache/download/golang.org/x/telemetry/@v/v0.0.0-20251111182119-bc8e575c7b54.zip",
+      "size": 1017761,
+      "mtime": "1970-01-01T00:00:00+00:00"
+    },
+    {
+      "path": "/home/ubuntu/go/pkg/mod/cache/download/golang.org/x/text/@v/v0.31.0.zip",
+      "size": 9236240,
+      "mtime": "1970-01-01T00:00:00+00:00"
+    },
+    {
+      "path": "/home/ubuntu/go/pkg/mod/cache/download/golang.org/x/tools/@v/v0.39.1-0.20260109155911-b69ac100ecb7.zip",
+      "size": 2972726,
+      "mtime": "1970-01-01T00:00:00+00:00"
+    },
+    {
+      "path": "/home/ubuntu/go/pkg/mod/cache/download/golang.org/x/tools/@v/v0.40.1-0.20260108161641-ca281cf95054.zip",
+      "size": 2974752,
+      "mtime": "1970-01-01T00:00:00+00:00"
+    },
+    {
+      "path": "/home/ubuntu/go/pkg/mod/cache/download/golang.org/x/tools/@v/v0.44.0.zip",
+      "size": 2711015,
+      "mtime": "1970-01-01T00:00:00+00:00"
+    },
+    {
+      "path": "/home/ubuntu/go/pkg/mod/cache/download/golang.org/x/tools/gopls/@v/v0.21.1.zip",
+      "size": 2226948,
+      "mtime": "1970-01-01T00:00:00+00:00"
+    },
+    {
+      "path": "/home/ubuntu/go/pkg/mod/cache/download/golang.org/x/vuln/@v/v1.1.4.zip",
+      "size": 853384,
+      "mtime": "1970-01-01T00:00:00+00:00"
+    },
+    {
+      "path": "/home/ubuntu/go/pkg/mod/cache/download/honnef.co/go/tools/@v/v0.7.0-0.dev.0.20251022135355-8273271481d0.zip",
+      "size": 1056633,
+      "mtime": "1970-01-01T00:00:00+00:00"
+    },
+    {
+      "path": "/home/ubuntu/go/pkg/mod/cache/download/honnef.co/go/tools/@v/v0.7.0.zip",
+      "size": 982220,
+      "mtime": "1970-01-01T00:00:00+00:00"
+    },
+    {
+      "path": "/home/ubuntu/go/pkg/mod/cache/download/mvdan.cc/gofumpt/@v/v0.8.0.zip",
+      "size": 126350,
+      "mtime": "1970-01-01T00:00:00+00:00"
+    },
+    {
+      "path": "/home/ubuntu/go/pkg/mod/cache/download/mvdan.cc/xurls/v2/@v/v2.6.0.zip",
+      "size": 34425,
+      "mtime": "1970-01-01T00:00:00+00:00"
+    },
+    {
+      "path": "/home/ubuntu/go/pkg/mod/golang.org/toolchain@v0.0.1-go1.25.9.linux-amd64/lib/fips140/v1.0.0-c2097c7c.zip",
+      "size": 658130,
+      "mtime": "1970-01-01T00:00:00+00:00"
+    },
+    {
+      "path": "/home/ubuntu/go/pkg/mod/golang.org/toolchain@v0.0.1-go1.25.9.linux-amd64/lib/time/zoneinfo.zip",
+      "size": 406973,
+      "mtime": "1970-01-01T00:00:00+00:00"
+    },
+    {
+      "path": "/home/ubuntu/go/pkg/mod/golang.org/toolchain@v0.0.1-go1.25.9.linux-amd64/src/archive/tar/testdata/file-and-dir.tar",
+      "size": 2560,
+      "mtime": "1970-01-01T00:00:00+00:00"
+    },
+    {
+      "path": "/home/ubuntu/go/pkg/mod/golang.org/toolchain@v0.0.1-go1.25.9.linux-amd64/src/archive/tar/testdata/gnu-incremental.tar",
+      "size": 2560,
+      "mtime": "1970-01-01T00:00:00+00:00"
+    },
+    {
+      "path": "/home/ubuntu/go/pkg/mod/golang.org/toolchain@v0.0.1-go1.25.9.linux-amd64/src/archive/tar/testdata/gnu-long-nul.tar",
+      "size": 2560,
+      "mtime": "1970-01-01T00:00:00+00:00"
+    },
+    {
+      "path": "/home/ubuntu/go/pkg/mod/golang.org/toolchain@v0.0.1-go1.25.9.linux-amd64/src/archive/tar/testdata/gnu-multi-hdrs.tar",
+      "size": 4608,
+      "mtime": "1970-01-01T00:00:00+00:00"
+    },
+    {
+      "path": "/home/ubuntu/go/pkg/mod/golang.org/toolchain@v0.0.1-go1.25.9.linux-amd64/src/archive/tar/testdata/gnu-nil-sparse-data.tar",
+      "size": 2560,
+      "mtime": "1970-01-01T00:00:00+00:00"
+    },
+    {
+      "path": "/home/ubuntu/go/pkg/mod/golang.org/toolchain@v0.0.1-go1.25.9.linux-amd64/src/archive/tar/testdata/gnu-nil-sparse-hole.tar",
+      "size": 1536,
+      "mtime": "1970-01-01T00:00:00+00:00"
+    },
+    {
+      "path": "/home/ubuntu/go/pkg/mod/golang.org/toolchain@v0.0.1-go1.25.9.linux-amd64/src/archive/tar/testdata/gnu-not-utf8.tar",
+      "size": 1536,
+      "mtime": "1970-01-01T00:00:00+00:00"
+    },
+    {
+      "path": "/home/ubuntu/go/pkg/mod/golang.org/toolchain@v0.0.1-go1.25.9.linux-amd64/src/archive/tar/testdata/gnu-sparse-big.tar",
+      "size": 5120,
+      "mtime": "1970-01-01T00:00:00+00:00"
+    },
+    {
+      "path": "/home/ubuntu/go/pkg/mod/golang.org/toolchain@v0.0.1-go1.25.9.linux-amd64/src/archive/tar/testdata/gnu-utf8.tar",
+      "size": 2560,
+      "mtime": "1970-01-01T00:00:00+00:00"
+    },
+    {
+      "path": "/home/ubuntu/go/pkg/mod/golang.org/toolchain@v0.0.1-go1.25.9.linux-amd64/src/archive/tar/testdata/gnu.tar",
+      "size": 3072,
+      "mtime": "1970-01-01T00:00:00+00:00"
+    },
+    {
+      "path": "/home/ubuntu/go/pkg/mod/golang.org/toolchain@v0.0.1-go1.25.9.linux-amd64/src/archive/tar/testdata/hardlink.tar",
+      "size": 2560,
+      "mtime": "1970-01-01T00:00:00+00:00"
+    },
+    {
+      "path": "/home/ubuntu/go/pkg/mod/golang.org/toolchain@v0.0.1-go1.25.9.linux-amd64/src/archive/tar/testdata/hdr-only.tar",
+      "size": 10240,
+      "mtime": "1970-01-01T00:00:00+00:00"
+    },
+    {
+      "path": "/home/ubuntu/go/pkg/mod/golang.org/toolchain@v0.0.1-go1.25.9.linux-amd64/src/archive/tar/testdata/invalid-go17.tar",
+      "size": 1536,
+      "mtime": "1970-01-01T00:00:00+00:00"
+    },
+    {
+      "path": "/home/ubuntu/go/pkg/mod/golang.org/toolchain@v0.0.1-go1.25.9.linux-amd64/src/archive/tar/testdata/issue10968.tar",
+      "size": 512,
+      "mtime": "1970-01-01T00:00:00+00:00"
+    },
+    {
+      "path": "/home/ubuntu/go/pkg/mod/golang.org/toolchain@v0.0.1-go1.25.9.linux-amd64/src/archive/tar/testdata/issue11169.tar",
+      "size": 602,
+      "mtime": "1970-01-01T00:00:00+00:00"
+    },
+    {
+      "path": "/home/ubuntu/go/pkg/mod/golang.org/toolchain@v0.0.1-go1.25.9.linux-amd64/src/archive/tar/testdata/issue12435.tar",
+      "size": 512,
+      "mtime": "1970-01-01T00:00:00+00:00"
+    },
+    {
+      "path": "/home/ubuntu/go/pkg/mod/golang.org/toolchain@v0.0.1-go1.25.9.linux-amd64/src/archive/tar/testdata/neg-size.tar",
+      "size": 512,
+      "mtime": "1970-01-01T00:00:00+00:00"
+    },
+    {
+      "path": "/home/ubuntu/go/pkg/mod/golang.org/toolchain@v0.0.1-go1.25.9.linux-amd64/src/archive/tar/testdata/nil-uid.tar",
+      "size": 1024,
+      "mtime": "1970-01-01T00:00:00+00:00"
+    },
+    {
+      "path": "/home/ubuntu/go/pkg/mod/golang.org/toolchain@v0.0.1-go1.25.9.linux-amd64/src/archive/tar/testdata/pax-bad-hdr-file.tar",
+      "size": 2560,
+      "mtime": "1970-01-01T00:00:00+00:00"
+    },
+    {
+      "path": "/home/ubuntu/go/pkg/mod/golang.org/toolchain@v0.0.1-go1.25.9.linux-amd64/src/archive/tar/testdata/pax-bad-mtime-file.tar",
+      "size": 2560,
+      "mtime": "1970-01-01T00:00:00+00:00"
+    },
+    {
+      "path": "/home/ubuntu/go/pkg/mod/golang.org/toolchain@v0.0.1-go1.25.9.linux-amd64/src/archive/tar/testdata/pax-global-records.tar",
+      "size": 7168,
+      "mtime": "1970-01-01T00:00:00+00:00"
+    },
+    {
+      "path": "/home/ubuntu/go/pkg/mod/golang.org/toolchain@v0.0.1-go1.25.9.linux-amd64/src/archive/tar/testdata/pax-multi-hdrs.tar",
+      "size": 4608,
+      "mtime": "1970-01-01T00:00:00+00:00"
+    },
+    {
+      "path": "/home/ubuntu/go/pkg/mod/golang.org/toolchain@v0.0.1-go1.25.9.linux-amd64/src/archive/tar/testdata/pax-nil-sparse-data.tar",
+      "size": 4096,
+      "mtime": "1970-01-01T00:00:00+00:00"
+    },
+    {
+      "path": "/home/ubuntu/go/pkg/mod/golang.org/toolchain@v0.0.1-go1.25.9.linux-amd64/src/archive/tar/testdata/pax-nil-sparse-hole.tar",
+      "size": 3072,
+      "mtime": "1970-01-01T00:00:00+00:00"
+    },
+    {
+      "path": "/home/ubuntu/go/pkg/mod/golang.org/toolchain@v0.0.1-go1.25.9.linux-amd64/src/archive/tar/testdata/pax-nul-path.tar",
+      "size": 2560,
+      "mtime": "1970-01-01T00:00:00+00:00"
+    },
+    {
+      "path": "/home/ubuntu/go/pkg/mod/golang.org/toolchain@v0.0.1-go1.25.9.linux-amd64/src/archive/tar/testdata/pax-nul-xattrs.tar",
+      "size": 2560,
+      "mtime": "1970-01-01T00:00:00+00:00"
+    },
+    {
+      "path": "/home/ubuntu/go/pkg/mod/golang.org/toolchain@v0.0.1-go1.25.9.linux-amd64/src/archive/tar/testdata/pax-path-hdr.tar",
+      "size": 1024,
+      "mtime": "1970-01-01T00:00:00+00:00"
+    },
+    {
+      "path": "/home/ubuntu/go/pkg/mod/golang.org/toolchain@v0.0.1-go1.25.9.linux-amd64/src/archive/tar/testdata/pax-pos-size-file.tar",
+      "size": 2560,
+      "mtime": "1970-01-01T00:00:00+00:00"
+    },
+    {
+      "path": "/home/ubuntu/go/pkg/mod/golang.org/toolchain@v0.0.1-go1.25.9.linux-amd64/src/archive/tar/testdata/pax-records.tar",
+      "size": 2560,
+      "mtime": "1970-01-01T00:00:00+00:00"
+    },
+    {
+      "path": "/home/ubuntu/go/pkg/mod/golang.org/toolchain@v0.0.1-go1.25.9.linux-amd64/src/archive/tar/testdata/pax-sparse-big.tar",
+      "size": 6144,
+      "mtime": "1970-01-01T00:00:00+00:00"
+    },
+    {
+      "path": "/home/ubuntu/go/pkg/mod/golang.org/toolchain@v0.0.1-go1.25.9.linux-amd64/src/archive/tar/testdata/pax.tar",
+      "size": 10240,
+      "mtime": "1970-01-01T00:00:00+00:00"
+    },
+    {
+      "path": "/home/ubuntu/go/pkg/mod/golang.org/toolchain@v0.0.1-go1.25.9.linux-amd64/src/archive/tar/testdata/sparse-formats.tar",
+      "size": 17920,
+      "mtime": "1970-01-01T00:00:00+00:00"
+    },
+    {
+      "path": "/home/ubuntu/go/pkg/mod/golang.org/toolchain@v0.0.1-go1.25.9.linux-amd64/src/archive/tar/testdata/star.tar",
+      "size": 3072,
+      "mtime": "1970-01-01T00:00:00+00:00"
+    },
+    {
+      "path": "/home/ubuntu/go/pkg/mod/golang.org/toolchain@v0.0.1-go1.25.9.linux-amd64/src/archive/tar/testdata/trailing-slash.tar",
+      "size": 2560,
+      "mtime": "1970-01-01T00:00:00+00:00"
+    },
+    {
+      "path": "/home/ubuntu/go/pkg/mod/golang.org/toolchain@v0.0.1-go1.25.9.linux-amd64/src/archive/tar/testdata/ustar-file-devs.tar",
+      "size": 1536,
+      "mtime": "1970-01-01T00:00:00+00:00"
+    },
+    {
+      "path": "/home/ubuntu/go/pkg/mod/golang.org/toolchain@v0.0.1-go1.25.9.linux-amd64/src/archive/tar/testdata/ustar-file-reg.tar",
+      "size": 1536,
+      "mtime": "1970-01-01T00:00:00+00:00"
+    },
+    {
+      "path": "/home/ubuntu/go/pkg/mod/golang.org/toolchain@v0.0.1-go1.25.9.linux-amd64/src/archive/tar/testdata/ustar.tar",
+      "size": 2048,
+      "mtime": "1970-01-01T00:00:00+00:00"
+    },
+    {
+      "path": "/home/ubuntu/go/pkg/mod/golang.org/toolchain@v0.0.1-go1.25.9.linux-amd64/src/archive/tar/testdata/v7.tar",
+      "size": 3584,
+      "mtime": "1970-01-01T00:00:00+00:00"
+    },
+    {
+      "path": "/home/ubuntu/go/pkg/mod/golang.org/toolchain@v0.0.1-go1.25.9.linux-amd64/src/archive/tar/testdata/writer-big-long.tar",
+      "size": 1536,
+      "mtime": "1970-01-01T00:00:00+00:00"
+    },
+    {
+      "path": "/home/ubuntu/go/pkg/mod/golang.org/toolchain@v0.0.1-go1.25.9.linux-amd64/src/archive/tar/testdata/writer-big.tar",
+      "size": 512,
+      "mtime": "1970-01-01T00:00:00+00:00"
+    },
+    {
+      "path": "/home/ubuntu/go/pkg/mod/golang.org/toolchain@v0.0.1-go1.25.9.linux-amd64/src/archive/tar/testdata/writer.tar",
+      "size": 3584,
+      "mtime": "1970-01-01T00:00:00+00:00"
+    },
+    {
+      "path": "/home/ubuntu/go/pkg/mod/golang.org/toolchain@v0.0.1-go1.25.9.linux-amd64/src/archive/tar/testdata/xattrs.tar",
+      "size": 5120,
+      "mtime": "1970-01-01T00:00:00+00:00"
+    },
+    {
+      "path": "/home/ubuntu/go/pkg/mod/golang.org/toolchain@v0.0.1-go1.25.9.linux-amd64/src/archive/zip/testdata/comment-truncated.zip",
+      "size": 216,
+      "mtime": "1970-01-01T00:00:00+00:00"
+    },
+    {
+      "path": "/home/ubuntu/go/pkg/mod/golang.org/toolchain@v0.0.1-go1.25.9.linux-amd64/src/archive/zip/testdata/crc32-not-streamed.zip",
+      "size": 314,
+      "mtime": "1970-01-01T00:00:00+00:00"
+    },
+    {
+      "path": "/home/ubuntu/go/pkg/mod/golang.org/toolchain@v0.0.1-go1.25.9.linux-amd64/src/archive/zip/testdata/dd.zip",
+      "size": 154,
+      "mtime": "1970-01-01T00:00:00+00:00"
+    },
+    {
+      "path": "/home/ubuntu/go/pkg/mod/golang.org/toolchain@v0.0.1-go1.25.9.linux-amd64/src/archive/zip/testdata/dupdir.zip",
+      "size": 458,
+      "mtime": "1970-01-01T00:00:00+00:00"
+    },
+    {
+      "path": "/home/ubuntu/go/pkg/mod/golang.org/toolchain@v0.0.1-go1.25.9.linux-amd64/src/archive/zip/testdata/go-with-datadesc-sig.zip",
+      "size": 242,
+      "mtime": "1970-01-01T00:00:00+00:00"
+    },
+    {
+      "path": "/home/ubuntu/go/pkg/mod/golang.org/toolchain@v0.0.1-go1.25.9.linux-amd64/src/archive/zip/testdata/readme.zip",
+      "size": 1886,
+      "mtime": "1970-01-01T00:00:00+00:00"
+    },
+    {
+      "path": "/home/ubuntu/go/pkg/mod/golang.org/toolchain@v0.0.1-go1.25.9.linux-amd64/src/archive/zip/testdata/subdir.zip",
+      "size": 428,
+      "mtime": "1970-01-01T00:00:00+00:00"
+    },
+    {
+      "path": "/home/ubuntu/go/pkg/mod/golang.org/toolchain@v0.0.1-go1.25.9.linux-amd64/src/archive/zip/testdata/symlink.zip",
+      "size": 173,
+      "mtime": "1970-01-01T00:00:00+00:00"
+    },
+    {
+      "path": "/home/ubuntu/go/pkg/mod/golang.org/toolchain@v0.0.1-go1.25.9.linux-amd64/src/archive/zip/testdata/test-badbase.zip",
+      "size": 1170,
+      "mtime": "1970-01-01T00:00:00+00:00"
+    },
+    {
+      "path": "/home/ubuntu/go/pkg/mod/golang.org/toolchain@v0.0.1-go1.25.9.linux-amd64/src/archive/zip/testdata/test-baddirsz.zip",
+      "size": 1170,
+      "mtime": "1970-01-01T00:00:00+00:00"
+    },
+    {
+      "path": "/home/ubuntu/go/pkg/mod/golang.org/toolchain@v0.0.1-go1.25.9.linux-amd64/src/archive/zip/testdata/test-prefix.zip",
+      "size": 1227,
+      "mtime": "1970-01-01T00:00:00+00:00"
+    },
+    {
+      "path": "/home/ubuntu/go/pkg/mod/golang.org/toolchain@v0.0.1-go1.25.9.linux-amd64/src/archive/zip/testdata/test-trailing-junk.zip",
+      "size": 1184,
+      "mtime": "1970-01-01T00:00:00+00:00"
+    },
+    {
+      "path": "/home/ubuntu/go/pkg/mod/golang.org/toolchain@v0.0.1-go1.25.9.linux-amd64/src/archive/zip/testdata/test.zip",
+      "size": 1170,
+      "mtime": "1970-01-01T00:00:00+00:00"
+    },
+    {
+      "path": "/home/ubuntu/go/pkg/mod/golang.org/toolchain@v0.0.1-go1.25.9.linux-amd64/src/archive/zip/testdata/time-22738.zip",
+      "size": 140,
+      "mtime": "1970-01-01T00:00:00+00:00"
+    },
+    {
+      "path": "/home/ubuntu/go/pkg/mod/golang.org/toolchain@v0.0.1-go1.25.9.linux-amd64/src/archive/zip/testdata/time-7zip.zip",
+      "size": 150,
+      "mtime": "1970-01-01T00:00:00+00:00"
+    },
+    {
+      "path": "/home/ubuntu/go/pkg/mod/golang.org/toolchain@v0.0.1-go1.25.9.linux-amd64/src/archive/zip/testdata/time-go.zip",
+      "size": 148,
+      "mtime": "1970-01-01T00:00:00+00:00"
+    },
+    {
+      "path": "/home/ubuntu/go/pkg/mod/golang.org/toolchain@v0.0.1-go1.25.9.linux-amd64/src/archive/zip/testdata/time-infozip.zip",
+      "size": 166,
+      "mtime": "1970-01-01T00:00:00+00:00"
+    },
+    {
+      "path": "/home/ubuntu/go/pkg/mod/golang.org/toolchain@v0.0.1-go1.25.9.linux-amd64/src/archive/zip/testdata/time-osx.zip",
+      "size": 142,
+      "mtime": "1970-01-01T00:00:00+00:00"
+    },
+    {
+      "path": "/home/ubuntu/go/pkg/mod/golang.org/toolchain@v0.0.1-go1.25.9.linux-amd64/src/archive/zip/testdata/time-win7.zip",
+      "size": 114,
+      "mtime": "1970-01-01T00:00:00+00:00"
+    },
+    {
+      "path": "/home/ubuntu/go/pkg/mod/golang.org/toolchain@v0.0.1-go1.25.9.linux-amd64/src/archive/zip/testdata/time-winrar.zip",
+      "size": 150,
+      "mtime": "1970-01-01T00:00:00+00:00"
+    },
+    {
+      "path": "/home/ubuntu/go/pkg/mod/golang.org/toolchain@v0.0.1-go1.25.9.linux-amd64/src/archive/zip/testdata/time-winzip.zip",
+      "size": 150,
+      "mtime": "1970-01-01T00:00:00+00:00"
+    },
+    {
+      "path": "/home/ubuntu/go/pkg/mod/golang.org/toolchain@v0.0.1-go1.25.9.linux-amd64/src/archive/zip/testdata/unix.zip",
+      "size": 620,
+      "mtime": "1970-01-01T00:00:00+00:00"
+    },
+    {
+      "path": "/home/ubuntu/go/pkg/mod/golang.org/toolchain@v0.0.1-go1.25.9.linux-amd64/src/archive/zip/testdata/utf8-7zip.zip",
+      "size": 146,
+      "mtime": "1970-01-01T00:00:00+00:00"
+    },
+    {
+      "path": "/home/ubuntu/go/pkg/mod/golang.org/toolchain@v0.0.1-go1.25.9.linux-amd64/src/archive/zip/testdata/utf8-infozip.zip",
+      "size": 162,
+      "mtime": "1970-01-01T00:00:00+00:00"
+    },
+    {
+      "path": "/home/ubuntu/go/pkg/mod/golang.org/toolchain@v0.0.1-go1.25.9.linux-amd64/src/archive/zip/testdata/utf8-osx.zip",
+      "size": 138,
+      "mtime": "1970-01-01T00:00:00+00:00"
+    },
+    {
+      "path": "/home/ubuntu/go/pkg/mod/golang.org/toolchain@v0.0.1-go1.25.9.linux-amd64/src/archive/zip/testdata/utf8-winrar.zip",
+      "size": 146,
+      "mtime": "1970-01-01T00:00:00+00:00"
+    },
+    {
+      "path": "/home/ubuntu/go/pkg/mod/golang.org/toolchain@v0.0.1-go1.25.9.linux-amd64/src/archive/zip/testdata/utf8-winzip.zip",
+      "size": 146,
+      "mtime": "1970-01-01T00:00:00+00:00"
+    },
+    {
+      "path": "/home/ubuntu/go/pkg/mod/golang.org/toolchain@v0.0.1-go1.25.9.linux-amd64/src/archive/zip/testdata/winxp.zip",
+      "size": 412,
+      "mtime": "1970-01-01T00:00:00+00:00"
+    },
+    {
+      "path": "/home/ubuntu/go/pkg/mod/golang.org/toolchain@v0.0.1-go1.25.9.linux-amd64/src/archive/zip/testdata/zip64-2.zip",
+      "size": 266,
+      "mtime": "1970-01-01T00:00:00+00:00"
+    },
+    {
+      "path": "/home/ubuntu/go/pkg/mod/golang.org/toolchain@v0.0.1-go1.25.9.linux-amd64/src/archive/zip/testdata/zip64.zip",
+      "size": 242,
+      "mtime": "1970-01-01T00:00:00+00:00"
+    },
+    {
+      "path": "/home/ubuntu/go/pkg/mod/golang.org/toolchain@v0.0.1-go1.25.9.linux-amd64/src/html/template/testdata/fs.zip",
+      "size": 406,
+      "mtime": "1970-01-01T00:00:00+00:00"
+    }
+  ],
+  "note": "Zero Greeny-Life/EOS/RAIOS project zip members on this VM. Env/toolchain archives listed but members not expanded."
+}

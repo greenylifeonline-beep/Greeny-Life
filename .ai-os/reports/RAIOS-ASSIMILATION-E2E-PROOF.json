@@ -1,0 +1,118 @@
+{
+  "schema": "raios.assimilation-e2e-proof.v1",
+  "knowledge_state": "DISCOVERED",
+  "canonical": false,
+  "from": "C2",
+  "parent": "C1",
+  "decision": "D-064",
+  "bound_head": "f17b749",
+  "ts": "2026-08-21T20:55:13.874272+00:00",
+  "stages": [
+    {
+      "id": "ALLOWED_SOURCE",
+      "status": "PASS",
+      "class": "LIVE",
+      "path": ".ai-os/CORE-CONTRACT.md",
+      "ok": true
+    },
+    {
+      "id": "parser",
+      "status": "PASS",
+      "class": "LIVE",
+      "ok": true,
+      "bytes": 666
+    },
+    {
+      "id": "semantic_decomposition",
+      "status": "PASS",
+      "class": "LIVE",
+      "result": {
+        "ok": true,
+        "class": "LIVE",
+        "actor": "supplier",
+        "action": "ship",
+        "object": "product",
+        "destination": "norway",
+        "llm_calls": 0
+      },
+      "note": "NeuroLingua lexicon compress; not Qwen/Granite"
+    },
+    {
+      "id": "provenance_hash",
+      "status": "PASS",
+      "class": "LIVE",
+      "sha256": "2d538d6ec24ab73a131e174d74b531a9c9cd389b42156c9fa5e45860ccaa36eb"
+    },
+    {
+      "id": "WAL",
+      "status": "BLOCKED",
+      "class": "CONNECTED",
+      "written": false,
+      "lock": "A15 LOCK-20260818130148",
+      "law": "A15_WAL_LOCK"
+    },
+    {
+      "id": "knowledge_state",
+      "status": "PASS",
+      "class": "LIVE",
+      "state": "DISCOVERED",
+      "knowledge": false,
+      "law": "STORED_NE_ASSIMILATED"
+    },
+    {
+      "id": "index_retrieval",
+      "status": "PASS",
+      "class": "LIVE",
+      "index": {
+        "exists": true,
+        "docs": 6252,
+        "terms": 1800,
+        "embedding_model": false,
+        "hits": 24,
+        "wal_written": false
+      },
+      "law": "EMBEDDED_NE_ASSIMILATED"
+    },
+    {
+      "id": "practice_generation",
+      "status": "PASS",
+      "class": "LIVE",
+      "book_ck": 0.6035,
+      "knowledge": false
+    },
+    {
+      "id": "blind_novel_replay",
+      "status": "FAIL",
+      "class": "PROTOTYPE",
+      "reproduced_same_path": true,
+      "law": "REPLAYED_NE_VALIDATED",
+      "note": "book replay is same-keeper, not unseen case"
+    },
+    {
+      "id": "skill_candidate",
+      "status": "PASS",
+      "class": "PROTOTYPE",
+      "kae_ok": true,
+      "promoted": false
+    },
+    {
+      "id": "reuse_on_unseen_case",
+      "status": "FAIL",
+      "class": "ABSENT",
+      "note": "no unseen-case reuse proof this slice"
+    }
+  ],
+  "stop": "WAL",
+  "assimilation_proven": false,
+  "extracted_qwen_granite": false,
+  "safe_to_remove_source": false,
+  "wal_written": false,
+  "gl005_proven": false,
+  "law": [
+    "STORED_NE_ASSIMILATED",
+    "EMBEDDED_NE_ASSIMILATED",
+    "REPLAYED_NE_VALIDATED",
+    "CI_PASS_NE_ASSIMILATION",
+    "STUDENT_NE_EXTRACTION"
+  ]
+}

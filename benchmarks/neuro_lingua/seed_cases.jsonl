@@ -1,0 +1,15 @@
+﻿{"id":"eg-001","locale":"ar-EG","input":"خلصلي الموضوع ده بس متبوظش حاجة في المشروع","expected_intent":"request_action","expected_constraint":"avoid_regression","expected_action":"resolve"}
+{"id":"eg-en-001","locale":"ar-EG","input":"أنا عملت migration بس الـ report مش بيتولد بعد الـ executor","expected_feature":"code_switch","preserve":["migration","report","executor"]}
+{"id":"gulf-001","locale":"ar-GULF","input":"شوف لنا الموضوع وإذا ما عليك أمر خلصه اليوم","expected_feature":"politeness_pragmatics","expected_action":"resolve","expected_deadline":"today","politeness":true,"condition":false}
+{"id":"gulf-002","locale":"ar-GULF","input":"زين، راجع الـ build من غير ما تلمس production","expected_feature":"code_switch","preserve":["build","production"]}
+{"id":"no-001","locale":"nb-NO","input":"Kan du deploye den nye builden, men ikke touche production-databasen?","expected_feature":"code_switch","preserve":["deploye","builden","production-databasen"]}
+{"id":"sv-001","locale":"sv-SE","input":"Kontrollera ändringen utan att påverka produktionen.","expected_constraint":"avoid_regression"}
+{"id":"sv-en-001","locale":"sv-SE","input":"Kan du merga PR-42 utan att röra production-databasen?","expected_feature":"code_switch","preserve":["PR-42","production-databasen"]}
+{"id":"da-001","locale":"da-DK","input":"Tjek ændringen uden at påvirke produktionen.","expected_constraint":"avoid_regression"}
+{"id":"da-en-001","locale":"da-DK","input":"Deploy build 1.4.2 men rør ikke production.","expected_feature":"code_switch","preserve":["1.4.2","production"]}
+{"id":"en-001","locale":"en","input":"Remove the dead code only if runtime behavior remains unchanged.","expected_constraint":"avoid_regression"}
+{"id":"en-002","locale":"en","input":"Do not translate C:\\Users\\Ghanam\\app.py or $RAIOS_HOME.","preserve":["C:\\Users\\Ghanam\\app.py","$RAIOS_HOME"]}
+{"id":"eg-warn-001","locale":"ar-EG","input":"الدنيا هتبوظ","expected_feature":"warning","context":{"domain":"project"}}
+{"id":"num-001","locale":"en","input":"Bump timeout from 30 to 45 seconds on executor-12.","preserve":["30","45","executor-12"]}
+{"id":"neg-001","locale":"en","input":"aaaa bbbb cccc","expected_feature":"ambiguity"}
+{"id":"id-001","locale":"en","input":"Keep SHIP-ORD-CUS-GCC-001 and hash sha256:deadbeefdeadbeefdeadbeefdeadbeef.","preserve":["SHIP-ORD-CUS-GCC-001"]}

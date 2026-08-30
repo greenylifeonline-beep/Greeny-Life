@@ -1,0 +1,139 @@
+{
+  "schema": "raios.model-capability-fingerprints.v1",
+  "fingerprints": [
+    {
+      "model_id": "qwen2.5:0.5b",
+      "axes": {
+        "reasoning": "UNSCORED_GENERATE_OK",
+        "coding": "UNKNOWN",
+        "tool_use": "UNKNOWN",
+        "multilingual": "UNKNOWN",
+        "arabic": "UNKNOWN",
+        "norwegian_scandinavian": "UNKNOWN",
+        "long_context": "UNKNOWN",
+        "domain_performance": "UNKNOWN",
+        "latency": "LOCAL_TINY",
+        "ram": "UNKNOWN",
+        "vram": "UNKNOWN",
+        "storage": "UNKNOWN",
+        "license": "UNKNOWN",
+        "quantization": "UNKNOWN",
+        "parallelism": "UNKNOWN",
+        "safety": "UNKNOWN",
+        "regression": "UNKNOWN"
+      },
+      "winner": false,
+      "evidence": [
+        "generate_code=200"
+      ],
+      "gl005_proven": false
+    },
+    {
+      "model_id": "qwen3.6:35b-a3b",
+      "axes": {
+        "reasoning": "UNKNOWN",
+        "coding": "UNKNOWN",
+        "tool_use": "UNKNOWN",
+        "multilingual": "UNKNOWN",
+        "arabic": "UNKNOWN",
+        "norwegian_scandinavian": "UNKNOWN",
+        "long_context": "UNKNOWN",
+        "domain_performance": "UNKNOWN",
+        "latency": "UNKNOWN",
+        "ram": "UNKNOWN",
+        "vram": "UNKNOWN",
+        "storage": "UNKNOWN",
+        "license": "UNKNOWN",
+        "quantization": "UNKNOWN",
+        "parallelism": "UNKNOWN",
+        "safety": "UNKNOWN",
+        "regression": "UNKNOWN"
+      },
+      "winner": false,
+      "evidence": [
+        "generate_code=CORTEX_HOLD_AWAITING_C1_RUN"
+      ],
+      "gl005_proven": false
+    },
+    {
+      "model_id": "granite4:3b",
+      "axes": {
+        "reasoning": "UNKNOWN",
+        "coding": "UNKNOWN",
+        "tool_use": "UNKNOWN",
+        "multilingual": "UNKNOWN",
+        "arabic": "UNKNOWN",
+        "norwegian_scandinavian": "UNKNOWN",
+        "long_context": "UNKNOWN",
+        "domain_performance": "UNKNOWN",
+        "latency": "UNKNOWN",
+        "ram": "UNKNOWN",
+        "vram": "UNKNOWN",
+        "storage": "UNKNOWN",
+        "license": "UNKNOWN",
+        "quantization": "UNKNOWN",
+        "parallelism": "UNKNOWN",
+        "safety": "UNKNOWN",
+        "regression": "UNKNOWN"
+      },
+      "winner": false,
+      "evidence": [],
+      "gl005_proven": false
+    },
+    {
+      "model_id": "ibm/granite",
+      "axes": {
+        "reasoning": "UNKNOWN",
+        "coding": "UNKNOWN",
+        "tool_use": "UNKNOWN",
+        "multilingual": "UNKNOWN",
+        "arabic": "UNKNOWN",
+        "norwegian_scandinavian": "UNKNOWN",
+        "long_context": "UNKNOWN",
+        "domain_performance": "UNKNOWN",
+        "latency": "UNKNOWN",
+        "ram": "UNKNOWN",
+        "vram": "UNKNOWN",
+        "storage": "UNKNOWN",
+        "license": "UNKNOWN",
+        "quantization": "UNKNOWN",
+        "parallelism": "UNKNOWN",
+        "safety": "UNKNOWN",
+        "regression": "UNKNOWN"
+      },
+      "winner": false,
+      "evidence": [],
+      "gl005_proven": false
+    },
+    {
+      "model_id": "deepseek-r1:1.5b",
+      "axes": {
+        "reasoning": "UNKNOWN",
+        "coding": "UNKNOWN",
+        "tool_use": "UNKNOWN",
+        "multilingual": "UNKNOWN",
+        "arabic": "UNKNOWN",
+        "norwegian_scandinavian": "UNKNOWN",
+        "long_context": "UNKNOWN",
+        "domain_performance": "UNKNOWN",
+        "latency": "UNKNOWN",
+        "ram": "UNKNOWN",
+        "vram": "UNKNOWN",
+        "storage": "UNKNOWN",
+        "license": "UNKNOWN",
+        "quantization": "UNKNOWN",
+        "parallelism": "UNKNOWN",
+        "safety": "UNKNOWN",
+        "regression": "UNKNOWN"
+      },
+      "winner": false,
+      "evidence": [],
+      "gl005_proven": false
+    }
+  ],
+  "winner": null,
+  "gl005_proven": false,
+  "from": "C2",
+  "c5": "git",
+  "wal_written": false
+}

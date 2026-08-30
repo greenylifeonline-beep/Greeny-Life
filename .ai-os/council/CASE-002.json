@@ -1,0 +1,60 @@
+{
+  "schema": "raios.council-case.v1",
+  "id": "CASE-002",
+  "meeting_id": "GL-COUNCIL-4a11023c3c321b6f",
+  "from": "C1",
+  "ts": "2026-08-20T20:38:00+00:00",
+  "text": "هل يمكنهم تدريب C5؟ ثم تشاور: أي قانون نربط، وأي سطر يبقى رأياً، وهل نرفض سطراً؟",
+  "status": "CONSULT_BOUND_DISCOVERED",
+  "consult": "BOUND_THIS_MEETING_ONLY",
+  "channel": "founder_whisper",
+  "public_url_required": false,
+  "operational_truth": false,
+  "knowledge_state": "DISCOVERED",
+  "promoted": false,
+  "canonical": false,
+  "validated": false,
+  "gl005_proven": false,
+  "wal_written": false,
+  "scope": "this_meeting_reviewable_each_session_not_outside_council",
+  "bind": [
+    "FLOOR_OPINION_NE_OPERATIONAL_TRUTH",
+    "NAMED_UNMODIFIED_FLOOR",
+    "CLAIM_NE_EVIDENCE_NE_OBSERVATION",
+    "EVIDENCE_GAP_IS_NOT_PROVEN_OR_BLOCKED",
+    "TEACH_NE_PASS",
+    "LESSON_STARTS_DISCOVERED",
+    "FALSIFY_BEFORE_IMPORTANT_CLAIM",
+    "SEAL_PROVES_IDENTITY_NE_CONTENT",
+    "SPEAKER_AUTHORITY_NE_EVIDENCE",
+    "DISCOVERED_NE_FACT"
+  ],
+  "opinion": [
+    "INFO_VS_OPERATIONAL_TRUTH_AS_FIXED_RULE",
+    "RECURRING_MUST_BECOME_SKILL"
+  ],
+  "reject_as_law": [
+    "LESSONS_BINDING_OUTSIDE_THIS_COUNCIL",
+    "SEAL_PROVES_CONTENT",
+    "PASTE_IS_LEARNING",
+    "SPEAKER_AUTHORITY_IS_EVIDENCE",
+    "DISCOVERED_IS_FACT"
+  ],
+  "classification": {
+    "CLAIM": "CASE-002 consult bound temporary laws for this meeting",
+    "EVIDENCE": "C3 and C4 five CONSULT lines each, unmodified on FLOOR",
+    "OBSERVATION": "C2 and C5 recorded bind; DISCOVERED; WAL not written; GL005_PROVEN=false"
+  },
+  "falsify": {
+    "hypothesis": "Council consult closes GL-005 or promotes TEACH to CANONICAL",
+    "independent_test": "status stays CONSULT_BOUND_DISCOVERED; canonical false; gl005_proven false; WAL mtime unchanged",
+    "result": "HYPOTHESIS_FALSIFIED"
+  },
+  "says": {
+    "C1": "relayed C3/C4 CONSULT",
+    "C2": "BIND_RECORDED",
+    "C3": "CONSULT_RECORDED",
+    "C4": "CONSULT_RECORDED",
+    "C5": "BIND_RECORDED"
+  }
+}

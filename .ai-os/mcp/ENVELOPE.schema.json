@@ -1,0 +1,48 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "raios.communication.envelope.v1",
+  "title": "RAIOS MCP Communication Envelope",
+  "type": "object",
+  "additionalProperties": true,
+  "required": [
+    "message_id",
+    "correlation_id",
+    "actor",
+    "target",
+    "intent",
+    "message_type",
+    "payload",
+    "permission_scope",
+    "created_at",
+    "requires_ack",
+    "ttl_seconds"
+  ],
+  "properties": {
+    "schema": {"const": "raios.communication.envelope.v1"},
+    "message_id": {"type": "string", "minLength": 1},
+    "correlation_id": {"type": "string", "minLength": 1},
+    "task_id": {"type": ["string", "null"]},
+    "actor": {"type": "string", "minLength": 1},
+    "target": {"type": "string", "minLength": 1},
+    "intent": {"type": "string"},
+    "message_type": {"type": "string", "minLength": 1},
+    "payload": {"type": "object"},
+    "evidence": {"type": "array"},
+    "confidence": {"type": "number", "minimum": 0.0, "maximum": 1.0},
+    "permission_scope": {"type": "array", "items": {"type": "string"}, "uniqueItems": true},
+    "attempt": {"type": "integer", "minimum": 1},
+    "created_at": {"type": "string", "minLength": 1},
+    "causal_parent": {"type": ["string", "null"]},
+    "requires_ack": {"type": "boolean"},
+    "ttl_seconds": {"type": "integer", "minimum": 1},
+    "content_hash": {"type": "string", "pattern": "^[0-9a-fA-F]{64}$"}
+  },
+  "x-raios-laws": [
+    "ENVELOPE_NE_BUS",
+    "AUTHENTICATED_ACTOR_NE_AUTHORIZED_ACTION",
+    "ACK_IS_A_NEW_PACKET_NEVER_A_MOVE",
+    "MESSAGE_ID_MUST_BE_IDEMPOTENT",
+    "TTL_EXPIRED_NE_DELIVERABLE",
+    "CONTENT_HASH_NE_TRUTH_AUTHORITY"
+  ]
+}

@@ -1,119 +1,297 @@
 {
-    "schema_version":  "1.0",
-    "tasks":  [
-                  {
-                      "id":  "GL-001",
-                      "title":  "Old to Codex migration map",
-                      "objective":  "Map verified legacy capabilities into Codex repair repository.",
-                      "scope":  [
-                                    ".ai-os",
-                                    "migration",
-                                    "reports"
-                                ],
-                      "dependencies":  [
-
-                                       ],
-                      "allowed_agents":  [
-                                             "gemini-cli",
-                                             "codex",
-                                             "claude-code",
-                                             "chatgpt-main-brain"
-                                         ],
-                      "validation":  "KEEP/MERGE/MIGRATE/REPLACE/ARCHIVE/UNPROVEN map.",
-                      "status":  "DONE",
-                      "claimed_by":  "gemini-cli",
-                      "evidence":  "migration/GL-001-EVIDENCE.md; six required migration reports completed and Gemini handoff recorded."
-                  },
-                  {
-                      "id":  "GL-002",
-                      "title":  "Main intelligence brain",
-                      "objective":  "Recover verified main intelligence and governance without duplicate implementations.",
-                      "scope":  [
-                                    "intelligence",
-                                    "governance",
-                                    "canonical"
-                                ],
-                      "dependencies":  [
-                                           "GL-001"
-                                       ],
-                      "allowed_agents":  [
-                                             "codex",
-                                             "claude-code",
-                                             "gemini-cli"
-                                         ],
-                      "validation":  "One authoritative intelligence path.",
-                      "status":  "READY",
-                      "claimed_by":  null
-                  },
-                  {
-                      "id":  "GL-003",
-                      "title":  "Three project brains",
-                      "objective":  "Identify and migrate the three project brains under shared governance.",
-                      "scope":  [
-                                    "projects",
-                                    "brains",
-                                    "canonical",
-                                    "intelligence"
-                                ],
-                      "dependencies":  [
-                                           "GL-001"
-                                       ],
-                      "allowed_agents":  [
-                                             "gemini-cli",
-                                             "codex",
-                                             "claude-code",
-                                             "deepseek-local"
-                                         ],
-                      "validation":  "Three verified brain inventories integrated.",
-                      "status":  "IN_PROGRESS",
-                      "claimed_by":  "deepseek-local"
-                  },
-                  {
-                      "id":  "GL-004",
-                      "title":  "Runtime and tests",
-                      "objective":  "Consolidate runtime APIs schemas and tests and prove execution truth.",
-                      "scope":  [
-                                    "app",
-                                    "prisma",
-                                    "tests",
-                                    "scripts"
-                                ],
-                      "dependencies":  [
-                                           "GL-001"
-                                       ],
-                      "allowed_agents":  [
-                                             "codex",
-                                             "cursor",
-                                             "github-agent"
-                                         ],
-                      "validation":  "Type-check build tests runtime trace.",
-                      "status":  "IN_PROGRESS",
-                      "claimed_by":  "cursor"
-                  },
-                  {
-                      "id":  "GL-005",
-                      "title":  "Unified orchestrator",
-                      "objective":  "Connect main brain, project brains, RAIOS, governance and agent adapters.",
-                      "scope":  [
-                                    ".ai-os",
-                                    "intelligence",
-                                    "governance",
-                                    "projects",
-                                    "brains"
-                                ],
-                      "dependencies":  [
-                                           "GL-002",
-                                           "GL-003",
-                                           "GL-004"
-                                       ],
-                      "allowed_agents":  [
-                                             "codex",
-                                             "claude-code",
-                                             "chatgpt-main-brain"
-                                         ],
-                      "validation":  "Shared task state locks handoff and orchestration demonstrated.",
-                      "status":  "READY",
-                      "claimed_by":  null
-                  }
-              ]
+  "schema_version": "1.0",
+  "tasks": [
+    {
+      "id": "GL-001",
+      "title": "Old to Codex migration map",
+      "objective": "Map verified legacy capabilities into Codex repair repository.",
+      "scope": [
+        ".ai-os",
+        "migration",
+        "reports"
+      ],
+      "dependencies": [],
+      "allowed_agents": [
+        "gemini-cli",
+        "codex",
+        "claude-code",
+        "chatgpt-main-brain"
+      ],
+      "validation": "KEEP/MERGE/MIGRATE/REPLACE/ARCHIVE/UNPROVEN map.",
+      "status": "DONE",
+      "claimed_by": "gemini-cli",
+      "evidence": "migration/GL-001-EVIDENCE.md; six required migration reports completed and Gemini handoff recorded."
+    },
+    {
+      "id": "GL-002",
+      "title": "Main intelligence brain",
+      "objective": "Recover verified main intelligence and governance without duplicate implementations.",
+      "scope": [
+        "intelligence",
+        "governance",
+        "canonical"
+      ],
+      "dependencies": [
+        "GL-001"
+      ],
+      "allowed_agents": [
+        "codex",
+        "claude-code",
+        "gemini-cli"
+      ],
+      "validation": "One authoritative intelligence path.",
+      "status": "READY",
+      "claimed_by": null
+    },
+    {
+      "id": "GL-003",
+      "title": "Three project brains",
+      "objective": "Identify and migrate the three project brains under shared governance.",
+      "scope": [
+        "projects",
+        "brains",
+        "canonical",
+        "intelligence"
+      ],
+      "dependencies": [
+        "GL-001"
+      ],
+      "allowed_agents": [
+        "gemini-cli",
+        "codex",
+        "claude-code",
+        "deepseek-local"
+      ],
+      "validation": "Three verified brain inventories integrated.",
+      "status": "IN_PROGRESS",
+      "claimed_by": "deepseek-local"
+    },
+    {
+      "id": "GL-004",
+      "title": "Runtime and tests",
+      "objective": "Consolidate runtime APIs schemas and tests and prove execution truth.",
+      "scope": [
+        "app",
+        "prisma",
+        "tests",
+        "scripts"
+      ],
+      "dependencies": [
+        "GL-001"
+      ],
+      "allowed_agents": [
+        "codex",
+        "cursor",
+        "github-agent"
+      ],
+      "validation": "Type-check build tests runtime trace.",
+      "status": "IN_PROGRESS",
+      "claimed_by": "cursor"
+    },
+    {
+      "id": "GL-005",
+      "title": "Unified orchestrator",
+      "objective": "Connect main brain, project brains, RAIOS, governance and agent adapters.",
+      "scope": [
+        ".ai-os",
+        "intelligence",
+        "governance",
+        "projects",
+        "brains"
+      ],
+      "dependencies": [
+        "GL-002",
+        "GL-003",
+        "GL-004"
+      ],
+      "allowed_agents": [
+        "codex",
+        "claude-code",
+        "chatgpt-main-brain"
+      ],
+      "validation": "Shared task state locks handoff and orchestration demonstrated.",
+      "status": "READY",
+      "claimed_by": null
+    },
+    {
+      "id": "V9-A14.1",
+      "title": "A14.1 baseline preservation / continuity rebind",
+      "objective": "Fail-closed maintenance: rebind installer to certified A14 harness semantics without rebuilding A14 or mutating canonical truth.",
+      "scope": [
+        "RAIOS/V9"
+      ],
+      "dependencies": [
+        "GL-001"
+      ],
+      "allowed_agents": [
+        "cursor"
+      ],
+      "validation": "Installer/harness semantic consistency PASS; live A14 recertification PASS; A14.1 preservation receipt; CURRENT-STATE A14_1_CERTIFIED.",
+      "status": "DONE",
+      "claimed_by": "cursor",
+      "evidence": "RAIOS/V9/evidence/observations/V9.0-A14.1-BASELINE-PRESERVATION-RECEIPT.json"
+    },
+    {
+      "id": "V9-A15",
+      "title": "A15 collaborative execution fabric / task exchange gateway",
+      "objective": "Build shared collaboration fabric for cross-agent task exchange without rediscovery, using deterministic sandbox certification only.",
+      "scope": [
+        "RAIOS/V9"
+      ],
+      "dependencies": [
+        "V9-A14.1"
+      ],
+      "allowed_agents": [
+        "cursor"
+      ],
+      "validation": "50-task fail-closed A15 certification PASS; lineage gate PASS; no production/canonical mutation; no automatic promotion.",
+      "status": "IN_PROGRESS",
+      "claimed_by": "cursor"
+    },
+    {
+      "id": "V9-NL0",
+      "title": "NeuroLingua Semantic Kernel NL-0",
+      "objective": "Deep-integrate NeuroLingua into existing RAIOS V9 without duplicate WAL/memory/event/provider infrastructure.",
+      "scope": [
+        "src/raios/neuro_lingua",
+        "configs/neuro_lingua",
+        "tests/neuro_lingua",
+        "benchmarks/neuro_lingua",
+        "reports",
+        "docs/v9"
+      ],
+      "dependencies": [
+        "V9-A14.1"
+      ],
+      "allowed_agents": [
+        "cursor"
+      ],
+      "validation": "NL-0 artifacts + offline benchmark llm_calls=0 + no second WAL; RAIOS transfer on WAL reuse.",
+      "status": "IN_PROGRESS",
+      "claimed_by": "cursor"
+    },
+    {
+      "id": "WAVE2-GAP-RES",
+      "title": "Wave2 targeted GL-004/GL-005 estate resolution",
+      "objective": "Read authoritative resurrection audit, name path-signal gaps, search estate without implementing.",
+      "scope": [
+        "_raios-wave2-gap-resolution",
+        "_raios-wave2-targeted-gap-resolution.py"
+      ],
+      "dependencies": [],
+      "allowed_agents": [
+        "cursor"
+      ],
+      "validation": "WAVE2-TARGETED-GAP-RESOLUTION.json with real process exit 0",
+      "status": "IN_PROGRESS",
+      "claimed_by": "cursor"
+    },
+    {
+      "id": "DRIVER-SYNC",
+      "title": "Driver packet for main assistant",
+      "objective": "Record exact executor stop-state for the driving assistant without further discovery reports.",
+      "scope": [
+        ".ai-os/handoffs"
+      ],
+      "dependencies": [],
+      "allowed_agents": [
+        "cursor"
+      ],
+      "validation": "Compact DRIVER-PACKET.json + handoff; no false PASS.",
+      "status": "DONE",
+      "claimed_by": "cursor",
+      "evidence": ".ai-os/handoffs/20260820-cursor-DRIVER-PACKET.json"
+    },
+    {
+      "id": "COMMAND-ORG",
+      "title": "Command: organize before expand",
+      "objective": "Record command vision, dispatch PowerShell helper, RAIOS service mode, and compress obsolete live residue.",
+      "scope": [
+        ".ai-os/handoffs",
+        ".ai-os/state/DECISIONS.md",
+        "scripts/ai-os",
+        "canonical/intelligence/intelligence",
+        "archive/duplicates"
+      ],
+      "dependencies": [],
+      "allowed_agents": [
+        "cursor"
+      ],
+      "validation": "Vision+orders committed; obsolete residue deleted or receipted; no second WAL; no migration/gl-* folders.",
+      "status": "DONE",
+      "claimed_by": "cursor",
+      "evidence": ".ai-os/COMMAND-VISION.md;.ai-os/reports/raios-service/LAST-HEARTBEAT.json;type-check=0;canonical=0;orch=0"
+    },
+    {
+      "id": "RAIOS-LINK",
+      "title": "Bring RAIOS live as shared channel",
+      "objective": "Start RAIOS service and open one communication channel over Cognitive WAL plus .ai-os/channel, no second bus.",
+      "scope": [
+        ".ai-os/channel",
+        "scripts/ai-os"
+      ],
+      "dependencies": [],
+      "allowed_agents": [
+        "cursor"
+      ],
+      "validation": "doctor ran; heartbeat running; LIVE.md + WAL event for open channel.",
+      "status": "DONE",
+      "claimed_by": "cursor",
+      "evidence": ".ai-os/channel/LIVE.md WAL_COMMITTED doctor.context_certified=false SHA mismatch DISCOVERED"
+    },
+    {
+      "id": "LEARN-QUAD",
+      "title": "Record quad-loop learning laws as DISCOVERED",
+      "objective": "Bind stale-observation, parent-exit, and supporting-test laws after health-reporter deletion was correctly blocked.",
+      "scope": [
+        ".ai-os/experience",
+        ".ai-os/state/DECISIONS.md",
+        ".ai-os/channel",
+        "scripts/ai-os"
+      ],
+      "dependencies": [],
+      "allowed_agents": [
+        "cursor"
+      ],
+      "validation": "DISCOVERED laws in experience+WAL; GC script parent fail-closed; no CANONICAL promotion.",
+      "status": "DONE",
+      "claimed_by": "cursor",
+      "evidence": ".ai-os/experience/pending-validation/CASE-20260820-QUAD-LOOP.json WAL 9d68e062 DISCOVERED not CANONICAL"
+    },
+    {
+      "id": "BOARD-0",
+      "title": "In-repo mission board for all role codes",
+      "objective": "One board file inside the repo so the external consultant and every actor can read status, required work, and leave an opinion without a second bus.",
+      "scope": [
+        ".ai-os/board",
+        "scripts/ai-os"
+      ],
+      "dependencies": [],
+      "allowed_agents": [
+        "cursor"
+      ],
+      "validation": "NOW.md+NOW.json exist; opinion writes WAL; codes C0-C4 documented.",
+      "status": "DONE",
+      "claimed_by": "cursor",
+      "evidence": ".ai-os/board/NOW.md WAL opinions C1 C4"
+    },
+    {
+      "id": "RELAY-REVIEW",
+      "title": "Adversarial review of Team Relay proposal",
+      "objective": "Challenge Team Relay/mailbox design without implementing it. Record DISCOVERED protocol laws.",
+      "scope": [
+        ".ai-os/handoffs",
+        ".ai-os/experience",
+        ".ai-os/board"
+      ],
+      "dependencies": [],
+      "allowed_agents": [
+        "cursor"
+      ],
+      "validation": "Written challenge covering 18 questions; no mailbox implementation; no second WAL.",
+      "status": "DONE",
+      "claimed_by": "cursor",
+      "evidence": ".ai-os/handoffs/20260820-TEAM-RELAY-CHALLENGE.json DISCOVERED not implemented"
+    }
+  ]
 }

@@ -1,0 +1,189 @@
+{
+  "schema": "raios.team-relay-challenge.v1",
+  "knowledge_state": "DISCOVERED",
+  "promoted": false,
+  "from": "EXECUTIVE_REVIEWER",
+  "to": ["MAIN_ASSISTANT", "USER", "CURSOR_EXECUTOR", "RAIOS"],
+  "created_at": "2026-08-20T13:57:00Z",
+  "reviewer_head": "b707296",
+  "proposal_status": "PROPOSED_NOT_CANONICAL",
+  "implementation": false,
+  "ARCHITECTURE_VERDICT": "CONDITIONAL_REJECT_OF_SPEC_AS_WRITTEN. ACCEPT a smaller primitive: actor-owned append-only OUTBOX + dispatcher-only INBOX copies + ACK packets. Reject shared-write mailboxes, processed-file moves, Issues-as-authority, presence-as-coordination-truth, and generated inbox markdown as anything but disposable views.",
+  "FATAL_FLAWS": [
+    {
+      "id": "SHARED_WRITE_DESTROYS_MAILBOX_OWNERSHIP",
+      "detail": "If every actor can push the same private repo, anyone can plant a file in executive-reviewer/inbox or forge executive-reviewer/outbox. A folder named mailbox is not ownership. Git write access is global unless CODEOWNERS + protected branches + Action-only inbox writes."
+    },
+    {
+      "id": "PROCESSED_MOVE_BREAKS_APPEND_ONLY",
+      "detail": "Moving a packet from inbox/ to processed/ is a mutation, races under concurrent git pull/push, and lets a reader rewrite history of what was received. ACK must be a new packet, never a move."
+    },
+    {
+      "id": "GENERATED_VIEWS_AND_ISSUES_BECOME_FIFTH_TRUTH",
+      "detail": "generated/inbox/*.md and GitHub Issues will be what humans actually read. Without an explicit demotion law they become task lists, replacing .ai-os. That is how Team Relay becomes execution/control truth."
+    },
+    {
+      "id": "HUB_WILL_MIRROR_EVIDENCE",
+      "detail": "A second repo invites copying receipts, WAL slices, and Repair paths into envelopes. Then the hub is a shadow evidence store. Envelopes may carry refs and hashes only."
+    }
+  ],
+  "SECURITY_FLAWS": [
+    "Git author/committer strings are spoofable. MVP identity = GitHub username bound by an allowlist in the hub, plus protected main, no force-push, signed commits preferred.",
+    "A stolen MAIN_ASSISTANT token must not be able to delete Repair files. write_authority:false is necessary but insufficient unless the executor refuses to honor requested_actions without a live .ai-os lock it owns.",
+    "Replaying a destructive envelope with a new packet_id bypasses packet_id dedupe. Need expires_at + requested_head + explicit USER/executor rebase packet.",
+    "Inbox injection: if actors can write other inboxes, a stale/compromised consultant injects 'EXECUTE DELETE'. Dispatcher-only inbox write is mandatory.",
+    "Secrets in envelopes. Hub is less trusted than Repair. No tokens, no WAL bodies, no customer records, no absolute Windows paths."
+  ],
+  "AUTHORITY_CONFLICTS": [
+    "RELAY_PACKET_NE_TASK — packet cannot create or complete a .ai-os task.",
+    "RELAY_NE_LOCK — presence.json must not substitute LOCKS.json.",
+    "RELAY_NE_HANDOFF — GitHub Issue is not D-003 handoff.",
+    "RELAY_NE_ORCHESTRATION — mailbox round-trip is not GL-005.",
+    "DELIVERY_RECEIPT_NE_EXECUTION_RECEIPT — already proposed; keep it fail-closed with no PASS boolean on envelopes.",
+    "LEARNING_CANDIDATE_NE_CANONICAL — relay must not write Cognitive WAL as authority; only an internal adapter may submit DISCOVERED candidates.",
+    "GENERATED_VIEW_NE_TRUTH",
+    "ISSUE_NE_ENVELOPE",
+    "BOARD_ALREADY_EXISTS — .ai-os/board/NOW.md is the in-repo meeting point. A hub before C2 uses the board is platform-before-primitive."
+  ],
+  "RACE_CONDITIONS": [
+    "Two ACKs for one packet_id: last writer of generated views wins; packets themselves are fine if immutable and named by packet_id.",
+    "Cursor and Reviewer both respond on one correlation_id: ALLOWED. Do not serialize the conversation with a single lock on the hub. .ai-os locks serialize Repair writes only.",
+    "Dispatcher copies to inbox while recipient pulls: git merge on generated markdown. Do not commit generated views. Recipients generate locally.",
+    "presence.json overwrite: inevitable. Therefore presence is advisory and untrusted."
+  ],
+  "PROTOCOL_CHANGES": [
+    "Actors may write ONLY mailboxes/<self>/outbox/<packet_id>.json. Never another actor's inbox, outbox, or processed.",
+    "A GitHub Action (the dispatcher) validates, authenticates allowlist, dedupes packet_id, copies to recipient inbox, writes delivery-receipts/<packet_id>.json as actor RELAY.",
+    "No processed/ directory. ACK/REJECT/STALE/EXECUTED are new packets in the actor's own outbox with causation_id set.",
+    "No generated/*.md in git. Local `raios-board.py`-class renderer only.",
+    "GitHub Issues optional and non-authoritative. Issue body may link blob SHA of the envelope. If Issue and envelope disagree, envelope wins for machines; USER wins for direction.",
+    "Envelopes forbid fields: pass, certified, gl004_proven, gl005_proven as booleans. Those live only in Repair receipts.",
+    "Destructive envelopes require requested_head, expires_at, and evidence_refs. Missing any → REJECT.",
+    "Keep using .ai-os/board as degraded/offline meeting point. Hub is optional external transport, not the control plane."
+  ],
+  "MINIMUM_ENVELOPE_V1": {
+    "schema": "raios.team-envelope.v1",
+    "required": [
+      "schema",
+      "packet_id",
+      "correlation_id",
+      "created_at",
+      "expires_at",
+      "from",
+      "to",
+      "intent",
+      "requested_head",
+      "evidence_refs",
+      "authority"
+    ],
+    "optional": ["causation_id", "priority", "message", "requested_actions", "required_response", "task_ref"],
+    "forbidden": ["pass", "certified", "wal_append", "lock_id_to_create", "knowledge_state=CANONICAL"],
+    "idempotency_key": "packet_id",
+    "laws": [
+      "PACKET_ID != CORRELATION_ID",
+      "CORRELATION_ID_MUST_NOT_BE_USED_AS_MESSAGE_DEDUPE_KEY",
+      "PACKET_ID_IS_THE_ONLY_DEDUPE_KEY",
+      "MESSAGE_RECEIVED_NE_COMMAND_AUTHORIZED",
+      "AUTHENTICATED_ACTOR_NE_AUTHORIZED_ACTION",
+      "VALID_PACKET_NE_VALID_EVIDENCE"
+    ],
+    "authority_defaults": {
+      "write_authority": false,
+      "evidence_authority": "PEER",
+      "execution_truth": false
+    }
+  },
+  "MAILBOX_STATE_MACHINE": [
+    "LOCAL_DRAFT (never pushed)",
+    "PUBLISHED (immutable outbox/<packet_id>.json)",
+    "DELIVERED (RELAY delivery-receipt packet)",
+    "SEEN (optional READ ack packet by recipient)",
+    "ACCEPTED | REJECTED | STALE_HEAD | EXPIRED",
+    "if ACCEPTED and actor is executor with live lock: EXECUTED_REF | FAILED_REF (refs Repair receipt sha256)"
+  ],
+  "ACK_STATE_MACHINE": {
+    "DELIVERED": "dispatcher only",
+    "READ": "recipient optional",
+    "ACCEPTED": "recipient; does not execute",
+    "REJECTED": "recipient; reason required",
+    "STALE_HEAD": "recipient or dispatcher; requires new packet",
+    "EXPIRED": "dispatcher or recipient",
+    "EXECUTED": "forbidden on relay; only Repair receipt ref from executor outbox"
+  },
+  "ACTOR_CAPABILITY_MODEL": {
+    "USER": "direction; destructive approval; may ACCEPT risk",
+    "MAIN_ASSISTANT": "steer/synthesize/challenge; write_authority false; cannot complete .ai-os tasks",
+    "EXECUTIVE_REVIEWER": "falsify claims; write_authority false; cannot delete; cannot grant GL-004/GL-005",
+    "CURSOR_EXECUTOR": "write Repair only under .ai-os locks it holds; may emit execution receipt refs",
+    "ENGINEER": "run scripts on Repair; same lock rules; no policy",
+    "RAIOS": "observe; DISCOVERED learning candidates only; no promotion; no execution",
+    "RELAY": "validate/route/dedupe/receipt delivery; never execute; never write WAL"
+  },
+  "OFFLINE_BEHAVIOR": {
+    "law": "TEAM_RELAY_DOWN_NE_RUNTIME_STOP",
+    "internal_continue": [".ai-os/state", ".ai-os/board/NOW.md", ".ai-os/channel/LIVE.md", "Cognitive WAL", "product tests"],
+    "when_hub_returns": "push unpublished outbox packets; reject those past expires_at or with stale requested_head",
+    "do_not": "block type-check/build/tests on hub availability"
+  },
+  "GITHUB_MVP_VERDICT": "CONDITIONAL_YES for a private hub that stores ONLY envelopes and delivery receipts, with CODEOWNERS so each actor can push only their outbox, and a GitHub Action that is the only writer of inboxes. CONDITIONAL_NO for GitHub Issues as meeting-room authority, git-tracked generated inboxes, presence as coordination, processed/ moves, and copying Repair receipts into the hub.",
+  "WHAT_NOT_TO_BUILD": [
+    "second WAL or event bus",
+    "capability registry",
+    "task/lock clone inside the hub",
+    "custom auth/PAT sharing",
+    "webhooks/gRPC/MQTT/WebSocket now",
+    "evolution-brain consumer of raw envelopes",
+    "auto-execution from inbox",
+    "mailbox implementation inside Greeny-Life-Repair",
+    "five mailbox trees before C2 has used .ai-os/board"
+  ],
+  "MINIMUM_IMPLEMENTATION_PLAN": [
+    "0. Use .ai-os/board NOW.md as the meeting point until C2 has posted one opinion. Do not open a hub with zero users.",
+    "1. If external reach is still required: create empty private repo RAIOS-Team-Hub with CODEOWNERS + branch protection + packet schema file only.",
+    "2. Allowlist: github_username → actor_id. Unsigned commits from unknown users rejected by Action.",
+    "3. Actor publishes only outbox/<packet_id>.json. Action copies to inbox/<to>/ and writes delivery-receipts/<packet_id>.json.",
+    "4. Local renderer (extend raios-board.py later) lists PENDING for WHOAMI. Views not committed.",
+    "5. Repair adapter: read inbox as DISCOVERED suggestions. To act: claim .ai-os task, re-check HEAD vs requested_head, then execute. Never the reverse.",
+    "6. Stop. Prove 20 packets, one stale-head reject, one replay reject, one forged-inbox reject. Then consider Issues as optional links."
+  ],
+  "RAIOS_LEARNING_CANDIDATES": [
+    "RELAY_PACKET_NE_TASK",
+    "RELAY_NE_LOCK",
+    "RELAY_NE_ORCHESTRATION",
+    "PRESENCE_NE_LOCK",
+    "DELIVERY_RECEIPT_NE_EXECUTION_RECEIPT",
+    "MESSAGE_RECEIVED_NE_COMMAND_AUTHORIZED",
+    "AUTHENTICATED_ACTOR_NE_AUTHORIZED_ACTION",
+    "VALID_PACKET_NE_VALID_EVIDENCE",
+    "PACKET_ID_IS_THE_ONLY_DEDUPE_KEY",
+    "CORRELATION_ID_MUST_NOT_BE_USED_AS_MESSAGE_DEDUPE_KEY",
+    "ISSUE_NE_ENVELOPE",
+    "GENERATED_VIEW_NE_TRUTH",
+    "TEAM_RELAY_DOWN_NE_RUNTIME_STOP",
+    "LEARNING_CANDIDATE_NE_CANONICAL",
+    "ACTOR_MAY_WRITE_ONLY_OWN_OUTBOX",
+    "ACK_IS_A_NEW_PACKET_NEVER_A_MOVE",
+    "DESTRUCTIVE_EXTERNAL_REQUEST_REQUIRES_CURRENT_HEAD_MATCH_OR_EXPLICIT_REBASE",
+    "ENVELOPE_MAY_REFERENCE_EVIDENCE_NEVER_CONTAIN_EXECUTION_TRUTH"
+  ],
+  "CHALLENGE_ANSWERS": {
+    "1_duplicate_authority": "Yes, as written. Views, Issues, presence, processed/, and requested_actions will become a shadow OS. Demote them in the protocol or do not build them.",
+    "2_races": "Allow concurrent packets on one correlation. Forbid mutating shared files. Generate views locally.",
+    "3_semantic_idempotency": "Dedupe packet_id only. Ten challenges in one correlation are ten packets.",
+    "4_stale_head": "Fail-closed STALE_HEAD. No auto-rebase. New packet or explicit rebase ack with current head.",
+    "5_git_identity": "Insufficient alone. Allowlist GitHub username + protected branch. Commit email is not identity.",
+    "6_injection": "Dispatcher-only inbox; write_authority false; executor requires live lock + head match.",
+    "7_replay": "packet_id replay no-op; content replay needs new id, then expires_at + requested_head catch it.",
+    "8_mailbox_ownership": "Own outbox only. Inbox is dispatcher-written. No processed/.",
+    "9_ack_model": "DELIVERED READ ACCEPTED REJECTED STALE EXPIRED. EXECUTED is Repair-only as a ref.",
+    "10_github_down": "Internal board/channel/WAL/tests continue.",
+    "11_offline_continuity": "Yes. Hub is transport. Repair is truth.",
+    "12_privacy": "Refs and hashes only. No WAL, secrets, customer data, absolute home paths.",
+    "13_git_scaling": "Fine for hundreds. Not an archive. Compact later. Do not design object storage now.",
+    "14_human_machine": "Envelope authoritative for machines. Issues are commentary. USER authoritative for direction.",
+    "15_cross_env_identity": "Stable actor_id. Environment is metadata (repair|workspace|kaggle). Bind github_user separately.",
+    "16_trust_levels": "Yes. Distinct capability contracts above. Reviewer cannot grant PASS.",
+    "17_learning_injection": "External packet → DISCOVERED candidate only, via internal WAL adapter, never CANONICAL.",
+    "18_wave2": "Relay must not satisfy GL-005. Optional evidence_ref to task_id. Tasks still claimed in .ai-os."
+  }
+}

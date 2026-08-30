@@ -1,0 +1,196 @@
+{
+  "schema": "raios.neurolingua-layer-matrix.v1",
+  "spec": {
+    "L1": {
+      "name": "FAST_LINGUISTIC_CPU",
+      "must": [
+        "language_id",
+        "dialect_id",
+        "tokenization",
+        "ner",
+        "dates",
+        "money",
+        "units",
+        "codes",
+        "regex",
+        "normalization",
+        "morphology"
+      ],
+      "live_here": [
+        "language_id",
+        "dialect_id",
+        "tokenization",
+        "codes",
+        "regex",
+        "normalization"
+      ],
+      "absent_here": [
+        "morphology",
+        "dedicated_dates",
+        "dedicated_money",
+        "dedicated_units"
+      ],
+      "packages_added": [],
+      "reuse": [
+        "language.py",
+        "dialect.py",
+        "protected.py",
+        "code_switch.py"
+      ]
+    },
+    "L2": {
+      "name": "SEMANTIC_NLP",
+      "must": [
+        "embeddings",
+        "semantic_similarity",
+        "intent",
+        "relation_extraction",
+        "terminology_mapping",
+        "cross_lingual_alignment",
+        "entity_linking",
+        "domain_concept_mapping"
+      ],
+      "live_here": [
+        "intent",
+        "terminology_mapping",
+        "domain_concept_mapping"
+      ],
+      "absent_here": [
+        "embeddings",
+        "vector_similarity"
+      ],
+      "packages_added": [],
+      "reuse": [
+        "concepts.py",
+        "customer.py",
+        "ops_compile.py"
+      ]
+    },
+    "L3": {
+      "name": "DEEP_LANGUAGE_BRAIN",
+      "must": [
+        "deep_interpretation",
+        "ambiguity",
+        "pragmatics",
+        "reasoning",
+        "generation",
+        "multilingual_transfer"
+      ],
+      "live_here": [],
+      "hold_here": [
+        "main_cortex_via_model_gateway"
+      ],
+      "absent_here": [
+        "live_cortex_generate"
+      ],
+      "packages_added": [],
+      "reuse": [
+        "governor.py",
+        "router.py",
+        "qwen_runtime.py",
+        "cortex.py"
+      ],
+      "law": [
+        "NO_HARD_MODEL_FAMILY",
+        "MODEL_GATEWAY_ONLY",
+        "HOLD_NE_THROW"
+      ]
+    },
+    "L4": {
+      "name": "NEUROLINGUA_COMPILER",
+      "must": [
+        "human_language",
+        "canonical_meaning",
+        "reasoning_representation",
+        "target_language"
+      ],
+      "live_here": [
+        "human_language",
+        "canonical_meaning",
+        "target_language"
+      ],
+      "packages_added": [],
+      "reuse": [
+        "ops_compile.py",
+        "realize.py"
+      ]
+    }
+  },
+  "layers": {
+    "L1": {
+      "layer": "L1",
+      "name": "FAST_LINGUISTIC_CPU",
+      "status": "TESTED",
+      "live_capabilities": [
+        "language_id",
+        "dialect_id",
+        "tokenization",
+        "codes",
+        "regex",
+        "normalization"
+      ],
+      "absent_capabilities": [
+        "morphology",
+        "dedicated_dates",
+        "dedicated_money",
+        "dedicated_units"
+      ],
+      "packages_added": [],
+      "proven": false,
+      "gl005_proven": false
+    },
+    "L2": {
+      "layer": "L2",
+      "name": "SEMANTIC_NLP",
+      "status": "TESTED",
+      "live_capabilities": [
+        "intent",
+        "terminology_mapping",
+        "domain_concept_mapping"
+      ],
+      "absent_capabilities": [
+        "embeddings",
+        "vector_similarity"
+      ],
+      "packages_added": [],
+      "proven": false,
+      "gl005_proven": false
+    },
+    "L3": {
+      "layer": "L3",
+      "name": "DEEP_LANGUAGE_BRAIN",
+      "status": "HOLD",
+      "live_capabilities": [],
+      "absent_capabilities": [
+        "live_cortex_generate"
+      ],
+      "packages_added": [],
+      "proven": false,
+      "gl005_proven": false
+    },
+    "L4": {
+      "layer": "L4",
+      "name": "NEUROLINGUA_COMPILER",
+      "status": "TESTED",
+      "live_capabilities": [
+        "human_language",
+        "canonical_meaning",
+        "target_language"
+      ],
+      "absent_capabilities": [],
+      "packages_added": [],
+      "proven": false,
+      "gl005_proven": false
+    }
+  },
+  "flags": {
+    "NEUROLINGUA_L1_PROVEN": false,
+    "NEUROLINGUA_L2_PROVEN": false,
+    "NEUROLINGUA_L3_PROVEN": false,
+    "NEUROLINGUA_L4_PROVEN": false
+  },
+  "gl005_proven": false,
+  "from": "C2",
+  "c5": "git",
+  "wal_written": false
+}

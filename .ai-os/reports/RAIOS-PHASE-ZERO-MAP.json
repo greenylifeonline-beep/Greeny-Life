@@ -1,0 +1,409 @@
+{
+  "schema": "raios.phase0-map.v1",
+  "knowledge_state": "DISCOVERED",
+  "canonical": false,
+  "from": "C2",
+  "parent": "C1",
+  "decision": "D-061",
+  "foundation_decision": "D-059",
+  "p0_decision": "D-060",
+  "ts": "2026-08-21T19:47:45.946214+00:00",
+  "host": {
+    "head": "d576fac859ed34f9c0be0db6f323d3ecfdf3688d",
+    "ram_gb": 15.64,
+    "gpu": false,
+    "database_url": false,
+    "app_session_secret": false,
+    "hf_token": false,
+    "c1_cortex_run": false,
+    "c1_login_email": false
+  },
+  "facts": {
+    "CI_1e28f84": "PASS",
+    "CI_68af867": "PASS",
+    "EXTRACTED_QWEN_GRANITE": false,
+    "SAFE_TO_REMOVE_SOURCE": false,
+    "GL005_PROVEN": false,
+    "AUTHENTICATED_ORCHESTRATION_TASK": false
+  },
+  "world_class_is": [
+    "ONE_LIVE_PRODUCT_PATH",
+    "ONE_AUTHENTICATED_ORCHESTRATION_PATH",
+    "ONE_LEARNING_AUTHORITY_COGNITIVE_WAL",
+    "FAIL_CLOSED_EVIDENCE",
+    "C5_HYBRID_THEN_SOURCE_INDEPENDENT_ASSIMILATION",
+    "THREE_COMPANY_BRAINS_UNDER_GOVERNANCE",
+    "ZERO_PAID_API",
+    "ENTROPY_REDUCTION_NOT_FOREST_GROWTH"
+  ],
+  "world_class_is_not": [
+    "CI_PASS_AS_INTELLIGENCE",
+    "NINETY_DAY_EMPIRE",
+    "TWENTY_TWO_PHASE_ARCHIVE_REVIVAL",
+    "CLONE_ODOO_CELERP_AG2_LIGHTRAG",
+    "LANGCHAIN_OPENAI_CHROMA_FAISS_DIFY",
+    "NINETY_THREE_STUDY_STUBS",
+    "SECOND_WAL_OR_MCP_TOOL",
+    "MILL_MS_AS_LEARNING",
+    "SOURCE_DELETION_ON_ASSUMED_ASSIMILATION",
+    "PRINTED_PASS_AS_EVIDENCE"
+  ],
+  "reject": [
+    {
+      "claim": "Celerp",
+      "law": "CELERP_NE_LIVE_ERP",
+      "keeper": "prisma/schema.prisma + app/api"
+    },
+    {
+      "claim": "AG2/AutoGen",
+      "law": "AG2_NE_RAIOS_COUNCIL",
+      "keeper": ".ai-os/mcp + council seats"
+    },
+    {
+      "claim": "LightRAG",
+      "law": "LIGHTRAG_NE_COGNITIVE_WAL",
+      "keeper": "DIGESTS/INDEX + Cognitive WAL + greenlines_brain/graph.py"
+    },
+    {
+      "claim": "LangChain/OpenAI/Chroma/FAISS/Dify/Flowise",
+      "law": "HUNT_FREE_NE_PAID_API",
+      "keeper": "INDEX + NeuroLingua + mind-fill"
+    },
+    {
+      "claim": "93 study_*.py",
+      "law": "NAMED_SCRIPT_NE_EXISTING_SCRIPT",
+      "keeper": "live C5 keepers"
+    }
+  ],
+  "keepers": [
+    {
+      "name": "grind",
+      "path": "scripts/ai-os/raios_c5_grind.py",
+      "exists": true
+    },
+    {
+      "name": "week",
+      "path": "scripts/ai-os/raios_c5_week.py",
+      "exists": true
+    },
+    {
+      "name": "minute",
+      "path": "scripts/ai-os/raios_c5_minute.py",
+      "exists": true
+    },
+    {
+      "name": "speak",
+      "path": "scripts/ai-os/raios_c5_speak.py",
+      "exists": true
+    },
+    {
+      "name": "experience",
+      "path": "scripts/ai-os/raios_c5_experience.py",
+      "exists": true
+    },
+    {
+      "name": "steward",
+      "path": "scripts/ai-os/raios_c5_steward.py",
+      "exists": true
+    },
+    {
+      "name": "proof",
+      "path": "scripts/ai-os/raios_c5_proof.py",
+      "exists": true
+    },
+    {
+      "name": "qwen",
+      "path": "scripts/ai-os/raios_c5_qwen.py",
+      "exists": true
+    },
+    {
+      "name": "kae",
+      "path": "scripts/ai-os/raios_c5_kae.py",
+      "exists": true
+    },
+    {
+      "name": "toc",
+      "path": "scripts/ai-os/raios_c5_toc.py",
+      "exists": true
+    },
+    {
+      "name": "mind-fill",
+      "path": "scripts/ai-os/raios_c5_mind_fill.py",
+      "exists": true
+    },
+    {
+      "name": "whoami",
+      "path": "scripts/ai-os/raios_c5_whoami.py",
+      "exists": true
+    },
+    {
+      "name": "foundation",
+      "path": "scripts/ai-os/raios_c5_foundation.py",
+      "exists": true
+    },
+    {
+      "name": "p0",
+      "path": "scripts/ai-os/raios_c5_p0.py",
+      "exists": true
+    },
+    {
+      "name": "phase0",
+      "path": "scripts/ai-os/raios_c5_phase0.py",
+      "exists": true
+    },
+    {
+      "name": "keyboard",
+      "path": "scripts/ai-os/raios_c5_keyboard.py",
+      "exists": true
+    },
+    {
+      "name": "screen",
+      "path": "scripts/ai-os/raios_c5_screen.py",
+      "exists": true
+    }
+  ],
+  "brains": [
+    {
+      "id": "GREENY_LIFE_EGYPT",
+      "keepers": [
+        {
+          "path": "lib/intelligence/greeny-life-egypt-brain.ts",
+          "exists": true
+        },
+        {
+          "path": "app/api/brains/greeny-life-egypt/route.ts",
+          "exists": true
+        },
+        {
+          "path": "tests/greeny_life_egypt_brain_check.ts",
+          "exists": true
+        }
+      ],
+      "gaps": [],
+      "gap_open": false,
+      "http": "/api/brains/greeny-life-egypt",
+      "http_code": 401,
+      "classification": "CAPABILITY_PROTECTED",
+      "fill_from_this_slice": false
+    },
+    {
+      "id": "GREENS_NATURE_UAE",
+      "keepers": [
+        {
+          "path": "lib/intelligence/three-operating-brains.ts",
+          "exists": true
+        }
+      ],
+      "gaps": [
+        {
+          "path": "lib/intelligence/greens-nature-uae-brain.ts",
+          "exists": false
+        },
+        {
+          "path": "app/api/brains/greens-nature-uae/route.ts",
+          "exists": false
+        },
+        {
+          "path": "tests/greens_nature_uae_brain_check.ts",
+          "exists": false
+        }
+      ],
+      "gap_open": true,
+      "http": "/api/brains/greens-nature-uae",
+      "http_code": 404,
+      "classification": "CAPABILITY_ABSENT",
+      "fill_from_this_slice": false
+    },
+    {
+      "id": "GREEN_LINES_NORWAY_EU",
+      "keepers": [
+        {
+          "path": "greenlines_brain/kernel.py",
+          "exists": true
+        },
+        {
+          "path": "greenlines_brain/graph.py",
+          "exists": true
+        },
+        {
+          "path": "lib/intelligence/three-operating-brains.ts",
+          "exists": true
+        }
+      ],
+      "gaps": [
+        {
+          "path": "lib/intelligence/greenlines-norway-brain.ts",
+          "exists": false
+        },
+        {
+          "path": "app/api/brains/greenlines-norway/route.ts",
+          "exists": false
+        },
+        {
+          "path": "tests/greenlines_norway_brain_check.ts",
+          "exists": false
+        }
+      ],
+      "gap_open": true,
+      "http": "/api/brains/green-lines-norway-eu",
+      "http_code": 404,
+      "classification": "CAPABILITY_ABSENT",
+      "fill_from_this_slice": false
+    }
+  ],
+  "packs": [
+    {
+      "path": "RAIOS-COGNITIVE-BOOT.json",
+      "exists": false
+    },
+    {
+      "path": "_raios-qwen-forensics/reports/QWEN36-FORENSIC-CERTIFICATION.json",
+      "exists": false
+    },
+    {
+      "path": "_raios-a17-native-cortex/cortex/runtime/MAIN-CORTEX-BINDING.json",
+      "exists": false
+    }
+  ],
+  "execution": [
+    {
+      "id": "Z",
+      "name": "PHASE_ZERO_MAP",
+      "status": "DONE_DISCOVERED",
+      "meaning": "inventory + ordered execution; not a new kernel",
+      "keeper": "python3 scripts/ai-os/raios_c5_phase0.py",
+      "blocks": []
+    },
+    {
+      "id": "0.1",
+      "name": "AUTHENTICATED_ORCHESTRATION_TASK",
+      "status": "BLOCKED",
+      "meaning": "live authenticated POST /api/tasks creates visible OrchestrationTask row",
+      "keeper": "python3 scripts/ai-os/raios_c5_p0.py",
+      "requires": [
+        "existing DATABASE_URL",
+        "legitimate login / session authenticated=true"
+      ],
+      "forbids": [
+        "mint APP_SESSION_SECRET",
+        "forge gl_session",
+        "provision-admin as proof",
+        "mock/unit-test as proof"
+      ],
+      "flip": "AUTHENTICATED_ORCHESTRATION_TASK=true still GL005_PROVEN=false"
+    },
+    {
+      "id": "0.2",
+      "name": "QWEN_GRANITE_SOURCE_INDEPENDENT_ASSIMILATION",
+      "status": "FAIL",
+      "stop": "SOURCE_PRESENT",
+      "meaning": "SOURCE_PRESENT → CAPABILITY_EXECUTES → SOURCE_DISABLED_OR_ISOLATED → C5_EXECUTES_SAME_CAPABILITY → RESTART → STILL_EXECUTES → BENCHMARK_PASS",
+      "keeper": "python3 scripts/ai-os/raios_c5_p0.py",
+      "requires": [
+        "qwen3.6:35b-a3b loaded",
+        "granite loaded",
+        "C5 independent pack after isolate"
+      ],
+      "forbids": [
+        "treat qwen2.5:0.5b as source",
+        "delete weights",
+        "skip SOURCE_PRESENT"
+      ],
+      "flip": "EXTRACTED_QWEN_GRANITE=true only after full chain"
+    },
+    {
+      "id": "0.3",
+      "name": "GL005",
+      "status": "UNREACHED",
+      "meaning": "routing + association + execution + persistence + reuse",
+      "keeper": "python3 scripts/ai-os/raios_c5_p0.py",
+      "requires": [
+        "0.1 PASS",
+        "0.2 PASS"
+      ],
+      "forbids": [
+        "PASS_CANDIDATE as GL005_PROVEN",
+        "this Cursor claiming GL-005"
+      ],
+      "flip": "GL005_PROVEN still requires C1/allowed-agent review"
+    },
+    {
+      "id": "1",
+      "name": "WAL_BIND_PRODUCT_EXPERIENCES",
+      "status": "FORBIDDEN_UNTIL_P0",
+      "meaning": "workflow/integrity/task-orchestration → one cognitive event each; no second bus",
+      "keeper": "existing RAIOS/V9 WAL after P0; A15 lock remains",
+      "requires": [
+        "0.1",
+        "0.2",
+        "0.3 or C1 burst grant"
+      ],
+      "forbids": [
+        "second WAL",
+        "mutate A15 while LOCK-20260818130148 ACTIVE without grant"
+      ]
+    },
+    {
+      "id": "2",
+      "name": "GL003_UAE_NORWAY_NEXT",
+      "status": "GAP_OTHER_AGENT",
+      "meaning": "UAE/Norway Next routes remain open; Python Norway brain already exists",
+      "keeper": "GL-003 claimed by deepseek-local",
+      "forbids": [
+        "fill UAE/Norway Next routes from this Cursor slice"
+      ]
+    },
+    {
+      "id": "3",
+      "name": "SLEEPLESS_CRON_ON_MAIN",
+      "status": "BLOCKED_NEEDS_C1_MERGE",
+      "meaning": "c5-week.yml exists on this branch; GitHub cron fires only from default main",
+      "keeper": ".github/workflows/c5-week.yml"
+    },
+    {
+      "id": "4",
+      "name": "CORTEX_C1_TREAT_RUN_THROW",
+      "status": "HOLD",
+      "meaning": "identity qwen3.6:35b-a3b stays; this host HOST_NO_GPU",
+      "keeper": "python3 scripts/ai-os/raios_c5_qwen.py --cortex",
+      "forbids": [
+        "executor throw",
+        "swap to 0.5b identity"
+      ]
+    }
+  ],
+  "stop": "AUTHENTICATED_ORCHESTRATION_TASK",
+  "next": "AUTHENTICATED_ORCHESTRATION_TASK;THEN_QWEN_GRANITE_ASSIMILATION;THEN_GL005",
+  "law": [
+    "PHASE_ZERO_MAP_NE_NEW_KERNEL",
+    "PHASE_ZERO_MAP_NE_GL005",
+    "ORGANIZE_BEFORE_EXPAND",
+    "CI_PASS_NE_ASSIMILATION",
+    "CI_PASS_NE_GL005",
+    "REUSE_BEFORE_BUILD",
+    "HOLD_NE_THROW"
+  ],
+  "gl005_proven": false,
+  "extracted_qwen_granite": false,
+  "safe_to_remove_source": false,
+  "source_deleted": false,
+  "new_kernel": false,
+  "wal_written": false,
+  "ok": true,
+  "text": "############################################################\n# RAIOS PHASE ZERO — WORLD-CLASS DISCOVERY & EXECUTION MAP\n############################################################\nHEAD=d576fac859ed\nDECISION=D-061\nFOUNDATION=D-059\nP0=D-060\nPHASE_ZERO_MAP_NE_NEW_KERNEL=true\nPHASE_ZERO_MAP_NE_GL005=true\nCI_PASS_NE_ASSIMILATION=true\nCI_PASS_NE_GL005=true\nAUTHENTICATED_ORCHESTRATION_TASK=false\nGATE1=BLOCKED\nEXTRACTED_QWEN_GRANITE=false\nGATE2_STOP=SOURCE_PRESENT\nSAFE_TO_REMOVE_SOURCE=false\nSOURCE_DELETED=false\nGL005_PROVEN=false\nGATE3=UNREACHED\nEGYPT_HTTP=401\nUAE_HTTP=404\nNORWAY_HTTP=404\nGPU=false\nSTOP=AUTHENTICATED_ORCHESTRATION_TASK\nNEXT=AUTHENTICATED_ORCHESTRATION_TASK;THEN_QWEN_GRANITE_ASSIMILATION;THEN_GL005\n############################################################\n",
+  "wal_mtime_unchanged": true,
+  "p0": {
+    "stop": "AUTHENTICATED_ORCHESTRATION_TASK",
+    "authenticated_orchestration_task": false,
+    "extracted_qwen_granite": false,
+    "gl005_proven": false,
+    "gate1_status": "BLOCKED",
+    "gate2_status": "FAIL",
+    "gate2_stop": "SOURCE_PRESENT",
+    "gate3_status": "UNREACHED",
+    "models": [
+      "qwen2.5:0.5b"
+    ],
+    "mock": false
+  }
+}

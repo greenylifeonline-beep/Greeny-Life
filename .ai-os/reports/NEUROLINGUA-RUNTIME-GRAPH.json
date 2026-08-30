@@ -1,0 +1,105 @@
+{
+  "schema": "raios.neurolingua-runtime-graph.v1",
+  "nodes": [
+    {
+      "id": "input",
+      "class": "LIVE"
+    },
+    {
+      "id": "parser",
+      "class": "LIVE",
+      "impl": "normalize_text"
+    },
+    {
+      "id": "neurolingua_l1",
+      "class": "LIVE",
+      "impl": "language.py+dialect.py+protected.py"
+    },
+    {
+      "id": "neurolingua_l2",
+      "class": "CONNECTED",
+      "impl": "ops_compile+concepts",
+      "embeddings": false
+    },
+    {
+      "id": "router",
+      "class": "LIVE",
+      "impl": "ProviderRouter deterministic"
+    },
+    {
+      "id": "model_shell",
+      "class": "TRAINING_ONLY",
+      "impl": "qwen_runtime.generate"
+    },
+    {
+      "id": "model_weights",
+      "class": "TRAINING_ONLY",
+      "id_measured": "qwen2.5:0.5b"
+    },
+    {
+      "id": "context_cortex_matrix",
+      "class": "HOLD",
+      "identity_string": "qwen3.6:35b-a3b",
+      "loaded": false
+    },
+    {
+      "id": "retrieval",
+      "class": "FILE_ONLY",
+      "note": "KAE/INDEX keepers, not LangChain"
+    },
+    {
+      "id": "memory",
+      "class": "LIVE",
+      "impl": "Cognitive WAL locked A15"
+    },
+    {
+      "id": "reasoning",
+      "class": "LIVE",
+      "impl": "deterministic ops_compile reasoning"
+    },
+    {
+      "id": "verifier",
+      "class": "LIVE",
+      "impl": "verify.py"
+    },
+    {
+      "id": "output",
+      "class": "LIVE"
+    },
+    {
+      "id": "qwen2.5:0.5b",
+      "class": "TRAINING_ONLY"
+    },
+    {
+      "id": "qwen3.6:35b-a3b",
+      "class": "HOLD",
+      "artifact_loaded": false,
+      "do_not_call_qwen_3_6_unless_artifact": true
+    },
+    {
+      "id": "granite",
+      "class": "NOT_REACHED"
+    },
+    {
+      "id": "deepseek",
+      "class": "FILE_ONLY",
+      "note": "Founder laptop claim. Absent this VM."
+    },
+    {
+      "id": "semantic_kernel",
+      "class": "LIVE",
+      "impl": "src/raios/neuro_lingua"
+    },
+    {
+      "id": "model_registry",
+      "class": "CONNECTED",
+      "impl": "RAIOS/V9/evolution/model_lab"
+    }
+  ],
+  "live_path": "input→L1→L2 terminology→L4 compile (L3 HOLD/skip)",
+  "llm_calls_on_compile": 0,
+  "gl005_proven": false,
+  "from": "C2",
+  "c5": "git",
+  "wal_written": false
+}

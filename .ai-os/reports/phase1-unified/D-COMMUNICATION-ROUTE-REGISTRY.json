@@ -1,0 +1,99 @@
+{
+  "schema": "raios.phase1-unified.communication-route-registry.v1",
+  "ts": "2026-08-25T18:36:36.100038+00:00",
+  "registry": {
+    "schema": "raios.route-registry.v1",
+    "ts_note": "Alias/route map over existing keepers. Not a message bus. Not Repair control plane.",
+    "host": "cursor",
+    "root": "/workspace",
+    "tree_id": "C2-CLOUD",
+    "law": [
+      "ENVELOPE_NE_BUS",
+      "NO_ALTERNATE_CONTROL_PLANE",
+      "C5_FOUNDER_FAIL_CLOSED_UNTIL_PROVEN",
+      "ALL_IS_PER_TARGET_RECEIPT_NE_FILE_COPY",
+      "C6_C10_NE_LIVE"
+    ],
+    "targets": {
+      "C1": {
+        "keeper": "scripts/ai-os/raios_mcp/gateway.py send_packet to=C1",
+        "auth": "mcp-bearer",
+        "live_this_host": false,
+        "status": "BLOCKED_AUTH",
+        "reason": "tokens.local.json absent on Cloud; founder paste is SESSION_ONLY"
+      },
+      "C2": {
+        "keeper": "scripts/ai-os/raios_mcp/cross_host_adapter.py + existing C2 MCP actor",
+        "auth": "mcp-bearer-hmac",
+        "live_this_host": true,
+        "status": "LOCAL_ONLY",
+        "reason": "isolated/tmp adapter proven; live remote_c2_ready=false"
+      },
+      "C5-PUBLIC": {
+        "keeper": "scripts/ai-os/raios_c5_screen.py POST /api/chat lane=PUBLIC :8765",
+        "auth": "none-public-lane",
+        "live_this_host": true,
+        "status": "LOCAL_ONLY",
+        "reason": "same-host loopback; not AG Cursor.exe forward"
+      },
+      "C5-FOUNDER": {
+        "keeper": "scripts/ai-os/raios_c5_screen.py lane=C1 :8876",
+        "auth": "optional RAIOS_C1_SCREEN_TOKEN",
+        "live_this_host": false,
+        "status": "BLOCKED_ROUTING",
+        "reason": "fail-closed: Cloud 8876 is this VM C1 console, not AG founder channel"
+      },
+      "C6": {
+        "keeper": null,
+        "auth": "n/a",
+        "live_this_host": false,
+        "status": "ABSENT",
+        "reason": "C6 unseated on SEAT-MAP; AG C6 executor is not this host"
+      },
+      "ALL": {
+        "keeper": "per-target dispatch via this registry",
+        "auth": "per-target",
+        "live_this_host": false,
+        "status": "UNPROVEN",
+        "reason": "ALL requires message_id+correlation_id+target+auth+ACK+receipt+return_path per live seat; C5-FOUNDER fail-closed; C6 ABSENT; C1 BLOCKED_AUTH"
+      }
+    },
+    "gl005_proven": false
+  },
+  "keepers": {
+    "schema": "raios.command-fabric.keepers.v1",
+    "law": [
+      "NO_ALTERNATE_CONTROL_PLANE",
+      "ENVELOPE_NE_BUS",
+      "MCP_GATEWAY_NE_TRUTH_AUTHORITY",
+      "ACK_IS_A_NEW_PACKET_NEVER_A_MOVE",
+      "MAIL_PASSES_NE_PROVES"
+    ],
+    "control_plane": "existing MCP V1 + mail + aios locks + nomadic lease/idempotency + c5 watchdog",
+    "not_created": "second bus, ninth MCP tool, second WAL, Repair .ai-os/control runtime",
+    "keepers": {
+      "mcp_gateway": "scripts/ai-os/raios_mcp/gateway.py",
+      "mcp_server": "scripts/ai-os/raios_mcp/server.py",
+      "mail": "scripts/ai-os/raios-mail.py",
+      "heartbeat": "scripts/ai-os/raios-service-heartbeat.py",
+      "watchdog": "scripts/ai-os/raios_c5_watchdog.py",
+      "leases": "RAIOS/V9/cloud/nomadic/lease_manager.py",
+      "idempotency": "RAIOS/V9/cloud/nomadic/idempotency.py",
+      "c5_screen": "scripts/ai-os/raios_c5_screen.py",
+      "c5_train": "scripts/ai-os/raios_c5_train.py",
+      "cross_host_adapter": "scripts/ai-os/raios_mcp/cross_host_adapter.py",
+      "cross_host_packet_schema": ".ai-os/mcp/CROSS-HOST-PACKET.schema.json",
+      "route_registry": ".ai-os/mcp/ROUTE-REGISTRY.json",
+      "envelope_schema": ".ai-os/mcp/ENVELOPE.schema.json"
+    },
+    "missing_on_this_host": {
+      "cursor-agent": true,
+      "raios_multimodal_gateway.py": true,
+      "repair_tree_12603d0": true,
+      ".ai-os/control runtime from Repair": true
+    }
+  },
+  "adapter": "scripts/ai-os/raios_mcp/cross_host_adapter.py",
+  "ninth_mcp_tool": false,
+  "new_bus": false
+}

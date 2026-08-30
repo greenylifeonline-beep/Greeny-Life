@@ -1,0 +1,131 @@
+{
+  "schema": "raios.c3-repair-packet.v1",
+  "from": "C1",
+  "role": "COMMANDER",
+  "to": ["C3"],
+  "via": ["C2 CONSULTANT"],
+  "knowledge_state": "DISCOVERED",
+  "GL005_PROVEN": false,
+  "GL004_PROVEN": true,
+  "GL004_PRODUCTION_RUNTIME_PROVEN": false,
+  "c2_verdict": "FALSIFICATION_ACCEPTED",
+  "chain_status": "BROKEN",
+  "breakpoint": "AUTHENTICATED_MUTATION",
+  "authority": "Repair is the mutation authority. PID 3297 cwd=/workspace is Instance B, not Repair.",
+  "do_not_generalize": {
+    "FAILURE_ON_INSTANCE_B_NE_FAILURE_ON_REPAIR": true,
+    "instance_b": {
+      "pid": 3297,
+      "cwd": "/workspace",
+      "GET_api_tasks": 500,
+      "POST_api_tasks_unauthenticated": 401,
+      "GET_api_auth_session": {"success": true, "authenticated": false, "session": null},
+      "LEGITIMATE_SESSION_AVAILABLE": false,
+      "classification": "BLOCKED_AUTH",
+      "capability": "PRESENT_BUT_PROTECTED_AND_UNPROVEN"
+    }
+  },
+  "forbidden": [
+    "Do not manufacture APP_SESSION_SECRET",
+    "Do not forge gl_session",
+    "Do not add an auth bypass",
+    "Do not spawn a second Next",
+    "Do not create PostgreSQL or Docker unless a FRESH Repair observation proves dependency absence",
+    "Do not treat Instance B GET 500 as Repair truth",
+    "Do not grant GL005_PROVEN from POST 401, GET 200, or a scheme-aware cookie fix"
+  ],
+  "existing_auth_only": {
+    "gate": "lib/authz.ts authorizeRequest(); writeRolePolicy.task = ADMIN|WAREHOUSE|EXPORT",
+    "cookie": "lib/auth.ts cookie name gl_session; HMAC via existing APP_SESSION_SECRET; Secure follows request scheme and X-Forwarded-Proto",
+    "login": "POST /api/auth/login (app/api/auth/login/route.ts) email+password against Prisma user",
+    "session_probe": "GET /api/auth/session (app/api/auth/session/route.ts)",
+    "ui": "app/login/page.tsx"
+  },
+  "next_cheapest_discriminator_on_repair": [
+    "1. Bind authoritative Repair HEAD.",
+    "2. Stash only RAIOS/V9/wal/cognitive-events.jsonl, ff-only pull to 9758765, rebuild, restart the SAME port 3107. Do not commit WAL. Do not spawn a second process.",
+    "3. GET /api/tasks and parse semantic body (success/count/data, not status code alone).",
+    "4. Inspect the EXISTING legitimate authentication mechanism only: authorizeRequest, login route, roles ADMIN/WAREHOUSE/EXPORT, whether C0 already has a legitimate active session (browser cookie or GET /api/auth/session on that process).",
+    "5. Do not manufacture APP_SESSION_SECRET.",
+    "6. Do not forge gl_session.",
+    "7. Do not add an auth bypass.",
+    "8. Do not create PostgreSQL/Docker unless a fresh Repair observation proves dependency absence.",
+    "9. If legitimate identity exists: BEFORE GET → authenticated POST /api/tasks → entity_id → AFTER GET → same entity → persistence. POST body uses existing contract: taskType, ownerCompany, subjectId. createTaskContract status is REVIEW_REQUIRED; execution remains false.",
+    "10. If legitimate identity does not exist: classification = BLOCKED_AUTH; GL005_PROVEN = FALSE."
+  ],
+  "observation_chain": [
+    "bind-live-runtime",
+    "capture HEAD/PID/port",
+    "before observation",
+    "action",
+    "semantic result",
+    "after observation",
+    "state-diff",
+    "child exits",
+    "receipt hash",
+    "stale-evidence check",
+    "parent fail-closed"
+  ],
+  "classifier": {
+    "401": "BLOCKED AUTH_GATE_PRESENT_IDENTITY_UNAVAILABLE",
+    "201_same_hash": "INVALID_OBSERVATION MUTATION_CLAIMED_WITHOUT_OBSERVED_STATE_CHANGE",
+    "201_id_missing_after": "FAILED CREATED_ENTITY_NOT_OBSERVABLE_AFTER_MUTATION",
+    "201_diff_and_visible_id": "PASS_CANDIDATE still requires falsification review"
+  },
+  "if_blocked_auth": {
+    "classification": "BLOCKED_AUTH",
+    "GL005_PROVEN": false,
+    "meaning": "CAPABILITY_PROTECTED + CAPABILITY_UNPROVEN, not CAPABILITY_ABSENT"
+  },
+  "c3_latest_observation": {
+    "PASSWORD_LENGTH": 0,
+    "thrown": "NEW_PASSWORD_TOO_SHORT",
+    "PASSWORD_VALUE_PRINTED": false,
+    "LOGIN_EXECUTED": false,
+    "TASK_MUTATION_EXECUTED": false,
+    "epistemic": "BLOCKED",
+    "reason": "NEW_PASSWORD_TOO_SHORT",
+    "stop": true,
+    "superseded_by": "GL005-C3-REPAIR-COOKIE-TRANSPORT.json"
+  },
+  "c3_login_session_split": {
+    "RUNTIME_LOGIN_HTTP": 200,
+    "RUNTIME_LOGIN_SUCCESS": true,
+    "SESSION_HTTP": 200,
+    "AUTHENTICATED": false,
+    "epistemic": "FAILED",
+    "reason": "LOGIN_HTTP_200_NE_SIGNED_SESSION",
+    "GL005_PROVEN": false,
+    "superseded_by": "GL005-C3-REPAIR-COOKIE-TRANSPORT.json"
+  },
+  "c3_cookie_transport": {
+    "SESSION_HTTP": 200,
+    "AUTHENTICATED": false,
+    "SESSION_OVER_HTTP": true,
+    "SECURE_GL_SESSION_COUNT": ">=1",
+    "DB_BINDING_MISMATCH": "FALSIFIED",
+    "CREDENTIAL_FAILURE": "FALSIFIED",
+    "COOKIE_TRANSPORT_MISMATCH": "PROVEN_CANDIDATE",
+    "epistemic": "FAILED",
+    "reason": "SECURE_SESSION_COOKIE_NOT_USABLE_OVER_CURRENT_HTTP_RUNTIME",
+    "GL005_PROVEN": false,
+    "c0_order": "صلح",
+    "product_fix": "lib/auth.ts cookieShouldBeSecure uses request scheme and X-Forwarded-Proto",
+    "superseded_by": "GL005-C3-REPAIR-STALE-HEAD-BIND.json"
+  },
+  "c3_stale_head_bind": {
+    "GIT_PULL_FAILED": true,
+    "PULL_BLOCKER": "RAIOS/V9/wal/cognitive-events.jsonl",
+    "BOUND_HEAD": "e1dfd7c235b0bd4ba1a58ab6dfea47bd00173370",
+    "REQUIRED_FIX_HEAD": "9758765602ba1fc04645a0327e1a0f33a07fc0d1",
+    "BOUND_RUNTIME_PID": 19720,
+    "BOUND_PORT": 3107,
+    "LIVE_RUNTIME_SEMANTIC_SUCCESS": true,
+    "COOKIE_FLAGS_MEASURED": false,
+    "WEBSESSION_HAS_GL_SESSION": false,
+    "SESSION_AUTHENTICATED": false,
+    "epistemic": "FAILED",
+    "reason": "STALE_HEAD_NE_PRODUCT_FIX_OBSERVATION",
+    "GL005_PROVEN": false
+  }
+}

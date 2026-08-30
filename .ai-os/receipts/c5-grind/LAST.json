@@ -1,0 +1,640 @@
+{
+  "schema": "raios.c5-grind.v1",
+  "meeting_id": "GL-COUNCIL-4a11023c3c321b6f",
+  "case": "CASE-008",
+  "ts": "2026-08-20T22:35:28.458830+00:00",
+  "from": "C5",
+  "parent": "C1",
+  "host": "local-or-cursor",
+  "consult_gate": false,
+  "helpers_permanent": false,
+  "files_scanned": 558,
+  "bytes_scanned": 19839900,
+  "trees": [
+    {
+      "path": "lib/intelligence",
+      "exists": true,
+      "files": 26,
+      "bytes": 145508,
+      "merkle": "fbe313c53a4a75ccb069a36f478c4eb713f3ec8b4f4827c75ed36c0755b39c78",
+      "entities": {
+        "GREENS_NATURE_UAE": 17,
+        "GREENY_LIFE_EGYPT": 29,
+        "GREEN_LINES_NORWAY_EU": 18,
+        "Inventory": 1,
+        "Shipment": 20,
+        "Supplier": 26
+      }
+    },
+    {
+      "path": "app/api",
+      "exists": true,
+      "files": 29,
+      "bytes": 77583,
+      "merkle": "4de3afa92484826dd9791dcc7ff8beb1fb7b19594fd9ea9f6c7d6c2691da7c11",
+      "entities": {
+        "GREENS_NATURE_UAE": 2,
+        "GREENY_LIFE_EGYPT": 2,
+        "GREEN_LINES_NORWAY_EU": 2,
+        "OrchestrationTask": 5,
+        "Supplier": 8
+      }
+    },
+    {
+      "path": "prisma",
+      "exists": true,
+      "files": 1,
+      "bytes": 13431,
+      "merkle": "1fba6a1910413e71b38ef2b9733af448394e6c75488d88cf6717a7168e29cbf9",
+      "entities": {
+        "Inventory": 3,
+        "Invoice": 3,
+        "OrchestrationTask": 1,
+        "Payment": 2,
+        "SalesOrder": 11,
+        "Shipment": 3,
+        "Supplier": 3
+      }
+    },
+    {
+      "path": "greenlines_brain",
+      "exists": true,
+      "files": 28,
+      "bytes": 124647,
+      "merkle": "7c49833e5d1a1128f01aae8c81b36668fa9a18331b9e9bf2ed02c769252dbbc4",
+      "entities": {
+        "Invoice": 2,
+        "Shipment": 2,
+        "Supplier": 5
+      }
+    },
+    {
+      "path": "canonical",
+      "exists": true,
+      "files": 165,
+      "bytes": 13521151,
+      "merkle": "551eb618d04998f11c7d53193007e566202567d04c106abe2877c90f63d14e5e",
+      "entities": {
+        "Inventory": 7,
+        "Invoice": 3,
+        "Payment": 2,
+        "SalesOrder": 10,
+        "Shipment": 5,
+        "Supplier": 40
+      }
+    },
+    {
+      "path": ".ai-os",
+      "exists": true,
+      "files": 260,
+      "bytes": 5550502,
+      "merkle": "03520b8f70155ec6d3efdd8975ac7dd179c4a2ea1a40db5ce4172fb9090285b5",
+      "entities": {
+        "GREENS_NATURE_UAE": 20,
+        "GREENY_LIFE_EGYPT": 14,
+        "GREEN_LINES_NORWAY_EU": 20,
+        "Inventory": 9,
+        "Invoice": 11,
+        "OrchestrationTask": 24,
+        "Payment": 10,
+        "SalesOrder": 11,
+        "Shipment": 10,
+        "Supplier": 11
+      }
+    },
+    {
+      "path": "scripts/ai-os",
+      "exists": true,
+      "files": 49,
+      "bytes": 407078,
+      "merkle": "4e30e6fde57e6a2a87d1f130b5edd2594ae783be44da5720111e896511e07c33",
+      "entities": {
+        "GREENS_NATURE_UAE": 2,
+        "GREENY_LIFE_EGYPT": 2,
+        "GREEN_LINES_NORWAY_EU": 2,
+        "Inventory": 1,
+        "Invoice": 2,
+        "OrchestrationTask": 5,
+        "Payment": 2,
+        "SalesOrder": 2,
+        "Shipment": 1,
+        "Supplier": 1
+      }
+    }
+  ],
+  "brains": [
+    {
+      "id": "GREENY_LIFE_EGYPT",
+      "name": "Greeny-Life Egypt",
+      "territory": "Egypt",
+      "keepers": [
+        {
+          "path": "lib/intelligence/greeny-life-egypt-brain.ts",
+          "exists": true,
+          "sha256": "6c1f668dc1ed68506f3ce02a48640442456d561a96da3c4c574f3f9871884292"
+        },
+        {
+          "path": "app/api/brains/greeny-life-egypt/route.ts",
+          "exists": true,
+          "sha256": "85974be84ac4132453a83b17cf64fcf0f524dea198895af60de83caf34ada0db"
+        },
+        {
+          "path": "tests/greeny_life_egypt_brain_check.ts",
+          "exists": true,
+          "sha256": "3610fd0569bf05eff8592b89e6937170deedd82401d1fa872ee14985f42c8d06"
+        }
+      ],
+      "gaps": [],
+      "keeper_ok": true,
+      "gap_open": false
+    },
+    {
+      "id": "GREENS_NATURE_UAE",
+      "name": "Greens Nature UAE",
+      "territory": "UAE / GCC",
+      "keepers": [
+        {
+          "path": "lib/intelligence/three-operating-brains.ts",
+          "exists": true,
+          "sha256": "eb9cb6104ca26f9be2ef6205d3f776cae706c2310228c4be0b2e47a85b31de71"
+        }
+      ],
+      "gaps": [
+        {
+          "path": "lib/intelligence/greens-nature-uae-brain.ts",
+          "exists": false
+        },
+        {
+          "path": "app/api/brains/greens-nature-uae/route.ts",
+          "exists": false
+        },
+        {
+          "path": "tests/greens_nature_uae_brain_check.ts",
+          "exists": false
+        }
+      ],
+      "keeper_ok": true,
+      "gap_open": true
+    },
+    {
+      "id": "GREEN_LINES_NORWAY_EU",
+      "name": "Green Lines Norway/EU",
+      "territory": "Norway / EU",
+      "keepers": [
+        {
+          "path": "greenlines_brain/kernel.py",
+          "exists": true,
+          "sha256": "ace6ac45ea203f902540ef974b6503b562c9f6a2f5db9fe9bb289eed5e8dcda5"
+        },
+        {
+          "path": "greenlines_brain/graph.py",
+          "exists": true,
+          "sha256": "ce6bf1b5e3b2bdc96ded5bfde07430d07c503f5e0135f5758dc07cc906d2754c"
+        },
+        {
+          "path": "greenlines_brain/identity.py",
+          "exists": true,
+          "sha256": "cc0355841c54b5a7fef9f7349bc30378540938da46432fafee03220afa4de121"
+        },
+        {
+          "path": "lib/intelligence/three-operating-brains.ts",
+          "exists": true,
+          "sha256": "eb9cb6104ca26f9be2ef6205d3f776cae706c2310228c4be0b2e47a85b31de71"
+        }
+      ],
+      "gaps": [
+        {
+          "path": "lib/intelligence/greenlines-norway-brain.ts",
+          "exists": false
+        },
+        {
+          "path": "app/api/brains/greenlines-norway/route.ts",
+          "exists": false
+        },
+        {
+          "path": "tests/greenlines_norway_brain_check.ts",
+          "exists": false
+        }
+      ],
+      "keeper_ok": true,
+      "gap_open": true
+    }
+  ],
+  "domains": [
+    {
+      "id": "erp_accounting",
+      "keepers": [
+        {
+          "path": "prisma/schema.prisma",
+          "exists": true,
+          "sha256": "1e037429cf7ec04e9ca9b359c104f70e0cbedc2ca3f6ad24d4da8b5879357ffa"
+        },
+        {
+          "path": "app/api/sales-orders/route.ts",
+          "exists": true,
+          "sha256": "8653455e723e8f42a25aa43521439e5c84c18252a5a2dd7a60698071b18ea8c9"
+        },
+        {
+          "path": "app/api/products/route.ts",
+          "exists": true,
+          "sha256": "dc989d6b966681b4880ae79df51ee301d52df84c97753c2a5e4fb02524e938ee"
+        }
+      ],
+      "keeper_ok": true,
+      "thin": false
+    },
+    {
+      "id": "trade_customs",
+      "keepers": [
+        {
+          "path": "TRADE-GOVERNANCE.md",
+          "exists": true,
+          "sha256": "b2fb4dc35ac45158630293f0d64f1f677a1607c266c66c2edcf581d151f63d3d"
+        },
+        {
+          "path": "TRADE-TRACEABILITY.md",
+          "exists": true,
+          "sha256": "a5f8761585bf0bad9e2a254790cd3cea41905c917c0b7e795a5a69fa6749a0bc"
+        },
+        {
+          "path": "app/api/trade-corridors/route.ts",
+          "exists": true,
+          "sha256": "e1bb34c247c3d31e9980d047230d7d0aff46c050536a9e84da82d10a31b69eac"
+        }
+      ],
+      "keeper_ok": true,
+      "thin": false
+    },
+    {
+      "id": "production_packaging",
+      "keepers": [
+        {
+          "path": "lib/intelligence/greeny-life-egypt-brain.ts",
+          "exists": true,
+          "sha256": "6c1f668dc1ed68506f3ce02a48640442456d561a96da3c4c574f3f9871884292"
+        },
+        {
+          "path": "lib/intelligence/gels-label-readiness.ts",
+          "exists": true,
+          "sha256": "145b27365aa64764402c9e9c039bdd3d62cf83b108e152f80f90a75cb795b897"
+        }
+      ],
+      "keeper_ok": true,
+      "thin": false
+    },
+    {
+      "id": "tracking_quality",
+      "keepers": [
+        {
+          "path": "app/api/traceability/route.ts",
+          "exists": true,
+          "sha256": "6eddf8627786ebb53a2f5aff3afa51efc80a22751b0c8a3a4b8a6a9aedfe3067"
+        },
+        {
+          "path": "app/api/evidence/official/route.ts",
+          "exists": true,
+          "sha256": "fee16be1df1b994d30c5559fd321c9fbe0baab4467033a6f0344730ffce1d642"
+        }
+      ],
+      "keeper_ok": true,
+      "thin": false
+    },
+    {
+      "id": "inventory",
+      "keepers": [
+        {
+          "path": "canonical/inventory/stock-levels.json",
+          "exists": true,
+          "sha256": "a2fb0ca1c4e43e82bb370f2110babe12da1d2163cc4e06612ea1d9ba08bb48d5"
+        },
+        {
+          "path": "app/api/suppliers/route.ts",
+          "exists": true,
+          "sha256": "9963eb3dfcb9fb14fe92a9ffff05d184c6f5f0880bc9e3cc794f85ba4820e63c"
+        }
+      ],
+      "keeper_ok": true,
+      "thin": false
+    },
+    {
+      "id": "marketing",
+      "keepers": [
+        {
+          "path": "canonical/docs/migrated_brand.md",
+          "exists": true,
+          "sha256": "9d00851857722734748c6dd81381209783c1aa2e998c5f0f14e747d7df82f1c6"
+        }
+      ],
+      "keeper_ok": true,
+      "thin": true
+    }
+  ],
+  "prisma_models": [
+    "Organization",
+    "Entity",
+    "Supplier",
+    "Product",
+    "SKU",
+    "Batch",
+    "Packaging",
+    "Warehouse",
+    "Inventory",
+    "Customer",
+    "SalesOrder",
+    "SalesOrderItem",
+    "Shipment",
+    "Document",
+    "Invoice",
+    "Payment",
+    "User",
+    "AuditLog",
+    "WorkflowApproval",
+    "CommercialChange",
+    "TradeTraceRecord",
+    "DecisionOutcome",
+    "TrainingCase",
+    "EvaluationRun",
+    "OrchestrationTask",
+    "SecurityAuditEvent",
+    "OfficialEvidenceRegistry"
+  ],
+  "api_routes": [
+    "/api/auth/login",
+    "/api/auth/logout",
+    "/api/auth/session",
+    "/api/brains/greeny-life-egypt",
+    "/api/commercial-changes",
+    "/api/data-control",
+    "/api/decisions/export-readiness",
+    "/api/decisions/official-evidence-review",
+    "/api/evidence/official",
+    "/api/intelligence/asset-registry",
+    "/api/intelligence/data-fabric",
+    "/api/intelligence/gels-label-readiness",
+    "/api/intelligence/production-readiness",
+    "/api/learning/evaluations",
+    "/api/learning/outcomes",
+    "/api/learning/training-cases",
+    "/api/mastermind/commercial-context",
+    "/api/mastermind/decision-package",
+    "/api/mastermind/operating-model",
+    "/api/mastermind/tools",
+    "/api/portfolio/egyptian-exports",
+    "/api/products",
+    "/api/sales-orders",
+    "/api/suppliers",
+    "/api/tasks",
+    "/api/traceability",
+    "/api/trade-corridors",
+    "/api/workflow/approvals",
+    "/api/workflow"
+  ],
+  "canonical": {
+    "products": 15,
+    "suppliers": 5,
+    "stock": 10
+  },
+  "entities": {
+    "GREENS_NATURE_UAE": 41,
+    "GREENY_LIFE_EGYPT": 47,
+    "GREEN_LINES_NORWAY_EU": 42,
+    "Inventory": 21,
+    "Invoice": 21,
+    "OrchestrationTask": 35,
+    "Payment": 16,
+    "SalesOrder": 34,
+    "Shipment": 41,
+    "Supplier": 94
+  },
+  "proposed": [
+    {
+      "name": "Celerp",
+      "in_package_manifest": false,
+      "law": "CELERP_NE_LIVE_ERP",
+      "reuse": "prisma/schema.prisma + app/api",
+      "install": false
+    },
+    {
+      "name": "AG2/AutoGen",
+      "in_package_manifest": false,
+      "law": "AG2_NE_RAIOS_COUNCIL",
+      "reuse": ".ai-os/mcp + council seats",
+      "install": false
+    },
+    {
+      "name": "LightRAG",
+      "in_package_manifest": false,
+      "law": "LIGHTRAG_NE_COGNITIVE_WAL",
+      "reuse": "DIGESTS/INDEX + RAIOS WAL + greenlines_brain/graph.py",
+      "install": false
+    },
+    {
+      "name": "pygrametl",
+      "in_package_manifest": false,
+      "law": "PYGRAMETL_NE_ABSORB",
+      "reuse": "scripts/ai-os/raios_absorb.py + raios_learn_ingest.py",
+      "install": false
+    },
+    {
+      "name": "BeeAI",
+      "in_package_manifest": false,
+      "law": "BEEAI_NE_EIGHT_TOOLS",
+      "reuse": "eight V1 MCP tools",
+      "install": false
+    },
+    {
+      "name": "LangSwarm",
+      "in_package_manifest": false,
+      "law": "LANGSWARM_NE_SECOND_BUS",
+      "reuse": "no second agent bus",
+      "install": false
+    }
+  ],
+  "graph": {
+    "nodes": [
+      {
+        "id": "ERP",
+        "kind": "keeper",
+        "label": "Prisma + Next API"
+      },
+      {
+        "id": "COUNCIL",
+        "kind": "keeper",
+        "label": "RAIOS seats + 8 MCP tools"
+      },
+      {
+        "id": "KNOWLEDGE",
+        "kind": "keeper",
+        "label": "DIGESTS/INDEX/WAL/graph.py"
+      },
+      {
+        "id": "ETL",
+        "kind": "keeper",
+        "label": "absorb + ingest"
+      },
+      {
+        "id": "MASTERMIND",
+        "kind": "keeper",
+        "label": "MasterMind AI"
+      },
+      {
+        "id": "GREENY_LIFE_EGYPT",
+        "kind": "company",
+        "label": "Greeny-Life Egypt"
+      },
+      {
+        "id": "GREENS_NATURE_UAE",
+        "kind": "company",
+        "label": "Greens Nature UAE"
+      },
+      {
+        "id": "lib/intelligence/greens-nature-uae-brain.ts",
+        "kind": "gap",
+        "label": "lib/intelligence/greens-nature-uae-brain.ts"
+      },
+      {
+        "id": "app/api/brains/greens-nature-uae/route.ts",
+        "kind": "gap",
+        "label": "app/api/brains/greens-nature-uae/route.ts"
+      },
+      {
+        "id": "tests/greens_nature_uae_brain_check.ts",
+        "kind": "gap",
+        "label": "tests/greens_nature_uae_brain_check.ts"
+      },
+      {
+        "id": "GREEN_LINES_NORWAY_EU",
+        "kind": "company",
+        "label": "Green Lines Norway/EU"
+      },
+      {
+        "id": "lib/intelligence/greenlines-norway-brain.ts",
+        "kind": "gap",
+        "label": "lib/intelligence/greenlines-norway-brain.ts"
+      },
+      {
+        "id": "app/api/brains/greenlines-norway/route.ts",
+        "kind": "gap",
+        "label": "app/api/brains/greenlines-norway/route.ts"
+      },
+      {
+        "id": "tests/greenlines_norway_brain_check.ts",
+        "kind": "gap",
+        "label": "tests/greenlines_norway_brain_check.ts"
+      },
+      {
+        "id": "PRISMA_MODELS",
+        "kind": "count",
+        "label": "27 models"
+      },
+      {
+        "id": "API_ROUTES",
+        "kind": "count",
+        "label": "29 routes"
+      }
+    ],
+    "edges": [
+      {
+        "from": "MASTERMIND",
+        "to": "ERP",
+        "rel": "reads"
+      },
+      {
+        "from": "COUNCIL",
+        "to": "MASTERMIND",
+        "rel": "does_not_replace"
+      },
+      {
+        "from": "MASTERMIND",
+        "to": "GREENY_LIFE_EGYPT",
+        "rel": "coordinates"
+      },
+      {
+        "from": "GREENY_LIFE_EGYPT",
+        "to": "ERP",
+        "rel": "uses_if_route_exists"
+      },
+      {
+        "from": "MASTERMIND",
+        "to": "GREENS_NATURE_UAE",
+        "rel": "coordinates"
+      },
+      {
+        "from": "GREENS_NATURE_UAE",
+        "to": "ERP",
+        "rel": "uses_if_route_exists"
+      },
+      {
+        "from": "GREENS_NATURE_UAE",
+        "to": "lib/intelligence/greens-nature-uae-brain.ts",
+        "rel": "missing"
+      },
+      {
+        "from": "GREENS_NATURE_UAE",
+        "to": "app/api/brains/greens-nature-uae/route.ts",
+        "rel": "missing"
+      },
+      {
+        "from": "GREENS_NATURE_UAE",
+        "to": "tests/greens_nature_uae_brain_check.ts",
+        "rel": "missing"
+      },
+      {
+        "from": "MASTERMIND",
+        "to": "GREEN_LINES_NORWAY_EU",
+        "rel": "coordinates"
+      },
+      {
+        "from": "GREEN_LINES_NORWAY_EU",
+        "to": "ERP",
+        "rel": "uses_if_route_exists"
+      },
+      {
+        "from": "GREEN_LINES_NORWAY_EU",
+        "to": "lib/intelligence/greenlines-norway-brain.ts",
+        "rel": "missing"
+      },
+      {
+        "from": "GREEN_LINES_NORWAY_EU",
+        "to": "app/api/brains/greenlines-norway/route.ts",
+        "rel": "missing"
+      },
+      {
+        "from": "GREEN_LINES_NORWAY_EU",
+        "to": "tests/greenlines_norway_brain_check.ts",
+        "rel": "missing"
+      }
+    ]
+  },
+  "ok": true,
+  "knowledge_state": "DISCOVERED",
+  "canonical_flag": false,
+  "promoted": false,
+  "wal_written": false,
+  "gl005_proven": false,
+  "install_celerp": false,
+  "install_ag2": false,
+  "install_lightrag": false,
+  "law": [
+    "CELERP_NE_LIVE_ERP",
+    "AG2_NE_RAIOS_COUNCIL",
+    "LIGHTRAG_NE_COGNITIVE_WAL",
+    "PYGRAMETL_NE_ABSORB",
+    "BEEAI_NE_EIGHT_TOOLS",
+    "LANGSWARM_NE_SECOND_BUS",
+    "PROPOSAL_PASTE_NE_INSTALL",
+    "THREE_COMPANIES_ALREADY_NAMED",
+    "WHITE_NOTEBOOK_NE_ABSENT_MIND",
+    "REUSE_KEEPER_BEFORE_NEW_STACK",
+    "PENDING_PASTE_NE_GATE",
+    "HELPER_SEAT_NE_PERMANENT_MIND",
+    "CONSULT_NE_BLOCK_EXECUTE"
+  ],
+  "ms": 47.523,
+  "hashes": {
+    "three_operating_brains": "eb9cb6104ca26f9be2ef6205d3f776cae706c2310228c4be0b2e47a85b31de71",
+    "schema_prisma": "1e037429cf7ec04e9ca9b359c104f70e0cbedc2ca3f6ad24d4da8b5879357ffa",
+    "core_contract": "2d538d6ec24ab73a131e174d74b531a9c9cd389b42156c9fa5e45860ccaa36eb"
+  },
+  "wal_mtime_unchanged": true
+}

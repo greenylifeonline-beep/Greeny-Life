@@ -1,0 +1,41 @@
+{
+  "schema": "raios.same-function-bind.receipt.v1",
+  "ts": "2026-08-24T17:36:09.554705+00:00",
+  "from": "C2",
+  "c5": "git",
+  "head_before": "9653598a13503b1450a9181c4e95bd9e2e893585",
+  "order": "جمع وتكامل تام بين أجزاء النظام المتشابهة",
+  "decision": "D-076",
+  "new_engine_created": false,
+  "new_bus_created": false,
+  "wal_written": false,
+  "wal_mtime": "2026-08-20T23:49:44.499160+00:00",
+  "gl005_proven": false,
+  "pytest": {
+    "passed": 27,
+    "file": "tests/neuro_lingua/test_same_function_bind.py + train/schema/kernel/whoami/phase0/p0"
+  },
+  "keepers_live": {
+    "8765": true,
+    "8876": true,
+    "8787": true
+  },
+  "bound_call_sites": [
+    "RAIOS/V9/autonomic/self_inspection/__init__.py",
+    "scripts/ai-os/raios_c5_wave_ccn.py",
+    "scripts/ai-os/raios_c5_grind.py",
+    "run_all.ps1",
+    "fix_brain.py",
+    "run_audit_hack.py",
+    "extract_dna.py"
+  ],
+  "canonical_aliases_pending_gl003": true,
+  "law": [
+    "ONE_CAPABILITY_ONE_KEEPER",
+    "SIMILAR_NAME_NE_SAME_JOB",
+    "NO_NEW_MERGE_ENGINE",
+    "NO_SECOND_WAL",
+    "BRAIN_PY_BROAD_MERGE_DO_NOT_RUN",
+    "D-076"
+  ]
+}

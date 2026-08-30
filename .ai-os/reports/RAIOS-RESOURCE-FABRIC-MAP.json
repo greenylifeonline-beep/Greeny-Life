@@ -1,0 +1,65 @@
+{
+  "schema": "raios.resource-fabric-map.v1",
+  "knowledge_state": "DISCOVERED",
+  "canonical": false,
+  "from": "C2",
+  "parent": "C1",
+  "decision": "D-063",
+  "ts": "2026-08-21T20:55:13.398422+00:00",
+  "host": {
+    "head": "98654f81aaffbde1471ce19556ed69bd9deb4455",
+    "ram_gb": 15.64,
+    "gpu": false,
+    "database_url": false,
+    "app_session_secret": false,
+    "hf_token": false,
+    "c1_cortex_run": false,
+    "c1_login_email": false
+  },
+  "listen": {
+    "next_3000": true,
+    "ollama_11434": true,
+    "postgres_5432": false,
+    "c5_screen_8765": true,
+    "mcp_8787": true
+  },
+  "models": {
+    "ollama": [
+      "qwen2.5:0.5b"
+    ],
+    "cortex_identity": "qwen3.6:35b-a3b",
+    "student": "qwen2.5:0.5b",
+    "source_present": false,
+    "student_ne_extraction": true
+  },
+  "distribute_compute": {
+    "cursor_vm": "this slice — CPU, HOST_NO_GPU",
+    "repair_windows": "founder device, HF login",
+    "colab_kaggle": "gym/colab_kaggle_c5.ipynb",
+    "github_actions": ".github/workflows/c5-week.yml — fires from main",
+    "hf_hub": "dataset muscle, not C5",
+    "new_cluster": false
+  },
+  "secrets_present": {
+    "DATABASE_URL": false,
+    "APP_SESSION_SECRET": false,
+    "C1_LOGIN_EMAIL": false,
+    "C1_CORTEX_RUN": false,
+    "HF_TOKEN_printed": false
+  },
+  "paid_api": false,
+  "weight_download_this_slice": false,
+  "gl005_proven": false,
+  "law": [
+    "SCALE_BY_COMPRESSION_NOT_COMPLEXITY",
+    "REALITY_AUDIT_NE_NEW_KERNEL",
+    "NAMED_ARTIFACT_NE_PLATFORM_PROVEN",
+    "FROM_INVENTORY_NE_TO_PLATFORM",
+    "C6_C10_NE_LIVE",
+    "CI_PASS_NE_ASSIMILATION",
+    "CI_PASS_NE_GL005",
+    "EXPERIENCE_NE_KNOWLEDGE",
+    "HOLD_NE_THROW",
+    "REUSE_BEFORE_BUILD"
+  ]
+}

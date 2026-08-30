@@ -1,0 +1,69 @@
+{
+  "schema": "raios.c1-foundation.v1",
+  "knowledge_state": "DISCOVERED",
+  "canonical": false,
+  "from": "C1",
+  "recorded_by": "C2",
+  "decision": "D-059",
+  "p0_decision": "D-060",
+  "scale_decision": "D-063",
+  "reality_decision": "D-063",
+  "wave1_decision": "D-064",
+  "wave_ccn_decision": "D-069",
+  "cross_tree_decision": "D-070",
+  "ci_commit": "1e28f845b9530777b7378298885e986c01feaa0c",
+  "ci_commits": {
+    "1e28f84": "PASS",
+    "68af867": "PASS"
+  },
+  "facts": {
+    "CI_1e28f84": "PASS",
+    "CI_68af867": "PASS",
+    "EXTRACTED_QWEN_GRANITE": false,
+    "SAFE_TO_REMOVE_SOURCE": false,
+    "GL005_PROVEN": false,
+    "AUTHENTICATED_ORCHESTRATION_TASK": false
+  },
+  "law": [
+    "CI_PASS_NE_ASSIMILATION",
+    "CI_PASS_NE_GL005",
+    "EXTRACT_CLAIM_NE_ASSIMILATION",
+    "SAFE_TO_REMOVE_SOURCE_REQUIRES_INDEPENDENT_EXECUTION",
+    "PRINTED_PASS_NE_EVIDENCE",
+    "HOLD_NE_THROW",
+    "MOCK_PATH_NE_ORCHESTRATION_TASK",
+    "STUDENT_NE_EXTRACTION",
+    "TINY_QWEN_NE_CORTEX_IDENTITY",
+    "SOURCE_DELETION_FORBIDDEN_UNTIL_INDEPENDENT_EXECUTION",
+    "AUTHENTICATED_ORCHESTRATION_TASK_NE_GL005"
+  ],
+  "p0": {
+    "order": [
+      "AUTHENTICATED_ORCHESTRATION_TASK",
+      "QWEN_GRANITE_SOURCE_INDEPENDENT_ASSIMILATION",
+      "GL005"
+    ],
+    "assimilation_chain": [
+      "SOURCE_PRESENT",
+      "CAPABILITY_EXECUTES",
+      "SOURCE_DISABLED_OR_ISOLATED",
+      "C5_EXECUTES_SAME_CAPABILITY",
+      "RESTART",
+      "STILL_EXECUTES",
+      "BENCHMARK_PASS"
+    ]
+  },
+  "next": [
+    "AUTHENTICATED_ORCHESTRATION_TASK",
+    "QWEN_GRANITE_SOURCE_INDEPENDENT_ASSIMILATION",
+    "GL005"
+  ],
+  "flip_requires": {
+    "AUTHENTICATED_ORCHESTRATION_TASK": "live GET /api/auth/session authenticated=true then POST /api/tasks 201 with visible OrchestrationTask row and before_hash != after_hash; not mock; not unit test",
+    "EXTRACTED_QWEN_GRANITE": "SOURCE PRESENT → CAPABILITY EXECUTES → SOURCE DISABLED/ISOLATED → C5 EXECUTES SAME CAPABILITY → RESTART → STILL EXECUTES → BENCHMARK PASS; student qwen2.5:0.5b is not the source",
+    "GL005_PROVEN": "gates 1 and 2 plus C5 brain behavior: routing + association + execution + persistence + reuse",
+    "SAFE_TO_REMOVE_SOURCE": "both assimilation and C1 decision; never from CI pass"
+  },
+  "gl005_proven": false,
+  "wal_written": false
+}

@@ -13,6 +13,7 @@ __pycache__/
 # Node / Next.js build artifacts
 node_modules/
 .next/
+.next-gl004-proof/
 .npm-cache/
 out/
 dist/
@@ -23,6 +24,7 @@ build/
 .env
 .env.*
 !.env.example
+.ai-os/mcp/tokens.local.json
 
 # Logs
 *.log
@@ -47,6 +49,8 @@ Thumbs.db
 # RAIOS generated runtime snapshots
 .ai-os/snapshots/*.json
 # RAIOS generated/runtime state
+.ai-os/reports/raios-service/LAST-MINUTE.json
+.ai-os/reports/raios-service/LAST-MINUTE.md
 .ai-os/install-backups/
 coverage/
 unified-intelligence-restore-*.zip

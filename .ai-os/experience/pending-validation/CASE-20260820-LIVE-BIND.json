@@ -1,0 +1,74 @@
+{
+  "schema": "raios.experience.pending-validation.v1",
+  "id": "CASE-20260820-LIVE-BIND",
+  "knowledge_state": "DISCOVERED",
+  "mastery": false,
+  "promoted": false,
+  "task_id": "GL-004",
+  "timestamp": "2026-08-20T14:24:00Z",
+  "agent": "cursor",
+  "context": "Visible next-server v16.2.10 was already listening. C3 bound it for GL-004 RUNTIME_TRACE instead of spawning a second runtime.",
+  "result": "Binder refuses spawn. Isolated next build uses a private distDir. GL004_PROVEN stays false unless all five named children exit 0. GL005_PROVEN is never granted by this executor.",
+  "decision": "PENDING_VALIDATION",
+  "laws": [
+    {
+      "id": "LIVE_PROCESS_CAN_SATISFY_RUNTIME_PROOF_IF_IDENTITY_AND_HTTP_EVIDENCE_ARE_BOUND",
+      "binds": "GL-004 RUNTIME_TRACE",
+      "rule": "A live Next process satisfies RUNTIME_TRACE only when PID, PPID, cmdline, cwd=repo, listen port owned by that PID, HTTP GET / == 200 with Next.js identity, HEAD, start time, and runtime log are bound in one receipt.",
+      "evidence": "scripts/ai-os/gl004-runtime-bind.py and gl004-runtime-bind.ps1"
+    },
+    {
+      "id": "BIND_EXISTING_NE_SPAWN",
+      "binds": "runtime",
+      "rule": "If a qualifying live process exists, do not start another Next server. --spawn is refused. Do not kill the live process.",
+      "evidence": "EXIT_SPAWN_REFUSED=7; no start/dev invocation in the binder."
+    },
+    {
+      "id": "DEV_LISTEN_NE_PRODUCTION_BUILD",
+      "binds": "GL-004 BUILD vs RUNTIME_TRACE",
+      "rule": "next dev HTTP is not next start and is not next build. Production runtime remains unproven until mode=start is bound.",
+      "evidence": "GL004_PRODUCTION_RUNTIME_PROVEN is a separate boolean."
+    },
+    {
+      "id": "HTTP_200_ON_ROOT_NE_APP_HEALTH",
+      "binds": "HTTP evidence",
+      "rule": "GET / == 200 proves the bound PID serves Next identity. 401/404/500 on APIs are execution evidence, not health PASS.",
+      "evidence": "/api/health 404, /api/workflow 401, /api/tasks 500 observed on the live process."
+    },
+    {
+      "id": "ISOLATED_BUILD_NE_SECOND_RUNTIME",
+      "binds": "GL-004 BUILD",
+      "rule": "next build into .next-gl004-proof via child-only distDir preload is compile proof. It must not listen. It must not replace the live .next used by next dev.",
+      "evidence": "scripts/ai-os/gl004-isolated-dist-preload.cjs"
+    },
+    {
+      "id": "GATE_CLOSED_NE_EPISTEMIC_FAILED",
+      "binds": "receipt learning",
+      "rule": "Final gate closed unless PASS. Learning still records NOT_RUN, FAILED, INVALID_OBSERVATION, BLOCKED, UNAVAILABLE.",
+      "evidence": "gl004_lib.epistemic_state"
+    },
+    {
+      "id": "LIVENESS_NE_READINESS_NE_CORRECTNESS_NE_PRODUCTION_EQUIVALENCE",
+      "binds": "HTTP classification",
+      "rule": "Do not collapse HTTP classes. next start is a separate child.",
+      "evidence": "gl004_lib.classify_http"
+    },
+    {
+      "id": "NEXT_CONFIG_FILE_NE_ISOLATION_CONTRACT",
+      "binds": "BUILD isolation",
+      "rule": "next@16.2.10 has no NEXT_CONFIG_FILE. Isolated distDir injection only. Do not write next.config.* beside a live next-dev.",
+      "evidence": "rg NEXT_CONFIG_FILE in node_modules/next returned no matches"
+    },
+    {
+      "id": "PROOF_FOREST_NE_RECEIPT",
+      "binds": "receipt location",
+      "rule": "Do not create _raios-wave2-proof-isolated. Receipts live in .ai-os/receipts.",
+      "evidence": ".ai-os/receipts/"
+    }
+  ],
+  "reusable_lessons": [
+    "Repair PowerShell twin must implement the same exits, epistemic states, and payload keys.",
+    "GET /api/tasks 500 details field is the cheapest discriminating evidence for GL-005 path failure.",
+    "Do not promote these laws to CANONICAL until the atomic receipt has been falsified by C1 and still holds."
+  ]
+}

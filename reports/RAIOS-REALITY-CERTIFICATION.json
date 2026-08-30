@@ -1,0 +1,61 @@
+{
+  "schema": "raios.reality-certification.v1",
+  "generated_at": "2026-08-20T06:54:49.317314+00:00",
+  "head": "d3f5ca69b858843dcf626f74fa13cf83d3e2e20c",
+  "tests": [
+    {
+      "name": "type-check",
+      "exit": 0,
+      "fresh": true,
+      "status": "PASS"
+    },
+    {
+      "name": "workflow_governance",
+      "exit": 0,
+      "fresh": true,
+      "status": "PASS"
+    },
+    {
+      "name": "shipment_tracking",
+      "exit": 0,
+      "fresh": true,
+      "status": "PASS"
+    },
+    {
+      "name": "legacy_brain",
+      "exit": 0,
+      "fresh": true,
+      "status": "PASS"
+    },
+    {
+      "name": "neuro_lingua_pytest",
+      "exit": 0,
+      "fresh": true,
+      "status": "PASS",
+      "detail": "17 passed"
+    },
+    {
+      "name": "neuro_lingua_offline_benchmark",
+      "exit": 0,
+      "fresh": true,
+      "status": "PASS",
+      "llm_calls": 0
+    },
+    {
+      "name": "next_lint",
+      "exit": 1,
+      "fresh": true,
+      "status": "FAIL",
+      "class": "TOOLCHAIN_BUG"
+    },
+    {
+      "name": "qwen_main_cortex_inference",
+      "exit": null,
+      "fresh": false,
+      "status": "NOT_RERUN",
+      "inherited": "MEMORY_CAPACITY_FAILURE",
+      "not_pass": true
+    }
+  ],
+  "false_pass_avoided": true
+}

@@ -1,0 +1,69 @@
+{
+  "schema": "raios.c5-p0-knowledge-e2e.v1",
+  "ts": "2026-08-22T22:21:48.135900+00:00",
+  "from": "C2",
+  "parent": "C1",
+  "ok": true,
+  "connected": true,
+  "mind_fill_to_index": true,
+  "index_to_kae": true,
+  "kae_to_ops_compile": true,
+  "ops_compile_to_meaning": true,
+  "mind_fill": {
+    "ok": true,
+    "files": 18,
+    "absorbed": 0,
+    "index_docs": 12667,
+    "index_terms": 1800
+  },
+  "kae": {
+    "ok": true,
+    "chosen": "canonical/logistics/customs-clearance.json",
+    "hit_count": 1,
+    "tiles": [
+      "FACT",
+      "RULE",
+      "WHY",
+      "WHEN",
+      "WHEN_NOT",
+      "EXAMPLE",
+      "COUNTEREXAMPLE",
+      "FAILURE_CASE",
+      "QUIZ",
+      "DECISION_CASE",
+      "NOVEL_VARIANT",
+      "ADVERSARIAL_VARIANT",
+      "PROCEDURE",
+      "TEST",
+      "INVARIANT",
+      "SKILL_CANDIDATE"
+    ],
+    "wal_written": false,
+    "cortex_used": false
+  },
+  "ops_compile": {
+    "ok": true,
+    "meaning_equivalent": true,
+    "canonical": {
+      "event": "shipment_status",
+      "state": "customs_hold"
+    },
+    "llm_calls": 0,
+    "l3_used": false,
+    "wal_written": false
+  },
+  "wal_written": false,
+  "gl005_proven": false,
+  "authenticated_orchestration_task": false,
+  "neurolingua_e2e_proven": false,
+  "extracted_qwen_granite": false,
+  "law": [
+    "REUSE_BEFORE_BUILD",
+    "NO_SECOND_WAL",
+    "NO_SECOND_ROUTER",
+    "KAE_INGEST_NE_WAL",
+    "OPS_COMPILE_NE_CORTEX",
+    "KNOWLEDGE_E2E_NE_GL005"
+  ],
+  "wal_mtime_unchanged": true
+}

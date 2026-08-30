@@ -1,0 +1,60 @@
+{
+  "schema": "raios.rsic-reality.v1",
+  "knowledge_state": "DISCOVERED",
+  "canonical": false,
+  "from": "C2",
+  "parent": "C1",
+  "decision": "D-064",
+  "ts": "2026-08-21T20:55:13.874290+00:00",
+  "parallel_research_system": false,
+  "functions": [
+    {
+      "id": "research_intake",
+      "keeper": "scripts/ai-os/raios_c5_book.py request_research",
+      "class": "LIVE",
+      "parallel_system": false
+    },
+    {
+      "id": "source_discovery",
+      "keeper": "scripts/ai-os/raios_c5_hunt.py",
+      "class": "CONNECTED",
+      "note": "local hunt; do not run (writes git-memory dirt)"
+    },
+    {
+      "id": "primary_source_verification",
+      "keeper": null,
+      "class": "ABSENT"
+    },
+    {
+      "id": "paper_repo_tool_scout",
+      "keeper": "scripts/ai-os/raios_c5_kae.py --libraries",
+      "class": "PROTOTYPE"
+    },
+    {
+      "id": "license_analysis",
+      "keeper": null,
+      "class": "ABSENT"
+    },
+    {
+      "id": "contradiction_search",
+      "keeper": "scripts/ai-os/raios_c5_enforce.py",
+      "class": "PROTOTYPE"
+    },
+    {
+      "id": "benchmark_design",
+      "keeper": "scripts/ai-os/raios_c5_p0.py assimilation chain",
+      "class": "LIVE"
+    },
+    {
+      "id": "evidence_backed_recommendation",
+      "keeper": ".ai-os/learning/C5-NEED.json",
+      "class": "LIVE"
+    }
+  ],
+  "rsic_proven": false,
+  "gl005_proven": false,
+  "law": [
+    "REUSE_BEFORE_BUILD",
+    "HUNT_FREE_NE_PAID_API"
+  ]
+}

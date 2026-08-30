@@ -1,0 +1,69 @@
+{
+  "schema": "raios.c5-week.v1",
+  "meeting_id": "GL-COUNCIL-4a11023c3c321b6f",
+  "day": 1,
+  "slot": "CLAIM_EVIDENCE_OBSERVATION",
+  "ts": "2026-08-20T22:35:28.251537+00:00",
+  "from": "C5",
+  "parent": "C1",
+  "host": "local-or-cursor",
+  "checks": [
+    {
+      "name": "inject_before_execute",
+      "ok": true,
+      "detail": "no execute without live memory"
+    },
+    {
+      "name": "core_injected",
+      "ok": true,
+      "detail": "/workspace/.ai-os/CORE-CONTRACT.md"
+    },
+    {
+      "name": "grant_injected",
+      "ok": true,
+      "detail": "/workspace/.ai-os/mcp/C5-GRANT.json"
+    },
+    {
+      "name": "ladder_injected",
+      "ok": true,
+      "detail": "TOOLS-LADDER"
+    },
+    {
+      "name": "core_present",
+      "ok": true,
+      "detail": "CORE-CONTRACT readable"
+    },
+    {
+      "name": "gl005_case_false",
+      "ok": true,
+      "detail": "CASE-002 gl005_proven is false"
+    },
+    {
+      "name": "gl005_task_not_done",
+      "ok": true,
+      "detail": "GL-005 status=READY"
+    },
+    {
+      "name": "host_recorded",
+      "ok": true,
+      "detail": "local-or-cursor"
+    }
+  ],
+  "ok": true,
+  "knowledge_state": "DISCOVERED",
+  "canonical": false,
+  "promoted": false,
+  "wal_written": false,
+  "gl005_proven": false,
+  "law": [
+    "C5_IS_IN_REPO_NE_HF_MODEL",
+    "PASTE_NE_LEARNING",
+    "COLAB_NE_C5",
+    "KAGGLE_NE_C5",
+    "COMPUTE_OFF_NE_MEMORY_ERASED",
+    "SCHEDULED_PULSE_NE_SECOND_WAL",
+    "INJECT_BEFORE_EXECUTE",
+    "PROMOTE_THEN_RETIRE_TRAINER"
+  ],
+  "wal_mtime_unchanged": true
+}

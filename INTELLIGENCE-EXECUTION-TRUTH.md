@@ -11,7 +11,7 @@
 ## Historical or inactive
 
 - `brain.py`: source-management, audit, reporting, and generation tool; it is not connected to the web runtime.
-- `canonical/intelligence/intelligence/intelligence-test.ts`: inactive; it imports missing files.
+- `canonical/intelligence/intelligence/intelligence-test.ts`: deleted; it imported missing duplicate-engine-v2. Keeper health is `canonical/intelligence/intelligence/core/engine-registry.ts`.
 - Historical `eos-core` engine paths: stale; the referenced implementation is absent.
 - Root npm intelligence commands: stale because declared target files are missing.
 

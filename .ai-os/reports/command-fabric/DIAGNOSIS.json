@@ -1,0 +1,153 @@
+{
+  "schema": "raios.command-fabric.diagnosis.v1",
+  "ts": "2026-08-25T16:45:28.403473+00:00",
+  "message_id": "MSG-1787675796720281-e5058327",
+  "identity": {
+    "seat": "C2-OBS",
+    "executor": "cursor-cloud",
+    "hostname": "cursor",
+    "bc_id": "bc-dd60b5cf-95bd-4f24-9237-cc1b2225f013",
+    "url": "https://cursor.com/agents/bc-dd60b5cf-95bd-4f24-9237-cc1b2225f013",
+    "not_chatgpt_c2": true,
+    "not_repair_executor": true,
+    "not_c5": true
+  },
+  "d17335a_context": {
+    "commit": "d17335a8a1428acdd0b98849550e4c930c1d9e97",
+    "local_head": "d17335a8a1428acdd0b98849550e4c930c1d9e97",
+    "head_is_d17335a": true,
+    "d17335a_is_ancestor": true,
+    "workspace": "/workspace",
+    "branch": "v9-neurolingua-semantic-kernel",
+    "repair_windows_root": "C:\\Users\\Ghanam\\Documents\\Codex\\Greeny-Life-Repair",
+    "repair_root_reachable": false,
+    "repair_commit_12603d0": "ABSENT"
+  },
+  "ci_d17335a": {
+    "govern": "success",
+    "c5_week": "success",
+    "ci_pass_ne_assimilation": true,
+    "gl005_proven": false
+  },
+  "keepers": {
+    "schema": "raios.command-fabric.keepers.v1",
+    "law": [
+      "NO_ALTERNATE_CONTROL_PLANE",
+      "ENVELOPE_NE_BUS",
+      "MCP_GATEWAY_NE_TRUTH_AUTHORITY",
+      "ACK_IS_A_NEW_PACKET_NEVER_A_MOVE",
+      "MAIL_PASSES_NE_PROVES"
+    ],
+    "control_plane": "existing MCP V1 + mail + aios locks + nomadic lease/idempotency + c5 watchdog",
+    "not_created": "second bus, ninth MCP tool, second WAL, Repair .ai-os/control runtime",
+    "keepers": {
+      "mcp_gateway": "scripts/ai-os/raios_mcp/gateway.py",
+      "mcp_server": "scripts/ai-os/raios_mcp/server.py",
+      "mail": "scripts/ai-os/raios-mail.py",
+      "heartbeat": "scripts/ai-os/raios-service-heartbeat.py",
+      "watchdog": "scripts/ai-os/raios_c5_watchdog.py",
+      "leases": "RAIOS/V9/cloud/nomadic/lease_manager.py",
+      "idempotency": "RAIOS/V9/cloud/nomadic/idempotency.py",
+      "c5_screen": "scripts/ai-os/raios_c5_screen.py",
+      "c5_train": "scripts/ai-os/raios_c5_train.py"
+    },
+    "missing_on_this_host": {
+      "cursor-agent": true,
+      "raios_multimodal_gateway.py": true,
+      "repair_tree_12603d0": true,
+      ".ai-os/control runtime from Repair": true
+    }
+  },
+  "live": {
+    "mcp_health_http": 200,
+    "mcp": {
+      "ok": true,
+      "service": "raios-universal-mcp",
+      "transport": "streamable-http",
+      "websocket": false,
+      "sqlite": false,
+      "law": "MCP_GATEWAY_NE_TRUTH_AUTHORITY",
+      "gl005_proven": false,
+      "remote_c2_ready": false,
+      "endpoint_local": true,
+      "head": "d17335a8a1428acdd0b98849550e4c930c1d9e97",
+      "tools": [
+        "get_head",
+        "read_board",
+        "read_inbox",
+        "read_receipt",
+        "get_diff",
+        "post_opinion",
+        "send_packet",
+        "ack_packet"
+      ]
+    },
+    "screen_8765": 200,
+    "c1_console_8876": 200,
+    "cursor_agent": null,
+    "multimodal_gateway": null,
+    "control_dir_was_missing": true,
+    "mail_inbox_exists": false,
+    "wal_mtime": "2026-08-20T23:49:44.499160+00:00"
+  },
+  "watchdog": [
+    {
+      "id": "MISSING_TRAIN",
+      "pathology": "slack",
+      "law": "SKIP_WITHOUT_RECEIPT_IS_SLACK",
+      "detail": ".ai-os/receipts/c5-train/LAST.json"
+    },
+    {
+      "id": "MISSING_SPEAK",
+      "pathology": "slack",
+      "law": "SKIP_WITHOUT_RECEIPT_IS_SLACK",
+      "detail": ".ai-os/receipts/c5-speak/LAST.json"
+    },
+    {
+      "id": "STALE_EXPERIENCE",
+      "pathology": "halt",
+      "law": "HALT_IS_PATHOLOGY",
+      "age_s": 407858.3
+    },
+    {
+      "id": "SKIPPED_GRIND",
+      "pathology": "slack",
+      "law": "SKIP_WITHOUT_RECEIPT_IS_SLACK",
+      "detail": "grind"
+    },
+    {
+      "id": "SKIPPED_WEEK",
+      "pathology": "slack",
+      "law": "SKIP_WITHOUT_RECEIPT_IS_SLACK",
+      "detail": "week"
+    },
+    {
+      "id": "SKIPPED_MINUTE",
+      "pathology": "slack",
+      "law": "SKIP_WITHOUT_RECEIPT_IS_SLACK",
+      "detail": "minute"
+    },
+    {
+      "id": "SKIPPED_SPEAK",
+      "pathology": "slack",
+      "law": "SKIP_WITHOUT_RECEIPT_IS_SLACK",
+      "detail": "speak"
+    },
+    {
+      "id": "SKIPPED_EXPERIENCE",
+      "pathology": "slack",
+      "law": "SKIP_WITHOUT_RECEIPT_IS_SLACK",
+      "detail": "experience"
+    }
+  ],
+  "fail_closed": true,
+  "gl005_proven": false,
+  "c2_join_proven": false,
+  "command_fabric_e2e_proven": false,
+  "c5_health_proven": true,
+  "remote_c2_ready": false,
+  "new_engine_created": false,
+  "new_bus_created": false,
+  "wal_written": false,
+  "ninth_mcp_tool": false
+}

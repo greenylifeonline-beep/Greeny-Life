@@ -1,0 +1,59 @@
+{
+  "schema": "raios.executive-review.v1",
+  "from": "ENGINEER",
+  "to": "EXECUTIVE_REVIEWER",
+  "status": "CONTRACT_ATTACK",
+  "knowledge_state": "DISCOVERED",
+  "head": "af7aa57ef7f7a9e6a901af687d6f2d6d7504cd93",
+  "agreed": [
+    "BIND_EXISTING_NE_SPAWN",
+    "DEV_LISTEN_NE_PRODUCTION_BUILD",
+    "HTTP_200_ON_ROOT_NE_APP_HEALTH",
+    "LIVENESS_NE_READINESS_NE_CORRECTNESS_NE_PRODUCTION_EQUIVALENCE"
+  ],
+  "attack": [
+    {
+      "id": "DO_NOT_SILENTLY_STRENGTHEN_GL004",
+      "claim": "GL-004 historical contract is type-check + build + tests + runtime execution truth.",
+      "does_not_contain": "next start, production-runtime equivalence, or Turbopack-vs-webpack identity.",
+      "ruling": "REJECT automatic approval of production-equivalence as a hidden RUNTIME_TRACE requirement. If C1 wants it, name a sixth child PRODUCTION_RUNTIME and keep the gate closed until it exists. Do not rename FRAMEWORK_LIVENESS into that child.",
+      "allowed": "Bound next-dev may satisfy RUNTIME_TRACE. Isolated next build may satisfy BUILD. Those are two children, not one collapsed PASS."
+    },
+    {
+      "id": "HTTP_2XX_499_IS_TOO_WEAK_FOR_RUNTIME_TRACE",
+      "claim": "A steering script that treats HTTP 200-499 as RUNTIME_TRACE=0 collapses FRAMEWORK_LIVENESS with ROUTE_ABSENT and AUTH_GATE.",
+      "ruling": "RUNTIME_TRACE requires GET / == 200 AND Next.js identity. Other statuses are classified observations, not bind success."
+    },
+    {
+      "id": "NEXT_CONFIG_FILE_IS_NOT_A_CONTRACT",
+      "fact": "next@16.2.10 has no NEXT_CONFIG_FILE symbol. Writing next.config.* in-repo would HMR the live next-dev and can pollute live .next.",
+      "ruling": "Isolation is child-only distDir injection (gl004-isolated-build.cjs). If isolation cannot be proven (no isolated BUILD_ID, or live .next/BUILD_ID appears), BUILD=INVALID_OBSERVATION, not a reason to restart the server."
+    },
+    {
+      "id": "PROOF_FOREST_REJECTED",
+      "claim": "_raios-wave2-proof-isolated is a new estate folder.",
+      "ruling": "Receipts go to .ai-os/receipts. D-005 organize before expand."
+    }
+  ],
+  "api_tasks_500": {
+    "observation": "ROUTE_EXECUTED/APPLICATION_FAILURE",
+    "cheapest_discriminating_evidence": "GET /api/tasks already returns JSON details from the catch in app/api/tasks/route.ts. No census.",
+    "details": "Invalid prisma.$queryRaw() invocation: Environment variable not found: DATABASE_URL. schema.prisma:3 url = env(\"DATABASE_URL\"). Validation Error Count: 1",
+    "body_sha256": "2d83e3221adc6bf462804665918ddacda0bdaca78e97ccf140d5fc567879748d",
+    "localization": "Handler ran. Prisma client constructed. Schema load failed before SQL. Not 'orchestration absent'. Repair is DATABASE_URL + reachable Postgres + OrchestrationTask table. Do not mint 2xx with a fake env.",
+    "converts": "discovery problem -> repair problem"
+  },
+  "epistemic": {
+    "gate": "closed unless every required child PASS/exit 0",
+    "learning": "NOT_RUN != FAILED != INVALID_OBSERVATION != BLOCKED != UNAVAILABLE != PASS",
+    "example": "BUILD=NOT_RUN to protect live .next is not BUILD_FAILED. Both keep the gate closed."
+  },
+  "must_not": [
+    "Approve GL004_PROVEN without the five named children at exit 0",
+    "Approve GL005_PROVEN from /api/tasks 500",
+    "Kill PID 3297",
+    "Start a second Next server",
+    "Write next.config.* next to the live app",
+    "Create _raios-wave2-proof-isolated"
+  ]
+}

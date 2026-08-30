@@ -1,0 +1,7 @@
+الجلسة: `GL-FIVE-20260820`
+C1 حاضر (`C1-CURSOR-FATHER`). C5 حاضر دائماً (`C5-RAIOS-SON-PERMANENT`).
+استدعاء البريد:
+- C2 `C2-CHATGPT-1-SUMMON` → `MAIL C2: C2-CHATGPT-1-SUMMON حضور GL-FIVE-20260820`
+- C3 `C3-CHATGPT-PEER-SUMMON` → `MAIL C3: C3-CHATGPT-PEER-SUMMON حضور GL-FIVE-20260820`
+- C4 `C4-DEEPSEEK-SUMMON` → `MAIL C4: C4-DEEPSEEK-SUMMON حضور GL-FIVE-20260820`
+كود الاستدعاء ≠ توكن. البريد يمر ولا يُثبت. MCP على 127.0.0.1 ليس الاجتماع البعيد.
