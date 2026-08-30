@@ -21,7 +21,10 @@ $old=Get-NetTCPConnection -LocalPort $Port -State Listen -ErrorAction SilentlyCo
 if($old){Stop-Process $old.OwningProcess -Force;Start-Sleep -Milliseconds 400}
 $live=Start-Center $Port "center";$health=Wait-Healthy $Port $live.Id
 if(-not$health){Stop-Process $live.Id -Force -ErrorAction SilentlyContinue;throw "COMMAND_CENTER_CUTOVER_FAILED"}
-$manifest=[ordered]@{schema="raios.command-center-deployment.v1";canonical_head=$Head;canonical_repo=$Repo;mcp_root=$McpRoot;runtime_root=$RuntimeRoot;port=$Port;pid=$live.Id;deployed_at=[DateTimeOffset]::UtcNow.ToString("o");auto_canonical_mutation=$false}
+$listener=Get-NetTCPConnection -LocalPort $Port -State Listen -ErrorAction SilentlyContinue|Select-Object -First 1
+if(-not$listener){Stop-Process $live.Id -Force -ErrorAction SilentlyContinue;throw "COMMAND_CENTER_LISTENER_MISSING"}
+$runtimePid=[int]$listener.OwningProcess
+$manifest=[ordered]@{schema="raios.command-center-deployment.v1";canonical_head=$Head;canonical_repo=$Repo;mcp_root=$McpRoot;runtime_root=$RuntimeRoot;port=$Port;pid=$runtimePid;launcher_pid=$live.Id;deployed_at=[DateTimeOffset]::UtcNow.ToString("o");auto_canonical_mutation=$false}
 $manifest|ConvertTo-Json -Depth 8|Set-Content(Join-Path $RuntimeRoot "deployment.json") -Encoding UTF8
 $launcher=@"
 `$env:RAIOS_CANONICAL_REPO="$Repo"
@@ -39,4 +42,4 @@ $launcherPath=Join-Path $RuntimeRoot "Open-RAIOS-Command-Center.ps1"
 [IO.File]::WriteAllText($launcherPath,$launcher,[Text.UTF8Encoding]::new($false))
 $desktop=[Environment]::GetFolderPath("Desktop");$shortcut=Join-Path $desktop "RAIOS Command Center.lnk";$ws=New-Object -ComObject WScript.Shell;$lnk=$ws.CreateShortcut($shortcut)
 $lnk.TargetPath="$env:SystemRoot\System32\WindowsPowerShell\v1.0\powershell.exe";$lnk.Arguments="-NoProfile -ExecutionPolicy Bypass -File `"$RuntimeRoot\Open-RAIOS-Command-Center.ps1`"";$lnk.WorkingDirectory=$RuntimeRoot;$lnk.Save()
-Write-Host "COMMAND_CENTER_CANONICAL=true";Write-Host "COMMAND_CENTER_STAGE_PASS=true";Write-Host "COMMAND_CENTER_HTTP=200";Write-Host "COMMAND_CENTER_PID=$($live.Id)";Write-Host "COMMAND_CENTER_HEAD=$Head";Write-Host "SHORTCUT=$shortcut"
+Write-Host "COMMAND_CENTER_CANONICAL=true";Write-Host "COMMAND_CENTER_STAGE_PASS=true";Write-Host "COMMAND_CENTER_HTTP=200";Write-Host "COMMAND_CENTER_PID=$runtimePid";Write-Host "COMMAND_CENTER_LAUNCHER_PID=$($live.Id)";Write-Host "COMMAND_CENTER_HEAD=$Head";Write-Host "SHORTCUT=$shortcut"

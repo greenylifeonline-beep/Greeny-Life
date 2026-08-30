@@ -275,6 +275,8 @@ class CouncilBoard:
               if t.get("status")=="IN_PROGRESS" or t.get("dispatch_status")=="PENDING_ACCEPTANCE"}
         dispatched=0
         for task in tasks:
+            if (task.get("automatic_dispatch") is not True or
+                task.get("dispatch_authorized_by")!="C1"):continue
             if task.get("status")!="READY" or task.get("claimed_by") or task.get("assigned_to"):continue
             if not all(d in done for d in task.get("dependencies",[])):continue
             candidates=[s for s in SEATS if s!="C1" and s not in busy and

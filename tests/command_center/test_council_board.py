@@ -13,7 +13,8 @@ def setup(tmp_path):
     repo=tmp_path/"Greeny-Life";(repo/".ai-os/state").mkdir(parents=True)
     tasks={"tasks":[{"id":"DONE","title":"done","status":"DONE","dependencies":[]},
       {"id":"NEXT","title":"next","status":"READY","dependencies":["DONE"],
-       "allowed_agents":["C2"],"claimed_by":None,"scope":["src"]}]}
+       "allowed_agents":["C2"],"claimed_by":None,"scope":["src"],
+       "automatic_dispatch":True,"dispatch_authorized_by":"C1"}]}
     (repo/".ai-os/state/TASKS.json").write_text(json.dumps(tasks),encoding="utf-8")
     presence=tmp_path/"presence.json"
     return CouncilBoard(repo,presence),presence,repo
@@ -151,3 +152,17 @@ def test_absent_executor_is_reassigned_by_capability_from_checkpoint(tmp_path):
     assert second["tasks_dispatched"]==1 and task["assigned_to"]=="C3"
     assert task["resume_checkpoint"]["checkpoint_id"]==saved["checkpoint_id"]
     assert "NEXT_STEP=Continue with step two." in worker.call[2]
+
+
+def test_automatic_dispatch_requires_explicit_c1_authorization(tmp_path):
+    board,presence,_=setup(tmp_path);worker=Worker()
+    tasks=json.loads(board.tasks.read_text(encoding="utf-8"))
+    tasks["tasks"][1].pop("dispatch_authorized_by")
+    board.tasks.write_text(json.dumps(tasks),encoding="utf-8")
+    future=(datetime.now(timezone.utc)+timedelta(minutes=1)).isoformat()
+    presence.write_text(json.dumps({"seats":{"C2":{"presence":"PRESENT",
+        "lease_expires_at":future}}}),encoding="utf-8")
+    out=board.run_cycle(worker)
+    task=json.loads(board.tasks.read_text(encoding="utf-8"))["tasks"][1]
+    assert out["tasks_dispatched"]==0
+    assert task["status"]=="READY" and "assigned_to" not in task
