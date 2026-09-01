@@ -2,6 +2,7 @@ import json
 from pathlib import Path
 import pytest
 from raios.council_ops import CouncilConflict, CouncilOperations, CouncilValidationError
+from raios.council_ops import operations as council_operations
 
 def auth(seat):
  return {"seat_id":seat,"SIGNATURE_VALID":True,"ISSUER_IDENTIFIED":True,"ISSUER_TRUSTED":True,
@@ -80,3 +81,15 @@ def test_presence_proof_refreshes_lease_and_expired_seat_cannot_claim(tmp_path):
  proof=op.prove_presence(seat="C1",auth=auth("C1"),idem="proof-live")
  assert first["seat"]==second["seat"]==proof["seat"]=="C1"
  assert proof["presence"]=="PRESENT" and proof["lease_expires_at"]>=second["lease_expires_at"]
+
+
+def test_presence_atomic_falls_back_when_stable_name_is_pinned(tmp_path,monkeypatch):
+ target=tmp_path/"presence.json"
+ target.write_text('{"seats":{}}',encoding="utf-8")
+ monkeypatch.setattr(council_operations.os,"replace",
+  lambda *args: (_ for _ in ()).throw(PermissionError("stable name pinned")))
+ monkeypatch.setattr(council_operations.time,"sleep",lambda *_:None)
+ council_operations._atomic(target,{"seats":{"C3":{"presence":"PRESENT"}}})
+ data=json.loads(target.read_text(encoding="utf-8"))
+ assert data["seats"]["C3"]["presence"]=="PRESENT"
+ assert list(tmp_path.glob("presence.json.*.tmp"))==[]

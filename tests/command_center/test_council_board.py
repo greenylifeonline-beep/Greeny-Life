@@ -2,6 +2,7 @@ import json
 from datetime import datetime, timedelta, timezone
 from pathlib import Path
 import pytest
+from src.raios.command_center import council_board
 from src.raios.command_center.council_board import CouncilBoard
 
 class Worker:
@@ -166,3 +167,14 @@ def test_automatic_dispatch_requires_explicit_c1_authorization(tmp_path):
     task=json.loads(board.tasks.read_text(encoding="utf-8"))["tasks"][1]
     assert out["tasks_dispatched"]==0
     assert task["status"]=="READY" and "assigned_to" not in task
+
+
+def test_atomic_falls_back_when_windows_pins_stable_task_name(tmp_path,monkeypatch):
+ target=tmp_path/"TASKS.json"
+ target.write_text('{"tasks":[]}',encoding="utf-8")
+ monkeypatch.setattr(council_board.os,"replace",
+  lambda *args: (_ for _ in ()).throw(PermissionError("stable name pinned")))
+ monkeypatch.setattr(council_board.time,"sleep",lambda *_:None)
+ council_board.atomic(target,{"tasks":[{"id":"T1"}]})
+ assert json.loads(target.read_text(encoding="utf-8"))["tasks"][0]["id"]=="T1"
+ assert list(tmp_path.glob("TASKS.json.*.tmp"))==[]

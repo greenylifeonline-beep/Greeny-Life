@@ -32,6 +32,7 @@ from raios.a2a.task_bridge import build_intent, map_artifact, map_message
 from raios.command_fabric.route import HTTP_FALLBACK, NATS, select_transport
 
 INTERNAL_SEATS = tuple(f"C{i}" for i in range(1, 13))
+EXPECTED_ROUTE_PAIRS = len(INTERNAL_SEATS) * (len(INTERNAL_SEATS) - 1)
 ENVELOPE_FIELDS = (
     "task_id",
     "context_id",
@@ -111,8 +112,11 @@ def routing_matrix(*, nats_available: bool) -> list[dict[str, Any]]:
                     "route": COMMAND_FABRIC_ROUTE if transport["selected_transport"] == NATS or dest == "C5" else HTTP_FALLBACK,
                 }
             )
-    if len(pairs) != 42:
-        raise FailClosed("SCHEMA_VALIDATION_FAILED", f"pair-count:{len(pairs)}")
+    if len(pairs) != EXPECTED_ROUTE_PAIRS:
+        raise FailClosed(
+            "SCHEMA_VALIDATION_FAILED",
+            f"pair-count:{len(pairs)};expected:{EXPECTED_ROUTE_PAIRS}",
+        )
     return pairs
 
 
@@ -233,7 +237,9 @@ def bind_c2(*, probe_live: bool = False) -> dict[str, Any]:
         blockers.append("C1_C5_CHANNEL_SCRIPT_MISSING")
     flags = {
         "C2_A2A_BOUND": bool(bind["C2_A2A_BOUND"] and bind["SEMANTIC_EXECUTION_ALLOWED"]),
-        "ROUTING_MATRIX_42_PAIRS": len(matrix) == 42,
+        "ROUTING_MATRIX_COMPLETE": len(matrix) == EXPECTED_ROUTE_PAIRS,
+        # Backward-compatible key for older evidence consumers; value now means complete.
+        "ROUTING_MATRIX_42_PAIRS": len(matrix) == EXPECTED_ROUTE_PAIRS,
         "C5_REACHABLE": bool(c5_ok or c5_tcp) if probe_live else any(p["to"] == "C5" for p in matrix),
         "C6_REACHABLE": any(p["from"] == "C6" or p["to"] == "C6" for p in matrix),
         "C1_REACHABLE": bool(c1_ready and ((c5_ok or c5_tcp) if probe_live else True)),
@@ -244,6 +250,7 @@ def bind_c2(*, probe_live: bool = False) -> dict[str, Any]:
         "DIRECT_MUTATION": False,
         "BLOCKERS": ",".join(blockers) if blockers else "none",
         "pairs": len(matrix),
+        "expected_pairs": EXPECTED_ROUTE_PAIRS,
         "nats_listening": nats_live,
         "c5_tcp": c5_tcp,
         "c5_http": c5_http,
@@ -263,6 +270,7 @@ def bind_c2(*, probe_live: bool = False) -> dict[str, Any]:
 def flags_text(flags: dict[str, Any]) -> str:
     keys = (
         "C2_A2A_BOUND",
+        "ROUTING_MATRIX_COMPLETE",
         "ROUTING_MATRIX_42_PAIRS",
         "C5_REACHABLE",
         "C6_REACHABLE",

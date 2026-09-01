@@ -16,6 +16,7 @@ HERE=Path(__file__).resolve().parent
 REPO=Path(os.getenv("RAIOS_CANONICAL_REPO",str(HERE.parents[2]))).resolve()
 MCP_ROOT=Path(os.getenv("RAIOS_MCP_ROOT",str(REPO))).resolve()
 RUNTIME=Path(os.getenv("RAIOS_COMMAND_CENTER_RUNTIME",str(Path.home()/".raios/runtime/command-center"))).resolve()
+COUNCIL_PRESENCE=Path(os.getenv("RAIOS_COUNCIL_PRESENCE",str(Path.home()/".raios/runtime/council-ops/presence.json"))).resolve()
 C5=os.getenv("RAIOS_C5_URL","http://127.0.0.1:8766")
 CSRF=secrets.token_urlsafe(32)
 MESSAGE_WORKER=MessageWorker(REPO,RUNTIME,poll_seconds=5.0)
@@ -69,13 +70,30 @@ def tasks_state():
  return {"total":len(tasks),"ready":sum(t.get("status")=="READY" for t in tasks),"in_progress":sum(t.get("status")=="IN_PROGRESS" for t in tasks),
   "blocked":sum(t.get("status")=="BLOCKED" for t in tasks),"done":sum(t.get("status")=="DONE" for t in tasks),
   "active_locks":sum(x.get("status")=="ACTIVE" for x in locks),"recent":tasks[-12:]}
+def _presence_state(row):
+ if not row:return "UNPROVEN"
+ state=str(row.get("presence") or "UNPROVEN").upper()
+ if state!="PRESENT":return state
+ expiry=row.get("lease_expires_at")
+ if not expiry:return "PRESENT"
+ try:
+  return "PRESENT" if datetime.fromisoformat(str(expiry).replace("Z","+00:00"))>datetime.now(timezone.utc) else "EXPIRED"
+ except (TypeError,ValueError):return "INVALID"
 def council_state():
- seatmap=load(MCP_ROOT/".ai-os/mcp/SEAT-MAP.json",{}); presence=load(Path.home()/".raios/runtime/council-ops/presence.json",{"seats":{}})
- seats=[]
+ seatmap=load(MCP_ROOT/".ai-os/mcp/SEAT-MAP.json",{})
+ presence=load(COUNCIL_PRESENCE,{"seats":{}})
+ registered=list((seatmap.get("seats") or {}).keys());seats=[];present=0
  for key,row in (seatmap.get("seats") or {}).items():
-  p=(presence.get("seats") or {}).get(key,{})
-  seats.append({"id":key,"name_ar":row.get("name_ar"),"role":row.get("actor_role"),"where":row.get("where"),"presence":p.get("presence","UNPROVEN"),"mail":row.get("mail",False)})
- return {"seats":seats,"live_declared":seatmap.get("live",[]),"attendance_is_proof":True}
+  proof=(presence.get("seats") or {}).get(key,{})
+  state=_presence_state(proof);current=state=="PRESENT";present+=int(current)
+  seats.append({"id":key,"name_ar":row.get("name_ar"),"role":row.get("actor_role"),
+   "where":row.get("where"),"identity_registered":True,"identity_state":"REGISTERED",
+   "presence":state,"presence_current":current,"lease_expires_at":proof.get("lease_expires_at"),
+   "mail":row.get("mail",False)})
+ return {"seats":seats,"registered_seats":registered,"live_declared":seatmap.get("live",[]),
+  "identity_total":len(registered),"present_total":present,
+  "no_registered_seats":not registered,"no_present_seats":present==0,
+  "identity_ne_presence":True,"attendance_is_proof":True}
 def model_state():
  code,body=http_json("http://127.0.0.1:11434/api/tags",timeout=4)
  models=[]

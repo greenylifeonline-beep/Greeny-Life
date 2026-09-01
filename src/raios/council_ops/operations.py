@@ -4,7 +4,7 @@ Not a scheduler, ledger, lock service, bus, WAL, receipt system, or authority sy
 Presence is operational runtime state; tasks and locks reuse the canonical files.
 """
 from __future__ import annotations
-import hashlib, json, os
+import hashlib, json, os, time, uuid
 from datetime import datetime, timedelta, timezone
 from pathlib import Path
 from typing import Any
@@ -25,8 +25,31 @@ def _load(path, default):
     try: return json.loads(path.read_text(encoding="utf-8-sig"))
     except FileNotFoundError: return default
 def _atomic(path, value):
-    path.parent.mkdir(parents=True,exist_ok=True); tmp=path.with_suffix(path.suffix+".tmp")
-    tmp.write_text(json.dumps(value,indent=2,ensure_ascii=False,sort_keys=True)+"\n",encoding="utf-8"); os.replace(tmp,path)
+    """Validated JSON write resilient to transient and stable Windows locks."""
+    path.parent.mkdir(parents=True,exist_ok=True)
+    payload=json.dumps(value,indent=2,ensure_ascii=False,sort_keys=True)+"\n"
+    json.loads(payload)
+    tmp=path.with_name(f"{path.name}.{os.getpid()}.{uuid.uuid4().hex}.tmp")
+    replace_error=None
+    try:
+        tmp.write_text(payload,encoding="utf-8")
+        for attempt in range(6):
+            try:
+                os.replace(tmp,path);return
+            except PermissionError as exc:
+                replace_error=exc
+                if attempt<5:time.sleep(.02*(2**attempt))
+        for attempt in range(8):
+            try:
+                with path.open("w",encoding="utf-8",newline="\n") as handle:
+                    handle.write(payload);handle.flush();os.fsync(handle.fileno())
+                json.loads(path.read_text(encoding="utf-8"));return
+            except PermissionError:
+                if attempt==7:raise replace_error or PermissionError("JSON_WRITE_DENIED")
+                time.sleep(.05*(attempt+1))
+    finally:
+        try:tmp.unlink(missing_ok=True)
+        except OSError:pass
 def _id(*parts): return hashlib.sha256("\x1f".join(parts).encode()).hexdigest()[:24]
 def _overlap(a,b):
     a,b=a.rstrip("/*/"),b.rstrip("/*/"); return a==b or a.startswith(b+"/") or b.startswith(a+"/")

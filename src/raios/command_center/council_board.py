@@ -21,15 +21,30 @@ def load(path:Path,default:Any)->Any:
     try:return json.loads(path.read_text(encoding="utf-8-sig"))
     except (OSError,json.JSONDecodeError):return default
 def atomic(path:Path,data:Any)->None:
+    """Write validated JSON despite transient or stable Windows rename locks."""
     path.parent.mkdir(parents=True,exist_ok=True)
+    payload=json.dumps(data,ensure_ascii=False,indent=2)+"\n"
+    json.loads(payload)
     tmp=path.with_name(f"{path.name}.{os.getpid()}.{threading.get_ident()}.{uuid.uuid4().hex}.tmp")
+    replace_error:PermissionError|None=None
     try:
-        tmp.write_text(json.dumps(data,ensure_ascii=False,indent=2)+"\n",encoding="utf-8")
+        tmp.write_text(payload,encoding="utf-8")
         for attempt in range(6):
-            try:os.replace(tmp,path);break
+            try:
+                os.replace(tmp,path)
+                return
+            except PermissionError as exc:
+                replace_error=exc
+                if attempt<5:time.sleep(.02*(2**attempt))
+        for attempt in range(8):
+            try:
+                with path.open("w",encoding="utf-8",newline="\n") as handle:
+                    handle.write(payload);handle.flush();os.fsync(handle.fileno())
+                json.loads(path.read_text(encoding="utf-8"))
+                return
             except PermissionError:
-                if attempt==5:raise
-                time.sleep(.02*(2**attempt))
+                if attempt==7:raise replace_error or PermissionError("JSON_WRITE_DENIED")
+                time.sleep(.05*(attempt+1))
     finally:
         try:tmp.unlink(missing_ok=True)
         except OSError:pass

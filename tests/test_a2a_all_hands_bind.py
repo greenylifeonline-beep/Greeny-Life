@@ -22,6 +22,7 @@ from raios.a2a.gateway import A2ARequest
 from raios.a2a.semantic import default_contract
 from raios.a2a_all_hands.bind import (
     ENVELOPE_FIELDS,
+    EXPECTED_ROUTE_PAIRS,
     INTERNAL_SEATS,
     bind_c2,
     c2_semantic_bind,
@@ -54,11 +55,11 @@ class AllHandsBindTests(unittest.TestCase):
                 )
             self.assertEqual(ctx2.exception.code, SEAT_IDENTITY_NOT_PUBLIC_AGENT)
 
-    def test_routing_matrix_is_42_directed_pairs(self) -> None:
+    def test_routing_matrix_covers_every_directed_seat_pair(self) -> None:
         matrix = routing_matrix(nats_available=True)
-        self.assertEqual(len(matrix), 42)
+        self.assertEqual(len(matrix), EXPECTED_ROUTE_PAIRS)
         pairs = {(row["from"], row["to"]) for row in matrix}
-        self.assertEqual(len(pairs), 42)
+        self.assertEqual(len(pairs), EXPECTED_ROUTE_PAIRS)
         for source in INTERNAL_SEATS:
             for dest in INTERNAL_SEATS:
                 if source == dest:
@@ -113,13 +114,15 @@ class AllHandsBindTests(unittest.TestCase):
         validate_envelope(env)
         flags = bind_c2(probe_live=False)
         self.assertTrue(flags["C2_A2A_BOUND"])
-        self.assertTrue(flags["ROUTING_MATRIX_42_PAIRS"])
+        self.assertTrue(flags["ROUTING_MATRIX_COMPLETE"])
+        self.assertTrue(flags["ROUTING_MATRIX_42_PAIRS"])  # Legacy compatibility.
         self.assertTrue(flags["COMMAND_FABRIC_ROUTE"])
         self.assertTrue(flags["NATS_REUSED"])
         self.assertTrue(flags["HTTP_REUSED"])
         self.assertFalse(flags["NEW_BUS_CREATED"])
         self.assertFalse(flags["DIRECT_MUTATION"])
-        self.assertEqual(flags["pairs"], 42)
+        self.assertEqual(flags["pairs"], EXPECTED_ROUTE_PAIRS)
+        self.assertEqual(flags["expected_pairs"], EXPECTED_ROUTE_PAIRS)
 
 
 if __name__ == "__main__":

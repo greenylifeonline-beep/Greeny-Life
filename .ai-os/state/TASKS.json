@@ -629,6 +629,100 @@
         "c1_authorized": true,
         "presence_not_required_for_deterministic_system_action": true
       }
+    },
+    {
+      "id": "RAIOS-C3-PRESENCE-ASSIGN-EXECUTE-PROOF-20260901-01",
+      "title": "C3 live presence and execution proof",
+      "objective": "Reuse canonical C3 identity, distinguish identity from live presence, and prove worker assignment, acceptance, execution report, evidence verification, and DONE.",
+      "scope": [
+        "src/raios/council_ops/operations.py",
+        "src/raios/command_center/app.py",
+        "requirements-c5.txt",
+        "tests/council_ops",
+        "tests/command_center",
+        ".ai-os/reports/command-center/RAIOS-C3-PRESENCE-ASSIGN-EXECUTE-PROOF-20260901-01"
+      ],
+      "dependencies": [],
+      "allowed_agents": [
+        "C3"
+      ],
+      "required_capabilities": [],
+      "validation": "C3 identity remains canonical; C3 presence is current; worker dispatches to C3; C3 accepts; focused tests pass; evidence-backed report reaches DONE.",
+      "status": "DONE",
+      "automatic_dispatch": true,
+      "dispatch_authorized_by": "C1",
+      "authorization_provenance": {
+        "authority": "C1",
+        "source": "DIRECT_ACTIVE_CHAT_SESSION",
+        "instruction": "Establish C3 presence, receive assignment, execute, and return evidence.",
+        "at": "2026-09-01T17:15:30Z"
+      },
+      "system_owner": "RAIOS_SYSTEM",
+      "existing_first": true,
+      "duplicate_capability_created": false,
+      "dispatch_status": "COMPLETE_EVIDENCE_VERIFIED",
+      "last_dispatch_target": "C3",
+      "last_dispatch_id": "DSP-253c5b0ddfc1473b",
+      "last_claimed_by": null,
+      "returned_at": "2026-09-01T17:20:10.700882+00:00",
+      "return_reason": "TARGET_PRESENCE_ABSENT_OR_EXPIRED",
+      "resume_checkpoint": {
+        "schema": "raios.task-checkpoint.v1",
+        "checkpoint_id": "CHK-535b4e9518084ca7",
+        "task_id": "RAIOS-C3-PRESENCE-ASSIGN-EXECUTE-PROOF-20260901-01",
+        "actor": "C3",
+        "phase": "COMPLETE",
+        "summary": "C3 reused its canonical identity, maintained a silent background presence lease, received and accepted the worker assignment, fixed the Windows atomic-write race and identity/presence conflation, corrected the 12-seat route invariant, and completed evidence-backed verification.",
+        "completed_steps": [
+          "Reused canonical C3 and C5 identities without creating a duplicate registry or bus.",
+          "Established and refreshed C3 presence with signed receipts in the existing council operations layer.",
+          "Proved absence return, resumable checkpoint, automatic redispatch, and explicit C3 acceptance.",
+          "Hardened canonical JSON writes against Windows stable-name pinning without killing the worker.",
+          "Separated registered identity from current live presence in the council API.",
+          "Closed C5 test dependencies through the existing A2A requirements file.",
+          "Updated all-hands routing validation from a stale fixed count to the 12-seat derived invariant.",
+          "Ran focused council, command-center, and all-hands verification successfully.",
+          "Redeployed the canonical Command Center and verified live worker health."
+        ],
+        "changed_files": [
+          "src/raios/command_center/council_board.py",
+          "src/raios/council_ops/operations.py",
+          "src/raios/command_center/app.py",
+          "src/raios/a2a_all_hands/bind.py",
+          "requirements-c5.txt",
+          "tests/command_center/test_app.py",
+          "tests/command_center/test_council_board.py",
+          "tests/council_ops/test_operations.py",
+          "tests/test_a2a_all_hands_bind.py",
+          ".ai-os/state/TASKS.json",
+          ".ai-os/reports/command-center/RAIOS-C3-PRESENCE-ASSIGN-EXECUTE-PROOF-20260901-01/PROOF.json"
+        ],
+        "validation": [
+          "pytest --import-mode=importlib: 45 passed, 1 warning",
+          "py_compile: PASS",
+          "Command Center deployment stage: PASS; HTTP 200",
+          "Council API: identity_total=12, present_total=1, C3 current, C5 registered",
+          "Worker health: ONLINE, thread_alive=true, heartbeat_current=true, consecutive_errors=0"
+        ],
+        "evidence_refs": [
+          ".ai-os/reports/command-center/RAIOS-C3-PRESENCE-ASSIGN-EXECUTE-PROOF-20260901-01/PROOF.json"
+        ],
+        "next_step": "Council may review the evidence and assign the next ready task.",
+        "blocker": null,
+        "created_at": "2026-09-01T17:37:49.160669+00:00"
+      },
+      "last_checkpoint_id": "CHK-535b4e9518084ca7",
+      "checkpoint_updated_at": "2026-09-01T17:37:49.160669+00:00",
+      "assigned_to": "C3",
+      "assigned_by": "C1",
+      "dispatched_by": "RAIOS-WORKER",
+      "dispatch_id": "DSP-be4b618d328146d2",
+      "dispatched_at": "2026-09-01T17:20:53.733765+00:00",
+      "claimed_by": "C3",
+      "accepted_at": "2026-09-01T17:20:55.997412+00:00",
+      "evidence": ".ai-os/reports/command-center/RAIOS-C3-PRESENCE-ASSIGN-EXECUTE-PROOF-20260901-01/PROOF.json",
+      "report_summary": "C3 reused its canonical identity, maintained a silent background presence lease, received and accepted the worker assignment, fixed the Windows atomic-write race and identity/presence conflation, corrected the 12-seat route invariant, and completed evidence-backed verification.",
+      "completed_at": "2026-09-01T17:37:49.160693+00:00"
     }
   ]
 }

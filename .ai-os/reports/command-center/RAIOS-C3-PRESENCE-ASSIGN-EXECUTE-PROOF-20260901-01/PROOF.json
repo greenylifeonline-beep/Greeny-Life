@@ -1,0 +1,18 @@
+{
+  "schema": "raios.c3-presence-execution-proof.v1",
+  "task_id": "RAIOS-C3-PRESENCE-ASSIGN-EXECUTE-PROOF-20260901-01",
+  "generated_at": "2026-09-01T17:36:32Z",
+  "verdict": "PASS",
+  "existing_first": {"applied": true, "duplicate_registry_created": false, "duplicate_bus_created": false, "reused": [".ai-os/mcp/SEAT-MAP.json", ".ai-os/state/TASKS.json", "src/raios/council_ops/operations.py", "src/raios/command_center/council_board.py", "requirements-a2a.txt"]},
+  "identity": {"identity_total": 12, "identity_ne_presence": true, "C3": {"registered": true, "presence": "PRESENT", "presence_current": true, "receipt": "C:\\Users\\Ghanam\\.raios\\runtime\\council-ops\\receipts\\7aa809ed1abca251589a2dcf.receipt.json"}, "C5": {"registered": true, "presence": "UNPROVEN", "presence_current": false}},
+  "heartbeat": {"mode": "INTERNAL_BACKGROUND", "interval_seconds": 45, "lease_seconds": 120, "opens_visible_window": false, "external_device_status_polling": false, "controller": "C:\\Users\\Ghanam\\.raios\\runtime\\council-ops\\c3_session_controller.py"},
+  "lifecycle": {"automatic_dispatch": true, "authorized_by": "C1", "absence_return_checkpoint": "CHK-9fff66e2427141a6", "absence_blocker": "EXECUTOR_PRESENCE_EXPIRED", "accepted_dispatch_id": "DSP-be4b618d328146d2", "actor": "C3", "state_before_report": "IN_PROGRESS", "dispatch_status_before_report": "ACCEPTED"},
+  "dependency_closure": {"pytest_available_in_C5": true, "a2a_sdk": "1.1.2", "durable_requirement": "requirements-c5.txt -> requirements-a2a.txt"},
+  "defects_fixed": ["Windows-pinned atomic JSON writes no longer kill the worker", "identity registration is no longer conflated with current presence", "12-seat all-hands route validation is derived dynamically as 132 directed pairs", "pytest uses importlib mode to prevent tests/a2a shadowing the installed SDK"],
+  "changed_files": ["src/raios/command_center/council_board.py", "src/raios/council_ops/operations.py", "src/raios/command_center/app.py", "src/raios/a2a_all_hands/bind.py", "requirements-c5.txt", "tests/command_center/test_app.py", "tests/command_center/test_council_board.py", "tests/council_ops/test_operations.py", "tests/test_a2a_all_hands_bind.py", ".ai-os/state/TASKS.json"],
+  "validation": {"pytest": "45 passed, 1 warning in 6.73s", "py_compile": "PASS", "command_center_deploy": "STAGE_PASS HTTP=200", "command_center": "ONLINE", "worker": {"id": "RAIOS-WORKER@AG", "state": "ONLINE", "thread_alive": true, "heartbeat_current": true, "consecutive_errors": 0}, "council": {"registered": 12, "present": 1, "C3_present": true, "C5_registered": true}},
+  "historical_failures_preserved": ["C:\\Users\\Ghanam\\.raios\\runtime\\council-ops\\C3-TEST-RESULT.attempt1.json", "C:\\Users\\Ghanam\\.raios\\runtime\\council-ops\\C3-TEST-RESULT.attempt2-39pass.json"],
+  "final_test_result": "C:\\Users\\Ghanam\\.raios\\runtime\\council-ops\\C3-TEST-RESULT.json",
+  "live_endpoints": ["http://127.0.0.1:8770/health", "http://127.0.0.1:8770/api/council"],
+  "truth_boundary": "C3 has a current session lease. C5 identity is registered but C5 live presence is not asserted without a valid lease."
+}

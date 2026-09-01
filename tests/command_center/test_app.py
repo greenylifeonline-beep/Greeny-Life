@@ -1,4 +1,6 @@
 import importlib
+import json
+from datetime import datetime, timedelta, timezone
 from pathlib import Path
 from fastapi.testclient import TestClient
 cc=importlib.import_module("raios.command_center.app")
@@ -72,3 +74,24 @@ def test_deployer_writes_launcher_as_real_lines():
  assert "[IO.File]::WriteAllText" in script
  assert '$launcher=@"' in script
  assert 'explorer.exe" "http://127.0.0.1:' in script
+
+
+def test_council_identity_is_not_conflated_with_live_presence(tmp_path,monkeypatch):
+ root=tmp_path/"root";seatmap=root/".ai-os/mcp/SEAT-MAP.json"
+ seatmap.parent.mkdir(parents=True)
+ seatmap.write_text(json.dumps({"live":["C3","C5"],"seats":{
+  "C3":{"name_ar":"ChatGPT","actor_role":"CONSULTANT_PEER","mail":True},
+  "C5":{"name_ar":"RAIOS","actor_role":"RAIOS_LIVE_BRAIN","mail":True}}}),encoding="utf-8")
+ presence=tmp_path/"presence.json"
+ future=(datetime.now(timezone.utc)+timedelta(minutes=2)).isoformat()
+ past=(datetime.now(timezone.utc)-timedelta(minutes=2)).isoformat()
+ presence.write_text(json.dumps({"seats":{
+  "C3":{"presence":"PRESENT","lease_expires_at":future},
+  "C5":{"presence":"PRESENT","lease_expires_at":past}}}),encoding="utf-8")
+ monkeypatch.setattr(cc,"MCP_ROOT",root)
+ monkeypatch.setattr(cc,"COUNCIL_PRESENCE",presence)
+ out=cc.council_state();rows={x["id"]:x for x in out["seats"]}
+ assert out["identity_total"]==2 and out["present_total"]==1
+ assert out["no_registered_seats"] is False and out["identity_ne_presence"] is True
+ assert rows["C3"]["presence_current"] is True
+ assert rows["C5"]["identity_registered"] is True and rows["C5"]["presence"]=="EXPIRED"
