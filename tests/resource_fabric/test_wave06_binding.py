@@ -6,6 +6,7 @@ import os
 import sys
 import unittest
 from pathlib import Path
+from unittest.mock import patch
 
 ROOT = Path(__file__).resolve().parents[2]
 sys.path.insert(0, str(ROOT / "src"))
@@ -293,9 +294,18 @@ class Wave06LiveBinding(unittest.TestCase):
         assert_no_secrets(view)
         assert_no_secrets(queue)
 
-    def test_blocked_accounts_are_not_reprobed(self):
-        state = run_live_probes(live=False)
-        for aid in ("KAGGLE_PARTNER", "ORACLE_01", "COLAB_01"):
+    def test_enrolled_partner_uses_existing_probe_while_other_blocks_remain(self):
+        partner = {
+            "account_id": "KAGGLE_PARTNER",
+            "status": "AUTH_REQUIRED",
+            "live_auth_proven": False,
+            "distinct_from_c1": False,
+        }
+        with patch("raios.resource_fabric.live._probe_kaggle_partner", return_value=partner) as probe:
+            state = run_live_probes(live=False)
+        probe.assert_called_once_with(live=False)
+        self.assertEqual(state["probes"]["KAGGLE_PARTNER"]["status"], "AUTH_REQUIRED")
+        for aid in ("ORACLE_01", "COLAB_01"):
             rec = state["probes"][aid]
             self.assertEqual(rec["status"], "BLOCKED_C1_ACTION")
             self.assertTrue(rec["PROBE_SKIPPED"])

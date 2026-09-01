@@ -812,17 +812,10 @@ def run_live_probes(*, live: bool = True) -> dict[str, Any]:
         probes["KAGGLE_C1"] = {"account_id": "KAGGLE_C1", "status": "SKIPPED"}
         probes["LIGHTNING_01"] = {"account_id": "LIGHTNING_01", "status": "SKIPPED"}
         probes["MODAL_01"] = {"account_id": "MODAL_01", "status": "SKIPPED"}
-    probes["KAGGLE_PARTNER"] = {
-        "account_id": "KAGGLE_PARTNER",
-        "status": "BLOCKED_C1_ACTION",
-        "AUTH_RESULT": "BLOCKED_C1_ACTION",
-        "PROBE_SKIPPED": True,
-        "isolated_from": "KAGGLE_C1",
-        "copied_from_c1": False,
-        "live_auth_proven": False,
-        "distinct_from_c1": False,
-        "reason": "WAVE06_CLOSURE_NO_REPEAT_PROBE",
-    }
+    probes["KAGGLE_PARTNER"] = _iso(
+        "KAGGLE_PARTNER",
+        lambda: _probe_kaggle_partner(live=live),
+    )
     probes["ORACLE_01"] = {
         "account_id": "ORACLE_01",
         "status": "BLOCKED_C1_ACTION",
