@@ -1010,9 +1010,43 @@ class LiveManager:
                 "second_wal": False,
             },
         )
+        pulse_state = {"tick_inflight": False}
+
+        def publish_liveness_pulse() -> None:
+            while True:
+                time.sleep(15)
+                try:
+                    write_heartbeat(
+                        {
+                            "schema": "raios.live-manager-tick.v2",
+                            "generated_at": utc(),
+                            "manager_pid": os.getpid(),
+                            "state": "RUNNING",
+                            "tick_inflight": pulse_state["tick_inflight"],
+                            "last_completed_at": self.state.get("last_tick"),
+                            "single_task_ledger": str(TASKS),
+                            "single_cognitive_wal": str(
+                                REPO / "RAIOS" / "V9" / "wal" / "cognitive-events.jsonl"
+                            ),
+                            "second_bus": False,
+                            "second_task_store": False,
+                            "second_wal": False,
+                        },
+                    )
+                except BaseException as exc:
+                    log(f"liveness pulse FAIL {type(exc).__name__}: {exc}")
+
+        threading.Thread(
+            target=publish_liveness_pulse,
+            name="RAIOS-Manager-Liveness-Pulse",
+            daemon=True,
+        ).start()
+
         while True:
             try:
+                pulse_state["tick_inflight"] = True
                 result = self.tick()
+                pulse_state["tick_inflight"] = False
                 log(
                     "tick PASS "
                     f"sources={result['source_count']} "
@@ -1022,9 +1056,11 @@ class LiveManager:
                     f"latency_ms={result['latency_ms']}"
                 )
             except KeyboardInterrupt:
+                pulse_state["tick_inflight"] = False
                 log("RAIOS live manager stopped")
                 return
             except BaseException as exc:
+                pulse_state["tick_inflight"] = False
                 log(f"tick FAIL {type(exc).__name__}: {exc}")
                 try:
                     event = build_event(

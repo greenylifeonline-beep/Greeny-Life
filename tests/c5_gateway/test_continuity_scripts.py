@@ -36,3 +36,5 @@ def test_manager_guard_checks_liveness_not_lock_file_existence():
     assert '"state": "STARTING"' in manager
     assert "write_heartbeat(" in manager
     assert "heartbeat.live-" in manager
+    assert "RAIOS-Manager-Liveness-Pulse" in manager
+    assert '"tick_inflight": pulse_state["tick_inflight"]' in manager
