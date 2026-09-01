@@ -574,6 +574,22 @@
       "status": "DONE",
       "claimed_by": "C6-AG-REMOTE-RECON",
       "evidence": "src/raios/command_center/app.py;tests/command_center/test_app.py;live:http://127.0.0.1:8770/api/overview"
+    },
+    {
+      "id": "RAIOS-COGNITIVE-OPERATIONS-WORLDCLASS-CLOSURE-01",
+      "title": "Unify search assimilation diagnostics UI and continuity",
+      "objective": "Reuse and harden the canonical Search Cortex, C5 learning-assimilation loop, live diagnostics, Command Center UX, dependency closure and automatic runtime continuity with machine-verifiable evidence.",
+      "scope": [
+        "src/raios/search_cortex;src/raios/c5_gateway;src/raios/command_center;src/raios/manager;scripts/runtime;requirements-c5.txt;tests/search_cortex;tests/c5_gateway;tests/command_center;.ai-os/reports/cognitive/RAIOS-COGNITIVE-OPERATIONS-WORLDCLASS-CLOSURE-01"
+      ],
+      "dependencies": [],
+      "allowed_agents": [
+        "C6"
+      ],
+      "validation": "Scoped tests pass; C5 dependency audit pass; shared-cortex retrieval proof; contradiction/provenance proof; manager live; services online; browser UI smoke; HEAD remote match.",
+      "status": "DONE",
+      "claimed_by": "C6",
+      "evidence": ".ai-os/reports/cognitive/RAIOS-COGNITIVE-OPERATIONS-WORLDCLASS-CLOSURE-01/PROOF.json;4418e79a960ee5cc229823c32c155fb4028d6c70"
     }
   ]
 }

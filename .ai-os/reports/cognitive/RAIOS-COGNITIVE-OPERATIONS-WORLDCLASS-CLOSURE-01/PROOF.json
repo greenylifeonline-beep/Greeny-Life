@@ -1,0 +1,20 @@
+{
+  "schema": "raios.cognitive-operations-worldclass-closure.v1",
+  "task": "RAIOS-COGNITIVE-OPERATIONS-WORLDCLASS-CLOSURE-01",
+  "generated_at": "2026-09-01T14:27:00Z",
+  "canonical_source_commit": "4418e79a960ee5cc229823c32c155fb4028d6c70",
+  "law": "DISCOVER_PROVE_REUSE_UPGRADE_UNIFY_LINK_CREATE_LAST_RESORT",
+  "existing_reused": ["C2 cognitive-loop implementation and inventory", "one Search Cortex", "existing KAE retile/replay/skill-candidate pipeline", "one Cognitive WAL", "one TASKS ledger", "existing RAIOS-C5-Permanent scheduled task", "existing Command Center source"],
+  "search": {"schema": "raios.search-cortex.result.v2", "shared": true, "second_search_bus": false, "live_evidence_count": 8, "sources": ["DERIVED_RETRIEVAL", "LEARNING_DIGEST"], "verification": "PASS", "private_query_sent_to_web": false, "hidden_reasoning_exported": false, "history_timeout_fail_safe": "PASS", "bounded_latency_ms": 6619.384, "history_result": "GIT_HISTORY::TIMEOUT surfaced, request completed"},
+  "assimilation": {"closed_loop": true, "planes": ["retrieve", "ground", "student_chat", "assimilate", "index", "continuous_manager"], "existing_kae_reused": true, "new_candidate_review_state": "READY_FOR_VALIDATION", "knowledge_state": "DISCOVERED", "wal_written": false, "canonical": false, "auto_canonical_promotion": false},
+  "execution": {"manager_alive": true, "worker_online": true, "worker_healthy": true, "worker_workflow_enabled": true, "continuity_status": "ONLINE", "self_healing": true, "interval_seconds": 60, "task_reused": true},
+  "services": {"C5": true, "COMMAND_CENTER": true, "ROUTER_9": true, "NATS": true, "OLLAMA": true, "MANAGER": true},
+  "environment": {"dependency_audit": "PASS", "pytest_available": true, "requirements_sha256": "B529B638238BACDC78A0FA4CC1982CA59B1844F4990C3B0C1838BD8FCB8B8E96", "packages": ["c5_gateway", "search_cortex", "neuro_lingua"]},
+  "ui": {"command_center_version": "2.0", "views": ["overview", "chat", "search", "learning", "work", "council", "diagnostics"], "responsive_rtl": true, "offline_assets_only": true, "visual_smoke": ["overview PASS", "chat PASS", "search PASS"]},
+  "tests": {"focused": "50 passed, 1 third-party deprecation warning", "deterministic_cloud_subset": "2 passed", "foundation": "2 passed", "diff_check": "PASS", "python_compile": "PASS", "powershell_parse": "PASS", "post_history_fix_live_search": "PASS", "network_model_turn": "INCONCLUSIVE_REMOTE_CHANNEL_RESOURCE_DROP"},
+  "head_proof": {"local": "4418e79a960ee5cc229823c32c155fb4028d6c70", "remote": "4418e79a960ee5cc229823c32c155fb4028d6c70", "match": true},
+  "resource_observation": {"student_model": "qwen3:0.6b", "ollama_processor": "CPU", "loaded_size": "2.5 GB", "remote_control_drop_during_generation": true, "control_health_not_promoted_from_model_turn": true},
+  "truth_gates": {"main_cortex_identity": "qwen3.6:35b-a3b", "main_cortex_state": "HOLD", "extracted_qwen_granite": false, "safe_to_remove_source": false, "authenticated_orchestration_task": false, "gl005_proven": false},
+  "result": "PASS_WITH_EXPLICIT_HOLDS",
+  "next": "Validate selected DISCOVERED candidates before promotion; bind Main Cortex only on proven capable hardware and authenticated orchestration evidence."
+}
