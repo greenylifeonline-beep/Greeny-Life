@@ -12,9 +12,11 @@ if (-not $mutex.WaitOne(0)) { Write-Host "RAIOS_CONTINUITY_ALREADY_RUNNING"; exi
 try {
     New-Item -ItemType Directory -Force -Path $RuntimeRoot | Out-Null
     if ($InstallTask) {
-        $PowerShell = "$env:SystemRoot\System32\WindowsPowerShell\v1.0\powershell.exe"
-        $Arguments = "-NoProfile -NonInteractive -WindowStyle Hidden -ExecutionPolicy Bypass -File `"$PSCommandPath`" -Repo `"$Repo`""
-        $Action = New-ScheduledTaskAction -Execute $PowerShell -Argument $Arguments -WorkingDirectory $Repo
+        $WScript = "$env:SystemRoot\System32\wscript.exe"
+        $Launcher = Join-Path $PSScriptRoot "Run-RAIOS-Continuity-Hidden.vbs"
+        if (-not (Test-Path -LiteralPath $Launcher)) { throw "WINDOWLESS_LAUNCHER_MISSING" }
+        $Arguments = "`"$Launcher`" `"$Repo`""
+        $Action = New-ScheduledTaskAction -Execute $WScript -Argument $Arguments -WorkingDirectory $Repo
         $Logon = New-ScheduledTaskTrigger -AtLogOn -User $env:USERNAME
         $Pulse = New-ScheduledTaskTrigger -Once -At (Get-Date).AddMinutes(1) -RepetitionInterval (New-TimeSpan -Minutes 1) -RepetitionDuration (New-TimeSpan -Days 3650)
         $Settings = New-ScheduledTaskSettingsSet -MultipleInstances IgnoreNew -Hidden -StartWhenAvailable -RestartCount 3 -RestartInterval (New-TimeSpan -Minutes 1) -ExecutionTimeLimit (New-TimeSpan -Minutes 15) -AllowStartIfOnBatteries -DontStopIfGoingOnBatteries

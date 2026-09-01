@@ -17,10 +17,14 @@ def test_c5_environment_is_manifest_driven_and_complete():
 
 def test_existing_continuity_task_is_reused_with_periodic_self_healing():
     script = (RUNTIME / "Maintain-RAIOS-Online.ps1").read_text(encoding="utf-8")
+    launcher = (RUNTIME / "Run-RAIOS-Continuity-Hidden.vbs").read_text(encoding="utf-8")
     assert '$TaskName = "RAIOS-C5-Permanent"' in script
     assert "Register-ScheduledTask" in script
     assert "RepetitionInterval" in script
-    assert "-NonInteractive -WindowStyle Hidden" in script
+    assert "$env:SystemRoot\\System32\\wscript.exe" in script
+    assert "Run-RAIOS-Continuity-Hidden.vbs" in script
+    assert "-NonInteractive -WindowStyle Hidden" in launcher
+    assert "shell.Run(command, 0, True)" in launcher
     assert "New-ScheduledTaskSettingsSet -MultipleInstances IgnoreNew -Hidden" in script
     assert "$routerOnline = Test-Tcp 20128" in script
     assert "Invoke-WebRequest -UseBasicParsing -Uri \"http://127.0.0.1:20128/dashboard\"" not in script
