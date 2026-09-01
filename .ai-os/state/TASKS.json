@@ -557,6 +557,23 @@
       "status": "DONE",
       "claimed_by": "C6-AG-REMOTE-RECON",
       "evidence": ".ai-os/CORE-CONTRACT.md"
+    },
+    {
+      "id": "RAIOS-9ROUTER-EXISTING-RUNTIME-HEALTH-RESTORE-01",
+      "title": "Restore existing 9Router runtime health truth",
+      "objective": "Reuse the installed 9Router and make the existing Command Center probe accept successful non-JSON dashboard responses without exposing content.",
+      "scope": [
+        "src/raios/command_center/app.py",
+        "tests/command_center/test_app.py"
+      ],
+      "dependencies": [],
+      "allowed_agents": [
+        "C6-AG-REMOTE-RECON"
+      ],
+      "validation": "Existing 9Router listener responds; Command Center reports ONLINE; targeted tests pass; no install or second gateway.",
+      "status": "DONE",
+      "claimed_by": "C6-AG-REMOTE-RECON",
+      "evidence": "src/raios/command_center/app.py;tests/command_center/test_app.py;live:http://127.0.0.1:8770/api/overview"
     }
   ]
 }

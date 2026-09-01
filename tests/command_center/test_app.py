@@ -14,6 +14,7 @@ def test_professional_bilingual_working_surface_is_local_and_complete():
 def test_health_and_bootstrap_bind_canonical_head(monkeypatch):
  monkeypatch.setattr(cc,"git",lambda *a:"a"*40)
  monkeypatch.setattr(cc,"overview",lambda:{"canonical_head":"a"*40,"maintenance":{"health":"HEALTHY"}})
+ monkeypatch.setattr(cc.MESSAGE_WORKER,"status",lambda:{"healthy":True,"workflow_enabled":True})
  out=client.get("/api/bootstrap").json()
  assert out["ui"]=="CANONICAL_COMMAND_CENTER" and out["direct_mutation"] is False
  assert len(out["csrf"])>=32
@@ -33,8 +34,23 @@ def test_chat_preserves_arabic_and_uses_canonical_c5(monkeypatch):
 def test_command_rejects_unseated_target_without_delivery(monkeypatch):
  called=[]
  monkeypatch.setattr(cc,"c1_gateway",lambda:called.append(True))
- out=client.post("/api/command",headers={"X-RAIOS-CSRF":cc.CSRF},json={"text":"test","targets":["C7"]})
+ out=client.post("/api/command",headers={"X-RAIOS-CSRF":cc.CSRF},json={"text":"test","targets":["C13"]})
  assert out.status_code==400 and not called
+
+def test_successful_non_json_service_probe_is_online_without_body_exposure(monkeypatch):
+ class Response:
+  status=200
+  headers={"Content-Type":"text/html; charset=utf-8"}
+  def read(self):return b"<html>dashboard-secret</html>"
+  def __enter__(self):return self
+  def __exit__(self,*args):return False
+ monkeypatch.setattr(cc.urllib.request,"urlopen",lambda *a,**k:Response())
+ code,body=cc.http_json("http://127.0.0.1:20128/dashboard")
+ assert code==200 and body=={"response_type":"NON_JSON","content_type":"text/html"}
+ assert "dashboard-secret" not in str(body)
+ monkeypatch.setattr(cc,"tcp",lambda port:True)
+ monkeypatch.setattr(cc,"http_json",lambda *a,**k:(code,body))
+ assert cc.service("9Router",20128,"http://127.0.0.1:20128/dashboard")["state"]=="ONLINE"
 
 def test_maintenance_is_diagnostic_not_autonomous(monkeypatch):
  monkeypatch.setattr(cc,"overview",lambda:{"maintenance":{"health":"HEALTHY","auto_canonical_mutation":False}})

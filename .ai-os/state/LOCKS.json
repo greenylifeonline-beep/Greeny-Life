@@ -945,6 +945,14 @@
       "agent": "C6-AG-REMOTE-RECON",
       "scope": ".ai-os/CORE-CONTRACT.md",
       "status": "RELEASED"
+    },
+    {
+      "id": "LOCK-20260901152401",
+      "task_id": "RAIOS-9ROUTER-EXISTING-RUNTIME-HEALTH-RESTORE-01",
+      "agent": "C6-AG-REMOTE-RECON",
+      "scope": "src/raios/command_center/app.py;tests/command_center/test_app.py",
+      "status": "RELEASED",
+      "files_or_subsystem": "Existing Command Center 9Router health probe only; no install and no second gateway"
     }
   ]
 }

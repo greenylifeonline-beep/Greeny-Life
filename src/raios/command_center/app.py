@@ -41,7 +41,11 @@ def http_json(url,method="GET",body=None,timeout=8):
  req=urllib.request.Request(url,data=data,method=method,headers={"Content-Type":"application/json"})
  try:
   with urllib.request.urlopen(req,timeout=timeout) as r:
-   raw=r.read().decode("utf-8-sig",errors="replace"); return r.status,json.loads(raw)
+   raw=r.read().decode("utf-8-sig",errors="replace")
+   try:body=json.loads(raw)
+   except json.JSONDecodeError:
+    body={"response_type":"NON_JSON","content_type":r.headers.get("Content-Type","").split(";",1)[0]}
+   return r.status,body
  except urllib.error.HTTPError as e:
   try:return e.code,json.loads(e.read().decode("utf-8-sig"))
   except Exception:return e.code,{"error":str(e)}
