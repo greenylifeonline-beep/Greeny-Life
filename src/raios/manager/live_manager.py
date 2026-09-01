@@ -108,11 +108,28 @@ def load_jsonl(path: Path, limit: int = 100) -> list[dict[str, Any]]:
 
 
 def atomic_json(path: Path, value: Any) -> None:
+    """Validated atomic replace resilient to transient Windows reader locks."""
     path.parent.mkdir(parents=True, exist_ok=True)
     tmp = path.with_name(path.name + ".tmp-" + uuid.uuid4().hex)
-    tmp.write_text(json.dumps(value, ensure_ascii=False, indent=2, default=str) + "\n", encoding="utf-8")
-    json.loads(tmp.read_text(encoding="utf-8"))
-    os.replace(tmp, path)
+    try:
+        tmp.write_text(
+            json.dumps(value, ensure_ascii=False, indent=2, default=str) + "\n",
+            encoding="utf-8",
+        )
+        json.loads(tmp.read_text(encoding="utf-8"))
+        for attempt in range(8):
+            try:
+                os.replace(tmp, path)
+                return
+            except PermissionError:
+                if attempt == 7:
+                    raise
+                time.sleep(0.025 * (attempt + 1))
+    finally:
+        try:
+            tmp.unlink(missing_ok=True)
+        except OSError:
+            pass
 
 
 def sha(value: Any) -> str:
