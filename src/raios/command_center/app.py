@@ -10,6 +10,7 @@ from pydantic import BaseModel, Field
 from raios.search_cortex import SearchCortex
 from .message_worker import COUNCIL_SEATS, ROUTING_TARGETS, MessageWorker
 from .council_board import CouncilBoard
+from .task_actions import latest_resource_census
 
 HERE=Path(__file__).resolve().parent
 REPO=Path(os.getenv("RAIOS_CANONICAL_REPO",str(HERE.parents[2]))).resolve()
@@ -94,6 +95,8 @@ def receipt_state():
 def factory_state():
  report=REPO/".ai-os/reports/factory-fabric"; names=["RESOURCE","ASSIMILATION","TRAINING","COGNITIVE","C5_EXPERT_FOUNDRY","MODEL"]
  return {"fabric_present":(REPO/"src/raios/factory_fabric").is_dir(),"factories":[{"name":n,"state":"AVAILABLE"} for n in names],"report_root":str(report)}
+def resource_state():
+ return latest_resource_census(REPO)
 def cognitive_state():
  code,loop=http_json(C5+"/v1/cognitive/status",timeout=5)
  manager=load(Path.home()/".raios/runtime/manager/heartbeat.json",{})
@@ -123,7 +126,7 @@ def overview():
  services=[service("C5",8766,C5+"/health"),service("9Router",20128,"http://127.0.0.1:20128/dashboard"),service("NATS",4222)]
  task=tasks_state(); degraded=[x["name"] for x in services if x["state"]!="ONLINE"]
  return {"generated_at":utc(),"canonical_head":git("rev-parse","HEAD"),"remote_head":git("rev-parse","origin/ai-evolution-202608051809"),
-  "services":services,"tasks":task,"models":model_state(),"factories":factory_state(),"council":council_state(),"cognitive":cognitive_state(),
+  "services":services,"tasks":task,"models":model_state(),"factories":factory_state(),"resources":resource_state(),"council":council_state(),"cognitive":cognitive_state(),
   "maintenance":{"health":"HEALTHY" if not degraded else "ATTENTION","degraded":degraded,"auto_refresh":True,
    "auto_canonical_mutation":False,"self_update_policy":"LOCAL_RUNTIME_FROM_FAST_FORWARD_CANONICAL_ONLY_WITH_C1_CONFIRMATION"}}
 
@@ -226,6 +229,8 @@ def api_receipts():return receipt_state()
 def api_message_worker():return MESSAGE_WORKER.status()
 @app.get("/api/factories")
 def api_factories():return factory_state()
+@app.get("/api/resources")
+def api_resources():return resource_state()
 @app.post("/api/chat")
 def chat(req:ChatIn,x_raios_csrf:str|None=Header(None)):
  require_csrf(x_raios_csrf); code,body=http_json(C5+"/v1/chat","POST",{"text":req.text,"language":"auto","conversation_id":req.conversation_id},130)

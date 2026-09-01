@@ -590,6 +590,37 @@
       "status": "DONE",
       "claimed_by": "C6",
       "evidence": ".ai-os/reports/cognitive/RAIOS-COGNITIVE-OPERATIONS-WORLDCLASS-CLOSURE-01/PROOF.json;4418e79a960ee5cc229823c32c155fb4028d6c70"
+    },
+    {
+      "id": "RAIOS-RESOURCES-MODEL-STRATEGY-20260901-01",
+      "title": "Automatic complete live resource census",
+      "objective": "Run the existing Resource Factory automatically and inventory every known local and cloud provider, account, CPU, accelerator, storage, quota, credit, service, and blocked binding without starting paid or GPU resources.",
+      "scope": [
+        "src/raios/resource_fabric",
+        ".ai-os/reports/command-center/resource-census"
+      ],
+      "dependencies": [],
+      "allowed_agents": [
+        "C4",
+        "C3",
+        "C6"
+      ],
+      "validation": "C1-authorized automatic Resource Factory census completes with full redacted evidence; no download, GPU session, paid resource, provider mutation, or second fabric.",
+      "status": "READY",
+      "claimed_by": null,
+      "dispatch_authorized_by": "C1",
+      "dispatch_authorized_at": "2026-09-01T15:14:52.980234+00:00",
+      "priority": "IMMEDIATE",
+      "system_owner": "RAIOS_SYSTEM",
+      "automation_action": "RESOURCE_CENSUS",
+      "automatic_dispatch": false,
+      "resource_policy": {
+        "local_ag_reserved_for": "CONTROL_AND_MANAGEMENT",
+        "model_download_allowed": false,
+        "max_model_parameters_billion": 32,
+        "paid_resource_allowed": false,
+        "gpu_session_start_allowed": false
+      }
     }
   ]
 }

@@ -8,6 +8,8 @@ from datetime import datetime, timezone
 from pathlib import Path
 from typing import Any
 
+from .task_actions import TaskActionExecutor
+
 SEATS=tuple(f"C{i}" for i in range(1,13))
 EXECUTION_ALIASES={
  "C1":{"C1"},"C2":{"C2","CURSOR","CODEX"},"C3":{"C3","CHATGPT-MAIN-BRAIN","CHATGPT-PEER"},
@@ -41,6 +43,7 @@ class CouncilBoard:
         self.report_processed=self.fabric/"task-reports/processed"
         self.report_rejected=self.fabric/"task-reports/rejected"
         self.receipts=self.repo/".ai-os/receipts/command-fabric"
+        self.actions=TaskActionExecutor(self.repo)
         self.lock=threading.RLock()
         for p in (self.report_inbox,self.report_processed,self.report_rejected,self.receipts):
             p.mkdir(parents=True,exist_ok=True)
@@ -291,8 +294,11 @@ class CouncilBoard:
             reports=self._process_reports()
             data=load(self.tasks,{"tasks":[]})
             returned=self._reconcile_absent_assignments(data)
+            actions=self.actions.execute_ready(data)
+            if actions["actions_processed"] or actions["actions_blocked"]:
+                atomic(self.tasks,data)
             dispatched=self._auto_dispatch(worker)
-            return {**reports,"tasks_returned_absent":returned,"tasks_dispatched":dispatched}
+            return {**reports,**actions,"tasks_returned_absent":returned,"tasks_dispatched":dispatched}
     def dispatch(self,task_id:str,target:str,worker:Any)->dict[str,Any]:
         target=target.upper()
         if target not in SEATS:raise ValueError("UNKNOWN_COUNCIL_SEAT")

@@ -67,13 +67,16 @@ DEFAULT_POLICY: dict[str, Any] = {
         "DO_NOT_START_GPU_FOR_DISCOVERY",
         "DO_NOT_USE_PAID_GPU_WITHOUT_C1_AUTHORIZATION",
         "DO_NOT_STORE_MODEL_WEIGHTS_ON_LOCAL_AG",
+        "DO_NOT_DOWNLOAD_NEW_MODEL_WEIGHTS_TO_LOCAL_AG",
         "DO_NOT_LOAD_HEAVY_MODELS_ON_LOCAL_AG_UNDER_CURRENT_RAM",
+        "MODEL_PARAMETERS_GT_32B_DENY",
+        "LOCAL_AG_RESERVED_FOR_CONTROL_AND_MANAGEMENT",
         "DO_NOT_MERGE_KAGGLE_C1_AND_PARTNER_QUOTAS",
         "DO_NOT_TREAT_AT_LEAST_ONCE_AS_EXACTLY_ONCE",
         "UNOBSERVED_CAPACITY_NE_ABSENT_CAPACITY",
         "CATALOG_CAPABILITY_NE_OWNED_ENTITLEMENT",
     ],
-    "local_ag": {"max_class": "LIGHTWEIGHT", "heavy_inference": "DENY", "reason": "RAM_PRESSURE"},
+    "local_ag": {"max_class": "LIGHTWEIGHT", "heavy_inference": "DENY", "model_download": "DENY", "max_model_parameters_billion": 32, "reserved_for": "CONTROL_AND_MANAGEMENT", "reason": "RAM_PRESSURE"},
     "gpu": {"current_primary": "KAGGLE_C1", "failover": "NONE_PROVEN", "source": "PROVEN_CAPACITY"},
     "remote_cpu": {"primary": "MODAL_01", "secondary": "KAGGLE_C1", "tertiary": "LIGHTNING_01", "source": "PROVEN_CAPACITY"},
     "model_storage": {"primary_candidate": "KAGGLE_C1", "backup": "UNPROVEN", "source": "PROVEN_CAPACITY"},
@@ -207,6 +210,9 @@ def resource_request(**kw: Any) -> dict[str, Any]:
         "risk_class": kw.get("risk_class", UNKNOWN),
         "authority_context": kw.get("authority_context", UNKNOWN),
         "heavy_inference": bool(kw.get("heavy_inference", False)),
+        "model_parameters_billion": kw.get("model_parameters_billion", UNKNOWN),
+        "max_model_parameters_billion": 32,
+        "model_download_allowed": False,
         "local_model_storage_prohibited": True,
         "MODEL_WEIGHTS_LOCAL": MODEL_WEIGHTS_LOCAL,
     }
@@ -422,6 +428,9 @@ def evaluate_account(req: dict[str, Any], world: dict[str, Any], account_id: str
 
     if account_id in req.get("prohibited_resources") or []:
         reasons.append("PROHIBITED_BY_REQUEST")
+    model_size = numeric_or_unknown(req.get("model_parameters_billion"))
+    if model_size is not UNKNOWN and float(model_size) > 32.0:
+        reasons.append("MODEL_PARAMETERS_GT_32B_DENIED")
     if not authenticated:
         reasons.append("UNAUTHENTICATED_RESOURCE")
         if auth == "BLOCKED_C1_ACTION":
@@ -630,6 +639,9 @@ def place(req: dict[str, Any], world: dict[str, Any], *, policy: dict[str, Any] 
                 "authority_context",
                 "heavy_inference",
                 "model_id",
+                "model_parameters_billion",
+                "max_model_parameters_billion",
+                "model_download_allowed",
             )
         },
         "auth": {aid: _auth_state(world, aid) for aid in CLOUD_ACCOUNTS},
@@ -736,6 +748,9 @@ def plan_dispatch(decision: dict[str, Any], req: dict[str, Any], *, dry_run: boo
         "GPU_SESSION_STARTED": False,
         "PAID_RESOURCE_CREATED": False,
         "MODEL_TRANSFER_EXECUTED": False,
+        "MODEL_DOWNLOAD_EXECUTED": False,
+        "LOCAL_MODEL_STORAGE_MUTATED": False,
+        "MAX_MODEL_PARAMETERS_BILLION": 32,
         "provider_account": selected,
         "job": {
             "job_id": job_id,

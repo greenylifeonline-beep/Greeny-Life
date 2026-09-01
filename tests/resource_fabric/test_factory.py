@@ -109,6 +109,23 @@ class ResourceFactory(unittest.TestCase):
         self.assertIn("LOCAL_AG_HEAVY_INFERENCE_DENIED", _reasons(dec, "LOCAL_AG"))
         self.assertNotEqual(dec.get("selected_resource"), "LOCAL_AG")
 
+    def test_b2_models_above_32b_are_denied_everywhere(self):
+        req = resource_request(
+            workload_class="MODEL_FACTORY",
+            model_id="qwen3.6:35b-a3b",
+            model_parameters_billion=35,
+            request_id="B2",
+        )
+        dec = place(req, self.world)
+        self.assertFalse(dec["dispatch_allowed"])
+        self.assertIsNone(dec["selected_resource"])
+        for row in dec["evaluations"]:
+            self.assertIn("MODEL_PARAMETERS_GT_32B_DENIED", row["reasons"])
+        plan = plan_dispatch(dec, req, dry_run=True)
+        self.assertFalse(plan["MODEL_DOWNLOAD_EXECUTED"])
+        self.assertFalse(plan["LOCAL_MODEL_STORAGE_MUTATED"])
+        self.assertEqual(plan["MAX_MODEL_PARAMETERS_BILLION"], 32)
+
     def test_c_gpu_burst_kaggle_candidate_modal_paid_rejected(self):
         req = resource_request(workload_class="GPU_BURST", paid_allowed=False, request_id="C")
         dec = place(req, self.world)
