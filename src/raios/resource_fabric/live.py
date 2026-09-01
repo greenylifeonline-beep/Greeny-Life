@@ -563,6 +563,21 @@ def _probe_kaggle_partner(*, live: bool = True) -> dict[str, Any]:
         ):
             env.pop(key, None)
         env["KAGGLE_CONFIG_DIR"] = str(target)
+        partner_legacy = target / "kaggle.json"
+        partner_identity = ""
+        if partner_legacy.is_file():
+            try:
+                partner_credential = json.loads(partner_legacy.read_text(encoding="utf-8"))
+                partner_token = str(partner_credential.get("key") or "").strip()
+                partner_identity = str(partner_credential.get("username") or "").strip()
+            except (OSError, json.JSONDecodeError, AttributeError):
+                partner_token = ""
+            # Modern Kaggle KGAT tokens are access tokens, not legacy API
+            # keys. Supply only to this isolated child process; never record
+            # the value in census output or the parent environment.
+            if partner_token.startswith("KGAT_"):
+                env["KAGGLE_API_TOKEN"] = partner_token
+                rec["auth_method"] = "KAGGLE_API_TOKEN"
         # Kaggle SDK OAuth credentials live under ~/.kaggle independently of
         # KAGGLE_CONFIG_DIR. Isolate the subprocess home so C1 OAuth can never
         # satisfy or contaminate the partner-account probe.
@@ -575,7 +590,7 @@ def _probe_kaggle_partner(*, live: bool = True) -> dict[str, Any]:
         quota_out = _run_cli(["kaggle", "quota", "--format", "json"], timeout=25, env=env)
         if not quota_out.get("ok"):
             quota_out = _run_cli(["kaggle", "quota"], timeout=25, env=env)
-        identity = UNOBSERVED
+        identity = partner_identity or UNOBSERVED
         stdout = cfg.get("stdout") or ""
         if cfg.get("ok"):
             m = re.search(r"(?im)^\s*-?\s*username\s*[:=]\s*(\S+)", stdout)

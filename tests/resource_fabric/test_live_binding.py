@@ -62,8 +62,9 @@ class LiveBinding(unittest.TestCase):
             root = Path(td)
             partner = root / "partner"
             partner.mkdir()
+            token = "KGAT_" + ("x" * 32)
             (partner / "kaggle.json").write_text(
-                '{"username":"partner-user","key":"redacted-test-token"}',
+                '{"username":"partner-user","key":"' + token + '"}',
                 encoding="utf-8",
             )
             calls = []
@@ -71,7 +72,7 @@ class LiveBinding(unittest.TestCase):
             def fake_cli(args, *, timeout, env=None):
                 calls.append((args, env))
                 if args[1:3] == ["config", "view"]:
-                    return {"ok": True, "stdout": "- username: partner-user\n- auth_method: LEGACY", "stderr": ""}
+                    return {"ok": True, "stdout": "[REDACTED]", "stderr": ""}
                 return {"ok": True, "stdout": "[]", "stderr": ""}
 
             inherited = {
@@ -92,7 +93,7 @@ class LiveBinding(unittest.TestCase):
                 self.assertEqual(env["KAGGLE_CONFIG_DIR"], str(partner))
                 self.assertEqual(env["HOME"], str(partner / ".isolated-home"))
                 self.assertEqual(env["USERPROFILE"], str(partner / ".isolated-home"))
-                self.assertNotIn("KAGGLE_API_TOKEN", env)
+                self.assertEqual(env["KAGGLE_API_TOKEN"], token)
                 self.assertNotIn("KAGGLE_USERNAME", env)
                 self.assertNotIn("KAGGLE_KEY", env)
 
