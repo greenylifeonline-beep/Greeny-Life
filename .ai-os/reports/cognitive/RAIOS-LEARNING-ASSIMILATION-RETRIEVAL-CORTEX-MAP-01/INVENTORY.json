@@ -1,0 +1,54 @@
+{
+  "schema": "raios.cognitive-plane-inventory.v1",
+  "observer": "C2-CURSOR",
+  "tree": "C:\\Users\\Ghanam\\Documents\\Codex\\Greeny-Life",
+  "observed_at": "2026-08-30T07:20:00Z",
+  "live": {
+    "c5": "ONLINE :8766 model=qwen3:0.6b",
+    "command_center": "ONLINE :8770",
+    "main_cortex_doctrine": "qwen3.6:35b-a3b HOLD C1-owned"
+  },
+  "planes": {
+    "cortex": [
+      "src/raios/neuro_lingua/cortex.py",
+      "src/raios/neuro_lingua/layers.py",
+      "src/raios/c5_gateway/gateway.py",
+      "src/raios/c5_gateway/ollama_client.py",
+      "src/raios/command_center/app.py"
+    ],
+    "learning": [
+      "src/raios/c5_gateway/learning_trace.py",
+      "scripts/ai-os/raios_c5_learn.py",
+      "scripts/ai-os/raios_c5_unconscious.py",
+      "src/raios/factory_fabric/cognitive.py",
+      "src/raios/factory_fabric/foundry_engine.py",
+      "lib/intelligence/controlled-learning.ts",
+      "lib/intelligence/training-factory.ts",
+      "app/api/learning/*"
+    ],
+    "assimilation": [
+      "src/raios/neuro_lingua/kae.py",
+      "src/raios/neuro_lingua/kae_libraries.py",
+      "scripts/ai-os/raios_absorb.py",
+      "scripts/ai-os/raios_c5_kae.py",
+      "scripts/ai-os/raios_learn_ingest.py",
+      "scripts/ai-os/raios_c5_mind_fill.py",
+      "src/raios/factory_fabric/assimilation.py"
+    ],
+    "retrieval": [
+      "scripts/ai-os/raios_c5_index.py",
+      "scripts/ai-os/raios_c5_read.py",
+      "scripts/ai-os/raios_c5_memory.py",
+      "src/raios/search_cortex/engine.py",
+      "src/raios/manager/live_manager.py",
+      "~/.raios/runtime/manager/retrieval.sqlite3"
+    ]
+  },
+  "gaps": [
+    "CORTEX_IDENTITY_CONFLATION_35B_VS_0.6B",
+    "DIGEST_ARTIFACTS_OFTEN_UNMATERIALIZED",
+    "NEUROLINGUA_L2_EMBEDDINGS_ABSENT_BUT_SEARCH_CORTEX_HAS_EMBED",
+    "LIGHTRAG_FORBIDDEN",
+    "NO_AUTO_CANONICAL_PROMOTION"
+  ]
+}

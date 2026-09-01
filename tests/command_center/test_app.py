@@ -6,10 +6,11 @@ client=TestClient(cc.app)
 
 def test_professional_bilingual_working_surface_is_local_and_complete():
  text=(cc.HERE/"index.html").read_text(encoding="utf-8")
- for value in ("RAIOS COMMAND","محادثة RAIOS","المجلس والعملاء","المصانع والنماذج","الصيانة والتحديث","setInterval"):
+ for value in ("RAIOS COMMAND","محادثة RAIOS","البحث والتحقق","التعلم والاستيعاب","العمل والأدلة","التشخيص","setInterval"):
   assert value in text
  assert "https://" not in text and "<script src=" not in text
- assert "Auto canonical mutation</span><b class=\"badge bad\">OFF" in text
+ assert "التنفيذ يحتاج إيصالًا" in text
+ assert "Search Cortex" in text
 
 def test_health_and_bootstrap_bind_canonical_head(monkeypatch):
  monkeypatch.setattr(cc,"git",lambda *a:"a"*40)
@@ -53,9 +54,18 @@ def test_successful_non_json_service_probe_is_online_without_body_exposure(monke
  assert cc.service("9Router",20128,"http://127.0.0.1:20128/dashboard")["state"]=="ONLINE"
 
 def test_maintenance_is_diagnostic_not_autonomous(monkeypatch):
- monkeypatch.setattr(cc,"overview",lambda:{"maintenance":{"health":"HEALTHY","auto_canonical_mutation":False}})
+ monkeypatch.setattr(cc,"diagnostic_state",lambda:{"health":"HEALTHY","score":100,"root_causes":[],"actions_executed":[],"canonical_mutation":False})
  out=client.post("/api/maintenance/diagnose",headers={"X-RAIOS-CSRF":cc.CSRF}).json()
  assert out["actions_executed"]==[] and out["canonical_mutation"] is False
+ assert out["diagnosis"]["score"]==100
+
+
+def test_search_endpoint_uses_shared_cortex_and_requires_csrf(monkeypatch):
+ assert client.post("/api/search",json={"query":"current status"}).status_code==403
+ monkeypatch.setattr(cc.SEARCH_CORTEX,"search",lambda *a,**k:{"schema":"raios.search-cortex.result.v2","count":1,"results":[{"evidence_id":"E001"}],"verification":{"status":"PASS"}})
+ out=client.post("/api/search",headers={"X-RAIOS-CSRF":cc.CSRF},json={"query":"current status"})
+ assert out.status_code==200
+ assert out.json()["results"][0]["evidence_id"]=="E001"
 
 def test_deployer_writes_launcher_as_real_lines():
  script=(Path(__file__).parents[2]/"scripts/runtime/Deploy-RAIOS-Command-Center.ps1").read_text(encoding="utf-8")

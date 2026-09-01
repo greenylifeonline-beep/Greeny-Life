@@ -34,10 +34,30 @@ from .learning_trace import (
     TrainingStore,
     TrainingTurn
 )
+from .cognitive_loop import (
+    assimilate_turn,
+    format_grounded_user_message,
+    loop_status,
+    retrieve_grounding,
+)
 
 
 def utc():
     return datetime.now(timezone.utc).isoformat()
+
+
+def deployment_environment():
+    manifest = Path(os.getenv("RAIOS_RUNTIME_ROOT", str(Path.home() / ".raios" / "runtime" / "c5"))) / "deployment.json"
+    try:
+        data = json.loads(manifest.read_text(encoding="utf-8-sig"))
+    except Exception:
+        data = {}
+    return {
+        "dependency_audit": data.get("dependency_audit", "UNPROVEN"),
+        "pytest_available": bool(data.get("pytest_available")),
+        "requirements_sha256": data.get("requirements_sha256"),
+        "packages": data.get("packages") or ["c5_gateway"],
+    }
 
 
 RUNTIME_ROOT=Path(
@@ -103,17 +123,20 @@ class ChatRequest(BaseModel):
 
 
 SYSTEM_PROMPT="""
-You are C5@AG, a local RAIOS language worker behind HTTP 127.0.0.1:8766.
+You are C5@AG, the RAIOS student language worker behind HTTP 127.0.0.1:8766.
 
-The user message may contain a GROUNDING_ENVELOPE. That envelope is truth for this turn.
+You are NOT Main Cortex. Main Cortex identity is qwen3.6:35b-a3b, owned by C1, state HOLD.
+
+The user message contains a GROUNDING_ENVELOPE. That envelope is truth for this turn.
 Conversation history and your own prior answers are not execution truth.
+If grounding count is 0, say EVIDENCE=NONE_AVAILABLE for execution claims.
 
 This HTTP turn does not run tools, GL tasks, clusters, or file mutations.
 
 Never say executed, started, initialized, running, completed, confirmed, deployed,
 connected, repaired, wrote, or changed unless the envelope contains a bound receipt.
 
-If C1 says hi/hello: greet briefly and identify as C5@AG. Do not mention GL tasks.
+If C1 says hi/hello: greet briefly and identify as C5@AG student. Do not mention GL tasks.
 If the input is nonsense: ask a short clarification.
 If asked whether you executed GL work: answer NOT_PROVEN.
 If no receipt exists: EVIDENCE=NONE_AVAILABLE.
@@ -136,6 +159,9 @@ def execute_chat(
         str(uuid.uuid4())
     )
 
+    grounding=retrieve_grounding(text)
+    grounded_text=format_grounded_user_message(text,grounding)
+
     result=client.chat(
         [
             {
@@ -144,38 +170,48 @@ def execute_chat(
             },
             {
                 "role":"user",
-                "content":text
+                "content":grounded_text
             }
         ],
         stream=False,
         timeout=timeout_seconds
     )
 
-    if training_mode:
-
-        store=TrainingStore(TRAINING_ROOT)
-
-        store.append(
-            TrainingTurn(
-                task_id=task_id,
-                conversation_id=cid,
-                teacher=teacher,
-                student="RAIOS_MAIN_CORTEX",
-                phase="ATTEMPT",
-                attempt=1,
-                prompt=text,
-                student_response=result.content,
-                execution_required=False,
-                scores={},
-                mastery=False,
-                state=(
-                    "OBSERVED"
-                    if result.ok
-                    else
-                    "FAILED_ATTEMPT"
-                )
+    store=TrainingStore(TRAINING_ROOT)
+    store.append(
+        TrainingTurn(
+            task_id=task_id,
+            conversation_id=cid,
+            teacher=teacher,
+            student="RAIOS_STUDENT",
+            phase="ATTEMPT",
+            attempt=1,
+            prompt=text,
+            student_response=result.content,
+            execution_required=False,
+            scores={"grounding_count":float(grounding.get("count") or 0)},
+            mastery=False,
+            state=(
+                "OBSERVED"
+                if result.ok
+                else
+                "FAILED_ATTEMPT"
             )
         )
+    )
+
+    assimilated=None
+    if result.ok:
+        try:
+            assimilated=assimilate_turn(
+                prompt=text,
+                response=result.content,
+                conversation_id=cid,
+                model=result.model,
+                grounding=grounding,
+            )
+        except Exception as assimilate_error:
+            assimilated={"status":"FAILED","error":f"{type(assimilate_error).__name__}:{assimilate_error}"}
 
     if not result.ok:
 
@@ -194,7 +230,8 @@ def execute_chat(
         raise HTTPException(
             status_code=504 if timeout_failure else 502,
             detail={
-                "error":"MAIN_CORTEX_TIMEOUT" if timeout_failure else "MAIN_CORTEX_FAILURE",
+                "error":"STUDENT_TIMEOUT" if timeout_failure else "STUDENT_FAILURE",
+                "legacy_error":"MAIN_CORTEX_TIMEOUT" if timeout_failure else "MAIN_CORTEX_FAILURE",
                 "model":result.model,
                 "cortex_request_id":
                     result.request_id,
@@ -213,10 +250,24 @@ def execute_chat(
         "cortex_request_id":
             result.request_id,
         "model":result.model,
+        "role":"STUDENT",
+        "main_cortex_identity":"qwen3.6:35b-a3b",
+        "main_cortex_state":"HOLD",
         "language":language,
         "response":result.content,
         "content":result.content,
         "reply":result.content,
+        "grounding":{
+            "count":grounding.get("count"),
+            "latency_ms":grounding.get("latency_ms"),
+            "receipts":grounding.get("receipts") or [],
+            "evidence_refs":grounding.get("evidence_refs") or [],
+            "verification":(grounding.get("search") or {}).get("verification"),
+            "contradictions":(grounding.get("search") or {}).get("contradictions") or [],
+            "shared_search_cortex":grounding.get("shared_search_cortex") is True,
+        },
+        "assimilated":assimilated,
+        "closed_loop":True,
         "latency_seconds":
             result.latency_seconds,
         "runtime_source":"CANONICAL_DEPLOYMENT",
@@ -237,39 +288,47 @@ def health():
         return {
             "status":"DEGRADED",
             "gateway":True,
+            "student":False,
             "main_cortex":False,
+            "main_cortex_state":"HOLD",
             "error":
                 f"{type(e).__name__}:{e}",
+            "cognitive_loop":loop_status(),
+            "environment":deployment_environment(),
             "runtime_source":"CANONICAL_DEPLOYMENT",
             "canonical_head":os.getenv("RAIOS_CANONICAL_HEAD","UNKNOWN"),
             "timestamp":utc()
         }
 
+    student_online=bool(model_health.get("required_model_present"))
     return {
         "status":
             "ONLINE"
-            if model_health.get(
-                "required_model_present"
-            )
+            if student_online
             else
             "DEGRADED",
 
         "gateway":True,
-
-        "main_cortex":
-            model_health.get(
-                "required_model_present",
-                False
-            ),
-
+        "student":student_online,
+        "student_model":client.model,
+        "main_cortex":False,
+        "main_cortex_identity":"qwen3.6:35b-a3b",
+        "main_cortex_state":"HOLD",
         "model":
             client.model,
 
+        "cognitive_loop":loop_status(),
+        "environment":deployment_environment(),
         "runtime_source":"CANONICAL_DEPLOYMENT",
         "canonical_head":os.getenv("RAIOS_CANONICAL_HEAD","UNKNOWN"),
         "training_root":str(TRAINING_ROOT),
         "timestamp":utc()
     }
+
+
+@app.get("/v1/cognitive/status")
+def cognitive_status():
+    return loop_status()
 
 
 @app.post("/v1/chat")

@@ -1,0 +1,26 @@
+{
+  "schema": "raios.cognitive-loop-closure.v1",
+  "task_id": "RAIOS-COGNITIVE-LOOP-CLOSURE-01",
+  "observer": "C2-CURSOR",
+  "tests": "2 passed tests/c5_gateway/test_cognitive_loop.py",
+  "changes": [
+    "src/raios/c5_gateway/cognitive_loop.py",
+    "src/raios/c5_gateway/gateway.py",
+    "src/raios/c5_gateway/ollama_client.py",
+    "scripts/runtime/Deploy-RAIOS-C5.ps1",
+    "scripts/runtime/Ensure-RAIOS-Cognitive-Loop.ps1"
+  ],
+  "loop": [
+    "retrieve local DIGEST/INDEX + manager FTS",
+    "GROUNDING_ENVELOPE before student chat",
+    "assimilate turn to DIGESTS+CANDIDATES+INDEX",
+    "student vs Main Cortex HOLD labels",
+    "no Cognitive WAL write",
+    "manager daemon --no-task-write for continuous retrieval"
+  ],
+  "not_done": [
+    "Main Cortex 35B remains HOLD",
+    "no LightRAG",
+    "no auto canonical promotion"
+  ]
+}

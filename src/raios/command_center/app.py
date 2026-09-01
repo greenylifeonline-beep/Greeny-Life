@@ -1,11 +1,13 @@
 from __future__ import annotations
 import json, os, secrets, socket, subprocess, sys, urllib.error, urllib.request, uuid
+from contextlib import asynccontextmanager
 from datetime import datetime, timezone
 from pathlib import Path
 from typing import Any
 from fastapi import FastAPI, Header, HTTPException
 from fastapi.responses import HTMLResponse
 from pydantic import BaseModel, Field
+from raios.search_cortex import SearchCortex
 from .message_worker import COUNCIL_SEATS, ROUTING_TARGETS, MessageWorker
 from .council_board import CouncilBoard
 
@@ -15,15 +17,20 @@ MCP_ROOT=Path(os.getenv("RAIOS_MCP_ROOT",str(REPO))).resolve()
 RUNTIME=Path(os.getenv("RAIOS_COMMAND_CENTER_RUNTIME",str(Path.home()/".raios/runtime/command-center"))).resolve()
 C5=os.getenv("RAIOS_C5_URL","http://127.0.0.1:8766")
 CSRF=secrets.token_urlsafe(32)
-app=FastAPI(title="RAIOS Command Center",version="1.1",docs_url=None,redoc_url=None)
 MESSAGE_WORKER=MessageWorker(REPO,RUNTIME)
 COUNCIL_BOARD=CouncilBoard(REPO)
+SEARCH_CORTEX=SearchCortex()
 MESSAGE_WORKER.configure_workflow(COUNCIL_BOARD)
 
-@app.on_event("startup")
-def start_message_worker():MESSAGE_WORKER.start()
-@app.on_event("shutdown")
-def stop_message_worker():MESSAGE_WORKER.stop()
+@asynccontextmanager
+async def lifespan(_: FastAPI):
+ MESSAGE_WORKER.start()
+ try:
+  yield
+ finally:
+  MESSAGE_WORKER.stop()
+
+app=FastAPI(title="RAIOS Command Center",version="2.0",docs_url=None,redoc_url=None,lifespan=lifespan)
 
 def utc(): return datetime.now(timezone.utc).isoformat()
 def load(path,default):
@@ -87,15 +94,46 @@ def receipt_state():
 def factory_state():
  report=REPO/".ai-os/reports/factory-fabric"; names=["RESOURCE","ASSIMILATION","TRAINING","COGNITIVE","C5_EXPERT_FOUNDRY","MODEL"]
  return {"fabric_present":(REPO/"src/raios/factory_fabric").is_dir(),"factories":[{"name":n,"state":"AVAILABLE"} for n in names],"report_root":str(report)}
+def cognitive_state():
+ code,loop=http_json(C5+"/v1/cognitive/status",timeout=5)
+ manager=load(Path.home()/".raios/runtime/manager/heartbeat.json",{})
+ latest=load(Path.home()/".raios/runtime/search-cortex/latest.json",{})
+ continuity=load(Path.home()/".raios/runtime/continuity/status.json",{})
+ return {"online":code==200,"http":code,"loop":loop if code==200 else {},
+  "manager":manager,"search_latest":latest,"continuity":continuity,
+  "shared_search_cortex":bool((loop.get("search_cortex") or {}).get("shared")) if isinstance(loop,dict) else False,
+  "existing_kae_reused":bool((loop.get("assimilation") or {}).get("existing_kae_reused")) if isinstance(loop,dict) else False}
+def diagnostic_state():
+ data=overview(); worker=MESSAGE_WORKER.status(); cognition=data.get("cognitive") or {}; loop=cognition.get("loop") or {}
+ causes=[]
+ for item in data["services"]:
+  if item["state"]!="ONLINE":causes.append({"code":item["name"].upper()+"_NOT_ONLINE","severity":"CRITICAL","evidence":item,"recommended_action":"RESTORE_EXISTING_RUNTIME"})
+ if worker.get("healthy") is not True:causes.append({"code":"MESSAGE_WORKER_UNHEALTHY","severity":"CRITICAL","evidence":worker,"recommended_action":"REDEPLOY_COMMAND_CENTER"})
+ manager=(loop.get("manager") or {})
+ if manager.get("alive") is not True:causes.append({"code":"CONTINUOUS_MANAGER_"+str(manager.get("reason") or "UNPROVEN"),"severity":"HIGH","evidence":manager,"recommended_action":"RESTART_EXISTING_MANAGER"})
+ c5=next((x for x in data["services"] if x["name"]=="C5"),{})
+ env=((c5.get("detail") or {}).get("environment") or {})
+ if env.get("dependency_audit")!="PASS" or env.get("pytest_available") is not True:causes.append({"code":"C5_ENVIRONMENT_INCOMPLETE","severity":"HIGH","evidence":env,"recommended_action":"DEPLOY_CANONICAL_C5_REQUIREMENTS"})
+ if data.get("canonical_head")!=data.get("remote_head"):causes.append({"code":"HEAD_REMOTE_DRIFT","severity":"MEDIUM","evidence":{"local":data.get("canonical_head"),"remote":data.get("remote_head")},"recommended_action":"REVIEW_FAST_FORWARD_POLICY"})
+ score=max(0,100-sum(30 if x["severity"]=="CRITICAL" else 15 if x["severity"]=="HIGH" else 5 for x in causes))
+ return {"schema":"raios.command-center.diagnosis.v2","generated_at":utc(),"health":"HEALTHY" if not causes else "DEGRADED",
+  "score":score,"root_causes":causes,"services":data["services"],"worker":worker,"cognitive":cognition,
+  "actions_executed":[],"canonical_mutation":False,"existing_first":True}
 def overview():
  services=[service("C5",8766,C5+"/health"),service("9Router",20128,"http://127.0.0.1:20128/dashboard"),service("NATS",4222)]
  task=tasks_state(); degraded=[x["name"] for x in services if x["state"]!="ONLINE"]
  return {"generated_at":utc(),"canonical_head":git("rev-parse","HEAD"),"remote_head":git("rev-parse","origin/ai-evolution-202608051809"),
-  "services":services,"tasks":task,"models":model_state(),"factories":factory_state(),"council":council_state(),
+  "services":services,"tasks":task,"models":model_state(),"factories":factory_state(),"council":council_state(),"cognitive":cognitive_state(),
   "maintenance":{"health":"HEALTHY" if not degraded else "ATTENTION","degraded":degraded,"auto_refresh":True,
    "auto_canonical_mutation":False,"self_update_policy":"LOCAL_RUNTIME_FROM_FAST_FORWARD_CANONICAL_ONLY_WITH_C1_CONFIRMATION"}}
 
 class ChatIn(BaseModel):text:str=Field(min_length=1,max_length=200000); conversation_id:str|None=None
+class SearchIn(BaseModel):
+ query:str=Field(min_length=2,max_length=4000)
+ public_query:str|None=Field(default=None,max_length=400)
+ allow_public:bool=False
+ deep:bool=True
+ limit:int=Field(default=20,ge=1,le=50)
 class CommandIn(BaseModel):text:str=Field(min_length=1,max_length=50000);targets:list[str];task_id:str|None=None
 class DispatchIn(BaseModel):task_id:str=Field(min_length=1,max_length=200);target:str=Field(min_length=2,max_length=20)
 class TaskAcceptIn(BaseModel):
@@ -139,6 +177,13 @@ def index():return (HERE/"index.html").read_text(encoding="utf-8")
 def bootstrap():return {"csrf":CSRF,"overview":overview(),"ui":"CANONICAL_COMMAND_CENTER","direct_mutation":False}
 @app.get("/api/overview")
 def api_overview():return overview()
+@app.get("/api/cognitive")
+def api_cognitive():return cognitive_state()
+@app.post("/api/search")
+def api_search(req:SearchIn,x_raios_csrf:str|None=Header(None)):
+ require_csrf(x_raios_csrf)
+ return SEARCH_CORTEX.search(req.query,public_allowed=req.allow_public,public_query=req.public_query,
+  official_allowed=True,limit=req.limit,deep=req.deep,trace=True)
 @app.get("/api/tasks")
 def api_tasks():return tasks_state()
 @app.get("/api/council")
@@ -200,7 +245,7 @@ def command(req:CommandIn,x_raios_csrf:str|None=Header(None)):
   "executed":False,"promotion":False,"timestamp":utc()}
 @app.post("/api/maintenance/diagnose")
 def diagnose(x_raios_csrf:str|None=Header(None)):
- require_csrf(x_raios_csrf); data=overview(); return {"ok":True,"diagnosis":data["maintenance"],"actions_executed":[],"canonical_mutation":False}
+ require_csrf(x_raios_csrf); data=diagnostic_state(); return {"ok":True,"diagnosis":data,"actions_executed":[],"canonical_mutation":False}
 @app.get("/health")
 def health():
  worker=MESSAGE_WORKER.status();online=worker.get("healthy") is True

@@ -6,37 +6,61 @@ $ErrorActionPreference = "Stop"
 $Repo = (Resolve-Path (Join-Path $PSScriptRoot "..\..")).Path
 $Head = (git -C $Repo rev-parse HEAD).Trim()
 $AppRoot = Join-Path $RuntimeRoot "app"
-$PkgDest = Join-Path $AppRoot "raios\c5_gateway"
 $Venv = Join-Path $RuntimeRoot ".venv"
 $Python = Join-Path $Venv "Scripts\python.exe"
 $Logs = Join-Path $RuntimeRoot "logs"
 $Manifest = Join-Path $RuntimeRoot "deployment.json"
+$Requirements = Join-Path $Repo "requirements-c5.txt"
+$PackageNames = @("c5_gateway","search_cortex","neuro_lingua")
 
-New-Item -ItemType Directory -Force -Path $PkgDest,$Logs | Out-Null
-New-Item -ItemType Directory -Force -Path (Join-Path $AppRoot "raios") | Out-Null
+New-Item -ItemType Directory -Force -Path $Logs,(Join-Path $AppRoot "raios") | Out-Null
 $Init = Join-Path $AppRoot "raios\__init__.py"
 if (-not (Test-Path $Init)) { Set-Content -Path $Init -Value "" -Encoding UTF8 }
-Copy-Item -Path (Join-Path $Repo "src\raios\c5_gateway\*") -Destination $PkgDest -Recurse -Force
+foreach ($PackageName in $PackageNames) {
+    $PackageDest = Join-Path $AppRoot ("raios\" + $PackageName)
+    New-Item -ItemType Directory -Force -Path $PackageDest | Out-Null
+    Copy-Item -Path (Join-Path $Repo ("src\raios\" + $PackageName + "\*")) -Destination $PackageDest -Recurse -Force
+}
 
 if (-not (Test-Path $Python)) {
     & py -3.14 -m venv $Venv
 }
-& $Python -c "import importlib.util as u,sys; sys.exit(0 if all(u.find_spec(x) for x in ('fastapi','uvicorn','pydantic')) else 1)"
-if ($LASTEXITCODE -ne 0) {
-    & $Python -m pip install --disable-pip-version-check "fastapi>=0.115,<1" "uvicorn>=0.30,<1" "pydantic>=2,<3"
+if (-not (Test-Path $Requirements)) {
+    throw "C5_REQUIREMENTS_MISSING::$Requirements"
 }
+$RequiredModules = "fastapi,uvicorn,pydantic,httpx,yaml,orjson,rapidfuzz,langcodes,language_data,ddgs,pytest,pytest_asyncio,hypothesis"
+$MissingModules = (& $Python -c "import importlib.util; mods='$RequiredModules'.split(','); print(','.join(x for x in mods if importlib.util.find_spec(x) is None))").Trim()
+if ($MissingModules) {
+    Write-Host "INSTALL C5 missing modules: $MissingModules"
+    & $Python -m pip install --disable-pip-version-check -r $Requirements
+    if ($LASTEXITCODE -ne 0) { throw "C5_DEPENDENCY_INSTALL_FAILED" }
+}
+& $Python -c "import importlib.util,sys; mods='$RequiredModules'.split(','); missing=[x for x in mods if importlib.util.find_spec(x) is None]; print('C5_DEPENDENCY_AUDIT=' + ('PASS' if not missing else 'FAIL:' + ','.join(missing))); sys.exit(0 if not missing else 1)"
+if ($LASTEXITCODE -ne 0) { throw "C5_DEPENDENCY_AUDIT_FAILED" }
+$DependencyFreeze = @(& $Python -m pip freeze)
+$RequirementsHash = (Get-FileHash $Requirements -Algorithm SHA256).Hash
 
 $hashes = @{}
-Get-ChildItem $PkgDest -File | ForEach-Object {
-    $hashes[$_.Name] = (Get-FileHash $_.FullName -Algorithm SHA256).Hash
+foreach ($PackageName in $PackageNames) {
+    $PackageDest = Join-Path $AppRoot ("raios\" + $PackageName)
+    Get-ChildItem $PackageDest -File -Recurse | ForEach-Object {
+        $relative = $_.FullName.Substring($AppRoot.Length + 1).Replace("\","/")
+        $hashes[$relative] = (Get-FileHash $_.FullName -Algorithm SHA256).Hash
+    }
 }
 $deploy = [ordered]@{
-    schema = "raios.c5-canonical-deployment.v1"
+    schema = "raios.c5-canonical-deployment.v2"
     canonical_head = $Head
     source_repo = $Repo
     runtime_root = $RuntimeRoot
     app_root = $AppRoot
+    packages = $PackageNames
     package_hashes = $hashes
+    requirements_file = $Requirements
+    requirements_sha256 = $RequirementsHash
+    dependency_audit = "PASS"
+    dependencies = $DependencyFreeze
+    pytest_available = [bool]($DependencyFreeze | Where-Object { $_ -match "^pytest==" })
     deployed_at = [DateTimeOffset]::UtcNow.ToString("o")
 }
 $deploy | ConvertTo-Json -Depth 8 | Set-Content -Path $Manifest -Encoding UTF8
@@ -49,7 +73,9 @@ if (Get-NetTCPConnection -LocalPort $stagePort -State Listen -ErrorAction Silent
 }
 
 $env:RAIOS_MAIN_CORTEX = "qwen3:0.6b"
+$env:RAIOS_STUDENT_MODEL = "qwen3:0.6b"
 $env:RAIOS_RUNTIME_ROOT = $RuntimeRoot
+$env:RAIOS_CANONICAL_REPO = $Repo
 $env:RAIOS_CANONICAL_HEAD = $Head
 $env:PYTHONPATH = $AppRoot
 

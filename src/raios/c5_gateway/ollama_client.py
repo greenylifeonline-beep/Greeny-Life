@@ -49,11 +49,13 @@ class OllamaCortexClient:
         self.model=(
             model
             or
-            os.getenv(
-                "RAIOS_MAIN_CORTEX",
-                "qwen3:0.6b"
-            )
+            os.getenv("RAIOS_STUDENT_MODEL")
+            or
+            os.getenv("RAIOS_MAIN_CORTEX")
+            or
+            "qwen3:0.6b"
         )
+        self.role="STUDENT"
 
         self.base_url=(
             base_url

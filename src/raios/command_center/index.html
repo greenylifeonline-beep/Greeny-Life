@@ -1,70 +1,282 @@
 <!doctype html>
 <html lang="ar" dir="rtl">
 <head>
-<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
-<title>RAIOS Command Center</title>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="color-scheme" content="dark">
+<title>RAIOS — مركز القيادة</title>
 <style>
-:root{--bg:#071019;--panel:#0d1824;--panel2:#101e2c;--line:#203549;--text:#edf6ff;--muted:#8ea5b9;--cyan:#35d9f0;--green:#45e49b;--amber:#ffca6a;--red:#ff6b7d;--violet:#a997ff;--shadow:0 20px 50px #0007}
-*{box-sizing:border-box}body{margin:0;background:radial-gradient(circle at 78% -5%,#12324b 0,transparent 32%),linear-gradient(150deg,#061019,#09131d 55%,#071019);color:var(--text);font-family:"Segoe UI",Tahoma,Arial,sans-serif;min-height:100vh}
-button,input,textarea{font:inherit}.app{display:grid;grid-template-columns:250px 1fr;min-height:100vh}.sidebar{border-left:1px solid var(--line);background:#07121dd9;backdrop-filter:blur(20px);padding:22px 16px;position:sticky;top:0;height:100vh}
-.brand{display:flex;gap:12px;align-items:center;padding:4px 8px 26px}.mark{width:42px;height:42px;border:1px solid #36d9f088;border-radius:14px;display:grid;place-items:center;background:linear-gradient(145deg,#173c4c,#0b1b29);box-shadow:0 0 30px #35d9f022;color:var(--cyan);font-weight:800}.brand h1{font-size:16px;margin:0}.brand p{font-size:11px;color:var(--muted);margin:4px 0 0;letter-spacing:1px}.nav{display:grid;gap:6px}.nav button{background:transparent;border:1px solid transparent;color:var(--muted);padding:12px 13px;border-radius:12px;text-align:right;cursor:pointer;display:flex;gap:10px}.nav button:hover,.nav button.active{background:#12283a;border-color:#24435a;color:var(--text)}.nav button.active{box-shadow:inset -3px 0 var(--cyan)}
-.sidefoot{position:absolute;bottom:18px;left:16px;right:16px;border-top:1px solid var(--line);padding-top:14px}.pulse{display:flex;align-items:center;gap:8px;font-size:12px}.dot{width:8px;height:8px;border-radius:50%;background:var(--green);box-shadow:0 0 12px var(--green)}
-main{padding:22px 28px;overflow:hidden}.top{display:flex;justify-content:space-between;align-items:center;margin-bottom:20px}.eyebrow{font-size:11px;color:var(--cyan);letter-spacing:2px}.top h2{font-size:24px;margin:5px 0}.actions{display:flex;gap:9px}.btn{border:1px solid var(--line);background:#102131;color:var(--text);padding:10px 14px;border-radius:11px;cursor:pointer}.btn:hover{border-color:var(--cyan)}.btn.primary{background:linear-gradient(135deg,#1689a0,#11607d);border-color:#39d8eb}.grid{display:grid;grid-template-columns:repeat(12,1fr);gap:14px}.card{background:linear-gradient(150deg,#10202edb,#0b1722e8);border:1px solid var(--line);border-radius:17px;padding:17px;box-shadow:var(--shadow)}.metric{grid-column:span 3}.metric .label{color:var(--muted);font-size:12px}.metric .value{font-size:27px;font-weight:750;margin-top:10px}.metric .sub{font-size:11px;color:var(--muted);margin-top:7px}.wide8{grid-column:span 8}.wide4{grid-column:span 4}.wide12{grid-column:span 12}.section h3{font-size:15px;margin:0 0 15px}.services{display:grid;grid-template-columns:repeat(3,1fr);gap:9px}.service{padding:13px;background:#091621;border:1px solid var(--line);border-radius:13px}.service strong{display:block;margin-bottom:7px}.badge{font-size:10px;padding:4px 8px;border-radius:20px;background:#173047;color:var(--muted)}.badge.ok{background:#133c32;color:var(--green)}.badge.warn{background:#41351f;color:var(--amber)}.badge.bad{background:#42232b;color:var(--red)}
-.timeline{display:grid;gap:9px}.row{display:flex;justify-content:space-between;gap:12px;align-items:center;padding:11px;border:1px solid #1b3043;border-radius:11px;background:#091521}.row small{color:var(--muted)}.view{display:none}.view.active{display:block}.composer{display:grid;grid-template-columns:1fr 130px;gap:10px}.composer textarea{min-height:110px;resize:vertical;background:#07131e;border:1px solid var(--line);border-radius:13px;color:var(--text);padding:14px;outline:none}.composer textarea:focus{border-color:var(--cyan)}.output{margin-top:13px;min-height:150px;white-space:pre-wrap;line-height:1.8;background:#07131e;border:1px solid var(--line);border-radius:13px;padding:15px}.chips{display:flex;gap:8px;flex-wrap:wrap;margin:0 0 12px}.chip{border:1px solid var(--line);background:#0a1722;color:var(--muted);padding:8px 12px;border-radius:30px;cursor:pointer}.chip.on{color:#071019;background:var(--cyan);border-color:var(--cyan)}table{width:100%;border-collapse:collapse;font-size:12px}th,td{text-align:right;padding:11px;border-bottom:1px solid var(--line)}th{color:var(--muted);font-weight:500}.empty{color:var(--muted);padding:24px;text-align:center}.spinner{display:inline-block;width:14px;height:14px;border:2px solid #ffffff33;border-top-color:white;border-radius:50%;animation:spin .8s linear infinite}@keyframes spin{to{transform:rotate(360deg)}}@media(max-width:1000px){.app{grid-template-columns:80px 1fr}.brand div:last-child,.nav span{display:none}.sidebar{padding:18px 10px}.nav button{justify-content:center}.metric{grid-column:span 6}.wide8,.wide4{grid-column:span 12}}@media(max-width:650px){main{padding:15px}.sidebar{display:none}.app{display:block}.metric{grid-column:span 12}.services{grid-template-columns:1fr}.composer{grid-template-columns:1fr}}
+:root{
+  --bg:#071019;--bg2:#091722;--surface:#0d1b27;--surface2:#112331;--surface3:#142b3a;
+  --line:#213746;--line2:#2b4d60;--text:#f3f8fb;--muted:#8ca4b4;--soft:#b9cad4;
+  --cyan:#45d7e8;--green:#55dfa2;--amber:#ffc86a;--red:#ff7688;--violet:#ac9cff;
+  --shadow:0 24px 80px rgba(0,0,0,.34);--radius:18px;--ease:cubic-bezier(.2,.8,.2,1)
+}
+*{box-sizing:border-box}html{background:var(--bg)}body{margin:0;min-height:100vh;color:var(--text);font:14px/1.55 "Segoe UI",Tahoma,Arial,sans-serif;background:
+radial-gradient(900px 500px at 82% -8%,rgba(39,145,178,.18),transparent 60%),
+radial-gradient(700px 440px at 10% 105%,rgba(107,79,204,.11),transparent 65%),var(--bg)}
+button,input,textarea{font:inherit}button{color:inherit}.shell{min-height:100vh;display:grid;grid-template-columns:252px minmax(0,1fr)}
+.sidebar{position:sticky;top:0;height:100vh;padding:22px 15px;border-left:1px solid var(--line);background:rgba(7,17,26,.86);backdrop-filter:blur(22px);z-index:10}
+.brand{display:flex;align-items:center;gap:12px;padding:2px 8px 24px}.logo{width:44px;height:44px;border-radius:15px;display:grid;place-items:center;font-size:18px;font-weight:800;color:#061117;background:linear-gradient(140deg,var(--cyan),#7df3c1);box-shadow:0 0 35px rgba(69,215,232,.2)}.brand strong{display:block;font-size:15px;letter-spacing:.4px}.brand small{display:block;color:var(--muted);font-size:10px;letter-spacing:1.5px;margin-top:3px}
+.nav{display:grid;gap:5px}.nav button{width:100%;display:flex;align-items:center;gap:12px;text-align:right;border:1px solid transparent;background:transparent;color:var(--muted);padding:11px 12px;border-radius:12px;cursor:pointer;transition:.2s var(--ease)}.nav button:hover{color:var(--text);background:rgba(255,255,255,.035)}.nav button.active{color:var(--text);background:linear-gradient(100deg,rgba(69,215,232,.15),rgba(69,215,232,.04));border-color:rgba(69,215,232,.22);box-shadow:inset -3px 0 var(--cyan)}.nav i{font-style:normal;width:22px;text-align:center;color:var(--cyan)}
+.side-status{position:absolute;inset:auto 16px 18px;border-top:1px solid var(--line);padding-top:15px}.presence{display:flex;align-items:center;gap:9px;color:var(--soft);font-size:12px}.live-dot{width:8px;height:8px;border-radius:50%;background:var(--green);box-shadow:0 0 0 5px rgba(85,223,162,.08),0 0 16px var(--green)}.side-status small{display:block;color:var(--muted);margin-top:7px}
+.workspace{min-width:0}.topbar{height:82px;display:flex;align-items:center;justify-content:space-between;gap:20px;padding:0 28px;border-bottom:1px solid rgba(33,55,70,.75);background:rgba(7,16,25,.5);backdrop-filter:blur(15px);position:sticky;top:0;z-index:8}.title small{display:block;color:var(--cyan);font-size:10px;letter-spacing:1.7px;text-transform:uppercase}.title h1{font-size:20px;margin:3px 0 0}.top-actions{display:flex;align-items:center;gap:9px}.sync{display:flex;gap:8px;align-items:center;color:var(--muted);font-size:11px;margin-inline-end:4px}
+.btn{border:1px solid var(--line);background:var(--surface2);color:var(--text);padding:9px 13px;border-radius:11px;cursor:pointer;transition:.18s var(--ease)}.btn:hover{border-color:var(--line2);transform:translateY(-1px)}.btn.primary{background:linear-gradient(135deg,#157e97,#126179);border-color:#3bcde0;box-shadow:0 8px 28px rgba(18,116,143,.2)}.btn.ghost{background:transparent}.btn.danger{color:var(--red)}.btn:disabled{opacity:.55;cursor:wait;transform:none}
+.content{padding:24px 28px 42px}.view{display:none;animation:fade .2s ease}.view.active{display:block}@keyframes fade{from{opacity:.35;transform:translateY(4px)}}
+.grid{display:grid;grid-template-columns:repeat(12,minmax(0,1fr));gap:14px}.span12{grid-column:span 12}.span8{grid-column:span 8}.span7{grid-column:span 7}.span6{grid-column:span 6}.span5{grid-column:span 5}.span4{grid-column:span 4}.span3{grid-column:span 3}
+.card{background:linear-gradient(145deg,rgba(17,35,49,.92),rgba(10,24,35,.94));border:1px solid var(--line);border-radius:var(--radius);box-shadow:var(--shadow);padding:18px;min-width:0}.card-head{display:flex;align-items:center;justify-content:space-between;gap:12px;margin-bottom:15px}.card h2,.card h3{margin:0;font-size:14px}.hint{color:var(--muted);font-size:11px}
+.kpi{position:relative;overflow:hidden;min-height:128px}.kpi:after{content:"";position:absolute;width:92px;height:92px;border-radius:50%;left:-30px;top:-35px;background:var(--glow,rgba(69,215,232,.08));filter:blur(2px)}.kpi-label{color:var(--muted);font-size:11px}.kpi-value{font-size:30px;font-weight:750;letter-spacing:-1px;margin:9px 0 4px}.kpi-sub{color:var(--soft);font-size:11px}
+.pill,.badge{display:inline-flex;align-items:center;gap:6px;border:1px solid var(--line);border-radius:999px;padding:4px 8px;font-size:10px;white-space:nowrap}.ok{color:var(--green);background:rgba(85,223,162,.08);border-color:rgba(85,223,162,.2)}.warn{color:var(--amber);background:rgba(255,200,106,.08);border-color:rgba(255,200,106,.22)}.bad{color:var(--red);background:rgba(255,118,136,.08);border-color:rgba(255,118,136,.22)}.neutral{color:var(--muted)}
+.service-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:10px}.service{border:1px solid var(--line);background:rgba(5,16,25,.52);border-radius:14px;padding:14px}.service-top{display:flex;justify-content:space-between;gap:8px;align-items:center}.service strong{font-size:13px}.service small{color:var(--muted);display:block;margin-top:12px}.bar{height:4px;border-radius:9px;background:#08131c;overflow:hidden;margin-top:12px}.bar i{display:block;height:100%;width:100%;background:linear-gradient(90deg,var(--cyan),var(--green))}
+.list{display:grid;gap:9px}.list-row{display:flex;align-items:center;justify-content:space-between;gap:12px;border:1px solid var(--line);background:rgba(6,17,26,.55);border-radius:12px;padding:11px 12px;min-width:0}.list-row .grow{min-width:0}.list-row strong{display:block;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;font-size:12px}.list-row small{color:var(--muted);display:block;margin-top:2px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.empty{padding:28px;text-align:center;color:var(--muted);border:1px dashed var(--line);border-radius:13px}
+.chat-layout{display:grid;grid-template-columns:minmax(0,1fr) 310px;gap:14px;height:calc(100vh - 130px);min-height:620px}.chat-panel{display:grid;grid-template-rows:auto 1fr auto;padding:0;overflow:hidden}.chat-head{display:flex;justify-content:space-between;align-items:center;padding:16px 18px;border-bottom:1px solid var(--line)}.thread{padding:22px;overflow:auto;scroll-behavior:smooth}.message{max-width:min(78%,760px);margin:0 0 16px}.message.user{margin-inline-start:0;margin-inline-end:auto}.message.ai{margin-inline-start:auto;margin-inline-end:0}.who{font-size:10px;color:var(--muted);margin:0 7px 5px}.bubble{padding:13px 15px;border:1px solid var(--line);border-radius:16px;white-space:pre-wrap;overflow-wrap:anywhere;line-height:1.75}.message.user .bubble{background:linear-gradient(135deg,#12687f,#15536b);border-bottom-left-radius:5px}.message.ai .bubble{background:#0a1823;border-bottom-right-radius:5px}.message.system .bubble{background:rgba(255,200,106,.05);color:var(--soft)}.message-meta{display:flex;gap:7px;flex-wrap:wrap;margin:6px 7px 0}.composer{border-top:1px solid var(--line);padding:14px;background:rgba(6,16,25,.72)}.compose-box{display:grid;grid-template-columns:1fr auto;gap:10px;align-items:end;border:1px solid var(--line2);background:#07141e;border-radius:15px;padding:8px}.compose-box textarea{width:100%;min-height:46px;max-height:150px;resize:none;border:0;outline:0;background:transparent;color:var(--text);padding:8px 10px;line-height:1.6}.compose-help{font-size:10px;color:var(--muted);margin:6px 8px 0}
+.inspector{overflow:auto}.fact{border-bottom:1px solid var(--line);padding:12px 0}.fact:first-child{padding-top:0}.fact:last-child{border:0}.fact label{display:block;color:var(--muted);font-size:10px;margin-bottom:4px}.fact strong{font-size:12px;overflow-wrap:anywhere}
+.search-box{display:grid;grid-template-columns:1fr auto;gap:10px}.search-box input,.public-query,input.text,textarea.text{width:100%;border:1px solid var(--line);background:#07141e;color:var(--text);outline:0;border-radius:12px;padding:12px}.search-box input:focus,.public-query:focus,textarea.text:focus{border-color:var(--cyan)}.options{display:flex;gap:12px;flex-wrap:wrap;margin-top:11px;color:var(--muted);font-size:11px}.toggle{display:flex;align-items:center;gap:7px;cursor:pointer}.toggle input{accent-color:var(--cyan)}.search-summary{display:flex;gap:8px;flex-wrap:wrap}.result{border:1px solid var(--line);background:rgba(6,17,26,.52);border-radius:14px;padding:14px;margin-top:10px}.result-head{display:flex;justify-content:space-between;gap:12px;align-items:center}.result p{color:var(--soft);margin:10px 0 0;white-space:pre-wrap;overflow-wrap:anywhere;max-height:150px;overflow:hidden}.citation{font:10px/1.5 Consolas,monospace;color:var(--cyan);margin-top:9px;overflow-wrap:anywhere}.conflict{border-color:rgba(255,118,136,.32);background:rgba(255,118,136,.05)}
+.planes{display:grid;grid-template-columns:repeat(3,1fr);gap:10px}.plane{padding:14px;border-radius:13px;border:1px solid var(--line);background:rgba(5,16,25,.52)}.plane span{display:block;color:var(--muted);font-size:10px}.plane strong{display:block;margin-top:7px;font-size:13px}
+table{width:100%;border-collapse:collapse;font-size:11px}th,td{text-align:right;padding:11px;border-bottom:1px solid var(--line);vertical-align:top}th{position:sticky;top:0;background:var(--surface);color:var(--muted);font-weight:500}.table-wrap{overflow:auto;max-height:520px}.code{font:11px/1.65 Consolas,monospace;white-space:pre-wrap;overflow-wrap:anywhere;background:#06131c;border:1px solid var(--line);border-radius:12px;padding:13px;color:var(--soft)}
+.spinner{width:15px;height:15px;display:inline-block;border:2px solid rgba(255,255,255,.25);border-top-color:#fff;border-radius:50%;animation:spin .75s linear infinite}@keyframes spin{to{transform:rotate(360deg)}}.toast{position:fixed;left:24px;bottom:24px;background:#122636;border:1px solid var(--line2);border-radius:12px;padding:11px 14px;box-shadow:var(--shadow);z-index:30;opacity:0;transform:translateY(8px);pointer-events:none;transition:.2s}.toast.show{opacity:1;transform:none}
+.mobile-nav{display:none}
+@media(max-width:1100px){.shell{grid-template-columns:82px 1fr}.brand>div:last-child,.nav span,.side-status small{display:none}.sidebar{padding:18px 10px}.brand{justify-content:center;padding-inline:0}.nav button{justify-content:center}.span3{grid-column:span 6}.span8,.span7,.span6,.span5,.span4{grid-column:span 12}.chat-layout{grid-template-columns:1fr}.inspector{display:none}}
+@media(max-width:720px){.shell{display:block}.sidebar{display:none}.topbar{height:70px;padding:0 15px}.sync,.top-actions .ghost{display:none}.content{padding:14px 12px 88px}.span3{grid-column:span 12}.service-grid,.planes{grid-template-columns:1fr}.chat-layout{height:calc(100vh - 100px);min-height:520px}.message{max-width:92%}.mobile-nav{display:flex;position:fixed;bottom:0;left:0;right:0;height:68px;background:rgba(7,17,26,.94);backdrop-filter:blur(18px);border-top:1px solid var(--line);z-index:20;justify-content:space-around;padding:8px}.mobile-nav button{border:0;background:transparent;color:var(--muted);font-size:10px}.mobile-nav button.active{color:var(--cyan)}}
+@media(prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important;scroll-behavior:auto!important}}
 </style>
 </head>
-<body><div class="app">
-<aside class="sidebar"><div class="brand"><div class="mark">R</div><div><h1>RAIOS COMMAND</h1><p>UNIFIED CONTROL SURFACE</p></div></div>
-<nav class="nav">
-<button class="active" data-view="overview">◈ <span>نظرة شاملة</span></button>
-<button data-view="raios">✦ <span>محادثة RAIOS</span></button>
-<button data-view="council">◎ <span>المجلس والعملاء</span></button>
-<button data-view="tasks">▣ <span>المهام والأقفال</span></button>
-<button data-view="estate">⬡ <span>المصانع والنماذج</span></button>
-<button data-view="evidence">◫ <span>الإيصالات والأدلة</span></button>
-<button data-view="maintenance">⚙ <span>الصيانة والتحديث</span></button>
-</nav><div class="sidefoot"><div class="pulse"><i class="dot"></i><span id="liveText">جاري الاتصال…</span></div></div></aside>
-<main><header class="top"><div><div class="eyebrow">C1 OWNER CONTROL PLANE</div><h2 id="title">مركز القيادة الموحد</h2></div><div class="actions"><button class="btn" id="lang">EN</button><button class="btn primary" id="refresh">تحديث الآن</button></div></header>
+<body>
+<div class="shell">
+<aside class="sidebar">
+  <div class="brand"><div class="logo">R</div><div><strong>RAIOS COMMAND</strong><small>CONTROL PLANE · C1</small></div></div>
+  <nav class="nav" aria-label="التنقل">
+    <button class="active" data-view="overview"><i>◈</i><span>المشهد التشغيلي</span></button>
+    <button data-view="chat"><i>✦</i><span>محادثة RAIOS</span></button>
+    <button data-view="search"><i>⌕</i><span>البحث والتحقق</span></button>
+    <button data-view="cognitive"><i>◎</i><span>التعلم والاستيعاب</span></button>
+    <button data-view="work"><i>▣</i><span>العمل والأدلة</span></button>
+    <button data-view="council"><i>◇</i><span>المجلس</span></button>
+    <button data-view="diagnostics"><i>⚙</i><span>التشخيص</span></button>
+  </nav>
+  <div class="side-status"><div class="presence"><i class="live-dot" id="sideDot"></i><span id="liveText">جاري الاتصال…</span></div><small id="headShort">HEAD —</small></div>
+</aside>
 
-<section id="overview" class="view active"><div class="grid">
-<div class="card metric"><div class="label">صحة النظام</div><div class="value" id="health">—</div><div class="sub" id="head">HEAD —</div></div>
-<div class="card metric"><div class="label">الخدمات الحية</div><div class="value" id="svcCount">—</div><div class="sub">C5 · 9Router · NATS</div></div>
-<div class="card metric"><div class="label">المهام النشطة</div><div class="value" id="taskCount">—</div><div class="sub" id="taskSub">—</div></div>
-<div class="card metric"><div class="label">النماذج المحلية</div><div class="value" id="modelCount">—</div><div class="sub">C5: qwen3:0.6b</div></div>
-<div class="card wide8 section"><h3>البنية التشغيلية الحية</h3><div class="services" id="services"></div></div>
-<div class="card wide4 section"><h3>تنبيهات وصيانة</h3><div class="timeline" id="alerts"></div></div>
-<div class="card wide12 section"><h3>المهام الأخيرة</h3><div id="recentTasks"></div></div>
-</div></section>
+<div class="workspace">
+<header class="topbar">
+  <div class="title"><small>RAIOS · CANONICAL OPERATIONS</small><h1 id="pageTitle">المشهد التشغيلي</h1></div>
+  <div class="top-actions"><div class="sync"><span id="clock">—</span><span>·</span><span id="lastSync">لم تتم المزامنة</span></div><button class="btn ghost" id="langBtn">AR / EN</button><button class="btn primary" id="refreshBtn">تحديث</button></div>
+</header>
 
-<section id="raios" class="view"><div class="grid"><div class="card wide8 section"><h3>تحدث مع RAIOS</h3><div class="composer"><textarea id="chatText" placeholder="اكتب رسالتك هنا…"></textarea><button class="btn primary" id="chatSend">إرسال إلى RAIOS</button></div><div class="output" id="chatOutput">RAIOS جاهز للمحادثة.</div></div><div class="card wide4 section"><h3>قواعد الثقة</h3><div class="timeline"><div class="row"><span>لغة المستخدم</span><b class="badge ok">نفس اللغة</b></div><div class="row"><span>ادعاء التنفيذ</span><b class="badge warn">يحتاج إيصالًا</b></div><div class="row"><span>التغيير الكانوني</span><b class="badge bad">ممنوع تلقائيًا</b></div></div></div></div></section>
+<main class="content">
+<section class="view active" id="overview">
+  <div class="grid">
+    <article class="card kpi span3" style="--glow:rgba(85,223,162,.1)"><div class="kpi-label">صحة التشغيل</div><div class="kpi-value" id="healthValue">—</div><div class="kpi-sub" id="healthSub">بانتظار القياس</div></article>
+    <article class="card kpi span3"><div class="kpi-label">الخدمات الحية</div><div class="kpi-value" id="servicesValue">—</div><div class="kpi-sub">C5 · Manager · Command · 9Router · NATS</div></article>
+    <article class="card kpi span3" style="--glow:rgba(172,156,255,.1)"><div class="kpi-label">العمل النشط</div><div class="kpi-value" id="tasksValue">—</div><div class="kpi-sub" id="tasksSub">—</div></article>
+    <article class="card kpi span3" style="--glow:rgba(255,200,106,.1)"><div class="kpi-label">الأدلة المسترجعة</div><div class="kpi-value" id="evidenceValue">—</div><div class="kpi-sub" id="evidenceSub">Search Cortex</div></article>
+    <article class="card span8"><div class="card-head"><h2>الخدمات والبنية الحية</h2><span class="hint">قياس مباشر، لا ادعاء</span></div><div class="service-grid" id="servicesGrid"></div></article>
+    <article class="card span4"><div class="card-head"><h2>ما يحتاج الانتباه</h2><span class="pill neutral" id="attentionCount">0</span></div><div class="list" id="attentionList"></div></article>
+    <article class="card span7"><div class="card-head"><h2>آخر المهام</h2><button class="btn ghost" data-jump="work">عرض الكل</button></div><div class="list" id="recentTasks"></div></article>
+    <article class="card span5"><div class="card-head"><h2>الدورة المعرفية</h2><button class="btn ghost" data-jump="cognitive">التفاصيل</button></div><div class="planes" id="overviewPlanes"></div></article>
+  </div>
+</section>
 
-<section id="council" class="view"><div class="grid"><div class="card wide8 section"><h3>إعلان أو أمر للمجلس</h3><div class="chips" id="targets"><button class="chip on" data-target="ALL">الجميع</button><button class="chip" data-target="C2">C2</button><button class="chip" data-target="C3">C3</button><button class="chip" data-target="C4">C4</button><button class="chip" data-target="C5">C5</button></div><div class="composer"><textarea id="commandText" placeholder="اكتب الإعلان أو التوجيه. الإرسال لا يعني التنفيذ…"></textarea><button class="btn primary" id="commandSend">إرسال موثّق</button></div><div class="output" id="commandOutput">ستظهر هنا إيصالات الإرسال والاستجابات.</div></div><div class="card wide4 section"><h3>حضور المقاعد</h3><div class="timeline" id="seats"></div></div></div></section>
+<section class="view" id="chat">
+  <div class="chat-layout">
+    <article class="card chat-panel">
+      <div class="chat-head"><div><h2>محادثة RAIOS</h2><div class="hint">Search Cortex → Grounding → C5 Student → KAE Assimilation</div></div><button class="btn ghost danger" id="newChat">محادثة جديدة</button></div>
+      <div class="thread" id="thread"></div>
+      <div class="composer"><div class="compose-box"><textarea id="chatInput" aria-label="رسالتك" placeholder="اكتب إلى RAIOS…"></textarea><button class="btn primary" id="sendChat">إرسال</button></div><div class="compose-help">Enter للإرسال · Shift+Enter لسطر جديد · التنفيذ يحتاج إيصالًا</div></div>
+    </article>
+    <aside class="card inspector"><div class="card-head"><h2>سياق الجولة</h2><span class="pill ok" id="chatRole">STUDENT</span></div>
+      <div class="fact"><label>النموذج</label><strong id="chatModel">qwen3:0.6b</strong></div>
+      <div class="fact"><label>Main Cortex</label><strong>qwen3.6:35b-a3b · HOLD</strong></div>
+      <div class="fact"><label>التأريض</label><strong id="chatGrounding">لا توجد جولة بعد</strong></div>
+      <div class="fact"><label>التحقق</label><strong id="chatVerification">—</strong></div>
+      <div class="fact"><label>الاستيعاب</label><strong id="chatAssimilation">DISCOVERED فقط</strong></div>
+      <div class="fact"><label>القانون</label><strong>NO_EXECUTION_CLAIM_WITHOUT_RECEIPT</strong></div>
+    </aside>
+  </div>
+</section>
 
-<section id="tasks" class="view"><div class="card section"><h3>المهام والأقفال الكانونية</h3><div id="tasksTable"></div></div></section>
-<section id="estate" class="view"><div class="grid"><div class="card wide6 section" style="grid-column:span 6"><h3>المصانع</h3><div class="timeline" id="factories"></div></div><div class="card wide6 section" style="grid-column:span 6"><h3>النماذج</h3><div class="timeline" id="models"></div></div></div></section>
-<section id="evidence" class="view"><div class="card section"><h3>الإيصالات والأدلة الحديثة</h3><div id="receipts"></div></div></section>
-<section id="maintenance" class="view"><div class="grid"><div class="card wide8 section"><h3>الصيانة الذاتية المحكومة</h3><p style="color:var(--muted);line-height:1.8">يراقب المركز الخدمات والحالة باستمرار، ويعيد تحديث لوحاته تلقائيًا. لا يعدّل canonical ولا يمنح نفسه صلاحيات. التشخيص تلقائي؛ الإصلاح أو التحديث التنفيذي يحتاج تأكيد C1 وإيصالًا.</p><button class="btn primary" id="diagnose">تشخيص شامل الآن</button><div class="output" id="diagnosis">لم يبدأ التشخيص بعد.</div></div><div class="card wide4 section"><h3>سياسة الأمان</h3><div class="timeline"><div class="row"><span>Auto refresh</span><b class="badge ok">ON</b></div><div class="row"><span>Auto canonical mutation</span><b class="badge bad">OFF</b></div><div class="row"><span>Fast-forward only</span><b class="badge ok">REQUIRED</b></div><div class="row"><span>C1 approval</span><b class="badge ok">REQUIRED</b></div></div></div></div></section>
-</main></div>
+<section class="view" id="search">
+  <div class="grid">
+    <article class="card span12">
+      <div class="card-head"><div><h2>Search Cortex الموحد</h2><div class="hint">تخطيط · بحث متعدد المصادر · إزالة تكرار · استشهاد · كشف تناقض</div></div><span class="pill ok">PRIVATE FIRST</span></div>
+      <div class="search-box"><input id="searchInput" placeholder="ما الذي تريد فحصه أو إثباته؟"><button class="btn primary" id="searchBtn">ابحث وتحقق</button></div>
+      <div class="options"><label class="toggle"><input type="checkbox" id="deepSearch" checked> بحث تاريخي عميق</label><label class="toggle"><input type="checkbox" id="publicSearch"> السماح ببحث عام منفصل</label><input class="public-query" id="publicQuery" style="display:none;max-width:420px" placeholder="صياغة عامة بلا بيانات خاصة"></div>
+    </article>
+    <article class="card span8"><div class="card-head"><h2>الأدلة المرتبة</h2><div class="search-summary" id="searchSummary"></div></div><div id="searchResults" class="empty">ابدأ باستعلام واضح. لن تُرسل صياغة RAIOS الخاصة إلى الويب.</div></article>
+    <article class="card span4"><div class="card-head"><h2>خطة التحقق</h2><span class="pill neutral" id="verifyState">—</span></div><div id="searchPlan" class="list"></div><div id="conflicts"></div></article>
+  </div>
+</section>
+
+<section class="view" id="cognitive">
+  <div class="grid">
+    <article class="card span8"><div class="card-head"><h2>حلقة التعلم والاستيعاب والتنفيذ المعرفي</h2><span class="pill" id="loopBadge">—</span></div><div class="planes" id="loopPlanes"></div></article>
+    <article class="card span4"><div class="card-head"><h2>المدير المستمر</h2><span class="pill" id="managerBadge">—</span></div><div class="list" id="managerFacts"></div></article>
+    <article class="card span6"><div class="card-head"><h2>مخزون المعرفة</h2><span class="hint">نافذة آخر 5000 سجل</span></div><div class="grid" id="learningMetrics"></div></article>
+    <article class="card span6"><div class="card-head"><h2>حدود الثقة</h2><span class="pill ok">GOVERNED</span></div><div class="list" id="learningLaws"></div></article>
+  </div>
+</section>
+
+<section class="view" id="work">
+  <div class="grid">
+    <article class="card span12"><div class="card-head"><h2>قائمة التنفيذ الكانونية</h2><span class="hint" id="workStats">—</span></div><div class="table-wrap" id="tasksTable"></div></article>
+    <article class="card span12"><div class="card-head"><h2>الإيصالات والأدلة الحديثة</h2><span class="hint">Provenance محفوظ</span></div><div class="table-wrap" id="receiptsTable"></div></article>
+  </div>
+</section>
+
+<section class="view" id="council">
+  <div class="grid">
+    <article class="card span8"><div class="card-head"><h2>إعلان أو توجيه موثّق</h2><span class="pill warn">الإرسال ≠ التنفيذ</span></div><div class="options" id="targets"><button class="btn primary target active" data-target="ALL">الجميع</button><button class="btn target" data-target="C2">C2</button><button class="btn target" data-target="C3">C3</button><button class="btn target" data-target="C4">C4</button><button class="btn target" data-target="C5">C5</button><button class="btn target" data-target="C6">C6</button></div><textarea class="text" id="commandInput" style="min-height:150px;margin-top:14px" placeholder="اكتب التوجيه…"></textarea><div style="display:flex;justify-content:flex-end;margin-top:10px"><button class="btn primary" id="sendCommand">إرسال موثّق</button></div><div class="code" id="commandOutput" style="margin-top:13px">ستظهر إيصالات الإرسال هنا.</div></article>
+    <article class="card span4"><div class="card-head"><h2>حضور المقاعد</h2><span class="hint">الحضور يحتاج إثباتًا</span></div><div class="list" id="seatList"></div></article>
+  </div>
+</section>
+
+<section class="view" id="diagnostics">
+  <div class="grid">
+    <article class="card span4 kpi"><div class="kpi-label">درجة الصحة</div><div class="kpi-value" id="diagScore">—</div><div class="kpi-sub" id="diagState">لم يبدأ التشخيص</div><button class="btn primary" id="diagnoseBtn" style="margin-top:14px">تشخيص شامل الآن</button></article>
+    <article class="card span8"><div class="card-head"><h2>الأسباب الجذرية</h2><span class="hint">تشخيص للقراءة فقط</span></div><div class="list" id="rootCauses"><div class="empty">ابدأ التشخيص لعرض الأسباب والإجراء الموصى به.</div></div></article>
+    <article class="card span12"><div class="card-head"><h2>الاستمرارية الذاتية</h2><span class="pill" id="continuityBadge">—</span></div><div class="planes" id="continuityServices"></div></article>
+  </div>
+</section>
+</main>
+</div>
+</div>
+
+<nav class="mobile-nav">
+<button class="active" data-view="overview">◈<br>الحالة</button><button data-view="chat">✦<br>RAIOS</button><button data-view="search">⌕<br>البحث</button><button data-view="cognitive">◎<br>التعلم</button><button data-view="diagnostics">⚙<br>الفحص</button>
+</nav>
+<div class="toast" id="toast"></div>
+
 <script>
-let csrf="",data=null,targets=new Set(["ALL"]);const $=s=>document.querySelector(s),$$=s=>[...document.querySelectorAll(s)];
-const esc=s=>String(s??"").replace(/[&<>"']/g,m=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[m]));
-async function api(url,opt={}){opt.headers={...(opt.headers||{}),"Content-Type":"application/json","X-RAIOS-CSRF":csrf};const r=await fetch(url,opt);const j=await r.json();if(!r.ok)throw Error(JSON.stringify(j));return j}
-function badge(state){let c=state==="ONLINE"||state==="DONE"||state==="PRESENT"?"ok":state==="OFFLINE"||state==="BLOCKED"?"bad":"warn";return '<b class="badge '+c+'">'+esc(state)+'</b>'}
-function render(o){data=o;$("#health").textContent=o.maintenance.health;$("#head").textContent="HEAD "+o.canonical_head.slice(0,10);$("#svcCount").textContent=o.services.filter(x=>x.state==="ONLINE").length+"/"+o.services.length;$("#taskCount").textContent=o.tasks.in_progress;$("#taskSub").textContent=o.tasks.ready+" جاهزة · "+o.tasks.blocked+" محجوبة";$("#modelCount").textContent=o.models.count;
-$("#services").innerHTML=o.services.map(x=>'<div class="service"><strong>'+esc(x.name)+'</strong>'+badge(x.state)+' <small>:'+x.port+'</small></div>').join("");
-$("#alerts").innerHTML=o.maintenance.degraded.length?o.maintenance.degraded.map(x=>'<div class="row"><span>'+esc(x)+'</span>'+badge("ATTENTION")+'</div>').join(""):'<div class="row"><span>لا توجد أعطال حرجة</span>'+badge("HEALTHY")+'</div>';
-$("#recentTasks").innerHTML=table(o.tasks.recent,[["id","المهمة"],["status","الحالة"],["claimed_by","المالك"]]);renderSeats(o.council);renderFactories(o.factories);renderModels(o.models);$("#liveText").textContent="متصل · "+new Date(o.generated_at).toLocaleTimeString("ar")}
-function table(rows,cols){if(!rows?.length)return'<div class="empty">لا توجد بيانات</div>';return'<table><thead><tr>'+cols.map(c=>'<th>'+c[1]+'</th>').join("")+'</tr></thead><tbody>'+rows.map(r=>'<tr>'+cols.map(c=>'<td>'+esc(r[c[0]]??"—")+'</td>').join("")+'</tr>').join("")+'</tbody></table>'}
-function renderSeats(c){$("#seats").innerHTML=c.seats.map(s=>'<div class="row"><span><b>'+esc(s.id)+'</b><br><small>'+esc(s.name_ar)+'</small></span>'+badge(s.presence)+'</div>').join("")}
-function renderFactories(f){$("#factories").innerHTML=f.factories.map(x=>'<div class="row"><span>'+esc(x.name)+'</span>'+badge(x.state)+'</div>').join("")}
-function renderModels(m){$("#models").innerHTML=m.models.length?m.models.map(x=>'<div class="row"><span>'+esc(x.name)+'</span><small>'+Math.round((x.size||0)/1e6)+' MB</small></div>').join(""):'<div class="empty">Ollama غير متاح</div>'}
-async function boot(){let b=await api("/api/bootstrap");csrf=b.csrf;render(b.overview);await extras()}
-async function refresh(){render(await api("/api/overview"));await extras()}
-async function extras(){let t=await api("/api/tasks");$("#tasksTable").innerHTML=table(t.recent,[["id","المهمة"],["status","الحالة"],["claimed_by","المالك"],["validation","التحقق"]]);let r=await api("/api/receipts");$("#receipts").innerHTML=table(r.recent,[["name","الإيصال"],["bytes","الحجم"],["path","المسار"]])}
-$$(".nav button").forEach(b=>b.onclick=()=>{$$(".nav button").forEach(x=>x.classList.remove("active"));b.classList.add("active");$$(".view").forEach(x=>x.classList.remove("active"));$("#"+b.dataset.view).classList.add("active");$("#title").textContent=b.querySelector("span")?.textContent||"RAIOS"});
-$$(".chip").forEach(b=>b.onclick=()=>{if(b.dataset.target==="ALL"){targets=new Set(["ALL"]);$$(".chip").forEach(x=>x.classList.toggle("on",x===b))}else{targets.delete("ALL");$(".chip[data-target=ALL]").classList.remove("on");targets.has(b.dataset.target)?targets.delete(b.dataset.target):targets.add(b.dataset.target);b.classList.toggle("on");}});
-$("#refresh").onclick=refresh;$("#chatSend").onclick=async()=>{let b=$("#chatSend"),t=$("#chatText").value.trim();if(!t)return;b.innerHTML='<i class="spinner"></i>';try{let r=await api("/api/chat",{method:"POST",body:JSON.stringify({text:t})});$("#chatOutput").textContent=r.response||r.content||JSON.stringify(r,null,2)}catch(e){$("#chatOutput").textContent="ERROR "+e.message}finally{b.textContent="إرسال إلى RAIOS"}};
-$("#commandSend").onclick=async()=>{let b=$("#commandSend"),t=$("#commandText").value.trim();if(!t||!targets.size)return;b.innerHTML='<i class="spinner"></i>';try{let r=await api("/api/command",{method:"POST",body:JSON.stringify({text:t,targets:[...targets]})});$("#commandOutput").textContent=JSON.stringify(r,null,2)}catch(e){$("#commandOutput").textContent="ERROR "+e.message}finally{b.textContent="إرسال موثّق"}};
-$("#diagnose").onclick=async()=>{try{$("#diagnosis").textContent=JSON.stringify(await api("/api/maintenance/diagnose",{method:"POST"}),null,2)}catch(e){$("#diagnosis").textContent=e.message}};
-boot().catch(e=>{$("#liveText").textContent="تعذر الاتصال";console.error(e)});setInterval(()=>refresh().catch(()=>{}),15000);
-</script></body></html>
+(function(){
+'use strict';
+var csrf='', overviewData=null, targets=new Set(['ALL']);
+var conversationId=localStorage.getItem('raiosConversationId')||newId();
+var messages=readMessages();
+var titles={overview:'المشهد التشغيلي',chat:'محادثة RAIOS',search:'البحث والتحقق',cognitive:'التعلم والاستيعاب',work:'العمل والأدلة',council:'المجلس',diagnostics:'التشخيص'};
+function $(s){return document.querySelector(s)} function $$(s){return Array.from(document.querySelectorAll(s))}
+function esc(v){return String(v==null?'':v).replace(/[&<>"']/g,function(m){return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[m]})}
+function newId(){var id=(crypto.randomUUID?crypto.randomUUID():Date.now()+'-'+Math.random());localStorage.setItem('raiosConversationId',id);return id}
+function readMessages(){try{return JSON.parse(localStorage.getItem('raiosChat')||'[]').slice(-40)}catch(e){return []}}
+function saveMessages(){localStorage.setItem('raiosChat',JSON.stringify(messages.slice(-40)))}
+function klass(s){s=String(s||'').toUpperCase();return /ONLINE|HEALTHY|DONE|PRESENT|PASS|READY_FOR_VALIDATION/.test(s)?'ok':/OFFLINE|BLOCKED|FAIL|DEGRADED|CONFLICT|STALE/.test(s)?'bad':'warn'}
+function badge(s){return '<span class="badge '+klass(s)+'">'+esc(s||'UNPROVEN')+'</span>'}
+function toast(t){var n=$('#toast');n.textContent=t;n.classList.add('show');setTimeout(function(){n.classList.remove('show')},2600)}
+async function api(url,opt){
+  opt=opt||{};opt.headers=Object.assign({},opt.headers||{}, {'Content-Type':'application/json','X-RAIOS-CSRF':csrf});
+  var r=await fetch(url,opt),j;try{j=await r.json()}catch(e){j={error:'NON_JSON_RESPONSE'}}
+  if(!r.ok)throw new Error(JSON.stringify(j));return j
+}
+function table(rows,cols){
+  if(!rows||!rows.length)return '<div class="empty">لا توجد بيانات</div>';
+  return '<table><thead><tr>'+cols.map(function(c){return '<th>'+esc(c[1])+'</th>'}).join('')+'</tr></thead><tbody>'+rows.map(function(r){return '<tr>'+cols.map(function(c){var v=r[c[0]];return '<td>'+esc(v==null?'—':(typeof v==='object'?JSON.stringify(v):v))+'</td>'}).join('')+'</tr>'}).join('')+'</tbody></table>'
+}
+function openView(id){
+  $$('.view').forEach(function(v){v.classList.toggle('active',v.id===id)});
+  $$('.nav button,.mobile-nav button').forEach(function(b){b.classList.toggle('active',b.dataset.view===id)});
+  $('#pageTitle').textContent=titles[id]||'RAIOS';
+  if(id==='chat')renderThread();
+  if(id==='diagnostics')renderContinuity((((overviewData||{}).cognitive||{}).continuity||{}));
+}
+function renderOverview(o){
+  overviewData=o;var services=o.services||[], online=services.filter(function(x){return x.state==='ONLINE'}).length;
+  var loop=((o.cognitive||{}).loop||{}), manager=(loop.manager||{}), latest=((o.cognitive||{}).search_latest||{});
+  var managerOnline=manager.alive===true;var total=services.length+1;var live=online+(managerOnline?1:0);var healthy=live===total;
+  $('#healthValue').textContent=healthy?'100':'ATTN';$('#healthSub').textContent=healthy?'كل المكونات الأساسية تعمل':'توجد فجوة تحتاج معالجة';
+  $('#servicesValue').textContent=live+'/'+total;$('#tasksValue').textContent=(o.tasks||{}).in_progress||0;
+  $('#tasksSub').textContent=((o.tasks||{}).ready||0)+' جاهزة · '+((o.tasks||{}).blocked||0)+' محجوبة';
+  $('#evidenceValue').textContent=latest.count==null?'—':latest.count;$('#evidenceSub').textContent=((latest.verification||{}).status||'لا بحث حديث');
+  $('#headShort').textContent='HEAD '+String(o.canonical_head||'—').slice(0,10);
+  $('#servicesGrid').innerHTML=services.map(function(x){
+    var latency=(x.detail||{}).latency_ms;return '<div class="service"><div class="service-top"><strong>'+esc(x.name)+'</strong>'+badge(x.state)+'</div><small>127.0.0.1:'+esc(x.port)+(latency?' · '+esc(latency)+'ms':'')+'</small><div class="bar"><i style="width:'+(x.state==='ONLINE'?100:18)+'%;background:'+(x.state==='ONLINE'?'':'var(--red)')+'"></i></div></div>'
+  }).join('')+'<div class="service"><div class="service-top"><strong>Live Manager</strong>'+badge(managerOnline?'ONLINE':(manager.reason||'UNPROVEN'))+'</div><small>Heartbeat · '+esc(manager.age_seconds==null?'—':manager.age_seconds+'s')+'</small><div class="bar"><i style="width:'+(managerOnline?100:18)+'%;background:'+(managerOnline?'':'var(--red)')+'"></i></div></div>';
+  var attention=services.filter(function(x){return x.state!=='ONLINE'}).map(function(x){return {name:x.name,detail:x.state}});
+  if(!managerOnline)attention.push({name:'Live Manager',detail:manager.reason||'UNPROVEN'});
+  var env=((services.find(function(x){return x.name==='C5'})||{}).detail||{}).environment||{};
+  if(env.dependency_audit!=='PASS'||env.pytest_available!==true)attention.push({name:'C5 Environment',detail:'INCOMPLETE'});
+  $('#attentionCount').textContent=attention.length;$('#attentionList').innerHTML=attention.length?attention.map(function(x){return '<div class="list-row"><div class="grow"><strong>'+esc(x.name)+'</strong><small>'+esc(x.detail)+'</small></div>'+badge('ATTENTION')+'</div>'}).join(''):'<div class="list-row"><div><strong>لا توجد أعطال حرجة</strong><small>آخر قياس مباشر</small></div>'+badge('HEALTHY')+'</div>';
+  var recent=(o.tasks||{}).recent||[];$('#recentTasks').innerHTML=recent.slice(-6).reverse().map(function(t){return '<div class="list-row"><div class="grow"><strong>'+esc(t.id)+'</strong><small>'+esc(t.claimed_by||'غير مسند')+'</small></div>'+badge(t.status)+'</div>'}).join('')||'<div class="empty">لا مهام</div>';
+  var planes=loop.planes||{};$('#overviewPlanes').innerHTML=['retrieve','assimilate','continuous_manager'].map(function(k){return '<div class="plane"><span>'+esc(k)+'</span><strong>'+badge(planes[k]===true?'ONLINE':'UNPROVEN')+'</strong></div>'}).join('');
+  $('#liveText').textContent=healthy?'متصل ومستقر':'متصل · يحتاج انتباه';$('#sideDot').style.background=healthy?'var(--green)':'var(--amber)';
+  $('#lastSync').textContent=new Date(o.generated_at).toLocaleTimeString('ar');
+  renderCognitive(o.cognitive||{});renderContinuity((o.cognitive||{}).continuity||{});
+}
+function renderThread(){
+  var box=$('#thread');if(!messages.length){box.innerHTML='<div class="message ai system"><div class="who">RAIOS</div><div class="bubble">أنا جاهز. سأبحث في الأدلة المحلية أولًا، أوضح حدود الثقة، ثم أستوعب الناتج كـ DISCOVERED دون ترقية تلقائية.</div></div>';return}
+  box.innerHTML=messages.map(function(m){return '<div class="message '+esc(m.role)+'"><div class="who">'+esc(m.who)+' · '+esc(m.time||'')+'</div><div class="bubble">'+esc(m.text)+'</div>'+(m.meta?'<div class="message-meta">'+m.meta.map(function(x){return badge(x)}).join('')+'</div>':'')+'</div>'}).join('');box.scrollTop=box.scrollHeight
+}
+function addMessage(role,who,text,meta){messages.push({role:role,who:who,text:text,time:new Date().toLocaleTimeString('ar',{hour:'2-digit',minute:'2-digit'}),meta:meta||[]});saveMessages();renderThread()}
+async function sendChat(){
+  var input=$('#chatInput'),text=input.value.trim();if(!text)return;var btn=$('#sendChat');addMessage('user','C1',text);input.value='';btn.disabled=true;btn.innerHTML='<i class="spinner"></i>';
+  try{
+    var r=await api('/api/chat',{method:'POST',body:JSON.stringify({text:text,conversation_id:conversationId})});
+    var g=r.grounding||{},a=r.assimilated||{},v=g.verification||{};
+    addMessage('ai','RAIOS · '+(r.model||'C5'),r.response||r.content||'لا يوجد رد',[v.status||'UNPROVEN',a.review_state||'NOT_ASSIMILATED']);
+    $('#chatModel').textContent=r.model||'—';$('#chatGrounding').textContent=(g.count||0)+' دليل · '+(g.latency_ms||0)+'ms';
+    $('#chatVerification').textContent=(v.status||'UNPROVEN')+' · '+(v.source_count||0)+' مصادر';
+    $('#chatAssimilation').textContent=(a.review_state||'UNPROVEN')+(a.skill_candidate?' · '+a.skill_candidate:'');
+  }catch(e){addMessage('system','SYSTEM','تعذر إكمال الجولة: '+e.message,['ERROR'])}finally{btn.disabled=false;btn.textContent='إرسال';input.focus()}
+}
+async function runSearch(){
+  var q=$('#searchInput').value.trim();if(!q)return;var btn=$('#searchBtn');btn.disabled=true;btn.innerHTML='<i class="spinner"></i>';
+  try{
+    var r=await api('/api/search',{method:'POST',body:JSON.stringify({query:q,public_query:$('#publicQuery').value.trim()||null,allow_public:$('#publicSearch').checked,deep:$('#deepSearch').checked,limit:24})});
+    var v=r.verification||{};$('#verifyState').className='pill '+klass(v.status);$('#verifyState').textContent=v.status||'UNPROVEN';
+    $('#searchSummary').innerHTML=badge((r.count||0)+' EVIDENCE')+badge((v.source_count||0)+' SOURCES')+badge(Math.round(r.latency_ms||0)+'ms');
+    var plan=r.plan||{};$('#searchPlan').innerHTML='<div class="list-row"><div><strong>النية</strong><small>'+esc((plan.intents||[]).join(' · '))+'</small></div></div><div class="list-row"><div><strong>الاستعلامات</strong><small>'+esc((plan.subqueries||[]).join(' | '))+'</small></div></div><div class="list-row"><div><strong>الحداثة</strong><small>'+esc(v.currentness_satisfied?'مُثبتة':'غير مثبتة/غير مطلوبة')+'</small></div></div>';
+    var rows=r.results||[];$('#searchResults').className='';$('#searchResults').innerHTML=rows.length?rows.map(function(x){return '<article class="result"><div class="result-head"><strong>'+esc(x.evidence_id)+' · '+esc(x.source)+'</strong>'+badge(x.trust||'UNPROVEN')+'</div><p>'+esc(x.excerpt||'')+'</p><div class="citation">'+esc(x.citation||'')+'</div></article>'}).join(''):'<div class="empty">NO_EVIDENCE — لا توجد أدلة كافية.</div>';
+    var cs=r.contradictions||[];$('#conflicts').innerHTML=cs.length?'<div class="result conflict"><strong>تعارض غير محسوم</strong>'+cs.map(function(c){return '<p>'+esc(c.claim_pair.join(' ↔ '))+' · '+esc(c.positive_evidence.join(','))+' / '+esc(c.negative_evidence.join(','))+'</p>'}).join('')+'</div>':'<div class="result"><strong>لا تعارض مباشر في الأدلة المختارة</strong></div>';
+  }catch(e){$('#searchResults').innerHTML='<div class="empty">SEARCH ERROR · '+esc(e.message)+'</div>'}finally{btn.disabled=false;btn.textContent='ابحث وتحقق'}
+}
+function renderCognitive(c){
+  var loop=c.loop||{},planes=loop.planes||{},art=loop.artifacts||{},mgr=loop.manager||{};
+  $('#loopBadge').className='pill '+klass(loop.closed_loop?'ONLINE':'DEGRADED');$('#loopBadge').textContent=loop.closed_loop?'CLOSED LOOP':'UNPROVEN';
+  $('#loopPlanes').innerHTML=Object.keys(planes).map(function(k){return '<div class="plane"><span>'+esc(k)+'</span><strong>'+badge(planes[k]===true?'ACTIVE':'INACTIVE')+'</strong></div>'}).join('')||'<div class="empty">لا بيانات</div>';
+  $('#managerBadge').className='pill '+klass(mgr.alive?'ONLINE':mgr.reason);$('#managerBadge').textContent=mgr.alive?'ONLINE':(mgr.reason||'UNPROVEN');
+  $('#managerFacts').innerHTML='<div class="list-row"><div><strong>Heartbeat age</strong><small>'+esc(mgr.age_seconds==null?'—':mgr.age_seconds+' seconds')+'</small></div></div><div class="list-row"><div><strong>Single Search Cortex</strong><small>'+esc(c.shared_search_cortex?'PROVEN':'UNPROVEN')+'</small></div></div><div class="list-row"><div><strong>Existing KAE</strong><small>'+esc(c.existing_kae_reused?'REUSED':'UNPROVEN')+'</small></div></div>';
+  var d=art.digests||{},ca=art.candidates||{};var stats=[['Digests',d.records_observed||0],['Candidates',ca.records_observed||0],['Ready',((ca.review_states||{}).READY_FOR_VALIDATION||0)],['Invalid',(d.invalid_records||0)+(ca.invalid_records||0)]];
+  $('#learningMetrics').innerHTML=stats.map(function(x){return '<div class="card span6 kpi" style="box-shadow:none"><div class="kpi-label">'+esc(x[0])+'</div><div class="kpi-value">'+esc(x[1])+'</div></div>'}).join('');
+  $('#learningLaws').innerHTML=(loop.law||[]).map(function(x){return '<div class="list-row"><div class="grow"><strong>'+esc(x)+'</strong><small>Enforced boundary</small></div>'+badge('ACTIVE')+'</div>'}).join('');
+}
+function renderContinuity(c){
+  $('#continuityBadge').className='pill '+klass(c.status);$('#continuityBadge').textContent=c.status||'UNPROVEN';
+  var s=c.services||{};$('#continuityServices').innerHTML=Object.keys(s).map(function(k){return '<div class="plane"><span>'+esc(k)+'</span><strong>'+badge(s[k]?'ONLINE':'OFFLINE')+'</strong></div>'}).join('')||'<div class="empty">سيظهر إثبات الحارس بعد أول دورة.</div>'
+}
+async function extras(){
+  var res=await Promise.all([api('/api/tasks'),api('/api/receipts'),api('/api/cognitive')]);var t=res[0],r=res[1],c=res[2];
+  $('#tasksTable').innerHTML=table(t.recent,[['id','المهمة'],['status','الحالة'],['claimed_by','المنفذ'],['validation','التحقق']]);
+  $('#workStats').textContent=t.in_progress+' قيد التنفيذ · '+t.active_locks+' أقفال نشطة';
+  $('#receiptsTable').innerHTML=table(r.recent,[['name','الإيصال'],['bytes','الحجم'],['path','المسار']]);renderCognitive(c)
+}
+async function refresh(){
+  var b=$('#refreshBtn');b.disabled=true;try{var o=await api('/api/overview');renderOverview(o);await extras()}catch(e){$('#liveText').textContent='تعذر الاتصال';$('#sideDot').style.background='var(--red)';toast('فشل التحديث')}finally{b.disabled=false;b.textContent='تحديث'}
+}
+async function boot(){var b=await api('/api/bootstrap');csrf=b.csrf;renderOverview(b.overview);renderThread();await extras()}
+async function diagnose(){
+  var b=$('#diagnoseBtn');b.disabled=true;b.innerHTML='<i class="spinner"></i>';
+  try{var r=await api('/api/maintenance/diagnose',{method:'POST'}),d=r.diagnosis||{};$('#diagScore').textContent=d.score==null?'—':d.score;$('#diagState').textContent=d.health||'UNPROVEN';var cs=d.root_causes||[];$('#rootCauses').innerHTML=cs.length?cs.map(function(c){return '<div class="list-row"><div class="grow"><strong>'+esc(c.code)+'</strong><small>'+esc(c.recommended_action)+'</small></div>'+badge(c.severity)+'</div>'}).join(''):'<div class="list-row"><div><strong>لا أسباب جذرية نشطة</strong><small>الحالة المقاسة سليمة</small></div>'+badge('HEALTHY')+'</div>';renderContinuity((d.cognitive||{}).continuity||{})}catch(e){toast('تعذر التشخيص')}finally{b.disabled=false;b.textContent='تشخيص شامل الآن'}
+}
+async function command(){
+  var text=$('#commandInput').value.trim();if(!text||!targets.size)return;var b=$('#sendCommand');b.disabled=true;
+  try{var r=await api('/api/command',{method:'POST',body:JSON.stringify({text:text,targets:Array.from(targets)})});$('#commandOutput').textContent=JSON.stringify(r,null,2);toast('تم الإرسال إلى النسيج الكانوني')}catch(e){$('#commandOutput').textContent=e.message}finally{b.disabled=false}
+}
+$$('.nav button,.mobile-nav button').forEach(function(b){b.addEventListener('click',function(){openView(b.dataset.view)})});
+$$('[data-jump]').forEach(function(b){b.addEventListener('click',function(){openView(b.dataset.jump)})});
+$$('.target').forEach(function(b){b.addEventListener('click',function(){
+  var v=b.dataset.target;if(v==='ALL'){targets=new Set(['ALL']);$$('.target').forEach(function(x){x.classList.toggle('primary',x===b)})}
+  else{targets.delete('ALL');$('.target[data-target="ALL"]').classList.remove('primary');targets.has(v)?targets.delete(v):targets.add(v);b.classList.toggle('primary')}
+})});
+$('#refreshBtn').addEventListener('click',refresh);$('#sendChat').addEventListener('click',sendChat);$('#searchBtn').addEventListener('click',runSearch);$('#diagnoseBtn').addEventListener('click',diagnose);$('#sendCommand').addEventListener('click',command);
+$('#chatInput').addEventListener('keydown',function(e){if(e.key==='Enter'&&!e.shiftKey){e.preventDefault();sendChat()}});
+$('#searchInput').addEventListener('keydown',function(e){if(e.key==='Enter'){runSearch()}});
+$('#publicSearch').addEventListener('change',function(){var p=$('#publicQuery');p.style.display=this.checked?'block':'none';if(this.checked)p.focus()});
+$('#newChat').addEventListener('click',function(){messages=[];localStorage.removeItem('raiosChat');conversationId=newId();renderThread();toast('بدأت محادثة جديدة')});
+$('#langBtn').addEventListener('click',function(){var rtl=document.documentElement.dir==='rtl';document.documentElement.dir=rtl?'ltr':'rtl';toast(rtl?'Layout LTR':'التخطيط RTL')});
+var initialView=new URLSearchParams(location.search).get('view');if(initialView&&titles[initialView])openView(initialView);
+setInterval(function(){$('#clock').textContent=new Date().toLocaleTimeString('ar',{hour:'2-digit',minute:'2-digit'})},1000);
+boot().catch(function(e){$('#liveText').textContent='تعذر الاتصال';$('#sideDot').style.background='var(--red)';console.error(e)});
+setInterval(function(){refresh().catch(function(){})},20000);
+})();
+</script>
+</body>
+</html>
