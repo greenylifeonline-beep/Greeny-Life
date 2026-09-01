@@ -1,0 +1,15 @@
+{
+  "schema": "raios.resource-fabric.c6-independent-test-results.v1",
+  "canonical_head": "1423d4ba21690da948735d4b9def3a48f6aa557e",
+  "command": "python -m pytest tests/resource_fabric tests/command_fabric -q --disable-warnings --maxfail=1",
+  "pythonpath": ["src", "C:/Users/Ghanam/.raios/tooling/transport/.venv/Lib/site-packages"],
+  "executed": 218,
+  "passed": 218,
+  "failed": 0,
+  "exit_code": 0,
+  "duration_seconds": 11.49,
+  "initial_environment_failure": "System Python alone lacked the existing a2a transport dependency; no package was installed.",
+  "mutation_executed": false,
+  "paid_resource_created": false,
+  "gpu_session_started": false
+}

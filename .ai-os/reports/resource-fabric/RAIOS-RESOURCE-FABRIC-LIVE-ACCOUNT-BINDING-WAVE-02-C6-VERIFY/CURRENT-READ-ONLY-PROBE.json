@@ -1,0 +1,24 @@
+{
+  "schema": "raios.resource-fabric.c6-current-read-only-probe.v1",
+  "timestamp_utc": "2026-08-30T08:26:43.5690755Z",
+  "canonical_head": "1423d4ba21690da948735d4b9def3a48f6aa557e",
+  "remote_head_matches": true,
+  "mutation_executed": false,
+  "gpu_started": false,
+  "paid_resource_created": false,
+  "credential_values_exposed": false,
+  "providers": {
+    "KAGGLE_C1": {"state": "AUTH_AND_READ_PROVEN", "identity": "greenylife", "auth_method": "OAUTH", "owned_dataset_read": true, "storage_capacity_proven": false, "execution_allowed": false},
+    "HUGGINGFACE": {"state": "AUTH_AND_IDENTITY_PROVEN", "identity": "greenylifeonline", "storage_capacity_proven": false, "compute_capacity_proven": false, "execution_allowed": false},
+    "KAGGLE_PARTNER": {"state": "AUTH_REQUIRED", "isolated_from_kaggle_c1": true, "execution_allowed": false},
+    "ORACLE": {"state": "AUTH_CONFIG_PRESENT_TOOL_UNAVAILABLE", "current_auth_proven": false, "execution_allowed": false},
+    "MODAL": {"state": "AUTH_CONFIG_PRESENT_TOOL_UNAVAILABLE", "current_auth_proven": false, "credits_proven": false, "execution_allowed": false},
+    "COLAB": {"state": "AUTH_REQUIRED_NO_ACTIVE_SESSION", "execution_allowed": false},
+    "ONEDRIVE": {"state": "LOCAL_SYNC_ROOT_REACHABLE", "provider_quota_proven": false},
+    "GITHUB": {"state": "GIT_TRANSPORT_PROVEN", "remote_head_matches": true}
+  },
+  "services_http_200": ["COMMAND_CENTER", "C5", "9ROUTER", "OLLAMA"],
+  "local_capacity": {"ram_total_bytes": 8375296000, "ram_free_bytes": 882593792, "disk_c_total_bytes": 254791380992, "disk_c_free_bytes": 46021955584, "ollama_models": 11},
+  "provider_execution_allowed": false,
+  "reason": "No cloud provider has complete operation-specific capacity plus current execution authority proof."
+}

@@ -1,0 +1,20 @@
+{
+  "schema": "raios.resource-fabric.c6-independent-closure.v1",
+  "task_id": "RAIOS-RESOURCE-FABRIC-LIVE-ACCOUNT-BINDING-WAVE-02",
+  "canonical_head": "1423d4ba21690da948735d4b9def3a48f6aa557e",
+  "original_c2_evidence_reused": true,
+  "source_mutated": false,
+  "independent_verification_proven": true,
+  "tests": "218/218_PASS",
+  "live_read_only_probe": "PASS",
+  "auth_required_not_absent": true,
+  "kaggle_c1_partner_isolation": true,
+  "provider_execution_fail_closed": true,
+  "cloud_live_dispatch": false,
+  "qwen35b_migrated": false,
+  "paid_resource_created": false,
+  "gpu_session_started": false,
+  "task_terminal_state": "LIVE_BINDING_VERIFIED_WITH_EXPLICIT_GAPS",
+  "remaining_gaps": ["Oracle CLI/current auth", "Modal CLI/current auth/credits", "Colab active session", "operation-specific provider storage/GPU capacity", "C1 paid or migration authority"],
+  "next_step": "C1 may authorize individual provider authentication or capacity probes; do not infer capacity from catalog or credential presence."
+}

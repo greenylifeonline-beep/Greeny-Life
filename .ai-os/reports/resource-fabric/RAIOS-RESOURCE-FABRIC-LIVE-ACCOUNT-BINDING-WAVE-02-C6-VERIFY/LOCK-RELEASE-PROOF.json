@@ -1,0 +1,14 @@
+{
+  "schema": "raios.system-owned-lock-release-proof.v1",
+  "task_id": "RAIOS-RESOURCE-FABRIC-LIVE-ACCOUNT-BINDING-WAVE-02",
+  "task_status_before_release": "DONE",
+  "c2_presence": "UNPROVEN",
+  "c6_presence": "PRESENT",
+  "ownership_model": "SYSTEM_OWNED_AGENT_LEASED",
+  "absent_holder_transferable": true,
+  "c1_handoff_authority_recorded_on_task": true,
+  "released_lock_ids": ["LOCK-20260827190100", "LOCK-20260827190101", "LOCK-20260827233500", "LOCK-20260827233501", "LOCK-20260827233502", "LOCK-20260827233503", "LOCK-20260830102537"],
+  "released_scopes": ["src/raios/command_fabric", "tests/command_fabric", "src/raios/resource_fabric", "tests/resource_fabric", "original C2 evidence report", "RAIOS-RESOURCE.ps1", "C6 verification report"],
+  "source_modified_by_c6": false,
+  "result": "ALL_TASK_LOCKS_RELEASED"
+}
