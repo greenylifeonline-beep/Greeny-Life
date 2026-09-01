@@ -20,6 +20,8 @@ def test_existing_continuity_task_is_reused_with_periodic_self_healing():
     assert '$TaskName = "RAIOS-C5-Permanent"' in script
     assert "Register-ScheduledTask" in script
     assert "RepetitionInterval" in script
+    assert "$routerOnline = Test-Tcp 20128" in script
+    assert "Invoke-WebRequest -UseBasicParsing -Uri \"http://127.0.0.1:20128/dashboard\"" not in script
     for service in ("C5", "MANAGER", "COMMAND_CENTER", "ROUTER_9", "NATS", "OLLAMA"):
         assert service in script
     assert "auto_canonical_mutation = $false" in script

@@ -93,11 +93,10 @@ try {
         } catch { $errors.Add("COMMAND_CENTER_RESTORE_FAILED:" + $_.Exception.GetType().Name) }
     }
 
-    $routerOnline = $false
-    try {
-        $response = Invoke-WebRequest -UseBasicParsing -Uri "http://127.0.0.1:20128/dashboard" -TimeoutSec 4
-        $routerOnline = $response.StatusCode -eq 200
-    } catch {}
+    # The installed 9Router dashboard may keep HTTP/1.1 responses open.
+    # Continuity must never block on page rendering; detailed HTTP truth remains
+    # in Command Center while this guard uses the bounded local listener proof.
+    $routerOnline = Test-Tcp 20128
     if (-not $routerOnline) {
         $router = Get-Command 9router.cmd -ErrorAction SilentlyContinue
         if (-not $router) {
@@ -114,8 +113,7 @@ try {
     $c5 = Get-JsonHealth "http://127.0.0.1:8766/health"
     $loop = Get-JsonHealth "http://127.0.0.1:8766/v1/cognitive/status"
     $center = Get-JsonHealth "http://127.0.0.1:8770/health"
-    $routerOnline = $false
-    try { $routerOnline = (Invoke-WebRequest -UseBasicParsing -Uri "http://127.0.0.1:20128/dashboard" -TimeoutSec 4).StatusCode -eq 200 } catch {}
+    $routerOnline = Test-Tcp 20128
     $services = [ordered]@{
         C5 = [bool]($c5 -and $c5.status -eq "ONLINE")
         MANAGER = [bool]($loop -and $loop.manager.alive -eq $true)
