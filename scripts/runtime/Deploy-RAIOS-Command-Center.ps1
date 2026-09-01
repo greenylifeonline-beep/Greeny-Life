@@ -13,7 +13,7 @@ Copy-Item(Join-Path $Repo "src\raios\search_cortex\*")$SearchPkg -Recurse -Force
 Copy-Item(Join-Path $Repo "src\raios\resource_fabric\*")$ResourcePkg -Recurse -Force
 Copy-Item(Join-Path $Repo "scripts\ai-os\raios_mcp\*")$Mcp -Recurse -Force
 $env:RAIOS_CANONICAL_REPO=$Repo;$env:RAIOS_MCP_ROOT=$McpRoot;$env:RAIOS_COMMAND_CENTER_RUNTIME=$RuntimeRoot;$env:PYTHONPATH=$App
-function Start-Center([int]$Listen,[string]$Name){$out=Join-Path $Logs "$Name.out.log";$err=Join-Path $Logs "$Name.err.log";Start-Process $Python -ArgumentList @("-m","uvicorn","raios.command_center.app:app","--app-dir",$App,"--host","127.0.0.1","--port","$Listen") -WindowStyle Hidden -RedirectStandardOutput $out -RedirectStandardError $err -PassThru}
+function Start-Center([int]$Listen,[string]$Name){$out=Join-Path $Logs "$Name.out.log";$err=Join-Path $Logs "$Name.err.log";Start-Process $Python -ArgumentList @("-m","uvicorn","raios.command_center.app:app","--app-dir",$App,"--host","127.0.0.1","--port","$Listen") -WorkingDirectory $Repo -WindowStyle Hidden -RedirectStandardOutput $out -RedirectStandardError $err -PassThru}
 function Wait-Healthy([int]$Listen,[int]$ProcessId){for($i=0;$i-lt 30;$i++){Start-Sleep 1;if(-not(Get-Process -Id $ProcessId -ErrorAction SilentlyContinue)){return $null};try{$r=Invoke-RestMethod "http://127.0.0.1:$Listen/health" -TimeoutSec 3;if($r.status-eq"ONLINE"-and$r.canonical_head-eq$Head){return $r}}catch{}};return $null}
 $stagePort=$Port+1000;if(Get-NetTCPConnection -LocalPort $stagePort -State Listen -ErrorAction SilentlyContinue){throw "STAGE_PORT_IN_USE"}
 $stage=Start-Center $stagePort "center.stage";$proof=Wait-Healthy $stagePort $stage.Id
@@ -35,7 +35,7 @@ $launcher=@"
 `$env:PYTHONPATH="$App"
 `$conn=Get-NetTCPConnection -LocalPort $Port -State Listen -ErrorAction SilentlyContinue
 if(-not `$conn){
- Start-Process "$Python" -ArgumentList @("-m","uvicorn","raios.command_center.app:app","--app-dir","$App","--host","127.0.0.1","--port","$Port") -WindowStyle Hidden -RedirectStandardOutput "$Logs\center.out.log" -RedirectStandardError "$Logs\center.err.log"
+ Start-Process "$Python" -ArgumentList @("-m","uvicorn","raios.command_center.app:app","--app-dir","$App","--host","127.0.0.1","--port","$Port") -WorkingDirectory "$Repo" -WindowStyle Hidden -RedirectStandardOutput "$Logs\center.out.log" -RedirectStandardError "$Logs\center.err.log"
  for(`$i=0;`$i-lt 20;`$i++){Start-Sleep -Milliseconds 500;try{`$h=Invoke-RestMethod "http://127.0.0.1:$Port/health" -TimeoutSec 2;if(`$h.status-eq"ONLINE"){break}}catch{}}
 }
 Start-Process "`$env:SystemRoot\explorer.exe" "http://127.0.0.1:$Port/"
