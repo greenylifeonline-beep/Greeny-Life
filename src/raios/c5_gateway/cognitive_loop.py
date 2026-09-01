@@ -486,6 +486,31 @@ def _bump_index(index_path: Path, digest: dict[str, Any]) -> None:
             pass
 
 
+def _process_alive(pid: Any) -> bool:
+    try:
+        process_id = int(pid)
+    except (TypeError, ValueError):
+        return False
+    if process_id <= 0:
+        return False
+    if os.name == "nt":
+        try:
+            import ctypes
+
+            handle = ctypes.windll.kernel32.OpenProcess(0x1000, False, process_id)
+            if not handle:
+                return False
+            ctypes.windll.kernel32.CloseHandle(handle)
+            return True
+        except Exception:
+            return False
+    try:
+        os.kill(process_id, 0)
+        return True
+    except OSError:
+        return False
+
+
 def manager_liveness(stale_after_seconds: float = 120.0) -> dict[str, Any]:
     root = manager_root()
     stable = root / "heartbeat.json"
@@ -517,14 +542,23 @@ def manager_liveness(stale_after_seconds: float = 120.0) -> dict[str, Any]:
 
     instant, obj, heartbeat = max(parsed, key=lambda row: row[0])
     age = (datetime.now(timezone.utc) - instant).total_seconds()
-    alive = -300.0 <= age <= stale_after_seconds
+    process_id = obj.get("manager_pid")
+    process_alive = _process_alive(process_id)
+    age_current = -300.0 <= age <= stale_after_seconds
+    alive = age_current and process_alive
     return {
         "alive": alive,
         "age_seconds": round(max(0.0, age), 3),
         "generated_at": instant.isoformat(),
         "state": obj.get("state") or "RUNNING",
+        "manager_pid": process_id,
+        "process_alive": process_alive,
         "heartbeat_file": heartbeat.name,
-        "reason": "OK" if alive else "STALE",
+        "reason": (
+            "OK" if alive else
+            "PROCESS_MISSING" if not process_alive else
+            "STALE"
+        ),
     }
 
 

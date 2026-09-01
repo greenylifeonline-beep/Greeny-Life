@@ -58,6 +58,7 @@ def test_c5_liveness_reads_freshest_versioned_manager_heartbeat(tmp_path, monkey
             {
                 "generated_at": datetime.now(timezone.utc).isoformat(),
                 "state": "STARTING",
+                "manager_pid": cognitive_loop.os.getpid(),
             }
         ),
         encoding="utf-8",
@@ -67,4 +68,25 @@ def test_c5_liveness_reads_freshest_versioned_manager_heartbeat(tmp_path, monkey
 
     assert result["alive"] is True
     assert result["state"] == "STARTING"
+    assert result["process_alive"] is True
     assert result["heartbeat_file"] == fresh.name
+
+
+def test_c5_rejects_fresh_heartbeat_for_missing_manager_process(tmp_path, monkeypatch):
+    heartbeat = tmp_path / "heartbeat.live-dead-1.json"
+    heartbeat.write_text(
+        json.dumps(
+            {
+                "generated_at": datetime.now(timezone.utc).isoformat(),
+                "state": "RUNNING",
+                "manager_pid": 99999999,
+            }
+        ),
+        encoding="utf-8",
+    )
+    monkeypatch.setattr(cognitive_loop, "manager_root", lambda: tmp_path)
+    result = cognitive_loop.manager_liveness()
+
+    assert result["alive"] is False
+    assert result["process_alive"] is False
+    assert result["reason"] == "PROCESS_MISSING"
