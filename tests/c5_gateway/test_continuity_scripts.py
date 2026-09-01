@@ -29,6 +29,9 @@ def test_existing_continuity_task_is_reused_with_periodic_self_healing():
 
 def test_manager_guard_checks_liveness_not_lock_file_existence():
     script = (RUNTIME / "Ensure-RAIOS-Cognitive-Loop.ps1").read_text(encoding="utf-8")
+    manager = (ROOT / "src" / "raios" / "manager" / "live_manager.py").read_text(encoding="utf-8")
     assert "loop.manager.alive" in script
     assert "STOP_STALE_MANAGER_PID_" in script
     assert "if (Test-Path $lock)" not in script
+    assert '"state": "STARTING"' in manager
+    assert "atomic_json(\n            HEARTBEAT" in manager

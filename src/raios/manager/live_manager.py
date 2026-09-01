@@ -945,6 +945,32 @@ class LiveManager:
             pass
 
         log("RAIOS live manager started")
+        # Publish process liveness immediately after the single-instance lock is
+        # acquired. The first evidence scan may be slow on a CPU-only laptop;
+        # STARTING is truthful liveness, not a completed diagnostic claim.
+        atomic_json(
+            HEARTBEAT,
+            {
+                "schema": "raios.live-manager-tick.v2",
+                "generated_at": utc(),
+                "manager_pid": os.getpid(),
+                "state": "STARTING",
+                "source_count": 0,
+                "live_source_count": 0,
+                "gap_count": 0,
+                "gaps": [],
+                "c5_reasoning_ok": False,
+                "c5_reasoning_inflight": False,
+                "latency_ms": 0.0,
+                "single_task_ledger": str(TASKS),
+                "single_cognitive_wal": str(
+                    REPO / "RAIOS" / "V9" / "wal" / "cognitive-events.jsonl"
+                ),
+                "second_bus": False,
+                "second_task_store": False,
+                "second_wal": False,
+            },
+        )
         while True:
             try:
                 result = self.tick()
