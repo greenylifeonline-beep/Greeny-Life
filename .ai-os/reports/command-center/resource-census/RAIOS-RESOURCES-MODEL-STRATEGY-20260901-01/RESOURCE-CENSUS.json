@@ -1,0 +1,509 @@
+{
+  "schema": "raios.resource-fabric.v1",
+  "generated_at": "2026-09-01T16:57:03.157774+00:00",
+  "status": {
+    "schema": "raios.resource-fabric.v1",
+    "providers_total": 8,
+    "accounts_total": 7,
+    "accounts_reachable": 4,
+    "accounts_auth_required": 0,
+    "accounts_partial": 0,
+    "cpu_total": "UNKNOWN",
+    "ram_total": 7.8,
+    "gpu_resources_total": 12,
+    "gpu_vram_total_observed": 64.0,
+    "persistent_storage_total_gb": 237.293,
+    "persistent_storage_free_gb": 47.644,
+    "ephemeral_storage_total_gb": "UNKNOWN",
+    "credits_total_by_currency": {
+      "USD": "UNKNOWN",
+      "CREDIT": "UNKNOWN"
+    },
+    "services_enabled_total": 15,
+    "services_unused_total": 48,
+    "estimated_free_capacity": "UNKNOWN",
+    "last_census": "2026-09-01T16:57:03.158145+00:00",
+    "probes": 9,
+    "UNOBSERVED_NE_ABSENT": true
+  },
+  "world_counts": {
+    "providers": 8,
+    "accounts": 7,
+    "regions": 7,
+    "compute": 7,
+    "accelerators": 12,
+    "storage": 17,
+    "services": 20,
+    "quotas": 5,
+    "credits": 3,
+    "pricing": 12,
+    "usage": 0,
+    "probes": 9,
+    "gateways": 1,
+    "live_probes": {
+      "LOCAL_AG": {
+        "account_id": "LOCAL_AG",
+        "status": "REACHABLE",
+        "disk_total_gb": 237.293,
+        "disk_used_gb": 189.649,
+        "disk_free_gb": 47.644,
+        "ram_total_gb": 7.8,
+        "ram_avail_gb": 0.517,
+        "c5": "SUCCESS",
+        "ollama": "SUCCESS",
+        "ollama_endpoint": "http://127.0.0.1:11434",
+        "mcp": "OFFLINE",
+        "ninerouter": "SUCCESS",
+        "execution_blocked_by_memory": true,
+        "model_storage_allowed": false,
+        "qwen35_present": true,
+        "ollama_http_status": 200,
+        "ollama_model_count": 11,
+        "ollama_names": [
+          "qwen3-embedding:0.6b",
+          "qwen3:0.6b",
+          "qwen2.5:0.5b",
+          "granite-embedding:278m",
+          "granite-code:3b",
+          "granite3-dense:8b",
+          "granite3-dense:2b",
+          "qwen3.6:35b-a3b",
+          "granite4:3b",
+          "qwen2.5-coder:3b",
+          "deepseek-r1:1.5b"
+        ],
+        "paid": false
+      },
+      "NINEROUTER": {
+        "provider_type": "MODEL_ROUTING_GATEWAY",
+        "endpoint": "LOCAL_ONLY",
+        "RESOURCE_AUTHORITY": false,
+        "health": "ok",
+        "accounts_connected": 0,
+        "models_visible": 691,
+        "catalog_model_names": 691,
+        "locally_available_weights": 0,
+        "executable_routed_models": 0,
+        "bind": "127.0.0.1:20128",
+        "catalog_ne_connected_providers": true,
+        "paid_providers_connected": false
+      },
+      "KAGGLE_C1": {
+        "account_id": "KAGGLE_C1",
+        "status": "REACHABLE",
+        "auth_method": "KAGGLE_CLI_OAUTH",
+        "config_ok": true,
+        "username_bound": "greenylife",
+        "kernel_status_observed": "COMPLETE",
+        "gpu_quota": {
+          "used": 0.0,
+          "remaining": 30.0,
+          "limit": 30.0,
+          "reset_at": "2026-09-05T00:00:00"
+        },
+        "tpu_quota": {
+          "used": 0.0,
+          "remaining": 20.0,
+          "limit": 20.0,
+          "reset_at": "2026-09-05T00:00:00"
+        },
+        "dataset_count": 6,
+        "dataset_used_bytes": 7301477,
+        "kernel_count": 6,
+        "active_session_gpu": false,
+        "account_eligible_gpu": true,
+        "current_allocatable_gpu": "UNKNOWN",
+        "accelerator_types": [
+          "GPU",
+          "TPU"
+        ],
+        "gpu_sku": "UNOBSERVED",
+        "gpu_vram": "UNOBSERVED",
+        "IDENTITY_PROOF": "greenylife",
+        "AUTH_RESULT": "REACHABLE",
+        "QUOTA_RESULT": {
+          "gpu": {
+            "used": 0.0,
+            "remaining": 30.0,
+            "limit": 30.0,
+            "reset_at": "2026-09-05T00:00:00"
+          },
+          "tpu": {
+            "used": 0.0,
+            "remaining": 20.0,
+            "limit": 20.0,
+            "reset_at": "2026-09-05T00:00:00"
+          },
+          "dataset_count": 6,
+          "dataset_used_bytes": 7301477
+        },
+        "REDACTED": true,
+        "paid": false
+      },
+      "LIGHTNING_01": {
+        "account_id": "LIGHTNING_01",
+        "status": "REACHABLE",
+        "storage_overuse_bytes": "0",
+        "allow_credits_auto_replenish": false,
+        "job_count": "0",
+        "datastore_count": "0",
+        "studio_states": [
+          "CLOUD_SPACE_STATE_READY",
+          "CLOUD_SPACE_STATE_READY"
+        ],
+        "org_alias": "greenylifeonline-org",
+        "org_id_present": true,
+        "credits_remaining": 30,
+        "storage_used_bytes": "62589",
+        "free_storage_bytes": "10737418240",
+        "studio_count": 2,
+        "jobs": 0,
+        "deployments": 0,
+        "gpu_model": "UNOBSERVED",
+        "gpu_sku": "UNOBSERVED",
+        "gpu_vram": "UNOBSERVED",
+        "current_allocatable_gpu": "UNOBSERVED",
+        "account_eligible_gpu": false,
+        "IDENTITY_PROOF": "greenylifeonline-org",
+        "AUTH_RESULT": "REACHABLE",
+        "QUOTA_RESULT": {
+          "credits_remaining": 30,
+          "storage_used_bytes": "62589",
+          "free_storage_bytes": "10737418240",
+          "studio_count": 2
+        },
+        "REDACTED": true,
+        "paid": false
+      },
+      "MODAL_01": {
+        "account_id": "MODAL_01",
+        "status": "REACHABLE_CREDENTIAL_PRESENT",
+        "profile": "greenylife-online",
+        "token_fields_present": true,
+        "reason": "TOKEN_FILE_PRESENT_SDK_NOT_USED",
+        "gpu_catalog": [
+          "T4",
+          "L4",
+          "A10",
+          "A100-80GB"
+        ],
+        "gpu_entitlement": "UNOBSERVED",
+        "gpu_sku": "UNOBSERVED",
+        "gpu_vram": "UNOBSERVED",
+        "IDENTITY_PROOF": "profile:greenylife-online",
+        "AUTH_RESULT": "REACHABLE_CREDENTIAL_PRESENT",
+        "QUOTA_RESULT": {},
+        "REDACTED": true,
+        "paid": false
+      },
+      "KAGGLE_PARTNER": {
+        "account_id": "KAGGLE_PARTNER",
+        "status": "BLOCKED_C1_ACTION",
+        "AUTH_RESULT": "BLOCKED_C1_ACTION",
+        "PROBE_SKIPPED": true,
+        "isolated_from": "KAGGLE_C1",
+        "copied_from_c1": false,
+        "live_auth_proven": false,
+        "distinct_from_c1": false,
+        "reason": "WAVE06_CLOSURE_NO_REPEAT_PROBE"
+      },
+      "ORACLE_01": {
+        "account_id": "ORACLE_01",
+        "status": "BLOCKED_C1_ACTION",
+        "AUTH_RESULT": "BLOCKED_C1_ACTION",
+        "PROBE_SKIPPED": true,
+        "reason": "WAVE06_CLOSURE_NO_REPEAT_PROBE"
+      },
+      "COLAB_01": {
+        "account_id": "COLAB_01",
+        "status": "BLOCKED_C1_ACTION",
+        "AUTH_RESULT": "BLOCKED_C1_ACTION",
+        "PROBE_SKIPPED": true,
+        "GOOGLE_AUTH": "ABSENT",
+        "COLAB_ACCESS": "UNOBSERVED",
+        "COLAB_GPU_ENTITLEMENT": "UNOBSERVED",
+        "ADC_NE_COLAB_ACCESS": true,
+        "reason": "WAVE06_CLOSURE_NO_REPEAT_PROBE"
+      }
+    },
+    "unknown_before": {
+      "UNKNOWN_STORAGE_FIELDS": 68,
+      "AUTH_REQUIRED": 0,
+      "UNKNOWN_QUOTAS": 12,
+      "UNKNOWN_CREDITS": 9,
+      "UNKNOWN_PRICING": 3
+    },
+    "unknown_after": {
+      "UNKNOWN_STORAGE_FIELDS": 63,
+      "AUTH_REQUIRED": 0,
+      "UNKNOWN_QUOTAS": 10,
+      "UNKNOWN_CREDITS": 8,
+      "UNKNOWN_PRICING": 2
+    },
+    "unknown_reduced": {
+      "UNKNOWN_STORAGE_FIELDS": 5,
+      "AUTH_REQUIRED": 0,
+      "UNKNOWN_QUOTAS": 2,
+      "UNKNOWN_CREDITS": 1,
+      "UNKNOWN_PRICING": 1
+    },
+    "live_state": {
+      "auth": [
+        {
+          "account_id": "KAGGLE_C1",
+          "provider": "KAGGLE",
+          "credential_ref": "existing-session:kaggle-cli-oauth",
+          "auth_method": "KAGGLE_CLI_OAUTH",
+          "session_state": "REACHABLE",
+          "kaggle_json_present": false,
+          "kaggle_oauth_credentials_present": true,
+          "cli_present": true,
+          "KAGGLE_JSON_ABSENT_NE_ACCOUNT_ABSENT": true,
+          "last_verified": "2026-09-01T16:57:03.134077+00:00"
+        },
+        {
+          "account_id": "KAGGLE_PARTNER",
+          "provider": "KAGGLE",
+          "credential_ref": "env:KAGGLE_CONFIG_DIR_B",
+          "auth_method": "ISOLATED_KAGGLE_PROFILE",
+          "session_state": "SEPARATE_PROFILE_CANDIDATE_PRESENT",
+          "isolated_from": "KAGGLE_C1",
+          "copied_from_c1": false,
+          "C1_KAGGLE_DIR_REFUSED": true,
+          "last_verified": "UNKNOWN"
+        },
+        {
+          "account_id": "ORACLE_01",
+          "provider": "ORACLE_CLOUD",
+          "credential_ref": "cli-profile:oci",
+          "auth_method": "OCI_CLI_PROFILE",
+          "session_state": "CONFIG_PRESENT",
+          "cli_present": false,
+          "last_verified": "UNKNOWN"
+        },
+        {
+          "account_id": "LIGHTNING_01",
+          "provider": "LIGHTNING",
+          "credential_ref": "file-ref:%USERPROFILE%/.lightning/credentials.json",
+          "auth_method": "LIGHTNING_API_BASIC",
+          "session_state": "REACHABLE",
+          "cli_present": false,
+          "last_verified": "2026-09-01T16:57:03.134077+00:00"
+        },
+        {
+          "account_id": "MODAL_01",
+          "provider": "MODAL",
+          "credential_ref": "file-ref:%USERPROFILE%/.modal.toml",
+          "auth_method": "MODAL_TOML_TOKEN",
+          "session_state": "REACHABLE_CREDENTIAL_PRESENT",
+          "cli_present": false,
+          "last_verified": "2026-09-01T16:57:03.134077+00:00"
+        },
+        {
+          "account_id": "COLAB_01",
+          "provider": "COLAB",
+          "credential_ref": "env:COLAB_SESSION_REF",
+          "auth_method": "GOOGLE_SESSION",
+          "session_state": "AUTH_REQUIRED",
+          "last_verified": "UNKNOWN"
+        },
+        {
+          "account_id": "LOCAL_AG",
+          "provider": "GENERIC_HTTP_INFERENCE",
+          "credential_ref": "existing:OWNER_LOCAL_CONTROL_PLANE",
+          "auth_method": "LOCAL",
+          "session_state": "REACHABLE",
+          "last_verified": "2026-09-01T16:57:03.134077+00:00"
+        }
+      ],
+      "probes": {
+        "LOCAL_AG": {
+          "account_id": "LOCAL_AG",
+          "status": "REACHABLE",
+          "disk_total_gb": 237.293,
+          "disk_used_gb": 189.649,
+          "disk_free_gb": 47.644,
+          "ram_total_gb": 7.8,
+          "ram_avail_gb": 0.517,
+          "c5": "SUCCESS",
+          "ollama": "SUCCESS",
+          "ollama_endpoint": "http://127.0.0.1:11434",
+          "mcp": "OFFLINE",
+          "ninerouter": "SUCCESS",
+          "execution_blocked_by_memory": true,
+          "model_storage_allowed": false,
+          "qwen35_present": true,
+          "ollama_http_status": 200,
+          "ollama_model_count": 11,
+          "ollama_names": [
+            "qwen3-embedding:0.6b",
+            "qwen3:0.6b",
+            "qwen2.5:0.5b",
+            "granite-embedding:278m",
+            "granite-code:3b",
+            "granite3-dense:8b",
+            "granite3-dense:2b",
+            "qwen3.6:35b-a3b",
+            "granite4:3b",
+            "qwen2.5-coder:3b",
+            "deepseek-r1:1.5b"
+          ],
+          "paid": false
+        },
+        "NINEROUTER": {
+          "provider_type": "MODEL_ROUTING_GATEWAY",
+          "endpoint": "LOCAL_ONLY",
+          "RESOURCE_AUTHORITY": false,
+          "health": "ok",
+          "accounts_connected": 0,
+          "models_visible": 691,
+          "catalog_model_names": 691,
+          "locally_available_weights": 0,
+          "executable_routed_models": 0,
+          "bind": "127.0.0.1:20128",
+          "catalog_ne_connected_providers": true,
+          "paid_providers_connected": false
+        },
+        "KAGGLE_C1": {
+          "account_id": "KAGGLE_C1",
+          "status": "REACHABLE",
+          "auth_method": "KAGGLE_CLI_OAUTH",
+          "config_ok": true,
+          "username_bound": "greenylife",
+          "kernel_status_observed": "COMPLETE",
+          "gpu_quota": {
+            "used": 0.0,
+            "remaining": 30.0,
+            "limit": 30.0,
+            "reset_at": "2026-09-05T00:00:00"
+          },
+          "tpu_quota": {
+            "used": 0.0,
+            "remaining": 20.0,
+            "limit": 20.0,
+            "reset_at": "2026-09-05T00:00:00"
+          },
+          "dataset_count": 6,
+          "dataset_used_bytes": 7301477,
+          "kernel_count": 6,
+          "active_session_gpu": false,
+          "account_eligible_gpu": true,
+          "current_allocatable_gpu": "UNKNOWN",
+          "accelerator_types": [
+            "GPU",
+            "TPU"
+          ],
+          "gpu_sku": "UNOBSERVED",
+          "gpu_vram": "UNOBSERVED",
+          "IDENTITY_PROOF": "greenylife",
+          "AUTH_RESULT": "REACHABLE",
+          "QUOTA_RESULT": {
+            "gpu": {
+              "used": 0.0,
+              "remaining": 30.0,
+              "limit": 30.0,
+              "reset_at": "2026-09-05T00:00:00"
+            },
+            "tpu": {
+              "used": 0.0,
+              "remaining": 20.0,
+              "limit": 20.0,
+              "reset_at": "2026-09-05T00:00:00"
+            },
+            "dataset_count": 6,
+            "dataset_used_bytes": 7301477
+          },
+          "REDACTED": true,
+          "paid": false
+        },
+        "LIGHTNING_01": {
+          "account_id": "LIGHTNING_01",
+          "status": "REACHABLE",
+          "storage_overuse_bytes": "0",
+          "allow_credits_auto_replenish": false,
+          "job_count": "0",
+          "datastore_count": "0",
+          "studio_states": [
+            "CLOUD_SPACE_STATE_READY",
+            "CLOUD_SPACE_STATE_READY"
+          ],
+          "org_alias": "greenylifeonline-org",
+          "org_id_present": true,
+          "credits_remaining": 30,
+          "storage_used_bytes": "62589",
+          "free_storage_bytes": "10737418240",
+          "studio_count": 2,
+          "jobs": 0,
+          "deployments": 0,
+          "gpu_model": "UNOBSERVED",
+          "gpu_sku": "UNOBSERVED",
+          "gpu_vram": "UNOBSERVED",
+          "current_allocatable_gpu": "UNOBSERVED",
+          "account_eligible_gpu": false,
+          "IDENTITY_PROOF": "greenylifeonline-org",
+          "AUTH_RESULT": "REACHABLE",
+          "QUOTA_RESULT": {
+            "credits_remaining": 30,
+            "storage_used_bytes": "62589",
+            "free_storage_bytes": "10737418240",
+            "studio_count": 2
+          },
+          "REDACTED": true,
+          "paid": false
+        },
+        "MODAL_01": {
+          "account_id": "MODAL_01",
+          "status": "REACHABLE_CREDENTIAL_PRESENT",
+          "profile": "greenylife-online",
+          "token_fields_present": true,
+          "reason": "TOKEN_FILE_PRESENT_SDK_NOT_USED",
+          "gpu_catalog": [
+            "T4",
+            "L4",
+            "A10",
+            "A100-80GB"
+          ],
+          "gpu_entitlement": "UNOBSERVED",
+          "gpu_sku": "UNOBSERVED",
+          "gpu_vram": "UNOBSERVED",
+          "IDENTITY_PROOF": "profile:greenylife-online",
+          "AUTH_RESULT": "REACHABLE_CREDENTIAL_PRESENT",
+          "QUOTA_RESULT": {},
+          "REDACTED": true,
+          "paid": false
+        },
+        "KAGGLE_PARTNER": {
+          "account_id": "KAGGLE_PARTNER",
+          "status": "BLOCKED_C1_ACTION",
+          "AUTH_RESULT": "BLOCKED_C1_ACTION",
+          "PROBE_SKIPPED": true,
+          "isolated_from": "KAGGLE_C1",
+          "copied_from_c1": false,
+          "live_auth_proven": false,
+          "distinct_from_c1": false,
+          "reason": "WAVE06_CLOSURE_NO_REPEAT_PROBE"
+        },
+        "ORACLE_01": {
+          "account_id": "ORACLE_01",
+          "status": "BLOCKED_C1_ACTION",
+          "AUTH_RESULT": "BLOCKED_C1_ACTION",
+          "PROBE_SKIPPED": true,
+          "reason": "WAVE06_CLOSURE_NO_REPEAT_PROBE"
+        },
+        "COLAB_01": {
+          "account_id": "COLAB_01",
+          "status": "BLOCKED_C1_ACTION",
+          "AUTH_RESULT": "BLOCKED_C1_ACTION",
+          "PROBE_SKIPPED": true,
+          "GOOGLE_AUTH": "ABSENT",
+          "COLAB_ACCESS": "UNOBSERVED",
+          "COLAB_GPU_ENTITLEMENT": "UNOBSERVED",
+          "ADC_NE_COLAB_ACCESS": true,
+          "reason": "WAVE06_CLOSURE_NO_REPEAT_PROBE"
+        }
+      },
+      "observed_at": "2026-09-01T16:57:03.134077+00:00",
+      "PAID_RESOURCE_CREATED": false
+    }
+  }
+}

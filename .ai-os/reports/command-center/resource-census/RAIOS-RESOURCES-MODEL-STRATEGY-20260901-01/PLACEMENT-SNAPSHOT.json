@@ -1,0 +1,682 @@
+{
+  "kind": "PlacementDecision",
+  "request": {
+    "kind": "PlacementRequest",
+    "requires_gpu": true,
+    "min_gpu_vram_gb": 24,
+    "min_ram_gb": "UNKNOWN",
+    "storage_required_gb": "UNKNOWN",
+    "persistent_output": true,
+    "max_cost_per_hour": "UNKNOWN",
+    "min_runtime_hours": "UNKNOWN",
+    "public_endpoint": false,
+    "preferred_capabilities": [
+      "HEAVY_INFERENCE"
+    ],
+    "local_model_storage_prohibited": true,
+    "MODEL_WEIGHTS_LOCAL": false
+  },
+  "ranked": [
+    {
+      "provider": "ORACLE_CLOUD",
+      "account": "ORACLE_01",
+      "region": "eu-stockholm-1",
+      "resource": "ORACLE_01:gpu-catalog",
+      "fit": false,
+      "constraints_met": [
+        "PERSISTENT"
+      ],
+      "constraints_failed": [
+        "VRAM_UNOBSERVED"
+      ],
+      "estimated_cost": "UNKNOWN",
+      "quota_remaining": "UNKNOWN",
+      "persistence": true,
+      "startup_time": "UNKNOWN",
+      "confidence": "LOW",
+      "reason_codes": [
+        "VRAM_UNOBSERVED"
+      ],
+      "scores": {
+        "availability_score": "UNKNOWN",
+        "cost_score": "UNKNOWN",
+        "persistence_score": 1.0,
+        "compute_score": "UNKNOWN",
+        "gpu_score": "UNKNOWN",
+        "storage_score": "UNKNOWN",
+        "network_score": "UNKNOWN",
+        "service_score": "UNKNOWN",
+        "reliability_score": "UNKNOWN",
+        "quota_score": "UNKNOWN",
+        "credit_score": "UNKNOWN",
+        "RAIOS_VALUE_SCORE": 1.0,
+        "OPAQUE_SINGLE_SCORE_ONLY": false
+      },
+      "capabilities": [
+        "PUBLIC_ENDPOINT",
+        "PRIVATE_ENDPOINT",
+        "GPU_BURST",
+        "HEAVY_COMPUTE",
+        "PERSISTENT_CONTROL_NODE",
+        "GPU_PERSISTENT"
+      ]
+    },
+    {
+      "provider": "LIGHTNING",
+      "account": "LIGHTNING_01",
+      "region": "UNKNOWN",
+      "resource": "LIGHTNING_01:studio-gpu",
+      "fit": false,
+      "constraints_met": [
+        "PERSISTENT"
+      ],
+      "constraints_failed": [
+        "VRAM_UNOBSERVED"
+      ],
+      "estimated_cost": "UNKNOWN",
+      "quota_remaining": "UNKNOWN",
+      "persistence": true,
+      "startup_time": "UNKNOWN",
+      "confidence": "LOW",
+      "reason_codes": [
+        "VRAM_UNOBSERVED"
+      ],
+      "scores": {
+        "availability_score": "UNKNOWN",
+        "cost_score": "UNKNOWN",
+        "persistence_score": 1.0,
+        "compute_score": "UNKNOWN",
+        "gpu_score": "UNKNOWN",
+        "storage_score": "UNKNOWN",
+        "network_score": "UNKNOWN",
+        "service_score": "UNKNOWN",
+        "reliability_score": "UNKNOWN",
+        "quota_score": "UNKNOWN",
+        "credit_score": "UNKNOWN",
+        "RAIOS_VALUE_SCORE": 1.0,
+        "OPAQUE_SINGLE_SCORE_ONLY": false
+      },
+      "capabilities": [
+        "PRIVATE_ENDPOINT",
+        "GPU_BURST",
+        "HEAVY_COMPUTE",
+        "PERSISTENT_CONTROL_NODE",
+        "GPU_PERSISTENT"
+      ]
+    },
+    {
+      "provider": "KAGGLE",
+      "account": "KAGGLE_C1",
+      "region": "UNKNOWN",
+      "resource": "KAGGLE_C1:gpu-p100-catalog",
+      "fit": false,
+      "constraints_met": [],
+      "constraints_failed": [
+        "VRAM_SHORT",
+        "NOT_PERSISTENT"
+      ],
+      "estimated_cost": "UNKNOWN",
+      "quota_remaining": 30.0,
+      "persistence": false,
+      "startup_time": "UNKNOWN",
+      "confidence": "LOW",
+      "reason_codes": [
+        "VRAM_SHORT",
+        "NOT_PERSISTENT"
+      ],
+      "scores": {
+        "availability_score": "UNKNOWN",
+        "cost_score": "UNKNOWN",
+        "persistence_score": 0.0,
+        "compute_score": "UNKNOWN",
+        "gpu_score": 0.2,
+        "storage_score": "UNKNOWN",
+        "network_score": "UNKNOWN",
+        "service_score": "UNKNOWN",
+        "reliability_score": "UNKNOWN",
+        "quota_score": "UNKNOWN",
+        "credit_score": "UNKNOWN",
+        "RAIOS_VALUE_SCORE": 0.1,
+        "OPAQUE_SINGLE_SCORE_ONLY": false
+      },
+      "capabilities": [
+        "GPU_PERSISTENT",
+        "LIGHT_COMPUTE",
+        "LIGHT_INFERENCE",
+        "PRIVATE_ENDPOINT",
+        "GPU_BURST",
+        "CI_WORKER",
+        "EMBEDDING"
+      ]
+    },
+    {
+      "provider": "KAGGLE",
+      "account": "KAGGLE_C1",
+      "region": "UNKNOWN",
+      "resource": "KAGGLE_C1:gpu-t4-catalog",
+      "fit": false,
+      "constraints_met": [],
+      "constraints_failed": [
+        "VRAM_SHORT",
+        "NOT_PERSISTENT"
+      ],
+      "estimated_cost": "UNKNOWN",
+      "quota_remaining": 30.0,
+      "persistence": false,
+      "startup_time": "UNKNOWN",
+      "confidence": "LOW",
+      "reason_codes": [
+        "VRAM_SHORT",
+        "NOT_PERSISTENT"
+      ],
+      "scores": {
+        "availability_score": "UNKNOWN",
+        "cost_score": "UNKNOWN",
+        "persistence_score": 0.0,
+        "compute_score": "UNKNOWN",
+        "gpu_score": 0.2,
+        "storage_score": "UNKNOWN",
+        "network_score": "UNKNOWN",
+        "service_score": "UNKNOWN",
+        "reliability_score": "UNKNOWN",
+        "quota_score": "UNKNOWN",
+        "credit_score": "UNKNOWN",
+        "RAIOS_VALUE_SCORE": 0.1,
+        "OPAQUE_SINGLE_SCORE_ONLY": false
+      },
+      "capabilities": [
+        "GPU_PERSISTENT",
+        "LIGHT_COMPUTE",
+        "LIGHT_INFERENCE",
+        "PRIVATE_ENDPOINT",
+        "GPU_BURST",
+        "CI_WORKER",
+        "EMBEDDING"
+      ]
+    },
+    {
+      "provider": "KAGGLE",
+      "account": "KAGGLE_C1",
+      "region": "UNKNOWN",
+      "resource": "KAGGLE_C1:tpu-catalog",
+      "fit": false,
+      "constraints_met": [],
+      "constraints_failed": [
+        "VRAM_UNOBSERVED",
+        "NOT_PERSISTENT"
+      ],
+      "estimated_cost": "UNKNOWN",
+      "quota_remaining": 30.0,
+      "persistence": false,
+      "startup_time": "UNKNOWN",
+      "confidence": "LOW",
+      "reason_codes": [
+        "VRAM_UNOBSERVED",
+        "NOT_PERSISTENT"
+      ],
+      "scores": {
+        "availability_score": "UNKNOWN",
+        "cost_score": "UNKNOWN",
+        "persistence_score": 0.0,
+        "compute_score": "UNKNOWN",
+        "gpu_score": "UNKNOWN",
+        "storage_score": "UNKNOWN",
+        "network_score": "UNKNOWN",
+        "service_score": "UNKNOWN",
+        "reliability_score": "UNKNOWN",
+        "quota_score": "UNKNOWN",
+        "credit_score": "UNKNOWN",
+        "RAIOS_VALUE_SCORE": 0.0,
+        "OPAQUE_SINGLE_SCORE_ONLY": false
+      },
+      "capabilities": [
+        "LIGHT_COMPUTE",
+        "PRIVATE_ENDPOINT",
+        "GPU_BURST",
+        "CI_WORKER",
+        "GPU_PERSISTENT"
+      ]
+    },
+    {
+      "provider": "KAGGLE",
+      "account": "KAGGLE_PARTNER",
+      "region": "UNKNOWN",
+      "resource": "KAGGLE_PARTNER:gpu-p100-catalog",
+      "fit": false,
+      "constraints_met": [],
+      "constraints_failed": [
+        "VRAM_SHORT",
+        "NOT_PERSISTENT"
+      ],
+      "estimated_cost": "UNKNOWN",
+      "quota_remaining": "UNKNOWN",
+      "persistence": false,
+      "startup_time": "UNKNOWN",
+      "confidence": "LOW",
+      "reason_codes": [
+        "VRAM_SHORT",
+        "NOT_PERSISTENT"
+      ],
+      "scores": {
+        "availability_score": "UNKNOWN",
+        "cost_score": "UNKNOWN",
+        "persistence_score": 0.0,
+        "compute_score": "UNKNOWN",
+        "gpu_score": 0.2,
+        "storage_score": "UNKNOWN",
+        "network_score": "UNKNOWN",
+        "service_score": "UNKNOWN",
+        "reliability_score": "UNKNOWN",
+        "quota_score": "UNKNOWN",
+        "credit_score": "UNKNOWN",
+        "RAIOS_VALUE_SCORE": 0.1,
+        "OPAQUE_SINGLE_SCORE_ONLY": false
+      },
+      "capabilities": [
+        "GPU_PERSISTENT",
+        "LIGHT_COMPUTE",
+        "LIGHT_INFERENCE",
+        "PRIVATE_ENDPOINT",
+        "GPU_BURST",
+        "CI_WORKER",
+        "EMBEDDING"
+      ]
+    },
+    {
+      "provider": "KAGGLE",
+      "account": "KAGGLE_PARTNER",
+      "region": "UNKNOWN",
+      "resource": "KAGGLE_PARTNER:gpu-t4-catalog",
+      "fit": false,
+      "constraints_met": [],
+      "constraints_failed": [
+        "VRAM_SHORT",
+        "NOT_PERSISTENT"
+      ],
+      "estimated_cost": "UNKNOWN",
+      "quota_remaining": "UNKNOWN",
+      "persistence": false,
+      "startup_time": "UNKNOWN",
+      "confidence": "LOW",
+      "reason_codes": [
+        "VRAM_SHORT",
+        "NOT_PERSISTENT"
+      ],
+      "scores": {
+        "availability_score": "UNKNOWN",
+        "cost_score": "UNKNOWN",
+        "persistence_score": 0.0,
+        "compute_score": "UNKNOWN",
+        "gpu_score": 0.2,
+        "storage_score": "UNKNOWN",
+        "network_score": "UNKNOWN",
+        "service_score": "UNKNOWN",
+        "reliability_score": "UNKNOWN",
+        "quota_score": "UNKNOWN",
+        "credit_score": "UNKNOWN",
+        "RAIOS_VALUE_SCORE": 0.1,
+        "OPAQUE_SINGLE_SCORE_ONLY": false
+      },
+      "capabilities": [
+        "GPU_PERSISTENT",
+        "LIGHT_COMPUTE",
+        "LIGHT_INFERENCE",
+        "PRIVATE_ENDPOINT",
+        "GPU_BURST",
+        "CI_WORKER",
+        "EMBEDDING"
+      ]
+    },
+    {
+      "provider": "KAGGLE",
+      "account": "KAGGLE_PARTNER",
+      "region": "UNKNOWN",
+      "resource": "KAGGLE_PARTNER:tpu-catalog",
+      "fit": false,
+      "constraints_met": [],
+      "constraints_failed": [
+        "VRAM_UNOBSERVED",
+        "NOT_PERSISTENT"
+      ],
+      "estimated_cost": "UNKNOWN",
+      "quota_remaining": "UNKNOWN",
+      "persistence": false,
+      "startup_time": "UNKNOWN",
+      "confidence": "LOW",
+      "reason_codes": [
+        "VRAM_UNOBSERVED",
+        "NOT_PERSISTENT"
+      ],
+      "scores": {
+        "availability_score": "UNKNOWN",
+        "cost_score": "UNKNOWN",
+        "persistence_score": 0.0,
+        "compute_score": "UNKNOWN",
+        "gpu_score": "UNKNOWN",
+        "storage_score": "UNKNOWN",
+        "network_score": "UNKNOWN",
+        "service_score": "UNKNOWN",
+        "reliability_score": "UNKNOWN",
+        "quota_score": "UNKNOWN",
+        "credit_score": "UNKNOWN",
+        "RAIOS_VALUE_SCORE": 0.0,
+        "OPAQUE_SINGLE_SCORE_ONLY": false
+      },
+      "capabilities": [
+        "LIGHT_COMPUTE",
+        "PRIVATE_ENDPOINT",
+        "GPU_BURST",
+        "CI_WORKER",
+        "GPU_PERSISTENT"
+      ]
+    },
+    {
+      "provider": "COLAB",
+      "account": "COLAB_01",
+      "region": "UNKNOWN",
+      "resource": "COLAB_01:colab-gpu",
+      "fit": false,
+      "constraints_met": [],
+      "constraints_failed": [
+        "VRAM_UNOBSERVED",
+        "NOT_PERSISTENT"
+      ],
+      "estimated_cost": "UNKNOWN",
+      "quota_remaining": "UNKNOWN",
+      "persistence": false,
+      "startup_time": "UNKNOWN",
+      "confidence": "LOW",
+      "reason_codes": [
+        "VRAM_UNOBSERVED",
+        "NOT_PERSISTENT"
+      ],
+      "scores": {
+        "availability_score": "UNKNOWN",
+        "cost_score": "UNKNOWN",
+        "persistence_score": 0.0,
+        "compute_score": "UNKNOWN",
+        "gpu_score": "UNKNOWN",
+        "storage_score": "UNKNOWN",
+        "network_score": "UNKNOWN",
+        "service_score": "UNKNOWN",
+        "reliability_score": "UNKNOWN",
+        "quota_score": "UNKNOWN",
+        "credit_score": "UNKNOWN",
+        "RAIOS_VALUE_SCORE": 0.0,
+        "OPAQUE_SINGLE_SCORE_ONLY": false
+      },
+      "capabilities": [
+        "LIGHT_COMPUTE",
+        "PRIVATE_ENDPOINT",
+        "GPU_BURST",
+        "CI_WORKER",
+        "GPU_PERSISTENT"
+      ]
+    },
+    {
+      "provider": "MODAL",
+      "account": "MODAL_01",
+      "region": "UNKNOWN",
+      "resource": "MODAL_01:modal-gpu",
+      "fit": false,
+      "constraints_met": [],
+      "constraints_failed": [
+        "VRAM_UNOBSERVED",
+        "NOT_PERSISTENT"
+      ],
+      "estimated_cost": "UNKNOWN",
+      "quota_remaining": "UNKNOWN",
+      "persistence": false,
+      "startup_time": "UNKNOWN",
+      "confidence": "LOW",
+      "reason_codes": [
+        "VRAM_UNOBSERVED",
+        "NOT_PERSISTENT"
+      ],
+      "scores": {
+        "availability_score": "UNKNOWN",
+        "cost_score": "UNKNOWN",
+        "persistence_score": 0.0,
+        "compute_score": "UNKNOWN",
+        "gpu_score": "UNKNOWN",
+        "storage_score": "UNKNOWN",
+        "network_score": "UNKNOWN",
+        "service_score": "UNKNOWN",
+        "reliability_score": "UNKNOWN",
+        "quota_score": "UNKNOWN",
+        "credit_score": "UNKNOWN",
+        "RAIOS_VALUE_SCORE": 0.0,
+        "OPAQUE_SINGLE_SCORE_ONLY": false
+      },
+      "capabilities": [
+        "LIGHT_COMPUTE",
+        "PRIVATE_ENDPOINT",
+        "GPU_BURST",
+        "CI_WORKER",
+        "GPU_PERSISTENT"
+      ]
+    },
+    {
+      "provider": "KAGGLE",
+      "account": "KAGGLE_C1",
+      "region": "kaggle-hosted",
+      "resource": "KAGGLE_C1:gpu-eligible-live",
+      "fit": false,
+      "constraints_met": [],
+      "constraints_failed": [
+        "VRAM_UNOBSERVED",
+        "NOT_PERSISTENT"
+      ],
+      "estimated_cost": "UNKNOWN",
+      "quota_remaining": 30.0,
+      "persistence": false,
+      "startup_time": "UNKNOWN",
+      "confidence": "LOW",
+      "reason_codes": [
+        "VRAM_UNOBSERVED",
+        "NOT_PERSISTENT"
+      ],
+      "scores": {
+        "availability_score": 0.7,
+        "cost_score": "UNKNOWN",
+        "persistence_score": 0.0,
+        "compute_score": "UNKNOWN",
+        "gpu_score": "UNKNOWN",
+        "storage_score": "UNKNOWN",
+        "network_score": "UNKNOWN",
+        "service_score": "UNKNOWN",
+        "reliability_score": "UNKNOWN",
+        "quota_score": "UNKNOWN",
+        "credit_score": "UNKNOWN",
+        "RAIOS_VALUE_SCORE": 0.35,
+        "OPAQUE_SINGLE_SCORE_ONLY": false
+      },
+      "capabilities": [
+        "LIGHT_COMPUTE",
+        "PRIVATE_ENDPOINT",
+        "GPU_BURST",
+        "CI_WORKER",
+        "GPU_PERSISTENT"
+      ]
+    },
+    {
+      "provider": "KAGGLE",
+      "account": "KAGGLE_C1",
+      "region": "kaggle-hosted",
+      "resource": "KAGGLE_C1:active-session-gpu",
+      "fit": false,
+      "constraints_met": [],
+      "constraints_failed": [
+        "VRAM_UNOBSERVED",
+        "NOT_PERSISTENT"
+      ],
+      "estimated_cost": "UNKNOWN",
+      "quota_remaining": 30.0,
+      "persistence": false,
+      "startup_time": "UNKNOWN",
+      "confidence": "LOW",
+      "reason_codes": [
+        "VRAM_UNOBSERVED",
+        "NOT_PERSISTENT"
+      ],
+      "scores": {
+        "availability_score": 0.0,
+        "cost_score": "UNKNOWN",
+        "persistence_score": 0.0,
+        "compute_score": "UNKNOWN",
+        "gpu_score": "UNKNOWN",
+        "storage_score": "UNKNOWN",
+        "network_score": "UNKNOWN",
+        "service_score": "UNKNOWN",
+        "reliability_score": "UNKNOWN",
+        "quota_score": "UNKNOWN",
+        "credit_score": "UNKNOWN",
+        "RAIOS_VALUE_SCORE": 0.0,
+        "OPAQUE_SINGLE_SCORE_ONLY": false
+      },
+      "capabilities": [
+        "LIGHT_COMPUTE",
+        "PRIVATE_ENDPOINT",
+        "GPU_BURST",
+        "CI_WORKER",
+        "GPU_PERSISTENT"
+      ]
+    }
+  ],
+  "fallbacks": [
+    {
+      "provider": "ORACLE_CLOUD",
+      "account": "ORACLE_01",
+      "region": "eu-stockholm-1",
+      "resource": "ORACLE_01:gpu-catalog",
+      "fit": false,
+      "constraints_met": [
+        "PERSISTENT"
+      ],
+      "constraints_failed": [
+        "VRAM_UNOBSERVED"
+      ],
+      "estimated_cost": "UNKNOWN",
+      "quota_remaining": "UNKNOWN",
+      "persistence": true,
+      "startup_time": "UNKNOWN",
+      "confidence": "LOW",
+      "reason_codes": [
+        "VRAM_UNOBSERVED"
+      ],
+      "scores": {
+        "availability_score": "UNKNOWN",
+        "cost_score": "UNKNOWN",
+        "persistence_score": 1.0,
+        "compute_score": "UNKNOWN",
+        "gpu_score": "UNKNOWN",
+        "storage_score": "UNKNOWN",
+        "network_score": "UNKNOWN",
+        "service_score": "UNKNOWN",
+        "reliability_score": "UNKNOWN",
+        "quota_score": "UNKNOWN",
+        "credit_score": "UNKNOWN",
+        "RAIOS_VALUE_SCORE": 1.0,
+        "OPAQUE_SINGLE_SCORE_ONLY": false
+      },
+      "capabilities": [
+        "PUBLIC_ENDPOINT",
+        "PRIVATE_ENDPOINT",
+        "GPU_BURST",
+        "HEAVY_COMPUTE",
+        "PERSISTENT_CONTROL_NODE",
+        "GPU_PERSISTENT"
+      ]
+    },
+    {
+      "provider": "LIGHTNING",
+      "account": "LIGHTNING_01",
+      "region": "UNKNOWN",
+      "resource": "LIGHTNING_01:studio-gpu",
+      "fit": false,
+      "constraints_met": [
+        "PERSISTENT"
+      ],
+      "constraints_failed": [
+        "VRAM_UNOBSERVED"
+      ],
+      "estimated_cost": "UNKNOWN",
+      "quota_remaining": "UNKNOWN",
+      "persistence": true,
+      "startup_time": "UNKNOWN",
+      "confidence": "LOW",
+      "reason_codes": [
+        "VRAM_UNOBSERVED"
+      ],
+      "scores": {
+        "availability_score": "UNKNOWN",
+        "cost_score": "UNKNOWN",
+        "persistence_score": 1.0,
+        "compute_score": "UNKNOWN",
+        "gpu_score": "UNKNOWN",
+        "storage_score": "UNKNOWN",
+        "network_score": "UNKNOWN",
+        "service_score": "UNKNOWN",
+        "reliability_score": "UNKNOWN",
+        "quota_score": "UNKNOWN",
+        "credit_score": "UNKNOWN",
+        "RAIOS_VALUE_SCORE": 1.0,
+        "OPAQUE_SINGLE_SCORE_ONLY": false
+      },
+      "capabilities": [
+        "PRIVATE_ENDPOINT",
+        "GPU_BURST",
+        "HEAVY_COMPUTE",
+        "PERSISTENT_CONTROL_NODE",
+        "GPU_PERSISTENT"
+      ]
+    },
+    {
+      "provider": "KAGGLE",
+      "account": "KAGGLE_C1",
+      "region": "UNKNOWN",
+      "resource": "KAGGLE_C1:gpu-p100-catalog",
+      "fit": false,
+      "constraints_met": [],
+      "constraints_failed": [
+        "VRAM_SHORT",
+        "NOT_PERSISTENT"
+      ],
+      "estimated_cost": "UNKNOWN",
+      "quota_remaining": 30.0,
+      "persistence": false,
+      "startup_time": "UNKNOWN",
+      "confidence": "LOW",
+      "reason_codes": [
+        "VRAM_SHORT",
+        "NOT_PERSISTENT"
+      ],
+      "scores": {
+        "availability_score": "UNKNOWN",
+        "cost_score": "UNKNOWN",
+        "persistence_score": 0.0,
+        "compute_score": "UNKNOWN",
+        "gpu_score": 0.2,
+        "storage_score": "UNKNOWN",
+        "network_score": "UNKNOWN",
+        "service_score": "UNKNOWN",
+        "reliability_score": "UNKNOWN",
+        "quota_score": "UNKNOWN",
+        "credit_score": "UNKNOWN",
+        "RAIOS_VALUE_SCORE": 0.1,
+        "OPAQUE_SINGLE_SCORE_ONLY": false
+      },
+      "capabilities": [
+        "GPU_PERSISTENT",
+        "LIGHT_COMPUTE",
+        "LIGHT_INFERENCE",
+        "PRIVATE_ENDPOINT",
+        "GPU_BURST",
+        "CI_WORKER",
+        "EMBEDDING"
+      ]
+    }
+  ],
+  "MUTATION": false,
+  "PAID_ACTIVATION": false
+}

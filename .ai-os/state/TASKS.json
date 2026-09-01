@@ -606,7 +606,7 @@
         "C6"
       ],
       "validation": "C1-authorized automatic Resource Factory census completes with full redacted evidence; no download, GPU session, paid resource, provider mutation, or second fabric.",
-      "status": "READY",
+      "status": "DONE",
       "claimed_by": null,
       "dispatch_authorized_by": "C1",
       "dispatch_authorized_at": "2026-09-01T15:14:52.980234+00:00",
@@ -620,6 +620,14 @@
         "max_model_parameters_billion": 32,
         "paid_resource_allowed": false,
         "gpu_session_start_allowed": false
+      },
+      "executed_by": "RAIOS-SYSTEM-ACTION:RESOURCE_FACTORY",
+      "dispatch_status": "AUTOMATION_COMPLETE_EVIDENCE_VERIFIED",
+      "evidence": ".ai-os/reports/command-center/resource-census/RAIOS-RESOURCES-MODEL-STRATEGY-20260901-01/AUTOMATED-RESOURCE-CENSUS.json",
+      "completed_at": "2026-09-01T16:57:03.287197+00:00",
+      "automation_policy": {
+        "c1_authorized": true,
+        "presence_not_required_for_deterministic_system_action": true
       }
     }
   ]

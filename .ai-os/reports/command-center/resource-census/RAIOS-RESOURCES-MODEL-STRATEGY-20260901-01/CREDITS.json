@@ -1,0 +1,50 @@
+[
+  {
+    "schema": "raios.resource-fabric.v1",
+    "kind": "Credit",
+    "credit_id": "ORACLE_01:trial-or-paid",
+    "provider_id": "ORACLE_CLOUD",
+    "account_id": "ORACLE_01",
+    "original_value": "UNKNOWN",
+    "remaining_value": "UNKNOWN",
+    "currency": "USD",
+    "granted_at": "UNKNOWN",
+    "expires_at": "UNKNOWN",
+    "eligible_services": [],
+    "restrictions": [],
+    "CREDIT_NE_CASH": true
+  },
+  {
+    "schema": "raios.resource-fabric.v1",
+    "kind": "Credit",
+    "credit_id": "MODAL_01:workspace-credits",
+    "provider_id": "MODAL",
+    "account_id": "MODAL_01",
+    "original_value": "UNKNOWN",
+    "remaining_value": "UNKNOWN",
+    "currency": "USD",
+    "granted_at": "UNKNOWN",
+    "expires_at": "UNKNOWN",
+    "eligible_services": [],
+    "restrictions": [],
+    "CREDIT_NE_CASH": true
+  },
+  {
+    "schema": "raios.resource-fabric.v1",
+    "kind": "Credit",
+    "credit_id": "LIGHTNING_01:org-credits",
+    "provider_id": "LIGHTNING",
+    "account_id": "LIGHTNING_01",
+    "original_value": "UNKNOWN",
+    "remaining_value": 30.0,
+    "currency": "CREDIT",
+    "granted_at": "UNKNOWN",
+    "expires_at": "UNKNOWN",
+    "eligible_services": [],
+    "restrictions": [
+      "CREDIT_NE_CASH",
+      "NOT_USD_CASH"
+    ],
+    "CREDIT_NE_CASH": true
+  }
+]
