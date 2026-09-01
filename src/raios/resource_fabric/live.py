@@ -552,8 +552,25 @@ def _probe_kaggle_partner(*, live: bool = True) -> dict[str, Any]:
             rec["reason"] = "REFUSED_C1_KAGGLE_DIR"
             return rec
         env = os.environ.copy()
-        env.pop("KAGGLE_CONFIG_DIR", None)
+        isolated_home = target / ".isolated-home"
+        isolated_home.mkdir(parents=True, exist_ok=True)
+        for key in (
+            "KAGGLE_CONFIG_DIR",
+            "KAGGLE_API_TOKEN",
+            "KAGGLE_API_V1_TOKEN_PATH",
+            "KAGGLE_USERNAME",
+            "KAGGLE_KEY",
+        ):
+            env.pop(key, None)
         env["KAGGLE_CONFIG_DIR"] = str(target)
+        # Kaggle SDK OAuth credentials live under ~/.kaggle independently of
+        # KAGGLE_CONFIG_DIR. Isolate the subprocess home so C1 OAuth can never
+        # satisfy or contaminate the partner-account probe.
+        env["HOME"] = str(isolated_home)
+        env["USERPROFILE"] = str(isolated_home)
+        if os.name == "nt":
+            env["HOMEDRIVE"] = isolated_home.drive
+            env["HOMEPATH"] = str(isolated_home)[len(isolated_home.drive) :]
         cfg = _run_cli(["kaggle", "config", "view"], timeout=20, env=env)
         quota_out = _run_cli(["kaggle", "quota", "--format", "json"], timeout=25, env=env)
         if not quota_out.get("ok"):
@@ -561,7 +578,7 @@ def _probe_kaggle_partner(*, live: bool = True) -> dict[str, Any]:
         identity = UNOBSERVED
         stdout = cfg.get("stdout") or ""
         if cfg.get("ok"):
-            m = re.search(r"(?im)^username\s*[:=]\s*(\S+)", stdout)
+            m = re.search(r"(?im)^\s*-?\s*username\s*[:=]\s*(\S+)", stdout)
             if m:
                 identity = m.group(1)
             elif "greenylife" in stdout and stdout.strip():

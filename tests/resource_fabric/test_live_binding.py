@@ -4,6 +4,7 @@ from __future__ import annotations
 
 import os
 import sys
+import tempfile
 import unittest
 from pathlib import Path
 from unittest.mock import patch
@@ -21,6 +22,7 @@ from raios.resource_fabric.live import (
     count_unknown_fields,
     discover_auth,
     model_hosting_fit,
+    _probe_kaggle_partner,
     qwen35b_placement,
     run_live_probes,
 )
@@ -54,6 +56,45 @@ class LiveBinding(unittest.TestCase):
         self.assertTrue(c1["KAGGLE_JSON_ABSENT_NE_ACCOUNT_ABSENT"])
         self.assertNotEqual(c1.get("session_state"), "ABSENT")
         self.assertNotEqual(c1.get("credential_ref"), "")
+
+    def test_kaggle_partner_probe_isolates_c1_oauth_home(self):
+        with tempfile.TemporaryDirectory() as td:
+            root = Path(td)
+            partner = root / "partner"
+            partner.mkdir()
+            (partner / "kaggle.json").write_text(
+                '{"username":"partner-user","key":"redacted-test-token"}',
+                encoding="utf-8",
+            )
+            calls = []
+
+            def fake_cli(args, *, timeout, env=None):
+                calls.append((args, env))
+                if args[1:3] == ["config", "view"]:
+                    return {"ok": True, "stdout": "- username: partner-user\n- auth_method: LEGACY", "stderr": ""}
+                return {"ok": True, "stdout": "[]", "stderr": ""}
+
+            inherited = {
+                "KAGGLE_API_TOKEN": "must-not-leak",
+                "KAGGLE_USERNAME": "greenylife",
+                "KAGGLE_KEY": "must-not-leak",
+            }
+            with patch("raios.resource_fabric.live._partner_candidate_dirs", return_value=[partner]), \
+                 patch("raios.resource_fabric.live.C1_KAGGLE_DIR", root / "c1"), \
+                 patch("raios.resource_fabric.live._run_cli", side_effect=fake_cli), \
+                 patch.dict(os.environ, inherited, clear=False):
+                result = _probe_kaggle_partner(live=True)
+
+            self.assertEqual(result["status"], "REACHABLE")
+            self.assertEqual(result["IDENTITY_PROOF"], "partner-user")
+            self.assertTrue(result["distinct_from_c1"])
+            for _, env in calls:
+                self.assertEqual(env["KAGGLE_CONFIG_DIR"], str(partner))
+                self.assertEqual(env["HOME"], str(partner / ".isolated-home"))
+                self.assertEqual(env["USERPROFILE"], str(partner / ".isolated-home"))
+                self.assertNotIn("KAGGLE_API_TOKEN", env)
+                self.assertNotIn("KAGGLE_USERNAME", env)
+                self.assertNotIn("KAGGLE_KEY", env)
 
     def test_kaggle_accounts_isolated_on_overlay(self):
         world = collect_world()
