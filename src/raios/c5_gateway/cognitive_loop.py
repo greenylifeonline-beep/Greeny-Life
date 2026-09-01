@@ -487,21 +487,45 @@ def _bump_index(index_path: Path, digest: dict[str, Any]) -> None:
 
 
 def manager_liveness(stale_after_seconds: float = 120.0) -> dict[str, Any]:
-    hb = manager_root() / "heartbeat.json"
-    if not hb.is_file():
+    root = manager_root()
+    stable = root / "heartbeat.json"
+    candidates = [stable] if stable.is_file() else []
+    candidates.extend(root.glob("heartbeat.live-*.json"))
+    if not candidates:
         return {"alive": False, "age_seconds": None, "reason": "HEARTBEAT_MISSING"}
-    try:
-        obj = json.loads(hb.read_text(encoding="utf-8-sig"))
-        ts = obj.get("generated_at") or obj.get("at") or ""
-        age = (datetime.now(timezone.utc) - datetime.fromisoformat(ts.replace("Z", "+00:00"))).total_seconds()
+
+    parsed: list[tuple[datetime, dict[str, Any], Path]] = []
+    last_error: Exception | None = None
+    for heartbeat in candidates[:20]:
+        try:
+            obj = json.loads(heartbeat.read_text(encoding="utf-8-sig"))
+            ts = str(obj.get("generated_at") or obj.get("at") or "")
+            instant = datetime.fromisoformat(ts.replace("Z", "+00:00"))
+            parsed.append((instant, obj, heartbeat))
+        except Exception as exc:
+            last_error = exc
+            continue
+    if not parsed:
         return {
-            "alive": age <= stale_after_seconds,
-            "age_seconds": round(age, 3),
-            "generated_at": ts,
-            "reason": "OK" if age <= stale_after_seconds else "STALE",
+            "alive": False,
+            "age_seconds": None,
+            "reason": (
+                f"{type(last_error).__name__}:{last_error}"
+                if last_error else "HEARTBEAT_UNREADABLE"
+            ),
         }
-    except Exception as exc:
-        return {"alive": False, "age_seconds": None, "reason": f"{type(exc).__name__}:{exc}"}
+
+    instant, obj, heartbeat = max(parsed, key=lambda row: row[0])
+    age = (datetime.now(timezone.utc) - instant).total_seconds()
+    alive = -300.0 <= age <= stale_after_seconds
+    return {
+        "alive": alive,
+        "age_seconds": round(max(0.0, age), 3),
+        "generated_at": instant.isoformat(),
+        "state": obj.get("state") or "RUNNING",
+        "heartbeat_file": heartbeat.name,
+        "reason": "OK" if alive else "STALE",
+    }
 
 
 def _jsonl_summary(path: Path, *, limit: int = 5000) -> dict[str, Any]:

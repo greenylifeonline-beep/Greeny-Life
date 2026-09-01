@@ -132,6 +132,29 @@ def atomic_json(path: Path, value: Any) -> None:
             pass
 
 
+def write_heartbeat(value: dict[str, Any]) -> Path:
+    """Write the one manager heartbeat even when Windows pins its stable name."""
+    try:
+        atomic_json(HEARTBEAT, value)
+        written = HEARTBEAT
+    except PermissionError:
+        written = HEARTBEAT.with_name(
+            f"heartbeat.live-{os.getpid()}-{time.time_ns()}.json"
+        )
+        atomic_json(written, value)
+    try:
+        versions = sorted(
+            HEARTBEAT.parent.glob("heartbeat.live-*.json"),
+            key=lambda candidate: candidate.stat().st_mtime_ns,
+            reverse=True,
+        )
+        for stale in versions[12:]:
+            stale.unlink(missing_ok=True)
+    except OSError:
+        pass
+    return written
+
+
 def sha(value: Any) -> str:
     raw = json.dumps(value, sort_keys=True, ensure_ascii=False, default=str).encode("utf-8")
     return hashlib.sha256(raw).hexdigest()
@@ -936,7 +959,7 @@ class LiveManager:
             "second_task_store": False,
             "second_wal": False,
         }
-        atomic_json(HEARTBEAT, result)
+        write_heartbeat(result)
         self.state["last_tick"] = result["generated_at"]
         self.state["last_snapshot_hash"] = snapshot_hash
         atomic_json(STATE, self.state)
@@ -965,8 +988,7 @@ class LiveManager:
         # Publish process liveness immediately after the single-instance lock is
         # acquired. The first evidence scan may be slow on a CPU-only laptop;
         # STARTING is truthful liveness, not a completed diagnostic claim.
-        atomic_json(
-            HEARTBEAT,
+        write_heartbeat(
             {
                 "schema": "raios.live-manager-tick.v2",
                 "generated_at": utc(),

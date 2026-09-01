@@ -34,4 +34,5 @@ def test_manager_guard_checks_liveness_not_lock_file_existence():
     assert "STOP_STALE_MANAGER_PID_" in script
     assert "if (Test-Path $lock)" not in script
     assert '"state": "STARTING"' in manager
-    assert "atomic_json(\n            HEARTBEAT" in manager
+    assert "write_heartbeat(" in manager
+    assert "heartbeat.live-" in manager
