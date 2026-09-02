@@ -113,7 +113,7 @@ DEFAULT_POLICY: dict[str, Any] = {
     "kaggle_quota_isolation": {"KAGGLE_C1": "KAGGLE_C1", "KAGGLE_PARTNER": "KAGGLE_PARTNER"},
 }
 
-PAID_GPU_ACCOUNTS = frozenset({"MODAL_01", "ORACLE_01", "LIGHTNING_01"})
+PAID_GPU_ACCOUNTS = frozenset({"MODAL_01", "MODAL_PARTNER", "ORACLE_01", "LIGHTNING_01"})
 BLOCKED_C1_ACCOUNTS = frozenset({"KAGGLE_PARTNER", "ORACLE_01", "COLAB_01"})
 C1_ACTION_QUEUE: tuple[dict[str, Any], ...] = (
     {
@@ -146,6 +146,7 @@ CLOUD_ACCOUNTS = (
     "KAGGLE_C1",
     "KAGGLE_PARTNER",
     "MODAL_01",
+    "MODAL_PARTNER",
     "LIGHTNING_01",
     "ORACLE_01",
     "COLAB_01",
@@ -499,7 +500,7 @@ def evaluate_account(req: dict[str, Any], world: dict[str, Any], account_id: str
     cost_class = "UNPAID_OR_QUOTA"
     if paid_gpu:
         cost_class = "PAID_CATALOG" if not c1_ok else "PAID_C1_OVERRIDE"
-    elif account_id == "MODAL_01":
+    elif account_id in {"MODAL_01", "MODAL_PARTNER"}:
         cost_class = "SERVERLESS_UNACTIVATED"
     elif account_id == "LOCAL_AG":
         cost_class = "LOCAL_SUNK"

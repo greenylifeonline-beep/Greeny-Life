@@ -662,9 +662,17 @@ class ModalAdapter(ReadOnlyAdapter):
                 provider_id=self.provider_id,
                 account_alias="MODAL_01",
                 owner_alias="C1",
-                credential_ref="env:MODAL_TOKEN_ID",
+                credential_ref="file-ref:%USERPROFILE%/.modal.toml#RAIOS_C1",
                 provenance_refs=["RAIOS/V9/autonomic/self_inspection/cloud_capacity_census.py:modal"],
-            )
+            ),
+            account(
+                account_id="MODAL_PARTNER",
+                provider_id=self.provider_id,
+                account_alias="MODAL_PARTNER",
+                owner_alias="PARTNER",
+                credential_ref="file-ref:%USERPROFILE%/.modal.toml#RAIOS_PARTNER",
+                provenance_refs=["RAIOS/V9/autonomic/self_inspection/cloud_capacity_census.py:modal-partner"],
+            ),
         ]
 
     def discover_regions(self, account_id: str) -> list[dict[str, Any]]:

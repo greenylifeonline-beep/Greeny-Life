@@ -23,6 +23,7 @@ from raios.resource_fabric.live import (
     discover_auth,
     model_hosting_fit,
     _probe_kaggle_partner,
+    _probe_modal_profile,
     qwen35b_placement,
     run_live_probes,
 )
@@ -96,6 +97,32 @@ class LiveBinding(unittest.TestCase):
                 self.assertEqual(env["KAGGLE_API_TOKEN"], token)
                 self.assertNotIn("KAGGLE_USERNAME", env)
                 self.assertNotIn("KAGGLE_KEY", env)
+
+    def test_modal_partner_profile_is_distinct_and_live(self):
+        with tempfile.TemporaryDirectory() as td:
+            root = Path(td)
+            (root / ".modal.toml").write_text(
+                "[RAIOS_C1]\ntoken_id = 'c1'\ntoken_secret = 'c1-secret'\n"
+                "[RAIOS_PARTNER]\ntoken_id = 'partner'\ntoken_secret = 'partner-secret'\n",
+                encoding="utf-8",
+            )
+            result = {
+                "ok": True,
+                "stdout": "Workspace: mariam-n-hend1 (redacted-id)\nUser: mariam-n-hend1 (redacted-user)",
+                "stderr": "",
+            }
+            with patch("raios.resource_fabric.live.HOME", root), \
+                 patch("raios.resource_fabric.live.shutil.which", return_value="uvx"), \
+                 patch("raios.resource_fabric.live._run_cli", return_value=result):
+                probe = _probe_modal_profile("MODAL_PARTNER", "RAIOS_PARTNER", live=True)
+
+            self.assertEqual(probe["status"], "REACHABLE")
+            self.assertEqual(probe["workspace"], "mariam-n-hend1")
+            self.assertTrue(probe["live_auth_proven"])
+            self.assertEqual(probe["credits_remaining"], 1.0)
+            self.assertEqual(probe["credits_locked"], 29.0)
+            self.assertFalse(probe["paid"])
+            assert_no_secrets(probe)
 
     def test_kaggle_accounts_isolated_on_overlay(self):
         world = collect_world()

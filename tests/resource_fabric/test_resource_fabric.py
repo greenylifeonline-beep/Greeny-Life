@@ -330,7 +330,7 @@ class PlacementCensus(unittest.TestCase):
 
     def test_accounts_include_required_slots(self):
         ids = {a["account_id"] for a in self.world["accounts"]}
-        for required in ("ORACLE_01", "KAGGLE_C1", "KAGGLE_PARTNER", "LIGHTNING_01", "COLAB_01", "MODAL_01"):
+        for required in ("ORACLE_01", "KAGGLE_C1", "KAGGLE_PARTNER", "LIGHTNING_01", "COLAB_01", "MODAL_01", "MODAL_PARTNER"):
             self.assertIn(required, ids)
 
     def test_no_invented_usernames_on_partner(self):

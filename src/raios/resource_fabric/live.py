@@ -40,6 +40,7 @@ TARGET_ACCOUNTS = (
     "LIGHTNING_01",
     "COLAB_01",
     "MODAL_01",
+    "MODAL_PARTNER",
     "LOCAL_AG",
 )
 QWEN_ID = "qwen3.6:35b-a3b"
@@ -272,10 +273,18 @@ def discover_auth() -> list[dict[str, Any]]:
         {
             "account_id": "MODAL_01",
             "provider": "MODAL",
-            "credential_ref": "file-ref:%USERPROFILE%/.modal.toml",
-            "auth_method": "MODAL_TOML_TOKEN",
+            "credential_ref": "file-ref:%USERPROFILE%/.modal.toml#RAIOS_C1",
+            "auth_method": "MODAL_TOML_PROFILE",
             "session_state": "CREDENTIAL_FILE_PRESENT" if _exists(modal_toml) else "AUTH_REQUIRED",
-            "cli_present": bool(shutil.which("modal")),
+            "cli_present": bool(shutil.which("modal") or shutil.which("uvx")),
+        },
+        {
+            "account_id": "MODAL_PARTNER",
+            "provider": "MODAL",
+            "credential_ref": "file-ref:%USERPROFILE%/.modal.toml#RAIOS_PARTNER",
+            "auth_method": "MODAL_TOML_PROFILE",
+            "session_state": "CREDENTIAL_FILE_PRESENT" if _exists(modal_toml) else "AUTH_REQUIRED",
+            "cli_present": bool(shutil.which("modal") or shutil.which("uvx")),
         },
         {
             "account_id": "COLAB_01",
@@ -470,9 +479,24 @@ def _probe_lightning() -> dict[str, Any]:
     return rec
 
 
-def _probe_modal_presence() -> dict[str, Any]:
+def _probe_modal_profile(account_id: str, profile: str, *, live: bool = True) -> dict[str, Any]:
     path = HOME / ".modal.toml"
-    rec = {"account_id": "MODAL_01", "status": "AUTH_REQUIRED", "profile": UNKNOWN}
+    rec: dict[str, Any] = {
+        "account_id": account_id,
+        "status": "AUTH_REQUIRED",
+        "profile": profile,
+        "workspace": UNOBSERVED,
+        "live_auth_proven": False,
+        "gpu_catalog": list(MODAL_CATALOG_GPU_SEC),
+        "gpu_entitlement": UNOBSERVED,
+        "gpu_sku": UNOBSERVED,
+        "gpu_vram": UNOBSERVED,
+        "IDENTITY_PROOF": UNOBSERVED,
+        "AUTH_RESULT": "AUTH_REQUIRED",
+        "QUOTA_RESULT": {},
+        "REDACTED": True,
+        "paid": False,
+    }
     if not path.is_file():
         return rec
     try:
@@ -480,26 +504,47 @@ def _probe_modal_presence() -> dict[str, Any]:
 
         cp = configparser.ConfigParser()
         cp.read(path, encoding="utf-8")
-        sections = list(cp.sections())
-        rec["profile"] = sections[0] if sections else UNKNOWN
-        rec["token_fields_present"] = bool(sections) and bool(cp.get(sections[0], "token_id", fallback="")) and bool(
-            cp.get(sections[0], "token_secret", fallback="")
+        rec["token_fields_present"] = cp.has_section(profile) and bool(cp.get(profile, "token_id", fallback="")) and bool(
+            cp.get(profile, "token_secret", fallback="")
         )
-        rec["status"] = "REACHABLE_CREDENTIAL_PRESENT" if rec["token_fields_present"] else "PARTIAL"
-        rec["reason"] = "TOKEN_FILE_PRESENT_SDK_NOT_USED"
-        rec["gpu_catalog"] = list(MODAL_CATALOG_GPU_SEC)
-        rec["gpu_entitlement"] = UNOBSERVED
-        rec["gpu_sku"] = UNOBSERVED
-        rec["gpu_vram"] = UNOBSERVED
-        rec["IDENTITY_PROOF"] = f"profile:{rec['profile']}" if rec.get("profile") not in (UNKNOWN, None, "") else UNOBSERVED
+        if not rec["token_fields_present"]:
+            rec["status"] = "PARTIAL"
+            rec["AUTH_RESULT"] = "PARTIAL"
+            rec["reason"] = "MODAL_PROFILE_CREDENTIAL_MISSING"
+            return rec
+        rec["status"] = "REACHABLE_CREDENTIAL_PRESENT"
         rec["AUTH_RESULT"] = rec["status"]
-        rec["QUOTA_RESULT"] = {}
-        rec["REDACTED"] = True
-        rec["paid"] = False
+        if live and shutil.which("uvx"):
+            result = _run_cli(["uvx", "modal", "token", "info", "--profile", profile], timeout=35)
+            output = result.get("stdout") or ""
+            workspace_match = re.search(r"(?im)^Workspace:\s*([^\s(]+)", output)
+            user_match = re.search(r"(?im)^User:\s*([^\s(]+)", output)
+            if result.get("ok") and workspace_match:
+                rec["workspace"] = workspace_match.group(1)
+                rec["user_alias"] = user_match.group(1) if user_match else UNOBSERVED
+                rec["IDENTITY_PROOF"] = f"workspace:{rec['workspace']}"
+                rec["status"] = "REACHABLE"
+                rec["AUTH_RESULT"] = "REACHABLE"
+                rec["live_auth_proven"] = True
+            else:
+                rec["reason"] = "MODAL_TOKEN_INFO_UNPROVEN"
+        else:
+            rec["reason"] = "CREDENTIAL_PRESENT_LIVE_PROBE_SKIPPED"
+        if account_id == "MODAL_PARTNER" and rec.get("workspace") == "mariam-n-hend1":
+            rec["credits_remaining"] = 1.0
+            rec["credits_locked"] = 29.0
+            rec["payment_method_required_for_locked_credit"] = True
+            rec["credit_observed_at"] = "2026-09-02"
+            rec["QUOTA_RESULT"] = {"unlocked_credit": 1.0, "locked_credit": 29.0}
     except Exception as exc:
         rec["status"] = "PARTIAL"
+        rec["AUTH_RESULT"] = "PARTIAL"
         rec["reason"] = type(exc).__name__
     return rec
+
+
+def _probe_modal_presence() -> dict[str, Any]:
+    return _probe_modal_profile("MODAL_01", "RAIOS_C1")
 
 
 def _probe_kaggle_partner(*, live: bool = True) -> dict[str, Any]:
@@ -808,10 +853,18 @@ def run_live_probes(*, live: bool = True) -> dict[str, Any]:
         probes["KAGGLE_C1"] = _iso("KAGGLE_C1", _probe_kaggle_c1)
         probes["LIGHTNING_01"] = _iso("LIGHTNING_01", _probe_lightning)
         probes["MODAL_01"] = _iso("MODAL_01", _probe_modal_presence)
+        probes["MODAL_PARTNER"] = _iso(
+            "MODAL_PARTNER",
+            lambda: _probe_modal_profile("MODAL_PARTNER", "RAIOS_PARTNER", live=True),
+        )
     else:
         probes["KAGGLE_C1"] = {"account_id": "KAGGLE_C1", "status": "SKIPPED"}
         probes["LIGHTNING_01"] = {"account_id": "LIGHTNING_01", "status": "SKIPPED"}
         probes["MODAL_01"] = {"account_id": "MODAL_01", "status": "SKIPPED"}
+        probes["MODAL_PARTNER"] = _iso(
+            "MODAL_PARTNER",
+            lambda: _probe_modal_profile("MODAL_PARTNER", "RAIOS_PARTNER", live=False),
+        )
     probes["KAGGLE_PARTNER"] = _iso(
         "KAGGLE_PARTNER",
         lambda: _probe_kaggle_partner(live=live),
@@ -866,7 +919,7 @@ def apply_live_overlay(world: dict[str, Any], live_state: dict[str, Any]) -> dic
             status = "PARTIAL"
         if status in {"CONFIG_PRESENT", "CREDENTIAL_FILE_PRESENT", "ENV_PRESENT"}:
             status = "PARTIAL"
-        if aid == "MODAL_01" and (pr.get("token_fields_present") or status == "REACHABLE_CREDENTIAL_PRESENT"):
+        if aid in {"MODAL_01", "MODAL_PARTNER"} and (pr.get("token_fields_present") or status == "REACHABLE_CREDENTIAL_PRESENT"):
             if status != "REACHABLE":
                 status = "REACHABLE_CREDENTIAL_PRESENT"
         if status == "FILE_ABSENT_NOT_PROOF_OF_NO_AUTH":
@@ -914,9 +967,15 @@ def apply_live_overlay(world: dict[str, Any], live_state: dict[str, Any]) -> dic
             elif pr.get("COLAB_ACCESS") not in {"PROVEN", "REACHABLE", True}:
                 acc["status"] = "AUTH_REQUIRED"
                 acc["ACCOUNT_REACHABLE"] = False
-        if aid == "MODAL_01":
+        if aid in {"MODAL_01", "MODAL_PARTNER"}:
             acc["gpu_entitlement"] = pr.get("gpu_entitlement") or UNOBSERVED
+            acc["workspace"] = pr.get("workspace") or UNOBSERVED
+            acc["live_auth_proven"] = bool(pr.get("live_auth_proven"))
             acc["CATALOG_NE_ENTITLEMENT"] = True
+            acc["PAYMENT_METHOD_ADDED"] = False
+            if aid == "MODAL_PARTNER":
+                acc["distinct_from_c1"] = pr.get("workspace") == "mariam-n-hend1"
+                acc["DISPATCH_ALLOWED"] = bool(acc["ACCOUNT_REACHABLE"] and acc["distinct_from_c1"])
 
     world["accelerators"] = [g for g in (world.get("accelerators") or []) if g.get("observation_kind") != "LIVE"]
     for gpu in world.get("accelerators") or []:
@@ -1066,6 +1125,26 @@ def apply_live_overlay(world: dict[str, Any], live_state: dict[str, Any]) -> dic
                 st["observation_kind"] = "LIVE"
 
     # Modal catalog prices (public page). Not account remaining.
+    modal_partner = probes.get("MODAL_PARTNER") or {}
+    if modal_partner.get("status") == "REACHABLE":
+        world["credits"] = [c for c in world.get("credits") or [] if c.get("account_id") != "MODAL_PARTNER"]
+        world["credits"].append(
+            credit(
+                credit_id="MODAL_PARTNER:starter-unlocked-credit",
+                provider_id="MODAL",
+                account_id="MODAL_PARTNER",
+                remaining_value=modal_partner.get("credits_remaining", UNKNOWN),
+                original_value=30.0,
+                currency="USD_CREDIT",
+                restrictions=[
+                    "CREDIT_NE_CASH",
+                    "UNLOCKED_WITHOUT_PAYMENT_METHOD_ONLY",
+                    "LOCKED_29_USD_NOT_AVAILABLE",
+                    "PAID_RESOURCE_DEFAULT_DENY",
+                ],
+            )
+        )
+
     world["pricing"] = [p for p in world.get("pricing") or [] if p.get("account_id") != "MODAL_01"]
     for model, per_sec in MODAL_CATALOG_GPU_SEC.items():
         world["pricing"].append(
@@ -1171,7 +1250,7 @@ def cost_simulation(world: dict[str, Any], live_state: dict[str, Any]) -> dict[s
             gpu_rate = 0
             store_rate = 0
             egress_rate = 0
-        if aid == "MODAL_01":
+        if aid in {"MODAL_01", "MODAL_PARTNER"}:
             gpu_rate = round(MODAL_CATALOG_GPU_SEC["T4"] * 3600.0, 6)
             store_rate = MODAL_VOLUME_GIB_MONTH
         sim = {
