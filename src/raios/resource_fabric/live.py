@@ -196,6 +196,20 @@ def _http_json(url: str, headers: dict[str, str], timeout: float = 15.0) -> dict
         return {"http": None, "json": None, "error": type(exc).__name__}
 
 
+def _http_json_post(url: str, headers: dict[str, str], payload: dict[str, Any], timeout: float = 30.0) -> dict[str, Any]:
+    body = json.dumps(payload, ensure_ascii=False).encode("utf-8")
+    req = urllib.request.Request(url, data=body, headers={**headers, "Content-Type": "application/json"}, method="POST")
+    try:
+        with urllib.request.urlopen(req, timeout=timeout) as resp:
+            raw = resp.read(500000)
+            parsed = json.loads(raw.decode("utf-8", errors="replace")) if raw[:1] in (b"{", b"[") else None
+            return {"http": resp.status, "json": parsed}
+    except urllib.error.HTTPError as exc:
+        return {"http": exc.code, "json": None}
+    except Exception as exc:
+        return {"http": None, "json": None, "error": type(exc).__name__}
+
+
 def count_unknown_fields(world: dict[str, Any]) -> dict[str, int]:
     storage_fields = ("capacity_total_gb", "capacity_used_gb", "capacity_free_gb", "quota_gb")
     storage_u = sum(1 for s in world.get("storage") or [] for f in storage_fields if s.get(f) in (None, "", UNKNOWN))
@@ -489,8 +503,11 @@ def _probe_lightning() -> dict[str, Any]:
     return rec
 
 
-def _probe_lightning_partner(*, live: bool = True) -> dict[str, Any]:
-    path = HOME / ".raios" / "accounts" / "lightning" / "partner" / "model-api.json"
+def _probe_lightning_partner(*, live: bool = True, verify_inference: bool = False) -> dict[str, Any]:
+    root = HOME / ".raios" / "accounts" / "lightning" / "partner"
+    path = root / "model-api.json"
+    proof_path = root / "model-api-proof.json"
+    model_id = "lightning-ai/Qwen3.8-27B"
     rec: dict[str, Any] = {
         "account_id": "LIGHTNING_PARTNER",
         "status": "AUTH_REQUIRED",
@@ -500,6 +517,9 @@ def _probe_lightning_partner(*, live: bool = True) -> dict[str, Any]:
         "distinct_from_c1": False,
         "DISPATCH_ALLOWED": False,
         "MODEL_API_BASE": "https://lightning.ai/api/v1",
+        "target_model_id": model_id,
+        "target_model_available": False,
+        "INFERENCE_PROBE_EXECUTED": False,
         "INFERENCE_STARTED": False,
         "GPU_SESSION_STARTED": False,
         "PAID_RESOURCE_CREATED": False,
@@ -516,6 +536,7 @@ def _probe_lightning_partner(*, live: bool = True) -> dict[str, Any]:
     workspace = str(cred.get("workspace") or "").strip()
     service_name = str(cred.get("service") or "").strip()
     api_key = str(cred.get("api_key") or "").strip()
+    fingerprint = hashlib.sha256(api_key.encode("utf-8")).hexdigest()[:16] if api_key else ""
     rec["workspace"] = workspace or UNOBSERVED
     rec["credential_fields_present"] = bool(workspace and service_name == "MODEL_API" and api_key)
     rec["distinct_from_c1"] = workspace == "mariamnhend1-org"
@@ -529,26 +550,67 @@ def _probe_lightning_partner(*, live: bool = True) -> dict[str, Any]:
     if not live:
         rec["reason"] = "CREDENTIAL_PRESENT_LIVE_PROBE_SKIPPED"
         return rec
-    probe = _http_json(
-        "https://lightning.ai/api/v1/models",
-        {"Authorization": f"Bearer {api_key}", "Accept": "application/json", "User-Agent": "RAIOS-ResourceFabric/lightning-partner"},
-        timeout=20.0,
+    catalog = _http_json("https://lightning.ai/api/v1/models", {"Accept": "application/json"}, timeout=20.0)
+    rows = (catalog.get("json") or {}).get("data") if isinstance(catalog.get("json"), dict) else []
+    ids = {str(row.get("id") or row.get("name") or "") for row in (rows or []) if isinstance(row, dict)}
+    rec["models_endpoint_http"] = catalog.get("http")
+    rec["model_catalog_count"] = len(rows or [])
+    rec["target_model_available"] = model_id in ids
+    rec["CATALOG_PUBLIC_NE_AUTH_PROOF"] = True
+    proof: dict[str, Any] = {}
+    try:
+        if proof_path.is_file():
+            proof = json.loads(proof_path.read_text(encoding="utf-8"))
+    except (OSError, json.JSONDecodeError):
+        proof = {}
+    proof_valid = bool(
+        proof.get("workspace") == workspace
+        and proof.get("model_id") == model_id
+        and proof.get("credential_fingerprint") == fingerprint
+        and proof.get("http") == 200
+        and proof.get("authenticated") is True
     )
-    rec["models_endpoint_http"] = probe.get("http")
-    models = probe.get("json")
-    if probe.get("http") == 200:
-        rows = models.get("data") if isinstance(models, dict) else models if isinstance(models, list) else []
+    if verify_inference and rec["target_model_available"]:
+        rec["INFERENCE_PROBE_EXECUTED"] = True
+        rec["INFERENCE_STARTED"] = True
+        result = _http_json_post(
+            "https://lightning.ai/api/v1/chat/completions",
+            {"Authorization": f"Bearer {api_key}", "Accept": "application/json", "User-Agent": "RAIOS-ResourceFabric/lightning-partner"},
+            {"model": model_id, "messages": [{"role": "user", "content": "."}], "max_tokens": 1, "temperature": 0},
+            timeout=60.0,
+        )
+        body = result.get("json")
+        authenticated = bool(result.get("http") == 200 and isinstance(body, dict) and body.get("choices"))
+        rec["inference_probe_http"] = result.get("http")
+        if authenticated:
+            proof = {
+                "schema": "raios.lightning-model-api-proof.v1",
+                "workspace": workspace,
+                "model_id": model_id,
+                "credential_fingerprint": fingerprint,
+                "http": 200,
+                "authenticated": True,
+                "max_output_units": 1,
+                "verified_at": _now(),
+                "PAID_RESOURCE_CREATED": False,
+                "GPU_SESSION_STARTED": False,
+            }
+            proof_path.write_text(json.dumps(proof, indent=2) + "\n", encoding="utf-8")
+            proof_valid = True
+    if proof_valid:
         rec.update(
             status="REACHABLE",
             AUTH_RESULT="REACHABLE",
             IDENTITY_PROOF=f"workspace:{workspace}",
             live_auth_proven=True,
             DISPATCH_ALLOWED=True,
-            model_catalog_count=len(rows or []),
-            QUOTA_RESULT={"advertised_free_units": 40_000_000, "consumed_by_probe": 0},
+            auth_proof_ref="external-runtime:model-api-proof.json",
+            QUOTA_RESULT={"advertised_free_units": 40_000_000, "remaining_units": UNOBSERVED},
         )
+    elif rec["target_model_available"]:
+        rec.update(reason="PUBLIC_CATALOG_REACHABLE_AUTH_NOT_YET_PROVEN")
     else:
-        rec.update(status="PARTIAL", AUTH_RESULT="PARTIAL", reason="MODEL_API_AUTH_UNPROVEN")
+        rec.update(status="PARTIAL", AUTH_RESULT="PARTIAL", reason="TARGET_MODEL_NOT_IN_PUBLIC_CATALOG")
     return rec
 
 
@@ -1029,7 +1091,10 @@ def apply_live_overlay(world: dict[str, Any], live_state: dict[str, Any]) -> dic
             acc["distinct_from_c1"] = bool(pr.get("distinct_from_c1"))
             acc["DISPATCH_ALLOWED"] = bool(pr.get("DISPATCH_ALLOWED") and acc["ACCOUNT_REACHABLE"])
             acc["MODEL_API_BASE"] = pr.get("MODEL_API_BASE") or "https://lightning.ai/api/v1"
-            acc["INFERENCE_STARTED"] = False
+            acc["target_model_id"] = pr.get("target_model_id") or UNOBSERVED
+            acc["target_model_available"] = bool(pr.get("target_model_available"))
+            acc["INFERENCE_PROBE_EXECUTED"] = bool(pr.get("INFERENCE_PROBE_EXECUTED"))
+            acc["INFERENCE_STARTED"] = bool(pr.get("INFERENCE_STARTED"))
             acc["GPU_SESSION_STARTED"] = False
             acc["PAID_RESOURCE_CREATED"] = False
         if aid == "LOCAL_AG":

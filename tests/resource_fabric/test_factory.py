@@ -67,6 +67,17 @@ def _world() -> dict:
             "ORACLE_01": {"account_id": "ORACLE_01", "status": "AUTH_REQUIRED"},
             "COLAB_01": {"account_id": "COLAB_01", "status": "AUTH_REQUIRED"},
             "LIGHTNING_01": {"account_id": "LIGHTNING_01", "status": "PARTIAL"},
+            "LIGHTNING_PARTNER": {
+                "account_id": "LIGHTNING_PARTNER",
+                "status": "REACHABLE",
+                "workspace": "mariamnhend1-org",
+                "live_auth_proven": True,
+                "distinct_from_c1": True,
+                "DISPATCH_ALLOWED": True,
+                "target_model_id": "lightning-ai/Qwen3.8-27B",
+                "target_model_available": True,
+                "QUOTA_RESULT": {"remaining_units": UNOBSERVED},
+            },
             "NINEROUTER": {"provider_type": "MODEL_ROUTING_GATEWAY", "RESOURCE_AUTHORITY": False},
         },
         "observed_at": "2026-08-28T00:00:00+00:00",
@@ -94,6 +105,36 @@ class ResourceFactory(unittest.TestCase):
 
     def test_workload_classes_supported(self):
         self.assertEqual(set(WORKLOAD_CLASSES), set(DEFAULT_POLICY["workload_classes"]))
+
+    def test_remote_qwen_route_is_bound_but_free_balance_fail_closed(self):
+        req = resource_request(
+            workload_class="REMOTE_MODEL_INFERENCE",
+            model_id="lightning-ai/Qwen3.8-27B",
+            max_output_units=64,
+            free_only=True,
+            auto_dispatch=False,
+            request_id="REMOTE-QWEN",
+        )
+        dec = place(req, self.world)
+        self.assertEqual(dec["result_class"], "CONDITIONAL")
+        self.assertEqual(dec["selected_resource"], "LIGHTNING_PARTNER")
+        self.assertFalse(dec["dispatch_allowed"])
+        self.assertIn("LIVE_FREE_BALANCE_UNOBSERVED", _reasons(dec, "LIGHTNING_PARTNER"))
+        plan = plan_dispatch(dec, req)
+        self.assertEqual(plan["dispatch_mode"], "DRY_RUN_BLOCKED")
+        self.assertFalse(plan["PAID_RESOURCE_CREATED"])
+        self.assertFalse(plan["GPU_SESSION_STARTED"])
+
+    def test_remote_qwen_auto_dispatch_is_denied(self):
+        req = resource_request(
+            workload_class="REMOTE_MODEL_INFERENCE",
+            model_id="lightning-ai/Qwen3.8-27B",
+            auto_dispatch=True,
+            request_id="REMOTE-QWEN-AUTO",
+        )
+        dec = place(req, self.world)
+        self.assertFalse(dec["dispatch_allowed"])
+        self.assertIn("METERED_API_AUTO_DISPATCH_DENIED", _reasons(dec, "LIGHTNING_PARTNER"))
 
     def test_a_control_low_ram_places_local(self):
         req = resource_request(workload_class="CONTROL", request_id="A")

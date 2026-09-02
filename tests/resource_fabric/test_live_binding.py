@@ -99,7 +99,7 @@ class LiveBinding(unittest.TestCase):
                 self.assertNotIn("KAGGLE_USERNAME", env)
                 self.assertNotIn("KAGGLE_KEY", env)
 
-    def test_lightning_partner_model_api_probe_is_read_only_and_distinct(self):
+    def test_lightning_partner_public_catalog_is_not_auth_proof(self):
         with tempfile.TemporaryDirectory() as td:
             root = Path(td)
             partner = root / ".raios" / "accounts" / "lightning" / "partner"
@@ -108,27 +108,46 @@ class LiveBinding(unittest.TestCase):
                 '{"workspace":"mariamnhend1-org","service":"MODEL_API","api_key":"secret-test-key"}',
                 encoding="utf-8",
             )
-            calls = []
-
-            def fake_http(url, headers, timeout=15.0):
-                calls.append((url, headers, timeout))
-                return {"http": 200, "json": {"data": [{"id": "lightning-ai/Qwen3.8-27B"}]}}
-
+            catalog = {"http": 200, "json": {"data": [{"id": "lightning-ai/Qwen3.8-27B"}]}}
             with patch("raios.resource_fabric.live.HOME", root), \
-                 patch("raios.resource_fabric.live._http_json", side_effect=fake_http):
+                 patch("raios.resource_fabric.live._http_json", return_value=catalog):
                 probe = _probe_lightning_partner(live=True)
+            self.assertEqual(probe["status"], "REACHABLE_CREDENTIAL_PRESENT")
+            self.assertTrue(probe["target_model_available"])
+            self.assertFalse(probe["live_auth_proven"])
+            self.assertFalse(probe["DISPATCH_ALLOWED"])
+            self.assertTrue(probe["CATALOG_PUBLIC_NE_AUTH_PROOF"])
+            self.assertFalse(probe["INFERENCE_PROBE_EXECUTED"])
 
+    def test_lightning_partner_one_unit_probe_writes_redacted_proof(self):
+        with tempfile.TemporaryDirectory() as td:
+            root = Path(td)
+            partner = root / ".raios" / "accounts" / "lightning" / "partner"
+            partner.mkdir(parents=True)
+            (partner / "model-api.json").write_text(
+                '{"workspace":"mariamnhend1-org","service":"MODEL_API","api_key":"secret-test-key"}',
+                encoding="utf-8",
+            )
+            catalog = {"http": 200, "json": {"data": [{"id": "lightning-ai/Qwen3.8-27B"}]}}
+            inference = {"http": 200, "json": {"choices": [{"message": {"content": "x"}}]}}
+            with patch("raios.resource_fabric.live.HOME", root), \
+                 patch("raios.resource_fabric.live._http_json", return_value=catalog), \
+                 patch("raios.resource_fabric.live._http_json_post", return_value=inference):
+                probe = _probe_lightning_partner(live=True, verify_inference=True)
+                cached = _probe_lightning_partner(live=True)
             self.assertEqual(probe["status"], "REACHABLE")
-            self.assertEqual(probe["workspace"], "mariamnhend1-org")
             self.assertTrue(probe["live_auth_proven"])
             self.assertTrue(probe["distinct_from_c1"])
             self.assertTrue(probe["DISPATCH_ALLOWED"])
-            self.assertFalse(probe["INFERENCE_STARTED"])
+            self.assertTrue(probe["INFERENCE_PROBE_EXECUTED"])
+            self.assertTrue(probe["INFERENCE_STARTED"])
             self.assertFalse(probe["GPU_SESSION_STARTED"])
             self.assertFalse(probe["PAID_RESOURCE_CREATED"])
-            self.assertEqual(calls[0][0], "https://lightning.ai/api/v1/models")
-            self.assertEqual(len(calls), 1)
+            self.assertTrue((partner / "model-api-proof.json").is_file())
+            self.assertTrue(cached["live_auth_proven"])
+            self.assertFalse(cached["INFERENCE_PROBE_EXECUTED"])
             assert_no_secrets(probe)
+            assert_no_secrets(cached)
 
     def test_modal_partner_profile_is_distinct_and_live(self):
         with tempfile.TemporaryDirectory() as td:

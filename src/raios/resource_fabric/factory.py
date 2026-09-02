@@ -38,6 +38,7 @@ WORKLOAD_CLASSES = (
     "GPU_BURST",
     "MODEL_STORAGE",
     "MODEL_FACTORY",
+    "REMOTE_MODEL_INFERENCE",
     "LONG_RUNNING_SERVICE",
 )
 
@@ -66,6 +67,7 @@ DEFAULT_POLICY: dict[str, Any] = {
         "DO_NOT_ASSUME_UNOBSERVED_CAPACITY",
         "DO_NOT_START_GPU_FOR_DISCOVERY",
         "DO_NOT_USE_PAID_GPU_WITHOUT_C1_AUTHORIZATION",
+        "DO_NOT_AUTO_DISPATCH_METERED_API_WITHOUT_LIVE_FREE_BALANCE",
         "DO_NOT_STORE_MODEL_WEIGHTS_ON_LOCAL_AG",
         "DO_NOT_DOWNLOAD_NEW_MODEL_WEIGHTS_TO_LOCAL_AG",
         "DO_NOT_LOAD_HEAVY_MODELS_ON_LOCAL_AG_UNDER_CURRENT_RAM",
@@ -95,12 +97,20 @@ DEFAULT_POLICY: dict[str, Any] = {
             "persistence": True,
         },
         "MODEL_FACTORY": {"gpu": True, "preferred": ["KAGGLE_C1"], "failover": "NONE_PROVEN"},
+        "REMOTE_MODEL_INFERENCE": {
+            "gpu": False,
+            "preferred": ["LIGHTNING_PARTNER"],
+            "required_service_category": "INFERENCE_ENDPOINT",
+            "free_only": True,
+            "max_output_units": 256,
+        },
         "LONG_RUNNING_SERVICE": {"gpu": False, "preferred": ["LOCAL_AG"], "persistence": True},
     },
     "warm_asset_affinity": {
         "KAGGLE_C1": ["MODEL_STORAGE", "MODEL_FACTORY", "GPU_BURST"],
         "MODAL_01": ["REMOTE_CPU", "SHORT_SERVERLESS_JOB", "BATCH_CPU", "TEST_LIGHT", "DISCOVERY"],
         "LIGHTNING_01": ["BATCH_CPU", "LONG_RUNNING_SERVICE"],
+        "LIGHTNING_PARTNER": ["REMOTE_MODEL_INFERENCE"],
         "LOCAL_AG": ["CONTROL", "ROUTING", "STATE", "POLICY", "LONG_RUNNING_SERVICE", "DISCOVERY", "TEST_LIGHT"],
     },
     "failover": {
@@ -109,6 +119,7 @@ DEFAULT_POLICY: dict[str, Any] = {
         "REMOTE_CPU": ["MODAL_01", "KAGGLE_C1", "LIGHTNING_01"],
         "PERSISTENT_STORAGE": ["KAGGLE_C1"],
         "PERSISTENT_CONTROL": ["LOCAL_AG", "LIGHTNING_01"],
+        "REMOTE_MODEL_INFERENCE": ["LIGHTNING_PARTNER"],
     },
     "kaggle_quota_isolation": {"KAGGLE_C1": "KAGGLE_C1", "KAGGLE_PARTNER": "KAGGLE_PARTNER"},
 }
@@ -209,6 +220,10 @@ def resource_request(**kw: Any) -> dict[str, Any]:
         "warm_assets": list(kw.get("warm_assets") or []),
         "data_locality": kw.get("data_locality", UNKNOWN),
         "model_id": kw.get("model_id", UNKNOWN),
+        "required_service_category": kw.get("required_service_category", class_pol.get("required_service_category", UNKNOWN)),
+        "free_only": bool(kw.get("free_only", class_pol.get("free_only", False))),
+        "max_output_units": kw.get("max_output_units", class_pol.get("max_output_units", UNKNOWN)),
+        "auto_dispatch": bool(kw.get("auto_dispatch", False)),
         "risk_class": kw.get("risk_class", UNKNOWN),
         "authority_context": kw.get("authority_context", UNKNOWN),
         "heavy_inference": bool(kw.get("heavy_inference", False)),
@@ -416,11 +431,24 @@ def _storage_ok(world: dict[str, Any], account_id: str, req: dict[str, Any]) -> 
     return True, reasons
 
 
+def _has_service(world: dict[str, Any], account_id: str, category: Any) -> bool:
+    if category in (None, "", UNKNOWN, UNOBSERVED):
+        return True
+    return any(
+        svc.get("account_id") == account_id
+        and svc.get("category") == category
+        and svc.get("available") is not False
+        for svc in world.get("services") or []
+    )
+
+
 def evaluate_account(req: dict[str, Any], world: dict[str, Any], account_id: str) -> dict[str, Any]:
     reasons: list[str] = []
     conditional: list[str] = []
     auth = _auth_state(world, account_id)
     authenticated = _authenticated(world, account_id)
+    rec = _probes(world).get(account_id) or {}
+    acc = _account_row(world, account_id)
     paid_gpu = _is_paid_gpu_account(account_id) and bool(req.get("gpu_required"))
     c1_ok = _c1_paid_override(req)
     live_vram = _live_vram(world, account_id)
@@ -430,6 +458,25 @@ def evaluate_account(req: dict[str, Any], world: dict[str, Any], account_id: str
 
     if account_id in req.get("prohibited_resources") or []:
         reasons.append("PROHIBITED_BY_REQUEST")
+    required_service = req.get("required_service_category")
+    if not _has_service(world, account_id, required_service):
+        reasons.append("REQUIRED_SERVICE_UNAVAILABLE")
+    if req.get("workload_class") == "REMOTE_MODEL_INFERENCE":
+        if account_id != "LIGHTNING_PARTNER":
+            reasons.append("REMOTE_MODEL_NOT_BOUND_TO_ACCOUNT")
+        else:
+            target = str(req.get("model_id") or "")
+            proven_target = str((rec or {}).get("target_model_id") or acc.get("target_model_id") or "")
+            available = bool((rec or {}).get("target_model_available") or acc.get("target_model_available"))
+            if not target or target in {UNKNOWN, UNOBSERVED}:
+                reasons.append("MODEL_ID_REQUIRED")
+            elif not available or proven_target != target:
+                reasons.append("TARGET_MODEL_NOT_PROVEN_AVAILABLE")
+            remaining = ((rec or {}).get("QUOTA_RESULT") or {}).get("remaining_units", UNOBSERVED)
+            if req.get("free_only") and remaining in (None, "", UNKNOWN, UNOBSERVED):
+                conditional.append("LIVE_FREE_BALANCE_UNOBSERVED")
+            if req.get("auto_dispatch"):
+                reasons.append("METERED_API_AUTO_DISPATCH_DENIED")
     model_size = numeric_or_unknown(req.get("model_parameters_billion"))
     if model_size is not UNKNOWN and float(model_size) > 32.0:
         reasons.append("MODEL_PARAMETERS_GT_32B_DENIED")
@@ -493,14 +540,17 @@ def evaluate_account(req: dict[str, Any], world: dict[str, Any], account_id: str
     if paid_gpu and not req.get("gpu_required") and not c1_ok:
         pass
     hard = [r for r in reasons if r]
-    eligible = not hard
-    dispatch_allowed = eligible and authenticated and "CAPACITY_PROBE_REQUIRED" not in conditional
-    if req.get("gpu_required") and "CAPACITY_PROBE_REQUIRED" in conditional:
+    blocking_conditional = any(r in {"CAPACITY_PROBE_REQUIRED", "LIVE_FREE_BALANCE_UNOBSERVED"} for r in conditional)
+    eligible = not hard and not blocking_conditional
+    dispatch_allowed = eligible and authenticated and not blocking_conditional
+    if blocking_conditional:
         dispatch_allowed = False
         eligible = False
     cost_class = "UNPAID_OR_QUOTA"
     if paid_gpu:
         cost_class = "PAID_CATALOG" if not c1_ok else "PAID_C1_OVERRIDE"
+    elif account_id == "LIGHTNING_PARTNER":
+        cost_class = "CREDIT_METERED_FREE_BALANCE_UNOBSERVED"
     elif account_id in {"MODAL_01", "MODAL_PARTNER"}:
         cost_class = "SERVERLESS_UNACTIVATED"
     elif account_id == "LOCAL_AG":
@@ -570,6 +620,8 @@ def _failover_order(req: dict[str, Any]) -> list[str]:
         return chain
     if wl == "MODEL_STORAGE":
         return list(DEFAULT_POLICY["failover"]["PERSISTENT_STORAGE"])
+    if wl == "REMOTE_MODEL_INFERENCE":
+        return list(DEFAULT_POLICY["failover"]["REMOTE_MODEL_INFERENCE"])
     if wl in {"BATCH_CPU", "DISCOVERY", "TEST_LIGHT"}:
         return list(DEFAULT_POLICY["failover"]["REMOTE_CPU"])
     return list(DEFAULT_POLICY["failover"]["CONTROL"])
@@ -641,6 +693,10 @@ def place(req: dict[str, Any], world: dict[str, Any], *, policy: dict[str, Any] 
                 "authority_context",
                 "heavy_inference",
                 "model_id",
+                "required_service_category",
+                "free_only",
+                "max_output_units",
+                "auto_dispatch",
                 "model_parameters_billion",
                 "max_model_parameters_billion",
                 "model_download_allowed",
@@ -780,6 +836,11 @@ def plan_dispatch(decision: dict[str, Any], req: dict[str, Any], *, dry_run: boo
             "gpu_vram_min_gb": req.get("gpu_vram_min_gb"),
             "ram_requirement_gb": req.get("ram_requirement_gb"),
             "persistence_required": req.get("persistence_required"),
+            "required_service_category": req.get("required_service_category"),
+            "model_id": req.get("model_id"),
+            "free_only": req.get("free_only"),
+            "max_output_units": req.get("max_output_units"),
+            "auto_dispatch": req.get("auto_dispatch"),
         },
         "cost_policy": {
             "paid_allowed": req.get("paid_allowed"),
@@ -809,7 +870,10 @@ def reservoir_view(world: dict[str, Any], *, policy: dict[str, Any] | None = Non
     vram_known = [
         aid for aid in gpu_sched if _live_vram(world, aid) not in (UNKNOWN, UNOBSERVED) and not is_unknown(_live_vram(world, aid))
     ]
-    cpu_pool = [aid for aid in schedulable]
+    cpu_pool = [aid for aid in schedulable if aid != "LIGHTNING_PARTNER"]
+    model_api_ready = "LIGHTNING_PARTNER" in schedulable
+    model_api_probe = _probes(world).get("LIGHTNING_PARTNER") or {}
+    model_api_free_remaining = (model_api_probe.get("QUOTA_RESULT") or {}).get("remaining_units", UNOBSERVED)
     cpu_order = [aid for aid in ("MODAL_01", "KAGGLE_C1", "LIGHTNING_01") if aid in cpu_pool]
     lightning = _account_row(world, "LIGHTNING_01")
     lightning_probe = _probes(world).get("LIGHTNING_01") or {}
@@ -845,6 +909,16 @@ def reservoir_view(world: dict[str, Any], *, policy: dict[str, Any] | None = Non
             "failover": cpu_order[1] if len(cpu_order) > 1 else "NONE_PROVEN",
             "failover_proven": len(cpu_order) > 1,
             "policy": policy["remote_cpu"],
+        },
+        "model_api_pool": {
+            "account_id": "LIGHTNING_PARTNER",
+            "authenticated": model_api_ready,
+            "target_model_id": model_api_probe.get("target_model_id") or UNOBSERVED,
+            "target_model_available": bool(model_api_probe.get("target_model_available")),
+            "free_balance_remaining": model_api_free_remaining,
+            "auto_dispatch_allowed": bool(model_api_ready and model_api_free_remaining not in (None, "", UNKNOWN, UNOBSERVED)),
+            "default_paid_policy": "DENY",
+            "NINEROUTER_IS_RESOURCE_AUTHORITY": False,
         },
         "storage_pool": {
             "primary_model_storage_candidate": "KAGGLE_C1" if "KAGGLE_C1" in schedulable else UNKNOWN,
