@@ -922,6 +922,12 @@ def reservoir_view(world: dict[str, Any], *, policy: dict[str, Any] | None = Non
         },
         "storage_pool": {
             "primary_model_storage_candidate": "KAGGLE_C1" if "KAGGLE_C1" in schedulable else UNKNOWN,
+            "canonical_estate_snapshot": (_account_row(world, "KAGGLE_C1").get("canonical_estate_snapshot") or {}),
+            "cognitive_state_snapshot": (_account_row(world, "KAGGLE_C1").get("cognitive_state_snapshot") or {}),
+            "qwen_public_model_catalog": (_account_row(world, "KAGGLE_C1").get("qwen_public_model_catalog") or {}),
+            "complete_cloud_copy_present": bool(_account_row(world, "KAGGLE_C1").get("COMPLETE_CLOUD_COPY_PRESENT")),
+            "snapshot_current_git_head_match": UNOBSERVED,
+            "snapshot_ne_current_git_authority": True,
             "backup_model_storage": "UNPROVEN",
             "local_model_weight_storage_allowed": False,
             "policy": policy["model_storage"],

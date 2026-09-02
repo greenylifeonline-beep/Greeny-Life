@@ -22,6 +22,7 @@ from raios.resource_fabric.live import (
     count_unknown_fields,
     discover_auth,
     model_hosting_fit,
+    _probe_kaggle_c1,
     _probe_kaggle_partner,
     _probe_lightning_partner,
     _probe_modal_profile,
@@ -58,6 +59,47 @@ class LiveBinding(unittest.TestCase):
         self.assertTrue(c1["KAGGLE_JSON_ABSENT_NE_ACCOUNT_ABSENT"])
         self.assertNotEqual(c1.get("session_state"), "ABSENT")
         self.assertNotEqual(c1.get("credential_ref"), "")
+
+    def test_kaggle_c1_records_complete_cloud_estate_without_download(self):
+        datasets = (
+            "ref,title,size,lastUpdated,downloadCount,voteCount,usabilityRating\n"
+            "greenylife/raios-canonical-estate,raios-canonical-estate,3691104,2026-08-26 22:19:15.867000,0,0,0.3\n"
+            "greenylife/raios-cognitive-state,raios-cognitive-state,175447,2026-08-17 06:46:50.353000,5,1,0.1\n"
+        )
+
+        def fake_cli(args, *, timeout, env=None):
+            joined = " ".join(args)
+            if "config view" in joined:
+                return {"ok": True, "stdout": "username: greenylife", "stderr": ""}
+            if "quota" in joined:
+                return {"ok": True, "stdout": "[]", "stderr": ""}
+            if "datasets list" in joined:
+                return {"ok": True, "stdout": datasets, "stderr": ""}
+            if "raios-canonical-estate" in joined:
+                return {"ok": True, "stdout": "name,size,creationDate\nMANIFEST.json,409,t\nFILES-SHA256.txt,53978,t", "stderr": ""}
+            if "raios-cognitive-state" in joined:
+                return {"ok": True, "stdout": "name,size,creationDate\nDURABLE-MANIFEST.json,28836,t\nSOURCE-OF-TRUTH.json,171,t", "stderr": ""}
+            if "models list --search qwen" in joined:
+                return {"ok": True, "stdout": "ref,title,subtitle,author\nqwen-lm/qwen-3-5,Qwen 3.5,x,QwenLM\nqwen-lm/qwen-3,Qwen 3,x,QwenLM", "stderr": ""}
+            if "kernels list" in joined:
+                return {"ok": True, "stdout": "ref,title,author,lastRunTime,totalVotes\n", "stderr": ""}
+            return {"ok": True, "stdout": "COMPLETE", "stderr": ""}
+
+        with patch("raios.resource_fabric.live.shutil.which", return_value="kaggle"), \
+             patch("raios.resource_fabric.live._run_cli", side_effect=fake_cli):
+            probe = _probe_kaggle_c1()
+
+        self.assertEqual(probe["canonical_estate_snapshot"]["classification"], "COMPLETE_RECOVERY_ESTATE_SNAPSHOT")
+        self.assertTrue(probe["canonical_estate_snapshot"]["manifest_present"])
+        self.assertTrue(probe["canonical_estate_snapshot"]["hash_manifest_present"])
+        self.assertEqual(probe["cognitive_state_snapshot"]["classification"], "COGNITIVE_RECOVERY_SNAPSHOT")
+        self.assertEqual(probe["qwen_public_model_catalog"]["classification"], "PUBLIC_MODEL_AVAILABLE")
+        self.assertTrue(probe["qwen_public_model_catalog"]["qwen_3_5_available"])
+        self.assertFalse(probe["qwen_public_model_catalog"]["account_owned"])
+        self.assertFalse(probe["qwen_public_model_catalog"]["weights_downloaded"])
+        self.assertTrue(probe["canonical_estate_snapshot"]["SNAPSHOT_NE_CURRENT_GIT_AUTHORITY"])
+        self.assertEqual(probe["qwen_public_model_catalog"]["weights_downloaded"], False)
+        assert_no_secrets(probe)
 
     def test_kaggle_partner_probe_isolates_c1_oauth_home(self):
         with tempfile.TemporaryDirectory() as td:

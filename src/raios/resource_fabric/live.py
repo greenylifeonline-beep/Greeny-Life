@@ -343,6 +343,9 @@ def _probe_kaggle_c1() -> dict[str, Any]:
     if not quota_out.get("ok"):
         quota_out = _run_cli(["kaggle", "quota"], timeout=25)
     ds = _run_cli(["kaggle", "datasets", "list", "--mine", "-p", "1", "--csv"], timeout=30)
+    estate_files = _run_cli(["kaggle", "datasets", "files", "greenylife/raios-canonical-estate", "--page-size", "20", "--csv"], timeout=30)
+    cognitive_files = _run_cli(["kaggle", "datasets", "files", "greenylife/raios-cognitive-state", "--page-size", "20", "--csv"], timeout=30)
+    qwen_models = _run_cli(["kaggle", "models", "list", "--search", "qwen", "--page-size", "20", "--csv"], timeout=30)
     ks = _run_cli(["kaggle", "kernels", "list", "--mine", "-p", "1", "--csv"], timeout=30)
     st = _run_cli(["kaggle", "kernels", "status", "greenylife/raios-canonical-workbench"], timeout=25)
     rec["auth_method"] = "KAGGLE_CLI_OAUTH"
@@ -377,14 +380,39 @@ def _probe_kaggle_c1() -> dict[str, Any]:
                     tpu = {"used": _hours(parts[1]), "remaining": _hours(parts[2]), "limit": _hours(parts[3]), "reset_at": parts[4]}
     used_bytes = 0
     ds_count = 0
+    dataset_refs: set[str] = set()
+    canonical_estate_size = UNKNOWN
+    canonical_estate_updated = UNKNOWN
+    cognitive_state_size = UNKNOWN
+    cognitive_state_updated = UNKNOWN
     if ds.get("ok") and "ref," in (ds.get("stdout") or ""):
         reader = csv.DictReader(io.StringIO(ds.get("stdout") or ""))
         for row in reader:
             ds_count += 1
+            ref = str(row.get("ref") or "")
+            dataset_refs.add(ref)
             try:
-                used_bytes += int(float(row.get("size") or 0))
+                size = int(float(row.get("size") or 0))
+                used_bytes += size
             except (TypeError, ValueError):
-                pass
+                size = UNKNOWN
+            if ref == "greenylife/raios-canonical-estate":
+                canonical_estate_size = size
+                canonical_estate_updated = row.get("lastUpdated") or UNKNOWN
+            if ref == "greenylife/raios-cognitive-state":
+                cognitive_state_size = size
+                cognitive_state_updated = row.get("lastUpdated") or UNKNOWN
+    estate_listing = estate_files.get("stdout") or ""
+    cognitive_listing = cognitive_files.get("stdout") or ""
+    canonical_estate_present = "greenylife/raios-canonical-estate" in dataset_refs
+    cognitive_state_present = "greenylife/raios-cognitive-state" in dataset_refs
+    canonical_manifest_present = "MANIFEST.json" in estate_listing
+    canonical_hash_manifest_present = "FILES-SHA256.txt" in estate_listing
+    cognitive_durable_manifest_present = "DURABLE-MANIFEST.json" in cognitive_listing
+    cognitive_source_of_truth_present = "SOURCE-OF-TRUTH.json" in cognitive_listing
+    qwen_catalog_listing = qwen_models.get("stdout") or ""
+    qwen_public_refs = sorted(set(re.findall(r"qwen-lm/[a-zA-Z0-9._-]+", qwen_catalog_listing)))
+    qwen_35_available = "qwen-lm/qwen-3-5" in qwen_public_refs
     kernel_count = 0
     if ks.get("ok") and "ref," in (ks.get("stdout") or ""):
         kernel_count = max(0, len((ks.get("stdout") or "").strip().splitlines()) - 1)
@@ -400,6 +428,36 @@ def _probe_kaggle_c1() -> dict[str, Any]:
             "tpu_quota": tpu,
             "dataset_count": ds_count,
             "dataset_used_bytes": used_bytes,
+            "canonical_estate_snapshot": {
+                "dataset_ref": "greenylife/raios-canonical-estate",
+                "present": canonical_estate_present,
+                "size_bytes": canonical_estate_size,
+                "last_updated": canonical_estate_updated,
+                "manifest_present": canonical_manifest_present,
+                "hash_manifest_present": canonical_hash_manifest_present,
+                "classification": "COMPLETE_RECOVERY_ESTATE_SNAPSHOT" if canonical_estate_present and canonical_manifest_present and canonical_hash_manifest_present else "UNPROVEN",
+                "CURRENT_GIT_HEAD_MATCH": UNOBSERVED,
+                "SNAPSHOT_NE_CURRENT_GIT_AUTHORITY": True,
+            },
+            "qwen_public_model_catalog": {
+                "available": bool(qwen_public_refs),
+                "owner": "QwenLM" if qwen_public_refs else UNKNOWN,
+                "model_refs": qwen_public_refs,
+                "qwen_3_5_available": qwen_35_available,
+                "account_owned": False,
+                "weights_downloaded": False,
+                "classification": "PUBLIC_MODEL_AVAILABLE" if qwen_public_refs else "UNOBSERVED",
+            },
+            "cognitive_state_snapshot": {
+                "dataset_ref": "greenylife/raios-cognitive-state",
+                "present": cognitive_state_present,
+                "size_bytes": cognitive_state_size,
+                "last_updated": cognitive_state_updated,
+                "durable_manifest_present": cognitive_durable_manifest_present,
+                "source_of_truth_present": cognitive_source_of_truth_present,
+                "classification": "COGNITIVE_RECOVERY_SNAPSHOT" if cognitive_state_present and cognitive_durable_manifest_present else "UNPROVEN",
+                "SNAPSHOT_NE_LIVE_RUNTIME": True,
+            },
             "kernel_count": kernel_count,
             "active_session_gpu": active,
             "account_eligible_gpu": gpu.get("remaining") not in (UNKNOWN, None) and float(gpu.get("remaining") or 0) > 0,
@@ -409,7 +467,20 @@ def _probe_kaggle_c1() -> dict[str, Any]:
             "gpu_vram": UNOBSERVED,
             "IDENTITY_PROOF": rec.get("username_bound") or UNOBSERVED,
             "AUTH_RESULT": "REACHABLE" if quota_out.get("ok") or cfg.get("ok") else "PARTIAL",
-            "QUOTA_RESULT": {"gpu": gpu, "tpu": tpu, "dataset_count": ds_count, "dataset_used_bytes": used_bytes},
+            "QUOTA_RESULT": {
+                "gpu": gpu,
+                "tpu": tpu,
+                "dataset_count": ds_count,
+                "dataset_used_bytes": used_bytes,
+                "canonical_estate_snapshot": {
+                    "present": canonical_estate_present,
+                    "classification": "COMPLETE_RECOVERY_ESTATE_SNAPSHOT" if canonical_estate_present and canonical_manifest_present and canonical_hash_manifest_present else "UNPROVEN",
+                },
+                "cognitive_state_snapshot": {
+                    "present": cognitive_state_present,
+                    "classification": "COGNITIVE_RECOVERY_SNAPSHOT" if cognitive_state_present and cognitive_durable_manifest_present else "UNPROVEN",
+                },
+            },
             "REDACTED": True,
             "paid": False,
         }
@@ -1079,6 +1150,12 @@ def apply_live_overlay(world: dict[str, Any], live_state: dict[str, Any]) -> dic
             acc["plan"] = "KAGGLE_FREE_OR_STANDARD"
             acc["free_tier_status"] = "GPU_QUOTA_OBSERVED"
             acc["accelerator_types"] = pr.get("accelerator_types") or []
+            acc["canonical_estate_snapshot"] = pr.get("canonical_estate_snapshot") or {}
+            acc["cognitive_state_snapshot"] = pr.get("cognitive_state_snapshot") or {}
+            acc["qwen_public_model_catalog"] = pr.get("qwen_public_model_catalog") or {}
+            acc["COMPLETE_CLOUD_COPY_PRESENT"] = (acc["canonical_estate_snapshot"].get("classification") == "COMPLETE_RECOVERY_ESTATE_SNAPSHOT")
+            acc["CURRENT_GIT_HEAD_MATCH"] = UNOBSERVED
+            acc["KAGGLE_SNAPSHOT_NE_CURRENT_GIT_AUTHORITY"] = True
         if aid == "LIGHTNING_01" and pr.get("status") == "REACHABLE":
             acc["plan"] = "LIGHTNING_PERSONAL_ORG"
             acc["billing_mode"] = "CREDITS"
