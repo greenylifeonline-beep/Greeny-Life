@@ -451,13 +451,25 @@ class LightningAdapter(ReadOnlyAdapter):
                 provenance_refs=[
                     "RAIOS/V9/autonomic/self_inspection/cloud_capacity_census.py:lightning:greenylifeonline-org"
                 ],
-            )
+            ),
+            account(
+                account_id="LIGHTNING_PARTNER",
+                provider_id=self.provider_id,
+                account_alias="LIGHTNING_PARTNER",
+                owner_alias="PARTNER",
+                credential_ref="file-ref:%USERPROFILE%/.raios/accounts/lightning/partner/model-api.json",
+                provenance_refs=[
+                    "RAIOS/V9/autonomic/self_inspection/cloud_capacity_census.py:lightning:mariamnhend1-org"
+                ],
+            ),
         ]
 
     def discover_regions(self, account_id: str) -> list[dict[str, Any]]:
         return [region(region_id="lightning-default", provider_id=self.provider_id)]
 
     def discover_compute(self, account_id: str) -> list[dict[str, Any]]:
+        if account_id == "LIGHTNING_PARTNER":
+            return []
         return [
             compute_resource(
                 resource_id=f"{account_id}:studio",
@@ -471,6 +483,8 @@ class LightningAdapter(ReadOnlyAdapter):
         ]
 
     def discover_accelerators(self, account_id: str) -> list[dict[str, Any]]:
+        if account_id == "LIGHTNING_PARTNER":
+            return []
         return [
             accelerator_resource(
                 resource_id=f"{account_id}:studio-gpu",
@@ -483,6 +497,8 @@ class LightningAdapter(ReadOnlyAdapter):
         ]
 
     def discover_storage(self, account_id: str) -> list[dict[str, Any]]:
+        if account_id == "LIGHTNING_PARTNER":
+            return []
         return [
             storage_resource(
                 storage_id=f"{account_id}:file_storage",
@@ -496,6 +512,19 @@ class LightningAdapter(ReadOnlyAdapter):
         ]
 
     def discover_services(self, account_id: str) -> list[dict[str, Any]]:
+        if account_id == "LIGHTNING_PARTNER":
+            return [
+                service(
+                    service_id=f"{account_id}:model-api",
+                    service_name="model-api",
+                    category="INFERENCE_ENDPOINT",
+                    provider_id=self.provider_id,
+                    account_id=account_id,
+                    enabled=True,
+                    available=True,
+                    quota_available=UNKNOWN,
+                )
+            ]
         return [
             service(
                 service_id=f"{account_id}:studio",
@@ -513,6 +542,8 @@ class LightningAdapter(ReadOnlyAdapter):
         return []
 
     def discover_credits(self, account_id: str) -> list[dict[str, Any]]:
+        if account_id == "LIGHTNING_PARTNER":
+            return []
         return [
             credit(
                 credit_id=f"{account_id}:org-credits",
@@ -526,6 +557,20 @@ class LightningAdapter(ReadOnlyAdapter):
         ]
 
     def discover_pricing(self, account_id: str) -> list[dict[str, Any]]:
+        if account_id == "LIGHTNING_PARTNER":
+            return [
+                price(
+                    price_id=f"{account_id}:model-api-unproven",
+                    kind="CATALOG_PRICE",
+                    provider_id=self.provider_id,
+                    account_id=account_id,
+                    resource_type="inference_tokens",
+                    amount=UNKNOWN,
+                    pricing_unit="MILLION_UNITS",
+                    source=CATALOG_SOURCE,
+                    observed_at=CATALOG_AT,
+                )
+            ]
         return [
             price(
                 price_id=f"{account_id}:gpu-hour",

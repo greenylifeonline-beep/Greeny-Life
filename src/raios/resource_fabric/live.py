@@ -38,6 +38,7 @@ TARGET_ACCOUNTS = (
     "KAGGLE_C1",
     "KAGGLE_PARTNER",
     "LIGHTNING_01",
+    "LIGHTNING_PARTNER",
     "COLAB_01",
     "MODAL_01",
     "MODAL_PARTNER",
@@ -218,6 +219,7 @@ def discover_auth() -> list[dict[str, Any]]:
     kaggle_legacy = HOME / ".kaggle" / "kaggle.json"
     oci_cfg = HOME / ".oci" / "config"
     lightning_cred = HOME / ".lightning" / "credentials.json"
+    lightning_partner_cred = HOME / ".raios" / "accounts" / "lightning" / "partner" / "model-api.json"
     modal_toml = HOME / ".modal.toml"
     gcloud = HOME / "AppData" / "Roaming" / "gcloud" / "application_default_credentials.json"
     rows = [
@@ -269,6 +271,14 @@ def discover_auth() -> list[dict[str, Any]]:
             "auth_method": "LIGHTNING_API_BASIC",
             "session_state": "CREDENTIAL_FILE_PRESENT" if _exists(lightning_cred) else "AUTH_REQUIRED",
             "cli_present": bool(shutil.which("lightning")),
+        },
+        {
+            "account_id": "LIGHTNING_PARTNER",
+            "provider": "LIGHTNING",
+            "credential_ref": "file-ref:%USERPROFILE%/.raios/accounts/lightning/partner/model-api.json",
+            "auth_method": "LIGHTNING_MODEL_API_BEARER",
+            "session_state": "CREDENTIAL_FILE_PRESENT" if _exists(lightning_partner_cred) else "AUTH_REQUIRED",
+            "isolated_from": "LIGHTNING_01",
         },
         {
             "account_id": "MODAL_01",
@@ -476,6 +486,69 @@ def _probe_lightning() -> dict[str, Any]:
             "paid": False,
         }
     )
+    return rec
+
+
+def _probe_lightning_partner(*, live: bool = True) -> dict[str, Any]:
+    path = HOME / ".raios" / "accounts" / "lightning" / "partner" / "model-api.json"
+    rec: dict[str, Any] = {
+        "account_id": "LIGHTNING_PARTNER",
+        "status": "AUTH_REQUIRED",
+        "workspace": UNOBSERVED,
+        "service": "MODEL_API",
+        "live_auth_proven": False,
+        "distinct_from_c1": False,
+        "DISPATCH_ALLOWED": False,
+        "MODEL_API_BASE": "https://lightning.ai/api/v1",
+        "INFERENCE_STARTED": False,
+        "GPU_SESSION_STARTED": False,
+        "PAID_RESOURCE_CREATED": False,
+        "REDACTED": True,
+        "paid": False,
+    }
+    if not path.is_file():
+        return rec
+    try:
+        cred = json.loads(path.read_text(encoding="utf-8"))
+    except (OSError, json.JSONDecodeError):
+        rec.update(status="PARTIAL", reason="CREDENTIAL_FILE_UNREADABLE")
+        return rec
+    workspace = str(cred.get("workspace") or "").strip()
+    service_name = str(cred.get("service") or "").strip()
+    api_key = str(cred.get("api_key") or "").strip()
+    rec["workspace"] = workspace or UNOBSERVED
+    rec["credential_fields_present"] = bool(workspace and service_name == "MODEL_API" and api_key)
+    rec["distinct_from_c1"] = workspace == "mariamnhend1-org"
+    if not rec["credential_fields_present"]:
+        rec.update(status="PARTIAL", reason="CREDENTIAL_FIELDS_MISSING")
+        return rec
+    if not rec["distinct_from_c1"]:
+        rec.update(status="NOT_DISTINCT_FROM_C1", reason="PARTNER_WORKSPACE_MISMATCH")
+        return rec
+    rec.update(status="REACHABLE_CREDENTIAL_PRESENT", AUTH_RESULT="REACHABLE_CREDENTIAL_PRESENT")
+    if not live:
+        rec["reason"] = "CREDENTIAL_PRESENT_LIVE_PROBE_SKIPPED"
+        return rec
+    probe = _http_json(
+        "https://lightning.ai/api/v1/models",
+        {"Authorization": f"Bearer {api_key}", "Accept": "application/json", "User-Agent": "RAIOS-ResourceFabric/lightning-partner"},
+        timeout=20.0,
+    )
+    rec["models_endpoint_http"] = probe.get("http")
+    models = probe.get("json")
+    if probe.get("http") == 200:
+        rows = models.get("data") if isinstance(models, dict) else models if isinstance(models, list) else []
+        rec.update(
+            status="REACHABLE",
+            AUTH_RESULT="REACHABLE",
+            IDENTITY_PROOF=f"workspace:{workspace}",
+            live_auth_proven=True,
+            DISPATCH_ALLOWED=True,
+            model_catalog_count=len(rows or []),
+            QUOTA_RESULT={"advertised_free_units": 40_000_000, "consumed_by_probe": 0},
+        )
+    else:
+        rec.update(status="PARTIAL", AUTH_RESULT="PARTIAL", reason="MODEL_API_AUTH_UNPROVEN")
     return rec
 
 
@@ -852,6 +925,7 @@ def run_live_probes(*, live: bool = True) -> dict[str, Any]:
     if live:
         probes["KAGGLE_C1"] = _iso("KAGGLE_C1", _probe_kaggle_c1)
         probes["LIGHTNING_01"] = _iso("LIGHTNING_01", _probe_lightning)
+        probes["LIGHTNING_PARTNER"] = _iso("LIGHTNING_PARTNER", lambda: _probe_lightning_partner(live=True))
         probes["MODAL_01"] = _iso("MODAL_01", _probe_modal_presence)
         probes["MODAL_PARTNER"] = _iso(
             "MODAL_PARTNER",
@@ -860,6 +934,7 @@ def run_live_probes(*, live: bool = True) -> dict[str, Any]:
     else:
         probes["KAGGLE_C1"] = {"account_id": "KAGGLE_C1", "status": "SKIPPED"}
         probes["LIGHTNING_01"] = {"account_id": "LIGHTNING_01", "status": "SKIPPED"}
+        probes["LIGHTNING_PARTNER"] = _iso("LIGHTNING_PARTNER", lambda: _probe_lightning_partner(live=False))
         probes["MODAL_01"] = {"account_id": "MODAL_01", "status": "SKIPPED"}
         probes["MODAL_PARTNER"] = _iso(
             "MODAL_PARTNER",
@@ -946,6 +1021,17 @@ def apply_live_overlay(world: dict[str, Any], live_state: dict[str, Any]) -> dic
             acc["plan"] = "LIGHTNING_PERSONAL_ORG"
             acc["billing_mode"] = "CREDITS"
             acc["studio_count"] = pr.get("studio_count")
+        if aid == "LIGHTNING_PARTNER":
+            acc["plan"] = "LIGHTNING_MODEL_API_STARTER"
+            acc["billing_mode"] = "TOKEN_CREDITS"
+            acc["workspace"] = pr.get("workspace") or UNOBSERVED
+            acc["live_auth_proven"] = bool(pr.get("live_auth_proven"))
+            acc["distinct_from_c1"] = bool(pr.get("distinct_from_c1"))
+            acc["DISPATCH_ALLOWED"] = bool(pr.get("DISPATCH_ALLOWED") and acc["ACCOUNT_REACHABLE"])
+            acc["MODEL_API_BASE"] = pr.get("MODEL_API_BASE") or "https://lightning.ai/api/v1"
+            acc["INFERENCE_STARTED"] = False
+            acc["GPU_SESSION_STARTED"] = False
+            acc["PAID_RESOURCE_CREATED"] = False
         if aid == "LOCAL_AG":
             acc["status"] = pr.get("status") or "REACHABLE"
             acc["ACCOUNT_REACHABLE"] = True

@@ -51,7 +51,9 @@ def live_state_from_probe(probe: dict[str, Any]) -> dict[str, Any]:
     q = kag.get("QUOTA_RESULT") or {}
     lit = accounts.get("LIGHTNING_01") or {}
     lq = lit.get("QUOTA_RESULT") or {}
+    lit_partner = accounts.get("LIGHTNING_PARTNER") or {}
     modal = accounts.get("MODAL_01") or {}
+    modal_partner = accounts.get("MODAL_PARTNER") or {}
     partner = accounts.get("KAGGLE_PARTNER") or {}
     oracle = accounts.get("ORACLE_01") or {}
     colab = accounts.get("COLAB_01") or {}
@@ -113,6 +115,26 @@ def live_state_from_probe(probe: dict[str, Any]) -> dict[str, Any]:
             "gpu_sku": UNOBSERVED,
             "gpu_vram": UNOBSERVED,
         },
+        "LIGHTNING_PARTNER": {
+            "account_id": "LIGHTNING_PARTNER",
+            "status": lit_partner.get("AUTH_RESULT") or "AUTH_REQUIRED",
+            "workspace": lit_partner.get("workspace") or UNOBSERVED,
+            "live_auth_proven": bool(lit_partner.get("live_auth_proven")),
+            "distinct_from_c1": bool(lit_partner.get("distinct_from_c1")),
+            "DISPATCH_ALLOWED": bool(lit_partner.get("DISPATCH_ALLOWED")),
+            "INFERENCE_STARTED": False,
+            "GPU_SESSION_STARTED": False,
+            "PAID_RESOURCE_CREATED": False,
+        },
+        "MODAL_PARTNER": {
+            "account_id": "MODAL_PARTNER",
+            "status": modal_partner.get("AUTH_RESULT") or "AUTH_REQUIRED",
+            "workspace": modal_partner.get("workspace") or UNOBSERVED,
+            "live_auth_proven": bool(modal_partner.get("live_auth_proven")),
+            "token_fields_present": bool(modal_partner.get("token_fields_present")),
+            "NO_RESOURCE_CREATED": True,
+            "NO_GPU_STARTED": True,
+        },
         "NINEROUTER": {"provider_type": "MODEL_ROUTING_GATEWAY", "RESOURCE_AUTHORITY": False},
     }
     return {
@@ -149,7 +171,9 @@ def write_wave06_package(probe: dict[str, Any], dest: Path | None = None) -> dic
         "KAGGLE-C1.json": _row(accounts.get("KAGGLE_C1") or {}, paths, ("KAGGLE_C1", "KAGGLE_C1_OAUTH", "KAGGLE_C1_JSON")),
         "KAGGLE-PARTNER.json": _row(accounts.get("KAGGLE_PARTNER") or {}, paths, ("KAGGLE_PARTNER", "KAGGLE_PARTNER_FILE", "KAGGLE_PARTNER_CANDIDATE_DIR")),
         "LIGHTNING.json": _row(accounts.get("LIGHTNING_01") or {}, paths, ("LIGHTNING_01",)),
+        "LIGHTNING-PARTNER.json": _row(accounts.get("LIGHTNING_PARTNER") or {}, paths, ("LIGHTNING_PARTNER",)),
         "MODAL.json": _row(accounts.get("MODAL_01") or {}, paths, ("MODAL_01",)),
+        "MODAL-PARTNER.json": _row(accounts.get("MODAL_PARTNER") or {}, paths, ("MODAL_PARTNER",)),
         "ORACLE.json": _row(accounts.get("ORACLE_01") or {}, paths, ("ORACLE_01",)),
         "COLAB.json": _row(accounts.get("COLAB_01") or {}, paths, ("COLAB_01", "GOOGLE_ADC_ROAMING", "GOOGLE_ADC_CONFIG")),
         "ACCOUNT-BINDING-MATRIX.json": {
@@ -168,7 +192,7 @@ def write_wave06_package(probe: dict[str, Any], dest: Path | None = None) -> dic
                     "authenticated_for_dispatch": aid in (view.get("currently_schedulable") or []),
                     "REDACTED": True,
                 }
-                for aid in ("KAGGLE_C1", "KAGGLE_PARTNER", "LIGHTNING_01", "MODAL_01", "ORACLE_01", "COLAB_01", "LOCAL_AG")
+                for aid in ("KAGGLE_C1", "KAGGLE_PARTNER", "LIGHTNING_01", "LIGHTNING_PARTNER", "MODAL_01", "MODAL_PARTNER", "ORACLE_01", "COLAB_01", "LOCAL_AG")
             },
         },
         "FAILOVER-MATRIX.json": {

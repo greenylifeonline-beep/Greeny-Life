@@ -23,6 +23,7 @@ from raios.resource_fabric.live import (
     discover_auth,
     model_hosting_fit,
     _probe_kaggle_partner,
+    _probe_lightning_partner,
     _probe_modal_profile,
     qwen35b_placement,
     run_live_probes,
@@ -97,6 +98,37 @@ class LiveBinding(unittest.TestCase):
                 self.assertEqual(env["KAGGLE_API_TOKEN"], token)
                 self.assertNotIn("KAGGLE_USERNAME", env)
                 self.assertNotIn("KAGGLE_KEY", env)
+
+    def test_lightning_partner_model_api_probe_is_read_only_and_distinct(self):
+        with tempfile.TemporaryDirectory() as td:
+            root = Path(td)
+            partner = root / ".raios" / "accounts" / "lightning" / "partner"
+            partner.mkdir(parents=True)
+            (partner / "model-api.json").write_text(
+                '{"workspace":"mariamnhend1-org","service":"MODEL_API","api_key":"secret-test-key"}',
+                encoding="utf-8",
+            )
+            calls = []
+
+            def fake_http(url, headers, timeout=15.0):
+                calls.append((url, headers, timeout))
+                return {"http": 200, "json": {"data": [{"id": "lightning-ai/Qwen3.8-27B"}]}}
+
+            with patch("raios.resource_fabric.live.HOME", root), \
+                 patch("raios.resource_fabric.live._http_json", side_effect=fake_http):
+                probe = _probe_lightning_partner(live=True)
+
+            self.assertEqual(probe["status"], "REACHABLE")
+            self.assertEqual(probe["workspace"], "mariamnhend1-org")
+            self.assertTrue(probe["live_auth_proven"])
+            self.assertTrue(probe["distinct_from_c1"])
+            self.assertTrue(probe["DISPATCH_ALLOWED"])
+            self.assertFalse(probe["INFERENCE_STARTED"])
+            self.assertFalse(probe["GPU_SESSION_STARTED"])
+            self.assertFalse(probe["PAID_RESOURCE_CREATED"])
+            self.assertEqual(calls[0][0], "https://lightning.ai/api/v1/models")
+            self.assertEqual(len(calls), 1)
+            assert_no_secrets(probe)
 
     def test_modal_partner_profile_is_distinct_and_live(self):
         with tempfile.TemporaryDirectory() as td:
