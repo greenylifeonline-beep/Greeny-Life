@@ -311,9 +311,9 @@ def recompose_v2(world: dict[str, Any]) -> dict[str, Any]:
         "PERSISTENT_CONTROL": "LOCAL_AG" if local_ok else UNKNOWN,
         "MODEL_WAREHOUSE": (ranked_store[0].get("storage_id") if ranked_store else UNKNOWN),
         "HEAVY_INFERENCE": (heavy.get("resource_id") if heavy else UNKNOWN),
-        "LIGHT_INFERENCE": "LOCAL_AG",
+        "LIGHT_INFERENCE": (burst.get("resource_id") if burst else UNKNOWN),
         "GPU_BURST": (burst.get("resource_id") if burst else UNKNOWN),
-        "EMBEDDING": "LOCAL_AG",
+        "EMBEDDING": (burst.get("resource_id") if burst else UNKNOWN),
         "BACKUP": base.get("BACKUP"),
         "FAILOVER": base.get("FAILOVER"),
         "CATALOG_NE_LIVE": True,
@@ -321,6 +321,8 @@ def recompose_v2(world: dict[str, Any]) -> dict[str, Any]:
         "PLANNING_ONLY": True,
         "PAID_RESOURCE_ACTIVATED": False,
         "MODEL_MIGRATION_EXECUTED": False,
+        "LOCAL_MODEL_INFERENCE_PROHIBITED": True,
+        "LAPTOP_ROLE": "CONTROL_ONLY",
         "NINEROUTER_IS_RESOURCE_AUTHORITY": False,
     }
 

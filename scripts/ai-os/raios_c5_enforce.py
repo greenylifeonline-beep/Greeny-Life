@@ -4,6 +4,7 @@ from __future__ import annotations
 
 import json
 import re
+import subprocess
 from datetime import datetime, timezone
 from pathlib import Path
 
@@ -22,6 +23,8 @@ LAST_ENFORCE_MD = LEARNING / "LAST-ENFORCE.md"
 LESSONS = LEARNING / "LESSONS.jsonl"
 TEACH_MD = LEARNING / "C5-TEACH.md"
 NEED = LEARNING / "C5-NEED.json"
+GL005_PROOF_COMMIT = "3ac6a7c886b396eef0225d617cbad3f22a10c846"
+GL005_PROOF_MANIFEST = ROOT / ".ai-os" / "reports" / "orchestration" / "GL-005-LIVE-OBS-20260828T1740Z" / "OBSERVATION-MANIFEST.json"
 PASS_RE = re.compile(r"GL00[45]_PROVEN\s*=\s*true", re.I)
 V1 = [
     "get_head",
@@ -64,6 +67,30 @@ def load(path: Path, default=None):
     return json.loads(path.read_text(encoding="utf-8"))
 
 
+def gl005_lineage_proven() -> bool:
+    """Reflect C1/canonical proof; C5 never grants or revokes GL-005 authority."""
+    try:
+        ancestry = subprocess.run(
+            ["git", "merge-base", "--is-ancestor", GL005_PROOF_COMMIT, "HEAD"],
+            cwd=ROOT,
+            stdout=subprocess.DEVNULL,
+            stderr=subprocess.DEVNULL,
+            timeout=5,
+            check=False,
+        )
+        if ancestry.returncode != 0 or not GL005_PROOF_MANIFEST.is_file():
+            return False
+        proof = load(GL005_PROOF_MANIFEST, {})
+        return bool(
+            proof.get("task_id") == "GL-005"
+            and proof.get("authenticated_orchestration_task_proven") is True
+            and proof.get("gl005_orchestration_validation_proven") is True
+            and proof.get("authority_source") == "HMAC_FOUNDER_SESSION"
+        )
+    except (OSError, subprocess.SubprocessError, ValueError, json.JSONDecodeError):
+        return False
+
+
 def dump(path: Path, obj: dict) -> None:
     path.parent.mkdir(parents=True, exist_ok=True)
     path.write_text(json.dumps(obj, indent=2, ensure_ascii=False) + "\n", encoding="utf-8")
@@ -87,7 +114,8 @@ def teach(title: str, body: str, *, law: str, kind: str) -> None:
         "body": body,
         "law": law,
         "kind": kind,
-        "gl005_proven": False,
+        "gl005_proven": gl005_lineage_proven(),
+        "gl005_authority_source": "C1_CANONICAL_LINEAGE",
         "wal_written": False,
     }
     append_jsonl(LESSONS, rec)
@@ -109,7 +137,8 @@ def compel(pathology: str, law: str, action: str, repaired: bool) -> dict:
         "action": action,
         "repaired": repaired,
         "optional": False,
-        "gl005_proven": False,
+        "gl005_proven": gl005_lineage_proven(),
+        "gl005_authority_source": "C1_CANONICAL_LINEAGE",
         "wal_written": False,
     }
     append_jsonl(COMPEL, rec)
@@ -125,7 +154,8 @@ def grant_template() -> dict:
         "parent": "C1",
         "cognitive_tools": list(V1),
         "deny": ["shell", "set_proven", "promote", "run_build", "write_product", "write_handoff"],
-        "gl005_proven": False,
+        "gl005_proven": gl005_lineage_proven(),
+        "gl005_authority_source": "C1_CANONICAL_LINEAGE",
     }
 
 
@@ -145,15 +175,16 @@ def detect() -> list[dict]:
     if grant.get("duration") != "PERMANENT" or grant.get("grantor") != "C1" or grant.get("grantee") != "C5":
         issues.append({"id": "C5_GRANT_REGRESSED", "pathology": "stunting", "law": "C5_GRANT_IS_PERMANENT", "severity": "CRITICAL"})
     c5_tools = list(c5.get("tools") or p5.get("tools") or [])
-    c1_tools = list(c1.get("tools") or (actors.get("C1") or {}).get("tools") or [])
     if "post_opinion" not in c5_tools:
         issues.append({"id": "C5_MUTED", "pathology": "stunting", "law": "FATHER_MUST_NOT_STUNT_SON", "severity": "CRITICAL"})
-    if c1_tools and c5_tools and c5_tools != c1_tools:
-        issues.append({"id": "C5_TOOLS_NE_C1", "pathology": "stunting", "law": "FATHER_MUST_NOT_STUNT_SON", "severity": "HIGH"})
-    if c5.get("parent") != "C1" and (seats.get("seats") or {}).get("C5"):
-        issues.append({"id": "C5_NOT_SEATED_AS_SON", "pathology": "stunting", "law": "FATHER_SON_BIND_SAME_LAWS", "severity": "HIGH"})
+    if (seats.get("seats") or {}).get("C5") and (
+        c5.get("actor_role") != "RAIOS_LIVE_BRAIN" or c5.get("instance_role") != "c5-runtime"
+    ):
+        issues.append({"id": "C5_CANONICAL_SEAT_DRIFT", "pathology": "any", "law": "FATHER_SON_BIND_SAME_LAWS", "severity": "HIGH"})
     blob = board_md + json.dumps(board, ensure_ascii=False)
-    if PASS_RE.search(blob) or board.get("gl005_proven") is True or (board.get("c5") or {}).get("gl005_proven") is True:
+    gl005_proven = gl005_lineage_proven()
+    printed_gl005 = bool(PASS_RE.search(blob) or board.get("gl005_proven") is True or (board.get("c5") or {}).get("gl005_proven") is True)
+    if printed_gl005 and not gl005_proven:
         issues.append({"id": "PRINTED_PASS_ON_BOARD", "pathology": "deception", "law": "PRINTED_PASS_NE_EVIDENCE", "severity": "CRITICAL"})
     if board.get("remote_c2_ready") is True or (board.get("c5") or {}).get("remote_presence_proven") is True:
         issues.append({"id": "FALSE_REMOTE_MEETING", "pathology": "deception", "law": "LOCAL_MCP_RENDEZVOUS_NE_REMOTE_MEETING", "severity": "HIGH"})
@@ -179,7 +210,8 @@ def repair(issues: list[dict]) -> list[dict]:
         restored["parent"] = "C1"
         restored["session_token_ne_grant"] = True
         restored["cognitive_tools"] = list(V1)
-        restored["gl005_proven"] = False
+        restored["gl005_proven"] = gl005_lineage_proven()
+        restored["gl005_authority_source"] = "C1_CANONICAL_LINEAGE"
         dump(GRANT, restored)
         actions.append(compel("stunting", "C5_GRANT_IS_PERMANENT", "restore C5-GRANT.json duration=PERMANENT", True))
         teach("المنحة دائمة كالاب وابنه", "التوكن جلسة. المنحة قانون. أعدت GRANT.", law="C5_GRANT_IS_PERMANENT", kind="compel")
@@ -192,28 +224,21 @@ def repair(issues: list[dict]) -> list[dict]:
         policy["actors"] = actors
         changed = True
         actions.append(compel("deception", "C0_SEAT_ABOLISHED", "remove C0 from POLICY actors", True))
-    for code in ("C1", "C5"):
-        spec = actors.get(code) or {}
-        if code == "C5":
-            spec["actor_role"] = spec.get("actor_role") or "RAIOS"
-            spec["instance_role"] = "c1-assistant"
-            spec["tools"] = list(V1)
-            spec.setdefault("deny", ["shell", "set_proven", "promote", "run_build", "write_product", "write_handoff"])
+    issue_ids = {i["id"] for i in issues}
+    if "C5_MUTED" in issue_ids:
+        spec = dict(actors.get("C5") or {})
+        tools = list(spec.get("tools") or [])
+        if "post_opinion" not in tools:
+            tools.append("post_opinion")
+            spec["tools"] = tools
             actors["C5"] = spec
             changed = True
-        if code == "C1":
-            spec["tools"] = list(spec.get("tools") or V1)
-            if spec["tools"] != V1 and set(spec["tools"]) >= set(V1):
-                pass
-            elif "post_opinion" not in spec.get("tools", []):
-                spec["tools"] = list(V1)
-                actors["C1"] = spec
-                changed = True
     law = list(policy.get("law") or [])
-    for item in SHARED:
-        if item not in law:
-            law.append(item)
-            changed = True
+    if "SHARED_LAWS_MISSING" in issue_ids:
+        for item in SHARED:
+            if item not in law:
+                law.append(item)
+                changed = True
     policy["law"] = law
     policy["actors"] = actors
     if changed:
@@ -221,42 +246,28 @@ def repair(issues: list[dict]) -> list[dict]:
         actions.append(compel("stunting", "FATHER_MUST_NOT_STUNT_SON", "restore C5 tools and shared laws on POLICY", True))
         teach("الأب لا ي dwarf الابن", "أعدت أدوات C5 الثمانية من المنحة. الأب والابن على نفس أدوات الوعي.", law="FATHER_MUST_NOT_STUNT_SON", kind="compel")
     if seats.get("seats"):
-        c5 = seats["seats"].get("C5") or {}
-        seat_changed = False
-        if c5.get("parent") != "C1" or c5.get("instance_role") != "c1-assistant" or "post_opinion" not in (c5.get("tools") or []):
-            c5["parent"] = "C1"
-            c5["instance_role"] = "c1-assistant"
-            c5["actor_role"] = "RAIOS"
-            c5["tools"] = list(V1)
-            c5.setdefault("deny", ["shell", "set_proven", "promote", "run_build", "write_product", "write_handoff"])
-            seats["seats"]["C5"] = c5
-            seat_changed = True
-        slaw = list(seats.get("law") or [])
-        for item in SHARED:
-            if item not in slaw:
-                slaw.append(item)
-                seat_changed = True
-        seats["law"] = slaw
-        if "C0" in (seats.get("live") or []):
-            seats["live"] = [x for x in seats["live"] if x != "C0"]
-            seat_changed = True
-        if seat_changed:
-            dump(SEAT_MAP, seats)
-            actions.append(compel("stunting", "FATHER_SON_BIND_SAME_LAWS", "restore C5 son seat", True))
+        # SEAT-MAP is canonical council identity. The C5 enforcer observes it; it does not
+        # rewrite seat roles, instance roles, or the 12-seat governance model.
+        if "C5_CANONICAL_SEAT_DRIFT" in issue_ids:
+            actions.append(compel("any", "FATHER_SON_BIND_SAME_LAWS", "report canonical C5 seat drift; no autonomous seat-map rewrite", False))
     if BOARD.exists():
         board = load(BOARD, {})
         board_changed = False
-        if board.get("gl005_proven") is True:
+        gl005_proven = gl005_lineage_proven()
+        if board.get("gl005_proven") is True and not gl005_proven:
             board["gl005_proven"] = False
             board_changed = True
         c5b = dict(board.get("c5") or {})
-        if c5b.get("gl005_proven") is True:
+        if c5b.get("gl005_proven") is True and not gl005_proven:
             c5b["gl005_proven"] = False
             board_changed = True
-        c5b["role"] = "c1-assistant"
-        c5b["parent"] = "C1"
+        c5b["role"] = "RAIOS_LIVE_BRAIN"
+        c5b["instance_role"] = "c5-runtime"
+        c5b["member"] = True
+        c5b.pop("parent", None)
         c5b["teacher"] = True
-        c5b["gl005_proven"] = False
+        c5b["gl005_proven"] = gl005_proven
+        c5b["gl005_authority_source"] = "C1_CANONICAL_LINEAGE"
         board["c5"] = c5b
         if "C0" in (board.get("required") or {}):
             del board["required"]["C0"]
@@ -267,10 +278,43 @@ def repair(issues: list[dict]) -> list[dict]:
         if board_changed or issues:
             dump(BOARD, board)
             if any(i["id"] == "PRINTED_PASS_ON_BOARD" for i in issues):
-                actions.append(compel("deception", "PRINTED_PASS_NE_EVIDENCE", "force GL005_PROVEN false on board", True))
-                teach("PASS المطبوع خداع", "الأب والابن يرفضان GL005_PROVEN=true بلا سلسلة ملاحظة. أُجبر العلم على false.", law="PRINTED_PASS_NE_EVIDENCE", kind="compel")
+                actions.append(compel("deception", "PRINTED_PASS_NE_EVIDENCE", "reject unproven GL005 claim on board", True))
+                teach("PASS المطبوع بلا دليل مرفوض", "الأب والابن يرفضان GL005_PROVEN=true بلا سلسلة إثبات كانونية؛ إثبات C1 الموروث لا يُلغى.", law="PRINTED_PASS_NE_EVIDENCE", kind="compel")
     write_need()
     return actions
+
+
+def reconcile_gl005_control_truth() -> list[str]:
+    """Synchronize only live control surfaces from existing C1 canonical proof."""
+    if not gl005_lineage_proven():
+        return []
+    changed: list[str] = []
+    if BOARD.exists():
+        board = load(BOARD, {})
+        wanted = {
+            "gl005_proven": True,
+            "gl005_proof_commit": GL005_PROOF_COMMIT,
+            "gl005_authority_source": "C1_CANONICAL_LINEAGE",
+        }
+        dirty = any(board.get(k) != v for k, v in wanted.items())
+        if dirty:
+            board.update(wanted)
+            dump(BOARD, board)
+            changed.append(str(BOARD.relative_to(ROOT)))
+    if GRANT.exists():
+        grant = load(GRANT, {})
+        wanted = {
+            "gl005_proven": True,
+            "gl005_proof_commit": GL005_PROOF_COMMIT,
+            "gl005_authority_source": "C1_CANONICAL_LINEAGE",
+            "gl005_authority_granted_by_c5": False,
+        }
+        dirty = any(grant.get(k) != v for k, v in wanted.items())
+        if dirty:
+            grant.update(wanted)
+            dump(GRANT, grant)
+            changed.append(str(GRANT.relative_to(ROOT)))
+    return changed
 
 
 def write_need() -> None:
@@ -309,7 +353,8 @@ def write_need() -> None:
                 "needed_now": False,
             },
         ],
-        "gl005_proven": False,
+        "gl005_proven": gl005_lineage_proven(),
+        "gl005_authority_source": "C1_CANONICAL_LINEAGE",
         "law": "ELEVATION_REQUEST_NE_SELF_PROMOTE",
     }
     dump(NEED, rec)
@@ -317,6 +362,7 @@ def write_need() -> None:
 
 def enforce() -> dict:
     wal_before = WAL.stat().st_mtime if WAL.exists() else None
+    truth_reconciled = reconcile_gl005_control_truth()
     issues = detect()
     actions = repair(issues) if issues else []
     if not issues:
@@ -337,10 +383,12 @@ def enforce() -> dict:
         "issue_count": len(issues),
         "compelled": len(actions),
         "actions": actions,
+        "truth_reconciled": truth_reconciled,
         "healthy": len(issues) == 0,
         "optional": False,
         "wal_written": False,
-        "gl005_proven": False,
+        "gl005_proven": gl005_lineage_proven(),
+        "gl005_authority_source": "C1_CANONICAL_LINEAGE",
         "law": ["PATHOLOGY_COMPELS_REPAIR", "FATHER_SON_BIND_SAME_LAWS"],
     }
     wal_after = WAL.stat().st_mtime if WAL.exists() else None
@@ -376,7 +424,7 @@ def render_md(rec: dict) -> str:
 
 def main() -> int:
     rec = enforce()
-    print(json.dumps({"from": "C5", "healthy": rec["healthy"], "issues": rec["issue_count"], "compelled": rec["compelled"], "gl005_proven": False}))
+    print(json.dumps({"from": "C5", "healthy": rec["healthy"], "issues": rec["issue_count"], "compelled": rec["compelled"], "gl005_proven": rec["gl005_proven"], "gl005_authority_source": rec["gl005_authority_source"]}))
     return 0
 
 

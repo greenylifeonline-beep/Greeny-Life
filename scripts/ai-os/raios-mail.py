@@ -1,10 +1,11 @@
 #!/usr/bin/env python3
-"""C1 public mail plane. Outbox = C1 sends. GitHub Issues = C2/C5 send. Mail does not prove."""
+"""RAIOS council mail ingress/egress. GitHub mail is unverified ingress; mail never grants execution authority."""
 from __future__ import annotations
 
 import argparse
 import importlib.util
 import json
+import os
 import re
 import subprocess
 import sys
@@ -16,6 +17,16 @@ ROOT = Path(__file__).resolve().parents[2]
 sys.path.insert(0, str(Path(__file__).resolve().parent))
 from raios_seats import LEGACY_MAIL, MAIL_CODES, resolve_mail_title_code  # noqa: E402
 
+CREATE_NO_WINDOW = getattr(subprocess, "CREATE_NO_WINDOW", 0)
+
+def windowless_startupinfo():
+    if os.name != "nt":
+        return None
+    info = subprocess.STARTUPINFO()
+    info.dwFlags |= subprocess.STARTF_USESHOWWINDOW
+    info.wShowWindow = subprocess.SW_HIDE
+    return info
+
 MAIL = ROOT / ".ai-os" / "mail"
 OUTBOX_JSONL = MAIL / "OUTBOX.jsonl"
 INBOX_JSONL = MAIL / "INBOX.jsonl"
@@ -24,15 +35,23 @@ COLLECT_RECEIPT = MAIL / "COLLECT-RECEIPT.json"
 BOARD_PY = ROOT / "scripts" / "ai-os" / "raios-board.py"
 
 REPO = "greenylifeonline-beep/Greeny-Life"
-BRANCH = "v9-neurolingua-semantic-kernel"
+_branch = subprocess.run(
+    ["git", "branch", "--show-current"],
+    cwd=ROOT,
+    text=True,
+    capture_output=True,
+    creationflags=CREATE_NO_WINDOW,
+    startupinfo=windowless_startupinfo(),
+)
+BRANCH = (_branch.stdout or "main").strip() or "main"
 ISSUES_URL = f"https://github.com/{REPO}/issues"
 OUTBOX_URL = f"https://github.com/{REPO}/blob/{BRANCH}/.ai-os/mail/OUTBOX.md"
-NEW_C2 = f"https://github.com/{REPO}/issues/new?template=raios-mail-c2.md"
-NEW_C3 = f"https://github.com/{REPO}/issues/new?template=raios-mail-c3.md"
-NEW_C4 = f"https://github.com/{REPO}/issues/new?template=raios-mail-c4.md"
-NEW_C5 = f"https://github.com/{REPO}/issues/new?template=raios-mail-c5.md"
+NEW_BY_SEAT = {
+    code: f"https://github.com/{REPO}/issues/new?title=MAIL%20{code}%3A%20"
+    for code in MAIL_CODES
+}
 
-TITLE_RE = re.compile(r"^MAIL\s+C([0-5])\b", re.I)
+TITLE_RE = re.compile(r"^MAIL\s+C(1[0-2]|[1-9])\b", re.I)
 SECRET_RE = re.compile(
     r"DATABASE_URL\s*=\s*\S+|APP_SESSION_SECRET\s*=\s*\S+|gl_session\s*=\s*\S+|postgres(?:ql)?://\S+",
     re.I,
@@ -40,7 +59,7 @@ SECRET_RE = re.compile(
 BEARER_TOKEN_RE = re.compile(r"(?:^|[^A-Za-z])Bearer [A-Za-z0-9\-._~+/]{16,}")
 PASS_CLAIM_RE = re.compile(r"GL00[45]_PROVEN\s*=\s*true", re.I)
 CODES = MAIL_CODES
-REPLY_URLS = {"C2": NEW_C2, "C3": NEW_C3, "C4": NEW_C4}
+REPLY_URLS = dict(NEW_BY_SEAT)
 
 
 def utc() -> str:
@@ -92,56 +111,41 @@ def load_board():
 
 
 def git_head() -> str:
-    r = subprocess.run(["git", "rev-parse", "HEAD"], cwd=ROOT, text=True, capture_output=True)
+    r = subprocess.run(
+        ["git", "rev-parse", "HEAD"],
+        cwd=ROOT,
+        text=True,
+        capture_output=True,
+        creationflags=CREATE_NO_WINDOW,
+        startupinfo=windowless_startupinfo(),
+    )
     return (r.stdout or "").strip()
 
 
 def sync_board(*, last_collect: dict | None = None, last_send: dict | None = None) -> None:
+    """Update mail telemetry only; never rewrite council governance from the mail adapter."""
     board = load_board()
     state = board.load_now()
-    state["branch"] = BRANCH
-    state["head"] = git_head()
-    state["updated_at"] = utc()
-    state["mission_status"] = "ONE_PLACE_MAP_ENCODED_REMOTE_UNPROVEN"
-    state["mission"] = (
-        "C0 abolished. C1 is Cursor (owner's hand). C2/C3 ChatGPT. C4 DeepSeek. C5 RAIOS. "
-        "Repair is unseated. Local MCP meeting is not remote ChatGPT. "
-        "MAIL_PASSES_NE_PROVES. GL005_PROVEN remains false."
-    )
-    state["schedule"] = {
-        "now": "C5 RAIOS — ابن Cursor — يقيّم ويهضم ويتكلم. C2/C3/C4 عبر MCP أو MAIL. C1 يجمع.",
-        "next": "Remote C2/C3/C4 connectivity remains unproven. Repair authenticated POST remains the only GL-005 mutation proof.",
-        "forbidden": "C0 live seat, Repair as C3, MAIL C5 as RAIOS, Issue as proof, PASS from mail or C5 pulse, Team Relay hub, WAL dump, forged session",
-    }
-    state["required"] = {
-        "C1": "Cursor — يد المالك وأب C5. بوابة MCP V1 + OUTBOX. يجمع. لا يمنح PASS.",
-        "C2": "ChatGPT الأول. MCP أو MAIL C2. لا كود.",
-        "C3": "ChatGPT النظير. MCP أو MAIL C3. ليس Repair.",
-        "C4": "DeepSeek. MCP أو MAIL C4. MAIL C5 التاريخي يصل هنا.",
-        "C5": "RAIOS الابن المساعد المخلص. يقيّم ويهضم ويتكلم. لا بريد GitHub. لا PASS.",
-    }
+    existing = state.get("mail") if isinstance(state.get("mail"), dict) else {}
     mail = {
-        "dispatcher": "C1",
+        **existing,
+        "worker": "RAIOS-WORKER",
+        "authority": "C1",
+        "seat_count": 12,
         "law": "MAIL_PASSES_NE_PROVES",
-        "gl005_proven": False,
         "inbox": ISSUES_URL,
         "outbox": OUTBOX_URL,
-        "new_c2": NEW_C2,
-        "new_c3": NEW_C3,
-        "new_c4": NEW_C4,
-        "new_c5_legacy": NEW_C5,
+        "reply_urls": dict(REPLY_URLS),
         "identity": "GITHUB_LOGIN_NOT_RAIOS_SEAT",
-        "c0_seat": "ABOLISHED",
-        "repair_seat": "UNSEATED",
+        "credential_ref": "windows-keyring:gh-cli/github.com",
+        "branch": BRANCH,
+        "head": git_head(),
+        "updated_at": utc(),
     }
     if last_collect is not None:
         mail["last_collect"] = last_collect
-    elif isinstance(state.get("mail"), dict) and state["mail"].get("last_collect"):
-        mail["last_collect"] = state["mail"]["last_collect"]
     if last_send is not None:
         mail["last_send"] = last_send
-    elif isinstance(state.get("mail"), dict) and state["mail"].get("last_send"):
-        mail["last_send"] = state["mail"]["last_send"]
     state["mail"] = mail
     board.save_now(state)
 
@@ -149,30 +153,30 @@ def sync_board(*, last_collect: dict | None = None, last_send: dict | None = Non
 def render_outbox(rows: list[dict]) -> None:
     MAIL.mkdir(parents=True, exist_ok=True)
     lines = [
-        "# صندوق الإرسال — C1",
+        "# ØµÙ†Ø¯ÙˆÙ‚ Ø§Ù„Ø¥Ø±Ø³Ø§Ù„ â€” C1",
         "",
-        "C1 Cursor يرسل من هنا. C2 و C3 و C4 يردون بـ GitHub Issue.",
-        "C0 ملغى. C5 RAIOS ليس مقعد بريد. `MAIL C5:` عنوان تاريخي → C4.",
-        "`MAIL_PASSES_NE_PROVES`. هذا الملف ليس TASKS وليست LOCKS وليس `GL005_PROVEN`.",
+        "C1 Cursor ÙŠØ±Ø³Ù„ Ù…Ù† Ù‡Ù†Ø§. C2 Ùˆ C3 Ùˆ C4 ÙŠØ±Ø¯ÙˆÙ† Ø¨Ù€ GitHub Issue.",
+        "C0 Ù…Ù„ØºÙ‰. C5 RAIOS Ù„ÙŠØ³ Ù…Ù‚Ø¹Ø¯ Ø¨Ø±ÙŠØ¯. `MAIL C5:` Ø¹Ù†ÙˆØ§Ù† ØªØ§Ø±ÙŠØ®ÙŠ â†’ C4.",
+        "`MAIL_PASSES_NE_PROVES`. Ù‡Ø°Ø§ Ø§Ù„Ù…Ù„Ù Ù„ÙŠØ³ TASKS ÙˆÙ„ÙŠØ³Øª LOCKS ÙˆÙ„ÙŠØ³ `GL005_PROVEN`.",
         "",
-        f"- القراءة: {OUTBOX_URL}",
-        f"- الرد C2: {NEW_C2}",
-        f"- الرد C3: {NEW_C3}",
-        f"- الرد C4: {NEW_C4}",
-        f"- الرد التاريخي C5→C4: {NEW_C5}",
-        f"- الصندوق: {ISSUES_URL}",
+        f"- Ø§Ù„Ù‚Ø±Ø§Ø¡Ø©: {OUTBOX_URL}",
+        f"- Ø§Ù„Ø±Ø¯ C2: {REPLY_URLS.get('C2')}",
+        f"- Ø§Ù„Ø±Ø¯ C3: {REPLY_URLS.get("C3")}",
+        f"- Ø§Ù„Ø±Ø¯ C4: {REPLY_URLS.get("C4")}",
+        f"- Ø§Ù„Ø±Ø¯ Ø§Ù„ØªØ§Ø±ÙŠØ®ÙŠ C5â†’C4: {REPLY_URLS.get("C5")}",
+        f"- Ø§Ù„ØµÙ†Ø¯ÙˆÙ‚: {ISSUES_URL}",
         "",
-        "لا git. لا اشتراك. لا أسرار. عنوان العدد يبدأ بـ `MAIL C2:` أو `MAIL C3:` أو `MAIL C4:`.",
+        "Ù„Ø§ git. Ù„Ø§ Ø§Ø´ØªØ±Ø§Ùƒ. Ù„Ø§ Ø£Ø³Ø±Ø§Ø±. Ø¹Ù†ÙˆØ§Ù† Ø§Ù„Ø¹Ø¯Ø¯ ÙŠØ¨Ø¯Ø£ Ø¨Ù€ `MAIL C2:` Ø£Ùˆ `MAIL C3:` Ø£Ùˆ `MAIL C4:`.",
         "",
-        "## الرسائل",
+        "## Ø§Ù„Ø±Ø³Ø§Ø¦Ù„",
         "",
     ]
     if not rows:
-        lines.append("_لا رسائل صادرة بعد._")
+        lines.append("_Ù„Ø§ Ø±Ø³Ø§Ø¦Ù„ ØµØ§Ø¯Ø±Ø© Ø¨Ø¹Ø¯._")
         lines.append("")
     for rec in rows:
         to = ",".join(rec.get("to") or [])
-        lines.append(f"### {rec.get('ts')} — to {to} — `{rec.get('id')}`")
+        lines.append(f"### {rec.get('ts')} â€” to {to} â€” `{rec.get('id')}`")
         lines.append("")
         lines.append(str(rec.get("text") or "").strip())
         lines.append("")
@@ -263,6 +267,8 @@ def list_issues(fixture: Path | None) -> list[dict]:
         cwd=ROOT,
         text=True,
         capture_output=True,
+        creationflags=CREATE_NO_WINDOW,
+        startupinfo=windowless_startupinfo(),
     )
     if r.returncode != 0:
         raise SystemExit((r.stderr or r.stdout or "GH_ISSUE_LIST_FAILED").strip())
@@ -315,10 +321,10 @@ def show() -> dict:
     return {
         "outbox": OUTBOX_URL,
         "inbox": ISSUES_URL,
-        "new_c2": NEW_C2,
-        "new_c3": NEW_C3,
-        "new_c4": NEW_C4,
-        "new_c5_legacy": NEW_C5,
+        "new_c2": REPLY_URLS.get("C2"),
+        "new_c3": REPLY_URLS.get("C3"),
+        "new_c4": REPLY_URLS.get("C4"),
+        "new_c5_legacy": REPLY_URLS.get("C5"),
         "out_count": len(load_jsonl(OUTBOX_JSONL)),
         "in_count": len(load_jsonl(INBOX_JSONL)),
         "gl005_proven": False,
@@ -331,7 +337,7 @@ def main() -> int:
     p = argparse.ArgumentParser()
     sub = p.add_subparsers(dest="c", required=True)
     s = sub.add_parser("send")
-    s.add_argument("--to", required=True, help="C2,C3,C4")
+    s.add_argument("--to", required=True, help="C1..C12")
     s.add_argument("--text", required=True)
     c = sub.add_parser("collect")
     c.add_argument("--fixture", type=Path)

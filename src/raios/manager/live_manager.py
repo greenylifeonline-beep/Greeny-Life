@@ -21,13 +21,26 @@ from datetime import datetime, timezone
 from pathlib import Path
 from typing import Any
 
+CREATE_NO_WINDOW = getattr(subprocess, "CREATE_NO_WINDOW", 0)
+
+
+def windowless_startupinfo():
+    if os.name != "nt":
+        return None
+    info = subprocess.STARTUPINFO()
+    info.dwFlags |= subprocess.STARTF_USESHOWWINDOW
+    info.wShowWindow = subprocess.SW_HIDE
+    return info
+
+
 REPO = Path(__file__).resolve().parents[3]
 SRC = REPO / "src"
 V9_RUNTIME = REPO / "RAIOS" / "V9" / "runtime"
 if str(V9_RUNTIME) not in sys.path:
     sys.path.insert(0, str(V9_RUNTIME))
 
-from cognitive_event_bus import build_event, emit_event
+from cognitive_event_bus import WAL_FILE, build_event, emit_event
+from raios.council_ops.operations import _live as council_presence_live
 from raios.search_cortex import SearchCortex
 
 TASKS = REPO / ".ai-os" / "state" / "TASKS.json"
@@ -55,15 +68,16 @@ OLLAMA_TAGS = "http://127.0.0.1:11434/api/tags"
 OLLAMA_EMBED = "http://127.0.0.1:11434/api/embed"
 EMBED_MODEL = "qwen3-embedding:0.6b"
 
-LOCAL_TICK_SECONDS = 2.0
+LOCAL_TICK_SECONDS = 15.0
 MAIL_REFRESH_SECONDS = 20.0
 GITHUB_REFRESH_SECONDS = 30.0
 RESOURCE_REFRESH_SECONDS = 90.0
-SEARCH_REFRESH_SECONDS = 10.0
+SEARCH_REFRESH_SECONDS = 300.0
 EMBED_REFRESH_SECONDS = 60.0
 OFFICIAL_REFRESH_SECONDS = 900.0
 FACTORY_REFRESH_SECONDS = 1800.0
 REASON_SECONDS = 15.0
+REASON_RETRY_SECONDS = 300.0
 EVOLUTION_SECONDS = 10.0
 
 MANAGER_ACTOR = "RAIOS-MANAGER"
@@ -177,6 +191,42 @@ def sanitize(value: Any) -> Any:
     return value
 
 
+VOLATILE_OBSERVATION_KEYS = {
+    "latency_ms",
+    "duration_ms",
+    "elapsed_ms",
+    "generated_at",
+    "checked_at",
+    "observed_at",
+    "updated_at",
+    "timestamp",
+    "checked_in_at",
+    "last_seen",
+    "lease_expires_at",
+    "receipt",
+}
+
+
+def semantic_observation(value: Any) -> Any:
+    """Remove transport telemetry while preserving operational state changes."""
+    if isinstance(value, dict):
+        return {
+            key: semantic_observation(item)
+            for key, item in value.items()
+            if str(key).lower() not in VOLATILE_OBSERVATION_KEYS
+        }
+    if isinstance(value, list):
+        return [semantic_observation(item) for item in value]
+    return sanitize(value)
+
+
+def safe_council_presence_live(row: Any) -> bool:
+    try:
+        return bool(council_presence_live(row))
+    except (AttributeError, TypeError, ValueError):
+        return False
+
+
 def http_json(url: str, timeout: float = 1.5) -> dict[str, Any]:
     req = urllib.request.Request(url, headers={"User-Agent": "RAIOS-Live-Manager/1.0"})
     started = time.perf_counter()
@@ -201,7 +251,16 @@ def http_json(url: str, timeout: float = 1.5) -> dict[str, Any]:
 
 def run(args: list[str], timeout: float = 8.0, cwd: Path | None = None) -> dict[str, Any]:
     try:
-        proc = subprocess.run(args, cwd=cwd or REPO, text=True, capture_output=True, timeout=timeout, check=False)
+        proc = subprocess.run(
+            args,
+            cwd=cwd or REPO,
+            text=True,
+            capture_output=True,
+            timeout=timeout,
+            check=False,
+            creationflags=CREATE_NO_WINDOW,
+            startupinfo=windowless_startupinfo(),
+        )
         return {
             "ok": proc.returncode == 0,
             "code": proc.returncode,
@@ -234,6 +293,10 @@ class Source:
             "payload": sanitize(self.payload),
             "evidence": self.evidence,
         }
+
+    def semantic_dict(self) -> dict[str, Any]:
+        """Stable state used for change events, retrieval and reasoning identity."""
+        return semantic_observation(self.as_dict())
 
 
 class HybridMemory:
@@ -366,9 +429,16 @@ class HybridMemory:
 
 
 class LiveManager:
-    def __init__(self, allow_task_write: bool = True):
+    def __init__(
+        self,
+        allow_task_write: bool = True,
+        enable_refreshes: bool = True,
+        enable_reasoning: bool = True,
+    ):
         MANAGER_ROOT.mkdir(parents=True, exist_ok=True)
         self.allow_task_write = allow_task_write
+        self.enable_refreshes = enable_refreshes
+        self.enable_reasoning = enable_reasoning
         self.state = load_json(STATE, {
             "schema": "raios.manager-state.v1",
             "last_hashes": {},
@@ -379,6 +449,8 @@ class LiveManager:
         self.search_cortex = SearchCortex()
         self._reason_lock = threading.Lock()
         self._reason_inflight = False
+        self._search_refresh_process: subprocess.Popen[Any] | None = None
+        self._refresh_processes: dict[str, subprocess.Popen[Any]] = {}
 
     def _source(self, source_id: str, access: str, authority: str, trust: str, live: bool, payload: Any, evidence: list[str]) -> Source:
         return Source(source_id, access, authority, trust, live, "LIVE" if live else "UNAVAILABLE_OR_STALE", payload, evidence)
@@ -415,14 +487,16 @@ class LiveManager:
         active_tasks = [x for x in tasks.get("tasks", []) if x.get("status") not in {"DONE", "CANCELLED", "ARCHIVED"}]
         active_locks = [x for x in locks.get("locks", []) if x.get("status") == "ACTIVE"]
         seats = presence.get("seats", {})
-        present = [k for k, v in seats.items() if v.get("presence") == "PRESENT"]
+        present = [
+            seat for seat, row in seats.items() if safe_council_presence_live(row)
+        ]
 
         return [
             self._source("CANONICAL_TASKS", "PRIVATE_INTERNAL", "CANONICAL", "HIGH", TASKS.is_file(),
                          {"active": active_tasks, "total": len(tasks.get("tasks", []))}, [str(TASKS)]),
             self._source("CANONICAL_LOCKS", "PRIVATE_INTERNAL", "CANONICAL", "HIGH", LOCKS.is_file(),
                          {"active": active_locks, "count": len(active_locks)}, [str(LOCKS)]),
-            self._source("COUNCIL_PRESENCE", "PRIVATE_INTERNAL", "RUNTIME_AUTHENTICATED", "HIGH", bool(presence),
+            self._source("COUNCIL_PRESENCE", "PRIVATE_INTERNAL", "RUNTIME_AUTHENTICATED", "HIGH", bool(present),
                          {"present": present, "seats": seats}, [str(COUNCIL_PRESENCE)]),
             self._source("C5_LIVE_BRAIN", "PRIVATE_INTERNAL", "RAIOS_INTERNAL", "HIGH", bool(c5.get("live")), c5, [C5_HEALTH]),
             self._source("COMMAND_CENTER", "PRIVATE_INTERNAL", "RAIOS_INTERNAL", "HIGH", bool(cc.get("live")), cc, [CC_HEALTH]),
@@ -442,7 +516,7 @@ class LiveManager:
     def _docs(self, sources: list[Source]) -> list[dict[str, str]]:
         docs: list[dict[str, str]] = []
         for source in sources:
-            payload = source.as_dict()
+            payload = source.semantic_dict()
             text = json.dumps(payload, ensure_ascii=False, sort_keys=True, default=str)
             docs.append({
                 "doc_id": f"source:{source.source_id}",
@@ -475,7 +549,7 @@ class LiveManager:
         emitted = 0
         hashes = self.state.setdefault("last_hashes", {})
         for source in sources:
-            current = sha(source.as_dict())
+            current = sha(source.semantic_dict())
             if hashes.get(source.source_id) == current:
                 continue
             event = build_event(
@@ -634,10 +708,16 @@ class LiveManager:
             data = json.loads(raw.decode("utf-8-sig"))
             tasks = data.setdefault("tasks", [])
             ids = {str(x.get("id")) for x in tasks}
+            active_gap_codes = {
+                str(task.get("manager_gap_code"))
+                for task in tasks
+                if task.get("manager_gap_code")
+                and task.get("status") not in {"DONE", "CANCELLED", "ARCHIVED"}
+            }
             changed = False
             for g in gaps:
                 tid = self._task_id(g, snapshot_hash)
-                if tid in ids:
+                if tid in ids or str(g["code"]) in active_gap_codes:
                     continue
                 status = "BLOCKED" if g.get("blocked_by") else "READY"
                 task = {
@@ -665,6 +745,7 @@ class LiveManager:
                 }
                 tasks.append(task)
                 ids.add(tid)
+                active_gap_codes.add(str(g["code"]))
                 created.append(tid)
                 changed = True
             if not changed:
@@ -777,76 +858,98 @@ class LiveManager:
     def _spawn_refreshes(self) -> None:
         now_s = time.time()
         last = self.state.setdefault("last_runs", {})
+        child_env = {**os.environ, "PYTHONPATH": str(SRC)}
 
         def due(name: str, seconds: float) -> bool:
             return now_s - float(last.get(name, 0.0)) >= seconds
 
-        if due("mail", MAIL_REFRESH_SECONDS):
-            subprocess.Popen(
-                [sys.executable, str(REPO / "scripts" / "ai-os" / "raios-mail.py"), "collect"],
+        def spawn_once(
+            name: str,
+            seconds: float,
+            args: list[str],
+            *,
+            env: dict[str, str] | None = None,
+        ) -> None:
+            existing = self._refresh_processes.get(name)
+            if not due(name, seconds) or (
+                existing is not None and existing.poll() is None
+            ):
+                return
+            process = subprocess.Popen(
+                args,
                 cwd=REPO,
+                env=env,
                 stdout=subprocess.DEVNULL,
                 stderr=subprocess.DEVNULL,
+                creationflags=CREATE_NO_WINDOW,
+                startupinfo=windowless_startupinfo(),
             )
-            last["mail"] = now_s
-        if due("search_index", SEARCH_REFRESH_SECONDS):
-            subprocess.Popen(
-                [
-                    sys.executable,
-                    "-m",
-                    "raios.search_cortex.engine",
-                    "--refresh-index",
-                ],
-                cwd=REPO,
-                env={**os.environ, "PYTHONPATH": str(SRC)},
-                stdout=subprocess.DEVNULL,
-                stderr=subprocess.DEVNULL,
-            )
-            last["search_index"] = now_s
-        if due("resources", RESOURCE_REFRESH_SECONDS):
-            subprocess.Popen(
-                [sys.executable, "-m", "raios.manager.live_manager", "--refresh-resources"],
-                cwd=REPO,
-                env={**os.environ, "PYTHONPATH": str(SRC)},
-                stdout=subprocess.DEVNULL,
-                stderr=subprocess.DEVNULL,
-            )
-            last["resources"] = now_s
-        if due("official", OFFICIAL_REFRESH_SECONDS):
-            subprocess.Popen(
-                [sys.executable, "-m", "raios.factory_fabric.official_source", "--limit", "2000"],
-                cwd=REPO,
-                env={**os.environ, "PYTHONPATH": str(SRC)},
-                stdout=subprocess.DEVNULL,
-                stderr=subprocess.DEVNULL,
-            )
-            last["official"] = now_s
-        if due("factory", FACTORY_REFRESH_SECONDS):
-            subprocess.Popen(
-                [sys.executable, "-m", "raios.manager.live_manager", "--refresh-factory"],
-                cwd=REPO,
-                env={**os.environ, "PYTHONPATH": str(SRC)},
-                stdout=subprocess.DEVNULL,
-                stderr=subprocess.DEVNULL,
-            )
-            last["factory"] = now_s
+            self._refresh_processes[name] = process
+            if name == "search_index":
+                self._search_refresh_process = process
+            last[name] = now_s
+
+        spawn_once(
+            "mail",
+            MAIL_REFRESH_SECONDS,
+            [sys.executable, str(REPO / "scripts" / "ai-os" / "raios-mail.py"), "collect"],
+        )
+        spawn_once(
+            "search_index",
+            SEARCH_REFRESH_SECONDS,
+            [sys.executable, "-m", "raios.search_cortex.engine", "--refresh-index"],
+            env=child_env,
+        )
+        spawn_once(
+            "resources",
+            RESOURCE_REFRESH_SECONDS,
+            [sys.executable, "-m", "raios.manager.live_manager", "--refresh-resources"],
+            env=child_env,
+        )
+        spawn_once(
+            "official",
+            OFFICIAL_REFRESH_SECONDS,
+            [sys.executable, "-m", "raios.factory_fabric.official_source", "--limit", "2000"],
+            env=child_env,
+        )
+        spawn_once(
+            "factory",
+            FACTORY_REFRESH_SECONDS,
+            [sys.executable, "-m", "raios.manager.live_manager", "--refresh-factory"],
+            env=child_env,
+        )
 
     def tick(self) -> dict[str, Any]:
         started = time.perf_counter()
-        self._spawn_refreshes()
+        phase_started = started
+        phase_latency_ms: dict[str, float] = {}
+
+        def mark_phase(name: str) -> None:
+            nonlocal phase_started
+            current = time.perf_counter()
+            phase_latency_ms[name] = round((current - phase_started) * 1000, 3)
+            phase_started = current
+
+        if self.enable_refreshes:
+            self._spawn_refreshes()
+        mark_phase("refresh_spawn")
         sources = self.gather()
+        mark_phase("gather")
         snapshot = {
             "schema": "raios.manager-source-snapshot.v1",
             "generated_at": utc(),
             "sources": [s.as_dict() for s in sources],
         }
-        snapshot_hash = sha(snapshot["sources"])
+        snapshot_hash = sha([source.semantic_dict() for source in sources])
         snapshot["snapshot_hash"] = snapshot_hash
         atomic_json(SOURCE_SNAPSHOT, snapshot)
+        mark_phase("snapshot_write")
 
         # Keep the live-source cache current without blocking on embeddings.
         index_result = self.memory.upsert(self._docs(sources), embed_limit=0)
+        mark_phase("retrieval_index")
         emitted = self._emit_changes(sources)
+        mark_phase("source_events")
         gaps = self._gaps(sources)
         query = (
             "current blockers failures resources tasks sources health "
@@ -861,22 +964,32 @@ class LiveManager:
             trace=False,
         )
         context = list(search_result.get("results") or [])
+        mark_phase("search")
 
-        reason_due = (
-            time.time()
-            - float(self.state.setdefault("last_runs", {}).get("reason", 0.0))
-            >= REASON_SECONDS
+        last_reason_at = float(
+            self.state.setdefault("last_runs", {}).get("reason", 0.0)
         )
+        reason_age = time.time() - last_reason_at
+        reason_due = reason_age >= REASON_SECONDS
+        retry_due = reason_age >= REASON_RETRY_SECONDS
         prior_hash = self.state.get("last_reason_snapshot_hash")
         c5_analysis = load_json(ANALYSIS, {})
+        analysis_payload = (
+            c5_analysis.get("c5", c5_analysis)
+            if isinstance(c5_analysis, dict)
+            else {}
+        )
+        analysis_ok = bool(analysis_payload.get("ok"))
         reason_started = False
-        if reason_due and (snapshot_hash != prior_hash or gaps):
+        should_reason = snapshot_hash != prior_hash or (not analysis_ok and retry_due)
+        if self.enable_reasoning and reason_due and should_reason:
             reason_started = self._launch_reason(gaps, context, snapshot_hash)
             if reason_started:
                 self.state["last_runs"]["reason"] = time.time()
                 self.state["last_reason_snapshot_hash"] = snapshot_hash
 
         created = self._write_tasks(gaps, snapshot_hash)
+        mark_phase("reason_and_tasks")
 
         if created:
             event = build_event(
@@ -910,11 +1023,7 @@ class LiveManager:
             "last_result": evolution_hb.get("last_result") or {},
         }
 
-        c5_payload = (
-            c5_analysis.get("c5", c5_analysis)
-            if isinstance(c5_analysis, dict)
-            else {}
-        )
+        c5_payload = analysis_payload
         elapsed = round((time.perf_counter() - started) * 1000, 3)
         result = {
             "schema": "raios.live-manager-tick.v2",
@@ -951,10 +1060,9 @@ class LiveManager:
             "c5_reasoning_inflight": self._reason_inflight,
             "evolution": evolution,
             "latency_ms": elapsed,
+            "phase_latency_ms": phase_latency_ms,
             "single_task_ledger": str(TASKS),
-            "single_cognitive_wal": str(
-                REPO / "RAIOS" / "V9" / "wal" / "cognitive-events.jsonl"
-            ),
+            "single_cognitive_wal": str(WAL_FILE),
             "second_bus": False,
             "second_task_store": False,
             "second_wal": False,
@@ -1002,9 +1110,7 @@ class LiveManager:
                 "c5_reasoning_inflight": False,
                 "latency_ms": 0.0,
                 "single_task_ledger": str(TASKS),
-                "single_cognitive_wal": str(
-                    REPO / "RAIOS" / "V9" / "wal" / "cognitive-events.jsonl"
-                ),
+                "single_cognitive_wal": str(WAL_FILE),
                 "second_bus": False,
                 "second_task_store": False,
                 "second_wal": False,
@@ -1025,9 +1131,7 @@ class LiveManager:
                             "tick_inflight": pulse_state["tick_inflight"],
                             "last_completed_at": self.state.get("last_tick"),
                             "single_task_ledger": str(TASKS),
-                            "single_cognitive_wal": str(
-                                REPO / "RAIOS" / "V9" / "wal" / "cognitive-events.jsonl"
-                            ),
+                            "single_cognitive_wal": str(WAL_FILE),
                             "second_bus": False,
                             "second_task_store": False,
                             "second_wal": False,
@@ -1127,6 +1231,8 @@ def main() -> int:
     parser.add_argument("--daemon", action="store_true")
     parser.add_argument("--once", action="store_true")
     parser.add_argument("--no-task-write", action="store_true")
+    parser.add_argument("--no-refresh-spawn", action="store_true")
+    parser.add_argument("--no-reasoning", action="store_true")
     parser.add_argument("--refresh-resources", action="store_true")
     parser.add_argument("--refresh-factory", action="store_true")
     args = parser.parse_args()
@@ -1138,7 +1244,11 @@ def main() -> int:
         print(json.dumps(refresh_factory(), ensure_ascii=False, indent=2))
         return 0
 
-    manager = LiveManager(allow_task_write=not args.no_task_write)
+    manager = LiveManager(
+        allow_task_write=not args.no_task_write,
+        enable_refreshes=not args.no_refresh_spawn,
+        enable_reasoning=not args.no_reasoning,
+    )
     if args.daemon:
         manager.daemon()
         return 0

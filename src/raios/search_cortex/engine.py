@@ -15,7 +15,10 @@ from datetime import datetime, timezone
 from pathlib import Path
 from typing import Any
 
-REPO = Path(os.getenv("RAIOS_CANONICAL_REPO", str(Path(__file__).resolve().parents[3]))).resolve()
+CREATE_NO_WINDOW = getattr(subprocess, "CREATE_NO_WINDOW", 0)
+
+CODE_REPO = Path(__file__).resolve().parents[3]
+REPO = Path(os.getenv("RAIOS_CANONICAL_REPO", str(CODE_REPO))).resolve()
 V9_RUNTIME = REPO / "RAIOS" / "V9" / "runtime"
 if str(V9_RUNTIME) not in sys.path:
     sys.path.insert(0, str(V9_RUNTIME))
@@ -23,13 +26,29 @@ if str(V9_RUNTIME) not in sys.path:
 from cognitive_event_bus import build_event, emit_event
 from git_history_search import search_git_history
 
-WAL = REPO / "RAIOS" / "V9" / "wal" / "cognitive-events.jsonl"
+COGNITIVE_STORE_ROOT = Path(
+    os.getenv("RAIOS_COGNITIVE_STORE_ROOT", str(REPO / "RAIOS" / "V9"))
+).expanduser().resolve()
+WAL = COGNITIVE_STORE_ROOT / "wal" / "cognitive-events.jsonl"
 DERIVED_DB = Path.home() / ".raios" / "runtime" / "manager" / "retrieval.sqlite3"
 OFFICIAL = Path.home() / ".raios" / "runtime" / "factory-fabric" / "foundry" / "data" / "official-source-snapshot.json"
 RUNTIME_ROOT = Path.home() / ".raios" / "runtime" / "search-cortex"
 LATEST = RUNTIME_ROOT / "latest.json"
 REPO_INDEX_DB = RUNTIME_ROOT / "repo-index-v2.sqlite3"
-LEARNING_DIGESTS = REPO / ".ai-os" / "learning" / "DIGESTS.jsonl"
+
+
+def _learning_root() -> Path:
+    configured = os.getenv("RAIOS_LEARNING_ROOT")
+    if configured:
+        return Path(configured).expanduser().resolve()
+    cognitive_store = os.getenv("RAIOS_COGNITIVE_STORE_ROOT")
+    if cognitive_store:
+        return Path(cognitive_store).expanduser().resolve() / "learning"
+    canonical = Path(os.getenv("RAIOS_CANONICAL_REPO", str(REPO))).resolve()
+    return canonical / ".ai-os" / "learning"
+
+
+LEARNING_DIGESTS = _learning_root() / "DIGESTS.jsonl"
 
 SOURCE_WEIGHT = {
     "CANONICAL_REPO": 1.00,
@@ -170,7 +189,7 @@ def plan_query(query: str, *, deep: bool = False) -> dict[str, Any]:
 
 
 def _learning_search(query: str, limit: int) -> list[dict[str, Any]]:
-    digests_path = Path(os.getenv("RAIOS_CANONICAL_REPO", str(REPO))).resolve() / ".ai-os" / "learning" / "DIGESTS.jsonl"
+    digests_path = _learning_root() / "DIGESTS.jsonl"
     if not digests_path.is_file():
         return []
     toks = _tokens(query)
@@ -354,6 +373,7 @@ def refresh_repo_index(max_files: int = 25000) -> dict[str, Any]:
         capture_output=True,
         timeout=8,
         check=False,
+        creationflags=CREATE_NO_WINDOW,
     )
     if proc.returncode != 0:
         db.close()

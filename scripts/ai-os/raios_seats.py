@@ -10,9 +10,9 @@ SEAT_MAP_PATH = ROOT / ".ai-os" / "mcp" / "SEAT-MAP.json"
 
 C0_ABOLISHED = "C0_SEAT_ABOLISHED"
 REPAIR_UNSEATED = "REPAIR_EXECUTOR_NE_C_SEAT"
-LIVE_CODES = ("C1", "C2", "C3", "C4", "C5")
-MAIL_CODES = ("C2", "C3", "C4")
-LEGACY_MAIL = {"C5": "C4"}
+LIVE_CODES = tuple(f"C{i}" for i in range(1, 13))
+MAIL_CODES = LIVE_CODES
+LEGACY_MAIL: dict[str, str] = {}
 
 
 def load_seat_map() -> dict:
@@ -29,7 +29,7 @@ def board_codes() -> dict[str, dict]:
         out[code] = {
             "actor": spec["actor_role"],
             "name": spec["name_ar"],
-            "where": spec["where"],
+            "where": spec.get("where"),
             "instance": spec["instance_role"],
         }
     return out
@@ -63,7 +63,7 @@ def resolve_live_code(value: str) -> tuple[str, str]:
 
 def resolve_mail_title_code(claimed: str) -> str | None:
     code = (claimed or "").strip().upper()
-    if code == "C0" or code == "C1":
+    if code == "C0":
         return None
     if code in LEGACY_MAIL:
         return LEGACY_MAIL[code]

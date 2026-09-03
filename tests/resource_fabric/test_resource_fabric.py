@@ -28,6 +28,7 @@ from raios.resource_fabric.placement import (
     model_record,
     placement_request,
     recompose,
+    recompose_v2,
 )
 from raios.resource_fabric.probe import ResourceProbeRunner
 from raios.resource_fabric.projection import classify_unused, project_accelerator, scores
@@ -222,6 +223,20 @@ class SchemaAndInvariants(unittest.TestCase):
         wh.register(rec)
         out = wh.add_location("m1", {"kind": "LOCAL", "path": "C:/weights"})
         self.assertEqual(out["code"], "LOCAL_MODEL_STORAGE_PROHIBITED")
+
+    def test_recomposition_keeps_laptop_control_only(self):
+        plan = recompose_v2({
+            "accounts": [{"account_id": "LOCAL_AG", "status": "REACHABLE"}],
+            "compute": [{"account_id": "LOCAL_AG", "provider_id": "LOCAL", "persistent": True}],
+            "accelerators": [],
+            "storage": [],
+            "quotas": [],
+        })
+        self.assertEqual(plan["PERSISTENT_CONTROL"], "LOCAL_AG")
+        self.assertEqual(plan["LIGHT_INFERENCE"], UNKNOWN)
+        self.assertEqual(plan["EMBEDDING"], UNKNOWN)
+        self.assertTrue(plan["LOCAL_MODEL_INFERENCE_PROHIBITED"])
+        self.assertEqual(plan["LAPTOP_ROLE"], "CONTROL_ONLY")
 
     def test_split_control_storage_inference(self):
         model = model_record(model_id="m", family="qwen", size_gb=10, sha256="h", min_vram=24, recommended_vram=40)

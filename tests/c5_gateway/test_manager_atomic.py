@@ -90,3 +90,108 @@ def test_c5_rejects_fresh_heartbeat_for_missing_manager_process(tmp_path, monkey
     assert result["alive"] is False
     assert result["process_alive"] is False
     assert result["reason"] == "PROCESS_MISSING"
+
+
+def test_manager_presence_requires_a_current_lease():
+    expired = {
+        "presence": "PRESENT",
+        "lease_expires_at": "2020-01-01T00:00:00Z",
+    }
+    assert live_manager.safe_council_presence_live(expired) is False
+    assert live_manager.safe_council_presence_live({"presence": "PRESENT"}) is True
+    assert live_manager.safe_council_presence_live({"presence": "ABSENT"}) is False
+    assert live_manager.safe_council_presence_live(
+        {"presence": "PRESENT", "lease_expires_at": "not-a-date"}
+    ) is False
+
+
+def test_manager_ignores_telemetry_only_source_changes(monkeypatch):
+    manager = object.__new__(live_manager.LiveManager)
+    manager.state = {"last_hashes": {}}
+    emitted = []
+    monkeypatch.setattr(live_manager, "emit_event", emitted.append)
+
+    first = live_manager.Source(
+        "C5_LIVE_BRAIN",
+        "PRIVATE_INTERNAL",
+        "RAIOS_INTERNAL",
+        "HIGH",
+        True,
+        "LIVE",
+        {
+            "live": True,
+            "http_status": 200,
+            "latency_ms": 12.5,
+            "body": {"status": "ONLINE", "generated_at": "2026-09-02T01:00:00Z"},
+        },
+        ["http://127.0.0.1:8766/health"],
+    )
+    latency_only = live_manager.Source(
+        "C5_LIVE_BRAIN",
+        "PRIVATE_INTERNAL",
+        "RAIOS_INTERNAL",
+        "HIGH",
+        True,
+        "LIVE",
+        {
+            "live": True,
+            "http_status": 200,
+            "latency_ms": 987.0,
+            "body": {"status": "ONLINE", "generated_at": "2026-09-02T01:01:00Z"},
+        },
+        ["http://127.0.0.1:8766/health"],
+    )
+    real_change = live_manager.Source(
+        "C5_LIVE_BRAIN",
+        "PRIVATE_INTERNAL",
+        "RAIOS_INTERNAL",
+        "HIGH",
+        False,
+        "UNAVAILABLE_OR_STALE",
+        {
+            "live": False,
+            "http_status": None,
+            "latency_ms": 1500.0,
+            "error": "TimeoutError",
+        },
+        ["http://127.0.0.1:8766/health"],
+    )
+
+    assert manager._emit_changes([first]) == 1
+    assert manager._emit_changes([latency_only]) == 0
+    assert manager._emit_changes([real_change]) == 1
+    assert len(emitted) == 2
+
+
+def test_manager_reuses_active_gap_task_across_new_snapshots(tmp_path, monkeypatch):
+    task_file = tmp_path / "TASKS.json"
+    task_file.write_text(
+        json.dumps(
+            {
+                "tasks": [
+                    {
+                        "id": "RAIOS-MGR-RESTORE_C5-existing",
+                        "status": "READY",
+                        "manager_gap_code": "RESTORE_C5",
+                    }
+                ]
+            }
+        ),
+        encoding="utf-8",
+    )
+    monkeypatch.setattr(live_manager, "TASKS", task_file)
+    manager = object.__new__(live_manager.LiveManager)
+    manager.allow_task_write = True
+    gap = {
+        "code": "RESTORE_C5",
+        "title": "Restore C5 live brain",
+        "objective": "Reuse the active repair task.",
+        "scope": ["src/raios"],
+        "blocked_by": None,
+        "required_capabilities": ["runtime_repair"],
+        "risk_class": "LOW",
+        "severity": 100,
+    }
+
+    assert manager._write_tasks([gap], "different-snapshot-hash") == []
+    assert len(json.loads(task_file.read_text(encoding="utf-8"))["tasks"]) == 1

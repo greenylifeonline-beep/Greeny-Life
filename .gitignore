@@ -48,5 +48,26 @@ Thumbs.db
 .ai-os/snapshots/*.json
 # RAIOS generated/runtime state
 .ai-os/install-backups/
+
+# Live C5 learning state lives in the external cognitive store
+/.ai-os/learning/C5-MIND.json
+/.ai-os/learning/C5-MIND.md
+/.ai-os/learning/C5-SCREEN.jsonl
+/.ai-os/learning/C5-WHOAMI.md
+/.ai-os/learning/CANDIDATES.jsonl
+/.ai-os/learning/DIGESTS.jsonl
+/.ai-os/learning/INDEX.json
+/.ai-os/learning/LAST-SEARCH.json
+/.ai-os/learning/MEMORY.json
+/.ai-os/learning/MEMORY.md
 coverage/
 unified-intelligence-restore-*.zip
+
+# Cognitive runtime data lives under ~/.raios/runtime/cognitive-store/v9
+/RAIOS/V9/evidence/events/*.json
+/RAIOS/V9/performance/a4/*.json
+/RAIOS/V9/experience/automatic-a4/*.json
+/RAIOS/V9/failures/a4/*.json
+/RAIOS/V9/skills/candidates-a4/*.json
+/RAIOS/V9/evolution/a5/experience-patterns/*.json
+/RAIOS/V9/evolution/a5/failure-families/*.json

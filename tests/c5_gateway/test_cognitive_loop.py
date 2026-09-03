@@ -1,14 +1,26 @@
 from __future__ import annotations
 
 import json
+import os
+from datetime import datetime, timezone
 from pathlib import Path
+
+import raios.c5_gateway.cognitive_loop as cognitive_loop
 
 from raios.c5_gateway.cognitive_loop import (
     assimilate_turn,
     format_grounded_user_message,
+    learning_root,
     loop_status,
     retrieve_grounding,
 )
+
+
+def test_learning_root_follows_the_external_cognitive_store(tmp_path, monkeypatch):
+    store = tmp_path / "cognitive-store" / "v9"
+    monkeypatch.delenv("RAIOS_LEARNING_ROOT", raising=False)
+    monkeypatch.setenv("RAIOS_COGNITIVE_STORE_ROOT", str(store))
+    assert learning_root() == store / "learning"
 
 
 def test_retrieve_fail_open_without_digests(tmp_path, monkeypatch):
@@ -29,7 +41,7 @@ def test_assimilate_and_retrieve_closed_loop(tmp_path, monkeypatch):
     wal.write_text("", encoding="utf-8")
     before = wal.stat().st_mtime
     rec = assimilate_turn(
-        prompt="ما قانون الاستيعاب؟",
+        prompt="what is the assimilation rule?",
         response="ABSORB_DIGEST_NE_WAL_DUMP",
         conversation_id="cid-test",
         model="qwen3:0.6b",
@@ -41,7 +53,7 @@ def test_assimilate_and_retrieve_closed_loop(tmp_path, monkeypatch):
     assert rec["replayed"] is True
     assert rec["review_state"] in {"READY_FOR_VALIDATION", "NEEDS_REVIEW"}
     assert wal.stat().st_mtime == before
-    env = retrieve_grounding("الاستيعاب WAL")
+    env = retrieve_grounding("assimilation rule WAL")
     assert env["count"] >= 1
     assert env["results"][0]["source"] == "LEARNING_DIGEST"
     assert env["shared_search_cortex"] is True
@@ -70,3 +82,26 @@ def test_assimilation_deduplicates_same_turn(tmp_path, monkeypatch):
     assert second["duplicate"] is True
     assert second["candidate_id"] is None
     assert len((tmp_path / ".ai-os" / "learning" / "DIGESTS.jsonl").read_text(encoding="utf-8").splitlines()) == 1
+
+
+def test_evolution_liveness_requires_current_process_and_single_wal(tmp_path, monkeypatch):
+    evolution = tmp_path / "evolution"
+    store = tmp_path / "cognitive-store" / "v9"
+    evolution.mkdir()
+    wal = store / "wal" / "cognitive-events.jsonl"
+    wal.parent.mkdir(parents=True)
+    wal.write_text("", encoding="utf-8")
+    (evolution / "heartbeat.json").write_text(json.dumps({
+        "timestamp": datetime.now(timezone.utc).isoformat(),
+        "pid": os.getpid(),
+        "state": "ACTIVE",
+        "wal": str(wal),
+    }), encoding="utf-8")
+    monkeypatch.setenv("RAIOS_COGNITIVE_STORE_ROOT", str(store))
+    monkeypatch.setattr(cognitive_loop, "evolution_root", lambda: evolution)
+
+    status = cognitive_loop.evolution_liveness()
+
+    assert status["alive"] is True
+    assert status["single_wal"] is True
+    assert status["reason"] == "OK"

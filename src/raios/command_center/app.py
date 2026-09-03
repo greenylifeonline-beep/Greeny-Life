@@ -12,6 +12,7 @@ from .message_worker import COUNCIL_SEATS, ROUTING_TARGETS, MessageWorker
 from .council_board import CouncilBoard
 from .task_actions import latest_resource_census
 
+CREATE_NO_WINDOW=getattr(subprocess,"CREATE_NO_WINDOW",0)
 HERE=Path(__file__).resolve().parent
 REPO=Path(os.getenv("RAIOS_CANONICAL_REPO",str(HERE.parents[2]))).resolve()
 MCP_ROOT=Path(os.getenv("RAIOS_MCP_ROOT",str(REPO))).resolve()
@@ -39,7 +40,7 @@ def load(path,default):
  try:return json.loads(path.read_text(encoding="utf-8-sig"))
  except Exception:return default
 def git(*args):
- try:return subprocess.check_output(["git",*args],cwd=REPO,text=True,stderr=subprocess.DEVNULL,timeout=8).strip()
+ try:return subprocess.check_output(["git",*args],cwd=REPO,text=True,stderr=subprocess.DEVNULL,timeout=8,creationflags=CREATE_NO_WINDOW).strip()
  except Exception:return "UNKNOWN"
 def tcp(port):
  try:

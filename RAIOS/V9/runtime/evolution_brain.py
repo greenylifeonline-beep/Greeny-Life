@@ -2,19 +2,16 @@ from __future__ import annotations
 
 import hashlib
 import json
+import os
 import re
-import subprocess
 from datetime import datetime, timezone
 from pathlib import Path
 from typing import Any
 
 
 REPO = Path(
-    subprocess.check_output(
-        ["git", "rev-parse", "--show-toplevel"],
-        text=True,
-    ).strip()
-)
+    os.getenv("RAIOS_CANONICAL_REPO", str(Path(__file__).resolve().parents[3]))
+).expanduser().resolve()
 
 V9 = REPO / "RAIOS" / "V9"
 
@@ -28,13 +25,15 @@ sys.path.insert(
 )
 
 from cognitive_event_bus import (
+    COGNITIVE_STORE_ROOT,
     WAL_FILE,
+    atomic_json_write as cognitive_atomic_json_write,
     load_jsonl,
 )
 
 
 EVOLUTION_ROOT = (
-    V9 /
+    COGNITIVE_STORE_ROOT /
     "evolution" /
     "a5"
 )
@@ -131,40 +130,7 @@ def atomic_json_write(
     path: Path,
     obj: Any,
 ) -> None:
-
-    path.parent.mkdir(
-        parents=True,
-        exist_ok=True,
-    )
-
-    temp = path.with_suffix(
-        path.suffix + ".tmp"
-    )
-
-    temp.write_text(
-        json.dumps(
-            obj,
-            indent=2,
-            ensure_ascii=False,
-            default=str,
-        ) + "\n",
-        encoding="utf-8",
-    )
-
-    readback = json.loads(
-        temp.read_text(
-            encoding="utf-8"
-        )
-    )
-
-    if readback != obj:
-        raise RuntimeError(
-            "A5_ATOMIC_WRITE_READBACK_FAILED"
-        )
-
-    temp.replace(
-        path
-    )
+    cognitive_atomic_json_write(path, obj)
 
 
 def append_jsonl(

@@ -1,19 +1,24 @@
 param(
-    [string]$RuntimeRoot = "$HOME\.raios\runtime\c5",
-    [int]$Port = 8766
+    [string]$RuntimeRoot = $(Join-Path ([Environment]::GetFolderPath("UserProfile")) ".raios\runtime\c5"),
+    [int]$Port = 8766,
+    [string]$Repo = $(Resolve-Path (Join-Path $PSScriptRoot "..\..")).Path
 )
 $ErrorActionPreference = "Stop"
-$Repo = (Resolve-Path (Join-Path $PSScriptRoot "..\..")).Path
+$StableUserProfile = [Environment]::GetFolderPath("UserProfile")
+$Repo = (Resolve-Path $Repo).Path
 $Head = (git -C $Repo rev-parse HEAD).Trim()
 $AppRoot = Join-Path $RuntimeRoot "app"
 $Venv = Join-Path $RuntimeRoot ".venv"
 $Python = Join-Path $Venv "Scripts\python.exe"
+$PythonWindowless = Join-Path $Venv "Scripts\pythonw.exe"
 $Logs = Join-Path $RuntimeRoot "logs"
 $Manifest = Join-Path $RuntimeRoot "deployment.json"
+$CognitiveStoreRoot = Join-Path $StableUserProfile ".raios\runtime\cognitive-store\v9"
+$LearningRoot = Join-Path $CognitiveStoreRoot "learning"
 $Requirements = Join-Path $Repo "requirements-c5.txt"
 $PackageNames = @("c5_gateway","search_cortex","neuro_lingua")
 
-New-Item -ItemType Directory -Force -Path $Logs,(Join-Path $AppRoot "raios") | Out-Null
+New-Item -ItemType Directory -Force -Path $Logs,(Join-Path $AppRoot "raios"),$CognitiveStoreRoot,$LearningRoot | Out-Null
 $Init = Join-Path $AppRoot "raios\__init__.py"
 if (-not (Test-Path $Init)) { Set-Content -Path $Init -Value "" -Encoding UTF8 }
 foreach ($PackageName in $PackageNames) {
@@ -27,6 +32,9 @@ if (-not (Test-Path $Python)) {
 }
 if (-not (Test-Path $Requirements)) {
     throw "C5_REQUIREMENTS_MISSING::$Requirements"
+}
+if (-not (Test-Path $PythonWindowless)) {
+    throw "C5_PYTHONW_MISSING::$PythonWindowless"
 }
 $RequiredModules = "fastapi,uvicorn,pydantic,httpx,yaml,orjson,rapidfuzz,langcodes,language_data,ddgs,pytest,pytest_asyncio,hypothesis"
 $MissingModules = (& $Python -c "import importlib.util; mods='$RequiredModules'.split(','); print(','.join(x for x in mods if importlib.util.find_spec(x) is None))").Trim()
@@ -53,6 +61,8 @@ $deploy = [ordered]@{
     canonical_head = $Head
     source_repo = $Repo
     runtime_root = $RuntimeRoot
+    cognitive_store_root = $CognitiveStoreRoot
+    learning_root = $LearningRoot
     app_root = $AppRoot
     packages = $PackageNames
     package_hashes = $hashes
@@ -74,7 +84,11 @@ if (Get-NetTCPConnection -LocalPort $stagePort -State Listen -ErrorAction Silent
 
 $env:RAIOS_MAIN_CORTEX = "qwen3:0.6b"
 $env:RAIOS_STUDENT_MODEL = "qwen3:0.6b"
+$env:RAIOS_STUDENT_NUM_CTX = "2048"
+$env:RAIOS_STUDENT_KEEP_ALIVE = "2m"
 $env:RAIOS_RUNTIME_ROOT = $RuntimeRoot
+$env:RAIOS_COGNITIVE_STORE_ROOT = $CognitiveStoreRoot
+$env:RAIOS_LEARNING_ROOT = $LearningRoot
 $env:RAIOS_CANONICAL_REPO = $Repo
 $env:RAIOS_CANONICAL_HEAD = $Head
 $env:PYTHONPATH = $AppRoot
@@ -89,7 +103,7 @@ function Start-C5Process([int]$ListenPort,[string]$Name) {
         "--host","127.0.0.1",
         "--port","$ListenPort"
     )
-    return Start-Process -FilePath $Python -ArgumentList $args -WindowStyle Hidden -RedirectStandardOutput $out -RedirectStandardError $err -PassThru
+    return Start-Process -FilePath $PythonWindowless -ArgumentList $args -WindowStyle Hidden -RedirectStandardOutput $out -RedirectStandardError $err -PassThru
 }
 
 function Wait-C5Healthy([int]$ListenPort,[int]$ExpectedPid) {

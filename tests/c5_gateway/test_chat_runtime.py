@@ -2,6 +2,7 @@ from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[2]
 GW = ROOT / "src" / "raios" / "c5_gateway" / "gateway.py"
+OLLAMA = ROOT / "src" / "raios" / "c5_gateway" / "ollama_client.py"
 
 
 def source():
@@ -28,6 +29,15 @@ def test_response_mapping_preserves_compatibility():
     assert '"response":result.content' in text
     assert '"content":result.content' in text
     assert '"reply":result.content' in text
+
+
+def test_small_local_student_uses_memory_bounded_inference_defaults():
+    text = OLLAMA.read_text(encoding="utf-8")
+    assert 'os.getenv("RAIOS_C5_NUM_CTX","2048")' in text
+    assert 'os.getenv("RAIOS_C5_NUM_PREDICT","128")' in text
+    assert 'os.getenv("RAIOS_C5_KEEP_ALIVE","30s")' in text
+    assert '"think":bool(think)' in text
+    assert '"keep_alive":keep_alive' in text
 
 
 def test_timeout_is_fail_closed_with_gateway_timeout_status():

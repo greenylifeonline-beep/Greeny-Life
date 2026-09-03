@@ -7,6 +7,7 @@ import sys
 import tempfile
 import unittest
 from pathlib import Path
+from types import SimpleNamespace
 from unittest.mock import patch
 
 ROOT = Path(__file__).resolve().parents[2]
@@ -22,6 +23,8 @@ from raios.resource_fabric.live import (
     count_unknown_fields,
     discover_auth,
     model_hosting_fit,
+    CREATE_NO_WINDOW,
+    _run_cli,
     _probe_kaggle_c1,
     _probe_kaggle_partner,
     _probe_lightning_partner,
@@ -54,6 +57,14 @@ def _state(**probes: dict) -> dict:
 
 
 class LiveBinding(unittest.TestCase):
+    def test_cli_subprocesses_never_open_windows(self):
+        completed = SimpleNamespace(returncode=0, stdout="ok", stderr="")
+        with patch("raios.resource_fabric.live.subprocess.run", return_value=completed) as run:
+            result = _run_cli(["git", "status"], timeout=1)
+
+        self.assertTrue(result["ok"])
+        self.assertEqual(run.call_args.kwargs["creationflags"], CREATE_NO_WINDOW)
+
     def test_kaggle_json_absent_is_not_account_absent(self):
         c1 = next(x for x in discover_auth() if x["account_id"] == "KAGGLE_C1")
         self.assertTrue(c1["KAGGLE_JSON_ABSENT_NE_ACCOUNT_ABSENT"])

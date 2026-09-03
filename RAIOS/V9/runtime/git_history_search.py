@@ -1,13 +1,14 @@
 from __future__ import annotations
 
 import json
+import os
 import subprocess
 from pathlib import Path
 
-REPO = Path(subprocess.check_output(
-    ["git", "rev-parse", "--show-toplevel"],
-    text=True
-).strip())
+CREATE_NO_WINDOW = getattr(subprocess, "CREATE_NO_WINDOW", 0)
+REPO = Path(
+    os.getenv("RAIOS_CANONICAL_REPO", str(Path(__file__).resolve().parents[3]))
+).expanduser().resolve()
 
 
 def run_git(args: list[str]) -> str:
@@ -19,6 +20,7 @@ def run_git(args: list[str]) -> str:
         text=True,
         encoding="utf-8",
         errors="replace",
+        creationflags=CREATE_NO_WINDOW,
     )
 
     if p.returncode != 0:

@@ -25,6 +25,18 @@ from .schema import UNKNOWN, UNOBSERVED, credit, price, quota, utc
 from .secrets import assert_no_secrets, mask_record
 
 HOME = Path.home()
+CREATE_NO_WINDOW = getattr(subprocess, "CREATE_NO_WINDOW", 0)
+
+
+def windowless_startupinfo():
+    if os.name != "nt":
+        return None
+    info = subprocess.STARTUPINFO()
+    info.dwFlags |= subprocess.STARTF_USESHOWWINDOW
+    info.wShowWindow = subprocess.SW_HIDE
+    return info
+
+
 C1_KAGGLE_DIR = HOME / ".kaggle"
 WAVE06_PACKAGE = (
     Path(__file__).resolve().parents[3]
@@ -161,7 +173,16 @@ def _tcp(host: str, port: int, timeout: float = 2.0) -> str:
 
 def _run_cli(args: list[str], *, timeout: float = 25.0, env: dict[str, str] | None = None) -> dict[str, Any]:
     try:
-        proc = subprocess.run(args, capture_output=True, text=True, timeout=timeout, check=False, env=env)
+        proc = subprocess.run(
+            args,
+            capture_output=True,
+            text=True,
+            timeout=timeout,
+            check=False,
+            env=env,
+            creationflags=CREATE_NO_WINDOW,
+            startupinfo=windowless_startupinfo(),
+        )
         out = proc.stdout or ""
         err = proc.stderr or ""
         if any(x in (out + err).lower() for x in ("access_token", "token_secret", "api_key", "bearer ")):

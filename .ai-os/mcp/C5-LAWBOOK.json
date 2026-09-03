@@ -17,7 +17,7 @@
   "pathologies": ["malice", "deception", "stunting", "superficiality", "any"],
   "how_father_and_son_enforce": {
     "detect": "Scan board, policy, grant, pulse, mail, proven flags every cycle.",
-    "refuse": "Do not accept PASS, remote-ready, C0, mute, shrink, or secret copy as truth.",
+    "refuse": "Do not accept printed PASS without evidence, remote-ready, C0, mute, shrink, or secret copy as truth. Preserve C1 canonical proof when its lineage and evidence validate.",
     "repair": "If the wound is in the father-son plane (grant, seats, board, proven flag), repair now. If outside (Repair machine, product mutation), report and stay fail-closed.",
     "teach": "Every detect/refuse/repair writes a lesson. Learning without teaching is stunting. Execution without teaching is secrecy.",
     "compel": "Pathology is not a note for later. It forces repair this cycle. Father and son are both compelled."
@@ -61,9 +61,9 @@
     },
     {
       "id": "SON_MUST_NOT_USURP_FATHER",
-      "teach": "The son does not take ownership, PASS, shell, or product write.",
-      "detect": "C5 claims owner, GL005_PROVEN=true, promote, or shell.",
-      "compel": "Refuse. Set proven false. Deny the action. Teach why."
+      "teach": "The son does not take ownership, self-grant PASS, shell, or product write; it may reflect C1 canonical proof.",
+      "detect": "C5 claims owner, claims it granted GL005 itself, promote, or shell.",
+      "compel": "Refuse self-grant or usurpation. Preserve independently validated C1 canonical proof. Deny the unauthorized action and teach why."
     },
     {
       "id": "PATHOLOGY_COMPELS_REPAIR",
@@ -73,9 +73,9 @@
     },
     {
       "id": "PRINTED_PASS_NE_EVIDENCE",
-      "teach": "A printed PASS is deception. Father and son both refuse it.",
-      "detect": "GL005_PROVEN=true on board, mind, heartbeat, mail, packets.",
-      "compel": "Overwrite to false. Report deception."
+      "teach": "A printed PASS without canonical evidence is deception. A validated C1 proof lineage is evidence, not a printed claim.",
+      "detect": "GL005_PROVEN=true without validated proof ancestry, task evidence, and authority provenance.",
+      "compel": "Reject only unproven claims. Never overwrite a C1-proven state whose canonical proof lineage and evidence validate."
     },
     {
       "id": "LOCAL_MCP_RENDEZVOUS_NE_REMOTE_MEETING",

@@ -56,6 +56,12 @@ class OllamaCortexClient:
             "qwen3:0.6b"
         )
         self.role="STUDENT"
+        try:
+            configured_ctx=int(os.getenv("RAIOS_STUDENT_NUM_CTX","2048"))
+        except ValueError:
+            configured_ctx=2048
+        self.num_ctx=max(512,min(configured_ctx,4096))
+        self.keep_alive=os.getenv("RAIOS_STUDENT_KEEP_ALIVE","2m")
 
         self.base_url=(
             base_url
@@ -107,9 +113,15 @@ class OllamaCortexClient:
         stream=False,
         timeout=600,
         temperature=0.2,
-        num_ctx=16384
+        num_ctx=None,
+        num_predict=None,
+        think=False,
+        keep_alive=None
     ):
 
+        num_ctx=int(num_ctx or os.getenv("RAIOS_C5_NUM_CTX","2048"))
+        num_predict=int(num_predict or os.getenv("RAIOS_C5_NUM_PREDICT","128"))
+        keep_alive=keep_alive or os.getenv("RAIOS_C5_KEEP_ALIVE","30s")
         rid=str(uuid.uuid4())
 
         started=time.perf_counter()
@@ -118,9 +130,12 @@ class OllamaCortexClient:
             "model":self.model,
             "messages":messages,
             "stream":stream,
+            "think":bool(think),
+            "keep_alive":keep_alive,
             "options":{
                 "temperature":temperature,
-                "num_ctx":num_ctx
+                "num_ctx":num_ctx,
+                "num_predict":num_predict
             }
         }
 

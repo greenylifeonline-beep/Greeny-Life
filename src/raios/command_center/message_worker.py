@@ -64,8 +64,11 @@ class MessageWorker:
     def _head(self)->str:
         try:
             import subprocess
-            return subprocess.check_output(["git","rev-parse","HEAD"],cwd=self.repo,text=True,
-                                           stderr=subprocess.DEVNULL,timeout=5).strip()
+            return subprocess.check_output(
+                ["git","rev-parse","HEAD"],cwd=self.repo,text=True,
+                stderr=subprocess.DEVNULL,timeout=5,
+                creationflags=getattr(subprocess,"CREATE_NO_WINDOW",0),
+            ).strip()
         except Exception:return "UNKNOWN"
     def _attempts(self,mid:str)->dict[str,Any]:
         return read_json(self.state/f"{mid}.json",{"message_id":mid,"attempts":0}) or {"message_id":mid,"attempts":0}

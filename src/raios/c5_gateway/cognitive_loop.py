@@ -57,11 +57,23 @@ def _repo_root() -> Path:
 
 
 def learning_root(repo: Path | None = None) -> Path:
-    return (repo or _repo_root()) / ".ai-os" / "learning"
+    if repo is not None:
+        return repo / ".ai-os" / "learning"
+    configured = os.getenv("RAIOS_LEARNING_ROOT")
+    if configured:
+        return Path(configured).expanduser().resolve()
+    cognitive_store = os.getenv("RAIOS_COGNITIVE_STORE_ROOT")
+    if cognitive_store:
+        return Path(cognitive_store).expanduser().resolve() / "learning"
+    return _repo_root() / ".ai-os" / "learning"
 
 
 def manager_root() -> Path:
     return Path.home() / ".raios" / "runtime" / "manager"
+
+
+def evolution_root() -> Path:
+    return Path.home() / ".raios" / "runtime" / "evolution-brain"
 
 
 def tokens(text: str) -> list[str]:
@@ -302,10 +314,14 @@ def assimilate_turn(
 ) -> dict[str, Any]:
     """Retile authorized output with existing KAE, then write DISCOVERED evidence."""
     repo = _repo_root()
-    root = learning_root(repo)
+    root = learning_root()
     digests = root / "DIGESTS.jsonl"
     candidates = root / "CANDIDATES.jsonl"
-    wal = repo / "RAIOS" / "V9" / "wal" / "cognitive-events.jsonl"
+    cognitive_store = os.getenv("RAIOS_COGNITIVE_STORE_ROOT")
+    wal = (
+        Path(cognitive_store).expanduser().resolve() / "wal" / "cognitive-events.jsonl"
+        if cognitive_store else repo / "RAIOS" / "V9" / "wal" / "cognitive-events.jsonl"
+    )
     wal_before = wal.stat().st_mtime_ns if wal.exists() else None
 
     blob = f"{prompt}\n{response}"
@@ -554,9 +570,55 @@ def manager_liveness(stale_after_seconds: float = 120.0) -> dict[str, Any]:
         "manager_pid": process_id,
         "process_alive": process_alive,
         "heartbeat_file": heartbeat.name,
+        "single_cognitive_wal": obj.get("single_cognitive_wal"),
         "reason": (
             "OK" if alive else
             "PROCESS_MISSING" if not process_alive else
+            "STALE"
+        ),
+    }
+
+
+def evolution_liveness(stale_after_seconds: float = 120.0) -> dict[str, Any]:
+    heartbeat = evolution_root() / "heartbeat.json"
+    if not heartbeat.is_file():
+        return {"alive": False, "age_seconds": None, "reason": "HEARTBEAT_MISSING"}
+    try:
+        obj = json.loads(heartbeat.read_text(encoding="utf-8-sig"))
+        instant = datetime.fromisoformat(str(obj.get("timestamp") or "").replace("Z", "+00:00"))
+    except Exception as exc:
+        return {
+            "alive": False,
+            "age_seconds": None,
+            "reason": f"HEARTBEAT_UNREADABLE:{type(exc).__name__}",
+        }
+
+    age = (datetime.now(timezone.utc) - instant).total_seconds()
+    process_id = obj.get("pid")
+    process_alive = _process_alive(process_id)
+    state = str(obj.get("state") or "UNKNOWN")
+    state_current = state in {"ACTIVE", "IDLE_COGNITION"}
+    wal = str(obj.get("wal") or "")
+    configured_root = os.getenv("RAIOS_COGNITIVE_STORE_ROOT")
+    expected_wal = str(Path(configured_root).expanduser().resolve() / "wal" / "cognitive-events.jsonl") if configured_root else wal
+    wal_matches = bool(wal) and Path(wal).resolve() == Path(expected_wal).resolve()
+    age_current = -300.0 <= age <= stale_after_seconds
+    alive = process_alive and state_current and age_current and wal_matches
+    return {
+        "alive": alive,
+        "age_seconds": round(max(0.0, age), 3),
+        "generated_at": instant.isoformat(),
+        "state": state,
+        "pid": process_id,
+        "process_alive": process_alive,
+        "wal": wal,
+        "expected_wal": expected_wal,
+        "single_wal": wal_matches,
+        "reason": (
+            "OK" if alive else
+            "PROCESS_MISSING" if not process_alive else
+            "BAD_STATE" if not state_current else
+            "WAL_MISMATCH" if not wal_matches else
             "STALE"
         ),
     }
@@ -602,12 +664,17 @@ def loop_status() -> dict[str, Any]:
     candidates = root / "CANDIDATES.jsonl"
     index = root / "INDEX.json"
     mgr = manager_liveness()
+    evolution = evolution_liveness()
     digest_summary = _jsonl_summary(digests)
     candidate_summary = _jsonl_summary(candidates)
+    closed = bool(
+        mgr.get("alive") and evolution.get("alive") and
+        digests.is_file() and candidates.is_file() and index.is_file()
+    )
     return {
-        "schema": "raios.cognitive-loop.status.v2",
+        "schema": "raios.cognitive-loop.status.v3",
         "at": utc(),
-        "closed_loop": True,
+        "closed_loop": closed,
         "planes": {
             "retrieve": True,
             "ground": True,
@@ -615,6 +682,7 @@ def loop_status() -> dict[str, Any]:
             "assimilate": True,
             "index": index.is_file(),
             "continuous_manager": bool(mgr.get("alive")),
+            "continuous_evolution": bool(evolution.get("alive")),
         },
         "artifacts": {
             "digests_exist": digests.is_file(),
@@ -627,6 +695,17 @@ def loop_status() -> dict[str, Any]:
         "search_cortex": {"shared": True, "second_search_bus": False},
         "assimilation": {"existing_kae_reused": True, "auto_canonical_promotion": False},
         "manager": mgr,
+        "evolution": evolution,
+        "cognitive_store": {
+            "root": os.getenv("RAIOS_COGNITIVE_STORE_ROOT"),
+            "learning_root": str(learning_root()),
+            "single_wal": bool(evolution.get("single_wal")),
+            "outside_git": bool(
+                os.getenv("RAIOS_COGNITIVE_STORE_ROOT") and
+                not Path(os.environ["RAIOS_COGNITIVE_STORE_ROOT"]).resolve().is_relative_to(_repo_root()) and
+                not learning_root().resolve().is_relative_to(_repo_root())
+            ),
+        },
         "main_cortex_identity": "qwen3.6:35b-a3b",
         "main_cortex_state": "HOLD",
         "student_env": os.getenv("RAIOS_STUDENT_MODEL") or os.getenv("RAIOS_MAIN_CORTEX") or "qwen3:0.6b",

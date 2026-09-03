@@ -4,24 +4,30 @@ import hashlib
 import json
 import os
 import subprocess
+import threading
 import time
 import uuid
 
+from contextlib import contextmanager
 from datetime import datetime, timezone
 from pathlib import Path
 from typing import Any, Callable
 
 
+CREATE_NO_WINDOW = getattr(subprocess, "CREATE_NO_WINDOW", 0)
 REPO = Path(
-    subprocess.check_output(
-        ["git", "rev-parse", "--show-toplevel"],
-        text=True,
-    ).strip()
-)
+    os.getenv("RAIOS_CANONICAL_REPO", str(Path(__file__).resolve().parents[3]))
+).expanduser().resolve()
+_REPO_SHA_CACHE: dict[str, Any] = {"value": None, "checked_at": 0.0}
+_REPO_SHA_LOCK = threading.Lock()
 
 V9 = REPO / "RAIOS" / "V9"
 
-WAL_DIR = V9 / "wal"
+COGNITIVE_STORE_ROOT = Path(
+    os.getenv("RAIOS_COGNITIVE_STORE_ROOT", str(V9))
+).expanduser().resolve()
+
+WAL_DIR = COGNITIVE_STORE_ROOT / "wal"
 
 WAL_FILE = (
     WAL_DIR /
@@ -29,7 +35,7 @@ WAL_FILE = (
 )
 
 STATE_DIR = (
-    V9 /
+    COGNITIVE_STORE_ROOT /
     "runtime" /
     "event-state"
 )
@@ -40,33 +46,39 @@ PROCESSED_LEDGER = (
 )
 
 EXPERIENCE_DIR = (
-    V9 /
+    COGNITIVE_STORE_ROOT /
     "experience" /
     "automatic-a4"
 )
 
 FAILURE_DIR = (
-    V9 /
+    COGNITIVE_STORE_ROOT /
     "failures" /
     "a4"
 )
 
 RECOVERY_DIR = (
-    V9 /
+    COGNITIVE_STORE_ROOT /
     "skills" /
     "candidates-a4"
 )
 
 PERFORMANCE_DIR = (
-    V9 /
+    COGNITIVE_STORE_ROOT /
     "performance" /
     "a4"
 )
 
 EVIDENCE_EVENT_DIR = (
-    V9 /
+    COGNITIVE_STORE_ROOT /
     "evidence" /
     "events"
+)
+
+JSONL_RECOVERY_DIR = (
+    COGNITIVE_STORE_ROOT /
+    "recovery" /
+    "jsonl"
 )
 
 for directory in (
@@ -77,6 +89,7 @@ for directory in (
     RECOVERY_DIR,
     PERFORMANCE_DIR,
     EVIDENCE_EVENT_DIR,
+    JSONL_RECOVERY_DIR,
 ):
     directory.mkdir(
         parents=True,
@@ -114,15 +127,26 @@ def now() -> str:
 
 
 def repo_sha() -> str:
-    return subprocess.check_output(
-        [
-            "git",
-            "rev-parse",
-            "HEAD",
-        ],
-        cwd=REPO,
-        text=True,
-    ).strip()
+    current = time.monotonic()
+    cached = _REPO_SHA_CACHE.get("value")
+    if cached and current - float(_REPO_SHA_CACHE["checked_at"]) < 60.0:
+        return str(cached)
+    with _REPO_SHA_LOCK:
+        cached = _REPO_SHA_CACHE.get("value")
+        current = time.monotonic()
+        if cached and current - float(_REPO_SHA_CACHE["checked_at"]) < 60.0:
+            return str(cached)
+        try:
+            value = subprocess.check_output(
+                ["git", "rev-parse", "HEAD"],
+                cwd=REPO,
+                text=True,
+                creationflags=CREATE_NO_WINDOW,
+            ).strip()
+        except (OSError, subprocess.SubprocessError):
+            value = str(cached or "UNKNOWN")
+        _REPO_SHA_CACHE.update(value=value, checked_at=current)
+        return value
 
 
 def canonical_bytes(
@@ -177,141 +201,364 @@ def validate_confidence(
     )
 
 
+_ATOMIC_WRITE_LOCK = threading.RLock()
+
+
 def atomic_json_write(
     path: Path,
     obj: Any,
 ) -> None:
+    """Validated Windows-resilient JSON write with a unique temporary file."""
+    path.parent.mkdir(parents=True, exist_ok=True)
+    payload = json.dumps(
+        obj,
+        indent=2,
+        ensure_ascii=False,
+        default=str,
+    ) + "\n"
+    tmp = path.with_name(path.name + ".tmp-" + uuid.uuid4().hex)
+    expected = json.loads(payload)
 
-    path.parent.mkdir(
-        parents=True,
-        exist_ok=True,
-    )
+    with _ATOMIC_WRITE_LOCK:
+        try:
+            tmp.write_text(payload, encoding="utf-8")
+            if json.loads(tmp.read_text(encoding="utf-8")) != expected:
+                raise RuntimeError("ATOMIC_WRITE_READBACK_MISMATCH")
 
-    tmp = path.with_suffix(
-        path.suffix + ".tmp"
-    )
+            last_error: PermissionError | None = None
+            for attempt in range(8):
+                try:
+                    os.replace(tmp, path)
+                    last_error = None
+                    break
+                except PermissionError as exc:
+                    last_error = exc
+                    time.sleep(0.02 * (attempt + 1))
 
-    tmp.write_text(
-        json.dumps(
-            obj,
-            indent=2,
-            ensure_ascii=False,
-            default=str,
-        ) + "\n",
-        encoding="utf-8",
-    )
-
-    reread = json.loads(
-        tmp.read_text(
-            encoding="utf-8"
-        )
-    )
-
-    if reread != obj:
-        raise RuntimeError(
-            "ATOMIC_WRITE_READBACK_MISMATCH"
-        )
-
-    tmp.replace(path)
-
-
-def append_jsonl_sync(
-    path: Path,
-    obj: Any,
-) -> None:
-
-    path.parent.mkdir(
-        parents=True,
-        exist_ok=True,
-    )
-
-    line = (
-        json.dumps(
-            obj,
-            ensure_ascii=False,
-            separators=(",", ":"),
-            default=str,
-        )
-        +
-        "\n"
-    )
-
-    with path.open(
-        "a",
-        encoding="utf-8",
-        newline="\n",
-    ) as handle:
-
-        handle.write(line)
-
-        handle.flush()
-
-        os.fsync(
-            handle.fileno()
-        )
-
-
-def load_jsonl(
-    path: Path,
-) -> list[dict[str, Any]]:
-
-    if not path.exists():
-        return []
-
-    records = []
-
-    with path.open(
-        "r",
-        encoding="utf-8-sig",
-    ) as handle:
-
-        for number, raw in enumerate(
-            handle,
-            start=1,
-        ):
-
-            raw = raw.strip()
-
-            if not raw:
-                continue
-
+            if last_error is not None:
+                with path.open("w", encoding="utf-8", newline="\n") as handle:
+                    handle.write(payload)
+                    handle.flush()
+                    os.fsync(handle.fileno())
+                if json.loads(path.read_text(encoding="utf-8")) != expected:
+                    raise RuntimeError("STABLE_WRITE_READBACK_MISMATCH")
+        finally:
             try:
-                records.append(
-                    json.loads(raw)
+                tmp.unlink(missing_ok=True)
+            except OSError:
+                pass
+
+
+_JSONL_THREAD_LOCK = threading.RLock()
+
+
+@contextmanager
+def _jsonl_process_lock(path: Path):
+    lock_path = path.with_name(path.name + ".lock")
+    lock_path.parent.mkdir(parents=True, exist_ok=True)
+    handle = lock_path.open("a+b")
+    acquired = False
+    try:
+        handle.seek(0, os.SEEK_END)
+        if handle.tell() == 0:
+            handle.write(b"0")
+            handle.flush()
+        handle.seek(0)
+        if os.name == "nt":
+            import msvcrt
+
+            for attempt in range(100):
+                try:
+                    handle.seek(0)
+                    msvcrt.locking(handle.fileno(), msvcrt.LK_NBLCK, 1)
+                    acquired = True
+                    break
+                except OSError:
+                    time.sleep(0.01 * min(attempt + 1, 10))
+        else:
+            import fcntl
+
+            fcntl.flock(handle.fileno(), fcntl.LOCK_EX)
+            acquired = True
+        if not acquired:
+            raise TimeoutError(f"JSONL_LOCK_TIMEOUT:{path}")
+        yield
+    finally:
+        if acquired:
+            handle.seek(0)
+            if os.name == "nt":
+                import msvcrt
+
+                msvcrt.locking(handle.fileno(), msvcrt.LK_UNLCK, 1)
+            else:
+                import fcntl
+
+                fcntl.flock(handle.fileno(), fcntl.LOCK_UN)
+        handle.close()
+
+
+def _repair_terminal_jsonl_unlocked(path: Path) -> dict[str, Any]:
+    if not path.exists():
+        return {"status": "MISSING", "repaired": False}
+    blob = path.read_bytes()
+    segments = blob.splitlines(keepends=True)
+    invalid: list[int] = []
+    nonblank: list[int] = []
+    for index, segment in enumerate(segments):
+        stripped = segment.strip()
+        if not stripped:
+            continue
+        nonblank.append(index)
+        try:
+            json.loads(stripped.decode("utf-8-sig"))
+        except (UnicodeDecodeError, json.JSONDecodeError):
+            invalid.append(index)
+    if not invalid:
+        return {"status": "VALID", "repaired": False}
+    if len(invalid) != 1 or not nonblank or invalid[0] != nonblank[-1]:
+        line = invalid[0] + 1
+        raise RuntimeError(f"CORRUPT_JSONL_INTERIOR:{path}:{line}")
+
+    index = invalid[0]
+    fragment = segments[index]
+    evidence = {
+        "schema": "raios.jsonl-tail-recovery.v1",
+        "recovered_at": now(),
+        "source": str(path),
+        "line": index + 1,
+        "fragment_sha256": hashlib.sha256(fragment).hexdigest(),
+        "fragment_bytes": len(fragment),
+        "fragment_preview": fragment.decode("utf-8", errors="replace")[:2000],
+    }
+    evidence_path = JSONL_RECOVERY_DIR / (
+        f"{path.name}-{time.time_ns()}-{uuid.uuid4().hex[:8]}.json"
+    )
+    atomic_json_write(evidence_path, evidence)
+
+    retained = b"".join(
+        segment for position, segment in enumerate(segments) if position != index
+    )
+    tmp = path.with_name(path.name + ".repair-" + uuid.uuid4().hex)
+    try:
+        with tmp.open("wb") as handle:
+            handle.write(retained)
+            handle.flush()
+            os.fsync(handle.fileno())
+        for attempt in range(8):
+            try:
+                os.replace(tmp, path)
+                break
+            except PermissionError:
+                if attempt == 7:
+                    with path.open("wb") as handle:
+                        handle.write(retained)
+                        handle.flush()
+                        os.fsync(handle.fileno())
+                else:
+                    time.sleep(0.02 * (attempt + 1))
+    finally:
+        tmp.unlink(missing_ok=True)
+    return {
+        "status": "REPAIRED_TERMINAL_FRAGMENT",
+        "repaired": True,
+        "line": index + 1,
+        "evidence": str(evidence_path),
+    }
+
+
+def repair_terminal_jsonl(path: Path) -> dict[str, Any]:
+    path.parent.mkdir(parents=True, exist_ok=True)
+    with _JSONL_THREAD_LOCK, _jsonl_process_lock(path):
+        return _repair_terminal_jsonl_unlocked(path)
+
+
+JSONL_TAIL_SCAN_BYTES = 1024 * 1024
+
+
+def _jsonl_tail_state_unlocked(path: Path) -> dict[str, Any]:
+    """Validate only the terminal JSONL record before an append.
+
+    Normal appends stay O(last-record). A missing separator, an invalid terminal
+    record, or an unusually large terminal record is escalated to the existing
+    full repair path while the same process lock remains held.
+    """
+    if not path.exists():
+        return {"status": "MISSING", "needs_separator": False}
+    size = path.stat().st_size
+    if size == 0:
+        return {"status": "EMPTY", "needs_separator": False}
+
+    read_size = min(size, JSONL_TAIL_SCAN_BYTES)
+    with path.open("rb") as handle:
+        handle.seek(size - read_size)
+        tail = handle.read(read_size)
+
+    if not tail:
+        return {"status": "EMPTY", "needs_separator": False}
+
+    needs_separator = not tail.endswith((b"\n", b"\r"))
+    candidate_blob = tail.rstrip(b"\r\n \t")
+    if not candidate_blob:
+        return {"status": "WHITESPACE", "needs_separator": needs_separator}
+
+    separator = candidate_blob.rfind(b"\n")
+    candidate = candidate_blob[separator + 1 :].strip()
+    candidate_starts_in_tail = separator >= 0 or read_size == size
+    if not candidate_starts_in_tail:
+        return {
+            "status": "FULL_VALIDATION_REQUIRED",
+            "needs_separator": needs_separator,
+        }
+
+    try:
+        json.loads(candidate.decode("utf-8-sig"))
+    except (UnicodeDecodeError, json.JSONDecodeError):
+        return {"status": "INVALID_TERMINAL", "needs_separator": needs_separator}
+    return {"status": "VALID", "needs_separator": needs_separator}
+
+
+def append_jsonl_sync(path: Path, obj: Any) -> tuple[int, int]:
+    path.parent.mkdir(parents=True, exist_ok=True)
+    payload = (
+        json.dumps(obj, ensure_ascii=False, separators=(",", ":"), default=str)
+        + "\n"
+    ).encode("utf-8")
+    with _JSONL_THREAD_LOCK, _jsonl_process_lock(path):
+        tail_state = _jsonl_tail_state_unlocked(path)
+        if tail_state["status"] in {
+            "FULL_VALIDATION_REQUIRED",
+            "INVALID_TERMINAL",
+        }:
+            _repair_terminal_jsonl_unlocked(path)
+            tail_state = _jsonl_tail_state_unlocked(path)
+            if tail_state["status"] not in {
+                "MISSING",
+                "EMPTY",
+                "WHITESPACE",
+                "VALID",
+            }:
+                raise RuntimeError(
+                    f"JSONL_TERMINAL_UNRECOVERABLE:{path}:{tail_state['status']}"
                 )
 
-            except Exception as exc:
-                raise RuntimeError(
-                    f"CORRUPT_JSONL:{path}:{number}"
-                ) from exc
+        prefix = b"\n" if tail_state.get("needs_separator") else b""
+        with path.open("ab", buffering=0) as handle:
+            view = memoryview(prefix + payload)
+            while view:
+                written = handle.write(view)
+                if not written:
+                    raise OSError(f"JSONL_APPEND_ZERO_WRITE:{path}")
+                view = view[written:]
+            os.fsync(handle.fileno())
+        stat = path.stat()
+        signature = (stat.st_size, stat.st_mtime_ns)
+    return signature
 
+
+def _load_jsonl_unlocked(path: Path) -> list[dict[str, Any]]:
+    records = []
+    with path.open("r", encoding="utf-8-sig") as handle:
+        for number, raw in enumerate(handle, start=1):
+            raw = raw.strip()
+            if not raw:
+                continue
+            try:
+                records.append(json.loads(raw))
+            except Exception as exc:
+                raise RuntimeError(f"CORRUPT_JSONL:{path}:{number}") from exc
     return records
 
 
-def wal_event_ids() -> set[str]:
+def _load_jsonl_snapshot(
+    path: Path,
+) -> tuple[list[dict[str, Any]], tuple[int, int]]:
+    if not path.exists():
+        return [], (0, 0)
+    with _JSONL_THREAD_LOCK, _jsonl_process_lock(path):
+        _repair_terminal_jsonl_unlocked(path)
+        records = _load_jsonl_unlocked(path)
+        stat = path.stat()
+        return records, (stat.st_size, stat.st_mtime_ns)
 
-    return {
-        record["event_id"]
-        for record in load_jsonl(
-            WAL_FILE
-        )
-        if record.get(
-            "event_id"
-        )
-    }
+
+def load_jsonl(path: Path) -> list[dict[str, Any]]:
+    records, _signature = _load_jsonl_snapshot(path)
+    return records
+
+
+_WAL_ID_CACHE_LOCK = threading.RLock()
+_WAL_ID_CACHE_SIGNATURE: tuple[int, int] | None = None
+_WAL_ID_CACHE: set[str] = set()
+
+
+def _wal_signature() -> tuple[int, int]:
+    try:
+        stat = WAL_FILE.stat()
+        return stat.st_size, stat.st_mtime_ns
+    except FileNotFoundError:
+        return 0, 0
+
+
+def wal_event_ids() -> set[str]:
+    global _WAL_ID_CACHE_SIGNATURE, _WAL_ID_CACHE
+    signature = _wal_signature()
+    with _WAL_ID_CACHE_LOCK:
+        if signature == _WAL_ID_CACHE_SIGNATURE:
+            return set(_WAL_ID_CACHE)
+        records, observed_signature = _load_jsonl_snapshot(WAL_FILE)
+        _WAL_ID_CACHE = {
+            str(record["event_id"])
+            for record in records
+            if record.get("event_id")
+        }
+        _WAL_ID_CACHE_SIGNATURE = observed_signature
+        return set(_WAL_ID_CACHE)
+
+
+def _remember_wal_event(event_id: str, signature: tuple[int, int]) -> None:
+    global _WAL_ID_CACHE_SIGNATURE
+    with _WAL_ID_CACHE_LOCK:
+        _WAL_ID_CACHE.add(event_id)
+        _WAL_ID_CACHE_SIGNATURE = signature
+
+
+_PROCESSED_ID_CACHE_LOCK = threading.RLock()
+_PROCESSED_ID_CACHE_SIGNATURE: tuple[int, int] | None = None
+_PROCESSED_ID_CACHE: set[str] = set()
+
+
+def _processed_signature() -> tuple[int, int]:
+    try:
+        stat = PROCESSED_LEDGER.stat()
+        return stat.st_size, stat.st_mtime_ns
+    except FileNotFoundError:
+        return 0, 0
 
 
 def processed_event_ids() -> set[str]:
+    global _PROCESSED_ID_CACHE_SIGNATURE, _PROCESSED_ID_CACHE
+    signature = _processed_signature()
+    with _PROCESSED_ID_CACHE_LOCK:
+        if signature == _PROCESSED_ID_CACHE_SIGNATURE:
+            return set(_PROCESSED_ID_CACHE)
+        records, observed_signature = _load_jsonl_snapshot(PROCESSED_LEDGER)
+        _PROCESSED_ID_CACHE = {
+            str(record["event_id"])
+            for record in records
+            if record.get("event_id")
+        }
+        _PROCESSED_ID_CACHE_SIGNATURE = observed_signature
+        return set(_PROCESSED_ID_CACHE)
 
-    return {
-        record["event_id"]
-        for record in load_jsonl(
-            PROCESSED_LEDGER
-        )
-        if record.get(
-            "event_id"
-        )
-    }
+
+def _remember_processed_event(
+    event_id: str,
+    signature: tuple[int, int],
+) -> None:
+    global _PROCESSED_ID_CACHE_SIGNATURE
+    with _PROCESSED_ID_CACHE_LOCK:
+        _PROCESSED_ID_CACHE.add(event_id)
+        _PROCESSED_ID_CACHE_SIGNATURE = signature
 
 
 def build_event(
@@ -541,10 +788,11 @@ def append_to_wal(
                 False,
         }
 
-    append_jsonl_sync(
+    wal_signature = append_jsonl_sync(
         WAL_FILE,
         event,
     )
+    _remember_wal_event(str(event["event_id"]), wal_signature)
 
     return {
         "status":
@@ -931,7 +1179,7 @@ def materialize_event(
 
         recovery_written = True
 
-    append_jsonl_sync(
+    processed_signature = append_jsonl_sync(
         PROCESSED_LEDGER,
         {
             "event_id":
@@ -946,6 +1194,7 @@ def materialize_event(
                 now(),
         },
     )
+    _remember_processed_event(str(event_id), processed_signature)
 
     return {
         "status":

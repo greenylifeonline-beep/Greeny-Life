@@ -2,13 +2,20 @@ param(
     [string]$Repo = $(if ($env:RAIOS_CANONICAL_REPO) { $env:RAIOS_CANONICAL_REPO } else { (Resolve-Path (Join-Path $PSScriptRoot "..\..")).Path })
 )
 $ErrorActionPreference = "Stop"
+$StableUserProfile = [Environment]::GetFolderPath("UserProfile")
 $env:RAIOS_CANONICAL_REPO = $Repo
-$Python = Join-Path $env:USERPROFILE ".raios\runtime\c5\.venv\Scripts\python.exe"
+$Python = Join-Path $StableUserProfile ".raios\runtime\c5\.venv\Scripts\python.exe"
+$PythonWindowless = Join-Path $StableUserProfile ".raios\runtime\c5\.venv\Scripts\pythonw.exe"
 if (-not (Test-Path -LiteralPath $Python)) { throw "C5_PYTHON_MISSING::$Python" }
+if (-not (Test-Path -LiteralPath $PythonWindowless)) { throw "C5_PYTHONW_MISSING::$PythonWindowless" }
 $Head = (git -C $Repo rev-parse HEAD).Trim()
-$StatusRoot = Join-Path $env:USERPROFILE ".raios\runtime\cognitive-loop"
+$StatusRoot = Join-Path $StableUserProfile ".raios\runtime\cognitive-loop"
 $StatusPath = Join-Path $StatusRoot "ensure-status.json"
-New-Item -ItemType Directory -Force -Path $StatusRoot | Out-Null
+$CognitiveStoreRoot = Join-Path $StableUserProfile ".raios\runtime\cognitive-store\v9"
+$LearningRoot = Join-Path $CognitiveStoreRoot "learning"
+$env:RAIOS_COGNITIVE_STORE_ROOT = $CognitiveStoreRoot
+$env:RAIOS_LEARNING_ROOT = $LearningRoot
+New-Item -ItemType Directory -Force -Path $StatusRoot,$CognitiveStoreRoot,$LearningRoot | Out-Null
 
 function Get-C5Health {
     try { return Invoke-RestMethod -Uri "http://127.0.0.1:8766/health" -TimeoutSec 5 }
@@ -17,6 +24,24 @@ function Get-C5Health {
 function Get-LoopStatus {
     try { return Invoke-RestMethod -Uri "http://127.0.0.1:8766/v1/cognitive/status" -TimeoutSec 5 }
     catch { return $null }
+}
+function Get-EvolutionStatus {
+    $HeartbeatPath = Join-Path $StableUserProfile ".raios\runtime\evolution-brain\heartbeat.json"
+    if (-not (Test-Path -LiteralPath $HeartbeatPath)) {
+        return [pscustomobject]@{ alive=$false; reason="HEARTBEAT_MISSING"; path=$HeartbeatPath }
+    }
+    try {
+        $Heartbeat = Get-Content -LiteralPath $HeartbeatPath -Raw | ConvertFrom-Json
+        $Instant = [DateTimeOffset]::Parse([string]$Heartbeat.timestamp)
+        $Age = ([DateTimeOffset]::UtcNow - $Instant.ToUniversalTime()).TotalSeconds
+        $ProcessId = [int]$Heartbeat.pid
+        $ProcessAlive = [bool](Get-Process -Id $ProcessId -ErrorAction SilentlyContinue)
+        $StateCurrent = $Heartbeat.state -in @("ACTIVE","IDLE_COGNITION")
+        $Alive = $ProcessAlive -and $StateCurrent -and $Age -ge -300 -and $Age -le 120
+        return [pscustomobject]@{ alive=$Alive; state=$Heartbeat.state; pid=$ProcessId; process_alive=$ProcessAlive; age_seconds=[math]::Round([math]::Max(0,$Age),3); wal=$Heartbeat.wal; reason=$(if($Alive){"OK"}elseif(-not $ProcessAlive){"PROCESS_MISSING"}elseif(-not $StateCurrent){"BAD_STATE"}else{"STALE"}) }
+    } catch {
+        return [pscustomobject]@{ alive=$false; reason=("HEARTBEAT_UNREADABLE:" + $_.Exception.GetType().Name); path=$HeartbeatPath }
+    }
 }
 function Write-AtomicJson([hashtable]$Value) {
     $Value["generated_at"] = [DateTimeOffset]::UtcNow.ToString("o")
@@ -69,9 +94,9 @@ if (-not $managerAlive) {
         $actions.Add("STOP_STALE_MANAGER_PID_" + $process.ProcessId)
     }
     $env:PYTHONPATH = Join-Path $Repo "src"
-    $managerRoot = Join-Path $env:USERPROFILE ".raios\runtime\manager"
+    $managerRoot = Join-Path $StableUserProfile ".raios\runtime\manager"
     New-Item -ItemType Directory -Force -Path $managerRoot | Out-Null
-    Start-Process -FilePath $Python -ArgumentList @($mgrPy, "--daemon", "--no-task-write") -WindowStyle Hidden -WorkingDirectory $Repo -RedirectStandardOutput (Join-Path $managerRoot "daemon.out.log") -RedirectStandardError (Join-Path $managerRoot "daemon.err.log") | Out-Null
+    Start-Process -FilePath $PythonWindowless -ArgumentList @($mgrPy, "--daemon", "--no-task-write") -WindowStyle Hidden -WorkingDirectory $Repo -RedirectStandardOutput (Join-Path $managerRoot "daemon.out.log") -RedirectStandardError (Join-Path $managerRoot "daemon.err.log") | Out-Null
     $actions.Add("START_EXISTING_MANAGER")
     for ($i=0; $i -lt 20; $i++) {
         Start-Sleep -Seconds 1
@@ -79,18 +104,46 @@ if (-not $managerAlive) {
         if ($loop -and $loop.manager.alive -eq $true) { break }
     }
 }
+
+$evolution = Get-EvolutionStatus
+if (-not $evolution.alive) {
+    $evolutionPy = Join-Path $Repo "RAIOS\V9\runtime\evolution_daemon.py"
+    if (-not (Test-Path -LiteralPath $evolutionPy)) { throw "EVOLUTION_DAEMON_MISSING::$evolutionPy" }
+    $matchingEvolution = @(
+        Get-CimInstance Win32_Process -ErrorAction SilentlyContinue |
+        Where-Object { $_.Name -match "^python" -and $_.CommandLine -like ("*" + $evolutionPy + "*") }
+    )
+    foreach ($process in $matchingEvolution) {
+        Stop-Process -Id $process.ProcessId -Force -ErrorAction SilentlyContinue
+        $actions.Add("STOP_STALE_EVOLUTION_PID_" + $process.ProcessId)
+    }
+    $evolutionRoot = Join-Path $StableUserProfile ".raios\runtime\evolution-brain"
+    New-Item -ItemType Directory -Force -Path $evolutionRoot | Out-Null
+    Start-Process -FilePath $PythonWindowless -ArgumentList @($evolutionPy) -WindowStyle Hidden -WorkingDirectory $Repo -RedirectStandardOutput (Join-Path $evolutionRoot "daemon.out.log") -RedirectStandardError (Join-Path $evolutionRoot "daemon.err.log") | Out-Null
+    $actions.Add("START_EXISTING_EVOLUTION_DAEMON")
+    for ($i=0; $i -lt 30; $i++) {
+        Start-Sleep -Seconds 1
+        $evolution = Get-EvolutionStatus
+        if ($evolution.alive) { break }
+    }
+}
 $loop = Get-LoopStatus
-$closed = $health -and $health.status -eq "ONLINE" -and $loop -and $loop.manager.alive -eq $true
+$evolution = Get-EvolutionStatus
+$closed = $health -and $health.status -eq "ONLINE" -and $loop -and $loop.manager.alive -eq $true -and $evolution.alive
 Write-AtomicJson @{
-    schema = "raios.cognitive-loop.ensure.v2"
+    schema = "raios.cognitive-loop.ensure.v3"
     status = $(if ($closed) { "ONLINE" } else { "DEGRADED" })
     canonical_head = $Head
     c5 = $(if ($health) { $health.status } else { "OFFLINE" })
     dependency_audit = $(if ($health) { $health.environment.dependency_audit } else { "UNPROVEN" })
     pytest_available = $(if ($health) { $health.environment.pytest_available } else { $false })
     manager = $(if ($loop) { $loop.manager } else { @{ alive = $false; reason = "STATUS_UNAVAILABLE" } })
+    evolution = $evolution
+    cognitive_store_root = $CognitiveStoreRoot
+    learning_root = $LearningRoot
     actions = @($actions)
     second_runtime = $false
+    second_wal = $false
 }
 if (-not $closed) { throw "COGNITIVE_LOOP_NOT_CLOSED" }
 Write-Host "RAIOS_COGNITIVE_LOOP=ONLINE"
