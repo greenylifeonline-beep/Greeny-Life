@@ -6,6 +6,8 @@ import json
 import os
 import secrets
 import time
+import urllib.error
+import urllib.request
 
 try:
     import msvcrt
@@ -68,6 +70,7 @@ class SeatSessionAgent:
         self.singleton_path = self.runtime / "consumers" / f"{self.seat}.agent.lock"
         self._singleton_handle = None
         self.started_at = datetime.now(timezone.utc)
+        self.command_center = os.getenv("RAIOS_COMMAND_CENTER_URL", "http://127.0.0.1:8770").rstrip("/")
 
     def _acquire_singleton(self) -> None:
         self.singleton_path.parent.mkdir(parents=True, exist_ok=True)
@@ -144,13 +147,96 @@ class SeatSessionAgent:
             return False
         return created >= self.started_at
 
+    @staticmethod
+    def _message_fields(text: str) -> dict[str, str]:
+        fields: dict[str, str] = {}
+        for line in str(text or "").splitlines():
+            if "=" in line:
+                key, value = line.split("=", 1)
+                fields[key.strip().upper()] = value.strip()
+        return fields
+
+    def _actor_proof(self) -> dict[str, Any]:
+        binding = self._binding()
+        presence = _load(self.runtime / "presence.json", {"seats": {}})
+        p = (presence.get("seats") or {}).get(self.seat) or {}
+        fingerprint = str(p.get("attendance_fingerprint") or "")
+        if not fingerprint:
+            raise RuntimeError("ATTENDANCE_FINGERPRINT_REQUIRED")
+        expected = {
+            "actor_id": self.actor_id,
+            "session_id": self.session_id,
+            "device_id": self.device_id,
+            "attendance_fingerprint": fingerprint,
+        }
+        if binding.get("actor_id") != self.actor_id:
+            raise RuntimeError("ACTOR_BINDING_MISMATCH")
+        if binding.get("session_id") != self.session_id:
+            raise RuntimeError("SESSION_BINDING_MISMATCH")
+        if binding.get("device_id") != self.device_id:
+            raise RuntimeError("DEVICE_BINDING_MISMATCH")
+        return expected
+
+    def _http_json(self, path: str, *, method: str = "GET",
+                   payload: dict[str, Any] | None = None,
+                   csrf: str | None = None) -> dict[str, Any]:
+        body = None
+        headers = {"Accept": "application/json"}
+        if payload is not None:
+            body = json.dumps(payload, ensure_ascii=False).encode("utf-8")
+            headers["Content-Type"] = "application/json"
+        if csrf:
+            headers["x-raios-csrf"] = csrf
+        request = urllib.request.Request(
+            self.command_center + path, data=body, headers=headers, method=method)
+        try:
+            with urllib.request.urlopen(request, timeout=8) as response:
+                raw = response.read().decode("utf-8")
+        except urllib.error.HTTPError as exc:
+            detail = exc.read().decode("utf-8", errors="replace")
+            raise RuntimeError(f"COMMAND_CENTER_HTTP_{exc.code}::{detail[:500]}") from exc
+        return json.loads(raw or "{}")
+
+    def _accept_task_assignment(self, msg: dict[str, Any]) -> dict[str, Any] | None:
+        text = str((msg.get("payload") or {}).get("text") or "")
+        if "TASK_ASSIGNMENT" not in text:
+            return None
+        fields = self._message_fields(text)
+        target = str(fields.get("TARGET") or "").upper()
+        if target != self.seat:
+            return {"status": "TARGET_MISMATCH", "target": target, "seat": self.seat}
+        task_id = fields.get("TASK_ID")
+        dispatch_id = fields.get("DISPATCH_ID")
+        if not task_id or not dispatch_id:
+            return {"status": "MALFORMED_ASSIGNMENT"}
+        proof = self._actor_proof()
+        bootstrap = self._http_json("/api/bootstrap")
+        csrf = str(bootstrap.get("csrf") or "")
+        if not csrf:
+            raise RuntimeError("COMMAND_CENTER_CSRF_MISSING")
+        result = self._http_json(
+            "/api/task-accept",
+            method="POST",
+            csrf=csrf,
+            payload={
+                "task_id": task_id,
+                "actor": self.seat,
+                "dispatch_id": dispatch_id,
+                "actor_proof": proof,
+            },
+        )
+        return {
+            "status": result.get("status"),
+            "task_id": task_id,
+            "dispatch_id": dispatch_id,
+            "acceptance_fingerprint": result.get("acceptance_fingerprint"),
+            "signature_mode": result.get("signature_mode"),
+        }
+
     def _respond_presence_probe(self,msg:dict[str,Any])->dict[str,Any]|None:
         text=str((msg.get("payload") or {}).get("text") or "")
         if "PRESENCE_PROBE" not in text:return None
-        fields={}
-        for line in text.splitlines():
-            if "=" in line:
-                key,value=line.split("=",1);fields[key.strip().upper()]=value.strip()
+        fields=self._message_fields(text)
         challenge_id=fields.get("CHALLENGE_ID");nonce=fields.get("NONCE")
         if not challenge_id or not nonce:return None
         auth=self._auth()
@@ -175,6 +261,12 @@ class SeatSessionAgent:
                 continue
             raw = path.read_bytes()
             challenge_result=self._respond_presence_probe(msg)
+            acceptance_result = None
+            acceptance_error = None
+            try:
+                acceptance_result = self._accept_task_assignment(msg)
+            except Exception as exc:
+                acceptance_error = f"{type(exc).__name__}:{exc}"
             binding = self._binding()
             presence = _load(self.runtime / "presence.json", {"seats": {}})
             p = (presence.get("seats") or {}).get(self.seat) or {}
@@ -200,6 +292,10 @@ class SeatSessionAgent:
                 "presence_challenge_verified": bool(challenge_result),
                 "presence_challenge_id": (challenge_result or {}).get("challenge_id"),
                 "attendance_fingerprint": (challenge_result or {}).get("attendance_fingerprint"),
+                "task_acceptance_signed": bool(
+                    acceptance_result and acceptance_result.get("status") == "ACCEPTED"),
+                "task_acceptance": acceptance_result,
+                "task_acceptance_error": acceptance_error,
             }
             _atomic(ack, row)
             consumed += 1

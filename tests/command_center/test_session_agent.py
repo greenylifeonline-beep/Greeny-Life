@@ -36,6 +36,47 @@ def test_session_agent_reads_new_delivery_and_writes_real_actor_ack(tmp_path):
     assert row["synthetic"] is False and row["canonical_mutation"] is False
 
 
+def test_session_agent_signs_assignment_with_current_session_proof(tmp_path, monkeypatch):
+    repo = tmp_path / "Greeny-Life"; repo.mkdir()
+    runtime = tmp_path / "runtime"; runtime.mkdir()
+    auth = runtime / "auth.json"; auth.write_text("{}", encoding="utf-8")
+    agent = SeatSessionAgent(repo, runtime, "C6", auth, "C6-ACTOR", "c6-live", "AG", "s6")
+    (runtime / "actor-bindings.json").write_text(json.dumps({"bindings": {"C6": {
+        "actor_id": "C6-ACTOR", "origin_instance": "c6-live", "device_id": "AG",
+        "session_id": "s6", "auth_evidence": "proof", "lease_expires_at": iso()}}}), encoding="utf-8")
+    (runtime / "presence.json").write_text(json.dumps({"seats": {"C6": {
+        "attendance_fingerprint": "ATTENDANCE-123", "receipt": "presence-proof"}}}), encoding="utf-8")
+    calls = []
+    def fake_http(path, *, method="GET", payload=None, csrf=None):
+        calls.append((path, method, payload, csrf))
+        if path == "/api/bootstrap":
+            return {"csrf": "csrf-token"}
+        return {"status": "ACCEPTED", "acceptance_fingerprint": "ACCEPT-123",
+                "signature_mode": "SESSION_BOUND_ATTENDANCE_FINGERPRINT"}
+    monkeypatch.setattr(agent, "_http_json", fake_http)
+    msg = {"payload": {"text": "TASK_ASSIGNMENT\nTASK_ID=T-9\nTARGET=C6\nDISPATCH_ID=DSP-9"}}
+    out = agent._accept_task_assignment(msg)
+    assert out["status"] == "ACCEPTED"
+    post = calls[-1]
+    assert post[0] == "/api/task-accept" and post[1] == "POST"
+    assert post[2]["task_id"] == "T-9" and post[2]["actor"] == "C6"
+    assert post[2]["actor_proof"]["attendance_fingerprint"] == "ATTENDANCE-123"
+    assert post[2]["actor_proof"]["session_id"] == "s6"
+
+
+def test_session_agent_rejects_assignment_for_other_seat_without_post(tmp_path, monkeypatch):
+    repo = tmp_path / "Greeny-Life"; repo.mkdir()
+    runtime = tmp_path / "runtime"; runtime.mkdir()
+    auth = runtime / "auth.json"; auth.write_text("{}", encoding="utf-8")
+    agent = SeatSessionAgent(repo, runtime, "C6", auth, "C6-ACTOR", "c6-live", "AG", "s6")
+    called = []
+    monkeypatch.setattr(agent, "_http_json", lambda *a, **k: called.append((a, k)))
+    out = agent._accept_task_assignment(
+        {"payload": {"text": "TASK_ASSIGNMENT\nTASK_ID=T-9\nTARGET=C2\nDISPATCH_ID=DSP-9"}})
+    assert out["status"] == "TARGET_MISMATCH"
+    assert called == []
+
+
 def test_session_agent_singleton_rejects_duplicate_for_same_seat(tmp_path):
     repo = tmp_path / "Greeny-Life"; repo.mkdir()
     runtime = tmp_path / "runtime"; runtime.mkdir()

@@ -24,24 +24,46 @@
     },
     {
       "id": "GL-002",
-      "title": "Main intelligence brain",
-      "objective": "Recover verified main intelligence and governance without duplicate implementations.",
+      "title": "Main intelligence brain ? canonical capability convergence",
+      "objective": "Discover and prove every existing main-intelligence/governance capability in the authorized canonical estate and live runtime; reconcile overlaps into one authoritative brain path. Reuse/merge existing components only; do not build a parallel brain/search/learning/governance system.",
       "scope": [
-        "intelligence",
+        "intelligence/knowledge_base",
+        "lib/intelligence",
         "governance",
-        "canonical"
+        "canonical",
+        "greenlines_brain"
       ],
       "dependencies": [
         "GL-001"
       ],
       "allowed_agents": [
-        "codex",
-        "claude-code",
-        "gemini-cli"
+        "C2"
       ],
-      "validation": "One authoritative intelligence path.",
+      "validation": "Existing-first capability inventory + overlap classification + one authoritative intelligence path + tests/runtime evidence; no duplicate brain/search/learning system; no canonical promotion without C1.",
       "status": "READY",
-      "claimed_by": null
+      "claimed_by": null,
+      "scheduler_priority": "CRITICAL",
+      "program_id": "RAIOS-CAPABILITY-EVOLUTION-202609-202703",
+      "target_month": "2026-09",
+      "milestone": "CANONICAL_TRUTH_AND_CRITICAL_RECOVERY",
+      "search_policy": {
+        "mode": "INTERNAL_FIRST",
+        "engine": "ONE_SHARED_SEARCH_CORTEX",
+        "internal_min_evidence": 3,
+        "external_on_gap_only": true,
+        "external_results_state": "DISCOVERED",
+        "auto_promote": false
+      },
+      "required_outputs": [
+        "MAIN-BRAIN-CAPABILITY-INVENTORY.json",
+        "OVERLAP-AND-AUTHORITY-MAP.json",
+        "REUSE-MERGE-GAP-DECISIONS.json",
+        "CANONICAL-BRAIN-PATH-PROOF.json",
+        "TEST-AND-RUNTIME-EVIDENCE.json"
+      ],
+      "canonical_promotion_requires_c1": true,
+      "automatic_dispatch": false,
+      "dispatch_authorized_by": "C1"
     },
     {
       "id": "GL-003",
@@ -63,30 +85,111 @@
         "deepseek-local"
       ],
       "validation": "Three verified brain inventories integrated.",
-      "status": "IN_PROGRESS",
-      "claimed_by": "deepseek-local"
+      "status": "READY",
+      "last_dispatch_target": "C4",
+      "last_dispatch_id": null,
+      "last_claimed_by": "deepseek-local",
+      "dispatch_status": "RETURNED_ABSENT_WITH_CHECKPOINT",
+      "returned_at": "2026-09-04T02:56:18.274144+00:00",
+      "return_reason": "TARGET_NOT_LIVE_BOUND_CONSUMER",
+      "legacy_claim_reconciled": true,
+      "resume_checkpoint": {
+        "schema": "raios.task-checkpoint.v1",
+        "checkpoint_id": "CHK-829ca0e1474745a0",
+        "task_id": "GL-003",
+        "actor": "RAIOS-WORKER",
+        "phase": "INTERRUPTED",
+        "summary": "Legacy or active executor claim had no current signed bound consumer; RAIOS returned the task to READY with a resumable recovery checkpoint.",
+        "completed_steps": [],
+        "changed_files": [],
+        "validation": [],
+        "evidence_refs": [],
+        "next_step": "Inspect the working tree and latest task evidence before continuing.",
+        "blocker": "EXECUTOR_NOT_LIVE_BOUND_CONSUMER",
+        "created_at": "2026-09-04T02:56:18.274189+00:00"
+      },
+      "last_checkpoint_id": "CHK-829ca0e1474745a0",
+      "checkpoint_updated_at": "2026-09-04T02:56:18.274189+00:00",
+      "program_id": "RAIOS-CAPABILITY-EVOLUTION-202609-202703",
+      "target_month": "2026-09",
+      "milestone": "CANONICAL_TRUTH_AND_CRITICAL_RECOVERY",
+      "scheduler_priority": "HIGH",
+      "search_policy": {
+        "mode": "INTERNAL_FIRST",
+        "engine": "ONE_SHARED_SEARCH_CORTEX",
+        "internal_min_evidence": 3,
+        "external_on_gap_only": true,
+        "external_results_state": "DISCOVERED",
+        "auto_promote": false
+      },
+      "canonical_promotion_requires_c1": true
     },
     {
       "id": "GL-004",
-      "title": "Runtime and tests",
-      "objective": "Consolidate runtime APIs schemas and tests and prove execution truth.",
+      "title": "Runtime and tests ? canonical execution truth",
+      "objective": "Discover, consolidate and prove the existing application/runtime/API/schema/test execution path required by GL-005. Fix only proven runtime/test gaps, preserve one runtime path, and return machine-verifiable evidence.",
       "scope": [
         "app",
         "prisma",
-        "tests",
-        "scripts"
+        "scripts/ai-os/gl004-atomic-executor.py",
+        "scripts/ai-os/gl004-runtime-bind.py",
+        "scripts/ai-os/gl004_runtime_bind_check.py",
+        "scripts/ai-os/gl004_lib.py",
+        "tests"
       ],
       "dependencies": [
         "GL-001"
       ],
       "allowed_agents": [
-        "codex",
-        "cursor",
-        "github-agent"
+        "C6"
       ],
-      "validation": "Type-check build tests runtime trace.",
-      "status": "IN_PROGRESS",
-      "claimed_by": "cursor"
+      "validation": "Type-check/build/tests + live runtime trace + API/schema consistency + GL005 dependency proof; one runtime path; no duplicate gateway/UI/transport.",
+      "status": "READY",
+      "last_dispatch_target": "C2",
+      "last_dispatch_id": null,
+      "last_claimed_by": "cursor",
+      "dispatch_status": "RETURNED_ABSENT_WITH_CHECKPOINT",
+      "returned_at": "2026-09-04T02:56:18.278760+00:00",
+      "return_reason": "TARGET_NOT_LIVE_BOUND_CONSUMER",
+      "legacy_claim_reconciled": true,
+      "resume_checkpoint": {
+        "schema": "raios.task-checkpoint.v1",
+        "checkpoint_id": "CHK-49ec5ad2de734622",
+        "task_id": "GL-004",
+        "actor": "RAIOS-WORKER",
+        "phase": "INTERRUPTED",
+        "summary": "Legacy or active executor claim had no current signed bound consumer; RAIOS returned the task to READY with a resumable recovery checkpoint.",
+        "completed_steps": [],
+        "changed_files": [],
+        "validation": [],
+        "evidence_refs": [],
+        "next_step": "Inspect the working tree and latest task evidence before continuing.",
+        "blocker": "EXECUTOR_NOT_LIVE_BOUND_CONSUMER",
+        "created_at": "2026-09-04T02:56:18.278800+00:00"
+      },
+      "last_checkpoint_id": "CHK-49ec5ad2de734622",
+      "checkpoint_updated_at": "2026-09-04T02:56:18.278800+00:00",
+      "scheduler_priority": "CRITICAL",
+      "program_id": "RAIOS-CAPABILITY-EVOLUTION-202609-202703",
+      "target_month": "2026-09",
+      "milestone": "CANONICAL_TRUTH_AND_CRITICAL_RECOVERY",
+      "search_policy": {
+        "mode": "INTERNAL_FIRST",
+        "engine": "ONE_SHARED_SEARCH_CORTEX",
+        "internal_min_evidence": 3,
+        "external_on_gap_only": true,
+        "external_results_state": "DISCOVERED",
+        "auto_promote": false
+      },
+      "required_outputs": [
+        "RUNTIME-ENTRYPOINT-MAP.json",
+        "API-SCHEMA-TEST-MATRIX.json",
+        "GL004-EXECUTION-PROOF.json",
+        "GL005-RUNTIME-DEPENDENCY-PROOF.json"
+      ],
+      "canonical_promotion_requires_c1": true,
+      "automatic_dispatch": false,
+      "dispatch_authorized_by": "C1"
     },
     {
       "id": "GL-005",
@@ -111,7 +214,20 @@
       ],
       "validation": "Shared task state locks handoff and orchestration demonstrated.",
       "status": "READY",
-      "claimed_by": null
+      "claimed_by": null,
+      "program_id": "RAIOS-CAPABILITY-EVOLUTION-202609-202703",
+      "target_month": "2026-10",
+      "milestone": "CAPABILITY_GRAPH_AND_ORCHESTRATION_CONVERGENCE",
+      "scheduler_priority": "CRITICAL",
+      "search_policy": {
+        "mode": "INTERNAL_FIRST",
+        "engine": "ONE_SHARED_SEARCH_CORTEX",
+        "internal_min_evidence": 3,
+        "external_on_gap_only": true,
+        "external_results_state": "DISCOVERED",
+        "auto_promote": false
+      },
+      "canonical_promotion_requires_c1": true
     },
     {
       "id": "V9-A14.1",
@@ -133,20 +249,64 @@
     },
     {
       "id": "V9-A15",
-      "title": "A15 collaborative execution fabric / task exchange gateway",
-      "objective": "Build shared collaboration fabric for cross-agent task exchange without rediscovery, using deterministic sandbox certification only.",
+      "title": "A15 existing collaborative execution fabric reconciliation & certification",
+      "objective": "Discover, reconcile and certify the existing Command Fabric/A2A/task exchange/presence/receipt mechanisms. Reuse the current fabric and fill only proven gaps; never build a second collaboration gateway, command fabric or transport.",
       "scope": [
-        "RAIOS/V9"
+        "src/raios/command_fabric",
+        "src/raios/a2a",
+        "src/raios/command_center",
+        "src/raios/council_ops",
+        "tests/command_fabric",
+        "tests/command_center"
       ],
       "dependencies": [
         "V9-A14.1"
       ],
       "allowed_agents": [
-        "cursor"
+        "C2"
       ],
-      "validation": "50-task fail-closed A15 certification PASS; lineage gate PASS; no production/canonical mutation; no automatic promotion.",
-      "status": "IN_PROGRESS",
-      "claimed_by": "cursor"
+      "validation": "Existing fabric inventory + duplicate-risk audit + 50-task fail-closed certification + signed presence/acceptance/evidence proof; no second fabric/transport.",
+      "status": "READY",
+      "last_dispatch_target": "C2",
+      "last_dispatch_id": null,
+      "last_claimed_by": "cursor",
+      "dispatch_status": "RETURNED_ABSENT_WITH_CHECKPOINT",
+      "returned_at": "2026-09-04T02:56:18.282328+00:00",
+      "return_reason": "TARGET_NOT_LIVE_BOUND_CONSUMER",
+      "legacy_claim_reconciled": true,
+      "resume_checkpoint": {
+        "schema": "raios.task-checkpoint.v1",
+        "checkpoint_id": "CHK-e15d62abff404d48",
+        "task_id": "V9-A15",
+        "actor": "RAIOS-WORKER",
+        "phase": "INTERRUPTED",
+        "summary": "Legacy or active executor claim had no current signed bound consumer; RAIOS returned the task to READY with a resumable recovery checkpoint.",
+        "completed_steps": [],
+        "changed_files": [],
+        "validation": [],
+        "evidence_refs": [],
+        "next_step": "Inspect the working tree and latest task evidence before continuing.",
+        "blocker": "EXECUTOR_NOT_LIVE_BOUND_CONSUMER",
+        "created_at": "2026-09-04T02:56:18.282363+00:00"
+      },
+      "last_checkpoint_id": "CHK-e15d62abff404d48",
+      "checkpoint_updated_at": "2026-09-04T02:56:18.282363+00:00",
+      "program_id": "RAIOS-CAPABILITY-EVOLUTION-202609-202703",
+      "target_month": "2026-10",
+      "milestone": "CAPABILITY_GRAPH_AND_ORCHESTRATION_CONVERGENCE",
+      "not_before": "2026-10-01T00:00:00+03:00",
+      "scheduler_priority": "HIGH",
+      "search_policy": {
+        "mode": "INTERNAL_FIRST",
+        "engine": "ONE_SHARED_SEARCH_CORTEX",
+        "internal_min_evidence": 3,
+        "external_on_gap_only": true,
+        "external_results_state": "DISCOVERED",
+        "auto_promote": false
+      },
+      "canonical_promotion_requires_c1": true,
+      "automatic_dispatch": true,
+      "dispatch_authorized_by": "C1"
     },
     {
       "id": "V9-NL0",
@@ -167,8 +327,45 @@
         "cursor"
       ],
       "validation": "NL-0 artifacts + offline benchmark llm_calls=0 + no second WAL; RAIOS transfer on WAL reuse.",
-      "status": "IN_PROGRESS",
-      "claimed_by": "cursor"
+      "status": "READY",
+      "last_dispatch_target": "C2",
+      "last_dispatch_id": null,
+      "last_claimed_by": "cursor",
+      "dispatch_status": "RETURNED_ABSENT_WITH_CHECKPOINT",
+      "returned_at": "2026-09-04T02:56:18.287229+00:00",
+      "return_reason": "TARGET_NOT_LIVE_BOUND_CONSUMER",
+      "legacy_claim_reconciled": true,
+      "resume_checkpoint": {
+        "schema": "raios.task-checkpoint.v1",
+        "checkpoint_id": "CHK-f88daa60a9a34758",
+        "task_id": "V9-NL0",
+        "actor": "RAIOS-WORKER",
+        "phase": "INTERRUPTED",
+        "summary": "Legacy or active executor claim had no current signed bound consumer; RAIOS returned the task to READY with a resumable recovery checkpoint.",
+        "completed_steps": [],
+        "changed_files": [],
+        "validation": [],
+        "evidence_refs": [],
+        "next_step": "Inspect the working tree and latest task evidence before continuing.",
+        "blocker": "EXECUTOR_NOT_LIVE_BOUND_CONSUMER",
+        "created_at": "2026-09-04T02:56:18.287263+00:00"
+      },
+      "last_checkpoint_id": "CHK-f88daa60a9a34758",
+      "checkpoint_updated_at": "2026-09-04T02:56:18.287263+00:00",
+      "program_id": "RAIOS-CAPABILITY-EVOLUTION-202609-202703",
+      "target_month": "2026-11",
+      "milestone": "ASSIMILATION_VALIDATION_AND_NEUROLINGUA",
+      "not_before": "2026-11-01T00:00:00+02:00",
+      "scheduler_priority": "HIGH",
+      "search_policy": {
+        "mode": "INTERNAL_FIRST",
+        "engine": "ONE_SHARED_SEARCH_CORTEX",
+        "internal_min_evidence": 3,
+        "external_on_gap_only": true,
+        "external_results_state": "DISCOVERED",
+        "auto_promote": false
+      },
+      "canonical_promotion_requires_c1": true
     },
     {
       "id": "WAVE2-GAP-RES",
@@ -183,8 +380,41 @@
         "cursor"
       ],
       "validation": "WAVE2-TARGETED-GAP-RESOLUTION.json with real process exit 0",
-      "status": "IN_PROGRESS",
-      "claimed_by": "cursor"
+      "status": "READY",
+      "last_dispatch_target": "C2",
+      "last_dispatch_id": null,
+      "last_claimed_by": "cursor",
+      "dispatch_status": "RETURNED_ABSENT_WITH_CHECKPOINT",
+      "returned_at": "2026-09-04T02:56:18.290161+00:00",
+      "return_reason": "TARGET_NOT_LIVE_BOUND_CONSUMER",
+      "legacy_claim_reconciled": true,
+      "resume_checkpoint": {
+        "schema": "raios.task-checkpoint.v1",
+        "checkpoint_id": "CHK-b1732665d50a41d9",
+        "task_id": "WAVE2-GAP-RES",
+        "actor": "RAIOS-WORKER",
+        "phase": "INTERRUPTED",
+        "summary": "Legacy or active executor claim had no current signed bound consumer; RAIOS returned the task to READY with a resumable recovery checkpoint.",
+        "completed_steps": [],
+        "changed_files": [],
+        "validation": [],
+        "evidence_refs": [],
+        "next_step": "Inspect the working tree and latest task evidence before continuing.",
+        "blocker": "EXECUTOR_NOT_LIVE_BOUND_CONSUMER",
+        "created_at": "2026-09-04T02:56:18.290193+00:00"
+      },
+      "last_checkpoint_id": "CHK-b1732665d50a41d9",
+      "checkpoint_updated_at": "2026-09-04T02:56:18.290193+00:00",
+      "program_id": "RAIOS-CAPABILITY-EVOLUTION-202609-202703",
+      "target_month": "2026-09",
+      "search_policy": {
+        "mode": "INTERNAL_FIRST",
+        "engine": "ONE_SHARED_SEARCH_CORTEX",
+        "internal_min_evidence": 3,
+        "external_on_gap_only": true,
+        "external_results_state": "DISCOVERED",
+        "auto_promote": false
+      }
     },
     {
       "id": "BRANCH-UNIFY-20260824",
@@ -218,9 +448,42 @@
         "C2@AG"
       ],
       "validation": "Master 00-19 artifacts + FILES-SHA256; C3 review required; PHASE1_COMPLETE remains false until C6 reconciliation and C3/C1.",
-      "status": "IN_PROGRESS",
-      "claimed_by": "C2@AG",
-      "lane": "C2_LOCAL_CENSUS"
+      "status": "READY",
+      "lane": "C2_LOCAL_CENSUS",
+      "last_dispatch_target": "C2",
+      "last_dispatch_id": null,
+      "last_claimed_by": "C2@AG",
+      "dispatch_status": "RETURNED_ABSENT_WITH_CHECKPOINT",
+      "returned_at": "2026-09-04T02:56:18.313181+00:00",
+      "return_reason": "TARGET_NOT_LIVE_BOUND_CONSUMER",
+      "legacy_claim_reconciled": true,
+      "resume_checkpoint": {
+        "schema": "raios.task-checkpoint.v1",
+        "checkpoint_id": "CHK-2e70c759fa204316",
+        "task_id": "RAIOS-TOTAL-ESTATE-PHASE1-01",
+        "actor": "RAIOS-WORKER",
+        "phase": "INTERRUPTED",
+        "summary": "Legacy or active executor claim had no current signed bound consumer; RAIOS returned the task to READY with a resumable recovery checkpoint.",
+        "completed_steps": [],
+        "changed_files": [],
+        "validation": [],
+        "evidence_refs": [],
+        "next_step": "Inspect the working tree and latest task evidence before continuing.",
+        "blocker": "EXECUTOR_NOT_LIVE_BOUND_CONSUMER",
+        "created_at": "2026-09-04T02:56:18.313213+00:00"
+      },
+      "last_checkpoint_id": "CHK-2e70c759fa204316",
+      "checkpoint_updated_at": "2026-09-04T02:56:18.313213+00:00",
+      "program_id": "RAIOS-CAPABILITY-EVOLUTION-202609-202703",
+      "target_month": "2026-09",
+      "search_policy": {
+        "mode": "INTERNAL_FIRST",
+        "engine": "ONE_SHARED_SEARCH_CORTEX",
+        "internal_min_evidence": 3,
+        "external_on_gap_only": true,
+        "external_results_state": "DISCOVERED",
+        "auto_promote": false
+      }
     },
     {
       "id": "RAIOS-RESOURCE-FABRIC-LIVE-ACCOUNT-BINDING-WAVE-02",
@@ -266,8 +529,41 @@
         "cursor"
       ],
       "validation": "Clean delivery commit fast-forwarded to origin/ai-evolution-202608051809; no file >=100MB in pushed ancestry after 50f243a; ORIGINAL_LOCAL_LINEAGE_REWRITTEN=false",
-      "status": "IN_PROGRESS",
-      "claimed_by": "cursor"
+      "status": "READY",
+      "last_dispatch_target": "C2",
+      "last_dispatch_id": null,
+      "last_claimed_by": "cursor",
+      "dispatch_status": "RETURNED_ABSENT_WITH_CHECKPOINT",
+      "returned_at": "2026-09-04T02:56:18.321970+00:00",
+      "return_reason": "TARGET_NOT_LIVE_BOUND_CONSUMER",
+      "legacy_claim_reconciled": true,
+      "resume_checkpoint": {
+        "schema": "raios.task-checkpoint.v1",
+        "checkpoint_id": "CHK-507e251ff327482e",
+        "task_id": "RAIOS-RESOURCE-FABRIC-GIT-DELIVERY-REPAIR-WAVE-01",
+        "actor": "RAIOS-WORKER",
+        "phase": "INTERRUPTED",
+        "summary": "Legacy or active executor claim had no current signed bound consumer; RAIOS returned the task to READY with a resumable recovery checkpoint.",
+        "completed_steps": [],
+        "changed_files": [],
+        "validation": [],
+        "evidence_refs": [],
+        "next_step": "Inspect the working tree and latest task evidence before continuing.",
+        "blocker": "EXECUTOR_NOT_LIVE_BOUND_CONSUMER",
+        "created_at": "2026-09-04T02:56:18.322001+00:00"
+      },
+      "last_checkpoint_id": "CHK-507e251ff327482e",
+      "checkpoint_updated_at": "2026-09-04T02:56:18.322001+00:00",
+      "program_id": "RAIOS-CAPABILITY-EVOLUTION-202609-202703",
+      "target_month": "2026-09",
+      "search_policy": {
+        "mode": "INTERNAL_FIRST",
+        "engine": "ONE_SHARED_SEARCH_CORTEX",
+        "internal_min_evidence": 3,
+        "external_on_gap_only": true,
+        "external_results_state": "DISCOVERED",
+        "auto_promote": false
+      }
     },
     {
       "id": "RAIOS-W4F-CAPABILITY-MAINTENANCE-CLOSURE-01",
@@ -723,6 +1019,548 @@
       "evidence": ".ai-os/reports/command-center/RAIOS-C3-PRESENCE-ASSIGN-EXECUTE-PROOF-20260901-01/PROOF.json",
       "report_summary": "C3 reused its canonical identity, maintained a silent background presence lease, received and accepted the worker assignment, fixed the Windows atomic-write race and identity/presence conflation, corrected the 12-seat route invariant, and completed evidence-backed verification.",
       "completed_at": "2026-09-01T17:37:49.160693+00:00"
+    },
+    {
+      "id": "RAIOS-EVOLUTION-SELF-LOOP-REPAIR-20260902-01",
+      "title": "Repair evolution self-loop and hidden Windows execution",
+      "objective": "Remove WAL feedback, bound retries, hide child processes, prove continuous learning without recurring consoles",
+      "scope": [
+        "RAIOS/V9/runtime",
+        "src/raios/search_cortex",
+        "src/raios/manager",
+        "scripts/runtime",
+        "tests",
+        ".ai-os/reports/cognitive"
+      ],
+      "dependencies": [],
+      "allowed_agents": [
+        "C3"
+      ],
+      "validation": "Focused tests, no self-generated WAL loop, single hidden daemon, stable heartbeat, bounded CPU",
+      "status": "READY",
+      "last_dispatch_target": "C3",
+      "last_dispatch_id": null,
+      "last_claimed_by": "C3",
+      "dispatch_status": "RETURNED_ABSENT_WITH_CHECKPOINT",
+      "returned_at": "2026-09-04T01:58:34.164930+00:00",
+      "return_reason": "TARGET_NOT_LIVE_BOUND_CONSUMER",
+      "legacy_claim_reconciled": true,
+      "resume_checkpoint": {
+        "schema": "raios.task-checkpoint.v1",
+        "checkpoint_id": "CHK-31b7872bf38a4613",
+        "task_id": "RAIOS-EVOLUTION-SELF-LOOP-REPAIR-20260902-01",
+        "actor": "RAIOS-WORKER",
+        "phase": "INTERRUPTED",
+        "summary": "Legacy or active executor claim had no current signed bound consumer; RAIOS returned the task to READY with a resumable recovery checkpoint.",
+        "completed_steps": [],
+        "changed_files": [],
+        "validation": [],
+        "evidence_refs": [],
+        "next_step": "Inspect the working tree and latest task evidence before continuing.",
+        "blocker": "EXECUTOR_NOT_LIVE_BOUND_CONSUMER",
+        "created_at": "2026-09-04T01:58:34.164968+00:00"
+      },
+      "last_checkpoint_id": "CHK-31b7872bf38a4613",
+      "checkpoint_updated_at": "2026-09-04T01:58:34.164968+00:00"
+    },
+    {
+      "id": "RAIOS-UNIFIED-COORDINATION-SOURCE-20260904-01",
+      "title": "Unify coordination availability work truth and system-first awareness",
+      "objective": "Make RAIOS the first knower of every active actor/task/scope and expose one coordination truth to all members, worker and non-seat actors without conflating availability with execution readiness.",
+      "scope": [
+        "src/raios/command_center",
+        "src/raios/council_ops",
+        "scripts/ai-os/raios_council_ops.py",
+        ".ai-os/mcp/SEAT-MAP.json",
+        "tests/command_center",
+        "tests/council_ops",
+        "scripts/runtime/Deploy-RAIOS-Command-Center.ps1"
+      ],
+      "dependencies": [],
+      "allowed_agents": [
+        "CHATGPT-NORMAL"
+      ],
+      "validation": "68/68 PASS; live Command Center v4; stale locks 29->0; founder brief live",
+      "status": "DONE",
+      "claimed_by": "CHATGPT-NORMAL",
+      "assigned_to": "CHATGPT-NORMAL",
+      "dispatch_status": "COMPLETE_EVIDENCE_VERIFIED",
+      "system_owner": "RAIOS_SYSTEM",
+      "authorized_by": "C1",
+      "authorization_provenance": {
+        "authority": "C1",
+        "source": "DIRECT_ACTIVE_CHAT_SESSION",
+        "instruction": "System must know first, everyone must know who works on what, no duplication/conflict.",
+        "at": "2026-09-04T02:16:35.987015+00:00"
+      },
+      "started_at": "2026-09-04T02:16:35.987015+00:00",
+      "coordination_source_required": "/api/client-activity",
+      "updated_at": "2026-09-04T02:27:20.524596+00:00",
+      "commit_note": {
+        "commit": "681bcb1cbed113c40199fa90fdc961464a7611bc",
+        "incidental_preexisting_staged_files": [
+          "src/raios/manager/live_manager.py",
+          "tests/c5_gateway/test_manager_atomic.py"
+        ],
+        "ownership": "UNKNOWN_PREEXISTING_STAGED_STATE",
+        "candidate_existing_task": "RAIOS-EVOLUTION-SELF-LOOP-REPAIR-20260902-01",
+        "action": "PRESERVED_AND_VERIFYING_NO_HISTORY_REWRITE",
+        "recorded_at": "2026-09-04T02:29:11.488667+00:00"
+      },
+      "completed_at": "2026-09-04T03:03:28.263052+00:00",
+      "evidence": ".ai-os/receipts/command-fabric/RAIOS-UNIFIED-COORDINATION-SOURCE-20260904-01.complete.receipt.json",
+      "report_summary": "Unified system-first coordination truth, lifecycle classification, founder consultation brief, alias/freshness reconciliation, and stale lock cleanup deployed and proven.",
+      "next_step": "RAIOS-WORKER may now schedule REQUIRED_NEXT tasks under conflict, presence, scope, and founder-decision gates."
+    },
+    {
+      "id": "RAIOS-SMART-DISPATCH-PRIORITY-20260904-01",
+      "title": "Smart critical-path dispatch planning and safe auto-assignment",
+      "objective": "Deterministic safe dispatch plus anti-illusion presence challenge, attendance/departure fingerprints, signed task acceptance, evidence delivery and system verification through the existing Command Fabric and receipt center.",
+      "scope": [
+        "src/raios/command_center/coordination_truth.py",
+        "src/raios/command_center/council_board.py",
+        "src/raios/command_center/client_activity.py",
+        "tests/command_center",
+        "src/raios/council_ops",
+        "scripts/ai-os/raios_council_ops.py",
+        "src/raios/command_center/message_worker.py",
+        "tests/council_ops",
+        "src/raios/command_center/actor_routing.py",
+        "src/raios/command_center/app.py",
+        ".ai-os/mcp/SEAT-MAP.json",
+        "scripts/runtime/Deploy-RAIOS-Command-Center.ps1"
+      ],
+      "dependencies": [],
+      "allowed_agents": [
+        "CHATGPT-NORMAL"
+      ],
+      "validation": "78/78 PASS; live C2/C6 verified; probe supersession PASS; worker healthy",
+      "status": "DONE",
+      "claimed_by": "CHATGPT-NORMAL",
+      "assigned_to": "CHATGPT-NORMAL",
+      "dispatch_status": "COMPLETE_EVIDENCE_VERIFIED",
+      "system_owner": "RAIOS_SYSTEM",
+      "authorized_by": "C1",
+      "authorization_provenance": {
+        "authority": "C1",
+        "source": "DIRECT_ACTIVE_CHAT_SESSION",
+        "instruction": "?????? ? continue with next safe coordinated execution",
+        "at": "2026-09-04T03:18:15.331202+00:00"
+      },
+      "started_at": "2026-09-04T03:18:15.331202+00:00",
+      "updated_at": "2026-09-04T04:06:45.263601+00:00",
+      "completed_at": "2026-09-04T04:19:54.048355+00:00",
+      "evidence": ".ai-os/receipts/command-fabric/RAIOS-SMART-DISPATCH-PRIORITY-20260904-01.complete.receipt.json",
+      "report_summary": "Smart dispatch and anti-illusion presence/work proof system tested live and completed.",
+      "next_step": "RAIOS-WORKER may continue REQUIRED_NEXT scheduling under signed presence, no-overlap, founder-gate and evidence verification laws."
+    },
+    {
+      "id": "RAIOS-LONG-HORIZON-TASK-BOARD-20260904-01",
+      "title": "Long-horizon task board, capability evolution program and signed assignment flow",
+      "objective": "Normalize the canonical board into a rolling multi-month execution program; use the existing Search Cortex/Factory Fabric to discover and assimilate internal capabilities first, escalate to external search only for proven gaps, and dispatch precise non-overlapping work to verified seats with signed acceptance/evidence.",
+      "scope": [
+        ".ai-os/state/TASKS.json",
+        ".ai-os/state/LOCKS.json",
+        "src/raios/council_ops/session_agent.py",
+        "tests/command_center/test_session_agent.py",
+        "src/raios/command_center/coordination_truth.py",
+        "tests/command_center/test_coordination_truth.py",
+        "RAIOS/V9/runtime/evolution_daemon.py",
+        "tests/c5_gateway/test_evolution_daemon_policy.py"
+      ],
+      "dependencies": [],
+      "allowed_agents": [
+        "CHATGPT-NORMAL"
+      ],
+      "validation": "One canonical TASKS ledger with long-horizon program metadata; GL-002/GL-004 rewritten precisely; C2/C6 dispatch+signed acceptance proven; no duplicate fabric; internal-first capability discovery policy encoded.",
+      "status": "IN_PROGRESS",
+      "claimed_by": "CHATGPT-NORMAL",
+      "assigned_to": "CHATGPT-NORMAL",
+      "dispatch_status": "SYSTEM_FIRST_ACTIVE",
+      "system_owner": "RAIOS_SYSTEM",
+      "authorized_by": "C1",
+      "authorization_provenance": {
+        "authority": "C1",
+        "source": "DIRECT_ACTIVE_CHAT_SESSION",
+        "instruction": "Review the system task board, make tasks extend for months, run intelligence/search to absorb all existing capabilities first and search externally only when missing, then distribute work.",
+        "at": "2026-09-04T04:40:21.857960+00:00"
+      },
+      "started_at": "2026-09-04T04:40:21.857960+00:00",
+      "updated_at": "2026-09-04T04:47:31.075246+00:00"
+    },
+    {
+      "id": "RAIOS-CAPABILITY-GRAPH-202610-01",
+      "title": "Canonical Capability Graph and overlap reconciliation",
+      "objective": "Fuse proven capabilities from canonical code, runtime, Factory Fabric, Cognitive WAL, learning digests, Git history, estate reports and assimilated teacher families into one capability graph with REUSE/MERGE/VALIDATE/RETIRE/EXTERNAL_GAP disposition.",
+      "scope": [
+        ".ai-os/reports/capability-evolution/2026-10",
+        "intelligence/knowledge_base/assimilated",
+        "src/raios/factory_fabric"
+      ],
+      "dependencies": [
+        "GL-002",
+        "GL-003",
+        "GL-004"
+      ],
+      "allowed_agents": [
+        "C2",
+        "C6"
+      ],
+      "validation": "Capability graph + provenance + overlap map + no duplicate systems + external-gap queue only for missing capability.",
+      "status": "READY",
+      "claimed_by": null,
+      "automatic_dispatch": true,
+      "dispatch_authorized_by": "C1",
+      "scheduler_priority": "CRITICAL",
+      "program_id": "RAIOS-CAPABILITY-EVOLUTION-202609-202703",
+      "target_month": "2026-10",
+      "not_before": "2026-10-01T00:00:00+03:00",
+      "horizon_end": "2026-10-31",
+      "milestone": "CAPABILITY_GRAPH_AND_ORCHESTRATION_CONVERGENCE",
+      "search_policy": {
+        "mode": "INTERNAL_FIRST",
+        "engine": "ONE_SHARED_SEARCH_CORTEX",
+        "internal_min_evidence": 3,
+        "external_on_gap_only": true,
+        "external_results_state": "DISCOVERED",
+        "auto_promote": false
+      },
+      "canonical_promotion_requires_c1": true
+    },
+    {
+      "id": "RAIOS-ASSIMILATION-VALIDATION-202611-01",
+      "title": "Assimilation validation queue and reusable skill promotion candidates",
+      "objective": "Validate and deduplicate the existing 117 cognitive review items and 72 assimilation units; compile reproducible low-risk capabilities into reusable skill candidates without automatic canonical promotion.",
+      "scope": [
+        ".ai-os/learning",
+        "intelligence/knowledge_base/assimilated",
+        ".ai-os/reports/capability-evolution/2026-11"
+      ],
+      "dependencies": [
+        "RAIOS-CAPABILITY-GRAPH-202610-01"
+      ],
+      "allowed_agents": [
+        "C2",
+        "C6"
+      ],
+      "validation": "Validation queue reduced with evidence/replay/contradiction gates; compiled skills measured; no auto-promotion.",
+      "status": "READY",
+      "claimed_by": null,
+      "automatic_dispatch": true,
+      "dispatch_authorized_by": "C1",
+      "scheduler_priority": "HIGH",
+      "program_id": "RAIOS-CAPABILITY-EVOLUTION-202609-202703",
+      "target_month": "2026-11",
+      "not_before": "2026-11-01T00:00:00+02:00",
+      "horizon_end": "2026-11-30",
+      "milestone": "ASSIMILATION_VALIDATION_AND_NEUROLINGUA",
+      "search_policy": {
+        "mode": "INTERNAL_FIRST",
+        "engine": "ONE_SHARED_SEARCH_CORTEX",
+        "internal_min_evidence": 3,
+        "external_on_gap_only": true,
+        "external_results_state": "DISCOVERED",
+        "auto_promote": false
+      },
+      "canonical_promotion_requires_c1": true
+    },
+    {
+      "id": "RAIOS-EXTERNAL-GAP-HARVEST-202612-01",
+      "title": "External capability gap harvest ? only after internal proof",
+      "objective": "For capability gaps still unfilled after internal capability graph and validation, use the one Search Cortex with sanitized public queries, official/open sources, provenance/license/trust/novelty/contradiction filtering; store findings as DISCOVERED only.",
+      "scope": [
+        "RAIOS/V9/runtime/evolution_daemon.py",
+        "src/raios/search_cortex",
+        ".ai-os/reports/capability-evolution/2026-12"
+      ],
+      "dependencies": [
+        "RAIOS-ASSIMILATION-VALIDATION-202611-01"
+      ],
+      "allowed_agents": [
+        "C2",
+        "C6"
+      ],
+      "validation": "Every external query tied to a proven internal gap; provenance/trust/license/contradiction recorded; zero automatic canonical promotion.",
+      "status": "READY",
+      "claimed_by": null,
+      "automatic_dispatch": true,
+      "dispatch_authorized_by": "C1",
+      "scheduler_priority": "HIGH",
+      "program_id": "RAIOS-CAPABILITY-EVOLUTION-202609-202703",
+      "target_month": "2026-12",
+      "not_before": "2026-12-01T00:00:00+02:00",
+      "horizon_end": "2026-12-31",
+      "milestone": "EXTERNAL_GAP_HARVEST",
+      "search_policy": {
+        "mode": "INTERNAL_FIRST",
+        "engine": "ONE_SHARED_SEARCH_CORTEX",
+        "internal_min_evidence": 3,
+        "external_on_gap_only": true,
+        "external_results_state": "DISCOVERED",
+        "auto_promote": false
+      },
+      "canonical_promotion_requires_c1": true
+    },
+    {
+      "id": "RAIOS-SKILL-COMPILATION-202701-01",
+      "title": "Experience-to-skill compilation and repeated-task cost decay",
+      "objective": "Compile repeatedly validated reasoning/repair/governance/learning patterns into deterministic or low-cost reusable skills and measure reuse, latency, LLM-call reduction and Cognitive Compression Ratio.",
+      "scope": [
+        ".ai-os/learning",
+        "RAIOS/V9/evolution",
+        "src/raios/neuro_lingua",
+        ".ai-os/reports/capability-evolution/2027-01"
+      ],
+      "dependencies": [
+        "RAIOS-EXTERNAL-GAP-HARVEST-202612-01"
+      ],
+      "allowed_agents": [
+        "C2",
+        "C6"
+      ],
+      "validation": "Skill compilation rate + repeated-task cost decay + replay accuracy + rollback evidence.",
+      "status": "READY",
+      "claimed_by": null,
+      "automatic_dispatch": true,
+      "dispatch_authorized_by": "C1",
+      "scheduler_priority": "HIGH",
+      "program_id": "RAIOS-CAPABILITY-EVOLUTION-202609-202703",
+      "target_month": "2027-01",
+      "not_before": "2027-01-01T00:00:00+02:00",
+      "horizon_end": "2027-01-31",
+      "milestone": "SKILL_COMPILATION_AND_COST_COMPRESSION",
+      "search_policy": {
+        "mode": "INTERNAL_FIRST",
+        "engine": "ONE_SHARED_SEARCH_CORTEX",
+        "internal_min_evidence": 3,
+        "external_on_gap_only": true,
+        "external_results_state": "DISCOVERED",
+        "auto_promote": false
+      },
+      "canonical_promotion_requires_c1": true
+    },
+    {
+      "id": "RAIOS-COGNITIVE-INTEGRATION-202702-01",
+      "title": "Cognitive integration: Search, NeuroLingua, factories, model ecology and managers",
+      "objective": "Compose the already-existing Search Cortex, NeuroLingua, Evolution Brain, Factory Fabric, Model Ecology, Live Manager and C5 learning loop through canonical contracts; eliminate islands and duplicate adapters.",
+      "scope": [
+        "src/raios/neuro_lingua",
+        "src/raios/factory_fabric",
+        "src/raios/manager",
+        "src/raios/c5_gateway",
+        ".ai-os/reports/capability-evolution/2027-02"
+      ],
+      "dependencies": [
+        "RAIOS-SKILL-COMPILATION-202701-01",
+        "V9-NL0"
+      ],
+      "allowed_agents": [
+        "C2",
+        "C6"
+      ],
+      "validation": "One integrated cognitive path; no duplicate WAL/search/provider; provider failover/offline continuity and capability reuse proven.",
+      "status": "READY",
+      "claimed_by": null,
+      "automatic_dispatch": true,
+      "dispatch_authorized_by": "C1",
+      "scheduler_priority": "HIGH",
+      "program_id": "RAIOS-CAPABILITY-EVOLUTION-202609-202703",
+      "target_month": "2027-02",
+      "not_before": "2027-02-01T00:00:00+02:00",
+      "horizon_end": "2027-02-28",
+      "milestone": "COGNITIVE_INTEGRATION_AND_MODEL_ECOLOGY",
+      "search_policy": {
+        "mode": "INTERNAL_FIRST",
+        "engine": "ONE_SHARED_SEARCH_CORTEX",
+        "internal_min_evidence": 3,
+        "external_on_gap_only": true,
+        "external_results_state": "DISCOVERED",
+        "auto_promote": false
+      },
+      "canonical_promotion_requires_c1": true
+    },
+    {
+      "id": "RAIOS-AUTONOMY-CERTIFICATION-202703-01",
+      "title": "Autonomous evolution certification and founder-governance closeout",
+      "objective": "Certify the full capability-evolution loop for self-repair, capability growth, external-gap research, skill compilation, resource/model failover, rollback, offline continuity and founder consultation without self-promotion.",
+      "scope": [
+        "tests",
+        ".ai-os/reports/capability-evolution/2027-03",
+        "RAIOS/V9/runtime",
+        "scripts/runtime"
+      ],
+      "dependencies": [
+        "RAIOS-COGNITIVE-INTEGRATION-202702-01"
+      ],
+      "allowed_agents": [
+        "C2",
+        "C6"
+      ],
+      "validation": "Autonomy Yield + Cognitive Compression Ratio + rollback success + offline continuity + provider failover + founder-gate proof + zero canonical corruption.",
+      "status": "READY",
+      "claimed_by": null,
+      "automatic_dispatch": true,
+      "dispatch_authorized_by": "C1",
+      "scheduler_priority": "CRITICAL",
+      "program_id": "RAIOS-CAPABILITY-EVOLUTION-202609-202703",
+      "target_month": "2027-03",
+      "not_before": "2027-03-01T00:00:00+02:00",
+      "horizon_end": "2027-03-31",
+      "milestone": "AUTONOMY_CERTIFICATION",
+      "search_policy": {
+        "mode": "INTERNAL_FIRST",
+        "engine": "ONE_SHARED_SEARCH_CORTEX",
+        "internal_min_evidence": 3,
+        "external_on_gap_only": true,
+        "external_results_state": "DISCOVERED",
+        "auto_promote": false
+      },
+      "canonical_promotion_requires_c1": true
     }
-  ]
+  ],
+  "programs": [
+    {
+      "id": "RAIOS-CAPABILITY-EVOLUTION-202609-202703",
+      "title": "RAIOS Capability Evolution & Expansion Program",
+      "status": "ACTIVE",
+      "horizon_start": "2026-09-04",
+      "horizon_end": "2027-03-31",
+      "rolling_horizon_days": 210,
+      "review_cadence": "WEEKLY_SYSTEM_REVIEW_MONTHLY_FOUNDER_BRIEF",
+      "mission": "Continuously discover, reconcile, validate, assimilate and compile every useful capability already present in the authorized RAIOS/Greeny-Life estate before acquiring missing capabilities externally.",
+      "laws": [
+        "ONE_CANONICAL_TASK_LEDGER",
+        "DISCOVER_EXISTING_BEFORE_BUILD",
+        "INTERNAL_FIRST_THEN_EXTERNAL_GAP_ONLY",
+        "NO_SECOND_BRAIN",
+        "NO_SECOND_SEARCH_BUS",
+        "NO_SECOND_COMMAND_FABRIC",
+        "NO_SECOND_TRANSPORT",
+        "NO_RETIRED_REPAIR_TREE_READ",
+        "EXTERNAL_RESULT_NE_CANONICAL",
+        "C1_PROMOTION_REQUIRED",
+        "EVIDENCE_REQUIRED_BEFORE_DONE"
+      ],
+      "authorized_internal_surfaces": [
+        "CANONICAL_REPO_CURRENT_TREE",
+        "CANONICAL_GIT_HISTORY",
+        "LIVE_RUNTIME_DERIVED_STATE",
+        "FACTORY_FABRIC",
+        "COGNITIVE_WAL",
+        "LEARNING_DIGESTS_AND_CANDIDATES",
+        "MASTER_ESTATE_CENSUS_REPORTS",
+        "AUTHORIZED_ARCHIVE_BACKUP_STAGING_INSIDE_CANONICAL_ESTATE",
+        "ASSIMILATED_CAPABILITY_MANIFESTS",
+        "RESOURCE_FABRIC_AUTHORIZED_ACCOUNT_SNAPSHOTS"
+      ],
+      "search_policy": {
+        "engine": "ONE_SHARED_SEARCH_CORTEX",
+        "internal_order": [
+          "CANONICAL_REPO",
+          "LIVE_RUNTIME_DERIVED_STATE",
+          "FACTORY_FABRIC",
+          "COGNITIVE_WAL",
+          "LEARNING_DIGEST",
+          "GIT_HISTORY",
+          "MASTER_ESTATE_CENSUS",
+          "AUTHORIZED_INTERNAL_ARCHIVE"
+        ],
+        "internal_sufficiency": "VERIFICATION_PASS_AND_EVIDENCE_COUNT_GTE_3_AND_NO_CONTRADICTION",
+        "external_trigger": "INTERNAL_SUFFICIENCY_FALSE",
+        "external_mode": "SANITIZED_PUBLIC_QUERY_WITH_6H_GAP_COOLDOWN",
+        "external_state": "DISCOVERED",
+        "auto_canonical_promotion": false
+      },
+      "baseline_evidence": {
+        "assimilation_source_files": 1074,
+        "assimilation_unique_objects": 1006,
+        "unique_materials": 809,
+        "assimilation_units": 72,
+        "cognitive_items": 117,
+        "validation_queue": 117,
+        "capability_counts": {
+          "GOVERNANCE": 29,
+          "LEARNING": 25,
+          "GENERAL": 9,
+          "CODE_REPAIR": 4,
+          "DIAGNOSTIC_REPAIR": 3,
+          "COMMUNICATION": 1,
+          "FILE_INTELLIGENCE": 1
+        },
+        "assimilated_teacher_families": [
+          "qwen",
+          "granite"
+        ]
+      },
+      "monthly_milestones": [
+        {
+          "month": "2026-09",
+          "milestone": "CANONICAL_TRUTH_AND_CRITICAL_RECOVERY",
+          "tasks": [
+            "GL-002",
+            "GL-003",
+            "GL-004",
+            "RAIOS-TOTAL-ESTATE-PHASE1-01"
+          ],
+          "exit_gate": "MAIN_BRAIN_RUNTIME_AND_BRAIN_ESTATE_PROVEN_NO_DUPLICATES"
+        },
+        {
+          "month": "2026-10",
+          "milestone": "CAPABILITY_GRAPH_AND_ORCHESTRATION_CONVERGENCE",
+          "tasks": [
+            "GL-005",
+            "V9-A15",
+            "RAIOS-CAPABILITY-GRAPH-202610-01"
+          ],
+          "exit_gate": "ONE_CAPABILITY_GRAPH_ONE_COMMAND_FABRIC_ONE_ORCHESTRATION_PATH"
+        },
+        {
+          "month": "2026-11",
+          "milestone": "ASSIMILATION_VALIDATION_AND_NEUROLINGUA",
+          "tasks": [
+            "RAIOS-ASSIMILATION-VALIDATION-202611-01",
+            "V9-NL0"
+          ],
+          "exit_gate": "VALIDATION_QUEUE_REDUCED_AND_REUSABLE_SKILLS_PROVEN"
+        },
+        {
+          "month": "2026-12",
+          "milestone": "EXTERNAL_GAP_HARVEST",
+          "tasks": [
+            "RAIOS-EXTERNAL-GAP-HARVEST-202612-01"
+          ],
+          "exit_gate": "ONLY_PROVEN_INTERNAL_GAPS_RESEARCHED_WITH_PROVENANCE"
+        },
+        {
+          "month": "2027-01",
+          "milestone": "SKILL_COMPILATION_AND_COST_COMPRESSION",
+          "tasks": [
+            "RAIOS-SKILL-COMPILATION-202701-01"
+          ],
+          "exit_gate": "REPEATED_REASONING_COMPILED_AND_COST_DECAY_MEASURED"
+        },
+        {
+          "month": "2027-02",
+          "milestone": "COGNITIVE_INTEGRATION_AND_MODEL_ECOLOGY",
+          "tasks": [
+            "RAIOS-COGNITIVE-INTEGRATION-202702-01"
+          ],
+          "exit_gate": "SEARCH_LEARNING_NEUROLINGUA_FACTORIES_AND_MODEL_ECOLOGY_COMPOSED"
+        },
+        {
+          "month": "2027-03",
+          "milestone": "AUTONOMY_CERTIFICATION",
+          "tasks": [
+            "RAIOS-AUTONOMY-CERTIFICATION-202703-01"
+          ],
+          "exit_gate": "SELF_IMPROVEMENT_ROLLBACK_OFFLINE_CONTINUITY_AND_FOUNDER_GATES_PROVEN"
+        }
+      ],
+      "created_at": "2026-09-04T04:49:43.866147+00:00",
+      "authorized_by": "C1",
+      "authorization_source": "DIRECT_ACTIVE_CHAT_SESSION"
+    }
+  ],
+  "roadmap_updated_at": "2026-09-04T04:49:43.866147+00:00",
+  "active_program_id": "RAIOS-CAPABILITY-EVOLUTION-202609-202703"
 }

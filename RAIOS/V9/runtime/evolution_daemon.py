@@ -20,12 +20,15 @@ from raios.search_cortex import SearchCortex
 ROOT = Path.home() / ".raios" / "runtime" / "evolution-brain"
 HEARTBEAT = ROOT / "heartbeat.json"
 SUBCONSCIOUS_CONTEXT = ROOT / "subconscious-retrieval.json"
+GAP_RESEARCH = ROOT / "capability-gap-research.json"
 LOG = ROOT / "evolution.log"
 LOCK = ROOT / ".instance.lock"
 POLL_SECONDS = 2.0
 FULL_REVIEW_SECONDS = 60.0
 LIVENESS_SECONDS = 15.0
 MAX_FAILURE_BACKOFF_SECONDS = 60.0
+EXTERNAL_GAP_COOLDOWN_SECONDS = 21600.0
+MIN_INTERNAL_EVIDENCE = 3
 
 
 def now() -> str:
@@ -66,10 +69,86 @@ def acquire_single_instance():
     return handle
 
 
+def _load_json(path: Path, default: dict) -> dict:
+    try:
+        return json.loads(path.read_text(encoding="utf-8-sig"))
+    except (OSError, json.JSONDecodeError):
+        return default
+
+
+def _internal_sufficient(result: dict) -> bool:
+    verification = result.get("verification") or {}
+    return bool(
+        verification.get("status") == "PASS"
+        and int(verification.get("evidence_count") or 0) >= MIN_INTERNAL_EVIDENCE
+        and not (result.get("contradictions") or [])
+    )
+
+
+def _safe_gap_query(family: dict) -> str | None:
+    geometry = family.get("geometry") or {}
+    pieces = [
+        str(geometry.get("tool") or ""),
+        str(geometry.get("exception_type") or ""),
+        *[str(x) for x in (geometry.get("unresolved_flags") or [])[:6]],
+    ]
+    clean = " ".join(x.strip() for x in pieces if x and x.strip())
+    clean = " ".join(part for part in clean.split() if "\\" not in part and "/" not in part)
+    return ("technical capability " + clean)[:300] if clean else None
+
+
+def _external_gap_research(cortex: SearchCortex, family: dict, internal: dict) -> dict | None:
+    query = _safe_gap_query(family)
+    if not query:
+        return None
+    cache = _load_json(GAP_RESEARCH, {"schema": "raios.capability-gap-research.v1", "entries": {}})
+    key = str(family.get("family_id") or query)
+    old = (cache.get("entries") or {}).get(key) or {}
+    try:
+        old_at = datetime.fromisoformat(str(old.get("searched_at") or "").replace("Z", "+00:00"))
+        if (datetime.now(timezone.utc) - old_at).total_seconds() < EXTERNAL_GAP_COOLDOWN_SECONDS:
+            return old
+    except (TypeError, ValueError):
+        pass
+    result = cortex.search(
+        query,
+        public_allowed=True,
+        public_query=query,
+        official_allowed=True,
+        limit=6,
+        deep=True,
+        trace=False,
+    )
+    row = {
+        "family_id": family.get("family_id"),
+        "searched_at": now(),
+        "query": query,
+        "knowledge_state": "DISCOVERED",
+        "canonical": False,
+        "promoted": False,
+        "internal_verification": internal.get("verification"),
+        "external_verification": result.get("verification"),
+        "sources": result.get("sources") or [],
+        "results": (result.get("results") or [])[:6],
+        "contradictions": result.get("contradictions") or [],
+        "law": [
+            "INTERNAL_FIRST",
+            "EXTERNAL_ONLY_FOR_PROVEN_GAP",
+            "EXTERNAL_RESULT_NE_CANONICAL",
+            "C1_PROMOTION_REQUIRED",
+        ],
+    }
+    cache.setdefault("entries", {})[key] = row
+    cache["generated_at"] = now()
+    atomic_json(GAP_RESEARCH, cache)
+    return row
+
+
 def build_subconscious_context() -> dict:
     brain = status()
     cortex = SearchCortex()
     contexts = []
+    external_gaps = []
     families = list(brain.get("families") or [])
     families.sort(key=lambda x: x.get("last_seen") or "", reverse=True)
     for family in families[:5]:
@@ -86,24 +165,36 @@ def build_subconscious_context() -> dict:
         result = cortex.search(
             query,
             public_allowed=False,
+            official_allowed=False,
             limit=5,
-            deep=False,
+            deep=True,
             trace=False,
         )
+        external = None
+        if not _internal_sufficient(result):
+            external = _external_gap_research(cortex, family, result)
+            if external:
+                external_gaps.append(external)
         contexts.append({
             "family_id": family.get("family_id"),
             "query": query,
             "mechanisms": result.get("mechanisms"),
             "results": result.get("results"),
+            "internal_sufficient": _internal_sufficient(result),
+            "external_gap_research": external,
         })
     payload = {
         "schema": "raios.subconscious-retrieval.v1",
         "generated_at": now(),
         "privacy": "LOCAL_PRIVATE_ONLY",
-        "public_web_used": False,
+        "public_web_used": bool(external_gaps),
+        "external_gap_count": len(external_gaps),
+        "external_gap_research": external_gaps,
         "family_contexts": contexts,
         "shared_search_cortex": True,
         "second_memory_created": False,
+        "search_policy": "INTERNAL_FIRST_THEN_EXTERNAL_GAP_ONLY",
+        "automatic_canonical_promotion": False,
     }
     atomic_json(SUBCONSCIOUS_CONTEXT, payload)
     return payload

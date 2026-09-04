@@ -28,6 +28,23 @@ def test_lifecycle_distinguishes_done_current_required_waiting_and_stale():
     assert out["required_backlog_count"] == 4
 
 
+def test_future_planned_task_is_visible_but_not_dispatchable_before_not_before():
+    tasks = [
+        {"id": "NOW", "status": "READY", "dependencies": []},
+        {"id": "JAN", "status": "READY", "dependencies": [],
+         "not_before": "2999-01-01T00:00:00+00:00",
+         "program_id": "P1", "target_month": "2999-01"},
+    ]
+    life = build_work_lifecycle(tasks)
+    assert life["counts"]["REQUIRED_NEXT"] == 1
+    assert life["counts"]["FUTURE_PLANNED"] == 1
+    assert life["buckets"]["FUTURE_PLANNED"][0]["id"] == "JAN"
+    rows = [{"seat": "C2", "aliases": ["CURSOR"], "alias_prefixes": [],
+             "auto_routable": True, "coordination_available": True}]
+    plan = build_dispatch_plan(tasks, rows)
+    assert {row["task_id"] for row in plan["queue"]} == {"NOW"}
+
+
 def test_founder_brief_prepares_when_offline_and_holds_explicit_decision():
     tasks = [
         {"id": "NEXT", "status": "READY", "dependencies": []},

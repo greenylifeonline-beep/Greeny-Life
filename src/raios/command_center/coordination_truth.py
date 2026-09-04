@@ -95,9 +95,11 @@ def aliases_for_seat(seat: str, seat_map: dict[str, Any]) -> tuple[list[str], li
     return sorted(aliases), sorted(set(prefixes), key=len, reverse=True)
 
 
-def task_truth_state(task: dict[str, Any], done_ids: set[str] | None = None) -> str:
+def task_truth_state(task: dict[str, Any], done_ids: set[str] | None = None,
+                     *, now: datetime | None = None) -> str:
     status = str(task.get("status") or "UNKNOWN").upper()
     done_ids = done_ids or set()
+    now = now or _utc_now()
     if status == "DONE":
         return "DONE"
     if status == "BLOCKED":
@@ -105,6 +107,9 @@ def task_truth_state(task: dict[str, Any], done_ids: set[str] | None = None) -> 
     if status == "IN_PROGRESS" or str(task.get("dispatch_status") or "").upper() == "PENDING_ACCEPTANCE":
         return "ACTIVE_VERIFIED" if task_claim_is_current(task) else "STALE_CLAIM_REQUIRES_RECONCILIATION"
     if status == "READY":
+        not_before = _parse_time(task.get("not_before"))
+        if not_before is not None and not_before > now:
+            return "FUTURE_PLANNED"
         deps = [str(x) for x in (task.get("dependencies") or []) if str(x)]
         return "REQUIRED_NEXT" if all(dep in done_ids for dep in deps) else "WAITING_DEPENDENCIES"
     return "UNCLASSIFIED_REQUIRED"
@@ -117,6 +122,7 @@ def build_work_lifecycle(tasks: list[dict[str, Any]]) -> dict[str, Any]:
         "ACTIVE_VERIFIED": [],
         "REQUIRED_NEXT": [],
         "WAITING_DEPENDENCIES": [],
+        "FUTURE_PLANNED": [],
         "BLOCKED": [],
         "STALE_CLAIM_REQUIRES_RECONCILIATION": [],
         "UNCLASSIFIED_REQUIRED": [],
@@ -134,12 +140,23 @@ def build_work_lifecycle(tasks: list[dict[str, Any]]) -> dict[str, Any]:
             "dependencies": list(task.get("dependencies") or []),
             "blocker": task.get("blocker"),
             "next_step": (task.get("resume_checkpoint") or {}).get("next_step"),
+            "program_id": task.get("program_id"),
+            "target_month": task.get("target_month"),
+            "not_before": task.get("not_before"),
+            "horizon_end": task.get("horizon_end"),
+            "milestone": task.get("milestone"),
         }
         buckets.setdefault(truth, []).append(row)
     required = [row for key, rows in buckets.items() if key != "DONE" for row in rows]
+    actionable = (
+        buckets["ACTIVE_VERIFIED"] + buckets["REQUIRED_NEXT"] +
+        buckets["WAITING_DEPENDENCIES"] + buckets["BLOCKED"] +
+        buckets["STALE_CLAIM_REQUIRES_RECONCILIATION"]
+    )
     return {
-        "schema": "raios.work-lifecycle.v1",
+        "schema": "raios.work-lifecycle.v2",
         "counts": {key: len(rows) for key, rows in buckets.items()},
+        "actionable_backlog_count": len(actionable),
         "buckets": buckets,
         "required_backlog_count": len(required),
         "required_backlog": required,
@@ -182,6 +199,7 @@ def build_founder_brief(tasks: list[dict[str, Any]], *, founder_available: bool,
         "active_verified": lifecycle["buckets"]["ACTIVE_VERIFIED"],
         "must_do_next": lifecycle["buckets"]["REQUIRED_NEXT"],
         "waiting_dependencies": lifecycle["buckets"]["WAITING_DEPENDENCIES"],
+        "future_planned": lifecycle["buckets"]["FUTURE_PLANNED"],
         "blocked": lifecycle["buckets"]["BLOCKED"],
         "stale_claims_requiring_reconciliation": stale,
         "decisions_required": decisions,
@@ -292,6 +310,9 @@ def build_dispatch_plan(tasks: list[dict[str, Any]], route_rows: list[dict[str, 
     for task in tasks:
         if str(task.get("status") or "").upper() != "READY":
             continue
+        not_before = _parse_time(task.get("not_before"))
+        if not_before is not None and not_before > _utc_now():
+            continue
         deps = [str(x) for x in (task.get("dependencies") or []) if str(x)]
         if not all(dep in done_ids for dep in deps):
             continue
@@ -355,6 +376,9 @@ def build_dispatch_plan(tasks: list[dict[str, Any]], route_rows: list[dict[str, 
             "dispatchable_now": blocker is None,
             "scope": list(task.get("scope") or []),
             "dependencies": deps,
+            "program_id": task.get("program_id"),
+            "target_month": task.get("target_month"),
+            "milestone": task.get("milestone"),
         })
     queue.sort(key=lambda row: (-int(row["score"]), str(row["task_id"])))
     for index, row in enumerate(queue, 1):
