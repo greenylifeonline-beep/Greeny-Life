@@ -89,3 +89,47 @@ def test_c1_named_unbound_seat_is_explicit_not_fake_live(tmp_path):
     assert out["targets"] == ["C2"]
     assert out["routing_modes"]["C2"] == "C1_SELECTED_UNBOUND"
     assert out["owner_selected_unbound"] == ["C2"]
+
+def test_process_candidate_is_discovered_not_fake_present(tmp_path, monkeypatch):
+    repo = tmp_path / "Greeny-Life"
+    seatmap = repo / ".ai-os" / "mcp" / "SEAT-MAP.json"
+    seatmap.parent.mkdir(parents=True)
+    seatmap.write_text(json.dumps({"seats": {
+        "C2": {"actor_role": "EXEC", "process_names": ["Cursor.exe"]}
+    }}), encoding="utf-8")
+    presence = tmp_path / "presence.json"; presence.write_text(json.dumps({"seats": {}}), encoding="utf-8")
+    bindings = tmp_path / "bindings.json"; bindings.write_text(json.dumps({"bindings": {}}), encoding="utf-8")
+    consumers = tmp_path / "consumers"; consumers.mkdir()
+    routes = ActorRouteRegistry(repo, presence_path=presence, bindings_path=bindings, consumers_path=consumers)
+    monkeypatch.setattr(routes, "_process_names", lambda: {"cursor.exe"})
+    snap = routes.snapshot()
+    row = snap["seats"][0]
+    assert row["process_candidate"] is True
+    assert row["discovery_state"] == "DISCOVERED_LIVE_UNVERIFIED"
+    assert row["auto_routable"] is False
+
+
+def test_live_consumer_with_expired_presence_requires_resign(tmp_path, monkeypatch):
+    repo = tmp_path / "Greeny-Life"
+    seatmap = repo / ".ai-os" / "mcp" / "SEAT-MAP.json"
+    seatmap.parent.mkdir(parents=True)
+    seatmap.write_text(json.dumps({"seats": {"C6": {"actor_role": "ESTATE"}}}), encoding="utf-8")
+    presence = tmp_path / "presence.json"
+    presence.write_text(json.dumps({"seats": {
+        "C6": {"presence": "PRESENT", "signature_valid": True, "lease_expires_at": iso(-1)}
+    }}), encoding="utf-8")
+    bindings = tmp_path / "bindings.json"
+    bindings.write_text(json.dumps({"bindings": {"C6": {
+        "actor_id": "C6-ACTOR", "origin_instance": "c6-live", "device_id": "AG",
+        "session_id": "s6", "auth_evidence": "proof", "lease_expires_at": iso(5)
+    }}}), encoding="utf-8")
+    consumers = tmp_path / "consumers"; consumers.mkdir()
+    (consumers / "C6.json").write_text(json.dumps({
+        "state": "ONLINE", "actor_id": "C6-ACTOR", "device_id": "AG",
+        "session_id": "s6", "lease_expires_at": iso(5)
+    }), encoding="utf-8")
+    routes = ActorRouteRegistry(repo, presence_path=presence, bindings_path=bindings, consumers_path=consumers)
+    monkeypatch.setattr(routes, "_process_names", lambda: set())
+    row = routes.snapshot()["seats"][0]
+    assert row["discovery_state"] == "LIVE_SESSION_REQUIRES_RESIGN"
+    assert row["auto_routable"] is False

@@ -188,6 +188,7 @@ class TaskAcceptIn(BaseModel):
  task_id:str=Field(min_length=1,max_length=200)
  actor:str=Field(min_length=2,max_length=20)
  dispatch_id:str=Field(min_length=4,max_length=200)
+ actor_proof:dict[str,Any]=Field(default_factory=dict)
 class TaskCheckpointIn(BaseModel):
  task_id:str=Field(min_length=1,max_length=200)
  actor:str=Field(min_length=2,max_length=20)
@@ -199,6 +200,7 @@ class TaskCheckpointIn(BaseModel):
  evidence_refs:list[str]=Field(default_factory=list,max_length=100)
  next_step:str=Field(min_length=1,max_length=50000)
  blocker:str|None=Field(default=None,max_length=50000)
+ actor_proof:dict[str,Any]=Field(default_factory=dict)
 class TaskReportIn(BaseModel):
  task_id:str=Field(min_length=1,max_length=200)
  actor:str=Field(min_length=2,max_length=20)
@@ -210,6 +212,7 @@ class TaskReportIn(BaseModel):
  evidence_refs:list[str]=Field(default_factory=list,max_length=100)
  next_step:str=Field(min_length=1,max_length=50000)
  blocker:str|None=Field(default=None,max_length=50000)
+ actor_proof:dict[str,Any]=Field(default_factory=dict)
 
 def c1_gateway():
  sys.path.insert(0,str(REPO/"scripts/ai-os"))
@@ -248,14 +251,14 @@ def api_task_dispatch(req:DispatchIn,x_raios_csrf:str|None=Header(None)):
 @app.post("/api/task-accept")
 def api_task_accept(req:TaskAcceptIn,x_raios_csrf:str|None=Header(None)):
  require_csrf(x_raios_csrf)
- try:return COUNCIL_BOARD.accept_task(req.task_id,req.actor,req.dispatch_id)
+ try:return COUNCIL_BOARD.accept_task(req.task_id,req.actor,req.dispatch_id,req.actor_proof)
  except ValueError as exc:raise HTTPException(409,str(exc))
 @app.post("/api/task-checkpoint")
 def api_task_checkpoint(req:TaskCheckpointIn,x_raios_csrf:str|None=Header(None)):
  require_csrf(x_raios_csrf)
  try:return COUNCIL_BOARD.submit_checkpoint(req.task_id,req.actor,req.phase,req.summary,
   req.completed_steps,req.changed_files,req.validation,req.evidence_refs,
-  req.next_step,req.blocker)
+  req.next_step,req.blocker,req.actor_proof)
  except ValueError as exc:raise HTTPException(409,str(exc))
 @app.get("/api/task-resume/{task_id}")
 def api_task_resume(task_id:str):
@@ -266,7 +269,7 @@ def api_task_report(req:TaskReportIn,x_raios_csrf:str|None=Header(None)):
  require_csrf(x_raios_csrf)
  try:return COUNCIL_BOARD.submit_report(req.task_id,req.actor,req.status,req.summary,
   req.evidence_refs,req.completed_steps,req.changed_files,req.validation,
-  req.next_step,req.blocker)
+  req.next_step,req.blocker,req.actor_proof)
  except ValueError as exc:raise HTTPException(409,str(exc))
 @app.get("/api/models")
 def api_models():return model_state()

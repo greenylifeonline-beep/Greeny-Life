@@ -168,11 +168,24 @@ class ClientActivityView:
             else:
                 availability = "UNKNOWN"
                 verified = False
-                source = "INSUFFICIENT_LIVE_EVIDENCE"
+                discovery = str(row.get("discovery_state") or "UNKNOWN")
+                source = "DISCOVERY_EVIDENCE" if discovery != "UNKNOWN" else "INSUFFICIENT_LIVE_EVIDENCE"
                 if stale_claims:
                     work_phase = "STALE_TASK_CLAIM_REQUIRES_RECONCILIATION"
                     required_action = "SIGN_CHECK_IN_OR_SYSTEM_RETURN_TASK_FROM_CHECKPOINT"
                     reason = "TASK_REFERENCE_EXISTS_WITHOUT_CURRENT_SIGNED_BOUND_CONSUMER"
+                elif discovery == "LIVE_SESSION_REQUIRES_RESIGN":
+                    work_phase = "LIVE_SESSION_REQUIRES_RESIGN"
+                    required_action = "RESPOND_TO_PRESENCE_CHALLENGE"
+                    reason = "LIVE_BOUND_SESSION_DETECTED_BUT_SIGNED_PRESENCE_EXPIRED"
+                elif discovery == "DISCOVERED_LIVE_UNVERIFIED":
+                    work_phase = "DISCOVERED_LIVE_UNVERIFIED"
+                    required_action = "RESPOND_TO_PRESENCE_CHALLENGE"
+                    reason = "LIVE_PROCESS_OR_CURRENT_ATTESTATION_DISCOVERED_BUT_SELF_SIGNATURE_REQUIRED"
+                elif discovery == "PROBE_PENDING":
+                    work_phase = "PRESENCE_PROBE_PENDING"
+                    required_action = "RESPOND_TO_PRESENCE_CHALLENGE"
+                    reason = "SYSTEM_SENT_AVAILABILITY_CHALLENGE_AWAITING_SIGNED_RESPONSE"
                 else:
                     work_phase = "SIGN_IN_REQUIRED" if not row.get("present") else "LIVE_BINDING_REQUIRED"
                     required_action = "SIGN_CHECK_IN_AND_BIND_LIVE_SESSION"
@@ -188,6 +201,11 @@ class ClientActivityView:
                 "last_seen": row.get("presence_last_seen"),
                 "source": source,
                 "verified": verified,
+                "discovery_state": row.get("discovery_state"),
+                "process_candidate": row.get("process_candidate") is True,
+                "probe_pending": row.get("probe_pending") is True,
+                "probe_challenge_id": row.get("probe_challenge_id"),
+                "probe_expires_at": row.get("probe_expires_at"),
                 "execution_ready": execution_ready,
                 "coordination_available": availability == "AVAILABLE",
                 "availability_attested_at": row.get("availability_attested_at"),
@@ -296,6 +314,21 @@ class ClientActivityView:
         founder_brief = build_founder_brief(
             tasks, founder_available=founder_available,
             active_scope_reservations=current_reservations)
+        presence_anomalies = [{
+            "seat": row.get("seat"),
+            "availability": row.get("availability"),
+            "execution_ready": row.get("execution_ready"),
+            "discovery_state": row.get("discovery_state"),
+            "work_phase": row.get("work_phase"),
+            "required_action": row.get("required_action"),
+            "reason": row.get("reason"),
+            "probe_pending": row.get("probe_pending"),
+            "probe_challenge_id": row.get("probe_challenge_id"),
+        } for row in clients
+          if row.get("execution_ready") is not True and str(row.get("discovery_state") or "UNKNOWN") != "UNKNOWN"]
+        founder_brief["presence_anomalies"] = presence_anomalies
+        founder_brief["presence_anomaly_count"] = len(presence_anomalies)
+        founder_brief["presence_attention_required"] = bool(presence_anomalies)
         dispatch_plan = build_dispatch_plan(tasks, route_rows, current_reservations)
         return {
             "schema": "raios.client-activity.v4",
@@ -305,6 +338,7 @@ class ClientActivityView:
             "availability_summary": availability_summary,
             "work_lifecycle": work_lifecycle,
             "founder_brief": founder_brief,
+            "presence_anomalies": presence_anomalies,
             "dispatch_plan": dispatch_plan,
             "all_seats_accounted_for": len(clients) == 12,
             "coordination_notifiable": route_snapshot.get("coordination_available", []),
@@ -349,6 +383,10 @@ class ClientActivityView:
                 "CLAIM_NE_LIVE_ACTIVITY", "DELIVERY_ACK_NE_ACTOR_ACK",
                 "SERVICE_NE_SEAT_ACTOR", "ONLY_BOUND_CONSUMER_IS_AUTO_ROUTABLE",
                 "AVAILABILITY_NE_EXECUTION_READINESS",
+                "PROCESS_DISCOVERY_NE_PRESENCE_PROOF",
+                "DELIVERY_ACK_NE_PRESENCE_PROOF",
+                "CHALLENGE_RESPONSE_REQUIRED_FOR_DISCOVERED_UNVERIFIED_SEAT",
+                "DISCOVERED_UNVERIFIED_SEAT_MUST_RAISE_FOUNDER_ATTENTION",
                 "SIGNED_PRESENCE_REQUIRED_FOR_ANY_WORK",
                 "WORKER_ASSIGNMENT_REQUIRED_BEFORE_EXECUTION",
                 "ALL_COORDINATION_READS_USE_CLIENT_ACTIVITY_V4",

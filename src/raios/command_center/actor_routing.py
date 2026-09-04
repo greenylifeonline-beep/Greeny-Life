@@ -1,7 +1,11 @@
 from __future__ import annotations
 
+import csv
+import io
 import json
 import os
+import subprocess
+import time
 from datetime import datetime, timezone
 from pathlib import Path
 from typing import Any
@@ -52,6 +56,9 @@ class ActorRouteRegistry:
         self.presence_path = (presence_path or p_default).resolve()
         self.bindings_path = (bindings_path or b_default).resolve()
         self.consumers_path = (consumers_path or c_default).resolve()
+        self.challenge_path = self.presence_path.parent / "presence-challenges.json"
+        self._process_cache_at = 0.0
+        self._process_cache: set[str] = set()
 
     def _binding_current(self, row: dict[str, Any]) -> bool:
         required = ("actor_id", "origin_instance", "device_id", "session_id", "auth_evidence", "lease_expires_at")
@@ -72,6 +79,22 @@ class ActorRouteRegistry:
             return False
         return _current_expiry(row.get("lease_expires_at"))
 
+    def _process_names(self) -> set[str]:
+        now=time.monotonic()
+        if now-self._process_cache_at < 15:
+            return set(self._process_cache)
+        names:set[str]=set()
+        try:
+            raw=subprocess.check_output(
+                ["tasklist","/FO","CSV","/NH"],text=True,stderr=subprocess.DEVNULL,
+                timeout=5,creationflags=getattr(subprocess,"CREATE_NO_WINDOW",0))
+            for row in csv.reader(io.StringIO(raw)):
+                if row:
+                    names.add(str(row[0]).lower())
+        except Exception:
+            pass
+        self._process_cache_at=now;self._process_cache=names
+        return set(names)
     def canonical_seats(self) -> set[str]:
         seat_map = _load(self.seat_map_path, {"seats": {}})
         return set((seat_map.get("seats") or {}).keys())
@@ -79,6 +102,8 @@ class ActorRouteRegistry:
         seat_map = _load(self.seat_map_path, {"seats": {}})
         presence = _load(self.presence_path, {"seats": {}})
         bindings = _load(self.bindings_path, {"bindings": {}})
+        challenges = _load(self.challenge_path, {"challenges": {}})
+        process_names = self._process_names()
         rows: list[dict[str, Any]] = []
         auto: list[str] = []
         coordination_available: list[str] = []
@@ -95,11 +120,32 @@ class ActorRouteRegistry:
             )
             binding_current = self._binding_current(b)
             consumer_current = self._consumer_current(c, b)
+            configured_processes={str(x).lower() for x in (spec.get("process_names") or []) if str(x).strip()}
+            process_candidate=bool(configured_processes & process_names)
+            pending_probe=False;pending_challenge_id=None;pending_probe_expires_at=None
+            for probe in (challenges.get("challenges") or {}).values():
+                if str(probe.get("seat") or "").upper()!=seat or probe.get("status")!="PENDING":
+                    continue
+                if _current_expiry(probe.get("expires_at")):
+                    pending_probe=True
+                    pending_challenge_id=probe.get("challenge_id")
+                    pending_probe_expires_at=probe.get("expires_at")
+                    break
             routable = present and binding_current and consumer_current
             coordination_current = (
                 routable or present or
                 (availability_claim_current and availability_claim == "AVAILABLE")
             )
+            if routable:
+                discovery_state="VERIFIED_EXECUTION_READY"
+            elif consumer_current and binding_current:
+                discovery_state="LIVE_SESSION_REQUIRES_RESIGN"
+            elif process_candidate or (availability_claim_current and availability_claim=="AVAILABLE"):
+                discovery_state="DISCOVERED_LIVE_UNVERIFIED"
+            elif pending_probe:
+                discovery_state="PROBE_PENDING"
+            else:
+                discovery_state="UNKNOWN"
             if routable:
                 auto.append(seat)
             if coordination_current:
@@ -136,6 +182,12 @@ class ActorRouteRegistry:
                 "session_id": b.get("session_id"),
                 "auto_routable": routable,
                 "coordination_available": coordination_current,
+                "process_candidate": process_candidate,
+                "configured_process_names": sorted(configured_processes),
+                "probe_pending": pending_probe,
+                "probe_challenge_id": pending_challenge_id,
+                "probe_expires_at": pending_probe_expires_at,
+                "discovery_state": discovery_state,
             })
         return {
             "schema": "raios.actor-route-registry.v2",
@@ -150,6 +202,8 @@ class ActorRouteRegistry:
             "presence_ne_binding": True,
             "binding_ne_consumer": True,
             "delivery_ack_ne_actor_ack": True,
+            "process_discovery_ne_presence_proof": True,
+            "live_session_ne_signed_presence": True,
         }
 
     def resolve(self, requested: list[str]) -> dict[str, Any]:

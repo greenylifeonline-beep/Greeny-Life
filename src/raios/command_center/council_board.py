@@ -14,6 +14,7 @@ from .coordination_truth import (
     canonical_seat, dispatch_priority_score, founder_gate_satisfied, task_claim_is_current,
 )
 from .task_actions import TaskActionExecutor
+from raios.council_ops.presence_challenge import PresenceChallengeStore
 
 SEATS=tuple(f"C{i}" for i in range(1,13))
 def utc()->str:return datetime.now(timezone.utc).isoformat()
@@ -57,6 +58,7 @@ class CouncilBoard:
         self.presence=(presence or Path.home()/".raios/runtime/council-ops/presence.json").resolve()
         self.presence_prompts=self.presence.parent/"presence-prompts.json"
         self.coordination_cache=self.presence.parent/"coordination-sync-cache.json"
+        self.presence_challenges=PresenceChallengeStore(self.presence.parent)
         self.fabric=self.repo/".ai-os/state/command-fabric"
         self.report_inbox=self.fabric/"task-reports/inbox"
         self.report_processed=self.fabric/"task-reports/processed"
@@ -83,6 +85,59 @@ class CouncilBoard:
     def _seat_aliases(self,seat:str)->set[str]:
         aliases,_=aliases_for_seat(seat,self._seat_map())
         return set(aliases)
+    def _actor_session_signature(self,actor:str,proof:dict[str,Any]|None,
+                                 action:str,subject_id:str)->dict[str,Any]:
+        if self.routes is None:
+            return {"signature_mode":"LEGACY_DIRECT_TEST","verified":True,
+                    "fingerprint":hashlib.sha256(
+                        f"LEGACY_DIRECT_TEST\x1f{action}\x1f{actor}\x1f{subject_id}".encode()
+                    ).hexdigest()}
+        if not proof:raise ValueError("ACTOR_SESSION_PROOF_REQUIRED")
+        snap=self.routes.snapshot()
+        route=next((x for x in snap.get("seats",[]) if str(x.get("seat") or "").upper()==actor),None)
+        if not route:raise ValueError("ACTOR_ROUTE_NOT_FOUND")
+        presence=load(self.presence,{"seats":{}}).get("seats",{}).get(actor,{})
+        attendance=str(presence.get("attendance_fingerprint") or "")
+        if not attendance:raise ValueError("ATTENDANCE_FINGERPRINT_REQUIRED")
+        expected={
+            "actor_id":str(route.get("actor_id") or ""),
+            "session_id":str(route.get("session_id") or ""),
+            "device_id":str(route.get("device_id") or ""),
+            "attendance_fingerprint":attendance,
+        }
+        for key,value in expected.items():
+            if not value or str(proof.get(key) or "")!=value:
+                raise ValueError("ACTOR_SESSION_PROOF_MISMATCH::"+key)
+        if route.get("auto_routable") is not True:raise ValueError("ACTOR_NOT_EXECUTION_READY")
+        at=utc()
+        fingerprint=hashlib.sha256("\x1f".join([
+            "RAIOS_ACTOR_SESSION_SIGNATURE_V1",action,actor,subject_id,
+            expected["actor_id"],expected["session_id"],expected["device_id"],
+            attendance,at]).encode()).hexdigest()
+        return {**expected,"signature_mode":"SESSION_BOUND_ATTENDANCE_FINGERPRINT",
+                "verified":True,"signed_at":at,"fingerprint":fingerprint}
+    def _evidence_manifest(self,refs:list[str])->list[dict[str,Any]]:
+        manifest=[]
+        for ref in list(dict.fromkeys(str(x) for x in refs if str(x).strip())):
+            path=Path(ref)
+            if not path.is_absolute():path=self.repo/path
+            try:path=path.resolve()
+            except OSError:raise ValueError("EVIDENCE_PATH_INVALID::"+ref)
+            if not path.is_file():raise ValueError("EVIDENCE_NOT_FOUND::"+ref)
+            digest=hashlib.sha256()
+            size=0
+            with path.open("rb") as handle:
+                for chunk in iter(lambda:handle.read(1024*1024),b""):
+                    size+=len(chunk);digest.update(chunk)
+            manifest.append({"ref":ref,"resolved_path":str(path),"sha256":digest.hexdigest(),"bytes":size})
+        return manifest
+    def _verify_evidence_manifest(self,manifest:list[dict[str,Any]])->None:
+        for item in manifest:
+            current=self._evidence_manifest([str(item.get("ref") or "")])
+            if not current:raise ValueError("EVIDENCE_NOT_FOUND::"+str(item.get("ref")))
+            now=current[0]
+            if now["sha256"]!=item.get("sha256") or now["bytes"]!=item.get("bytes"):
+                raise ValueError("EVIDENCE_CHANGED_AFTER_SUBMISSION::"+str(item.get("ref")))
     def _worker_ready(self,target:str)->bool:
         if not self._live(target):return False
         if self.routes is None:return True
@@ -92,33 +147,36 @@ class CouncilBoard:
             return bool(row and row.get("auto_routable") is True)
         except Exception:
             return False
-    def _prompt_unsigned_connected(self,worker:Any)->int:
+    def _probe_unverified_seats(self,worker:Any)->int:
         if self.routes is None:return 0
         try:snapshot=self.routes.snapshot()
         except Exception:return 0
-        state=load(self.presence_prompts,{"schema":"raios.presence-prompts.v1","seats":{}})
-        prompted=0;now=datetime.now(timezone.utc)
-        for row in snapshot.get("seats",[]):
-            if row.get("auto_routable") is True or row.get("consumer_current") is not True:continue
-            seat=str(row.get("seat") or "").upper();session=str(row.get("session_id") or "")
-            if seat not in SEATS or not session:continue
-            old=(state.get("seats") or {}).get(seat,{})
-            recent=False
-            try:
-                at=datetime.fromisoformat(str(old.get("last_prompt_at") or "").replace("Z","+00:00"))
-                recent=old.get("session_id")==session and (now-at).total_seconds()<120
-            except (TypeError,ValueError):pass
-            if recent:continue
-            text=("PRESENCE_REQUIRED\nWORK_AUTHORITY=false\n"
-                  f"SEAT={seat}\nACTION=SIGNED_CHECK_IN_AND_BIND_LIVE_SESSION\n"
-                  "AFTER_CHECK_IN=WAIT_FOR_RAIOS_WORKER_ASSIGNMENT\n"
+        priority={"LIVE_SESSION_REQUIRES_RESIGN":0,"DISCOVERED_LIVE_UNVERIFIED":1,
+                  "PROBE_PENDING":2,"UNKNOWN":3}
+        rows=sorted(snapshot.get("seats",[]),
+                    key=lambda r:(priority.get(str(r.get("discovery_state") or "UNKNOWN"),9),
+                                  str(r.get("seat") or "")))
+        prompted=0
+        for row in rows:
+            if row.get("auto_routable") is True:continue
+            seat=str(row.get("seat") or "").upper()
+            if seat not in SEATS:continue
+            challenge=self.presence_challenges.issue(
+                seat,reason=str(row.get("discovery_state") or "UNKNOWN"),issued_by="RAIOS-WORKER",
+                ttl_seconds=600)
+            if challenge.get("status")=="ALREADY_PENDING":continue
+            text=("PRESENCE_PROBE\nWORK_AUTHORITY=false\n"
+                  f"SEAT={seat}\nDISCOVERY_STATE={row.get('discovery_state')}\n"
+                  f"CHALLENGE_ID={challenge['challenge_id']}\nNONCE={challenge['nonce']}\n"
+                  "RESPONSE_REQUIRED=AUTHENTICATED_SELF_RESPONSE\n"
+                  "DELIVERY_ACK_NE_PRESENCE_PROOF=true\n"
+                  "IF_AVAILABLE=SIGN_RESPONSE_AND_WAIT_FOR_RAIOS_WORKER_ASSIGNMENT\n"
+                  "IF_BUSY=SIGN_RESPONSE_BUSY\nIF_OFFLINE=SIGN_RESPONSE_OFFLINE\n"
                   "SELF_CLAIM=false\nDIRECT_HANDOFF=false")
-            msg=worker.enqueue("RAIOS-WORKER",[seat],text,None)
-            state.setdefault("seats",{})[seat]={"session_id":session,"last_prompt_at":utc(),
-                                                "message_id":msg.get("message_id")}
+            msg=worker.enqueue("RAIOS-WORKER",[seat],text,None,
+                               routing_modes={seat:"PRESENCE_DISCOVERY_PROBE"})
+            self.presence_challenges.bind_message(challenge["challenge_id"],msg["message_id"])
             prompted+=1
-        if prompted:
-            state["generated_at"]=utc();atomic(self.presence_prompts,state)
         return prompted
     def _publish_coordination_change(self,worker:Any)->int:
         data=load(self.tasks,{"tasks":[]})
@@ -147,9 +205,22 @@ class CouncilBoard:
         current_locks=[x for x in locks if x["reservation_state"]=="CURRENT_ACTIVE_RESERVATION"]
         routes=self.routes.snapshot() if self.routes is not None else {}
         coordination_available=list(routes.get("coordination_available",[]))
+        presence_anomalies=[{
+            "seat":row.get("seat"),
+            "discovery_state":row.get("discovery_state"),
+            "probe_pending":row.get("probe_pending"),
+            "probe_challenge_id":row.get("probe_challenge_id"),
+            "process_candidate":row.get("process_candidate"),
+            "consumer_current":row.get("consumer_current"),
+            "binding_current":row.get("binding_current"),
+        } for row in routes.get("seats",[])
+          if row.get("auto_routable") is not True and str(row.get("discovery_state") or "UNKNOWN")!="UNKNOWN"]
         founder_brief=build_founder_brief(
             tasks,founder_available="C1" in coordination_available,
             active_scope_reservations=current_locks)
+        founder_brief["presence_anomalies"]=presence_anomalies
+        founder_brief["presence_anomaly_count"]=len(presence_anomalies)
+        founder_brief["presence_attention_required"]=bool(presence_anomalies)
         payload={
             "schema":"raios.coordination-state.v2",
             "source":"/api/client-activity",
@@ -157,6 +228,7 @@ class CouncilBoard:
             "stale_work_claims":stale,
             "work_lifecycle":lifecycle,
             "founder_brief":founder_brief,
+            "presence_anomalies":presence_anomalies,
             "active_scope_reservations":current_locks,
             "stale_scope_reservations":[x for x in locks if x not in current_locks],
             "coordination_available":coordination_available,
@@ -181,6 +253,8 @@ class CouncilBoard:
                 "active_work":active,
                 "must_do_next":founder_brief.get("must_do_next",[]),
                 "founder_decisions_required":founder_brief.get("decision_count",0),
+                "presence_anomaly_count":len(presence_anomalies),
+                "presence_anomalies":presence_anomalies,
                 "execution_ready":routes.get("auto_routable",[]),
             }
             msg=worker.enqueue("RAIOS-WORKER",targets,
@@ -384,7 +458,8 @@ class CouncilBoard:
                 "changed_files":list(dict.fromkeys(changed_files)),
                 "validation":list(dict.fromkeys(validation)),"evidence_refs":refs,
                 "next_step":next_step,"blocker":blocker,"created_at":utc()}
-    def accept_task(self,task_id:str,actor:str,dispatch_id:str)->dict[str,Any]:
+    def accept_task(self,task_id:str,actor:str,dispatch_id:str,
+                    actor_proof:dict[str,Any]|None=None)->dict[str,Any]:
         actor=actor.upper()
         if actor not in SEATS:raise ValueError("UNKNOWN_COUNCIL_SEAT")
         if not self._worker_ready(actor):raise ValueError("TARGET_NOT_LIVE_BOUND_CONSUMER")
@@ -403,18 +478,27 @@ class CouncilBoard:
                 if "TARGET_BUSY" in kinds:raise ValueError("TARGET_BUSY_AT_ACCEPTANCE")
                 raise ValueError("ACTIVE_SCOPE_CONFLICT_AT_ACCEPTANCE")
             if self._lock_conflicts(task):raise ValueError("ACTIVE_CANONICAL_LOCK_CONFLICT_AT_ACCEPTANCE")
+            signature=self._actor_session_signature(actor,actor_proof,"TASK_ACCEPT",dispatch_id)
             task.update(status="IN_PROGRESS",claimed_by=actor,dispatch_status="ACCEPTED",
-                        accepted_at=utc())
+                        accepted_at=signature.get("signed_at") or utc(),
+                        acceptance_fingerprint=signature["fingerprint"],
+                        acceptance_signature_mode=signature["signature_mode"])
             atomic(self.tasks,data)
-            receipt={"schema":"raios.task-acceptance-receipt.v1","task_id":task_id,
-                     "dispatch_id":dispatch_id,"actor":actor,"status":"ACCEPTED","at":utc(),
+            receipt={"schema":"raios.task-acceptance-receipt.v2","task_id":task_id,
+                     "dispatch_id":dispatch_id,"actor":actor,"status":"ACCEPTED",
+                     "at":signature.get("signed_at") or utc(),
+                     "acceptance_fingerprint":signature["fingerprint"],
+                     "signature_mode":signature["signature_mode"],
+                     "session_id":signature.get("session_id"),"device_id":signature.get("device_id"),
+                     "attendance_fingerprint":signature.get("attendance_fingerprint"),
                      "resume_checkpoint":task.get("resume_checkpoint")}
             atomic(self.receipts/f"{dispatch_id}.{actor}.task-accept.receipt.json",receipt)
             return receipt
     def submit_checkpoint(self,task_id:str,actor:str,phase:str,summary:str,
                           completed_steps:list[str],changed_files:list[str],
                           validation:list[str],evidence_refs:list[str],
-                          next_step:str,blocker:str|None=None)->dict[str,Any]:
+                          next_step:str,blocker:str|None=None,
+                          actor_proof:dict[str,Any]|None=None)->dict[str,Any]:
         actor=actor.upper();phase=phase.upper()
         if actor not in SEATS:raise ValueError("UNKNOWN_COUNCIL_SEAT")
         if not self._worker_ready(actor):raise ValueError("REPORTER_NOT_LIVE_BOUND_CONSUMER")
@@ -427,6 +511,7 @@ class CouncilBoard:
             if not task:raise ValueError("TASK_NOT_FOUND")
             if str(task.get("claimed_by") or "").upper()!=actor:
                 raise ValueError("CHECKPOINT_ACTOR_NE_TASK_CLAIM")
+            signature=self._actor_session_signature(actor,actor_proof,"TASK_CHECKPOINT",task_id)
             checkpoint=self._build_checkpoint(task,actor,phase,summary,completed_steps,
                 changed_files,validation,evidence_refs,next_step,blocker)
             task.update(resume_checkpoint=checkpoint,last_checkpoint_id=checkpoint["checkpoint_id"],
@@ -435,7 +520,11 @@ class CouncilBoard:
                         dispatch_status="CHECKPOINT_SAVED")
             if blocker:task["blocker"]=blocker
             atomic(self.tasks,data)
-            receipt={**checkpoint,"status":"SAVED","single_task_ledger":True}
+            receipt={**checkpoint,"status":"SAVED","single_task_ledger":True,
+                     "submission_fingerprint":signature["fingerprint"],
+                     "signature_mode":signature["signature_mode"],
+                     "attendance_fingerprint":signature.get("attendance_fingerprint"),
+                     "session_id":signature.get("session_id"),"device_id":signature.get("device_id")}
             atomic(self.receipts/f"{checkpoint['checkpoint_id']}.checkpoint.receipt.json",receipt)
             return receipt
     def resume_checkpoint(self,task_id:str)->dict[str,Any]:
@@ -449,7 +538,7 @@ class CouncilBoard:
     def submit_report(self,task_id:str,actor:str,status:str,summary:str,
                       evidence_refs:list[str],completed_steps:list[str],
                       changed_files:list[str],validation:list[str],next_step:str,
-                      blocker:str|None=None)->dict[str,Any]:
+                      blocker:str|None=None,actor_proof:dict[str,Any]|None=None)->dict[str,Any]:
         actor=actor.upper();status=status.upper()
         if actor not in SEATS:raise ValueError("UNKNOWN_COUNCIL_SEAT")
         if not self._worker_ready(actor):raise ValueError("REPORTER_NOT_LIVE_BOUND_CONSUMER")
@@ -461,6 +550,9 @@ class CouncilBoard:
         if not task:raise ValueError("TASK_NOT_FOUND")
         if str(task.get("claimed_by") or "").upper()!=actor:
             raise ValueError("REPORTER_NE_TASK_CLAIM")
+        signature=self._actor_session_signature(actor,actor_proof,"TASK_REPORT",task_id)
+        if status=="COMPLETE" and not validation:raise ValueError("COMPLETION_VALIDATION_REQUIRED")
+        manifest=self._evidence_manifest(evidence_refs) if evidence_refs else []
         report_id="RPT-"+uuid.uuid4().hex[:16]
         report={"schema":"raios.task-report.v1","report_id":report_id,"task_id":task_id,
                 "actor":actor,"status":status,"summary":summary,
@@ -468,7 +560,13 @@ class CouncilBoard:
                 "changed_files":list(dict.fromkeys(changed_files)),
                 "validation":list(dict.fromkeys(validation)),
                 "evidence_refs":list(dict.fromkeys(evidence_refs)),
-                "next_step":next_step,"blocker":blocker,"created_at":utc()}
+                "evidence_manifest":manifest,
+                "submission_fingerprint":signature["fingerprint"],
+                "signature_mode":signature["signature_mode"],
+                "attendance_fingerprint":signature.get("attendance_fingerprint"),
+                "session_id":signature.get("session_id"),"device_id":signature.get("device_id"),
+                "next_step":next_step,"blocker":blocker,
+                "created_at":signature.get("signed_at") or utc()}
         atomic(self.report_inbox/f"{report_id}.json",report)
         return {"status":"REPORT_QUEUED","report_id":report_id,"task_id":task_id}
     def _process_reports(self)->dict[str,int]:
@@ -487,6 +585,14 @@ class CouncilBoard:
                 status=str(report.get("status") or "").upper()
                 refs=[str(x) for x in report.get("evidence_refs",[]) if str(x).strip()]
                 if status=="COMPLETE" and not refs:raise ValueError("EXECUTION_EVIDENCE_REQUIRED")
+                if status=="COMPLETE" and not report.get("validation"):
+                    raise ValueError("COMPLETION_VALIDATION_REQUIRED")
+                if self.routes is not None:
+                    if not report.get("submission_fingerprint"):
+                        raise ValueError("SIGNED_REPORT_REQUIRED")
+                    if not task.get("acceptance_fingerprint"):
+                        raise ValueError("SIGNED_TASK_ACCEPTANCE_REQUIRED")
+                self._verify_evidence_manifest(list(report.get("evidence_manifest") or []))
                 checkpoint=self._build_checkpoint(task,actor,status,str(report.get("summary") or ""),
                     list(report.get("completed_steps") or []),list(report.get("changed_files") or []),
                     list(report.get("validation") or []),refs,str(report.get("next_step") or ""),
@@ -513,10 +619,14 @@ class CouncilBoard:
                 atomic(self.receipts/f"{checkpoint['checkpoint_id']}.checkpoint.receipt.json",
                        {**checkpoint,"status":"SAVED","source_report_id":path.stem,
                         "single_task_ledger":True})
-                receipt={"schema":"raios.task-report-receipt.v1","report_id":path.stem,
+                receipt={"schema":"raios.task-report-receipt.v2","report_id":path.stem,
                          "task_id":task_id,"actor":actor,"status":"ACCEPTED",
                          "task_status":task["status"],"evidence_refs":refs,
-                         "checkpoint_id":checkpoint["checkpoint_id"],"at":utc()}
+                         "evidence_manifest":report.get("evidence_manifest",[]),
+                         "submission_fingerprint":report.get("submission_fingerprint"),
+                         "acceptance_fingerprint":task.get("acceptance_fingerprint"),
+                         "checkpoint_id":checkpoint["checkpoint_id"],"at":utc(),
+                         "completion_accepted_only_after_evidence_hash_verification":status=="COMPLETE"}
                 atomic(self.receipts/f"{path.stem}.task-report.receipt.json",receipt)
                 atomic(self.report_processed/path.name,report);path.unlink(missing_ok=True)
                 counts["reports_processed"]+=1
@@ -557,7 +667,7 @@ class CouncilBoard:
     def run_cycle(self,worker:Any)->dict[str,int]:
         with self.lock:
             reports=self._process_reports()
-            presence_prompts=self._prompt_unsigned_connected(worker)
+            presence_prompts=self._probe_unverified_seats(worker)
             data=load(self.tasks,{"tasks":[]})
             returned=self._reconcile_absent_assignments(data)
             locks_reconciled=self._reconcile_stale_locks(data)

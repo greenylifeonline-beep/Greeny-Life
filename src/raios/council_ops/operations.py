@@ -9,6 +9,7 @@ from datetime import datetime, timedelta, timezone
 from pathlib import Path
 from typing import Any
 from raios.a2a.receipt_bridge import build_receipt
+from .presence_challenge import PresenceChallengeError, PresenceChallengeStore
 INTERNAL_SEATS=tuple(f"C{i}" for i in range(1,13))
 
 TASKS=Path(".ai-os/state/TASKS.json"); LOCKS=Path(".ai-os/state/LOCKS.json")
@@ -51,6 +52,15 @@ def _atomic(path, value):
         try:tmp.unlink(missing_ok=True)
         except OSError:pass
 def _id(*parts): return hashlib.sha256("\x1f".join(parts).encode()).hexdigest()[:24]
+def _fingerprint(action,seat,auth,at,challenge_fingerprint=""):
+    provenance=json.dumps(auth.get("AUTHORITY_SOURCE_PROVENANCE") or {},sort_keys=True,separators=(",",":"))
+    actor=auth.get("actor_id") or auth.get("principal") or auth.get("PRINCIPAL") or ""
+    origin=auth.get("origin_instance") or auth.get("ORIGIN_INSTANCE") or ""
+    device=auth.get("device_id") or auth.get("remote_device_id") or auth.get("DEVICE_ID") or ""
+    session=auth.get("session_id") or auth.get("remote_session_id") or auth.get("SESSION_ID") or ""
+    return hashlib.sha256("\x1f".join(map(str,(
+      "RAIOS_ATTENDANCE_FINGERPRINT_V1",action,seat,actor,origin,device,session,at,provenance,challenge_fingerprint
+    ))).encode()).hexdigest()
 def _overlap(a,b):
     a,b=a.rstrip("/*/"),b.rstrip("/*/"); return a==b or a.startswith(b+"/") or b.startswith(a+"/")
 
@@ -59,6 +69,7 @@ class CouncilOperations:
         self.repo=repo.resolve(); self.runtime=(runtime or Path.home()/".raios/runtime/council-ops").resolve()
         self.presence_path=self.runtime/"presence.json"; self.receipt_dir=self.runtime/"receipts"
         self.bindings_path=self.runtime/"actor-bindings.json"
+        self.challenges=PresenceChallengeStore(self.runtime)
     def _auth(self, seat, auth):
         if seat.split("-",1)[0].split("@",1)[0] not in INTERNAL_SEATS: raise CouncilValidationError("UNKNOWN_SEAT")
         if auth.get("seat_id")!=seat: raise CouncilValidationError("SEAT_IDENTITY_MISMATCH")
@@ -96,12 +107,15 @@ class CouncilOperations:
     def check_in(self,*,seat,auth,idem):
         self._auth(seat,auth); state=self._state(); fp=_id("IN",seat); old=self._once(state,idem,fp)
         if old: return {"status":"ALREADY_APPLIED",**old["result"]}
-        at=_now(); path,_=self._receipt(seat,"CHECK_IN","COUNCIL-PRESENCE","presence:"+seat,idem,auth,"PRESENT",[str(self.presence_path)])
+        at=_now(); fingerprint=_fingerprint("CHECK_IN",seat,auth,at)
+        path,_=self._receipt(seat,"CHECK_IN","COUNCIL-PRESENCE","presence:"+seat,idem,auth,"PRESENT",[str(self.presence_path)])
         result={"seat":seat,"presence":"PRESENT","checked_in_at":at,"last_seen":at,
                 "lease_expires_at":_expires(),"signature_valid":True,"receipt":path,
                 "availability":"AVAILABLE","availability_source":"SELF_SIGNED_PRESENCE",
                 "availability_attested_at":at,"availability_expires_at":_expires(1800),
                 "availability_reason":"SIGNED_PRESENT_AND_AVAILABLE_FOR_COORDINATION",
+                "attendance_fingerprint":fingerprint,
+                "attendance_proof_type":"AUTHENTICATED_SELF_CHECK_IN",
                 "work_state":"WAITING_FOR_ASSIGNMENT",
                 "required_action":"WAIT_FOR_RAIOS_WORKER_DISPATCH"}
         state["seats"][seat]=result; state["idempotency"][idem]={"fingerprint":fp,"result":result}; _atomic(self.presence_path,state)
@@ -112,11 +126,13 @@ class CouncilOperations:
         if not _live(current): raise CouncilConflict("CHECK_IN_REQUIRED")
         fp=_id("PRESENCE",seat,idem); old=self._once(state,idem,fp)
         if old: return {"status":"ALREADY_APPLIED",**old["result"]}
-        now=_now()
+        now=_now();fingerprint=_fingerprint("PROVE_PRESENCE",seat,auth,now,current.get("attendance_fingerprint",""))
         current.update(last_seen=now,lease_expires_at=_expires(),signature_valid=True,
                        availability="AVAILABLE",availability_source="SELF_SIGNED_PRESENCE",
                        availability_attested_at=now,availability_expires_at=_expires(1800),
                        availability_reason="SIGNED_PRESENT_AND_AVAILABLE_FOR_COORDINATION",
+                       attendance_fingerprint=fingerprint,
+                       attendance_proof_type="AUTHENTICATED_PRESENCE_REFRESH",
                        work_state="WAITING_FOR_ASSIGNMENT",
                        required_action="WAIT_FOR_RAIOS_WORKER_DISPATCH")
         path,_=self._receipt(seat,"PROVE_PRESENCE","COUNCIL-PRESENCE","presence:"+seat,idem,auth,"PRESENT",[str(self.presence_path)])
@@ -124,6 +140,55 @@ class CouncilOperations:
         state["idempotency"][idem]={"fingerprint":fp,"result":current};_atomic(self.presence_path,state)
         binding=self._bind_from_auth(seat,auth,current["lease_expires_at"])
         return {"status":"PRESENT",**current,"actor_binding":binding}
+    def respond_presence_challenge(self,*,seat,challenge_id,nonce,origin_salt,response_word,
+                                  availability,auth,idem):
+        seat=str(seat).upper();availability=str(availability).upper()
+        self._auth(seat,auth)
+        state=self._state();fp=_id("PRESENCE_CHALLENGE",seat,challenge_id,availability)
+        old=self._once(state,idem,fp)
+        if old:return {"status":"ALREADY_APPLIED",**old["result"]}
+        proof=self.challenges.consume(
+            seat=seat,challenge_id=challenge_id,nonce=nonce,origin_salt=origin_salt,
+            response_word=response_word,auth=auth,state=availability)
+        at=_now()
+        row=dict(state["seats"].get(seat,{}) or {})
+        if availability in ("AVAILABLE","BUSY"):
+            row.update(
+                seat=seat,presence="PRESENT",signature_valid=True,
+                checked_in_at=row.get("checked_in_at") or at,last_seen=at,
+                lease_expires_at=_expires(),
+                availability=availability,
+                availability_source="SELF_CHALLENGE_RESPONSE",
+                availability_attested_at=at,availability_expires_at=_expires(1800),
+                availability_reason="VERIFIED_CHALLENGE_RESPONSE",
+                attendance_fingerprint=proof["response_fingerprint"],
+                attendance_proof_type="CHALLENGE_RESPONSE",
+                presence_challenge_id=challenge_id,
+                work_state="WAITING_FOR_ASSIGNMENT" if availability=="AVAILABLE" else "BUSY_EXTERNAL_OR_UNASSIGNED",
+                required_action="WAIT_FOR_RAIOS_WORKER_DISPATCH" if availability=="AVAILABLE" else "REPORT_OR_FINISH_CURRENT_WORK")
+            binding=self._bind_from_auth(seat,auth,row["lease_expires_at"])
+        else:
+            row.update(
+                seat=seat,presence="ABSENT",signature_valid=True,checked_out_at=at,
+                availability="OFFLINE",availability_source="SELF_CHALLENGE_RESPONSE",
+                availability_attested_at=at,availability_expires_at=_expires(1800),
+                availability_reason="VERIFIED_CHALLENGE_RESPONSE_OFFLINE",
+                departure_fingerprint=proof["response_fingerprint"],
+                departure_proof_type="CHALLENGE_RESPONSE",
+                presence_challenge_id=challenge_id,
+                work_state="SIGNED_OUT",required_action="SIGN_CHECK_IN_BEFORE_ANY_WORK")
+            binding=None
+            bindings=self._bindings();bindings.get("bindings",{}).pop(seat,None);bindings["generated_at"]=_now();_atomic(self.bindings_path,bindings)
+        path,_=self._receipt(
+            seat,"RESPOND_PRESENCE_CHALLENGE","COUNCIL-PRESENCE","challenge:"+challenge_id,
+            idem,auth,availability,[proof.get("message_id") or challenge_id,proof["response_fingerprint"]])
+        row["receipt"]=path;state["seats"][seat]=row
+        result={"seat":seat,"availability":row["availability"],"presence":row["presence"],
+                "signature_valid":True,"attendance_fingerprint":row.get("attendance_fingerprint"),
+                "departure_fingerprint":row.get("departure_fingerprint"),
+                "challenge_id":challenge_id,"receipt":path,"actor_binding":binding}
+        state["idempotency"][idem]={"fingerprint":fp,"result":result};_atomic(self.presence_path,state)
+        return {"status":"VERIFIED",**result}
     def attest_availability(self,*,seat,state,attested_by,auth,idem,reason=""):
         seat=str(seat).upper();attested_by=str(attested_by).upper();state=str(state).upper()
         self._auth(attested_by,auth)
@@ -155,12 +220,14 @@ class CouncilOperations:
         state=self._state(); fp=_id("OUT",seat,",".join(active),handoff_receipt or ""); old=self._once(state,idem,fp)
         if old: return {"status":"ALREADY_APPLIED",**old["result"]}
         ev=[handoff_receipt] if handoff_receipt else []; path,_=self._receipt(seat,"CHECK_OUT","COUNCIL-PRESENCE","presence:"+seat,idem,auth,"ABSENT",ev)
-        out_at=_now()
+        out_at=_now();departure_fingerprint=_fingerprint("CHECK_OUT",seat,auth,out_at)
         result={"seat":seat,"presence":"ABSENT","checked_out_at":out_at,"active_tasks":active,"receipt":path,
                 "signature_valid":True,"availability":"OFFLINE",
                 "availability_source":"SELF_SIGNED_CHECK_OUT",
                 "availability_attested_at":out_at,"availability_expires_at":_expires(1800),
-                "availability_reason":"MEMBER_EXPLICITLY_SIGNED_OUT"}
+                "availability_reason":"MEMBER_EXPLICITLY_SIGNED_OUT",
+                "departure_fingerprint":departure_fingerprint,
+                "departure_proof_type":"AUTHENTICATED_SELF_CHECK_OUT"}
         state["seats"][seat]=result; state["idempotency"][idem]={"fingerprint":fp,"result":result}; _atomic(self.presence_path,state)
         bindings=self._bindings();bindings.get("bindings",{}).pop(seat,None);bindings["generated_at"]=_now();_atomic(self.bindings_path,bindings)
         return {"status":"ABSENT",**result}

@@ -115,12 +115,11 @@ def test_completion_report_with_missing_evidence_is_rejected(tmp_path):
     board.run_cycle(worker)
     task=json.loads((board.tasks).read_text(encoding="utf-8"))["tasks"][1]
     board.accept_task("NEXT","C2",task["dispatch_id"])
-    board.submit_report("NEXT","C2","COMPLETE","unsupported",["missing.json"],
-        ["claimed completion"],[],[],"Council review.")
-    out=board.run_cycle(worker)
-    assert out["reports_rejected"]==1
-    rejected=list(board.report_rejected.glob("RPT-*.json"))
-    assert len(rejected)==1 and "EVIDENCE_NOT_FOUND" in rejected[0].read_text(encoding="utf-8")
+    with pytest.raises(ValueError,match="EVIDENCE_NOT_FOUND"):
+        board.submit_report("NEXT","C2","COMPLETE","unsupported",["missing.json"],
+            ["claimed completion"],[],["validation claimed"],"Council review.")
+    task=json.loads((board.tasks).read_text(encoding="utf-8"))["tasks"][1]
+    assert task["status"]=="IN_PROGRESS"
 
 
 def test_checkpoint_is_embedded_in_task_and_resumable(tmp_path):

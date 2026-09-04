@@ -4,6 +4,7 @@ import argparse
 import hashlib
 import json
 import os
+import secrets
 import time
 from datetime import datetime, timedelta, timezone
 from pathlib import Path
@@ -110,6 +111,21 @@ class SeatSessionAgent:
             return False
         return created >= self.started_at
 
+    def _respond_presence_probe(self,msg:dict[str,Any])->dict[str,Any]|None:
+        text=str((msg.get("payload") or {}).get("text") or "")
+        if "PRESENCE_PROBE" not in text:return None
+        fields={}
+        for line in text.splitlines():
+            if "=" in line:
+                key,value=line.split("=",1);fields[key.strip().upper()]=value.strip()
+        challenge_id=fields.get("CHALLENGE_ID");nonce=fields.get("NONCE")
+        if not challenge_id or not nonce:return None
+        auth=self._auth()
+        return self.ops.respond_presence_challenge(
+            seat=self.seat,challenge_id=challenge_id,nonce=nonce,
+            origin_salt=secrets.token_hex(16),response_word=secrets.token_hex(12),
+            availability="AVAILABLE",auth=auth,
+            idem=f"{self.seat.lower()}-probe-{challenge_id}")
     def consume_once(self) -> int:
         if not self._binding_live():
             return 0
@@ -125,6 +141,7 @@ class SeatSessionAgent:
             if ack.exists():
                 continue
             raw = path.read_bytes()
+            challenge_result=self._respond_presence_probe(msg)
             binding = self._binding()
             presence = _load(self.runtime / "presence.json", {"seats": {}})
             p = (presence.get("seats") or {}).get(self.seat) or {}
@@ -147,6 +164,9 @@ class SeatSessionAgent:
                 "synthetic": False,
                 "canonical_mutation": False,
                 "task_id": (msg.get("payload") or {}).get("task_id"),
+                "presence_challenge_verified": bool(challenge_result),
+                "presence_challenge_id": (challenge_result or {}).get("challenge_id"),
+                "attendance_fingerprint": (challenge_result or {}).get("attendance_fingerprint"),
             }
             _atomic(ack, row)
             consumed += 1
