@@ -198,8 +198,8 @@ def test_manager_reuses_active_gap_task_across_new_snapshots(tmp_path, monkeypat
 
 
 def test_semantic_observation_ignores_heartbeat_at_timestamp():
-    left = {"status": "ONLINE", "at": "2026-09-04T01:00:00Z", "value": 7}
-    right = {"status": "ONLINE", "at": "2026-09-04T01:00:15Z", "value": 7}
+    left = {"status": "ONLINE", "at": "2026-09-04T01:00:00Z", "age_seconds": 1.0, "value": 7}
+    right = {"status": "ONLINE", "at": "2026-09-04T01:00:15Z", "age_seconds": 18.0, "value": 7}
     assert live_manager.semantic_observation(left) == live_manager.semantic_observation(right)
 
 
