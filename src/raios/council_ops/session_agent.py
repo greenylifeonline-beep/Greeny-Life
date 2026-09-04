@@ -6,6 +6,15 @@ import json
 import os
 import secrets
 import time
+
+try:
+    import msvcrt
+except ImportError:
+    msvcrt = None
+try:
+    import fcntl
+except ImportError:
+    fcntl = None
 from datetime import datetime, timedelta, timezone
 from pathlib import Path
 from typing import Any
@@ -56,7 +65,31 @@ class SeatSessionAgent:
         self.deliveries = self.repo / ".ai-os" / "state" / "command-fabric" / "deliveries" / self.seat
         self.receipts = self.repo / ".ai-os" / "receipts" / "command-fabric"
         self.heartbeat_path = self.runtime / "consumers" / f"{self.seat}.json"
+        self.singleton_path = self.runtime / "consumers" / f"{self.seat}.agent.lock"
+        self._singleton_handle = None
         self.started_at = datetime.now(timezone.utc)
+
+    def _acquire_singleton(self) -> None:
+        self.singleton_path.parent.mkdir(parents=True, exist_ok=True)
+        handle = self.singleton_path.open("a+b")
+        if handle.tell() == 0:
+            handle.write(b"0")
+            handle.flush()
+        handle.seek(0)
+        try:
+            if msvcrt is not None:
+                msvcrt.locking(handle.fileno(), msvcrt.LK_NBLCK, 1)
+            elif fcntl is not None:
+                fcntl.flock(handle.fileno(), fcntl.LOCK_EX | fcntl.LOCK_NB)
+            else:
+                raise RuntimeError("NO_PROCESS_LOCK_PRIMITIVE")
+        except Exception:
+            handle.close()
+            raise RuntimeError(f"SEAT_SESSION_SINGLETON_ALREADY_RUNNING::{self.seat}")
+        self._singleton_handle = handle
+        handle.seek(0)
+        handle.write(str(os.getpid()).encode()[:32].ljust(32,b" "))
+        handle.flush()
 
     def _auth(self) -> dict[str, Any]:
         auth = _load(self.auth_path, {})
@@ -173,6 +206,7 @@ class SeatSessionAgent:
         return consumed
 
     def run(self) -> None:
+        self._acquire_singleton()
         next_presence = 0.0
         while True:
             now = time.time()

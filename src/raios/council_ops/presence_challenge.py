@@ -117,6 +117,29 @@ class PresenceChallengeStore:
         _atomic(self.path, data)
         return {"status": "ISSUED", **row}
 
+    def supersede_for_seat(self, seat: str, *, reason: str,
+                           attendance_fingerprint: str | None = None) -> int:
+        seat = seat.upper()
+        data = self._load()
+        changed = 0
+        at = _utc()
+        for row in (data.get("challenges") or {}).values():
+            if str(row.get("seat") or "").upper() != seat:
+                continue
+            if row.get("status") != "PENDING":
+                continue
+            row.update(
+                status="SUPERSEDED",
+                superseded_at=at,
+                supersede_reason=reason,
+                attendance_fingerprint=attendance_fingerprint,
+            )
+            changed += 1
+        if changed:
+            data["updated_at"] = at
+            _atomic(self.path, data)
+        return changed
+
     def bind_message(self, challenge_id: str, message_id: str) -> dict[str, Any]:
         data = self._load()
         row = (data.get("challenges") or {}).get(challenge_id)

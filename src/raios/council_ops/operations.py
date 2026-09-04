@@ -119,6 +119,9 @@ class CouncilOperations:
                 "work_state":"WAITING_FOR_ASSIGNMENT",
                 "required_action":"WAIT_FOR_RAIOS_WORKER_DISPATCH"}
         state["seats"][seat]=result; state["idempotency"][idem]={"fingerprint":fp,"result":result}; _atomic(self.presence_path,state)
+        self.challenges.supersede_for_seat(
+            seat,reason="AUTHENTICATED_SELF_CHECK_IN",
+            attendance_fingerprint=fingerprint)
         binding=self._bind_from_auth(seat,auth,result["lease_expires_at"])
         return {"status":"PRESENT",**result,"actor_binding":binding}
     def prove_presence(self,*,seat,auth,idem):
@@ -138,6 +141,9 @@ class CouncilOperations:
         path,_=self._receipt(seat,"PROVE_PRESENCE","COUNCIL-PRESENCE","presence:"+seat,idem,auth,"PRESENT",[str(self.presence_path)])
         current["receipt"]=path;state["seats"][seat]=current
         state["idempotency"][idem]={"fingerprint":fp,"result":current};_atomic(self.presence_path,state)
+        self.challenges.supersede_for_seat(
+            seat,reason="AUTHENTICATED_PRESENCE_REFRESH",
+            attendance_fingerprint=fingerprint)
         binding=self._bind_from_auth(seat,auth,current["lease_expires_at"])
         return {"status":"PRESENT",**current,"actor_binding":binding}
     def respond_presence_challenge(self,*,seat,challenge_id,nonce,origin_salt,response_word,
@@ -229,6 +235,9 @@ class CouncilOperations:
                 "departure_fingerprint":departure_fingerprint,
                 "departure_proof_type":"AUTHENTICATED_SELF_CHECK_OUT"}
         state["seats"][seat]=result; state["idempotency"][idem]={"fingerprint":fp,"result":result}; _atomic(self.presence_path,state)
+        self.challenges.supersede_for_seat(
+            seat,reason="AUTHENTICATED_SELF_CHECK_OUT",
+            attendance_fingerprint=departure_fingerprint)
         bindings=self._bindings();bindings.get("bindings",{}).pop(seat,None);bindings["generated_at"]=_now();_atomic(self.bindings_path,bindings)
         return {"status":"ABSENT",**result}
     def claim(self,*,seat,task_id,auth,idem):

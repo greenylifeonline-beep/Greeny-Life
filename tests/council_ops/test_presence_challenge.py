@@ -48,6 +48,18 @@ def test_challenge_response_creates_verified_attendance_and_binding(tmp_path):
     assert binding["session_id"] == "SESSION-C6"
 
 
+def test_authenticated_check_in_supersedes_pending_probe(tmp_path):
+    op = setup(tmp_path)
+    challenge = op.challenges.issue("C6", reason="PROBE_PENDING")
+    out = op.check_in(seat="C6", auth=live_auth("C6"), idem="direct-check-in-c6")
+    assert out["status"] == "PRESENT"
+    assert op.challenges.current_for("C6") is None
+    store = json.loads(op.challenges.path.read_text(encoding="utf-8"))
+    row = store["challenges"][challenge["challenge_id"]]
+    assert row["status"] == "SUPERSEDED"
+    assert row["attendance_fingerprint"] == out["attendance_fingerprint"]
+
+
 def test_delivery_or_wrong_nonce_cannot_create_presence(tmp_path):
     op = setup(tmp_path)
     challenge = op.challenges.issue("C2", reason="PROCESS_DISCOVERED")

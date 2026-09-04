@@ -3,6 +3,7 @@ from __future__ import annotations
 import json
 from datetime import datetime, timedelta, timezone
 
+import pytest
 from raios.council_ops.session_agent import SeatSessionAgent
 
 
@@ -33,6 +34,17 @@ def test_session_agent_reads_new_delivery_and_writes_real_actor_ack(tmp_path):
     assert row["ack_type"] == "ACTOR_ACK" and row["status"] == "READ"
     assert row["actor"] == "C6-ACTOR" and row["session_id"] == "s6"
     assert row["synthetic"] is False and row["canonical_mutation"] is False
+
+
+def test_session_agent_singleton_rejects_duplicate_for_same_seat(tmp_path):
+    repo = tmp_path / "Greeny-Life"; repo.mkdir()
+    runtime = tmp_path / "runtime"; runtime.mkdir()
+    auth = runtime / "auth.json"; auth.write_text("{}", encoding="utf-8")
+    first = SeatSessionAgent(repo, runtime, "C6", auth, "C6-ACTOR", "c6-live", "AG", "s6")
+    second = SeatSessionAgent(repo, runtime, "C6", auth, "C6-ACTOR", "c6-live", "AG", "s6")
+    first._acquire_singleton()
+    with pytest.raises(RuntimeError, match="SEAT_SESSION_SINGLETON_ALREADY_RUNNING"):
+        second._acquire_singleton()
 
 
 def test_session_agent_does_not_ack_delivery_older_than_session(tmp_path):
