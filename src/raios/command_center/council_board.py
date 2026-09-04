@@ -11,7 +11,7 @@ from typing import Any
 
 from .coordination_truth import (
     aliases_for_seat, build_founder_brief, build_work_lifecycle,
-    canonical_seat, founder_gate_satisfied, task_claim_is_current,
+    canonical_seat, dispatch_priority_score, founder_gate_satisfied, task_claim_is_current,
 )
 from .task_actions import TaskActionExecutor
 
@@ -537,7 +537,9 @@ class CouncilBoard:
             raw=str(t.get("claimed_by") or t.get("assigned_to") or "").upper()
             busy.add(self._canonical_actor(raw) or raw)
         dispatched=0
-        for task in tasks:
+        ordered=sorted(tasks,key=lambda task:(
+            -dispatch_priority_score(task,tasks)["score"],str(task.get("id") or "")))
+        for task in ordered:
             if (task.get("automatic_dispatch") is not True or
                 task.get("dispatch_authorized_by")!="C1"):continue
             if not founder_gate_satisfied(task):continue

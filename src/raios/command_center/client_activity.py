@@ -5,7 +5,9 @@ from datetime import datetime, timezone
 from pathlib import Path
 from typing import Any
 
-from .coordination_truth import build_founder_brief, build_work_lifecycle, task_claim_is_current
+from .coordination_truth import (
+    build_dispatch_plan, build_founder_brief, build_work_lifecycle, task_claim_is_current,
+)
 
 
 def _load(path: Path, default: Any) -> Any:
@@ -289,10 +291,12 @@ class ClientActivityView:
             row.get("seat") == "C1" and row.get("availability") == "AVAILABLE"
             for row in clients
         )
+        current_reservations = [r for r in reservations
+                                if r["reservation_state"] == "CURRENT_ACTIVE_RESERVATION"]
         founder_brief = build_founder_brief(
             tasks, founder_available=founder_available,
-            active_scope_reservations=[r for r in reservations
-                                       if r["reservation_state"] == "CURRENT_ACTIVE_RESERVATION"])
+            active_scope_reservations=current_reservations)
+        dispatch_plan = build_dispatch_plan(tasks, route_rows, current_reservations)
         return {
             "schema": "raios.client-activity.v4",
             "generated_at": _utc(),
@@ -301,6 +305,7 @@ class ClientActivityView:
             "availability_summary": availability_summary,
             "work_lifecycle": work_lifecycle,
             "founder_brief": founder_brief,
+            "dispatch_plan": dispatch_plan,
             "all_seats_accounted_for": len(clients) == 12,
             "coordination_notifiable": route_snapshot.get("coordination_available", []),
             "coordination_notifiable_count": route_snapshot.get("coordination_available_count", 0),

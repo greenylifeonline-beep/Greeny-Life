@@ -122,6 +122,7 @@ table{width:100%;border-collapse:collapse;font-size:11px}th,td{text-align:right;
     <article class="card span12"><div class="card-head"><h2>قائمة التنفيذ الكانونية</h2><span class="hint" id="workStats">—</span></div><div class="table-wrap" id="tasksTable"></div></article>
     <article class="card span6"><div class="card-head"><h2>حقيقة دورة العمل</h2><span class="hint">تم · جارٍ · مطلوب · منتظر · قديم</span></div><div class="list" id="lifecycleList"></div></article>
     <article class="card span6"><div class="card-head"><h2>ملف المؤسس والمالك</h2><span class="hint">يُجهّز دائمًا حتى عند غياب C1</span></div><div class="list" id="founderBrief"></div></article>
+    <article class="card span12"><div class="card-head"><h2>خطة التوزيع الذكية</h2><span class="hint">المسار الحرج · الأهلية · الجاهزية · التعارض</span></div><div class="list" id="dispatchPlan"></div></article>
     <article class="card span12"><div class="card-head"><h2>الإيصالات والأدلة الحديثة</h2><span class="hint">Provenance محفوظ</span></div><div class="table-wrap" id="receiptsTable"></div></article>
   </div>
 </section>
@@ -274,6 +275,12 @@ function renderAvailability(a){
     '<div class="list-row"><div class="grow"><strong>'+esc(f.consultation_mode||'—')+'</strong><small>Founder available: '+esc(f.founder_available===true?'YES':'NO')+'</small></div>'+badge((f.decision_count||0)+' DECISIONS')+'</div>'+
     '<div class="list-row"><div class="grow"><strong>ما لابد أن يتم</strong><small>'+esc(next.map(function(x){return x.id}).join(' · ')||'لا شيء جاهز الآن')+'</small></div></div>'+
     '<div class="list-row"><div class="grow"><strong>ما ينتظر قرار المؤسس</strong><small>'+esc(dec.map(function(x){return x.task_id}).join(' · ')||'لا يوجد قرار محجوز')+'</small></div></div>';
+  var plan=(a.dispatch_plan||{}).queue||[];
+  $('#dispatchPlan').innerHTML=plan.map(function(p){
+    var why='score='+p.score+' · dependents='+p.transitive_dependents+' · eligible='+(p.eligible_seats||[]).join(',')+' · ready='+(p.execution_ready_seats||[]).join(',');
+    var state=p.dispatchable_now?'DISPATCHABLE':(p.blocker||'WAIT');
+    return '<div class="list-row"><div class="grow"><strong>#'+esc(p.rank)+' · '+esc(p.task_id)+'</strong><small>'+esc(why)+'</small></div>'+badge(state)+'</div>'
+  }).join('')||'<div class="empty">لا توجد مهام جاهزة للتوزيع.</div>';
 }
 async function extras(){
   var res=await Promise.all([api('/api/tasks'),api('/api/receipts'),api('/api/cognitive'),api('/api/client-activity')]);var t=res[0],r=res[1],c=res[2],a=res[3];

@@ -1,9 +1,11 @@
 from __future__ import annotations
 
 from raios.command_center.coordination_truth import (
+    build_dispatch_plan,
     build_founder_brief,
     build_work_lifecycle,
     canonical_seat,
+    dispatch_priority_score,
     founder_gate_satisfied,
 )
 
@@ -46,6 +48,38 @@ def test_founder_gate_requires_explicit_c1_approval_when_marked():
     task.update(founder_decision_status="APPROVED", founder_decision_by="C1")
     assert founder_gate_satisfied(task) is True
     assert founder_gate_satisfied({"id": "Y", "status": "READY"}) is True
+
+
+def test_dispatch_priority_favors_tasks_that_unlock_more_work():
+    tasks = [
+        {"id": "HIGH", "status": "READY", "dependencies": [], "allowed_agents": ["cursor"]},
+        {"id": "LOW", "status": "READY", "dependencies": [], "allowed_agents": ["cursor"]},
+        {"id": "CHILD", "status": "READY", "dependencies": ["HIGH"]},
+    ]
+    assert dispatch_priority_score(tasks[0], tasks)["score"] > dispatch_priority_score(tasks[1], tasks)["score"]
+
+
+def test_dispatch_plan_explains_eligibility_readiness_and_blocker():
+    tasks = [
+        {"id": "HIGH", "status": "READY", "dependencies": [], "allowed_agents": ["cursor"],
+         "automatic_dispatch": True, "dispatch_authorized_by": "C1"},
+        {"id": "LOW", "status": "READY", "dependencies": [], "allowed_agents": ["github-agent"],
+         "automatic_dispatch": True, "dispatch_authorized_by": "C1"},
+        {"id": "CHILD", "status": "READY", "dependencies": ["HIGH"]},
+    ]
+    rows = [
+        {"seat": "C2", "aliases": ["CURSOR", "C2@AG"], "alias_prefixes": ["C2@"],
+         "auto_routable": True, "coordination_available": True},
+        {"seat": "C6", "aliases": ["GITHUB-AGENT"], "alias_prefixes": ["C6@"],
+         "auto_routable": False, "coordination_available": True},
+    ]
+    plan = build_dispatch_plan(tasks, rows)
+    by = {row["task_id"]: row for row in plan["queue"]}
+    assert plan["queue"][0]["task_id"] == "HIGH"
+    assert by["HIGH"]["dispatchable_now"] is True
+    assert by["HIGH"]["execution_ready_seats"] == ["C2"]
+    assert by["LOW"]["blocker"] == "ELIGIBLE_SEAT_NOT_EXECUTION_READY"
+    assert "CHILD" not in by
 
 
 def test_actor_aliases_are_unambiguous_and_canonical():

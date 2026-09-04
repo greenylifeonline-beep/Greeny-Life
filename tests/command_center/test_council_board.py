@@ -310,6 +310,31 @@ def test_worker_releases_stale_and_orphan_locks_but_keeps_current_verified_lock(
     assert receipt["released_count"]==2
 
 
+def test_auto_dispatch_uses_dependency_impact_priority(tmp_path):
+    board,presence,repo=setup(tmp_path);worker=Worker()
+    data=json.loads(board.tasks.read_text(encoding="utf-8"))
+    data["tasks"][1]["automatic_dispatch"]=False
+    data["tasks"].extend([
+        {"id":"HIGH","title":"unblocks child","status":"READY","dependencies":["DONE"],
+         "allowed_agents":["C2"],"scope":["high"],"automatic_dispatch":True,
+         "dispatch_authorized_by":"C1"},
+        {"id":"LOW","title":"independent","status":"READY","dependencies":["DONE"],
+         "allowed_agents":["C2"],"scope":["low"],"automatic_dispatch":True,
+         "dispatch_authorized_by":"C1"},
+        {"id":"CHILD","title":"child","status":"READY","dependencies":["HIGH"],
+         "allowed_agents":["C2"],"scope":["child"]}
+    ])
+    board.tasks.write_text(json.dumps(data),encoding="utf-8")
+    future=(datetime.now(timezone.utc)+timedelta(minutes=1)).isoformat()
+    presence.write_text(json.dumps({"seats":{"C2":{"presence":"PRESENT",
+        "signature_valid":True,"lease_expires_at":future}}}),encoding="utf-8")
+    out=board.run_cycle(worker)
+    tasks={x["id"]:x for x in json.loads(board.tasks.read_text(encoding="utf-8"))["tasks"]}
+    assert out["tasks_dispatched"]==1
+    assert tasks["HIGH"]["dispatch_status"]=="PENDING_ACCEPTANCE"
+    assert "assigned_to" not in tasks["LOW"]
+
+
 def test_atomic_falls_back_when_windows_pins_stable_task_name(tmp_path,monkeypatch):
  target=tmp_path/"TASKS.json"
  target.write_text('{"tasks":[]}',encoding="utf-8")

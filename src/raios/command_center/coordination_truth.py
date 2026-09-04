@@ -202,3 +202,168 @@ def founder_gate_satisfied(task: dict[str, Any]) -> bool:
     decision = str(task.get("founder_decision_status") or "").upper()
     actor = str(task.get("founder_decision_by") or "").upper()
     return decision == "APPROVED" and actor == "C1"
+
+
+_PRIORITY_MAP = {
+    "CRITICAL": 5,
+    "URGENT": 4,
+    "HIGH": 3,
+    "MEDIUM": 2,
+    "NORMAL": 1,
+    "LOW": 0,
+}
+
+
+def _numeric_priority(task: dict[str, Any]) -> int:
+    raw = task.get("scheduler_priority", task.get("priority", 0))
+    if isinstance(raw, bool):
+        return 0
+    if isinstance(raw, (int, float)):
+        return int(raw)
+    text = str(raw or "").strip().upper()
+    if text in _PRIORITY_MAP:
+        return _PRIORITY_MAP[text]
+    try:
+        return int(text)
+    except ValueError:
+        return 0
+
+
+def dependency_impact(task_id: str, tasks: list[dict[str, Any]]) -> tuple[int, int]:
+    reverse: dict[str, set[str]] = {}
+    live_ids = {str(t.get("id")) for t in tasks if str(t.get("status") or "").upper() != "DONE"}
+    for task in tasks:
+        child = str(task.get("id") or "")
+        if not child or child not in live_ids:
+            continue
+        for dep in (task.get("dependencies") or []):
+            reverse.setdefault(str(dep), set()).add(child)
+    direct = len(reverse.get(task_id, set()))
+    seen: set[str] = set()
+    stack = list(reverse.get(task_id, set()))
+    while stack:
+        child = stack.pop()
+        if child in seen:
+            continue
+        seen.add(child)
+        stack.extend(reverse.get(child, set()) - seen)
+    return direct, len(seen)
+
+
+def dispatch_priority_score(task: dict[str, Any], tasks: list[dict[str, Any]]) -> dict[str, Any]:
+    task_id = str(task.get("id") or "")
+    direct, transitive = dependency_impact(task_id, tasks)
+    explicit = _numeric_priority(task)
+    score = explicit * 100000 + transitive * 1000 + direct * 100 + 10
+    return {
+        "score": score,
+        "explicit_priority": explicit,
+        "direct_dependents": direct,
+        "transitive_dependents": transitive,
+        "critical_path": transitive > 0,
+        "resumable_checkpoint": bool(task.get("resume_checkpoint")),
+    }
+
+
+def _task_allowed_for_route(task: dict[str, Any], row: dict[str, Any]) -> bool:
+    allowed = {str(x).upper() for x in (task.get("allowed_agents") or []) if str(x).strip()}
+    if not allowed:
+        return True
+    aliases = {str(row.get("seat") or "").upper(), str(row.get("actor_id") or "").upper()}
+    aliases.update(str(x).upper() for x in (row.get("aliases") or []))
+    aliases.discard("")
+    prefixes = [str(x).upper() for x in (row.get("alias_prefixes") or []) if str(x).strip()]
+    if allowed & aliases:
+        return True
+    return any(alias.startswith(prefix) for alias in allowed for prefix in prefixes)
+
+
+def _scope_overlap(left: str, right: str) -> bool:
+    a = str(left or "").replace("\\", "/").rstrip("/*/")
+    b = str(right or "").replace("\\", "/").rstrip("/*/")
+    return bool(a and b and (a == b or a.startswith(b + "/") or b.startswith(a + "/")))
+
+
+def build_dispatch_plan(tasks: list[dict[str, Any]], route_rows: list[dict[str, Any]],
+                        active_scope_reservations: list[dict[str, Any]] | None = None) -> dict[str, Any]:
+    done_ids = {str(t.get("id")) for t in tasks if str(t.get("status") or "").upper() == "DONE"}
+    reservations = list(active_scope_reservations or [])
+    queue = []
+    for task in tasks:
+        if str(task.get("status") or "").upper() != "READY":
+            continue
+        deps = [str(x) for x in (task.get("dependencies") or []) if str(x)]
+        if not all(dep in done_ids for dep in deps):
+            continue
+        rank = dispatch_priority_score(task, tasks)
+        eligible = []
+        ready = []
+        available = []
+        for row in route_rows:
+            seat = str(row.get("seat") or "").upper()
+            if not seat or seat == "C1" or not _task_allowed_for_route(task, row):
+                continue
+            eligible.append(seat)
+            if row.get("coordination_available") is True or str(row.get("availability_claim") or "").upper() == "AVAILABLE":
+                available.append(seat)
+            if row.get("auto_routable") is True:
+                ready.append(seat)
+        scope_conflicts = []
+        for reservation in reservations:
+            for wanted in (task.get("scope") or []):
+                if _scope_overlap(wanted, reservation.get("scope")):
+                    scope_conflicts.append({
+                        "lock_id": reservation.get("lock_id"),
+                        "task_id": reservation.get("task_id"),
+                        "actor": reservation.get("actor"),
+                        "wanted_scope": wanted,
+                        "active_scope": reservation.get("scope"),
+                    })
+        auto_authorized = (
+            task.get("automatic_dispatch") is True
+            and str(task.get("dispatch_authorized_by") or "").upper() == "C1"
+        )
+        founder_ok = founder_gate_satisfied(task)
+        if not founder_ok:
+            blocker = "FOUNDER_DECISION_REQUIRED"
+        elif scope_conflicts:
+            blocker = "ACTIVE_SCOPE_CONFLICT"
+        elif not eligible:
+            blocker = "NO_ELIGIBLE_COUNCIL_SEAT"
+        elif not ready:
+            blocker = "ELIGIBLE_SEAT_NOT_EXECUTION_READY"
+        elif not auto_authorized:
+            blocker = "AUTO_DISPATCH_NOT_AUTHORIZED"
+        else:
+            blocker = None
+        queue.append({
+            "task_id": task.get("id"),
+            "title": task.get("title"),
+            "score": rank["score"],
+            "critical_path": rank["critical_path"],
+            "direct_dependents": rank["direct_dependents"],
+            "transitive_dependents": rank["transitive_dependents"],
+            "explicit_priority": rank["explicit_priority"],
+            "resumable_checkpoint": rank["resumable_checkpoint"],
+            "eligible_seats": sorted(set(eligible)),
+            "coordination_available_seats": sorted(set(available)),
+            "execution_ready_seats": sorted(set(ready)),
+            "automatic_dispatch_authorized": auto_authorized,
+            "founder_gate_satisfied": founder_ok,
+            "scope_conflicts": scope_conflicts,
+            "blocker": blocker,
+            "dispatchable_now": blocker is None,
+            "scope": list(task.get("scope") or []),
+            "dependencies": deps,
+        })
+    queue.sort(key=lambda row: (-int(row["score"]), str(row["task_id"])))
+    for index, row in enumerate(queue, 1):
+        row["rank"] = index
+    return {
+        "schema": "raios.dispatch-plan.v1",
+        "queue": queue,
+        "dispatchable_now": [row for row in queue if row["dispatchable_now"]],
+        "blocked_count": sum(1 for row in queue if not row["dispatchable_now"]),
+        "ready_count": len(queue),
+        "policy": "DEPENDENCY_IMPACT_THEN_EXPLICIT_PRIORITY_THEN_STABLE_TASK_ID",
+    }

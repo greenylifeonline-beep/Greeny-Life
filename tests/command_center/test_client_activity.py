@@ -66,6 +66,7 @@ def test_snapshot_separates_live_activity_from_stale_claim(tmp_path):
     assert snap["work_lifecycle"]["counts"]["ACTIVE_VERIFIED"] == 1
     assert snap["work_lifecycle"]["counts"]["STALE_CLAIM_REQUIRES_RECONCILIATION"] == 1
     assert snap["founder_brief"]["prepared_for_founder_return"] is True
+    assert snap["dispatch_plan"]["schema"] == "raios.dispatch-plan.v1"
 
 
 def test_unified_source_includes_nonseat_actor_worker_and_scope_reservations(tmp_path):
