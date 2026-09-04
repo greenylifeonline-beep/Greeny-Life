@@ -49,7 +49,7 @@ def test_session_agent_signs_assignment_with_current_session_proof(tmp_path, mon
     calls = []
     def fake_http(path, *, method="GET", payload=None, csrf=None):
         calls.append((path, method, payload, csrf))
-        if path == "/api/bootstrap":
+        if path == "/api/csrf":
             return {"csrf": "csrf-token"}
         return {"status": "ACCEPTED", "acceptance_fingerprint": "ACCEPT-123",
                 "signature_mode": "SESSION_BOUND_ATTENDANCE_FINGERPRINT"}

@@ -22,6 +22,9 @@ def test_health_and_bootstrap_bind_canonical_head(monkeypatch):
  out=client.get("/api/bootstrap").json()
  assert out["ui"]=="CANONICAL_COMMAND_CENTER" and out["direct_mutation"] is False
  assert len(out["csrf"])>=32
+ csrf=client.get("/api/csrf").json()
+ assert csrf["csrf"]==cc.CSRF and csrf["service"]=="RAIOS_COMMAND_CENTER"
+ assert csrf["direct_mutation"] is False
  health=client.get("/health").json()
  assert health["status"]=="ONLINE" and health["canonical_head"]=="a"*40
 

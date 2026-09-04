@@ -210,8 +210,8 @@ class SeatSessionAgent:
         if not task_id or not dispatch_id:
             return {"status": "MALFORMED_ASSIGNMENT"}
         proof = self._actor_proof()
-        bootstrap = self._http_json("/api/bootstrap")
-        csrf = str(bootstrap.get("csrf") or "")
+        csrf_state = self._http_json("/api/csrf")
+        csrf = str(csrf_state.get("csrf") or "")
         if not csrf:
             raise RuntimeError("COMMAND_CENTER_CSRF_MISSING")
         result = self._http_json(

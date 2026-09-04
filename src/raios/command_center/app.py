@@ -226,6 +226,8 @@ def c1_gateway():
 def index():return (HERE/"index.html").read_text(encoding="utf-8")
 @app.get("/api/bootstrap")
 def bootstrap():return {"csrf":CSRF,"overview":overview(),"ui":"CANONICAL_COMMAND_CENTER","direct_mutation":False}
+@app.get("/api/csrf")
+def api_csrf():return {"csrf":CSRF,"service":"RAIOS_COMMAND_CENTER","direct_mutation":False}
 @app.get("/api/overview")
 def api_overview():return overview()
 @app.get("/api/cognitive")
