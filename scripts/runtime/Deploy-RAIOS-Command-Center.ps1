@@ -4,14 +4,15 @@ $Repo=(Resolve-Path(Join-Path $PSScriptRoot "..\..")).Path;$Head=(git -C $Repo r
 if(-not $McpRoot){$McpRoot=$Repo}
 $McpRoot=(Resolve-Path $McpRoot).Path
 if($McpRoot -ne $Repo){throw "MCP_ROOT_MUST_EQUAL_CANONICAL_REPO"}
-$App=Join-Path $RuntimeRoot "app";$Logs=Join-Path $RuntimeRoot "logs";$Pkg=Join-Path $App "raios\command_center";$SearchPkg=Join-Path $App "raios\search_cortex";$ResourcePkg=Join-Path $App "raios\resource_fabric";$Mcp=Join-Path $App "raios_mcp"
+$App=Join-Path $RuntimeRoot "app";$Logs=Join-Path $RuntimeRoot "logs";$Pkg=Join-Path $App "raios\command_center";$SearchPkg=Join-Path $App "raios\search_cortex";$ResourcePkg=Join-Path $App "raios\resource_fabric";$GatewayPkg=Join-Path $App "raios\ai_gateway";$Mcp=Join-Path $App "raios_mcp"
 $Python=Join-Path $HOME ".raios\runtime\c5\.venv\Scripts\python.exe";if(-not(Test-Path $Python)){throw "CANONICAL_C5_PYTHON_MISSING"}
 $PythonWindowless=Join-Path $HOME ".raios\runtime\c5\.venv\Scripts\pythonw.exe";if(-not(Test-Path $PythonWindowless)){throw "CANONICAL_C5_PYTHONW_MISSING"}
-New-Item -ItemType Directory -Force -Path $Pkg,$SearchPkg,$ResourcePkg,$Mcp,$Logs,(Join-Path $App "raios")|Out-Null
+New-Item -ItemType Directory -Force -Path $Pkg,$SearchPkg,$ResourcePkg,$GatewayPkg,$Mcp,$Logs,(Join-Path $App "raios")|Out-Null
 if(-not(Test-Path(Join-Path $App "raios\__init__.py"))){Set-Content(Join-Path $App "raios\__init__.py")"" -Encoding UTF8}
 Copy-Item(Join-Path $Repo "src\raios\command_center\*")$Pkg -Recurse -Force
 Copy-Item(Join-Path $Repo "src\raios\search_cortex\*")$SearchPkg -Recurse -Force
 Copy-Item(Join-Path $Repo "src\raios\resource_fabric\*")$ResourcePkg -Recurse -Force
+Copy-Item(Join-Path $Repo "src\raios\ai_gateway\*")$GatewayPkg -Recurse -Force
 Copy-Item(Join-Path $Repo "scripts\ai-os\raios_mcp\*")$Mcp -Recurse -Force
 $env:RAIOS_CANONICAL_REPO=$Repo;$env:RAIOS_MCP_ROOT=$McpRoot;$env:RAIOS_COMMAND_CENTER_RUNTIME=$RuntimeRoot;$env:PYTHONPATH=$App
 function Start-Center([int]$Listen,[string]$Name){$out=Join-Path $Logs "$Name.out.log";$err=Join-Path $Logs "$Name.err.log";Start-Process $PythonWindowless -ArgumentList @("-m","uvicorn","raios.command_center.app:app","--app-dir",$App,"--host","127.0.0.1","--port","$Listen") -WorkingDirectory $Repo -WindowStyle Hidden -RedirectStandardOutput $out -RedirectStandardError $err -PassThru}

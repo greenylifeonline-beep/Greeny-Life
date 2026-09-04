@@ -58,6 +58,7 @@ class CouncilOperations:
     def __init__(self, repo:Path, runtime:Path|None=None):
         self.repo=repo.resolve(); self.runtime=(runtime or Path.home()/".raios/runtime/council-ops").resolve()
         self.presence_path=self.runtime/"presence.json"; self.receipt_dir=self.runtime/"receipts"
+        self.bindings_path=self.runtime/"actor-bindings.json"
     def _auth(self, seat, auth):
         if seat.split("-",1)[0].split("@",1)[0] not in INTERNAL_SEATS: raise CouncilValidationError("UNKNOWN_SEAT")
         if auth.get("seat_id")!=seat: raise CouncilValidationError("SEAT_IDENTITY_MISMATCH")
@@ -65,6 +66,20 @@ class CouncilOperations:
             raise CouncilValidationError("AUTHENTICATED_SEAT_PROOF_REQUIRED")
         if not auth.get("AUTHORITY_SOURCE_PROVENANCE"): raise CouncilValidationError("AUTHORITY_PROVENANCE_REQUIRED")
     def _state(self): return _load(self.presence_path,{"schema":"raios.council-presence.v1","seats":{},"idempotency":{}})
+    def _bindings(self): return _load(self.bindings_path,{"schema":"raios.actor-bindings.v1","bindings":{}})
+    def _bind_from_auth(self,seat,auth,lease_expires_at):
+        actor_id=auth.get("actor_id") or auth.get("principal") or auth.get("PRINCIPAL")
+        origin=auth.get("origin_instance") or auth.get("ORIGIN_INSTANCE")
+        device=auth.get("device_id") or auth.get("remote_device_id") or auth.get("DEVICE_ID")
+        session=auth.get("session_id") or auth.get("remote_session_id") or auth.get("SESSION_ID")
+        if not all((actor_id,origin,device,session)):
+            return None
+        data=self._bindings(); row={
+          "seat":seat,"actor_id":actor_id,"origin_instance":origin,"device_id":device,
+          "session_id":session,"auth_evidence":auth.get("AUTHORITY_SOURCE_PROVENANCE"),
+          "bound_at":_now(),"last_seen":_now(),"lease_expires_at":lease_expires_at,
+          "signature_valid":True,"synthetic":False}
+        data["bindings"][seat]=row;data["generated_at"]=_now();_atomic(self.bindings_path,data);return row
     def _once(self,state,idem,fp):
         old=state["idempotency"].get(idem)
         if old and old["fingerprint"]!=fp: raise CouncilConflict("IDEMPOTENCY_CONFLICT")
@@ -85,7 +100,8 @@ class CouncilOperations:
         result={"seat":seat,"presence":"PRESENT","checked_in_at":at,"last_seen":at,
                 "lease_expires_at":_expires(),"signature_valid":True,"receipt":path}
         state["seats"][seat]=result; state["idempotency"][idem]={"fingerprint":fp,"result":result}; _atomic(self.presence_path,state)
-        return {"status":"PRESENT",**result}
+        binding=self._bind_from_auth(seat,auth,result["lease_expires_at"])
+        return {"status":"PRESENT",**result,"actor_binding":binding}
     def prove_presence(self,*,seat,auth,idem):
         self._auth(seat,auth); state=self._state(); current=state["seats"].get(seat,{})
         if not _live(current): raise CouncilConflict("CHECK_IN_REQUIRED")
@@ -95,7 +111,8 @@ class CouncilOperations:
         path,_=self._receipt(seat,"PROVE_PRESENCE","COUNCIL-PRESENCE","presence:"+seat,idem,auth,"PRESENT",[str(self.presence_path)])
         current["receipt"]=path;state["seats"][seat]=current
         state["idempotency"][idem]={"fingerprint":fp,"result":current};_atomic(self.presence_path,state)
-        return {"status":"PRESENT",**current}
+        binding=self._bind_from_auth(seat,auth,current["lease_expires_at"])
+        return {"status":"PRESENT",**current,"actor_binding":binding}
     def check_out(self,*,seat,auth,idem,handoff_receipt=None):
         self._auth(seat,auth); tasks=_load(self.repo/TASKS,{"tasks":[]})["tasks"]
         active=[t["id"] for t in tasks if t.get("claimed_by")==seat and t.get("status")=="IN_PROGRESS"]
@@ -105,6 +122,7 @@ class CouncilOperations:
         ev=[handoff_receipt] if handoff_receipt else []; path,_=self._receipt(seat,"CHECK_OUT","COUNCIL-PRESENCE","presence:"+seat,idem,auth,"ABSENT",ev)
         result={"seat":seat,"presence":"ABSENT","checked_out_at":_now(),"active_tasks":active,"receipt":path}
         state["seats"][seat]=result; state["idempotency"][idem]={"fingerprint":fp,"result":result}; _atomic(self.presence_path,state)
+        bindings=self._bindings();bindings.get("bindings",{}).pop(seat,None);bindings["generated_at"]=_now();_atomic(self.bindings_path,bindings)
         return {"status":"ABSENT",**result}
     def claim(self,*,seat,task_id,auth,idem):
         self._auth(seat,auth); state=self._state()

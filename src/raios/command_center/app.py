@@ -8,7 +8,9 @@ from fastapi import FastAPI, Header, HTTPException
 from fastapi.responses import HTMLResponse
 from pydantic import BaseModel, Field
 from raios.search_cortex import SearchCortex
+from raios.ai_gateway import ModelRouter, RouteRequest
 from .message_worker import COUNCIL_SEATS, ROUTING_TARGETS, MessageWorker
+from .actor_routing import ActorRouteRegistry
 from .council_board import CouncilBoard
 from .task_actions import latest_resource_census
 
@@ -21,8 +23,10 @@ COUNCIL_PRESENCE=Path(os.getenv("RAIOS_COUNCIL_PRESENCE",str(Path.home()/".raios
 C5=os.getenv("RAIOS_C5_URL","http://127.0.0.1:8766")
 CSRF=secrets.token_urlsafe(32)
 MESSAGE_WORKER=MessageWorker(REPO,RUNTIME,poll_seconds=5.0)
+ACTOR_ROUTES=ActorRouteRegistry(REPO,presence_path=COUNCIL_PRESENCE)
 COUNCIL_BOARD=CouncilBoard(REPO)
 SEARCH_CORTEX=SearchCortex()
+MODEL_ROUTER=ModelRouter(REPO)
 MESSAGE_WORKER.configure_workflow(COUNCIL_BOARD)
 
 @asynccontextmanager
@@ -157,6 +161,13 @@ class SearchIn(BaseModel):
  deep:bool=True
  limit:int=Field(default=20,ge=1,le=50)
 class CommandIn(BaseModel):text:str=Field(min_length=1,max_length=50000);targets:list[str];task_id:str|None=None
+class ModelRouteIn(BaseModel):
+ capability:str=Field(min_length=2,max_length=100)
+ privacy:str=Field(default="local_preferred",max_length=40)
+ latency:str=Field(default="normal",max_length=40)
+ cost:str=Field(default="bounded",max_length=40)
+ tools_required:bool=False
+ context_tokens:int=Field(default=4096,ge=256,le=1000000)
 class DispatchIn(BaseModel):task_id:str=Field(min_length=1,max_length=200);target:str=Field(min_length=2,max_length=20)
 class TaskAcceptIn(BaseModel):
  task_id:str=Field(min_length=1,max_length=200)
@@ -210,6 +221,8 @@ def api_search(req:SearchIn,x_raios_csrf:str|None=Header(None)):
 def api_tasks():return tasks_state()
 @app.get("/api/council")
 def api_council():return council_state()
+@app.get("/api/actor-routes")
+def api_actor_routes():return ACTOR_ROUTES.snapshot()
 @app.get("/api/council-board")
 def api_council_board():return COUNCIL_BOARD.snapshot()
 @app.post("/api/task-dispatch")
@@ -242,6 +255,13 @@ def api_task_report(req:TaskReportIn,x_raios_csrf:str|None=Header(None)):
  except ValueError as exc:raise HTTPException(409,str(exc))
 @app.get("/api/models")
 def api_models():return model_state()
+@app.get("/api/model-router")
+def api_model_router():return MODEL_ROUTER.registry()
+@app.post("/api/model-router/route")
+def api_model_route(req:ModelRouteIn,x_raios_csrf:str|None=Header(None)):
+ require_csrf(x_raios_csrf)
+ return MODEL_ROUTER.route(RouteRequest(capability=req.capability,privacy=req.privacy,
+  latency=req.latency,cost=req.cost,tools_required=req.tools_required,context_tokens=req.context_tokens))
 @app.get("/api/receipts")
 def api_receipts():return receipt_state()
 @app.get("/api/message-worker")
@@ -257,16 +277,20 @@ def chat(req:ChatIn,x_raios_csrf:str|None=Header(None)):
  return {"ok":True,**body}
 @app.post("/api/command")
 def command(req:CommandIn,x_raios_csrf:str|None=Header(None)):
- require_csrf(x_raios_csrf); allowed=set(ROUTING_TARGETS); targets=[]
- for t in req.targets:
-  u=t.upper(); targets.extend(COUNCIL_SEATS if u=="ALL" else [u])
- targets=list(dict.fromkeys(targets))
- if not targets or any(t not in allowed for t in targets):raise HTTPException(400,"TARGET_NOT_LIVE_OR_UNKNOWN")
- try:msg=MESSAGE_WORKER.enqueue("C1@COMMAND_CENTER",targets,req.text,req.task_id)
+ require_csrf(x_raios_csrf)
+ resolution=ACTOR_ROUTES.resolve(req.targets)
+ targets=resolution["targets"]
+ if resolution["rejected"]:
+  raise HTTPException(400,{"error":"TARGET_UNKNOWN","targets":resolution["rejected"]})
+ if not targets:
+  raise HTTPException(409,{"error":"NO_LIVE_BOUND_TARGETS","auto_routable":resolution["auto_routable_snapshot"]})
+ try:msg=MESSAGE_WORKER.enqueue("C1@COMMAND_CENTER",targets,req.text,req.task_id,
+  routing_modes=resolution["routing_modes"])
  except ValueError as exc:raise HTTPException(400,str(exc))
  return {"ok":True,"results":[{"targets":targets,"route":"CANONICAL_LOCAL_FABRIC",
+  "routing_modes":resolution["routing_modes"],"owner_selected_unbound":resolution["owner_selected_unbound"],
   "status":"SENT_PENDING_DELIVERY_ACK","message_id":msg["message_id"]}],
-  "executed":False,"promotion":False,"timestamp":utc()}
+  "actor_ack_synthesized":False,"executed":False,"promotion":False,"timestamp":utc()}
 @app.post("/api/maintenance/diagnose")
 def diagnose(x_raios_csrf:str|None=Header(None)):
  require_csrf(x_raios_csrf); data=diagnostic_state(); return {"ok":True,"diagnosis":data,"actions_executed":[],"canonical_mutation":False}

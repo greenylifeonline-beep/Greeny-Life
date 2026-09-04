@@ -1,0 +1,27 @@
+{
+  "schema": "raios.ai-gateway.v1",
+  "authority": "C1",
+  "model_ne_council_seat": true,
+  "second_bus_created": false,
+  "selection_policy": {
+    "prefer_live": true,
+    "prefer_local_for_private": true,
+    "fail_closed_on_unproven_remote": true,
+    "cost_bounded_by_default": true
+  },
+  "providers": [
+    {
+      "provider_id": "deepseek-remote",
+      "model_id": "deepseek-v4",
+      "availability": "UNPROVEN",
+      "enabled": false,
+      "local": false,
+      "cost_class": "UNKNOWN",
+      "privacy_class": "CLOUD",
+      "capabilities": ["reasoning", "code", "general_chat"],
+      "context_tokens": 0,
+      "tools": false,
+      "note": "Declared capability candidate only. Enable after authenticated health/capability proof."
+    }
+  ]
+}

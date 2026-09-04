@@ -51,7 +51,9 @@ class MessageWorker:
         payload=msg.get("payload") or {};raw=payload.get("to")
         if isinstance(raw,list):targets=[str(x).upper() for x in raw]
         else:targets=[str(msg.get("target") or "").upper()]
-        if "ALL" in targets:targets=list(COUNCIL_SEATS)
+        # ALL must be resolved by the authority-aware command layer against live
+        # actor/session bindings. The transport worker never expands ALL itself.
+        targets=[x for x in targets if x!="ALL"]
         return list(dict.fromkeys(x for x in targets if x in ROUTING_TARGETS))
     def _record(self,mid:str,target:str,status:str,attempt:int,detail:str|None=None)->dict[str,Any]:
         row={"schema":"raios.delivery-ack.v1","receipt_id":f"{mid}.{target}.delivery",
@@ -80,7 +82,7 @@ class MessageWorker:
         targets=self._targets(msg)
         if not targets:raise ValueError("NO_CANONICAL_TARGET")
         return mid,targets
-    def enqueue(self,sender:str,targets:list[str],text:str,task_id:str|None=None)->dict[str,Any]:
+    def enqueue(self,sender:str,targets:list[str],text:str,task_id:str|None=None,routing_modes:dict[str,str]|None=None)->dict[str,Any]:
         import uuid
         mid=f"MSG-{int(time.time()*1_000_000)}-{uuid.uuid4().hex[:8]}"
         clean=list(dict.fromkeys(str(x).upper() for x in targets if str(x).upper() in ROUTING_TARGETS))
@@ -88,11 +90,13 @@ class MessageWorker:
         msg={"schema":"raios.message.v1","message_id":mid,"correlation_id":f"cc-{uuid.uuid4().hex[:12]}",
              "sender":sender,"target":"ALL" if len(clean)>1 else clean[0],"kind":"COMMAND",
              "channel":"INTERNAL_BUS","payload":{"text":text,"to":clean,"task_id":task_id,
-             "ack_requested":True},"created_at":utc(),"head":self._head(),"ack_required":True}
+             "routing_modes":routing_modes or {},"ack_requested":True,"actor_ack_required":True,
+             "actor_ack_synthesized":False},"created_at":utc(),"head":self._head(),"ack_required":True}
         digest=atomic(self.inbox/f"{mid}.json",msg)
         atomic(self.receipts/f"{mid}.send.json",{"receipt_id":mid,"message_id":mid,
           "RECEIPT_ID_EQUALS_MESSAGE_ID":True,"sha256":digest,"event":"SENT","at":utc(),
-          "targets":clean,"route":"CANONICAL_LOCAL_FABRIC"})
+          "targets":clean,"routing_modes":routing_modes or {},"route":"CANONICAL_LOCAL_FABRIC",
+          "actor_ack_synthesized":False})
         return msg
 
     def process(self,path:Path)->dict[str,Any]:
