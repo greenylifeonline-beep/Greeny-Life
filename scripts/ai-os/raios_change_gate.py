@@ -183,7 +183,7 @@ def status() -> int:
 
 def main() -> int:
     p = argparse.ArgumentParser(prog="raios-change-gate")
-    p.add_argument("mode", choices=("pre-commit", "post-commit", "pre-push", "status"))
+    p.add_argument("mode", choices=("pre-commit", "post-commit", "pre-push", "status", "hash"))
     args = p.parse_args()
     if args.mode == "pre-commit":
         return verify_pre_commit()
@@ -191,6 +191,9 @@ def main() -> int:
         return record_post_commit()
     if args.mode == "pre-push":
         return verify_pre_push()
+    if args.mode == "hash":
+        print(staged_diff_hash())
+        return 0
     return status()
 
 

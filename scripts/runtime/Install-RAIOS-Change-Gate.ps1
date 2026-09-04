@@ -13,9 +13,11 @@ if($Repo -match '^(?<h>[A-Za-z]:\\Users\\[^\\]+)\\'){$RealHome=$Matches.h}
 git config --local raios.home $RealHome
 git config --local core.hooksPath .githooks
 git config --local push.default nothing
-git config --local remote.origin.push "refs/heads/$Canonical:refs/heads/$Canonical"
+git config --local --unset-all remote.origin.push 2>$null
+git config --local remote.origin.push "refs/heads/${Canonical}:refs/heads/${Canonical}"
 git config --local branch.autoSetupMerge false
 git remote set-head origin $Canonical
+if($LASTEXITCODE -ne 0){throw 'ORIGIN_HEAD_UPDATE_FAILED'}
 $Python=Join-Path $RealHome '.raios\runtime\c5\.venv\Scripts\python.exe'
 if(-not(Test-Path $Python)){throw 'CANONICAL_PYTHON_MISSING'}
 & $Python scripts\ai-os\raios_change_gate.py status

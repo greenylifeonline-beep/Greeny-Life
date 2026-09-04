@@ -13,6 +13,7 @@ from .message_worker import COUNCIL_SEATS, ROUTING_TARGETS, MessageWorker
 from .actor_routing import ActorRouteRegistry
 from .council_board import CouncilBoard
 from .task_actions import latest_resource_census
+from .client_activity import ClientActivityView
 
 CREATE_NO_WINDOW=getattr(subprocess,"CREATE_NO_WINDOW",0)
 HERE=Path(__file__).resolve().parent
@@ -27,6 +28,7 @@ ACTOR_ROUTES=ActorRouteRegistry(REPO,presence_path=COUNCIL_PRESENCE)
 COUNCIL_BOARD=CouncilBoard(REPO)
 SEARCH_CORTEX=SearchCortex()
 MODEL_ROUTER=ModelRouter(REPO)
+CLIENT_ACTIVITY=ClientActivityView(REPO,ACTOR_ROUTES)
 MESSAGE_WORKER.configure_workflow(COUNCIL_BOARD)
 
 @asynccontextmanager
@@ -262,6 +264,10 @@ def api_model_route(req:ModelRouteIn,x_raios_csrf:str|None=Header(None)):
  require_csrf(x_raios_csrf)
  return MODEL_ROUTER.route(RouteRequest(capability=req.capability,privacy=req.privacy,
   latency=req.latency,cost=req.cost,tools_required=req.tools_required,context_tokens=req.context_tokens))
+@app.get("/api/client-activity")
+def api_client_activity():return CLIENT_ACTIVITY.snapshot()
+@app.get("/api/notifications/{message_id}")
+def api_notification_status(message_id:str):return CLIENT_ACTIVITY.notification_status(message_id)
 @app.get("/api/receipts")
 def api_receipts():return receipt_state()
 @app.get("/api/message-worker")

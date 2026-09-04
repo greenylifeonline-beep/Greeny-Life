@@ -15,8 +15,8 @@ $RealHome=(git config --get raios.home).Trim()
 if(-not $RealHome){$RealHome=$HOME}
 $Python=Join-Path $RealHome '.raios\runtime\c5\.venv\Scripts\python.exe'
 if(-not(Test-Path $Python)){throw 'CANONICAL_PYTHON_MISSING'}
-$hashCode='import hashlib,subprocess;print(hashlib.sha256(subprocess.run(["git","diff","--cached","--binary","--no-ext-diff"],check=True,stdout=subprocess.PIPE).stdout).hexdigest())'
-$DiffSha=(& $Python -c $hashCode).Trim()
+$Gate=Join-Path $Repo 'scripts\ai-os\raios_change_gate.py'
+$DiffSha=(& $Python $Gate hash).Trim()
 if(-not $DiffSha){throw 'STAGED_DIFF_HASH_FAILED'}
 $Root=Join-Path $RealHome '.raios\runtime\change-authority'
 New-Item -ItemType Directory -Force $Root|Out-Null
