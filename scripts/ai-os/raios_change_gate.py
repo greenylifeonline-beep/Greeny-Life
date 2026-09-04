@@ -60,6 +60,31 @@ def current_approval_path() -> Path:
     return Path(value).resolve() if value else approval_root() / "current-approval.json"
 
 
+def active_lease_path() -> Path:
+    return approval_root() / "active-change.json"
+
+
+def lease_valid_for_approval(row: dict[str, Any]) -> tuple[bool, str, dict[str, Any]]:
+    lease = load_json(active_lease_path())
+    if not lease:
+        return False, "CHANGE_LEASE_MISSING", lease
+    if lease.get("authority") != "C1":
+        return False, "CHANGE_LEASE_AUTHORITY_INVALID", lease
+    if lease.get("task_id") != row.get("task_id") or lease.get("base_head") != row.get("base_head"):
+        return False, "CHANGE_LEASE_SCOPE_MISMATCH", lease
+    if lease.get("staged_diff_sha256") != row.get("staged_diff_sha256"):
+        return False, "CHANGE_LEASE_DIFF_MISMATCH", lease
+    if row.get("approval_id") and lease.get("approval_id") != row.get("approval_id"):
+        return False, "CHANGE_LEASE_APPROVAL_MISMATCH", lease
+    try:
+        expiry = datetime.fromisoformat(str(lease["expires_at"]).replace("Z", "+00:00"))
+    except (KeyError, ValueError):
+        return False, "CHANGE_LEASE_EXPIRY_INVALID", lease
+    if expiry <= datetime.now(timezone.utc):
+        return False, "CHANGE_LEASE_EXPIRED", lease
+    return True, "PASS", lease
+
+
 def approval_valid(path: Path) -> tuple[bool, str, dict[str, Any]]:
     row = load_json(path)
     required = ("authority", "decision", "canonical_branch", "base_head",
@@ -74,6 +99,9 @@ def approval_valid(path: Path) -> tuple[bool, str, dict[str, Any]]:
         return False, "APPROVAL_BASE_HEAD_MISMATCH", row
     if row.get("staged_diff_sha256") != staged_diff_hash():
         return False, "APPROVAL_SCOPE_HASH_MISMATCH", row
+    lease_ok, lease_reason, _ = lease_valid_for_approval(row)
+    if not lease_ok:
+        return False, lease_reason, row
     try:
         expiry = datetime.fromisoformat(str(row["expires_at"]).replace("Z", "+00:00"))
     except ValueError:
@@ -123,6 +151,13 @@ def record_post_commit() -> int:
         path.unlink()
     except OSError:
         pass
+    lease_path = active_lease_path()
+    lease = load_json(lease_path)
+    if lease.get("task_id") == row.get("task_id") and lease.get("base_head") == row.get("base_head"):
+        try:
+            lease_path.unlink()
+        except OSError:
+            pass
     print(f"RAIOS_POST_COMMIT=RECORDED commit={commit} task_id={row['task_id']}")
     return 0
 
@@ -174,6 +209,7 @@ def status() -> int:
         "worktree_count": count,
         "single_worktree": count == 1,
         "approval_present": current_approval_path().exists(),
+        "change_lease_present": active_lease_path().exists(),
         "hooks_path": run("git", "config", "--get", "core.hooksPath") if subprocess.run(["git","config","--get","core.hooksPath"],capture_output=True).returncode == 0 else None,
         "repo": str(root),
     }

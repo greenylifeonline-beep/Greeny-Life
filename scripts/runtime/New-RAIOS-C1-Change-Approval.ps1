@@ -20,6 +20,12 @@ $DiffSha=(& $Python $Gate hash).Trim()
 if(-not $DiffSha){throw 'STAGED_DIFF_HASH_FAILED'}
 $Root=Join-Path $RealHome '.raios\runtime\change-authority'
 New-Item -ItemType Directory -Force $Root|Out-Null
+$LeasePath=Join-Path $Root 'active-change.json'
+if(-not(Test-Path $LeasePath)){throw 'CANONICAL_CHANGE_LEASE_REQUIRED'}
+$Lease=Get-Content $LeasePath -Raw|ConvertFrom-Json
+if($Lease.authority -ne 'C1' -or $Lease.task_id -ne $TaskId -or $Lease.base_head -ne $Head){throw 'CANONICAL_CHANGE_LEASE_MISMATCH'}
+try{$LeaseExpiry=[DateTimeOffset]::Parse([string]$Lease.expires_at)}catch{throw 'CANONICAL_CHANGE_LEASE_EXPIRY_INVALID'}
+if($LeaseExpiry -le [DateTimeOffset]::UtcNow){throw 'CANONICAL_CHANGE_LEASE_EXPIRED'}
 $Expires=[DateTimeOffset]::UtcNow.AddMinutes($ValidityMinutes).ToString('o')
 $Receipt=[ordered]@{
  schema='raios.canonical-change-approval.v1'
@@ -35,8 +41,12 @@ $Receipt=[ordered]@{
  reusable=$false
  explicit_c1_approval=$true
 }
+$ApprovalId=[guid]::NewGuid().ToString('N')
+$Receipt.approval_id=$ApprovalId
 $Path=Join-Path $Root 'current-approval.json'
 $Receipt|ConvertTo-Json -Depth 5|Set-Content $Path -Encoding UTF8
+$Lease.staged_diff_sha256=$DiffSha;$Lease.approval_id=$ApprovalId
+$Lease|ConvertTo-Json -Depth 5|Set-Content $LeasePath -Encoding UTF8
 Write-Host 'C1_CHANGE_APPROVAL_CREATED=true'
 Write-Host "TASK_ID=$TaskId"
 Write-Host "BASE_HEAD=$Head"
