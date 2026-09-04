@@ -121,3 +121,9 @@ def test_health_uses_cached_head_without_spawning_git(monkeypatch):
  monkeypatch.setattr(cc,"git",lambda *a:(_ for _ in ()).throw(AssertionError("health must not call git")))
  health=client.get("/health").json()
  assert health["canonical_head"]=="b"*40 and health["status"]=="ONLINE"
+
+
+def test_command_center_deployer_copies_internal_a2a_receipt_dependency():
+ deploy=(cc.HERE.parents[2]/"scripts/runtime/Deploy-RAIOS-Command-Center.ps1").read_text(encoding="utf-8")
+ assert "src\\raios\\a2a\\*" in deploy
+ assert "$A2APkg" in deploy
