@@ -1,0 +1,54 @@
+from __future__ import annotations
+
+import json
+from datetime import datetime, timedelta, timezone
+
+from raios.council_ops.session_agent import SeatSessionAgent
+
+
+def iso(minutes: int = 5) -> str:
+    return (datetime.now(timezone.utc) + timedelta(minutes=minutes)).isoformat()
+
+
+def test_session_agent_reads_new_delivery_and_writes_real_actor_ack(tmp_path):
+    repo = tmp_path / "Greeny-Life"; repo.mkdir()
+    runtime = tmp_path / "runtime"; runtime.mkdir()
+    auth = runtime / "auth.json"; auth.write_text("{}", encoding="utf-8")
+    agent = SeatSessionAgent(repo, runtime, "C6", auth, "C6-ACTOR", "c6-live", "AG", "s6")
+    agent.started_at = datetime.now(timezone.utc) - timedelta(seconds=5)
+    (runtime / "actor-bindings.json").write_text(json.dumps({"bindings": {"C6": {
+        "actor_id": "C6-ACTOR", "origin_instance": "c6-live", "device_id": "AG",
+        "session_id": "s6", "auth_evidence": "proof", "lease_expires_at": iso()}}}), encoding="utf-8")
+    (runtime / "presence.json").write_text(json.dumps({"seats": {"C6": {"receipt": "presence-proof"}}}), encoding="utf-8")
+    delivery = repo / ".ai-os" / "state" / "command-fabric" / "deliveries" / "C6" / "MSG-1.json"
+    delivery.parent.mkdir(parents=True)
+    delivery.write_text(json.dumps({
+        "schema": "raios.message.v1", "message_id": "MSG-1",
+        "created_at": datetime.now(timezone.utc).isoformat(),
+        "payload": {"task_id": "T-1", "text": "hello"}
+    }), encoding="utf-8")
+    assert agent.consume_once() == 1
+    ack = repo / ".ai-os" / "receipts" / "command-fabric" / "MSG-1.C6.actor.ack.receipt.json"
+    row = json.loads(ack.read_text(encoding="utf-8"))
+    assert row["ack_type"] == "ACTOR_ACK" and row["status"] == "READ"
+    assert row["actor"] == "C6-ACTOR" and row["session_id"] == "s6"
+    assert row["synthetic"] is False and row["canonical_mutation"] is False
+
+
+def test_session_agent_does_not_ack_delivery_older_than_session(tmp_path):
+    repo = tmp_path / "Greeny-Life"; repo.mkdir()
+    runtime = tmp_path / "runtime"; runtime.mkdir()
+    auth = runtime / "auth.json"; auth.write_text("{}", encoding="utf-8")
+    agent = SeatSessionAgent(repo, runtime, "C6", auth, "C6-ACTOR", "c6-live", "AG", "s6")
+    (runtime / "actor-bindings.json").write_text(json.dumps({"bindings": {"C6": {
+        "actor_id": "C6-ACTOR", "device_id": "AG", "session_id": "s6", "lease_expires_at": iso()}}}), encoding="utf-8")
+    delivery = repo / ".ai-os" / "state" / "command-fabric" / "deliveries" / "C6" / "MSG-old.json"
+    delivery.parent.mkdir(parents=True)
+    delivery.write_text(json.dumps({
+        "schema": "raios.message.v1", "message_id": "MSG-old",
+        "created_at": (datetime.now(timezone.utc) - timedelta(minutes=5)).isoformat(),
+        "payload": {"task_id": "T-old"}
+    }), encoding="utf-8")
+    assert agent.consume_once() == 0
+    ack = repo / ".ai-os" / "receipts" / "command-fabric" / "MSG-old.C6.actor.ack.receipt.json"
+    assert not ack.exists()

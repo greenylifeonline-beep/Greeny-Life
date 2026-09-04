@@ -9,7 +9,7 @@ from datetime import datetime, timedelta, timezone
 from pathlib import Path
 from typing import Any
 from raios.a2a.receipt_bridge import build_receipt
-from raios.a2a_all_hands.bind import INTERNAL_SEATS, routing_matrix, validate_envelope
+INTERNAL_SEATS=tuple(f"C{i}" for i in range(1,13))
 
 TASKS=Path(".ai-os/state/TASKS.json"); LOCKS=Path(".ai-os/state/LOCKS.json")
 class CouncilValidationError(RuntimeError): pass
@@ -165,6 +165,7 @@ class CouncilOperations:
         dests=[s for s,v in state["seats"].items() if _live(v) and s!=from_seat] if to_seat=="ALL" else [to_seat]
         if not dests or any(not _live(state["seats"].get(d,{})) for d in dests): raise CouncilConflict("DESTINATION_NOT_PRESENT")
         context="task:"+task_id; path,receipt=self._receipt(from_seat,"COORDINATION_MESSAGE",task_id,context,idem,auth,"ROUTED",[str(TASKS)])
+        from raios.a2a_all_hands.bind import routing_matrix, validate_envelope
         roots={d.split("-",1)[0] for d in dests}; routes=[r for r in routing_matrix(nats_available=False) if r["from"]==from_seat.split("-",1)[0] and r["to"] in roots]
         env=validate_envelope({"task_id":task_id,"context_id":context,"message_id":_id("msg",idem),"artifact_id":_id("art",idem),
           "correlation_id":context,"idempotency_key":idem,"provenance":auth["AUTHORITY_SOURCE_PROVENANCE"],"receipt":receipt})
