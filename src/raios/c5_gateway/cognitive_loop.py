@@ -1,4 +1,4 @@
-"""Closed cognitive loop for C5 live chat: retrieve → ground → respond → assimilate.
+"""Closed cognitive loop for C5 live chat: retrieve Ã¢â€ â€™ ground Ã¢â€ â€™ respond Ã¢â€ â€™ assimilate.
 
 Laws:
 - STUDENT_NE_MAIN_CORTEX
@@ -26,7 +26,7 @@ from typing import Any
 TOKEN_RE = re.compile(r"[A-Za-z][A-Za-z0-9_]{2,}|[\u0600-\u06FF]{2,}")
 STOP = {
     "the", "and", "for", "that", "this", "with", "from", "not", "are", "was",
-    "json", "true", "false", "none", "هل", "ما", "في", "من", "على", "إلى",
+    "json", "true", "false", "none", "Ã™â€¡Ã™â€ž", "Ã™â€¦Ã˜Â§", "Ã™ÂÃ™Å ", "Ã™â€¦Ã™â€ ", "Ã˜Â¹Ã™â€žÃ™â€°", "Ã˜Â¥Ã™â€žÃ™â€°",
 }
 
 
@@ -674,6 +674,15 @@ def loop_status() -> dict[str, Any]:
     evolution = evolution_liveness()
     digest_summary = _jsonl_summary(digests)
     candidate_summary = _jsonl_summary(candidates)
+    maintenance_receipt_path = runtime_base() / "c5" / "maintenance-assimilation.json"
+    maintenance_receipt: dict[str, Any] = {}
+    if maintenance_receipt_path.is_file():
+        try:
+            maintenance_receipt = json.loads(maintenance_receipt_path.read_text(encoding="utf-8-sig"))
+        except Exception:
+            maintenance_receipt = {}
+    maintenance_results = maintenance_receipt.get("results") if isinstance(maintenance_receipt.get("results"), list) else []
+    maintenance_ready = sum(1 for row in maintenance_results if row.get("review_state") in {"READY_FOR_VALIDATION", "DEDUPED"})
     closed = bool(
         mgr.get("alive") and evolution.get("alive") and
         digests.is_file() and candidates.is_file() and index.is_file()
@@ -701,6 +710,14 @@ def loop_status() -> dict[str, Any]:
         },
         "search_cortex": {"shared": True, "second_search_bus": False},
         "assimilation": {"existing_kae_reused": True, "auto_canonical_promotion": False},
+        "maintenance_assimilation": {
+            "receipt_present": maintenance_receipt_path.is_file(),
+            "law_count": int(maintenance_receipt.get("law_count") or 0),
+            "ready_or_deduped": maintenance_ready,
+            "all_wal_clean": bool(maintenance_receipt.get("all_wal_clean")),
+            "complete": bool(maintenance_receipt.get("law_count")) and maintenance_ready == int(maintenance_receipt.get("law_count") or 0),
+            "receipt": str(maintenance_receipt_path),
+        },
         "manager": mgr,
         "evolution": evolution,
         "cognitive_store": {

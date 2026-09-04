@@ -12,6 +12,8 @@ $CanonicalSourcePaths = @(
     "src/raios/c5_gateway",
     "src/raios/search_cortex",
     "src/raios/neuro_lingua",
+    ".ai-os/mcp/C5-MAINTENANCE-LAWS.json",
+    "scripts/ai-os/raios_c5_maintenance_guard.py",
     "scripts/runtime/Deploy-RAIOS-C5.ps1"
 )
 $DirtyCanonicalSources = @(git -C $Repo status --porcelain=v1 -- $CanonicalSourcePaths)
@@ -28,6 +30,7 @@ $RuntimeBase = Split-Path -Parent $RuntimeRoot
 $CognitiveStoreRoot = Join-Path $RuntimeBase "cognitive-store\v9"
 $LearningRoot = Join-Path $CognitiveStoreRoot "learning"
 $Requirements = Join-Path $Repo "requirements-c5.txt"
+$MaintenanceGuard = Join-Path $Repo "scripts\ai-os\raios_c5_maintenance_guard.py"
 $PackageNames = @("c5_gateway","search_cortex","neuro_lingua")
 
 New-Item -ItemType Directory -Force -Path $Logs,(Join-Path $AppRoot "raios"),$CognitiveStoreRoot,$LearningRoot | Out-Null
@@ -42,6 +45,10 @@ foreach ($PackageName in $PackageNames) {
 if (-not (Test-Path $Python)) {
     & py -3.14 -m venv $Venv
 }
+
+& $Python $MaintenanceGuard
+if ($LASTEXITCODE -ne 0) { throw "C5_MAINTENANCE_GUARD_FAILED" }
+
 if (-not (Test-Path $Requirements)) {
     throw "C5_REQUIREMENTS_MISSING::$Requirements"
 }

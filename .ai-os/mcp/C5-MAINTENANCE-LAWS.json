@@ -1,0 +1,196 @@
+﻿{
+    "schema":  "raios.c5-maintenance-laws.v1",
+    "authority":  "C1",
+    "student":  "C5",
+    "knowledge_state":  "CANONICAL",
+    "purpose":  "Prevent recurrence of proven RAIOS/C5 maintenance defects",
+    "laws":  [
+                 {
+                     "id":  "C5_IDLE_REASONING_ON_GAPS_ONLY",
+                     "incident":  "Manager repeatedly invoked C5/Ollama while system meaning was unchanged",
+                     "detect":  "Manager reasoning trigger must hash actionable gaps, not the full/telemetry snapshot",
+                     "guard":  "reasoning_hash = sha(gaps)",
+                     "remediation":  "Do not reason again until gap identity changes or bounded retry is required",
+                     "root_cause":  "Manager reasoning trigger included volatile/non-actionable state, causing repeated inference without a new decision gap",
+                     "non_recurrence":  "75-second idle proof: OLLAMA_CHAT_DELTA=0 and C5_CHAT_DELTA=0",
+                     "mechanism":  "Heartbeat/age/telemetry changes altered the trigger hash and recursively caused C5 reasoning",
+                     "retrieval_cues":  [
+                                            "idle churn",
+                                            "periodic /v1/chat",
+                                            "manager reasoning loop",
+                                            "ollama stays hot"
+                                        ]
+                 },
+                 {
+                     "id":  "C5_IDLE_MODEL_MUST_UNLOAD",
+                     "incident":  "qwen3:0.6b stayed hot and consumed large RAM while idle",
+                     "detect":  "Idle observation must produce zero C5/Ollama chat calls and Ollama model pool may unload",
+                     "guard":  "RAIOS_STUDENT_KEEP_ALIVE=30s",
+                     "remediation":  "Keep bounded keep_alive and remove periodic inference callers",
+                     "root_cause":  "Periodic inference refreshed Ollama keep_alive before expiry",
+                     "non_recurrence":  "75-second idle proof ended with OLLAMA_MODELS=0 and FREE_MEM_GB=1.24",
+                     "mechanism":  "Repeated chat calls prevented qwen3:0.6b from unloading and consumed scarce RAM",
+                     "retrieval_cues":  [
+                                            "low RAM",
+                                            "llama-server memory",
+                                            "model never unloads",
+                                            "keep_alive"
+                                        ]
+                 },
+                 {
+                     "id":  "HEALTH_ENDPOINT_NE_SUBPROCESS",
+                     "incident":  "Command Center health spawned git rev-parse per request and was slow",
+                     "detect":  "Health must return cached canonical head",
+                     "guard":  "canonical_head=CANONICAL_HEAD",
+                     "remediation":  "Load canonical head once at process start/deploy",
+                     "root_cause":  "Health endpoint and worker heartbeat spawned git rev-parse repeatedly on Windows",
+                     "non_recurrence":  "steady-state Command Center /health approximately 2.5-3.5 ms after caching canonical head",
+                     "mechanism":  "External process creation dominated a trivial health request",
+                     "retrieval_cues":  [
+                                            "slow health",
+                                            "git rev-parse per request",
+                                            "health latency"
+                                        ]
+                 },
+                 {
+                     "id":  "HISTORICAL_ACK_NE_DEAD_LETTER",
+                     "incident":  "Acknowledged historical message was retried 26688 times",
+                     "detect":  "Worker must recognize historical actor ACK before retry/dead-letter",
+                     "guard":  "_historical_actor_ack",
+                     "remediation":  "Classify delivered and stop retries without forging a new ACK",
+                     "root_cause":  "New worker rescanned a historical message whose target was no longer routable and ignored its existing actor ACK",
+                     "non_recurrence":  "worker dead_letter=0; historical message classified DELIVERED with historical_ack=true",
+                     "mechanism":  "Retry classifier treated old acknowledged delivery as unresolved",
+                     "retrieval_cues":  [
+                                            "dead-letter loop",
+                                            "26688 attempts",
+                                            "historical ACK",
+                                            "old target"
+                                        ]
+                 },
+                 {
+                     "id":  "CANONICAL_RUNTIME_BYTES_MATCH_HEAD",
+                     "incident":  "Runtime could be copied from dirty working tree while advertising HEAD SHA",
+                     "detect":  "C5 deploy must reject dirty canonical source paths",
+                     "guard":  "C5_CANONICAL_SOURCE_DIRTY",
+                     "remediation":  "Commit approved source first, then deploy from clean canonical tree",
+                     "root_cause":  "Deployment copied bytes from working tree while labeling runtime with git HEAD SHA",
+                     "non_recurrence":  "Deploy-RAIOS-C5 fails closed with C5_CANONICAL_SOURCE_DIRTY before staging",
+                     "mechanism":  "HEAD identity was read from Git but copied source was not proven clean",
+                     "retrieval_cues":  [
+                                            "runtime drift",
+                                            "dirty source",
+                                            "HEAD mismatch",
+                                            "deployed bytes"
+                                        ]
+                 },
+                 {
+                     "id":  "SINGLE_CANONICAL_CHANGE_WRITER",
+                     "incident":  "Approved development waves overlapped on the same Git index",
+                     "detect":  "Active canonical change lease must exist and match approval/diff",
+                     "guard":  "active-change.json",
+                     "remediation":  "Serialize stage/approve/commit/push; other workers remain read/propose only",
+                     "root_cause":  "Multiple approved work waves shared one index/worktree concurrently",
+                     "non_recurrence":  "second Begin-RAIOS-Canonical-Change rejected with CANONICAL_CHANGE_LEASE_HELD",
+                     "mechanism":  "Approval gate serialized commits but did not serialize stage/approval windows",
+                     "retrieval_cues":  [
+                                            "concurrent stage",
+                                            "index race",
+                                            "multiple writers",
+                                            "change lease"
+                                        ]
+                 },
+                 {
+                     "id":  "INTERNAL_COUNCIL_NE_EXTERNAL_A2A",
+                     "incident":  "Internal council messaging failed because external A2A SDK module was missing",
+                     "detect":  "Council internal routes must use INTERNAL_BUS and not import a2a_all_hands in message path",
+                     "guard":  "transport=INTERNAL_BUS",
+                     "remediation":  "Load external A2A only for external A2A operations",
+                     "root_cause":  "Internal council message path imported external A2A SDK modules that were optional/missing",
+                     "non_recurrence":  "council internal route uses INTERNAL_BUS and tests pass without external a2a_all_hands import",
+                     "mechanism":  "A transport-independent internal operation inherited an unnecessary external dependency",
+                     "retrieval_cues":  [
+                                            "a2a.types missing",
+                                            "council import failure",
+                                            "internal bus"
+                                        ]
+                 },
+                 {
+                     "id":  "AUTO_ROUTE_REQUIRES_LIVE_CONSUMER",
+                     "incident":  "Defined seats were treated as routable without actor/session consumer",
+                     "detect":  "Automatic routing requires presence + binding + consumer heartbeat",
+                     "guard":  "present and binding_current and consumer_current",
+                     "remediation":  "Keep unbound seats offline; C1 explicit target remains C1_SELECTED_UNBOUND",
+                     "root_cause":  "Defined seat identity was previously conflated with current actor availability",
+                     "non_recurrence":  "ALL routes only to current present+bound+consumer seats; C12 excluded unless C1 explicitly selects it",
+                     "mechanism":  "Routing did not require live presence, session binding, and consumer heartbeat together",
+                     "retrieval_cues":  [
+                                            "fake online seat",
+                                            "C12",
+                                            "ALL routing",
+                                            "consumer heartbeat"
+                                        ]
+                 },
+                 {
+                     "id":  "DELIVERY_ACK_NE_ACTOR_ACK",
+                     "incident":  "Delivery-to-mailbox risked being mistaken for actor read/acceptance",
+                     "detect":  "Transport worker must never synthesize actor ACK",
+                     "guard":  "actor_ack_synthesized=false",
+                     "remediation":  "Only session consumer may emit actor ACK using bound actor/session identity",
+                     "root_cause":  "Mailbox delivery could be mistaken for actor read/acceptance",
+                     "non_recurrence":  "actor_ack_synthesized=false and only session consumer emits ACTOR_ACK=READ",
+                     "mechanism":  "Transport acknowledgement and human/actor consumption were not strongly separated",
+                     "retrieval_cues":  [
+                                            "fake ACK",
+                                            "DELIVERY_ACK",
+                                            "ACTOR_ACK",
+                                            "read receipt"
+                                        ]
+                 },
+                 {
+                     "id":  "ARCHIVE_PATHS_MUST_BE_COLLISION_SAFE",
+                     "incident":  "Dead-letter archive initially collided because message and worker-state shared filename",
+                     "detect":  "Archive artifacts from different roles must use unique destination names",
+                     "guard":  "semantic-message / actor-ack / worker-state names",
+                     "remediation":  "Verify hashes before removal and disclose any byte-level loss honestly",
+                     "root_cause":  "Different evidence roles used the same basename during archival",
+                     "non_recurrence":  "archive uses role-specific names and resolution record discloses byte-level loss/collision",
+                     "mechanism":  "Destination naming was filename-based rather than role-based",
+                     "retrieval_cues":  [
+                                            "archive overwrite",
+                                            "same filename",
+                                            "hash collision",
+                                            "evidence preservation"
+                                        ]
+                 },
+                 {
+                     "id":  "MODEL_PROVIDER_NE_COUNCIL_SEAT",
+                     "incident":  "Model/provider identity risked being conflated with council seats",
+                     "detect":  "AI Gateway providers must not create council identities",
+                     "guard":  "model_ne_council_seat=true",
+                     "remediation":  "Models are capability providers; seats require actor/session binding",
+                     "root_cause":  "Capability provider identity risked being treated as council/actor identity",
+                     "non_recurrence":  "AI Gateway marks model_ne_council_seat=true and actor routing requires session-bound seats",
+                     "mechanism":  "Model routing and governance identity were not explicitly separated",
+                     "retrieval_cues":  [
+                                            "DeepSeek as seat",
+                                            "model router",
+                                            "provider identity",
+                                            "council seat"
+                                        ]
+                 }
+             ],
+    "closure_requirements":  [
+                                 "lawbook_present",
+                                 "maintenance_guard_pass",
+                                 "regression_tests_pass",
+                                 "clean_source_deploy_gate",
+                                 "idle_churn_nonrecurrence_proven",
+                                 "no_synthetic_actor_ack",
+                                 "single_change_writer"
+                             ],
+    "last_proven_head":  "2101ff5253a2064152f77f6ed751a65fe01c2e91",
+    "updated_at":  "2026-09-04T02:51:30.2441801+00:00",
+    "assimilation_required":  true,
+    "assimilation_definition":  "symptom+root_cause+mechanism+repair+guard+non_recurrence+retrieval_cues"
+}

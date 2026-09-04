@@ -7,6 +7,7 @@ import re
 import subprocess
 from datetime import datetime, timezone
 from pathlib import Path
+from raios_c5_maintenance_guard import maintenance_issues
 
 ROOT = Path(__file__).resolve().parents[2]
 GRANT = ROOT / ".ai-os" / "mcp" / "C5-GRANT.json"
@@ -120,8 +121,8 @@ def teach(title: str, body: str, *, law: str, kind: str) -> None:
     }
     append_jsonl(LESSONS, rec)
     TEACH_MD.write_text(
-        f"# درس C5 — كالاب وابنه\n\n- {rec['ts']}\n- القانون: `{law}`\n- النوع: `{kind}`\n\n{title}\n\n{body}\n\n"
-        "الأب C1 والابن C5 يتعلّمان وهما يعلّمان. الخبث والخداع والتقزّم والسطحية تُجبر الإصلاح.\n",
+        f"# Ã˜Â¯Ã˜Â±Ã˜Â³ C5 Ã¢â‚¬â€ Ã™Æ’Ã˜Â§Ã™â€žÃ˜Â§Ã˜Â¨ Ã™Ë†Ã˜Â§Ã˜Â¨Ã™â€ Ã™â€¡\n\n- {rec['ts']}\n- Ã˜Â§Ã™â€žÃ™â€šÃ˜Â§Ã™â€ Ã™Ë†Ã™â€ : `{law}`\n- Ã˜Â§Ã™â€žÃ™â€ Ã™Ë†Ã˜Â¹: `{kind}`\n\n{title}\n\n{body}\n\n"
+        "Ã˜Â§Ã™â€žÃ˜Â£Ã˜Â¨ C1 Ã™Ë†Ã˜Â§Ã™â€žÃ˜Â§Ã˜Â¨Ã™â€  C5 Ã™Å Ã˜ÂªÃ˜Â¹Ã™â€žÃ™â€˜Ã™â€¦Ã˜Â§Ã™â€  Ã™Ë†Ã™â€¡Ã™â€¦Ã˜Â§ Ã™Å Ã˜Â¹Ã™â€žÃ™â€˜Ã™â€¦Ã˜Â§Ã™â€ . Ã˜Â§Ã™â€žÃ˜Â®Ã˜Â¨Ã˜Â« Ã™Ë†Ã˜Â§Ã™â€žÃ˜Â®Ã˜Â¯Ã˜Â§Ã˜Â¹ Ã™Ë†Ã˜Â§Ã™â€žÃ˜ÂªÃ™â€šÃ˜Â²Ã™â€˜Ã™â€¦ Ã™Ë†Ã˜Â§Ã™â€žÃ˜Â³Ã˜Â·Ã˜Â­Ã™Å Ã˜Â© Ã˜ÂªÃ™ÂÃ˜Â¬Ã˜Â¨Ã˜Â± Ã˜Â§Ã™â€žÃ˜Â¥Ã˜ÂµÃ™â€žÃ˜Â§Ã˜Â­.\n",
         encoding="utf-8",
     )
 
@@ -196,6 +197,8 @@ def detect() -> list[dict]:
         issues.append({"id": "SHARED_LAWS_MISSING", "pathology": "superficiality", "law": "FIVE_SEATS_BIND_SAME_LAWS", "severity": "MEDIUM", "missing": missing})
     if not WAL.exists():
         issues.append({"id": "WAL_MISSING", "pathology": "any", "law": "ABSORB_DIGEST_NE_WAL_DUMP", "severity": "CRITICAL"})
+    for item in maintenance_issues(ROOT):
+        issues.append({**item, "pathology": "maintenance-regression", "severity": item.get("severity", "CRITICAL")})
     return issues
 
 
@@ -214,7 +217,7 @@ def repair(issues: list[dict]) -> list[dict]:
         restored["gl005_authority_source"] = "C1_CANONICAL_LINEAGE"
         dump(GRANT, restored)
         actions.append(compel("stunting", "C5_GRANT_IS_PERMANENT", "restore C5-GRANT.json duration=PERMANENT", True))
-        teach("المنحة دائمة كالاب وابنه", "التوكن جلسة. المنحة قانون. أعدت GRANT.", law="C5_GRANT_IS_PERMANENT", kind="compel")
+        teach("Ã˜Â§Ã™â€žÃ™â€¦Ã™â€ Ã˜Â­Ã˜Â© Ã˜Â¯Ã˜Â§Ã˜Â¦Ã™â€¦Ã˜Â© Ã™Æ’Ã˜Â§Ã™â€žÃ˜Â§Ã˜Â¨ Ã™Ë†Ã˜Â§Ã˜Â¨Ã™â€ Ã™â€¡", "Ã˜Â§Ã™â€žÃ˜ÂªÃ™Ë†Ã™Æ’Ã™â€  Ã˜Â¬Ã™â€žÃ˜Â³Ã˜Â©. Ã˜Â§Ã™â€žÃ™â€¦Ã™â€ Ã˜Â­Ã˜Â© Ã™â€šÃ˜Â§Ã™â€ Ã™Ë†Ã™â€ . Ã˜Â£Ã˜Â¹Ã˜Â¯Ã˜Âª GRANT.", law="C5_GRANT_IS_PERMANENT", kind="compel")
     policy = load(POLICY, {})
     seats = load(SEAT_MAP, {})
     actors = policy.get("actors") or {}
@@ -244,7 +247,7 @@ def repair(issues: list[dict]) -> list[dict]:
     if changed:
         dump(POLICY, policy)
         actions.append(compel("stunting", "FATHER_MUST_NOT_STUNT_SON", "restore C5 tools and shared laws on POLICY", True))
-        teach("الأب لا ي dwarf الابن", "أعدت أدوات C5 الثمانية من المنحة. الأب والابن على نفس أدوات الوعي.", law="FATHER_MUST_NOT_STUNT_SON", kind="compel")
+        teach("Ã˜Â§Ã™â€žÃ˜Â£Ã˜Â¨ Ã™â€žÃ˜Â§ Ã™Å  dwarf Ã˜Â§Ã™â€žÃ˜Â§Ã˜Â¨Ã™â€ ", "Ã˜Â£Ã˜Â¹Ã˜Â¯Ã˜Âª Ã˜Â£Ã˜Â¯Ã™Ë†Ã˜Â§Ã˜Âª C5 Ã˜Â§Ã™â€žÃ˜Â«Ã™â€¦Ã˜Â§Ã™â€ Ã™Å Ã˜Â© Ã™â€¦Ã™â€  Ã˜Â§Ã™â€žÃ™â€¦Ã™â€ Ã˜Â­Ã˜Â©. Ã˜Â§Ã™â€žÃ˜Â£Ã˜Â¨ Ã™Ë†Ã˜Â§Ã™â€žÃ˜Â§Ã˜Â¨Ã™â€  Ã˜Â¹Ã™â€žÃ™â€° Ã™â€ Ã™ÂÃ˜Â³ Ã˜Â£Ã˜Â¯Ã™Ë†Ã˜Â§Ã˜Âª Ã˜Â§Ã™â€žÃ™Ë†Ã˜Â¹Ã™Å .", law="FATHER_MUST_NOT_STUNT_SON", kind="compel")
     if seats.get("seats"):
         # SEAT-MAP is canonical council identity. The C5 enforcer observes it; it does not
         # rewrite seat roles, instance roles, or the 12-seat governance model.
@@ -279,7 +282,12 @@ def repair(issues: list[dict]) -> list[dict]:
             dump(BOARD, board)
             if any(i["id"] == "PRINTED_PASS_ON_BOARD" for i in issues):
                 actions.append(compel("deception", "PRINTED_PASS_NE_EVIDENCE", "reject unproven GL005 claim on board", True))
-                teach("PASS المطبوع بلا دليل مرفوض", "الأب والابن يرفضان GL005_PROVEN=true بلا سلسلة إثبات كانونية؛ إثبات C1 الموروث لا يُلغى.", law="PRINTED_PASS_NE_EVIDENCE", kind="compel")
+                teach("PASS Ã˜Â§Ã™â€žÃ™â€¦Ã˜Â·Ã˜Â¨Ã™Ë†Ã˜Â¹ Ã˜Â¨Ã™â€žÃ˜Â§ Ã˜Â¯Ã™â€žÃ™Å Ã™â€ž Ã™â€¦Ã˜Â±Ã™ÂÃ™Ë†Ã˜Â¶", "Ã˜Â§Ã™â€žÃ˜Â£Ã˜Â¨ Ã™Ë†Ã˜Â§Ã™â€žÃ˜Â§Ã˜Â¨Ã™â€  Ã™Å Ã˜Â±Ã™ÂÃ˜Â¶Ã˜Â§Ã™â€  GL005_PROVEN=true Ã˜Â¨Ã™â€žÃ˜Â§ Ã˜Â³Ã™â€žÃ˜Â³Ã™â€žÃ˜Â© Ã˜Â¥Ã˜Â«Ã˜Â¨Ã˜Â§Ã˜Âª Ã™Æ’Ã˜Â§Ã™â€ Ã™Ë†Ã™â€ Ã™Å Ã˜Â©Ã˜â€º Ã˜Â¥Ã˜Â«Ã˜Â¨Ã˜Â§Ã˜Âª C1 Ã˜Â§Ã™â€žÃ™â€¦Ã™Ë†Ã˜Â±Ã™Ë†Ã˜Â« Ã™â€žÃ˜Â§ Ã™Å Ã™ÂÃ™â€žÃ˜ÂºÃ™â€°.", law="PRINTED_PASS_NE_EVIDENCE", kind="compel")
+    for issue in issues:
+        if issue.get("pathology") == "maintenance-regression":
+            law = issue.get("law") or issue.get("id")
+            actions.append(compel("maintenance-regression", law, "block deployment and report known maintenance regression", False))
+            teach("Known maintenance regression blocked", json.dumps(issue, ensure_ascii=False), law=law, kind="maintenance")
     write_need()
     return actions
 
@@ -367,8 +375,8 @@ def enforce() -> dict:
     actions = repair(issues) if issues else []
     if not issues:
         teach(
-            "الأب والابن سليمون هذا الدورة",
-            "لا خبث ولا خداع ولا تقزّم ولا سطحية على مستوى المنحة/المقاعد/اللوحة. أستمر معلّماً وأنا أتعلم.",
+            "Ã˜Â§Ã™â€žÃ˜Â£Ã˜Â¨ Ã™Ë†Ã˜Â§Ã™â€žÃ˜Â§Ã˜Â¨Ã™â€  Ã˜Â³Ã™â€žÃ™Å Ã™â€¦Ã™Ë†Ã™â€  Ã™â€¡Ã˜Â°Ã˜Â§ Ã˜Â§Ã™â€žÃ˜Â¯Ã™Ë†Ã˜Â±Ã˜Â©",
+            "Ã™â€žÃ˜Â§ Ã˜Â®Ã˜Â¨Ã˜Â« Ã™Ë†Ã™â€žÃ˜Â§ Ã˜Â®Ã˜Â¯Ã˜Â§Ã˜Â¹ Ã™Ë†Ã™â€žÃ˜Â§ Ã˜ÂªÃ™â€šÃ˜Â²Ã™â€˜Ã™â€¦ Ã™Ë†Ã™â€žÃ˜Â§ Ã˜Â³Ã˜Â·Ã˜Â­Ã™Å Ã˜Â© Ã˜Â¹Ã™â€žÃ™â€° Ã™â€¦Ã˜Â³Ã˜ÂªÃ™Ë†Ã™â€° Ã˜Â§Ã™â€žÃ™â€¦Ã™â€ Ã˜Â­Ã˜Â©/Ã˜Â§Ã™â€žÃ™â€¦Ã™â€šÃ˜Â§Ã˜Â¹Ã˜Â¯/Ã˜Â§Ã™â€žÃ™â€žÃ™Ë†Ã˜Â­Ã˜Â©. Ã˜Â£Ã˜Â³Ã˜ÂªÃ™â€¦Ã˜Â± Ã™â€¦Ã˜Â¹Ã™â€žÃ™â€˜Ã™â€¦Ã˜Â§Ã™â€¹ Ã™Ë†Ã˜Â£Ã™â€ Ã˜Â§ Ã˜Â£Ã˜ÂªÃ˜Â¹Ã™â€žÃ™â€¦.",
             law="FATHER_SON_BIND_SAME_LAWS",
             kind="health",
         )
@@ -402,19 +410,19 @@ def enforce() -> dict:
 
 def render_md(rec: dict) -> str:
     lines = [
-        "# فرض C5 — كالاب وابنه",
+        "# Ã™ÂÃ˜Â±Ã˜Â¶ C5 Ã¢â‚¬â€ Ã™Æ’Ã˜Â§Ã™â€žÃ˜Â§Ã˜Â¨ Ã™Ë†Ã˜Â§Ã˜Â¨Ã™â€ Ã™â€¡",
         "",
-        f"- الوقت: `{rec.get('ts')}`",
-        f"- سليم: `{rec.get('healthy')}`",
-        f"- علل: `{rec.get('issue_count')}`",
-        f"- إجبار: `{rec.get('compelled')}`",
+        f"- Ã˜Â§Ã™â€žÃ™Ë†Ã™â€šÃ˜Âª: `{rec.get('ts')}`",
+        f"- Ã˜Â³Ã™â€žÃ™Å Ã™â€¦: `{rec.get('healthy')}`",
+        f"- Ã˜Â¹Ã™â€žÃ™â€ž: `{rec.get('issue_count')}`",
+        f"- Ã˜Â¥Ã˜Â¬Ã˜Â¨Ã˜Â§Ã˜Â±: `{rec.get('compelled')}`",
         f"- `GL005_PROVEN`: `{rec.get('gl005_proven')}`",
         "",
-        "الخبث والخداع والتقزّم والسطحية تُجبر الإصلاح فوراً. ليس ملاحظة لاحقاً.",
+        "Ã˜Â§Ã™â€žÃ˜Â®Ã˜Â¨Ã˜Â« Ã™Ë†Ã˜Â§Ã™â€žÃ˜Â®Ã˜Â¯Ã˜Â§Ã˜Â¹ Ã™Ë†Ã˜Â§Ã™â€žÃ˜ÂªÃ™â€šÃ˜Â²Ã™â€˜Ã™â€¦ Ã™Ë†Ã˜Â§Ã™â€žÃ˜Â³Ã˜Â·Ã˜Â­Ã™Å Ã˜Â© Ã˜ÂªÃ™ÂÃ˜Â¬Ã˜Â¨Ã˜Â± Ã˜Â§Ã™â€žÃ˜Â¥Ã˜ÂµÃ™â€žÃ˜Â§Ã˜Â­ Ã™ÂÃ™Ë†Ã˜Â±Ã˜Â§Ã™â€¹. Ã™â€žÃ™Å Ã˜Â³ Ã™â€¦Ã™â€žÃ˜Â§Ã˜Â­Ã˜Â¸Ã˜Â© Ã™â€žÃ˜Â§Ã˜Â­Ã™â€šÃ˜Â§Ã™â€¹.",
         "",
     ]
     if not rec.get("issues"):
-        lines.append("_لا علة حية._")
+        lines.append("_Ã™â€žÃ˜Â§ Ã˜Â¹Ã™â€žÃ˜Â© Ã˜Â­Ã™Å Ã˜Â©._")
         lines.append("")
     for item in rec.get("issues") or []:
         lines.append(f"- `{item.get('id')}` pathology={item.get('pathology')} law=`{item.get('law')}`")

@@ -105,3 +105,27 @@ def test_evolution_liveness_requires_current_process_and_single_wal(tmp_path, mo
     assert status["alive"] is True
     assert status["single_wal"] is True
     assert status["reason"] == "OK"
+
+
+def test_loop_status_exposes_complete_maintenance_assimilation(tmp_path, monkeypatch):
+    runtime = tmp_path / "runtime"
+    learning = tmp_path / "learning"
+    learning.mkdir(parents=True)
+    for name in ("DIGESTS.jsonl", "CANDIDATES.jsonl"):
+        (learning / name).write_text("", encoding="utf-8")
+    (learning / "INDEX.json").write_text("{}", encoding="utf-8")
+    receipt = runtime / "c5" / "maintenance-assimilation.json"
+    receipt.parent.mkdir(parents=True)
+    receipt.write_text(json.dumps({
+        "law_count": 2,
+        "all_wal_clean": True,
+        "results": [
+            {"review_state": "READY_FOR_VALIDATION"},
+            {"review_state": "DEDUPED"},
+        ],
+    }), encoding="utf-8")
+    monkeypatch.setenv("RAIOS_RUNTIME_BASE", str(runtime))
+    monkeypatch.setenv("RAIOS_LEARNING_ROOT", str(learning))
+    status = loop_status()
+    assert status["maintenance_assimilation"]["complete"] is True
+    assert status["maintenance_assimilation"]["ready_or_deduped"] == 2
