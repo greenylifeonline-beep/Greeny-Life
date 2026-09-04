@@ -14,6 +14,7 @@ from .actor_routing import ActorRouteRegistry
 from .council_board import CouncilBoard
 from .task_actions import latest_resource_census
 from .client_activity import ClientActivityView
+from raios.council_ops import CouncilOperations
 
 CREATE_NO_WINDOW=getattr(subprocess,"CREATE_NO_WINDOW",0)
 HERE=Path(__file__).resolve().parent
@@ -25,10 +26,11 @@ C5=os.getenv("RAIOS_C5_URL","http://127.0.0.1:8766")
 CSRF=secrets.token_urlsafe(32)
 MESSAGE_WORKER=MessageWorker(REPO,RUNTIME,poll_seconds=5.0)
 ACTOR_ROUTES=ActorRouteRegistry(REPO,presence_path=COUNCIL_PRESENCE)
-COUNCIL_BOARD=CouncilBoard(REPO)
+COUNCIL_BOARD=CouncilBoard(REPO,routes=ACTOR_ROUTES)
 SEARCH_CORTEX=SearchCortex()
 MODEL_ROUTER=ModelRouter(REPO)
 CLIENT_ACTIVITY=ClientActivityView(REPO,ACTOR_ROUTES)
+COUNCIL_OPS=CouncilOperations(REPO)
 MESSAGE_WORKER.configure_workflow(COUNCIL_BOARD)
 
 @asynccontextmanager
@@ -48,6 +50,7 @@ def load(path,default):
 def git(*args):
  try:return subprocess.check_output(["git",*args],cwd=REPO,text=True,stderr=subprocess.DEVNULL,timeout=8,creationflags=CREATE_NO_WINDOW).strip()
  except Exception:return "UNKNOWN"
+CANONICAL_HEAD=os.getenv("RAIOS_CANONICAL_HEAD","").strip() or git("rev-parse","HEAD")
 def tcp(port):
  try:
   with socket.create_connection(("127.0.0.1",port),timeout=.8):return True
@@ -80,6 +83,7 @@ def tasks_state():
 def _presence_state(row):
  if not row:return "UNPROVEN"
  state=str(row.get("presence") or "UNPROVEN").upper()
+ if state=="PRESENT" and row.get("signature_valid") is not True:return "UNVERIFIED"
  if state!="PRESENT":return state
  expiry=row.get("lease_expires_at")
  if not expiry:return "PRESENT"
@@ -87,20 +91,25 @@ def _presence_state(row):
   return "PRESENT" if datetime.fromisoformat(str(expiry).replace("Z","+00:00"))>datetime.now(timezone.utc) else "EXPIRED"
  except (TypeError,ValueError):return "INVALID"
 def council_state():
- seatmap=load(MCP_ROOT/".ai-os/mcp/SEAT-MAP.json",{})
- presence=load(COUNCIL_PRESENCE,{"seats":{}})
- registered=list((seatmap.get("seats") or {}).keys());seats=[];present=0
- for key,row in (seatmap.get("seats") or {}).items():
-  proof=(presence.get("seats") or {}).get(key,{})
-  state=_presence_state(proof);current=state=="PRESENT";present+=int(current)
-  seats.append({"id":key,"name_ar":row.get("name_ar"),"role":row.get("actor_role"),
-   "where":row.get("where"),"identity_registered":True,"identity_state":"REGISTERED",
-   "presence":state,"presence_current":current,"lease_expires_at":proof.get("lease_expires_at"),
-   "mail":row.get("mail",False)})
- return {"seats":seats,"registered_seats":registered,"live_declared":seatmap.get("live",[]),
-  "identity_total":len(registered),"present_total":present,
-  "no_registered_seats":not registered,"no_present_seats":present==0,
-  "identity_ne_presence":True,"attendance_is_proof":True}
+ snap=CLIENT_ACTIVITY.snapshot();seatmap=load(MCP_ROOT/".ai-os/mcp/SEAT-MAP.json",{})
+ by_spec=seatmap.get("seats") or {};seats=[]
+ for row in snap.get("clients",[]):
+  key=row.get("seat");spec=by_spec.get(key,{})
+  seats.append({"id":key,"name_ar":spec.get("name_ar"),"role":row.get("actor_role"),
+   "where":spec.get("where"),"identity_registered":True,"identity_state":"REGISTERED",
+   "presence":row.get("presence"),"presence_current":row.get("present") is True,
+   "availability":row.get("availability"),"execution_ready":row.get("execution_ready"),
+   "work_phase":row.get("work_phase"),"reason":row.get("reason"),
+   "current_tasks":row.get("current_tasks",[]),"mail":spec.get("mail",False)})
+ present=sum(1 for x in seats if x.get("presence_current"))
+ return {"schema":"raios.council-state.v3","canonical_coordination_source":"/api/client-activity",
+  "seats":seats,"registered_seats":[x.get("id") for x in seats],
+  "identity_total":len(seats),"present_total":present,
+  "available_total":sum(1 for x in seats if x.get("availability")=="AVAILABLE"),
+  "execution_ready_total":sum(1 for x in seats if x.get("execution_ready") is True),
+  "no_registered_seats":not seats,"no_present_seats":present==0,
+  "identity_ne_presence":True,"availability_ne_execution_readiness":True,
+  "attendance_is_proof":True,"source_schema":snap.get("schema")}
 def model_state():
  code,body=http_json("http://127.0.0.1:11434/api/tags",timeout=4)
  models=[]
@@ -163,6 +172,10 @@ class SearchIn(BaseModel):
  deep:bool=True
  limit:int=Field(default=20,ge=1,le=50)
 class CommandIn(BaseModel):text:str=Field(min_length=1,max_length=50000);targets:list[str];task_id:str|None=None
+class AvailabilityIn(BaseModel):
+ seat:str=Field(min_length=2,max_length=4)
+ state:str=Field(pattern="^(AVAILABLE|BUSY|OFFLINE|UNKNOWN)$")
+ reason:str=Field(default="",max_length=5000)
 class ModelRouteIn(BaseModel):
  capability:str=Field(min_length=2,max_length=100)
  privacy:str=Field(default="local_preferred",max_length=40)
@@ -266,6 +279,19 @@ def api_model_route(req:ModelRouteIn,x_raios_csrf:str|None=Header(None)):
   latency=req.latency,cost=req.cost,tools_required=req.tools_required,context_tokens=req.context_tokens))
 @app.get("/api/client-activity")
 def api_client_activity():return CLIENT_ACTIVITY.snapshot()
+@app.post("/api/availability")
+def api_availability(req:AvailabilityIn,x_raios_csrf:str|None=Header(None)):
+ require_csrf(x_raios_csrf)
+ try:
+  _,actor,_=c1_gateway()
+  auth={"seat_id":"C1","SIGNATURE_VALID":True,"ISSUER_IDENTIFIED":True,
+        "ISSUER_TRUSTED":True,"PRINCIPAL_BOUND":True,
+        "AUTHORITY_SOURCE_PROVENANCE":{"source":"C1_MCP_GATEWAY_AUTHENTICATED",
+        "actor_id":getattr(actor,"actor_id","C1"),"command_center":True}}
+  return COUNCIL_OPS.attest_availability(seat=req.seat,state=req.state,attested_by="C1",
+   auth=auth,idem="availability-"+uuid.uuid4().hex,reason=req.reason)
+ except Exception as exc:
+  raise HTTPException(409,f"{type(exc).__name__}:{exc}")
 @app.get("/api/notifications/{message_id}")
 def api_notification_status(message_id:str):return CLIENT_ACTIVITY.notification_status(message_id)
 @app.get("/api/receipts")
@@ -290,13 +316,16 @@ def command(req:CommandIn,x_raios_csrf:str|None=Header(None)):
   raise HTTPException(400,{"error":"TARGET_UNKNOWN","targets":resolution["rejected"]})
  if not targets:
   raise HTTPException(409,{"error":"NO_LIVE_BOUND_TARGETS","auto_routable":resolution["auto_routable_snapshot"]})
- try:msg=MESSAGE_WORKER.enqueue("C1@COMMAND_CENTER",targets,req.text,req.task_id,
+ notice=("COUNCIL_NOTICE_ONLY\nWORK_AUTHORITY=false\n"
+         "EXECUTION_REQUIRES=RAIOS_WORKER_TASK_ASSIGNMENT_AND_EXPLICIT_ACCEPTANCE\n\n"+req.text)
+ try:msg=MESSAGE_WORKER.enqueue("C1@COMMAND_CENTER",targets,notice,req.task_id,
   routing_modes=resolution["routing_modes"])
  except ValueError as exc:raise HTTPException(400,str(exc))
  return {"ok":True,"results":[{"targets":targets,"route":"CANONICAL_LOCAL_FABRIC",
   "routing_modes":resolution["routing_modes"],"owner_selected_unbound":resolution["owner_selected_unbound"],
   "status":"SENT_PENDING_DELIVERY_ACK","message_id":msg["message_id"]}],
-  "actor_ack_synthesized":False,"executed":False,"promotion":False,"timestamp":utc()}
+  "work_authority":False,"notice_only":True,"actor_ack_synthesized":False,
+  "executed":False,"promotion":False,"timestamp":utc()}
 @app.post("/api/maintenance/diagnose")
 def diagnose(x_raios_csrf:str|None=Header(None)):
  require_csrf(x_raios_csrf); data=diagnostic_state(); return {"ok":True,"diagnosis":data,"actions_executed":[],"canonical_mutation":False}
@@ -304,5 +333,5 @@ def diagnose(x_raios_csrf:str|None=Header(None)):
 def health():
  worker=MESSAGE_WORKER.status();online=worker.get("healthy") is True
  return {"status":"ONLINE" if online else "DEGRADED","service":"RAIOS_COMMAND_CENTER",
-  "canonical_head":git("rev-parse","HEAD"),"message_worker":worker,
+  "canonical_head":CANONICAL_HEAD,"message_worker":worker,
   "workflow_automation":worker.get("workflow_enabled") is True,"timestamp":utc()}

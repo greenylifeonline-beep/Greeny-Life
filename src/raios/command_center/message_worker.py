@@ -44,6 +44,7 @@ class MessageWorker:
         self.state=self.runtime/"worker";self.poll_seconds=poll_seconds
         self.max_attempts=max_attempts;self.stop_event=threading.Event()
         self.worker_id=f"RAIOS-WORKER@{socket.gethostname()}"
+        self.canonical_head=os.getenv("RAIOS_CANONICAL_HEAD","").strip() or self._read_head_once()
         self.workflow=None;self.thread=None;self.last_error=None;self.consecutive_errors=0
         for p in (self.inbox,self.outbox,self.receipts,self.deliveries,self.dead,self.state):
             p.mkdir(parents=True,exist_ok=True)
@@ -63,7 +64,7 @@ class MessageWorker:
         atomic(self.outbox/f"{mid}.{target}.delivery.ack.json",row)
         atomic(self.receipts/f"{mid}.{target}.delivery.ack.receipt.json",row)
         return row
-    def _head(self)->str:
+    def _read_head_once(self)->str:
         try:
             import subprocess
             return subprocess.check_output(
@@ -72,8 +73,20 @@ class MessageWorker:
                 creationflags=getattr(subprocess,"CREATE_NO_WINDOW",0),
             ).strip()
         except Exception:return "UNKNOWN"
+    def _head(self)->str:return self.canonical_head
     def _attempts(self,mid:str)->dict[str,Any]:
         return read_json(self.state/f"{mid}.json",{"message_id":mid,"attempts":0}) or {"message_id":mid,"attempts":0}
+    def _historical_actor_ack(self,mid:str)->dict[str,Any]|None:
+        for path in self.receipts.glob(f"{mid}.*.ack.receipt.json"):
+            row=read_json(path,{}) or {}
+            if row.get("schema") not in {"raios.message-ack.v1","raios.actor-ack.v1"}:
+                continue
+            if str(row.get("status") or "").upper() not in {"ACKNOWLEDGED","READ","DONE"}:
+                continue
+            actor=str(row.get("actor") or "")
+            if actor and not actor.startswith("RAIOS-WORKER@"):
+                return {"path":str(path),"actor":actor,"status":row.get("status"),"at":row.get("at")}
+        return None
     def _validate(self,msg:Any,path:Path)->tuple[str,list[str]]:
         if not isinstance(msg,dict) or msg.get("schema")!="raios.message.v1":
             raise ValueError("INVALID_MESSAGE_SCHEMA")
@@ -126,6 +139,11 @@ class MessageWorker:
         for path in sorted(self.inbox.glob("MSG-*.json")):
             result["seen"]+=1;state=self._attempts(path.stem)
             if state.get("status")=="DELIVERED":continue
+            historical_ack=self._historical_actor_ack(path.stem)
+            if historical_ack:
+                state.update(status="DELIVERED",historical_ack=True,historical_actor_ack=historical_ack,updated_at=utc(),last_error=None)
+                atomic(self.state/f"{path.stem}.json",state)
+                continue
             if state.get("status")=="RETRY":
                 delay=min(60,2**max(0,int(state.get("attempts",0))-1))
                 try:

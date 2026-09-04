@@ -79,6 +79,23 @@ class MessageWorkerTests(unittest.TestCase):
             if worker.thread:worker.thread.join(timeout=1)
             td.cleanup()
 
+
+    def test_historical_actor_ack_prevents_obsolete_message_dead_letter(self):
+        td,worker=self.make_worker(max_attempts=1)
+        try:
+            mid="MSG-historical"
+            path=worker.inbox/f"{mid}.json"
+            path.write_text(json.dumps({"schema":"raios.message.v1","message_id":mid,"target":"C2-OBS","payload":{"text":"old"}}),encoding="utf-8")
+            receipt=worker.receipts/f"{mid}.C2-OBS.ack.receipt.json"
+            receipt.write_text(json.dumps({"schema":"raios.message-ack.v1","message_id":mid,"actor":"C2-OBS","status":"ACKNOWLEDGED","at":"2026-08-27T00:00:00Z"}),encoding="utf-8")
+            result=worker.scan_once()
+            state=json.loads((worker.state/f"{mid}.json").read_text())
+            self.assertEqual(result["dead_letter"],0)
+            self.assertEqual(state["status"],"DELIVERED")
+            self.assertTrue(state["historical_ack"])
+            self.assertFalse((worker.dead/path.name).exists())
+        finally:td.cleanup()
+
     def test_invalid_message_reaches_dead_letter(self):
         td,worker=self.make_worker(max_attempts=1)
         try:

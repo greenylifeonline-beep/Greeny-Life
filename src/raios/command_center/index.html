@@ -55,7 +55,7 @@ table{width:100%;border-collapse:collapse;font-size:11px}th,td{text-align:right;
     <button data-view="council"><i>◇</i><span>المجلس</span></button>
     <button data-view="diagnostics"><i>⚙</i><span>التشخيص</span></button>
   </nav>
-  <div class="side-status"><div class="presence"><i class="live-dot" id="sideDot"></i><span id="liveText">جاري الاتصال…</span></div><small id="headShort">HEAD —</small></div>
+  <div class="side-status"><div class="presence"><i class="live-dot" id="sideDot"></i><span id="liveText">جاري الاتصال…</span></div><small id="councilSummary">المجلس —</small><small id="headShort">HEAD —</small></div>
 </aside>
 
 <div class="workspace">
@@ -126,8 +126,10 @@ table{width:100%;border-collapse:collapse;font-size:11px}th,td{text-align:right;
 
 <section class="view" id="council">
   <div class="grid">
-    <article class="card span8"><div class="card-head"><h2>إعلان أو توجيه موثّق</h2><span class="pill warn">الإرسال ≠ التنفيذ</span></div><div class="options" id="targets"><button class="btn primary target active" data-target="ALL">الجميع</button><button class="btn target" data-target="C2">C2</button><button class="btn target" data-target="C3">C3</button><button class="btn target" data-target="C4">C4</button><button class="btn target" data-target="C5">C5</button><button class="btn target" data-target="C6">C6</button></div><textarea class="text" id="commandInput" style="min-height:150px;margin-top:14px" placeholder="اكتب التوجيه…"></textarea><div style="display:flex;justify-content:flex-end;margin-top:10px"><button class="btn primary" id="sendCommand">إرسال موثّق</button></div><div class="code" id="commandOutput" style="margin-top:13px">ستظهر إيصالات الإرسال هنا.</div></article>
-    <article class="card span4"><div class="card-head"><h2>حضور المقاعد</h2><span class="hint">الحضور يحتاج إثباتًا</span></div><div class="list" id="seatList"></div></article>
+    <article class="card span8"><div class="card-head"><h2>إعلان أو تنسيق موثّق</h2><span class="pill warn">لا يمنح صلاحية تنفيذ · المهمة تأتي من RAIOS-WORKER فقط</span></div><div class="options" id="targets"><button class="btn primary target active" data-target="ALL">الجميع</button><button class="btn target" data-target="C1">C1</button><button class="btn target" data-target="C2">C2</button><button class="btn target" data-target="C3">C3</button><button class="btn target" data-target="C4">C4</button><button class="btn target" data-target="C5">C5</button><button class="btn target" data-target="C6">C6</button><button class="btn target" data-target="C7">C7</button><button class="btn target" data-target="C8">C8</button><button class="btn target" data-target="C9">C9</button><button class="btn target" data-target="C10">C10</button><button class="btn target" data-target="C11">C11</button><button class="btn target" data-target="C12">C12</button></div><textarea class="text" id="commandInput" style="min-height:150px;margin-top:14px" placeholder="اكتب التوجيه…"></textarea><div style="display:flex;justify-content:flex-end;margin-top:10px"><button class="btn primary" id="sendCommand">إرسال موثّق</button></div><div class="code" id="commandOutput" style="margin-top:13px">ستظهر إيصالات الإرسال هنا.</div></article>
+    <article class="card span4"><div class="card-head"><h2>حالة الأعضاء</h2><span class="hint">التوفر ≠ جاهزية التنفيذ</span></div><div class="list" id="seatList"></div></article>
+    <article class="card span6"><div class="card-head"><h2>العامل</h2><span class="hint">نفس مصدر التنسيق</span></div><div class="list" id="workerList"></div></article>
+    <article class="card span6"><div class="card-head"><h2>منفذون آخرون نشطون</h2><span class="hint">خارج المقاعد إن وُجدوا</span></div><div class="list" id="otherActorList"></div></article>
   </div>
 </section>
 
@@ -159,7 +161,7 @@ function esc(v){return String(v==null?'':v).replace(/[&<>"']/g,function(m){retur
 function newId(){var id=(crypto.randomUUID?crypto.randomUUID():Date.now()+'-'+Math.random());localStorage.setItem('raiosConversationId',id);return id}
 function readMessages(){try{return JSON.parse(localStorage.getItem('raiosChat')||'[]').slice(-40)}catch(e){return []}}
 function saveMessages(){localStorage.setItem('raiosChat',JSON.stringify(messages.slice(-40)))}
-function klass(s){s=String(s||'').toUpperCase();return /ONLINE|HEALTHY|DONE|PRESENT|PASS|READY_FOR_VALIDATION/.test(s)?'ok':/OFFLINE|BLOCKED|FAIL|DEGRADED|CONFLICT|STALE/.test(s)?'bad':'warn'}
+function klass(s){s=String(s||'').toUpperCase();return /ONLINE|HEALTHY|DONE|PRESENT|PASS|READY_FOR_VALIDATION|AVAILABLE/.test(s)?'ok':/OFFLINE|BLOCKED|FAIL|DEGRADED|CONFLICT|STALE/.test(s)?'bad':'warn'}
 function badge(s){return '<span class="badge '+klass(s)+'">'+esc(s||'UNPROVEN')+'</span>'}
 function toast(t){var n=$('#toast');n.textContent=t;n.classList.add('show');setTimeout(function(){n.classList.remove('show')},2600)}
 async function api(url,opt){
@@ -242,11 +244,30 @@ function renderContinuity(c){
   $('#continuityBadge').className='pill '+klass(c.status);$('#continuityBadge').textContent=c.status||'UNPROVEN';
   var s=c.services||{};$('#continuityServices').innerHTML=Object.keys(s).map(function(k){return '<div class="plane"><span>'+esc(k)+'</span><strong>'+badge(s[k]?'ONLINE':'OFFLINE')+'</strong></div>'}).join('')||'<div class="empty">سيظهر إثبات الحارس بعد أول دورة.</div>'
 }
+function renderAvailability(a){
+  var rows=a.clients||[],sum=a.availability_summary||{},workers=a.workers||[],others=a.other_active_actors||[];
+  var ready=rows.filter(function(r){return r.execution_ready===true}).length;
+  $('#councilSummary').textContent='المجلس: '+(sum.AVAILABLE||0)+' متاح · '+ready+' جاهز تنفيذ · '+(sum.BUSY||0)+' مشغول · '+(sum.UNKNOWN||0)+' غير معلوم';
+  $('#seatList').innerHTML=rows.map(function(r){
+    var task=(r.current_tasks||[])[0],taskText=task?(task.id||task.title||'TASK'):'NO_TASK';
+    var exec=r.execution_ready?'EXEC_READY':'COORD_ONLY';
+    var detail=exec+' · '+(r.work_phase||'—')+' · '+taskText+' · '+(r.reason||r.source||'—')+' · NEXT='+(r.required_action||'—');
+    return '<div class="list-row"><div class="grow"><strong>'+esc(r.seat)+' · '+esc(r.presence||'AWAY')+'</strong><small>'+esc(detail)+'</small></div>'+badge(r.availability||'UNKNOWN')+'</div>'
+  }).join('')||'<div class="empty">لا توجد بيانات أعضاء.</div>';
+  $('#workerList').innerHTML=workers.map(function(r){
+    var detail=(r.kind||'WORKER')+' · '+(r.reason||'—')+' · heartbeat='+(r.heartbeat||'—');
+    return '<div class="list-row"><div class="grow"><strong>'+esc(r.actor_id||'WORKER')+'</strong><small>'+esc(detail)+'</small></div>'+badge(r.availability||'UNKNOWN')+'</div>'
+  }).join('')||'<div class="empty">لا يوجد عامل حي مثبت.</div>';
+  $('#otherActorList').innerHTML=others.map(function(r){
+    var task=(r.current_tasks||[])[0],detail=(r.source||'—')+' · '+(task?(task.id||'TASK'):'NO_TASK');
+    return '<div class="list-row"><div class="grow"><strong>'+esc(r.actor_id||'ACTOR')+'</strong><small>'+esc(detail)+'</small></div>'+badge(r.availability||'UNKNOWN')+'</div>'
+  }).join('')||'<div class="empty">لا يوجد منفذ نشط خارج المقاعد.</div>';
+}
 async function extras(){
-  var res=await Promise.all([api('/api/tasks'),api('/api/receipts'),api('/api/cognitive')]);var t=res[0],r=res[1],c=res[2];
+  var res=await Promise.all([api('/api/tasks'),api('/api/receipts'),api('/api/cognitive'),api('/api/client-activity')]);var t=res[0],r=res[1],c=res[2],a=res[3];
   $('#tasksTable').innerHTML=table(t.recent,[['id','المهمة'],['status','الحالة'],['claimed_by','المنفذ'],['validation','التحقق']]);
   $('#workStats').textContent=t.in_progress+' قيد التنفيذ · '+t.active_locks+' أقفال نشطة';
-  $('#receiptsTable').innerHTML=table(r.recent,[['name','الإيصال'],['bytes','الحجم'],['path','المسار']]);renderCognitive(c)
+  $('#receiptsTable').innerHTML=table(r.recent,[['name','الإيصال'],['bytes','الحجم'],['path','المسار']]);renderCognitive(c);renderAvailability(a)
 }
 async function refresh(){
   var b=$('#refreshBtn');b.disabled=true;try{var o=await api('/api/overview');renderOverview(o);await extras()}catch(e){$('#liveText').textContent='تعذر الاتصال';$('#sideDot').style.background='var(--red)';toast('فشل التحديث')}finally{b.disabled=false;b.textContent='تحديث'}

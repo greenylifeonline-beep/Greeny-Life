@@ -1,6 +1,8 @@
 param([string]$RuntimeRoot="$HOME\.raios\runtime\command-center",[int]$Port=8770,[string]$McpRoot="")
 $ErrorActionPreference="Stop"
 $Repo=(Resolve-Path(Join-Path $PSScriptRoot "..\..")).Path;$Head=(git -C $Repo rev-parse HEAD).Trim()
+$Dirty = @(git -C $Repo status --porcelain -- src/raios/command_center src/raios/search_cortex src/raios/resource_fabric src/raios/ai_gateway src/raios/council_ops scripts/ai-os/raios_mcp scripts/runtime/Deploy-RAIOS-Command-Center.ps1)
+if ($Dirty.Count -gt 0) { throw "COMMAND_CENTER_CANONICAL_SOURCE_DIRTY::$($Dirty -join ';')" }
 if(-not $McpRoot){$McpRoot=$Repo}
 $McpRoot=(Resolve-Path $McpRoot).Path
 if($McpRoot -ne $Repo){throw "MCP_ROOT_MUST_EQUAL_CANONICAL_REPO"}
@@ -14,7 +16,7 @@ Copy-Item(Join-Path $Repo "src\raios\search_cortex\*")$SearchPkg -Recurse -Force
 Copy-Item(Join-Path $Repo "src\raios\resource_fabric\*")$ResourcePkg -Recurse -Force
 Copy-Item(Join-Path $Repo "src\raios\ai_gateway\*")$GatewayPkg -Recurse -Force
 Copy-Item(Join-Path $Repo "scripts\ai-os\raios_mcp\*")$Mcp -Recurse -Force
-$env:RAIOS_CANONICAL_REPO=$Repo;$env:RAIOS_MCP_ROOT=$McpRoot;$env:RAIOS_COMMAND_CENTER_RUNTIME=$RuntimeRoot;$env:PYTHONPATH=$App
+$env:RAIOS_CANONICAL_REPO=$Repo;$env:RAIOS_CANONICAL_HEAD=$Head;$env:RAIOS_MCP_ROOT=$McpRoot;$env:RAIOS_COMMAND_CENTER_RUNTIME=$RuntimeRoot;$env:PYTHONPATH=$App
 function Start-Center([int]$Listen,[string]$Name){$out=Join-Path $Logs "$Name.out.log";$err=Join-Path $Logs "$Name.err.log";Start-Process $PythonWindowless -ArgumentList @("-m","uvicorn","raios.command_center.app:app","--app-dir",$App,"--host","127.0.0.1","--port","$Listen") -WorkingDirectory $Repo -WindowStyle Hidden -RedirectStandardOutput $out -RedirectStandardError $err -PassThru}
 function Wait-Healthy([int]$Listen,[int]$ProcessId){for($i=0;$i-lt 30;$i++){Start-Sleep 1;if(-not(Get-Process -Id $ProcessId -ErrorAction SilentlyContinue)){return $null};try{$r=Invoke-RestMethod "http://127.0.0.1:$Listen/health" -TimeoutSec 3;if($r.status-eq"ONLINE"-and$r.canonical_head-eq$Head){return $r}}catch{}};return $null}
 $stagePort=$Port+1000;if(Get-NetTCPConnection -LocalPort $stagePort -State Listen -ErrorAction SilentlyContinue){throw "STAGE_PORT_IN_USE"}
@@ -32,6 +34,7 @@ $manifest=[ordered]@{schema="raios.command-center-deployment.v1";canonical_head=
 $manifest|ConvertTo-Json -Depth 8|Set-Content(Join-Path $RuntimeRoot "deployment.json") -Encoding UTF8
 $launcher=@"
 `$env:RAIOS_CANONICAL_REPO="$Repo"
+`$env:RAIOS_CANONICAL_HEAD="$Head"
 `$env:RAIOS_MCP_ROOT="$McpRoot"
 `$env:RAIOS_COMMAND_CENTER_RUNTIME="$RuntimeRoot"
 `$env:PYTHONPATH="$App"

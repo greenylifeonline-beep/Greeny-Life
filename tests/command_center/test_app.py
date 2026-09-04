@@ -15,6 +15,7 @@ def test_professional_bilingual_working_surface_is_local_and_complete():
  assert "Search Cortex" in text
 
 def test_health_and_bootstrap_bind_canonical_head(monkeypatch):
+ monkeypatch.setattr(cc,"CANONICAL_HEAD","a"*40)
  monkeypatch.setattr(cc,"git",lambda *a:"a"*40)
  monkeypatch.setattr(cc,"overview",lambda:{"canonical_head":"a"*40,"maintenance":{"health":"HEALTHY"}})
  monkeypatch.setattr(cc.MESSAGE_WORKER,"status",lambda:{"healthy":True,"workflow_enabled":True})
@@ -39,6 +40,20 @@ def test_command_rejects_unseated_target_without_delivery(monkeypatch):
  monkeypatch.setattr(cc,"c1_gateway",lambda:called.append(True))
  out=client.post("/api/command",headers={"X-RAIOS-CSRF":cc.CSRF},json={"text":"test","targets":["C13"]})
  assert out.status_code==400 and not called
+
+def test_availability_endpoint_is_coordination_only_and_c1_authenticated(monkeypatch):
+ class Actor: actor_id="C1"
+ monkeypatch.setattr(cc,"c1_gateway",lambda:(None,Actor(),None))
+ called={}
+ def attest(**kwargs):
+  called.update(kwargs);return {"status":"ATTESTED","seat":kwargs["seat"],
+   "availability":kwargs["state"],"execution_authority":False}
+ monkeypatch.setattr(cc.COUNCIL_OPS,"attest_availability",attest)
+ out=client.post("/api/availability",headers={"X-RAIOS-CSRF":cc.CSRF},
+  json={"seat":"C2","state":"AVAILABLE","reason":"C1 confirms C2 available"})
+ assert out.status_code==200 and out.json()["availability"]=="AVAILABLE"
+ assert called["attested_by"]=="C1" and called["seat"]=="C2"
+
 
 def test_successful_non_json_service_probe_is_online_without_body_exposure(monkeypatch):
  class Response:
@@ -79,19 +94,30 @@ def test_deployer_writes_launcher_as_real_lines():
 def test_council_identity_is_not_conflated_with_live_presence(tmp_path,monkeypatch):
  root=tmp_path/"root";seatmap=root/".ai-os/mcp/SEAT-MAP.json"
  seatmap.parent.mkdir(parents=True)
- seatmap.write_text(json.dumps({"live":["C3","C5"],"seats":{
+ seatmap.write_text(json.dumps({"seats":{
   "C3":{"name_ar":"ChatGPT","actor_role":"CONSULTANT_PEER","mail":True},
   "C5":{"name_ar":"RAIOS","actor_role":"RAIOS_LIVE_BRAIN","mail":True}}}),encoding="utf-8")
- presence=tmp_path/"presence.json"
- future=(datetime.now(timezone.utc)+timedelta(minutes=2)).isoformat()
- past=(datetime.now(timezone.utc)-timedelta(minutes=2)).isoformat()
- presence.write_text(json.dumps({"seats":{
-  "C3":{"presence":"PRESENT","lease_expires_at":future},
-  "C5":{"presence":"PRESENT","lease_expires_at":past}}}),encoding="utf-8")
  monkeypatch.setattr(cc,"MCP_ROOT",root)
- monkeypatch.setattr(cc,"COUNCIL_PRESENCE",presence)
+ monkeypatch.setattr(cc.CLIENT_ACTIVITY,"snapshot",lambda:{
+  "schema":"raios.client-activity.v3",
+  "clients":[
+   {"seat":"C3","actor_role":"CONSULTANT_PEER","presence":"PRESENT","present":True,
+    "availability":"AVAILABLE","execution_ready":True,"work_phase":"WAITING_FOR_ASSIGNMENT",
+    "reason":"SIGNED_PRESENT_IDLE_AND_ELIGIBLE","current_tasks":[]},
+   {"seat":"C5","actor_role":"RAIOS_LIVE_BRAIN","presence":"AWAY","present":False,
+    "availability":"UNKNOWN","execution_ready":False,"work_phase":"SIGN_IN_REQUIRED",
+    "reason":"NO_CURRENT_SIGNED_BOUND_CONSUMER_PROOF","current_tasks":[]}]})
  out=cc.council_state();rows={x["id"]:x for x in out["seats"]}
  assert out["identity_total"]==2 and out["present_total"]==1
- assert out["no_registered_seats"] is False and out["identity_ne_presence"] is True
+ assert out["available_total"]==1 and out["execution_ready_total"]==1
+ assert out["canonical_coordination_source"]=="/api/client-activity"
  assert rows["C3"]["presence_current"] is True
- assert rows["C5"]["identity_registered"] is True and rows["C5"]["presence"]=="EXPIRED"
+ assert rows["C5"]["identity_registered"] is True and rows["C5"]["availability"]=="UNKNOWN"
+
+
+def test_health_uses_cached_head_without_spawning_git(monkeypatch):
+ monkeypatch.setattr(cc,"CANONICAL_HEAD","b"*40)
+ monkeypatch.setattr(cc.MESSAGE_WORKER,"status",lambda:{"healthy":True,"workflow_enabled":True})
+ monkeypatch.setattr(cc,"git",lambda *a:(_ for _ in ()).throw(AssertionError("health must not call git")))
+ health=client.get("/health").json()
+ assert health["canonical_head"]=="b"*40 and health["status"]=="ONLINE"

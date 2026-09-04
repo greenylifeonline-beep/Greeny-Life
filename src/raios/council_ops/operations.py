@@ -18,7 +18,7 @@ class CouncilConflict(RuntimeError): pass
 def _now(): return datetime.now(timezone.utc).strftime("%Y-%m-%dT%H:%M:%SZ")
 def _expires(seconds=120): return (datetime.now(timezone.utc)+timedelta(seconds=seconds)).strftime("%Y-%m-%dT%H:%M:%SZ")
 def _live(row):
-    if row.get("presence")!="PRESENT": return False
+    if row.get("presence")!="PRESENT" or row.get("signature_valid") is not True: return False
     expiry=row.get("lease_expires_at")
     return not expiry or datetime.fromisoformat(expiry.replace("Z","+00:00"))>datetime.now(timezone.utc)
 def _load(path, default):
@@ -98,7 +98,12 @@ class CouncilOperations:
         if old: return {"status":"ALREADY_APPLIED",**old["result"]}
         at=_now(); path,_=self._receipt(seat,"CHECK_IN","COUNCIL-PRESENCE","presence:"+seat,idem,auth,"PRESENT",[str(self.presence_path)])
         result={"seat":seat,"presence":"PRESENT","checked_in_at":at,"last_seen":at,
-                "lease_expires_at":_expires(),"signature_valid":True,"receipt":path}
+                "lease_expires_at":_expires(),"signature_valid":True,"receipt":path,
+                "availability":"AVAILABLE","availability_source":"SELF_SIGNED_PRESENCE",
+                "availability_attested_at":at,"availability_expires_at":_expires(1800),
+                "availability_reason":"SIGNED_PRESENT_AND_AVAILABLE_FOR_COORDINATION",
+                "work_state":"WAITING_FOR_ASSIGNMENT",
+                "required_action":"WAIT_FOR_RAIOS_WORKER_DISPATCH"}
         state["seats"][seat]=result; state["idempotency"][idem]={"fingerprint":fp,"result":result}; _atomic(self.presence_path,state)
         binding=self._bind_from_auth(seat,auth,result["lease_expires_at"])
         return {"status":"PRESENT",**result,"actor_binding":binding}
@@ -107,56 +112,64 @@ class CouncilOperations:
         if not _live(current): raise CouncilConflict("CHECK_IN_REQUIRED")
         fp=_id("PRESENCE",seat,idem); old=self._once(state,idem,fp)
         if old: return {"status":"ALREADY_APPLIED",**old["result"]}
-        current.update(last_seen=_now(),lease_expires_at=_expires(),signature_valid=True)
+        now=_now()
+        current.update(last_seen=now,lease_expires_at=_expires(),signature_valid=True,
+                       availability="AVAILABLE",availability_source="SELF_SIGNED_PRESENCE",
+                       availability_attested_at=now,availability_expires_at=_expires(1800),
+                       availability_reason="SIGNED_PRESENT_AND_AVAILABLE_FOR_COORDINATION",
+                       work_state="WAITING_FOR_ASSIGNMENT",
+                       required_action="WAIT_FOR_RAIOS_WORKER_DISPATCH")
         path,_=self._receipt(seat,"PROVE_PRESENCE","COUNCIL-PRESENCE","presence:"+seat,idem,auth,"PRESENT",[str(self.presence_path)])
         current["receipt"]=path;state["seats"][seat]=current
         state["idempotency"][idem]={"fingerprint":fp,"result":current};_atomic(self.presence_path,state)
         binding=self._bind_from_auth(seat,auth,current["lease_expires_at"])
         return {"status":"PRESENT",**current,"actor_binding":binding}
+    def attest_availability(self,*,seat,state,attested_by,auth,idem,reason=""):
+        seat=str(seat).upper();attested_by=str(attested_by).upper();state=str(state).upper()
+        self._auth(attested_by,auth)
+        if seat not in INTERNAL_SEATS:raise CouncilValidationError("UNKNOWN_SEAT")
+        if attested_by not in ("C1",seat):raise CouncilConflict("AVAILABILITY_ATTESTATION_REQUIRES_C1_OR_SELF")
+        if state not in ("AVAILABLE","BUSY","OFFLINE","UNKNOWN"):
+            raise CouncilValidationError("INVALID_AVAILABILITY_STATE")
+        data=self._state();fp=_id("AVAILABILITY",seat,state,attested_by,reason);old=self._once(data,idem,fp)
+        if old:return {"status":"ALREADY_APPLIED",**old["result"]}
+        at=_now();row=dict(data["seats"].get(seat,{}) or {})
+        row.update(seat=seat,availability=state,
+                   availability_source=f"{attested_by}_ATTESTATION",
+                   availability_attested_at=at,availability_expires_at=_expires(1800),
+                   availability_reason=reason or "EXPLICIT_COORDINATION_AVAILABILITY")
+        path,_=self._receipt(attested_by,"ATTEST_AVAILABILITY","COUNCIL-PRESENCE",
+                             "availability:"+seat,idem,auth,state,[str(self.presence_path)])
+        row["availability_receipt"]=path;data["seats"][seat]=row
+        result={"seat":seat,"availability":state,"availability_source":row["availability_source"],
+                "availability_attested_at":at,"availability_expires_at":row["availability_expires_at"],
+                "availability_reason":row["availability_reason"],"receipt":path}
+        data["idempotency"][idem]={"fingerprint":fp,"result":result};_atomic(self.presence_path,data)
+        return {"status":"ATTESTED",**result}
     def check_out(self,*,seat,auth,idem,handoff_receipt=None):
         self._auth(seat,auth); tasks=_load(self.repo/TASKS,{"tasks":[]})["tasks"]
-        active=[t["id"] for t in tasks if t.get("claimed_by")==seat and t.get("status")=="IN_PROGRESS"]
+        active=[t["id"] for t in tasks if
+                (t.get("claimed_by")==seat and t.get("status")=="IN_PROGRESS") or
+                (t.get("assigned_to")==seat and t.get("dispatch_status")=="PENDING_ACCEPTANCE")]
         if active and not handoff_receipt: raise CouncilConflict("ACTIVE_TASKS_REQUIRE_HANDOFF:"+",".join(active))
         state=self._state(); fp=_id("OUT",seat,",".join(active),handoff_receipt or ""); old=self._once(state,idem,fp)
         if old: return {"status":"ALREADY_APPLIED",**old["result"]}
         ev=[handoff_receipt] if handoff_receipt else []; path,_=self._receipt(seat,"CHECK_OUT","COUNCIL-PRESENCE","presence:"+seat,idem,auth,"ABSENT",ev)
-        result={"seat":seat,"presence":"ABSENT","checked_out_at":_now(),"active_tasks":active,"receipt":path}
+        out_at=_now()
+        result={"seat":seat,"presence":"ABSENT","checked_out_at":out_at,"active_tasks":active,"receipt":path,
+                "signature_valid":True,"availability":"OFFLINE",
+                "availability_source":"SELF_SIGNED_CHECK_OUT",
+                "availability_attested_at":out_at,"availability_expires_at":_expires(1800),
+                "availability_reason":"MEMBER_EXPLICITLY_SIGNED_OUT"}
         state["seats"][seat]=result; state["idempotency"][idem]={"fingerprint":fp,"result":result}; _atomic(self.presence_path,state)
         bindings=self._bindings();bindings.get("bindings",{}).pop(seat,None);bindings["generated_at"]=_now();_atomic(self.bindings_path,bindings)
         return {"status":"ABSENT",**result}
     def claim(self,*,seat,task_id,auth,idem):
-        self._auth(seat,auth); state=self._state()
-        if not _live(state["seats"].get(seat,{})): raise CouncilConflict("CHECK_IN_REQUIRED")
-        data=_load(self.repo/TASKS,{"tasks":[]}); task=next((t for t in data["tasks"] if t.get("id")==task_id),None)
-        if not task: raise CouncilValidationError("TASK_NOT_FOUND")
-        if task.get("allowed_agents") and seat not in task["allowed_agents"]: raise CouncilConflict("SEAT_NOT_ALLOWED")
-        if task.get("status") not in ("READY","IN_PROGRESS") or task.get("claimed_by") not in (None,seat): raise CouncilConflict("TASK_NOT_CLAIMABLE")
-        for dep in task.get("dependencies",[]):
-            d=next((t for t in data["tasks"] if t.get("id")==dep),None)
-            if not d or d.get("status")!="DONE": raise CouncilConflict("DEPENDENCY_INCOMPLETE:"+dep)
-        for scope in task.get("scope",[]):
-            for lock in _load(self.repo/LOCKS,{"locks":[]})["locks"]:
-                if lock.get("status")=="ACTIVE" and lock.get("agent")!=seat and _overlap(lock.get("scope",""),scope):
-                    raise CouncilConflict("LOCK_CONFLICT:"+str(lock.get("id")))
-        fp=_id("CLAIM",seat,task_id); old=self._once(state,idem,fp)
-        if old: return {"status":"ALREADY_APPLIED",**old["result"]}
-        task["status"]="IN_PROGRESS"; task["claimed_by"]=seat; _atomic(self.repo/TASKS,data)
-        path,_=self._receipt(seat,"CLAIM",task_id,"task:"+task_id,idem,auth,"CLAIMED",[str(TASKS),str(LOCKS)])
-        result={"task_id":task_id,"claimed_by":seat,"receipt":path}; state["idempotency"][idem]={"fingerprint":fp,"result":result}; _atomic(self.presence_path,state)
-        return {"status":"CLAIMED",**result}
+        self._auth(seat,auth)
+        raise CouncilConflict("SELF_CLAIM_DISABLED_USE_RAIOS_WORKER_DISPATCH")
     def handoff(self,*,from_seat,to_seat,task_id,auth,idem,evidence):
-        self._auth(from_seat,auth); state=self._state()
-        if not _live(state["seats"].get(to_seat,{})): raise CouncilConflict("DESTINATION_NOT_PRESENT")
-        data=_load(self.repo/TASKS,{"tasks":[]}); task=next((t for t in data["tasks"] if t.get("id")==task_id),None)
-        if not task: raise CouncilValidationError("TASK_NOT_FOUND")
-        if task.get("claimed_by")!=from_seat or task.get("status")!="IN_PROGRESS": raise CouncilConflict("SOURCE_NOT_TASK_OWNER")
-        if task.get("allowed_agents") and to_seat not in task["allowed_agents"]: raise CouncilConflict("DESTINATION_NOT_ALLOWED")
-        fp=_id("HANDOFF",from_seat,to_seat,task_id,*sorted(evidence)); old=self._once(state,idem,fp)
-        if old: return {"status":"ALREADY_APPLIED",**old["result"]}
-        task["claimed_by"]=to_seat; task["handoff_from"]=from_seat; task["handoff_at"]=_now(); _atomic(self.repo/TASKS,data)
-        path,_=self._receipt(from_seat,"HANDOFF",task_id,"task:"+task_id,idem,auth,"HANDED_OFF",evidence+[str(TASKS)])
-        result={"task_id":task_id,"from":from_seat,"to":to_seat,"receipt":path}; state["idempotency"][idem]={"fingerprint":fp,"result":result}; _atomic(self.presence_path,state)
-        return {"status":"HANDED_OFF",**result}
+        self._auth(from_seat,auth)
+        raise CouncilConflict("DIRECT_HANDOFF_DISABLED_USE_CHECKPOINT_AND_RAIOS_WORKER_REASSIGNMENT")
     def message(self,*,from_seat,to_seat,task_id,text,auth,idem):
         self._auth(from_seat,auth); state=self._state()
         if not _live(state["seats"].get(from_seat,{})): raise CouncilConflict("CHECK_IN_REQUIRED")
@@ -165,10 +178,12 @@ class CouncilOperations:
         dests=[s for s,v in state["seats"].items() if _live(v) and s!=from_seat] if to_seat=="ALL" else [to_seat]
         if not dests or any(not _live(state["seats"].get(d,{})) for d in dests): raise CouncilConflict("DESTINATION_NOT_PRESENT")
         context="task:"+task_id; path,receipt=self._receipt(from_seat,"COORDINATION_MESSAGE",task_id,context,idem,auth,"ROUTED",[str(TASKS)])
-        from raios.a2a_all_hands.bind import routing_matrix, validate_envelope
-        roots={d.split("-",1)[0] for d in dests}; routes=[r for r in routing_matrix(nats_available=False) if r["from"]==from_seat.split("-",1)[0] and r["to"] in roots]
-        env=validate_envelope({"task_id":task_id,"context_id":context,"message_id":_id("msg",idem),"artifact_id":_id("art",idem),
-          "correlation_id":context,"idempotency_key":idem,"provenance":auth["AUTHORITY_SOURCE_PROVENANCE"],"receipt":receipt})
+        roots={d.split("-",1)[0] for d in dests}; origin=from_seat.split("-",1)[0]
+        routes=[{"from":origin,"to":dest,"transport":"INTERNAL_BUS","command_fabric_gate":True} for dest in sorted(roots)]
+        env={"task_id":task_id,"context_id":context,"message_id":_id("msg",idem),"artifact_id":_id("art",idem),
+          "correlation_id":context,"idempotency_key":idem,"provenance":auth["AUTHORITY_SOURCE_PROVENANCE"],"receipt":receipt}
+        if any(not env.get(k) for k in ("task_id","context_id","message_id","artifact_id","correlation_id","idempotency_key","provenance","receipt")):
+            raise CouncilConflict("INVALID_INTERNAL_MESSAGE_ENVELOPE")
         result={"from":from_seat,"to":dests,"text":text,"routes":routes,"envelope":env,"receipt":path,"direct_mutation":False,"command_fabric_gate":True}
         state["idempotency"][idem]={"fingerprint":fp,"result":result}; _atomic(self.presence_path,state)
         return {"status":"ROUTED",**result}

@@ -31,7 +31,11 @@ def _current_expiry(expiry: str | None) -> bool:
 
 def lease_current(row: dict[str, Any]) -> bool:
     state = str(row.get("presence") or "").upper()
-    return state == "PRESENT" and _current_expiry(row.get("lease_expires_at"))
+    return (
+        state == "PRESENT"
+        and row.get("signature_valid") is True
+        and _current_expiry(row.get("lease_expires_at"))
+    )
 
 
 class ActorRouteRegistry:
@@ -75,23 +79,46 @@ class ActorRouteRegistry:
         bindings = _load(self.bindings_path, {"bindings": {}})
         rows: list[dict[str, Any]] = []
         auto: list[str] = []
+        coordination_available: list[str] = []
         for seat, spec in (seat_map.get("seats") or {}).items():
             p = (presence.get("seats") or {}).get(seat) or {}
             b = (bindings.get("bindings") or {}).get(seat) or {}
             c = _load(self.consumers_path / f"{seat}.json", {})
             present = lease_current(p)
+            availability_claim = str(p.get("availability") or "UNKNOWN").upper()
+            availability_claim_current = (
+                availability_claim in {"AVAILABLE", "BUSY", "OFFLINE"}
+                and _current_expiry(p.get("availability_expires_at"))
+            )
             binding_current = self._binding_current(b)
             consumer_current = self._consumer_current(c, b)
             routable = present and binding_current and consumer_current
+            coordination_current = (
+                routable or present or
+                (availability_claim_current and availability_claim == "AVAILABLE")
+            )
             if routable:
                 auto.append(seat)
+            if coordination_current:
+                coordination_available.append(seat)
             rows.append({
                 "seat": seat,
                 "defined": True,
                 "actor_role": spec.get("actor_role"),
                 "instance_role": spec.get("instance_role"),
                 "present": present,
+                "presence_state": str(p.get("presence") or "UNKNOWN").upper(),
+                "presence_last_seen": p.get("last_seen"),
+                "presence_checked_in_at": p.get("checked_in_at"),
+                "presence_checked_out_at": p.get("checked_out_at"),
+                "presence_signature_valid": p.get("signature_valid") is True,
                 "presence_lease_expires_at": p.get("lease_expires_at"),
+                "availability_claim": availability_claim,
+                "availability_claim_current": availability_claim_current,
+                "availability_source": p.get("availability_source"),
+                "availability_attested_at": p.get("availability_attested_at"),
+                "availability_expires_at": p.get("availability_expires_at"),
+                "availability_reason": p.get("availability_reason"),
                 "actor_bound": bool(b.get("actor_id")),
                 "session_bound": bool(b.get("session_id")),
                 "binding_current": binding_current,
@@ -103,14 +130,18 @@ class ActorRouteRegistry:
                 "device_id": b.get("device_id"),
                 "session_id": b.get("session_id"),
                 "auto_routable": routable,
+                "coordination_available": coordination_current,
             })
         return {
             "schema": "raios.actor-route-registry.v2",
             "generated_at": _utc_now().isoformat(),
             "auto_routable": auto,
             "auto_routable_count": len(auto),
+            "coordination_available": coordination_available,
+            "coordination_available_count": len(coordination_available),
             "seats": rows,
             "identity_ne_presence": True,
+            "availability_ne_execution_readiness": True,
             "presence_ne_binding": True,
             "binding_ne_consumer": True,
             "delivery_ack_ne_actor_ack": True,
@@ -126,7 +157,14 @@ class ActorRouteRegistry:
         modes: dict[str, str] = {}
         for raw in requested:
             target = str(raw).upper()
-            if target in {"ALL", "ALL_ONLINE", "ALL_AVAILABLE"}:
+            if target in {"ALL", "ALL_AVAILABLE"}:
+                for seat in snap["coordination_available"]:
+                    if seat not in resolved:
+                        resolved.append(seat)
+                        modes[seat] = ("AUTO_LIVE_BOUND_CONSUMER" if seat in automatic
+                                       else "AUTO_COORDINATION_AVAILABLE")
+                continue
+            if target == "ALL_ONLINE":
                 for seat in snap["auto_routable"]:
                     if seat not in resolved:
                         resolved.append(seat)
