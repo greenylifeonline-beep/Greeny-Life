@@ -207,3 +207,10 @@ def test_semantic_observation_still_detects_real_state_change():
     left = {"status": "ONLINE", "at": "2026-09-04T01:00:00Z", "value": 7}
     right = {"status": "DEGRADED", "at": "2026-09-04T01:00:15Z", "value": 7}
     assert live_manager.semantic_observation(left) != live_manager.semantic_observation(right)
+
+
+def test_manager_reasoning_trigger_is_gap_identity_not_full_snapshot():
+    text=(live_manager.Path(live_manager.__file__)).read_text(encoding="utf-8")
+    assert "reasoning_hash = sha(gaps)" in text
+    assert "reasoning_hash != prior_reasoning_hash" in text
+    assert 'last_reason_input_hash' in text

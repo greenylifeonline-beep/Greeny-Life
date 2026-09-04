@@ -974,7 +974,8 @@ class LiveManager:
         reason_age = time.time() - last_reason_at
         reason_due = reason_age >= REASON_SECONDS
         retry_due = reason_age >= REASON_RETRY_SECONDS
-        prior_hash = self.state.get("last_reason_snapshot_hash")
+        reasoning_hash = sha(gaps)
+        prior_reasoning_hash = self.state.get("last_reason_input_hash")
         c5_analysis = load_json(ANALYSIS, {})
         analysis_payload = (
             c5_analysis.get("c5", c5_analysis)
@@ -983,12 +984,13 @@ class LiveManager:
         )
         analysis_ok = bool(analysis_payload.get("ok"))
         reason_started = False
-        should_reason = snapshot_hash != prior_hash or (not analysis_ok and retry_due)
+        should_reason = reasoning_hash != prior_reasoning_hash or (not analysis_ok and retry_due)
         if self.enable_reasoning and reason_due and should_reason:
             reason_started = self._launch_reason(gaps, context, snapshot_hash)
             if reason_started:
                 self.state["last_runs"]["reason"] = time.time()
                 self.state["last_reason_snapshot_hash"] = snapshot_hash
+                self.state["last_reason_input_hash"] = reasoning_hash
 
         created = self._write_tasks(gaps, snapshot_hash)
         mark_phase("reason_and_tasks")
