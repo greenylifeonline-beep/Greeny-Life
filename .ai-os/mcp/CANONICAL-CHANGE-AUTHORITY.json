@@ -1,0 +1,26 @@
+{
+  "schema": "raios.canonical-change-authority.v1",
+  "authority": "C1",
+  "canonical_repository": "greenylifeonline-beep/Greeny-Life",
+  "canonical_branch": "ai-evolution-202608051809",
+  "single_physical_tree": true,
+  "single_promotion_authority": true,
+  "workers_may_prepare_changes": true,
+  "workers_may_promote_without_c1_approval": false,
+  "noncanonical_branch_commit_allowed": false,
+  "noncanonical_branch_push_allowed": false,
+  "force_push_allowed": false,
+  "branch_delete_by_worker_allowed": false,
+  "new_worktree_allowed": false,
+  "new_project_copy_allowed": false,
+  "approval_receipt_required": true,
+  "approval_receipt_scope": "base_head+staged_diff_sha256+task_id+expiry",
+  "historical_branches": "READ_ONLY_UNTIL_LINEAGE_CLASSIFIED",
+  "law": [
+    "ONE_CANONICAL_BRANCH",
+    "ONE_CANONICAL_PROMOTION_AUTHORITY",
+    "PROPOSAL_NE_PROMOTION",
+    "DELIVERY_NE_APPROVAL",
+    "NO_PARALLEL_UPDATE_AUTHORITY"
+  ]
+}

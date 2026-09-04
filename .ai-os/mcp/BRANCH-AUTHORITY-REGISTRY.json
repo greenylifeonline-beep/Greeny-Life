@@ -1,0 +1,158 @@
+﻿{
+    "schema":  "raios.branch-authority-registry.v1",
+    "generated_at":  "2026-09-04T01:19:56.0845918Z",
+    "authority":  "C1",
+    "canonical_branch":  "ai-evolution-202608051809",
+    "github_default_observed":  "main",
+    "github_default_matches_canonical":  false,
+    "main_diverged_no_common_ancestor":  true,
+    "new_remote_branches_allowed":  false,
+    "force_push_allowed":  false,
+    "delete_historical_without_lineage_review":  false,
+    "branches":  [
+                     {
+                         "branch":  "ai-evolution-202608051809",
+                         "sha":  "e2d0951e8a1ea54f24e5170b2791fb0715cf6eea",
+                         "classification":  "CANONICAL_WRITABLE",
+                         "promotion_authority":  "C1"
+                     },
+                     {
+                         "branch":  "c6-engine-consolidation-wave02",
+                         "sha":  "8091dfac234668bb982e303d5bdceafb37a3336b",
+                         "classification":  "HISTORICAL_READ_ONLY",
+                         "promotion_authority":  "NONE"
+                     },
+                     {
+                         "branch":  "codex-clean",
+                         "sha":  "98b952417c19d61d269a5681ef0ccc4aba959738",
+                         "classification":  "HISTORICAL_READ_ONLY",
+                         "promotion_authority":  "NONE"
+                     },
+                     {
+                         "branch":  "cursor/a17-cursor-parallel-f3c7",
+                         "sha":  "b2a1645d32c5de8e8fb19d14445b6585c875653e",
+                         "classification":  "HISTORICAL_READ_ONLY",
+                         "promotion_authority":  "NONE"
+                     },
+                     {
+                         "branch":  "cursor/a17-integration-wave-f3c7",
+                         "sha":  "4475a1cff3c506883848242fe2d4b060f33a47e5",
+                         "classification":  "HISTORICAL_READ_ONLY",
+                         "promotion_authority":  "NONE"
+                     },
+                     {
+                         "branch":  "cursor/a18-ccee-foundation-f3c7",
+                         "sha":  "edb344eac48a010f18a0ecdb2b7fd4c8b1e58fb5",
+                         "classification":  "HISTORICAL_READ_ONLY",
+                         "promotion_authority":  "NONE"
+                     },
+                     {
+                         "branch":  "cursor/c2-evidence-reuse-preparation-4247",
+                         "sha":  "c36906757f7dce17cbcbb2d3cf9fcb5c8f53f6cc",
+                         "classification":  "HISTORICAL_READ_ONLY",
+                         "promotion_authority":  "NONE"
+                     },
+                     {
+                         "branch":  "cursor/c5-screen-identity-4540",
+                         "sha":  "f48e80b63d405a5483cf21822aa4ac618888bd55",
+                         "classification":  "HISTORICAL_READ_ONLY",
+                         "promotion_authority":  "NONE"
+                     },
+                     {
+                         "branch":  "cursor/file-intelligence-authority-f3c7",
+                         "sha":  "223386b53be5b6c6e4b9cf65b74f97fa4fc48605",
+                         "classification":  "HISTORICAL_READ_ONLY",
+                         "promotion_authority":  "NONE"
+                     },
+                     {
+                         "branch":  "cursor/file-intelligence-fabric-f3c7",
+                         "sha":  "a6e121e8fbdededaf44507dd3387a2f48565a950",
+                         "classification":  "HISTORICAL_READ_ONLY",
+                         "promotion_authority":  "NONE"
+                     },
+                     {
+                         "branch":  "cursor/file-intelligence-parallel-f3c7",
+                         "sha":  "79569cde5573fdd24da2268481f22f43aa74b0dd",
+                         "classification":  "HISTORICAL_READ_ONLY",
+                         "promotion_authority":  "NONE"
+                     },
+                     {
+                         "branch":  "cursor/neurolingua-semantic-kernel-4f9d",
+                         "sha":  "0c9b4f6a64255e64aa73d90cb178774623e3eb01",
+                         "classification":  "HISTORICAL_READ_ONLY",
+                         "promotion_authority":  "NONE"
+                     },
+                     {
+                         "branch":  "cursor/raios-certifier-safety-schema-4540",
+                         "sha":  "2a834cc86c05642d59e3e2837e411751190aa7b4",
+                         "classification":  "HISTORICAL_READ_ONLY",
+                         "promotion_authority":  "NONE"
+                     },
+                     {
+                         "branch":  "cursor/raios-false-pass-training-147d",
+                         "sha":  "4b0b51af31685b49df181641c2e88d16f4b8c3d3",
+                         "classification":  "HISTORICAL_READ_ONLY",
+                         "promotion_authority":  "NONE"
+                     },
+                     {
+                         "branch":  "cursor/raios-live-assimilation-147d",
+                         "sha":  "2d41ef264bdda70b1ba0f0588585ee740aea3ff2",
+                         "classification":  "HISTORICAL_READ_ONLY",
+                         "promotion_authority":  "NONE"
+                     },
+                     {
+                         "branch":  "cursor/raios-repair-boot-41f5",
+                         "sha":  "c2847e28a2d2b09e04b57684eee65236c96427a7",
+                         "classification":  "HISTORICAL_READ_ONLY",
+                         "promotion_authority":  "NONE"
+                     },
+                     {
+                         "branch":  "cursor/setup-dev-environment-ee89",
+                         "sha":  "31449c23905ab02f43360762ababbe4bca759997",
+                         "classification":  "HISTORICAL_READ_ONLY",
+                         "promotion_authority":  "NONE"
+                     },
+                     {
+                         "branch":  "main",
+                         "sha":  "da67f44963fafde67df52cb62ab32f75fe725df0",
+                         "classification":  "LEGACY_DEFAULT_DIVERGED_READ_ONLY",
+                         "promotion_authority":  "NONE"
+                     },
+                     {
+                         "branch":  "pr/authoritative-certifier-forensic",
+                         "sha":  "d2ab122fe25e3ab16b91afbc3267cd47778f6dba",
+                         "classification":  "HISTORICAL_READ_ONLY",
+                         "promotion_authority":  "NONE"
+                     },
+                     {
+                         "branch":  "pr/cairo-shipment-origin-salvage",
+                         "sha":  "7031ffc1de5f34ddefc77d622d8eedc8cb12892d",
+                         "classification":  "HISTORICAL_READ_ONLY",
+                         "promotion_authority":  "NONE"
+                     },
+                     {
+                         "branch":  "pr/nl0-semantic-kernel",
+                         "sha":  "f7c23759b59be72456af59a87d8c48b13827fa7b",
+                         "classification":  "HISTORICAL_READ_ONLY",
+                         "promotion_authority":  "NONE"
+                     },
+                     {
+                         "branch":  "raios/gl-005-convergence",
+                         "sha":  "3d9f58136d318ba07d743e127ab1e433605ce1ea",
+                         "classification":  "HISTORICAL_READ_ONLY",
+                         "promotion_authority":  "NONE"
+                     },
+                     {
+                         "branch":  "rf-wave05-executable-reservoir",
+                         "sha":  "4f3e6b9cbd999a1b602c7e82f8de7a7a3b06e562",
+                         "classification":  "HISTORICAL_READ_ONLY",
+                         "promotion_authority":  "NONE"
+                     },
+                     {
+                         "branch":  "v9-neurolingua-semantic-kernel",
+                         "sha":  "79ba97031e0b0fd740fd890cbf9ba0451597783d",
+                         "classification":  "HISTORICAL_READ_ONLY",
+                         "promotion_authority":  "NONE"
+                     }
+                 ]
+}
