@@ -98,7 +98,7 @@ def test_manager_presence_requires_a_current_lease():
         "lease_expires_at": "2020-01-01T00:00:00Z",
     }
     assert live_manager.safe_council_presence_live(expired) is False
-    assert live_manager.safe_council_presence_live({"presence": "PRESENT"}) is True
+    assert live_manager.safe_council_presence_live({"presence": "PRESENT"}) is False
     assert live_manager.safe_council_presence_live({"presence": "ABSENT"}) is False
     assert live_manager.safe_council_presence_live(
         {"presence": "PRESENT", "lease_expires_at": "not-a-date"}
@@ -195,3 +195,15 @@ def test_manager_reuses_active_gap_task_across_new_snapshots(tmp_path, monkeypat
 
     assert manager._write_tasks([gap], "different-snapshot-hash") == []
     assert len(json.loads(task_file.read_text(encoding="utf-8"))["tasks"]) == 1
+
+
+def test_semantic_observation_ignores_heartbeat_at_timestamp():
+    left = {"status": "ONLINE", "at": "2026-09-04T01:00:00Z", "value": 7}
+    right = {"status": "ONLINE", "at": "2026-09-04T01:00:15Z", "value": 7}
+    assert live_manager.semantic_observation(left) == live_manager.semantic_observation(right)
+
+
+def test_semantic_observation_still_detects_real_state_change():
+    left = {"status": "ONLINE", "at": "2026-09-04T01:00:00Z", "value": 7}
+    right = {"status": "DEGRADED", "at": "2026-09-04T01:00:15Z", "value": 7}
+    assert live_manager.semantic_observation(left) != live_manager.semantic_observation(right)

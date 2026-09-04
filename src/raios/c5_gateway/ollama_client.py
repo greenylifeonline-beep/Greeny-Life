@@ -61,7 +61,12 @@ class OllamaCortexClient:
         except ValueError:
             configured_ctx=2048
         self.num_ctx=max(512,min(configured_ctx,4096))
-        self.keep_alive=os.getenv("RAIOS_STUDENT_KEEP_ALIVE","2m")
+        try:
+            configured_predict=int(os.getenv("RAIOS_STUDENT_NUM_PREDICT","128"))
+        except ValueError:
+            configured_predict=128
+        self.num_predict=max(32,min(configured_predict,512))
+        self.keep_alive=os.getenv("RAIOS_STUDENT_KEEP_ALIVE","30s")
 
         self.base_url=(
             base_url
@@ -119,9 +124,9 @@ class OllamaCortexClient:
         keep_alive=None
     ):
 
-        num_ctx=int(num_ctx or os.getenv("RAIOS_C5_NUM_CTX","2048"))
-        num_predict=int(num_predict or os.getenv("RAIOS_C5_NUM_PREDICT","128"))
-        keep_alive=keep_alive or os.getenv("RAIOS_C5_KEEP_ALIVE","30s")
+        num_ctx=int(num_ctx or self.num_ctx)
+        num_predict=int(num_predict or self.num_predict)
+        keep_alive=keep_alive or self.keep_alive
         rid=str(uuid.uuid4())
 
         started=time.perf_counter()

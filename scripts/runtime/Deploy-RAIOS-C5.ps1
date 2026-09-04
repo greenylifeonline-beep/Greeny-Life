@@ -7,13 +7,25 @@ $ErrorActionPreference = "Stop"
 $StableUserProfile = [Environment]::GetFolderPath("UserProfile")
 $Repo = (Resolve-Path $Repo).Path
 $Head = (git -C $Repo rev-parse HEAD).Trim()
+$CanonicalSourcePaths = @(
+    "requirements-c5.txt",
+    "src/raios/c5_gateway",
+    "src/raios/search_cortex",
+    "src/raios/neuro_lingua",
+    "scripts/runtime/Deploy-RAIOS-C5.ps1"
+)
+$DirtyCanonicalSources = @(git -C $Repo status --porcelain=v1 -- $CanonicalSourcePaths)
+if ($DirtyCanonicalSources.Count -gt 0) {
+    throw ("C5_CANONICAL_SOURCE_DIRTY::" + (($DirtyCanonicalSources -join ";") -replace "`r|`n", " "))
+}
 $AppRoot = Join-Path $RuntimeRoot "app"
 $Venv = Join-Path $RuntimeRoot ".venv"
 $Python = Join-Path $Venv "Scripts\python.exe"
 $PythonWindowless = Join-Path $Venv "Scripts\pythonw.exe"
 $Logs = Join-Path $RuntimeRoot "logs"
 $Manifest = Join-Path $RuntimeRoot "deployment.json"
-$CognitiveStoreRoot = Join-Path $StableUserProfile ".raios\runtime\cognitive-store\v9"
+$RuntimeBase = Split-Path -Parent $RuntimeRoot
+$CognitiveStoreRoot = Join-Path $RuntimeBase "cognitive-store\v9"
 $LearningRoot = Join-Path $CognitiveStoreRoot "learning"
 $Requirements = Join-Path $Repo "requirements-c5.txt"
 $PackageNames = @("c5_gateway","search_cortex","neuro_lingua")
@@ -85,8 +97,10 @@ if (Get-NetTCPConnection -LocalPort $stagePort -State Listen -ErrorAction Silent
 $env:RAIOS_MAIN_CORTEX = "qwen3:0.6b"
 $env:RAIOS_STUDENT_MODEL = "qwen3:0.6b"
 $env:RAIOS_STUDENT_NUM_CTX = "2048"
-$env:RAIOS_STUDENT_KEEP_ALIVE = "2m"
+$env:RAIOS_STUDENT_NUM_PREDICT = "128"
+$env:RAIOS_STUDENT_KEEP_ALIVE = "30s"
 $env:RAIOS_RUNTIME_ROOT = $RuntimeRoot
+$env:RAIOS_RUNTIME_BASE = $RuntimeBase
 $env:RAIOS_COGNITIVE_STORE_ROOT = $CognitiveStoreRoot
 $env:RAIOS_LEARNING_ROOT = $LearningRoot
 $env:RAIOS_CANONICAL_REPO = $Repo
@@ -126,11 +140,15 @@ if (-not $stageHealth) {
     Stop-Process -Id $stage.Id -Force -ErrorAction SilentlyContinue
     throw "CANONICAL_C5_STAGE_VALIDATION_FAILED::$Logs\gateway.stage.err.log"
 }
-Stop-Process -Id $stage.Id -Force -ErrorAction Stop
+$stageListener = Get-NetTCPConnection -LocalPort $stagePort -State Listen -ErrorAction SilentlyContinue | Select-Object -First 1
+if ($stageListener) {
+    Stop-Process -Id $stageListener.OwningProcess -Force -ErrorAction SilentlyContinue
+}
+Stop-Process -Id $stage.Id -Force -ErrorAction SilentlyContinue
 Start-Sleep -Milliseconds 500
 
-if ($oldPid) {
-    Stop-Process -Id $oldPid -Force -ErrorAction Stop
+if ($oldPid -and (Get-Process -Id $oldPid -ErrorAction SilentlyContinue)) {
+    Stop-Process -Id $oldPid -Force -ErrorAction SilentlyContinue
     Start-Sleep -Milliseconds 500
 }
 

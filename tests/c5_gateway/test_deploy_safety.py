@@ -12,6 +12,9 @@ def test_deploy_validates_staged_listener_before_cutover():
     final_start = text.index('$proc = Start-C5Process')
     assert stage_start < stage_health < old_stop < final_start
     assert 'C5_STAGE_VALIDATION=true' in text
+    assert "$stageListener.OwningProcess" in text
+    assert "Get-Process -Id $oldPid -ErrorAction SilentlyContinue" in text
+    assert "Stop-Process -Id $oldPid -Force -ErrorAction Stop" not in text
 
 
 def test_deploy_fails_closed_on_stage_or_final_health_failure():
@@ -19,3 +22,11 @@ def test_deploy_fails_closed_on_stage_or_final_health_failure():
     assert 'CANONICAL_C5_STAGE_VALIDATION_FAILED' in text
     assert 'CANONICAL_C5_CUTOVER_FAILED' in text
     assert '$health.canonical_head -eq $Head' in text
+
+def test_deploy_refuses_dirty_canonical_sources():
+    text = DEPLOY.read_text(encoding="utf-8")
+    assert "$CanonicalSourcePaths" in text
+    assert "git -C $Repo status --porcelain=v1" in text
+    assert "C5_CANONICAL_SOURCE_DIRTY" in text
+    assert "src/raios/c5_gateway" in text
+    assert "scripts/runtime/Deploy-RAIOS-C5.ps1" in text

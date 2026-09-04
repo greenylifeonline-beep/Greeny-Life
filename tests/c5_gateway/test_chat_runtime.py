@@ -24,6 +24,13 @@ def test_request_contract_rejects_blank_and_bounds_timeout():
     assert 'le=600.0' in text
 
 
+def test_arabic_request_gets_an_explicit_unicode_language_instruction():
+    text = source()
+    assert 'language_key.startswith("ar")' in text
+    assert "Respond only in clear Arabic" in text
+    assert "Preserve Arabic Unicode" in text
+
+
 def test_response_mapping_preserves_compatibility():
     text = source()
     assert '"response":result.content' in text
@@ -33,9 +40,9 @@ def test_response_mapping_preserves_compatibility():
 
 def test_small_local_student_uses_memory_bounded_inference_defaults():
     text = OLLAMA.read_text(encoding="utf-8")
-    assert 'os.getenv("RAIOS_C5_NUM_CTX","2048")' in text
-    assert 'os.getenv("RAIOS_C5_NUM_PREDICT","128")' in text
-    assert 'os.getenv("RAIOS_C5_KEEP_ALIVE","30s")' in text
+    assert 'os.getenv("RAIOS_STUDENT_NUM_CTX","2048")' in text
+    assert 'os.getenv("RAIOS_STUDENT_NUM_PREDICT","128")' in text
+    assert 'os.getenv("RAIOS_STUDENT_KEEP_ALIVE","30s")' in text
     assert '"think":bool(think)' in text
     assert '"keep_alive":keep_alive' in text
 

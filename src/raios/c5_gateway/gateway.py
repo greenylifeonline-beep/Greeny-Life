@@ -161,12 +161,18 @@ def execute_chat(
 
     grounding=retrieve_grounding(text)
     grounded_text=format_grounded_user_message(text,grounding)
+    language_key=str(language or "auto").lower()
+    language_instruction=(
+        "Respond only in clear Arabic. Preserve Arabic Unicode; do not transliterate."
+        if language_key.startswith("ar")
+        else "Respond in the user requested language."
+    )
 
     result=client.chat(
         [
             {
                 "role":"system",
-                "content":SYSTEM_PROMPT
+                "content":SYSTEM_PROMPT + "\n" + language_instruction
             },
             {
                 "role":"user",

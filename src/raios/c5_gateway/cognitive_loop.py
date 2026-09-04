@@ -68,12 +68,19 @@ def learning_root(repo: Path | None = None) -> Path:
     return _repo_root() / ".ai-os" / "learning"
 
 
+def runtime_base() -> Path:
+    configured = os.getenv("RAIOS_RUNTIME_BASE")
+    if configured:
+        return Path(configured).expanduser().resolve()
+    return Path.home() / ".raios" / "runtime"
+
+
 def manager_root() -> Path:
-    return Path.home() / ".raios" / "runtime" / "manager"
+    return runtime_base() / "manager"
 
 
 def evolution_root() -> Path:
-    return Path.home() / ".raios" / "runtime" / "evolution-brain"
+    return runtime_base() / "evolution-brain"
 
 
 def tokens(text: str) -> list[str]:

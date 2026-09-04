@@ -200,6 +200,7 @@ VOLATILE_OBSERVATION_KEYS = {
     "observed_at",
     "updated_at",
     "timestamp",
+    "at",
     "checked_in_at",
     "last_seen",
     "lease_expires_at",

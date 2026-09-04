@@ -89,7 +89,8 @@ def test_c5_deploy_binds_the_durable_cognitive_store():
     assert '[Environment]::GetFolderPath("UserProfile")' in deploy
     assert "$StableUserProfile" in deploy
     assert "cognitive_store_root" in deploy
-    assert ".raios\\runtime\\cognitive-store\\v9" in deploy
+    assert "$RuntimeBase = Split-Path -Parent $RuntimeRoot" in deploy
+    assert 'Join-Path $RuntimeBase "cognitive-store\\v9"' in deploy
 
 
 def test_evolution_loop_is_non_recursive_bounded_and_windowless():
