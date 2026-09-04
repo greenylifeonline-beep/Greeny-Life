@@ -28,21 +28,40 @@ def test_lifecycle_distinguishes_done_current_required_waiting_and_stale():
     assert out["required_backlog_count"] == 4
 
 
-def test_future_planned_task_is_visible_but_not_dispatchable_before_not_before():
+def test_soft_target_window_can_fast_track_before_planned_month():
     tasks = [
         {"id": "NOW", "status": "READY", "dependencies": []},
         {"id": "JAN", "status": "READY", "dependencies": [],
          "not_before": "2999-01-01T00:00:00+00:00",
-         "program_id": "P1", "target_month": "2999-01"},
+         "program_id": "P1", "target_month": "2999-01",
+         "acceleration_allowed": True, "hard_not_before": False},
     ]
     life = build_work_lifecycle(tasks)
-    assert life["counts"]["REQUIRED_NEXT"] == 1
-    assert life["counts"]["FUTURE_PLANNED"] == 1
-    assert life["buckets"]["FUTURE_PLANNED"][0]["id"] == "JAN"
+    assert life["counts"]["REQUIRED_NEXT"] == 2
+    assert life["counts"]["FUTURE_PLANNED"] == 0
+    jan = next(x for x in life["buckets"]["REQUIRED_NEXT"] if x["id"] == "JAN")
+    assert jan["ahead_of_plan"] is True
+    assert jan["acceleration_allowed"] is True
     rows = [{"seat": "C2", "aliases": ["CURSOR"], "alias_prefixes": [],
              "auto_routable": True, "coordination_available": True}]
     plan = build_dispatch_plan(tasks, rows)
-    assert {row["task_id"] for row in plan["queue"]} == {"NOW"}
+    by = {row["task_id"]: row for row in plan["queue"]}
+    assert set(by) == {"NOW", "JAN"}
+    assert by["JAN"]["ahead_of_plan"] is True
+    assert by["JAN"]["acceleration_bonus"] > 0
+
+
+def test_hard_not_before_remains_a_real_execution_gate():
+    tasks = [
+        {"id": "LOCKED", "status": "READY", "dependencies": [],
+         "not_before": "2999-01-01T00:00:00+00:00",
+         "hard_not_before": True, "acceleration_allowed": True},
+    ]
+    life = build_work_lifecycle(tasks)
+    assert life["counts"]["FUTURE_PLANNED"] == 1
+    rows = [{"seat": "C2", "aliases": ["CURSOR"], "alias_prefixes": [],
+             "auto_routable": True, "coordination_available": True}]
+    assert build_dispatch_plan(tasks, rows)["queue"] == []
 
 
 def test_founder_brief_prepares_when_offline_and_holds_explicit_decision():

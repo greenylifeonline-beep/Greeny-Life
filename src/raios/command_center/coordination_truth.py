@@ -95,6 +95,19 @@ def aliases_for_seat(seat: str, seat_map: dict[str, Any]) -> tuple[list[str], li
     return sorted(aliases), sorted(set(prefixes), key=len, reverse=True)
 
 
+def _acceleration_allowed(task: dict[str, Any]) -> bool:
+    return bool(
+        task.get("hard_not_before") is not True
+        and task.get("acceleration_allowed", True) is not False
+    )
+
+
+def _ahead_of_plan(task: dict[str, Any], *, now: datetime | None = None) -> bool:
+    now = now or _utc_now()
+    not_before = _parse_time(task.get("not_before"))
+    return bool(not_before is not None and not_before > now)
+
+
 def task_truth_state(task: dict[str, Any], done_ids: set[str] | None = None,
                      *, now: datetime | None = None) -> str:
     status = str(task.get("status") or "UNKNOWN").upper()
@@ -107,8 +120,7 @@ def task_truth_state(task: dict[str, Any], done_ids: set[str] | None = None,
     if status == "IN_PROGRESS" or str(task.get("dispatch_status") or "").upper() == "PENDING_ACCEPTANCE":
         return "ACTIVE_VERIFIED" if task_claim_is_current(task) else "STALE_CLAIM_REQUIRES_RECONCILIATION"
     if status == "READY":
-        not_before = _parse_time(task.get("not_before"))
-        if not_before is not None and not_before > now:
+        if _ahead_of_plan(task, now=now) and not _acceleration_allowed(task):
             return "FUTURE_PLANNED"
         deps = [str(x) for x in (task.get("dependencies") or []) if str(x)]
         return "REQUIRED_NEXT" if all(dep in done_ids for dep in deps) else "WAITING_DEPENDENCIES"
@@ -145,6 +157,10 @@ def build_work_lifecycle(tasks: list[dict[str, Any]]) -> dict[str, Any]:
             "not_before": task.get("not_before"),
             "horizon_end": task.get("horizon_end"),
             "milestone": task.get("milestone"),
+            "ahead_of_plan": _ahead_of_plan(task),
+            "acceleration_allowed": _acceleration_allowed(task),
+            "hard_not_before": task.get("hard_not_before") is True,
+            "method_strategy": task.get("method_strategy"),
         }
         buckets.setdefault(truth, []).append(row)
     required = [row for key, rows in buckets.items() if key != "DONE" for row in rows]
@@ -272,7 +288,18 @@ def dispatch_priority_score(task: dict[str, Any], tasks: list[dict[str, Any]]) -
     task_id = str(task.get("id") or "")
     direct, transitive = dependency_impact(task_id, tasks)
     explicit = _numeric_priority(task)
-    score = explicit * 100000 + transitive * 1000 + direct * 100 + 10
+    ahead = _ahead_of_plan(task)
+    acceleration = _acceleration_allowed(task)
+    acceleration_bonus = 5000 if ahead and acceleration else 0
+    compression_bonus = int(task.get("time_compression_priority") or 0) * 100
+    score = (
+        explicit * 100000
+        + transitive * 1000
+        + direct * 100
+        + acceleration_bonus
+        + compression_bonus
+        + 10
+    )
     return {
         "score": score,
         "explicit_priority": explicit,
@@ -280,6 +307,10 @@ def dispatch_priority_score(task: dict[str, Any], tasks: list[dict[str, Any]]) -
         "transitive_dependents": transitive,
         "critical_path": transitive > 0,
         "resumable_checkpoint": bool(task.get("resume_checkpoint")),
+        "ahead_of_plan": ahead,
+        "acceleration_allowed": acceleration,
+        "acceleration_bonus": acceleration_bonus,
+        "time_compression_priority": int(task.get("time_compression_priority") or 0),
     }
 
 
@@ -310,8 +341,7 @@ def build_dispatch_plan(tasks: list[dict[str, Any]], route_rows: list[dict[str, 
     for task in tasks:
         if str(task.get("status") or "").upper() != "READY":
             continue
-        not_before = _parse_time(task.get("not_before"))
-        if not_before is not None and not_before > _utc_now():
+        if _ahead_of_plan(task) and not _acceleration_allowed(task):
             continue
         deps = [str(x) for x in (task.get("dependencies") or []) if str(x)]
         if not all(dep in done_ids for dep in deps):
@@ -379,6 +409,11 @@ def build_dispatch_plan(tasks: list[dict[str, Any]], route_rows: list[dict[str, 
             "program_id": task.get("program_id"),
             "target_month": task.get("target_month"),
             "milestone": task.get("milestone"),
+            "ahead_of_plan": rank["ahead_of_plan"],
+            "acceleration_allowed": rank["acceleration_allowed"],
+            "acceleration_bonus": rank["acceleration_bonus"],
+            "method_strategy": task.get("method_strategy"),
+            "goal_contract": task.get("goal_contract"),
         })
     queue.sort(key=lambda row: (-int(row["score"]), str(row["task_id"])))
     for index, row in enumerate(queue, 1):
