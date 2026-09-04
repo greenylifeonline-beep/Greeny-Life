@@ -26,7 +26,15 @@ $stage=Start-Center $stagePort "center.stage";$proof=Wait-Healthy $stagePort $st
 if(-not$proof){Stop-Process $stage.Id -Force -ErrorAction SilentlyContinue;throw "COMMAND_CENTER_STAGE_FAILED"}
 Stop-Process $stage.Id -Force;Start-Sleep -Milliseconds 400
 $old=Get-NetTCPConnection -LocalPort $Port -State Listen -ErrorAction SilentlyContinue
-if($old){Stop-Process $old.OwningProcess -Force;Start-Sleep -Milliseconds 400}
+if($old){
+ $oldPids=@($old|Select-Object -ExpandProperty OwningProcess -Unique)
+ foreach($pid in $oldPids){Stop-Process $pid -Force -ErrorAction SilentlyContinue}
+ for($i=0;$i-lt 40;$i++){
+  Start-Sleep -Milliseconds 250
+  if(-not(Get-NetTCPConnection -LocalPort $Port -State Listen -ErrorAction SilentlyContinue)){break}
+ }
+ if(Get-NetTCPConnection -LocalPort $Port -State Listen -ErrorAction SilentlyContinue){throw "COMMAND_CENTER_OLD_LISTENER_NOT_RELEASED"}
+}
 $live=Start-Center $Port "center";$health=Wait-Healthy $Port $live.Id
 if(-not$health){Stop-Process $live.Id -Force -ErrorAction SilentlyContinue;throw "COMMAND_CENTER_CUTOVER_FAILED"}
 $listener=Get-NetTCPConnection -LocalPort $Port -State Listen -ErrorAction SilentlyContinue|Select-Object -First 1
