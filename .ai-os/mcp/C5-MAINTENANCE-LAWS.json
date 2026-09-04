@@ -178,6 +178,23 @@
                                             "provider identity",
                                             "council seat"
                                         ]
+                 },
+                 {
+                     "id":  "C5_DEPLOY_STAGE_NE_LIVE_APP_MUTATION",
+                     "incident":  "C5 deploy attempted to copy new source over the live app directory and hit a locked neuro_lingua file",
+                     "root_cause":  "Staging and live runtime shared the same app directory",
+                     "mechanism":  "Copy-Item mutated live runtime bytes before stage validation, so running processes could hold files or observe mixed versions",
+                     "detect":  "Deployment must prepare and validate an independent app.stage before stopping/swapping the live app",
+                     "guard":  "StageAppRoot + stage health + live stop + atomic directory swap + rollback",
+                     "remediation":  "Never copy canonical packages into live app while C5 is running; validate separate staged bytes then cut over",
+                     "non_recurrence":  "Canonical deploy reports C5_LIVE_APP_MUTATION=false and C5_STAGE_VALIDATION=true",
+                     "retrieval_cues":  [
+                                            "locked dialect.py",
+                                            "copy over live runtime",
+                                            "stage app",
+                                            "deployment rollback",
+                                            "mixed runtime bytes"
+                                        ]
                  }
              ],
     "closure_requirements":  [
@@ -190,7 +207,7 @@
                                  "single_change_writer"
                              ],
     "last_proven_head":  "2101ff5253a2064152f77f6ed751a65fe01c2e91",
-    "updated_at":  "2026-09-04T02:51:30.2441801+00:00",
+    "updated_at":  "2026-09-04T03:01:14.4470647+00:00",
     "assimilation_required":  true,
     "assimilation_definition":  "symptom+root_cause+mechanism+repair+guard+non_recurrence+retrieval_cues"
 }

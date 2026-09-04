@@ -31,6 +31,7 @@ def maintenance_issues(root: Path | None = None) -> list[dict[str, Any]]:
         ("HEALTH_ENDPOINT_NE_SUBPROCESS", "src/raios/command_center/app.py", '"canonical_head":CANONICAL_HEAD'),
         ("HISTORICAL_ACK_NE_DEAD_LETTER", "src/raios/command_center/message_worker.py", "_historical_actor_ack"),
         ("CANONICAL_RUNTIME_BYTES_MATCH_HEAD", "scripts/runtime/Deploy-RAIOS-C5.ps1", "C5_CANONICAL_SOURCE_DIRTY"),
+        ("C5_DEPLOY_STAGE_NE_LIVE_APP_MUTATION", "scripts/runtime/Deploy-RAIOS-C5.ps1", "StageAppRoot"),
         ("SINGLE_CANONICAL_CHANGE_WRITER", "scripts/ai-os/raios_change_gate.py", "active-change.json"),
         ("INTERNAL_COUNCIL_NE_EXTERNAL_A2A", "src/raios/council_ops/operations.py", '"transport":"INTERNAL_BUS"'),
         ("AUTO_ROUTE_REQUIRES_LIVE_CONSUMER", "src/raios/command_center/actor_routing.py", "present and binding_current and consumer_current"),

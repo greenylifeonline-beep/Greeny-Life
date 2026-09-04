@@ -154,3 +154,17 @@ def test_c5_truth_guard_preserves_c1_canonical_gl005_proof():
     assert 'c5["instance_role"] = "c1-assistant"' not in enforcer
     assert "report canonical C5 seat drift; no autonomous seat-map rewrite" in enforcer
     assert "Never overwrite a C1-proven state" in lawbook
+
+
+def test_c5_deploy_stages_off_live_app_and_supports_rollback():
+    deploy = (RUNTIME / "Deploy-RAIOS-C5.ps1").read_text(encoding="utf-8")
+    assert '$StageAppRoot = Join-Path $RuntimeRoot "app.stage"' in deploy
+    assert '$BackupAppRoot = Join-Path $RuntimeRoot "app.previous"' in deploy
+    assert '-AppDir $StageAppRoot' in deploy
+    assert 'Move-Item -LiteralPath $StageAppRoot -Destination $AppRoot' in deploy
+    assert 'C5_CUTOVER_ROLLED_BACK' in deploy
+    assert 'C5_LIVE_APP_MUTATION=false' in deploy
+    assert 'C5_ROLLBACK_READY=true' in deploy
+    assert 'Copy-Item -Path (Join-Path $Repo' in deploy
+    assert '$dest = Join-Path $StageAppRoot' in deploy
+    assert '$PackageDest = Join-Path $AppRoot' not in deploy
