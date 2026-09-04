@@ -238,6 +238,30 @@ class CouncilBoard:
                 lock.update(status="RELEASED",released_at=utc(),release_reason=reason);count+=1
         if count:atomic(self.locks,data)
         return count
+    def _reconcile_stale_locks(self,data:dict[str,Any])->int:
+        lock_data=load(self.locks,{"schema_version":"1.0","locks":[]})
+        task_index={str(t.get("id")):t for t in data.get("tasks",[]) if t.get("id")}
+        released=[]
+        for lock in lock_data.get("locks",[]):
+            if lock.get("status")!="ACTIVE":continue
+            task_id=str(lock.get("task_id") or "")
+            task=task_index.get(task_id)
+            if task is not None and task_claim_is_current(task):continue
+            reason=("ORPHAN_TASK_NOT_IN_CANONICAL_LEDGER" if task is None
+                    else "STALE_TASK_CLAIM_NOT_CURRENT")
+            lock.update(status="RELEASED",released_at=utc(),
+                        release_reason=reason,
+                        reconciled_by="RAIOS-WORKER")
+            released.append({"lock_id":lock.get("id"),"task_id":task_id,
+                             "scope":lock.get("scope"),"reason":reason})
+        if released:
+            atomic(self.locks,lock_data)
+            atomic(self.receipts/"LOCK-RECONCILIATION-LATEST.receipt.json",{
+                "schema":"raios.lock-reconciliation-receipt.v1",
+                "at":utc(),"released_count":len(released),"released":released,
+                "policy":"ONLY_CURRENT_VERIFIED_TASKS_RETAIN_ACTIVE_LOCKS",
+                "truth_owner":"RAIOS_SYSTEM"})
+        return len(released)
     def _active_conflicts(self,task:dict[str,Any],target:str,data:dict[str,Any])->list[dict[str,Any]]:
         conflicts=[]
         wanted=self._scopes(task)
@@ -534,14 +558,15 @@ class CouncilBoard:
             presence_prompts=self._prompt_unsigned_connected(worker)
             data=load(self.tasks,{"tasks":[]})
             returned=self._reconcile_absent_assignments(data)
+            locks_reconciled=self._reconcile_stale_locks(data)
             actions=self.actions.execute_ready(data)
             if actions["actions_processed"] or actions["actions_blocked"]:
                 atomic(self.tasks,data)
             dispatched=self._auto_dispatch(worker)
             coordination_changes=self._publish_coordination_change(worker)
             return {**reports,**actions,"presence_prompts":presence_prompts,
-                    "tasks_returned_absent":returned,"tasks_dispatched":dispatched,
-                    "coordination_changes":coordination_changes}
+                    "tasks_returned_absent":returned,"locks_reconciled":locks_reconciled,
+                    "tasks_dispatched":dispatched,"coordination_changes":coordination_changes}
     def dispatch(self,task_id:str,target:str,worker:Any)->dict[str,Any]:
         target=target.upper()
         if target not in SEATS:raise ValueError("UNKNOWN_COUNCIL_SEAT")

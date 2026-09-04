@@ -288,6 +288,28 @@ def test_system_first_coordination_receipt_then_single_broadcast(tmp_path):
     assert "WORK_AUTHORITY=false" in worker.calls[0][2]
 
 
+def test_worker_releases_stale_and_orphan_locks_but_keeps_current_verified_lock(tmp_path):
+    board,presence,repo=setup(tmp_path);worker=Worker()
+    data=json.loads(board.tasks.read_text(encoding="utf-8"))
+    data["tasks"].append({"id":"SYS","status":"IN_PROGRESS","claimed_by":"CHATGPT-NORMAL",
+                          "dispatch_status":"SYSTEM_FIRST_ACTIVE","scope":["src/current"]})
+    board.tasks.write_text(json.dumps(data),encoding="utf-8")
+    (repo/".ai-os/state/LOCKS.json").write_text(json.dumps({"locks":[
+        {"id":"L-CURRENT","task_id":"SYS","agent":"CHATGPT-NORMAL","scope":"src/current","status":"ACTIVE"},
+        {"id":"L-STALE","task_id":"NEXT","agent":"C2","scope":"src","status":"ACTIVE"},
+        {"id":"L-ORPHAN","task_id":"MISSING","agent":"C9","scope":"docs","status":"ACTIVE"}
+    ]}),encoding="utf-8")
+    out=board.run_cycle(worker)
+    locks=json.loads((repo/".ai-os/state/LOCKS.json").read_text(encoding="utf-8"))["locks"]
+    by={x["id"]:x for x in locks}
+    assert out["locks_reconciled"]==2
+    assert by["L-CURRENT"]["status"]=="ACTIVE"
+    assert by["L-STALE"]["status"]=="RELEASED"
+    assert by["L-ORPHAN"]["status"]=="RELEASED"
+    receipt=json.loads((board.receipts/"LOCK-RECONCILIATION-LATEST.receipt.json").read_text(encoding="utf-8"))
+    assert receipt["released_count"]==2
+
+
 def test_atomic_falls_back_when_windows_pins_stable_task_name(tmp_path,monkeypatch):
  target=tmp_path/"TASKS.json"
  target.write_text('{"tasks":[]}',encoding="utf-8")
