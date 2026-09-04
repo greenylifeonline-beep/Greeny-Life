@@ -28,7 +28,7 @@ Stop-Process $stage.Id -Force;Start-Sleep -Milliseconds 400
 $old=Get-NetTCPConnection -LocalPort $Port -State Listen -ErrorAction SilentlyContinue
 if($old){
  $oldPids=@($old|Select-Object -ExpandProperty OwningProcess -Unique)
- foreach($pid in $oldPids){Stop-Process $pid -Force -ErrorAction SilentlyContinue}
+ foreach($oldPid in $oldPids){Stop-Process $oldPid -Force -ErrorAction SilentlyContinue}
  for($i=0;$i-lt 40;$i++){
   Start-Sleep -Milliseconds 250
   if(-not(Get-NetTCPConnection -LocalPort $Port -State Listen -ErrorAction SilentlyContinue)){break}
