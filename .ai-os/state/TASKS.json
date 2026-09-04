@@ -41,7 +41,6 @@
       ],
       "validation": "Existing-first capability inventory + overlap classification + one authoritative intelligence path + tests/runtime evidence; no duplicate brain/search/learning system; no canonical promotion without C1.",
       "status": "READY",
-      "claimed_by": null,
       "scheduler_priority": "CRITICAL",
       "program_id": "RAIOS-CAPABILITY-EVOLUTION-202609-202703",
       "target_month": "2026-09",
@@ -64,12 +63,7 @@
       "canonical_promotion_requires_c1": true,
       "automatic_dispatch": false,
       "dispatch_authorized_by": "C1",
-      "assigned_to": "C2",
-      "assigned_by": "C1",
-      "dispatched_by": "RAIOS-WORKER",
-      "dispatch_status": "PENDING_ACCEPTANCE",
-      "dispatch_id": "DSP-9655f05813c6456f",
-      "dispatched_at": "2026-09-04T04:59:04.925738+00:00",
+      "dispatch_status": "RETURNED_ABSENT_WITH_CHECKPOINT",
       "system_owner": "RAIOS_SYSTEM",
       "hard_not_before": false,
       "acceleration_allowed": true,
@@ -123,7 +117,30 @@
         "RISK",
         "GOVERNANCE"
       ],
-      "legacy_recovery_task": "RAIOS-LEGACY-COGNITIVE-ASSET-RECOVERY-202609-01"
+      "legacy_recovery_task": "RAIOS-LEGACY-COGNITIVE-ASSET-RECOVERY-202609-01",
+      "last_dispatch_target": "C2",
+      "last_dispatch_id": "DSP-9655f05813c6456f",
+      "last_claimed_by": null,
+      "returned_at": "2026-09-04T21:19:33.751678+00:00",
+      "return_reason": "TARGET_NOT_LIVE_BOUND_CONSUMER",
+      "legacy_claim_reconciled": false,
+      "resume_checkpoint": {
+        "schema": "raios.task-checkpoint.v1",
+        "checkpoint_id": "CHK-bc1c7bdf02944ac7",
+        "task_id": "GL-002",
+        "actor": "RAIOS-WORKER",
+        "phase": "INTERRUPTED",
+        "summary": "Legacy or active executor claim had no current signed bound consumer; RAIOS returned the task to READY with a resumable recovery checkpoint.",
+        "completed_steps": [],
+        "changed_files": [],
+        "validation": [],
+        "evidence_refs": [],
+        "next_step": "Inspect the working tree and latest task evidence before continuing.",
+        "blocker": "EXECUTOR_NOT_LIVE_BOUND_CONSUMER",
+        "created_at": "2026-09-04T21:19:33.757573+00:00"
+      },
+      "last_checkpoint_id": "CHK-bc1c7bdf02944ac7",
+      "checkpoint_updated_at": "2026-09-04T21:19:33.757573+00:00"
     },
     {
       "id": "GL-003",
@@ -1449,7 +1466,7 @@
     {
       "id": "RAIOS-LONG-HORIZON-TASK-BOARD-20260904-01",
       "title": "Long-horizon task board, capability evolution program and signed assignment flow",
-      "objective": "Normalize the canonical board into a rolling multi-month execution program; use the existing Search Cortex/Factory Fabric to discover and assimilate internal capabilities first, escalate to external search only for proven gaps, and dispatch precise non-overlapping work to verified seats with signed acceptance/evidence.",
+      "objective": "Normalize the canonical board into a rolling multi-month execution program; use the existing Search Cortex/Factory Fabric to discover and assimilate internal capabilities first, escalate to external search only for proven gaps, and dispatch precise non-overlapping work to verified seats with signed acceptance/evidence. Enforce a deep legacy forensic pre-delete gate so old copies/versions cannot be deleted until all unique value is proven extracted or covered.",
       "scope": [
         ".ai-os/state/TASKS.json",
         ".ai-os/state/LOCKS.json",
@@ -1460,7 +1477,11 @@
         "RAIOS/V9/runtime/evolution_daemon.py",
         "tests/c5_gateway/test_evolution_daemon_policy.py",
         "src/raios/command_center/app.py",
-        "tests/command_center/test_app.py"
+        "tests/command_center/test_app.py",
+        ".ai-os/CORE-CONTRACT.md",
+        ".ai-os/state/FOUNDATION.json",
+        "src/raios/command_center/council_board.py",
+        "tests/command_center/test_council_board.py"
       ],
       "dependencies": [],
       "allowed_agents": [
@@ -1480,7 +1501,7 @@
         "at": "2026-09-04T04:40:21.857960+00:00"
       },
       "started_at": "2026-09-04T04:40:21.857960+00:00",
-      "updated_at": "2026-09-04T05:00:49.131437+00:00"
+      "updated_at": "2026-09-04T05:35:17.367719+00:00"
     },
     {
       "id": "RAIOS-CAPABILITY-GRAPH-202610-01",
@@ -2092,7 +2113,185 @@
         "allow_skip_if_objective_already_proven": true,
         "allow_substitute_better_method": true
       },
-      "created_at": "2026-09-04T05:23:37.391718+00:00"
+      "created_at": "2026-09-04T05:23:37.391718+00:00",
+      "predelete_forensic_consumer": "RAIOS-DEEP-LEGACY-FORENSIC-PREDELETE-202609-01",
+      "deletion_authority": false,
+      "updated_at": "2026-09-04T05:40:20.252359+00:00"
+    },
+    {
+      "id": "RAIOS-DEEP-LEGACY-FORENSIC-PREDELETE-202609-01",
+      "title": "Deep legacy forensic audit before any old-version deletion",
+      "objective": "Deeply inspect every authorized old version/copy/archive/history surface before any deletion. Reuse existing Master Estate Census, A13 semantic capability dedup, Git history, classification reports, Factory Fabric/assimilation, cognitive/learning evidence and current runtime truth; extract all unique code, algorithms, business/commercial/domain intelligence, prompts, policies, data schemas, tests, tools, configuration, knowledge and operational behavior; prove current coverage or migrate/merge/retain every unique value. This task performs NO deletion.",
+      "scope": [
+        ".ai-os/reports/global-estate/RAIOS-DEEP-LEGACY-FORENSIC-PREDELETE-202609-01"
+      ],
+      "read_surfaces": [
+        "CURRENT_CANONICAL_TREE",
+        "CANONICAL_GIT_HISTORY_AND_REFS",
+        "LIVE_RUNTIME_DERIVED_STATE",
+        "MASTER_ESTATE_CENSUS_REPORTS",
+        "A13_AGENT_CAPABILITY_DEDUP_REPORT",
+        "CANONICAL_CLASSIFICATION_KEEP_CORE_REVIEW_REQUIRED_REPORTS",
+        "FACTORY_FABRIC_AND_ASSIMILATION_MANIFESTS",
+        "COGNITIVE_WAL_AND_LEARNING_EVIDENCE",
+        "AUTHORIZED_ARCHIVES_AND_MANIFESTS_INSIDE_CANONICAL_ESTATE"
+      ],
+      "forbidden_read_surface": "RETIRED_GREENY_LIFE_REPAIR_TREE",
+      "historical_absolute_paths_are_provenance_only": true,
+      "dependencies": [],
+      "reconcile_with_tasks": [
+        "RAIOS-TOTAL-ESTATE-PHASE1-01",
+        "RAIOS-LEGACY-COGNITIVE-ASSET-RECOVERY-202609-01"
+      ],
+      "allowed_agents": [
+        "C2",
+        "C6"
+      ],
+      "required_capabilities": [
+        "FILE_INTELLIGENCE",
+        "KNOWLEDGE_ASSIMILATION",
+        "ARCHITECTURE_REASONING",
+        "CODE_REPAIR",
+        "GOVERNANCE"
+      ],
+      "status": "READY",
+      "claimed_by": null,
+      "automatic_dispatch": true,
+      "dispatch_authorized_by": "C1",
+      "scheduler_priority": "CRITICAL",
+      "time_compression_priority": 10,
+      "program_id": "RAIOS-CAPABILITY-EVOLUTION-202609-202703",
+      "target_month": "2026-09",
+      "milestone": "CANONICAL_TRUTH_AND_CRITICAL_RECOVERY",
+      "hard_not_before": false,
+      "acceleration_allowed": true,
+      "method_strategy": "ADAPTIVE_BEST_AVAILABLE_METHOD",
+      "destructive_action_requested": false,
+      "produces_deep_legacy_forensic_gate": true,
+      "required_outputs": [
+        "00-AUTHORIZED-SURFACE-CENSUS.json",
+        "01-HASH-LINEAGE-MAP.json",
+        "02-CODE-ALGORITHM-BEHAVIOR-CAPABILITY-MAP.json",
+        "03-BUSINESS-COMMERCIAL-DOMAIN-INTELLIGENCE-MAP.json",
+        "04-DATA-SCHEMA-CONFIG-KNOWLEDGE-MAP.json",
+        "05-TEST-RUNTIME-BEHAVIOR-EQUIVALENCE.json",
+        "06-CURRENT-VS-LEGACY-COVERAGE-MATRIX.json",
+        "07-UNIQUE-VALUE-EXTRACTION-MERGE-RETAIN-QUEUE.json",
+        "08-PROVENANCE-RECOVERY-ROLLBACK-PROOF.json",
+        "09-DELETE-CANDIDATE-TERMINAL-DECISIONS.json",
+        "10-DEEP-LEGACY-DELETE-GATE.json"
+      ],
+      "gate_contract": {
+        "audit_status_initial": "DENY",
+        "safe_to_remove_source_initial": false,
+        "unknown_unclassified_unresolved_required": 0,
+        "exact_hash_duplicate_is_not_sufficient_alone": true,
+        "semantic_and_behavioral_delta_required": true,
+        "business_commercial_knowledge_delta_required": true,
+        "data_schema_delta_required": true,
+        "current_coverage_proof_required": true,
+        "recovery_or_rollback_required": true,
+        "non_exact_retirement_requires_specific_c1_approval": true
+      },
+      "validation": "All authorized old-version evidence surfaces terminally classified; exact + semantic + behavioral + data/schema + business/commercial/domain knowledge deltas proven; every unique value reused/merged/compiled/migrated/retained; current coverage proven; recovery path proven; unknown/unclassified/unresolved unique value = 0; retired Repair tree not opened; no deletion executed; final gate remains DENY unless every machine-verifiable requirement passes.",
+      "canonical_promotion_requires_c1": true,
+      "created_at": "2026-09-04T05:40:20.252359+00:00"
+    },
+    {
+      "id": "RAIOS-DEEP-LEGACY-FORENSIC-AUDIT-202609-01",
+      "title": "Deep legacy forensic audit before any old-version deletion",
+      "objective": "Deeply inspect every authorized legacy version, branch, archive, donor package, historical cognitive/business asset and duplicate-looking source before any deletion. Recover all unique executable behavior, algorithms, data, schemas, prompts, policies, business/commercial intelligence, domain knowledge, tests, workflows, configuration and provenance; compare them against the current canonical system; leave zero unknown/unclassified/unresolved unique value. This task is audit/recovery only and MUST NOT delete or retire sources.",
+      "scope": [
+        ".ai-os/reports/deep-legacy-forensic/2026-09",
+        ".ai-os/reports/master-estate-census",
+        "canonical/KNOWLEDGE-BASE",
+        "canonical/legacy-data",
+        "intelligence/knowledge_base/assimilated",
+        "RAIOS/V9/runtime/a13_agent_capability_dedup_certification.py"
+      ],
+      "dependencies": [],
+      "allowed_agents": [
+        "C2",
+        "C6"
+      ],
+      "required_capabilities": [
+        "FILE_INTELLIGENCE",
+        "KNOWLEDGE_ASSIMILATION",
+        "ARCHITECTURE_REASONING",
+        "CODE_REPAIR"
+      ],
+      "status": "READY",
+      "claimed_by": null,
+      "scheduler_priority": "CRITICAL",
+      "time_compression_priority": 10,
+      "automatic_dispatch": true,
+      "dispatch_authorized_by": "C1",
+      "program_id": "RAIOS-CAPABILITY-EVOLUTION-202609-202703",
+      "target_month": "2026-09",
+      "milestone": "CANONICAL_TRUTH_AND_CRITICAL_RECOVERY",
+      "hard_not_before": false,
+      "acceleration_allowed": true,
+      "method_strategy": "ADAPTIVE_BEST_AVAILABLE_METHOD",
+      "destructive_action_requested": false,
+      "search_policy": {
+        "mode": "INTERNAL_FIRST",
+        "engine": "ONE_SHARED_SEARCH_CORTEX",
+        "sources": [
+          "CURRENT_CANONICAL_TREE",
+          "CANONICAL_GIT_HISTORY_AND_REFS",
+          "MASTER_ESTATE_CENSUS",
+          "FACTORY_FABRIC_AND_ASSIMILATION",
+          "COGNITIVE_WAL_AND_LEARNING_EVIDENCE",
+          "CANONICAL_DISCOVERY_CLASSIFICATION_REPORTS",
+          "AUTHORIZED_ARCHIVE_AND_BACKUP_MANIFESTS"
+        ],
+        "retired_repair_tree": "FORBIDDEN_UNLESS_C1_EXPLICITLY_REAUTHORIZES_SOURCE",
+        "external_web": "NOT_A_SUBSTITUTE_FOR_LEGACY_SOURCE_AUDIT",
+        "auto_promote": false
+      },
+      "forensic_stages": [
+        "SURFACE_CENSUS",
+        "HASH_AND_LINEAGE",
+        "SEMANTIC_CAPABILITY_EXTRACTION",
+        "DATA_SCHEMA_KNOWLEDGE_EXTRACTION",
+        "RUNTIME_ROLE_AND_DEPENDENCY_TRACE",
+        "CURRENT_VS_LEGACY_SEMANTIC_COMPARISON",
+        "UNIQUE_VALUE_CLASSIFICATION",
+        "REUSE_MERGE_COMPILE_MIGRATE_RETAIN",
+        "BEHAVIOR_EQUIVALENCE_OR_SUPERIOR_REPLACEMENT_PROOF",
+        "DATA_AND_SCHEMA_COVERAGE_PROOF",
+        "PROVENANCE_AND_RECOVERY_PROOF",
+        "ZERO_UNRESOLVED_CERTIFICATION"
+      ],
+      "deep_legacy_forensic_gate": {
+        "status": "AUDIT_IN_PROGRESS_NOT_A_DELETE_GATE",
+        "authorized_surface_census_complete": false,
+        "hash_and_lineage_complete": false,
+        "semantic_capability_extraction_complete": false,
+        "data_schema_knowledge_extraction_complete": false,
+        "current_vs_legacy_coverage_complete": false,
+        "unique_value_extracted_merged_migrated_or_retained": false,
+        "behavior_equivalence_or_superior_replacement_proven": false,
+        "provenance_preserved": false,
+        "recovery_or_rollback_proven": false,
+        "unknown_unclassified_unresolved_unique_value": "UNKNOWN",
+        "safe_to_remove_source": false
+      },
+      "required_outputs": [
+        "LEGACY-SURFACE-CENSUS.json",
+        "HASH-LINEAGE-MANIFEST.json",
+        "SEMANTIC-CAPABILITY-CENSUS.json",
+        "DATA-SCHEMA-KNOWLEDGE-CENSUS.json",
+        "CURRENT-VS-LEGACY-COVERAGE-MATRIX.json",
+        "UNIQUE-VALUE-RECOVERY-LEDGER.json",
+        "BEHAVIOR-EQUIVALENCE-PROOFS.json",
+        "RECOVERY-ROLLBACK-MANIFEST.json",
+        "ZERO-UNRESOLVED-CERTIFICATION.json",
+        "DELETE-ELIGIBILITY-REPORT.json"
+      ],
+      "validation": "No source deletion/retirement during audit. Every candidate gets provenance/hash/semantic capability/data/schema/knowledge/runtime-role classification. Every unique delta is recovered or explicitly retained. Unknown/unclassified/unresolved unique value must be zero before any later delete gate may pass.",
+      "canonical_promotion_requires_c1": true,
+      "created_at": "2026-09-04T21:29:53.962191+00:00"
     }
   ],
   "programs": [
@@ -2116,7 +2315,9 @@
         "NO_RETIRED_REPAIR_TREE_READ",
         "EXTERNAL_RESULT_NE_CANONICAL",
         "C1_PROMOTION_REQUIRED",
-        "EVIDENCE_REQUIRED_BEFORE_DONE"
+        "EVIDENCE_REQUIRED_BEFORE_DONE",
+        "NO_DELETE_BEFORE_DEEP_LEGACY_FORENSIC_GATE",
+        "OLD_COPY_IS_EVIDENCE_UNTIL_ZERO_UNRESOLVED_PROOF"
       ],
       "authorized_internal_surfaces": [
         "CANONICAL_REPO_CURRENT_TREE",
@@ -2174,11 +2375,13 @@
           "month": "2026-09",
           "milestone": "CANONICAL_TRUTH_AND_CRITICAL_RECOVERY",
           "tasks": [
+            "RAIOS-DEEP-LEGACY-FORENSIC-AUDIT-202609-01",
             "GL-002",
             "GL-003",
             "GL-004",
             "RAIOS-TOTAL-ESTATE-PHASE1-01",
-            "RAIOS-LEGACY-COGNITIVE-ASSET-RECOVERY-202609-01"
+            "RAIOS-LEGACY-COGNITIVE-ASSET-RECOVERY-202609-01",
+            "RAIOS-DEEP-LEGACY-FORENSIC-PREDELETE-202609-01"
           ],
           "exit_gate": "MAIN_BRAIN_RUNTIME_AND_BRAIN_ESTATE_PROVEN_NO_DUPLICATES",
           "timing_role": "TARGET_WINDOW_NOT_HARD_SEQUENCE",
@@ -2337,7 +2540,7 @@
         ]
       },
       "success_definition": "COMPLETE_OBJECTIVES_AS_EARLY_AS_SAFELY_POSSIBLE_WITH_MACHINE_VERIFIABLE_EVIDENCE",
-      "updated_at": "2026-09-04T05:23:37.391718+00:00",
+      "updated_at": "2026-09-04T21:29:53.962191+00:00",
       "legacy_cognitive_asset_policy": {
         "enabled": true,
         "purpose": "RECOVER_CAPABILITIES_NOT_OLD_ARCHITECTURE",
@@ -2470,9 +2673,45 @@
         ],
         "architecture_rule": "CAPABILITIES_JOIN_CURRENT_COGNITIVE_SYSTEM_AS_SKILLS_MODULES_TOOLS_OR_DOMAIN_BRAINS_UNDER_ONE_AUTHORITY_NOT_PARALLEL_MASTER_BRAINS",
         "auto_promote": false
-      }
+      },
+      "deep_legacy_forensic_delete_policy": {
+        "enabled": true,
+        "fail_closed": true,
+        "audit_task_id": "RAIOS-DEEP-LEGACY-FORENSIC-PREDELETE-202609-01",
+        "default_delete_decision": "DENY",
+        "safe_to_remove_source_default": false,
+        "required_gates": [
+          "AUTHORIZED_SURFACE_CENSUS_COMPLETE",
+          "HASH_AND_LINEAGE_COMPLETE",
+          "SEMANTIC_CAPABILITY_EXTRACTION_COMPLETE",
+          "DATA_SCHEMA_KNOWLEDGE_EXTRACTION_COMPLETE",
+          "CURRENT_VS_LEGACY_COVERAGE_COMPLETE",
+          "UNIQUE_VALUE_EXTRACTED_MERGED_MIGRATED_OR_RETAINED",
+          "EXECUTABLE_BEHAVIOR_EQUIVALENCE_OR_SUPERIOR_REPLACEMENT_PROVEN",
+          "PROVENANCE_PRESERVED",
+          "RECOVERY_OR_ROLLBACK_PROVEN",
+          "UNKNOWN_UNCLASSIFIED_UNRESOLVED_EQUALS_ZERO",
+          "SAFE_TO_REMOVE_SOURCE_TRUE"
+        ],
+        "standing_exact_duplicate_authority": "C1_PREAUTHORIZED_ONLY_AFTER_ALL_DEEP_GATES_PASS",
+        "non_exact_retirement_requires_specific_c1_approval": true,
+        "historical_path_strings_are_provenance_only": true,
+        "retired_repair_tree_direct_read_authorized": false
+      },
+      "pre_delete_forensic_gate_task": "RAIOS-DEEP-LEGACY-FORENSIC-AUDIT-202609-01",
+      "delete_default": "DENY",
+      "delete_gate_global_source": ".ai-os/state/FOUNDATION.json",
+      "delete_gate_laws": [
+        "NO_DELETE_DURING_FORENSIC_AUDIT",
+        "EXACT_HASH_DUPLICATE_NE_SEMANTIC_DUPLICATE",
+        "FILENAME_MATCH_NE_CAPABILITY_EQUIVALENCE",
+        "ALL_UNIQUE_VALUE_RECOVERED_BEFORE_DELETE",
+        "ZERO_UNKNOWN_UNCLASSIFIED_UNRESOLVED_REQUIRED",
+        "GLOBAL_FOUNDATION_GATE_AND_PER_TASK_GATE_BOTH_REQUIRED",
+        "NON_EXACT_DESTRUCTIVE_ACTION_REQUIRES_C1_SPECIFIC_APPROVAL"
+      ]
     }
   ],
-  "roadmap_updated_at": "2026-09-04T05:23:37.391718+00:00",
+  "roadmap_updated_at": "2026-09-04T21:29:53.962191+00:00",
   "active_program_id": "RAIOS-CAPABILITY-EVOLUTION-202609-202703"
 }

@@ -1,6 +1,7 @@
 from __future__ import annotations
 
 from datetime import datetime, timedelta, timezone
+import re
 from typing import Any
 
 ACTIVE_STATUSES = {"IN_PROGRESS", "BLOCKED"}
@@ -180,11 +181,77 @@ def build_work_lifecycle(tasks: list[dict[str, Any]]) -> dict[str, Any]:
     }
 
 
+def destructive_task_requested(task: dict[str, Any]) -> bool:
+    if "destructive_action_requested" in task:
+        return task.get("destructive_action_requested") is True
+    if task.get("irreversible_change") is True:
+        return True
+    text = " ".join(str(task.get(key) or "") for key in (
+        "id", "title", "objective", "validation", "next_step",
+        "operation", "action", "change_type",
+    )).lower()
+    # Audit/retention wording must not be mistaken for a destructive request.
+    text = re.sub(
+        r"\b(no|never|without|forbid(?:den)?|prohibit(?:ed)?)\s+"
+        r"(delete|deletion|remove|removal|retire|retirement|prune|destroy|purge)\b",
+        " retained_action ",
+        text,
+    )
+    patterns = (
+        r"\bdelete\b", r"\bdeletion\b", r"\bremove\b", r"\bremoval\b",
+        r"\bretire\b", r"\bretirement\b", r"\bprune\b",
+        r"\bdestroy\b", r"\bpurge\b",
+    )
+    return any(re.search(pattern, text) for pattern in patterns)
+
+
+def global_legacy_delete_gate_satisfied(foundation: dict[str, Any] | None) -> bool:
+    facts = (foundation or {}).get("facts") or {}
+    unresolved = facts.get("LEGACY_UNIQUE_VALUE_UNRESOLVED")
+    return bool(
+        facts.get("DEEP_LEGACY_FORENSIC_AUDIT_PASS") is True
+        and facts.get("LEGACY_DELETE_ALLOWED") is True
+        and facts.get("SAFE_TO_REMOVE_SOURCE") is True
+        and unresolved in (0, "0")
+    )
+
+
+def legacy_delete_gate_satisfied(task: dict[str, Any]) -> bool:
+    if not destructive_task_requested(task):
+        return True
+    gate = task.get("deep_legacy_forensic_gate") or {}
+    required_true = (
+        "authorized_surface_census_complete",
+        "hash_and_lineage_complete",
+        "semantic_capability_extraction_complete",
+        "data_schema_knowledge_extraction_complete",
+        "current_vs_legacy_coverage_complete",
+        "unique_value_extracted_merged_migrated_or_retained",
+        "behavior_equivalence_or_superior_replacement_proven",
+        "provenance_preserved",
+        "recovery_or_rollback_proven",
+        "safe_to_remove_source",
+    )
+    if str(gate.get("status") or "").upper() != "PASS":
+        return False
+    if any(gate.get(key) is not True for key in required_true):
+        return False
+    unresolved = gate.get("unknown_unclassified_unresolved_unique_value")
+    if unresolved not in (0, "0"):
+        return False
+    exact = gate.get("exact_redundancy") is True
+    if exact:
+        return gate.get("standing_c1_duplicate_authority") is True
+    return gate.get("c1_specific_deletion_approval") is True
+
+
 def founder_decision_required(task: dict[str, Any]) -> bool:
     explicit = task.get("requires_c1_decision") is True or task.get("requires_founder_decision") is True
     authority = str(task.get("decision_authority") or task.get("approval_authority") or "").upper()
     promotion = task.get("canonical_promotion_requested") is True or task.get("irreversible_change") is True
-    return explicit or authority in {"C1", "FOUNDER", "OWNER"} or promotion
+    gate = task.get("deep_legacy_forensic_gate") or {}
+    non_exact_destructive = destructive_task_requested(task) and gate.get("exact_redundancy") is not True
+    return explicit or authority in {"C1", "FOUNDER", "OWNER"} or promotion or non_exact_destructive
 
 
 def build_founder_brief(tasks: list[dict[str, Any]], *, founder_available: bool,
@@ -375,7 +442,10 @@ def build_dispatch_plan(tasks: list[dict[str, Any]], route_rows: list[dict[str, 
             and str(task.get("dispatch_authorized_by") or "").upper() == "C1"
         )
         founder_ok = founder_gate_satisfied(task)
-        if not founder_ok:
+        legacy_delete_ok = legacy_delete_gate_satisfied(task)
+        if not legacy_delete_ok:
+            blocker = "DEEP_LEGACY_FORENSIC_AUDIT_REQUIRED"
+        elif not founder_ok:
             blocker = "FOUNDER_DECISION_REQUIRED"
         elif scope_conflicts:
             blocker = "ACTIVE_SCOPE_CONFLICT"
@@ -401,6 +471,8 @@ def build_dispatch_plan(tasks: list[dict[str, Any]], route_rows: list[dict[str, 
             "execution_ready_seats": sorted(set(ready)),
             "automatic_dispatch_authorized": auto_authorized,
             "founder_gate_satisfied": founder_ok,
+            "destructive_task_requested": destructive_task_requested(task),
+            "deep_legacy_forensic_gate_satisfied": legacy_delete_ok,
             "scope_conflicts": scope_conflicts,
             "blocker": blocker,
             "dispatchable_now": blocker is None,

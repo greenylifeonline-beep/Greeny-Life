@@ -11,7 +11,9 @@ from typing import Any
 
 from .coordination_truth import (
     aliases_for_seat, build_founder_brief, build_work_lifecycle,
-    canonical_seat, dispatch_priority_score, founder_gate_satisfied, task_claim_is_current,
+    canonical_seat, destructive_task_requested, dispatch_priority_score,
+    founder_gate_satisfied, global_legacy_delete_gate_satisfied,
+    legacy_delete_gate_satisfied, task_claim_is_current,
 )
 from .task_actions import TaskActionExecutor
 from raios.council_ops.presence_challenge import PresenceChallengeStore
@@ -54,6 +56,7 @@ class CouncilBoard:
     def __init__(self,repo:Path,presence:Path|None=None,routes:Any|None=None):
         self.repo=repo.resolve();self.tasks=self.repo/".ai-os/state/TASKS.json"
         self.locks=self.repo/".ai-os/state/LOCKS.json"
+        self.foundation=self.repo/".ai-os/state/FOUNDATION.json"
         self.seat_map_path=self.repo/".ai-os/mcp/SEAT-MAP.json"
         self.presence=(presence or Path.home()/".raios/runtime/council-ops/presence.json").resolve()
         self.presence_prompts=self.presence.parent/"presence-prompts.json"
@@ -78,6 +81,9 @@ class CouncilBoard:
         except (TypeError,ValueError):return False
     def _seat_map(self)->dict[str,Any]:
         return load(self.seat_map_path,{"seats":{}})
+    def _global_legacy_delete_gate(self)->bool:
+        return global_legacy_delete_gate_satisfied(
+            load(self.foundation,{"facts":{}}))
     def _canonical_actor(self,actor:str)->str|None:
         value=str(actor or "").upper()
         if value in SEATS:return value
@@ -652,6 +658,8 @@ class CouncilBoard:
         for task in ordered:
             if (task.get("automatic_dispatch") is not True or
                 task.get("dispatch_authorized_by")!="C1"):continue
+            if not legacy_delete_gate_satisfied(task):continue
+            if destructive_task_requested(task) and not self._global_legacy_delete_gate():continue
             if not founder_gate_satisfied(task):continue
             if task.get("status")!="READY" or task.get("claimed_by") or task.get("assigned_to"):continue
             if not all(d in done for d in task.get("dependencies",[])):continue
@@ -692,6 +700,10 @@ class CouncilBoard:
             task=next((t for t in data.get("tasks",[]) if t.get("id")==task_id),None)
             if not task:raise ValueError("TASK_NOT_FOUND")
             if task.get("status")!="READY":raise ValueError("TASK_NOT_READY_FOR_DISPATCH")
+            if not legacy_delete_gate_satisfied(task):
+                raise ValueError("DEEP_LEGACY_FORENSIC_AUDIT_REQUIRED")
+            if destructive_task_requested(task) and not self._global_legacy_delete_gate():
+                raise ValueError("GLOBAL_LEGACY_DELETE_GATE_CLOSED")
             if not founder_gate_satisfied(task):raise ValueError("FOUNDER_DECISION_REQUIRED")
             if not self._eligible(task,target):raise ValueError("SEAT_NOT_ALLOWED_FOR_TASK")
             if task.get("claimed_by") not in (None,target):raise ValueError("TASK_ALREADY_CLAIMED")

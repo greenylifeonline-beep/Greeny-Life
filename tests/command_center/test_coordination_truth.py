@@ -6,7 +6,10 @@ from raios.command_center.coordination_truth import (
     build_work_lifecycle,
     canonical_seat,
     dispatch_priority_score,
+    destructive_task_requested,
     founder_gate_satisfied,
+    global_legacy_delete_gate_satisfied,
+    legacy_delete_gate_satisfied,
 )
 
 
@@ -127,3 +130,104 @@ def test_actor_aliases_are_unambiguous_and_canonical():
     assert canonical_seat("C2@AG", seat_map) == "C2"
     assert canonical_seat("C6@AG", seat_map) == "C6"
     assert canonical_seat("CODEX", seat_map) is None
+
+
+def _passing_exact_delete_gate():
+    return {
+        "status": "PASS",
+        "authorized_surface_census_complete": True,
+        "hash_and_lineage_complete": True,
+        "semantic_capability_extraction_complete": True,
+        "data_schema_knowledge_extraction_complete": True,
+        "current_vs_legacy_coverage_complete": True,
+        "unique_value_extracted_merged_migrated_or_retained": True,
+        "behavior_equivalence_or_superior_replacement_proven": True,
+        "provenance_preserved": True,
+        "recovery_or_rollback_proven": True,
+        "safe_to_remove_source": True,
+        "unknown_unclassified_unresolved_unique_value": 0,
+        "exact_redundancy": True,
+        "standing_c1_duplicate_authority": True,
+    }
+
+
+def test_destructive_task_is_fail_closed_until_deep_legacy_gate_passes():
+    task = {
+        "id": "DEL",
+        "title": "Delete old duplicate source",
+        "status": "READY",
+        "dependencies": [],
+        "allowed_agents": ["cursor"],
+        "automatic_dispatch": True,
+        "dispatch_authorized_by": "C1",
+    }
+    assert destructive_task_requested(task) is True
+    assert legacy_delete_gate_satisfied(task) is False
+    rows = [{"seat": "C2", "aliases": ["CURSOR"], "alias_prefixes": [],
+             "auto_routable": True, "coordination_available": True}]
+    plan = build_dispatch_plan([task], rows)
+    assert plan["queue"][0]["blocker"] == "DEEP_LEGACY_FORENSIC_AUDIT_REQUIRED"
+    assert plan["queue"][0]["dispatchable_now"] is False
+
+
+def test_exact_redundancy_can_pass_only_after_all_deep_gates():
+    task = {
+        "id": "DEL",
+        "title": "Delete old duplicate source",
+        "status": "READY",
+        "dependencies": [],
+        "deep_legacy_forensic_gate": _passing_exact_delete_gate(),
+    }
+    assert legacy_delete_gate_satisfied(task) is True
+    assert founder_gate_satisfied(task) is True
+
+
+def test_non_exact_retirement_requires_specific_c1_decision_even_after_audit():
+    gate = _passing_exact_delete_gate()
+    gate["exact_redundancy"] = False
+    gate["c1_specific_deletion_approval"] = True
+    task = {
+        "id": "RETIRE",
+        "title": "Retire legacy project after migration",
+        "status": "READY",
+        "deep_legacy_forensic_gate": gate,
+    }
+    assert legacy_delete_gate_satisfied(task) is True
+    assert founder_gate_satisfied(task) is False
+    task.update(founder_decision_status="APPROVED", founder_decision_by="C1")
+    assert founder_gate_satisfied(task) is True
+
+
+def test_predelete_audit_task_is_explicitly_non_destructive():
+    task = {
+        "id": "AUDIT",
+        "title": "Deep legacy forensic pre-delete audit",
+        "destructive_action_requested": False,
+    }
+    assert destructive_task_requested(task) is False
+    assert legacy_delete_gate_satisfied(task) is True
+
+
+def test_no_delete_language_is_not_misclassified_as_destructive():
+    assert destructive_task_requested({
+        "id": "AUDIT",
+        "title": "Audit old sources",
+        "objective": "No delete, never remove, and without retirement during this audit.",
+    }) is False
+
+
+def test_global_delete_gate_is_fail_closed_until_every_foundation_fact_passes():
+    closed = {"facts": {
+        "DEEP_LEGACY_FORENSIC_AUDIT_PASS": False,
+        "LEGACY_DELETE_ALLOWED": False,
+        "SAFE_TO_REMOVE_SOURCE": False,
+        "LEGACY_UNIQUE_VALUE_UNRESOLVED": "UNKNOWN",
+    }}
+    assert global_legacy_delete_gate_satisfied(closed) is False
+    open_gate = {"facts": {
+        "DEEP_LEGACY_FORENSIC_AUDIT_PASS": True,
+        "LEGACY_DELETE_ALLOWED": True,
+        "SAFE_TO_REMOVE_SOURCE": True,
+        "LEGACY_UNIQUE_VALUE_UNRESOLVED": 0,
+    }}
+    assert global_legacy_delete_gate_satisfied(open_gate) is True

@@ -1,0 +1,47 @@
+{
+  "schema": "raios.c1-foundation.v1",
+  "facts": {
+    "CI_1e28f84": "PASS",
+    "CI_68af867": "PASS",
+    "EXTRACTED_QWEN_GRANITE": false,
+    "SAFE_TO_REMOVE_SOURCE": false,
+    "GL005_PROVEN": false,
+    "AUTHENTICATED_ORCHESTRATION_TASK": false,
+    "DEEP_LEGACY_FORENSIC_AUDIT_REQUIRED": true,
+    "DEEP_LEGACY_FORENSIC_AUDIT_PASS": false,
+    "LEGACY_DELETE_ALLOWED": false,
+    "LEGACY_UNIQUE_VALUE_UNRESOLVED": "UNKNOWN",
+    "DEEP_LEGACY_DELETE_GATE_VERSION": "v1"
+  },
+  "p0": {
+    "order": [
+      "AUTHENTICATED_ORCHESTRATION_TASK",
+      "QWEN_GRANITE_SOURCE_INDEPENDENT_ASSIMILATION",
+      "GL005"
+    ],
+    "stop": "AUTHENTICATED_ORCHESTRATION_TASK",
+    "gl005_proven": false
+  },
+  "p0_decision": "D-060",
+  "updated_at": "2026-09-04T21:29:53.962191+00:00",
+  "deep_legacy_forensic_gate": {
+    "task_id": "RAIOS-DEEP-LEGACY-FORENSIC-AUDIT-202609-01",
+    "default": "DENY",
+    "status": "AUDIT_REQUIRED",
+    "minimum_requirements": [
+      "AUTHORIZED_SURFACE_CENSUS_COMPLETE",
+      "HASH_AND_LINEAGE_COMPLETE",
+      "SEMANTIC_CAPABILITY_EXTRACTION_COMPLETE",
+      "DATA_SCHEMA_KNOWLEDGE_EXTRACTION_COMPLETE",
+      "CURRENT_VS_LEGACY_COVERAGE_COMPLETE",
+      "ALL_UNIQUE_VALUE_RECOVERED_OR_RETAINED",
+      "BEHAVIOR_EQUIVALENCE_OR_SUPERIOR_REPLACEMENT_PROVEN",
+      "PROVENANCE_PRESERVED",
+      "RECOVERY_OR_ROLLBACK_PROVEN",
+      "ZERO_UNKNOWN_UNCLASSIFIED_UNRESOLVED"
+    ],
+    "safe_to_remove_source": false,
+    "legacy_delete_allowed": false,
+    "updated_at": "2026-09-04T21:29:53.962191+00:00"
+  }
+}

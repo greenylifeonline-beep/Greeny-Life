@@ -343,3 +343,43 @@ def test_atomic_falls_back_when_windows_pins_stable_task_name(tmp_path,monkeypat
  council_board.atomic(target,{"tasks":[{"id":"T1"}]})
  assert json.loads(target.read_text(encoding="utf-8"))["tasks"][0]["id"]=="T1"
  assert list(tmp_path.glob("TASKS.json.*.tmp"))==[]
+
+
+def test_manual_dispatch_blocks_destructive_task_until_deep_legacy_gate(tmp_path):
+    board,presence,_=setup(tmp_path);worker=Worker()
+    data=json.loads(board.tasks.read_text(encoding="utf-8"))
+    task=data["tasks"][1]
+    task.update(title="Delete old duplicate source",destructive_action_requested=True)
+    board.tasks.write_text(json.dumps(data),encoding="utf-8")
+    future=(datetime.now(timezone.utc)+timedelta(minutes=1)).isoformat()
+    presence.write_text(json.dumps({"seats":{"C2":{"presence":"PRESENT",
+        "signature_valid":True,"lease_expires_at":future}}}),encoding="utf-8")
+    with pytest.raises(ValueError,match="DEEP_LEGACY_FORENSIC_AUDIT_REQUIRED"):
+        board.dispatch("NEXT","C2",worker)
+    data=json.loads(board.tasks.read_text(encoding="utf-8"))
+    data["tasks"][1]["deep_legacy_forensic_gate"]={
+        "status":"PASS",
+        "authorized_surface_census_complete":True,
+        "hash_and_lineage_complete":True,
+        "semantic_capability_extraction_complete":True,
+        "data_schema_knowledge_extraction_complete":True,
+        "current_vs_legacy_coverage_complete":True,
+        "unique_value_extracted_merged_migrated_or_retained":True,
+        "behavior_equivalence_or_superior_replacement_proven":True,
+        "provenance_preserved":True,
+        "recovery_or_rollback_proven":True,
+        "safe_to_remove_source":True,
+        "unknown_unclassified_unresolved_unique_value":0,
+        "exact_redundancy":True,
+        "standing_c1_duplicate_authority":True,
+    }
+    board.tasks.write_text(json.dumps(data),encoding="utf-8")
+    with pytest.raises(ValueError,match="GLOBAL_LEGACY_DELETE_GATE_CLOSED"):
+        board.dispatch("NEXT","C2",worker)
+    board.foundation.write_text(json.dumps({"facts":{
+        "DEEP_LEGACY_FORENSIC_AUDIT_PASS":True,
+        "LEGACY_DELETE_ALLOWED":True,
+        "SAFE_TO_REMOVE_SOURCE":True,
+        "LEGACY_UNIQUE_VALUE_UNRESOLVED":0
+    }}),encoding="utf-8")
+    assert board.dispatch("NEXT","C2",worker)["status"]=="DISPATCHED_PENDING_ACCEPTANCE"
