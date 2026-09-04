@@ -120,6 +120,8 @@ table{width:100%;border-collapse:collapse;font-size:11px}th,td{text-align:right;
 <section class="view" id="work">
   <div class="grid">
     <article class="card span12"><div class="card-head"><h2>قائمة التنفيذ الكانونية</h2><span class="hint" id="workStats">—</span></div><div class="table-wrap" id="tasksTable"></div></article>
+    <article class="card span6"><div class="card-head"><h2>حقيقة دورة العمل</h2><span class="hint">تم · جارٍ · مطلوب · منتظر · قديم</span></div><div class="list" id="lifecycleList"></div></article>
+    <article class="card span6"><div class="card-head"><h2>ملف المؤسس والمالك</h2><span class="hint">يُجهّز دائمًا حتى عند غياب C1</span></div><div class="list" id="founderBrief"></div></article>
     <article class="card span12"><div class="card-head"><h2>الإيصالات والأدلة الحديثة</h2><span class="hint">Provenance محفوظ</span></div><div class="table-wrap" id="receiptsTable"></div></article>
   </div>
 </section>
@@ -262,6 +264,16 @@ function renderAvailability(a){
     var task=(r.current_tasks||[])[0],detail=(r.source||'—')+' · '+(task?(task.id||'TASK'):'NO_TASK');
     return '<div class="list-row"><div class="grow"><strong>'+esc(r.actor_id||'ACTOR')+'</strong><small>'+esc(detail)+'</small></div>'+badge(r.availability||'UNKNOWN')+'</div>'
   }).join('')||'<div class="empty">لا يوجد منفذ نشط خارج المقاعد.</div>';
+  var life=a.work_lifecycle||{},counts=life.counts||{};
+  var labels=[['DONE','تم'],['ACTIVE_VERIFIED','جارٍ مثبت'],['REQUIRED_NEXT','لابد أن يتم الآن'],['WAITING_DEPENDENCIES','ينتظر متطلبات'],['BLOCKED','متوقف'],['STALE_CLAIM_REQUIRES_RECONCILIATION','ادعاء قديم يحتاج مصالحة']];
+  $('#lifecycleList').innerHTML=labels.map(function(x){
+    return '<div class="list-row"><div class="grow"><strong>'+esc(x[1])+'</strong><small>'+esc(x[0])+'</small></div>'+badge(counts[x[0]]||0)+'</div>'
+  }).join('');
+  var f=a.founder_brief||{},next=f.must_do_next||[],dec=f.decisions_required||[];
+  $('#founderBrief').innerHTML=
+    '<div class="list-row"><div class="grow"><strong>'+esc(f.consultation_mode||'—')+'</strong><small>Founder available: '+esc(f.founder_available===true?'YES':'NO')+'</small></div>'+badge((f.decision_count||0)+' DECISIONS')+'</div>'+
+    '<div class="list-row"><div class="grow"><strong>ما لابد أن يتم</strong><small>'+esc(next.map(function(x){return x.id}).join(' · ')||'لا شيء جاهز الآن')+'</small></div></div>'+
+    '<div class="list-row"><div class="grow"><strong>ما ينتظر قرار المؤسس</strong><small>'+esc(dec.map(function(x){return x.task_id}).join(' · ')||'لا يوجد قرار محجوز')+'</small></div></div>';
 }
 async function extras(){
   var res=await Promise.all([api('/api/tasks'),api('/api/receipts'),api('/api/cognitive'),api('/api/client-activity')]);var t=res[0],r=res[1],c=res[2],a=res[3];

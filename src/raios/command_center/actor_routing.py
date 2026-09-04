@@ -6,6 +6,8 @@ from datetime import datetime, timezone
 from pathlib import Path
 from typing import Any
 
+from .coordination_truth import aliases_for_seat, canonical_seat
+
 COUNCIL_SEATS = tuple(f"C{i}" for i in range(1, 13))
 
 
@@ -81,6 +83,7 @@ class ActorRouteRegistry:
         auto: list[str] = []
         coordination_available: list[str] = []
         for seat, spec in (seat_map.get("seats") or {}).items():
+            aliases, alias_prefixes = aliases_for_seat(seat, seat_map)
             p = (presence.get("seats") or {}).get(seat) or {}
             b = (bindings.get("bindings") or {}).get(seat) or {}
             c = _load(self.consumers_path / f"{seat}.json", {})
@@ -106,6 +109,8 @@ class ActorRouteRegistry:
                 "defined": True,
                 "actor_role": spec.get("actor_role"),
                 "instance_role": spec.get("instance_role"),
+                "aliases": aliases,
+                "alias_prefixes": alias_prefixes,
                 "present": present,
                 "presence_state": str(p.get("presence") or "UNKNOWN").upper(),
                 "presence_last_seen": p.get("last_seen"),
@@ -150,7 +155,8 @@ class ActorRouteRegistry:
     def resolve(self, requested: list[str]) -> dict[str, Any]:
         snap = self.snapshot()
         automatic = set(snap["auto_routable"])
-        canonical = self.canonical_seats()
+        seat_map = _load(self.seat_map_path, {"seats": {}})
+        canonical = set((seat_map.get("seats") or {}).keys())
         resolved: list[str] = []
         owner_selected_unbound: list[str] = []
         rejected: list[str] = []
@@ -170,9 +176,11 @@ class ActorRouteRegistry:
                         resolved.append(seat)
                         modes[seat] = "AUTO_LIVE_BOUND_CONSUMER"
                 continue
-            if target not in canonical:
+            resolved_target = canonical_seat(target, seat_map)
+            if resolved_target is None or resolved_target not in canonical:
                 rejected.append(target)
                 continue
+            target = resolved_target
             if target not in resolved:
                 resolved.append(target)
             if target in automatic:

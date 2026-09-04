@@ -99,7 +99,7 @@ def test_council_identity_is_not_conflated_with_live_presence(tmp_path,monkeypat
   "C5":{"name_ar":"RAIOS","actor_role":"RAIOS_LIVE_BRAIN","mail":True}}}),encoding="utf-8")
  monkeypatch.setattr(cc,"MCP_ROOT",root)
  monkeypatch.setattr(cc.CLIENT_ACTIVITY,"snapshot",lambda:{
-  "schema":"raios.client-activity.v3",
+  "schema":"raios.client-activity.v4",
   "clients":[
    {"seat":"C3","actor_role":"CONSULTANT_PEER","presence":"PRESENT","present":True,
     "availability":"AVAILABLE","execution_ready":True,"work_phase":"WAITING_FOR_ASSIGNMENT",

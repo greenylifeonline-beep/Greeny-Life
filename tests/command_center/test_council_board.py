@@ -188,6 +188,27 @@ def test_automatic_dispatch_requires_explicit_c1_authorization(tmp_path):
     assert task["status"]=="READY" and "assigned_to" not in task
 
 
+def test_founder_gated_task_is_prepared_but_not_dispatched_without_c1_decision(tmp_path):
+    board,presence,_=setup(tmp_path);worker=Worker()
+    data=json.loads(board.tasks.read_text(encoding="utf-8"))
+    data["tasks"][1]["requires_c1_decision"]=True
+    data["tasks"][1]["founder_question"]="Approve governed execution?"
+    board.tasks.write_text(json.dumps(data),encoding="utf-8")
+    future=(datetime.now(timezone.utc)+timedelta(minutes=1)).isoformat()
+    presence.write_text(json.dumps({"seats":{"C2":{"presence":"PRESENT",
+        "signature_valid":True,"lease_expires_at":future}}}),encoding="utf-8")
+    out=board.run_cycle(worker)
+    assert out["tasks_dispatched"]==0
+    receipt=json.loads((board.receipts/"COORDINATION-LATEST.receipt.json").read_text(encoding="utf-8"))
+    assert receipt["founder_brief"]["decision_count"]==1
+    with pytest.raises(ValueError,match="FOUNDER_DECISION_REQUIRED"):
+        board.dispatch("NEXT","C2",worker)
+    data=json.loads(board.tasks.read_text(encoding="utf-8"))
+    data["tasks"][1].update(founder_decision_status="APPROVED",founder_decision_by="C1")
+    board.tasks.write_text(json.dumps(data),encoding="utf-8")
+    assert board.dispatch("NEXT","C2",worker)["status"]=="DISPATCHED_PENDING_ACCEPTANCE"
+
+
 def test_dispatch_rejects_unsigned_presence(tmp_path):
     board,presence,_=setup(tmp_path);worker=Worker()
     future=(datetime.now(timezone.utc)+timedelta(minutes=1)).isoformat()

@@ -42,12 +42,13 @@ def test_snapshot_separates_live_activity_from_stale_claim(tmp_path):
     repo = tmp_path / "repo"
     write_json(repo / ".ai-os/state/TASKS.json", {"tasks": [
         {"id": "T-C3", "title": "old", "status": "IN_PROGRESS", "claimed_by": "C3"},
-        {"id": "T-C6", "title": "live", "status": "IN_PROGRESS", "claimed_by": "C6-ACTOR"},
+        {"id": "T-C6", "title": "live", "status": "IN_PROGRESS", "claimed_by": "C6-ACTOR",
+         "dispatch_status": "ACCEPTED"},
     ]})
     view = ClientActivityView(repo, Routes())
     snap = view.snapshot()
     by = {row["seat"]: row for row in snap["clients"]}
-    assert snap["schema"] == "raios.client-activity.v3"
+    assert snap["schema"] == "raios.client-activity.v4"
     assert snap["canonical_coordination_source"] is True
     assert by["C2"]["availability"] == "AVAILABLE"
     assert by["C2"]["execution_ready"] is False
@@ -62,13 +63,17 @@ def test_snapshot_separates_live_activity_from_stale_claim(tmp_path):
     assert by["C6"]["current_tasks"][0]["id"] == "T-C6"
     assert snap["live_notifiable"] == ["C6"]
     assert snap["availability_summary"] == {"AVAILABLE": 1, "BUSY": 1, "OFFLINE": 1, "UNKNOWN": 1}
+    assert snap["work_lifecycle"]["counts"]["ACTIVE_VERIFIED"] == 1
+    assert snap["work_lifecycle"]["counts"]["STALE_CLAIM_REQUIRES_RECONCILIATION"] == 1
+    assert snap["founder_brief"]["prepared_for_founder_return"] is True
 
 
 def test_unified_source_includes_nonseat_actor_worker_and_scope_reservations(tmp_path):
     repo = tmp_path / "repo"
     write_json(repo / ".ai-os/state/TASKS.json", {"tasks": [{
         "id": "SYS-COORD", "title": "coord", "status": "IN_PROGRESS",
-        "claimed_by": "CHATGPT-NORMAL", "scope": ["src/raios/command_center"]
+        "claimed_by": "CHATGPT-NORMAL", "scope": ["src/raios/command_center"],
+        "dispatch_status": "SYSTEM_FIRST_ACTIVE"
     }]})
     write_json(repo / ".ai-os/state/LOCKS.json", {"locks": [{
         "id": "L-SYS", "task_id": "SYS-COORD", "agent": "CHATGPT-NORMAL",

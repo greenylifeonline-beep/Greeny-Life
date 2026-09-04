@@ -5,6 +5,8 @@ from datetime import datetime, timezone
 from pathlib import Path
 from typing import Any
 
+from .coordination_truth import build_founder_brief, build_work_lifecycle, task_claim_is_current
+
 
 def _load(path: Path, default: Any) -> Any:
     try:
@@ -26,12 +28,44 @@ def _current(expiry: str | None) -> bool:
         return False
 
 
-def _matches_actor(task: dict[str, Any], seat: str, actor_id: str | None) -> bool:
-    values = {str(task.get("claimed_by") or ""), str(task.get("assigned_to") or "")}
-    candidates = {seat}
+def _matches_actor(task: dict[str, Any], seat: str, actor_id: str | None,
+                   aliases: list[str] | None = None,
+                   alias_prefixes: list[str] | None = None) -> bool:
+    values = {
+        str(task.get("claimed_by") or "").upper(),
+        str(task.get("assigned_to") or "").upper(),
+    }
+    values.discard("")
+    candidates = {str(seat).upper()}
     if actor_id:
-        candidates.add(actor_id)
-    return bool(values & candidates)
+        candidates.add(str(actor_id).upper())
+    candidates.update(str(x).upper() for x in (aliases or []))
+    if values & candidates:
+        return True
+    return any(value.startswith(str(prefix).upper())
+               for value in values for prefix in (alias_prefixes or []))
+
+
+def _seat_for_actor(actor: str, rows: list[dict[str, Any]]) -> str | None:
+    value = str(actor or "").upper().strip()
+    if not value:
+        return None
+    exact: set[str] = set()
+    prefix: set[str] = set()
+    for row in rows:
+        seat = str(row.get("seat") or "").upper()
+        candidates = {seat, str(row.get("actor_id") or "").upper()}
+        candidates.update(str(x).upper() for x in (row.get("aliases") or []))
+        candidates.discard("")
+        if value in candidates:
+            exact.add(seat)
+        if any(value.startswith(str(p).upper()) for p in (row.get("alias_prefixes") or [])):
+            prefix.add(seat)
+    if len(exact) == 1:
+        return next(iter(exact))
+    if not exact and len(prefix) == 1:
+        return next(iter(prefix))
+    return None
 
 
 class ClientActivityView:
@@ -62,16 +96,23 @@ class ClientActivityView:
         tasks = self._tasks()
         active_locks = [x for x in (_load(self.locks_path, {"locks": []}).get("locks") or [])
                         if str(x.get("status") or "").upper() == "ACTIVE"]
+        route_rows = list(route_snapshot.get("seats", []))
         clients = []
-        for row in route_snapshot.get("seats", []):
+        for row in route_rows:
             seat = str(row.get("seat") or "")
             actor_id = row.get("actor_id")
-            current = [t for t in tasks if t.get("status") in ("IN_PROGRESS", "BLOCKED") and _matches_actor(t, seat, actor_id)]
-            pending = [t for t in tasks if t.get("dispatch_status") == "PENDING_ACCEPTANCE" and _matches_actor(t, seat, actor_id)]
+            matched = [t for t in tasks if
+                       (t.get("status") in ("IN_PROGRESS", "BLOCKED") or
+                        t.get("dispatch_status") == "PENDING_ACCEPTANCE") and
+                       _matches_actor(t, seat, actor_id, row.get("aliases"), row.get("alias_prefixes"))]
+            verified_claims = [t for t in matched if row.get("auto_routable") is True and task_claim_is_current(t)]
+            current = [t for t in verified_claims if t.get("status") in ("IN_PROGRESS", "BLOCKED")]
+            pending = [t for t in verified_claims if t.get("dispatch_status") == "PENDING_ACCEPTANCE"]
+            stale_claims = [t for t in matched if t not in verified_claims]
             last_ack = self._latest_actor_ack(seat)
             if row.get("auto_routable"):
                 state = "ASSIGNED_PENDING_ACCEPTANCE" if pending else ("WORKING" if current else "IDLE")
-            elif current or pending:
+            elif stale_claims:
                 state = "STALE_OR_UNBOUND_CLAIM"
             else:
                 state = "OFFLINE_OR_UNBOUND"
@@ -105,13 +146,15 @@ class ClientActivityView:
                 source = row.get("availability_source") or "AVAILABILITY_ATTESTATION"
                 work_phase = "AVAILABLE_NOT_EXECUTION_READY"
                 required_action = "SIGN_CHECK_IN_WHEN_ASSIGNED_WORK"
-                reason = row.get("availability_reason") or "RECENT_VERIFIED_AVAILABILITY_ATTESTATION"
+                reason = ("CURRENT_AVAILABILITY_SUPERSEDES_LEGACY_UNVERIFIED_CLAIMS"
+                          if stale_claims else
+                          (row.get("availability_reason") or "RECENT_VERIFIED_AVAILABILITY_ATTESTATION"))
                 execution_ready = False
             elif presence_state == "ABSENT":
                 availability = "OFFLINE"
                 verified = row.get("presence_signature_valid") is True
                 source = "SELF_SIGNED_PRESENCE" if verified else "UNVERIFIED_PRESENCE"
-                if current or pending:
+                if stale_claims:
                     work_phase = "STALE_TASK_CLAIM_REQUIRES_RECONCILIATION"
                     required_action = "SYSTEM_RETURN_OR_REASSIGN_FROM_CHECKPOINT"
                     reason = "SIGNED_OUT_BUT_TASK_REFERENCE_REMAINS"
@@ -124,7 +167,7 @@ class ClientActivityView:
                 availability = "UNKNOWN"
                 verified = False
                 source = "INSUFFICIENT_LIVE_EVIDENCE"
-                if current or pending:
+                if stale_claims:
                     work_phase = "STALE_TASK_CLAIM_REQUIRES_RECONCILIATION"
                     required_action = "SIGN_CHECK_IN_OR_SYSTEM_RETURN_TASK_FROM_CHECKPOINT"
                     reason = "TASK_REFERENCE_EXISTS_WITHOUT_CURRENT_SIGNED_BOUND_CONSUMER"
@@ -163,6 +206,13 @@ class ClientActivityView:
                     "claimed_by": t.get("claimed_by"), "assigned_to": t.get("assigned_to"),
                     "scope": list(t.get("scope") or []),
                 } for t in (pending + current)],
+                "stale_task_claims": [{
+                    "id": t.get("id"), "title": t.get("title"),
+                    "status": t.get("status"), "dispatch_status": t.get("dispatch_status"),
+                    "claimed_by": t.get("claimed_by"), "assigned_to": t.get("assigned_to"),
+                    "scope": list(t.get("scope") or []),
+                    "truth_state": "STALE_CLAIM_REQUIRES_RECONCILIATION",
+                } for t in stale_claims],
                 "last_actor_ack": {
                     "message_id": last_ack.get("message_id"),
                     "status": last_ack.get("status"),
@@ -175,6 +225,7 @@ class ClientActivityView:
             key: sum(1 for row in clients if row.get("availability") == key)
             for key in ("AVAILABLE", "BUSY", "OFFLINE", "UNKNOWN")
         }
+        work_lifecycle = build_work_lifecycle(tasks)
         worker_rows = []
         worker_state = _load(self.worker_registry, {"workers": []})
         for worker in worker_state.get("workers", []):
@@ -193,23 +244,63 @@ class ClientActivityView:
         seat_ids = {str(row.get("seat") or "").upper() for row in clients}
         known_workers = {str(row.get("actor_id") or "").upper() for row in worker_rows}
         other_map: dict[str, dict[str, Any]] = {}
+        stale_other_map: dict[str, dict[str, Any]] = {}
         for task in tasks:
             if task.get("status") not in ("IN_PROGRESS", "BLOCKED") and task.get("dispatch_status") != "PENDING_ACCEPTANCE":
                 continue
             actor = str(task.get("claimed_by") or task.get("assigned_to") or "").strip()
-            if not actor or actor.upper() in seat_ids or actor.upper() in known_workers:
+            canonical_owner = _seat_for_actor(actor, route_rows)
+            if not actor or canonical_owner or actor.upper() in known_workers:
                 continue
-            row = other_map.setdefault(actor, {"actor_id": actor, "availability": "BUSY",
-                                               "execution_ready": False, "current_tasks": [],
-                                               "source": "CANONICAL_TASK_LEDGER"})
+            current_truth = task_claim_is_current(task)
+            target_map = other_map if current_truth else stale_other_map
+            row = target_map.setdefault(actor, {
+                "actor_id": actor,
+                "availability": "BUSY" if current_truth else "UNKNOWN",
+                "execution_ready": False,
+                "current_tasks": [],
+                "source": "CANONICAL_TASK_LEDGER",
+                "truth_state": "CURRENT_VERIFIED_CLAIM" if current_truth else "STALE_CLAIM_REQUIRES_RECONCILIATION",
+            })
             row["current_tasks"].append({"id": task.get("id"), "status": task.get("status"),
+                                         "dispatch_status": task.get("dispatch_status"),
                                          "scope": list(task.get("scope") or [])})
+        task_index = {str(t.get("id")): t for t in tasks if t.get("id")}
+        reservations = []
+        for lock in active_locks:
+            task = task_index.get(str(lock.get("task_id") or ""))
+            if task is None:
+                reservation_state = "ORPHAN_LOCK_REQUIRES_RECONCILIATION"
+            elif task_claim_is_current(task):
+                reservation_state = "CURRENT_ACTIVE_RESERVATION"
+            else:
+                reservation_state = "STALE_TASK_LOCK_REQUIRES_RECONCILIATION"
+            reservations.append({
+                "lock_id": lock.get("id"),
+                "task_id": lock.get("task_id"),
+                "actor": lock.get("lease_holder") or lock.get("agent"),
+                "scope": lock.get("scope"),
+                "lock_kind": lock.get("lock_kind"),
+                "owner": lock.get("owner"),
+                "created_at": lock.get("created_at"),
+                "reservation_state": reservation_state,
+            })
+        founder_available = any(
+            row.get("seat") == "C1" and row.get("availability") == "AVAILABLE"
+            for row in clients
+        )
+        founder_brief = build_founder_brief(
+            tasks, founder_available=founder_available,
+            active_scope_reservations=[r for r in reservations
+                                       if r["reservation_state"] == "CURRENT_ACTIVE_RESERVATION"])
         return {
-            "schema": "raios.client-activity.v3",
+            "schema": "raios.client-activity.v4",
             "generated_at": _utc(),
             "canonical_coordination_source": True,
             "canonical_endpoint": "/api/client-activity",
             "availability_summary": availability_summary,
+            "work_lifecycle": work_lifecycle,
+            "founder_brief": founder_brief,
             "all_seats_accounted_for": len(clients) == 12,
             "coordination_notifiable": route_snapshot.get("coordination_available", []),
             "coordination_notifiable_count": route_snapshot.get("coordination_available_count", 0),
@@ -218,18 +309,16 @@ class ClientActivityView:
             "clients": clients,
             "workers": worker_rows,
             "other_active_actors": list(other_map.values()),
-            "active_scope_reservations": [{
-                "lock_id": lock.get("id"),
-                "task_id": lock.get("task_id"),
-                "actor": lock.get("lease_holder") or lock.get("agent"),
-                "scope": lock.get("scope"),
-                "lock_kind": lock.get("lock_kind"),
-                "owner": lock.get("owner"),
-                "created_at": lock.get("created_at"),
-            } for lock in active_locks],
+            "unverified_work_claims": list(stale_other_map.values()),
+            "active_scope_reservations": reservations,
+            "current_scope_reservations": [r for r in reservations
+                                           if r["reservation_state"] == "CURRENT_ACTIVE_RESERVATION"],
+            "stale_scope_reservations": [r for r in reservations
+                                         if r["reservation_state"] != "CURRENT_ACTIVE_RESERVATION"],
             "source_precedence": [
-                "TASKS_AND_LOCKS_FOR_ACTIVE_WORK_AND_SCOPE",
+                "CURRENT_VERIFIED_TASKS_AND_LOCKS_FOR_ACTIVE_WORK_AND_SCOPE",
                 "SIGNED_BOUND_CONSUMER_FOR_EXECUTION_READINESS",
+                "STALE_CLAIMS_ARE_VISIBLE_BUT_NOT_CURRENT_WORK",
                 "CURRENT_AVAILABILITY_ATTESTATION_FOR_COORDINATION_AVAILABILITY",
                 "SIGNED_OUT_FOR_OFFLINE",
                 "UNKNOWN_WHEN_NO_CURRENT_VERIFIED_FACT",
@@ -257,7 +346,9 @@ class ClientActivityView:
                 "AVAILABILITY_NE_EXECUTION_READINESS",
                 "SIGNED_PRESENCE_REQUIRED_FOR_ANY_WORK",
                 "WORKER_ASSIGNMENT_REQUIRED_BEFORE_EXECUTION",
-                "ALL_COORDINATION_READS_USE_CLIENT_ACTIVITY_V3",
+                "ALL_COORDINATION_READS_USE_CLIENT_ACTIVITY_V4",
+                "FOUNDER_BRIEF_ALWAYS_PREPARED",
+                "C1_GATED_DECISIONS_WAIT_WHEN_FOUNDER_OFFLINE",
                 "NEWER_VERIFIED_FACT_SUPERSEDES_OLDER_COORDINATION_FACT",
                 "ONE_ACTIVE_TASK_PER_SEAT", "NO_ACTIVE_SCOPE_OVERLAP",
             ],

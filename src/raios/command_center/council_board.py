@@ -9,14 +9,13 @@ from datetime import datetime, timezone
 from pathlib import Path
 from typing import Any
 
+from .coordination_truth import (
+    aliases_for_seat, build_founder_brief, build_work_lifecycle,
+    canonical_seat, founder_gate_satisfied, task_claim_is_current,
+)
 from .task_actions import TaskActionExecutor
 
 SEATS=tuple(f"C{i}" for i in range(1,13))
-EXECUTION_ALIASES={
- "C1":{"C1"},"C2":{"C2","CURSOR","CODEX"},"C3":{"C3","CHATGPT-MAIN-BRAIN","CHATGPT-PEER"},
- "C4":{"C4","DEEPSEEK","DEEPSEEK-LOCAL"},"C5":{"C5","RAIOS","C5-RUNTIME"},
- "C6":{"C6","CODEX","GITHUB-AGENT"},"C7":{"C7"},"C8":{"C8"},"C9":{"C9"},
- "C10":{"C10"},"C11":{"C11"},"C12":{"C12"}}
 def utc()->str:return datetime.now(timezone.utc).isoformat()
 def load(path:Path,default:Any)->Any:
     try:return json.loads(path.read_text(encoding="utf-8-sig"))
@@ -54,6 +53,7 @@ class CouncilBoard:
     def __init__(self,repo:Path,presence:Path|None=None,routes:Any|None=None):
         self.repo=repo.resolve();self.tasks=self.repo/".ai-os/state/TASKS.json"
         self.locks=self.repo/".ai-os/state/LOCKS.json"
+        self.seat_map_path=self.repo/".ai-os/mcp/SEAT-MAP.json"
         self.presence=(presence or Path.home()/".raios/runtime/council-ops/presence.json").resolve()
         self.presence_prompts=self.presence.parent/"presence-prompts.json"
         self.coordination_cache=self.presence.parent/"coordination-sync-cache.json"
@@ -74,6 +74,15 @@ class CouncilBoard:
         if not expiry:return True
         try:return datetime.fromisoformat(str(expiry).replace("Z","+00:00"))>datetime.now(timezone.utc)
         except (TypeError,ValueError):return False
+    def _seat_map(self)->dict[str,Any]:
+        return load(self.seat_map_path,{"seats":{}})
+    def _canonical_actor(self,actor:str)->str|None:
+        value=str(actor or "").upper()
+        if value in SEATS:return value
+        return canonical_seat(value,self._seat_map())
+    def _seat_aliases(self,seat:str)->set[str]:
+        aliases,_=aliases_for_seat(seat,self._seat_map())
+        return set(aliases)
     def _worker_ready(self,target:str)->bool:
         if not self._live(target):return False
         if self.routes is None:return True
@@ -113,29 +122,44 @@ class CouncilBoard:
         return prompted
     def _publish_coordination_change(self,worker:Any)->int:
         data=load(self.tasks,{"tasks":[]})
-        active=[]
-        for task in data.get("tasks",[]):
-            if (task.get("status") in ("IN_PROGRESS","BLOCKED") or
-                    task.get("dispatch_status") in ("PENDING_ACCEPTANCE","SYSTEM_FIRST_ACTIVE")):
-                active.append({
-                    "task_id":task.get("id"),
-                    "actor":task.get("claimed_by") or task.get("assigned_to"),
-                    "status":task.get("status"),
-                    "dispatch_status":task.get("dispatch_status"),
-                    "scope":self._scopes(task),
-                })
-        locks=[{
-            "lock_id":x.get("id"),"task_id":x.get("task_id"),
-            "actor":x.get("lease_holder") or x.get("agent"),"scope":x.get("scope")
-        } for x in load(self.locks,{"locks":[]}).get("locks",[])
-          if x.get("status")=="ACTIVE"]
+        tasks=list(data.get("tasks",[]))
+        lifecycle=build_work_lifecycle(tasks)
+        active=[{
+            "task_id":row.get("id"),"actor":row.get("actor"),
+            "status":row.get("status"),"dispatch_status":row.get("dispatch_status"),
+            "scope":row.get("scope",[])
+        } for row in lifecycle["buckets"]["ACTIVE_VERIFIED"]]
+        stale=list(lifecycle["buckets"]["STALE_CLAIM_REQUIRES_RECONCILIATION"])
+        task_index={str(t.get("id")):t for t in tasks if t.get("id")}
+        locks=[]
+        for x in load(self.locks,{"locks":[]}).get("locks",[]):
+            if x.get("status")!="ACTIVE":continue
+            task=task_index.get(str(x.get("task_id") or ""))
+            reservation_state=("CURRENT_ACTIVE_RESERVATION"
+                if task is not None and task_claim_is_current(task)
+                else ("ORPHAN_LOCK_REQUIRES_RECONCILIATION" if task is None
+                      else "STALE_TASK_LOCK_REQUIRES_RECONCILIATION"))
+            locks.append({
+                "lock_id":x.get("id"),"task_id":x.get("task_id"),
+                "actor":x.get("lease_holder") or x.get("agent"),
+                "scope":x.get("scope"),"reservation_state":reservation_state,
+            })
+        current_locks=[x for x in locks if x["reservation_state"]=="CURRENT_ACTIVE_RESERVATION"]
         routes=self.routes.snapshot() if self.routes is not None else {}
+        coordination_available=list(routes.get("coordination_available",[]))
+        founder_brief=build_founder_brief(
+            tasks,founder_available="C1" in coordination_available,
+            active_scope_reservations=current_locks)
         payload={
-            "schema":"raios.coordination-state.v1",
+            "schema":"raios.coordination-state.v2",
             "source":"/api/client-activity",
             "active_work":active,
-            "active_scope_reservations":locks,
-            "coordination_available":routes.get("coordination_available",[]),
+            "stale_work_claims":stale,
+            "work_lifecycle":lifecycle,
+            "founder_brief":founder_brief,
+            "active_scope_reservations":current_locks,
+            "stale_scope_reservations":[x for x in locks if x not in current_locks],
+            "coordination_available":coordination_available,
             "execution_ready":routes.get("auto_routable",[]),
         }
         canonical=json.dumps(payload,ensure_ascii=False,sort_keys=True,separators=(",",":"))
@@ -143,17 +167,20 @@ class CouncilBoard:
         old=load(self.coordination_cache,{})
         if old.get("digest")==digest:return 0
         at=utc()
-        receipt={**payload,"schema":"raios.coordination-state-receipt.v1",
+        receipt={**payload,"schema":"raios.coordination-state-receipt.v2",
                  "system_first_at":at,"digest":digest,
                  "truth_owner":"RAIOS_SYSTEM",
-                 "single_coordination_source":True}
+                 "single_coordination_source":True,
+                 "founder_brief_prepared":True}
         atomic(self.receipts/"COORDINATION-LATEST.receipt.json",receipt)
-        targets=list(dict.fromkeys(routes.get("coordination_available",[])))
+        targets=list(dict.fromkeys(coordination_available))
         message_id=None
         if targets:
             compact={
                 "source":"/api/client-activity",
                 "active_work":active,
+                "must_do_next":founder_brief.get("must_do_next",[]),
+                "founder_decisions_required":founder_brief.get("decision_count",0),
                 "execution_ready":routes.get("auto_routable",[]),
             }
             msg=worker.enqueue("RAIOS-WORKER",targets,
@@ -161,8 +188,9 @@ class CouncilBoard:
                 json.dumps(compact,ensure_ascii=False,separators=(",",":")),None)
             message_id=msg.get("message_id")
         atomic(self.coordination_cache,{
-            "schema":"raios.coordination-sync-cache.v1","digest":digest,
-            "updated_at":at,"message_id":message_id,"targets":targets})
+            "schema":"raios.coordination-sync-cache.v2","digest":digest,
+            "updated_at":at,"message_id":message_id,"targets":targets,
+            "founder_available":"C1" in coordination_available})
         return 1
     @staticmethod
     def _scope_overlap(a:str,b:str)->bool:
@@ -202,10 +230,11 @@ class CouncilBoard:
                          "dispatch_id":dispatch_id,"created_at":utc(),
                          "lock_kind":"COUNCIL_TASK_SCOPE"})
         atomic(self.locks,data)
-    def _release_task_locks(self,task_id:str,reason:str)->int:
+    def _release_task_locks(self,task_id:str,reason:str,*,all_kinds:bool=False)->int:
         data=load(self.locks,{"schema_version":"1.0","locks":[]});count=0
         for lock in data.get("locks",[]):
-            if lock.get("status")=="ACTIVE" and lock.get("task_id")==task_id and lock.get("lock_kind")=="COUNCIL_TASK_SCOPE":
+            eligible=all_kinds or lock.get("lock_kind")=="COUNCIL_TASK_SCOPE"
+            if lock.get("status")=="ACTIVE" and lock.get("task_id")==task_id and eligible:
                 lock.update(status="RELEASED",released_at=utc(),release_reason=reason);count+=1
         if count:atomic(self.locks,data)
         return count
@@ -216,8 +245,9 @@ class CouncilBoard:
             if other is task or other.get("id")==task.get("id"):continue
             active=(other.get("status") in ("IN_PROGRESS","BLOCKED") or
                     other.get("dispatch_status")=="PENDING_ACCEPTANCE")
-            if not active:continue
-            owner=str(other.get("claimed_by") or other.get("assigned_to") or "").upper()
+            if not active or not task_claim_is_current(other):continue
+            raw_owner=str(other.get("claimed_by") or other.get("assigned_to") or "").upper()
+            owner=self._canonical_actor(raw_owner) or raw_owner
             if owner==target:
                 conflicts.append({"type":"TARGET_BUSY","task_id":other.get("id"),"owner":owner})
                 continue
@@ -230,15 +260,20 @@ class CouncilBoard:
     def _reconcile_absent_assignments(self,data:dict[str,Any])->int:
         returned=0;release_after=[]
         for task in data.get("tasks",[]):
-            target=str(task.get("assigned_to") or task.get("claimed_by") or "").upper()
+            raw_target=str(task.get("assigned_to") or task.get("claimed_by") or "").upper()
+            target=self._canonical_actor(raw_target)
             modern_states=("PENDING_ACCEPTANCE","ACCEPTED","CHECKPOINT_SAVED",
                            "IN_PROGRESS_REPORTED","BLOCKED_REPORTED")
-            active_seat_claim=(target in SEATS and
-                (task.get("status") in ("IN_PROGRESS","BLOCKED") or
-                 task.get("dispatch_status") in modern_states))
-            if not active_seat_claim or self._worker_ready(target):continue
+            active_claim=(task.get("status") in ("IN_PROGRESS","BLOCKED") or
+                          task.get("dispatch_status") in modern_states)
+            if not active_claim:continue
+            if task_claim_is_current(task):
+                if target is None or self._worker_ready(target):
+                    continue
+            elif target is None and str(task.get("dispatch_status") or "").upper()=="SYSTEM_FIRST_ACTIVE":
+                continue
             legacy_claim=task.get("dispatch_status") not in modern_states
-            task["last_dispatch_target"]=target
+            task["last_dispatch_target"]=target or raw_target
             task["last_dispatch_id"]=task.get("dispatch_id")
             task["last_claimed_by"]=task.get("claimed_by")
             task["dispatch_status"]="RETURNED_ABSENT_WITH_CHECKPOINT"
@@ -267,7 +302,7 @@ class CouncilBoard:
         if returned:
             atomic(self.tasks,data)
             for task_id in release_after:
-                self._release_task_locks(task_id,"TARGET_NOT_LIVE_BOUND_CONSUMER")
+                self._release_task_locks(task_id,"TARGET_NOT_LIVE_BOUND_CONSUMER",all_kinds=True)
         return returned
     def snapshot(self)->dict[str,Any]:
         data=load(self.tasks,{"tasks":[]})
@@ -297,7 +332,7 @@ class CouncilBoard:
                              "completion_evidence_required":True}}
     def _eligible(self,task:dict[str,Any],seat:str)->bool:
         allowed={str(x).upper() for x in task.get("allowed_agents",[])}
-        if allowed and not (allowed & EXECUTION_ALIASES.get(seat,{seat})):return False
+        if allowed and not (allowed & self._seat_aliases(seat)):return False
         required={str(x).upper() for x in task.get("required_capabilities",[]) if str(x).strip()}
         if required:
             row=load(self.presence,{"seats":{}}).get("seats",{}).get(seat,{})
@@ -470,13 +505,18 @@ class CouncilBoard:
     def _auto_dispatch(self,worker:Any)->int:
         data=load(self.tasks,{"tasks":[]});tasks=data.get("tasks",[])
         done={t.get("id") for t in tasks if t.get("status")=="DONE"}
-        busy={str(t.get("claimed_by") or t.get("assigned_to")).upper() for t in tasks
-              if t.get("status") in ("IN_PROGRESS","BLOCKED") or
-              t.get("dispatch_status")=="PENDING_ACCEPTANCE"}
+        busy=set()
+        for t in tasks:
+            active=(t.get("status") in ("IN_PROGRESS","BLOCKED") or
+                    t.get("dispatch_status")=="PENDING_ACCEPTANCE")
+            if not active or not task_claim_is_current(t):continue
+            raw=str(t.get("claimed_by") or t.get("assigned_to") or "").upper()
+            busy.add(self._canonical_actor(raw) or raw)
         dispatched=0
         for task in tasks:
             if (task.get("automatic_dispatch") is not True or
                 task.get("dispatch_authorized_by")!="C1"):continue
+            if not founder_gate_satisfied(task):continue
             if task.get("status")!="READY" or task.get("claimed_by") or task.get("assigned_to"):continue
             if not all(d in done for d in task.get("dependencies",[])):continue
             candidates=[s for s in SEATS if s!="C1" and s not in busy and
@@ -515,6 +555,7 @@ class CouncilBoard:
             task=next((t for t in data.get("tasks",[]) if t.get("id")==task_id),None)
             if not task:raise ValueError("TASK_NOT_FOUND")
             if task.get("status")!="READY":raise ValueError("TASK_NOT_READY_FOR_DISPATCH")
+            if not founder_gate_satisfied(task):raise ValueError("FOUNDER_DECISION_REQUIRED")
             if not self._eligible(task,target):raise ValueError("SEAT_NOT_ALLOWED_FOR_TASK")
             if task.get("claimed_by") not in (None,target):raise ValueError("TASK_ALREADY_CLAIMED")
             conflicts=self._active_conflicts(task,target,data)

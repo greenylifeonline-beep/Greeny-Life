@@ -43,6 +43,24 @@ def test_all_requires_presence_binding_and_live_consumer(tmp_path):
     assert "C12" not in out["targets"]
 
 
+def test_alias_resolution_folds_cursor_and_c2_ag_into_c2(tmp_path):
+    repo = tmp_path / "Greeny-Life"; seatmap = repo / ".ai-os" / "mcp" / "SEAT-MAP.json"
+    seatmap.parent.mkdir(parents=True)
+    seatmap.write_text(json.dumps({"seats": {
+        "C2": {"actor_role": "EXEC", "instance_role": "cursor",
+               "aliases": ["CURSOR", "C2@AG"], "alias_prefixes": ["C2@"]},
+        "C6": {"actor_role": "ESTATE", "instance_role": "c6-runtime",
+               "aliases": ["GITHUB-AGENT"], "alias_prefixes": ["C6@"]},
+    }}), encoding="utf-8")
+    presence = tmp_path / "presence.json"; presence.write_text(json.dumps({"seats": {}}), encoding="utf-8")
+    bindings = tmp_path / "bindings.json"; bindings.write_text(json.dumps({"bindings": {}}), encoding="utf-8")
+    consumers = tmp_path / "consumers"; consumers.mkdir()
+    routes = ActorRouteRegistry(repo, presence_path=presence, bindings_path=bindings, consumers_path=consumers)
+    for alias in ("CURSOR", "C2@AG", "C2@DEVICE"):
+        assert routes.resolve([alias])["targets"] == ["C2"]
+    assert routes.resolve(["CODEX"])["rejected"] == ["CODEX"]
+
+
 def test_bound_without_consumer_is_not_auto_routable(tmp_path):
     repo = tmp_path / "Greeny-Life"; seatmap = repo / ".ai-os" / "mcp" / "SEAT-MAP.json"
     seatmap.parent.mkdir(parents=True)
