@@ -1485,7 +1485,9 @@
         "src/raios/command_center/actor_routing.py",
         "tests/command_center/test_actor_routing.py",
         "src/raios/command_center/message_worker.py",
-        "tests/command_center/test_message_worker.py"
+        "tests/command_center/test_message_worker.py",
+        "src/raios/command_center/task_actions.py",
+        "tests/command_center/test_task_actions.py"
       ],
       "dependencies": [],
       "allowed_agents": [
@@ -1505,7 +1507,7 @@
         "at": "2026-09-04T04:40:21.857960+00:00"
       },
       "started_at": "2026-09-04T04:40:21.857960+00:00",
-      "updated_at": "2026-09-05T00:26:48.512185+00:00"
+      "updated_at": "2026-09-05T02:25:05.419560+00:00"
     },
     {
       "id": "RAIOS-CAPABILITY-GRAPH-202610-01",
@@ -2220,7 +2222,9 @@
         "intelligence/knowledge_base/assimilated",
         "RAIOS/V9/runtime/a13_agent_capability_dedup_certification.py"
       ],
-      "dependencies": [],
+      "dependencies": [
+        "RAIOS-DEEP-LEGACY-FORENSIC-CENSUS-202609-01"
+      ],
       "allowed_agents": [
         "C2",
         "C6"
@@ -2329,7 +2333,7 @@
           "fit": "SECONDARY_OR_RECONCILIATION"
         }
       },
-      "updated_at": "2026-09-05T02:18:25.144287+00:00",
+      "updated_at": "2026-09-05T02:28:14.948395+00:00",
       "dispatch_status": "RETURNED_ABSENT_WITH_CHECKPOINT",
       "system_owner": "RAIOS_SYSTEM",
       "acceptance_fingerprint": "ffdc24708543729f847dd24699b4c229d7b206f0a7d164aa6aeb2f1a5a2003b9",
@@ -2410,7 +2414,60 @@
           },
           "reason": "CURSOR_PRODUCT_FEATURE_GATE_FALSE_AND_USER_SETTING_FALSE_NO_LIVE_EXECUTOR_BRIDGE"
         }
-      }
+      },
+      "phase1_deterministic_census_task": "RAIOS-DEEP-LEGACY-FORENSIC-CENSUS-202609-01",
+      "phase1_required_before_semantic_reconciliation": true
+    },
+    {
+      "id": "RAIOS-DEEP-LEGACY-FORENSIC-CENSUS-202609-01",
+      "title": "Deep legacy forensic Phase-1 deterministic census and lineage",
+      "objective": "Run the existing RAIOS deterministic system action to inventory the canonical current tree, Git refs/history/objects, master estate evidence, A13 dedup evidence, assimilated capability manifests, and canonical knowledge/legacy-data reports. Produce hashes, lineage, domain/cognitive candidates and data/schema/knowledge census without reading the retired Repair tree and without deleting, moving, editing, checking out, resetting or cleaning source assets.",
+      "scope": [
+        ".ai-os/reports/deep-legacy-forensic/2026-09/RAIOS-DEEP-LEGACY-FORENSIC-CENSUS-202609-01"
+      ],
+      "read_surfaces": [
+        "CURRENT_CANONICAL_TREE",
+        "CANONICAL_GIT_HISTORY_AND_REFS",
+        ".ai-os/reports/master-estate-census",
+        "RAIOS/V9/agents/a13",
+        "intelligence/knowledge_base/assimilated",
+        "canonical/KNOWLEDGE-BASE",
+        "canonical/legacy-data"
+      ],
+      "forbidden_read_surfaces": [
+        "RETIRED_GREENY_LIFE_REPAIR_TREE"
+      ],
+      "dependencies": [],
+      "allowed_agents": [],
+      "status": "READY",
+      "claimed_by": null,
+      "assigned_to": null,
+      "automation_action": "DEEP_LEGACY_FORENSIC_CENSUS",
+      "system_action_only": true,
+      "automatic_dispatch": false,
+      "dispatch_authorized_by": "C1",
+      "authorized_by": "C1",
+      "authorization_source": "DIRECT_ACTIVE_CHAT_SESSION",
+      "destructive_action_requested": false,
+      "source_mutation_allowed": false,
+      "scheduler_priority": "CRITICAL",
+      "program_id": "RAIOS-CAPABILITY-EVOLUTION-202609-202703",
+      "target_month": "2026-09",
+      "milestone": "CANONICAL_TRUTH_AND_CRITICAL_RECOVERY",
+      "hard_not_before": false,
+      "acceleration_allowed": true,
+      "required_outputs": [
+        "00-SURFACE-CENSUS.json",
+        "01-CURRENT-HASH-MANIFEST.json",
+        "02-GIT-HISTORY-LINEAGE.json",
+        "03-LEGACY-CAPABILITY-CANDIDATES.json",
+        "04-DATA-SCHEMA-KNOWLEDGE-CENSUS.json",
+        "05-EXISTING-EVIDENCE-INVENTORY.json",
+        "DELETE-ELIGIBILITY-REPORT.json",
+        "PHASE1-FORENSIC-EVIDENCE.json"
+      ],
+      "validation": "Deterministic read-only evidence exists; current tracked files and Git lineage inventoried; old commercial/domain candidates surfaced; retired Repair tree not read; DELETE decision remains DENY; safe_to_remove_source=false; full forensic audit remains incomplete.",
+      "created_at": "2026-09-05T02:28:14.948395+00:00"
     }
   ],
   "programs": [
@@ -2494,6 +2551,7 @@
           "month": "2026-09",
           "milestone": "CANONICAL_TRUTH_AND_CRITICAL_RECOVERY",
           "tasks": [
+            "RAIOS-DEEP-LEGACY-FORENSIC-CENSUS-202609-01",
             "RAIOS-DEEP-LEGACY-FORENSIC-AUDIT-202609-01",
             "GL-002",
             "GL-003",
@@ -2658,7 +2716,7 @@
         ]
       },
       "success_definition": "COMPLETE_OBJECTIVES_AS_EARLY_AS_SAFELY_POSSIBLE_WITH_MACHINE_VERIFIABLE_EVIDENCE",
-      "updated_at": "2026-09-04T21:49:15.938276+00:00",
+      "updated_at": "2026-09-05T02:28:14.948395+00:00",
       "legacy_cognitive_asset_policy": {
         "enabled": true,
         "purpose": "RECOVER_CAPABILITIES_NOT_OLD_ARCHITECTURE",
@@ -2830,6 +2888,6 @@
       ]
     }
   ],
-  "roadmap_updated_at": "2026-09-04T21:49:15.938276+00:00",
+  "roadmap_updated_at": "2026-09-05T02:28:14.948395+00:00",
   "active_program_id": "RAIOS-CAPABILITY-EVOLUTION-202609-202703"
 }
