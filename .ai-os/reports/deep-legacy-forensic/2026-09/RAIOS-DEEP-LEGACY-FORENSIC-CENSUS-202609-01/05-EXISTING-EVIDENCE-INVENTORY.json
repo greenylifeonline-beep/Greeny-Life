@@ -1,0 +1,946 @@
+{
+  "schema": "raios.deep-legacy-forensic.existing-evidence.v1",
+  "generated_at": "2026-09-05T02:56:51.282338+00:00",
+  "roots": [
+    ".ai-os/reports/master-estate-census",
+    "RAIOS/V9/agents/a13",
+    "intelligence/knowledge_base/assimilated",
+    "canonical/KNOWLEDGE-BASE",
+    "canonical/legacy-data"
+  ],
+  "missing_roots": [],
+  "files": [
+    {
+      "path": ".ai-os/reports/master-estate-census/RAIOS-TOTAL-ESTATE-PHASE1-01-20260826T1853Z/00-ACTOR-ACCESS-MATRIX.json",
+      "bytes": 2916,
+      "sha256": "d4009618289d4329a239c05e7973ada8ce6177a5b5be7e6fbd4fa65b8f30f063",
+      "domain_hits": []
+    },
+    {
+      "path": ".ai-os/reports/master-estate-census/RAIOS-TOTAL-ESTATE-PHASE1-01-20260826T1853Z/01-MASTER-SURFACE-REGISTRY.json",
+      "bytes": 9604,
+      "sha256": "2d1616d4ae21e1e6f48c0f5e22ecead6f5080ceb06b18de5d2d95deeb09ff5f1",
+      "domain_hits": []
+    },
+    {
+      "path": ".ai-os/reports/master-estate-census/RAIOS-TOTAL-ESTATE-PHASE1-01-20260826T1853Z/02-MASTER-GIT-ESTATE.json",
+      "bytes": 2931,
+      "sha256": "1d47716ae2ccbce1b9287570d81ebf904c64f7e6d9ccd5074bdb0a63de77cccd",
+      "domain_hits": []
+    },
+    {
+      "path": ".ai-os/reports/master-estate-census/RAIOS-TOTAL-ESTATE-PHASE1-01-20260826T1853Z/03-MASTER-CLOUD-LOCAL-MATRIX.json",
+      "bytes": 2305,
+      "sha256": "332acb385646f792e5e296616ee1c805c9745576a56de6ba9c8acaea68800802",
+      "domain_hits": []
+    },
+    {
+      "path": ".ai-os/reports/master-estate-census/RAIOS-TOTAL-ESTATE-PHASE1-01-20260826T1853Z/04-MASTER-ARCHIVE-INDEX.json",
+      "bytes": 1187,
+      "sha256": "d4f0ee5813dd0c7b3749c73caf15d2eeb7f4a8e751b5c8618011ab564e2273a2",
+      "domain_hits": []
+    },
+    {
+      "path": ".ai-os/reports/master-estate-census/RAIOS-TOTAL-ESTATE-PHASE1-01-20260826T1853Z/05-MASTER-ENGINE-TOOL-AGENT-CATALOG.json",
+      "bytes": 951,
+      "sha256": "e0e22a07da9201674f0c90ef283193a70683db210e683d56e7d066bf2bbd86d8",
+      "domain_hits": [
+        "agent"
+      ]
+    },
+    {
+      "path": ".ai-os/reports/master-estate-census/RAIOS-TOTAL-ESTATE-PHASE1-01-20260826T1853Z/06-MASTER-MODEL-CATALOG.json",
+      "bytes": 484,
+      "sha256": "3c6d32e33e2dc933ae1d11e0943d4e91ee26caca12a6db7ae92f85b561671cb3",
+      "domain_hits": [
+        "model"
+      ]
+    },
+    {
+      "path": ".ai-os/reports/master-estate-census/RAIOS-TOTAL-ESTATE-PHASE1-01-20260826T1853Z/07-MASTER-KNOWLEDGE-BRAIN-CATALOG.json",
+      "bytes": 671,
+      "sha256": "dcf05c22ba0faa17ca13660faa20a03d046d56a59e945d0a1771fba715f383d8",
+      "domain_hits": [
+        "brain",
+        "knowledge"
+      ]
+    },
+    {
+      "path": ".ai-os/reports/master-estate-census/RAIOS-TOTAL-ESTATE-PHASE1-01-20260826T1853Z/08-MASTER-DOCUMENT-SPEC-IDEA-CATALOG.json",
+      "bytes": 624,
+      "sha256": "ac09c7260486b0c4b0d68e88e80c7cd98870875e806c4e082051e5222272c194",
+      "domain_hits": []
+    },
+    {
+      "path": ".ai-os/reports/master-estate-census/RAIOS-TOTAL-ESTATE-PHASE1-01-20260826T1853Z/09-MASTER-BUSINESS-ASSET-CATALOG.json",
+      "bytes": 693,
+      "sha256": "f32d6fdbbb3206f57d37573cb1803453f58b30c03e8e14d5fb44f28101b0ef09",
+      "domain_hits": [
+        "business"
+      ]
+    },
+    {
+      "path": ".ai-os/reports/master-estate-census/RAIOS-TOTAL-ESTATE-PHASE1-01-20260826T1853Z/10-MASTER-CAPABILITY-GRAPH.json",
+      "bytes": 739,
+      "sha256": "60940c4ada891a1b77a295c710a78eb6a1d50cbcb23e32f718f3769c9f46e222",
+      "domain_hits": []
+    },
+    {
+      "path": ".ai-os/reports/master-estate-census/RAIOS-TOTAL-ESTATE-PHASE1-01-20260826T1853Z/11-MASTER-LINEAGE-GRAPH.json",
+      "bytes": 888,
+      "sha256": "d85db03422f03fde47d7b5fc6417e0c0e78921cb1db701a13d11abe2573a46bf",
+      "domain_hits": []
+    },
+    {
+      "path": ".ai-os/reports/master-estate-census/RAIOS-TOTAL-ESTATE-PHASE1-01-20260826T1853Z/12-MASTER-DUPLICATE-MATRIX.json",
+      "bytes": 519,
+      "sha256": "ef3e24cc994346c2745a893f5a7183e17e4b4ce4fef64c8e3b611e70da499e6f",
+      "domain_hits": []
+    },
+    {
+      "path": ".ai-os/reports/master-estate-census/RAIOS-TOTAL-ESTATE-PHASE1-01-20260826T1853Z/13-MASTER-COMPOSITION-OPPORTUNITIES.json",
+      "bytes": 779,
+      "sha256": "27bbf49546b7bfb291dd9d23acdf10aa7fabffb2cc16054a02e2187b33f89831",
+      "domain_hits": []
+    },
+    {
+      "path": ".ai-os/reports/master-estate-census/RAIOS-TOTAL-ESTATE-PHASE1-01-20260826T1853Z/14-MASTER-RUNTIME-MAP.json",
+      "bytes": 508,
+      "sha256": "215777218a13b5f900ab701435139cc768add691c88be4255b36730e145958e4",
+      "domain_hits": []
+    },
+    {
+      "path": ".ai-os/reports/master-estate-census/RAIOS-TOTAL-ESTATE-PHASE1-01-20260826T1853Z/15-MASTER-UNRESOLVED-REGISTER.json",
+      "bytes": 896,
+      "sha256": "c59976edd5f3ab9b4ba4493c2aae4648cb01cab9de0e5f5242412a8a584d8448",
+      "domain_hits": []
+    },
+    {
+      "path": ".ai-os/reports/master-estate-census/RAIOS-TOTAL-ESTATE-PHASE1-01-20260826T1853Z/16-MASTER-REUSE-ARCHIVE-DELETE-PLAN.json",
+      "bytes": 526,
+      "sha256": "ba81092148e836c3a26e14cdf2466b0d7643f1a323d893ce9fe16ae94db70da7",
+      "domain_hits": []
+    },
+    {
+      "path": ".ai-os/reports/master-estate-census/RAIOS-TOTAL-ESTATE-PHASE1-01-20260826T1853Z/17-MASTER-COVERAGE-PROOF.json",
+      "bytes": 1505,
+      "sha256": "b907330b2c254cf77d1f7a49b59c338e82d13ef26f0e5fae7e96279031f14bb1",
+      "domain_hits": []
+    },
+    {
+      "path": ".ai-os/reports/master-estate-census/RAIOS-TOTAL-ESTATE-PHASE1-01-20260826T1853Z/18-RAIOS-ESTATE-AS-IS.md",
+      "bytes": 1425,
+      "sha256": "9b84ecade78299956a583212c8f944399fdd87eba43e56e60901444b2e004326",
+      "domain_hits": []
+    },
+    {
+      "path": ".ai-os/reports/master-estate-census/RAIOS-TOTAL-ESTATE-PHASE1-01-20260826T1853Z/19-C1-DECISION-BRIEF.md",
+      "bytes": 986,
+      "sha256": "6f4af12a6f3180b01d9b3a5abfb2aacea3c4617950ee6e0979ddc74adb9ed55d",
+      "domain_hits": []
+    },
+    {
+      "path": ".ai-os/reports/master-estate-census/RAIOS-TOTAL-ESTATE-PHASE1-01-20260826T1853Z/FILES-SHA256.txt",
+      "bytes": 2539,
+      "sha256": "93a9a56223f84a41a1f3409c41902a7f9bb2f635ffaec9343c172550ca973ffa",
+      "domain_hits": []
+    },
+    {
+      "path": ".ai-os/reports/master-estate-census/RAIOS-TOTAL-ESTATE-PHASE1-01-20260826T1853Z/cloud/kaggle/KAGGLE-DATASET-INDEX.json",
+      "bytes": 112,
+      "sha256": "fbea9cc71e82048399aa414eed848ba95a51e11d9f3411d325af37c2f2c14aff",
+      "domain_hits": []
+    },
+    {
+      "path": ".ai-os/reports/master-estate-census/RAIOS-TOTAL-ESTATE-PHASE1-01-20260826T1853Z/cloud/kaggle/KAGGLE-GIT-MATRIX.json",
+      "bytes": 933,
+      "sha256": "b3efc897d5139ee14205017ac9ff24cf050c1712933f19b12b9fe28c7a549f9a",
+      "domain_hits": []
+    },
+    {
+      "path": ".ai-os/reports/master-estate-census/RAIOS-TOTAL-ESTATE-PHASE1-01-20260826T1853Z/cloud/kaggle/KAGGLE-NOTEBOOK-VERSION-INDEX.json",
+      "bytes": 527,
+      "sha256": "f9933904f35b44c3c5369758df19dee9ace926a813af510209704cd9441239e9",
+      "domain_hits": []
+    },
+    {
+      "path": ".ai-os/reports/master-estate-census/RAIOS-TOTAL-ESTATE-PHASE1-01-20260826T1853Z/cloud/kaggle/KAGGLE-OUTPUT-MODEL-INDEX.json",
+      "bytes": 201,
+      "sha256": "22768d449f2f365e8d7a42bdd6de1f222217886b45e2c2996e57c3d03b67de2f",
+      "domain_hits": [
+        "model"
+      ]
+    },
+    {
+      "path": ".ai-os/reports/master-estate-census/RAIOS-TOTAL-ESTATE-PHASE1-01-20260826T1853Z/cloud/kaggle/KAGGLE-SURFACE-CENSUS.json",
+      "bytes": 750,
+      "sha256": "5a3eafa0d6cdc092f9577afb1d7b147933fe48973524c5257580206f22483491",
+      "domain_hits": []
+    },
+    {
+      "path": ".ai-os/reports/master-estate-census/RAIOS-TOTAL-ESTATE-PHASE1-01-20260826T1853Z/local/C3-REVIEW-COVER.md",
+      "bytes": 5793,
+      "sha256": "1f61025624a106b588b0e6ae723bfdb2f93fa86337ec4724af81e940015c36a1",
+      "domain_hits": []
+    },
+    {
+      "path": ".ai-os/reports/master-estate-census/RAIOS-TOTAL-ESTATE-PHASE1-01-20260826T185525Z/00-ACTOR-ACCESS-MATRIX.json",
+      "bytes": 3682,
+      "sha256": "0e4509aac30fd0fc2a9ef2bed0a358287e2c8d6dc84949023a9fc6d2c6e53246",
+      "domain_hits": []
+    },
+    {
+      "path": ".ai-os/reports/master-estate-census/RAIOS-TOTAL-ESTATE-PHASE1-01-20260826T185525Z/01-MASTER-SURFACE-REGISTRY.json",
+      "bytes": 45689,
+      "sha256": "5fa999df3bb7a94508929bb621c22fc67d382aaa803b64a6e5d99841df7887f3",
+      "domain_hits": []
+    },
+    {
+      "path": ".ai-os/reports/master-estate-census/RAIOS-TOTAL-ESTATE-PHASE1-01-20260826T185525Z/02-MASTER-GIT-ESTATE.json",
+      "bytes": 3861,
+      "sha256": "b8e1949f96bd1087ad6ca72bed835d9f3101e7f35bda0962d42d9a13820d9c7a",
+      "domain_hits": []
+    },
+    {
+      "path": ".ai-os/reports/master-estate-census/RAIOS-TOTAL-ESTATE-PHASE1-01-20260826T185525Z/03-MASTER-CLOUD-LOCAL-MATRIX.json",
+      "bytes": 2376,
+      "sha256": "bd61e92122eca4c284636d6b15bcb51b3a9f5b8589953b151f9ce8d9a0f6b05d",
+      "domain_hits": []
+    },
+    {
+      "path": ".ai-os/reports/master-estate-census/RAIOS-TOTAL-ESTATE-PHASE1-01-20260826T185525Z/04-MASTER-ARCHIVE-INDEX.json",
+      "bytes": 4147,
+      "sha256": "37db80e04035d901db75478c27333370cd2bc885f36d593887527a794bb99aae",
+      "domain_hits": []
+    },
+    {
+      "path": ".ai-os/reports/master-estate-census/RAIOS-TOTAL-ESTATE-PHASE1-01-20260826T185525Z/05-MASTER-ENGINE-TOOL-AGENT-CATALOG.json",
+      "bytes": 5606,
+      "sha256": "cb006baecc9c32f14a53c5bc43075a17b4baa0ce076ca8dd81cae1f4305e6921",
+      "domain_hits": [
+        "agent"
+      ]
+    },
+    {
+      "path": ".ai-os/reports/master-estate-census/RAIOS-TOTAL-ESTATE-PHASE1-01-20260826T185525Z/06-MASTER-MODEL-CATALOG.json",
+      "bytes": 6945,
+      "sha256": "d9a4e84c4906e771cedcb1083b3e83403f0c6e840d9e16c0af55fc18b9592b2e",
+      "domain_hits": [
+        "model"
+      ]
+    },
+    {
+      "path": ".ai-os/reports/master-estate-census/RAIOS-TOTAL-ESTATE-PHASE1-01-20260826T185525Z/07-MASTER-KNOWLEDGE-BRAIN-CATALOG.json",
+      "bytes": 2347,
+      "sha256": "a2240b1de6f4d43da84112f0ef5346b332f5130a389e44eeaa539c4da6260484",
+      "domain_hits": [
+        "brain",
+        "knowledge"
+      ]
+    },
+    {
+      "path": ".ai-os/reports/master-estate-census/RAIOS-TOTAL-ESTATE-PHASE1-01-20260826T185525Z/08-MASTER-DOCUMENT-SPEC-IDEA-CATALOG.json",
+      "bytes": 1237,
+      "sha256": "9b88ac729612fde9c2f5fead2bac4a34c90eb8fa156eaf3033a02cf5eac95ff4",
+      "domain_hits": []
+    },
+    {
+      "path": ".ai-os/reports/master-estate-census/RAIOS-TOTAL-ESTATE-PHASE1-01-20260826T185525Z/09-MASTER-BUSINESS-ASSET-CATALOG.json",
+      "bytes": 1314,
+      "sha256": "6e68e23a9f744720cda97499d4ad07ab03a8f60e5c90b137f7e93ffdb7b77631",
+      "domain_hits": [
+        "business"
+      ]
+    },
+    {
+      "path": ".ai-os/reports/master-estate-census/RAIOS-TOTAL-ESTATE-PHASE1-01-20260826T185525Z/10-MASTER-CAPABILITY-GRAPH.json",
+      "bytes": 3637,
+      "sha256": "cc64f3397c8d76bb3c9e8097ceb1e8b5db37632b15bb9e0aedd6d47ed2e29bd3",
+      "domain_hits": []
+    },
+    {
+      "path": ".ai-os/reports/master-estate-census/RAIOS-TOTAL-ESTATE-PHASE1-01-20260826T185525Z/11-MASTER-LINEAGE-GRAPH.json",
+      "bytes": 1472,
+      "sha256": "1c2cd12a1f20fd6778d90e38ecd159cec0d3c7795f2db83ba346886655b7d3f9",
+      "domain_hits": []
+    },
+    {
+      "path": ".ai-os/reports/master-estate-census/RAIOS-TOTAL-ESTATE-PHASE1-01-20260826T185525Z/12-MASTER-DUPLICATE-MATRIX.json",
+      "bytes": 978,
+      "sha256": "0b7c85da0e6d8b9b7b544cc39e14c8fd2a968e0054ad2fd2dafa91a6472c7deb",
+      "domain_hits": []
+    },
+    {
+      "path": ".ai-os/reports/master-estate-census/RAIOS-TOTAL-ESTATE-PHASE1-01-20260826T185525Z/13-MASTER-COMPOSITION-OPPORTUNITIES.json",
+      "bytes": 1024,
+      "sha256": "d0aba7c0e6447a42d722112b96144e6b7fb95e26b9e4d15578b385f190ceec79",
+      "domain_hits": []
+    },
+    {
+      "path": ".ai-os/reports/master-estate-census/RAIOS-TOTAL-ESTATE-PHASE1-01-20260826T185525Z/14-MASTER-RUNTIME-MAP.json",
+      "bytes": 7182,
+      "sha256": "b77dd5d413f9f0bf086b56e1a5fe3e7e17a819253110eb5ee9e92c614f9573a2",
+      "domain_hits": []
+    },
+    {
+      "path": ".ai-os/reports/master-estate-census/RAIOS-TOTAL-ESTATE-PHASE1-01-20260826T185525Z/15-MASTER-UNRESOLVED-REGISTER.json",
+      "bytes": 3707,
+      "sha256": "f3faa3171c198827e5eeef846a6bb5de56f87c07a65ccddaa58a533ad3c22e08",
+      "domain_hits": []
+    },
+    {
+      "path": ".ai-os/reports/master-estate-census/RAIOS-TOTAL-ESTATE-PHASE1-01-20260826T185525Z/16-MASTER-REUSE-ARCHIVE-DELETE-PLAN.json",
+      "bytes": 1122,
+      "sha256": "509019635404b9c7b56f5fcfebde9b1b1b510f4d4e8427333f84e20af367aa55",
+      "domain_hits": []
+    },
+    {
+      "path": ".ai-os/reports/master-estate-census/RAIOS-TOTAL-ESTATE-PHASE1-01-20260826T185525Z/17-MASTER-COVERAGE-PROOF.json",
+      "bytes": 2196,
+      "sha256": "efef7ab6b09346b84080b55c7161bab1a822c1af634e50cc833436b494432cc9",
+      "domain_hits": []
+    },
+    {
+      "path": ".ai-os/reports/master-estate-census/RAIOS-TOTAL-ESTATE-PHASE1-01-20260826T185525Z/18-RAIOS-ESTATE-AS-IS.md",
+      "bytes": 2719,
+      "sha256": "33f70bd4f917bc5a95dbc95b3c35cb7dd2ef85da77084a80bd6fdfbf4d59b733",
+      "domain_hits": []
+    },
+    {
+      "path": ".ai-os/reports/master-estate-census/RAIOS-TOTAL-ESTATE-PHASE1-01-20260826T185525Z/19-C1-DECISION-BRIEF.md",
+      "bytes": 2197,
+      "sha256": "c46ebb9933b41ca56ac1a57679b0c9cdf0586f6a2555f42792ec2552905e56c9",
+      "domain_hits": []
+    },
+    {
+      "path": ".ai-os/reports/master-estate-census/RAIOS-TOTAL-ESTATE-PHASE1-01-20260826T185525Z/FILES-SHA256.txt",
+      "bytes": 4883,
+      "sha256": "9e7314ec4c25f6ccc9f12f9f46cbaf838874601690423d6d4c88baf9ad204d88",
+      "domain_hits": []
+    },
+    {
+      "path": ".ai-os/reports/master-estate-census/RAIOS-TOTAL-ESTATE-PHASE1-01-20260826T185525Z/PHASE1-02-CLOSEOUT.json",
+      "bytes": 3108,
+      "sha256": "3cb9a362309566ae713229fc7636a55ab2d90a6ccc8026ca9d60d0d57357e067",
+      "domain_hits": []
+    },
+    {
+      "path": ".ai-os/reports/master-estate-census/RAIOS-TOTAL-ESTATE-PHASE1-01-20260826T185525Z/TOOL-STATIC-CLASSIFICATION.json",
+      "bytes": 2181,
+      "sha256": "48d6fddef5d3416b05ae7879f8730c81e8f88637e6713721017aa754af69d001",
+      "domain_hits": []
+    },
+    {
+      "path": ".ai-os/reports/master-estate-census/RAIOS-TOTAL-ESTATE-PHASE1-01-20260826T185525Z/c6-reconciliation/C6-HANDOFF-RECONCILIATION.json",
+      "bytes": 1162,
+      "sha256": "e831f4be0012d6102a309f2285d48269e94caea522651a213968428a8e9c3b9a",
+      "domain_hits": []
+    },
+    {
+      "path": ".ai-os/reports/master-estate-census/RAIOS-TOTAL-ESTATE-PHASE1-01-20260826T185525Z/c6-reconciliation/PENDING.json",
+      "bytes": 356,
+      "sha256": "a46d41e8996762fcd7cd64ab4d7a5033070173af5728504e1697c340ac995dc6",
+      "domain_hits": []
+    },
+    {
+      "path": ".ai-os/reports/master-estate-census/RAIOS-TOTAL-ESTATE-PHASE1-01-20260826T185525Z/cloud/01-github.json",
+      "bytes": 417,
+      "sha256": "b89840e40c530db21a6628a1bdc348f7d3717e2c4d6dafc4a267c7af349cfbeb",
+      "domain_hits": []
+    },
+    {
+      "path": ".ai-os/reports/master-estate-census/RAIOS-TOTAL-ESTATE-PHASE1-01-20260826T185525Z/cloud/CLOUD-SCOPE-MATRIX.json",
+      "bytes": 1130,
+      "sha256": "31af323f06f3ea526739513649fdd9e44e77912371166cc851a65dd482f8d4d5",
+      "domain_hits": []
+    },
+    {
+      "path": ".ai-os/reports/master-estate-census/RAIOS-TOTAL-ESTATE-PHASE1-01-20260826T185525Z/cloud/kaggle/C1-KAGGLE-UI-OBSERVATION.json",
+      "bytes": 2255,
+      "sha256": "efa0abca846963b7648e74a3fffcf658b0a1d241c0854547d2222004790df4ec",
+      "domain_hits": []
+    },
+    {
+      "path": ".ai-os/reports/master-estate-census/RAIOS-TOTAL-ESTATE-PHASE1-01-20260826T185525Z/cloud/kaggle/JSON-STRICT-PARSE.json",
+      "bytes": 839,
+      "sha256": "66a47e53ecbd78c8c01e4b0b221741917f5fb13dbdf2390dbf5d1b355c3b5a6b",
+      "domain_hits": []
+    },
+    {
+      "path": ".ai-os/reports/master-estate-census/RAIOS-TOTAL-ESTATE-PHASE1-01-20260826T185525Z/cloud/kaggle/KAGGLE-BINDING.json",
+      "bytes": 3332,
+      "sha256": "1f6497a62bf2b2699fe79ed388ee8074d0fcc390b23bd5f63d3a8b27e8a16a70",
+      "domain_hits": []
+    },
+    {
+      "path": ".ai-os/reports/master-estate-census/RAIOS-TOTAL-ESTATE-PHASE1-01-20260826T185525Z/cloud/kaggle/KAGGLE-C1-UI-OBSERVATION.json",
+      "bytes": 277,
+      "sha256": "13cc71176219cd04f66c7a50ae9fbf964a2f4e2476d6862d8250cbf12509eb45",
+      "domain_hits": []
+    },
+    {
+      "path": ".ai-os/reports/master-estate-census/RAIOS-TOTAL-ESTATE-PHASE1-01-20260826T185525Z/cloud/kaggle/KAGGLE-COGNITIVE-HERITAGE-RECONCILIATION.json",
+      "bytes": 7402,
+      "sha256": "f9a6cf98826f63387fed52fa886c6e8292cc4b89f1ddd3962d73d61eca1e849c",
+      "domain_hits": []
+    },
+    {
+      "path": ".ai-os/reports/master-estate-census/RAIOS-TOTAL-ESTATE-PHASE1-01-20260826T185525Z/cloud/kaggle/KAGGLE-DATASET-ASSETS.json",
+      "bytes": 2768,
+      "sha256": "7d19454b3e21b19ee2151b80931d49f7f871bb73339cf42fa5312c77aed08d70",
+      "domain_hits": []
+    },
+    {
+      "path": ".ai-os/reports/master-estate-census/RAIOS-TOTAL-ESTATE-PHASE1-01-20260826T185525Z/cloud/kaggle/KAGGLE-DATASET-INDEX.json",
+      "bytes": 233,
+      "sha256": "cd884859f31356f6efe75cbeffd10645e30eab0a111bd9d2a5587e0f77b10218",
+      "domain_hits": []
+    },
+    {
+      "path": ".ai-os/reports/master-estate-census/RAIOS-TOTAL-ESTATE-PHASE1-01-20260826T185525Z/cloud/kaggle/KAGGLE-GIT-MATRIX.json",
+      "bytes": 1583,
+      "sha256": "0ba4a8c5750a612d538cff0efb63158f24c1257c03309f09dc29856d7952740f",
+      "domain_hits": []
+    },
+    {
+      "path": ".ai-os/reports/master-estate-census/RAIOS-TOTAL-ESTATE-PHASE1-01-20260826T185525Z/cloud/kaggle/KAGGLE-NB-DECISION-01-CLOSEOUT.json",
+      "bytes": 1844,
+      "sha256": "3896aadd244e6e37255d6d56721ecdf27b5ef6387009e37e7eb01ccc63af4abe",
+      "domain_hits": []
+    },
+    {
+      "path": ".ai-os/reports/master-estate-census/RAIOS-TOTAL-ESTATE-PHASE1-01-20260826T185525Z/cloud/kaggle/KAGGLE-NB-DECISION-01.json",
+      "bytes": 7554,
+      "sha256": "d91b7ec6205f49dfef1e3109fbfcc76a755c275cd4ca1198cdd5c208986fe765",
+      "domain_hits": []
+    },
+    {
+      "path": ".ai-os/reports/master-estate-census/RAIOS-TOTAL-ESTATE-PHASE1-01-20260826T185525Z/cloud/kaggle/KAGGLE-NOTEBOOK-ASSETS.json",
+      "bytes": 1164,
+      "sha256": "b536d4bff343481faa15f027e025e3a6885a8277d399021690b5d2f4016aba0f",
+      "domain_hits": []
+    },
+    {
+      "path": ".ai-os/reports/master-estate-census/RAIOS-TOTAL-ESTATE-PHASE1-01-20260826T185525Z/cloud/kaggle/KAGGLE-NOTEBOOK-VERSION-INDEX.json",
+      "bytes": 1672,
+      "sha256": "65d50be0a5272a012a93aeac3aa085569c233af73ed7673254a3cd611f850be4",
+      "domain_hits": []
+    },
+    {
+      "path": ".ai-os/reports/master-estate-census/RAIOS-TOTAL-ESTATE-PHASE1-01-20260826T185525Z/cloud/kaggle/KAGGLE-OUTPUT-MODEL-INDEX.json",
+      "bytes": 952,
+      "sha256": "1faaba4ffbcf68d235308a3b07af4c14657a68e4067576a3b893e70dfb92aae6",
+      "domain_hits": [
+        "model"
+      ]
+    },
+    {
+      "path": ".ai-os/reports/master-estate-census/RAIOS-TOTAL-ESTATE-PHASE1-01-20260826T185525Z/cloud/kaggle/KAGGLE-REGISTRY-NORMALIZATION-DELTA.json",
+      "bytes": 1445,
+      "sha256": "005cfc430c4ab09b2c81a76e7c980f0f24567deefb0cae81e492d78fdf1f0817",
+      "domain_hits": []
+    },
+    {
+      "path": ".ai-os/reports/master-estate-census/RAIOS-TOTAL-ESTATE-PHASE1-01-20260826T185525Z/cloud/kaggle/KAGGLE-SURFACE-CENSUS.json",
+      "bytes": 2177,
+      "sha256": "5f2218d0cfcdf5a45df78efd0a2b30730a010bd88acb356ce683fa0e62c6260c",
+      "domain_hits": []
+    },
+    {
+      "path": ".ai-os/reports/master-estate-census/RAIOS-TOTAL-ESTATE-PHASE1-01-20260826T185525Z/cloud/kaggle/PHASE1-KAGGLE-LIVE-DELTA-02.json",
+      "bytes": 3273,
+      "sha256": "aa27ca3bff210fbcaade2389e36ece2f327e2ad7e256ac835c61cdd1eacf2c3f",
+      "domain_hits": []
+    },
+    {
+      "path": ".ai-os/reports/master-estate-census/RAIOS-TOTAL-ESTATE-PHASE1-01-20260826T185525Z/cloud/kaggle/_rehash_files.py",
+      "bytes": 1577,
+      "sha256": "a1872b853fea746d7d91b871e74f86a63040c557cc14b6c76cc4a442bc0db858",
+      "domain_hits": []
+    },
+    {
+      "path": ".ai-os/reports/master-estate-census/RAIOS-TOTAL-ESTATE-PHASE1-01-20260826T185525Z/cloud/kaggle/_strict_parse.py",
+      "bytes": 3869,
+      "sha256": "c8a1be8815fc59ccd67581cef95b979d16a50ca339f91d5b1f5fc7b305ba2279",
+      "domain_hits": []
+    },
+    {
+      "path": ".ai-os/reports/master-estate-census/RAIOS-TOTAL-ESTATE-PHASE1-01-20260826T185525Z/gl/GL-002-GL-003-LINEAGE.json",
+      "bytes": 1896,
+      "sha256": "e7a46382d50a1826debebaea4db1ce15470146926ceee5d707a3823a18b7b6a4",
+      "domain_hits": []
+    },
+    {
+      "path": ".ai-os/reports/master-estate-census/RAIOS-TOTAL-ESTATE-PHASE1-01-20260826T185525Z/local/00-actor-local.json",
+      "bytes": 370,
+      "sha256": "493a0541b3cde603b0db8d18635d83769b0f39ba17012a0de25e79e83a51870c",
+      "domain_hits": []
+    },
+    {
+      "path": ".ai-os/reports/master-estate-census/RAIOS-TOTAL-ESTATE-PHASE1-01-20260826T185525Z/local/_probe.py",
+      "bytes": 18935,
+      "sha256": "80d28d814226c2169f15cd2cf34719c2f67b591a5ea182d83dc153e3071d2dee",
+      "domain_hits": []
+    },
+    {
+      "path": ".ai-os/reports/master-estate-census/RAIOS-TOTAL-ESTATE-PHASE1-01-20260826T185525Z/s35/S35-NOMADIC-MANIFEST.SHA256",
+      "bytes": 66,
+      "sha256": "7883f911c52fde29c486b64f99c8cc2b668ca2f604c8d0f2499420c28cddca23",
+      "domain_hits": []
+    },
+    {
+      "path": ".ai-os/reports/master-estate-census/RAIOS-TOTAL-ESTATE-PHASE1-01-20260826T185525Z/s35/S35-NOMADIC-MANIFEST.json",
+      "bytes": 2437,
+      "sha256": "a55c35dd9b7102f7ff8ad26f87d69142ff776e45d4dfd3d6e666ec6db1d7e4ad",
+      "domain_hits": []
+    },
+    {
+      "path": ".ai-os/reports/master-estate-census/RAIOS-TOTAL-ESTATE-PHASE1-01-20260826T185525Z/tools/CICF-STATIC-CLASSIFICATION.jsonl",
+      "bytes": 1428522,
+      "sha256": "e84fd740ba6b7750a96104bbdc4cc53a193573babdf08c3a6afcf25c92b9c76a",
+      "domain_hits": []
+    },
+    {
+      "path": ".ai-os/reports/master-estate-census/RAIOS-TOTAL-ESTATE-PHASE1-01-20260826T185525Z/tools/CICF-STATIC-SUMMARY.json",
+      "bytes": 2016,
+      "sha256": "cb47a26550f523d84c9c66b02cc11f6ad12ab2cd1d2afdcdd7d6ca63f9028586",
+      "domain_hits": []
+    },
+    {
+      "path": ".ai-os/reports/master-estate-census/RAIOS-TOTAL-ESTATE-PHASE1-01-20260826T185525Z/tools/_classify_cicf_closeout.py",
+      "bytes": 12493,
+      "sha256": "9c57f73222fbce47ca8d3934c70096c6974dcf93d375b599c6eb7fe70bf335b4",
+      "domain_hits": []
+    },
+    {
+      "path": ".ai-os/reports/master-estate-census/RAIOS-TOTAL-ESTATE-PHASE1-01-20260826T185525Z/tools/_json_strict_check.py",
+      "bytes": 2195,
+      "sha256": "030be9a14cb3e6f99d3db2e7996737237f288728d7163b7e18adfc630e9f5bbe",
+      "domain_hits": []
+    },
+    {
+      "path": ".ai-os/reports/master-estate-census/RAIOS-TOTAL-ESTATE-PHASE1-01-20260826T185525Z/tools/_phase1_02_apply.py",
+      "bytes": 39649,
+      "sha256": "edea469b548f2777cde12ebfc30186995ad9a04652d9fedcd1bb5b292a85f58f",
+      "domain_hits": []
+    },
+    {
+      "path": ".ai-os/reports/master-estate-census/RAIOS-TOTAL-ESTATE-PHASE1-01-20260826T185525Z/tree-copy-repo-recon/RAIOS-TOTAL-TREE-COPY-REPO-RECON-01/AGENT-WORK-LINEAGE.json",
+      "bytes": 6265,
+      "sha256": "235f6a3fc6c2d4a1606bdf4a4071a264d1c7d740c6b2cf74a1b8e9e865bc1021",
+      "domain_hits": [
+        "agent"
+      ]
+    },
+    {
+      "path": ".ai-os/reports/master-estate-census/RAIOS-TOTAL-ESTATE-PHASE1-01-20260826T185525Z/tree-copy-repo-recon/RAIOS-TOTAL-TREE-COPY-REPO-RECON-01/CANONICALIZATION-CANDIDATES.json",
+      "bytes": 3485,
+      "sha256": "ab035e5385721815a420adbbf655b5eb393db91a64bc19e352fb61d24aed390d",
+      "domain_hits": []
+    },
+    {
+      "path": ".ai-os/reports/master-estate-census/RAIOS-TOTAL-ESTATE-PHASE1-01-20260826T185525Z/tree-copy-repo-recon/RAIOS-TOTAL-TREE-COPY-REPO-RECON-01/CONTRADICTIONS.json",
+      "bytes": 2624,
+      "sha256": "41090402f28c18d38107cce5c11c2c2dd8b4dccd7fabb47088945991d2d15f09",
+      "domain_hits": []
+    },
+    {
+      "path": ".ai-os/reports/master-estate-census/RAIOS-TOTAL-ESTATE-PHASE1-01-20260826T185525Z/tree-copy-repo-recon/RAIOS-TOTAL-TREE-COPY-REPO-RECON-01/DUPLICATE-UNIQUE-ANALYSIS.json",
+      "bytes": 4529,
+      "sha256": "5c7e6e53c80b4238dbf74e8d5a4a0889d6538970797df54d31b59868c8833531",
+      "domain_hits": []
+    },
+    {
+      "path": ".ai-os/reports/master-estate-census/RAIOS-TOTAL-ESTATE-PHASE1-01-20260826T185525Z/tree-copy-repo-recon/RAIOS-TOTAL-TREE-COPY-REPO-RECON-01/FILES-SHA256.txt",
+      "bytes": 817,
+      "sha256": "9656f3e82a0b568882fc70d89304170c101f4f9d51404469292b251fb066d43a",
+      "domain_hits": []
+    },
+    {
+      "path": ".ai-os/reports/master-estate-census/RAIOS-TOTAL-ESTATE-PHASE1-01-20260826T185525Z/tree-copy-repo-recon/RAIOS-TOTAL-TREE-COPY-REPO-RECON-01/REPOSITORY-REFS.json",
+      "bytes": 4136,
+      "sha256": "132463b7e13141bb7fe193d84bcda30b574006f83f2bd160a57428028eee429c",
+      "domain_hits": []
+    },
+    {
+      "path": ".ai-os/reports/master-estate-census/RAIOS-TOTAL-ESTATE-PHASE1-01-20260826T185525Z/tree-copy-repo-recon/RAIOS-TOTAL-TREE-COPY-REPO-RECON-01/SUMMARY.md",
+      "bytes": 2289,
+      "sha256": "0fb2161773afd16e2949a6df3dc92a988575afddbd9e8d2e993ec0709cfb5ab6",
+      "domain_hits": []
+    },
+    {
+      "path": ".ai-os/reports/master-estate-census/RAIOS-TOTAL-ESTATE-PHASE1-01-20260826T185525Z/tree-copy-repo-recon/RAIOS-TOTAL-TREE-COPY-REPO-RECON-01/TASK-STATE-EVIDENCE.json",
+      "bytes": 6838,
+      "sha256": "8a37dc2aa317948dc07a5e43af02f17b6bfdd9f66541b9715f3ec66f018ac265",
+      "domain_hits": []
+    },
+    {
+      "path": ".ai-os/reports/master-estate-census/RAIOS-TOTAL-ESTATE-PHASE1-01-20260826T185525Z/tree-copy-repo-recon/RAIOS-TOTAL-TREE-COPY-REPO-RECON-01/TREE-ASSET-REGISTRY.json",
+      "bytes": 23579,
+      "sha256": "9d57699c047b33df5471f30d0f6e2d4cf8fc6ef670d698823e16f6f67415a653",
+      "domain_hits": []
+    },
+    {
+      "path": ".ai-os/reports/master-estate-census/RAIOS-TOTAL-ESTATE-PHASE1-01-20260826T185525Z/tree-copy-repo-recon/RAIOS-TOTAL-TREE-COPY-REPO-RECON-01/TREE-RELATIONSHIPS.json",
+      "bytes": 3369,
+      "sha256": "5917556653624801a713df3738324d6e7bb80c90ad885e3d9641ef730e72c7a5",
+      "domain_hits": []
+    },
+    {
+      "path": ".ai-os/reports/master-estate-census/RAIOS-TOTAL-ESTATE-PHASE1-01-20260826T185525Z/tree-copy-repo-recon/RAIOS-TOTAL-TREE-COPY-REPO-RECON-01A/AGENT-WORK-LINEAGE.json",
+      "bytes": 7372,
+      "sha256": "1366d7832c0785ea71a087d8f1931672488de50cec9c746fa096efa8d68cc298",
+      "domain_hits": [
+        "agent"
+      ]
+    },
+    {
+      "path": ".ai-os/reports/master-estate-census/RAIOS-TOTAL-ESTATE-PHASE1-01-20260826T185525Z/tree-copy-repo-recon/RAIOS-TOTAL-TREE-COPY-REPO-RECON-01A/CANONICALIZATION-CANDIDATES.json",
+      "bytes": 6222,
+      "sha256": "eeed8a1952f2f3dfb66da8461231db853285a0157bbd9daaaf67802db22ef04f",
+      "domain_hits": []
+    },
+    {
+      "path": ".ai-os/reports/master-estate-census/RAIOS-TOTAL-ESTATE-PHASE1-01-20260826T185525Z/tree-copy-repo-recon/RAIOS-TOTAL-TREE-COPY-REPO-RECON-01A/CONTRADICTIONS.json",
+      "bytes": 4041,
+      "sha256": "7be8b21362ec20b199308cb3a90ed6ca81ae81695b58d92fa45015967ce93c2c",
+      "domain_hits": []
+    },
+    {
+      "path": ".ai-os/reports/master-estate-census/RAIOS-TOTAL-ESTATE-PHASE1-01-20260826T185525Z/tree-copy-repo-recon/RAIOS-TOTAL-TREE-COPY-REPO-RECON-01A/DUPLICATE-UNIQUE-ANALYSIS.json",
+      "bytes": 5295,
+      "sha256": "59ecbce7bde0a41ff44fcf19429af8521b066bfa656c0c561ff1ab476e680167",
+      "domain_hits": []
+    },
+    {
+      "path": ".ai-os/reports/master-estate-census/RAIOS-TOTAL-ESTATE-PHASE1-01-20260826T185525Z/tree-copy-repo-recon/RAIOS-TOTAL-TREE-COPY-REPO-RECON-01A/FILES-SHA256.txt",
+      "bytes": 1081,
+      "sha256": "de7310a65a669a4e602cb83b98ef27630d6dd210302be3ef4634c5d24662d5b7",
+      "domain_hits": []
+    },
+    {
+      "path": ".ai-os/reports/master-estate-census/RAIOS-TOTAL-ESTATE-PHASE1-01-20260826T185525Z/tree-copy-repo-recon/RAIOS-TOTAL-TREE-COPY-REPO-RECON-01A/GLOBAL-COMMIT-SET.json",
+      "bytes": 125918,
+      "sha256": "a3ca614351e6610958922e60d0d6c0f26c2fac88818310d85fa872dbdb758003",
+      "domain_hits": []
+    },
+    {
+      "path": ".ai-os/reports/master-estate-census/RAIOS-TOTAL-ESTATE-PHASE1-01-20260826T185525Z/tree-copy-repo-recon/RAIOS-TOTAL-TREE-COPY-REPO-RECON-01A/KNOWN-ASSET-CARRY-FORWARD.json",
+      "bytes": 8748,
+      "sha256": "86200396121831e963502f3f7c765eeb703a43bc2f957999093a48f0630a604f",
+      "domain_hits": []
+    },
+    {
+      "path": ".ai-os/reports/master-estate-census/RAIOS-TOTAL-ESTATE-PHASE1-01-20260826T185525Z/tree-copy-repo-recon/RAIOS-TOTAL-TREE-COPY-REPO-RECON-01A/MANIFEST.json",
+      "bytes": 2536,
+      "sha256": "e4a9b663c74e19cf022ded79c8e620acef44eac878989d7fed122e1b1367b435",
+      "domain_hits": []
+    },
+    {
+      "path": ".ai-os/reports/master-estate-census/RAIOS-TOTAL-ESTATE-PHASE1-01-20260826T185525Z/tree-copy-repo-recon/RAIOS-TOTAL-TREE-COPY-REPO-RECON-01A/REPOSITORY-REFS.json",
+      "bytes": 66884,
+      "sha256": "47284db67ee48c4de855eecb254335a6a7e4d956f05fc06933710cf3c664f8a8",
+      "domain_hits": []
+    },
+    {
+      "path": ".ai-os/reports/master-estate-census/RAIOS-TOTAL-ESTATE-PHASE1-01-20260826T185525Z/tree-copy-repo-recon/RAIOS-TOTAL-TREE-COPY-REPO-RECON-01A/SEAT-LINEAGE-DELTA.json",
+      "bytes": 1817,
+      "sha256": "12ea732f32036ee24713f0178c8e83611bd3b3083cfacb791edbf74f11354b92",
+      "domain_hits": []
+    },
+    {
+      "path": ".ai-os/reports/master-estate-census/RAIOS-TOTAL-ESTATE-PHASE1-01-20260826T185525Z/tree-copy-repo-recon/RAIOS-TOTAL-TREE-COPY-REPO-RECON-01A/SUMMARY.md",
+      "bytes": 3295,
+      "sha256": "7455000ec591f50364ced5ba4f94e7a1175493ad9f410446b8d3074136a32d9a",
+      "domain_hits": []
+    },
+    {
+      "path": ".ai-os/reports/master-estate-census/RAIOS-TOTAL-ESTATE-PHASE1-01-20260826T185525Z/tree-copy-repo-recon/RAIOS-TOTAL-TREE-COPY-REPO-RECON-01A/TASK-STATE-DRIFT.json",
+      "bytes": 7141,
+      "sha256": "51b94c72011f386d5a92424dd59ce3df8955cf735f8e7c468d4dcedf7749f147",
+      "domain_hits": []
+    },
+    {
+      "path": ".ai-os/reports/master-estate-census/RAIOS-TOTAL-ESTATE-PHASE1-01-20260826T185525Z/tree-copy-repo-recon/RAIOS-TOTAL-TREE-COPY-REPO-RECON-01A/TREE-ASSET-REGISTRY.json",
+      "bytes": 31145,
+      "sha256": "6dafd8cc3029fbbe8d9178be1a4f385e84164fb647ca53e91e8285a4c366095a",
+      "domain_hits": []
+    },
+    {
+      "path": ".ai-os/reports/master-estate-census/RAIOS-TOTAL-ESTATE-PHASE1-01-20260826T185525Z/tree-copy-repo-recon/RAIOS-TOTAL-TREE-COPY-REPO-RECON-01A/TREE-RELATIONSHIPS.json",
+      "bytes": 6932,
+      "sha256": "8a9106a0e6248f382068745529b9cec9da1746378db563504aad8e9dba7e1599",
+      "domain_hits": []
+    },
+    {
+      "path": ".ai-os/reports/master-estate-census/RAIOS-TOTAL-ESTATE-PHASE1-01-20260826T185525Z/tree-copy-repo-recon/RAIOS-TOTAL-TREE-COPY-REPO-RECON-01B/A2A-CHECKPOINT-BIND.json",
+      "bytes": 1356,
+      "sha256": "1107105e001dbda011c572c113e3415dfc3f7bb607489da2ea3b897b162aab50",
+      "domain_hits": []
+    },
+    {
+      "path": ".ai-os/reports/master-estate-census/RAIOS-TOTAL-ESTATE-PHASE1-01-20260826T185525Z/tree-copy-repo-recon/RAIOS-TOTAL-TREE-COPY-REPO-RECON-01B/C6-HANDOFF.md",
+      "bytes": 1283,
+      "sha256": "fd520fa2c8d92fc5be9a4955ea52bab065c371a1b592c587b0bd5fcb24007138",
+      "domain_hits": []
+    },
+    {
+      "path": ".ai-os/reports/master-estate-census/RAIOS-TOTAL-ESTATE-PHASE1-01-20260826T185525Z/tree-copy-repo-recon/RAIOS-TOTAL-TREE-COPY-REPO-RECON-01B/CONTRADICTIONS.json",
+      "bytes": 1978,
+      "sha256": "98c83bacd8678285f24ea8c5fddfb1b4073deb2ef8d21e3893fde3a7f726119d",
+      "domain_hits": []
+    },
+    {
+      "path": ".ai-os/reports/master-estate-census/RAIOS-TOTAL-ESTATE-PHASE1-01-20260826T185525Z/tree-copy-repo-recon/RAIOS-TOTAL-TREE-COPY-REPO-RECON-01B/FILES-SHA256.txt",
+      "bytes": 909,
+      "sha256": "a19148efb5a72320ca751410f54150d921cc98fb5578e74e9d07f3fe0093f89e",
+      "domain_hits": []
+    },
+    {
+      "path": ".ai-os/reports/master-estate-census/RAIOS-TOTAL-ESTATE-PHASE1-01-20260826T185525Z/tree-copy-repo-recon/RAIOS-TOTAL-TREE-COPY-REPO-RECON-01B/MANIFEST.json",
+      "bytes": 2452,
+      "sha256": "85056e10d1ed201082997ff00942c4e302d5a4a9cf327375e3fc91aec976ddfe",
+      "domain_hits": []
+    },
+    {
+      "path": ".ai-os/reports/master-estate-census/RAIOS-TOTAL-ESTATE-PHASE1-01-20260826T185525Z/tree-copy-repo-recon/RAIOS-TOTAL-TREE-COPY-REPO-RECON-01B/PREVIOUS-PACKAGE-INTEGRITY.json",
+      "bytes": 2320,
+      "sha256": "423ce428b66cbf7702b382fdde853cbdb6ff6dfe2be61176f87a17d6596b04d7",
+      "domain_hits": []
+    },
+    {
+      "path": ".ai-os/reports/master-estate-census/RAIOS-TOTAL-ESTATE-PHASE1-01-20260826T185525Z/tree-copy-repo-recon/RAIOS-TOTAL-TREE-COPY-REPO-RECON-01B/SEAT-LINEAGE-CURRENT.json",
+      "bytes": 1304,
+      "sha256": "0667161f4d5190448c55dfe24b16211cb2bfe4cbc82c97354efb3991ef17d962",
+      "domain_hits": []
+    },
+    {
+      "path": ".ai-os/reports/master-estate-census/RAIOS-TOTAL-ESTATE-PHASE1-01-20260826T185525Z/tree-copy-repo-recon/RAIOS-TOTAL-TREE-COPY-REPO-RECON-01B/SEAT-MODEL-CORRECTION.json",
+      "bytes": 1548,
+      "sha256": "ab21a77f2165ab2d5455e2b15bfe415cfd9c6caf7ff7ddcae6410d449d43155a",
+      "domain_hits": [
+        "model"
+      ]
+    },
+    {
+      "path": ".ai-os/reports/master-estate-census/RAIOS-TOTAL-ESTATE-PHASE1-01-20260826T185525Z/tree-copy-repo-recon/RAIOS-TOTAL-TREE-COPY-REPO-RECON-01B/SELF-CONSISTENCY.json",
+      "bytes": 487,
+      "sha256": "11ad52a194aa25ab48913f1a01ebdc627ce1a731da1bfb5f6dbb745733e37dc7",
+      "domain_hits": []
+    },
+    {
+      "path": ".ai-os/reports/master-estate-census/RAIOS-TOTAL-ESTATE-PHASE1-01-20260826T185525Z/tree-copy-repo-recon/RAIOS-TOTAL-TREE-COPY-REPO-RECON-01B/SEMANTIC-REMEDIATION.json",
+      "bytes": 1761,
+      "sha256": "e4950a11dfd885feea4a88020c304460dd9ab1a52059186a7a574e4a391d4586",
+      "domain_hits": []
+    },
+    {
+      "path": ".ai-os/reports/master-estate-census/RAIOS-TOTAL-ESTATE-PHASE1-01-20260826T185525Z/tree-copy-repo-recon/RAIOS-TOTAL-TREE-COPY-REPO-RECON-01B/SEMANTIC-STALE-LABEL-INVENTORY.json",
+      "bytes": 10050,
+      "sha256": "eeb36a15e6eb0af5075420bc305c18a00803d2a31745d494ff49beff25f56501",
+      "domain_hits": [
+        "inventory"
+      ]
+    },
+    {
+      "path": ".ai-os/reports/master-estate-census/RAIOS-TOTAL-ESTATE-PHASE1-01-20260826T185525Z/tree-copy-repo-recon/RAIOS-TOTAL-TREE-COPY-REPO-RECON-01B/SUMMARY.md",
+      "bytes": 2040,
+      "sha256": "4057ee0ffbe2bb15a09675a6f3784a754fca23ceaf8301d2ffd26d4acddeeda1",
+      "domain_hits": []
+    },
+    {
+      "path": ".ai-os/reports/master-estate-census/kaggle-auth-read-20260826T235455/KAGGLE-AUTHENTICATED-READ-RECEIPT.json",
+      "bytes": 2102,
+      "sha256": "cfaee5a72bfc5a95371cc923ea5d5a2295b999a5959e1d04805c05a08df2c757",
+      "domain_hits": []
+    },
+    {
+      "path": ".ai-os/reports/master-estate-census/kaggle-auth-read-20260826T235455/datasets/greenylife__collection-for-understand/dataset-metadata.json",
+      "bytes": 322,
+      "sha256": "b23288bb0ca3fdc61cca5251098f21e2bd450510d825697e91584fbc5a6dad56",
+      "domain_hits": []
+    },
+    {
+      "path": ".ai-os/reports/master-estate-census/kaggle-auth-read-20260826T235455/datasets/greenylife__greeny-life/dataset-metadata.json",
+      "bytes": 273,
+      "sha256": "ad8c86b56c61fa7628ebe60a66b27d776bb252edcfbf1ab30111555dd9b9db68",
+      "domain_hits": []
+    },
+    {
+      "path": ".ai-os/reports/master-estate-census/kaggle-auth-read-20260826T235455/datasets/greenylife__raios-cognitive-state/dataset-metadata.json",
+      "bytes": 348,
+      "sha256": "66a5789660fe3f019d778dbe4b46b75eae21ce7c2aaeac6cb26177ee6772768b",
+      "domain_hits": []
+    },
+    {
+      "path": ".ai-os/reports/master-estate-census/kaggle-auth-read-20260826T235455/datasets/greenylife__raios-greeny-continuity-evidence/dataset-metadata.json",
+      "bytes": 315,
+      "sha256": "516d9c9fd91884093db883ea10484e5520ba05fab8893e234b86befc14b44e73",
+      "domain_hits": []
+    },
+    {
+      "path": ".ai-os/reports/master-estate-census/kaggle-auth-read-20260826T235455/datasets/greenylife__raios-version-evidence/dataset-metadata.json",
+      "bytes": 295,
+      "sha256": "fb69af7b05e2e1feee769e422d9b87e375e0a1f786a30a2c93d4b9362cbe7a56",
+      "domain_hits": []
+    },
+    {
+      "path": ".ai-os/reports/master-estate-census/kaggle-auth-read-20260826T235455/notebook8c2d6a9080/kernel-metadata.json",
+      "bytes": 788,
+      "sha256": "81ca979de369b6cb910d7176893fd2a552240435465adc164169863825cdf68c",
+      "domain_hits": []
+    },
+    {
+      "path": ".ai-os/reports/master-estate-census/kaggle-auth-read-20260826T235455/notebook8c2d6a9080/notebook8c2d6a9080.ipynb",
+      "bytes": 371850,
+      "sha256": "6a54bf46257e079d85904955a20f8be4b6dc7733b09aa79175c25d7d7a99dd0e",
+      "domain_hits": []
+    },
+    {
+      "path": ".ai-os/reports/master-estate-census/kaggle-auth-read-20260826T235455/notebook8d96bf4e18/kernel-metadata.json",
+      "bytes": 618,
+      "sha256": "23bc32b4e75a8d03e19598b46ab6d1ca5292cf9761092846c36f292c7d7b33a2",
+      "domain_hits": []
+    },
+    {
+      "path": ".ai-os/reports/master-estate-census/kaggle-auth-read-20260826T235455/notebook8d96bf4e18/notebook8d96bf4e18.ipynb",
+      "bytes": 264135,
+      "sha256": "2fd90547efbdf94b79d7640e8121f6bb60ecff3d5f7bbef948391ed697816ab6",
+      "domain_hits": []
+    },
+    {
+      "path": "RAIOS/V9/agents/a13/registry/UNIFIED-AGENT-CAPABILITY-REGISTRY.json",
+      "bytes": 10323,
+      "sha256": "fb02ae78930dfdd2738ce738837f98da34790568e3a1f60c34cf431d9c71ad6a",
+      "domain_hits": [
+        "agent"
+      ]
+    },
+    {
+      "path": "RAIOS/V9/agents/a13/reports/AGENT-CAPABILITY-DEDUP-REPORT.json",
+      "bytes": 465,
+      "sha256": "9b5ba25ae1a989cb1c78e6fc5264246a703f9cf5bec7a0cf09386cbc647c7563",
+      "domain_hits": [
+        "agent"
+      ]
+    },
+    {
+      "path": "RAIOS/V9/agents/a13/routing/UNIFIED-AGENT-ROUTING.json",
+      "bytes": 2028,
+      "sha256": "8d98a07fc0e8d063a2844b8044ee41bd11882950148b39a64d523bad6b4e0234",
+      "domain_hits": [
+        "agent"
+      ]
+    },
+    {
+      "path": "canonical/KNOWLEDGE-BASE/AI-INTELLIGENCE-DISCOVERY-REPORT.json",
+      "bytes": 7500535,
+      "sha256": "516278757b5985edd7bef2dc2f08b90608019c548ac8aeb76b1f9b5557808532",
+      "domain_hits": [
+        "intelligence",
+        "knowledge"
+      ]
+    },
+    {
+      "path": "canonical/KNOWLEDGE-BASE/INDEX/reconciliation/RECONCILIATION-SUMMARY.json",
+      "bytes": 280,
+      "sha256": "a8ee9f7cd9d5eb066ccf3d7872d5e4e5d92e003a417564cdb30e264c7623325a",
+      "domain_hits": [
+        "knowledge"
+      ]
+    },
+    {
+      "path": "canonical/KNOWLEDGE-BASE/KEEP-PACKAGE/GELS/gels-normalized-registry-v1.json",
+      "bytes": 15888,
+      "sha256": "b7eb65cca1ec39ffec5cea106b8cce5d55f4209aad1b86da0abab04fd172e12b",
+      "domain_hits": [
+        "knowledge"
+      ]
+    },
+    {
+      "path": "canonical/KNOWLEDGE-BASE/MASTER-SOURCE/MASTER-TRUTH-v1.json",
+      "bytes": 8114,
+      "sha256": "4aaef6752a345c561d93a3c1888b2336453d1095db2036bd7f04ef134eafd4f7",
+      "domain_hits": [
+        "knowledge"
+      ]
+    },
+    {
+      "path": "canonical/legacy-data/canonical-product-master-v1.json",
+      "bytes": 4511,
+      "sha256": "05951559b2a74fe3f8e8a416caf2de2ce3023589870f9cb3a5635d05c78e0268",
+      "domain_hits": []
+    },
+    {
+      "path": "canonical/legacy-data/eos-real-product-master-v2.json",
+      "bytes": 8294,
+      "sha256": "4eb45a2a415ddfb75e5f11089eeb3ddc8c849d7e2c8c426a38165c67f1c612c0",
+      "domain_hits": []
+    },
+    {
+      "path": "canonical/legacy-data/gels-normalized-registry-v1.json",
+      "bytes": 15888,
+      "sha256": "b7eb65cca1ec39ffec5cea106b8cce5d55f4209aad1b86da0abab04fd172e12b",
+      "domain_hits": []
+    },
+    {
+      "path": "canonical/legacy-data/product-asset-link-map-v1.json",
+      "bytes": 132425,
+      "sha256": "4f776293ed78a59a1c9b2e54cbc31a76d3fed545079cda1c94b2f11b4d710605",
+      "domain_hits": []
+    },
+    {
+      "path": "canonical/legacy-data/typescript-asset-inventory.json",
+      "bytes": 4199,
+      "sha256": "450722077a07fa1b6b9ca612c00cb522fa54731e80eb305923935772294685e1",
+      "domain_hits": [
+        "inventory"
+      ]
+    },
+    {
+      "path": "intelligence/knowledge_base/assimilated/CAPABILITIES.json",
+      "bytes": 3669,
+      "sha256": "2497bfbdeb849ae0f3e96d1b5685f393672ad11e1f6158a1033650e9e18d9f17",
+      "domain_hits": [
+        "intelligence",
+        "knowledge"
+      ]
+    },
+    {
+      "path": "intelligence/knowledge_base/assimilated/D059-ACCEPTANCE.json",
+      "bytes": 2674,
+      "sha256": "ac0325acd5c4a133aa8d26f270290a095461e4d0037dae2d323cb46373698c7b",
+      "domain_hits": [
+        "intelligence",
+        "knowledge"
+      ]
+    },
+    {
+      "path": "intelligence/knowledge_base/assimilated/GRANITE.json",
+      "bytes": 29771,
+      "sha256": "421f13d06b2977e7856b7f2e5c21a450eed437ba6f2be29c7106992b3958656c",
+      "domain_hits": [
+        "intelligence",
+        "knowledge"
+      ]
+    },
+    {
+      "path": "intelligence/knowledge_base/assimilated/INDEX.json",
+      "bytes": 2380,
+      "sha256": "0ceb2063fd61f8efdc61dbe96e0ad1a22504a520f0811eb092c59bc2639a6d50",
+      "domain_hits": [
+        "intelligence",
+        "knowledge"
+      ]
+    },
+    {
+      "path": "intelligence/knowledge_base/assimilated/QWEN.json",
+      "bytes": 28678,
+      "sha256": "b4a4cb718547fee0fa576aa9270cd7eadf3524cc9f6148bd566795835001e40b",
+      "domain_hits": [
+        "intelligence",
+        "knowledge"
+      ]
+    }
+  ]
+}

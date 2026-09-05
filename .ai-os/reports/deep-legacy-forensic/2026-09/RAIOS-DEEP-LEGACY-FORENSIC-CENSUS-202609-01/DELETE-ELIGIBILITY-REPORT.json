@@ -1,0 +1,33 @@
+{
+  "schema": "raios.deep-legacy-forensic.delete-eligibility.v1",
+  "generated_at": "2026-09-05T02:56:51.282338+00:00",
+  "task_id": "RAIOS-DEEP-LEGACY-FORENSIC-CENSUS-202609-01",
+  "decision": "DENY",
+  "safe_to_remove_source": false,
+  "legacy_delete_allowed": false,
+  "deep_legacy_forensic_audit_pass": false,
+  "unique_value_unresolved": "UNKNOWN",
+  "missing_proofs": [
+    "SEMANTIC_CAPABILITY_EQUIVALENCE",
+    "BEHAVIOR_EQUIVALENCE_OR_SUPERIOR_REPLACEMENT",
+    "ALL_UNIQUE_VALUE_RECOVERED_OR_RETAINED",
+    "DATA_SCHEMA_KNOWLEDGE_COVERAGE",
+    "RECOVERY_ROLLBACK_PROOF",
+    "ZERO_UNKNOWN_UNCLASSIFIED_UNRESOLVED",
+    "C1_FINAL_DELETE_GATE"
+  ],
+  "safety": {
+    "READ_ONLY_SOURCE_AUDIT": true,
+    "SOURCE_FILE_DELETED": false,
+    "SOURCE_FILE_MOVED": false,
+    "SOURCE_FILE_EDITED": false,
+    "GIT_CHECKOUT_PERFORMED": false,
+    "GIT_RESET_PERFORMED": false,
+    "GIT_CLEAN_PERFORMED": false,
+    "RETIRED_REPAIR_TREE_READ": false,
+    "EXTERNAL_WEB_USED": false,
+    "PAID_RESOURCE_USED": false,
+    "CANONICAL_PROMOTION_EXECUTED": false,
+    "SAFE_TO_REMOVE_SOURCE": false
+  }
+}

@@ -220,3 +220,116 @@ def test_forensic_census_missing_phase1_evidence_fails_closed(tmp_path):
     assert out["actions_blocked"] == 1
     assert task["status"] == "BLOCKED"
     assert "FORENSIC_PHASE1_EVIDENCE_MISSING" in task["blocker"]
+
+
+def make_semantic_board(tmp_path: Path, authorized: bool = True, phase1_done: bool = True):
+    repo = tmp_path / "Greeny-Life"
+    (repo / ".ai-os/state").mkdir(parents=True)
+    phase1 = {
+        "id": "FORENSIC-PHASE1",
+        "status": "DONE" if phase1_done else "READY",
+        "dependencies": [],
+    }
+    phase2 = {
+        "id": "FORENSIC-PHASE2",
+        "title": "semantic reconciliation",
+        "status": "READY",
+        "dependencies": ["FORENSIC-PHASE1"],
+        "automation_action": "DEEP_LEGACY_SEMANTIC_RECONCILIATION",
+        "dispatch_authorized_by": "C1" if authorized else None,
+        "destructive_action_requested": False,
+    }
+    (repo / ".ai-os/state/TASKS.json").write_text(
+        json.dumps({"tasks": [phase1, phase2]}), encoding="utf-8"
+    )
+    return CouncilBoard(repo, tmp_path / "presence.json"), repo
+
+
+def fake_semantic_package(_task, safe=False):
+    safety = {
+        "READ_ONLY_SOURCE_AUDIT": True,
+        "SOURCE_MUTATION": False,
+        "RETIRED_REPAIR_TREE_READ": False,
+        "SAFE_TO_REMOVE_SOURCE": safe,
+    }
+    return {
+        "06-SEMANTIC-RECONCILIATION.json": {
+            "summary": {
+                "historical_candidate_rows": 10,
+                "exact_current_content_matches": 6,
+                "unresolved_unique_value_candidates": 4,
+            },
+            "safety": safety,
+        },
+        "07-UNIQUE-VALUE-LEDGER.json": {
+            "unresolved_count": 4,
+            "zero_unknown_unclassified_unresolved": False,
+            "safe_to_remove_source": safe,
+        },
+        "PHASE2-FORENSIC-EVIDENCE.json": {
+            "schema": "raios.deep-legacy-forensic.phase2-evidence.v1",
+            "status": "COMPLETE_EVIDENCE_VERIFIED",
+            "full_forensic_audit_complete": False,
+            "safe_to_remove_source": safe,
+            "next_required_phase": "BEHAVIORAL_EQUIVALENCE_AND_RECOVERY_PROOF",
+            "safety": safety,
+        },
+        "DELETE-ELIGIBILITY-REPORT.json": {
+            "decision": "DENY" if not safe else "ALLOW",
+            "safe_to_remove_source": safe,
+        },
+    }
+
+
+def test_semantic_reconciliation_runs_read_only_without_seat(tmp_path):
+    board, repo = make_semantic_board(tmp_path)
+    source = repo / "valuable-history.txt"
+    source.write_text("preserve me", encoding="utf-8")
+    before = source.read_bytes()
+    board.actions = TaskActionExecutor(
+        repo,
+        collector=lambda: {},
+        prober=lambda world: [],
+        semantic_collector=lambda task: fake_semantic_package(task, safe=False),
+    )
+    out = board.run_cycle(Worker())
+    tasks = json.loads(board.tasks.read_text(encoding="utf-8"))["tasks"]
+    task = next(x for x in tasks if x["id"] == "FORENSIC-PHASE2")
+    assert out["actions_processed"] == 1
+    assert task["status"] == "DONE"
+    assert task["executed_by"] == "RAIOS-SYSTEM-ACTION:DETERMINISTIC_SEMANTIC_RECONCILIATION"
+    assert source.read_bytes() == before
+    proof = json.loads((repo / task["evidence"]).read_text(encoding="utf-8"))
+    assert proof["safe_to_remove_source"] is False
+    assert proof["full_forensic_audit_complete"] is False
+
+
+def test_semantic_reconciliation_rejects_safe_to_remove_true(tmp_path):
+    board, repo = make_semantic_board(tmp_path)
+    board.actions = TaskActionExecutor(
+        repo,
+        collector=lambda: {},
+        prober=lambda world: [],
+        semantic_collector=lambda task: fake_semantic_package(task, safe=True),
+    )
+    out = board.run_cycle(Worker())
+    tasks = json.loads(board.tasks.read_text(encoding="utf-8"))["tasks"]
+    task = next(x for x in tasks if x["id"] == "FORENSIC-PHASE2")
+    assert out["actions_blocked"] == 1
+    assert task["status"] == "BLOCKED"
+    assert "FORENSIC_PHASE2_FAIL_CLOSED_VIOLATION" in task["blocker"]
+
+
+def test_semantic_reconciliation_waits_for_phase1_dependency(tmp_path):
+    board, repo = make_semantic_board(tmp_path, phase1_done=False)
+    board.actions = TaskActionExecutor(
+        repo,
+        collector=lambda: {},
+        prober=lambda world: [],
+        semantic_collector=lambda task: fake_semantic_package(task, safe=False),
+    )
+    out = board.run_cycle(Worker())
+    tasks = json.loads(board.tasks.read_text(encoding="utf-8"))["tasks"]
+    task = next(x for x in tasks if x["id"] == "FORENSIC-PHASE2")
+    assert out["actions_processed"] == 0
+    assert task["status"] == "READY"
