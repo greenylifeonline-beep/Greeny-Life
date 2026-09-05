@@ -43,7 +43,7 @@ def test_snapshot_separates_live_activity_from_stale_claim(tmp_path):
     write_json(repo / ".ai-os/state/TASKS.json", {"tasks": [
         {"id": "T-C3", "title": "old", "status": "IN_PROGRESS", "claimed_by": "C3"},
         {"id": "T-C6", "title": "live", "status": "IN_PROGRESS", "claimed_by": "C6-ACTOR",
-         "dispatch_status": "ACCEPTED"},
+         "dispatch_status": "ACCEPTED", "execution_proof": {"verified": True}},
     ]})
     view = ClientActivityView(repo, Routes())
     snap = view.snapshot()

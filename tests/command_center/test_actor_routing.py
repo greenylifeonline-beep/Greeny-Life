@@ -35,8 +35,7 @@ def test_all_requires_presence_binding_and_live_consumer(tmp_path):
         "session_id": "s6", "lease_expires_at": iso(5)}), encoding="utf-8")
     routes = ActorRouteRegistry(repo, presence_path=presence, bindings_path=bindings, consumers_path=consumers)
     out = routes.resolve(["ALL_AVAILABLE"])
-    assert out["targets"] == ["C2", "C6"]
-    assert out["routing_modes"]["C2"] == "AUTO_COORDINATION_AVAILABLE"
+    assert out["targets"] == ["C6"]
     assert out["routing_modes"]["C6"] == "AUTO_LIVE_BOUND_CONSUMER"
     online = routes.resolve(["ALL_ONLINE"])
     assert online["targets"] == ["C6"]
@@ -74,7 +73,7 @@ def test_bound_without_consumer_is_not_auto_routable(tmp_path):
     consumers = tmp_path / "consumers"; consumers.mkdir()
     routes = ActorRouteRegistry(repo, presence_path=presence, bindings_path=bindings, consumers_path=consumers)
     assert routes.resolve(["ALL_ONLINE"])["targets"] == []
-    assert routes.resolve(["ALL_AVAILABLE"])["targets"] == ["C6"]
+    assert routes.resolve(["ALL_AVAILABLE"])["targets"] == []
 
 
 def test_c1_named_unbound_seat_is_explicit_not_fake_live(tmp_path):
@@ -158,3 +157,27 @@ def test_route_snapshot_exposes_signed_presence_capabilities(tmp_path):
     routes = ActorRouteRegistry(repo,presence_path=presence,bindings_path=bindings,consumers_path=consumers)
     row = routes.snapshot()["seats"][0]
     assert row["capabilities"] == ["FILE_INTELLIGENCE","ARCHITECTURE_REASONING"]
+
+
+def test_availability_claim_without_bound_consumer_is_discovery_only(tmp_path):
+    repo = tmp_path / "Greeny-Life"
+    seatmap = repo / ".ai-os" / "mcp" / "SEAT-MAP.json"
+    seatmap.parent.mkdir(parents=True)
+    seatmap.write_text(json.dumps({"seats": {"C2": {"actor_role": "EXEC"}}}), encoding="utf-8")
+    presence = tmp_path / "presence.json"
+    presence.write_text(json.dumps({"seats": {"C2": {
+        "presence": "PRESENT", "signature_valid": True, "lease_expires_at": iso(5),
+        "availability": "AVAILABLE", "availability_expires_at": iso(5)
+    }}}), encoding="utf-8")
+    bindings = tmp_path / "bindings.json"
+    bindings.write_text(json.dumps({"bindings": {}}), encoding="utf-8")
+    consumers = tmp_path / "consumers"
+    consumers.mkdir()
+    routes = ActorRouteRegistry(repo, presence_path=presence, bindings_path=bindings, consumers_path=consumers)
+    snap = routes.snapshot()
+    row = snap["seats"][0]
+    assert row["availability_claim_current"] is True
+    assert row["coordination_available"] is False
+    assert routes.resolve(["ALL_AVAILABLE"])["targets"] == []
+    assert snap["delivery_ack_ne_cooperation"] is True
+    assert snap["coordination_requires_live_bound_consumer"] is True

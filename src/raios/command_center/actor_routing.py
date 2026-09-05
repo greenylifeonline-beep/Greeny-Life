@@ -132,10 +132,9 @@ class ActorRouteRegistry:
                     pending_probe_expires_at=probe.get("expires_at")
                     break
             routable = present and binding_current and consumer_current
-            coordination_current = (
-                routable or present or
-                (availability_claim_current and availability_claim == "AVAILABLE")
-            )
+            # Coordination availability is execution readiness, not a claim.
+            # Presence/availability without a current bound consumer remains discovery-only.
+            coordination_current = routable
             if routable:
                 discovery_state="VERIFIED_EXECUTION_READY"
             elif consumer_current and binding_current:
@@ -205,6 +204,8 @@ class ActorRouteRegistry:
             "delivery_ack_ne_actor_ack": True,
             "process_discovery_ne_presence_proof": True,
             "live_session_ne_signed_presence": True,
+            "coordination_requires_live_bound_consumer": True,
+            "delivery_ack_ne_cooperation": True,
         }
 
     def resolve(self, requested: list[str]) -> dict[str, Any]:
@@ -222,8 +223,7 @@ class ActorRouteRegistry:
                 for seat in snap["coordination_available"]:
                     if seat not in resolved:
                         resolved.append(seat)
-                        modes[seat] = ("AUTO_LIVE_BOUND_CONSUMER" if seat in automatic
-                                       else "AUTO_COORDINATION_AVAILABLE")
+                        modes[seat] = "AUTO_LIVE_BOUND_CONSUMER"
                 continue
             if target == "ALL_ONLINE":
                 for seat in snap["auto_routable"]:
