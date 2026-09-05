@@ -1,0 +1,24 @@
+{
+  "schema": "raios.deep-legacy-forensic.delete-eligibility.v2",
+  "generated_at": "2026-09-05T03:10:58.071385+00:00",
+  "decision": "DENY",
+  "safe_to_remove_source": false,
+  "legacy_delete_allowed": false,
+  "deep_legacy_forensic_audit_pass": false,
+  "unresolved_unique_value_candidates": 1402,
+  "missing_proofs": [
+    "BEHAVIOR_EQUIVALENCE_OR_SUPERIOR_REPLACEMENT",
+    "RECOVERY_ROLLBACK_PROOF",
+    "ZERO_UNKNOWN_UNCLASSIFIED_UNRESOLVED",
+    "C1_FINAL_DELETE_GATE"
+  ],
+  "safety": {
+    "READ_ONLY_SOURCE_AUDIT": true,
+    "SOURCE_MUTATION": false,
+    "GIT_HISTORY_MUTATION": false,
+    "RETIRED_REPAIR_TREE_READ": false,
+    "EXTERNAL_WEB_USED": false,
+    "PAID_RESOURCE_USED": false,
+    "SAFE_TO_REMOVE_SOURCE": false
+  }
+}

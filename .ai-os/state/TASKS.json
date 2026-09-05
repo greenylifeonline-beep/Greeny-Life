@@ -2500,7 +2500,7 @@
         "RAIOS-DEEP-LEGACY-FORENSIC-CENSUS-202609-01"
       ],
       "allowed_agents": [],
-      "status": "READY",
+      "status": "DONE",
       "claimed_by": null,
       "assigned_to": null,
       "automation_action": "DEEP_LEGACY_SEMANTIC_RECONCILIATION",
@@ -2524,7 +2524,16 @@
         "DELETE-ELIGIBILITY-REPORT.json"
       ],
       "validation": "Exact historical-content coverage is separated from heuristic semantic coverage; unresolved unique value remains explicit; source mutation=false; Repair tree unread; safe_to_remove_source=false; behavior/recovery proof still required.",
-      "created_at": "2026-09-05T03:09:05.125239+00:00"
+      "created_at": "2026-09-05T03:09:05.125239+00:00",
+      "executed_by": "RAIOS-SYSTEM-ACTION:DETERMINISTIC_SEMANTIC_RECONCILIATION",
+      "dispatch_status": "AUTOMATION_COMPLETE_EVIDENCE_VERIFIED",
+      "evidence": ".ai-os/reports/deep-legacy-forensic/2026-09/RAIOS-DEEP-LEGACY-SEMANTIC-RECONCILIATION-202609-01/PHASE2-FORENSIC-EVIDENCE.json",
+      "completed_at": "2026-09-05T03:10:58.152930+00:00",
+      "automation_policy": {
+        "c1_authorized": true,
+        "presence_not_required_for_deterministic_system_action": true,
+        "source_mutation_allowed": false
+      }
     }
   ],
   "programs": [

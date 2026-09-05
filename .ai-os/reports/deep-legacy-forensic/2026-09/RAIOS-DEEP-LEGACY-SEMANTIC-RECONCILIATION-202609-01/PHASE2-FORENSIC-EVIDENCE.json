@@ -1,0 +1,32 @@
+{
+  "schema": "raios.deep-legacy-forensic.phase2-evidence.v1",
+  "generated_at": "2026-09-05T03:10:58.071385+00:00",
+  "task_id": "RAIOS-DEEP-LEGACY-SEMANTIC-RECONCILIATION-202609-01",
+  "phase": "DETERMINISTIC_SEMANTIC_AND_UNIQUE_VALUE_RECONCILIATION",
+  "status": "COMPLETE_EVIDENCE_VERIFIED",
+  "summary": {
+    "historical_candidate_rows": 2144,
+    "exact_current_content_matches": 709,
+    "same_path_changed_rows": 109,
+    "historical_only_rows": 1326,
+    "high_semantic_coverage_candidates": 33,
+    "partial_coverage_requiring_review": 30,
+    "unresolved_unique_value_candidates": 1402,
+    "current_text_candidates_indexed": 732
+  },
+  "semantic_reconciliation_phase_complete": true,
+  "behavior_equivalence_proven": false,
+  "recovery_rollback_proven": false,
+  "full_forensic_audit_complete": false,
+  "safe_to_remove_source": false,
+  "next_required_phase": "BEHAVIORAL_EQUIVALENCE_AND_RECOVERY_PROOF",
+  "safety": {
+    "READ_ONLY_SOURCE_AUDIT": true,
+    "SOURCE_MUTATION": false,
+    "GIT_HISTORY_MUTATION": false,
+    "RETIRED_REPAIR_TREE_READ": false,
+    "EXTERNAL_WEB_USED": false,
+    "PAID_RESOURCE_USED": false,
+    "SAFE_TO_REMOVE_SOURCE": false
+  }
+}
