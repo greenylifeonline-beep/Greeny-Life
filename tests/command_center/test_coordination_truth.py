@@ -17,7 +17,10 @@ def test_lifecycle_distinguishes_done_current_required_waiting_and_stale():
     tasks = [
         {"id": "D", "status": "DONE"},
         {"id": "A", "status": "IN_PROGRESS", "claimed_by": "CHATGPT-NORMAL",
-         "dispatch_status": "SYSTEM_FIRST_ACTIVE"},
+         "dispatch_status": "SYSTEM_FIRST_ACTIVE",
+         "started_at": "2026-09-04T00:00:00+00:00",
+         "updated_at": "2026-09-04T00:01:00+00:00",
+         "validation": "deterministic proof recorded"},
         {"id": "N", "status": "READY", "dependencies": ["D"]},
         {"id": "W", "status": "READY", "dependencies": ["MISSING"]},
         {"id": "S", "status": "IN_PROGRESS", "claimed_by": "cursor"},
@@ -29,6 +32,76 @@ def test_lifecycle_distinguishes_done_current_required_waiting_and_stale():
     assert out["counts"]["WAITING_DEPENDENCIES"] == 1
     assert out["counts"]["STALE_CLAIM_REQUIRES_RECONCILIATION"] == 1
     assert out["required_backlog_count"] == 4
+
+
+def test_signed_acceptance_without_work_evidence_is_not_active_verified():
+    tasks = [{
+        "id": "A", "status": "IN_PROGRESS", "claimed_by": "C2",
+        "dispatch_status": "ACCEPTED",
+        "accepted_at": "2026-09-04T10:00:00+00:00",
+        "acceptance_fingerprint": "signed",
+        "validation": "pre-existing task acceptance criteria",
+        "updated_at": "2026-09-04T09:00:00+00:00",
+    }]
+    out = build_work_lifecycle(tasks)
+    assert out["counts"]["ACCEPTED_AWAITING_WORK_PROOF"] == 1
+    assert out["counts"]["ACTIVE_VERIFIED"] == 0
+    row = out["buckets"]["ACCEPTED_AWAITING_WORK_PROOF"][0]
+    assert row["acceptance_fingerprint"] == "signed"
+    assert row["work_proof_state"] == "UNPROVEN"
+
+
+def test_old_interruption_checkpoint_before_acceptance_does_not_prove_new_work():
+    tasks = [{
+        "id": "A", "status": "IN_PROGRESS", "claimed_by": "C2",
+        "dispatch_status": "ACCEPTED",
+        "accepted_at": "2026-09-04T10:00:00+00:00",
+        "checkpoint_updated_at": "2026-09-04T09:30:00+00:00",
+        "resume_checkpoint": {
+            "phase": "INTERRUPTED",
+            "created_at": "2026-09-04T09:30:00+00:00",
+            "completed_steps": [],
+            "changed_files": [],
+            "validation": [],
+            "evidence_refs": [],
+        },
+    }]
+    out = build_work_lifecycle(tasks)
+    assert out["counts"]["ACCEPTED_AWAITING_WORK_PROOF"] == 1
+    assert out["counts"]["ACTIVE_VERIFIED"] == 0
+
+
+def test_substantive_checkpoint_after_acceptance_proves_active_work():
+    tasks = [{
+        "id": "A", "status": "IN_PROGRESS", "claimed_by": "C2",
+        "dispatch_status": "IN_PROGRESS_REPORTED",
+        "accepted_at": "2026-09-04T10:00:00+00:00",
+        "checkpoint_updated_at": "2026-09-04T10:05:00+00:00",
+        "resume_checkpoint": {
+            "phase": "IN_PROGRESS",
+            "created_at": "2026-09-04T10:05:00+00:00",
+            "completed_steps": ["surface census started"],
+            "changed_files": ["report.json"],
+            "validation": ["hash verified"],
+            "evidence_refs": ["report.json"],
+        },
+    }]
+    out = build_work_lifecycle(tasks)
+    assert out["counts"]["ACTIVE_VERIFIED"] == 1
+    assert out["counts"]["ACCEPTED_AWAITING_WORK_PROOF"] == 0
+    row = out["buckets"]["ACTIVE_VERIFIED"][0]
+    assert row["work_proof_state"] == "PROVEN"
+    assert "checkpoint:completed_steps" in row["work_proof_reasons"]
+
+
+def test_pending_acceptance_is_not_active_work():
+    tasks = [{
+        "id": "A", "status": "READY", "assigned_to": "C2",
+        "dispatch_status": "PENDING_ACCEPTANCE",
+    }]
+    out = build_work_lifecycle(tasks)
+    assert out["counts"]["PENDING_ACCEPTANCE"] == 1
+    assert out["counts"]["ACTIVE_VERIFIED"] == 0
 
 
 def test_soft_target_window_can_fast_track_before_planned_month():

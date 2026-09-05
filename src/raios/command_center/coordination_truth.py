@@ -109,6 +109,69 @@ def _ahead_of_plan(task: dict[str, Any], *, now: datetime | None = None) -> bool
     return bool(not_before is not None and not_before > now)
 
 
+def _substantive_checkpoint(task: dict[str, Any]) -> tuple[bool, datetime | None, list[str]]:
+    checkpoint = task.get("resume_checkpoint") or {}
+    reasons: list[str] = []
+    if checkpoint.get("completed_steps"):
+        reasons.append("completed_steps")
+    if checkpoint.get("changed_files"):
+        reasons.append("changed_files")
+    if checkpoint.get("validation"):
+        reasons.append("validation")
+    if checkpoint.get("evidence_refs"):
+        reasons.append("evidence_refs")
+    stamp = _parse_time(task.get("checkpoint_updated_at") or checkpoint.get("created_at"))
+    return bool(reasons), stamp, reasons
+
+
+def task_work_proof(task: dict[str, Any]) -> dict[str, Any]:
+    accepted = _parse_time(task.get("accepted_at"))
+    started = _parse_time(task.get("started_at"))
+    updated = _parse_time(task.get("updated_at"))
+    checkpoint_ok, checkpoint_at, checkpoint_reasons = _substantive_checkpoint(task)
+    reasons: list[str] = []
+    proof_at: datetime | None = None
+
+    explicit = task.get("execution_proof") or task.get("work_proof")
+    if isinstance(explicit, dict) and explicit.get("verified") is True:
+        explicit_at = _parse_time(
+            explicit.get("verified_at") or explicit.get("at") or task.get("work_proof_at")
+        )
+        if accepted is None or (explicit_at is not None and explicit_at >= accepted):
+            reasons.append("verified_execution_proof")
+            proof_at = explicit_at
+
+    for key in ("work_proof_at", "last_progress_at", "execution_proven_at"):
+        stamp = _parse_time(task.get(key))
+        if stamp is not None and (accepted is None or stamp >= accepted):
+            reasons.append(key)
+            proof_at = max(filter(None, [proof_at, stamp]), default=stamp)
+
+    if checkpoint_ok and checkpoint_at is not None and (
+        accepted is None or checkpoint_at >= accepted
+    ):
+        reasons.extend(f"checkpoint:{x}" for x in checkpoint_reasons)
+        proof_at = max(filter(None, [proof_at, checkpoint_at]), default=checkpoint_at)
+
+    if accepted is None and started is not None and updated is not None and updated > started:
+        if task.get("evidence"):
+            reasons.append("task_evidence_after_start")
+        if task.get("report_summary"):
+            reasons.append("report_summary_after_start")
+        if task.get("validation"):
+            reasons.append("validation_after_start")
+        if reasons:
+            proof_at = max(filter(None, [proof_at, updated]), default=updated)
+
+    return {
+        "proven": bool(reasons),
+        "proof_at": proof_at.isoformat() if proof_at is not None else None,
+        "reasons": list(dict.fromkeys(reasons)),
+        "accepted_at": task.get("accepted_at"),
+        "checkpoint_updated_at": task.get("checkpoint_updated_at"),
+    }
+
+
 def task_truth_state(task: dict[str, Any], done_ids: set[str] | None = None,
                      *, now: datetime | None = None) -> str:
     status = str(task.get("status") or "UNKNOWN").upper()
@@ -120,8 +183,13 @@ def task_truth_state(task: dict[str, Any], done_ids: set[str] | None = None,
         return "SUPERSEDED_OR_CANCELLED"
     if status == "BLOCKED":
         return "BLOCKED" if task_claim_is_current(task) else "STALE_CLAIM_REQUIRES_RECONCILIATION"
-    if status == "IN_PROGRESS" or str(task.get("dispatch_status") or "").upper() == "PENDING_ACCEPTANCE":
-        return "ACTIVE_VERIFIED" if task_claim_is_current(task) else "STALE_CLAIM_REQUIRES_RECONCILIATION"
+    dispatch = str(task.get("dispatch_status") or "").upper()
+    if dispatch == "PENDING_ACCEPTANCE":
+        return "PENDING_ACCEPTANCE" if task_claim_is_current(task) else "STALE_CLAIM_REQUIRES_RECONCILIATION"
+    if status == "IN_PROGRESS":
+        if not task_claim_is_current(task):
+            return "STALE_CLAIM_REQUIRES_RECONCILIATION"
+        return "ACTIVE_VERIFIED" if task_work_proof(task)["proven"] else "ACCEPTED_AWAITING_WORK_PROOF"
     if status == "READY":
         if _ahead_of_plan(task, now=now) and not _acceleration_allowed(task):
             return "FUTURE_PLANNED"
@@ -135,6 +203,8 @@ def build_work_lifecycle(tasks: list[dict[str, Any]]) -> dict[str, Any]:
     buckets: dict[str, list[dict[str, Any]]] = {
         "DONE": [],
         "SUPERSEDED_OR_CANCELLED": [],
+        "PENDING_ACCEPTANCE": [],
+        "ACCEPTED_AWAITING_WORK_PROOF": [],
         "ACTIVE_VERIFIED": [],
         "REQUIRED_NEXT": [],
         "WAITING_DEPENDENCIES": [],
@@ -145,6 +215,7 @@ def build_work_lifecycle(tasks: list[dict[str, Any]]) -> dict[str, Any]:
     }
     for task in tasks:
         truth = task_truth_state(task, done_ids)
+        work_proof = task_work_proof(task)
         row = {
             "id": task.get("id"),
             "title": task.get("title"),
@@ -167,6 +238,21 @@ def build_work_lifecycle(tasks: list[dict[str, Any]]) -> dict[str, Any]:
             "method_strategy": task.get("method_strategy"),
             "superseded_by": task.get("superseded_by"),
             "closure_reason": task.get("closure_reason"),
+            "acceptance_fingerprint": task.get("acceptance_fingerprint"),
+            "work_proof_state": "PROVEN" if work_proof["proven"] else "UNPROVEN",
+            "work_proof_at": work_proof["proof_at"],
+            "work_proof_reasons": work_proof["reasons"],
+            "executor_proof_state": (
+                "PROVEN"
+                if isinstance(task.get("executor_proof"), dict)
+                and task["executor_proof"].get("verified") is True
+                else "UNPROVEN"
+            ),
+            "executor_id": (
+                (task.get("executor_proof") or {}).get("executor_id")
+                if isinstance(task.get("executor_proof"), dict)
+                else None
+            ),
         }
         buckets.setdefault(truth, []).append(row)
     required = [
@@ -176,12 +262,14 @@ def build_work_lifecycle(tasks: list[dict[str, Any]]) -> dict[str, Any]:
         for row in rows
     ]
     actionable = (
+        buckets["PENDING_ACCEPTANCE"] +
+        buckets["ACCEPTED_AWAITING_WORK_PROOF"] +
         buckets["ACTIVE_VERIFIED"] + buckets["REQUIRED_NEXT"] +
         buckets["WAITING_DEPENDENCIES"] + buckets["BLOCKED"] +
         buckets["STALE_CLAIM_REQUIRES_RECONCILIATION"]
     )
     return {
-        "schema": "raios.work-lifecycle.v2",
+        "schema": "raios.work-lifecycle.v3",
         "counts": {key: len(rows) for key, rows in buckets.items()},
         "actionable_backlog_count": len(actionable),
         "buckets": buckets,
@@ -289,6 +377,8 @@ def build_founder_brief(tasks: list[dict[str, Any]], *, founder_available: bool,
         "founder_available": founder_available,
         "consultation_mode": "LIVE_CONSULTATION" if founder_available else "PREPARE_AND_HOLD_GOVERNED_DECISIONS",
         "completed_count": lifecycle["counts"]["DONE"],
+        "pending_acceptance": lifecycle["buckets"]["PENDING_ACCEPTANCE"],
+        "accepted_awaiting_work_proof": lifecycle["buckets"]["ACCEPTED_AWAITING_WORK_PROOF"],
         "active_verified": lifecycle["buckets"]["ACTIVE_VERIFIED"],
         "must_do_next": lifecycle["buckets"]["REQUIRED_NEXT"],
         "waiting_dependencies": lifecycle["buckets"]["WAITING_DEPENDENCIES"],
