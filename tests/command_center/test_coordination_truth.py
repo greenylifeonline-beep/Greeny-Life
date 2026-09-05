@@ -340,3 +340,32 @@ def test_global_delete_gate_is_fail_closed_until_every_foundation_fact_passes():
         "LEGACY_UNIQUE_VALUE_UNRESOLVED": 0,
     }}
     assert global_legacy_delete_gate_satisfied(open_gate) is True
+
+
+def test_verified_unavailable_executor_excludes_only_that_seat_from_dispatch():
+    task = {
+        "id": "EXEC", "status": "READY", "dependencies": [],
+        "allowed_agents": ["C2", "C6"],
+        "automatic_dispatch": True, "dispatch_authorized_by": "C1",
+        "executor_backends": {
+            "C2": {
+                "kind": "CURSOR_DESKTOP_BRIDGE",
+                "state": "FEATURE_GATE_DISABLED",
+                "verified": True,
+            }
+        },
+    }
+    rows = [
+        {"seat": "C2", "actor_id": "C2-ACTOR", "aliases": ["C2"],
+         "alias_prefixes": [], "auto_routable": True,
+         "coordination_available": True, "capabilities": []},
+        {"seat": "C6", "actor_id": "C6-ACTOR", "aliases": ["C6"],
+         "alias_prefixes": [], "auto_routable": True,
+         "coordination_available": True, "capabilities": []},
+    ]
+    plan = build_dispatch_plan([task], rows)
+    row = plan["queue"][0]
+    assert row["eligible_seats"] == ["C6"]
+    assert row["execution_ready_seats"] == ["C6"]
+    assert row["dispatchable_now"] is True
+    assert row["executor_backends"]["C2"]["state"] == "FEATURE_GATE_DISABLED"

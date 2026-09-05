@@ -14,6 +14,10 @@ CURRENT_DISPATCH_STATES = {
     "SYSTEM_FIRST_ACTIVE",
 }
 RECENT_ACTIVITY_SECONDS = 1800
+UNAVAILABLE_EXECUTOR_STATES = {
+    "UNAVAILABLE","DISABLED","BLOCKED","NOT_BOUND","NO_EXECUTOR",
+    "PRODUCT_GATE_DISABLED","FEATURE_GATE_DISABLED",
+}
 
 
 def _utc_now() -> datetime:
@@ -239,6 +243,9 @@ def build_work_lifecycle(tasks: list[dict[str, Any]]) -> dict[str, Any]:
             "superseded_by": task.get("superseded_by"),
             "closure_reason": task.get("closure_reason"),
             "acceptance_fingerprint": task.get("acceptance_fingerprint"),
+            "first_work_proof_deadline": task.get("first_work_proof_deadline"),
+            "executor_backend": task.get("executor_backend"),
+            "executor_backends": task.get("executor_backends"),
             "work_proof_state": "PROVEN" if work_proof["proven"] else "UNPROVEN",
             "work_proof_at": work_proof["proof_at"],
             "work_proof_reasons": work_proof["reasons"],
@@ -481,6 +488,21 @@ def dispatch_priority_score(task: dict[str, Any], tasks: list[dict[str, Any]]) -
     }
 
 
+def executor_backend_for_seat(task: dict[str, Any], seat: str) -> dict[str, Any] | None:
+    backends = task.get("executor_backends")
+    if not isinstance(backends, dict):
+        return None
+    backend = backends.get(str(seat or "").upper())
+    return backend if isinstance(backend, dict) else None
+
+
+def executor_backend_allows_seat(task: dict[str, Any], seat: str) -> bool:
+    backend = executor_backend_for_seat(task, seat)
+    if not backend or backend.get("verified") is not True:
+        return True
+    return str(backend.get("state") or "").upper() not in UNAVAILABLE_EXECUTOR_STATES
+
+
 def _task_allowed_for_route(task: dict[str, Any], row: dict[str, Any]) -> bool:
     allowed = {str(x).upper() for x in (task.get("allowed_agents") or []) if str(x).strip()}
     aliases = {str(row.get("seat") or "").upper(), str(row.get("actor_id") or "").upper()}
@@ -499,14 +521,15 @@ def _task_allowed_for_route(task: dict[str, Any], row: dict[str, Any]) -> bool:
         for x in (task.get("required_capabilities") or [])
         if str(x).strip()
     }
-    if not required:
-        return True
-    available = {
-        str(x).upper()
-        for x in (row.get("capabilities") or [])
-        if str(x).strip()
-    }
-    return required.issubset(available)
+    if required:
+        available = {
+            str(x).upper()
+            for x in (row.get("capabilities") or [])
+            if str(x).strip()
+        }
+        if not required.issubset(available):
+            return False
+    return executor_backend_allows_seat(task, str(row.get("seat") or ""))
 
 
 def _scope_overlap(left: str, right: str) -> bool:
@@ -601,6 +624,7 @@ def build_dispatch_plan(tasks: list[dict[str, Any]], route_rows: list[dict[str, 
             "acceleration_bonus": rank["acceleration_bonus"],
             "method_strategy": task.get("method_strategy"),
             "goal_contract": task.get("goal_contract"),
+            "executor_backends": task.get("executor_backends"),
         })
     queue.sort(key=lambda row: (-int(row["score"]), str(row["task_id"])))
     for index, row in enumerate(queue, 1):

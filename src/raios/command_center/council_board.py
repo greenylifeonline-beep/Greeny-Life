@@ -5,20 +5,22 @@ import os
 import threading
 import time
 import uuid
-from datetime import datetime, timezone
+from datetime import datetime, timedelta, timezone
 from pathlib import Path
 from typing import Any
 
 from .coordination_truth import (
     aliases_for_seat, build_founder_brief, build_work_lifecycle,
     canonical_seat, destructive_task_requested, dispatch_priority_score,
+    executor_backend_allows_seat, executor_backend_for_seat,
     founder_gate_satisfied, global_legacy_delete_gate_satisfied,
-    legacy_delete_gate_satisfied, task_claim_is_current,
+    legacy_delete_gate_satisfied, task_claim_is_current, task_work_proof,
 )
 from .task_actions import TaskActionExecutor
 from raios.council_ops.presence_challenge import PresenceChallengeStore
 
 SEATS=tuple(f"C{i}" for i in range(1,13))
+FIRST_WORK_PROOF_TIMEOUT_SECONDS=300
 def utc()->str:return datetime.now(timezone.utc).isoformat()
 def load(path:Path,default:Any)->Any:
     try:return json.loads(path.read_text(encoding="utf-8-sig"))
@@ -361,6 +363,91 @@ class CouncilBoard:
                         conflicts.append({"type":"ACTIVE_SCOPE_CONFLICT","task_id":other.get("id"),
                                           "owner":owner,"scope_a":left,"scope_b":right})
         return conflicts
+    def _reconcile_unproven_acceptances(self,data:dict[str,Any])->int:
+        returned=0;release_after=[]
+        now_dt=datetime.now(timezone.utc)
+        for task in data.get("tasks",[]):
+            if str(task.get("status") or "").upper()!="IN_PROGRESS":continue
+            if str(task.get("dispatch_status") or "").upper()!="ACCEPTED":continue
+            if task_work_proof(task).get("proven") is True:continue
+            backend=task.get("executor_backend") if isinstance(task.get("executor_backend"),dict) else {}
+            backend_state=str(backend.get("state") or task.get("executor_state") or "").upper()
+            unavailable=backend_state in {
+                "UNAVAILABLE","DISABLED","BLOCKED","NOT_BOUND","NO_EXECUTOR",
+                "PRODUCT_GATE_DISABLED","FEATURE_GATE_DISABLED",
+            }
+            accepted_at=task.get("accepted_at")
+            try:
+                accepted_dt=datetime.fromisoformat(str(accepted_at).replace("Z","+00:00"))
+            except (TypeError,ValueError):
+                accepted_dt=None
+            timeout=max(30,int(task.get("first_work_proof_timeout_seconds") or
+                               FIRST_WORK_PROOF_TIMEOUT_SECONDS))
+            timed_out=bool(
+                accepted_dt is not None and
+                (now_dt-accepted_dt).total_seconds()>=timeout
+            )
+            if not unavailable and not timed_out:continue
+            reason=("EXECUTOR_BACKEND_UNAVAILABLE" if unavailable
+                    else "FIRST_WORK_PROOF_TIMEOUT")
+            task["last_dispatch_target"]=task.get("assigned_to") or task.get("claimed_by")
+            task["last_dispatch_id"]=task.get("dispatch_id")
+            task["last_claimed_by"]=task.get("claimed_by")
+            task["last_acceptance_fingerprint"]=task.get("acceptance_fingerprint")
+            task["last_acceptance_signature_mode"]=task.get("acceptance_signature_mode")
+            task["last_accepted_at"]=task.get("accepted_at")
+            task["dispatch_status"]="RETURNED_NO_FIRST_WORK_PROOF"
+            task["status"]="READY";task["returned_at"]=utc()
+            task["return_reason"]=reason
+            task["work_proof_state"]="UNPROVEN"
+            task["executor_backend_snapshot"]=backend or None
+            checkpoint={
+                "schema":"raios.task-checkpoint.v1",
+                "checkpoint_id":"CHK-"+uuid.uuid4().hex[:16],
+                "task_id":task.get("id"),"actor":"RAIOS-WORKER",
+                "phase":"ACCEPTED_NO_WORK_PROOF",
+                "summary":(
+                    "Task acceptance was authenticated, but no post-acceptance "
+                    "executor/progress/checkpoint/evidence proof was observed. "
+                    "RAIOS returned the task to READY without claiming work occurred."
+                ),
+                "completed_steps":[],"changed_files":[],"validation":[],
+                "evidence_refs":[],
+                "previous_checkpoint_id":(
+                    (task.get("resume_checkpoint") or {}).get("checkpoint_id")
+                    if isinstance(task.get("resume_checkpoint"),dict) else None
+                ),
+                "next_step":(
+                    "Bind a verified execution backend or produce a first signed "
+                    "work checkpoint before claiming ACTIVE_VERIFIED."
+                ),
+                "blocker":reason,"created_at":utc(),
+            }
+            task["last_system_recovery_checkpoint"]=checkpoint
+            if not task.get("resume_checkpoint"):
+                task["resume_checkpoint"]=checkpoint
+                task["last_checkpoint_id"]=checkpoint["checkpoint_id"]
+                task["checkpoint_updated_at"]=checkpoint["created_at"]
+            atomic(
+                self.receipts/f"{checkpoint['checkpoint_id']}.checkpoint.receipt.json",
+                {**checkpoint,"status":"SYSTEM_RECOVERY_SAVED",
+                 "single_task_ledger":True},
+            )
+            release_after.append(str(task.get("id") or ""))
+            for key in (
+                "assigned_to","assigned_by","dispatched_by","dispatch_id",
+                "dispatched_at","claimed_by","accepted_at",
+                "acceptance_fingerprint","acceptance_signature_mode",
+                "first_work_proof_deadline","executor_backend",
+            ):
+                task.pop(key,None)
+            returned+=1
+        if returned:
+            atomic(self.tasks,data)
+            for task_id in release_after:
+                self._release_task_locks(
+                    task_id,"NO_FIRST_WORK_PROOF",all_kinds=True)
+        return returned
     def _reconcile_absent_assignments(self,data:dict[str,Any])->int:
         returned=0;release_after=[]
         for task in data.get("tasks",[]):
@@ -410,6 +497,8 @@ class CouncilBoard:
         return returned
     def snapshot(self)->dict[str,Any]:
         data=load(self.tasks,{"tasks":[]})
+        returned_unproven=self._reconcile_unproven_acceptances(data)
+        data=load(self.tasks,{"tasks":[]}) if returned_unproven else data
         returned=self._reconcile_absent_assignments(data)
         tasks=data.get("tasks",[])
         buckets={"DONE":[],"IN_PROGRESS":[],"READY":[],"BLOCKED":[],"NEXT":[]}
@@ -427,7 +516,9 @@ class CouncilBoard:
         presence=load(self.presence,{"seats":{}}).get("seats",{})
         return {"schema":"raios.council-board.v1","generated_at":utc(),
                 "summary":{k:len(v) for k,v in buckets.items()},
-                "buckets":buckets,"presence":presence,"returned_absent_assignments":returned,
+                "buckets":buckets,"presence":presence,
+                "returned_absent_assignments":returned,
+                "returned_unproven_acceptances":returned_unproven,
                 "single_task_ledger":True,
                 "work_gate":{"signed_presence_required":True,"live_bound_consumer_required":True,
                              "worker_assignment_required":True,
@@ -442,7 +533,7 @@ class CouncilBoard:
             row=load(self.presence,{"seats":{}}).get("seats",{}).get(seat,{})
             available={str(x).upper() for x in row.get("capabilities",[]) if str(x).strip()}
             if not required.issubset(available):return False
-        return True
+        return executor_backend_allows_seat(task,seat)
     def _evidence_exists(self,ref:str)->bool:
         try:
             path=Path(ref)
@@ -485,14 +576,28 @@ class CouncilBoard:
                 raise ValueError("ACTIVE_SCOPE_CONFLICT_AT_ACCEPTANCE")
             if self._lock_conflicts(task):raise ValueError("ACTIVE_CANONICAL_LOCK_CONFLICT_AT_ACCEPTANCE")
             signature=self._actor_session_signature(actor,actor_proof,"TASK_ACCEPT",dispatch_id)
+            accepted_at=signature.get("signed_at") or utc()
+            accepted_dt=datetime.fromisoformat(str(accepted_at).replace("Z","+00:00"))
+            timeout=max(30,int(task.get("first_work_proof_timeout_seconds") or
+                               FIRST_WORK_PROOF_TIMEOUT_SECONDS))
+            deadline=(accepted_dt+timedelta(seconds=timeout)).isoformat()
+            selected_backend=executor_backend_for_seat(task,actor)
             task.update(status="IN_PROGRESS",claimed_by=actor,dispatch_status="ACCEPTED",
-                        accepted_at=signature.get("signed_at") or utc(),
+                        accepted_at=accepted_at,
+                        first_work_proof_deadline=deadline,
+                        work_proof_state="UNPROVEN",
                         acceptance_fingerprint=signature["fingerprint"],
                         acceptance_signature_mode=signature["signature_mode"])
+            if selected_backend is not None:
+                task["executor_backend"]=dict(selected_backend)
+            else:
+                task.pop("executor_backend",None)
             atomic(self.tasks,data)
-            receipt={"schema":"raios.task-acceptance-receipt.v2","task_id":task_id,
+            receipt={"schema":"raios.task-acceptance-receipt.v3","task_id":task_id,
                      "dispatch_id":dispatch_id,"actor":actor,"status":"ACCEPTED",
-                     "at":signature.get("signed_at") or utc(),
+                     "at":accepted_at,
+                     "first_work_proof_deadline":deadline,
+                     "work_proof_state":"UNPROVEN",
                      "acceptance_fingerprint":signature["fingerprint"],
                      "signature_mode":signature["signature_mode"],
                      "session_id":signature.get("session_id"),"device_id":signature.get("device_id"),
@@ -677,7 +782,10 @@ class CouncilBoard:
             reports=self._process_reports()
             presence_prompts=self._probe_unverified_seats(worker)
             data=load(self.tasks,{"tasks":[]})
+            returned_unproven=self._reconcile_unproven_acceptances(data)
+            data=load(self.tasks,{"tasks":[]}) if returned_unproven else data
             returned=self._reconcile_absent_assignments(data)
+            data=load(self.tasks,{"tasks":[]}) if returned else data
             locks_reconciled=self._reconcile_stale_locks(data)
             actions=self.actions.execute_ready(data)
             if actions["actions_processed"] or actions["actions_blocked"]:
@@ -685,6 +793,7 @@ class CouncilBoard:
             dispatched=self._auto_dispatch(worker)
             coordination_changes=self._publish_coordination_change(worker)
             return {**reports,**actions,"presence_prompts":presence_prompts,
+                    "tasks_returned_unproven":returned_unproven,
                     "tasks_returned_absent":returned,"locks_reconciled":locks_reconciled,
                     "tasks_dispatched":dispatched,"coordination_changes":coordination_changes}
     def dispatch(self,task_id:str,target:str,worker:Any)->dict[str,Any]:

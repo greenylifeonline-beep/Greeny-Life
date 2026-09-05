@@ -262,7 +262,8 @@ def test_system_first_coordination_receipt_then_single_broadcast(tmp_path):
     repo=tmp_path/"Greeny-Life";(repo/".ai-os/state").mkdir(parents=True)
     (repo/".ai-os/state/TASKS.json").write_text(json.dumps({"tasks":[{
         "id":"SYS-COORD","status":"IN_PROGRESS","claimed_by":"CHATGPT-NORMAL",
-        "scope":["src/raios/command_center"],"dispatch_status":"SYSTEM_FIRST_ACTIVE"
+        "scope":["src/raios/command_center"],"dispatch_status":"SYSTEM_FIRST_ACTIVE",
+        "execution_proof":{"verified":True,"verified_at":datetime.now(timezone.utc).isoformat()}
     }]}),encoding="utf-8")
     (repo/".ai-os/state/LOCKS.json").write_text(json.dumps({"locks":[{
         "id":"L1","task_id":"SYS-COORD","agent":"CHATGPT-NORMAL","lease_holder":"CHATGPT-NORMAL",
@@ -383,3 +384,101 @@ def test_manual_dispatch_blocks_destructive_task_until_deep_legacy_gate(tmp_path
         "LEGACY_UNIQUE_VALUE_UNRESOLVED":0
     }}),encoding="utf-8")
     assert board.dispatch("NEXT","C2",worker)["status"]=="DISPATCHED_PENDING_ACCEPTANCE"
+
+
+def test_accepted_task_returns_to_ready_when_first_work_proof_times_out(tmp_path):
+    board,_,_=setup(tmp_path)
+    data=json.loads(board.tasks.read_text(encoding="utf-8"))
+    task=data["tasks"][1]
+    accepted=(datetime.now(timezone.utc)-timedelta(minutes=10)).isoformat()
+    task.update(
+        status="IN_PROGRESS",dispatch_status="ACCEPTED",
+        assigned_to="C2",claimed_by="C2",dispatch_id="DSP-old",
+        accepted_at=accepted,acceptance_fingerprint="ACC-old",
+        acceptance_signature_mode="SESSION_BOUND_ATTENDANCE_FINGERPRINT",
+        first_work_proof_timeout_seconds=60,
+    )
+    board.tasks.write_text(json.dumps(data),encoding="utf-8")
+    board.locks.write_text(json.dumps({"locks":[{
+        "id":"L1","task_id":"NEXT","status":"ACTIVE","scope":"src",
+        "agent":"C2","lease_holder":"C2"
+    }]}),encoding="utf-8")
+    returned=board._reconcile_unproven_acceptances(data)
+    assert returned==1
+    saved=json.loads(board.tasks.read_text(encoding="utf-8"))["tasks"][1]
+    assert saved["status"]=="READY"
+    assert saved["dispatch_status"]=="RETURNED_NO_FIRST_WORK_PROOF"
+    assert saved["return_reason"]=="FIRST_WORK_PROOF_TIMEOUT"
+    assert saved["last_acceptance_fingerprint"]=="ACC-old"
+    assert "claimed_by" not in saved and "assigned_to" not in saved
+    assert saved["last_system_recovery_checkpoint"]["phase"]=="ACCEPTED_NO_WORK_PROOF"
+    locks=json.loads(board.locks.read_text(encoding="utf-8"))["locks"]
+    assert locks[0]["status"]=="RELEASED"
+
+
+def test_post_acceptance_work_proof_prevents_first_proof_return(tmp_path):
+    board,_,_=setup(tmp_path)
+    data=json.loads(board.tasks.read_text(encoding="utf-8"))
+    task=data["tasks"][1]
+    accepted=datetime.now(timezone.utc)-timedelta(minutes=10)
+    task.update(
+        status="IN_PROGRESS",dispatch_status="ACCEPTED",
+        assigned_to="C2",claimed_by="C2",dispatch_id="DSP-proof",
+        accepted_at=accepted.isoformat(),
+        first_work_proof_timeout_seconds=60,
+        work_proof_at=(accepted+timedelta(seconds=30)).isoformat(),
+    )
+    board.tasks.write_text(json.dumps(data),encoding="utf-8")
+    assert board._reconcile_unproven_acceptances(data)==0
+    saved=json.loads(board.tasks.read_text(encoding="utf-8"))["tasks"][1]
+    assert saved["status"]=="IN_PROGRESS"
+    assert saved["dispatch_status"]=="ACCEPTED"
+
+
+def test_unavailable_executor_returns_accepted_task_immediately(tmp_path):
+    board,_,_=setup(tmp_path)
+    data=json.loads(board.tasks.read_text(encoding="utf-8"))
+    task=data["tasks"][1]
+    task.update(
+        status="IN_PROGRESS",dispatch_status="ACCEPTED",
+        assigned_to="C2",claimed_by="C2",dispatch_id="DSP-no-executor",
+        accepted_at=datetime.now(timezone.utc).isoformat(),
+        acceptance_fingerprint="ACC-no-executor",
+        executor_backend={
+            "kind":"CURSOR_DESKTOP_BRIDGE",
+            "state":"FEATURE_GATE_DISABLED",
+            "verified":True,
+            "reason":"CURSOR_PRODUCT_GATE_FALSE_AND_USER_SETTING_FALSE",
+        },
+    )
+    board.tasks.write_text(json.dumps(data),encoding="utf-8")
+    assert board._reconcile_unproven_acceptances(data)==1
+    saved=json.loads(board.tasks.read_text(encoding="utf-8"))["tasks"][1]
+    assert saved["status"]=="READY"
+    assert saved["return_reason"]=="EXECUTOR_BACKEND_UNAVAILABLE"
+    assert saved["executor_backend_snapshot"]["state"]=="FEATURE_GATE_DISABLED"
+
+
+def test_verified_unavailable_executor_backend_blocks_only_that_seat(tmp_path):
+    board,presence,_=setup(tmp_path);worker=Worker()
+    data=json.loads(board.tasks.read_text(encoding="utf-8"))
+    task=data["tasks"][1]
+    task["allowed_agents"]=["C2","C6"]
+    task["executor_backends"]={
+        "C2":{
+            "kind":"CURSOR_DESKTOP_BRIDGE",
+            "state":"FEATURE_GATE_DISABLED",
+            "verified":True,
+        }
+    }
+    board.tasks.write_text(json.dumps(data),encoding="utf-8")
+    expiry=(datetime.now(timezone.utc)+timedelta(minutes=2)).isoformat()
+    presence.write_text(json.dumps({"seats":{
+        "C2":{"presence":"PRESENT","signature_valid":True,"lease_expires_at":expiry},
+        "C6":{"presence":"PRESENT","signature_valid":True,"lease_expires_at":expiry},
+    }}),encoding="utf-8")
+    with pytest.raises(ValueError,match="SEAT_NOT_ALLOWED_FOR_TASK"):
+        board.dispatch("NEXT","C2",worker)
+    out=board.dispatch("NEXT","C6",worker)
+    assert out["status"]=="DISPATCHED_PENDING_ACCEPTANCE"
+    assert out["target"]=="C6"

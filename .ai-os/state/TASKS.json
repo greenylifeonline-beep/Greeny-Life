@@ -2225,7 +2225,7 @@
         "C2",
         "C6"
       ],
-      "status": "IN_PROGRESS",
+      "status": "READY",
       "scheduler_priority": "CRITICAL",
       "time_compression_priority": 10,
       "automatic_dispatch": true,
@@ -2329,8 +2329,8 @@
           "fit": "SECONDARY_OR_RECONCILIATION"
         }
       },
-      "updated_at": "2026-09-04T21:49:15.938276+00:00",
-      "dispatch_status": "ACCEPTED",
+      "updated_at": "2026-09-05T02:18:25.144287+00:00",
+      "dispatch_status": "RETURNED_ABSENT_WITH_CHECKPOINT",
       "system_owner": "RAIOS_SYSTEM",
       "acceptance_fingerprint": "ffdc24708543729f847dd24699b4c229d7b206f0a7d164aa6aeb2f1a5a2003b9",
       "acceptance_signature_mode": "SESSION_BOUND_ATTENDANCE_FINGERPRINT",
@@ -2367,10 +2367,10 @@
       ],
       "duplicate_task_merged": true,
       "single_canonical_forensic_task": true,
-      "last_dispatch_target": "C6",
-      "last_dispatch_id": "DSP-e750d011b9794a5f",
-      "last_claimed_by": "C6",
-      "returned_at": "2026-09-04T23:47:28.202134+00:00",
+      "last_dispatch_target": "C2",
+      "last_dispatch_id": "DSP-b863599052b44947",
+      "last_claimed_by": "C2",
+      "returned_at": "2026-09-05T01:06:54.715998+00:00",
       "return_reason": "TARGET_NOT_LIVE_BOUND_CONSUMER",
       "legacy_claim_reconciled": false,
       "resume_checkpoint": {
@@ -2390,13 +2390,27 @@
       },
       "last_checkpoint_id": "CHK-9583cc5ad20642a8",
       "checkpoint_updated_at": "2026-09-04T22:14:16.327011+00:00",
-      "assigned_to": "C2",
-      "assigned_by": "C1",
-      "dispatched_by": "RAIOS-WORKER",
-      "dispatch_id": "DSP-b863599052b44947",
-      "dispatched_at": "2026-09-04T23:47:38.712472+00:00",
-      "claimed_by": "C2",
-      "accepted_at": "2026-09-04T23:48:22.032274+00:00"
+      "first_work_proof_timeout_seconds": 300,
+      "work_proof_state": "UNPROVEN",
+      "executor_backends": {
+        "C2": {
+          "kind": "CURSOR_DESKTOP_BRIDGE",
+          "state": "FEATURE_GATE_DISABLED",
+          "verified": true,
+          "verified_at": "2026-09-05T02:18:25.144287+00:00",
+          "evidence": {
+            "desktop_bridge_discovery_dir_exists": false,
+            "feature_gate_key": "cursor.desktopBridge.enabled",
+            "feature_gate_value": false,
+            "user_setting_key": "cursor/desktopBridgeUserEnabled",
+            "user_setting_present": false,
+            "user_setting_effective_value": false,
+            "cursor_agent_implementation_found": false,
+            "cursor_agent_parser_only": true
+          },
+          "reason": "CURSOR_PRODUCT_FEATURE_GATE_FALSE_AND_USER_SETTING_FALSE_NO_LIVE_EXECUTOR_BRIDGE"
+        }
+      }
     }
   ],
   "programs": [
