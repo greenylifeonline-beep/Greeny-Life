@@ -1,0 +1,1225 @@
+{
+  "schema": "raios.deep-legacy-forensic.business-commercial-revalidation.v1",
+  "generated_at": "2026-09-05T18:28:33.586521+00:00",
+  "task_id": "RAIOS-DEEP-LEGACY-COMMERCIAL-REVALIDATION-202609-01",
+  "raw_business_commercial_rows": 83,
+  "category_counts": {
+    "BUSINESS_KNOWLEDGE_RECOVERY_REVIEW": 3,
+    "BUSINESS_CAPABILITY_RECOVERY_REVIEW": 9,
+    "MARKET_TAXONOMY_RECOVERY_REVIEW": 4,
+    "CUSTOMER_DATA_RECOVERY_REVIEW": 1,
+    "SUPPLIER_DATA_RECOVERY_REVIEW": 1,
+    "PROVENANCE_OR_INVENTORY_EVIDENCE": 27,
+    "STALE_SALVAGE_EVIDENCE_REQUIRES_REVALIDATION": 21,
+    "CURRENT_CODE_SURFACE_PRESENT_STATIC_ONLY": 6,
+    "CURRENT_PATH_EVOLUTION_REVIEW": 11
+  },
+  "substantive_review_count": 29,
+  "dispositions": [
+    {
+      "historical_object": "aec1f19fa53846ebdb312979f58a8f08ef712768",
+      "historical_path": ".ai-os/learning/c5-foundry-v0.1/knowledge-objects/EU_ACCESS2MARKETS_IMPORT.json",
+      "priority": "CRITICAL",
+      "priority_score": 27,
+      "domains": [
+        "import",
+        "knowledge",
+        "learning",
+        "market"
+      ],
+      "static_state": "STRUCTURED_LEAF_VALUES_PARTIAL_OR_MISSING",
+      "static_coverage_ratio": 0.4,
+      "phase2_best_current_match": ".ai-os/learning/c5-foundry-v0.1/SOURCE-REGISTRY.json",
+      "recovery_state": "RECOVERABLE_FROM_GIT",
+      "category": "BUSINESS_KNOWLEDGE_RECOVERY_REVIEW"
+    },
+    {
+      "historical_object": "9a39d21e3747b0c17014bacf0a409aa9399c6d6f",
+      "historical_path": ".architecture-backups/pre-unified-intelligence-20260726-145157/lib/lib/data/markets.ts",
+      "priority": "CRITICAL",
+      "priority_score": 26,
+      "domains": [
+        "intelligence",
+        "market"
+      ],
+      "static_state": "CODE_SYMBOL_SURFACE_PARTIAL_OR_MISSING",
+      "static_coverage_ratio": 0.0,
+      "phase2_best_current_match": "canonical/intelligence/intelligence/engines/audit-engine.ts",
+      "recovery_state": "RECOVERABLE_FROM_GIT",
+      "category": "BUSINESS_CAPABILITY_RECOVERY_REVIEW"
+    },
+    {
+      "historical_object": "e1d0030303e753b6342bcbe78ecf11aa56b1307d",
+      "historical_path": ".architecture-backups/pre-unified-intelligence-20260726-145157/data/data/06_markets.json",
+      "priority": "CRITICAL",
+      "priority_score": 24,
+      "domains": [
+        "intelligence",
+        "market"
+      ],
+      "static_state": "STRUCTURED_LEAF_VALUES_PARTIAL_OR_MISSING",
+      "static_coverage_ratio": 0.325581,
+      "phase2_best_current_match": "archive/old_folders/GREENY-LIFE-EOS-PRODUCTION/platform/market-intelligence/country-intelligence/countries.json",
+      "recovery_state": "RECOVERABLE_FROM_GIT",
+      "category": "MARKET_TAXONOMY_RECOVERY_REVIEW"
+    },
+    {
+      "historical_object": "47c06707e5742092e7e5eb9a0f602404a231dc41",
+      "historical_path": ".architecture-backups/pre-unified-intelligence-20260726-145157/data/data/customers.json",
+      "priority": "CRITICAL",
+      "priority_score": 24,
+      "domains": [
+        "customer",
+        "intelligence"
+      ],
+      "static_state": "STRUCTURED_LEAF_VALUES_PARTIAL_OR_MISSING",
+      "static_coverage_ratio": 0.225806,
+      "phase2_best_current_match": "canonical/data/customer-domain/customers.json",
+      "recovery_state": "RECOVERABLE_FROM_GIT",
+      "category": "CUSTOMER_DATA_RECOVERY_REVIEW"
+    },
+    {
+      "historical_object": "4e6e5adeba28d807958f350d93f7c217ae940c00",
+      "historical_path": ".architecture-backups/pre-unified-intelligence-20260726-145157/data/data/legacy/markets.json",
+      "priority": "CRITICAL",
+      "priority_score": 24,
+      "domains": [
+        "intelligence",
+        "market"
+      ],
+      "static_state": "STRUCTURED_LEAF_VALUES_PARTIAL_OR_MISSING",
+      "static_coverage_ratio": 0.0,
+      "phase2_best_current_match": "canonical/data/customer-domain/customer-segments.json",
+      "recovery_state": "RECOVERABLE_FROM_GIT",
+      "category": "MARKET_TAXONOMY_RECOVERY_REVIEW"
+    },
+    {
+      "historical_object": "5df32329d06e7476abd79e5cdfec921820448376",
+      "historical_path": ".architecture-backups/pre-unified-intelligence-20260726-145157/data/data/legacy_markets.json",
+      "priority": "CRITICAL",
+      "priority_score": 24,
+      "domains": [
+        "intelligence",
+        "market"
+      ],
+      "static_state": "STRUCTURED_LEAF_VALUES_PARTIAL_OR_MISSING",
+      "static_coverage_ratio": 0.0,
+      "phase2_best_current_match": "archive/old_folders/unified-intelligence/reports/discovery/capability-discovery-20260726-145740.json",
+      "recovery_state": "RECOVERABLE_FROM_GIT",
+      "category": "BUSINESS_CAPABILITY_RECOVERY_REVIEW"
+    },
+    {
+      "historical_object": "5bf3e82239295e2442c312398a00f07758b106ab",
+      "historical_path": ".architecture-backups/pre-unified-intelligence-20260726-145157/data/data/suppliers.json",
+      "priority": "CRITICAL",
+      "priority_score": 24,
+      "domains": [
+        "intelligence",
+        "supplier"
+      ],
+      "static_state": "STRUCTURED_LEAF_VALUES_PARTIAL_OR_MISSING",
+      "static_coverage_ratio": 0.421053,
+      "phase2_best_current_match": "data/controlled-intake/legacy-commercial/20260815-001201/suppliers.json",
+      "recovery_state": "RECOVERABLE_FROM_GIT",
+      "category": "SUPPLIER_DATA_RECOVERY_REVIEW"
+    },
+    {
+      "historical_object": "18ae65a774bd42890bb2b82998cea0329ff1cba4",
+      "historical_path": "_raios-file-intelligence-parallel/src/raios_fi/inventory.py",
+      "priority": "CRITICAL",
+      "priority_score": 24,
+      "domains": [
+        "intelligence",
+        "inventory"
+      ],
+      "static_state": "STATIC_AST_UNITS_PARTIAL_OR_MISSING",
+      "static_coverage_ratio": 0.294118,
+      "phase2_best_current_match": "RAIOS/V9/runtime/a13_agent_capability_dedup_certification.py",
+      "recovery_state": "RECOVERABLE_FROM_GIT",
+      "category": "PROVENANCE_OR_INVENTORY_EVIDENCE"
+    },
+    {
+      "historical_object": "a7215fd1cf011f21cf5e71da5f030233b9f9485d",
+      "historical_path": "_raios-file-intelligence-parallel/src/raios_fi/inventory.py",
+      "priority": "CRITICAL",
+      "priority_score": 24,
+      "domains": [
+        "intelligence",
+        "inventory"
+      ],
+      "static_state": "STATIC_AST_UNITS_PARTIAL_OR_MISSING",
+      "static_coverage_ratio": 0.294118,
+      "phase2_best_current_match": "RAIOS/V9/runtime/a13_agent_capability_dedup_certification.py",
+      "recovery_state": "RECOVERABLE_FROM_GIT",
+      "category": "PROVENANCE_OR_INVENTORY_EVIDENCE"
+    },
+    {
+      "historical_object": "4054386ee73ef2c72ce1e0896c4a5a02236e08bf",
+      "historical_path": "_raios-file-intelligence-parallel/reports/FILE-TYPE-INVENTORY.json",
+      "priority": "CRITICAL",
+      "priority_score": 22,
+      "domains": [
+        "intelligence",
+        "inventory"
+      ],
+      "static_state": "STRUCTURED_LEAF_VALUES_PARTIAL_OR_MISSING",
+      "static_coverage_ratio": 0.114286,
+      "phase2_best_current_match": "archive/generated-reports/legacy-review/2026-08-13_143908/LEGACY-INVENTORY.json",
+      "recovery_state": "RECOVERABLE_FROM_GIT",
+      "category": "PROVENANCE_OR_INVENTORY_EVIDENCE"
+    },
+    {
+      "historical_object": "66a67bf99f4d667924d1b774849117916d3eb3c6",
+      "historical_path": "_raios-file-intelligence-parallel/reports/FILE-TYPE-INVENTORY.json",
+      "priority": "CRITICAL",
+      "priority_score": 22,
+      "domains": [
+        "intelligence",
+        "inventory"
+      ],
+      "static_state": "STRUCTURED_LEAF_VALUES_PARTIAL_OR_MISSING",
+      "static_coverage_ratio": 0.085714,
+      "phase2_best_current_match": "archive/generated-reports/legacy-review/2026-08-12_224640/LEGACY-INVENTORY.json",
+      "recovery_state": "RECOVERABLE_FROM_GIT",
+      "category": "PROVENANCE_OR_INVENTORY_EVIDENCE"
+    },
+    {
+      "historical_object": "7f7a495d6150119dae64b880d868116b0374f83b",
+      "historical_path": "_raios-file-intelligence-parallel/reports/FILE-TYPE-INVENTORY.json",
+      "priority": "CRITICAL",
+      "priority_score": 22,
+      "domains": [
+        "intelligence",
+        "inventory"
+      ],
+      "static_state": "STRUCTURED_LEAF_VALUES_PARTIAL_OR_MISSING",
+      "static_coverage_ratio": 0.085714,
+      "phase2_best_current_match": "archive/generated-reports/legacy-review/2026-08-12_224640/LEGACY-INVENTORY.json",
+      "recovery_state": "RECOVERABLE_FROM_GIT",
+      "category": "PROVENANCE_OR_INVENTORY_EVIDENCE"
+    },
+    {
+      "historical_object": "41d8255cbb9c848242e1a72d720d6f60e82832cc",
+      "historical_path": "_raios-file-intelligence-parallel/reports/ROOT-INVENTORY.json",
+      "priority": "CRITICAL",
+      "priority_score": 22,
+      "domains": [
+        "intelligence",
+        "inventory"
+      ],
+      "static_state": "STRUCTURED_LEAF_VALUES_PARTIAL_OR_MISSING",
+      "static_coverage_ratio": 0.010471,
+      "phase2_best_current_match": "archive/generated-reports/legacy-review/2026-08-12_224640/LEGACY-INVENTORY.md",
+      "recovery_state": "RECOVERABLE_FROM_GIT",
+      "category": "PROVENANCE_OR_INVENTORY_EVIDENCE"
+    },
+    {
+      "historical_object": "690e7910122567b6452888c9c4567b82890928ca",
+      "historical_path": "_raios-file-intelligence-parallel/reports/ROOT-INVENTORY.json",
+      "priority": "CRITICAL",
+      "priority_score": 22,
+      "domains": [
+        "intelligence",
+        "inventory"
+      ],
+      "static_state": "STRUCTURED_LEAF_VALUES_PARTIAL_OR_MISSING",
+      "static_coverage_ratio": 0.010471,
+      "phase2_best_current_match": "archive/generated-reports/legacy-review/2026-08-12_224640/LEGACY-INVENTORY.md",
+      "recovery_state": "RECOVERABLE_FROM_GIT",
+      "category": "PROVENANCE_OR_INVENTORY_EVIDENCE"
+    },
+    {
+      "historical_object": "7543ff8553827366fa0ca165f83b5e95a89eb829",
+      "historical_path": "_raios-file-intelligence-parallel/reports/ROOT-INVENTORY.json",
+      "priority": "CRITICAL",
+      "priority_score": 22,
+      "domains": [
+        "intelligence",
+        "inventory"
+      ],
+      "static_state": "STRUCTURED_LEAF_VALUES_PARTIAL_OR_MISSING",
+      "static_coverage_ratio": 0.010582,
+      "phase2_best_current_match": "archive/generated-reports/legacy-review/2026-08-13_143908/LEGACY-INVENTORY.md",
+      "recovery_state": "RECOVERABLE_FROM_GIT",
+      "category": "PROVENANCE_OR_INVENTORY_EVIDENCE"
+    },
+    {
+      "historical_object": "0ea235fc8eea31048864726a30c24090af584cba",
+      "historical_path": "_raios-file-intelligence-parallel/reports/TOOL-INVENTORY.json",
+      "priority": "CRITICAL",
+      "priority_score": 22,
+      "domains": [
+        "intelligence",
+        "inventory"
+      ],
+      "static_state": "STRUCTURED_LEAF_VALUES_PARTIAL_OR_MISSING",
+      "static_coverage_ratio": 0.032609,
+      "phase2_best_current_match": "lib/intelligence/tool-registry.ts",
+      "recovery_state": "RECOVERABLE_FROM_GIT",
+      "category": "PROVENANCE_OR_INVENTORY_EVIDENCE"
+    },
+    {
+      "historical_object": "4965a99ed1e34c9be7ae1f8b6e14a0d0e87c2d6d",
+      "historical_path": "_raios-file-intelligence-parallel/reports/TOOL-INVENTORY.json",
+      "priority": "CRITICAL",
+      "priority_score": 22,
+      "domains": [
+        "intelligence",
+        "inventory"
+      ],
+      "static_state": "STRUCTURED_LEAF_VALUES_PARTIAL_OR_MISSING",
+      "static_coverage_ratio": 0.032609,
+      "phase2_best_current_match": "lib/intelligence/tool-registry.ts",
+      "recovery_state": "RECOVERABLE_FROM_GIT",
+      "category": "PROVENANCE_OR_INVENTORY_EVIDENCE"
+    },
+    {
+      "historical_object": "b8428644fcd609f60de45c470b678700c50b7370",
+      "historical_path": "_raios-file-intelligence-parallel/reports/TOOL-INVENTORY.json",
+      "priority": "CRITICAL",
+      "priority_score": 22,
+      "domains": [
+        "intelligence",
+        "inventory"
+      ],
+      "static_state": "STRUCTURED_LEAF_VALUES_PARTIAL_OR_MISSING",
+      "static_coverage_ratio": 0.033333,
+      "phase2_best_current_match": "lib/intelligence/tool-registry.ts",
+      "recovery_state": "RECOVERABLE_FROM_GIT",
+      "category": "PROVENANCE_OR_INVENTORY_EVIDENCE"
+    },
+    {
+      "historical_object": "bb4ed18218f0223baea40fd339a31889903a98fc",
+      "historical_path": "_raios-old-business-salvage/learning/BOM-AST-AND-FALSE-PASS-LESSON.json",
+      "priority": "CRITICAL",
+      "priority_score": 22,
+      "domains": [
+        "business",
+        "learning"
+      ],
+      "static_state": "STRUCTURED_LEAF_VALUES_PARTIAL_OR_MISSING",
+      "static_coverage_ratio": 0.173913,
+      "phase2_best_current_match": "intelligence/knowledge_base/assimilated/GRANITE.json",
+      "recovery_state": "RECOVERABLE_FROM_GIT",
+      "category": "STALE_SALVAGE_EVIDENCE_REQUIRES_REVALIDATION"
+    },
+    {
+      "historical_object": "6d91b4303f8847ef4571b3150561d04695869d4a",
+      "historical_path": "_raios-old-business-salvage/learning/FINAL-CRITICAL-SALVAGE-LESSON.json",
+      "priority": "CRITICAL",
+      "priority_score": 22,
+      "domains": [
+        "business",
+        "learning"
+      ],
+      "static_state": "STRUCTURED_LEAF_VALUES_PARTIAL_OR_MISSING",
+      "static_coverage_ratio": 0.230769,
+      "phase2_best_current_match": "intelligence/knowledge_base/assimilated/QWEN.json",
+      "recovery_state": "RECOVERABLE_FROM_GIT",
+      "category": "STALE_SALVAGE_EVIDENCE_REQUIRES_REVALIDATION"
+    },
+    {
+      "historical_object": "2db31cc073910ea70836c760c0c4352d730f9dcf",
+      "historical_path": "_raios-old-business-salvage/learning/FINAL-TWO-CAPABILITY-SALVAGE.json",
+      "priority": "CRITICAL",
+      "priority_score": 22,
+      "domains": [
+        "business",
+        "learning"
+      ],
+      "static_state": "STRUCTURED_LEAF_VALUES_PARTIAL_OR_MISSING",
+      "static_coverage_ratio": 0.357143,
+      "phase2_best_current_match": "archive/generated-reports/legacy-review/brain-recovery-decision-2026-08-13_154245/E3-LEGACY-BRAIN-RECOVERY-DECISION.md",
+      "recovery_state": "RECOVERABLE_FROM_GIT",
+      "category": "STALE_SALVAGE_EVIDENCE_REQUIRES_REVALIDATION"
+    },
+    {
+      "historical_object": "05fe0b9d33322a17eccf8ce4200e2153e1bcc039",
+      "historical_path": "_raios-old-business-salvage/learning/OLD-BUSINESS-SALVAGE-LEARNING-EVENT.json",
+      "priority": "CRITICAL",
+      "priority_score": 22,
+      "domains": [
+        "business",
+        "learning"
+      ],
+      "static_state": "STRUCTURED_LEAF_VALUES_PARTIAL_OR_MISSING",
+      "static_coverage_ratio": 0.25,
+      "phase2_best_current_match": ".ai-os/reports/master-estate-census/RAIOS-TOTAL-ESTATE-PHASE1-01-20260826T185525Z/tree-copy-repo-recon/RAIOS-TOTAL-TREE-COPY-REPO-RECON-01B/SEMANTIC-STALE-LABEL-INVENTORY.json",
+      "recovery_state": "RECOVERABLE_FROM_GIT",
+      "category": "STALE_SALVAGE_EVIDENCE_REQUIRES_REVALIDATION"
+    },
+    {
+      "historical_object": "6deab7a440c567a6cef10ec5d9be45c0f2d4e41f",
+      "historical_path": "_raios-old-business-salvage/learning/REPOSITORY-CONVERGENCE-ZERO-GAP.json",
+      "priority": "CRITICAL",
+      "priority_score": 22,
+      "domains": [
+        "business",
+        "learning"
+      ],
+      "static_state": "STRUCTURED_LEAF_VALUES_PARTIAL_OR_MISSING",
+      "static_coverage_ratio": 0.25,
+      "phase2_best_current_match": "lib/intelligence/export-decision.ts",
+      "recovery_state": "RECOVERABLE_FROM_GIT",
+      "category": "STALE_SALVAGE_EVIDENCE_REQUIRES_REVALIDATION"
+    },
+    {
+      "historical_object": "76d55a2a91ee29a693d6aa36a0d2d3de67485b5d",
+      "historical_path": "_raios-old-business-salvage/learning/SIX-BUSINESS-CASE-LEARNING.json",
+      "priority": "CRITICAL",
+      "priority_score": 22,
+      "domains": [
+        "business",
+        "learning"
+      ],
+      "static_state": "STRUCTURED_LEAF_VALUES_PARTIAL_OR_MISSING",
+      "static_coverage_ratio": 0.181818,
+      "phase2_best_current_match": "_raios-old-business-salvage/reports/CURSOR-INDEPENDENT-ZERO-GAP-CERTIFICATION.json",
+      "recovery_state": "RECOVERABLE_FROM_GIT",
+      "category": "STALE_SALVAGE_EVIDENCE_REQUIRES_REVALIDATION"
+    },
+    {
+      "historical_object": "c2c27074d395b9d8423ce7e68b63d866037f77e9",
+      "historical_path": ".ai-os/learning/c5-foundry-v0.1/sources/EU_ACCESS2MARKETS_IMPORT.txt",
+      "priority": "CRITICAL",
+      "priority_score": 20,
+      "domains": [
+        "import",
+        "learning",
+        "market"
+      ],
+      "static_state": "TEXT_TOKEN_SURFACE_PARTIAL_OR_MISSING",
+      "static_coverage_ratio": 0.64759,
+      "phase2_best_current_match": "intelligence/knowledge_base/assimilated/GRANITE.json",
+      "recovery_state": "RECOVERABLE_FROM_GIT",
+      "category": "BUSINESS_KNOWLEDGE_RECOVERY_REVIEW"
+    },
+    {
+      "historical_object": "df688c028218f1c88f5404d978ec9ee5b8f82d0a",
+      "historical_path": "_raios-model-escalation/exports/ESC-TEST-002-result.json",
+      "priority": "CRITICAL",
+      "priority_score": 20,
+      "domains": [
+        "export",
+        "model"
+      ],
+      "static_state": "STRUCTURED_LEAF_VALUES_PARTIAL_OR_MISSING",
+      "static_coverage_ratio": 0.047619,
+      "phase2_best_current_match": ".ai-os/reports/cognitive/RAIOS-COGNITIVE-OPERATIONS-WORLDCLASS-CLOSURE-01/PROOF.json",
+      "recovery_state": "RECOVERABLE_FROM_GIT",
+      "category": "BUSINESS_CAPABILITY_RECOVERY_REVIEW"
+    },
+    {
+      "historical_object": "2471eefabb7670768f6313d3f1bf1d961547efa2",
+      "historical_path": "_raios-cognitive-governance/reports/QWEN-WEIGHTS-INVENTORY.json",
+      "priority": "CRITICAL",
+      "priority_score": 19,
+      "domains": [
+        "governance",
+        "inventory"
+      ],
+      "static_state": "STRUCTURED_LEAF_VALUES_PARTIAL_OR_MISSING",
+      "static_coverage_ratio": 0.064516,
+      "phase2_best_current_match": ".ai-os/reports/model-estate/RAIOS-MODEL-ESTATE-LIVE-BINDING-AND-FACTORY-CORRECTION-01/HANDOFF.md",
+      "recovery_state": "RECOVERABLE_FROM_GIT",
+      "category": "PROVENANCE_OR_INVENTORY_EVIDENCE"
+    },
+    {
+      "historical_object": "8f81a0dc5f0939652711159b83413a52b1b39372",
+      "historical_path": "_raios-old-business-salvage/src/final_critical_business_resolver.py",
+      "priority": "CRITICAL",
+      "priority_score": 19,
+      "domains": [
+        "business"
+      ],
+      "static_state": "STATIC_AST_UNITS_PARTIAL_OR_MISSING",
+      "static_coverage_ratio": 0.275,
+      "phase2_best_current_match": "src/raios/factory_fabric/state_import.py",
+      "recovery_state": "RECOVERABLE_FROM_GIT",
+      "category": "STALE_SALVAGE_EVIDENCE_REQUIRES_REVALIDATION"
+    },
+    {
+      "historical_object": "5106f111dc30eb15a8ab2fe6b89ca76a480085a8",
+      "historical_path": "_raios-old-business-salvage/src/resolve_and_promote_final_two.py",
+      "priority": "CRITICAL",
+      "priority_score": 19,
+      "domains": [
+        "business"
+      ],
+      "static_state": "STATIC_AST_UNITS_PARTIAL_OR_MISSING",
+      "static_coverage_ratio": 0.105769,
+      "phase2_best_current_match": "RAIOS/V9/runtime/a13_agent_capability_dedup_certification.py",
+      "recovery_state": "RECOVERABLE_FROM_GIT",
+      "category": "STALE_SALVAGE_EVIDENCE_REQUIRES_REVALIDATION"
+    },
+    {
+      "historical_object": "0d2508ebf9c14e75849341d4b2bc28639f1c5c7c",
+      "historical_path": "_raios-old-business-salvage/src/resolve_six_business_cases.py",
+      "priority": "CRITICAL",
+      "priority_score": 19,
+      "domains": [
+        "business"
+      ],
+      "static_state": "STATIC_AST_UNITS_PARTIAL_OR_MISSING",
+      "static_coverage_ratio": 0.145455,
+      "phase2_best_current_match": "src/raios/factory_fabric/state_import.py",
+      "recovery_state": "RECOVERABLE_FROM_GIT",
+      "category": "STALE_SALVAGE_EVIDENCE_REQUIRES_REVALIDATION"
+    },
+    {
+      "historical_object": "55e0f1b64308a5fc78f420668b73d128640226d5",
+      "historical_path": "_raios-old-business-salvage/src/semantic_salvage_compare.py",
+      "priority": "CRITICAL",
+      "priority_score": 19,
+      "domains": [
+        "business"
+      ],
+      "static_state": "STATIC_AST_UNITS_PARTIAL_OR_MISSING",
+      "static_coverage_ratio": 0.2,
+      "phase2_best_current_match": "src/raios/factory_fabric/state_import.py",
+      "recovery_state": "RECOVERABLE_FROM_GIT",
+      "category": "STALE_SALVAGE_EVIDENCE_REQUIRES_REVALIDATION"
+    },
+    {
+      "historical_object": "a77c875d9488da5ec98eb2fa0e45617b611e69f5",
+      "historical_path": "_raios-old-business-salvage/tests/RUN-FINAL-CRITICAL-RESOLUTION.ps1",
+      "priority": "CRITICAL",
+      "priority_score": 19,
+      "domains": [
+        "business"
+      ],
+      "static_state": "CODE_SYMBOL_SURFACE_PARTIAL_OR_MISSING",
+      "static_coverage_ratio": 0.0,
+      "phase2_best_current_match": "lib/intelligence/greeny-life-verification.ts",
+      "recovery_state": "RECOVERABLE_FROM_GIT",
+      "category": "STALE_SALVAGE_EVIDENCE_REQUIRES_REVALIDATION"
+    },
+    {
+      "historical_object": "b3b6095f633dfc44ea6d764342834fd7b9208529",
+      "historical_path": "lib/intelligence/export-decision.ts",
+      "priority": "CRITICAL",
+      "priority_score": 19,
+      "domains": [
+        "export",
+        "intelligence"
+      ],
+      "static_state": "CODE_SYMBOL_SURFACE_FULLY_PRESENT_CURRENT",
+      "static_coverage_ratio": 1.0,
+      "phase2_best_current_match": "lib/intelligence/export-decision.ts",
+      "recovery_state": "RECOVERABLE_FROM_GIT",
+      "category": "CURRENT_CODE_SURFACE_PRESENT_STATIC_ONLY"
+    },
+    {
+      "historical_object": "4b9ed1c059505d26f18f0ba2c03fb1b1432ef94a",
+      "historical_path": ".ai-os/learning/c5-foundry-v0.1/sources/EU_ACCESS2MARKETS_IMPORT.raw",
+      "priority": "HIGH",
+      "priority_score": 17,
+      "domains": [
+        "import",
+        "learning",
+        "market"
+      ],
+      "static_state": "UNANALYZED_BINARY_OR_LARGE",
+      "static_coverage_ratio": 0.0,
+      "phase2_best_current_match": null,
+      "recovery_state": "RECOVERABLE_FROM_GIT",
+      "category": "BUSINESS_KNOWLEDGE_RECOVERY_REVIEW"
+    },
+    {
+      "historical_object": "f7b8f2155de70949aee4dc1a1c02b79df2e24eba",
+      "historical_path": "_raios-old-business-salvage/reports/CONTROLLED-LEGACY-RETIREMENT-AUTHORIZATION.json",
+      "priority": "HIGH",
+      "priority_score": 17,
+      "domains": [
+        "business"
+      ],
+      "static_state": "STRUCTURED_LEAF_VALUES_PARTIAL_OR_MISSING",
+      "static_coverage_ratio": 0.368421,
+      "phase2_best_current_match": "_raios-old-business-salvage/reports/CURSOR-INDEPENDENT-ZERO-GAP-CERTIFICATION.json",
+      "recovery_state": "RECOVERABLE_FROM_GIT",
+      "category": "STALE_SALVAGE_EVIDENCE_REQUIRES_REVALIDATION"
+    },
+    {
+      "historical_object": "9025973bb3beef97ef7e5d532fe904a67139454c",
+      "historical_path": "_raios-old-business-salvage/reports/FINAL-CRITICAL-BUSINESS-RESOLUTION.json",
+      "priority": "HIGH",
+      "priority_score": 17,
+      "domains": [
+        "business"
+      ],
+      "static_state": "STRUCTURED_LEAF_VALUES_PARTIAL_OR_MISSING",
+      "static_coverage_ratio": 0.023256,
+      "phase2_best_current_match": "archive/generated-reports/e3-post-repair-classification/inventory-2026-08-13_191416/E3-POST-REPAIR-ASSET-CLASSIFICATION.json",
+      "recovery_state": "RECOVERABLE_FROM_GIT",
+      "category": "STALE_SALVAGE_EVIDENCE_REQUIRES_REVALIDATION"
+    },
+    {
+      "historical_object": "24206c6ec3cfc461f64c67bec7f73ef403b84ee0",
+      "historical_path": "_raios-old-business-salvage/reports/FINAL-TWO-BUSINESS-RESOLUTION.json",
+      "priority": "HIGH",
+      "priority_score": 17,
+      "domains": [
+        "business"
+      ],
+      "static_state": "STRUCTURED_LEAF_VALUES_PARTIAL_OR_MISSING",
+      "static_coverage_ratio": 0.017391,
+      "phase2_best_current_match": "canonical/logistics/shipments.json",
+      "recovery_state": "RECOVERABLE_FROM_GIT",
+      "category": "STALE_SALVAGE_EVIDENCE_REQUIRES_REVALIDATION"
+    },
+    {
+      "historical_object": "62b887fb05f07be70be2dd10c6cc0a760f9b218d",
+      "historical_path": "_raios-old-business-salvage/reports/OLD-BUSINESS-SEMANTIC-SALVAGE.json",
+      "priority": "HIGH",
+      "priority_score": 17,
+      "domains": [
+        "business"
+      ],
+      "static_state": "STRUCTURED_LEAF_VALUES_PARTIAL_OR_MISSING",
+      "static_coverage_ratio": 0.0,
+      "phase2_best_current_match": "archive/generated-reports/e3-full-legacy-inventory/2026-08-13_233542/E3-FULL-LEGACY-PROJECT-INVENTORY.json",
+      "recovery_state": "RECOVERABLE_FROM_GIT",
+      "category": "STALE_SALVAGE_EVIDENCE_REQUIRES_REVALIDATION"
+    },
+    {
+      "historical_object": "81a4b9920033ace674f441f587da1d9e6bee69f7",
+      "historical_path": "_raios-old-business-salvage/reports/OLD-BUSINESS-UNIQUE-ASSETS.json",
+      "priority": "HIGH",
+      "priority_score": 17,
+      "domains": [
+        "business"
+      ],
+      "static_state": "STRUCTURED_LEAF_VALUES_PARTIAL_OR_MISSING",
+      "static_coverage_ratio": 0.020833,
+      "phase2_best_current_match": "intelligence/asset_classification_report_v3.json",
+      "recovery_state": "RECOVERABLE_FROM_GIT",
+      "category": "STALE_SALVAGE_EVIDENCE_REQUIRES_REVALIDATION"
+    },
+    {
+      "historical_object": "a455b3633bdf20951ad0c3acbe6f29ff1c8769de",
+      "historical_path": "_raios-old-business-salvage/reports/SIX-BUSINESS-CASE-RESOLUTION.json",
+      "priority": "HIGH",
+      "priority_score": 17,
+      "domains": [
+        "business"
+      ],
+      "static_state": "STRUCTURED_LEAF_VALUES_PARTIAL_OR_MISSING",
+      "static_coverage_ratio": 0.0,
+      "phase2_best_current_match": "_raios-old-business-salvage/reports/CURSOR-INDEPENDENT-ZERO-GAP-CERTIFICATION.json",
+      "recovery_state": "RECOVERABLE_FROM_GIT",
+      "category": "STALE_SALVAGE_EVIDENCE_REQUIRES_REVALIDATION"
+    },
+    {
+      "historical_object": "7f6186727660fda5dbd5720faf4d77f7a534c963",
+      "historical_path": "_raios-old-business-salvage/reports/WORKTREE-RETIREMENT-BLOCKERS.json",
+      "priority": "HIGH",
+      "priority_score": 17,
+      "domains": [
+        "business"
+      ],
+      "static_state": "JSON_PARSE_FAILED",
+      "static_coverage_ratio": 0.0,
+      "phase2_best_current_match": "archive/generated-reports/e3-business-asset-recovery/lineage-correction-2026-08-13_195616/E3-BUSINESS-ASSET-RECOVERY-LINEAGE-CORRECTION.json",
+      "recovery_state": "RECOVERABLE_FROM_GIT",
+      "category": "STALE_SALVAGE_EVIDENCE_REQUIRES_REVALIDATION"
+    },
+    {
+      "historical_object": "8f8034603b84fb9dc99de3d9d986a07e5050bbc7",
+      "historical_path": "_raios-old-business-salvage/reports/ZERO-GAP-REPOSITORY-CONVERGENCE.json",
+      "priority": "HIGH",
+      "priority_score": 17,
+      "domains": [
+        "business"
+      ],
+      "static_state": "STRUCTURED_LEAF_VALUES_PARTIAL_OR_MISSING",
+      "static_coverage_ratio": 0.2,
+      "phase2_best_current_match": ".ai-os/reports/global-estate/RAIOS-W4FF-DEEP-VALUE-CLOSURE-01/BRAIN-CAPABILITY-CLOSURE.json",
+      "recovery_state": "RECOVERABLE_FROM_GIT",
+      "category": "STALE_SALVAGE_EVIDENCE_REQUIRES_REVALIDATION"
+    },
+    {
+      "historical_object": "5889c277465c52bb6f7194114873f848e83a84f4",
+      "historical_path": "app/api/mastermind/commercial-context/route.ts",
+      "priority": "HIGH",
+      "priority_score": 17,
+      "domains": [
+        "commercial"
+      ],
+      "static_state": "CODE_SYMBOL_SURFACE_FULLY_PRESENT_CURRENT",
+      "static_coverage_ratio": 1.0,
+      "phase2_best_current_match": "app/api/mastermind/commercial-context/route.ts",
+      "recovery_state": "RECOVERABLE_FROM_GIT",
+      "category": "CURRENT_CODE_SURFACE_PRESENT_STATIC_ONLY"
+    },
+    {
+      "historical_object": "b4e942fe5ad5ba8d645e3c756f2d0601dc370aee",
+      "historical_path": "backup/2026-07-17_18-51-09/06_markets.json",
+      "priority": "HIGH",
+      "priority_score": 17,
+      "domains": [
+        "market"
+      ],
+      "static_state": "STRUCTURED_LEAF_VALUES_PARTIAL_OR_MISSING",
+      "static_coverage_ratio": 0.194444,
+      "phase2_best_current_match": "archive/old_folders/GREENY-LIFE-EOS-PRODUCTION/platform/market-intelligence/country-intelligence/countries.json",
+      "recovery_state": "RECOVERABLE_FROM_GIT",
+      "category": "MARKET_TAXONOMY_RECOVERY_REVIEW"
+    },
+    {
+      "historical_object": "d17700488e0859e241009757b89d4a29cc2c645b",
+      "historical_path": ".ai-os/receipts/command-fabric/PKT-32468bd0ed754bcc86c2c34e69a2f5e5.export.receipt.json",
+      "priority": "HIGH",
+      "priority_score": 16,
+      "domains": [
+        "export"
+      ],
+      "static_state": "STRUCTURED_LEAF_VALUES_PARTIAL_OR_MISSING",
+      "static_coverage_ratio": 0.0,
+      "phase2_best_current_match": ".ai-os/reports/orchestration/GL-005-LIVE-OBS-20260828T1740Z/REPLAY-RECEIPT.json",
+      "recovery_state": "RECOVERABLE_FROM_GIT",
+      "category": "PROVENANCE_OR_INVENTORY_EVIDENCE"
+    },
+    {
+      "historical_object": "bf9e7b39ecb104d9fc5d7081278285f68fc22af4",
+      "historical_path": ".ai-os/receipts/command-fabric/PKT-70a9e7149bf8486c879b7627be65506c.export.receipt.json",
+      "priority": "HIGH",
+      "priority_score": 16,
+      "domains": [
+        "export"
+      ],
+      "static_state": "STRUCTURED_LEAF_VALUES_PARTIAL_OR_MISSING",
+      "static_coverage_ratio": 0.0,
+      "phase2_best_current_match": ".ai-os/reports/orchestration/GL-005-LIVE-OBS-20260828T1740Z/REPLAY-RECEIPT.json",
+      "recovery_state": "RECOVERABLE_FROM_GIT",
+      "category": "PROVENANCE_OR_INVENTORY_EVIDENCE"
+    },
+    {
+      "historical_object": "3b77d573835fd31bdeed38b5465587100d22f1e0",
+      "historical_path": "archive/repair-leftovers/communication-fabric-retirement-20260824/reports/AUDIO-DEVICE-INVENTORY.json",
+      "priority": "HIGH",
+      "priority_score": 16,
+      "domains": [
+        "inventory"
+      ],
+      "static_state": "STRUCTURED_LEAF_VALUES_PARTIAL_OR_MISSING",
+      "static_coverage_ratio": 0.0,
+      "phase2_best_current_match": "RAIOS/V9/evolution/model_lab/weight_merge_runtime.py",
+      "recovery_state": "RECOVERABLE_FROM_GIT",
+      "category": "PROVENANCE_OR_INVENTORY_EVIDENCE"
+    },
+    {
+      "historical_object": "9f6b7d6acb52d1fa2db2c0cb9043b475cb4fd6ec",
+      "historical_path": "data/06_markets.json",
+      "priority": "HIGH",
+      "priority_score": 16,
+      "domains": [
+        "market"
+      ],
+      "static_state": "STRUCTURED_LEAF_VALUES_PARTIAL_OR_MISSING",
+      "static_coverage_ratio": 0.010417,
+      "phase2_best_current_match": "canonical/crm/customers.json",
+      "recovery_state": "RECOVERABLE_FROM_GIT",
+      "category": "MARKET_TAXONOMY_RECOVERY_REVIEW"
+    },
+    {
+      "historical_object": "9d960d0a4cde6bb8adb0390ebe3981a57de2c5bc",
+      "historical_path": "migration/gl-005/multi-source-2/04-COMMERCIAL-CONTEXT.txt",
+      "priority": "HIGH",
+      "priority_score": 16,
+      "domains": [
+        "commercial"
+      ],
+      "static_state": "BINARY_LIKE_TEXT_REJECTED",
+      "static_coverage_ratio": 0.0,
+      "phase2_best_current_match": null,
+      "recovery_state": "RECOVERABLE_FROM_GIT",
+      "category": "BUSINESS_CAPABILITY_RECOVERY_REVIEW"
+    },
+    {
+      "historical_object": "57d21c462da376e8c1bc493efa670fc6ca4918a5",
+      "historical_path": ".ai-os/reports/RAIOS-MERGE-ENGINES-INVENTORY.json",
+      "priority": "HIGH",
+      "priority_score": 15,
+      "domains": [
+        "inventory"
+      ],
+      "static_state": "STRUCTURED_LEAF_VALUES_PARTIAL_OR_MISSING",
+      "static_coverage_ratio": 0.143541,
+      "phase2_best_current_match": "E3-RECON-OUTPUT/E3-FILE-INVENTORY.json",
+      "recovery_state": "RECOVERABLE_FROM_GIT",
+      "category": "PROVENANCE_OR_INVENTORY_EVIDENCE"
+    },
+    {
+      "historical_object": "2e8f62ab447f30adda58ab1580f5e71f738fa97b",
+      "historical_path": ".ai-os/reports/RAIOS-OLLAMA-LOCAL-VS-CLOUD-INVENTORY.json",
+      "priority": "HIGH",
+      "priority_score": 15,
+      "domains": [
+        "inventory"
+      ],
+      "static_state": "STRUCTURED_LEAF_VALUES_PARTIAL_OR_MISSING",
+      "static_coverage_ratio": 0.184211,
+      "phase2_best_current_match": ".ai-os/reports/model-estate/RAIOS-MODEL-ESTATE-LIVE-BINDING-AND-FACTORY-CORRECTION-01/LOCAL-EXECUTION-CLASSIFICATION.json",
+      "recovery_state": "RECOVERABLE_FROM_GIT",
+      "category": "PROVENANCE_OR_INVENTORY_EVIDENCE"
+    },
+    {
+      "historical_object": "44d79f3529f8395242714b7178a93b975e0b6f64",
+      "historical_path": "_raios-legacy-global-forensics/inventory/ALL-LEGACY-FILES.json",
+      "priority": "HIGH",
+      "priority_score": 15,
+      "domains": [
+        "inventory"
+      ],
+      "static_state": "UNANALYZED_BINARY_OR_LARGE",
+      "static_coverage_ratio": 0.0,
+      "phase2_best_current_match": null,
+      "recovery_state": "RECOVERABLE_FROM_GIT",
+      "category": "BUSINESS_CAPABILITY_RECOVERY_REVIEW"
+    },
+    {
+      "historical_object": "644e885c9dde4c96791cc48d9f721d26e9701edd",
+      "historical_path": "_raios-wave2-post-retirement/reports/CICF-CAPABILITY-INVENTORY.json",
+      "priority": "HIGH",
+      "priority_score": 15,
+      "domains": [
+        "inventory"
+      ],
+      "static_state": "UNANALYZED_BINARY_OR_LARGE",
+      "static_coverage_ratio": 0.0,
+      "phase2_best_current_match": null,
+      "recovery_state": "RECOVERABLE_FROM_GIT",
+      "category": "PROVENANCE_OR_INVENTORY_EVIDENCE"
+    },
+    {
+      "historical_object": "8e291a31690870c3ab6dded4c2cf03bb41fbe97c",
+      "historical_path": "app/api/suppliers/route.ts",
+      "priority": "HIGH",
+      "priority_score": 15,
+      "domains": [
+        "supplier"
+      ],
+      "static_state": "CODE_SYMBOL_SURFACE_FULLY_PRESENT_CURRENT",
+      "static_coverage_ratio": 1.0,
+      "phase2_best_current_match": "app/api/suppliers/route.ts",
+      "recovery_state": "RECOVERABLE_FROM_GIT",
+      "category": "CURRENT_CODE_SURFACE_PRESENT_STATIC_ONLY"
+    },
+    {
+      "historical_object": "c17813555baf9973265aff44b5f22e8938a8db84",
+      "historical_path": "app/api/suppliers/route.ts",
+      "priority": "HIGH",
+      "priority_score": 15,
+      "domains": [
+        "supplier"
+      ],
+      "static_state": "CODE_SYMBOL_SURFACE_FULLY_PRESENT_CURRENT",
+      "static_coverage_ratio": 1.0,
+      "phase2_best_current_match": "app/api/suppliers/route.ts",
+      "recovery_state": "RECOVERABLE_FROM_GIT",
+      "category": "CURRENT_CODE_SURFACE_PRESENT_STATIC_ONLY"
+    },
+    {
+      "historical_object": "2baf65bdec77cd9eab09c90b816db5571dcc30c0",
+      "historical_path": "docs/auto-generated/finance.md",
+      "priority": "HIGH",
+      "priority_score": 15,
+      "domains": [
+        "finance"
+      ],
+      "static_state": "TEXT_TOKEN_SURFACE_HIGH_COVERAGE",
+      "static_coverage_ratio": 1.0,
+      "phase2_best_current_match": "KNOWLEDGE-BASE/Architecture/architecture-files.csv",
+      "recovery_state": "RECOVERABLE_FROM_GIT",
+      "category": "BUSINESS_CAPABILITY_RECOVERY_REVIEW"
+    },
+    {
+      "historical_object": "bf0fdd460e4196bd74a174cf637ae656abfe69fb",
+      "historical_path": "legacy_audit_reports/legacy_system_inventory.json",
+      "priority": "HIGH",
+      "priority_score": 15,
+      "domains": [
+        "inventory"
+      ],
+      "static_state": "STRUCTURED_LEAF_VALUES_PARTIAL_OR_MISSING",
+      "static_coverage_ratio": 0.006417,
+      "phase2_best_current_match": "archive/old_folders/GREENY-LIFE-EOS/governance/eos-duplicate-review-v1.json",
+      "recovery_state": "RECOVERABLE_FROM_GIT",
+      "category": "PROVENANCE_OR_INVENTORY_EVIDENCE"
+    },
+    {
+      "historical_object": "6fc1c727e13d76c72d1bff58ff6afd6604c78ec2",
+      "historical_path": "app/api/commercial-changes/route.ts",
+      "priority": "HIGH",
+      "priority_score": 14,
+      "domains": [
+        "commercial"
+      ],
+      "static_state": "CODE_SYMBOL_SURFACE_FULLY_PRESENT_CURRENT",
+      "static_coverage_ratio": 1.0,
+      "phase2_best_current_match": "app/api/commercial-changes/route.ts",
+      "recovery_state": "RECOVERABLE_FROM_GIT",
+      "category": "CURRENT_CODE_SURFACE_PRESENT_STATIC_ONLY"
+    },
+    {
+      "historical_object": "471c7a25f00b77bedb6128bcd7194ca52a676aac",
+      "historical_path": "migration/gl-004/evidence/test-supplier-read-authorization.txt",
+      "priority": "HIGH",
+      "priority_score": 14,
+      "domains": [
+        "supplier"
+      ],
+      "static_state": "BINARY_LIKE_TEXT_REJECTED",
+      "static_coverage_ratio": 0.0,
+      "phase2_best_current_match": null,
+      "recovery_state": "RECOVERABLE_FROM_GIT",
+      "category": "BUSINESS_CAPABILITY_RECOVERY_REVIEW"
+    },
+    {
+      "historical_object": "4420394f89f4b7f5edd894afda940a54c5c2ddf4",
+      "historical_path": ".ai-os/reports/RAIOS-MERGE-ENGINES-INVENTORY.md",
+      "priority": "HIGH",
+      "priority_score": 13,
+      "domains": [
+        "inventory"
+      ],
+      "static_state": "TEXT_TOKEN_SURFACE_HIGH_COVERAGE",
+      "static_coverage_ratio": 1.0,
+      "phase2_best_current_match": "E3-RECON-OUTPUT/E3-FILE-INVENTORY.json",
+      "recovery_state": "RECOVERABLE_FROM_GIT",
+      "category": "PROVENANCE_OR_INVENTORY_EVIDENCE"
+    },
+    {
+      "historical_object": "cabe6653391e9208d24aeac1e1930457b4624d3b",
+      "historical_path": "_raios-a17-native-cortex/evidence/a17-13/OLLAMA-INVENTORY-AFTER.txt",
+      "priority": "HIGH",
+      "priority_score": 13,
+      "domains": [
+        "inventory"
+      ],
+      "static_state": "TEXT_TOKEN_SURFACE_PARTIAL_OR_MISSING",
+      "static_coverage_ratio": 0.9375,
+      "phase2_best_current_match": ".ai-os/reports/model-estate/RAIOS-MODEL-ESTATE-LIVE-BINDING-AND-FACTORY-CORRECTION-01/LOCAL-EXECUTION-CLASSIFICATION.json",
+      "recovery_state": "RECOVERABLE_FROM_GIT",
+      "category": "PROVENANCE_OR_INVENTORY_EVIDENCE"
+    },
+    {
+      "historical_object": "04f08ca5ec9533376dfc17ceacb6dec6cef83baa",
+      "historical_path": "_raios-a17-native-cortex/evidence/a17-13/OLLAMA-INVENTORY-BEFORE.txt",
+      "priority": "HIGH",
+      "priority_score": 13,
+      "domains": [
+        "inventory"
+      ],
+      "static_state": "TEXT_TOKEN_SURFACE_PARTIAL_OR_MISSING",
+      "static_coverage_ratio": 0.916667,
+      "phase2_best_current_match": ".ai-os/reports/model-estate/RAIOS-MODEL-ESTATE-LIVE-BINDING-AND-FACTORY-CORRECTION-01/LOCAL-EXECUTION-CLASSIFICATION.json",
+      "recovery_state": "RECOVERABLE_FROM_GIT",
+      "category": "PROVENANCE_OR_INVENTORY_EVIDENCE"
+    },
+    {
+      "historical_object": "a2412d1eecbaac029c3d85bc8950717b07a13f53",
+      "historical_path": "_raios-a17-native-cortex/teachers/deepseek-r1-1.5b/SELF-CAPABILITY-INVENTORY.txt",
+      "priority": "HIGH",
+      "priority_score": 13,
+      "domains": [
+        "inventory"
+      ],
+      "static_state": "TEXT_TOKEN_SURFACE_PARTIAL_OR_MISSING",
+      "static_coverage_ratio": 0.79932,
+      "phase2_best_current_match": "intelligence/knowledge_base/assimilated/QWEN.json",
+      "recovery_state": "RECOVERABLE_FROM_GIT",
+      "category": "PROVENANCE_OR_INVENTORY_EVIDENCE"
+    },
+    {
+      "historical_object": "510b8b6abe7a9d6cc9c30c95495713449c49ded9",
+      "historical_path": "_raios-a17-native-cortex/teachers/granite4-3b/SELF-CAPABILITY-INVENTORY.txt",
+      "priority": "HIGH",
+      "priority_score": 13,
+      "domains": [
+        "inventory"
+      ],
+      "static_state": "TEXT_TOKEN_SURFACE_HIGH_COVERAGE",
+      "static_coverage_ratio": 1.0,
+      "phase2_best_current_match": "intelligence/knowledge_base/assimilated/GRANITE.json",
+      "recovery_state": "RECOVERABLE_FROM_GIT",
+      "category": "PROVENANCE_OR_INVENTORY_EVIDENCE"
+    },
+    {
+      "historical_object": "589bbff38fc29f0522147201bf28b729c5f42ca6",
+      "historical_path": "_raios-a17-native-cortex/teachers/qwen2.5-coder-3b/SELF-CAPABILITY-INVENTORY.txt",
+      "priority": "HIGH",
+      "priority_score": 13,
+      "domains": [
+        "inventory"
+      ],
+      "static_state": "TEXT_TOKEN_SURFACE_PARTIAL_OR_MISSING",
+      "static_coverage_ratio": 0.932584,
+      "phase2_best_current_match": "intelligence/knowledge_base/assimilated/QWEN.json",
+      "recovery_state": "RECOVERABLE_FROM_GIT",
+      "category": "PROVENANCE_OR_INVENTORY_EVIDENCE"
+    },
+    {
+      "historical_object": "cc2bed7e91704d41c35b791f4f14dc4e2becd7f5",
+      "historical_path": "app/api/sales-orders/route.ts",
+      "priority": "HIGH",
+      "priority_score": 13,
+      "domains": [
+        "sales"
+      ],
+      "static_state": "CODE_SYMBOL_SURFACE_PARTIAL_OR_MISSING",
+      "static_coverage_ratio": 0.833333,
+      "phase2_best_current_match": "app/api/sales-orders/route.ts",
+      "recovery_state": "RECOVERABLE_FROM_GIT",
+      "category": "CURRENT_PATH_EVOLUTION_REVIEW"
+    },
+    {
+      "historical_object": "97f5837c329091283d1889b794616165308d0a91",
+      "historical_path": "docs/auto-generated/logistics.md",
+      "priority": "HIGH",
+      "priority_score": 13,
+      "domains": [
+        "logistics"
+      ],
+      "static_state": "TEXT_TOKEN_SURFACE_HIGH_COVERAGE",
+      "static_coverage_ratio": 1.0,
+      "phase2_best_current_match": "KNOWLEDGE-BASE/Architecture/architecture-files.csv",
+      "recovery_state": "RECOVERABLE_FROM_GIT",
+      "category": "BUSINESS_CAPABILITY_RECOVERY_REVIEW"
+    },
+    {
+      "historical_object": "fd938b2ba19ce79dfaeaada8e0a353ec7837b506",
+      "historical_path": "docs/auto-generated/operations.md",
+      "priority": "HIGH",
+      "priority_score": 13,
+      "domains": [
+        "operations"
+      ],
+      "static_state": "TEXT_TOKEN_SURFACE_HIGH_COVERAGE",
+      "static_coverage_ratio": 1.0,
+      "phase2_best_current_match": "KNOWLEDGE-BASE/Architecture/architecture-files.csv",
+      "recovery_state": "RECOVERABLE_FROM_GIT",
+      "category": "BUSINESS_CAPABILITY_RECOVERY_REVIEW"
+    },
+    {
+      "historical_object": "937d6c55250374067c7a85c2d044c52517e59e8b",
+      "historical_path": "reports/full-file-inventory.txt",
+      "priority": "HIGH",
+      "priority_score": 13,
+      "domains": [
+        "inventory"
+      ],
+      "static_state": "UNANALYZED_BINARY_OR_LARGE",
+      "static_coverage_ratio": 0.0,
+      "phase2_best_current_match": null,
+      "recovery_state": "RECOVERABLE_FROM_GIT",
+      "category": "PROVENANCE_OR_INVENTORY_EVIDENCE"
+    },
+    {
+      "historical_object": "17bcc7dddbe2708a5f0472d42192511624ff87d9",
+      "historical_path": "_raios-old-business-salvage/reports/OLD-BUSINESS-SEMANTIC-SALVAGE.csv",
+      "priority": "HIGH",
+      "priority_score": 12,
+      "domains": [
+        "business"
+      ],
+      "static_state": "TEXT_TOKEN_SURFACE_PARTIAL_OR_MISSING",
+      "static_coverage_ratio": 0.916201,
+      "phase2_best_current_match": "intelligence/asset_classification_report_v3.json",
+      "recovery_state": "RECOVERABLE_FROM_GIT",
+      "category": "STALE_SALVAGE_EVIDENCE_REQUIRES_REVALIDATION"
+    },
+    {
+      "historical_object": "66ea93491a4fef1748d92c02a15ec037e80aeedd",
+      "historical_path": "_raios-old-business-salvage/reports/OLD-BUSINESS-UNIQUE-ASSETS.csv",
+      "priority": "HIGH",
+      "priority_score": 12,
+      "domains": [
+        "business"
+      ],
+      "static_state": "TEXT_TOKEN_SURFACE_PARTIAL_OR_MISSING",
+      "static_coverage_ratio": 0.915152,
+      "phase2_best_current_match": "intelligence/asset_classification_report_v3.json",
+      "recovery_state": "RECOVERABLE_FROM_GIT",
+      "category": "STALE_SALVAGE_EVIDENCE_REQUIRES_REVALIDATION"
+    },
+    {
+      "historical_object": "c2129d86012ec51e9d492e9d2fd387e749d31bae",
+      "historical_path": "app/api/decisions/export-readiness/route.ts",
+      "priority": "HIGH",
+      "priority_score": 12,
+      "domains": [
+        "export"
+      ],
+      "static_state": "CODE_SYMBOL_SURFACE_FULLY_PRESENT_CURRENT",
+      "static_coverage_ratio": 1.0,
+      "phase2_best_current_match": "app/api/decisions/export-readiness/route.ts",
+      "recovery_state": "RECOVERABLE_FROM_GIT",
+      "category": "CURRENT_CODE_SURFACE_PRESENT_STATIC_ONLY"
+    },
+    {
+      "historical_object": "1275ce8486fb03787baa2aa6d32d1fbffa5140a3",
+      "historical_path": "src/raios/council_ops/operations.py",
+      "priority": "MEDIUM",
+      "priority_score": 11,
+      "domains": [
+        "operations"
+      ],
+      "static_state": "STATIC_AST_UNITS_PARTIAL_OR_MISSING",
+      "static_coverage_ratio": 0.677419,
+      "phase2_best_current_match": "src/raios/council_ops/operations.py",
+      "recovery_state": "RECOVERABLE_FROM_GIT",
+      "category": "CURRENT_PATH_EVOLUTION_REVIEW"
+    },
+    {
+      "historical_object": "3d8d03af22984881afd8a485d194fffd57cb888e",
+      "historical_path": "src/raios/council_ops/operations.py",
+      "priority": "MEDIUM",
+      "priority_score": 11,
+      "domains": [
+        "operations"
+      ],
+      "static_state": "STATIC_AST_UNITS_PARTIAL_OR_MISSING",
+      "static_coverage_ratio": 0.642857,
+      "phase2_best_current_match": "src/raios/council_ops/operations.py",
+      "recovery_state": "RECOVERABLE_FROM_GIT",
+      "category": "CURRENT_PATH_EVOLUTION_REVIEW"
+    },
+    {
+      "historical_object": "3f704f42bd1c8c8ebaa7f224fa59eb64ea2613c0",
+      "historical_path": "src/raios/council_ops/operations.py",
+      "priority": "MEDIUM",
+      "priority_score": 11,
+      "domains": [
+        "operations"
+      ],
+      "static_state": "STATIC_AST_UNITS_PARTIAL_OR_MISSING",
+      "static_coverage_ratio": 0.69697,
+      "phase2_best_current_match": "src/raios/council_ops/operations.py",
+      "recovery_state": "RECOVERABLE_FROM_GIT",
+      "category": "CURRENT_PATH_EVOLUTION_REVIEW"
+    },
+    {
+      "historical_object": "4d81f2916c6d8c9691dc6a47f77d49e55f99cccc",
+      "historical_path": "src/raios/council_ops/operations.py",
+      "priority": "MEDIUM",
+      "priority_score": 11,
+      "domains": [
+        "operations"
+      ],
+      "static_state": "STATIC_AST_UNITS_PARTIAL_OR_MISSING",
+      "static_coverage_ratio": 0.727273,
+      "phase2_best_current_match": "src/raios/council_ops/operations.py",
+      "recovery_state": "RECOVERABLE_FROM_GIT",
+      "category": "CURRENT_PATH_EVOLUTION_REVIEW"
+    },
+    {
+      "historical_object": "71a9b525b99f3cb5e9f0145e8579c4145022d4fc",
+      "historical_path": "src/raios/council_ops/operations.py",
+      "priority": "MEDIUM",
+      "priority_score": 11,
+      "domains": [
+        "operations"
+      ],
+      "static_state": "STATIC_AST_UNITS_PARTIAL_OR_MISSING",
+      "static_coverage_ratio": 0.612903,
+      "phase2_best_current_match": "src/raios/council_ops/operations.py",
+      "recovery_state": "RECOVERABLE_FROM_GIT",
+      "category": "CURRENT_PATH_EVOLUTION_REVIEW"
+    },
+    {
+      "historical_object": "b69786a4940490d05fc128f061c663c7abfc80d3",
+      "historical_path": "src/raios/council_ops/operations.py",
+      "priority": "MEDIUM",
+      "priority_score": 11,
+      "domains": [
+        "operations"
+      ],
+      "static_state": "STATIC_AST_UNITS_PARTIAL_OR_MISSING",
+      "static_coverage_ratio": 0.852941,
+      "phase2_best_current_match": "src/raios/council_ops/operations.py",
+      "recovery_state": "RECOVERABLE_FROM_GIT",
+      "category": "CURRENT_PATH_EVOLUTION_REVIEW"
+    },
+    {
+      "historical_object": "2efdae418daff361ed3ff2aa1b7ad97ad6eb4839",
+      "historical_path": "tests/council_ops/test_operations.py",
+      "priority": "MEDIUM",
+      "priority_score": 11,
+      "domains": [
+        "operations"
+      ],
+      "static_state": "STATIC_AST_UNITS_PARTIAL_OR_MISSING",
+      "static_coverage_ratio": 0.769231,
+      "phase2_best_current_match": "tests/council_ops/test_operations.py",
+      "recovery_state": "RECOVERABLE_FROM_GIT",
+      "category": "CURRENT_PATH_EVOLUTION_REVIEW"
+    },
+    {
+      "historical_object": "8bed6d4016472314b72e3cd19fdf9f39380f9b9c",
+      "historical_path": "tests/council_ops/test_operations.py",
+      "priority": "MEDIUM",
+      "priority_score": 11,
+      "domains": [
+        "operations"
+      ],
+      "static_state": "STATIC_AST_UNITS_PARTIAL_OR_MISSING",
+      "static_coverage_ratio": 0.75,
+      "phase2_best_current_match": "tests/council_ops/test_operations.py",
+      "recovery_state": "RECOVERABLE_FROM_GIT",
+      "category": "CURRENT_PATH_EVOLUTION_REVIEW"
+    },
+    {
+      "historical_object": "fb9853837b4535f6fccf36586aa4a5c55566d8d1",
+      "historical_path": "tests/council_ops/test_operations.py",
+      "priority": "MEDIUM",
+      "priority_score": 11,
+      "domains": [
+        "operations"
+      ],
+      "static_state": "STATIC_AST_UNITS_PARTIAL_OR_MISSING",
+      "static_coverage_ratio": 0.714286,
+      "phase2_best_current_match": "tests/council_ops/test_operations.py",
+      "recovery_state": "RECOVERABLE_FROM_GIT",
+      "category": "CURRENT_PATH_EVOLUTION_REVIEW"
+    },
+    {
+      "historical_object": "7e1fa180f9211e190d3048f57a8d57e98c836eb5",
+      "historical_path": ".ai-os/reports/cognitive/RAIOS-COGNITIVE-OPERATIONS-WORLDCLASS-CLOSURE-01/PROOF.json",
+      "priority": "MEDIUM",
+      "priority_score": 9,
+      "domains": [
+        "operations"
+      ],
+      "static_state": "STRUCTURED_LEAF_VALUES_PARTIAL_OR_MISSING",
+      "static_coverage_ratio": 0.946809,
+      "phase2_best_current_match": ".ai-os/reports/cognitive/RAIOS-COGNITIVE-OPERATIONS-WORLDCLASS-CLOSURE-01/PROOF.json",
+      "recovery_state": "RECOVERABLE_FROM_GIT",
+      "category": "PROVENANCE_OR_INVENTORY_EVIDENCE"
+    },
+    {
+      "historical_object": "f9bb05b42331649563c8da9796be08d4b0be0d44",
+      "historical_path": ".ai-os/handoffs/20260901-172852-C6-RAIOS-COGNITIVE-OPERATIONS-WORLDCLASS-CLOSURE-01.md",
+      "priority": "MEDIUM",
+      "priority_score": 7,
+      "domains": [
+        "operations"
+      ],
+      "static_state": "TEXT_TOKEN_SURFACE_HIGH_COVERAGE",
+      "static_coverage_ratio": 1.0,
+      "phase2_best_current_match": ".ai-os/handoffs/20260901-172852-C6-RAIOS-COGNITIVE-OPERATIONS-WORLDCLASS-CLOSURE-01.md",
+      "recovery_state": "RECOVERABLE_FROM_GIT",
+      "category": "CURRENT_PATH_EVOLUTION_REVIEW"
+    }
+  ],
+  "safety": {
+    "READ_ONLY_SOURCE_AUDIT": true,
+    "DATABASE_WRITE": false,
+    "CANONICAL_BUSINESS_DATA_MUTATION": false,
+    "SOURCE_MUTATION": false,
+    "RETIRED_REPAIR_TREE_READ": false,
+    "PAID_RESOURCE_USED": false,
+    "AUTOMATIC_DELETE_AUTHORITY": false,
+    "SAFE_TO_REMOVE_SOURCE": false
+  }
+}

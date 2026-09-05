@@ -1,0 +1,27 @@
+{
+  "schema": "raios.deep-legacy-forensic.delete-eligibility.v4",
+  "generated_at": "2026-09-05T18:28:33.586521+00:00",
+  "decision": "DENY",
+  "safe_to_remove_source": false,
+  "legacy_delete_allowed": false,
+  "deep_legacy_forensic_audit_pass": false,
+  "stale_business_zero_gap_accepted": false,
+  "substantive_business_value_review_count": 29,
+  "missing_proofs": [
+    "COMMERCIAL_RECOVERY_CANDIDATE_VALIDATION",
+    "BUSINESS_KNOWLEDGE_ASSIMILATION",
+    "COMMERCIAL_CODE_RUNTIME_EQUIVALENCE_OR_EXPLICIT_RETENTION",
+    "ZERO_UNKNOWN_UNCLASSIFIED_UNRESOLVED",
+    "C1_FINAL_DELETE_GATE"
+  ],
+  "safety": {
+    "READ_ONLY_SOURCE_AUDIT": true,
+    "DATABASE_WRITE": false,
+    "CANONICAL_BUSINESS_DATA_MUTATION": false,
+    "SOURCE_MUTATION": false,
+    "RETIRED_REPAIR_TREE_READ": false,
+    "PAID_RESOURCE_USED": false,
+    "AUTOMATIC_DELETE_AUTHORITY": false,
+    "SAFE_TO_REMOVE_SOURCE": false
+  }
+}

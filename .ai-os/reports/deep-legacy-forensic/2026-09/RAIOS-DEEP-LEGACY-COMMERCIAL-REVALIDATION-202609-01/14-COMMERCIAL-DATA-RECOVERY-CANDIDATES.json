@@ -1,0 +1,872 @@
+{
+  "schema": "raios.deep-legacy-forensic.commercial-data-recovery.v1",
+  "generated_at": "2026-09-05T18:28:33.586521+00:00",
+  "current_sources": {
+    "suppliers": "canonical/data/suppliers.json",
+    "supplier_product_links": "canonical/data/supplier-product-links.json",
+    "customers": "canonical/data/customer-domain/customers.json",
+    "markets": "canonical/business/markets.json"
+  },
+  "current_counts": {
+    "suppliers": 5,
+    "supplier_product_links": 15,
+    "customers": 30,
+    "target_markets": 5
+  },
+  "supplier_candidates": [
+    {
+      "historical_object": "5bf3e82239295e2442c312398a00f07758b106ab",
+      "historical_path": ".architecture-backups/pre-unified-intelligence-20260726-145157/data/data/suppliers.json",
+      "priority": "CRITICAL",
+      "priority_score": 24,
+      "domains": [
+        "intelligence",
+        "supplier"
+      ],
+      "static_state": "STRUCTURED_LEAF_VALUES_PARTIAL_OR_MISSING",
+      "static_coverage_ratio": 0.421053,
+      "phase2_best_current_match": "data/controlled-intake/legacy-commercial/20260815-001201/suppliers.json",
+      "recovery_state": "RECOVERABLE_FROM_GIT",
+      "historical_entity_id": "SUP-001",
+      "historical_name": "Nile Valley Honey Co.",
+      "current_entity_id": "SUP-EGY-HONEY-001",
+      "entity_match": "MATCHED_CURRENT_SUPPLIER",
+      "field_delta": {
+        "historical_only_fields": {
+          "type": "Primary Producer",
+          "address": "10 Nile Road, Cairo, Egypt",
+          "contact.name": "Mohammed Hassan",
+          "contact.position": "CEO",
+          "certifications[3]": "GMP",
+          "quality_metrics.on_time_delivery": 98,
+          "quality_metrics.quality_pass_rate": 99.5,
+          "quality_metrics.lead_time_days": 7
+        },
+        "changed_fields": {
+          "contact.email": {
+            "historical": "mohammed@nilehoney.eg",
+            "current": "info@nilevalleyhoney.com"
+          },
+          "certifications[0]": {
+            "historical": "Halal",
+            "current": "HACCP"
+          },
+          "certifications[1]": {
+            "historical": "HACCP",
+            "current": "ISO 22000"
+          },
+          "certifications[2]": {
+            "historical": "ISO 22000",
+            "current": "GMP"
+          }
+        },
+        "historical_only_count": 8,
+        "changed_count": 4
+      },
+      "historical_record": {
+        "id": "SUP-001",
+        "name": "Nile Valley Honey Co.",
+        "type": "Primary Producer",
+        "country": "Egypt",
+        "city": "Cairo",
+        "address": "10 Nile Road, Cairo, Egypt",
+        "contact": {
+          "name": "Mohammed Hassan",
+          "email": "mohammed@nilehoney.eg",
+          "phone": "+20 2 1234 5678",
+          "position": "CEO"
+        },
+        "certifications": [
+          "Halal",
+          "HACCP",
+          "ISO 22000",
+          "GMP"
+        ],
+        "quality_metrics": {
+          "on_time_delivery": 98,
+          "quality_pass_rate": 99.5,
+          "lead_time_days": 7
+        }
+      },
+      "promotion_state": "VALIDATION_REQUIRED_BEFORE_CANONICAL_PROMOTION"
+    }
+  ],
+  "customer_candidates": [
+    {
+      "historical_object": "47c06707e5742092e7e5eb9a0f602404a231dc41",
+      "historical_path": ".architecture-backups/pre-unified-intelligence-20260726-145157/data/data/customers.json",
+      "priority": "CRITICAL",
+      "priority_score": 24,
+      "domains": [
+        "customer",
+        "intelligence"
+      ],
+      "static_state": "STRUCTURED_LEAF_VALUES_PARTIAL_OR_MISSING",
+      "static_coverage_ratio": 0.225806,
+      "phase2_best_current_match": "canonical/data/customer-domain/customers.json",
+      "recovery_state": "RECOVERABLE_FROM_GIT",
+      "historical_entity_id": "CUST-001",
+      "historical_name": "Nature's Best Ltd.",
+      "current_entity_id": null,
+      "entity_match": "NO_CURRENT_CUSTOMER_MATCH",
+      "field_delta": {
+        "historical_only_fields": {
+          "id": "CUST-001",
+          "name": "Nature's Best Ltd.",
+          "type": "Distributor",
+          "market": "eu",
+          "country": "United Kingdom",
+          "city": "London",
+          "address": "123 Health Street, London, UK",
+          "contact.name": "John Smith",
+          "contact.email": "john@naturesbest.uk",
+          "contact.phone": "+44 20 1234 5678",
+          "contact.position": "Procurement Manager",
+          "relationship.since": "2025-01-15",
+          "relationship.status": "Active",
+          "relationship.credit_limit": 50000,
+          "relationship.payment_terms": "30 days"
+        },
+        "changed_fields": {},
+        "historical_only_count": 15,
+        "changed_count": 0
+      },
+      "historical_record": {
+        "id": "CUST-001",
+        "name": "Nature's Best Ltd.",
+        "type": "Distributor",
+        "market": "eu",
+        "country": "United Kingdom",
+        "city": "London",
+        "address": "123 Health Street, London, UK",
+        "contact": {
+          "name": "John Smith",
+          "email": "john@naturesbest.uk",
+          "phone": "+44 20 1234 5678",
+          "position": "Procurement Manager"
+        },
+        "relationship": {
+          "since": "2025-01-15",
+          "status": "Active",
+          "credit_limit": 50000,
+          "payment_terms": "30 days"
+        },
+        "purchase_history": [],
+        "opportunities": []
+      },
+      "promotion_state": "VALIDATION_REQUIRED_BEFORE_CANONICAL_PROMOTION"
+    },
+    {
+      "historical_object": "47c06707e5742092e7e5eb9a0f602404a231dc41",
+      "historical_path": ".architecture-backups/pre-unified-intelligence-20260726-145157/data/data/customers.json",
+      "priority": "CRITICAL",
+      "priority_score": 24,
+      "domains": [
+        "customer",
+        "intelligence"
+      ],
+      "static_state": "STRUCTURED_LEAF_VALUES_PARTIAL_OR_MISSING",
+      "static_coverage_ratio": 0.225806,
+      "phase2_best_current_match": "canonical/data/customer-domain/customers.json",
+      "recovery_state": "RECOVERABLE_FROM_GIT",
+      "historical_entity_id": "CUST-002",
+      "historical_name": "Green Market LLC",
+      "current_entity_id": null,
+      "entity_match": "NO_CURRENT_CUSTOMER_MATCH",
+      "field_delta": {
+        "historical_only_fields": {
+          "id": "CUST-002",
+          "name": "Green Market LLC",
+          "type": "Retail Chain",
+          "market": "gcc",
+          "country": "UAE",
+          "city": "Dubai",
+          "address": "Dubai Mall, Level 2, Dubai, UAE",
+          "contact.name": "Ahmed Al Maktoum",
+          "contact.email": "ahmed@greenmarket.ae",
+          "contact.phone": "+971 4 567 8901",
+          "contact.position": "Director of Purchasing",
+          "relationship.since": "2026-01-01",
+          "relationship.status": "Active",
+          "relationship.credit_limit": 100000,
+          "relationship.payment_terms": "60 days"
+        },
+        "changed_fields": {},
+        "historical_only_count": 15,
+        "changed_count": 0
+      },
+      "historical_record": {
+        "id": "CUST-002",
+        "name": "Green Market LLC",
+        "type": "Retail Chain",
+        "market": "gcc",
+        "country": "UAE",
+        "city": "Dubai",
+        "address": "Dubai Mall, Level 2, Dubai, UAE",
+        "contact": {
+          "name": "Ahmed Al Maktoum",
+          "email": "ahmed@greenmarket.ae",
+          "phone": "+971 4 567 8901",
+          "position": "Director of Purchasing"
+        },
+        "relationship": {
+          "since": "2026-01-01",
+          "status": "Active",
+          "credit_limit": 100000,
+          "payment_terms": "60 days"
+        },
+        "purchase_history": [],
+        "opportunities": []
+      },
+      "promotion_state": "VALIDATION_REQUIRED_BEFORE_CANONICAL_PROMOTION"
+    }
+  ],
+  "market_taxonomy_candidates": [
+    {
+      "historical_object": "e1d0030303e753b6342bcbe78ecf11aa56b1307d",
+      "historical_path": ".architecture-backups/pre-unified-intelligence-20260726-145157/data/data/06_markets.json",
+      "priority": "CRITICAL",
+      "priority_score": 24,
+      "domains": [
+        "intelligence",
+        "market"
+      ],
+      "static_state": "STRUCTURED_LEAF_VALUES_PARTIAL_OR_MISSING",
+      "static_coverage_ratio": 0.325581,
+      "phase2_best_current_match": "archive/old_folders/GREENY-LIFE-EOS-PRODUCTION/platform/market-intelligence/country-intelligence/countries.json",
+      "recovery_state": "RECOVERABLE_FROM_GIT",
+      "historical_market_count": 7,
+      "historical_markets": [
+        {
+          "id": "EU",
+          "name": {
+            "en": "European Union",
+            "ar": "الاتحاد الأوروبي"
+          },
+          "currency": "EUR",
+          "language": "en",
+          "region": "Europe",
+          "status": {
+            "active": true
+          },
+          "sort_order": 10
+        },
+        {
+          "id": "GCC",
+          "name": {
+            "en": "Gulf Cooperation Council",
+            "ar": "دول مجلس التعاون الخليجي"
+          },
+          "currency": "SAR",
+          "language": "ar",
+          "region": "Middle East",
+          "status": {
+            "active": true
+          },
+          "sort_order": 20
+        },
+        {
+          "id": "UK",
+          "name": {
+            "en": "United Kingdom",
+            "ar": "المملكة المتحدة"
+          },
+          "currency": "GBP",
+          "language": "en",
+          "region": "Europe",
+          "status": {
+            "active": true
+          },
+          "sort_order": 30
+        },
+        {
+          "id": "USA",
+          "name": {
+            "en": "United States",
+            "ar": "الولايات المتحدة"
+          },
+          "currency": "USD",
+          "language": "en",
+          "region": "North America",
+          "status": {
+            "active": true
+          },
+          "sort_order": 40
+        },
+        {
+          "id": "CAN",
+          "name": {
+            "en": "Canada",
+            "ar": "كندا"
+          },
+          "currency": "CAD",
+          "language": "en",
+          "region": "North America",
+          "status": {
+            "active": true
+          },
+          "sort_order": 50
+        },
+        {
+          "id": "AFR",
+          "name": {
+            "en": "Africa",
+            "ar": "إفريقيا"
+          },
+          "currency": null,
+          "language": "en",
+          "region": "Africa",
+          "status": {
+            "active": true
+          },
+          "sort_order": 60
+        },
+        {
+          "id": "ASIA",
+          "name": {
+            "en": "Asia",
+            "ar": "آسيا"
+          },
+          "currency": null,
+          "language": "en",
+          "region": "Asia",
+          "status": {
+            "active": true
+          },
+          "sort_order": 70
+        }
+      ],
+      "current_target_market_count": 5,
+      "current_target_markets": [
+        {
+          "country": "Norway",
+          "region": "Europe",
+          "priority": 1,
+          "status": "active"
+        },
+        {
+          "country": "UAE",
+          "region": "GCC",
+          "priority": 1,
+          "status": "active"
+        },
+        {
+          "country": "Saudi Arabia",
+          "region": "GCC",
+          "priority": 2,
+          "status": "active"
+        },
+        {
+          "country": "Germany",
+          "region": "Europe",
+          "priority": 2,
+          "status": "active"
+        },
+        {
+          "country": "USA",
+          "region": "North America",
+          "priority": 3,
+          "status": "pending"
+        }
+      ],
+      "classification": "HISTORICAL_MARKET_TAXONOMY_NE_CURRENT_TARGET_MARKET_LIST",
+      "promotion_state": "VALIDATION_REQUIRED_BEFORE_CANONICAL_PROMOTION"
+    },
+    {
+      "historical_object": "4e6e5adeba28d807958f350d93f7c217ae940c00",
+      "historical_path": ".architecture-backups/pre-unified-intelligence-20260726-145157/data/data/legacy/markets.json",
+      "priority": "CRITICAL",
+      "priority_score": 24,
+      "domains": [
+        "intelligence",
+        "market"
+      ],
+      "static_state": "STRUCTURED_LEAF_VALUES_PARTIAL_OR_MISSING",
+      "static_coverage_ratio": 0.0,
+      "phase2_best_current_match": "canonical/data/customer-domain/customer-segments.json",
+      "recovery_state": "RECOVERABLE_FROM_GIT",
+      "historical_market_count": 6,
+      "historical_markets": [
+        {
+          "id": "EU",
+          "name": "European Union"
+        },
+        {
+          "id": "GCC",
+          "name": "Gulf Cooperation Council"
+        },
+        {
+          "id": "USA",
+          "name": "United States"
+        },
+        {
+          "id": "AFR",
+          "name": "Africa"
+        },
+        {
+          "id": "MENA",
+          "name": "Middle East & North Africa"
+        },
+        {
+          "id": "GLOBAL",
+          "name": "Global"
+        }
+      ],
+      "current_target_market_count": 5,
+      "current_target_markets": [
+        {
+          "country": "Norway",
+          "region": "Europe",
+          "priority": 1,
+          "status": "active"
+        },
+        {
+          "country": "UAE",
+          "region": "GCC",
+          "priority": 1,
+          "status": "active"
+        },
+        {
+          "country": "Saudi Arabia",
+          "region": "GCC",
+          "priority": 2,
+          "status": "active"
+        },
+        {
+          "country": "Germany",
+          "region": "Europe",
+          "priority": 2,
+          "status": "active"
+        },
+        {
+          "country": "USA",
+          "region": "North America",
+          "priority": 3,
+          "status": "pending"
+        }
+      ],
+      "classification": "HISTORICAL_MARKET_TAXONOMY_NE_CURRENT_TARGET_MARKET_LIST",
+      "promotion_state": "VALIDATION_REQUIRED_BEFORE_CANONICAL_PROMOTION"
+    },
+    {
+      "historical_object": "b4e942fe5ad5ba8d645e3c756f2d0601dc370aee",
+      "historical_path": "backup/2026-07-17_18-51-09/06_markets.json",
+      "priority": "HIGH",
+      "priority_score": 17,
+      "domains": [
+        "market"
+      ],
+      "static_state": "STRUCTURED_LEAF_VALUES_PARTIAL_OR_MISSING",
+      "static_coverage_ratio": 0.194444,
+      "phase2_best_current_match": "archive/old_folders/GREENY-LIFE-EOS-PRODUCTION/platform/market-intelligence/country-intelligence/countries.json",
+      "recovery_state": "RECOVERABLE_FROM_GIT",
+      "historical_market_count": 7,
+      "historical_markets": [
+        {
+          "id": "EU",
+          "name": {
+            "en": "European Union",
+            "ar": "الاتحاد الأوروبي"
+          },
+          "currency": "EUR",
+          "language": "en",
+          "region": "Europe",
+          "status": {
+            "active": true
+          }
+        },
+        {
+          "id": "GCC",
+          "name": {
+            "en": "Gulf Cooperation Council",
+            "ar": "دول مجلس التعاون الخليجي"
+          },
+          "currency": "SAR",
+          "language": "ar",
+          "region": "Middle East",
+          "status": {
+            "active": true
+          }
+        },
+        {
+          "id": "UK",
+          "name": {
+            "en": "United Kingdom",
+            "ar": "المملكة المتحدة"
+          },
+          "currency": "GBP",
+          "language": "en",
+          "region": "Europe",
+          "status": {
+            "active": true
+          }
+        },
+        {
+          "id": "USA",
+          "name": {
+            "en": "United States",
+            "ar": "الولايات المتحدة"
+          },
+          "currency": "USD",
+          "language": "en",
+          "region": "North America",
+          "status": {
+            "active": true
+          }
+        },
+        {
+          "id": "CAN",
+          "name": {
+            "en": "Canada",
+            "ar": "كندا"
+          },
+          "currency": "CAD",
+          "language": "en",
+          "region": "North America",
+          "status": {
+            "active": true
+          }
+        },
+        {
+          "id": "AFR",
+          "name": {
+            "en": "Africa",
+            "ar": "إفريقيا"
+          },
+          "currency": null,
+          "language": "en",
+          "region": "Africa",
+          "status": {
+            "active": true
+          }
+        },
+        {
+          "id": "ASIA",
+          "name": {
+            "en": "Asia",
+            "ar": "آسيا"
+          },
+          "currency": null,
+          "language": "en",
+          "region": "Asia",
+          "status": {
+            "active": true
+          }
+        }
+      ],
+      "current_target_market_count": 5,
+      "current_target_markets": [
+        {
+          "country": "Norway",
+          "region": "Europe",
+          "priority": 1,
+          "status": "active"
+        },
+        {
+          "country": "UAE",
+          "region": "GCC",
+          "priority": 1,
+          "status": "active"
+        },
+        {
+          "country": "Saudi Arabia",
+          "region": "GCC",
+          "priority": 2,
+          "status": "active"
+        },
+        {
+          "country": "Germany",
+          "region": "Europe",
+          "priority": 2,
+          "status": "active"
+        },
+        {
+          "country": "USA",
+          "region": "North America",
+          "priority": 3,
+          "status": "pending"
+        }
+      ],
+      "classification": "HISTORICAL_MARKET_TAXONOMY_NE_CURRENT_TARGET_MARKET_LIST",
+      "promotion_state": "VALIDATION_REQUIRED_BEFORE_CANONICAL_PROMOTION"
+    },
+    {
+      "historical_object": "9f6b7d6acb52d1fa2db2c0cb9043b475cb4fd6ec",
+      "historical_path": "data/06_markets.json",
+      "priority": "HIGH",
+      "priority_score": 16,
+      "domains": [
+        "market"
+      ],
+      "static_state": "STRUCTURED_LEAF_VALUES_PARTIAL_OR_MISSING",
+      "static_coverage_ratio": 0.010417,
+      "phase2_best_current_match": "canonical/crm/customers.json",
+      "recovery_state": "RECOVERABLE_FROM_GIT",
+      "historical_market_count": 7,
+      "historical_markets": [
+        {
+          "id": "gcc",
+          "name": {
+            "en": "Gulf Cooperation Council (GCC)",
+            "ar": "دول مجلس التعاون الخليجي"
+          },
+          "countries": [
+            "Saudi Arabia",
+            "United Arab Emirates",
+            "Qatar",
+            "Kuwait",
+            "Bahrain",
+            "Oman"
+          ],
+          "default_language": "ar",
+          "supported_languages": [
+            "ar",
+            "en"
+          ],
+          "currency": [
+            "SAR",
+            "AED",
+            "QAR",
+            "KWD",
+            "BHD",
+            "OMR"
+          ],
+          "business_channels": [
+            "b2c",
+            "b2b",
+            "private_label"
+          ],
+          "export_enabled": true
+        },
+        {
+          "id": "eu",
+          "name": {
+            "en": "European Union",
+            "ar": "الاتحاد الأوروبي"
+          },
+          "countries": [
+            "Germany",
+            "France",
+            "Italy",
+            "Spain",
+            "Netherlands",
+            "Belgium",
+            "Sweden",
+            "Denmark",
+            "Finland",
+            "Austria",
+            "Poland",
+            "Ireland",
+            "Portugal",
+            "Greece",
+            "Czech Republic",
+            "Romania",
+            "Hungary",
+            "Slovakia",
+            "Slovenia",
+            "Croatia",
+            "Bulgaria",
+            "Lithuania",
+            "Latvia",
+            "Estonia",
+            "Luxembourg",
+            "Cyprus",
+            "Malta"
+          ],
+          "default_language": "en",
+          "supported_languages": [
+            "en",
+            "de",
+            "fr",
+            "it",
+            "es"
+          ],
+          "currency": [
+            "EUR"
+          ],
+          "business_channels": [
+            "b2c",
+            "b2b",
+            "private_label"
+          ],
+          "export_enabled": true
+        },
+        {
+          "id": "uk",
+          "name": {
+            "en": "United Kingdom",
+            "ar": "المملكة المتحدة"
+          },
+          "countries": [
+            "United Kingdom"
+          ],
+          "default_language": "en",
+          "supported_languages": [
+            "en"
+          ],
+          "currency": [
+            "GBP"
+          ],
+          "business_channels": [
+            "b2c",
+            "b2b",
+            "private_label"
+          ],
+          "export_enabled": true
+        },
+        {
+          "id": "usa",
+          "name": {
+            "en": "United States",
+            "ar": "الولايات المتحدة"
+          },
+          "countries": [
+            "United States"
+          ],
+          "default_language": "en",
+          "supported_languages": [
+            "en"
+          ],
+          "currency": [
+            "USD"
+          ],
+          "business_channels": [
+            "b2c",
+            "b2b",
+            "private_label"
+          ],
+          "export_enabled": true
+        },
+        {
+          "id": "canada",
+          "name": {
+            "en": "Canada",
+            "ar": "كندا"
+          },
+          "countries": [
+            "Canada"
+          ],
+          "default_language": "en",
+          "supported_languages": [
+            "en",
+            "fr"
+          ],
+          "currency": [
+            "CAD"
+          ],
+          "business_channels": [
+            "b2c",
+            "b2b",
+            "private_label"
+          ],
+          "export_enabled": true
+        },
+        {
+          "id": "asia",
+          "name": {
+            "en": "Asia",
+            "ar": "آسيا"
+          },
+          "countries": [
+            "Japan",
+            "South Korea",
+            "Singapore",
+            "Malaysia"
+          ],
+          "default_language": "en",
+          "supported_languages": [
+            "en"
+          ],
+          "currency": [
+            "JPY",
+            "KRW",
+            "SGD",
+            "MYR"
+          ],
+          "business_channels": [
+            "b2b",
+            "private_label"
+          ],
+          "export_enabled": true
+        },
+        {
+          "id": "africa",
+          "name": {
+            "en": "Africa",
+            "ar": "أفريقيا"
+          },
+          "countries": [
+            "Egypt",
+            "South Africa",
+            "Kenya",
+            "Morocco"
+          ],
+          "default_language": "en",
+          "supported_languages": [
+            "en",
+            "ar"
+          ],
+          "currency": [
+            "EGP",
+            "ZAR",
+            "KES",
+            "MAD"
+          ],
+          "business_channels": [
+            "b2b",
+            "private_label"
+          ],
+          "export_enabled": true
+        }
+      ],
+      "current_target_market_count": 5,
+      "current_target_markets": [
+        {
+          "country": "Norway",
+          "region": "Europe",
+          "priority": 1,
+          "status": "active"
+        },
+        {
+          "country": "UAE",
+          "region": "GCC",
+          "priority": 1,
+          "status": "active"
+        },
+        {
+          "country": "Saudi Arabia",
+          "region": "GCC",
+          "priority": 2,
+          "status": "active"
+        },
+        {
+          "country": "Germany",
+          "region": "Europe",
+          "priority": 2,
+          "status": "active"
+        },
+        {
+          "country": "USA",
+          "region": "North America",
+          "priority": 3,
+          "status": "pending"
+        }
+      ],
+      "classification": "HISTORICAL_MARKET_TAXONOMY_NE_CURRENT_TARGET_MARKET_LIST",
+      "promotion_state": "VALIDATION_REQUIRED_BEFORE_CANONICAL_PROMOTION"
+    }
+  ],
+  "database_write": false,
+  "canonical_promotion_complete": false,
+  "promotion_gate": "C1_VALIDATION_AND_EXPLICIT_PROMOTION",
+  "safety": {
+    "READ_ONLY_SOURCE_AUDIT": true,
+    "DATABASE_WRITE": false,
+    "CANONICAL_BUSINESS_DATA_MUTATION": false,
+    "SOURCE_MUTATION": false,
+    "RETIRED_REPAIR_TREE_READ": false,
+    "PAID_RESOURCE_USED": false,
+    "AUTOMATIC_DELETE_AUTHORITY": false,
+    "SAFE_TO_REMOVE_SOURCE": false
+  }
+}
