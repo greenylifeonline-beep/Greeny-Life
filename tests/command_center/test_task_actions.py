@@ -623,3 +623,141 @@ def test_commercial_revalidation_waits_for_phase3_dependency(tmp_path):
     task = next(x for x in tasks if x["id"] == "FORENSIC-PHASE4")
     assert out["actions_processed"] == 0
     assert task["status"] == "READY"
+
+
+def make_commercial_validation_board(tmp_path: Path, phase4_done: bool = True):
+    repo = tmp_path / "Greeny-Life"
+    (repo / ".ai-os/state").mkdir(parents=True)
+    phase4 = {
+        "id": "FORENSIC-PHASE4",
+        "status": "DONE" if phase4_done else "READY",
+        "dependencies": [],
+    }
+    phase5 = {
+        "id": "FORENSIC-PHASE5",
+        "status": "READY",
+        "dependencies": ["FORENSIC-PHASE4"],
+        "automation_action": "DEEP_LEGACY_COMMERCIAL_RECOVERY_VALIDATION",
+        "dispatch_authorized_by": "C1",
+        "destructive_action_requested": False,
+    }
+    (repo / ".ai-os/state/TASKS.json").write_text(
+        json.dumps({"tasks": [phase4, phase5]}), encoding="utf-8"
+    )
+    return CouncilBoard(repo, tmp_path / "presence.json"), repo
+
+
+def fake_commercial_validation_package(_task, safe=False, promoted=False, ready=0):
+    safety = {
+        "READ_ONLY_SOURCE_AUDIT": True,
+        "DATABASE_WRITE": False,
+        "CANONICAL_BUSINESS_DATA_MUTATION": False,
+        "KNOWLEDGE_CANONICAL_PROMOTION": False,
+        "SOURCE_MUTATION": False,
+        "SAFE_TO_REMOVE_SOURCE": safe,
+    }
+    return {
+        "17-COMMERCIAL-RECOVERY-PROVENANCE.json": {
+            "path_lineage": [],
+            "safety": safety,
+        },
+        "18-COMMERCIAL-DATA-VALIDATION-DECISIONS.json": {
+            "supplier_decisions": [],
+            "customer_decisions": [],
+            "market_taxonomy_decisions": [],
+            "promotion_ready_count": ready,
+            "canonical_write_executed": False,
+            "safety": safety,
+        },
+        "19-COMMERCIAL-KNOWLEDGE-LINEAGE.json": {
+            "knowledge_lineages": [],
+            "knowledge_assimilation_executed": False,
+            "safety": safety,
+        },
+        "20-COMMERCIAL-CAPABILITY-VALIDATION-PLAN.json": {
+            "executable_behavior_validation_required": [],
+            "reference_not_executable_gap": [],
+            "runtime_equivalence_proven": False,
+            "safety": safety,
+        },
+        "PHASE5-FORENSIC-EVIDENCE.json": {
+            "schema": "raios.deep-legacy-forensic.phase5-evidence.v1",
+            "status": "COMPLETE_EVIDENCE_VERIFIED",
+            "promotion_ready_count": ready,
+            "canonical_promotion_complete": promoted,
+            "business_value_zero_gap_proven": False,
+            "full_forensic_audit_complete": False,
+            "safe_to_remove_source": safe,
+            "next_required_phase":
+                "EXTERNAL_SOURCE_ENTITY_VALIDATION_AND_EXECUTABLE_BEHAVIOR_PROOF",
+            "safety": safety,
+        },
+        "DELETE-ELIGIBILITY-REPORT.json": {
+            "decision": "DENY",
+            "safe_to_remove_source": safe,
+        },
+    }
+
+
+def test_commercial_recovery_validation_runs_read_only_without_seat(tmp_path):
+    board, repo = make_commercial_validation_board(tmp_path)
+    source = repo / "historical-commercial.txt"
+    source.write_text("preserve", encoding="utf-8")
+    before = source.read_bytes()
+    board.actions = TaskActionExecutor(
+        repo,
+        collector=lambda: {},
+        prober=lambda world: [],
+        commercial_validation_collector=lambda task:
+            fake_commercial_validation_package(task),
+    )
+    out = board.run_cycle(Worker())
+    tasks = json.loads(board.tasks.read_text(encoding="utf-8"))["tasks"]
+    task = next(x for x in tasks if x["id"] == "FORENSIC-PHASE5")
+    assert out["actions_processed"] == 1, task.get("blocker")
+    assert task["status"] == "DONE"
+    assert task["executed_by"] == (
+        "RAIOS-SYSTEM-ACTION:DETERMINISTIC_COMMERCIAL_RECOVERY_VALIDATION"
+    )
+    assert source.read_bytes() == before
+    proof = json.loads((repo / task["evidence"]).read_text(encoding="utf-8"))
+    assert proof["promotion_ready_count"] == 0
+    assert proof["canonical_promotion_complete"] is False
+    assert proof["safe_to_remove_source"] is False
+
+
+def test_commercial_recovery_validation_fails_closed_on_unvalidated_promotion(tmp_path):
+    board, repo = make_commercial_validation_board(tmp_path)
+    board.actions = TaskActionExecutor(
+        repo,
+        collector=lambda: {},
+        prober=lambda world: [],
+        commercial_validation_collector=lambda task:
+            fake_commercial_validation_package(task, ready=1),
+    )
+    out = board.run_cycle(Worker())
+    task = next(
+        x for x in json.loads(board.tasks.read_text(encoding="utf-8"))["tasks"]
+        if x["id"] == "FORENSIC-PHASE5"
+    )
+    assert out["actions_blocked"] == 1
+    assert task["status"] == "BLOCKED"
+    assert "FORENSIC_PHASE5_UNVALIDATED_PROMOTION_CANDIDATE" in task["blocker"]
+
+
+def test_commercial_recovery_validation_waits_for_phase4(tmp_path):
+    board, repo = make_commercial_validation_board(tmp_path, phase4_done=False)
+    board.actions = TaskActionExecutor(
+        repo,
+        collector=lambda: {},
+        prober=lambda world: [],
+        commercial_validation_collector=lambda task:
+            fake_commercial_validation_package(task),
+    )
+    out = board.run_cycle(Worker())
+    task = next(
+        x for x in json.loads(board.tasks.read_text(encoding="utf-8"))["tasks"]
+        if x["id"] == "FORENSIC-PHASE5"
+    )
+    assert out["actions_processed"] == 0
+    assert task["status"] == "READY"

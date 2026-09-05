@@ -22,6 +22,7 @@ DEEP_LEGACY_FORENSIC_CENSUS = "DEEP_LEGACY_FORENSIC_CENSUS"
 DEEP_LEGACY_SEMANTIC_RECONCILIATION = "DEEP_LEGACY_SEMANTIC_RECONCILIATION"
 DEEP_LEGACY_BEHAVIOR_RECOVERY = "DEEP_LEGACY_BEHAVIOR_RECOVERY"
 DEEP_LEGACY_COMMERCIAL_REVALIDATION = "DEEP_LEGACY_COMMERCIAL_REVALIDATION"
+DEEP_LEGACY_COMMERCIAL_RECOVERY_VALIDATION = "DEEP_LEGACY_COMMERCIAL_RECOVERY_VALIDATION"
 MAX_MODEL_PARAMETERS_BILLION = 32
 MAX_FORENSIC_TEXT_BYTES = 2 * 1024 * 1024
 
@@ -81,6 +82,7 @@ class TaskActionExecutor:
         semantic_collector: Callable[[dict[str, Any]], dict[str, Any]] | None = None,
         behavior_collector: Callable[[dict[str, Any]], dict[str, Any]] | None = None,
         commercial_collector: Callable[[dict[str, Any]], dict[str, Any]] | None = None,
+        commercial_validation_collector: Callable[[dict[str, Any]], dict[str, Any]] | None = None,
     ):
         self.repo = repo.resolve()
         self.collector = collector
@@ -89,6 +91,7 @@ class TaskActionExecutor:
         self.semantic_collector = semantic_collector
         self.behavior_collector = behavior_collector
         self.commercial_collector = commercial_collector
+        self.commercial_validation_collector = commercial_validation_collector
         self.report_root = (
             self.repo / ".ai-os/reports/command-center/resource-census"
         )
@@ -106,6 +109,7 @@ class TaskActionExecutor:
                 DEEP_LEGACY_SEMANTIC_RECONCILIATION,
                 DEEP_LEGACY_BEHAVIOR_RECOVERY,
                 DEEP_LEGACY_COMMERCIAL_REVALIDATION,
+                DEEP_LEGACY_COMMERCIAL_RECOVERY_VALIDATION,
             }
             and task.get("dispatch_authorized_by") == "C1"
             and not task.get("claimed_by")
@@ -2049,6 +2053,518 @@ class TaskActionExecutor:
         )
         return rel
 
+    def _git_path_lineage(self, path: str, limit: int = 5) -> dict[str, Any]:
+        clean = str(path or "").replace("\\", "/")
+        try:
+            raw = self._git_output(
+                "log", "--all", f"-n{max(1, int(limit))}",
+                "--date=iso-strict",
+                "--pretty=format:%H%x1f%aI%x1f%an%x1f%s",
+                "--", clean, timeout=60,
+            )
+        except Exception as exc:
+            return {
+                "path": clean,
+                "current_path_exists": (self.repo / clean).is_file(),
+                "history_query_ok": False,
+                "error": f"{type(exc).__name__}:{exc}",
+                "commits": [],
+            }
+        commits: list[dict[str, Any]] = []
+        for line in raw.splitlines():
+            parts = line.split("\x1f", 3)
+            if len(parts) != 4:
+                continue
+            commits.append({
+                "commit": parts[0],
+                "authored_at": parts[1],
+                "author": parts[2],
+                "subject": parts[3],
+            })
+        return {
+            "path": clean,
+            "current_path_exists": (self.repo / clean).is_file(),
+            "history_query_ok": True,
+            "commit_count_returned": len(commits),
+            "commits": commits,
+        }
+
+    @staticmethod
+    def _normalized_market_id(value: Any) -> str:
+        raw = re.sub(r"[^A-Z0-9]+", "", str(value or "").upper())
+        aliases = {
+            "CANADA": "CAN",
+            "AFRICA": "AFR",
+            "UNITEDSTATES": "USA",
+            "UNITEDKINGDOM": "UK",
+        }
+        return aliases.get(raw, raw)
+
+    def _collect_deep_legacy_commercial_recovery_validation(
+        self, task: dict[str, Any]
+    ) -> dict[str, Any]:
+        data = self._forensic_dependency_payload(
+            task, "14-COMMERCIAL-DATA-RECOVERY-CANDIDATES.json"
+        )
+        capability = self._forensic_dependency_payload(
+            task, "16-COMMERCIAL-CAPABILITY-REVIEW-QUEUE.json"
+        )
+
+        source_registry_path = self.repo / ".ai-os/learning/c5-foundry-v0.1/SOURCE-REGISTRY.json"
+        source_registry: dict[str, Any] = {}
+        if source_registry_path.is_file():
+            try:
+                source_registry = json.loads(
+                    source_registry_path.read_text(encoding="utf-8-sig")
+                )
+            except (OSError, json.JSONDecodeError):
+                source_registry = {}
+        source_rows = {
+            str(x.get("source_id") or ""): x
+            for x in source_registry.get("sources", [])
+            if isinstance(x, dict) and x.get("source_id")
+        }
+
+        current_supplier_doc = {}
+        current_customer_doc = {}
+        try:
+            current_supplier_doc = json.loads(
+                (self.repo / "canonical/data/suppliers.json").read_text(
+                    encoding="utf-8-sig"
+                )
+            )
+        except (OSError, json.JSONDecodeError):
+            pass
+        try:
+            current_customer_doc = json.loads(
+                (self.repo / "canonical/data/customer-domain/customers.json").read_text(
+                    encoding="utf-8-sig"
+                )
+            )
+        except (OSError, json.JSONDecodeError):
+            pass
+        current_suppliers = list(current_supplier_doc.get("suppliers") or [])
+        current_customers = list(current_customer_doc.get("customers") or [])
+        supplier_by_id = {
+            str(x.get("supplier_id") or ""): x
+            for x in current_suppliers if isinstance(x, dict) and x.get("supplier_id")
+        }
+        customer_by_id = {
+            str(x.get("customer_id") or ""): x
+            for x in current_customers if isinstance(x, dict) and x.get("customer_id")
+        }
+
+        supplier_decisions: list[dict[str, Any]] = []
+        for row in data.get("supplier_candidates", []) or []:
+            current_id = str(row.get("current_entity_id") or "")
+            current = supplier_by_id.get(current_id)
+            historical = row.get("historical_record") if isinstance(
+                row.get("historical_record"), dict
+            ) else {}
+            old_certs = {
+                str(x) for x in (historical.get("certifications") or [])
+                if x not in (None, "")
+            }
+            current_certs = {
+                str(x) for x in ((current or {}).get("certifications") or [])
+                if x not in (None, "")
+            }
+            decision = (
+                "QUARANTINE_HISTORICAL_DELTA_UNVERIFIED"
+                if current
+                else "QUARANTINE_HISTORICAL_ENTITY_NOT_CURRENT"
+            )
+            supplier_decisions.append({
+                "historical_object": row.get("historical_object"),
+                "historical_path": row.get("historical_path"),
+                "historical_entity_id": row.get("historical_entity_id"),
+                "historical_name": row.get("historical_name"),
+                "current_entity_id": current_id or None,
+                "decision": decision,
+                "promotion_ready": False,
+                "requires_owner_or_external_validation": True,
+                "historical_only_certifications":
+                    sorted(old_certs - current_certs),
+                "current_only_certifications":
+                    sorted(current_certs - old_certs),
+                "field_delta": row.get("field_delta"),
+                "reason": (
+                    "Historical commercial fields conflict with or extend the "
+                    "current canonical supplier record and have no current proof."
+                ),
+            })
+
+        customer_decisions: list[dict[str, Any]] = []
+        for row in data.get("customer_candidates", []) or []:
+            current_id = str(row.get("current_entity_id") or "")
+            current = customer_by_id.get(current_id)
+            customer_decisions.append({
+                "historical_object": row.get("historical_object"),
+                "historical_path": row.get("historical_path"),
+                "historical_entity_id": row.get("historical_entity_id"),
+                "historical_name": row.get("historical_name"),
+                "current_entity_id": current_id or None,
+                "decision": (
+                    "CURRENT_ENTITY_DELTA_REQUIRES_VALIDATION"
+                    if current else "QUARANTINE_HISTORICAL_ENTITY_NOT_CURRENT"
+                ),
+                "promotion_ready": False,
+                "requires_owner_or_external_validation": True,
+                "field_delta": row.get("field_delta"),
+                "reason": (
+                    "Identity/contact/credit terms from history cannot be treated "
+                    "as current commercial truth without entity and provenance proof."
+                ),
+            })
+
+        taxonomy_groups: dict[str, dict[str, Any]] = {}
+        for row in data.get("market_taxonomy_candidates", []) or []:
+            markets = [
+                x for x in (row.get("historical_markets") or [])
+                if isinstance(x, dict)
+            ]
+            ids = sorted({
+                self._normalized_market_id(x.get("id"))
+                for x in markets if x.get("id")
+            })
+            signature = hashlib.sha256(
+                "|".join(ids).encode("utf-8")
+            ).hexdigest()
+            group = taxonomy_groups.setdefault(signature, {
+                "taxonomy_signature": signature,
+                "normalized_market_ids": ids,
+                "source_snapshots": [],
+                "decision": "RETAIN_REFERENCE_TAXONOMY",
+                "promotion_ready": False,
+                "reason": (
+                    "Historical regional taxonomy is a reference ontology and is "
+                    "not equivalent to the current country-level target market list."
+                ),
+            })
+            group["source_snapshots"].append({
+                "historical_object": row.get("historical_object"),
+                "historical_path": row.get("historical_path"),
+                "historical_market_count": row.get("historical_market_count"),
+            })
+        taxonomy_decisions = list(taxonomy_groups.values())
+
+        knowledge_by_source: dict[str, dict[str, Any]] = {}
+        for row in capability.get("knowledge_recovery_review", []) or []:
+            path = str(row.get("historical_path") or "")
+            stem = Path(path).stem
+            source_id = stem
+            if source_id.endswith(".raw"):
+                source_id = source_id[:-4]
+            registry = source_rows.get(source_id)
+            group = knowledge_by_source.setdefault(source_id, {
+                "source_id": source_id,
+                "representations": [],
+                "source_registry_present": registry is not None,
+                "registry_entry": registry,
+                "registry_knowledge_state": source_registry.get("knowledge_state"),
+                "registry_is_learning_authority":
+                    source_registry.get("this_registry_is_learning_authority"),
+                "decision": (
+                    "VALIDATE_OFFICIAL_SOURCE_BEFORE_ASSIMILATION"
+                    if registry else "QUARANTINE_UNREGISTERED_KNOWLEDGE"
+                ),
+                "promotion_ready": False,
+                "reason": (
+                    "Registered official source exists, but the registry marks "
+                    "knowledge DISCOVERED and is explicitly not the learning authority."
+                    if registry else
+                    "Historical knowledge representation lacks a current registered source."
+                ),
+            })
+            group["representations"].append({
+                "historical_object": row.get("historical_object"),
+                "historical_path": path,
+                "content_sha256": row.get("content_sha256"),
+            })
+        knowledge_decisions = list(knowledge_by_source.values())
+
+        executable_exts = {
+            ".py", ".ts", ".tsx", ".js", ".jsx", ".cjs", ".ps1", ".sh"
+        }
+        executable_candidates: list[dict[str, Any]] = []
+        reference_candidates: list[dict[str, Any]] = []
+        for row in capability.get("missing_or_noncurrent_capability_review", []) or []:
+            path = str(row.get("historical_path") or "")
+            ext = Path(path).suffix.lower()
+            lowered = path.lower().replace("\\", "/")
+            is_test_or_evidence = (
+                "/tests/" in lowered
+                or "/evidence/" in lowered
+                or "/reports/" in lowered
+                or "/exports/" in lowered
+                or "/inventory/" in lowered
+                or lowered.startswith("docs/")
+                or lowered.startswith("migration/")
+            )
+            payload = {
+                "historical_object": row.get("historical_object"),
+                "historical_path": path,
+                "priority": row.get("priority"),
+                "priority_score": row.get("priority_score"),
+                "domains": row.get("domains"),
+                "phase2_best_current_match": row.get("phase2_best_current_match"),
+                "static_state": row.get("static_state"),
+                "static_coverage_ratio": row.get("static_coverage_ratio"),
+            }
+            if ext in executable_exts and not is_test_or_evidence:
+                executable_candidates.append({
+                    **payload,
+                    "decision": "EXECUTABLE_BEHAVIOR_VALIDATION_REQUIRED",
+                    "promotion_ready": False,
+                    "requires_runtime_or_deterministic_behavior_test": True,
+                })
+            else:
+                reference_candidates.append({
+                    **payload,
+                    "decision": "RETAIN_REFERENCE_NOT_EXECUTABLE_GAP",
+                    "promotion_ready": False,
+                    "reason": (
+                        "Historical row is documentation, evidence, inventory, "
+                        "test/migration output, or non-executable structured data."
+                    ),
+                })
+
+        current_lineage = [
+            {
+                **{
+                    k: row.get(k) for k in (
+                        "historical_object", "historical_path", "priority",
+                        "priority_score", "domains", "static_state",
+                        "static_coverage_ratio",
+                    )
+                },
+                "decision": "CURRENT_PATH_EVOLUTION_LINEAGE_NOT_MISSING_GAP",
+                "promotion_ready": False,
+            }
+            for row in (capability.get("current_path_evolution_review", []) or [])
+        ]
+        static_current = [
+            {
+                **{
+                    k: row.get(k) for k in (
+                        "historical_object", "historical_path", "priority",
+                        "priority_score", "domains", "static_state",
+                        "static_coverage_ratio",
+                    )
+                },
+                "decision": "CURRENT_CODE_SURFACE_PRESENT_STATIC_ONLY",
+                "promotion_ready": False,
+            }
+            for row in (capability.get("static_covered_current_code", []) or [])
+        ]
+
+        lineage_paths = {
+            str(x.get("historical_path") or "")
+            for x in (
+                list(data.get("supplier_candidates", []) or [])
+                + list(data.get("customer_candidates", []) or [])
+                + list(data.get("market_taxonomy_candidates", []) or [])
+                + list(capability.get("knowledge_recovery_review", []) or [])
+                + executable_candidates
+            )
+            if x.get("historical_path")
+        }
+        path_lineage = [
+            self._git_path_lineage(path, limit=4)
+            for path in sorted(lineage_paths)
+        ]
+
+        validation_reports = {}
+        for name, rel in {
+            "supplier": "intelligence/supplier-validation-report.json",
+            "customer": "intelligence/customer-validation-report.json",
+        }.items():
+            path = self.repo / rel
+            if path.is_file():
+                try:
+                    validation_reports[name] = json.loads(
+                        path.read_text(encoding="utf-8-sig")
+                    )
+                except (OSError, json.JSONDecodeError):
+                    validation_reports[name] = {"status": "UNREADABLE"}
+            else:
+                validation_reports[name] = {"status": "MISSING"}
+
+        promotion_ready_count = 0
+        quarantine_count = sum(
+            1 for row in supplier_decisions + customer_decisions
+            if str(row.get("decision", "")).startswith("QUARANTINE")
+        )
+        external_validation_required_count = (
+            sum(1 for row in supplier_decisions + customer_decisions
+                if row.get("requires_owner_or_external_validation"))
+            + sum(1 for row in knowledge_decisions
+                  if row.get("decision")
+                  == "VALIDATE_OFFICIAL_SOURCE_BEFORE_ASSIMILATION")
+        )
+        generated = utc()
+        safety = {
+            "READ_ONLY_SOURCE_AUDIT": True,
+            "EXTERNAL_WEB_USED": False,
+            "DATABASE_WRITE": False,
+            "CANONICAL_BUSINESS_DATA_MUTATION": False,
+            "KNOWLEDGE_CANONICAL_PROMOTION": False,
+            "SOURCE_MUTATION": False,
+            "RETIRED_REPAIR_TREE_READ": False,
+            "AUTOMATIC_DELETE_AUTHORITY": False,
+            "SAFE_TO_REMOVE_SOURCE": False,
+        }
+        return {
+            "17-COMMERCIAL-RECOVERY-PROVENANCE.json": {
+                "schema":
+                    "raios.deep-legacy-forensic.commercial-recovery-provenance.v1",
+                "generated_at": generated,
+                "path_lineage": path_lineage,
+                "source_registry": {
+                    "path":
+                        ".ai-os/learning/c5-foundry-v0.1/SOURCE-REGISTRY.json",
+                    "present": source_registry_path.is_file(),
+                    "knowledge_state": source_registry.get("knowledge_state"),
+                    "this_registry_is_learning_authority":
+                        source_registry.get("this_registry_is_learning_authority"),
+                    "registered_source_ids": sorted(source_rows),
+                },
+                "current_validation_reports": validation_reports,
+                "safety": safety,
+            },
+            "18-COMMERCIAL-DATA-VALIDATION-DECISIONS.json": {
+                "schema":
+                    "raios.deep-legacy-forensic.commercial-data-validation.v1",
+                "generated_at": generated,
+                "supplier_decisions": supplier_decisions,
+                "customer_decisions": customer_decisions,
+                "market_taxonomy_decisions": taxonomy_decisions,
+                "promotion_ready_count": promotion_ready_count,
+                "canonical_write_executed": False,
+                "safety": safety,
+            },
+            "19-COMMERCIAL-KNOWLEDGE-LINEAGE.json": {
+                "schema":
+                    "raios.deep-legacy-forensic.commercial-knowledge-lineage.v1",
+                "generated_at": generated,
+                "knowledge_lineages": knowledge_decisions,
+                "unique_source_lineages": len(knowledge_decisions),
+                "knowledge_assimilation_executed": False,
+                "safety": safety,
+            },
+            "20-COMMERCIAL-CAPABILITY-VALIDATION-PLAN.json": {
+                "schema":
+                    "raios.deep-legacy-forensic.commercial-capability-plan.v1",
+                "generated_at": generated,
+                "executable_behavior_validation_required": executable_candidates,
+                "reference_not_executable_gap": reference_candidates,
+                "current_path_evolution_lineage": current_lineage,
+                "static_current_code_surface": static_current,
+                "executable_behavior_validation_count":
+                    len(executable_candidates),
+                "reference_not_executable_gap_count":
+                    len(reference_candidates),
+                "current_path_evolution_count": len(current_lineage),
+                "static_current_code_surface_count": len(static_current),
+                "runtime_equivalence_proven": False,
+                "safety": safety,
+            },
+            "PHASE5-FORENSIC-EVIDENCE.json": {
+                "schema": "raios.deep-legacy-forensic.phase5-evidence.v1",
+                "generated_at": generated,
+                "task_id": task.get("id"),
+                "phase":
+                    "COMMERCIAL_RECOVERY_PROVENANCE_AND_QUARANTINE_VALIDATION",
+                "status": "COMPLETE_EVIDENCE_VERIFIED",
+                "supplier_decisions": len(supplier_decisions),
+                "customer_decisions": len(customer_decisions),
+                "unique_market_taxonomy_families": len(taxonomy_decisions),
+                "unique_knowledge_source_lineages": len(knowledge_decisions),
+                "executable_behavior_validation_required":
+                    len(executable_candidates),
+                "reference_rows_removed_from_executable_gap":
+                    len(reference_candidates),
+                "current_path_evolution_rows_not_missing_gap":
+                    len(current_lineage),
+                "promotion_ready_count": promotion_ready_count,
+                "quarantine_count": quarantine_count,
+                "external_or_owner_validation_required":
+                    external_validation_required_count,
+                "knowledge_state":
+                    source_registry.get("knowledge_state"),
+                "registry_is_learning_authority":
+                    source_registry.get("this_registry_is_learning_authority"),
+                "canonical_promotion_complete": False,
+                "business_value_zero_gap_proven": False,
+                "full_forensic_audit_complete": False,
+                "safe_to_remove_source": False,
+                "next_required_phase":
+                    "EXTERNAL_SOURCE_ENTITY_VALIDATION_AND_EXECUTABLE_BEHAVIOR_PROOF",
+                "safety": safety,
+            },
+            "DELETE-ELIGIBILITY-REPORT.json": {
+                "schema": "raios.deep-legacy-forensic.delete-eligibility.v5",
+                "generated_at": generated,
+                "decision": "DENY",
+                "safe_to_remove_source": False,
+                "legacy_delete_allowed": False,
+                "promotion_ready_count": promotion_ready_count,
+                "quarantine_count": quarantine_count,
+                "missing_proofs": [
+                    "EXTERNAL_OR_OWNER_ENTITY_VALIDATION",
+                    "OFFICIAL_KNOWLEDGE_SOURCE_REFRESH_AND_VALIDATION",
+                    "EXECUTABLE_BEHAVIOR_EQUIVALENCE_OR_EXPLICIT_RETENTION",
+                    "ZERO_UNKNOWN_UNCLASSIFIED_UNRESOLVED",
+                    "C1_FINAL_DELETE_GATE",
+                ],
+                "safety": safety,
+            },
+        }
+
+    def _deep_legacy_commercial_recovery_validation(
+        self, task: dict[str, Any]
+    ) -> str:
+        package = (
+            self.commercial_validation_collector(task)
+            if self.commercial_validation_collector is not None
+            else self._collect_deep_legacy_commercial_recovery_validation(task)
+        )
+        task_id = str(task["id"])
+        target = self.forensic_report_root / task_id
+        for name, payload in package.items():
+            atomic(target / name, payload)
+        evidence = target / "PHASE5-FORENSIC-EVIDENCE.json"
+        if not evidence.is_file():
+            raise RuntimeError("FORENSIC_PHASE5_EVIDENCE_MISSING")
+        proof = json.loads(evidence.read_text(encoding="utf-8-sig"))
+        if proof.get("safe_to_remove_source") is not False:
+            raise RuntimeError("FORENSIC_PHASE5_FAIL_CLOSED_VIOLATION")
+        if proof.get("canonical_promotion_complete") is not False:
+            raise RuntimeError("FORENSIC_PHASE5_PROMOTION_BOUNDARY_VIOLATION")
+        if int(proof.get("promotion_ready_count") or 0) != 0:
+            raise RuntimeError("FORENSIC_PHASE5_UNVALIDATED_PROMOTION_CANDIDATE")
+        rel = evidence.relative_to(self.repo).as_posix()
+        atomic(
+            self.receipt_root
+            / f"{task_id}.deep-legacy-commercial-validation.receipt.json",
+            {
+                "schema": "raios.system-task-action-receipt.v1",
+                "task_id": task_id,
+                "action": DEEP_LEGACY_COMMERCIAL_RECOVERY_VALIDATION,
+                "status": "COMPLETE_EVIDENCE_VERIFIED",
+                "evidence": rel,
+                "executed_at": utc(),
+                "source_mutation": False,
+                "database_write": False,
+                "canonical_promotion_complete": False,
+                "promotion_ready_count": 0,
+                "safe_to_remove_source": False,
+                "next_required_phase":
+                    "EXTERNAL_SOURCE_ENTITY_VALIDATION_AND_EXECUTABLE_BEHAVIOR_PROOF",
+            },
+        )
+        return rel
+
     def execute_ready(self, data: dict[str, Any]) -> dict[str, int]:
         counts = {"actions_processed": 0, "actions_blocked": 0}
         tasks = data.get("tasks", [])
@@ -2073,6 +2589,9 @@ class TaskActionExecutor:
                 elif action == DEEP_LEGACY_COMMERCIAL_REVALIDATION:
                     evidence = self._deep_legacy_commercial_revalidation(task)
                     executed_by = "RAIOS-SYSTEM-ACTION:DETERMINISTIC_COMMERCIAL_REVALIDATION"
+                elif action == DEEP_LEGACY_COMMERCIAL_RECOVERY_VALIDATION:
+                    evidence = self._deep_legacy_commercial_recovery_validation(task)
+                    executed_by = "RAIOS-SYSTEM-ACTION:DETERMINISTIC_COMMERCIAL_RECOVERY_VALIDATION"
                 else:
                     continue
                 task.update(
