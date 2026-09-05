@@ -162,6 +162,23 @@ class MessageWorker:
         snapshot.update(scan_phase=phase,scan_in_progress=phase!="SCAN_COMPLETE",
                         delivered_terminal_cache=len(self._delivered_terminal))
         self.heartbeat(snapshot)
+    def _run_workflow_with_heartbeat(self,result:dict[str,int])->dict[str,int]:
+        if self.workflow is None:return {}
+        done=threading.Event()
+        phase="WORKFLOW_RUNNING"
+        def pulse()->None:
+            while not done.wait(self.heartbeat_interval_seconds):
+                try:self._progress_heartbeat(result,phase,force=True)
+                except Exception:pass
+        ticker=threading.Thread(
+            target=pulse,name="raios-message-worker-heartbeat-ticker",daemon=True
+        )
+        ticker.start()
+        try:
+            return self.workflow.run_cycle(self)
+        finally:
+            done.set()
+            ticker.join(timeout=max(1.0,self.heartbeat_interval_seconds+0.5))
     def scan_once(self)->dict[str,int]:
         result={"seen":0,"delivered":0,"retried":0,"dead_letter":0,
                 "terminal_cache_hits":0,"terminal_cache_warmed":0,
@@ -213,7 +230,7 @@ class MessageWorker:
         self._flush_terminal_index()
         if self.workflow is not None:
             self._progress_heartbeat(result,"WORKFLOW_START",force=True)
-            result.update(self.workflow.run_cycle(self))
+            result.update(self._run_workflow_with_heartbeat(result))
         self._progress_heartbeat(result,"SCAN_COMPLETE",force=True)
         return result
     def heartbeat(self,last:dict[str,int]|None=None)->None:

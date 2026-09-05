@@ -179,4 +179,29 @@ class MessageWorkerTests(unittest.TestCase):
             self.assertEqual(recovered["status"],"DELIVERED")
         finally:td.cleanup()
 
+    def test_long_workflow_keeps_heartbeat_alive_while_run_cycle_is_blocked(self):
+        td,worker=self.make_worker()
+        try:
+            class SlowWorkflow:
+                def run_cycle(self,_worker):
+                    time.sleep(.08)
+                    return {"slow_workflow_completed":1}
+            worker.configure_workflow(SlowWorkflow())
+            worker.heartbeat_interval_seconds=.01
+            phases=[]
+            original=worker.heartbeat
+            def capture(last=None):
+                phases.append((last or {}).get("scan_phase"))
+                return original(last)
+            worker.heartbeat=capture
+            result=worker.scan_once()
+            self.assertEqual(result["slow_workflow_completed"],1)
+            self.assertGreaterEqual(phases.count("WORKFLOW_RUNNING"),2)
+            self.assertIn("WORKFLOW_START",phases)
+            self.assertEqual(phases[-1],"SCAN_COMPLETE")
+            hb=json.loads((worker.state/"heartbeat.json").read_text())
+            self.assertEqual(hb["last_scan"]["scan_phase"],"SCAN_COMPLETE")
+            self.assertTrue(worker.status()["heartbeat_current"])
+        finally:td.cleanup()
+
 if __name__=="__main__":unittest.main()
