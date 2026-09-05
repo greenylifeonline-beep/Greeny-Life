@@ -1,0 +1,388 @@
+{
+  "schema": "raios.deep-legacy-forensic.commercial-capability-plan.v1",
+  "generated_at": "2026-09-05T18:41:15.766890+00:00",
+  "executable_behavior_validation_required": [
+    {
+      "historical_object": "9a39d21e3747b0c17014bacf0a409aa9399c6d6f",
+      "historical_path": ".architecture-backups/pre-unified-intelligence-20260726-145157/lib/lib/data/markets.ts",
+      "priority": "CRITICAL",
+      "priority_score": 26,
+      "domains": [
+        "intelligence",
+        "market"
+      ],
+      "phase2_best_current_match": "canonical/intelligence/intelligence/engines/audit-engine.ts",
+      "static_state": "CODE_SYMBOL_SURFACE_PARTIAL_OR_MISSING",
+      "static_coverage_ratio": 0.0,
+      "decision": "EXECUTABLE_BEHAVIOR_VALIDATION_REQUIRED",
+      "promotion_ready": false,
+      "requires_runtime_or_deterministic_behavior_test": true
+    }
+  ],
+  "reference_not_executable_gap": [
+    {
+      "historical_object": "5df32329d06e7476abd79e5cdfec921820448376",
+      "historical_path": ".architecture-backups/pre-unified-intelligence-20260726-145157/data/data/legacy_markets.json",
+      "priority": "CRITICAL",
+      "priority_score": 24,
+      "domains": [
+        "intelligence",
+        "market"
+      ],
+      "phase2_best_current_match": "archive/old_folders/unified-intelligence/reports/discovery/capability-discovery-20260726-145740.json",
+      "static_state": "STRUCTURED_LEAF_VALUES_PARTIAL_OR_MISSING",
+      "static_coverage_ratio": 0.0,
+      "decision": "RETAIN_REFERENCE_NOT_EXECUTABLE_GAP",
+      "promotion_ready": false,
+      "reason": "Historical row is documentation, evidence, inventory, test/migration output, or non-executable structured data."
+    },
+    {
+      "historical_object": "df688c028218f1c88f5404d978ec9ee5b8f82d0a",
+      "historical_path": "_raios-model-escalation/exports/ESC-TEST-002-result.json",
+      "priority": "CRITICAL",
+      "priority_score": 20,
+      "domains": [
+        "export",
+        "model"
+      ],
+      "phase2_best_current_match": ".ai-os/reports/cognitive/RAIOS-COGNITIVE-OPERATIONS-WORLDCLASS-CLOSURE-01/PROOF.json",
+      "static_state": "STRUCTURED_LEAF_VALUES_PARTIAL_OR_MISSING",
+      "static_coverage_ratio": 0.047619,
+      "decision": "RETAIN_REFERENCE_NOT_EXECUTABLE_GAP",
+      "promotion_ready": false,
+      "reason": "Historical row is documentation, evidence, inventory, test/migration output, or non-executable structured data."
+    },
+    {
+      "historical_object": "9d960d0a4cde6bb8adb0390ebe3981a57de2c5bc",
+      "historical_path": "migration/gl-005/multi-source-2/04-COMMERCIAL-CONTEXT.txt",
+      "priority": "HIGH",
+      "priority_score": 16,
+      "domains": [
+        "commercial"
+      ],
+      "phase2_best_current_match": null,
+      "static_state": "BINARY_LIKE_TEXT_REJECTED",
+      "static_coverage_ratio": 0.0,
+      "decision": "RETAIN_REFERENCE_NOT_EXECUTABLE_GAP",
+      "promotion_ready": false,
+      "reason": "Historical row is documentation, evidence, inventory, test/migration output, or non-executable structured data."
+    },
+    {
+      "historical_object": "44d79f3529f8395242714b7178a93b975e0b6f64",
+      "historical_path": "_raios-legacy-global-forensics/inventory/ALL-LEGACY-FILES.json",
+      "priority": "HIGH",
+      "priority_score": 15,
+      "domains": [
+        "inventory"
+      ],
+      "phase2_best_current_match": null,
+      "static_state": "UNANALYZED_BINARY_OR_LARGE",
+      "static_coverage_ratio": 0.0,
+      "decision": "RETAIN_REFERENCE_NOT_EXECUTABLE_GAP",
+      "promotion_ready": false,
+      "reason": "Historical row is documentation, evidence, inventory, test/migration output, or non-executable structured data."
+    },
+    {
+      "historical_object": "2baf65bdec77cd9eab09c90b816db5571dcc30c0",
+      "historical_path": "docs/auto-generated/finance.md",
+      "priority": "HIGH",
+      "priority_score": 15,
+      "domains": [
+        "finance"
+      ],
+      "phase2_best_current_match": "KNOWLEDGE-BASE/Architecture/architecture-files.csv",
+      "static_state": "TEXT_TOKEN_SURFACE_HIGH_COVERAGE",
+      "static_coverage_ratio": 1.0,
+      "decision": "RETAIN_REFERENCE_NOT_EXECUTABLE_GAP",
+      "promotion_ready": false,
+      "reason": "Historical row is documentation, evidence, inventory, test/migration output, or non-executable structured data."
+    },
+    {
+      "historical_object": "471c7a25f00b77bedb6128bcd7194ca52a676aac",
+      "historical_path": "migration/gl-004/evidence/test-supplier-read-authorization.txt",
+      "priority": "HIGH",
+      "priority_score": 14,
+      "domains": [
+        "supplier"
+      ],
+      "phase2_best_current_match": null,
+      "static_state": "BINARY_LIKE_TEXT_REJECTED",
+      "static_coverage_ratio": 0.0,
+      "decision": "RETAIN_REFERENCE_NOT_EXECUTABLE_GAP",
+      "promotion_ready": false,
+      "reason": "Historical row is documentation, evidence, inventory, test/migration output, or non-executable structured data."
+    },
+    {
+      "historical_object": "97f5837c329091283d1889b794616165308d0a91",
+      "historical_path": "docs/auto-generated/logistics.md",
+      "priority": "HIGH",
+      "priority_score": 13,
+      "domains": [
+        "logistics"
+      ],
+      "phase2_best_current_match": "KNOWLEDGE-BASE/Architecture/architecture-files.csv",
+      "static_state": "TEXT_TOKEN_SURFACE_HIGH_COVERAGE",
+      "static_coverage_ratio": 1.0,
+      "decision": "RETAIN_REFERENCE_NOT_EXECUTABLE_GAP",
+      "promotion_ready": false,
+      "reason": "Historical row is documentation, evidence, inventory, test/migration output, or non-executable structured data."
+    },
+    {
+      "historical_object": "fd938b2ba19ce79dfaeaada8e0a353ec7837b506",
+      "historical_path": "docs/auto-generated/operations.md",
+      "priority": "HIGH",
+      "priority_score": 13,
+      "domains": [
+        "operations"
+      ],
+      "phase2_best_current_match": "KNOWLEDGE-BASE/Architecture/architecture-files.csv",
+      "static_state": "TEXT_TOKEN_SURFACE_HIGH_COVERAGE",
+      "static_coverage_ratio": 1.0,
+      "decision": "RETAIN_REFERENCE_NOT_EXECUTABLE_GAP",
+      "promotion_ready": false,
+      "reason": "Historical row is documentation, evidence, inventory, test/migration output, or non-executable structured data."
+    }
+  ],
+  "current_path_evolution_lineage": [
+    {
+      "historical_object": "cc2bed7e91704d41c35b791f4f14dc4e2becd7f5",
+      "historical_path": "app/api/sales-orders/route.ts",
+      "priority": "HIGH",
+      "priority_score": 13,
+      "domains": [
+        "sales"
+      ],
+      "static_state": "CODE_SYMBOL_SURFACE_PARTIAL_OR_MISSING",
+      "static_coverage_ratio": 0.833333,
+      "decision": "CURRENT_PATH_EVOLUTION_LINEAGE_NOT_MISSING_GAP",
+      "promotion_ready": false
+    },
+    {
+      "historical_object": "1275ce8486fb03787baa2aa6d32d1fbffa5140a3",
+      "historical_path": "src/raios/council_ops/operations.py",
+      "priority": "MEDIUM",
+      "priority_score": 11,
+      "domains": [
+        "operations"
+      ],
+      "static_state": "STATIC_AST_UNITS_PARTIAL_OR_MISSING",
+      "static_coverage_ratio": 0.677419,
+      "decision": "CURRENT_PATH_EVOLUTION_LINEAGE_NOT_MISSING_GAP",
+      "promotion_ready": false
+    },
+    {
+      "historical_object": "3d8d03af22984881afd8a485d194fffd57cb888e",
+      "historical_path": "src/raios/council_ops/operations.py",
+      "priority": "MEDIUM",
+      "priority_score": 11,
+      "domains": [
+        "operations"
+      ],
+      "static_state": "STATIC_AST_UNITS_PARTIAL_OR_MISSING",
+      "static_coverage_ratio": 0.642857,
+      "decision": "CURRENT_PATH_EVOLUTION_LINEAGE_NOT_MISSING_GAP",
+      "promotion_ready": false
+    },
+    {
+      "historical_object": "3f704f42bd1c8c8ebaa7f224fa59eb64ea2613c0",
+      "historical_path": "src/raios/council_ops/operations.py",
+      "priority": "MEDIUM",
+      "priority_score": 11,
+      "domains": [
+        "operations"
+      ],
+      "static_state": "STATIC_AST_UNITS_PARTIAL_OR_MISSING",
+      "static_coverage_ratio": 0.69697,
+      "decision": "CURRENT_PATH_EVOLUTION_LINEAGE_NOT_MISSING_GAP",
+      "promotion_ready": false
+    },
+    {
+      "historical_object": "4d81f2916c6d8c9691dc6a47f77d49e55f99cccc",
+      "historical_path": "src/raios/council_ops/operations.py",
+      "priority": "MEDIUM",
+      "priority_score": 11,
+      "domains": [
+        "operations"
+      ],
+      "static_state": "STATIC_AST_UNITS_PARTIAL_OR_MISSING",
+      "static_coverage_ratio": 0.727273,
+      "decision": "CURRENT_PATH_EVOLUTION_LINEAGE_NOT_MISSING_GAP",
+      "promotion_ready": false
+    },
+    {
+      "historical_object": "71a9b525b99f3cb5e9f0145e8579c4145022d4fc",
+      "historical_path": "src/raios/council_ops/operations.py",
+      "priority": "MEDIUM",
+      "priority_score": 11,
+      "domains": [
+        "operations"
+      ],
+      "static_state": "STATIC_AST_UNITS_PARTIAL_OR_MISSING",
+      "static_coverage_ratio": 0.612903,
+      "decision": "CURRENT_PATH_EVOLUTION_LINEAGE_NOT_MISSING_GAP",
+      "promotion_ready": false
+    },
+    {
+      "historical_object": "b69786a4940490d05fc128f061c663c7abfc80d3",
+      "historical_path": "src/raios/council_ops/operations.py",
+      "priority": "MEDIUM",
+      "priority_score": 11,
+      "domains": [
+        "operations"
+      ],
+      "static_state": "STATIC_AST_UNITS_PARTIAL_OR_MISSING",
+      "static_coverage_ratio": 0.852941,
+      "decision": "CURRENT_PATH_EVOLUTION_LINEAGE_NOT_MISSING_GAP",
+      "promotion_ready": false
+    },
+    {
+      "historical_object": "2efdae418daff361ed3ff2aa1b7ad97ad6eb4839",
+      "historical_path": "tests/council_ops/test_operations.py",
+      "priority": "MEDIUM",
+      "priority_score": 11,
+      "domains": [
+        "operations"
+      ],
+      "static_state": "STATIC_AST_UNITS_PARTIAL_OR_MISSING",
+      "static_coverage_ratio": 0.769231,
+      "decision": "CURRENT_PATH_EVOLUTION_LINEAGE_NOT_MISSING_GAP",
+      "promotion_ready": false
+    },
+    {
+      "historical_object": "8bed6d4016472314b72e3cd19fdf9f39380f9b9c",
+      "historical_path": "tests/council_ops/test_operations.py",
+      "priority": "MEDIUM",
+      "priority_score": 11,
+      "domains": [
+        "operations"
+      ],
+      "static_state": "STATIC_AST_UNITS_PARTIAL_OR_MISSING",
+      "static_coverage_ratio": 0.75,
+      "decision": "CURRENT_PATH_EVOLUTION_LINEAGE_NOT_MISSING_GAP",
+      "promotion_ready": false
+    },
+    {
+      "historical_object": "fb9853837b4535f6fccf36586aa4a5c55566d8d1",
+      "historical_path": "tests/council_ops/test_operations.py",
+      "priority": "MEDIUM",
+      "priority_score": 11,
+      "domains": [
+        "operations"
+      ],
+      "static_state": "STATIC_AST_UNITS_PARTIAL_OR_MISSING",
+      "static_coverage_ratio": 0.714286,
+      "decision": "CURRENT_PATH_EVOLUTION_LINEAGE_NOT_MISSING_GAP",
+      "promotion_ready": false
+    },
+    {
+      "historical_object": "f9bb05b42331649563c8da9796be08d4b0be0d44",
+      "historical_path": ".ai-os/handoffs/20260901-172852-C6-RAIOS-COGNITIVE-OPERATIONS-WORLDCLASS-CLOSURE-01.md",
+      "priority": "MEDIUM",
+      "priority_score": 7,
+      "domains": [
+        "operations"
+      ],
+      "static_state": "TEXT_TOKEN_SURFACE_HIGH_COVERAGE",
+      "static_coverage_ratio": 1.0,
+      "decision": "CURRENT_PATH_EVOLUTION_LINEAGE_NOT_MISSING_GAP",
+      "promotion_ready": false
+    }
+  ],
+  "static_current_code_surface": [
+    {
+      "historical_object": "b3b6095f633dfc44ea6d764342834fd7b9208529",
+      "historical_path": "lib/intelligence/export-decision.ts",
+      "priority": "CRITICAL",
+      "priority_score": 19,
+      "domains": [
+        "export",
+        "intelligence"
+      ],
+      "static_state": "CODE_SYMBOL_SURFACE_FULLY_PRESENT_CURRENT",
+      "static_coverage_ratio": 1.0,
+      "decision": "CURRENT_CODE_SURFACE_PRESENT_STATIC_ONLY",
+      "promotion_ready": false
+    },
+    {
+      "historical_object": "5889c277465c52bb6f7194114873f848e83a84f4",
+      "historical_path": "app/api/mastermind/commercial-context/route.ts",
+      "priority": "HIGH",
+      "priority_score": 17,
+      "domains": [
+        "commercial"
+      ],
+      "static_state": "CODE_SYMBOL_SURFACE_FULLY_PRESENT_CURRENT",
+      "static_coverage_ratio": 1.0,
+      "decision": "CURRENT_CODE_SURFACE_PRESENT_STATIC_ONLY",
+      "promotion_ready": false
+    },
+    {
+      "historical_object": "8e291a31690870c3ab6dded4c2cf03bb41fbe97c",
+      "historical_path": "app/api/suppliers/route.ts",
+      "priority": "HIGH",
+      "priority_score": 15,
+      "domains": [
+        "supplier"
+      ],
+      "static_state": "CODE_SYMBOL_SURFACE_FULLY_PRESENT_CURRENT",
+      "static_coverage_ratio": 1.0,
+      "decision": "CURRENT_CODE_SURFACE_PRESENT_STATIC_ONLY",
+      "promotion_ready": false
+    },
+    {
+      "historical_object": "c17813555baf9973265aff44b5f22e8938a8db84",
+      "historical_path": "app/api/suppliers/route.ts",
+      "priority": "HIGH",
+      "priority_score": 15,
+      "domains": [
+        "supplier"
+      ],
+      "static_state": "CODE_SYMBOL_SURFACE_FULLY_PRESENT_CURRENT",
+      "static_coverage_ratio": 1.0,
+      "decision": "CURRENT_CODE_SURFACE_PRESENT_STATIC_ONLY",
+      "promotion_ready": false
+    },
+    {
+      "historical_object": "6fc1c727e13d76c72d1bff58ff6afd6604c78ec2",
+      "historical_path": "app/api/commercial-changes/route.ts",
+      "priority": "HIGH",
+      "priority_score": 14,
+      "domains": [
+        "commercial"
+      ],
+      "static_state": "CODE_SYMBOL_SURFACE_FULLY_PRESENT_CURRENT",
+      "static_coverage_ratio": 1.0,
+      "decision": "CURRENT_CODE_SURFACE_PRESENT_STATIC_ONLY",
+      "promotion_ready": false
+    },
+    {
+      "historical_object": "c2129d86012ec51e9d492e9d2fd387e749d31bae",
+      "historical_path": "app/api/decisions/export-readiness/route.ts",
+      "priority": "HIGH",
+      "priority_score": 12,
+      "domains": [
+        "export"
+      ],
+      "static_state": "CODE_SYMBOL_SURFACE_FULLY_PRESENT_CURRENT",
+      "static_coverage_ratio": 1.0,
+      "decision": "CURRENT_CODE_SURFACE_PRESENT_STATIC_ONLY",
+      "promotion_ready": false
+    }
+  ],
+  "executable_behavior_validation_count": 1,
+  "reference_not_executable_gap_count": 8,
+  "current_path_evolution_count": 11,
+  "static_current_code_surface_count": 6,
+  "runtime_equivalence_proven": false,
+  "safety": {
+    "READ_ONLY_SOURCE_AUDIT": true,
+    "EXTERNAL_WEB_USED": false,
+    "DATABASE_WRITE": false,
+    "CANONICAL_BUSINESS_DATA_MUTATION": false,
+    "KNOWLEDGE_CANONICAL_PROMOTION": false,
+    "SOURCE_MUTATION": false,
+    "RETIRED_REPAIR_TREE_READ": false,
+    "AUTOMATIC_DELETE_AUTHORITY": false,
+    "SAFE_TO_REMOVE_SOURCE": false
+  }
+}

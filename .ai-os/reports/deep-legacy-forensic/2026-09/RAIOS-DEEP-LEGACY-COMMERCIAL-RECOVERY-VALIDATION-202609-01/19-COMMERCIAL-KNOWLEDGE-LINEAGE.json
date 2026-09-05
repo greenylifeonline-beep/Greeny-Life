@@ -1,0 +1,61 @@
+{
+  "schema": "raios.deep-legacy-forensic.commercial-knowledge-lineage.v1",
+  "generated_at": "2026-09-05T18:41:15.766890+00:00",
+  "knowledge_lineages": [
+    {
+      "source_id": "EU_ACCESS2MARKETS_IMPORT",
+      "representations": [
+        {
+          "historical_object": "aec1f19fa53846ebdb312979f58a8f08ef712768",
+          "historical_path": ".ai-os/learning/c5-foundry-v0.1/knowledge-objects/EU_ACCESS2MARKETS_IMPORT.json",
+          "content_sha256": "042a59919d60db3839cee6117643cefcbeef5744dcaf8c292b1841d1faca4dac"
+        },
+        {
+          "historical_object": "c2c27074d395b9d8423ce7e68b63d866037f77e9",
+          "historical_path": ".ai-os/learning/c5-foundry-v0.1/sources/EU_ACCESS2MARKETS_IMPORT.txt",
+          "content_sha256": "5f8f1d0960c3fdcfddc080c20b334bfb2dce1c45b7ac49603f951097186969c2"
+        },
+        {
+          "historical_object": "4b9ed1c059505d26f18f0ba2c03fb1b1432ef94a",
+          "historical_path": ".ai-os/learning/c5-foundry-v0.1/sources/EU_ACCESS2MARKETS_IMPORT.raw",
+          "content_sha256": "b0d9724d000605627d33af43c42d280b12386de10b902f4c4f304124c50d8821"
+        }
+      ],
+      "source_registry_present": true,
+      "registry_entry": {
+        "source_id": "EU_ACCESS2MARKETS_IMPORT",
+        "authority": "EUROPEAN_COMMISSION",
+        "authority_level": "TIER0_PRIMARY",
+        "jurisdiction": "EU",
+        "language": "en",
+        "document_type": "OFFICIAL_GUIDANCE",
+        "url": "https://policy.trade.ec.europa.eu/help-exporters-and-importers/importing-eu_en",
+        "domain": [
+          "trade",
+          "customs",
+          "tariffs",
+          "origin",
+          "compliance"
+        ]
+      },
+      "registry_knowledge_state": "DISCOVERED",
+      "registry_is_learning_authority": false,
+      "decision": "VALIDATE_OFFICIAL_SOURCE_BEFORE_ASSIMILATION",
+      "promotion_ready": false,
+      "reason": "Registered official source exists, but the registry marks knowledge DISCOVERED and is explicitly not the learning authority."
+    }
+  ],
+  "unique_source_lineages": 1,
+  "knowledge_assimilation_executed": false,
+  "safety": {
+    "READ_ONLY_SOURCE_AUDIT": true,
+    "EXTERNAL_WEB_USED": false,
+    "DATABASE_WRITE": false,
+    "CANONICAL_BUSINESS_DATA_MUTATION": false,
+    "KNOWLEDGE_CANONICAL_PROMOTION": false,
+    "SOURCE_MUTATION": false,
+    "RETIRED_REPAIR_TREE_READ": false,
+    "AUTOMATIC_DELETE_AUTHORITY": false,
+    "SAFE_TO_REMOVE_SOURCE": false
+  }
+}
