@@ -2225,7 +2225,8 @@
       "dependencies": [
         "RAIOS-DEEP-LEGACY-FORENSIC-CENSUS-202609-01",
         "RAIOS-DEEP-LEGACY-SEMANTIC-RECONCILIATION-202609-01",
-        "RAIOS-DEEP-LEGACY-BEHAVIOR-RECOVERY-202609-01"
+        "RAIOS-DEEP-LEGACY-BEHAVIOR-RECOVERY-202609-01",
+        "RAIOS-DEEP-LEGACY-COMMERCIAL-REVALIDATION-202609-01"
       ],
       "allowed_agents": [
         "C2",
@@ -2335,11 +2336,9 @@
           "fit": "SECONDARY_OR_RECONCILIATION"
         }
       },
-      "updated_at": "2026-09-05T03:21:03.119926+00:00",
+      "updated_at": "2026-09-05T18:24:53.049618+00:00",
       "dispatch_status": "RETURNED_ABSENT_WITH_CHECKPOINT",
       "system_owner": "RAIOS_SYSTEM",
-      "acceptance_fingerprint": "ffdc24708543729f847dd24699b4c229d7b206f0a7d164aa6aeb2f1a5a2003b9",
-      "acceptance_signature_mode": "SESSION_BOUND_ATTENDANCE_FINGERPRINT",
       "read_surfaces": [
         "CURRENT_CANONICAL_TREE",
         "CANONICAL_GIT_HISTORY_AND_REFS",
@@ -2373,10 +2372,10 @@
       ],
       "duplicate_task_merged": true,
       "single_canonical_forensic_task": true,
-      "last_dispatch_target": "C2",
-      "last_dispatch_id": "DSP-b863599052b44947",
-      "last_claimed_by": "C2",
-      "returned_at": "2026-09-05T01:06:54.715998+00:00",
+      "last_dispatch_target": "C6",
+      "last_dispatch_id": "DSP-b8e5d0ac4ac54dbc",
+      "last_claimed_by": null,
+      "returned_at": "2026-09-05T04:14:53.487904+00:00",
       "return_reason": "TARGET_NOT_LIVE_BOUND_CONSUMER",
       "legacy_claim_reconciled": false,
       "resume_checkpoint": {
@@ -2422,7 +2421,29 @@
       "phase2_semantic_reconciliation_task": "RAIOS-DEEP-LEGACY-SEMANTIC-RECONCILIATION-202609-01",
       "phase2_required_before_behavioral_recovery_proof": true,
       "phase3_behavior_recovery_task": "RAIOS-DEEP-LEGACY-BEHAVIOR-RECOVERY-202609-01",
-      "phase3_required_before_targeted_assimilation": true
+      "phase3_required_before_targeted_assimilation": true,
+      "last_acceptance_fingerprint": "15ea05f72cb7cfba22ceb5626805a339fe3eb9c05fef661d752e46e1951722ea",
+      "last_acceptance_signature_mode": "SESSION_BOUND_ATTENDANCE_FINGERPRINT",
+      "last_accepted_at": "2026-09-05T03:53:16.949966+00:00",
+      "executor_backend_snapshot": null,
+      "last_system_recovery_checkpoint": {
+        "schema": "raios.task-checkpoint.v1",
+        "checkpoint_id": "CHK-6d43ba08881144e5",
+        "task_id": "RAIOS-DEEP-LEGACY-FORENSIC-AUDIT-202609-01",
+        "actor": "RAIOS-WORKER",
+        "phase": "ACCEPTED_NO_WORK_PROOF",
+        "summary": "Task acceptance was authenticated, but no post-acceptance executor/progress/checkpoint/evidence proof was observed. RAIOS returned the task to READY without claiming work occurred.",
+        "completed_steps": [],
+        "changed_files": [],
+        "validation": [],
+        "evidence_refs": [],
+        "previous_checkpoint_id": "CHK-9583cc5ad20642a8",
+        "next_step": "Bind a verified execution backend or produce a first signed work checkpoint before claiming ACTIVE_VERIFIED.",
+        "blocker": "FIRST_WORK_PROOF_TIMEOUT",
+        "created_at": "2026-09-05T04:09:01.026944+00:00"
+      },
+      "phase4_commercial_revalidation_task": "RAIOS-DEEP-LEGACY-COMMERCIAL-REVALIDATION-202609-01",
+      "phase4_required_before_commercial_promotion_or_zero_gap": true
     },
     {
       "id": "RAIOS-DEEP-LEGACY-FORENSIC-CENSUS-202609-01",
@@ -2597,6 +2618,59 @@
         "presence_not_required_for_deterministic_system_action": true,
         "source_mutation_allowed": false
       }
+    },
+    {
+      "id": "RAIOS-DEEP-LEGACY-COMMERCIAL-REVALIDATION-202609-01",
+      "title": "Deep legacy forensic Phase-4 targeted business and commercial revalidation",
+      "objective": "Revalidate historical business/commercial value against the current canonical tree, reject stale Repair-based zero-gap evidence, separate provenance/salvage metadata from substantive value, extract supplier/customer/market recovery candidates, and queue commercial knowledge/code for later validation. No database write, canonical business promotion, or deletion is allowed in this phase.",
+      "scope": [
+        ".ai-os/reports/deep-legacy-forensic/2026-09/RAIOS-DEEP-LEGACY-COMMERCIAL-REVALIDATION-202609-01"
+      ],
+      "read_surfaces": [
+        ".ai-os/reports/deep-legacy-forensic/2026-09/RAIOS-DEEP-LEGACY-BEHAVIOR-RECOVERY-202609-01",
+        "canonical/data/suppliers.json",
+        "canonical/data/supplier-product-links.json",
+        "canonical/data/customer-domain/customers.json",
+        "canonical/business/markets.json",
+        "_raios-old-business-salvage/reports/CURSOR-INDEPENDENT-ZERO-GAP-CERTIFICATION.json",
+        "CANONICAL_GIT_OBJECTS"
+      ],
+      "forbidden_read_surfaces": [
+        "RETIRED_GREENY_LIFE_REPAIR_TREE"
+      ],
+      "dependencies": [
+        "RAIOS-DEEP-LEGACY-BEHAVIOR-RECOVERY-202609-01"
+      ],
+      "allowed_agents": [],
+      "status": "READY",
+      "claimed_by": null,
+      "assigned_to": null,
+      "automation_action": "DEEP_LEGACY_COMMERCIAL_REVALIDATION",
+      "system_action_only": true,
+      "automatic_dispatch": false,
+      "dispatch_authorized_by": "C1",
+      "authorized_by": "C1",
+      "authorization_source": "DIRECT_ACTIVE_CHAT_SESSION",
+      "destructive_action_requested": false,
+      "source_mutation_allowed": false,
+      "database_write_allowed": false,
+      "canonical_business_promotion_allowed": false,
+      "scheduler_priority": "CRITICAL",
+      "program_id": "RAIOS-CAPABILITY-EVOLUTION-202609-202703",
+      "target_month": "2026-09",
+      "milestone": "CANONICAL_TRUTH_AND_CRITICAL_RECOVERY",
+      "hard_not_before": false,
+      "acceleration_allowed": true,
+      "required_outputs": [
+        "13-BUSINESS-COMMERCIAL-REVALIDATION.json",
+        "14-COMMERCIAL-DATA-RECOVERY-CANDIDATES.json",
+        "15-STALE-BUSINESS-SALVAGE-CERTIFICATION-AUDIT.json",
+        "16-COMMERCIAL-CAPABILITY-REVIEW-QUEUE.json",
+        "PHASE4-FORENSIC-EVIDENCE.json",
+        "DELETE-ELIGIBILITY-REPORT.json"
+      ],
+      "validation": "Current canonical business sources are compared domain-aware; stale Repair-based zero-gap evidence is rejected as current proof; recovery candidates are evidence only; database_write=false; canonical_promotion=false; source_mutation=false; safe_to_remove_source=false.",
+      "created_at": "2026-09-05T18:24:53.049618+00:00"
     }
   ],
   "programs": [
@@ -2683,6 +2757,7 @@
             "RAIOS-DEEP-LEGACY-FORENSIC-CENSUS-202609-01",
             "RAIOS-DEEP-LEGACY-SEMANTIC-RECONCILIATION-202609-01",
             "RAIOS-DEEP-LEGACY-BEHAVIOR-RECOVERY-202609-01",
+            "RAIOS-DEEP-LEGACY-COMMERCIAL-REVALIDATION-202609-01",
             "RAIOS-DEEP-LEGACY-FORENSIC-AUDIT-202609-01",
             "GL-002",
             "GL-003",
@@ -2847,7 +2922,7 @@
         ]
       },
       "success_definition": "COMPLETE_OBJECTIVES_AS_EARLY_AS_SAFELY_POSSIBLE_WITH_MACHINE_VERIFIABLE_EVIDENCE",
-      "updated_at": "2026-09-05T03:21:03.119926+00:00",
+      "updated_at": "2026-09-05T18:24:53.049618+00:00",
       "legacy_cognitive_asset_policy": {
         "enabled": true,
         "purpose": "RECOVER_CAPABILITIES_NOT_OLD_ARCHITECTURE",
@@ -3019,6 +3094,6 @@
       ]
     }
   ],
-  "roadmap_updated_at": "2026-09-05T03:21:03.119926+00:00",
+  "roadmap_updated_at": "2026-09-05T18:24:53.049618+00:00",
   "active_program_id": "RAIOS-CAPABILITY-EVOLUTION-202609-202703"
 }
