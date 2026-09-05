@@ -46,8 +46,17 @@ class MessageWorker:
         self.worker_id=f"RAIOS-WORKER@{socket.gethostname()}"
         self.canonical_head=os.getenv("RAIOS_CANONICAL_HEAD","").strip() or self._read_head_once()
         self.workflow=None;self.thread=None;self.last_error=None;self.consecutive_errors=0
+        self.heartbeat_interval_seconds=5.0
+        self._last_heartbeat_monotonic=0.0
+        self.terminal_index=self.state/"delivered-terminal-index.json"
+        self._delivered_terminal:set[str]=set()
+        self._terminal_dirty=False
         for p in (self.inbox,self.outbox,self.receipts,self.deliveries,self.dead,self.state):
             p.mkdir(parents=True,exist_ok=True)
+        index=read_json(self.terminal_index,{"message_ids":[]}) or {"message_ids":[]}
+        self._delivered_terminal={
+            str(x) for x in (index.get("message_ids") or []) if str(x).startswith("MSG-")
+        }
     def _targets(self,msg:dict[str,Any])->list[str]:
         payload=msg.get("payload") or {};raw=payload.get("to")
         if isinstance(raw,list):targets=[str(x).upper() for x in raw]
@@ -134,27 +143,79 @@ class MessageWorker:
                 self._record(mid,"COMMAND_CENTER","DEAD_LETTER",state["attempts"],state["last_error"])
             atomic(self.state/f"{mid}.json",state);return state
     def configure_workflow(self,workflow:Any)->None:self.workflow=workflow
+    def _remember_delivered(self,mid:str)->None:
+        if mid not in self._delivered_terminal:
+            self._delivered_terminal.add(mid);self._terminal_dirty=True
+    def _flush_terminal_index(self)->None:
+        if not self._terminal_dirty:return
+        atomic(self.terminal_index,{
+            "schema":"raios.message-worker-delivered-terminal-index.v1",
+            "generated_at":utc(),"head":self._head(),
+            "count":len(self._delivered_terminal),
+            "message_ids":sorted(self._delivered_terminal),
+        })
+        self._terminal_dirty=False
+    def _progress_heartbeat(self,result:dict[str,int],phase:str,*,force:bool=False)->None:
+        now=time.monotonic()
+        if not force and now-self._last_heartbeat_monotonic<self.heartbeat_interval_seconds:return
+        snapshot=dict(result)
+        snapshot.update(scan_phase=phase,scan_in_progress=phase!="SCAN_COMPLETE",
+                        delivered_terminal_cache=len(self._delivered_terminal))
+        self.heartbeat(snapshot)
     def scan_once(self)->dict[str,int]:
-        result={"seen":0,"delivered":0,"retried":0,"dead_letter":0}
+        result={"seen":0,"delivered":0,"retried":0,"dead_letter":0,
+                "terminal_cache_hits":0,"terminal_cache_warmed":0,
+                "historical_ack_recovered":0}
+        self._progress_heartbeat(result,"SCAN_START",force=True)
         for path in sorted(self.inbox.glob("MSG-*.json")):
-            result["seen"]+=1;state=self._attempts(path.stem)
-            if state.get("status")=="DELIVERED":continue
-            historical_ack=self._historical_actor_ack(path.stem)
-            if historical_ack:
-                state.update(status="DELIVERED",historical_ack=True,historical_actor_ack=historical_ack,updated_at=utc(),last_error=None)
-                atomic(self.state/f"{path.stem}.json",state)
+            result["seen"]+=1;mid=path.stem
+            if mid in self._delivered_terminal:
+                result["terminal_cache_hits"]+=1
+                self._progress_heartbeat(result,"SCANNING")
                 continue
-            if state.get("status")=="RETRY":
+            state=self._attempts(mid);status=str(state.get("status") or "").upper()
+            if status=="DELIVERED":
+                self._remember_delivered(mid);result["terminal_cache_warmed"]+=1
+                self._progress_heartbeat(result,"SCANNING")
+                continue
+            if status=="DEAD_LETTER":
+                historical_ack=self._historical_actor_ack(mid)
+                if historical_ack:
+                    state.update(status="DELIVERED",historical_ack=True,
+                                 historical_actor_ack=historical_ack,
+                                 updated_at=utc(),last_error=None)
+                    atomic(self.state/f"{mid}.json",state)
+                    self._remember_delivered(mid);result["historical_ack_recovered"]+=1
+                self._progress_heartbeat(result,"SCANNING")
+                continue
+            historical_ack=self._historical_actor_ack(mid)
+            if historical_ack:
+                state.update(status="DELIVERED",historical_ack=True,
+                             historical_actor_ack=historical_ack,
+                             updated_at=utc(),last_error=None)
+                atomic(self.state/f"{mid}.json",state)
+                self._remember_delivered(mid);result["historical_ack_recovered"]+=1
+                self._progress_heartbeat(result,"SCANNING")
+                continue
+            if status=="RETRY":
                 delay=min(60,2**max(0,int(state.get("attempts",0))-1))
                 try:
                     changed=datetime.fromisoformat(str(state["updated_at"]).replace("Z","+00:00"))
-                    if (datetime.now(timezone.utc)-changed).total_seconds()<delay:continue
+                    if (datetime.now(timezone.utc)-changed).total_seconds()<delay:
+                        self._progress_heartbeat(result,"SCANNING")
+                        continue
                 except Exception:pass
             state=self.process(path)
             key={"DELIVERED":"delivered","RETRY":"retried","DEAD_LETTER":"dead_letter"}[state["status"]]
             result[key]+=1
-        if self.workflow is not None:result.update(self.workflow.run_cycle(self))
-        self.heartbeat(result);return result
+            if state["status"]=="DELIVERED":self._remember_delivered(mid)
+            self._progress_heartbeat(result,"SCANNING")
+        self._flush_terminal_index()
+        if self.workflow is not None:
+            self._progress_heartbeat(result,"WORKFLOW_START",force=True)
+            result.update(self.workflow.run_cycle(self))
+        self._progress_heartbeat(result,"SCAN_COMPLETE",force=True)
+        return result
     def heartbeat(self,last:dict[str,int]|None=None)->None:
         stamp=utc();expires=(datetime.now(timezone.utc)+timedelta(seconds=30)).isoformat();head=self._head()
         row={"schema":"raios.message-worker-heartbeat.v1","worker_id":self.worker_id,
@@ -169,6 +230,7 @@ class MessageWorker:
                         "owner":"RAIOS_SYSTEM","permanent_lock":False})
         registry.update(workers=workers,generated_at=stamp,head=head)
         atomic(registry_path,registry)
+        self._last_heartbeat_monotonic=time.monotonic()
     def run(self)->None:
         while not self.stop_event.is_set():
             try:
