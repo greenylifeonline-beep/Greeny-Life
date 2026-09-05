@@ -1,0 +1,41 @@
+{
+  "schema": "raios.deep-legacy-forensic.phase3-evidence.v1",
+  "generated_at": "2026-09-05T03:32:15.739035+00:00",
+  "task_id": "RAIOS-DEEP-LEGACY-BEHAVIOR-RECOVERY-202609-01",
+  "phase": "OBJECT_NORMALIZATION_STATIC_BEHAVIOR_AND_RECOVERY",
+  "status": "COMPLETE_EVIDENCE_VERIFIED",
+  "summary": {
+    "phase2_raw_unresolved_rows": 1402,
+    "structural_tree_snapshots_reclassified": 647,
+    "content_blob_rows_requiring_value_review": 755,
+    "retrievable_objects": 1402,
+    "missing_objects": 0,
+    "unreachable_objects": 0,
+    "object_recovery_proven": true,
+    "python_static_full_coverage_candidates": 3,
+    "json_static_full_coverage_candidates": 3,
+    "code_symbol_full_coverage_candidates": 29,
+    "text_token_high_coverage_candidates": 34,
+    "parse_failures": 41,
+    "high_value_review_queue": 755,
+    "business_commercial_review_queue": 83
+  },
+  "object_recovery_proven": true,
+  "behavior_equivalence_proven": false,
+  "full_runtime_rollback_proven": false,
+  "zero_unknown_unclassified_unresolved": false,
+  "remaining_content_value_review_count": 755,
+  "full_forensic_audit_complete": false,
+  "safe_to_remove_source": false,
+  "next_required_phase": "TARGETED_HIGH_VALUE_BEHAVIOR_VALIDATION_AND_ASSIMILATION",
+  "safety": {
+    "READ_ONLY_SOURCE_AUDIT": true,
+    "SOURCE_MUTATION": false,
+    "GIT_HISTORY_MUTATION": false,
+    "RETIRED_REPAIR_TREE_READ": false,
+    "EXTERNAL_WEB_USED": false,
+    "PAID_RESOURCE_USED": false,
+    "AUTOMATIC_DELETE_AUTHORITY": false,
+    "SAFE_TO_REMOVE_SOURCE": false
+  }
+}
