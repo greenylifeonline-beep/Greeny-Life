@@ -1,6 +1,7 @@
 """C1-authorized deterministic actions executed by the existing command worker."""
 from __future__ import annotations
 
+import ast
 import hashlib
 import json
 import os
@@ -9,6 +10,7 @@ import subprocess
 import threading
 import time
 import uuid
+import warnings
 from datetime import datetime, timezone
 from pathlib import Path
 from typing import Any, Callable
@@ -18,6 +20,7 @@ from ..resource_fabric.census import collect_world, run_safe_probes, snapshots
 RESOURCE_CENSUS = "RESOURCE_CENSUS"
 DEEP_LEGACY_FORENSIC_CENSUS = "DEEP_LEGACY_FORENSIC_CENSUS"
 DEEP_LEGACY_SEMANTIC_RECONCILIATION = "DEEP_LEGACY_SEMANTIC_RECONCILIATION"
+DEEP_LEGACY_BEHAVIOR_RECOVERY = "DEEP_LEGACY_BEHAVIOR_RECOVERY"
 MAX_MODEL_PARAMETERS_BILLION = 32
 MAX_FORENSIC_TEXT_BYTES = 2 * 1024 * 1024
 
@@ -72,12 +75,14 @@ class TaskActionExecutor:
         prober: Callable[[dict[str, Any]], Any] = run_safe_probes,
         forensic_collector: Callable[[dict[str, Any]], dict[str, Any]] | None = None,
         semantic_collector: Callable[[dict[str, Any]], dict[str, Any]] | None = None,
+        behavior_collector: Callable[[dict[str, Any]], dict[str, Any]] | None = None,
     ):
         self.repo = repo.resolve()
         self.collector = collector
         self.prober = prober
         self.forensic_collector = forensic_collector
         self.semantic_collector = semantic_collector
+        self.behavior_collector = behavior_collector
         self.report_root = (
             self.repo / ".ai-os/reports/command-center/resource-census"
         )
@@ -93,6 +98,7 @@ class TaskActionExecutor:
                 RESOURCE_CENSUS,
                 DEEP_LEGACY_FORENSIC_CENSUS,
                 DEEP_LEGACY_SEMANTIC_RECONCILIATION,
+                DEEP_LEGACY_BEHAVIOR_RECOVERY,
             }
             and task.get("dispatch_authorized_by") == "C1"
             and not task.get("claimed_by")
@@ -894,6 +900,602 @@ class TaskActionExecutor:
         )
         return rel
 
+    def _forensic_dependency_payload(
+        self, task: dict[str, Any], filename: str
+    ) -> dict[str, Any]:
+        for dep in (task.get("dependencies") or []):
+            path = self.forensic_report_root / str(dep) / filename
+            if path.is_file():
+                return json.loads(path.read_text(encoding="utf-8-sig"))
+        raise RuntimeError(f"FORENSIC_DEPENDENCY_INPUT_MISSING::{filename}")
+
+    @staticmethod
+    def _python_behavior_signature(text: str) -> dict[str, Any]:
+        try:
+            with warnings.catch_warnings():
+                warnings.simplefilter("ignore", SyntaxWarning)
+                tree = ast.parse(text)
+        except (SyntaxError, ValueError):
+            return {
+                "parse_ok": False,
+                "unit_hashes": [],
+                "named_units": [],
+                "top_level_hashes": [],
+            }
+        unit_hashes: list[str] = []
+        named_units: list[dict[str, str]] = []
+        for node in ast.walk(tree):
+            if isinstance(node, (ast.FunctionDef, ast.AsyncFunctionDef, ast.ClassDef)):
+                dump = ast.dump(node, include_attributes=False)
+                digest = hashlib.sha256(dump.encode("utf-8")).hexdigest()
+                unit_hashes.append(digest)
+                named_units.append({
+                    "name": str(getattr(node, "name", "")),
+                    "kind": node.__class__.__name__,
+                    "hash": digest,
+                })
+        top_level_hashes: list[str] = []
+        for node in tree.body:
+            if (
+                isinstance(node, ast.Expr)
+                and isinstance(getattr(node, "value", None), ast.Constant)
+                and isinstance(node.value.value, str)
+            ):
+                continue
+            dump = ast.dump(node, include_attributes=False)
+            top_level_hashes.append(
+                hashlib.sha256(dump.encode("utf-8")).hexdigest()
+            )
+        return {
+            "parse_ok": True,
+            "unit_hashes": sorted(set(unit_hashes)),
+            "named_units": named_units,
+            "top_level_hashes": sorted(set(top_level_hashes)),
+        }
+
+    @staticmethod
+    def _json_leaf_signature(text: str) -> dict[str, Any]:
+        try:
+            value = json.loads(text)
+        except (json.JSONDecodeError, TypeError):
+            return {"parse_ok": False, "leaf_hashes": [], "leaf_count": 0}
+        leaves: set[str] = set()
+        def walk(node: Any, key: str = "$") -> None:
+            if isinstance(node, dict):
+                for child_key, child_value in node.items():
+                    walk(child_value, str(child_key))
+            elif isinstance(node, list):
+                for child in node:
+                    walk(child, key)
+            else:
+                canonical = json.dumps(
+                    node, sort_keys=True, ensure_ascii=False, default=str
+                )
+                basis = f"{key}={canonical}"
+                leaves.add(hashlib.sha256(basis.encode("utf-8")).hexdigest())
+        walk(value)
+        return {
+            "parse_ok": True,
+            "leaf_hashes": sorted(leaves),
+            "leaf_count": len(leaves),
+        }
+
+    @staticmethod
+    def _code_symbol_signature(text: str, ext: str) -> set[str]:
+        out: set[str] = set()
+        if ext in {".ts", ".tsx", ".js", ".jsx", ".cjs"}:
+            patterns = (
+                r"\b(?:export\s+)?(?:async\s+)?function\s+([A-Za-z_$][\w$]*)",
+                r"\bclass\s+([A-Za-z_$][\w$]*)",
+                r"\b(?:const|let|var)\s+([A-Za-z_$][\w$]*)\s*=\s*(?:async\s*)?\(",
+                r"\bexport\s+(?:async\s+)?function\s+(GET|POST|PUT|PATCH|DELETE|OPTIONS|HEAD)\b",
+            )
+        elif ext == ".ps1":
+            patterns = (r"(?im)^\s*function\s+([A-Za-z0-9_-]+)",)
+        elif ext == ".sh":
+            patterns = (
+                r"(?m)^\s*function\s+([A-Za-z_][A-Za-z0-9_]*)",
+                r"(?m)^\s*([A-Za-z_][A-Za-z0-9_]*)\s*\(\)\s*\{",
+            )
+        else:
+            patterns = ()
+        for pattern in patterns:
+            for match in re.findall(pattern, text):
+                out.add(str(match))
+        return out
+
+    @staticmethod
+    def _high_value_score(path: str, domains: list[str], ext: str) -> int:
+        weights = {
+            "brain": 7, "intelligence": 7, "commercial": 7, "business": 6,
+            "sales": 6, "pricing": 6, "finance": 6, "customer": 5,
+            "supplier": 5, "export": 5, "market": 5, "inventory": 4,
+            "logistics": 4, "operations": 4, "learning": 5, "knowledge": 5,
+            "governance": 4, "orchestrat": 5, "model": 4, "risk": 3,
+            "quality": 3,
+        }
+        score = sum(weights.get(x, 1) for x in set(domains))
+        if ext in {".py", ".ts", ".tsx", ".js", ".jsx", ".cjs", ".ps1", ".sh"}:
+            score += 7
+        elif ext in {".json", ".jsonl", ".yaml", ".yml", ".sql", ".prisma", ".toml"}:
+            score += 5
+        elif ext in {".md", ".mdc", ".txt"}:
+            score += 3
+        if "archive" in path.lower() or "backup" in path.lower():
+            score += 1
+        return score
+
+    def _collect_deep_legacy_behavior_recovery(
+        self, task: dict[str, Any]
+    ) -> dict[str, Any]:
+        ledger = self._forensic_dependency_payload(
+            task, "07-UNIQUE-VALUE-LEDGER.json"
+        )
+        rows = list(ledger.get("rows") or [])
+        oids = [
+            str(row.get("historical_object") or "")
+            for row in rows if row.get("historical_object")
+        ]
+        meta = self._git_batch_meta(oids)
+        reachable_raw = self._git_output(
+            "rev-list", "--all", "--objects", timeout=120
+        )
+        reachable = {
+            line.split(" ", 1)[0]
+            for line in reachable_raw.splitlines()
+            if line.strip()
+        }
+
+        tree_rows: list[dict[str, Any]] = []
+        blob_rows: list[dict[str, Any]] = []
+        missing_rows: list[dict[str, Any]] = []
+        unreachable_rows: list[dict[str, Any]] = []
+        recovery_rows: list[dict[str, Any]] = []
+        for row in rows:
+            oid = str(row.get("historical_object") or "")
+            path = str(row.get("historical_path") or "")
+            info = meta.get(oid)
+            if not info:
+                missing_rows.append({"object": oid, "path": path})
+                continue
+            obj_type = str(info.get("type") or "")
+            size = int(info.get("bytes") or 0)
+            is_reachable = oid in reachable
+            if not is_reachable:
+                unreachable_rows.append({"object": oid, "path": path, "type": obj_type})
+            recovery_rows.append({
+                "object": oid,
+                "path": path,
+                "type": obj_type,
+                "bytes": size,
+                "reachable_from_current_refs": is_reachable,
+                "retrievable": True,
+                "recovery_command": (
+                    f"git cat-file blob {oid}"
+                    if obj_type == "blob"
+                    else f"git ls-tree {oid}"
+                    if obj_type == "tree"
+                    else f"git cat-file -p {oid}"
+                ),
+            })
+            enriched = {**row, "object_type": obj_type, "object_bytes": size}
+            if obj_type == "tree":
+                enriched.update(
+                    unique_value_carrier=False,
+                    classification="STRUCTURAL_LINEAGE_SNAPSHOT",
+                    recovery_state="RECOVERABLE_FROM_GIT",
+                )
+                tree_rows.append(enriched)
+            elif obj_type == "blob":
+                enriched.update(
+                    unique_value_carrier=True,
+                    recovery_state="RECOVERABLE_FROM_GIT",
+                )
+                blob_rows.append(enriched)
+
+        text_exts = {
+            ".py", ".ts", ".tsx", ".js", ".jsx", ".cjs", ".ps1", ".sh",
+            ".json", ".jsonl", ".yaml", ".yml", ".md", ".mdc", ".txt",
+            ".html", ".css", ".sql", ".csv", ".toml", ".prisma", ".log",
+            ".patch",
+        }
+        text_oids = [
+            str(row.get("historical_object") or "")
+            for row in blob_rows
+            if (
+                Path(str(row.get("historical_path") or "")).suffix.lower()
+                in text_exts
+                and int(row.get("object_bytes") or 0) <= MAX_FORENSIC_TEXT_BYTES
+            )
+        ]
+        old_texts = self._git_blob_texts(text_oids)
+
+        tracked = [
+            x for x in self._git_output("ls-files", "-z").split("\0") if x
+        ]
+        current_py_units: dict[str, set[str]] = {}
+        current_json_leaves: dict[str, set[str]] = {}
+        current_symbols: dict[str, set[str]] = {}
+        current_global_tokens: set[str] = set()
+        for rel in tracked:
+            path = self.repo / rel
+            if not path.is_file():
+                continue
+            try:
+                size = path.stat().st_size
+            except OSError:
+                continue
+            if size > MAX_FORENSIC_TEXT_BYTES:
+                continue
+            ext = path.suffix.lower()
+            if ext not in text_exts:
+                continue
+            try:
+                text = path.read_text(
+                    encoding="utf-8-sig", errors="replace"
+                )
+            except OSError:
+                continue
+            current_global_tokens.update(self._semantic_tokens(text))
+            if ext == ".py":
+                sig = self._python_behavior_signature(text)
+                if sig["parse_ok"]:
+                    for digest in sig["unit_hashes"]:
+                        current_py_units.setdefault(digest, set()).add(rel)
+                    for digest in sig["top_level_hashes"]:
+                        current_py_units.setdefault(digest, set()).add(rel)
+            elif ext == ".json":
+                sig = self._json_leaf_signature(text)
+                if sig["parse_ok"]:
+                    for digest in sig["leaf_hashes"]:
+                        current_json_leaves.setdefault(digest, set()).add(rel)
+            if ext in {".ts", ".tsx", ".js", ".jsx", ".cjs", ".ps1", ".sh"}:
+                for symbol in self._code_symbol_signature(text, ext):
+                    current_symbols.setdefault(symbol, set()).add(rel)
+
+        behavior_rows: list[dict[str, Any]] = []
+        data_rows: list[dict[str, Any]] = []
+        review_queue: list[dict[str, Any]] = []
+        python_full = 0
+        json_full = 0
+        symbol_full = 0
+        text_token_high = 0
+        parse_failures = 0
+
+        for row in blob_rows:
+            oid = str(row.get("historical_object") or "")
+            path = str(row.get("historical_path") or "")
+            ext = Path(path).suffix.lower()
+            text = old_texts.get(oid)
+            domains = self._domain_hits(path)
+            static_state = "UNANALYZED_BINARY_OR_LARGE"
+            coverage_ratio = 0.0
+            details: dict[str, Any] = {}
+            if text is not None:
+                if "\x00" in text or (
+                    text and text.count("\ufffd") / max(1, len(text)) > 0.02
+                ):
+                    static_state = "BINARY_LIKE_TEXT_REJECTED"
+                elif ext == ".py":
+                    sig = self._python_behavior_signature(text)
+                    if not sig["parse_ok"]:
+                        static_state = "PYTHON_AST_PARSE_FAILED"
+                        parse_failures += 1
+                    else:
+                        units = set(sig["unit_hashes"]) | set(sig["top_level_hashes"])
+                        hits = {x for x in units if x in current_py_units}
+                        coverage_ratio = len(hits) / max(1, len(units))
+                        matched_paths = sorted({
+                            p for digest in hits
+                            for p in current_py_units.get(digest, set())
+                        })
+                        static_state = (
+                            "STATIC_AST_UNITS_FULLY_PRESENT_CURRENT"
+                            if units and coverage_ratio == 1.0
+                            else "STATIC_AST_UNITS_PARTIAL_OR_MISSING"
+                        )
+                        if static_state == "STATIC_AST_UNITS_FULLY_PRESENT_CURRENT":
+                            python_full += 1
+                        details = {
+                            "old_behavior_unit_count": len(units),
+                            "exact_current_unit_hits": len(hits),
+                            "matched_current_paths": matched_paths[:40],
+                            "named_units": sig["named_units"][:80],
+                        }
+                        behavior_rows.append({
+                            "historical_object": oid,
+                            "historical_path": path,
+                            "language": "PYTHON",
+                            "static_state": static_state,
+                            "coverage_ratio": round(coverage_ratio, 6),
+                            **details,
+                        })
+                elif ext == ".json":
+                    sig = self._json_leaf_signature(text)
+                    if not sig["parse_ok"]:
+                        static_state = "JSON_PARSE_FAILED"
+                        parse_failures += 1
+                    else:
+                        leaves = set(sig["leaf_hashes"])
+                        hits = {x for x in leaves if x in current_json_leaves}
+                        coverage_ratio = len(hits) / max(1, len(leaves))
+                        matched_paths = sorted({
+                            p for digest in hits
+                            for p in current_json_leaves.get(digest, set())
+                        })
+                        static_state = (
+                            "STRUCTURED_LEAF_VALUES_FULLY_PRESENT_CURRENT"
+                            if leaves and coverage_ratio == 1.0
+                            else "STRUCTURED_LEAF_VALUES_PARTIAL_OR_MISSING"
+                        )
+                        if static_state == "STRUCTURED_LEAF_VALUES_FULLY_PRESENT_CURRENT":
+                            json_full += 1
+                        details = {
+                            "old_leaf_count": len(leaves),
+                            "exact_current_leaf_hits": len(hits),
+                            "matched_current_paths": matched_paths[:40],
+                        }
+                        data_rows.append({
+                            "historical_object": oid,
+                            "historical_path": path,
+                            "format": "JSON",
+                            "static_state": static_state,
+                            "coverage_ratio": round(coverage_ratio, 6),
+                            **details,
+                        })
+                elif ext in {".ts", ".tsx", ".js", ".jsx", ".cjs", ".ps1", ".sh"}:
+                    symbols = self._code_symbol_signature(text, ext)
+                    hits = {x for x in symbols if x in current_symbols}
+                    coverage_ratio = len(hits) / max(1, len(symbols))
+                    static_state = (
+                        "CODE_SYMBOL_SURFACE_FULLY_PRESENT_CURRENT"
+                        if symbols and coverage_ratio == 1.0
+                        else "CODE_SYMBOL_SURFACE_PARTIAL_OR_MISSING"
+                    )
+                    if static_state == "CODE_SYMBOL_SURFACE_FULLY_PRESENT_CURRENT":
+                        symbol_full += 1
+                    details = {
+                        "old_symbols": sorted(symbols),
+                        "matched_symbols": sorted(hits),
+                        "matched_current_paths": sorted({
+                            p for symbol in hits
+                            for p in current_symbols.get(symbol, set())
+                        })[:40],
+                    }
+                    behavior_rows.append({
+                        "historical_object": oid,
+                        "historical_path": path,
+                        "language": ext.lstrip(".").upper(),
+                        "static_state": static_state,
+                        "coverage_ratio": round(coverage_ratio, 6),
+                        **details,
+                    })
+                else:
+                    tokens = self._semantic_tokens(text)
+                    hits = tokens & current_global_tokens
+                    coverage_ratio = len(hits) / max(1, len(tokens))
+                    static_state = (
+                        "TEXT_TOKEN_SURFACE_HIGH_COVERAGE"
+                        if tokens and coverage_ratio >= 0.98
+                        else "TEXT_TOKEN_SURFACE_PARTIAL_OR_MISSING"
+                    )
+                    if static_state == "TEXT_TOKEN_SURFACE_HIGH_COVERAGE":
+                        text_token_high += 1
+                    details = {
+                        "old_token_count": len(tokens),
+                        "current_global_token_hits": len(hits),
+                    }
+
+            score = self._high_value_score(path, domains, ext)
+            if str(row.get("coverage") or "") == "HISTORICAL_PATH_NOT_CURRENT":
+                score += 3
+            semantic_score = float(row.get("score") or 0.0)
+            if semantic_score < 0.5:
+                score += 3
+            priority = (
+                "CRITICAL" if score >= 18
+                else "HIGH" if score >= 12
+                else "MEDIUM" if score >= 7
+                else "LOW"
+            )
+            review_queue.append({
+                "historical_object": oid,
+                "historical_path": path,
+                "object_bytes": int(row.get("object_bytes") or 0),
+                "extension": ext or "<none>",
+                "domains": domains,
+                "priority_score": score,
+                "priority": priority,
+                "phase2_semantic_state": row.get("semantic_state"),
+                "phase2_best_current_match": row.get("best_current_match"),
+                "phase2_score": row.get("score"),
+                "static_state": static_state,
+                "static_coverage_ratio": round(coverage_ratio, 6),
+                "static_details": details,
+                "recovery_state": "RECOVERABLE_FROM_GIT",
+                "requires_behavior_or_assimilation_review": True,
+                "automatic_delete_authority": False,
+            })
+
+        review_queue.sort(
+            key=lambda x: (-int(x["priority_score"]), x["historical_path"])
+        )
+        critical_business = [
+            row for row in review_queue
+            if set(row["domains"]) & {
+                "commercial", "business", "sales", "pricing", "finance",
+                "customer", "supplier", "export", "market", "inventory",
+                "logistics", "operations",
+            }
+        ]
+        recovery_ok = not missing_rows and not unreachable_rows
+        generated = utc()
+        summary = {
+            "phase2_raw_unresolved_rows": len(rows),
+            "structural_tree_snapshots_reclassified": len(tree_rows),
+            "content_blob_rows_requiring_value_review": len(blob_rows),
+            "retrievable_objects": len(recovery_rows),
+            "missing_objects": len(missing_rows),
+            "unreachable_objects": len(unreachable_rows),
+            "object_recovery_proven": recovery_ok,
+            "python_static_full_coverage_candidates": python_full,
+            "json_static_full_coverage_candidates": json_full,
+            "code_symbol_full_coverage_candidates": symbol_full,
+            "text_token_high_coverage_candidates": text_token_high,
+            "parse_failures": parse_failures,
+            "high_value_review_queue": len(review_queue),
+            "business_commercial_review_queue": len(critical_business),
+        }
+        safety = {
+            "READ_ONLY_SOURCE_AUDIT": True,
+            "SOURCE_MUTATION": False,
+            "GIT_HISTORY_MUTATION": False,
+            "RETIRED_REPAIR_TREE_READ": False,
+            "EXTERNAL_WEB_USED": False,
+            "PAID_RESOURCE_USED": False,
+            "AUTOMATIC_DELETE_AUTHORITY": False,
+            "SAFE_TO_REMOVE_SOURCE": False,
+        }
+        provenance = [
+            "audit_ast_extraction.py",
+            "RAIOS/V9/runtime/git_history_search.py",
+            "RAIOS/V9/runtime/a13_agent_capability_dedup_certification.py",
+        ]
+        return {
+            "08-OBJECT-TYPE-NORMALIZATION.json": {
+                "schema": "raios.deep-legacy-forensic.object-normalization.v1",
+                "generated_at": generated,
+                "summary": {
+                    "input_rows": len(rows),
+                    "tree_rows": len(tree_rows),
+                    "blob_rows": len(blob_rows),
+                    "missing_rows": len(missing_rows),
+                },
+                "tree_snapshots": tree_rows,
+                "classification_rule": (
+                    "Git tree objects preserve historical directory structure; "
+                    "they are not independent file-content capability assets. "
+                    "Their descendant blobs remain subject to value review."
+                ),
+                "safety": safety,
+            },
+            "09-STATIC-BEHAVIOR-SIGNATURES.json": {
+                "schema": "raios.deep-legacy-forensic.static-behavior.v1",
+                "generated_at": generated,
+                "method_provenance": provenance,
+                "rows": behavior_rows,
+                "full_static_coverage_is_not_runtime_equivalence": True,
+                "behavior_equivalence_proven": False,
+                "safety": safety,
+            },
+            "10-STRUCTURED-DATA-COVERAGE.json": {
+                "schema": "raios.deep-legacy-forensic.structured-data.v1",
+                "generated_at": generated,
+                "method_provenance": provenance,
+                "rows": data_rows,
+                "full_static_coverage_is_not_assimilation_proof": True,
+                "safety": safety,
+            },
+            "11-RECOVERY-REACHABILITY-PROOF.json": {
+                "schema": "raios.deep-legacy-forensic.recovery-reachability.v1",
+                "generated_at": generated,
+                "object_recovery_proven": recovery_ok,
+                "full_runtime_rollback_proven": False,
+                "retrievable_count": len(recovery_rows),
+                "missing_objects": missing_rows,
+                "unreachable_objects": unreachable_rows,
+                "objects": recovery_rows,
+                "safety": safety,
+            },
+            "12-HIGH-VALUE-REVIEW-QUEUE.json": {
+                "schema": "raios.deep-legacy-forensic.high-value-review.v1",
+                "generated_at": generated,
+                "queue_count": len(review_queue),
+                "business_commercial_count": len(critical_business),
+                "business_commercial_priority": critical_business,
+                "queue": review_queue,
+                "next_action": (
+                    "Target CRITICAL/HIGH business and cognitive assets for "
+                    "behavior validation, extraction, assimilation or explicit retention."
+                ),
+                "safety": safety,
+            },
+            "PHASE3-FORENSIC-EVIDENCE.json": {
+                "schema": "raios.deep-legacy-forensic.phase3-evidence.v1",
+                "generated_at": generated,
+                "task_id": task.get("id"),
+                "phase": "OBJECT_NORMALIZATION_STATIC_BEHAVIOR_AND_RECOVERY",
+                "status": "COMPLETE_EVIDENCE_VERIFIED",
+                "summary": summary,
+                "object_recovery_proven": recovery_ok,
+                "behavior_equivalence_proven": False,
+                "full_runtime_rollback_proven": False,
+                "zero_unknown_unclassified_unresolved": len(blob_rows) == 0,
+                "remaining_content_value_review_count": len(blob_rows),
+                "full_forensic_audit_complete": False,
+                "safe_to_remove_source": False,
+                "next_required_phase": (
+                    "TARGETED_HIGH_VALUE_BEHAVIOR_VALIDATION_AND_ASSIMILATION"
+                ),
+                "safety": safety,
+            },
+            "DELETE-ELIGIBILITY-REPORT.json": {
+                "schema": "raios.deep-legacy-forensic.delete-eligibility.v3",
+                "generated_at": generated,
+                "decision": "DENY",
+                "safe_to_remove_source": False,
+                "legacy_delete_allowed": False,
+                "deep_legacy_forensic_audit_pass": False,
+                "remaining_content_value_review_count": len(blob_rows),
+                "structural_tree_snapshots_reclassified": len(tree_rows),
+                "object_recovery_proven": recovery_ok,
+                "missing_proofs": [
+                    "TARGETED_HIGH_VALUE_BEHAVIOR_VALIDATION",
+                    "UNIQUE_VALUE_EXTRACTION_ASSIMILATION_OR_EXPLICIT_RETENTION",
+                    "FULL_RUNTIME_ROLLBACK_OR_EQUIVALENT_RECOVERY_PROOF",
+                    "ZERO_UNKNOWN_UNCLASSIFIED_UNRESOLVED",
+                    "C1_FINAL_DELETE_GATE",
+                ],
+                "safety": safety,
+            },
+        }
+
+    def _deep_legacy_behavior_recovery(self, task: dict[str, Any]) -> str:
+        package = (
+            self.behavior_collector(task)
+            if self.behavior_collector is not None
+            else self._collect_deep_legacy_behavior_recovery(task)
+        )
+        task_id = str(task["id"])
+        target = self.forensic_report_root / task_id
+        for name, payload in package.items():
+            atomic(target / name, payload)
+        evidence = target / "PHASE3-FORENSIC-EVIDENCE.json"
+        if not evidence.is_file():
+            raise RuntimeError("FORENSIC_PHASE3_EVIDENCE_MISSING")
+        proof = json.loads(evidence.read_text(encoding="utf-8-sig"))
+        if proof.get("safe_to_remove_source") is not False:
+            raise RuntimeError("FORENSIC_PHASE3_FAIL_CLOSED_VIOLATION")
+        rel = evidence.relative_to(self.repo).as_posix()
+        atomic(
+            self.receipt_root / f"{task_id}.deep-legacy-behavior-recovery.receipt.json",
+            {
+                "schema": "raios.system-task-action-receipt.v1",
+                "task_id": task_id,
+                "action": DEEP_LEGACY_BEHAVIOR_RECOVERY,
+                "status": "COMPLETE_EVIDENCE_VERIFIED",
+                "evidence": rel,
+                "executed_at": utc(),
+                "source_mutation": False,
+                "safe_to_remove_source": False,
+                "full_forensic_audit_complete": False,
+                "next_required_phase": (
+                    "TARGETED_HIGH_VALUE_BEHAVIOR_VALIDATION_AND_ASSIMILATION"
+                ),
+            },
+        )
+        return rel
+
     def execute_ready(self, data: dict[str, Any]) -> dict[str, int]:
         counts = {"actions_processed": 0, "actions_blocked": 0}
         tasks = data.get("tasks", [])
@@ -912,6 +1514,9 @@ class TaskActionExecutor:
                 elif action == DEEP_LEGACY_SEMANTIC_RECONCILIATION:
                     evidence = self._deep_legacy_semantic_reconciliation(task)
                     executed_by = "RAIOS-SYSTEM-ACTION:DETERMINISTIC_SEMANTIC_RECONCILIATION"
+                elif action == DEEP_LEGACY_BEHAVIOR_RECOVERY:
+                    evidence = self._deep_legacy_behavior_recovery(task)
+                    executed_by = "RAIOS-SYSTEM-ACTION:DETERMINISTIC_BEHAVIOR_RECOVERY"
                 else:
                     continue
                 task.update(

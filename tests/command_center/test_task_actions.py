@@ -333,3 +333,134 @@ def test_semantic_reconciliation_waits_for_phase1_dependency(tmp_path):
     task = next(x for x in tasks if x["id"] == "FORENSIC-PHASE2")
     assert out["actions_processed"] == 0
     assert task["status"] == "READY"
+
+
+def make_behavior_board(tmp_path: Path, phase2_done: bool = True):
+    repo = tmp_path / "Greeny-Life"
+    (repo / ".ai-os/state").mkdir(parents=True)
+    phase2 = {
+        "id": "FORENSIC-PHASE2",
+        "status": "DONE" if phase2_done else "READY",
+        "dependencies": [],
+    }
+    phase3 = {
+        "id": "FORENSIC-PHASE3",
+        "title": "behavior and recovery",
+        "status": "READY",
+        "dependencies": ["FORENSIC-PHASE2"],
+        "automation_action": "DEEP_LEGACY_BEHAVIOR_RECOVERY",
+        "dispatch_authorized_by": "C1",
+        "destructive_action_requested": False,
+    }
+    (repo / ".ai-os/state/TASKS.json").write_text(
+        json.dumps({"tasks": [phase2, phase3]}), encoding="utf-8"
+    )
+    return CouncilBoard(repo, tmp_path / "presence.json"), repo
+
+
+def fake_behavior_package(_task, safe=False):
+    safety = {
+        "READ_ONLY_SOURCE_AUDIT": True,
+        "SOURCE_MUTATION": False,
+        "RETIRED_REPAIR_TREE_READ": False,
+        "SAFE_TO_REMOVE_SOURCE": safe,
+    }
+    return {
+        "08-OBJECT-TYPE-NORMALIZATION.json": {
+            "summary": {"input_rows": 10, "tree_rows": 4, "blob_rows": 6},
+            "safety": safety,
+        },
+        "09-STATIC-BEHAVIOR-SIGNATURES.json": {
+            "behavior_equivalence_proven": False,
+            "rows": [],
+            "safety": safety,
+        },
+        "10-STRUCTURED-DATA-COVERAGE.json": {
+            "rows": [],
+            "safety": safety,
+        },
+        "11-RECOVERY-REACHABILITY-PROOF.json": {
+            "object_recovery_proven": True,
+            "full_runtime_rollback_proven": False,
+            "missing_objects": [],
+            "unreachable_objects": [],
+            "safety": safety,
+        },
+        "12-HIGH-VALUE-REVIEW-QUEUE.json": {
+            "queue_count": 6,
+            "business_commercial_count": 2,
+            "queue": [],
+            "safety": safety,
+        },
+        "PHASE3-FORENSIC-EVIDENCE.json": {
+            "schema": "raios.deep-legacy-forensic.phase3-evidence.v1",
+            "status": "COMPLETE_EVIDENCE_VERIFIED",
+            "object_recovery_proven": True,
+            "behavior_equivalence_proven": False,
+            "full_runtime_rollback_proven": False,
+            "remaining_content_value_review_count": 6,
+            "full_forensic_audit_complete": False,
+            "safe_to_remove_source": safe,
+            "next_required_phase": "TARGETED_HIGH_VALUE_BEHAVIOR_VALIDATION_AND_ASSIMILATION",
+            "safety": safety,
+        },
+        "DELETE-ELIGIBILITY-REPORT.json": {
+            "decision": "DENY" if not safe else "ALLOW",
+            "safe_to_remove_source": safe,
+        },
+    }
+
+
+def test_behavior_recovery_runs_read_only_without_seat(tmp_path):
+    board, repo = make_behavior_board(tmp_path)
+    source = repo / "historical-capability.txt"
+    source.write_text("preserve", encoding="utf-8")
+    before = source.read_bytes()
+    board.actions = TaskActionExecutor(
+        repo,
+        collector=lambda: {},
+        prober=lambda world: [],
+        behavior_collector=lambda task: fake_behavior_package(task, safe=False),
+    )
+    out = board.run_cycle(Worker())
+    tasks = json.loads(board.tasks.read_text(encoding="utf-8"))["tasks"]
+    task = next(x for x in tasks if x["id"] == "FORENSIC-PHASE3")
+    assert out["actions_processed"] == 1
+    assert task["status"] == "DONE"
+    assert task["executed_by"] == "RAIOS-SYSTEM-ACTION:DETERMINISTIC_BEHAVIOR_RECOVERY"
+    assert source.read_bytes() == before
+    proof = json.loads((repo / task["evidence"]).read_text(encoding="utf-8"))
+    assert proof["object_recovery_proven"] is True
+    assert proof["behavior_equivalence_proven"] is False
+    assert proof["safe_to_remove_source"] is False
+
+
+def test_behavior_recovery_rejects_safe_to_remove_true(tmp_path):
+    board, repo = make_behavior_board(tmp_path)
+    board.actions = TaskActionExecutor(
+        repo,
+        collector=lambda: {},
+        prober=lambda world: [],
+        behavior_collector=lambda task: fake_behavior_package(task, safe=True),
+    )
+    out = board.run_cycle(Worker())
+    tasks = json.loads(board.tasks.read_text(encoding="utf-8"))["tasks"]
+    task = next(x for x in tasks if x["id"] == "FORENSIC-PHASE3")
+    assert out["actions_blocked"] == 1
+    assert task["status"] == "BLOCKED"
+    assert "FORENSIC_PHASE3_FAIL_CLOSED_VIOLATION" in task["blocker"]
+
+
+def test_behavior_recovery_waits_for_phase2_dependency(tmp_path):
+    board, repo = make_behavior_board(tmp_path, phase2_done=False)
+    board.actions = TaskActionExecutor(
+        repo,
+        collector=lambda: {},
+        prober=lambda world: [],
+        behavior_collector=lambda task: fake_behavior_package(task, safe=False),
+    )
+    out = board.run_cycle(Worker())
+    tasks = json.loads(board.tasks.read_text(encoding="utf-8"))["tasks"]
+    task = next(x for x in tasks if x["id"] == "FORENSIC-PHASE3")
+    assert out["actions_processed"] == 0
+    assert task["status"] == "READY"
