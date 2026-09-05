@@ -67,6 +67,42 @@ def test_hard_not_before_remains_a_real_execution_gate():
     assert build_dispatch_plan(tasks, rows)["queue"] == []
 
 
+def test_superseded_task_is_closed_but_not_done_or_required():
+    tasks = [
+        {"id": "D", "status": "DONE"},
+        {"id": "S", "status": "SUPERSEDED",
+         "superseded_by": "ACTIVE",
+         "closure_reason": "DUPLICATE_TASK_MERGED"},
+        {"id": "R", "status": "READY", "dependencies": []},
+    ]
+    out = build_work_lifecycle(tasks)
+    assert out["counts"]["DONE"] == 1
+    assert out["counts"]["SUPERSEDED_OR_CANCELLED"] == 1
+    assert out["counts"]["REQUIRED_NEXT"] == 1
+    assert out["required_backlog_count"] == 1
+    row = out["buckets"]["SUPERSEDED_OR_CANCELLED"][0]
+    assert row["superseded_by"] == "ACTIVE"
+
+
+def test_dispatch_plan_required_capabilities_match_runtime_eligibility():
+    task = {
+        "id": "CAP", "status": "READY", "dependencies": [],
+        "allowed_agents": ["C6"], "required_capabilities": ["FILE_INTELLIGENCE"],
+        "automatic_dispatch": True, "dispatch_authorized_by": "C1",
+    }
+    base_row = {
+        "seat": "C6", "actor_id": "C6-ACTOR", "aliases": ["C6"],
+        "alias_prefixes": [], "auto_routable": True, "coordination_available": True,
+    }
+    missing = build_dispatch_plan([task], [dict(base_row)])
+    assert missing["queue"][0]["eligible_seats"] == []
+    assert missing["queue"][0]["blocker"] == "NO_ELIGIBLE_COUNCIL_SEAT"
+    proven_row = dict(base_row, capabilities=["FILE_INTELLIGENCE"])
+    proven = build_dispatch_plan([task], [proven_row])
+    assert proven["queue"][0]["eligible_seats"] == ["C6"]
+    assert proven["queue"][0]["dispatchable_now"] is True
+
+
 def test_founder_brief_prepares_when_offline_and_holds_explicit_decision():
     tasks = [
         {"id": "NEXT", "status": "READY", "dependencies": []},

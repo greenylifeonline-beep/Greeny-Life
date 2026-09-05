@@ -133,3 +133,28 @@ def test_live_consumer_with_expired_presence_requires_resign(tmp_path, monkeypat
     row = routes.snapshot()["seats"][0]
     assert row["discovery_state"] == "LIVE_SESSION_REQUIRES_RESIGN"
     assert row["auto_routable"] is False
+
+
+def test_route_snapshot_exposes_signed_presence_capabilities(tmp_path):
+    repo = tmp_path / "Greeny-Life"
+    seatmap = repo / ".ai-os" / "mcp" / "SEAT-MAP.json"
+    seatmap.parent.mkdir(parents=True)
+    seatmap.write_text(json.dumps({"seats":{"C6":{"actor_role":"ESTATE","aliases":["C6"]}}}),encoding="utf-8")
+    presence = tmp_path / "presence.json"
+    presence.write_text(json.dumps({"seats":{"C6":{
+        "presence":"PRESENT","signature_valid":True,"lease_expires_at":iso(5),
+        "capabilities":["FILE_INTELLIGENCE","ARCHITECTURE_REASONING"]
+    }}}),encoding="utf-8")
+    bindings = tmp_path / "bindings.json"
+    bindings.write_text(json.dumps({"bindings":{"C6":{
+        "actor_id":"C6-ACTOR","origin_instance":"c6-live","device_id":"AG",
+        "session_id":"s6","auth_evidence":"proof","lease_expires_at":iso(5)
+    }}}),encoding="utf-8")
+    consumers = tmp_path / "consumers"; consumers.mkdir()
+    (consumers/"C6.json").write_text(json.dumps({
+        "state":"ONLINE","actor_id":"C6-ACTOR","device_id":"AG","session_id":"s6",
+        "lease_expires_at":iso(5)
+    }),encoding="utf-8")
+    routes = ActorRouteRegistry(repo,presence_path=presence,bindings_path=bindings,consumers_path=consumers)
+    row = routes.snapshot()["seats"][0]
+    assert row["capabilities"] == ["FILE_INTELLIGENCE","ARCHITECTURE_REASONING"]

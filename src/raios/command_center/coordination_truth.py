@@ -116,6 +116,8 @@ def task_truth_state(task: dict[str, Any], done_ids: set[str] | None = None,
     now = now or _utc_now()
     if status == "DONE":
         return "DONE"
+    if status in {"SUPERSEDED", "CANCELLED", "ARCHIVED"}:
+        return "SUPERSEDED_OR_CANCELLED"
     if status == "BLOCKED":
         return "BLOCKED" if task_claim_is_current(task) else "STALE_CLAIM_REQUIRES_RECONCILIATION"
     if status == "IN_PROGRESS" or str(task.get("dispatch_status") or "").upper() == "PENDING_ACCEPTANCE":
@@ -132,6 +134,7 @@ def build_work_lifecycle(tasks: list[dict[str, Any]]) -> dict[str, Any]:
     done_ids = {str(t.get("id")) for t in tasks if str(t.get("status") or "").upper() == "DONE"}
     buckets: dict[str, list[dict[str, Any]]] = {
         "DONE": [],
+        "SUPERSEDED_OR_CANCELLED": [],
         "ACTIVE_VERIFIED": [],
         "REQUIRED_NEXT": [],
         "WAITING_DEPENDENCIES": [],
@@ -162,9 +165,16 @@ def build_work_lifecycle(tasks: list[dict[str, Any]]) -> dict[str, Any]:
             "acceleration_allowed": _acceleration_allowed(task),
             "hard_not_before": task.get("hard_not_before") is True,
             "method_strategy": task.get("method_strategy"),
+            "superseded_by": task.get("superseded_by"),
+            "closure_reason": task.get("closure_reason"),
         }
         buckets.setdefault(truth, []).append(row)
-    required = [row for key, rows in buckets.items() if key != "DONE" for row in rows]
+    required = [
+        row
+        for key, rows in buckets.items()
+        if key not in {"DONE", "SUPERSEDED_OR_CANCELLED"}
+        for row in rows
+    ]
     actionable = (
         buckets["ACTIVE_VERIFIED"] + buckets["REQUIRED_NEXT"] +
         buckets["WAITING_DEPENDENCIES"] + buckets["BLOCKED"] +
@@ -383,15 +393,30 @@ def dispatch_priority_score(task: dict[str, Any], tasks: list[dict[str, Any]]) -
 
 def _task_allowed_for_route(task: dict[str, Any], row: dict[str, Any]) -> bool:
     allowed = {str(x).upper() for x in (task.get("allowed_agents") or []) if str(x).strip()}
-    if not allowed:
-        return True
     aliases = {str(row.get("seat") or "").upper(), str(row.get("actor_id") or "").upper()}
     aliases.update(str(x).upper() for x in (row.get("aliases") or []))
     aliases.discard("")
     prefixes = [str(x).upper() for x in (row.get("alias_prefixes") or []) if str(x).strip()]
-    if allowed & aliases:
+    allowed_ok = (
+        not allowed
+        or bool(allowed & aliases)
+        or any(alias.startswith(prefix) for alias in allowed for prefix in prefixes)
+    )
+    if not allowed_ok:
+        return False
+    required = {
+        str(x).upper()
+        for x in (task.get("required_capabilities") or [])
+        if str(x).strip()
+    }
+    if not required:
         return True
-    return any(alias.startswith(prefix) for alias in allowed for prefix in prefixes)
+    available = {
+        str(x).upper()
+        for x in (row.get("capabilities") or [])
+        if str(x).strip()
+    }
+    return required.issubset(available)
 
 
 def _scope_overlap(left: str, right: str) -> bool:

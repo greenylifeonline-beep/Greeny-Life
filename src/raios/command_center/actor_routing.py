@@ -164,6 +164,7 @@ class ActorRouteRegistry:
                 "presence_checked_out_at": p.get("checked_out_at"),
                 "presence_signature_valid": p.get("signature_valid") is True,
                 "presence_lease_expires_at": p.get("lease_expires_at"),
+                "capabilities": list(p.get("capabilities") or []),
                 "availability_claim": availability_claim,
                 "availability_claim_current": availability_claim_current,
                 "availability_source": p.get("availability_source"),
