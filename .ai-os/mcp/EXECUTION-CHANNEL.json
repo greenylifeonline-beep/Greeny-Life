@@ -1,0 +1,431 @@
+{
+  "schema": "raios.official-execution-channel.v1",
+  "mission_id": "RMEP-C2-RUNTIME-GATEWAY-001",
+  "program": "RAIOS OFFICIAL EXECUTION CHANNEL",
+  "authority": "C1",
+  "engineering_authority": "C2",
+  "implementation_authority": "C3",
+  "knowledge_authority": "C8",
+  "mode": "CANONICAL_ONLY",
+  "generated_at": "2026-09-10T13:33:00Z",
+  "head": "96a1e7ef9cbbe15176a83c9b65d5efea9239b747",
+  "canonical_branch": "ai-evolution-202608051809",
+  "canonical_root": "C:\\Users\\Ghanam\\Documents\\Codex\\Greeny-Life",
+  "origin": "https://github.com/greenylifeonline-beep/Greeny-Life.git",
+  "worktree_count": 1,
+  "merge_stop": true,
+  "second_gateway_created": false,
+  "law": [
+    "REUSE_EXISTING_UNIVERSAL_MCP",
+    "MCP_GATEWAY_NE_TRUTH_AUTHORITY",
+    "NO_SECOND_GATEWAY",
+    "NO_SECOND_BUS",
+    "ADAPTER_NE_CANONICAL",
+    "CLIENT_NE_DIRECT_RUNTIME_AFTER_GATEWAY_PRIMARY",
+    "AI_GATEWAY_IS_MODEL_ADAPTER_NOT_EXECUTION_CHANNEL",
+    "COMMAND_FABRIC_REMAINS_INTERNAL_BUS"
+  ],
+  "official_gateway": {
+    "id": "raios-universal-mcp",
+    "source": "scripts/ai-os/raios_mcp/server.py",
+    "logic": "scripts/ai-os/raios_mcp/gateway.py",
+    "adapter": "scripts/ai-os/raios_mcp/cross_host_adapter.py",
+    "policy": ".ai-os/mcp/POLICY.json",
+    "packet_schema": ".ai-os/mcp/CROSS-HOST-PACKET.schema.json",
+    "example_client": ".ai-os/mcp/cursor-mcp.example.json",
+    "transport": ["streamable-http", "stdio"],
+    "default_port": 8787,
+    "census_port": 8788,
+    "endpoint": "POST /mcp",
+    "health": "GET /health",
+    "tools_v1": [
+      "get_head",
+      "read_board",
+      "read_inbox",
+      "read_receipt",
+      "get_diff",
+      "post_opinion",
+      "send_packet",
+      "ack_packet"
+    ],
+    "forbidden": ["shell", "bash", "run_command", "run_sandboxed_command"],
+    "v1_execution_intent": "DENIED",
+    "remote_c2_ready": false,
+    "runtime_this_cycle": "OFFLINE_TIMEOUT",
+    "upgrade_policy": "IN_PLACE_ONLY"
+  },
+  "end_state_topology": [
+    "Clients (ChatGPT / Codex / C2 / C3 / C8)",
+    "RAIOS MCP Gateway (existing Universal MCP)",
+    "Adapter Layer",
+    "Runtimes (DC, SSH-MCP, Git, C5, Command Center, Tunnel, future)",
+    "Execution Factory / Command Fabric",
+    "Canonical Greeny-Life"
+  ],
+  "phase1_c2_instances": {
+    "local_c2": {
+      "actor_id": "C2-CURSOR",
+      "runtime_id": "C2@AG",
+      "device_id": "AG",
+      "engine": "cursor",
+      "session_id": "UNPROVEN_THIS_TURN",
+      "canonical_root": "C:\\Users\\Ghanam\\Documents\\Codex\\Greeny-Life",
+      "head": "96a1e7ef9cbbe15176a83c9b65d5efea9239b747",
+      "branch": "ai-evolution-202608051809",
+      "remote": "origin",
+      "origin": "https://github.com/greenylifeonline-beep/Greeny-Life.git",
+      "worktree": "SINGLE C:/Users/Ghanam/Documents/Codex/Greeny-Life",
+      "engineering_state": "GOVERNANCE_ACTIVE_NO_IMPLEMENTATION",
+      "evidence": [
+        "git rev-parse",
+        ".ai-os/control/C2-IDENTITY-BINDING.json",
+        ".ai-os/mcp/SEAT-MAP.json"
+      ]
+    },
+    "cloud_c2": {
+      "actor_id": "C2-CLOUD",
+      "tree_id": "C2-CLOUD",
+      "root_in_registry": "/workspace",
+      "live_this_host": true,
+      "status": "LOCAL_ONLY_STALE_CLOUD_REGISTRY",
+      "remote_c2_ready": false,
+      "session_id": "UNPROVEN",
+      "head": "UNPROVEN_ON_THIS_HOST",
+      "branch_in_gateway_source": "v9-neurolingua-semantic-kernel",
+      "evidence": [
+        ".ai-os/mcp/ROUTE-REGISTRY.json",
+        "scripts/ai-os/raios_mcp/server.py remote_c2_ready=false"
+      ]
+    },
+    "mismatch": true,
+    "merge_stop": true
+  },
+  "drift": [
+    {
+      "id": "DRIFT-BRANCH-POLICY",
+      "severity": "P0",
+      "finding": "POLICY.json and gateway.py declare branch v9-neurolingua-semantic-kernel; live canonical is ai-evolution-202608051809",
+      "owner": "C1_FOR_POLICY_IDENTITY then C3_FOR_SOURCE_ALIGN"
+    },
+    {
+      "id": "DRIFT-C2-LOCAL-CLOUD",
+      "severity": "P0",
+      "finding": "ROUTE-REGISTRY is a C2-CLOUD artifact (root=/workspace) inside AG canonical tree; Cloud C2 HEAD/session unproven",
+      "owner": "C2_REVIEW C3_NO_SECOND_TREE"
+    },
+    {
+      "id": "DRIFT-MCP-PORT",
+      "severity": "P0",
+      "finding": "Code default :8787; tool census expected :8788; both timed out this cycle",
+      "owner": "C3"
+    },
+    {
+      "id": "DRIFT-IDENTITY-POLICY",
+      "severity": "P0",
+      "finding": "POLICY.json C2_SEAT_IS_CHATGPT vs SEAT-MAP C2=cursor EXECUTIVE_ENGINEER",
+      "owner": "C1"
+    },
+    {
+      "id": "DRIFT-C5-HEALTH",
+      "severity": "P1",
+      "finding": "C5 :8766 was HTTP 200 earlier today; this cycle timeout",
+      "owner": "C3"
+    }
+  ],
+  "runtimes": [
+    {
+      "id": "command-center",
+      "health": "ONLINE",
+      "owner": "C3+RAIOS-WORKER",
+      "transport": "HTTP :8770",
+      "auth": "internal fabric",
+      "role": "canonical control UI/API",
+      "adapter": true,
+      "capabilities": ["health", "command", "council", "client-activity"],
+      "dependencies": ["Command Fabric", "git HEAD"],
+      "failure": "HTTP timeout / worker PermissionError on WORKER-REGISTRY",
+      "recovery": "reuse Deploy-RAIOS-Command-Center.ps1 after lease clear",
+      "evidence": "GET /health 200 canonical_head=96a1e7e"
+    },
+    {
+      "id": "universal-mcp",
+      "health": "CODE_EXISTS_RUNTIME_OFF",
+      "owner": "C3 restore; C2 governance",
+      "transport": "Streamable HTTP default :8787",
+      "auth": "Bearer / X-RAIOS-TOKEN vs tokens.local.json",
+      "role": "OFFICIAL execution gateway",
+      "adapter": false,
+      "capabilities": ["8 V1 tools", "no shell"],
+      "dependencies": ["POLICY.json", "git", "actor grants"],
+      "failure": "process down; token missing; wrong port",
+      "recovery": "start existing scripts/ai-os/raios_mcp/server.py --http; do not write a second server",
+      "evidence": ":8787 and :8788 timeout 2026-09-10T13:32:51Z"
+    },
+    {
+      "id": "c5-runtime",
+      "health": "DEGRADED_TIMEOUT",
+      "owner": "C3/C5",
+      "transport": "HTTP :8766",
+      "auth": "C5 runtime",
+      "role": "live brain adapter behind gateway",
+      "adapter": true,
+      "capabilities": ["student chat", "gateway health"],
+      "dependencies": ["Ollama"],
+      "failure": "timeout; cortex HOLD; student-only",
+      "recovery": "existing Deploy-RAIOS-C5.ps1; no weight pull",
+      "evidence": "timeout this cycle; earlier 200 student qwen3:0.6b"
+    },
+    {
+      "id": "ai-gateway-models",
+      "health": "CONFIG_LOCKED",
+      "owner": "C2 lease LOCK-DSP-d605a8460989460e-6",
+      "transport": "src/raios/ai_gateway + 9Router :20128",
+      "auth": "provider credentials",
+      "role": "MODEL adapter, not execution channel",
+      "adapter": true,
+      "capabilities": ["model cascade"],
+      "dependencies": ["Ollama", "9Router", "optional Lightning/DeepSeek"],
+      "failure": "Lightning 402",
+      "recovery": "do not mutate while C2 Qwen38 locks ACTIVE",
+      "evidence": ".ai-os/mcp/AI-GATEWAY.json"
+    },
+    {
+      "id": "9router",
+      "health": "ONLINE",
+      "owner": "C3 ops",
+      "transport": "HTTP :20128/v1",
+      "auth": "Bearer 9Router key != 9Remote",
+      "role": "model routing adapter",
+      "adapter": true,
+      "capabilities": ["openai-compatible models"],
+      "dependencies": ["local 9Router process"],
+      "failure": "timeout; key domain mix-up",
+      "recovery": "D-006; do not activate 9Remote without C1",
+      "evidence": "GET /v1/models 200"
+    },
+    {
+      "id": "ollama",
+      "health": "ONLINE",
+      "owner": "C3 ops",
+      "transport": "HTTP :11434",
+      "auth": "local",
+      "role": "local model runtime adapter",
+      "adapter": true,
+      "capabilities": ["local inference"],
+      "dependencies": ["installed models only"],
+      "failure": "missing model; timeout",
+      "recovery": "no ollama pull unless C1",
+      "evidence": "GET /api/version 0.33.2"
+    },
+    {
+      "id": "git-runtime",
+      "health": "ONLINE",
+      "owner": "C1 change authority + C2/C3 writers",
+      "transport": "git + .githooks + raios_change_gate.py",
+      "auth": "C1 approval receipt + lease",
+      "role": "canonical mutation adapter",
+      "adapter": true,
+      "capabilities": ["commit", "push canonical branch only"],
+      "dependencies": ["current-approval.json", "active-change.json"],
+      "failure": "APPROVAL_FIELDS_MISSING",
+      "recovery": "Begin-RAIOS-Canonical-Change + New-RAIOS-C1-Change-Approval",
+      "evidence": "HEAD 96a1e7e; one worktree"
+    },
+    {
+      "id": "command-fabric",
+      "health": "LIVE_WORKER",
+      "owner": "RAIOS-WORKER",
+      "transport": "files under .ai-os/state/command-fabric",
+      "auth": "seat presence",
+      "role": "internal bus, not client gateway",
+      "adapter": false,
+      "capabilities": ["inbox", "delivery ACK", "receipts"],
+      "dependencies": ["Command Center"],
+      "failure": "DELIVERY_ACK without ACTOR_ACK",
+      "recovery": "existing message_worker; no second bus",
+      "evidence": "WORKER-REGISTRY head=96a1e7e LIVE"
+    },
+    {
+      "id": "desktop-commander",
+      "health": "EXTERNAL_PRODUCT",
+      "owner": "C3 bind as adapter only",
+      "transport": "product MCP",
+      "auth": "product",
+      "role": "optional host adapter",
+      "adapter": true,
+      "capabilities": "UNPROVEN_IN_CANONICAL_TREE",
+      "dependencies": ["Gateway once PRIMARY"],
+      "failure": "client bypass of gateway",
+      "recovery": "route through Universal MCP adapter; never make DC canonical",
+      "evidence": "absent as first-class source in Greeny-Life"
+    },
+    {
+      "id": "ssh-mcp",
+      "health": "EXTERNAL_PRODUCT",
+      "owner": "C3 bind as adapter only",
+      "transport": "product MCP",
+      "auth": "SSH credentials never in git",
+      "role": "optional remote-host adapter",
+      "adapter": true,
+      "capabilities": "UNPROVEN_IN_CANONICAL_TREE",
+      "dependencies": ["Gateway"],
+      "failure": "direct SSH from clients",
+      "recovery": "adapter behind gateway; C1 for remote shell",
+      "evidence": "absent as first-class source in Greeny-Life"
+    },
+    {
+      "id": "tunnel",
+      "health": "NOT_ACTIVATED",
+      "owner": "C1",
+      "transport": "9Remote / Secure MCP Tunnel",
+      "auth": "C1 explicit",
+      "role": "optional exposure adapter for ChatGPT Apps HTTPS",
+      "adapter": true,
+      "capabilities": ["public HTTPS front for SAME mcp process"],
+      "dependencies": ["Universal MCP process"],
+      "failure": "second MCP behind tunnel",
+      "recovery": "cursor-mcp.example.json: same process; D-006 9Remote gated",
+      "evidence": ".ai-os/mcp/cursor-mcp.example.json; D-006"
+    }
+  ],
+  "contracts": {
+    "gateway": {
+      "input": "JSON-RPC tools/call with bearer actor token",
+      "output": "tool result JSON; never GL005_PROVEN write",
+      "errors": ["UNAUTHENTICATED", "CAPABILITY_DENIED", "TOOL_NOT_FOUND", "IDENTITY_MISMATCH", "ESCALATION_DENIED"],
+      "retry": "bounded client retry on transport only",
+      "timeout": "caller-bounded; server has no shell",
+      "evidence": ".ai-os/mcp/AUDIT.jsonl + receipts"
+    },
+    "adapter": {
+      "input": "gateway-routed operation id + scoped args",
+      "output": "result + adapter_id + runtime_health",
+      "errors": ["ADAPTER_UNHEALTHY", "OPERATION_UNSUPPORTED", "SECRET_REFUSED"],
+      "retry": "adapter-specific; no silent failover to second gateway",
+      "timeout": "declared per operation",
+      "evidence": "receipt path under .ai-os/receipts/"
+    },
+    "factory": {
+      "input": "authorized task_id",
+      "output": "FACTORY-STATUS evidence",
+      "errors": ["NO_SECOND_FACTORY", "PAID_BLOCKED"],
+      "retry": "none for paid/GPU",
+      "timeout": "task deadline",
+      "evidence": ".ai-os/reports/factory-fabric/"
+    },
+    "execution": {
+      "input": "C1-authorized dispatch",
+      "output": "checkpoint + tests",
+      "errors": ["NO_FIRST_WORK_PROOF", "SCOPE_OVERLAP"],
+      "retry": "resume from checkpoint",
+      "timeout": "first_work_proof_deadline",
+      "evidence": "TASKS.json checkpoint; C3 only"
+    },
+    "knowledge": {
+      "input": "discovered artifact + hash",
+      "output": "knowledge registry row + provenance",
+      "errors": ["C8_UNASSIGNED", "PROVENANCE_MISSING"],
+      "retry": "none without C8 identity",
+      "timeout": "wave gate",
+      "evidence": "C8 program; currently BLOCKED"
+    },
+    "runtime": {
+      "input": "health probe",
+      "output": "ONLINE|DEGRADED|OFFLINE + head",
+      "errors": ["HEAD_DRIFT", "PORT_DRIFT"],
+      "retry": "3x/2s then fail-closed",
+      "timeout": "2s probe",
+      "evidence": "this cycle probe log"
+    }
+  },
+  "execution_flow": [
+    "Client",
+    "RAIOS MCP Gateway (existing Universal MCP)",
+    "Router (V1 tool name + actor scopes; later adapter_id)",
+    "Adapter (CC, C5, Git, DC, SSH, Tunnel, models)",
+    "Execution (C3 / factories; V1 execution_intent DENIED until C1 wave)",
+    "Verification (tests/receipts)",
+    "Knowledge Update (C8)",
+    "Registry Update (existing registries only)",
+    "Response"
+  ],
+  "migration": {
+    "current": "Clients (Cursor/ChatGPT) talk to CC/C5/git/MCP products directly; Universal MCP source exists but process down",
+    "hybrid": "Keep CC/C5 live; restore ONE mcp process on declared port; clients may still use CC UI",
+    "gateway_enabled": "ChatGPT/Codex/C3/C8 attach to Gateway /mcp; DC/SSH become adapters",
+    "gateway_primary": "new client runtime calls forbidden except through Gateway; CC remains UI over fabric",
+    "legacy_retirement": "retire direct client-to-runtime only after evidence of equivalent operations; no production interrupt",
+    "interrupt": "NONE_PLANNED"
+  },
+  "risks": [
+    {
+      "id": "SPOF-MCP-PROCESS",
+      "class": "runtime",
+      "mitigation": "health on /health; restart existing server; CC remains local UI fallback during hybrid"
+    },
+    {
+      "id": "SPOF-AG-HOST",
+      "class": "operational",
+      "mitigation": "single worktree law; no second tree; C1 for tunnel"
+    },
+    {
+      "id": "SEC-TOKEN-FILE",
+      "class": "security",
+      "mitigation": "tokens.local.json gitignored; never log bearer"
+    },
+    {
+      "id": "SEC-CLIENT-BYPASS",
+      "class": "security",
+      "mitigation": "gateway_primary forbids direct DC/SSH; audit"
+    },
+    {
+      "id": "OPS-PORT-SPLIT",
+      "class": "operational",
+      "mitigation": "C3 pick 8787 XOR 8788, update census+example+deploy to one port"
+    }
+  ],
+  "roadmap": [
+    {
+      "sprint": "S0",
+      "wave": "HYBRID",
+      "milestone": "M0 Restore existing MCP process",
+      "owner": "C3",
+      "deps": ["C1 port decision if 8787 vs 8788 disputed"],
+      "acceptance": ["GET /health 200", "head matches canonical", "remote_c2_ready remains false until proven", "no second server"]
+    },
+    {
+      "sprint": "S0",
+      "wave": "HYBRID",
+      "milestone": "M1 Align POLICY/gateway branch string to canonical branch",
+      "owner": "C3 after C1 identity confirm",
+      "deps": ["C1 on POLICY vs SEAT-MAP"],
+      "acceptance": ["POLICY.branch == CANONICAL-CHANGE-AUTHORITY.canonical_branch", "tests/ai-os MCP checks pass"]
+    },
+    {
+      "sprint": "S1",
+      "wave": "GATEWAY_ENABLED",
+      "milestone": "M2 Adapter API on existing gateway without 9th council tool unless C1",
+      "owner": "C3",
+      "deps": ["M0"],
+      "acceptance": ["adapter registry rows have live health probes", "DC/SSH optional and gated"]
+    },
+    {
+      "sprint": "S2",
+      "wave": "GATEWAY_PRIMARY",
+      "milestone": "M3 Clients use Gateway; CC UI remains",
+      "owner": "C3",
+      "deps": ["M2", "C8 for provenance of capability claims"],
+      "acceptance": ["no new direct runtime client bindings", "evidence pack"]
+    }
+  ],
+  "c3_work_packages": [
+    "C3-RMEP-MCP-RESTORE-EXISTING: start scripts/ai-os/raios_mcp/server.py --http on ONE port; prove /health; no new gateway",
+    "C3-RMEP-PORT-UNIFY: collapse 8787/8788 documentation and deploy to the chosen port",
+    "C3-RMEP-C5-HEALTH: restore existing C5 :8766; no pull/spend",
+    "C3-RMEP-ADAPTER-BIND: bind DC/SSH/Git/CC/C5 as adapters behind Universal MCP after M0",
+    "C3-RMEP-POLICY-BRANCH: after C1, align POLICY.json and gateway.py BRANCH constant in place"
+  ],
+  "c8_work_packages": [
+    "BLOCKED_UNTIL_C8_IDENTITY: provenance for adapter capability claims and knowledge update stage of the channel"
+  ]
+}

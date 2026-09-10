@@ -21,3 +21,9 @@ A key created in RAIOS or in 9Router dashboard **Create Key** is for `http://127
 ## D-007 Live Resource Fabric overlay does not invent a second registry
 Wave-02 binds owned accounts onto the existing Resource Fabric adapters. Catalog GPU/storage remains catalog. Live quota and credits overlay live observations. Missing `~/.kaggle/kaggle.json` does not mean KAGGLE_C1 is absent; current auth is Kaggle CLI OAuth (`credentials.json`). KAGGLE_C1 and KAGGLE_PARTNER stay isolated. 9Router on `127.0.0.1:20128` is a MODEL_ROUTING_GATEWAY only, never resource authority. No paid activation and no model-weight migration in this wave.
 
+## D-008 EO-C2-002 program executive transition
+C1 order EO-C2-002: C2 architecture mission is complete. C2 owns program management, coordination, verification, risk, and schedule. C3 owns implementation, runtime, factories, registries, deployment, tests, recovery. C8 owns discovery, knowledge, graphs, provenance, learning. No new architecture documents unless C1 requests them. No second task ledger: backlog remains `.ai-os/state/TASKS.json`. Executive index: `.ai-os/state/EXECUTIVE-PROGRAM.json`.
+
+## D-009 EO-C2-002 cycle-02 health accepted; remaining P1s are C3
+C1 accepted C2 health verification: HEAD verified; Command Center, C5, and Ollama ONLINE. Remaining critical items are Universal MCP and 9Router, both assigned to C3. C2 stays executive oversight only and waits for C3 engineering reports. No redesign. No C2 implementation.
+

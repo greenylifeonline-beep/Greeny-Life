@@ -1,0 +1,349 @@
+{
+  "schema": "raios.executive-program.v1",
+  "order": "EO-C2-002",
+  "cycle": "02",
+  "status": "PROGRAM_CONTINUES",
+  "role": "PROGRAM_EXECUTIVE_MANAGEMENT",
+  "architecture_mission": "COMPLETE",
+  "implementation_owner": "C3",
+  "knowledge_owner": "C8",
+  "program_owner": "C2",
+  "updated_at": "2026-09-10T13:55:00Z",
+  "head": "96a1e7ef9cbbe15176a83c9b65d5efea9239b747",
+  "head_status": "VERIFIED",
+  "branch": "ai-evolution-202608051809",
+  "ledger": ".ai-os/state/TASKS.json",
+  "locks": ".ai-os/state/LOCKS.json",
+  "decisions": ".ai-os/state/DECISIONS.md",
+  "channel_spec_frozen": ".ai-os/mcp/EXECUTION-CHANNEL.json",
+  "c1_ack": {
+    "health_verification": "ACCEPTED",
+    "accepted_online": [
+      "HEAD",
+      "Command Center :8770",
+      "C5 :8766",
+      "Ollama :11434"
+    ],
+    "remaining_critical_assigned_to_c3": [
+      "Universal MCP",
+      "9Router"
+    ],
+    "c2_mode": "EXECUTIVE_OVERSIGHT_ONLY",
+    "wait": "C3_ENGINEERING_REPORTS_ONLY"
+  },
+  "sprint": {
+    "id": "S0-HYBRID-MCP",
+    "goal": "Restore existing Universal MCP and existing 9Router; no new gateway",
+    "owner": "C3",
+    "status": "WAITING_C3_REPORT",
+    "p1": [
+      "Universal MCP",
+      "9Router"
+    ]
+  },
+  "priorities": [
+    {
+      "rank": 1,
+      "item": "Universal MCP runtime online",
+      "owner": "C3",
+      "status": "WAITING_C3_REPORT",
+      "evidence": "C1 accepted last C2 probe: GET :8787 and :8788 fail"
+    },
+    {
+      "rank": 1,
+      "item": "9Router runtime online",
+      "owner": "C3",
+      "status": "WAITING_C3_REPORT",
+      "evidence": "C1 accepted last C2 probe: :20128/v1/models TimeoutError"
+    },
+    {
+      "rank": 2,
+      "item": "Canonical Knowledge Program",
+      "owner": "C8",
+      "status": "WAITING_LIVE_ACTIVATION",
+      "evidence": "SEAT-MAP C8=CHIEF_KNOWLEDGE_INTELLIGENCE_OFFICER; live_activation_executed=false; no C8 dispatch this cycle"
+    },
+    {
+      "rank": 3,
+      "item": "Engineering Progress Dashboard",
+      "owner": "C2",
+      "status": "RUNNING"
+    },
+    {
+      "rank": 4,
+      "item": "Runtime Health Dashboard",
+      "owner": "C2",
+      "status": "RUNNING"
+    },
+    {
+      "rank": 5,
+      "item": "Executive Dependency Matrix",
+      "owner": "C2",
+      "status": "RUNNING"
+    },
+    {
+      "rank": 6,
+      "item": "Program Risk Matrix",
+      "owner": "C2",
+      "status": "RUNNING"
+    }
+  ],
+  "backlog_index": {
+    "source": ".ai-os/state/TASKS.json",
+    "active_program_id": "RAIOS-CAPABILITY-EVOLUTION-202609-202703",
+    "counts": {
+      "total": 72,
+      "DONE": 30,
+      "READY": 35,
+      "IN_PROGRESS": 6,
+      "SUPERSEDED": 1,
+      "BLOCKED": 0
+    },
+    "note": "Single ledger. C2 does not duplicate tasks. Mutation blocked while RAIOS_SYSTEM leases TASKS.json/LOCKS.json.",
+    "c3_dispatch_queue": [
+      "C3-RMEP-MCP-RESTORE-EXISTING",
+      "C3-RMEP-9ROUTER-RESTORE-EXISTING"
+    ],
+    "c3_sequenced_after_p1": [
+      "C3-RMEP-PORT-UNIFY",
+      "C3-RMEP-ADAPTER-BIND"
+    ],
+    "c3_in_progress_existing": 6,
+    "c2_qwen38": {
+      "id": "RAIOS-C2-QWEN38-CLOUD-INSTALL-20260907-01",
+      "ledger_status": "READY",
+      "owner": null,
+      "checkpoint_blocker": "LIGHTNING_402_NONE_ALLOCATABLE_AWAITING_C1_ENTITLEMENT",
+      "dsp_locks": "RELEASED",
+      "c2_action_this_cycle": "NONE"
+    }
+  },
+  "dependencies": [
+    {
+      "from": "C3_MCP_REPORT",
+      "to": "MCP_ONLINE",
+      "status": "WAITING_C3_REPORT"
+    },
+    {
+      "from": "C3_9ROUTER_REPORT",
+      "to": "NINE_ROUTER_ONLINE",
+      "status": "WAITING_C3_REPORT"
+    },
+    {
+      "from": "MCP_ONLINE",
+      "to": "ADAPTER_BIND",
+      "status": "WAITING"
+    },
+    {
+      "from": "C1_PORT_XOR",
+      "to": "MCP_PORT_UNIFY",
+      "status": "WAITING_DECISION"
+    },
+    {
+      "from": "C8_LIVE_ACTIVATION",
+      "to": "KNOWLEDGE_PROGRAM",
+      "status": "WAITING"
+    },
+    {
+      "from": "CHATGPT_NORMAL_LEDGER_LEASE",
+      "to": "BACKLOG_MUTATION",
+      "status": "WAITING"
+    },
+    {
+      "from": "MCP_ONLINE",
+      "to": "GATEWAY_ENABLED_WAVE",
+      "status": "WAITING"
+    }
+  ],
+  "risk_register": [
+    {
+      "id": "RSK-MCP-DOWN",
+      "priority": 1,
+      "owner": "C3",
+      "item": "Universal MCP process not answering on :8787 or :8788",
+      "impact": "Official execution channel stays dark; adapters cannot bind",
+      "mitigation": "C3 restores existing server.py in place; no second gateway",
+      "status": "OPEN_WAITING_C3"
+    },
+    {
+      "id": "RSK-9ROUTER-TIMEOUT",
+      "priority": 1,
+      "owner": "C3",
+      "item": "9Router :20128 timed out on last accepted probe",
+      "impact": "Model-routing gateway unavailable; D-006/D-007 surface dark",
+      "mitigation": "C3 restores existing 9Router process; C2 does not implement",
+      "status": "OPEN_WAITING_C3"
+    },
+    {
+      "id": "RSK-C3-REPORT-GAP",
+      "priority": 1,
+      "owner": "C3",
+      "item": "No C3 engineering report filed this cycle",
+      "impact": "Executive board cannot close P1; schedule holds",
+      "mitigation": "C2 waits; does not substitute implementation",
+      "status": "OPEN"
+    },
+    {
+      "id": "RSK-LEDGER-LEASE",
+      "priority": 3,
+      "owner": "C3/CHATGPT-NORMAL",
+      "item": "TASKS.json and LOCKS.json remain ACTIVE-leased (12 locks)",
+      "impact": "Backlog cannot be mutated; C2 index-only",
+      "mitigation": "Keep single ledger; do not create a second task list",
+      "status": "OPEN"
+    },
+    {
+      "id": "RSK-C8-LIVE",
+      "priority": 4,
+      "owner": "C1/C8",
+      "item": "C8 identity exists in SEAT-MAP; live_activation_executed=false",
+      "impact": "Knowledge program cannot start; canonical shells stay empty",
+      "mitigation": "No C8 dispatch until C1 authorizes live activation",
+      "status": "OPEN_NOT_THIS_WAIT"
+    },
+    {
+      "id": "RSK-MERGE-DRIFT",
+      "priority": 4,
+      "owner": "C1/C3",
+      "item": "Local/Cloud C2 and POLICY branch string still drifted",
+      "impact": "Production merge remains STOP",
+      "mitigation": "Hold merge; do not redesign channel",
+      "status": "OPEN"
+    },
+    {
+      "id": "RSK-QWEN38-READY-UNCLAIMED",
+      "priority": 5,
+      "owner": "C1",
+      "item": "Qwen38 task returned READY; DSP locks RELEASED; Lightning 402 still in checkpoint",
+      "impact": "Not a current P1; accidental re-claim would violate no-implement order",
+      "mitigation": "C2 does not claim; no spend",
+      "status": "WATCH"
+    }
+  ],
+  "roadmap": [
+    {
+      "wave": "S0",
+      "name": "Restore existing MCP + 9Router",
+      "owner": "C3",
+      "status": "CURRENT_WAITING_C3",
+      "gate": "C3 engineering reports proving process restore"
+    },
+    {
+      "wave": "S0b",
+      "name": "Port unify 8787 XOR 8788",
+      "owner": "C3",
+      "status": "WAITING_C1_XOR",
+      "gate": "C1 port decision"
+    },
+    {
+      "wave": "S1",
+      "name": "Adapter bind after MCP online",
+      "owner": "C3",
+      "status": "QUEUED",
+      "gate": "MCP_ONLINE"
+    },
+    {
+      "wave": "S2",
+      "name": "Gateway-enabled wave",
+      "owner": "C3",
+      "status": "QUEUED",
+      "gate": "MCP_ONLINE + adapter bind"
+    },
+    {
+      "wave": "K0",
+      "name": "Canonical knowledge program",
+      "owner": "C8",
+      "status": "HOLD_LIVE_ACTIVATION",
+      "gate": "C1 live activation; C2 issues no C8 dispatch this cycle"
+    }
+  ],
+  "runtime_status": {
+    "probe_cycle": "2026-09-10T13:39:49Z",
+    "c1_health_ack": "ACCEPTED",
+    "command_center_8770": "ONLINE",
+    "c5_8766": "ONLINE",
+    "mcp_8787": "OFFLINE",
+    "mcp_8788": "OFFLINE",
+    "nine_router_20128": "TIMEOUT",
+    "ollama_11434": "ONLINE",
+    "command_fabric_worker": "LIVE",
+    "worker_head": "96a1e7ef9cbbe15176a83c9b65d5efea9239b747"
+  },
+  "factory_status": {
+    "source": ".ai-os/reports/factory-fabric/RAIOS-FACTORY-FABRIC-CRITICAL-CLOSURE-C6-01/FACTORY-STATUS-MATRIX.json",
+    "resource_factory": "PASS",
+    "assimilation_factory": "PASS",
+    "training_factory": "PASS",
+    "second_factory": false
+  },
+  "knowledge_status": {
+    "owner": "C8",
+    "seat_map_role": "CHIEF_KNOWLEDGE_INTELLIGENCE_OFFICER",
+    "instance_role": "opencode",
+    "live_activation_executed": false,
+    "canonical_shells": "EMPTY",
+    "dispatch": "NONE",
+    "wait_this_cycle": false,
+    "note": "Prior cycle listed C8 as UNASSIGNED; current SEAT-MAP has CKIO identity. Capability task C8-GOVERNED-SEAT-ASSIGNMENT-P0 is DONE without live activation."
+  },
+  "engineering_status": {
+    "owner": "C3",
+    "merge": "STOP_UNTIL_DRIFT_CLOSED",
+    "mcp": "RESTORE_EXISTING_ONLY",
+    "nine_router": "RESTORE_EXISTING_ONLY",
+    "c3_reports_this_cycle": [],
+    "c3_report_status": "NONE",
+    "in_progress_existing_owner": "CHATGPT-NORMAL",
+    "in_progress_count": 6,
+    "active_locks": 12,
+    "c2_implementation": "FORBIDDEN"
+  },
+  "waiting_for": [
+    {
+      "id": "WAIT-C3-MCP",
+      "from": "C3",
+      "item": "Engineering report: Universal MCP restore"
+    },
+    {
+      "id": "WAIT-C3-9ROUTER",
+      "from": "C3",
+      "item": "Engineering report: 9Router restore"
+    }
+  ],
+  "waiting_for_decision_not_this_gate": [
+    "C1_PORT_XOR_8787_OR_8788",
+    "C8_LIVE_ACTIVATION",
+    "CHATGPT_NORMAL_LEDGER_LEASE_KEEP_OR_RELEASE",
+    "POLICY_BRANCH_STRING_VS_CANONICAL"
+  ],
+  "blockers": [
+    {
+      "id": "BLK-MCP-PROCESS",
+      "priority": 1,
+      "owner": "C3",
+      "item": "Universal MCP process not answering",
+      "independent_work": "C2 dashboards; accepted ONLINE surfaces stay observed"
+    },
+    {
+      "id": "BLK-9ROUTER-PROCESS",
+      "priority": 1,
+      "owner": "C3",
+      "item": "9Router :20128 timeout",
+      "independent_work": "MCP restore is independent of 9Router; both assigned to C3"
+    },
+    {
+      "id": "BLK-C3-REPORT",
+      "priority": 1,
+      "owner": "C3",
+      "item": "No C3 engineering report since dispatch",
+      "independent_work": "C2 continues executive boards only"
+    },
+    {
+      "id": "BLK-LEDGER-LEASE",
+      "priority": 3,
+      "owner": "C3/CHATGPT-NORMAL",
+      "item": "TASKS.json and LOCKS.json ACTIVE leases",
+      "independent_work": "C2 executive index does not mutate ledger"
+    }
+  ]
+}
