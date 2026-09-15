@@ -1,0 +1,102 @@
+{
+  "schema": "raios.c2.noncanonical-commit-block.v1",
+  "packet_id": "PKT-C2-20260915-114800-NONCANONICAL-COMMIT-BLOCK",
+  "recorded_at_utc": "2026-09-15T11:48:00Z",
+  "actor_id": "C2",
+  "actor_role": "EXECUTIVE_ENGINEER",
+  "instance_role": "cursor",
+  "decision": "D-035",
+  "status": "RESOLVED_OPTION_A",
+  "reason": "NONCANONICAL_BRANCH",
+  "resolution_commit": "775a804b95be1a41ce9a7dcbca88e042c8ec0e35",
+  "classification": {
+    "blocker": "DIRECT",
+    "git_head_and_staged_set": "OBSERVED",
+    "lock_inspect": "OBSERVED",
+    "canonical_commit_still_needs_c1_approval": "DERIVED"
+  },
+  "git": {
+    "working_branch": "cursor/ucf-runtime-cert-c5-recovery",
+    "canonical_branch": "ai-evolution-202608051809",
+    "head": "86d0f3ed475951fa46d0e30fa250c118412a284a",
+    "head_short": "86d0f3e",
+    "commit_created": false,
+    "hook_bypassed": false,
+    "gate_deny": "RAIOS_CHANGE_GATE=DENY reason=NONCANONICAL_BRANCH",
+    "staged_file_count": 27,
+    "note": "cursor branch and canonical share the same HEAD; cursor has no unique commit."
+  },
+  "staged_files": [
+    ".ai-os/handoffs/20260914-185000-C2-UCF-ARCHITECTURE-001.md",
+    ".ai-os/handoffs/20260915-012000-C2-MANAGEMENT-REPORT-001.md",
+    ".ai-os/handoffs/20260915-013000-C2-C3-UCF-RUNTIME-CERT-DISPATCH.md",
+    ".ai-os/handoffs/20260915-013000-C2-UCF-CERTIFICATION-CHECKPOINT.md",
+    ".ai-os/handoffs/20260915-042000-C2-UCF-RUNTIME-CERT-GAPS-001.md",
+    ".ai-os/handoffs/20260915-042200-C2-C5-HUNG-HEADONLY-RECOVERY.md",
+    ".ai-os/handoffs/20260915-044800-C2-UCF-CERT-C3-PROXY-D034.md",
+    ".ai-os/handoffs/20260915-050200-C2-C5-HUNG-HEADONLY-RECOVERY.md",
+    ".ai-os/mcp/EXECUTION-CHANNEL.json",
+    ".ai-os/mcp/POLICY.json",
+    ".ai-os/receipts/c2-executive/20260915-013000-C2-C3-UCF-RUNTIME-CERT-DISPATCH.receipt.json",
+    ".ai-os/receipts/c2-executive/20260915-042200-C2-C5-HUNG-HEADONLY-RECOVERY.receipt.json",
+    ".ai-os/receipts/c2-executive/20260915-050200-C2-C5-HUNG-HEADONLY-RECOVERY.receipt.json",
+    ".ai-os/receipts/c2-executive/UCF-CERT-E2E.json",
+    ".ai-os/receipts/c2-executive/UCF-RUNTIME-INSPECT.json",
+    ".ai-os/receipts/c2-executive/ucf_cert_e2e_probe.py",
+    ".ai-os/receipts/c2-executive/ucf_runtime_inspect.py",
+    ".ai-os/reports/comms/UCF-CANONICALIZATION-001/CANONICAL_COMMUNICATION_MODEL.json",
+    ".ai-os/reports/comms/UCF-CANONICALIZATION-001/COMMUNICATION_MAP.json",
+    ".ai-os/reports/comms/UCF-CANONICALIZATION-001/READY_FOR_IMPLEMENTATION.json",
+    ".ai-os/reports/comms/UCF-CANONICALIZATION-001/RESTART_PLAN.json",
+    ".ai-os/reports/comms/UCF-CANONICALIZATION-001/SELF_HEAL_PLAN.json",
+    ".ai-os/reports/comms/UCF-CANONICALIZATION-001/UCF-CERTIFICATION.json",
+    ".ai-os/reports/comms/UCF-CANONICALIZATION-001/UCF_DELTA.json",
+    ".ai-os/reports/comms/UCF-CANONICALIZATION-001/UNIFICATION_PLAN.json",
+    ".ai-os/state/DECISIONS.md",
+    ".ai-os/state/EXECUTIVE-PROGRAM.json"
+  ],
+  "ownership": {
+    "legal_owner": "RAIOS_SYSTEM",
+    "seat": "C2",
+    "seat_map_actor": "EXECUTIVE_ENGINEER / cursor",
+    "claim_lock": "SKIPPED",
+    "chatgpt_normal_leases_released": false
+  },
+  "active_locks_inspected": [
+    {
+      "id": "LOCK-RAIOS-LONG-HORIZON-TASK-BOARD-20260904-01-1",
+      "scope": ".ai-os/state/TASKS.json",
+      "holder": "CHATGPT-NORMAL",
+      "status": "ACTIVE",
+      "overlaps_staged": false
+    },
+    {
+      "id": "LOCK-RAIOS-LONG-HORIZON-TASK-BOARD-20260904-01-2",
+      "scope": ".ai-os/state/LOCKS.json",
+      "holder": "CHATGPT-NORMAL",
+      "status": "ACTIVE",
+      "overlaps_staged": false
+    },
+    {
+      "id": "LOCK-RAIOS-TRANSACTIONAL-DEPLOYMENT-20260906-01-1",
+      "scope": "scripts/runtime/Deploy-RAIOS-Command-Center.ps1",
+      "holder": "CHATGPT-NORMAL",
+      "status": "ACTIVE",
+      "overlaps_staged": false
+    }
+  ],
+  "staged_lock_overlap": false,
+  "policy_overlay_note": "POLICY.json and EXECUTION-CHANNEL.json staged deltas are ucf_metadata only; C1_INSTANCE_IS_CURSOR and C2_SEAT_IS_CHATGPT retained.",
+  "c1_decision_required": {
+    "option_a": "Move staged set onto ai-evolution-202608051809, then issue C1 change-authority approval matching staged_diff_sha256. Canonical pre-commit still requires that approval.",
+    "option_b": "Explicit limited gate exception. Not recommended without that C1 authorization. Do not --no-verify without it.",
+    "chosen": "A"
+  },
+  "not_done": [
+    "canonical checkout",
+    "commit",
+    "hook bypass",
+    "TASKS/LOCKS mutation",
+    "lease release"
+  ]
+}

@@ -456,6 +456,26 @@
     "headonly_recovery": "RAN_EXISTING_SCRIPT",
     "live_git_head": "86d0f3ed475951fa46d0e30fa250c118412a284a"
   },
+  "noncanonical_commit_block_d035": {
+    "packet_id": "PKT-C2-20260915-114800-NONCANONICAL-COMMIT-BLOCK",
+    "decision": "D-035",
+    "prior_decision": "D-034",
+    "status": "RESOLVED_OPTION_A",
+    "working_branch": "ai-evolution-202608051809",
+    "canonical_branch": "ai-evolution-202608051809",
+    "prior_blocked_branch": "cursor/ucf-runtime-cert-c5-recovery",
+    "head": "775a804b95be1a41ce9a7dcbca88e042c8ec0e35",
+    "staged_file_count": 27,
+    "hook_bypassed": false,
+    "commit_created": true,
+    "evidence_commit": "775a804b95be1a41ce9a7dcbca88e042c8ec0e35",
+    "lock_overlap_with_staged": false,
+    "c1_choice": "A",
+    "option_a": "Move staged set onto canonical branch, then C1 change-authority approval",
+    "option_b": "Explicit limited gate exception (not recommended without C1)",
+    "handoff": ".ai-os/handoffs/20260915-114800-C2-NONCANONICAL-COMMIT-BLOCK.md",
+    "receipt": ".ai-os/receipts/c2-executive/20260915-114800-C2-NONCANONICAL-COMMIT-BLOCK.receipt.json"
+  },
   "head": "2efd08184614749dee999be7a2456c6bf1387c2e",
   "head_status": "GIT_VERIFIED_PUSHED",
   "runtime_head": "96a1e7ef9cbbe15176a83c9b65d5efea9239b747",
@@ -831,7 +851,7 @@
   ],
   "decision_register": {
     "source": ".ai-os/state/DECISIONS.md",
-    "latest": "D-034",
+    "latest": "D-035",
     "open_c1": [
       "C8_LIVE_ACTIVATION",
       "C6_RECONNECT_OR_TRANSFER_MESSAGE_WORKER",
