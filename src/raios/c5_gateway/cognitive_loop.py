@@ -665,15 +665,19 @@ def _jsonl_summary(path: Path, *, limit: int = 5000) -> dict[str, Any]:
     }
 
 
-def loop_status() -> dict[str, Any]:
+def loop_status(*, include_summaries: bool = True) -> dict[str, Any]:
     root = learning_root()
     digests = root / "DIGESTS.jsonl"
     candidates = root / "CANDIDATES.jsonl"
     index = root / "INDEX.json"
     mgr = manager_liveness()
     evolution = evolution_liveness()
-    digest_summary = _jsonl_summary(digests)
-    candidate_summary = _jsonl_summary(candidates)
+    if include_summaries:
+        digest_summary = _jsonl_summary(digests)
+        candidate_summary = _jsonl_summary(candidates)
+    else:
+        digest_summary = {"exists": digests.is_file(), "summary_deferred": True}
+        candidate_summary = {"exists": candidates.is_file(), "summary_deferred": True}
     maintenance_receipt_path = runtime_base() / "c5" / "maintenance-assimilation.json"
     maintenance_receipt: dict[str, Any] = {}
     if maintenance_receipt_path.is_file():

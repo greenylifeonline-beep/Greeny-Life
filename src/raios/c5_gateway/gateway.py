@@ -299,7 +299,7 @@ def health():
             "main_cortex_state":"HOLD",
             "error":
                 f"{type(e).__name__}:{e}",
-            "cognitive_loop":loop_status(),
+            "cognitive_loop":loop_status(include_summaries=False),
             "environment":deployment_environment(),
             "runtime_source":"CANONICAL_DEPLOYMENT",
             "canonical_head":os.getenv("RAIOS_CANONICAL_HEAD","UNKNOWN"),
@@ -323,7 +323,7 @@ def health():
         "model":
             client.model,
 
-        "cognitive_loop":loop_status(),
+        "cognitive_loop":loop_status(include_summaries=False),
         "environment":deployment_environment(),
         "runtime_source":"CANONICAL_DEPLOYMENT",
         "canonical_head":os.getenv("RAIOS_CANONICAL_HEAD","UNKNOWN"),

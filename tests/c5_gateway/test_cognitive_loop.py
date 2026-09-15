@@ -129,3 +129,25 @@ def test_loop_status_exposes_complete_maintenance_assimilation(tmp_path, monkeyp
     status = loop_status()
     assert status["maintenance_assimilation"]["complete"] is True
     assert status["maintenance_assimilation"]["ready_or_deduped"] == 2
+
+
+
+def test_loop_status_can_defer_expensive_jsonl_summaries(tmp_path, monkeypatch):
+    learning = tmp_path / "learning"
+    learning.mkdir()
+    for name in ("DIGESTS.jsonl", "CANDIDATES.jsonl"):
+        (learning / name).write_text("{}\n", encoding="utf-8")
+    (learning / "INDEX.json").write_text("{}", encoding="utf-8")
+    monkeypatch.setenv("RAIOS_LEARNING_ROOT", str(learning))
+    monkeypatch.setattr(
+        cognitive_loop,
+        "_jsonl_summary",
+        lambda *_args, **_kwargs: (_ for _ in ()).throw(
+            AssertionError("lightweight health must not scan JSONL")
+        ),
+    )
+
+    status = loop_status(include_summaries=False)
+
+    assert status["artifacts"]["digests"]["summary_deferred"] is True
+    assert status["artifacts"]["candidates"]["summary_deferred"] is True
