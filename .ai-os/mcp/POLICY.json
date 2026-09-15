@@ -199,5 +199,22 @@
         "write_handoff"
       ]
     }
+  },
+  "ucf_metadata": {
+    "schema": "raios.ucf.policy-overlay.v1",
+    "applied_at": "2026-09-15T04:20:00Z",
+    "applied_by": "C2",
+    "proxy_for": "C3",
+    "canonical_host": "RAIOS_HOST_AG",
+    "working_branch": "ai-evolution-202608051809",
+    "repository": "greenylifeonline-beep/Greeny-Life",
+    "seat_map_actor_source": "CANONICAL",
+    "policy_actors_snapshot": "DISCOVERED_NOT_REWRITTEN",
+    "policy_branch_field_retained": "v9-neurolingua-semantic-kernel",
+    "laws_retained_not_rewritten": [
+      "C1_INSTANCE_IS_CURSOR",
+      "C2_SEAT_IS_CHATGPT"
+    ],
+    "note": "Minimal overlay only. Does not rewrite actors, laws, or C1/C2 seat identity."
   }
 }

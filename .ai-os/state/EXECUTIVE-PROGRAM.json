@@ -1,97 +1,696 @@
 {
   "schema": "raios.executive-program.v1",
-  "order": "EO-C2-002",
-  "cycle": "02",
-  "status": "PROGRAM_CONTINUES",
-  "role": "PROGRAM_EXECUTIVE_MANAGEMENT",
+  "order": "RAIOS-EXECUTIVE-PROGRAM-CYCLE-04",
+  "cycle": "04",
+  "prior_cycle": "03",
+  "status": "AWAITING_C1_APPROVAL",
+  "role": "EXECUTIVE_PROGRAM_MANAGER",
   "architecture_mission": "COMPLETE",
   "implementation_owner": "C3",
   "knowledge_owner": "C8",
   "program_owner": "C2",
-  "updated_at": "2026-09-10T13:55:00Z",
-  "head": "96a1e7ef9cbbe15176a83c9b65d5efea9239b747",
-  "head_status": "VERIFIED",
+  "c2_mode": "READ_FIRST_DELTA_ONLY",
+  "measurement": [
+    "Program Progress",
+    "Engineering Coordination",
+    "Delivery Predictability",
+    "Blocker Resolution",
+    "Governance Integrity"
+  ],
+  "commits": "NONE_THIS_CYCLE",
+    "updated_at": "2026-09-14T18:50:00Z",
+  "dashboard_authority": "USER_LOCAL_DISPLAY_NOT_RUNTIME_OR_GOVERNANCE_EVIDENCE",
+  "p0_complete": "FROZEN_TRUE",
+  "live_reconcile": {
+    "c1_status": "REPORT_ACCEPTED",
+    "probe_start_utc": "2026-09-11T01:49:40.035570Z",
+    "probe_end_utc": "2026-09-11T01:50:32.438059Z",
+    "listeners_utc": "2026-09-11T01:54:10.5321353Z",
+    "receipt": ".ai-os/receipts/c2-executive/LIVE-RECONCILE.json",
+    "receipt_sha256": "ae793f01ec8d5e7bc955d325b65f40548c1b57fd409eea3865810ef9954123cc",
+    "receipt_bytes": 25158,
+    "do_not_use_to_dismiss_later_c3_defect": true,
+    "classification": {
+      "8788": "PROVEN_ONLINE",
+      "8787": "NOT_EXPECTED_ON_AG",
+      "20128": "PROVEN_ONLINE",
+      "8770": "PROVEN_ONLINE",
+      "8766": "PROVEN_ONLINE",
+      "11434": "PROVEN_ONLINE"
+    },
+    "c1_cleared_for_observation_window": [
+      "Universal MCP :8788 PROCESS_DOWN",
+      "9Router :20128 PROCESS_DOWN",
+      "Local MCP :8787 absence"
+    ]
+  },
+  "watch_pre_recovery": {
+    "receipt": ".ai-os/receipts/c2-executive/WATCH-PRE-RECOVERY.json",
+    "receipt_sha256": "901207edfa293fa0a9e264c75d4b3fe884b5c51df0746071969b4ee52d3ab62e",
+    "receipt_bytes": 13733,
+    "generated_at_utc": "2026-09-11T03:47:25.452869Z",
+    "listeners_receipt": ".ai-os/receipts/c2-executive/LISTENERS-WATCH.json",
+    "listeners_receipt_sha256": "e817fd77c53a377775ac63c25d9e841d9450e1d5169b26839400493e0d4e2fee",
+    "listeners_utc": "2026-09-11T03:47:07.6627642Z",
+    "verified_governance_conflict": false,
+    "independent_post_recovery_verify": "NOT_DUE"
+  },
+  "c3_h1_diagnostic": {
+    "c1_order": "H1_RESULT_ACCEPTED_CONTINUE_BOUNDED_ROOT_CAUSE",
+    "recorded_at_utc": "2026-09-11T16:39:00Z",
+    "h1": "STRONGLY_SUPPORTED_BUT_NOT_FULLY_PROVEN",
+    "h1_falsified": false,
+    "root_cause": "UNRESOLVED",
+    "boundary": "POWERSHELL_NATIVE_STARTUP / PRE-CLR / PRE-ENGINE",
+    "timeout_event_alone": "NOT_ROOT_CAUSE",
+    "authorized_owner": "C3",
+    "c2_executes": false,
+    "repair": false,
+    "instances_authorized": 1,
+    "event_channel": "Microsoft-Windows-TaskScheduler/Operational",
+    "restore_to": "DISABLED",
+    "authority_expires": "AFTER_ONE_INSTANCE_AND_CHANNEL_RESTORE",
+    "required_deliverables": [
+      "TERMINATION-PROVENANCE-RECEIPT",
+      "PRE-ENGINE-WAIT-EVIDENCE",
+      "ROOT-CAUSE-DECISION"
+    ],
+    "execution_note": "C3 SEAT-MAP instance_role=chatgpt-peer; C2-IDENTITY-BINDING C3=no AG shell. Elevated AG TaskScheduler enable is C3-owned and is not executed by C2. If C3 cannot elevate on AG, C1 rule BLOCKED_C1_INTERACTIVE_ADMIN_REQUIRED applies. C2 does not self-claim this package."
+  },
+  "cycle_04": {
+    "task_id": "RAIOS-EXECUTIVE-PROGRAM-CYCLE-04",
+    "mission": "Converge completed work into one AI-Native Enterprise Operating System Program. No feature implementation.",
+    "reports": ".ai-os/reports/executive-program/RAIOS-EXECUTIVE-PROGRAM-CYCLE-04/",
+    "index": ".ai-os/reports/executive-program/RAIOS-EXECUTIVE-PROGRAM-CYCLE-04/INDEX.json",
+    "handoff": ".ai-os/handoffs/20260911-191400-C2-RAIOS-EXECUTIVE-PROGRAM-CYCLE-04.md",
+    "await": "C1_APPROVAL_BEFORE_NEXT_ENGINEERING_CYCLE",
+    "implementation": "NONE",
+    "commits": "NONE"
+  },
+  "architecture_001": {
+    "task_id": "RAIOS-AIOS-ARCHITECTURE-PROGRAM-001",
+    "c1_status": "ACCEPTED",
+    "cycle_04": "ACCEPTED",
+    "role": "CHIEF_SYSTEM_ARCHITECT",
+    "reports": ".ai-os/reports/architecture/RAIOS-AIOS-ARCHITECTURE-PROGRAM-001/",
+    "index": ".ai-os/reports/architecture/RAIOS-AIOS-ARCHITECTURE-PROGRAM-001/INDEX.json",
+    "handoff": ".ai-os/handoffs/20260911-195100-C2-RAIOS-AIOS-ARCHITECTURE-PROGRAM-001.md",
+    "implementation": "NONE",
+    "rfc": "RFC-RAIOS-AIOS-ARCHITECTURE-20260911-01"
+  },
+  "kernel_specification_001": {
+    "task_id": "RAIOS-KERNEL-SPECIFICATION-PROGRAM-001",
+    "c1_status": "DELIVERED_AWAITING_REVIEW",
+    "architecture_001": "ACCEPTED",
+    "role": "CHIEF_SYSTEM_ARCHITECT",
+    "reports": ".ai-os/reports/specifications/RAIOS-KERNEL-SPECIFICATION-PROGRAM-001/",
+    "index": ".ai-os/reports/specifications/RAIOS-KERNEL-SPECIFICATION-PROGRAM-001/INDEX.json",
+    "handoff": ".ai-os/handoffs/20260912-171000-C2-RAIOS-KERNEL-SPECIFICATION-PROGRAM-001.md",
+    "implementation": "NONE",
+    "rfc": "RFC-RAIOS-KERNEL-SPECIFICATION-20260912-01",
+    "decision": "D-015",
+    "await": "C1_REVIEW_BEFORE_KERNEL_IMPLEMENTATION"
+  },
+  "alignment_001": {
+    "task_id": "RAIOS-CONSTITUTIONAL-ALIGNMENT-001",
+    "c1_status": "DELIVERED_AWAITING_REVIEW",
+    "role": "CHIEF_SYSTEM_ARCHITECT",
+    "mode": "ARCHITECTURE_ALIGNMENT_READ_ONLY_CANONICAL_ONLY_DELTA_ONLY",
+    "reports": ".ai-os/reports/alignment/RAIOS-CONSTITUTIONAL-ALIGNMENT-001/",
+    "index": ".ai-os/reports/alignment/RAIOS-CONSTITUTIONAL-ALIGNMENT-001/INDEX.json",
+    "handoff": ".ai-os/handoffs/20260912-174412-C2-RAIOS-CONSTITUTIONAL-ALIGNMENT-001.md",
+    "canvas": "C:\\Users\\Ghanam\\.cursor\\projects\\c-Users-Ghanam-Documents-Codex-Greeny-Life\\canvases\\RAIOS-C2-constitutional-alignment-001.canvas.tsx",
+    "implementation": "NONE",
+    "decision": "D-017",
+    "await": "C1_REVIEW_BEFORE_KERNEL_IMPLEMENTATION",
+    "ready_for_implementation_gate": "READY_WITH_HOLDS",
+    "conflict_count": 23,
+    "does_not_rewrite": [
+      "cycle_04",
+      "architecture_001",
+      "kernel_specification_001",
+      "constitution pack JSON"
+    ]
+  },
+  "alignment_communication_001": {
+    "task_id": "RAIOS-CONSTITUTIONAL-ALIGNMENT-001-C3-C6-DISPATCH",
+    "c1_status": "C6_ACK_RECEIVED_VIA_C1_AWAITING_C3_AND_C6_CERTIFICATION",
+    "from": "C2",
+    "to": ["C3", "C6"],
+    "recorded_at_utc": "2026-09-12T21:55:36Z",
+    "channel": "dated_handoff_plus_c2_executive_receipt",
+    "existing_first_evidence": ".ai-os/handoffs/20260911-163900-C2-C3-H1-DIAGNOSTIC-DISPATCH.md",
+    "c3_handoff": ".ai-os/handoffs/20260912-215535-C2-C3-ALIGNMENT-DISPATCH.md",
+    "c6_handoff": ".ai-os/handoffs/20260912-215535-C2-C6-ALIGNMENT-DISPATCH.md",
+    "coordinator_note": ".ai-os/handoffs/20260912-215535-C2-C3-C6-ALIGNMENT-COMMUNICATION.md",
+    "c3_receipt": ".ai-os/receipts/c2-executive/20260912-215535-C2-C3-ALIGNMENT-DISPATCH.receipt.json",
+    "c6_receipt": ".ai-os/receipts/c2-executive/20260912-215535-C2-C6-ALIGNMENT-DISPATCH.receipt.json",
+    "implementation": "NONE",
+    "h1_authorization": "INTACT",
+    "decision": "D-018",
+    "c6_ack": "RECEIVED_VIA_C1",
+    "c6_constitutional_review": "IN_PROGRESS",
+    "does_not_rewrite": [
+      "cycle_04",
+      "architecture_001",
+      "kernel_specification_001",
+      "alignment_001"
+    ]
+  },
+  "c6_alignment_ack": {
+    "task_id": "RAIOS-CONSTITUTIONAL-ALIGNMENT-001",
+    "status": "RECEIVED_VIA_C1",
+    "status_class": "DIRECT",
+    "review": "IN_PROGRESS",
+    "review_class": "DIRECT",
+    "constitutional_review": "IN_PROGRESS",
+    "constitutional_review_class": "DIRECT",
+    "baseline_ack": true,
+    "baseline_ack_class": "DIRECT",
+    "via": "C1_RELAY",
+    "from": "C6",
+    "to": "C2",
+    "recorded_at_utc": "2026-09-13T16:57:00Z",
+    "prior_receipt": ".ai-os/receipts/c2-executive/20260913-C6-ALIGNMENT-ACK.receipt.json",
+    "prior_handoff": ".ai-os/handoffs/20260913-151400-C2-C6-ALIGNMENT-ACK-RECORDED.md",
+    "prior_decision": "D-019",
+    "receipt": ".ai-os/receipts/c2-executive/20260913-C6-ACK-CONFIRMED-REVIEW-CONTINUES.receipt.json",
+    "handoff": ".ai-os/handoffs/20260913-165700-C2-C6-ACK-CONFIRMED-RECORDED.md",
+    "decision": "D-020",
+    "constitutional_approval": false,
+    "implementation_approval": false,
+    "actor_ack_via_bus": false,
+    "bus_registration": "NOT_PROVEN",
+    "live_receipt": "NOT_PROVEN",
+    "actor_binding": "NOT_PROVEN",
+    "implementation": "NOT_AUTHORIZED",
+    "ready_for_implementation": false,
+    "d016": "NOT_PROVEN",
+    "message_worker_ownership": "PRESERVED",
+    "third_ack_loop": false,
+    "await": "C6_CONSTITUTIONAL_CERTIFICATION_OUTPUTS_THEN_C1_REVIEW"
+  },
+  "implementation_planning_001": {
+    "task_id": "RAIOS-IMPLEMENTATION-PROGRAM-PLANNING-001",
+    "c1_status": "DELIVERED_AWAITING_REVIEW",
+    "role": "CHIEF_SYSTEM_ARCHITECT",
+    "mode": "IMPLEMENTATION_PROGRAM_DESIGN",
+    "reports": ".ai-os/reports/implementation-program/RAIOS-IMPLEMENTATION-PROGRAM-PLANNING-001/",
+    "index": ".ai-os/reports/implementation-program/RAIOS-IMPLEMENTATION-PROGRAM-PLANNING-001/INDEX.json",
+    "handoff": ".ai-os/handoffs/20260913-184200-C2-RAIOS-IMPLEMENTATION-PROGRAM-PLANNING-001.md",
+    "canvas": "C:\\Users\\Ghanam\\.cursor\\projects\\c-Users-Ghanam-Documents-Codex-Greeny-Life\\canvases\\RAIOS-C2-implementation-program-planning-001.canvas.tsx",
+    "implementation": "NOT_STARTED",
+    "implementation_design": "COMPLETE",
+    "ready_for_c1_review": true,
+    "ready_for_kernel_implementation": false,
+    "ready_for_implementation": false,
+    "decision": "D-021",
+    "rfc": "RFC-RAIOS-IMPLEMENTATION-PROGRAM-20260913-01",
+    "delta_package_count": 29,
+    "program_count": 10,
+    "c6_ack_loop": "CLOSED",
+    "does_not_rewrite": [
+      "cycle_04",
+      "architecture_001",
+      "kernel_specification_001",
+      "alignment_001",
+      "constitution pack JSON"
+    ]
+  },
+  "implementation_planning_002": {
+    "task_id": "RAIOS-IMPLEMENTATION-PROGRAM-PLANNING-002",
+    "c1_status": "DELIVERED_AWAITING_REVIEW",
+    "role": "CHIEF_SYSTEM_ARCHITECT",
+    "mode": "IMPLEMENTATION_PROGRAM_DESIGN",
+    "reports": ".ai-os/reports/implementation-program/RAIOS-IMPLEMENTATION-PROGRAM-PLANNING-002/",
+    "index": ".ai-os/reports/implementation-program/RAIOS-IMPLEMENTATION-PROGRAM-PLANNING-002/INDEX.json",
+    "handoff": ".ai-os/handoffs/20260913-204800-C2-RAIOS-IMPLEMENTATION-PROGRAM-PLANNING-002.md",
+    "canvas": "C:\\Users\\Ghanam\\.cursor\\projects\\c-Users-Ghanam-Documents-Codex-Greeny-Life\\canvases\\RAIOS-C2-implementation-program-planning-002.canvas.tsx",
+    "implementation": "NOT_STARTED",
+    "implementation_program": "COMPLETE",
+    "ready_for_c1_review": true,
+    "ready_for_kernel_implementation": false,
+    "ready_for_implementation": false,
+    "decision": "D-022",
+    "rfc": "RFC-RAIOS-IMPLEMENTATION-PROGRAM-20260913-02",
+    "delta_package_count": 40,
+    "program_count": 12,
+    "supersedes_catalog": "RAIOS-IMPLEMENTATION-PROGRAM-PLANNING-001",
+    "001_retained_as_evidence": true,
+    "c6_ack_loop": "CLOSED",
+    "c6_owns": [
+      "constitution",
+      "compliance",
+      "provider certification",
+      "protected runtime certification"
+    ],
+    "does_not_rewrite": [
+      "cycle_04",
+      "architecture_001",
+      "kernel_specification_001",
+      "alignment_001",
+      "constitution pack JSON",
+      "implementation_planning_001 JSON bodies"
+    ]
+  },
+  "master_implementation_program_001": {
+    "task_id": "RAIOS-MASTER-IMPLEMENTATION-PROGRAM-001",
+    "c1_status": "ACCEPTED",
+    "architectural_authority": "C2",
+    "role": "ARCHITECTURAL_AUTHORITY",
+    "mode": "ARCHITECTURAL_ACCEPTANCE",
+    "reports": ".ai-os/reports/implementation-program/RAIOS-MASTER-IMPLEMENTATION-PROGRAM-001/",
+    "index": ".ai-os/reports/implementation-program/RAIOS-MASTER-IMPLEMENTATION-PROGRAM-001/INDEX.json",
+    "acceptance": ".ai-os/reports/implementation-program/RAIOS-MASTER-IMPLEMENTATION-PROGRAM-001/C1-ARCHITECTURAL-ACCEPTANCE.json",
+    "official_execution_order": ".ai-os/reports/implementation-program/RAIOS-MASTER-IMPLEMENTATION-PROGRAM-001/OFFICIAL-EXECUTION-ORDER.json",
+    "official_execution_order_version": "C1-D024-20260914",
+    "handoff": ".ai-os/handoffs/20260914-001000-C2-MASTER-PROGRAM-C1-ACCEPTANCE.md",
+    "canvas": "C:\\Users\\Ghanam\\.cursor\\projects\\c-Users-Ghanam-Documents-Codex-Greeny-Life\\canvases\\RAIOS-C2-master-implementation-accepted.canvas.tsx",
+    "implementation": "NOT_STARTED",
+    "master_implementation_program": "OFFICIAL",
+    "architectural_baseline": "FROZEN",
+    "ready_for_c1_review": true,
+    "ready_for_c1_execution_gate": true,
+    "ready_for_kernel_implementation": false,
+    "official_roadmap": true,
+    "decision": "D-024",
+    "decision_accepted": "D-023",
+    "rfc": "RFC-RAIOS-MASTER-IMPLEMENTATION-PROGRAM-20260913-01",
+    "delta_package_count": 50,
+    "program_span": "00-12",
+    "supersedes_catalog": [
+      "RAIOS-IMPLEMENTATION-PROGRAM-PLANNING-001",
+      "RAIOS-IMPLEMENTATION-PROGRAM-PLANNING-002"
+    ],
+    "001_002_retained_as_evidence": true,
+    "shipped_sequence_20260913": "LINEAGE_PRESERVED",
+    "program_03_provider_fabric_delta": ".ai-os/reports/implementation-program/RAIOS-MASTER-IMPLEMENTATION-PROGRAM-001/PROGRAM-03-PROVIDER-FABRIC-DELTA.json",
+    "program_00_architecture_delta": ".ai-os/reports/implementation-program/RAIOS-MASTER-IMPLEMENTATION-PROGRAM-001/PROGRAM-00-ARCHITECTURE-DELTA.json"
+  },
+  "capability_provider_fabric_delta_001": {
+    "task_id": "RAIOS-CAPABILITY-PROVIDER-FABRIC-DELTA-001",
+    "authority": "C1",
+    "role": "C2_CHIEF_SYSTEM_ARCHITECT",
+    "mode": "ARCHITECTURE_DELTA",
+    "status": "EXECUTE",
+    "execution": "READ_ONLY_EXCEPT_THIS_DELTA",
+    "reports": ".ai-os/reports/architecture/RAIOS-CAPABILITY-PROVIDER-FABRIC-DELTA-001/",
+    "index": ".ai-os/reports/architecture/RAIOS-CAPABILITY-PROVIDER-FABRIC-DELTA-001/INDEX.json",
+    "program_03_provider_fabric_delta": ".ai-os/reports/implementation-program/RAIOS-MASTER-IMPLEMENTATION-PROGRAM-001/PROGRAM-03-PROVIDER-FABRIC-DELTA.json",
+    "handoff": ".ai-os/handoffs/20260914-005600-C2-RAIOS-CAPABILITY-PROVIDER-FABRIC-DELTA-001.md",
+    "handoff_prior": ".ai-os/handoffs/20260914-004600-C2-RAIOS-CAPABILITY-PROVIDER-FABRIC-DELTA-001.md",
+    "canvas": "C:\\Users\\Ghanam\\.cursor\\projects\\c-Users-Ghanam-Documents-Codex-Greeny-Life\\canvases\\RAIOS-C2-capability-provider-fabric-delta-001.canvas.tsx",
+    "DELTA_ARCHITECTURE": "COMPLETE",
+    "READY_FOR_C6_REVIEW": true,
+    "IMPLEMENTATION": "NOT_STARTED",
+    "NO_PROVIDER_PROMOTION": true,
+    "execute_produced": "Updated Program 03 Delta",
+    "decision_recorded": "D-026",
+    "decision_prior_this_task": "D-025",
+    "c1_claimed_decision": "D-031",
+    "d031_in_decisions_md": false,
+    "d031_class": "CONFLICTING"
+  },
+  "program_00_architecture_001": {
+    "task_id": "RAIOS-PROGRAM-00-ARCHITECTURE-001",
+    "authority": "C1",
+    "role": "C2_ARCHITECTURAL_AUTHORITY",
+    "mode": "ARCHITECTURE_DELTA",
+    "reports": ".ai-os/reports/architecture/RAIOS-PROGRAM-00-ARCHITECTURE-001/",
+    "index": ".ai-os/reports/architecture/RAIOS-PROGRAM-00-ARCHITECTURE-001/INDEX.json",
+    "overlay": ".ai-os/reports/implementation-program/RAIOS-MASTER-IMPLEMENTATION-PROGRAM-001/PROGRAM-00-ARCHITECTURE-DELTA.json",
+    "handoff": ".ai-os/handoffs/20260914-013513-C2-RAIOS-PROGRAM-00-ARCHITECTURE-001.md",
+    "canvas": "C:\\Users\\Ghanam\\.cursor\\projects\\c-Users-Ghanam-Documents-Codex-Greeny-Life\\canvases\\RAIOS-C2-program-00-architecture-001.canvas.tsx",
+    "PROGRAM_00_ARCHITECTURE": "COMPLETE",
+    "READY_FOR_C6_REVIEW": true,
+    "IMPLEMENTATION": "NOT_STARTED",
+    "RESOURCE_ASSIMILATION_FIRST": true,
+    "decision": "D-027",
+    "evidence_lock": "D-021 ACTIVE"
+  },
+  "program_00_phase_a": {
+    "task_id": "RAIOS-PROGRAM-00-PHASE-A-FOUNDATION-BOOTSTRAP-001",
+    "authority": "C1",
+    "role": "C2_ARCHITECTURAL_AUTHORITY",
+    "mode": "CANONICAL_ONLY_DELTA_ONLY",
+    "status": "EXECUTION_AUTHORIZED_PHASE_A_ARCHITECTURE_ONLY",
+    "C1_PHASE_A_AUTHORIZED": true,
+    "PHASE_A_C2_ARCHITECTURE": "COMPLETE",
+    "IMPLEMENTATION_RUNTIME": "NOT_STARTED_BY_C2",
+    "FOUNDATION_BOOTSTRAP_CERTIFIED": false,
+    "READY_FOR_ASSIMILATION": false,
+    "PHASE_B": "NOT_STARTED",
+    "KERNEL": "FROZEN",
+    "RUNTIME": "UNCHANGED",
+    "Providers": "NOT_PROMOTED",
+    "evidence_lock": "D-021 ACTIVE",
+    "c1_auth_phase_a_only": true,
+    "c1_auth_full_implementation": false,
+    "reports": ".ai-os/reports/architecture/RAIOS-PROGRAM-00-PHASE-A-FOUNDATION-BOOTSTRAP-001/",
+    "index": ".ai-os/reports/architecture/RAIOS-PROGRAM-00-PHASE-A-FOUNDATION-BOOTSTRAP-001/INDEX.json",
+    "handoff": ".ai-os/handoffs/20260914-020200-C2-P00-PHASE-A-ARCHITECTURE.md",
+    "all_seats_order": ".ai-os/handoffs/20260914-020200-C1-P00-PHASE-A-ALL-SEATS.md",
+    "canvas": "C:\\Users\\Ghanam\\.cursor\\projects\\c-Users-Ghanam-Documents-Codex-Greeny-Life\\canvases\\RAIOS-C2-program-00-phase-a.canvas.tsx",
+    "decision": "D-028",
+    "channel": "dated_handoff_plus_c2_executive_receipt",
+    "INTERNAL_BUS_live_delivery": "NOT_PROVEN"
+  },
+  "ucf_architecture_001": {
+    "task_id": "UCF-ARCHITECTURE-001",
+    "pack_id": "RAIOS-UCF-ARCHITECTURE-001",
+    "authority": "C1",
+    "role": "C2_ARCHITECTURAL_AUTHORITY",
+    "project": "Unified Communication Fabric",
+    "program_named_this_order": "Program 03 project",
+    "numbering_reconcile": "UCF = Communication Capability through official P03 Provider Fabric + official P12 Communication Fabric + P00 integration; no third program number",
+    "reports": ".ai-os/reports/architecture/RAIOS-UCF-ARCHITECTURE-001/",
+    "index": ".ai-os/reports/architecture/RAIOS-UCF-ARCHITECTURE-001/INDEX.json",
+    "handoff": ".ai-os/handoffs/20260914-185000-C2-UCF-ARCHITECTURE-001.md",
+    "canvas": "C:\\Users\\Ghanam\\.cursor\\projects\\c-Users-Ghanam-Documents-Codex-Greeny-Life\\canvases\\RAIOS-C2-ucf-architecture-001.canvas.tsx",
+    "UCF_ARCHITECTURE": "COMPLETE",
+    "READY_FOR_C3": true,
+    "IMPLEMENTATION": "NOT_STARTED",
+    "NO_PARALLEL_BUS": true,
+    "decision": "D-029",
+    "this_seat_runs_c3": false
+  },
+  "management_report_contract_integration": {
+    "c1_task": "MANAGEMENT-REPORT-CONTRACT-001",
+    "c1_status": "ACCEPTED",
+    "decision": "D-029",
+    "asset_class": "ManagementReport",
+    "new_component": false,
+    "c6_contract_found": false,
+    "c6_contract_class": "UNPROVEN",
+    "integration": ".ai-os/reports/architecture/RAIOS-PROGRAM-00-ARCHITECTURE-001/PROGRAM-00-MANAGEMENT-REPORT-CONTRACT-INTEGRATION.json",
+    "canonical_asset_model": ".ai-os/reports/architecture/RAIOS-PROGRAM-00-ARCHITECTURE-001/CANONICAL-ASSET-MODEL.json",
+    "system_passport": ".ai-os/reports/architecture/RAIOS-PROGRAM-00-PHASE-A-FOUNDATION-BOOTSTRAP-001/SYSTEM-PASSPORT.json",
+    "current_operational_state": ".ai-os/reports/architecture/RAIOS-PROGRAM-00-PHASE-A-FOUNDATION-BOOTSTRAP-001/CURRENT-OPERATIONAL-STATE.json",
+    "operational_dashboard": ".ai-os/reports/architecture/RAIOS-PROGRAM-00-PHASE-A-FOUNDATION-BOOTSTRAP-001/OPERATIONAL-DASHBOARD.json"
+  },
+  "c2_management_report_001": {
+    "ManagementReportID": "MR-C2-20260915-001",
+    "ReportVersion": "1.0",
+    "task_owner": "C2",
+    "decision": "D-030",
+    "reports": ".ai-os/reports/management/RAIOS-C2-MANAGEMENT-REPORT-001/",
+    "human": ".ai-os/reports/management/RAIOS-C2-MANAGEMENT-REPORT-001/MANAGEMENT-REPORT.md",
+    "machine": ".ai-os/reports/management/RAIOS-C2-MANAGEMENT-REPORT-001/MANAGEMENT-REPORT.json",
+    "handoff": ".ai-os/handoffs/20260915-012000-C2-MANAGEMENT-REPORT-001.md",
+    "IMPLEMENTATION": "NOT_STARTED",
+    "KERNEL": "FROZEN"
+  },
+  "ucf_certification_checkpoint": {
+    "task_id": "UCF-CERTIFICATION",
+    "checkpoint": "2026-09-15T01:30:00Z",
+    "status": "NOT_CERTIFIED",
+    "C2_ARCHITECTURE_CERTIFICATION": "PASS",
+    "UCF_RUNTIME_CERTIFICATION": "NOT_CERTIFIED",
+    "certification_file": ".ai-os/reports/comms/UCF-CANONICALIZATION-001/UCF-CERTIFICATION.json",
+    "handoff": ".ai-os/handoffs/20260915-013000-C2-UCF-CERTIFICATION-CHECKPOINT.md",
+    "c3_dispatch": ".ai-os/handoffs/20260915-013000-C2-C3-UCF-RUNTIME-CERT-DISPATCH.md",
+    "decision": "D-032",
+    "this_turn_8766": "FAIL",
+    "this_turn_8788": "PASS",
+    "this_turn_8770": "PASS"
+  },
+  "ucf_runtime_cert_gaps_d033": {
+    "task_id": "UCF-CERTIFICATION",
+    "checkpoint": "2026-09-15T04:20:00Z",
+    "status": "NOT_CERTIFIED",
+    "C2_ARCHITECTURE_CERTIFICATION": "PASS",
+    "UCF_RUNTIME_CERTIFICATION": "NOT_CERTIFIED",
+    "C6_CONSTITUTIONAL_CERTIFICATION": "NOT_CERTIFIED_NOT_FAKED",
+    "decision": "D-033",
+    "prior_decision": "D-032",
+    "certification_file": ".ai-os/reports/comms/UCF-CANONICALIZATION-001/UCF-CERTIFICATION.json",
+    "handoff": ".ai-os/handoffs/20260915-042000-C2-UCF-RUNTIME-CERT-GAPS-001.md",
+    "e2e_receipt": ".ai-os/receipts/c2-executive/UCF-CERT-E2E.json",
+    "this_turn_8766": "FAIL",
+    "this_turn_8788": "PASS",
+    "this_turn_8770": "PASS",
+    "end_to_end": "PROVEN_AS_C1",
+    "c2_token": "ABSENT",
+    "restart_proof": "NOT_PROVEN",
+    "live_git_head": "86d0f3ed475951fa46d0e30fa250c118412a284a"
+  },
+  "ucf_runtime_cert_d034": {
+    "task_id": "UCF-CERTIFICATION",
+    "checkpoint": "2026-09-15T04:48:00Z",
+    "status": "NOT_CERTIFIED",
+    "C2_ARCHITECTURE_CERTIFICATION": "PASS",
+    "UCF_RUNTIME_CERTIFICATION": "NOT_CERTIFIED",
+    "C6_CONSTITUTIONAL_CERTIFICATION": "NOT_CERTIFIED_NOT_FAKED",
+    "decision": "D-034",
+    "prior_decision": "D-033",
+    "certification_file": ".ai-os/reports/comms/UCF-CANONICALIZATION-001/UCF-CERTIFICATION.json",
+    "handoff": ".ai-os/handoffs/20260915-044800-C2-UCF-CERT-C3-PROXY-D034.md",
+    "e2e_receipt": ".ai-os/receipts/c2-executive/UCF-CERT-E2E.json",
+    "inspect_receipt": ".ai-os/receipts/c2-executive/UCF-RUNTIME-INSPECT.json",
+    "this_turn_8766": "PASS",
+    "this_turn_8788": "PASS",
+    "this_turn_8770": "PASS",
+    "end_to_end": "PROVEN_AS_C1",
+    "c2_token": "ABSENT",
+    "restart_proof": "NOT_PROVEN",
+    "headonly_recovery": "RAN_EXISTING_SCRIPT",
+    "live_git_head": "86d0f3ed475951fa46d0e30fa250c118412a284a"
+  },
+  "head": "2efd08184614749dee999be7a2456c6bf1387c2e",
+  "head_status": "GIT_VERIFIED_PUSHED",
+  "runtime_head": "96a1e7ef9cbbe15176a83c9b65d5efea9239b747",
+  "runtime_head_classification": {
+    "96a1e7e": "DEPLOYED_SOURCE_HEAD_REPORTED_BY_RUNTIME",
+    "96a1e7e_is_not": [
+      "TRANSACTION_BASE",
+      "HASH_PINNED_STAGE_BASE",
+      "STALE_RUNTIME_SOLELY_BECAUSE_GIT_IS_2EFD081"
+    ],
+    "96a1e7e_overlay_blobs_match_git_96a1e7e": false,
+    "96a1e7e_as_git_tree_for_live_overlays": "UNPROVEN",
+    "transaction_base": "75d2b097a081e32836079f7e8a8f58d6644d24fd",
+    "hash_pinned_stage_base": "75d2b097a081e32836079f7e8a8f58d6644d24fd",
+    "canonical_git": "2efd08184614749dee999be7a2456c6bf1387c2e",
+    "cutover": "FORBIDDEN"
+  },
+  "runtime_head_match": false,
   "branch": "ai-evolution-202608051809",
   "ledger": ".ai-os/state/TASKS.json",
   "locks": ".ai-os/state/LOCKS.json",
   "decisions": ".ai-os/state/DECISIONS.md",
   "channel_spec_frozen": ".ai-os/mcp/EXECUTION-CHANNEL.json",
+  "port_contract": {
+    "ag_universal_mcp": "127.0.0.1:8788",
+    "cursor_cloud_mcp": ":8787 when present in its own environment",
+    "second_ag_mcp": "FORBIDDEN",
+    "mcp_tool_count": 8,
+    "doc_xor_8787_8788": "ADVISORY_DOCUMENTATION_BLOCKER_NOT_RUNTIME_AUTHORITY",
+    "doc_edits_during_c3_recovery": "FORBIDDEN"
+  },
   "c1_ack": {
-    "health_verification": "ACCEPTED",
-    "accepted_online": [
-      "HEAD",
-      "Command Center :8770",
-      "C5 :8766",
-      "Ollama :11434"
-    ],
-    "remaining_critical_assigned_to_c3": [
-      "Universal MCP",
-      "9Router"
-    ],
-    "c2_mode": "EXECUTIVE_OVERSIGHT_ONLY",
-    "wait": "C3_ENGINEERING_REPORTS_ONLY"
+    "previous_cycle": "ACCEPTED",
+    "live_reconcile": "ACCEPTED",
+    "no_further_commits": true,
+    "c2_mode": "INDEPENDENT_READ_ONLY_WATCH"
   },
   "sprint": {
     "id": "S0-HYBRID-MCP",
-    "goal": "Restore existing Universal MCP and existing 9Router; no new gateway",
+    "goal": "C3 controlled recovery of RAIOS-C5-Permanent; keep proven MCP/9Router healthy; no cutover",
     "owner": "C3",
-    "status": "WAITING_C3_REPORT",
+    "status": "P1_OPEN_C3_RECOVERY",
     "p1": [
-      "Universal MCP",
-      "9Router"
+      "RAIOS-C5-Permanent stuck-instance defect",
+      "Command Center/C5 provenance reconciliation",
+      "C6 ownership gate before Command Center cutover",
+      "8787/8788 documentation XOR (advisory)",
+      "Final RAIOS channel recovery/stability certification"
     ]
   },
+  "streams": [
+    {
+      "id": "C3",
+      "role": "runtime_defect_investigation_and_controlled_recovery",
+      "status": "H1_ACCEPTED_DIAGNOSTIC_AUTHORIZED",
+      "note": "C1 accepted H1 STRONGLY_SUPPORTED_BUT_NOT_FULLY_PROVEN. One Admin diagnostic instance of RAIOS-C5-Permanent authorized; repair forbidden. C2 does not execute this package."
+    },
+    {
+      "id": "C6",
+      "role": "coordination_and_independent_review",
+      "status": "OWNERSHIP_GATE",
+      "note": "message_worker cutover blocked; C2 will not touch C6 scope."
+    },
+    {
+      "id": "C2",
+      "role": "read_only_executive_observation",
+      "status": "WATCHING",
+      "note": "No terminate PID 14124/19236; no Maintain script edit; no task re-register; no MCP alter; no CC cutover."
+    },
+    {
+      "id": "C8",
+      "role": "knowledge",
+      "status": "HOLD_LIVE_ACTIVATION",
+      "note": "SEAT-MAP CKIO/OpenCode; live_activation_executed=false; no dispatch"
+    },
+    {
+      "id": "CLAUDE",
+      "role": "claude_code_adapter",
+      "status": "ADAPTER_ONLY",
+      "note": "CLAUDE.md binds Claude Code to CORE-CONTRACT. Not a council seat. C2 issues no Claude implementation dispatch."
+    },
+    {
+      "id": "RUNTIME",
+      "role": "live_surfaces",
+      "status": "LISTENERS_STABLE_TASK_DEFECT_OPEN",
+      "note": "CC/C5/MCP/9Router/Ollama listener PIDs unchanged from 01:54:10Z. RAIOS-C5-Permanent still Running; Maintain PIDs 14124/19236 absent at 03:59Z. Not recovery certification."
+    },
+    {
+      "id": "KNOWLEDGE",
+      "role": "canonical_knowledge",
+      "status": "SHELLS_EMPTY",
+      "note": "No C8 live activation; do not fill .canonical shells"
+    },
+    {
+      "id": "GATEWAY",
+      "role": "official_execution_channel",
+      "status": "PROVEN_ONLINE_8788",
+      "note": "AG Universal MCP 127.0.0.1:8788; do not start :8787; do not restart 8788/20128 while healthy"
+    },
+    {
+      "id": "FACTORY",
+      "role": "factory_fabric",
+      "status": "PASS_UNCHANGED",
+      "note": "Existing FACTORY-STATUS-MATRIX PASS; second_factory=false"
+    }
+  ],
   "priorities": [
     {
       "rank": 1,
-      "item": "Universal MCP runtime online",
+      "item": "RAIOS-C5-Permanent stuck-instance defect",
       "owner": "C3",
-      "status": "WAITING_C3_REPORT",
-      "evidence": "C1 accepted last C2 probe: GET :8787 and :8788 fail"
-    },
-    {
-      "rank": 1,
-      "item": "9Router runtime online",
-      "owner": "C3",
-      "status": "WAITING_C3_REPORT",
-      "evidence": "C1 accepted last C2 probe: :20128/v1/models TimeoutError"
+      "status": "OPEN",
+      "evidence": "C3 capture 02:52Z task Running LastTaskResult 2147946720 PID 19236 before RUN_START; phase.log last SCRIPT_EXIT 23:14:20Z PID 20688. C2 watch: task still Running 03:47Z; PIDs 14124/19236/20360 absent 03:59Z. Not three-cycle verified."
     },
     {
       "rank": 2,
-      "item": "Canonical Knowledge Program",
-      "owner": "C8",
-      "status": "WAITING_LIVE_ACTIVATION",
-      "evidence": "SEAT-MAP C8=CHIEF_KNOWLEDGE_INTELLIGENCE_OFFICER; live_activation_executed=false; no C8 dispatch this cycle"
+      "item": "Command Center/C5 provenance reconciliation",
+      "owner": "C3/C6",
+      "status": "OPEN_NO_CUTOVER",
+      "evidence": "TX base 75d2b09; runtime health 96a1e7e; git 2efd081; overlay hashes pinned and not equal to any of those git trees for overlay files"
+    },
+    {
+      "rank": 2,
+      "item": "C6 ownership gate before Command Center cutover",
+      "owner": "C1",
+      "status": "OWNERSHIP_CONFLICT",
+      "evidence": "COMMAND_FABRIC_WORKER_STARVATION READY allowed_agents=C6; worker overlay lock RELEASED; CHATGPT-NORMAL transactional deploy IN_PROGRESS BLOCKED_OWNERSHIP_GATE"
     },
     {
       "rank": 3,
-      "item": "Engineering Progress Dashboard",
+      "item": "8787/8788 documentation XOR",
+      "owner": "C1/C3",
+      "status": "ADVISORY_HOLD_NO_DOC_EDIT",
+      "evidence": "Frozen XOR remains documentation blocker, not runtime authority. Delta proposal only after live channel certified."
+    },
+    {
+      "rank": 3,
+      "item": "Final RAIOS channel recovery/stability certification",
       "owner": "C2",
-      "status": "RUNNING"
+      "status": "WAITING_C3_RECOVERY_THEN_INDEPENDENT_VERIFY",
+      "evidence": "Post-recovery six-surface verify not due"
     },
     {
       "rank": 4,
-      "item": "Runtime Health Dashboard",
-      "owner": "C2",
-      "status": "RUNNING"
-    },
-    {
-      "rank": 5,
-      "item": "Executive Dependency Matrix",
-      "owner": "C2",
-      "status": "RUNNING"
-    },
-    {
-      "rank": 6,
-      "item": "Program Risk Matrix",
-      "owner": "C2",
-      "status": "RUNNING"
+      "item": "Canonical Knowledge Program",
+      "owner": "C8",
+      "status": "WAITING_LIVE_ACTIVATION"
     }
   ],
-  "backlog_index": {
+  "critical_path": [
+    {
+      "seq": 1,
+      "item": "C3 controlled recovery of RAIOS-C5-Permanent + three consecutive completed cycles",
+      "owner": "C3",
+      "status": "CURRENT",
+      "closes": false
+    },
+    {
+      "seq": 2,
+      "item": "C2 independent six-surface verification after C3 recovery report",
+      "owner": "C2",
+      "status": "QUEUED",
+      "closes": false
+    },
+    {
+      "seq": 3,
+      "item": "C1 reconnect C6 or transfer message_worker scope",
+      "owner": "C1",
+      "status": "BLOCKING_CUTOVER",
+      "closes": false
+    },
+    {
+      "seq": 4,
+      "item": "Transactional CC deploy at git HEAD 2efd081",
+      "owner": "C3",
+      "status": "BLOCKED_OWNERSHIP_GATE",
+      "closes": false
+    },
+    {
+      "seq": 5,
+      "item": "8787/8788 documentation XOR delta after channel certified",
+      "owner": "C1/C3",
+      "status": "QUEUED",
+      "closes": false
+    }
+  ],
+  "milestones": [
+    {
+      "id": "MS-CYCLE-02-HEALTH-ACK",
+      "status": "CLOSED",
+      "verified_by": "C1",
+      "note": "Prior cycle accepted"
+    },
+    {
+      "id": "MS-GIT-HEAD-2EFD081",
+      "status": "CLOSED",
+      "verified_by": "C2",
+      "note": "rev-parse 2efd081; ahead 0 vs origin"
+    },
+    {
+      "id": "MS-MCP-ONLINE",
+      "status": "CLOSED_FOR_OBSERVATION_WINDOW",
+      "verified_by": "C1",
+      "note": "C1 accepted C2 live reconcile :8788 PROCESS_DOWN cleared. Remains one listener PID 27372 at 03:47:07Z. Not a substitute for post-recovery certify."
+    },
+    {
+      "id": "MS-9ROUTER-ONLINE",
+      "status": "CLOSED_FOR_OBSERVATION_WINDOW",
+      "verified_by": "C1",
+      "note": "C1 accepted C2 live reconcile :20128 PROCESS_DOWN cleared. Remains one listener PID 10852 at 03:47:07Z."
+    },
+    {
+      "id": "MS-C5-PERMANENT-RECOVERY",
+      "status": "OPEN",
+      "verified_by": "C2",
+      "note": "Waiting C3 controlled recovery + three-cycle stability then C2 independent verify"
+    },
+    {
+      "id": "MS-CC-RUNTIME-HEAD-MATCH",
+      "status": "OPEN",
+      "verified_by": "C2",
+      "note": "96a1e7e is runtime-reported DEPLOYED_SOURCE_HEAD, not STALE solely vs git 2efd081; overlays pinned on TX base 75d2b09"
+    },
+    {
+      "id": "MS-C8-LIVE",
+      "status": "OPEN",
+      "verified_by": "C2",
+      "note": "live_activation_executed=false"
+    }
+  ],
+  "engineering_backlog": {
     "source": ".ai-os/state/TASKS.json",
     "active_program_id": "RAIOS-CAPABILITY-EVOLUTION-202609-202703",
-    "counts": {
+    "counts_last_enumerated": {
+      "at": "2026-09-10T13:53:00Z",
       "total": 72,
       "DONE": 30,
       "READY": 35,
@@ -99,45 +698,51 @@
       "SUPERSEDED": 1,
       "BLOCKED": 0
     },
-    "note": "Single ledger. C2 does not duplicate tasks. Mutation blocked while RAIOS_SYSTEM leases TASKS.json/LOCKS.json.",
-    "c3_dispatch_queue": [
-      "C3-RMEP-MCP-RESTORE-EXISTING",
-      "C3-RMEP-9ROUTER-RESTORE-EXISTING"
-    ],
-    "c3_sequenced_after_p1": [
-      "C3-RMEP-PORT-UNIFY",
-      "C3-RMEP-ADAPTER-BIND"
-    ],
-    "c3_in_progress_existing": 6,
-    "c2_qwen38": {
-      "id": "RAIOS-C2-QWEN38-CLOUD-INSTALL-20260907-01",
-      "ledger_status": "READY",
-      "owner": null,
-      "checkpoint_blocker": "LIGHTNING_402_NONE_ALLOCATABLE_AWAITING_C1_ENTITLEMENT",
-      "dsp_locks": "RELEASED",
-      "c2_action_this_cycle": "NONE"
-    }
+    "note": "Single ledger. C2 does not duplicate or mutate. Index only. TASKS/LOCKS still CHATGPT-NORMAL leased.",
+    "watched": [
+      {
+        "id": "RAIOS-C5-Permanent",
+        "kind": "scheduled_task",
+        "status": "RUNNING_DEFECT_OPEN",
+        "owner": "C3"
+      },
+      {
+        "id": "RAIOS-TRANSACTIONAL-DEPLOYMENT-20260906-01",
+        "kind": "ledger",
+        "status": "IN_PROGRESS",
+        "owner": "CHATGPT-NORMAL",
+        "handoff": "BLOCKED_OWNERSHIP_GATE"
+      },
+      {
+        "id": "COMMAND_FABRIC_WORKER_STARVATION",
+        "kind": "ledger",
+        "status": "READY",
+        "allowed_agents": [
+          "C6"
+        ]
+      }
+    ]
   },
   "dependencies": [
     {
-      "from": "C3_MCP_REPORT",
-      "to": "MCP_ONLINE",
-      "status": "WAITING_C3_REPORT"
-    },
-    {
-      "from": "C3_9ROUTER_REPORT",
-      "to": "NINE_ROUTER_ONLINE",
-      "status": "WAITING_C3_REPORT"
-    },
-    {
-      "from": "MCP_ONLINE",
-      "to": "ADAPTER_BIND",
+      "from": "C3_C5_PERMANENT_RECOVERY_THREE_CYCLES",
+      "to": "C2_INDEPENDENT_VERIFY",
       "status": "WAITING"
     },
     {
-      "from": "C1_PORT_XOR",
-      "to": "MCP_PORT_UNIFY",
+      "from": "C2_INDEPENDENT_VERIFY",
+      "to": "CHANNEL_STABILITY_CERTIFY",
+      "status": "WAITING"
+    },
+    {
+      "from": "C1_C6_RECONNECT_OR_TRANSFER",
+      "to": "CC_CUTOVER",
       "status": "WAITING_DECISION"
+    },
+    {
+      "from": "CHANNEL_CERTIFIED",
+      "to": "DOC_XOR_DELTA_PROPOSAL",
+      "status": "WAITING"
     },
     {
       "from": "C8_LIVE_ACTIVATION",
@@ -148,126 +753,201 @@
       "from": "CHATGPT_NORMAL_LEDGER_LEASE",
       "to": "BACKLOG_MUTATION",
       "status": "WAITING"
-    },
-    {
-      "from": "MCP_ONLINE",
-      "to": "GATEWAY_ENABLED_WAVE",
-      "status": "WAITING"
     }
   ],
   "risk_register": [
     {
-      "id": "RSK-MCP-DOWN",
+      "id": "RSK-C5-PERMANENT-STUCK",
       "priority": 1,
       "owner": "C3",
-      "item": "Universal MCP process not answering on :8787 or :8788",
-      "impact": "Official execution channel stays dark; adapters cannot bind",
-      "mitigation": "C3 restores existing server.py in place; no second gateway",
-      "status": "OPEN_WAITING_C3"
-    },
-    {
-      "id": "RSK-9ROUTER-TIMEOUT",
-      "priority": 1,
-      "owner": "C3",
-      "item": "9Router :20128 timed out on last accepted probe",
-      "impact": "Model-routing gateway unavailable; D-006/D-007 surface dark",
-      "mitigation": "C3 restores existing 9Router process; C2 does not implement",
-      "status": "OPEN_WAITING_C3"
-    },
-    {
-      "id": "RSK-C3-REPORT-GAP",
-      "priority": 1,
-      "owner": "C3",
-      "item": "No C3 engineering report filed this cycle",
-      "impact": "Executive board cannot close P1; schedule holds",
-      "mitigation": "C2 waits; does not substitute implementation",
+      "item": "RAIOS-C5-Permanent instance stuck before RUN_START; task State=Running while later Maintain PIDs absent",
+      "impact": "Continuity loop not completing; ignored triggers possible",
+      "mitigation": "C3 owns controlled recovery. C2 observe only. Do not kill named PIDs. Do not re-register task.",
       "status": "OPEN"
+    },
+    {
+      "id": "RSK-FALSE-GREEN",
+      "priority": 1,
+      "owner": "C2",
+      "item": "Printed PASS or stale continuity status.json must not close P1",
+      "impact": "Would certify recovery from stale 23:14Z status or from PID absence alone",
+      "mitigation": "Require C3 recovery report + three completed cycles + C2 independent verify",
+      "status": "OPEN"
+    },
+    {
+      "id": "RSK-C6-OWNERSHIP",
+      "priority": 2,
+      "owner": "C1",
+      "item": "Transactional deploy blocked: needs C6 message_worker overlay; C6 leases released",
+      "impact": "Runtime HEAD cannot catch git HEAD; cutover stalls",
+      "mitigation": "C1 reconnect C6 or transfer exact scope; C2 does not reassign seats",
+      "status": "OPEN"
+    },
+    {
+      "id": "RSK-RUNTIME-HEAD-LAG",
+      "priority": 2,
+      "owner": "C3/C6",
+      "item": "CC/C5 health report 96a1e7e; TX/C5 deploy base 75d2b09; git 2efd081; overlays pinned and not equal to those git blobs",
+      "impact": "Live Command Center is overlay-pinned, not canonical git HEAD",
+      "mitigation": "Do not classify 96a1e7e as stale solely vs git. No cutover.",
+      "status": "OPEN"
+    },
+    {
+      "id": "RSK-ADJACENT-CC-LOCKS",
+      "priority": 2,
+      "owner": "C3",
+      "item": "12 ACTIVE CHATGPT-NORMAL locks cover CC overlay sources served by TX-C3-ATTENTION-LIVE-20260908-03",
+      "impact": "Restarting :8770 would be runtime-adjacent to locked sources",
+      "mitigation": "Exact C3 recovery scope is Maintain-RAIOS-Online.ps1 + RAIOS-C5-Permanent + continuity. No verified write-conflict. Do not release locks.",
+      "status": "ADJACENT_NOT_VERIFIED_CONFLICT"
     },
     {
       "id": "RSK-LEDGER-LEASE",
       "priority": 3,
       "owner": "C3/CHATGPT-NORMAL",
-      "item": "TASKS.json and LOCKS.json remain ACTIVE-leased (12 locks)",
-      "impact": "Backlog cannot be mutated; C2 index-only",
-      "mitigation": "Keep single ledger; do not create a second task list",
+      "item": "TASKS.json / LOCKS.json still leased for index mutation",
+      "impact": "Backlog cannot be mutated",
+      "mitigation": "Single ledger; C2 index only",
       "status": "OPEN"
     },
     {
       "id": "RSK-C8-LIVE",
       "priority": 4,
       "owner": "C1/C8",
-      "item": "C8 identity exists in SEAT-MAP; live_activation_executed=false",
-      "impact": "Knowledge program cannot start; canonical shells stay empty",
-      "mitigation": "No C8 dispatch until C1 authorizes live activation",
-      "status": "OPEN_NOT_THIS_WAIT"
+      "item": "Knowledge seat not live-activated",
+      "impact": "Knowledge program cannot start",
+      "mitigation": "No C8 dispatch",
+      "status": "OPEN"
     },
     {
       "id": "RSK-MERGE-DRIFT",
       "priority": 4,
       "owner": "C1/C3",
-      "item": "Local/Cloud C2 and POLICY branch string still drifted",
-      "impact": "Production merge remains STOP",
-      "mitigation": "Hold merge; do not redesign channel",
+      "item": "POLICY branch and C2 identity still drifted",
+      "impact": "Production merge STOP",
+      "mitigation": "Hold merge; architecture review queue only",
       "status": "OPEN"
+    }
+  ],
+  "decision_register": {
+    "source": ".ai-os/state/DECISIONS.md",
+    "latest": "D-034",
+    "open_c1": [
+      "C8_LIVE_ACTIVATION",
+      "C6_RECONNECT_OR_TRANSFER_MESSAGE_WORKER",
+      "CHATGPT_NORMAL_LEDGER_LEASE_KEEP_OR_RELEASE",
+      "POLICY_BRANCH_STRING_VS_CANONICAL",
+      "DOC_XOR_8787_8788_AFTER_CHANNEL_CERTIFIED"
+    ]
+  },
+  "architecture_review_queue": [
+    {
+      "id": "ARQ-D005-STALE-BRANCH",
+      "item": "D-005 still names phase2a/class-a and v9-neurolingua; live authority is ai-evolution-202608051809",
+      "action": "REVIEW_ONLY",
+      "new_architecture": false
     },
     {
-      "id": "RSK-QWEN38-READY-UNCLAIMED",
-      "priority": 5,
-      "owner": "C1",
-      "item": "Qwen38 task returned READY; DSP locks RELEASED; Lightning 402 still in checkpoint",
-      "impact": "Not a current P1; accidental re-claim would violate no-implement order",
-      "mitigation": "C2 does not claim; no spend",
-      "status": "WATCH"
+      "id": "ARQ-POLICY-C2-SEAT",
+      "item": "POLICY.json C2_SEAT_IS_CHATGPT vs SEAT-MAP C2 Cursor EXECUTIVE_ENGINEER",
+      "action": "REVIEW_ONLY",
+      "new_architecture": false
+    },
+    {
+      "id": "ARQ-POLICY-BRANCH",
+      "item": "POLICY.json branch v9-neurolingua-semantic-kernel vs canonical ai-evolution-202608051809",
+      "action": "REVIEW_ONLY",
+      "new_architecture": false
+    },
+    {
+      "id": "ARQ-CHANNEL-RUNTIME-FIELD",
+      "item": "EXECUTION-CHANNEL.json runtime field may still read OFFLINE; spec stays frozen; live AG MCP is :8788",
+      "action": "OBSERVE",
+      "new_architecture": false
+    }
+  ],
+  "knowledge_assimilation_queue": [
+    {
+      "id": "KAQ-C8-LIVE",
+      "item": "Authorize live C8 before any knowledge dispatch",
+      "status": "HOLD"
+    },
+    {
+      "id": "KAQ-CANONICAL-SHELLS",
+      "item": "Empty .canonical registry/knowledge shells; do not invent contents",
+      "status": "HOLD"
+    },
+    {
+      "id": "KAQ-FACTORY-ASSIMILATION",
+      "item": "Existing assimilation_factory PASS: 105 materials / 14 units",
+      "status": "RETAIN_EXISTING"
     }
   ],
   "roadmap": [
     {
       "wave": "S0",
-      "name": "Restore existing MCP + 9Router",
+      "name": "C3 RAIOS-C5-Permanent controlled recovery",
       "owner": "C3",
-      "status": "CURRENT_WAITING_C3",
-      "gate": "C3 engineering reports proving process restore"
+      "status": "CURRENT",
+      "gate": "Three consecutive completed cycles then C2 independent verify"
     },
     {
       "wave": "S0b",
-      "name": "Port unify 8787 XOR 8788",
+      "name": "Port unify 8787 XOR 8788 documentation delta",
       "owner": "C3",
-      "status": "WAITING_C1_XOR",
-      "gate": "C1 port decision"
+      "status": "WAITING_CHANNEL_CERTIFIED",
+      "gate": "Advisory only until live channel certified"
+    },
+    {
+      "wave": "S0c",
+      "name": "CC transactional cutover to git HEAD",
+      "owner": "C3/C6",
+      "status": "BLOCKED_OWNERSHIP",
+      "gate": "C1 C6 reconnect or scope transfer"
     },
     {
       "wave": "S1",
-      "name": "Adapter bind after MCP online",
+      "name": "Adapter bind after channel certified",
       "owner": "C3",
       "status": "QUEUED",
-      "gate": "MCP_ONLINE"
+      "gate": "CHANNEL_STABILITY_CERTIFY"
     },
     {
       "wave": "S2",
       "name": "Gateway-enabled wave",
       "owner": "C3",
       "status": "QUEUED",
-      "gate": "MCP_ONLINE + adapter bind"
+      "gate": "CHANNEL_STABILITY_CERTIFY + adapter bind"
     },
     {
       "wave": "K0",
       "name": "Canonical knowledge program",
       "owner": "C8",
       "status": "HOLD_LIVE_ACTIVATION",
-      "gate": "C1 live activation; C2 issues no C8 dispatch this cycle"
+      "gate": "C1 live activation"
     }
   ],
   "runtime_status": {
-    "probe_cycle": "2026-09-10T13:39:49Z",
-    "c1_health_ack": "ACCEPTED",
-    "command_center_8770": "ONLINE",
-    "c5_8766": "ONLINE",
-    "mcp_8787": "OFFLINE",
-    "mcp_8788": "OFFLINE",
-    "nine_router_20128": "TIMEOUT",
-    "ollama_11434": "ONLINE",
-    "command_fabric_worker": "LIVE",
-    "worker_head": "96a1e7ef9cbbe15176a83c9b65d5efea9239b747"
+    "probe_cycle": "2026-09-11T03:47:07Z",
+    "git_head": "2efd08184614749dee999be7a2456c6bf1387c2e",
+    "command_center_8770": "ONLINE_PID_11616_UNCHANGED",
+    "command_center_canonical_head_reported": "96a1e7ef9cbbe15176a83c9b65d5efea9239b747",
+    "command_center_transaction": "TX-C3-ATTENTION-LIVE-20260908-03",
+    "command_center_transaction_base": "75d2b097a081e32836079f7e8a8f58d6644d24fd",
+    "c5_8766": "ONLINE_PID_23916_UNCHANGED",
+    "c5_deploy_canonical_head": "75d2b097a081e32836079f7e8a8f58d6644d24fd",
+    "c5_health_reported_head": "96a1e7ef9cbbe15176a83c9b65d5efea9239b747",
+    "c5_main_cortex": "HOLD",
+    "mcp_8787": "NOT_EXPECTED_ON_AG",
+    "mcp_8788": "ONLINE_PID_27372_UNCHANGED",
+    "nine_router_20128": "ONLINE_PID_10852_UNCHANGED",
+    "ollama_11434": "ONLINE_PID_18560_UNCHANGED",
+    "ollama_version": "0.33.2",
+    "command_fabric_worker": "LIVE_AT_RECONCILE",
+    "worker_head_reported": "96a1e7ef9cbbe15176a83c9b65d5efea9239b747",
+    "raios_c5_permanent": "RUNNING_DEFECT_OPEN",
+    "do_not_start_8787": true,
+    "do_not_restart_8788_or_20128_while_healthy": true
   },
   "factory_status": {
     "source": ".ai-os/reports/factory-fabric/RAIOS-FACTORY-FABRIC-CRITICAL-CLOSURE-C6-01/FACTORY-STATUS-MATRIX.json",
@@ -282,68 +962,133 @@
     "instance_role": "opencode",
     "live_activation_executed": false,
     "canonical_shells": "EMPTY",
-    "dispatch": "NONE",
-    "wait_this_cycle": false,
-    "note": "Prior cycle listed C8 as UNASSIGNED; current SEAT-MAP has CKIO identity. Capability task C8-GOVERNED-SEAT-ASSIGNMENT-P0 is DONE without live activation."
+    "dispatch": "NONE"
   },
   "engineering_status": {
     "owner": "C3",
     "merge": "STOP_UNTIL_DRIFT_CLOSED",
-    "mcp": "RESTORE_EXISTING_ONLY",
-    "nine_router": "RESTORE_EXISTING_ONLY",
-    "c3_reports_this_cycle": [],
-    "c3_report_status": "NONE",
-    "in_progress_existing_owner": "CHATGPT-NORMAL",
-    "in_progress_count": 6,
-    "active_locks": 12,
-    "c2_implementation": "FORBIDDEN"
+    "mcp": "PROVEN_ONLINE_DO_NOT_RESTART",
+    "nine_router": "PROVEN_ONLINE_DO_NOT_RESTART",
+    "c5_permanent": "C3_H1_DIAGNOSTIC_NO_REPAIR",
+    "latest_engineering_handoff": ".ai-os/handoffs/20260910-223256-CHATGPT-NORMAL-RAIOS-TRANSACTIONAL-DEPLOYMENT-20260906-01.md",
+    "c3_defect_evidence": "C:\\Users\\Ghanam\\.raios\\runtime\\continuity\\c5-permanent-defect-20260911-055059",
+    "handoff_status": "BLOCKED_OWNERSHIP_GATE",
+    "c2_implementation": "FORBIDDEN",
+    "c2_commits": "FORBIDDEN_THIS_ORDER"
   },
-  "waiting_for": [
+  "ownership_conflicts": [
     {
-      "id": "WAIT-C3-MCP",
-      "from": "C3",
-      "item": "Engineering report: Universal MCP restore"
-    },
-    {
-      "id": "WAIT-C3-9ROUTER",
-      "from": "C3",
-      "item": "Engineering report: 9Router restore"
+      "id": "OWN-MSG-WORKER-C6",
+      "claimed_by": "CHATGPT-NORMAL",
+      "needed": "C6",
+      "scope": "src/raios/command_center/message_worker.py",
+      "resolution": "C1 reconnect C6 or explicitly transfer exact session-bound leases. C2 will not reassign.",
+      "status": "ESCALATED_C1"
     }
   ],
-  "waiting_for_decision_not_this_gate": [
-    "C1_PORT_XOR_8787_OR_8788",
-    "C8_LIVE_ACTIVATION",
-    "CHATGPT_NORMAL_LEDGER_LEASE_KEEP_OR_RELEASE",
-    "POLICY_BRANCH_STRING_VS_CANONICAL"
+  "waiting_for": [
+    {
+      "id": "WAIT-C1-IMPLEMENTATION-PROGRAM-REVIEW",
+      "from": "C1",
+      "item": "Review RAIOS-IMPLEMENTATION-PROGRAM-PLANNING-001. Design only. Implementation remains NOT_STARTED. C6 certification still required before kernel implementation."
+    },
+    {
+      "id": "WAIT-C1-AIOS-ARCHITECTURE-REVIEW",
+      "from": "C1",
+      "item": "Review RAIOS-AIOS-ARCHITECTURE-PROGRAM-001 before any implementation"
+    },
+    {
+      "id": "WAIT-C1-CYCLE-04-APPROVAL",
+      "from": "C1",
+      "item": "Approve Cycle 04 executive program pack before next engineering cycle"
+    },
+    {
+      "id": "WAIT-C3-H1-DIAGNOSTIC",
+      "from": "C3",
+      "item": "One-instance TaskScheduler Operational capture: TERMINATION-PROVENANCE-RECEIPT, PRE-ENGINE-WAIT-EVIDENCE, ROOT-CAUSE-DECISION; channel restored DISABLED"
+    },
+    {
+      "id": "WAIT-C3-C5-PERMANENT-RECOVERY",
+      "from": "C3",
+      "item": "Controlled recovery report plus three consecutive completed RAIOS-C5-Permanent cycles — only after proven root cause"
+    },
+    {
+      "id": "WAIT-C1-C6",
+      "from": "C1",
+      "item": "Reconnect C6 or transfer message_worker scope"
+    },
+    {
+      "id": "WAIT-C3-ALIGNMENT-RECEIPT",
+      "from": "C3",
+      "item": "Dated receipt for RAIOS-CONSTITUTIONAL-ALIGNMENT-001: runtime truth vs ARCHITECTURE-RUNTIME-ALIGNMENT; H1 complete/open/blocked"
+    },
+    {
+      "id": "WAIT-C6-CONSTITUTIONAL-CERTIFICATION",
+      "from": "C6",
+      "item": "Constitutional certification outputs (not approval), returned to C1: CONSTITUTIONAL_REVIEW_REPORT, CONFLICT_REGISTER, OVERLAP_REGISTER, CONSTITUTIONAL_GAP_REGISTER, CONSTITUTIONAL_COMPLIANCE_MATRIX, RUNTIME_CLASSIFICATION_MATRIX; plus documentary gap classes CONSTITUTION_GAP, ARCHITECTURE_GAP, RUNTIME_DEBT, GOVERNANCE_GAP, IMPLEMENTATION_GAP, INTEGRATION_CANDIDATE, TECHNICAL_DEBT, KNOWN_LIMITATION, DEFERRED, ALREADY_RESOLVED. C2 waits; no third ACK loop."
+    },
+    {
+      "id": "WAIT-C1-CONSTITUTIONAL-REVIEW",
+      "from": "C1",
+      "item": "C1 constitutional review of alignment pack after C6 certification outputs; no implementation until C1 authorizes"
+    }
   ],
   "blockers": [
     {
-      "id": "BLK-MCP-PROCESS",
+      "id": "BLK-C5-PERMANENT-STUCK",
       "priority": 1,
       "owner": "C3",
-      "item": "Universal MCP process not answering",
-      "independent_work": "C2 dashboards; accepted ONLINE surfaces stay observed"
+      "item": "New RAIOS-C5-Permanent stuck-instance defect",
+      "status": "OPEN"
     },
     {
-      "id": "BLK-9ROUTER-PROCESS",
-      "priority": 1,
-      "owner": "C3",
-      "item": "9Router :20128 timeout",
-      "independent_work": "MCP restore is independent of 9Router; both assigned to C3"
+      "id": "BLK-CC-C5-PROVENANCE",
+      "priority": 2,
+      "owner": "C3/C6",
+      "item": "Command Center/C5 provenance reconciliation",
+      "status": "OPEN"
     },
     {
-      "id": "BLK-C3-REPORT",
+      "id": "BLK-C6-OWNERSHIP",
+      "priority": 2,
+      "owner": "C1",
+      "item": "C6 ownership gate before any Command Center cutover",
+      "status": "OPEN"
+    },
+    {
+      "id": "BLK-DOC-XOR",
+      "priority": 3,
+      "owner": "C1/C3",
+      "item": "8787/8788 documentation XOR (advisory; no doc edit during recovery)",
+      "status": "OPEN"
+    },
+    {
+      "id": "BLK-CHANNEL-CERTIFY",
       "priority": 1,
-      "owner": "C3",
-      "item": "No C3 engineering report since dispatch",
-      "independent_work": "C2 continues executive boards only"
+      "owner": "C2",
+      "item": "Final RAIOS channel recovery/stability certification",
+      "status": "OPEN"
     },
     {
       "id": "BLK-LEDGER-LEASE",
       "priority": 3,
       "owner": "C3/CHATGPT-NORMAL",
-      "item": "TASKS.json and LOCKS.json ACTIVE leases",
-      "independent_work": "C2 executive index does not mutate ledger"
+      "item": "TASKS.json and LOCKS.json ACTIVE leases"
     }
-  ]
+  ],
+  "p1": {
+    "status": "OPEN",
+    "cleared": [
+      "AG Universal MCP :8788 down",
+      "9Router :20128 down",
+      "Local :8787 absence"
+    ],
+    "open": [
+      "New RAIOS-C5-Permanent stuck-instance defect",
+      "Command Center/C5 provenance reconciliation",
+      "C6 ownership gate before any Command Center cutover",
+      "8787/8788 documentation XOR",
+      "Final RAIOS channel recovery/stability certification"
+    ]
+  }
 }

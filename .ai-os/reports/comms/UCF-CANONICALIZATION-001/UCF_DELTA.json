@@ -1,0 +1,14 @@
+{
+  "schema": "raios.ucf.delta.v1",
+  "authority": "C1",
+  "execution_mode": "DELTA_ONLY",
+  "changes": [
+    {"delta":"identity","action":"treat RAIOS_HOST_AG as stable host identity; provider device IDs remain renewable bindings","risk":"LOW","rollback":"retain existing identity file"},
+    {"delta":"mcp","action":"use existing Universal MCP as sole gateway; declared health port is 8788 in current runtime evidence","risk":"MEDIUM","rollback":"restore prior declared port metadata only"},
+    {"delta":"actor-policy","action":"SEAT-MAP is canonical actor source; POLICY actor snapshot must be aligned later under source-control gate","risk":"MEDIUM","rollback":"restore prior POLICY snapshot"},
+    {"delta":"route-map","action":"treat ROUTE-REGISTRY as stale compatibility metadata; align it to canonical host/seat map without new routing plane","risk":"MEDIUM","rollback":"restore prior registry snapshot"},
+    {"delta":"runtime","action":"keep Command Center and Command Fabric as existing canonical runtime; no replacement","risk":"LOW","rollback":"existing deployment rollback"}
+  ],
+  "not_changed": ["NATS","AI Gateway architecture","Command Center architecture","Universal MCP tool surface","governance laws"],
+  "status": "DELTA_DEFINED_NO_CORE_REDESIGN"
+}

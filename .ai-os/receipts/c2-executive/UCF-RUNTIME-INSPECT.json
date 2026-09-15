@@ -1,0 +1,125 @@
+{
+  "schema": "raios.ucf.runtime-inspect.v1",
+  "generated_at_utc": "2026-09-15T04:16:32Z",
+  "token_actor_ids": [
+    "C1"
+  ],
+  "pid_17436_tasklist": "INFO: No tasks are running which match the specified criteria.\n",
+  "pid_63464_tasklist": "\nImage Name:   pythonw.exe\nPID:          63464\nSession Name: Console\nSession#:     1\nMem Usage:    126,944 K\nStatus:       Unknown\nUser Name:    AG\\Ghanam\nCPU Time:     0:44:53\nWindow Title: N/A\n",
+  "health": {
+    "c5_root": {
+      "ts": "2026-09-15T04:16:34Z",
+      "status": "FAIL",
+      "error": "TimeoutError",
+      "detail": "timed out",
+      "url": "http://127.0.0.1:8766/"
+    },
+    "c5_health": {
+      "ts": "2026-09-15T04:16:44Z",
+      "status": "FAIL",
+      "error": "TimeoutError",
+      "detail": "timed out",
+      "url": "http://127.0.0.1:8766/health"
+    },
+    "mcp_health": {
+      "ts": "2026-09-15T04:16:52Z",
+      "status": "OK",
+      "http": 200,
+      "url": "http://127.0.0.1:8788/health",
+      "json": {
+        "ok": true,
+        "service": "raios-universal-mcp",
+        "transport": "streamable-http",
+        "websocket": false,
+        "sqlite": false,
+        "law": "MCP_GATEWAY_NE_TRUTH_AUTHORITY",
+        "gl005_proven": false,
+        "remote_c2_ready": false,
+        "endpoint_local": true,
+        "head": "86d0f3ed475951fa46d0e30fa250c118412a284a",
+        "tools": [
+          "get_head",
+          "read_board",
+          "read_inbox",
+          "read_receipt",
+          "get_diff",
+          "post_opinion",
+          "send_packet",
+          "ack_packet"
+        ]
+      },
+      "body_prefix": "{\"ok\": true, \"service\": \"raios-universal-mcp\", \"transport\": \"streamable-http\", \"websocket\": false, \"sqlite\": false, \"law\": \"MCP_GATEWAY_NE_TRUTH_AUTHORITY\", \"gl005_proven\": false, \"remote_c2_ready\": false, \"endpoint_local\": true, \"head\": \"86d0f3ed475951fa46d0e30fa250c118412a284a\", \"tools\": [\"get_head\", \"read_board\", \"read_inbox\", \"read_receipt\", \"get_diff\", \"post_opinion\", \"send_packet\", \"ack_pack"
+    },
+    "cc_health": {
+      "ts": "2026-09-15T04:16:53Z",
+      "status": "OK",
+      "http": 200,
+      "url": "http://127.0.0.1:8770/health",
+      "json": null,
+      "body_prefix": "{\"status\":\"ONLINE\",\"service\":\"RAIOS_COMMAND_CENTER\",\"canonical_head\":\"2efd08184614749dee999be7a2456c6bf1387c2e\",\"message_worker\":{\"schema\":\"raios.message-worker-heartbeat.v1\",\"worker_id\":\"RAIOS-WORKER@AG\",\"at\":\"2026-09-15T04:16:56.611643+00:00\",\"lease_expires_at\":\"2026-09-15T04:17:26.611668+00:00\",\"head\":\"2efd08184614749dee999be7a2456c6bf1387c2e\",\"last_scan\":{\"seen\":8,\"delivered\":8,\"retried\":0,\"de"
+    }
+  },
+  "c5_logs": [
+    {
+      "name": "gateway.err.log",
+      "bytes": 15822,
+      "mtime_utc": "2026-09-15T04:16:30Z"
+    },
+    {
+      "name": "gateway.rollback.err.log",
+      "bytes": 411,
+      "mtime_utc": "2026-09-15T04:13:17Z"
+    },
+    {
+      "name": "gateway.rollback.out.log",
+      "bytes": 0,
+      "mtime_utc": "2026-09-15T04:13:12Z"
+    },
+    {
+      "name": "gateway.out.log",
+      "bytes": 0,
+      "mtime_utc": "2026-09-15T04:13:07Z"
+    },
+    {
+      "name": "gateway.stage.out.log",
+      "bytes": 59,
+      "mtime_utc": "2026-09-15T04:13:04Z"
+    },
+    {
+      "name": "gateway.stage.err.log",
+      "bytes": 202,
+      "mtime_utc": "2026-09-15T04:13:02Z"
+    },
+    {
+      "name": "c5.out.log",
+      "bytes": 185525,
+      "mtime_utc": "2026-09-13T20:17:58Z"
+    },
+    {
+      "name": "c5.err.log",
+      "bytes": 202,
+      "mtime_utc": "2026-09-10T13:16:14Z"
+    },
+    {
+      "name": "gateway.reuse.out.log",
+      "bytes": 104802,
+      "mtime_utc": "2026-09-09T22:06:43Z"
+    },
+    {
+      "name": "gateway.reuse.err.log",
+      "bytes": 202,
+      "mtime_utc": "2026-09-09T00:53:27Z"
+    },
+    {
+      "name": "gateway.manual.err.log",
+      "bytes": 410,
+      "mtime_utc": "2026-09-05T22:14:57Z"
+    },
+    {
+      "name": "gateway.manual.out.log",
+      "bytes": 0,
+      "mtime_utc": "2026-09-05T22:14:26Z"
+    }
+  ],
+  "listeners": "TCP    127.0.0.1:8766         0.0.0.0:0              LISTENING       63464\nTCP    127.0.0.1:8770         0.0.0.0:0              LISTENING       56712\nTCP    127.0.0.1:8788         0.0.0.0:0              LISTENING       55952"
+}

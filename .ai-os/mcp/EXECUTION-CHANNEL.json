@@ -427,5 +427,30 @@
   ],
   "c8_work_packages": [
     "BLOCKED_UNTIL_C8_IDENTITY: provenance for adapter capability claims and knowledge update stage of the channel"
-  ]
+  ],
+  "ucf_metadata": {
+    "schema": "raios.ucf.execution-channel-overlay.v1",
+    "applied_at": "2026-09-15T04:20:00Z",
+    "applied_by": "C2",
+    "proxy_for": "C3",
+    "canonical_host": "RAIOS_HOST_AG",
+    "working_branch": "ai-evolution-202608051809",
+    "live_git_head": "86d0f3ed475951fa46d0e30fa250c118412a284a",
+    "channel_recorded_head_retained": "96a1e7ef9cbbe15176a83c9b65d5efea9239b747",
+    "command_center_reported_head": "2efd08184614749dee999be7a2456c6bf1387c2e",
+    "deployed_source_conflict": "96a1e7e vs 2efd081 vs live 86d0f3e",
+    "cutover": "FORBIDDEN",
+    "note": "Minimal overlay. Channel spec body not rewritten. Recorded head 96a1e7e retained.",
+    "d034_mcp_8788": "ONLINE_HTTP_200",
+    "d034_mcp_8788_class": "OBSERVED",
+    "d034_cc_8770": "ONLINE_HTTP_200",
+    "d034_c5_8766": "ONLINE_HTTP_200_AFTER_HEADONLY",
+    "d034_c5_8766_class": "OBSERVED",
+    "d034_c5_script_pid": 38828,
+    "d034_c5_listener_pid": 59260,
+    "d034_c5_pid_class": "CONFLICTING",
+    "d034_port_8787": "NOT_LISTENING",
+    "d034_historical_runtime_this_cycle": "OFFLINE_TIMEOUT",
+    "d034_historical_runtime_this_cycle_class": "STALE"
+  }
 }

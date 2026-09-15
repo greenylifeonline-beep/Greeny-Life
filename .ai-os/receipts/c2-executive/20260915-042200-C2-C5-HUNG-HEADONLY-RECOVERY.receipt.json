@@ -1,0 +1,122 @@
+{
+  "schema": "raios.c2-executive.c5-session-check.v1",
+  "receipt_id": "20260915-042200-C2-C5-HUNG-HEADONLY-RECOVERY",
+  "generated_at_utc": "2026-09-15T04:22:00Z",
+  "actor": "C2@AG",
+  "engine": "C2-CURSOR",
+  "authority": "USER_ORDER_VERIFY_THEN_RESTART_IF_HUNG",
+  "user_supplied_telemetry": {
+    "cognitive.runtime.health": "DEGRADED",
+    "cognitive.runtime.reason": "loop_unhealthy",
+    "cognitive.loop.health": "DEGRADED",
+    "cognitive.loop.reason": "waiting_for_c1_authorization",
+    "http_8766": 200,
+    "treated_as": "USER_SUPPLIED_NOT_LIVE_EVIDENCE"
+  },
+  "classification_rule": "DEGRADED + waiting_for_c1_authorization + :8766 HTTP 200 is NOT hung. Hung = /health timeout, dead PID, listener freeze.",
+  "probes": {
+    "pre_restart": {
+      "utc": "2026-09-15T04:09:33Z",
+      "get_http_127_0_0_1_8766_health": {
+        "http": 0,
+        "ms": 8101,
+        "error": "The operation has timed out"
+      },
+      "listener_8766": {
+        "pid": 63464,
+        "state": "Listen",
+        "alive": true,
+        "name": "pythonw",
+        "start_local": "2026-09-14T05:23:51.8332782+03:00",
+        "windows_responding_flag": true
+      },
+      "stale_pid_17436_alive": false,
+      "mcp_8788_health_http": 200,
+      "mcp_8788_ms": 916
+    },
+    "post_restart": {
+      "utc": "2026-09-15T04:16:39Z",
+      "curl_8766_health": {
+        "curl_exit": 28,
+        "ms": 9163,
+        "bytes": 0,
+        "error": "Operation timed out after 8026 milliseconds with 0 bytes received"
+      },
+      "curl_8788_health": {
+        "http": 200,
+        "time_s": 1.003066
+      },
+      "netstat_8766": {
+        "listening_pid": 63464,
+        "close_wait_present": true,
+        "established_present": true,
+        "stage_9766": "NONE"
+      },
+      "tasklist_63464": {
+        "image": "pythonw.exe",
+        "user": "AG\\Ghanam",
+        "status": "Unknown",
+        "mem_kb": 147368,
+        "cpu_time": "0:45:02"
+      }
+    }
+  },
+  "hung": true,
+  "hung_reason": "GET :8766/health timeout with listener present and PID alive (freeze). User-supplied HTTP 200 was not confirmed live.",
+  "restarted": true,
+  "restart_count_this_slice": 1,
+  "restart_command": "powershell -File scripts\\runtime\\Deploy-RAIOS-C5.ps1 -HeadOnlyRecovery",
+  "restart_flags_added": false,
+  "env_added": false,
+  "ports_changed": false,
+  "config_changed": false,
+  "restart_result": {
+    "exit_code": 1,
+    "elapsed_ms": 159199,
+    "dirty_canonical_sources_excluded": [
+      " M scripts/runtime/Deploy-RAIOS-C5.ps1",
+      " M src/raios/c5_gateway/learning_trace.py",
+      " M src/raios/search_cortex/engine.py",
+      "?? src/raios/c5_gateway/model_fabric.py"
+    ],
+    "maintenance_guard": "PASS",
+    "dependency_audit": "PASS",
+    "stage_9766": {
+      "observed": "Uvicorn running on http://127.0.0.1:9766; GET /health 200 in gateway.stage.out.log"
+    },
+    "cutover": "FAILED",
+    "rollback": "FAILED",
+    "throw": "C5_CUTOVER_AND_ROLLBACK_FAILED",
+    "bind_error_live_and_rollback": "[Errno 10048] 127.0.0.1:8766 already in use",
+    "rollback_server_process": 39084,
+    "old_listener_not_released": 63464
+  },
+  "not_done": [
+    "second_restart",
+    "Ensure-RAIOS-Cognitive-Loop.ps1",
+    "Maintain-RAIOS-Online.ps1",
+    "re-register RAIOS-C5-Permanent",
+    "Deploy-RAIOS-Command-Center.ps1",
+    "bounce :8788",
+    "start :8787",
+    "start parallel C5",
+    "mutate TASKS.json",
+    "mutate LOCKS.json",
+    "mutate SEAT-MAP.json",
+    "release CHATGPT-NORMAL leases"
+  ],
+  "post_state": {
+    "hung": true,
+    "http_8766_health": "TIMEOUT",
+    "pid": 63464,
+    "pid_changed": false,
+    "mcp_8788": "HTTP 200 left running",
+    "existing_manifest_deployed_at_utc": "2026-09-15T01:45:19.6086881+00:00",
+    "existing_manifest_canonical_head": "2efd08184614749dee999be7a2456c6bf1387c2e",
+    "existing_manifest_head_only_recovery": true,
+    "git_head_at_aios_status": "86d0f3ed475951fa46d0e30fa250c118412a284a",
+    "branch": "ai-evolution-202608051809"
+  },
+  "second_restart": false,
+  "secrets": false
+}

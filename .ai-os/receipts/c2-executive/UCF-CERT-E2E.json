@@ -1,0 +1,220 @@
+{
+  "schema": "raios.ucf.cert-e2e-probe.v1",
+  "generated_at_utc": "2026-09-15T04:35:56Z",
+  "token_present": true,
+  "token_actor_id": "C1",
+  "c2_token_present": false,
+  "identity_source": "SEAT-MAP",
+  "live_head": "86d0f3ed475951fa46d0e30fa250c118412a284a",
+  "live_branch": "ai-evolution-202608051809",
+  "working_branch_sent": "ai-evolution-202608051809",
+  "repository_sent": "greenylifeonline-beep/Greeny-Life",
+  "health": {
+    "c5": {
+      "ts": "2026-09-15T04:35:56Z",
+      "status": "FAIL",
+      "error": "URLError",
+      "detail": "<urlopen error [WinError 10061] No connection could be made because the target machine actively refused it>",
+      "url": "http://127.0.0.1:8766/health"
+    },
+    "mcp": {
+      "ts": "2026-09-15T04:36:01Z",
+      "status": "OK",
+      "http": 200,
+      "url": "http://127.0.0.1:8788/health",
+      "json": {
+        "ok": true,
+        "service": "raios-universal-mcp",
+        "transport": "streamable-http",
+        "websocket": false,
+        "sqlite": false,
+        "law": "MCP_GATEWAY_NE_TRUTH_AUTHORITY",
+        "gl005_proven": false,
+        "remote_c2_ready": false,
+        "endpoint_local": true,
+        "head": "86d0f3ed475951fa46d0e30fa250c118412a284a",
+        "tools": [
+          "get_head",
+          "read_board",
+          "read_inbox",
+          "read_receipt",
+          "get_diff",
+          "post_opinion",
+          "send_packet",
+          "ack_packet"
+        ]
+      },
+      "body_prefix": "{\"ok\": true, \"service\": \"raios-universal-mcp\", \"transport\": \"streamable-http\", \"websocket\": false, \"sqlite\": false, \"law\": \"MCP_GATEWAY_NE_TRUTH_AUTHORITY\", \"gl005_proven\": false, \"remote_c2_ready\": false, \"endpoint_local\": true, \"head\": \"86d0f3ed475951fa46d0e30fa250c118412a284a\", \"tools\": [\"get_head\", \"read_board\", \"read_inbox\", \"read_receipt\", \"get_diff\", \"post_opinion\", \"send_packet\", \"ack_pack"
+    },
+    "cc": {
+      "ts": "2026-09-15T04:36:02Z",
+      "status": "OK",
+      "http": 200,
+      "url": "http://127.0.0.1:8770/health",
+      "json": {
+        "status": "ONLINE",
+        "service": "RAIOS_COMMAND_CENTER",
+        "canonical_head": "2efd08184614749dee999be7a2456c6bf1387c2e",
+        "message_worker": {
+          "schema": "raios.message-worker-heartbeat.v1",
+          "worker_id": "RAIOS-WORKER@AG",
+          "at": "2026-09-15T04:36:02.801791+00:00",
+          "lease_expires_at": "2026-09-15T04:36:32.801904+00:00",
+          "head": "2efd08184614749dee999be7a2456c6bf1387c2e",
+          "last_scan": {
+            "seen": 1,
+            "delivered": 1,
+            "retried": 0,
+            "dead_letter": 0,
+            "terminal_cache_hits": 0,
+            "terminal_cache_warmed": 0,
+            "historical_ack_recovered": 0,
+            "scan_budget_exhausted": true,
+            "cursor_state": "CURRENT",
+            "scan_phase": "WORKFLOW_RUNNING",
+            "scan_in_progress": true,
+            "delivered_terminal_cache": 64793
+          },
+          "consecutive_errors": 0,
+          "thread_alive": true,
+          "heartbeat_current": true,
+          "healthy": true,
+          "state": "ONLINE",
+          "last_error": null,
+          "workflow_enabled": true,
+          "heartbeat_thread_alive": true
+        },
+        "workflow_automation": true,
+        "timestamp": "2026-09-15T04:36:03.221799+00:00"
+      },
+      "body_prefix": "{\"status\":\"ONLINE\",\"service\":\"RAIOS_COMMAND_CENTER\",\"canonical_head\":\"2efd08184614749dee999be7a2456c6bf1387c2e\",\"message_worker\":{\"schema\":\"raios.message-worker-heartbeat.v1\",\"worker_id\":\"RAIOS-WORKER@AG\",\"at\":\"2026-09-15T04:36:02.801791+00:00\",\"lease_expires_at\":\"2026-09-15T04:36:32.801904+00:00\",\"head\":\"2efd08184614749dee999be7a2456c6bf1387c2e\",\"last_scan\":{\"seen\":1,\"delivered\":1,\"retried\":0,\"de"
+    }
+  },
+  "rpc": {
+    "initialize": {
+      "ts": "2026-09-15T04:36:04Z",
+      "status": "OK",
+      "http": 200,
+      "method": "initialize",
+      "json": {
+        "jsonrpc": "2.0",
+        "id": 1,
+        "result": {
+          "protocolVersion": "2025-03-26",
+          "capabilities": {
+            "tools": {}
+          },
+          "serverInfo": {
+            "name": "raios-universal-mcp",
+            "version": "1.0.0"
+          },
+          "instructions": "MCP_GATEWAY_NE_TRUTH_AUTHORITY. Streamable HTTP. ChatGPT Apps / Developer Mode remote MCP. No WebSocket. No SQLite. No raw shell. No PASS writes. Authority ≠ bypass invariants."
+        }
+      }
+    },
+    "tools_list": {
+      "ts": "2026-09-15T04:36:04Z",
+      "status": "OK",
+      "http": 200,
+      "method": "tools/list",
+      "json": {
+        "jsonrpc": "2.0",
+        "id": 1,
+        "result": {
+          "tools": [
+            {
+              "name": "get_head",
+              "description": "RAIOS V1 get_head. Streamable HTTP. MCP_GATEWAY_NE_TRUTH_AUTHORITY. Never writes GL005_PROVEN.",
+              "inputSchema": {
+                "type": "object",
+                "additionalProperties": true
+              }
+            },
+            {
+              "name": "read_board",
+              "description": "RAIOS V1 read_board. Streamable HTTP. MCP_GATEWAY_NE_TRUTH_AUTHORITY. Never writes GL005_PROVEN.",
+              "inputSchema": {
+                "type": "object",
+                "additionalProperties": true
+              }
+            },
+            {
+              "name": "read_inbox",
+              "description": "RAIOS V1 read_inbox. Streamable HTTP. MCP_GATEWAY_NE_TRUTH_AUTHORITY. Never writes GL005_PROVEN.",
+              "inputSchema": {
+                "type": "object",
+                "additionalProperties": true
+              }
+            },
+            {
+              "name": "read_receipt",
+              "description": "RAIOS V1 read_receipt. Streamable HTTP. MCP_GATEWAY_NE_TRUTH_AUTHORITY. Never writes GL005_PROVEN.",
+              "inputSchema": {
+                "type": "object",
+                "additionalProperties": true
+              }
+            },
+            {
+              "name": "get_diff",
+              "description": "RAIOS V1 get_diff. Streamable HTTP. MCP_GATEWAY_NE_TRUTH_AUTHORITY. Never writes GL005_PROVEN.",
+              "inputSchema": {
+                "type": "object",
+                "additionalProperties": true
+              }
+            },
+            {
+              "name": "post_opinion",
+              "description": "RAIOS V1 post_opinion. Streamable HTTP. MCP_GATEWAY_NE_TRUTH_AUTHORITY. Never writes GL005_PROVEN.",
+              "inputSchema": {
+                "type": "object",
+                "additionalProperties": true
+              }
+            },
+            {
+              "name": "send_packet",
+              "description": "RAIOS V1 send_packet. Streamable HTTP. MCP_GATEWAY_NE_TRUTH_AUTHORITY. Never writes GL005_PROVEN.",
+              "inputSchema": {
+                "type": "object",
+                "additionalProperties": true
+              }
+            },
+            {
+              "name": "ack_packet",
+              "description": "RAIOS V1 ack_packet. Streamable HTTP. MCP_GATEWAY_NE_TRUTH_AUTHORITY. Never writes GL005_PROVEN.",
+              "inputSchema": {
+                "type": "object",
+                "additionalProperties": true
+              }
+            }
+          ]
+        }
+      }
+    }
+  },
+  "send_packet": {
+    "status": "OK",
+    "http": 200,
+    "ok": true,
+    "error": null,
+    "message": null,
+    "packet_id": "3e396976-50e9-4d39-855d-84b90bd16241",
+    "to": [
+      "C6"
+    ],
+    "authenticated_actor_id": "C1",
+    "actor_role": "OWNER_FINAL_AUTHORITY",
+    "instance_role": "human-owner",
+    "branch": "ai-evolution-202608051809",
+    "requested_head": "86d0f3ed475951fa46d0e30fa250c118412a284a"
+  },
+  "ack_packet": {
+    "status": "OK",
+    "http": 200,
+    "ok": true,
+    "error": null,
+    "message": null,
+    "ack_status_sent": "READ",
+    "causation_id": "3e396976-50e9-4d39-855d-84b90bd16241",
+    "packet_id": "b60e7281-6d69-491b-8815-2cd5befb11c9"
+  }
+}

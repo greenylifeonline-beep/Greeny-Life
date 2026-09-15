@@ -1,0 +1,13 @@
+{
+  "schema":"raios.ucf.self-heal-plan.v1",
+  "guards":[
+    "Remote channel watchdog detects missing managed process and relaunches existing launcher.",
+    "Universal MCP health failure invokes existing ensure script; no second server.",
+    "Command Center health failure invokes existing deployment/recovery path only when lease gate permits.",
+    "C5 failure remains fail-closed and restores only an approved canonical source.",
+    "Stale provider/device IDs never replace RAIOS_HOST_AG.",
+    "Repeated failure produces evidence and stops rather than creating parallel infrastructure."
+  ],
+  "escalation":"C1 on ownership, governance, destructive or unresolved canonical conflict",
+  "status":"DESIGNED_FROM_EXISTING_COMPONENTS"
+}

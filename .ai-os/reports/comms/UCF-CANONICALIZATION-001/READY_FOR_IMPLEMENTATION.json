@@ -1,0 +1,20 @@
+{
+  "schema":"raios.ucf.canonicalization-readiness.v1",
+  "task_id":"UCF-CANONICALIZATION-001",
+  "authority":"C1",
+  "discovery":"COMPLETE",
+  "canonical_model":"IDENTIFIED",
+  "canonical_implementation":"EXISTING_UNIVERSAL_MCP_PLUS_EXISTING_COMMAND_CENTER_PLUS_EXISTING_COMMAND_FABRIC",
+  "new_runtime_required":false,
+  "new_mcp_required":false,
+  "new_bus_required":false,
+  "new_gateway_required":false,
+  "new_registry_required":false,
+  "duplicate_mcp_found":false,
+  "duplicate_bus_found":false,
+  "duplicate_command_center_found":false,
+  "known_stale_surfaces":["POLICY.json","ROUTE-REGISTRY.json","EXECUTION-CHANNEL.json"],
+  "next_implementation":["align stale declarations to canonical sources","preserve Universal MCP 8-tool surface","bind remote capability through existing adapters","add restart/self-heal checks to existing lifecycle","verify end-to-end and emit receipts"],
+  "implementation_gate":"C1-governed delta with rollback and evidence",
+  "ready_for_implementation":true
+}

@@ -1,0 +1,16 @@
+{
+  "schema":"raios.ucf.unification-plan.v1",
+  "sequence":[
+    "1. Freeze Universal MCP surface at 8 tools.",
+    "2. Make SEAT-MAP the actor identity source; align stale POLICY snapshot.",
+    "3. Reconcile ROUTE-REGISTRY to RAIOS_HOST_AG and canonical seats.",
+    "4. Keep cross_host_adapter as adapter; never promote it to bus.",
+    "5. Keep Command Center as canonical UI/API and Command Fabric as internal bus.",
+    "6. Bind remote capabilities through existing adapter interfaces.",
+    "7. Verify every route with health, identity, lease, ACK and receipt evidence.",
+    "8. Retire only proven redundant declarations after forensic/provenance gate."
+  ],
+  "forbidden":["second_mcp","second_bus","second_gateway","second_command_center","provider_authority"],
+  "owner":"C3 within C1 authority",
+  "status":"READY_FOR_IMPLEMENTATION"
+}

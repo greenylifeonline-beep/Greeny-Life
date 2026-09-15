@@ -1,0 +1,34 @@
+{
+  "schema": "raios.ucf.canonical-communication-model.v1",
+  "authority": "C1",
+  "model": [
+    "Client / Seat",
+    "Remote Capability Adapter",
+    "Universal MCP Gateway",
+    "Capability/Actor Routing",
+    "Command Center + Command Fabric",
+    "Runtime Adapter",
+    "Verification / Receipt",
+    "Canonical State"
+  ],
+  "singletons": {
+    "identity": "RAIOS_HOST_AG",
+    "mcp": "scripts/ai-os/raios_mcp/server.py",
+    "gateway": "scripts/ai-os/raios_mcp/gateway.py",
+    "command_center": "src/raios/command_center",
+    "command_fabric": ".ai-os/state/command-fabric",
+    "coordination_truth": "src/raios/command_center/client_activity.py",
+    "seat_authority": ".ai-os/mcp/SEAT-MAP.json"
+  },
+  "invariants": [
+    "NO_SECOND_MCP",
+    "NO_SECOND_BUS",
+    "NO_SECOND_COMMAND_CENTER",
+    "PROVIDERS_ARE_ADAPTERS_NOT_AUTHORITIES",
+    "DEVICE_UUID_IS_NOT_CANONICAL_IDENTITY",
+    "DELIVERY_ACK_NE_ACTOR_ACK",
+    "AVAILABILITY_NE_EXECUTION_READINESS",
+    "C1_AUTHORITY_REQUIRED_FOR_GOVERNED_MUTATION"
+  ],
+  "status": "CANONICAL_MODEL_IDENTIFIED"
+}

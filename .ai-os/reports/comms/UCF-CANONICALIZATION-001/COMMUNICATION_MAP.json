@@ -1,0 +1,27 @@
+{
+  "schema": "raios.ucf.communication-map.v1",
+  "task_id": "UCF-CANONICALIZATION-001",
+  "authority": "C1",
+  "canonical_root": "C:\\Users\\Ghanam\\Documents\\Codex\\Greeny-Life",
+  "canonical_host_identity": "RAIOS_HOST_AG",
+  "components": [
+    {"id":"universal-mcp","class":"CANONICAL","source":"scripts/ai-os/raios_mcp/server.py","role":"single execution gateway","status":"LIVE_VERIFIED","port":8788,"tools":8},
+    {"id":"mcp-gateway","class":"CANONICAL","source":"scripts/ai-os/raios_mcp/gateway.py","role":"authentication/policy/tool routing","status":"CANONICAL_SOURCE"},
+    {"id":"cross-host-adapter","class":"CANONICAL_ADAPTER","source":"scripts/ai-os/raios_mcp/cross_host_adapter.py","role":"cross-host packet adapter","status":"EXISTING_FAIL_CLOSED"},
+    {"id":"command-center","class":"CANONICAL_RUNTIME","source":"src/raios/command_center","role":"control UI/API and coordination","status":"EXISTING"},
+    {"id":"command-fabric","class":"CANONICAL_INTERNAL_BUS","source":"src/raios/command_center/message_worker.py + .ai-os/state/command-fabric","role":"internal task/message fabric","status":"EXISTING"},
+    {"id":"actor-routing","class":"CANONICAL","source":"src/raios/command_center/actor_routing.py","role":"seat/capability routing","status":"EXISTING"},
+    {"id":"client-activity-v4","class":"CANONICAL_TRUTH_VIEW","source":"src/raios/command_center/client_activity.py","role":"coordination truth","status":"EXISTING"},
+    {"id":"control-plane-v1","class":"LEGACY_COMPATIBILITY","source":".ai-os/control/RAIOS-CONTROL-PLANE-V1.py","role":"older local message/lease helper","status":"EXISTING_NOT_PRIMARY"},
+    {"id":"route-registry","class":"LEGACY_STALE","source":".ai-os/mcp/ROUTE-REGISTRY.json","role":"old alias map","status":"DRIFTED"},
+    {"id":"policy","class":"LEGACY_STALE","source":".ai-os/mcp/POLICY.json","role":"MCP policy snapshot","status":"DRIFTED_IDENTITY_BRANCH"},
+    {"id":"execution-channel","class":"LEGACY_STALE_SNAPSHOT","source":".ai-os/mcp/EXECUTION-CHANNEL.json","role":"historical execution-channel declaration","status":"DRIFTED_PORT_HEAD"}
+  ],
+  "external_adapters": ["desktop-commander","ssh-mcp","tunnel"],
+  "external_adapters_class": "PROVIDER_OR_HOST_ADAPTER_ONLY",
+  "archive_content": "LEGACY_OR_DERIVED_EVIDENCE; not runtime authority",
+  "second_system_found": false,
+  "second_mcp_found": false,
+  "second_bus_found": false,
+  "second_command_center_found": false
+}

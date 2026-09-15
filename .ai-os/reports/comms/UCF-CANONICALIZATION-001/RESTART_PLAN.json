@@ -1,0 +1,13 @@
+{
+  "schema":"raios.ucf.restart-plan.v1",
+  "sequence":[
+    "Remote Commander managed watchdog starts first.",
+    "Universal MCP ensure script restores the existing server on the single declared port.",
+    "Command Center deployer/health gate restores the existing runtime.",
+    "C5 continuity guard restores the existing C5 runtime from an approved canonical source only.",
+    "9Router/NATS/Ollama are dependency probes, not replacement communication systems.",
+    "After all health gates pass, publish unified runtime status and receipts."
+  ],
+  "proof_required":["startup","health","canonical_head","single_process_owner","no_manual_intervention"],
+  "status":"PLAN_READY_REAL_REBOOT_PROOF_REQUIRED"
+}

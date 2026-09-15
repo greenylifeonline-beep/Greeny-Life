@@ -1,0 +1,156 @@
+{
+  "schema": "raios.c2-executive.c5-session-check.v1",
+  "receipt_id": "20260915-050200-C2-C5-HUNG-HEADONLY-RECOVERY",
+  "generated_at_utc": "2026-09-15T05:02:00Z",
+  "actor": "C2@AG",
+  "engine": "C2-CURSOR",
+  "authority": "USER_ORDER_VERIFY_THEN_RESTART_IF_HUNG_SAME_SETTINGS",
+  "lock": {
+    "aios_lock": "SKIPPED",
+    "reason": "CHATGPT-NORMAL ACTIVE lease on .ai-os/state/LOCKS.json and TASKS.json; this slice did not mutate those files",
+    "write_scope": [
+      ".ai-os/receipts/c2-executive/20260915-050200-C2-C5-HUNG-HEADONLY-RECOVERY.receipt.json",
+      ".ai-os/handoffs/20260915-050200-C2-C5-HUNG-HEADONLY-RECOVERY.md",
+      ".ai-os/reports/comms/UCF-CANONICALIZATION-001/UCF-CERTIFICATION.json"
+    ]
+  },
+  "classification_rule": "Hung = GET :8766/health timeout with listener present, or no live /health 200. If already HTTP 200, do nothing.",
+  "pre_probe": {
+    "utc": "2026-09-15T04:32:06Z",
+    "get_http_127_0_0_1_8766_health": {
+      "http": 0,
+      "ms": 12644,
+      "error": "The operation has timed out"
+    },
+    "listener_8766": {
+      "pid": 63464,
+      "state": "Listen",
+      "alive": true,
+      "name": "pythonw",
+      "start_local": "2026-09-14T05:23:51",
+      "windows_status": "Unknown",
+      "close_wait_count": 3,
+      "established_count": 6
+    },
+    "stale_pid_17436_alive": false,
+    "stage_9766": "NONE",
+    "mcp_8788_health_http": 200,
+    "mcp_8788_ms": 1443,
+    "mcp_8788_pid": 55952,
+    "hung": true
+  },
+  "occupant_stop": {
+    "allowed": "ONE stop of occupying hung listener so HeadOnlyRecovery can bind same port",
+    "helper": "Stop-Process -Id $oldPid -Force as in scripts/runtime/Deploy-RAIOS-C5.ps1 lines 172-174",
+    "utc_check": "2026-09-15T04:35:27Z",
+    "issued": false,
+    "reason": "tasklist PID 63464 already gone; netstat :8766 empty; Stop-Process not issued",
+    "pid_63464_after_check": "DEAD",
+    "port_8766_after_check": "NO_LISTENER"
+  },
+  "head_only_recovery_this_slice": {
+    "invoked": false,
+    "reason": "First invoke of Deploy-RAIOS-C5.ps1 -HeadOnlyRecovery was classifier-blocked. Independent re-probe then already HTTP 200. Second invoke forbidden (already 200; at most one recovery).",
+    "parallel_observed": {
+      "class": "OBSERVED_OTHER_TERMINAL",
+      "terminal": "590887.txt",
+      "command": "powershell -NoProfile -File scripts\\runtime\\Deploy-RAIOS-C5.ps1 -HeadOnlyRecovery",
+      "started_at_utc": "2026-09-15T04:35:25Z",
+      "ended_at_utc": "2026-09-15T04:40:26Z",
+      "exit_code": 0,
+      "elapsed_ms": 300773,
+      "printed_c5_http": 200,
+      "printed_c5_pid": 38828,
+      "printed_old_listener_pid": "",
+      "printed_canonical_head": "86d0f3ed475951fa46d0e30fa250c118412a284a",
+      "printed_runtime_source": "CANONICAL_DEPLOYMENT",
+      "c5_live_app_mutation": false
+    }
+  },
+  "post_probe": {
+    "utc": "2026-09-15T04:56:34Z",
+    "curl_8766_health": {
+      "http": 200,
+      "time_s": 0.658376,
+      "bytes": 2678,
+      "status": "ONLINE",
+      "runtime_source": "CANONICAL_DEPLOYMENT",
+      "canonical_head": "86d0f3ed475951fa46d0e30fa250c118412a284a",
+      "model": "qwen3:0.6b",
+      "health_ts": "2026-09-15T04:56:36.143722+00:00"
+    },
+    "curl_8788_health": {
+      "http": 200,
+      "time_s": 0.196707
+    },
+    "netstat": {
+      "listening_8766_pid": 59260,
+      "listening_8766_image": "pythonw.exe",
+      "stage_9766": "NONE",
+      "listening_8788_pid": 55952,
+      "listening_8788_image": "python.exe",
+      "8787": "NOT_LISTENING"
+    },
+    "pid_38828": "DEAD",
+    "pid_63464": "DEAD",
+    "manifest": {
+      "path": "C:\\Users\\Ghanam\\.raios\\runtime\\c5\\deployment.json",
+      "deployed_at": "2026-09-15T04:39:19.3130143+00:00",
+      "canonical_head": "86d0f3ed475951fa46d0e30fa250c118412a284a",
+      "head_only_recovery": true,
+      "base_source": "GIT_OBJECT_DATABASE"
+    }
+  },
+  "hung_before": true,
+  "hung_after": false,
+  "pid_before": 63464,
+  "pid_after": 59260,
+  "occupant_stopped_by_this_slice": false,
+  "headonlyrecovery_result": "THIS_SLICE_NOT_INVOKED; PARALLEL_TERMINAL_EXIT_0_C5_HTTP_200; LIVE_LISTEN_PID_59260",
+  "http_8766": 200,
+  "http_8788": 200,
+  "ports_changed": false,
+  "config_changed": false,
+  "env_added": false,
+  "flags_added": false,
+  "mcp_8788_bounced": false,
+  "second_recovery_this_slice": false,
+  "ucf": {
+    "path": ".ai-os/reports/comms/UCF-CANONICALIZATION-001/UCF-CERTIFICATION.json",
+    "status_remains": "NOT_CERTIFIED",
+    "c5_health_already": "PASS",
+    "restart_persistence_remains": "NOT_PROVEN",
+    "action": "APPEND_CONFIRMING_PROBE_ONLY"
+  },
+  "not_done": [
+    "this_slice_HeadOnlyRecovery_invoke",
+    "Ensure-RAIOS-Cognitive-Loop.ps1",
+    "Maintain-RAIOS-Online.ps1",
+    "re-register RAIOS-C5-Permanent",
+    "Deploy-RAIOS-Command-Center.ps1",
+    "bounce :8788",
+    "start :8787",
+    "start parallel C5",
+    "mutate TASKS.json",
+    "mutate LOCKS.json",
+    "mutate SEAT-MAP.json",
+    "release CHATGPT-NORMAL leases",
+    "mark UCF CERTIFIED"
+  ],
+  "holds": [
+    "UCF-CERTIFICATION remains NOT_CERTIFIED",
+    "restart_persistence NOT_PROVEN (printed C5_PID 38828 vs live listener 59260 CONFLICTING; no reboot/scheduler-survive proof)",
+    "C2 MCP token ABSENT",
+    "C6 constitutional certification OPEN",
+    "CHATGPT-NORMAL ACTIVE lease on TASKS.json and LOCKS.json",
+    "deployed-source overlays still CONFLICTING (96a1e7e vs 2efd081 vs live 86d0f3e)"
+  ],
+  "git_head_at_aios_status": "86d0f3ed475951fa46d0e30fa250c118412a284a",
+  "branch": "ai-evolution-202608051809",
+  "aios_status": {
+    "active_tasks": 42,
+    "active_locks": 12,
+    "dirty": true
+  },
+  "secrets": false
+}
