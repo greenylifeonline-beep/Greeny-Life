@@ -77,6 +77,32 @@ class OllamaCortexClient:
             )
         ).rstrip("/")
 
+    def liveness(self):
+
+        req=urllib.request.Request(
+            self.base_url+"/api/version",
+            method="GET"
+        )
+
+        with urllib.request.urlopen(
+            req,
+            timeout=2
+        ) as r:
+
+            body=json.loads(
+                r.read().decode(
+                    "utf-8",
+                    errors="replace"
+                )
+            )
+
+        return {
+            "available":True,
+            "version":body.get("version"),
+            "required_model_present":None,
+            "model_inventory_checked":False
+        }
+
     def health(self):
 
         req=urllib.request.Request(

@@ -51,3 +51,36 @@ def test_timeout_is_fail_closed_with_gateway_timeout_status():
     text = source()
     assert 'status_code=504 if timeout_failure else 502' in text
     assert '"MAIN_CORTEX_TIMEOUT"' in text
+
+
+def test_ollama_liveness_uses_version_endpoint_without_model_inventory(monkeypatch):
+    import urllib.request
+
+    from raios.c5_gateway.ollama_client import OllamaCortexClient
+
+    observed = {}
+
+    class Response:
+        def __enter__(self):
+            return self
+
+        def __exit__(self, *_args):
+            return False
+
+        def read(self):
+            return b'{"version":"test"}'
+
+    def fake_urlopen(request, timeout):
+        observed["url"] = request.full_url
+        observed["timeout"] = timeout
+        return Response()
+
+    monkeypatch.setattr(urllib.request, "urlopen", fake_urlopen)
+    result = OllamaCortexClient(base_url="http://127.0.0.1:11434").liveness()
+
+    assert observed == {
+        "url": "http://127.0.0.1:11434/api/version",
+        "timeout": 2,
+    }
+    assert result["available"] is True
+    assert result["model_inventory_checked"] is False

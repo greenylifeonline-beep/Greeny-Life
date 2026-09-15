@@ -287,7 +287,7 @@ def health():
 
     try:
 
-        model_health=client.health()
+        model_health=client.liveness()
 
     except Exception as e:
 
@@ -306,7 +306,7 @@ def health():
             "timestamp":utc()
         }
 
-    student_online=bool(model_health.get("required_model_present"))
+    student_online=bool(model_health.get("available"))
     return {
         "status":
             "ONLINE"
@@ -317,6 +317,8 @@ def health():
         "gateway":True,
         "student":student_online,
         "student_model":client.model,
+        "student_model_inventory_checked":bool(model_health.get("model_inventory_checked")),
+        "student_model_presence":"DEFERRED_TO_READINESS",
         "main_cortex":False,
         "main_cortex_identity":"qwen3.6:35b-a3b",
         "main_cortex_state":"HOLD",
