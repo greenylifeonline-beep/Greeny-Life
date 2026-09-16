@@ -1,6 +1,6 @@
 # RAIOS Canonical Convergence 001 — Design
 
-Status: PHASE2_FILES_AND_TESTS. C1_ACCEPTANCE=false (full EXECUTE). C1_PHASE0_FILES_AUTHORIZED=true. C1_PHASE1_FILES_AUTHORIZED=true. C1_PHASE2_FILES_AUTHORIZED=true. IMPLEMENTATION=NOT_STARTED.
+Status: P0_MUTATION_BLOCKED_C6_ABSENT. C1_EXECUTE_ORDERED=true. C1_MUTATION_AUTHORIZED=true. mutation_allowed=false. IMPLEMENTATION=NOT_STARTED.
 
 The defect is not “too many copies.” Four kinds share one space: legal source, volatile runtime state, evidence/governance, and historical legacy. Direct cleanup now can destroy unique value or freeze a temporary runtime stamp as permanent truth.
 
@@ -54,4 +54,4 @@ No provider promotion without Adapter Profile and security/recovery certificates
 
 Archive before delete. Exact-redundancy delete only after C8 certification, recovery proof, and C1 approval. Final flags (FOUNDATION_BOOTSTRAP_CERTIFIED, READY_FOR_ASSIMILATION, RAIOS_CANONICAL_RUNTIME_CERTIFIED) only after the phase-12 gate vector is true.
 
-C2 emitted Phase 0 files (D-038), Phase 1 classification files (D-039), and Phase 2 HEAD-stamp files (D-040). P0 mutation, C6 rebind, cursor extraction, tree cleanup, P1 relocation, and C5 cutover remain blocked.
+C2 emitted Phase 0–2 files (D-038–D-040). D-041 attempted P0 mutation via the existing council-ops status path. C6 is SIGNED_OUT. C2 did not impersonate C6. P1 relocation and C5 cutover remain blocked.

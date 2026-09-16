@@ -1,0 +1,59 @@
+{
+  "schema": "raios.ops-slice-checkpoint.v1",
+  "task_id": "RAIOS-CANONICAL-CONVERGENCE-001",
+  "decision": "D-043",
+  "generated_at_utc": "2026-09-16T23:08:00Z",
+  "class": "OBSERVED",
+  "locks_mutated": false,
+  "chatgpt_normal_leases_released": false,
+  "c6_impersonated": false,
+  "wholesale_merge": false,
+  "deletion": false,
+  "disk_free_gb_observed": 7.78,
+  "pytest_command_center": {
+    "files": ["tests/command_center/test_app.py", "tests/command_center/test_actor_routing.py"],
+    "passed": 24,
+    "exit_code": 0
+  },
+  "complete": {
+    "C1_ACCEPTANCE_OPTION_3": true,
+    "TASKS_JSON_APPENDED": true,
+    "task_status": "IN_PROGRESS",
+    "dispatch_status": "SYSTEM_FIRST_ACTIVE",
+    "NOW_md_campaign_pointer": true,
+    "9ROUTER_TCP_ACCEPT": true,
+    "9ROUTER_PID_OBSERVED": 28252,
+    "NATS_TCP_ACCEPT": true,
+    "NATS_VARZ_HTTP_200": true,
+    "NATS_PID_OBSERVED": 19600,
+    "MCP_HEALTH_8_TOOLS": true,
+    "MCP_PID": 55952,
+    "MCP_HEAD": "eb7b0492a54f6f341dcc74c6622a53a497a73bdb"
+  },
+  "blocked": {
+    "COMMAND_CENTER_UI_BOOTSTRAP": "HUNG_PID_56712_ACCESS_DENIED_TO_KILL",
+    "COMMAND_CENTER_REPORTED_HEAD": "2efd08184614749dee999be7a2456c6bf1387c2e",
+    "COMMAND_CENTER_API_PLANE": "404_OLD_BINARY",
+    "BOARD_HTML_EMPTY": "STATIC_SHELL_LOADED_APIS_TIMEOUT",
+    "C5_HTTP_HEALTH": "TIMEOUT_TCP_OPEN_PID_32796_CLOSE_WAIT",
+    "C2_C8_LIVE_BOUND_CONSUMER": "C2_AND_C8_CONSUMER_AND_BINDING_CURRENT; AUTO_ROUTABLE_ON_HUNG_CC_UNPROVEN",
+    "C6_LIVE_BOUND_CONSUMER": false,
+    "UCF_CERTIFIED": false,
+    "P0_SOURCE_MUTATION": "BLOCKED_C6_SIGNED_OUT"
+  },
+  "c1_must_run_elevated": ".ai-os/reports/architecture/RAIOS-CANONICAL-CONVERGENCE-001/C1-ADMIN-AFTER-DISK-CLEAN.ps1",
+  "c1_admin_kill_targets": {
+    "command_center": 56712,
+    "optional_c5_if_http_dead": 32796,
+    "do_not_kill_healthy_mcp": 55952
+  },
+  "not_this_slice": [
+    "cursor/* merge",
+    "clean-tree rebuild",
+    "deletion",
+    "C6 impersonation",
+    "UCF CERTIFIED stamp",
+    "EXECUTION-CHANNEL head cutover",
+    "P0 runtime relocation"
+  ]
+}

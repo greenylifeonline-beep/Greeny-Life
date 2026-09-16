@@ -11,11 +11,12 @@
     "C1_MUTATION_AUTHORIZED": true
   },
   "phase0_this_slice": {
-    "C1_ACCEPTANCE": false,
+    "C1_ACCEPTANCE": true,
+    "C1_EXECUTE_ORDERED": true,
     "C1_PHASE0_FILES_AUTHORIZED": true,
-    "C1_MUTATION_AUTHORIZED": false,
+    "C1_MUTATION_AUTHORIZED": true,
     "C6_LIVE_BOUND_CONSUMER": false,
-    "TASK_LEASE_ACTIVE": "NOT_ASSERTED",
+    "TASK_LEASE_ACTIVE": false,
     "mutation_allowed": false,
     "class": "OBSERVED"
   },

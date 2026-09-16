@@ -1,0 +1,117 @@
+{
+  "schema": "raios.ops-plane-observed.v1",
+  "generated_at": "2026-09-16T22:18:07.171631+00:00",
+  "class": "OBSERVED",
+  "locks_mutated": false,
+  "tcp": {
+    "20128": false,
+    "4222": false,
+    "8766": true,
+    "8770": true,
+    "8788": true,
+    "11434": true
+  },
+  "http": {
+    "c5_health": {
+      "ok": false,
+      "status": 0,
+      "error": "TimeoutError:timed out"
+    },
+    "cc_health": {
+      "ok": true,
+      "status": 200,
+      "body": {
+        "status": "ONLINE",
+        "service": "RAIOS_COMMAND_CENTER",
+        "canonical_head": "2efd08184614749dee999be7a2456c6bf1387c2e",
+        "message_worker": {
+          "schema": "raios.message-worker-heartbeat.v1",
+          "worker_id": "RAIOS-WORKER@AG",
+          "at": "2026-09-16T22:18:04.317422+00:00",
+          "lease_expires_at": "2026-09-16T22:18:34.317501+00:00",
+          "head": "2efd08184614749dee999be7a2456c6bf1387c2e",
+          "last_scan": {
+            "seen": 0,
+            "delivered": 0,
+            "retried": 0,
+            "dead_letter": 0,
+            "terminal_cache_hits": 0,
+            "terminal_cache_warmed": 0,
+            "historical_ack_recovered": 0,
+            "scan_budget_exhausted": true,
+            "cursor_state": "STALE_RECONCILE",
+            "scan_phase": "WORKFLOW_RUNNING",
+            "scan_in_progress": true,
+            "delivered_terminal_cache": 70440
+          },
+          "consecutive_errors": 0,
+          "thread_alive": true,
+          "heartbeat_current": true,
+          "healthy": true,
+          "state": "ONLINE",
+          "last_error": null,
+          "workflow_enabled": true,
+          "heartbeat_thread_alive": true
+        },
+        "workflow_automation": true,
+        "timestamp": "2026-09-16T22:18:10.175368+00:00"
+      }
+    },
+    "cc_bootstrap": {
+      "ok": false,
+      "status": 0,
+      "error": "TimeoutError:timed out"
+    },
+    "cc_plane": {
+      "ok": false,
+      "status": 404,
+      "error": "HTTP Error 404: Not Found"
+    },
+    "mcp_health": {
+      "ok": true,
+      "status": 200,
+      "body": {
+        "ok": true,
+        "service": "raios-universal-mcp",
+        "transport": "streamable-http",
+        "websocket": false,
+        "sqlite": false,
+        "law": "MCP_GATEWAY_NE_TRUTH_AUTHORITY",
+        "gl005_proven": false,
+        "remote_c2_ready": false,
+        "endpoint_local": true,
+        "head": "eb7b0492a54f6f341dcc74c6622a53a497a73bdb",
+        "tools": [
+          "get_head",
+          "read_board",
+          "read_inbox",
+          "read_receipt",
+          "get_diff",
+          "post_opinion",
+          "send_packet",
+          "ack_packet"
+        ]
+      }
+    }
+  },
+  "auth": {
+    "c2": true,
+    "c8": true
+  },
+  "consumers": {
+    "c2_lock_pid": "07876",
+    "c8_lock_pid": "03304",
+    "c2_exists": true,
+    "c8_exists": true
+  },
+  "paths": {
+    "9router_cli": "C:\\Users\\Ghanam\\AppData\\Roaming\\npm\\node_modules\\9router\\cli.js",
+    "9router_cli_exists": true
+  },
+  "task": {
+    "action": "APPENDED",
+    "found": true,
+    "last_id": "RAIOS-CANONICAL-CONVERGENCE-001",
+    "total": 75
+  }
+}
