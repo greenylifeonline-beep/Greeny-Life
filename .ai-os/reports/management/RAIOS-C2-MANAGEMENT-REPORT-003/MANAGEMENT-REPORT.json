@@ -1,23 +1,37 @@
 {
   "schema": "raios.management-report.v1",
   "ManagementReportID": "MR-C2-20260916-001",
-  "ReportVersion": "1.0",
+  "ReportVersion": "1.1",
   "task_owner": "C2",
   "to": ["C1", "MANAGEMENT"],
   "authority": "C1",
-  "generated_at_utc": "2026-09-15T23:20:00Z",
+  "generated_at_utc": "2026-09-16T02:30:00Z",
   "one_task_one_report": true,
   "task_id": "RAIOS-CANONICAL-CONVERGENCE-001",
-  "decision": "D-037",
+  "decision": "D-038",
+  "prior_decision": "D-037",
   "C1_ACCEPTANCE": false,
+  "C1_PHASE0_FILES_AUTHORIZED": true,
+  "C1_MUTATION_AUTHORIZED": false,
   "IMPLEMENTATION": "NOT_STARTED",
+  "PHASE0_FILES": "EMITTED",
+  "mutation_allowed": false,
   "pack": ".ai-os/reports/architecture/RAIOS-CANONICAL-CONVERGENCE-001/",
   "AffectedPrograms": ["P00", "P03", "P11", "P12"],
   "AffectedCapabilities": ["Communication", "File", "Memory", "Provider", "Remote"],
   "selected_option": "GRADUAL_CONVERGENCE_ONTO_CANONICAL",
+  "this_slice_did_not": [
+    "cursor branch extraction",
+    "tree cleanup",
+    "C6 live rebind",
+    "LOCKS.json mutation",
+    "TASKS.json mutation",
+    "merge",
+    "delete"
+  ],
   "waiting": [
-    "C1 explicit acceptance of this design",
     "C6 live binding + scoped expiring leases",
-    "Then wave-level files/tests only"
+    "C1 mutation authorization for later waves",
+    "No P1–P11 execute until mutation_allowed is true"
   ]
 }

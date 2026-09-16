@@ -1,6 +1,6 @@
 # RAIOS Canonical Convergence 001 — Design
 
-Status: DESIGN_RECORDED. C1_ACCEPTANCE=false. IMPLEMENTATION=NOT_STARTED.
+Status: PHASE0_FILES_AND_TESTS. C1_ACCEPTANCE=false (full EXECUTE). C1_PHASE0_FILES_AUTHORIZED=true. IMPLEMENTATION=NOT_STARTED.
 
 The defect is not “too many copies.” Four kinds share one space: legal source, volatile runtime state, evidence/governance, and historical legacy. Direct cleanup now can destroy unique value or freeze a temporary runtime stamp as permanent truth.
 
@@ -13,6 +13,8 @@ Official programs 00–12 are not rewritten. This campaign is an overlay through
 No mutation until: canonical branch `ai-evolution-202608051809`, proven HEAD, C6 live-bound consumer, active task lease, LOCK_OWNER=RAIOS_SYSTEM, SCOPE_CONFLICTS=0, and C1 acceptance of this design.
 
 Rebind C6. Issue scoped expiring leases. C1 remains sole promotion authority. No merge/push/delete/restart outside the task contract. Checkpoint before each wave. No extra worktree/branch.
+
+D-038 emitted the Phase 0 gate files and fail-closed tests only. C6 rebind and leases were not performed in that slice.
 
 Fail-closed: ownership/canonical/governance conflict → READY + checkpoint.
 
@@ -48,4 +50,4 @@ No provider promotion without Adapter Profile and security/recovery certificates
 
 Archive before delete. Exact-redundancy delete only after C8 certification, recovery proof, and C1 approval. Final flags (FOUNDATION_BOOTSTRAP_CERTIFIED, READY_FOR_ASSIMILATION, RAIOS_CANONICAL_RUNTIME_CERTIFIED) only after the phase-12 gate vector is true.
 
-C2 does not start P0–P11 execution in this slice.
+C2 emitted Phase 0 files and fail-closed tests only (D-038). P0 mutation, C6 rebind, cursor extraction, and tree cleanup remain blocked.

@@ -1,8 +1,12 @@
-# MR-C2-20260916-001 — Canonical Convergence design
+# MR-C2-20260916-001 v1.1 — Canonical Convergence Phase 0 files
 
-C2 recorded the multi-phase architecture: gradual convergence onto `ai-evolution-202608051809`, not wholesale merge and not a clean rebuild.
+Same task as D-037. C1 authorized Phase 0 **files and tests only**.
 
-C1_ACCEPTANCE is **false** until C1 says ACCEPTED/EXECUTE. No C6 rebind, no leases, no merge, no delete, no runtime stop were performed.
+C1_ACCEPTANCE (full EXECUTE) remains **false**. C1_PHASE0_FILES_AUTHORIZED is **true**. `mutation_allowed` remains **false**.
+
+No `cursor/*` extraction. No working-tree cleanup. No C6 rebind. No LOCKS/TASKS mutation.
 
 Pack: `.ai-os/reports/architecture/RAIOS-CANONICAL-CONVERGENCE-001/`  
-Decision: D-037
+Wave: `WAVE-00.json`  
+Tests: `tests/architecture/test_canonical_convergence_phase0.py`  
+Decision: D-038

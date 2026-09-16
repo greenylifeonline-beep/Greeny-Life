@@ -1,0 +1,52 @@
+{
+  "schema": "raios.canonical-convergence.wave-00.v1",
+  "wave": "P0",
+  "name": "Authority and execution gate — files and tests only",
+  "decision": "D-038",
+  "authorized_by_c1": "PHASE0_FILES_AND_TESTS_ONLY",
+  "C1_FULL_EXECUTE": false,
+  "includes": [
+    "gate contract",
+    "fail-closed tests",
+    "forbidden operations"
+  ],
+  "excludes": [
+    "cursor branch extraction",
+    "tree cleanup",
+    "gitignore-only mutable-state fix",
+    "C6 live rebind",
+    "LOCKS.json mutation",
+    "TASKS.json mutation",
+    "merge",
+    "delete",
+    "service stop",
+    "provider promotion"
+  ],
+  "required_before_mutation": {
+    "CANONICAL_BRANCH": "ai-evolution-202608051809",
+    "CANONICAL_HEAD_PROVEN": true,
+    "C6_LIVE_BOUND_CONSUMER": true,
+    "TASK_LEASE_ACTIVE": true,
+    "LOCK_OWNER": "RAIOS_SYSTEM",
+    "SCOPE_CONFLICTS": 0,
+    "C1_MUTATION_AUTHORIZED": true
+  },
+  "observed_this_slice": {
+    "CANONICAL_BRANCH": "ai-evolution-202608051809",
+    "CANONICAL_BRANCH_class": "OBSERVED_FROM_AUTHORITY_FILE",
+    "CANONICAL_HEAD_PROVEN": "NOT_REPROBED_THIS_SLICE",
+    "C6_LIVE_BOUND_CONSUMER": false,
+    "C6_LIVE_BOUND_CONSUMER_class": "UNPROVEN",
+    "TASK_LEASE_ACTIVE": false,
+    "TASK_LEASE_ACTIVE_class": "UNPROVEN",
+    "LOCK_OWNER_LAW": "RAIOS_SYSTEM",
+    "SCOPE_CONFLICTS": "UNPROVEN",
+    "C1_MUTATION_AUTHORIZED": false,
+    "mutation_allowed": false,
+    "class": "DERIVED"
+  },
+  "fail_closed": "Any ownership, canonical, or governance conflict blocks mutation and returns READY with checkpoint.",
+  "checkpoint_before_each_later_wave": true,
+  "new_worktree_allowed": false,
+  "new_branch_for_campaign": false
+}

@@ -7,10 +7,13 @@
     "TASK_LEASE_ACTIVE": true,
     "LOCK_OWNER": "RAIOS_SYSTEM",
     "SCOPE_CONFLICTS": 0,
-    "C1_ACCEPTANCE": true
+    "C1_ACCEPTANCE": true,
+    "C1_MUTATION_AUTHORIZED": true
   },
   "phase0_this_slice": {
     "C1_ACCEPTANCE": false,
+    "C1_PHASE0_FILES_AUTHORIZED": true,
+    "C1_MUTATION_AUTHORIZED": false,
     "C6_LIVE_BOUND_CONSUMER": false,
     "TASK_LEASE_ACTIVE": "NOT_ASSERTED",
     "mutation_allowed": false,
