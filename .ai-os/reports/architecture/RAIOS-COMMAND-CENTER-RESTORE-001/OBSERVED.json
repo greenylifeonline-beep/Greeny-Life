@@ -1,0 +1,65 @@
+{
+  "schema": "raios.command-center-restore.observed.v1",
+  "pack_id": "RAIOS-COMMAND-CENTER-RESTORE-001",
+  "recorded_at_utc": "2026-09-16T17:55:00Z",
+  "recorder": "C2@AG",
+  "decision": "D-042",
+  "source_upgrade": {
+    "class": "DIRECT",
+    "paths": [
+      "src/raios/command_center/app.py",
+      "src/raios/command_center/index.html",
+      "src/raios/command_center/client_activity.py"
+    ],
+    "tests": "tests/command_center/test_actor_routing.py",
+    "pytest": "9 passed"
+  },
+  "hung_listeners": {
+    "class": "OBSERVED",
+    "8770_pid": 56712,
+    "8788_pid": 55952,
+    "8766_old_pid_stopped": 59260,
+    "stop_process": "ACCESS_DENIED on 56712 and 55952; 59260 STOPPED",
+    "taskkill": "ACCESS_DENIED on 56712 and 55952"
+  },
+  "c5_headonlyrecovery": {
+    "class": "OBSERVED",
+    "status": "C5_HTTP=200",
+    "printed_pid": 58232,
+    "later_listener_pid": 32796,
+    "canonical_head": "42813ba0ef1bb1b9e10dcef28ca625601afeb877",
+    "note": "PID identity CONFLICTING (script vs later netstat) as in D-034; health printed 200"
+  },
+  "mcp_ensure": {
+    "class": "OBSERVED",
+    "result": "THREW Port 8788 owned by python.exe PID 55952",
+    "reason": "Hung occupant not replaced; ACCESS_DENIED on stop"
+  },
+  "c2_session": {
+    "class": "OBSERVED",
+    "result": "SEAT_SESSION_START_FAILED",
+    "note": "Likely blocked by hung Command Center holding council-ops files"
+  },
+  "live_cutover": {
+    "class": "BLOCKED",
+    "reason": "Hung Command Center 56712 and MCP 55952 are not stoppable from this session. Upgraded source cannot bind :8770 until 56712 is released.",
+    "c1_required_admin": [
+      "Start Windows PowerShell as Administrator",
+      "taskkill /F /PID 56712",
+      "taskkill /F /PID 55952"
+    ],
+    "then_start_upgraded_center": "pythonw -m uvicorn raios.command_center.app:app --app-dir src --host 127.0.0.1 --port 8770 with RAIOS_CANONICAL_REPO and PYTHONPATH=src",
+    "then_mcp": "scripts/ai-os/raios_mcp_local_ensure.ps1 after 55952 is gone"
+  },
+  "c5_independent_probe": {
+    "class": "OBSERVED",
+    "url": "http://127.0.0.1:8766/health",
+    "http": 200,
+    "status": "ONLINE",
+    "student_model": "qwen3:0.6b",
+    "main_cortex_state": "HOLD"
+  },
+  "ucf_certification": "NOT_CERTIFIED",
+  "second_command_center": false,
+  "locks_mutated": false
+}

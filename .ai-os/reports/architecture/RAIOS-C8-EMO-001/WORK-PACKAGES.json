@@ -1,0 +1,68 @@
+{
+  "schema": "raios.c8-executive-order.work-packages.v1",
+  "sequence_required": true,
+  "skip_forward_forbidden": true,
+  "packages": [
+    {
+      "id": "WP-00-BIND-AND-ACK",
+      "owner": "C8",
+      "status": "READY",
+      "do": "Confirm canonical root/branch. Start or keep Start-RAIOS-Seat-Session for C8 with C8 auth only. Return dated ACK receipt. Do not flip SEAT-MAP.",
+      "done_when": "C8 dated receipt exists; C8 consumer current or blocker classified OBSERVED"
+    },
+    {
+      "id": "WP-01-COMMAND-CENTER-EVIDENCE",
+      "owner": "C8",
+      "depends": ["WP-00-BIND-AND-ACK"],
+      "status": "READY_AFTER_C2_RESTORE",
+      "do": "Hash src/raios/command_center/{app.py,index.html,client_activity.py,actor_routing.py}. Probe http://127.0.0.1:8770/health and /api/plane and /api/bootstrap. Prove members listed (registered seats, not empty). Prove send path to C8 (explicit C8, not ALL). Classify C5 :8766 and MCP :8788 OBSERVED.",
+      "done_when": "Dated evidence pack with hashes + HTTP codes + seat list; no second Command Center created"
+    },
+    {
+      "id": "WP-02-UCF-REMAINING-GATES",
+      "owner": "C8",
+      "depends": ["WP-01-COMMAND-CENTER-EVIDENCE"],
+      "status": "READY",
+      "do": "Read UCF-CERTIFICATION.json. Record remaining gates exactly: CONTROLLED_RESTART_PROOF OPEN owner C3; C6_CONSTITUTIONAL_CERTIFICATION OPEN owner C6 NOT_FAKED; C2 token ABSENT so e2e was PROVEN_AS_C1. Hash live plane. Do not assert UCF_RUNTIME_CERTIFICATION=CERTIFIED.",
+      "done_when": "C8 gate table matches certification file; no invented PASS"
+    },
+    {
+      "id": "WP-03-PRESENCE-AND-STATE-CENSUS",
+      "owner": "C8",
+      "depends": ["WP-00-BIND-AND-ACK"],
+      "status": "READY",
+      "do": "Hash and size presence.json, actor-bindings.json, LOCKS.json, TASKS.json, consumers/*.json. Report bloat/staleness. Do not prune presence idempotency. Do not mutate LOCKS/TASKS.",
+      "done_when": "Census table with bytes, mtime, sha256, class"
+    },
+    {
+      "id": "WP-04-LOCAL-COPY-CENSUS-ONLY",
+      "owner": "C8",
+      "depends": ["WP-00-BIND-AND-ACK"],
+      "status": "READY_AS_EVIDENCE",
+      "do": "Inventory local copies C8 already knows. Path, hash, lineage, whether canonical-overlap or unique-value. Execution from those copies is forbidden. No new copy. No merge. This is P4-prep evidence, not P4/P5 execute.",
+      "done_when": "Census JSON in canonical reports path; unique-value items listed; SAFE_TO_REMOVE_SOURCE remains false"
+    },
+    {
+      "id": "WP-05-CURSOR-BRANCH-POINTERS",
+      "owner": "C8",
+      "depends": ["WP-04-LOCAL-COPY-CENSUS-ONLY"],
+      "status": "POINTERS_ONLY",
+      "do": "Confirm 14 origin cursor/* remain DIVERGED / VALUE_EXTRACTION_REQUIRED. List refs. Do not merge, rebase, squash, or delete.",
+      "done_when": "Named ref list with class DIVERGED; no git mutation"
+    },
+    {
+      "id": "WP-06-INCOMPLETE-WORK-LEDGER",
+      "owner": "C8",
+      "depends": ["WP-01-COMMAND-CENTER-EVIDENCE", "WP-02-UCF-REMAINING-GATES"],
+      "status": "CONTINUOUS",
+      "do": "Publish a single incomplete-work ledger: every open gate, hung service, unbound seat, uncertified UCF item, unextracted branch, unreported partial. No reduction. No contradiction with D-029/D-041/D-042.",
+      "done_when": "Ledger path reported; C2 reviews; C1 accepts or returns"
+    }
+  ],
+  "blocked_until_c6_live_bound": [
+    "P0 mutation of runtime state relocation",
+    "P1 stop source-tree runtime churn",
+    "cursor/* value extraction merge",
+    "C5 canonical cutover of EXECUTION-CHANNEL recorded head"
+  ]
+}

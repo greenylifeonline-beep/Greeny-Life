@@ -68,7 +68,7 @@ table{width:100%;border-collapse:collapse;font-size:11px}th,td{text-align:right;
 <section class="view active" id="overview">
   <div class="grid">
     <article class="card kpi span3" style="--glow:rgba(85,223,162,.1)"><div class="kpi-label">صحة التشغيل</div><div class="kpi-value" id="healthValue">—</div><div class="kpi-sub" id="healthSub">بانتظار القياس</div></article>
-    <article class="card kpi span3"><div class="kpi-label">الخدمات الحية</div><div class="kpi-value" id="servicesValue">—</div><div class="kpi-sub">C5 · Manager · Command · 9Router · NATS</div></article>
+    <article class="card kpi span3"><div class="kpi-label">الخدمات الحية</div><div class="kpi-value" id="servicesValue">—</div><div class="kpi-sub">C5 · MCP :8788 · Command · 9Router · NATS</div></article>
     <article class="card kpi span3" style="--glow:rgba(172,156,255,.1)"><div class="kpi-label">العمل النشط</div><div class="kpi-value" id="tasksValue">—</div><div class="kpi-sub" id="tasksSub">—</div></article>
     <article class="card kpi span3" style="--glow:rgba(255,200,106,.1)"><div class="kpi-label">الأدلة المسترجعة</div><div class="kpi-value" id="evidenceValue">—</div><div class="kpi-sub" id="evidenceSub">Search Cortex</div></article>
     <article class="card span8"><div class="card-head"><h2>الخدمات والبنية الحية</h2><span class="hint">قياس مباشر، لا ادعاء</span></div><div class="service-grid" id="servicesGrid"></div></article>
@@ -123,13 +123,14 @@ table{width:100%;border-collapse:collapse;font-size:11px}th,td{text-align:right;
     <article class="card span6"><div class="card-head"><h2>حقيقة دورة العمل</h2><span class="hint">تم · جارٍ · مطلوب · منتظر · قديم</span></div><div class="list" id="lifecycleList"></div></article>
     <article class="card span6"><div class="card-head"><h2>ملف المؤسس والمالك</h2><span class="hint">يُجهّز دائمًا حتى عند غياب C1</span></div><div class="list" id="founderBrief"></div></article>
     <article class="card span12"><div class="card-head"><h2>خطة التوزيع الذكية</h2><span class="hint">المسار الحرج · الأهلية · الجاهزية · التعارض</span></div><div class="list" id="dispatchPlan"></div></article>
+    <article class="card span12"><div class="card-head"><h2>Resource Factory - Accounts and Capacity</h2><span class="hint">Live/cached projection - FREE / CREDIT / PAID / UNKNOWN</span></div><div class="table-wrap" id="resourceMatrixTable"></div></article>
     <article class="card span12"><div class="card-head"><h2>الإيصالات والأدلة الحديثة</h2><span class="hint">Provenance محفوظ</span></div><div class="table-wrap" id="receiptsTable"></div></article>
   </div>
 </section>
 
 <section class="view" id="council">
   <div class="grid">
-    <article class="card span8"><div class="card-head"><h2>إعلان أو تنسيق موثّق</h2><span class="pill warn">لا يمنح صلاحية تنفيذ · المهمة تأتي من RAIOS-WORKER فقط</span></div><div class="options" id="targets"><button class="btn primary target active" data-target="ALL">الجميع</button><button class="btn target" data-target="C1">C1</button><button class="btn target" data-target="C2">C2</button><button class="btn target" data-target="C3">C3</button><button class="btn target" data-target="C4">C4</button><button class="btn target" data-target="C5">C5</button><button class="btn target" data-target="C6">C6</button><button class="btn target" data-target="C7">C7</button><button class="btn target" data-target="C8">C8</button><button class="btn target" data-target="C9">C9</button><button class="btn target" data-target="C10">C10</button><button class="btn target" data-target="C11">C11</button><button class="btn target" data-target="C12">C12</button></div><textarea class="text" id="commandInput" style="min-height:150px;margin-top:14px" placeholder="اكتب التوجيه…"></textarea><div style="display:flex;justify-content:flex-end;margin-top:10px"><button class="btn primary" id="sendCommand">إرسال موثّق</button></div><div class="code" id="commandOutput" style="margin-top:13px">ستظهر إيصالات الإرسال هنا.</div></article>
+    <article class="card span8"><div class="card-head"><h2>إعلان أو تنسيق موثّق</h2><span class="pill warn">لا يمنح صلاحية تنفيذ · المهمة تأتي من RAIOS-WORKER فقط · ALL = المربوط الحي فقط</span></div><div class="options" id="targets"><button class="btn target" data-target="ALL">الجميع (حي فقط)</button><button class="btn target" data-target="C1">C1</button><button class="btn primary target active" data-target="C2">C2</button><button class="btn target" data-target="C3">C3</button><button class="btn target" data-target="C4">C4</button><button class="btn target" data-target="C5">C5</button><button class="btn target" data-target="C6">C6</button><button class="btn target" data-target="C7">C7</button><button class="btn primary target active" data-target="C8">C8</button><button class="btn target" data-target="C9">C9</button><button class="btn target" data-target="C10">C10</button><button class="btn target" data-target="C11">C11</button><button class="btn target" data-target="C12">C12</button></div><textarea class="text" id="commandInput" style="min-height:150px;margin-top:14px" placeholder="اكتب التوجيه…"></textarea><div style="display:flex;justify-content:flex-end;margin-top:10px"><button class="btn primary" id="sendCommand">إرسال موثّق</button></div><div class="code" id="commandOutput" style="margin-top:13px">ستظهر إيصالات الإرسال هنا.</div></article>
     <article class="card span4"><div class="card-head"><h2>حالة الأعضاء</h2><span class="hint">التوفر ≠ جاهزية التنفيذ</span></div><div class="list" id="seatList"></div></article>
     <article class="card span6"><div class="card-head"><h2>العامل</h2><span class="hint">نفس مصدر التنسيق</span></div><div class="list" id="workerList"></div></article>
     <article class="card span6"><div class="card-head"><h2>منفذون آخرون نشطون</h2><span class="hint">خارج المقاعد إن وُجدوا</span></div><div class="list" id="otherActorList"></div></article>
@@ -155,7 +156,7 @@ table{width:100%;border-collapse:collapse;font-size:11px}th,td{text-align:right;
 <script>
 (function(){
 'use strict';
-var csrf='', overviewData=null, targets=new Set(['ALL']);
+var csrf='', overviewData=null, targets=new Set(['C2','C8']);
 var conversationId=localStorage.getItem('raiosConversationId')||newId();
 var messages=readMessages();
 var titles={overview:'المشهد التشغيلي',chat:'محادثة RAIOS',search:'البحث والتحقق',cognitive:'التعلم والاستيعاب',work:'العمل والأدلة',council:'المجلس',diagnostics:'التشخيص'};
@@ -247,6 +248,15 @@ function renderContinuity(c){
   $('#continuityBadge').className='pill '+klass(c.status);$('#continuityBadge').textContent=c.status||'UNPROVEN';
   var s=c.services||{};$('#continuityServices').innerHTML=Object.keys(s).map(function(k){return '<div class="plane"><span>'+esc(k)+'</span><strong>'+badge(s[k]?'ONLINE':'OFFLINE')+'</strong></div>'}).join('')||'<div class="empty">سيظهر إثبات الحارس بعد أول دورة.</div>'
 }
+function renderCouncilLite(lite){
+  var rows=lite.seats||[], live=(lite.auto_routable||[]).length;
+  $('#councilSummary').textContent='المجلس: '+(rows.length)+' مسجّل · '+live+' مربوط حي · عاملون C1/C2/C8';
+  if(!rows.length){$('#seatList').innerHTML='<div class="empty">لا توجد مقاعد في SEAT-MAP.</div>';return}
+  $('#seatList').innerHTML=rows.map(function(r){
+    var st=r.auto_routable?'LIVE_BOUND':(r.present?'PRESENT_UNBOUND':(r.discovery_state||'UNBOUND'));
+    return '<div class="list-row"><div class="grow"><strong>'+esc(r.seat)+' · '+esc(r.actor_role||'')+'</strong><small>'+esc(st)+' · '+esc(r.actor_id||r.origin_instance||'—')+'</small></div>'+badge(r.auto_routable?'ONLINE':(r.present?'PRESENT':'AWAY'))+'</div>'
+  }).join('');
+}
 function renderAvailability(a){
   var rows=a.clients||[],sum=a.availability_summary||{},workers=a.workers||[],others=a.other_active_actors||[];
   var ready=rows.filter(function(r){return r.execution_ready===true}).length;
@@ -282,23 +292,72 @@ function renderAvailability(a){
     return '<div class="list-row"><div class="grow"><strong>#'+esc(p.rank)+' · '+esc(p.task_id)+'</strong><small>'+esc(why)+'</small></div>'+badge(state)+'</div>'
   }).join('')||'<div class="empty">لا توجد مهام جاهزة للتوزيع.</div>';
 }
+function renderResources(){
+  var proof=((overviewData||{}).resources||{}),inv=proof.inventory||{};
+  var matrix=inv['ACCOUNT-RESOURCE-MATRIX.json']||{},rows=matrix.rows||[];
+  if(!rows.length){rows=(inv['ACCOUNTS.json']||[]).map(function(a){return {
+    account_id:a.account_id,owner:a.owner_alias,provider:a.provider_id,status:a.status,
+    free_tier_status:a.free_tier_status,billing_mode:a.billing_mode,last_verified_at:a.last_verified_at,
+    blockers:a.BLOCKED_C1_ACTION?['BLOCKED_C1_ACTION']:[]
+  }})}
+  $('#resourceMatrixTable').innerHTML=table(rows,[
+    ['account_id','ACCOUNT'],['owner','OWNER'],['provider','PROVIDER'],['status','STATUS'],
+    ['free_tier_status','FREE TIER'],['billing_mode','BILLING'],['gpu_eligible','GPU ELIGIBLE'],
+    ['live_gpu','LIVE GPU'],['quota','QUOTA / REMAINING'],['credits','CREDITS'],
+    ['storage_free_gb_known_total','STORAGE FREE GB'],['last_verified_at','LAST PROBE'],['blockers','BLOCKER']
+  ]);
+}
 async function extras(){
-  var res=await Promise.all([api('/api/tasks'),api('/api/receipts'),api('/api/cognitive'),api('/api/client-activity')]);var t=res[0],r=res[1],c=res[2],a=res[3];
-  $('#tasksTable').innerHTML=table(t.recent,[['id','المهمة'],['status','الحالة'],['claimed_by','المنفذ'],['validation','التحقق']]);
-  $('#workStats').textContent=t.in_progress+' قيد التنفيذ · '+t.active_locks+' أقفال نشطة';
-  $('#receiptsTable').innerHTML=table(r.recent,[['name','الإيصال'],['bytes','الحجم'],['path','المسار']]);renderCognitive(c);renderAvailability(a)
+  try{var a=await api('/api/client-activity?lite=true');renderAvailability(a)}catch(e){console.error('client-activity',e)}
+  try{var c=await api('/api/cognitive');renderCognitive(c)}catch(e){console.error('cognitive',e)}
+  try{
+    var b=await api('/api/council-board'),rows=b.tasks||[],sm=b.summary||{};
+    $('#tasksTable').innerHTML=table(rows,[
+      ['stage','DONE / DOING / NEXT'],['id','TASK'],['owner','OWNER'],['model','MODEL'],
+      ['start','START'],['last_proof','LAST PROOF'],['reviewer','REVIEWER'],
+      ['review_status','REVIEW STATUS'],['next_checkpoint','NEXT CHECKPOINT'],['blocker','BLOCKER']
+    ]);
+    $('#workStats').textContent=(sm.IN_PROGRESS||0)+' DOING | '+(sm.NEXT||0)+' NEXT | '+(sm.DONE||0)+' DONE | live projection';
+  }catch(e){console.error('council-board',e)}
+  try{var r=await api('/api/receipts');$('#receiptsTable').innerHTML=table(r.recent,[['name','RECEIPT'],['bytes','BYTES'],['path','PATH']])}catch(e){console.error('receipts',e)}
+  try{renderResources()}catch(e){console.error('resources',e)}
 }
 async function refresh(){
-  var b=$('#refreshBtn');b.disabled=true;try{var o=await api('/api/overview');renderOverview(o);await extras()}catch(e){$('#liveText').textContent='تعذر الاتصال';$('#sideDot').style.background='var(--red)';toast('فشل التحديث')}finally{b.disabled=false;b.textContent='تحديث'}
+  var b=$('#refreshBtn');b.disabled=true;
+  try{
+    var p=await api('/api/plane');
+    $('#liveText').textContent='متصل';$('#sideDot').style.background='var(--green)';
+    var o=await api('/api/overview');renderOverview(o);
+    await extras()
+  }catch(e){$('#liveText').textContent='تعذر الاتصال';$('#sideDot').style.background='var(--red)';toast('فشل التحديث')}
+  finally{b.disabled=false;b.textContent='تحديث'}
 }
-async function boot(){var b=await api('/api/bootstrap');csrf=b.csrf;renderOverview(b.overview);renderThread();await extras()}
+async function boot(){
+  var b=await api('/api/bootstrap');csrf=b.csrf;
+  $('#liveText').textContent='متصل';$('#sideDot').style.background='var(--green)';
+  $('#headShort').textContent='HEAD '+String(b.canonical_head||'—').slice(0,10);
+  if(b.council_lite)renderCouncilLite(b.council_lite);
+  if(b.overview)renderOverview(b.overview);
+  renderThread();
+  extras().catch(function(e){console.error(e);toast('التفاصيل الجزئية تعذرت — اللوحة متصلة')});
+  if(!b.overview){
+    api('/api/overview').then(function(o){renderOverview(o)}).catch(function(e){
+      $('#healthSub').textContent='اللوحة متصلة · التفاصيل الكاملة متأخرة';console.error(e);
+    });
+  }
+}
 async function diagnose(){
   var b=$('#diagnoseBtn');b.disabled=true;b.innerHTML='<i class="spinner"></i>';
   try{var r=await api('/api/maintenance/diagnose',{method:'POST'}),d=r.diagnosis||{};$('#diagScore').textContent=d.score==null?'—':d.score;$('#diagState').textContent=d.health||'UNPROVEN';var cs=d.root_causes||[];$('#rootCauses').innerHTML=cs.length?cs.map(function(c){return '<div class="list-row"><div class="grow"><strong>'+esc(c.code)+'</strong><small>'+esc(c.recommended_action)+'</small></div>'+badge(c.severity)+'</div>'}).join(''):'<div class="list-row"><div><strong>لا أسباب جذرية نشطة</strong><small>الحالة المقاسة سليمة</small></div>'+badge('HEALTHY')+'</div>';renderContinuity((d.cognitive||{}).continuity||{})}catch(e){toast('تعذر التشخيص')}finally{b.disabled=false;b.textContent='تشخيص شامل الآن'}
 }
 async function command(){
   var text=$('#commandInput').value.trim();if(!text||!targets.size)return;var b=$('#sendCommand');b.disabled=true;
-  try{var r=await api('/api/command',{method:'POST',body:JSON.stringify({text:text,targets:Array.from(targets)})});$('#commandOutput').textContent=JSON.stringify(r,null,2);toast('تم الإرسال إلى النسيج الكانوني')}catch(e){$('#commandOutput').textContent=e.message}finally{b.disabled=false}
+  try{var r=await api('/api/command',{method:'POST',body:JSON.stringify({text:text,targets:Array.from(targets)})});$('#commandOutput').textContent=JSON.stringify(r,null,2);toast('تم الإرسال إلى النسيج الكانوني')}
+  catch(e){
+    var msg=e.message;
+    try{var j=JSON.parse(msg);var d=j.detail||j;msg=(d.hint_ar||d.error||msg)+'\n'+JSON.stringify(d,null,2)}catch(_e){}
+    $('#commandOutput').textContent=msg;toast('تعذر الإرسال — راجع الإيصال')
+  }finally{b.disabled=false}
 }
 $$('.nav button,.mobile-nav button').forEach(function(b){b.addEventListener('click',function(){openView(b.dataset.view)})});
 $$('[data-jump]').forEach(function(b){b.addEventListener('click',function(){openView(b.dataset.jump)})});

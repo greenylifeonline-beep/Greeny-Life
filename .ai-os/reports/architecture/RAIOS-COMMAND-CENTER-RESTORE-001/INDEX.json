@@ -1,0 +1,45 @@
+{
+  "schema": "raios.command-center-restore.index.v1",
+  "pack_id": "RAIOS-COMMAND-CENTER-RESTORE-001",
+  "task_id": "RAIOS-COMMAND-CENTER-RESTORE-001",
+  "authority": "C1_DIRECT",
+  "recorder": "C2@AG",
+  "generated_at_utc": "2026-09-16T17:30:00Z",
+  "decision": "D-042",
+  "existing_first": true,
+  "second_command_center": false,
+  "canonical_listen": "127.0.0.1:8770",
+  "pre_restore": {
+    "class": "OBSERVED",
+    "8770_http": "TIMEOUT",
+    "8766_http": "TIMEOUT",
+    "8788_http": "TIMEOUT",
+    "8770_tcp": "TIMEOUT_WHILE_LISTEN",
+    "8766_tcp": "TIMEOUT_WHILE_LISTEN",
+    "8788_tcp": "TIMEOUT_WHILE_LISTEN",
+    "8770_pid": 56712,
+    "8766_pid": 59260,
+    "8788_pid": 55952,
+    "20128_tcp": "OPEN",
+    "4222_tcp": "OPEN",
+    "presence_json_bytes": 8166365,
+    "presence_mtime_utc": "2026-09-13T21:26:25Z",
+    "locks_json_bytes": 3380841,
+    "command_center_deployment_mtime_utc": "2026-09-14T02:36:25Z",
+    "ui_default_all_send": "NO_LIVE_BOUND_TARGETS",
+    "empty_member_list": "BOOTSTRAP_HANG_PLUS_NO_LITE_COUNCIL"
+  },
+  "upgrade_in_place": [
+    "src/raios/command_center/app.py",
+    "src/raios/command_center/index.html",
+    "src/raios/command_center/client_activity.py",
+    "tests/command_center/test_actor_routing.py"
+  ],
+  "restore_method": [
+    "Stop hung listeners 56712/59260/55952 after C1 restore order",
+    "Deploy-RAIOS-C5.ps1 -HeadOnlyRecovery",
+    "raios_mcp_local_ensure.ps1 only after hung :8788 stopped",
+    "Start existing uvicorn raios.command_center.app:app on :8770 from canonical src (working-tree upgrade; not a second app)"
+  ],
+  "ucf_status_unchanged": "NOT_CERTIFIED"
+}

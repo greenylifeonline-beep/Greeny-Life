@@ -83,23 +83,43 @@ class ClientActivityView:
     def _tasks(self) -> list[dict[str, Any]]:
         return list((_load(self.tasks_path, {"tasks": []}).get("tasks") or []))
 
-    def _latest_actor_ack(self, seat: str) -> dict[str, Any] | None:
-        rows: list[tuple[float, dict[str, Any]]] = []
-        for path in self.receipts.glob(f"MSG-*.{seat}.actor.ack.receipt.json"):
+    def _latest_actor_acks(self) -> dict[str, dict[str, Any]]:
+        latest: dict[str, tuple[float, Path]] = {}
+        if not self.receipts.exists():
+            return {}
+        try:
+            entries = list(self.receipts.iterdir())
+        except OSError:
+            return {}
+        for path in entries:
+            name = path.name
+            if not name.startswith("MSG-") or not name.endswith(".actor.ack.receipt.json"):
+                continue
+            parts = name.split(".")
+            if len(parts) < 5:
+                continue
+            seat = parts[-5].upper()
+            if not seat.startswith("C"):
+                continue
             try:
-                data = _load(path, {})
-                rows.append((path.stat().st_mtime, data))
+                mtime = path.stat().st_mtime
             except OSError:
                 continue
-        return max(rows, key=lambda item: item[0])[1] if rows else None
+            current = latest.get(seat)
+            if current is None or mtime > current[0]:
+                latest[seat] = (mtime, path)
+        return {seat: _load(path, {}) for seat, (_, path) in latest.items()}
 
-    def snapshot(self) -> dict[str, Any]:
+    def snapshot(self, *, include_member_state: bool = True, lite: bool = False) -> dict[str, Any]:
+        if lite:
+            include_member_state = False
         route_snapshot = self.routes.snapshot()
-        tasks = self._tasks()
-        active_locks = [x for x in (_load(self.locks_path, {"locks": []}).get("locks") or [])
+        tasks = [] if lite else self._tasks()
+        active_locks = [] if lite else [x for x in (_load(self.locks_path, {"locks": []}).get("locks") or [])
                         if str(x.get("status") or "").upper() == "ACTIVE"]
         route_rows = list(route_snapshot.get("seats", []))
         clients = []
+        latest_actor_acks = {} if lite else self._latest_actor_acks()
         for row in route_rows:
             seat = str(row.get("seat") or "")
             actor_id = row.get("actor_id")
@@ -111,7 +131,7 @@ class ClientActivityView:
             current = [t for t in verified_claims if t.get("status") in ("IN_PROGRESS", "BLOCKED")]
             pending = [t for t in verified_claims if t.get("dispatch_status") == "PENDING_ACCEPTANCE"]
             stale_claims = [t for t in matched if t not in verified_claims]
-            last_ack = self._latest_actor_ack(seat)
+            last_ack = latest_actor_acks.get(seat.upper())
             if row.get("auto_routable"):
                 state = "ASSIGNED_PENDING_ACCEPTANCE" if pending else ("WORKING" if current else "IDLE")
             elif stale_claims:
@@ -330,11 +350,25 @@ class ClientActivityView:
         founder_brief["presence_anomaly_count"] = len(presence_anomalies)
         founder_brief["presence_attention_required"] = bool(presence_anomalies)
         dispatch_plan = build_dispatch_plan(tasks, route_rows, current_reservations)
+        council_member_state = None
+        council_member_state_dump = None
+        if include_member_state:
+            try:
+                from .council_member_state import build_council_member_state
+                council_member_state = build_council_member_state(
+                    self.repo, self.routes, activity_clients=clients,
+                )
+                council_member_state_dump = council_member_state.get("dump_path")
+            except Exception:
+                council_member_state = None
         return {
             "schema": "raios.client-activity.v4",
             "generated_at": _utc(),
             "canonical_coordination_source": True,
             "canonical_endpoint": "/api/client-activity",
+            "council_member_state_dump": council_member_state_dump,
+            "council_member_state_schema": (council_member_state or {}).get("schema"),
+            "COUNCIL_STATE_ENDPOINT": "MODULE+FILE_DUMP",
             "availability_summary": availability_summary,
             "work_lifecycle": work_lifecycle,
             "founder_brief": founder_brief,

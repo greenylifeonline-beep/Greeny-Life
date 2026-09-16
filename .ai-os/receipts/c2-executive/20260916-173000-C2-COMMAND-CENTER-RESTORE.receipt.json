@@ -1,0 +1,17 @@
+{
+  "schema": "raios.c2-executive.receipt.v1",
+  "receipt_id": "20260916-173000-C2-COMMAND-CENTER-RESTORE",
+  "task_id": "RAIOS-COMMAND-CENTER-RESTORE-001",
+  "decision": "D-042",
+  "agent": "C2@AG",
+  "recorded_at_utc": "2026-09-16T17:55:00Z",
+  "mode": "EXISTING_COMMAND_CENTER_UPGRADE_IN_PLACE_PLUS_HUNG_LISTENER_RESTORE",
+  "source_upgrade": true,
+  "live_cutover": "BLOCKED_ACCESS_DENIED_ON_HUNG_PIDS_56712_55952",
+  "c5_old_pid_59260": "STOPPED",
+  "pytest_actor_routing": "9_PASSED",
+  "ucf_status_unchanged": "NOT_CERTIFIED",
+  "locks_mutated": false,
+  "handoff": ".ai-os/handoffs/20260916-173000-C2-C8-EXECUTIVE-ORDER-BLOCK.md",
+  "observed": ".ai-os/reports/architecture/RAIOS-COMMAND-CENTER-RESTORE-001/OBSERVED.json"
+}

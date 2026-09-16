@@ -4,7 +4,7 @@ from contextlib import asynccontextmanager
 from datetime import datetime, timezone
 from pathlib import Path
 from typing import Any
-from fastapi import FastAPI, Header, HTTPException
+from fastapi import FastAPI, Header, HTTPException, Query
 from fastapi.responses import HTMLResponse
 from pydantic import BaseModel, Field
 from raios.search_cortex import SearchCortex
@@ -14,6 +14,7 @@ from .actor_routing import ActorRouteRegistry
 from .council_board import CouncilBoard
 from .task_actions import latest_resource_census
 from .client_activity import ClientActivityView
+from .council_member_state import build_council_member_state
 from raios.council_ops import CouncilOperations
 
 CREATE_NO_WINDOW=getattr(subprocess,"CREATE_NO_WINDOW",0)
@@ -24,7 +25,7 @@ RUNTIME=Path(os.getenv("RAIOS_COMMAND_CENTER_RUNTIME",str(Path.home()/".raios/ru
 COUNCIL_PRESENCE=Path(os.getenv("RAIOS_COUNCIL_PRESENCE",str(Path.home()/".raios/runtime/council-ops/presence.json"))).resolve()
 C5=os.getenv("RAIOS_C5_URL","http://127.0.0.1:8766")
 CSRF=secrets.token_urlsafe(32)
-MESSAGE_WORKER=MessageWorker(REPO,RUNTIME,poll_seconds=5.0)
+MESSAGE_WORKER=MessageWorker(REPO,RUNTIME,poll_seconds=5.0,max_messages_per_scan=50000,max_scan_seconds=30.0)
 ACTOR_ROUTES=ActorRouteRegistry(REPO,presence_path=COUNCIL_PRESENCE)
 COUNCIL_BOARD=CouncilBoard(REPO,routes=ACTOR_ROUTES)
 SEARCH_CORTEX=SearchCortex()
@@ -75,6 +76,25 @@ def service(name,port,url=None):
  listening=tcp(port); code,body=http_json(url,timeout=3) if url and listening else (None,{})
  ready=listening and (not url or code==200)
  return {"name":name,"state":"ONLINE" if ready else ("DEGRADED" if listening else "OFFLINE"),"port":port,"http":code,"detail":body}
+def tcp_service(name,port):
+ listening=tcp(port)
+ return {"name":name,"state":"ONLINE" if listening else "OFFLINE","port":port,"http":None,
+  "probe":"TCP_ONLY","detail":{"probe":"TCP_ONLY","listening":listening}}
+def live_plane():
+ return {"schema":"raios.command-center.live-plane.v1","generated_at":utc(),
+  "canonical_head":CANONICAL_HEAD,"self":{"name":"CommandCenter","port":8770,"state":"ONLINE","probe":"SELF"},
+  "services":[tcp_service("C5",8766),tcp_service("UniversalMCP",8788),tcp_service("9Router",20128),tcp_service("NATS",4222)]}
+def council_lite():
+ snap=ACTOR_ROUTES.snapshot(); seats=[]
+ for row in snap.get("seats") or []:
+  seats.append({"seat":row.get("seat"),"actor_role":row.get("actor_role"),
+   "present":row.get("present") is True,"presence_state":row.get("presence_state"),
+   "auto_routable":row.get("auto_routable") is True,"consumer_current":row.get("consumer_current") is True,
+   "binding_current":row.get("binding_current") is True,"discovery_state":row.get("discovery_state"),
+   "origin_instance":row.get("origin_instance"),"actor_id":row.get("actor_id")})
+ return {"schema":"raios.council-lite.v1","active_workers":["C1","C2","C8"],
+  "auto_routable":list(snap.get("auto_routable") or []),"auto_routable_count":int(snap.get("auto_routable_count") or 0),
+  "registered_count":len(seats),"seats":seats}
 def tasks_state():
  tasks=load(REPO/".ai-os/state/TASKS.json",{"tasks":[]})["tasks"]; locks=load(REPO/".ai-os/state/LOCKS.json",{"locks":[]})["locks"]
  return {"total":len(tasks),"ready":sum(t.get("status")=="READY" for t in tasks),"in_progress":sum(t.get("status")=="IN_PROGRESS" for t in tasks),
@@ -91,7 +111,7 @@ def _presence_state(row):
   return "PRESENT" if datetime.fromisoformat(str(expiry).replace("Z","+00:00"))>datetime.now(timezone.utc) else "EXPIRED"
  except (TypeError,ValueError):return "INVALID"
 def council_state():
- snap=CLIENT_ACTIVITY.snapshot();seatmap=load(MCP_ROOT/".ai-os/mcp/SEAT-MAP.json",{})
+ snap=CLIENT_ACTIVITY.snapshot(include_member_state=False);seatmap=load(MCP_ROOT/".ai-os/mcp/SEAT-MAP.json",{})
  by_spec=seatmap.get("seats") or {};seats=[]
  for row in snap.get("clients",[]):
   key=row.get("seat");spec=by_spec.get(key,{})
@@ -157,7 +177,8 @@ def diagnostic_state():
   "score":score,"root_causes":causes,"services":data["services"],"worker":worker,"cognitive":cognition,
   "actions_executed":[],"canonical_mutation":False,"existing_first":True}
 def overview():
- services=[service("C5",8766,C5+"/health"),service("9Router",20128,"http://127.0.0.1:20128/dashboard"),service("NATS",4222)]
+ services=[service("C5",8766,C5+"/health"),service("UniversalMCP",8788,"http://127.0.0.1:8788/health"),
+  tcp_service("9Router",20128),service("NATS",4222)]
  task=tasks_state(); degraded=[x["name"] for x in services if x["state"]!="ONLINE"]
  return {"generated_at":utc(),"canonical_head":git("rev-parse","HEAD"),"remote_head":git("rev-parse","origin/ai-evolution-202608051809"),
   "services":services,"tasks":task,"models":model_state(),"factories":factory_state(),"resources":resource_state(),"council":council_state(),"cognitive":cognitive_state(),
@@ -184,6 +205,10 @@ class ModelRouteIn(BaseModel):
  tools_required:bool=False
  context_tokens:int=Field(default=4096,ge=256,le=1000000)
 class DispatchIn(BaseModel):task_id:str=Field(min_length=1,max_length=200);target:str=Field(min_length=2,max_length=20)
+class TaskClaimIn(BaseModel):
+ task_id:str=Field(min_length=1,max_length=200)
+ actor:str=Field(min_length=2,max_length=20)
+ actor_proof:dict[str,Any]=Field(default_factory=dict)
 class TaskAcceptIn(BaseModel):
  task_id:str=Field(min_length=1,max_length=200)
  actor:str=Field(min_length=2,max_length=20)
@@ -225,7 +250,12 @@ def c1_gateway():
 @app.get("/",response_class=HTMLResponse)
 def index():return (HERE/"index.html").read_text(encoding="utf-8")
 @app.get("/api/bootstrap")
-def bootstrap():return {"csrf":CSRF,"overview":overview(),"ui":"CANONICAL_COMMAND_CENTER","direct_mutation":False}
+def bootstrap():
+ return {"csrf":CSRF,"ui":"CANONICAL_COMMAND_CENTER","direct_mutation":False,
+  "boot_mode":"FAST_PLANE_THEN_OVERVIEW","canonical_head":CANONICAL_HEAD,
+  "health":health(),"plane":live_plane(),"council_lite":council_lite(),"overview":None}
+@app.get("/api/plane")
+def api_plane():return live_plane()
 @app.get("/api/csrf")
 def api_csrf():return {"csrf":CSRF,"service":"RAIOS_COMMAND_CENTER","direct_mutation":False}
 @app.get("/api/overview")
@@ -241,6 +271,10 @@ def api_search(req:SearchIn,x_raios_csrf:str|None=Header(None)):
 def api_tasks():return tasks_state()
 @app.get("/api/council")
 def api_council():return council_state()
+@app.get("/api/council-state")
+def api_council_state():
+ activity=CLIENT_ACTIVITY.snapshot(include_member_state=False)
+ return build_council_member_state(REPO,ACTOR_ROUTES,activity.get("clients",[]))
 @app.get("/api/actor-routes")
 def api_actor_routes():return ACTOR_ROUTES.snapshot()
 @app.get("/api/council-board")
@@ -249,6 +283,15 @@ def api_council_board():return COUNCIL_BOARD.snapshot()
 def api_task_dispatch(req:DispatchIn,x_raios_csrf:str|None=Header(None)):
  require_csrf(x_raios_csrf)
  try:return COUNCIL_BOARD.dispatch(req.task_id,req.target,MESSAGE_WORKER)
+ except ValueError as exc:raise HTTPException(409,str(exc))
+@app.get("/api/tasks/claimable/{actor}")
+def api_claimable_tasks(actor:str):
+ try:return COUNCIL_BOARD.claimable_tasks(actor)
+ except ValueError as exc:raise HTTPException(409,str(exc))
+@app.post("/api/task-claim")
+def api_task_claim(req:TaskClaimIn,x_raios_csrf:str|None=Header(None)):
+ require_csrf(x_raios_csrf)
+ try:return COUNCIL_BOARD.claim_task(req.task_id,req.actor,req.actor_proof)
  except ValueError as exc:raise HTTPException(409,str(exc))
 @app.post("/api/task-accept")
 def api_task_accept(req:TaskAcceptIn,x_raios_csrf:str|None=Header(None)):
@@ -283,7 +326,8 @@ def api_model_route(req:ModelRouteIn,x_raios_csrf:str|None=Header(None)):
  return MODEL_ROUTER.route(RouteRequest(capability=req.capability,privacy=req.privacy,
   latency=req.latency,cost=req.cost,tools_required=req.tools_required,context_tokens=req.context_tokens))
 @app.get("/api/client-activity")
-def api_client_activity():return CLIENT_ACTIVITY.snapshot()
+def api_client_activity(lite:bool=Query(False)):
+ return CLIENT_ACTIVITY.snapshot(include_member_state=not lite, lite=lite)
 @app.post("/api/availability")
 def api_availability(req:AvailabilityIn,x_raios_csrf:str|None=Header(None)):
  require_csrf(x_raios_csrf)
@@ -299,6 +343,10 @@ def api_availability(req:AvailabilityIn,x_raios_csrf:str|None=Header(None)):
   raise HTTPException(409,f"{type(exc).__name__}:{exc}")
 @app.get("/api/notifications/{message_id}")
 def api_notification_status(message_id:str):return CLIENT_ACTIVITY.notification_status(message_id)
+@app.get("/api/attention")
+def api_attention():return COUNCIL_BOARD.attention_snapshot()
+@app.get("/api/attention/{message_id}")
+def api_attention_message(message_id:str):return COUNCIL_BOARD.attention_snapshot(message_id)
 @app.get("/api/receipts")
 def api_receipts():return receipt_state()
 @app.get("/api/message-worker")
@@ -320,7 +368,12 @@ def command(req:CommandIn,x_raios_csrf:str|None=Header(None)):
  if resolution["rejected"]:
   raise HTTPException(400,{"error":"TARGET_UNKNOWN","targets":resolution["rejected"]})
  if not targets:
-  raise HTTPException(409,{"error":"NO_LIVE_BOUND_TARGETS","auto_routable":resolution["auto_routable_snapshot"]})
+  lite=council_lite()
+  raise HTTPException(409,{"error":"NO_LIVE_BOUND_TARGETS","auto_routable":resolution["auto_routable_snapshot"],
+   "registered_count":lite["registered_count"],"active_workers":lite["active_workers"],
+   "select_explicit":["C2","C8"],
+   "hint_ar":"ALL يرسل فقط للمقاعد المربوطة الحية. لا يوجد مقعد حي الآن. اختر C2 أو C8 صراحة.",
+   "hint_en":"ALL routes only to live-bound seats. None are live-bound. Select C2 or C8 explicitly."})
  notice=("COUNCIL_NOTICE_ONLY\nWORK_AUTHORITY=false\n"
          "EXECUTION_REQUIRES=RAIOS_WORKER_TASK_ASSIGNMENT_AND_EXPLICIT_ACCEPTANCE\n\n"+req.text)
  try:msg=MESSAGE_WORKER.enqueue("C1@COMMAND_CENTER",targets,notice,req.task_id,

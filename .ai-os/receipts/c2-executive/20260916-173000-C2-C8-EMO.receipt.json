@@ -1,0 +1,40 @@
+{
+  "schema": "raios.c2-executive.dispatch-receipt.v1",
+  "receipt_id": "C2-C8-EMO-001-20260916-173000",
+  "kind": "C2_OUTBOUND_DISPATCH",
+  "from": "C2",
+  "to": "C8",
+  "task_id": "RAIOS-C8-EMO-001",
+  "dispatch_id": "RAIOS-C8-EMO-001-C8",
+  "recorded_at_utc": "2026-09-16T17:30:00Z",
+  "filename_stamp_utc": "20260916-173000",
+  "status": "DISPATCHED_AWAITING_C8_DATED_RECEIPT",
+  "actor_ack": false,
+  "delivery_ack_ne_actor_ack": true,
+  "authority_this_task": "C1_DIRECT",
+  "active_workers": ["C1", "C2", "C8"],
+  "reviewers": ["C1", "C2"],
+  "seat_map_flipped": false,
+  "channel": {
+    "id": "dated_handoff_plus_c2_executive_receipt_plus_existing_command_center_when_healthy",
+    "handoff": ".ai-os/handoffs/20260916-173000-C2-C8-EXECUTIVE-ORDER-BLOCK.md",
+    "pack": ".ai-os/reports/architecture/RAIOS-C8-EMO-001/",
+    "live_board_or_mcp_used": false,
+    "INTERNAL_BUS_live_delivery": "PENDING_AFTER_COMMAND_CENTER_RESTORE"
+  },
+  "asked_of_c8": [
+    "Canonical-only; local copies are evidence not execution trees",
+    "No new tree/copy/worktree/branch",
+    "WP-00 bind ACK with C8 auth only",
+    "WP-01 Command Center evidence hashes after C2 restore",
+    "WP-02 UCF remaining gates exactly; do not stamp CERTIFIED",
+    "WP-03 presence/LOCKS census; do not mutate",
+    "WP-04 local-copy census only",
+    "WP-05 cursor/* pointers only; no merge",
+    "WP-06 incomplete-work ledger; no silent partials",
+    "C1+C2 review before mutation"
+  ],
+  "c2_executes_command_center_restore": true,
+  "commits": "NONE",
+  "decision_recorded": "D-042"
+}

@@ -1,0 +1,44 @@
+{
+  "schema": "raios.c8-executive-order.constraints.v1",
+  "must": [
+    "Work only in canonical root C:\\Users\\Ghanam\\Documents\\Codex\\Greeny-Life on branch ai-evolution-202608051809",
+    "Existing-first: Discover -> Prove -> Reuse -> Upgrade -> Unify -> Link -> Create (last resort)",
+    "Classify every claim DIRECT|OBSERVED|DERIVED|INFERRED|STALE|CONFLICTING|UNPROVEN",
+    "Finish or report: no silent partials; every WP ends with a dated C8 receipt C1 and C2 can read",
+    "Hash evidence: path + sha256 + generated_at_utc + class",
+    "Treat local copies as evidence surfaces, never as execution trees",
+    "Review loop: C8 evidence -> C2 architectural review -> C1 acceptance before mutation",
+    "Keep UCF as P03+P12+P00 capability, not a 13th program",
+    "Keep Command Center as the existing FastAPI on 127.0.0.1:8770",
+    "Keep Universal MCP as the existing gateway on 127.0.0.1:8788",
+    "Keep C5 as the existing runtime on 127.0.0.1:8766"
+  ],
+  "must_not": [
+    "Create a new git worktree, branch, clone, or project copy for this campaign",
+    "Execute from a local/noncanonical copy",
+    "git merge origin/cursor/* or wholesale merge of cursor/*",
+    "Delete cursor/* branches before extraction closure",
+    "Mutate TASKS.json, LOCKS.json, or SEAT-MAP.json",
+    "Release CHATGPT-NORMAL leases",
+    "Impersonate C3, C4, C5, C6, C7, C9–C12",
+    "Fake C6 constitutional certification or C2 MCP ACK",
+    "Start a second MCP, bus, Command Center, kernel, memory, or knowledge OS",
+    "Bounce a proven-healthy :8788; hung/unhealthy listeners may be restored via existing scripts only",
+    "Re-register RAIOS-C5-Permanent",
+    "Use git --no-verify",
+    "Skip C1+C2 review on mutation",
+    "Mark a WP COMPLETE without evidence hashes",
+    "Leave an incomplete WP unreported"
+  ],
+  "active_workers_only": ["C1", "C2", "C8"],
+  "c8_self_model": {
+    "local_copies_knowledge": "ASSUMED_PRIMARY_C8_VIEW",
+    "class": "INFERRED_UNTIL_C8_CONFIRMS",
+    "rule": "If C8 cannot see the canonical root, STOP and report. Do not invent a second tree to work in."
+  },
+  "p0_mutation": {
+    "C1_MUTATION_AUTHORIZED": true,
+    "mutation_allowed": false,
+    "reason": "C6 signed out; live-bound C6 consumer required before convergence mutation"
+  }
+}

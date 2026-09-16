@@ -181,3 +181,25 @@ def test_availability_claim_without_bound_consumer_is_discovery_only(tmp_path):
     assert routes.resolve(["ALL_AVAILABLE"])["targets"] == []
     assert snap["delivery_ack_ne_cooperation"] is True
     assert snap["coordination_requires_live_bound_consumer"] is True
+
+
+def test_all_empty_does_not_hide_explicit_c8_unbound(tmp_path):
+    repo = tmp_path / "Greeny-Life"
+    seatmap = repo / ".ai-os" / "mcp" / "SEAT-MAP.json"
+    seatmap.parent.mkdir(parents=True)
+    seatmap.write_text(json.dumps({"seats": {
+        "C2": {"actor_role": "ARCHITECT"},
+        "C8": {"actor_role": "CKIO"},
+    }}), encoding="utf-8")
+    presence = tmp_path / "presence.json"
+    presence.write_text(json.dumps({"seats": {}}), encoding="utf-8")
+    bindings = tmp_path / "bindings.json"
+    bindings.write_text(json.dumps({"bindings": {}}), encoding="utf-8")
+    consumers = tmp_path / "consumers"
+    consumers.mkdir()
+    routes = ActorRouteRegistry(repo, presence_path=presence, bindings_path=bindings, consumers_path=consumers)
+    assert routes.resolve(["ALL"])["targets"] == []
+    explicit = routes.resolve(["C2", "C8"])
+    assert explicit["targets"] == ["C2", "C8"]
+    assert explicit["routing_modes"]["C8"] == "C1_SELECTED_UNBOUND"
+    assert "C8" in explicit["owner_selected_unbound"]
