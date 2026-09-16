@@ -20,10 +20,30 @@
     "class": "OBSERVED"
   },
   "fail_closed": "Any ownership, canonical, or governance conflict returns the task to READY with checkpoint.",
+  "phase1_this_slice": {
+    "C1_PHASE1_FILES_AUTHORIZED": true,
+    "C1_MUTATION_AUTHORIZED": false,
+    "C6_LIVE_BOUND_CONSUMER": false,
+    "files_moved": false,
+    "services_stopped": false,
+    "gitignore_used_as_sole_fix": false,
+    "mutation_allowed": false,
+    "class": "OBSERVED"
+  },
   "phase1_success": {
     "SOURCE_TREE_CHURN_PER_10_MIN": 0,
     "UNKNOWN_WRITERS": 0,
     "RUNTIME_STATE_IN_SOURCE_TRACKING": 0
+  },
+  "phase2_this_slice": {
+    "C1_PHASE2_FILES_AUTHORIZED": true,
+    "C1_MUTATION_AUTHORIZED": false,
+    "executive_program_treated_as_authority": false,
+    "c5_cutover": false,
+    "stale_marked_as_current": false,
+    "conflicts_present": true,
+    "mutation_allowed": false,
+    "class": "OBSERVED"
   },
   "phase2_success": {
     "AMBIGUOUS_HEAD_FIELDS": 0,

@@ -1,0 +1,43 @@
+{
+  "schema": "raios.canonical-convergence.p0-observed.v1",
+  "task_id": "RAIOS-CANONICAL-CONVERGENCE-001",
+  "decision": "D-039",
+  "observed_at_utc": "2026-09-16T04:02:00Z",
+  "mode": "READ_ONLY",
+  "CANONICAL_BRANCH": "ai-evolution-202608051809",
+  "CANONICAL_BRANCH_class": "OBSERVED_FROM_AUTHORITY_FILE_AND_LAST_PUSH",
+  "repository_head": "c527cd7cac8a95f84fcf16322812ea651b9701f8",
+  "repository_head_class": "OBSERVED_THIS_SESSION_PUSH",
+  "worker_registry_path": ".ai-os/state/command-fabric/WORKER-REGISTRY.json",
+  "worker_id": "RAIOS-WORKER@AG",
+  "worker_kind": "MESSAGE_PICKUP",
+  "worker_liveness": "LIVE",
+  "worker_liveness_observed_at": "2026-09-16T03:58:22.931878+00:00",
+  "worker_registry_head": "2efd08184614749dee999be7a2456c6bf1387c2e",
+  "worker_registry_head_class": "OBSERVED_FILE_CONFLICTING_VS_REPOSITORY_HEAD",
+  "C6_LIVE_BOUND_CONSUMER": false,
+  "C6_LIVE_BOUND_CONSUMER_class": "OBSERVED_WORKER_LIVE_IS_MESSAGE_PICKUP_NOT_C6_CONSUMER",
+  "TASK_LEASE_ACTIVE": false,
+  "TASK_LEASE_ACTIVE_class": "OBSERVED_NO_LOCKS_ENTRY_FOR_CAMPAIGN_TASK_ID",
+  "LOCK_OWNER_LAW": "RAIOS_SYSTEM",
+  "LOCK_OWNER_LAW_class": "OBSERVED_FROM_SEAT_MAP_OWNER",
+  "SCOPE_CONFLICTS": "UNPROVEN",
+  "SCOPE_CONFLICTS_class": "UNPROVEN_FULL_LOCK_SCAN_NOT_RUN",
+  "C1_MUTATION_AUTHORIZED": false,
+  "mutation_allowed": false,
+  "health_probes_this_slice": {
+    "mcp_8788": "TIMEOUT",
+    "mcp_8788_class": "OBSERVED",
+    "command_center_8770": "TIMEOUT",
+    "command_center_8770_class": "OBSERVED",
+    "c5_8766": "TIMEOUT",
+    "c5_8766_class": "OBSERVED",
+    "note": "Invoke-WebRequest -TimeoutSec 5 against 127.0.0.1. Worker registry still showed MESSAGE_PICKUP LIVE at 2026-09-16T03:58:22Z. Health timeout is not a C6 bind."
+  },
+  "locks_mutated": false,
+  "c6_rebound": false,
+  "derived": {
+    "mutation_allowed": false,
+    "reason": "C6_LIVE_BOUND_CONSUMER false; TASK_LEASE_ACTIVE false; C1_MUTATION_AUTHORIZED false; SCOPE_CONFLICTS UNPROVEN"
+  }
+}

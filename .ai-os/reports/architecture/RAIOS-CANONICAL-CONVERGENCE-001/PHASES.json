@@ -2,8 +2,8 @@
   "schema": "raios.canonical-convergence.phases.v1",
   "campaign": [
     {"id": "P0", "name": "C6 live binding + leases", "phase": 0, "owner": "C1/C6", "status": "FILES_AND_TESTS_EMITTED", "mutation": "BLOCKED_NO_C6_LIVE_BINDING"},
-    {"id": "P1", "name": "Stop source-tree runtime churn", "phase": 1, "owner": "C3", "status": "QUEUED"},
-    {"id": "P2", "name": "Reconcile HEAD/state truth", "phase": 2, "owner": "C2", "status": "QUEUED"},
+    {"id": "P1", "name": "Stop source-tree runtime churn", "phase": 1, "owner": "C3", "status": "FILES_AND_TESTS_EMITTED", "mutation": "BLOCKED_UNTIL_P0_MUTATION_ALLOWED"},
+    {"id": "P2", "name": "Reconcile HEAD/state truth", "phase": 2, "owner": "C2", "status": "FILES_AND_TESTS_EMITTED", "mutation": "BLOCKED_UNTIL_P0_MUTATION_ALLOWED"},
     {"id": "P3", "name": "Certify UCF delivery and Actor ACK", "phase": 3, "owner": "C3/C6", "status": "QUEUED"},
     {"id": "P4", "name": "Global asset/copy census", "phase": 4, "owner": "C8/C2", "status": "QUEUED"},
     {"id": "P5", "name": "Cursor and Kaggle value extraction", "phase": 5, "owner": "C2/C8", "status": "QUEUED"},

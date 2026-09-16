@@ -1,0 +1,70 @@
+{
+  "schema": "raios.canonical-convergence.head-snapshot.v1",
+  "task_id": "RAIOS-CANONICAL-CONVERGENCE-001",
+  "decision": "D-040",
+  "observed_at_utc": "2026-09-16T04:12:00Z",
+  "mode": "READ_ONLY",
+  "law": "Never use a bare field named head when the referent is deployed or runtime. EXECUTIVE-PROGRAM.json is a projection, not an independent authority.",
+  "stamps": {
+    "repository_head": {
+      "value": "c527cd7cac8a95f84fcf16322812ea651b9701f8",
+      "observed_at": "2026-09-16T04:12:00Z",
+      "source": ".git/refs/heads/ai-evolution-202608051809",
+      "proof_hash": "sha256:value",
+      "class": "OBSERVED"
+    },
+    "evidence_commit": {
+      "value": "c527cd7cac8a95f84fcf16322812ea651b9701f8",
+      "observed_at": "2026-09-16T04:12:00Z",
+      "source": "last pushed canonical commit D-038; D-039/D-040 still uncommitted working tree",
+      "proof_hash": "sha256:value",
+      "class": "OBSERVED"
+    },
+    "deployed_source_head": {
+      "value": null,
+      "last_known": "86d0f3ed475951fa46d0e30fa250c118412a284a",
+      "observed_at": "2026-09-16T04:12:00Z",
+      "source": "no live C5 /health this slice; D-039 HTTP TIMEOUT; last_known from HEAD-TRUTH-MODEL snapshot_at_design",
+      "proof_hash": "sha256:last_known",
+      "class": "UNPROVEN",
+      "last_known_class": "STALE"
+    },
+    "runtime_reported_head": {
+      "value": "2efd08184614749dee999be7a2456c6bf1387c2e",
+      "observed_at": "2026-09-16T04:10:50.224302+00:00",
+      "source": ".ai-os/state/command-fabric/WORKER-REGISTRY.json",
+      "proof_hash": "sha256:value",
+      "class": "CONFLICTING"
+    },
+    "state_projection_head": {
+      "value": "2efd08184614749dee999be7a2456c6bf1387c2e",
+      "also_seen": ["96a1e7ef9cbbe15176a83c9b65d5efea9239b747"],
+      "observed_at": "2026-09-16T04:12:00Z",
+      "source": ".ai-os/state/EXECUTIVE-PROGRAM.json head; .ai-os/mcp/EXECUTION-CHANNEL.json head",
+      "proof_hash": "sha256:value",
+      "class": "CONFLICTING",
+      "also_seen_class": "HISTORICAL"
+    },
+    "upstream_head": {
+      "value": "c527cd7cac8a95f84fcf16322812ea651b9701f8",
+      "observed_at": "2026-09-16T04:12:00Z",
+      "source": ".git/refs/remotes/origin/ai-evolution-202608051809",
+      "proof_hash": "sha256:value",
+      "class": "OBSERVED"
+    }
+  },
+  "conflicts": [
+    "repository_head c527cd7 vs runtime_reported_head 2efd081",
+    "repository_head c527cd7 vs state_projection_head 2efd081",
+    "repository_head c527cd7 vs EXECUTION-CHANNEL head 96a1e7e"
+  ],
+  "historical_unless_live_proves_use": [
+    "2efd08184614749dee999be7a2456c6bf1387c2e",
+    "96a1e7ef9cbbe15176a83c9b65d5efea9239b747"
+  ],
+  "executive_program_is_authority": false,
+  "c5_cutover_this_slice": false,
+  "c5_cutover_before_delta_and_rollback_test": "FORBIDDEN",
+  "locks_mutated": false,
+  "mutation_allowed": false
+}

@@ -1,6 +1,6 @@
 # RAIOS Canonical Convergence 001 — Design
 
-Status: PHASE0_FILES_AND_TESTS. C1_ACCEPTANCE=false (full EXECUTE). C1_PHASE0_FILES_AUTHORIZED=true. IMPLEMENTATION=NOT_STARTED.
+Status: PHASE2_FILES_AND_TESTS. C1_ACCEPTANCE=false (full EXECUTE). C1_PHASE0_FILES_AUTHORIZED=true. C1_PHASE1_FILES_AUTHORIZED=true. C1_PHASE2_FILES_AUTHORIZED=true. IMPLEMENTATION=NOT_STARTED.
 
 The defect is not “too many copies.” Four kinds share one space: legal source, volatile runtime state, evidence/governance, and historical legacy. Direct cleanup now can destroy unique value or freeze a temporary runtime stamp as permanent truth.
 
@@ -24,9 +24,13 @@ Highest engineering priority. Classify: Source (Git), Governance (Git after auth
 
 Do not treat `.gitignore` alone as the fix. Do not stop services outside a C1 quiescence window.
 
+D-039 emitted the Phase 1 classification contract and fail-closed tests only. No file was moved. P1 mutation stays blocked until P0 `mutation_allowed` is true. `WORKER-REGISTRY.json` remains an observed RUNTIME_STATE example in the tree.
+
 ## Phase 2 — HEAD truth model
 
 Distinguish repository_head, evidence_commit, deployed_source_head, runtime_reported_head, state_projection_head, upstream_head. Each stamp needs observed_at, source, proof_hash, class. EXECUTIVE-PROGRAM.json is a projection, not an independent authority. Do not cut over C5 off `86d0f3e` without deployment-delta and rollback tests. Treat `2efd081` and `96a1e7e` as historical unless a live runtime proves it still uses them.
+
+D-040 emitted the Phase 2 named-stamp snapshot and fail-closed tests only. Conflicts remain recorded: repository `c527cd7` vs worker/projection `2efd081` vs EXECUTION-CHANNEL `96a1e7e`. Live deployed C5 head is UNPROVEN (HTTP timeout). The projection `head` field was not rewritten as current. C5 was not cut over.
 
 ## Phases 3–5 — Census and extraction
 
@@ -50,4 +54,4 @@ No provider promotion without Adapter Profile and security/recovery certificates
 
 Archive before delete. Exact-redundancy delete only after C8 certification, recovery proof, and C1 approval. Final flags (FOUNDATION_BOOTSTRAP_CERTIFIED, READY_FOR_ASSIMILATION, RAIOS_CANONICAL_RUNTIME_CERTIFIED) only after the phase-12 gate vector is true.
 
-C2 emitted Phase 0 files and fail-closed tests only (D-038). P0 mutation, C6 rebind, cursor extraction, and tree cleanup remain blocked.
+C2 emitted Phase 0 files (D-038), Phase 1 classification files (D-039), and Phase 2 HEAD-stamp files (D-040). P0 mutation, C6 rebind, cursor extraction, tree cleanup, P1 relocation, and C5 cutover remain blocked.

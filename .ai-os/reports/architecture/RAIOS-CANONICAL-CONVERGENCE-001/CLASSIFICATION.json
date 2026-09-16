@@ -1,0 +1,88 @@
+{
+  "schema": "raios.canonical-convergence.classification.v1",
+  "wave": "P1",
+  "decision": "D-039",
+  "purpose": "Contract for separating legal source from runtime state. Files and tests only. No relocation this slice.",
+  "kinds": [
+    {
+      "id": "LEGAL_SOURCE",
+      "git": true,
+      "definition": "Canonical executable and schema that the branch must carry."
+    },
+    {
+      "id": "GOVERNANCE",
+      "git": true,
+      "after": "authority",
+      "definition": "Contracts, seat map, change-authority policy, decisions. High churn does not make them runtime-only."
+    },
+    {
+      "id": "DURABLE_EVIDENCE",
+      "git": "or evidence store",
+      "definition": "Receipts, reports, handoffs, certification packs with provenance."
+    },
+    {
+      "id": "RUNTIME_STATE",
+      "git": false,
+      "definition": "Live worker heartbeats, leases, deliveries, session stamps. Must leave source tracking when P1 mutates."
+    },
+    {
+      "id": "VOLATILE_TELEMETRY",
+      "git": false,
+      "definition": "Logs, audits, pulse traces. Out of Git."
+    },
+    {
+      "id": "WAL",
+      "git": false,
+      "store": "bounded",
+      "definition": "Append-only cognitive/command WAL. Not a Git source of truth."
+    },
+    {
+      "id": "TEMPORARY",
+      "git": false,
+      "definition": "Backups, bak copies, editor debris. Isolate; delete only after proof."
+    },
+    {
+      "id": "RECOVERY_ARTIFACT",
+      "git": "hash-archive then value-assess",
+      "definition": "Recovery snapshots. Archive before any delete."
+    }
+  ],
+  "law": [
+    "gitignore-only is not the mutable-state solution",
+    "do not stop services outside a C1 quiescence window",
+    "classification is not relocation",
+    "LOCKS.json and TASKS.json remain GOVERNANCE until C1 authorizes a new control-plane store",
+    "WORKER-REGISTRY live heartbeat in the tree is RUNTIME_STATE, not LEGAL_SOURCE"
+  ],
+  "observed_examples_not_moved": [
+    {
+      "path": "scripts/ai-os/raios_change_gate.py",
+      "kind": "LEGAL_SOURCE"
+    },
+    {
+      "path": ".ai-os/mcp/CANONICAL-CHANGE-AUTHORITY.json",
+      "kind": "GOVERNANCE"
+    },
+    {
+      "path": ".ai-os/reports/architecture/RAIOS-CANONICAL-CONVERGENCE-001/",
+      "kind": "DURABLE_EVIDENCE"
+    },
+    {
+      "path": ".ai-os/state/command-fabric/WORKER-REGISTRY.json",
+      "kind": "RUNTIME_STATE",
+      "note": "MESSAGE_PICKUP heartbeat and reported head live in the source tree"
+    },
+    {
+      "path": ".ai-os/state/LOCKS.json",
+      "kind": "GOVERNANCE",
+      "note": "Shared control plane. Not relocated this slice. Not treated as disposable runtime."
+    },
+    {
+      "path": ".ai-os/mcp/AUDIT.jsonl",
+      "kind": "VOLATILE_TELEMETRY"
+    }
+  ],
+  "this_slice_relocated": [],
+  "this_slice_deleted": [],
+  "gitignore_used_as_sole_fix": false
+}

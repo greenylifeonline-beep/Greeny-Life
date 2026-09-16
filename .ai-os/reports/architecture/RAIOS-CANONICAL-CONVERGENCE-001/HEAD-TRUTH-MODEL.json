@@ -19,5 +19,16 @@
     "state_projection_heads_historical": ["2efd08184614749dee999be7a2456c6bf1387c2e", "96a1e7ef9cbbe15176a83c9b65d5efea9239b747"],
     "stale_unless_live_runtime_proves_use": true,
     "c5_cutover_before_delta_and_rollback_test": "FORBIDDEN"
+  },
+  "snapshot_at_d040": {
+    "repository_head": "c527cd7cac8a95f84fcf16322812ea651b9701f8",
+    "repository_head_class": "OBSERVED",
+    "runtime_reported_head": "2efd08184614749dee999be7a2456c6bf1387c2e",
+    "runtime_reported_head_class": "CONFLICTING",
+    "state_projection_head": "2efd08184614749dee999be7a2456c6bf1387c2e",
+    "execution_channel_head": "96a1e7ef9cbbe15176a83c9b65d5efea9239b747",
+    "deployed_source_head_live": "UNPROVEN",
+    "executive_program_is_authority": false,
+    "c5_cutover": "FORBIDDEN"
   }
 }

@@ -1,0 +1,48 @@
+{
+  "schema": "raios.canonical-convergence.wave-01.v1",
+  "wave": "P1",
+  "name": "Separate source from runtime — files and tests only",
+  "decision": "D-039",
+  "authorized_by_c1": "NEXT_AFTER_D038_SAME_MODE_FILES_AND_TESTS",
+  "authorization_class": "OBSERVED_OWNER_UTTERANCE_TALI",
+  "C1_FULL_EXECUTE": false,
+  "C1_MUTATION_AUTHORIZED": false,
+  "depends_on": "P0 mutation_allowed remains false; this wave does not skip the C6 bind",
+  "includes": [
+    "kind classification contract",
+    "fail-closed tests that gitignore-only is not the fix",
+    "observed examples left in place",
+    "P0 gate re-observation without rebind"
+  ],
+  "excludes": [
+    "moving or deleting files",
+    "gitignore-only mutable-state fix",
+    "stop services",
+    "cursor branch extraction",
+    "tree cleanup",
+    "C6 live rebind",
+    "LOCKS.json mutation",
+    "TASKS.json mutation",
+    "SEAT-MAP.json mutation",
+    "merge",
+    "C5 cutover",
+    "provider promotion"
+  ],
+  "required_before_p1_mutation": {
+    "P0_mutation_allowed": true,
+    "C1_MUTATION_AUTHORIZED": true,
+    "C6_LIVE_BOUND_CONSUMER": true,
+    "TASK_LEASE_ACTIVE": true
+  },
+  "observed_this_slice": {
+    "files_moved": false,
+    "services_stopped": false,
+    "gitignore_used_as_sole_fix": false,
+    "C6_LIVE_BOUND_CONSUMER": false,
+    "mutation_allowed": false,
+    "class": "DERIVED"
+  },
+  "classification": "CLASSIFICATION.json",
+  "p0_observation": "P0-OBSERVED.json",
+  "fail_closed": "P1 mutation stays blocked while P0 mutation_allowed is false. Classification is not relocation."
+}

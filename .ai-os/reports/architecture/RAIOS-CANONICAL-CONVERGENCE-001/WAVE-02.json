@@ -1,0 +1,46 @@
+{
+  "schema": "raios.canonical-convergence.wave-02.v1",
+  "wave": "P2",
+  "name": "Reconcile HEAD/state truth — files and tests only",
+  "decision": "D-040",
+  "authorized_by_c1": "NEXT_AFTER_D039_SAME_MODE_FILES_AND_TESTS",
+  "authorization_class": "OBSERVED_OWNER_UTTERANCE_TALI",
+  "C1_FULL_EXECUTE": false,
+  "C1_MUTATION_AUTHORIZED": false,
+  "owner": "C2",
+  "depends_on": "Does not skip P0 C6 bind. Does not relocate P1 runtime state. Does not cut over C5.",
+  "includes": [
+    "named HEAD stamps with class",
+    "fail-closed tests that EXECUTIVE-PROGRAM is not authority",
+    "fail-closed tests that 2efd081 and 96a1e7e are not current",
+    "C5 cutover remains forbidden"
+  ],
+  "excludes": [
+    "rewriting EXECUTIVE-PROGRAM.json head as current",
+    "C5 cutover",
+    "C6 live rebind",
+    "LOCKS.json mutation",
+    "TASKS.json mutation",
+    "SEAT-MAP.json mutation",
+    "file relocation",
+    "cursor branch extraction",
+    "merge",
+    "service stop"
+  ],
+  "required_before_p2_mutation": {
+    "P0_mutation_allowed": true,
+    "C1_MUTATION_AUTHORIZED": true,
+    "named_stamps_only": true,
+    "c5_delta_and_rollback_tests": true
+  },
+  "observed_this_slice": {
+    "c5_cutover": false,
+    "executive_program_treated_as_authority": false,
+    "stale_marked_as_current": false,
+    "conflicts_present": true,
+    "mutation_allowed": false,
+    "class": "DERIVED"
+  },
+  "snapshot": "HEAD-SNAPSHOT.json",
+  "fail_closed": "A bare head field is not current. Projection is not repository. Live HTTP timeout is not a cutover."
+}
