@@ -1,0 +1,90 @@
+{
+  "schema": "raios.c2.canonical-truth-delta.v1",
+  "task_id": "RAIOS-UCF-CANONICAL-TRUTH-RECONCILIATION-001",
+  "c2_packet_id": "eda2756f-5b3a-409b-9476-ab4855075921",
+  "c8_packet_id": "d145653d-8af1-483d-ab22-46500bba30da",
+  "c1_correction_packet_id": "f446107e-64a6-43d1-bc50-2248cd2b4801",
+  "mode": "READ_ONLY_ANALYSIS",
+  "worker_used": false,
+  "ack_fabricated": false,
+  "generated_at_utc": "2026-09-15T18:52:00Z",
+  "baseline_packet": {
+    "branch": "ai-evolution-202608051809",
+    "head": "4fbfd26de028807f7056f6dba42a22b88e65b732",
+    "class": "DIRECT"
+  },
+  "this_inspect": {
+    "branch": "ai-evolution-202608051809",
+    "head": "4fbfd26de028807f7056f6dba42a22b88e65b732",
+    "head_match_packet": true,
+    "class": "OBSERVED"
+  },
+  "newer_than_packet": [
+    {
+      "item": "MCP packets.jsonl records for C2/C8/C1 packets after HEAD",
+      "path": ".ai-os/mcp/packets.jsonl",
+      "git": "UNTRACKED",
+      "class": "OBSERVED"
+    },
+    {
+      "item": "This C2 read-only reconciliation pack",
+      "class": "DIRECT"
+    }
+  ],
+  "seat_map": {
+    "path": ".ai-os/mcp/SEAT-MAP.json",
+    "exists": true,
+    "schema": "raios.seat-map.v2",
+    "knowledge_state": "CANONICAL",
+    "owner": "RAIOS_SYSTEM",
+    "authority": "C1",
+    "seat_count": 12,
+    "sha256_prefix_worktree": "461c55127251a90a",
+    "git_worktree": "MODIFIED",
+    "missing_claim": "REJECTED_FOR_CANONICAL_REPO",
+    "class": "OBSERVED"
+  },
+  "ucf_core_overwrite": {
+    "admin_claim": "UCF core files have local changes; overwrite prevented",
+    "this_inspect_ucf_pack": "CLEAN_AT_HEAD",
+    "clean_paths": [
+      ".ai-os/reports/comms/UCF-CANONICALIZATION-001/",
+      ".ai-os/mcp/POLICY.json",
+      ".ai-os/mcp/EXECUTION-CHANNEL.json"
+    ],
+    "dirty_related_paths": [
+      ".ai-os/mcp/SEAT-MAP.json",
+      ".ai-os/state/LOCKS.json",
+      ".ai-os/state/TASKS.json",
+      ".ai-os/mcp/packets.jsonl"
+    ],
+    "class": "CONFLICTING",
+    "action": "C2 did not overwrite any of these paths"
+  },
+  "ucf_certification": {
+    "path": ".ai-os/reports/comms/UCF-CANONICALIZATION-001/UCF-CERTIFICATION.json",
+    "status": "NOT_CERTIFIED",
+    "architecture": "PASS",
+    "implementation": "NOT_STARTED",
+    "waiting": "WAITING_FOR_C1_BOOTSTRAP_PASS",
+    "class": "OBSERVED"
+  },
+  "mcp_delivery": {
+    "send_packet_c2": "ok in AUDIT.jsonl as actor C1",
+    "enqueue_command_fabric": "NOT_PROVEN this slice",
+    "c2_mcp_token": "ABSENT",
+    "mcp_ack_packet": "NOT_SENT",
+    "ledger_read_receipt": true,
+    "queued_for_seat_ne_actor_ack": true,
+    "class": "OBSERVED"
+  },
+  "c1_correction": {
+    "to": "C1",
+    "c2_executes": false,
+    "note": "TASKS/LOCKS bootstrap remains C1-owned. C2 does not mutate LOCKS.json."
+  },
+  "c8_packet": {
+    "to": "C8",
+    "c2_impersonates": false
+  }
+}

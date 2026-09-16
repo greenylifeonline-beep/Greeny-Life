@@ -1,0 +1,44 @@
+{
+  "schema": "raios.c2.program-order-reconciliation.v1",
+  "task_id": "RAIOS-UCF-CANONICAL-TRUTH-RECONCILIATION-001",
+  "generated_at_utc": "2026-09-15T18:52:00Z",
+  "official_00_12": {
+    "source": "D-024",
+    "class": "DIRECT",
+    "P03": "Provider Fabric",
+    "P12": "Communication Fabric",
+    "P00": "Resource Assimilation Fabric",
+    "rewritten": false
+  },
+  "ucf_as_program_03_project": {
+    "source": "D-029",
+    "class": "DIRECT",
+    "priority": "ZERO",
+    "formula": "Communication Capability through official P03 Provider Fabric + official P12 Communication Fabric (INTERNAL_BUS) + P00 integration",
+    "third_program_number": false,
+    "illegal": false,
+    "program_03_priority_order_class": "C1_OVERRIDE_VALID"
+  },
+  "capability_overlay": {
+    "source": "D-026",
+    "class": "DIRECT",
+    "P03_remains": "Provider Fabric",
+    "overlay": "capability-driven"
+  },
+  "p00_phase_a": {
+    "source": "D-028",
+    "FOUNDATION_BOOTSTRAP_CERTIFIED": false,
+    "implementation_runtime": "NOT_STARTED_BY_C2"
+  },
+  "this_admin_report": {
+    "UCF_IMPLEMENTATION": "WAITING_FOR_C1_BOOTSTRAP_PASS",
+    "class": "DIRECT",
+    "aligns_with": ["D-028", "D-029", "D-032", "UCF-CERTIFICATION.json NOT_CERTIFIED"]
+  },
+  "d031": {
+    "invented": false,
+    "ledger": "ABSENT",
+    "class": "CONFLICTING vs historical C1 oral claim; D-025 already recorded"
+  },
+  "implementation_this_task": false
+}

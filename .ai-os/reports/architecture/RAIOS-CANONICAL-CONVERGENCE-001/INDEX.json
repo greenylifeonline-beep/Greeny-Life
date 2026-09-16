@@ -1,0 +1,52 @@
+{
+  "schema": "raios.canonical-convergence.index.v1",
+  "pack_id": "RAIOS-CANONICAL-CONVERGENCE-001",
+  "task_id": "RAIOS-CANONICAL-CONVERGENCE-001",
+  "authority": "C1",
+  "role": "C2_ARCHITECTURAL_AUTHORITY",
+  "generated_at_utc": "2026-09-15T23:20:00Z",
+  "status": "DESIGN_RECORDED",
+  "C1_ACCEPTANCE": false,
+  "IMPLEMENTATION": "NOT_STARTED",
+  "KERNEL": "FROZEN",
+  "FOUNDATION_BOOTSTRAP_CERTIFIED": false,
+  "READY_FOR_ASSIMILATION": false,
+  "selected_option": 3,
+  "selected_name": "GRADUAL_CONVERGENCE_ONTO_CANONICAL",
+  "rejected_options": [
+    "WHOLESALE_BRANCH_AND_COPY_MERGE",
+    "CLEAN_TREE_REBUILD"
+  ],
+  "four_mixed_kinds": [
+    "LEGAL_SOURCE",
+    "VOLATILE_RUNTIME_STATE",
+    "EVIDENCE_AND_GOVERNANCE",
+    "HISTORICAL_LEGACY"
+  ],
+  "official_00_12_rewritten": false,
+  "third_program_number": false,
+  "overlay_through": ["P00", "P03", "P11", "P12"],
+  "decision": "D-037",
+  "management_report": "MR-C2-20260916-001",
+  "human_design": "DESIGN.md",
+  "files": [
+    "INDEX.json",
+    "DESIGN.md",
+    "GATES.json",
+    "PHASES.json",
+    "HEAD-TRUTH-MODEL.json",
+    "FORBIDDEN.json",
+    "ROLES.json"
+  ],
+  "execution_bar": {
+    "CANONICAL_BRANCH": "ai-evolution-202608051809",
+    "C1_ACCEPTANCE": "REQUIRED",
+    "C6_LIVE_BOUND_CONSUMER": "REQUIRED_BEFORE_MUTATION",
+    "TASK_LEASE_ACTIVE": "REQUIRED_BEFORE_MUTATION",
+    "LOCK_OWNER": "RAIOS_SYSTEM"
+  },
+  "this_slice_wrote_runtime": false,
+  "this_slice_merged": false,
+  "this_slice_deleted": false,
+  "locks_mutated": false
+}

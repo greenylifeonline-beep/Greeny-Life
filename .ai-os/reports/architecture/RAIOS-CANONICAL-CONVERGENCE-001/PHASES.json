@@ -1,0 +1,42 @@
+{
+  "schema": "raios.canonical-convergence.phases.v1",
+  "campaign": [
+    {"id": "P0", "name": "C6 live binding + leases", "phase": 0, "owner": "C1/C6", "status": "BLOCKED_NO_C6_LIVE_BINDING"},
+    {"id": "P1", "name": "Stop source-tree runtime churn", "phase": 1, "owner": "C3", "status": "QUEUED"},
+    {"id": "P2", "name": "Reconcile HEAD/state truth", "phase": 2, "owner": "C2", "status": "QUEUED"},
+    {"id": "P3", "name": "Certify UCF delivery and Actor ACK", "phase": 3, "owner": "C3/C6", "status": "QUEUED"},
+    {"id": "P4", "name": "Global asset/copy census", "phase": 4, "owner": "C8/C2", "status": "QUEUED"},
+    {"id": "P5", "name": "Cursor and Kaggle value extraction", "phase": 5, "owner": "C2/C8", "status": "QUEUED"},
+    {"id": "P6", "name": "Capability/name deduplication", "phase": 6, "owner": "C2", "status": "QUEUED"},
+    {"id": "P7", "name": "Incremental canonical integration", "phase": 7, "owner": "C3", "status": "QUEUED"},
+    {"id": "P8", "name": "Runtime/restart/reboot/self-heal proof", "phase": 8, "owner": "C3", "status": "QUEUED"},
+    {"id": "P9", "name": "Recoverable archive", "phase": 10, "owner": "C8", "status": "QUEUED"},
+    {"id": "P10", "name": "Safe deletion", "phase": 11, "owner": "C1/C8", "status": "QUEUED"},
+    {"id": "P11", "name": "Final certification", "phase": 12, "owner": "C6/C1", "status": "QUEUED"}
+  ],
+  "note": "Campaign P0–P11 are execution waves over official programs 00–12. They are not a thirteenth program number.",
+  "design_phases": [
+    {"n": 0, "title": "Authority and execution gate"},
+    {"n": 1, "title": "Separate source from runtime state"},
+    {"n": 2, "title": "Unify canonical HEAD truth"},
+    {"n": 3, "title": "Global copy/resource census"},
+    {"n": 4, "title": "Extract value from cursor/*"},
+    {"n": 5, "title": "Extract Kaggle and external copies"},
+    {"n": 6, "title": "Unify capabilities and names"},
+    {"n": 7, "title": "Disciplined capability-by-capability merge"},
+    {"n": 8, "title": "Professional runtime recovery"},
+    {"n": 9, "title": "Resource and capability certification"},
+    {"n": 10, "title": "Archive before delete"},
+    {"n": 11, "title": "Safe deletion"},
+    {"n": 12, "title": "Final certification"}
+  ],
+  "cursor_extraction_priority": [
+    "UCF / Command Fabric / delivery/ACK",
+    "C5 recovery and operational independence",
+    "Governance / certifier safety",
+    "File Intelligence",
+    "Resource / Provider / AI Gateway",
+    "Assimilation and old repairs",
+    "A17/A18 only if required by active capabilities"
+  ]
+}

@@ -1,0 +1,23 @@
+{
+  "schema": "raios.head-truth-model.v1",
+  "law": "Never use a bare field named head when the referent is deployed or runtime.",
+  "fields": [
+    "repository_head",
+    "evidence_commit",
+    "deployed_source_head",
+    "runtime_reported_head",
+    "state_projection_head",
+    "upstream_head"
+  ],
+  "stamp_required": ["observed_at", "source", "proof_hash", "class"],
+  "snapshot_at_design": {
+    "repository_head": "4fbfd26de028807f7056f6dba42a22b88e65b732",
+    "repository_head_class": "OBSERVED_AT_D036",
+    "evidence_commit_ucf": "775a804b95be1a41ce9a7dcbca88e042c8ec0e35",
+    "governance_closure_commit": "4fbfd26de028807f7056f6dba42a22b88e65b732",
+    "deployed_source_head_c5": "86d0f3ed475951fa46d0e30fa250c118412a284a",
+    "state_projection_heads_historical": ["2efd08184614749dee999be7a2456c6bf1387c2e", "96a1e7ef9cbbe15176a83c9b65d5efea9239b747"],
+    "stale_unless_live_runtime_proves_use": true,
+    "c5_cutover_before_delta_and_rollback_test": "FORBIDDEN"
+  }
+}

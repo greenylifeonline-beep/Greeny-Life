@@ -1,0 +1,60 @@
+{
+  "schema": "raios.management-report.v1",
+  "ManagementReportID": "MR-C2-20260915-002",
+  "ReportVersion": "1.0",
+  "task_owner": "C2",
+  "to": ["C1", "MANAGEMENT", "C6"],
+  "authority": "C1",
+  "generated_at_utc": "2026-09-15T18:52:00Z",
+  "contract_task": "MANAGEMENT-REPORT-CONTRACT-001",
+  "one_task_one_report": true,
+  "source_packet_id": "eda2756f-5b3a-409b-9476-ab4855075921",
+  "correlation_id": "RAIOS-UCF-C2-TRUTH-20260915",
+  "task_id": "RAIOS-UCF-CANONICAL-TRUTH-RECONCILIATION-001",
+  "READY_FOR_C6_REVIEW": true,
+  "IMPLEMENTATION": false,
+  "KERNEL": "FROZEN",
+  "UCF_IMPLEMENTATION": "WAITING_FOR_C1_BOOTSTRAP_PASS",
+  "worker_used": false,
+  "ack_fabricated": false,
+  "mcp_ack_sent": false,
+  "mcp_ack_reason": "C2 token ABSENT; only C1 token present; C2 will not impersonate C1",
+  "AffectedPrograms": ["P00", "P03", "P12"],
+  "AffectedCapabilities": ["Communication"],
+  "AffectedProviders": {"promoted": [], "class": "DIRECT"},
+  "RelatedDecisions": ["D-024", "D-026", "D-028", "D-029", "D-032", "D-035", "D-036"],
+  "RelatedCanonicalAssets": [
+    ".ai-os/reports/management/RAIOS-C2-MANAGEMENT-REPORT-002/",
+    ".ai-os/reports/comms/UCF-CANONICALIZATION-001/UCF-CERTIFICATION.json",
+    ".ai-os/reports/architecture/RAIOS-UCF-ARCHITECTURE-001/",
+    ".ai-os/mcp/SEAT-MAP.json",
+    ".ai-os/mcp/packets.jsonl",
+    ".ai-os/mcp/AUDIT.jsonl"
+  ],
+  "supporting_evidence_not_separate_reports": [
+    "evidence/C2_CANONICAL_TRUTH_DELTA.json",
+    "evidence/UCF_VALUE_EXTRACTION_MATRIX.json",
+    "evidence/PROGRAM_ORDER_RECONCILIATION.json",
+    "evidence/LOCK_CONTRACT_ARCHITECTURE_DELTA.json"
+  ],
+  "findings": [
+    {"id": "HEAD_MATCH", "class": "OBSERVED", "detail": "Live HEAD equals packet 4fbfd26"},
+    {"id": "SEAT_MAP_PRESENT", "class": "OBSERVED", "detail": ".ai-os/mcp/SEAT-MAP.json schema v2, owner RAIOS_SYSTEM, 12 seats"},
+    {"id": "UCF_PACK_CLEAN", "class": "CONFLICTING vs admin dirty-UCF claim", "detail": "UCF-CANONICALIZATION-001, POLICY.json, EXECUTION-CHANNEL.json clean at HEAD; dirty are SEAT-MAP/LOCKS/TASKS/packets.jsonl"},
+    {"id": "P03_UCF", "class": "C1_OVERRIDE_VALID", "detail": "D-029; not a third program; not illegal"},
+    {"id": "NO_MERGE", "class": "DIRECT", "detail": "cursor/* not merged; certifier 1-commit UNPROVEN; c5-screen 8787 DANGEROUS"},
+    {"id": "LOCK_OWNER", "class": "DIRECT", "detail": "RAIOS_SYSTEM; holders are not owners; C2 did not mutate LOCKS.json"},
+    {"id": "CERT", "class": "OBSERVED", "detail": "UCF-CERTIFICATION remains NOT_CERTIFIED"}
+  ],
+  "waiting": [
+    "C1 bootstrap pass for UCF implementation",
+    "C1 correction packet f446107e execution by C1 only",
+    "C8 independent verification d145653d",
+    "C6 review of this pack",
+    "C2 MCP token if genuine MCP ACK is required"
+  ],
+  "canonical_branch": "ai-evolution-202608051809",
+  "canonical_head": "4fbfd26de028807f7056f6dba42a22b88e65b732",
+  "canonical_head_class": "OBSERVED",
+  "human_path": ".ai-os/reports/management/RAIOS-C2-MANAGEMENT-REPORT-002/MANAGEMENT-REPORT.md"
+}

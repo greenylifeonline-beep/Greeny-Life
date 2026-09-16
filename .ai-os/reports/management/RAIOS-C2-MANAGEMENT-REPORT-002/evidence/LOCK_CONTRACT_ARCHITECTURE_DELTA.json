@@ -1,0 +1,41 @@
+{
+  "schema": "raios.c2.lock-contract-architecture-delta.v1",
+  "task_id": "RAIOS-UCF-CANONICAL-TRUTH-RECONCILIATION-001",
+  "generated_at_utc": "2026-09-15T18:52:00Z",
+  "mode": "ARCHITECTURE_ONLY",
+  "locks_json_mutated": false,
+  "tasks_json_mutated": false,
+  "binding": {
+    "LOCK_OWNER": "RAIOS_SYSTEM",
+    "SEAT_OWNERSHIP": "PROHIBITED",
+    "LEASE_EXPIRY": "MANDATORY",
+    "PARALLEL_OVERWRITE": "PREVENTED",
+    "class": "DIRECT"
+  },
+  "semantics": {
+    "owner": "RAIOS_SYSTEM",
+    "holder": "temporary agent/seat lease only",
+    "chatgpt_normal_is_owner": false,
+    "chatgpt_normal_may_be_recorded_as": "agent/holder",
+    "holder_absence_must_not_permanently_block": true
+  },
+  "packet_baseline_lock_census": {
+    "active_locks": 12,
+    "active_system_owner_explicit": 10,
+    "active_legacy_owner_missing": 2,
+    "active_expiry_present": 0,
+    "class": "DIRECT from C2 packet; not re-counted this slice (LOCKS.json dirty; C2 did not mutate it)"
+  },
+  "architecture_delta": [
+    "Every ACTIVE lock row must carry legal_owner=RAIOS_SYSTEM.",
+    "agent/lease_holder is not owner.",
+    "lease_id + expires_at + reclaim path are mandatory; expiry_present=0 is a contract defect.",
+    "Repair task and C6 non-overlapping scopes are C1 correction packet f446107e; C2 does not execute that PowerShell block.",
+    "Dirty LOCKS.json/TASKS.json/SEAT-MAP.json: do not overwrite until value/ownership inspect by the C1 bootstrap completes."
+  ],
+  "c1_correction_packet": {
+    "id": "f446107e-64a6-43d1-bc50-2248cd2b4801",
+    "supersedes": "16dad66c-1349-4cf4-919d-e336c3ad041e",
+    "c2_action": "NONE"
+  }
+}

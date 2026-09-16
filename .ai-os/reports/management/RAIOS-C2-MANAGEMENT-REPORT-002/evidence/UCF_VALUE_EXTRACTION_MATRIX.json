@@ -1,0 +1,51 @@
+{
+  "schema": "raios.c2.ucf-value-extraction-matrix.v1",
+  "task_id": "RAIOS-UCF-CANONICAL-TRUTH-RECONCILIATION-001",
+  "generated_at_utc": "2026-09-15T18:52:00Z",
+  "canonical_head": "4fbfd26de028807f7056f6dba42a22b88e65b732",
+  "law": "No whole-branch merge or rebase. Extract unique hunks only. Re-prove on canonical HEAD.",
+  "a17_a18_diversion": "SKIPPED_NOT_UCF_DIRECT",
+  "rows": [
+    {
+      "ref": "cursor/ucf-runtime-cert-c5-recovery",
+      "ahead": 0,
+      "behind": 2,
+      "class": "ALREADY_CANONICAL",
+      "provenance": "Option A moved the 27-file UCF/C5 evidence set; commits 775a804 and 4fbfd26",
+      "extract": false
+    },
+    {
+      "ref": "origin/cursor/raios-certifier-safety-schema-4540",
+      "ahead": 1,
+      "behind": 196,
+      "unique_tip": "2a834cc Add CI for the certifier nested safety-schema regression tests.",
+      "class": "UNPROVEN",
+      "likely": "UNIQUE_VALUE if tests still absent on 4fbfd26",
+      "extract": "INSPECT_THEN_CHERRY_HUNK",
+      "order": 1
+    },
+    {
+      "ref": "origin/cursor/c5-screen-identity-4540",
+      "ahead": 158,
+      "behind": 146,
+      "sample_unique": [
+        "f48e80b Record Stage-0 live C2 MCP bind 127.0.0.1:8787 without Challenge.",
+        "85fde1c Record C5 public-channel proof as Cursor Cloud :8765 only.",
+        "826b42f Assimilate communication envelope contract into existing MCP"
+      ],
+      "classes": {
+        "8787_bind": "DANGEROUS",
+        "c5_8765_cloud": "STALE",
+        "envelope_into_existing_mcp": "UNPROVEN",
+        "whole_branch": "NOT_MERGE_READY"
+      },
+      "extract": "HUNK_SCAN_UCF_C5_COMMS_ONLY",
+      "order": 2
+    }
+  ],
+  "recommended_extraction_order": [
+    "Confirm certifier safety-schema CI hunk vs tests/ on 4fbfd26; if absent, restage on canonical under change-authority.",
+    "Scan c5-screen unique commits for communication-envelope hunks only; discard 8787 bind and :8765 identity.",
+    "Do not merge any cursor/* branch."
+  ]
+}

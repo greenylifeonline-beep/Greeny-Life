@@ -476,6 +476,28 @@
     "handoff": ".ai-os/handoffs/20260915-114800-C2-NONCANONICAL-COMMIT-BLOCK.md",
     "receipt": ".ai-os/receipts/c2-executive/20260915-114800-C2-NONCANONICAL-COMMIT-BLOCK.receipt.json"
   },
+  "ucf_canonical_truth_reconciliation_d036": {
+    "task_id": "RAIOS-UCF-CANONICAL-TRUTH-RECONCILIATION-001",
+    "c2_packet_id": "eda2756f-5b3a-409b-9476-ab4855075921",
+    "decision": "D-036",
+    "mode": "READ_ONLY_ANALYSIS",
+    "management_report": "MR-C2-20260915-002",
+    "READY_FOR_C6_REVIEW": true,
+    "IMPLEMENTATION": false,
+    "UCF_IMPLEMENTATION": "WAITING_FOR_C1_BOOTSTRAP_PASS",
+    "mcp_ack": "NOT_SENT_C2_TOKEN_ABSENT",
+    "handoff": ".ai-os/handoffs/20260915-185200-C2-UCF-CANONICAL-TRUTH-RECONCILIATION-001.md"
+  },
+  "canonical_convergence_001_d037": {
+    "task_id": "RAIOS-CANONICAL-CONVERGENCE-001",
+    "decision": "D-037",
+    "status": "DESIGN_RECORDED",
+    "C1_ACCEPTANCE": false,
+    "IMPLEMENTATION": "NOT_STARTED",
+    "pack": ".ai-os/reports/architecture/RAIOS-CANONICAL-CONVERGENCE-001/",
+    "management_report": "MR-C2-20260916-001",
+    "handoff": ".ai-os/handoffs/20260916-022000-C2-CANONICAL-CONVERGENCE-001.md"
+  },
   "head": "2efd08184614749dee999be7a2456c6bf1387c2e",
   "head_status": "GIT_VERIFIED_PUSHED",
   "runtime_head": "96a1e7ef9cbbe15176a83c9b65d5efea9239b747",
@@ -851,7 +873,7 @@
   ],
   "decision_register": {
     "source": ".ai-os/state/DECISIONS.md",
-    "latest": "D-035",
+    "latest": "D-037",
     "open_c1": [
       "C8_LIVE_ACTIVATION",
       "C6_RECONNECT_OR_TRANSFER_MESSAGE_WORKER",

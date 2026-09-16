@@ -1,0 +1,22 @@
+{
+  "schema": "raios.canonical-convergence.forbidden.v1",
+  "forbidden": [
+    "git merge origin/cursor/*",
+    "git rebase whole-branch",
+    "whole-branch squash",
+    "branch deletion before extraction closure",
+    "wholesale copy merge",
+    "clean-tree rebuild as primary path",
+    "new worktree or parallel branch for this campaign",
+    "gitignore-only as the mutable-state solution",
+    "stop services outside C1 quiescence window",
+    "provider promotion without PROVIDER_ADAPTER_PROFILE",
+    "fabricated ACK",
+    "glob-unresolved deletion",
+    "delete root or whole branch",
+    "second MCP/bus/scheduler/memory/knowledge/control-plane",
+    "TASKS.json / LOCKS.json mutation by C2 this slice"
+  ],
+  "archive_before_delete": true,
+  "safe_to_remove_source": false
+}
