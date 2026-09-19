@@ -6,7 +6,7 @@ from pathlib import Path
 from typing import Any
 
 from .coordination_truth import (
-    build_dispatch_plan, build_founder_brief, build_work_lifecycle, task_claim_is_current,
+    build_dispatch_plan, build_founder_brief, build_work_lifecycle, lock_is_effective, task_claim_is_current,
 )
 
 
@@ -116,7 +116,7 @@ class ClientActivityView:
         route_snapshot = self.routes.snapshot()
         tasks = [] if lite else self._tasks()
         active_locks = [] if lite else [x for x in (_load(self.locks_path, {"locks": []}).get("locks") or [])
-                        if str(x.get("status") or "").upper() == "ACTIVE"]
+                        if lock_is_effective(x)]
         route_rows = list(route_snapshot.get("seats", []))
         clients = []
         latest_actor_acks = {} if lite else self._latest_actor_acks()

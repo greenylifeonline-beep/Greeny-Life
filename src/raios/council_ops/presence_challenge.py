@@ -117,6 +117,31 @@ class PresenceChallengeStore:
         _atomic(self.path, data)
         return {"status": "ISSUED", **row}
 
+    def compact(self, *, keep_terminal: int = 64) -> int:
+        data = self._load()
+        now = datetime.now(timezone.utc)
+        live: dict[str, Any] = {}
+        terminal: list[tuple[str, str, dict[str, Any]]] = []
+        for cid, row in (data.get("challenges") or {}).items():
+            status = str(row.get("status") or "")
+            expiry = _parse(row.get("expires_at"))
+            if status == "PENDING" and expiry and expiry > now:
+                live[cid] = row
+            else:
+                terminal.append((str(row.get("issued_at") or ""), cid, row))
+        before = len(data.get("challenges") or {})
+        terminal.sort()
+        kept = {cid: row for _, cid, row in terminal[-keep_terminal:]}
+        kept.update(live)
+        dropped = before - len(kept)
+        if dropped <= 0:
+            return 0
+        data["challenges"] = kept
+        data["updated_at"] = _utc()
+        data["compacted"] = True
+        _atomic(self.path, data)
+        return dropped
+
     def supersede_for_seat(self, seat: str, *, reason: str,
                            attendance_fingerprint: str | None = None) -> int:
         seat = seat.upper()

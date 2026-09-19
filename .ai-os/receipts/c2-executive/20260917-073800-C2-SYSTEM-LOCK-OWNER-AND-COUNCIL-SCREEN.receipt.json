@@ -1,0 +1,34 @@
+{
+  "schema": "raios.c2-executive.receipt.v1",
+  "id": "20260917-073800-C2-SYSTEM-LOCK-OWNER-AND-COUNCIL-SCREEN",
+  "actor": "C2@AG",
+  "decision": "D-047",
+  "status": "SOURCE_COMPLETE_IN_PLACE",
+  "lock_owner": "RAIOS_SYSTEM",
+  "absent_agent_does_not_pin_files": true,
+  "locks_json_rewritten": false,
+  "chatgpt_normal_leases_released": false,
+  "second_command_center": false,
+  "ninth_mcp": false,
+  "kernel": false,
+  "c6_impersonated": false,
+  "live": {
+    "command_center": "http://127.0.0.1:8770",
+    "pid": 29332,
+    "source": "src",
+    "auto_routable": ["C2", "C8"],
+    "c6": "SIGNED_OUT",
+    "council_all_message_id": "MSG-1789620055765741-d1856959",
+    "delivered_to": ["C2", "C8"]
+  },
+  "paths": [
+    "src/raios/command_center/coordination_truth.py",
+    "src/raios/command_center/app.py",
+    "src/raios/command_center/index.html",
+    "src/raios/command_center/council_board.py",
+    "scripts/ai-os/aios.py",
+    "tests/command_center/test_coordination_truth.py",
+    "tests/command_center/test_council_board.py",
+    "tests/command_center/test_app.py"
+  ]
+}

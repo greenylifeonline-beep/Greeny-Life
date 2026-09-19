@@ -1,0 +1,16 @@
+{
+  "schema": "raios.provider-adapter-profile.v1",
+  "provider_id": "hermes-knowledge-ingest",
+  "capability": "KnowledgeIngest",
+  "authorized_by": "C1",
+  "enabled": true,
+  "not_core": true,
+  "ninth_mcp": false,
+  "second_wal": false,
+  "beside": "raios.absorb-digest.v2",
+  "source_mode": "LOCAL_TEXT_OR_ALLOWLIST_PATH",
+  "never_weight_download": true,
+  "never_ollama_pull": true,
+  "discovery": "LOCAL_ADAPTER_ONLY",
+  "note": "Ingest uses existing KAE/absorb-digest. Hermes is a replaceable provider, not Core, not an MCP tool."
+}

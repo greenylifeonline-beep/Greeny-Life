@@ -82,3 +82,25 @@ def test_offline_response_creates_departure_fingerprint(tmp_path):
     assert out["presence"] == "ABSENT"
     state = json.loads(op.presence_path.read_text(encoding="utf-8"))
     assert state["seats"]["C4"]["departure_fingerprint"]
+
+
+def test_challenge_store_compacts_expired_history(tmp_path):
+    op = setup(tmp_path)
+    store = op.challenges
+    data = {"schema": "raios.presence-challenges.v1", "challenges": {}}
+    for i in range(80):
+        data["challenges"][f"PCH-old-{i:03d}"] = {
+            "challenge_id": f"PCH-old-{i:03d}", "seat": "C2", "status": "SUPERSEDED",
+            "issued_at": f"2026-09-01T00:00:{i:02d}+00:00", "expires_at": "2026-09-01T00:10:00+00:00",
+        }
+    data["challenges"]["PCH-live"] = {
+        "challenge_id": "PCH-live", "seat": "C8", "status": "PENDING",
+        "issued_at": "2026-09-17T00:00:00+00:00",
+        "expires_at": "2099-01-01T00:00:00+00:00",
+    }
+    store.path.write_text(json.dumps(data), encoding="utf-8")
+    dropped = store.compact(keep_terminal=64)
+    saved = json.loads(store.path.read_text(encoding="utf-8"))
+    assert dropped == 16
+    assert "PCH-live" in saved["challenges"]
+    assert len(saved["challenges"]) == 65

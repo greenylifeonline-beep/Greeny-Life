@@ -38,7 +38,7 @@ table{width:100%;border-collapse:collapse;font-size:11px}th,td{text-align:right;
 .spinner{width:15px;height:15px;display:inline-block;border:2px solid rgba(255,255,255,.25);border-top-color:#fff;border-radius:50%;animation:spin .75s linear infinite}@keyframes spin{to{transform:rotate(360deg)}}.toast{position:fixed;left:24px;bottom:24px;background:#122636;border:1px solid var(--line2);border-radius:12px;padding:11px 14px;box-shadow:var(--shadow);z-index:30;opacity:0;transform:translateY(8px);pointer-events:none;transition:.2s}.toast.show{opacity:1;transform:none}
 .mobile-nav{display:none}
 @media(max-width:1100px){.shell{grid-template-columns:82px 1fr}.brand>div:last-child,.nav span,.side-status small{display:none}.sidebar{padding:18px 10px}.brand{justify-content:center;padding-inline:0}.nav button{justify-content:center}.span3{grid-column:span 6}.span8,.span7,.span6,.span5,.span4{grid-column:span 12}.chat-layout{grid-template-columns:1fr}.inspector{display:none}}
-@media(max-width:720px){.shell{display:block}.sidebar{display:none}.topbar{height:70px;padding:0 15px}.sync,.top-actions .ghost{display:none}.content{padding:14px 12px 88px}.span3{grid-column:span 12}.service-grid,.planes{grid-template-columns:1fr}.chat-layout{height:calc(100vh - 100px);min-height:520px}.message{max-width:92%}.mobile-nav{display:flex;position:fixed;bottom:0;left:0;right:0;height:68px;background:rgba(7,17,26,.94);backdrop-filter:blur(18px);border-top:1px solid var(--line);z-index:20;justify-content:space-around;padding:8px}.mobile-nav button{border:0;background:transparent;color:var(--muted);font-size:10px}.mobile-nav button.active{color:var(--cyan)}}
+@media(max-width:720px){.shell{display:block}.sidebar{display:none}.topbar{height:70px;padding:0 15px}.sync,.top-actions .ghost{display:none}.content{padding:14px 12px 108px}.span3{grid-column:span 12}.service-grid,.planes{grid-template-columns:1fr}.chat-layout{height:calc(100vh - 100px);min-height:520px}.message{max-width:92%}.mobile-nav{display:flex;position:fixed;bottom:0;left:0;right:0;min-height:68px;height:auto;flex-wrap:wrap;background:rgba(7,17,26,.94);backdrop-filter:blur(18px);border-top:1px solid var(--line);z-index:20;justify-content:space-around;padding:8px 4px 10px}.mobile-nav button{border:0;background:transparent;color:var(--muted);font-size:9px;flex:1 1 14%;min-width:52px;padding:4px 2px}.mobile-nav button.active{color:var(--cyan)}}
 @media(prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important;scroll-behavior:auto!important}}
 </style>
 </head>
@@ -73,8 +73,9 @@ table{width:100%;border-collapse:collapse;font-size:11px}th,td{text-align:right;
     <article class="card kpi span3" style="--glow:rgba(255,200,106,.1)"><div class="kpi-label">الأدلة المسترجعة</div><div class="kpi-value" id="evidenceValue">—</div><div class="kpi-sub" id="evidenceSub">Search Cortex</div></article>
     <article class="card span8"><div class="card-head"><h2>الخدمات والبنية الحية</h2><span class="hint">قياس مباشر، لا ادعاء</span></div><div class="service-grid" id="servicesGrid"></div></article>
     <article class="card span4"><div class="card-head"><h2>ما يحتاج الانتباه</h2><span class="pill neutral" id="attentionCount">0</span></div><div class="list" id="attentionList"></div></article>
-    <article class="card span7"><div class="card-head"><h2>آخر المهام</h2><button class="btn ghost" data-jump="work">عرض الكل</button></div><div class="list" id="recentTasks"></div></article>
-    <article class="card span5"><div class="card-head"><h2>الدورة المعرفية</h2><button class="btn ghost" data-jump="cognitive">التفاصيل</button></div><div class="planes" id="overviewPlanes"></div></article>
+    <article class="card span7"><div class="card-head"><h2>العمل الآن</h2><button class="btn ghost" data-jump="work">لوحة العمل</button></div><div class="hint" style="margin:-8px 0 10px">سلطة TASKS.json · ليست NOW.md · ليست ذيل الدفتر</div><div class="list" id="recentTasks"></div></article>
+    <article class="card span5"><div class="card-head"><h2>الهدف والبرنامج</h2><span class="hint">كتالوج مسمّى · ليست نواة</span></div><div class="list" id="goalsList"></div></article>
+    <article class="card span12"><div class="card-head"><h2>الدورة المعرفية</h2><button class="btn ghost" data-jump="cognitive">التفاصيل</button></div><div class="planes" id="overviewPlanes"></div></article>
   </div>
 </section>
 
@@ -114,12 +115,13 @@ table{width:100%;border-collapse:collapse;font-size:11px}th,td{text-align:right;
     <article class="card span4"><div class="card-head"><h2>المدير المستمر</h2><span class="pill" id="managerBadge">—</span></div><div class="list" id="managerFacts"></div></article>
     <article class="card span6"><div class="card-head"><h2>مخزون المعرفة</h2><span class="hint">نافذة آخر 5000 سجل</span></div><div class="grid" id="learningMetrics"></div></article>
     <article class="card span6"><div class="card-head"><h2>حدود الثقة</h2><span class="pill ok">GOVERNED</span></div><div class="list" id="learningLaws"></div></article>
+    <article class="card span12"><div class="card-head"><h2>محركات التنظيف والدمج والتصنيف</h2><span class="hint" id="engineStats">المسار الحي فقط · لا دمج تلقائي · لا محرك 113</span></div><div class="list" id="engineList"></div></article>
   </div>
 </section>
 
 <section class="view" id="work">
   <div class="grid">
-    <article class="card span12"><div class="card-head"><h2>قائمة التنفيذ الكانونية</h2><span class="hint" id="workStats">—</span></div><div class="table-wrap" id="tasksTable"></div></article>
+    <article class="card span12"><div class="card-head"><h2>العمل الآن — شريحة TASKS</h2><div><span class="hint" id="workStats">—</span> <button class="btn ghost" id="boardToggle" type="button">عرض الدفتر كاملاً</button></div></div><div class="table-wrap" id="tasksTable"></div></article>
     <article class="card span6"><div class="card-head"><h2>حقيقة دورة العمل</h2><span class="hint">تم · جارٍ · مطلوب · منتظر · قديم</span></div><div class="list" id="lifecycleList"></div></article>
     <article class="card span6"><div class="card-head"><h2>ملف المؤسس والمالك</h2><span class="hint">يُجهّز دائمًا حتى عند غياب C1</span></div><div class="list" id="founderBrief"></div></article>
     <article class="card span12"><div class="card-head"><h2>خطة التوزيع الذكية</h2><span class="hint">المسار الحرج · الأهلية · الجاهزية · التعارض</span></div><div class="list" id="dispatchPlan"></div></article>
@@ -130,8 +132,8 @@ table{width:100%;border-collapse:collapse;font-size:11px}th,td{text-align:right;
 
 <section class="view" id="council">
   <div class="grid">
-    <article class="card span8"><div class="card-head"><h2>إعلان أو تنسيق موثّق</h2><span class="pill warn">لا يمنح صلاحية تنفيذ · المهمة تأتي من RAIOS-WORKER فقط · ALL = المربوط الحي فقط</span></div><div class="options" id="targets"><button class="btn target" data-target="ALL">الجميع (حي فقط)</button><button class="btn target" data-target="C1">C1</button><button class="btn primary target active" data-target="C2">C2</button><button class="btn target" data-target="C3">C3</button><button class="btn target" data-target="C4">C4</button><button class="btn target" data-target="C5">C5</button><button class="btn target" data-target="C6">C6</button><button class="btn target" data-target="C7">C7</button><button class="btn primary target active" data-target="C8">C8</button><button class="btn target" data-target="C9">C9</button><button class="btn target" data-target="C10">C10</button><button class="btn target" data-target="C11">C11</button><button class="btn target" data-target="C12">C12</button></div><textarea class="text" id="commandInput" style="min-height:150px;margin-top:14px" placeholder="اكتب التوجيه…"></textarea><div style="display:flex;justify-content:flex-end;margin-top:10px"><button class="btn primary" id="sendCommand">إرسال موثّق</button></div><div class="code" id="commandOutput" style="margin-top:13px">ستظهر إيصالات الإرسال هنا.</div></article>
-    <article class="card span4"><div class="card-head"><h2>حالة الأعضاء</h2><span class="hint">التوفر ≠ جاهزية التنفيذ</span></div><div class="list" id="seatList"></div></article>
+    <article class="card span8"><div class="card-head"><h2>تواصل المجلس عبر RAIOS</h2><span class="pill warn">ALL = الأحياء فقط · الغائب لا يُقفل ملفًا · المالك RAIOS_SYSTEM</span></div><div class="options" id="targets"><button class="btn primary target active" data-target="ALL">الجميع (الحي فقط)</button><button class="btn target" data-target="C1">C1</button><button class="btn target" data-target="C2">C2</button><button class="btn target" data-target="C3">C3</button><button class="btn target" data-target="C4">C4</button><button class="btn target" data-target="C5">C5</button><button class="btn target" data-target="C6">C6</button><button class="btn target" data-target="C7">C7</button><button class="btn target" data-target="C8">C8</button><button class="btn target" data-target="C9">C9</button><button class="btn target" data-target="C10">C10</button><button class="btn target" data-target="C11">C11</button><button class="btn target" data-target="C12">C12</button></div><textarea class="text" id="commandInput" style="min-height:150px;margin-top:14px" placeholder="اكتب إلى العاملين الأحياء…"></textarea><div style="display:flex;justify-content:flex-end;margin-top:10px"><button class="btn primary" id="sendCommand">إرسال موثّق</button></div><div class="code" id="commandOutput" style="margin-top:13px">ستظهر إيصالات الإرسال هنا: من استلم ومن غير متاح.</div></article>
+    <article class="card span4"><div class="card-head"><h2>من متاح ومن غير متاح</h2><span class="hint">حضور موقع ≠ تنفيذ</span></div><div class="list" id="seatList"></div></article>
     <article class="card span6"><div class="card-head"><h2>العامل</h2><span class="hint">نفس مصدر التنسيق</span></div><div class="list" id="workerList"></div></article>
     <article class="card span6"><div class="card-head"><h2>منفذون آخرون نشطون</h2><span class="hint">خارج المقاعد إن وُجدوا</span></div><div class="list" id="otherActorList"></div></article>
   </div>
@@ -149,14 +151,14 @@ table{width:100%;border-collapse:collapse;font-size:11px}th,td{text-align:right;
 </div>
 
 <nav class="mobile-nav">
-<button class="active" data-view="overview">◈<br>الحالة</button><button data-view="chat">✦<br>RAIOS</button><button data-view="search">⌕<br>البحث</button><button data-view="cognitive">◎<br>التعلم</button><button data-view="diagnostics">⚙<br>الفحص</button>
+<button class="active" data-view="overview">◈<br>الحالة</button><button data-view="chat">✦<br>RAIOS</button><button data-view="search">⌕<br>البحث</button><button data-view="cognitive">◎<br>التعلم</button><button data-view="work">▣<br>العمل</button><button data-view="council">◇<br>المجلس</button><button data-view="diagnostics">⚙<br>الفحص</button>
 </nav>
 <div class="toast" id="toast"></div>
 
 <script>
 (function(){
 'use strict';
-var csrf='', overviewData=null, targets=new Set(['C2','C8']);
+var csrf='', overviewData=null, targets=new Set(['ALL']), boardFull=false, boardSnap=null;
 var conversationId=localStorage.getItem('raiosConversationId')||newId();
 var messages=readMessages();
 var titles={overview:'المشهد التشغيلي',chat:'محادثة RAIOS',search:'البحث والتحقق',cognitive:'التعلم والاستيعاب',work:'العمل والأدلة',council:'المجلس',diagnostics:'التشخيص'};
@@ -190,7 +192,7 @@ function renderOverview(o){
   var managerOnline=manager.alive===true;var total=services.length+1;var live=online+(managerOnline?1:0);var healthy=live===total;
   $('#healthValue').textContent=healthy?'100':'ATTN';$('#healthSub').textContent=healthy?'كل المكونات الأساسية تعمل':'توجد فجوة تحتاج معالجة';
   $('#servicesValue').textContent=live+'/'+total;$('#tasksValue').textContent=(o.tasks||{}).in_progress||0;
-  $('#tasksSub').textContent=((o.tasks||{}).ready||0)+' جاهزة · '+((o.tasks||{}).blocked||0)+' محجوبة';
+  $('#tasksSub').textContent=((o.tasks||{}).in_progress||0)+' جارٍ · '+((o.tasks||{}).ready||0)+' جاهزة · '+((o.tasks||{}).blocked||0)+' محجوبة · NOW '+(((o.tasks||{}).now||[]).length);
   $('#evidenceValue').textContent=latest.count==null?'—':latest.count;$('#evidenceSub').textContent=((latest.verification||{}).status||'لا بحث حديث');
   $('#headShort').textContent='HEAD '+String(o.canonical_head||'—').slice(0,10);
   $('#servicesGrid').innerHTML=services.map(function(x){
@@ -200,8 +202,16 @@ function renderOverview(o){
   if(!managerOnline)attention.push({name:'Live Manager',detail:manager.reason||'UNPROVEN'});
   var env=((services.find(function(x){return x.name==='C5'})||{}).detail||{}).environment||{};
   if(env.dependency_audit!=='PASS'||env.pytest_available!==true)attention.push({name:'C5 Environment',detail:'INCOMPLETE'});
+  ((o.tasks||{}).now||[]).forEach(function(t){
+    var blk=String(t.blocker||'');
+    if(t.status==='BLOCKED'||/C6|NOT_LIVE|UNSIGNED|FAIL_CLOSED/i.test(blk))
+      attention.push({name:String(t.id||t.title||'TASK'),detail:blk||t.status});
+  });
   $('#attentionCount').textContent=attention.length;$('#attentionList').innerHTML=attention.length?attention.map(function(x){return '<div class="list-row"><div class="grow"><strong>'+esc(x.name)+'</strong><small>'+esc(x.detail)+'</small></div>'+badge('ATTENTION')+'</div>'}).join(''):'<div class="list-row"><div><strong>لا توجد أعطال حرجة</strong><small>آخر قياس مباشر</small></div>'+badge('HEALTHY')+'</div>';
-  var recent=(o.tasks||{}).recent||[];$('#recentTasks').innerHTML=recent.slice(-6).reverse().map(function(t){return '<div class="list-row"><div class="grow"><strong>'+esc(t.id)+'</strong><small>'+esc(t.claimed_by||'غير مسند')+'</small></div>'+badge(t.status)+'</div>'}).join('')||'<div class="empty">لا مهام</div>';
+  var recent=(o.tasks||{}).now||(o.tasks||{}).recent||[];
+  $('#recentTasks').innerHTML=recent.slice(0,8).map(function(t){return '<div class="list-row"><div class="grow"><strong>'+esc(t.title||t.id)+'</strong><small>'+esc(t.id)+' · '+esc(t.owner||t.claimed_by||'غير مسند')+(t.blocker?' · '+esc(t.blocker):'')+'</small></div>'+badge(t.status)+'</div>'}).join('')||'<div class="empty">لا عمل حي في شريحة NOW</div>';
+  var goals=((o.goals||{}).goals||[]).slice(0,8);
+  $('#goalsList').innerHTML=goals.map(function(g){return '<div class="list-row"><div class="grow"><strong>'+esc(g.title||g.goal_id)+'</strong><small>'+esc(g.kind||'')+' · '+esc(g.goal_id||'')+'</small></div>'+badge(g.active?'ACTIVE':(g.status||'—'))+'</div>'}).join('')||'<div class="empty">لا هدف مسمّى على TASKS</div>';
   var planes=loop.planes||{};$('#overviewPlanes').innerHTML=['retrieve','assimilate','continuous_manager'].map(function(k){return '<div class="plane"><span>'+esc(k)+'</span><strong>'+badge(planes[k]===true?'ONLINE':'UNPROVEN')+'</strong></div>'}).join('');
   $('#liveText').textContent=healthy?'متصل ومستقر':'متصل · يحتاج انتباه';$('#sideDot').style.background=healthy?'var(--green)':'var(--amber)';
   $('#lastSync').textContent=new Date(o.generated_at).toLocaleTimeString('ar');
@@ -244,6 +254,16 @@ function renderCognitive(c){
   $('#learningMetrics').innerHTML=stats.map(function(x){return '<div class="card span6 kpi" style="box-shadow:none"><div class="kpi-label">'+esc(x[0])+'</div><div class="kpi-value">'+esc(x[1])+'</div></div>'}).join('');
   $('#learningLaws').innerHTML=(loop.law||[]).map(function(x){return '<div class="list-row"><div class="grow"><strong>'+esc(x)+'</strong><small>Enforced boundary</small></div>'+badge('ACTIVE')+'</div>'}).join('');
 }
+function renderEngines(e){
+  var rows=e.engines||[], live=e.live_ids||[], drown=e.drowning_controls||{};
+  $('#engineStats').textContent='حي '+(live.length)+' · جرد ≠ تنفيذ · حضور '+(drown.presence_bytes==null?'—':drown.presence_bytes)+' بايت · RapidFuzz موجود · datasketch مرشح غير مثبت';
+  var keep=rows.filter(function(r){return r.live_keeper});
+  var rest=rows.filter(function(r){return !r.live_keeper}).slice(0,8);
+  $('#engineList').innerHTML=keep.concat(rest).map(function(r){
+    var st=r.live_keeper?(r.path_exists?'LIVE':'MISSING'):(r.status||'HOLD');
+    return '<div class="list-row"><div class="grow"><strong>'+esc(r.name_ar||r.id)+'</strong><small>'+esc((r.id||'')+' · '+(r.path||'—'))+'</small></div>'+badge(st)+'</div>'
+  }).join('')||'<div class="empty">لا جرد محركات.</div>';
+}
 function renderContinuity(c){
   $('#continuityBadge').className='pill '+klass(c.status);$('#continuityBadge').textContent=c.status||'UNPROVEN';
   var s=c.services||{};$('#continuityServices').innerHTML=Object.keys(s).map(function(k){return '<div class="plane"><span>'+esc(k)+'</span><strong>'+badge(s[k]?'ONLINE':'OFFLINE')+'</strong></div>'}).join('')||'<div class="empty">سيظهر إثبات الحارس بعد أول دورة.</div>'
@@ -257,15 +277,17 @@ function renderCouncilLite(lite){
     return '<div class="list-row"><div class="grow"><strong>'+esc(r.seat)+' · '+esc(r.actor_role||'')+'</strong><small>'+esc(st)+' · '+esc(r.actor_id||r.origin_instance||'—')+'</small></div>'+badge(r.auto_routable?'ONLINE':(r.present?'PRESENT':'AWAY'))+'</div>'
   }).join('');
 }
+function availLabel(s){s=String(s||'').toUpperCase();return {AVAILABLE:'متاح',BUSY:'مشغول',OFFLINE:'غير متاح',UNKNOWN:'غير مثبت',ONLINE:'حي'}[s]||s}
 function renderAvailability(a){
   var rows=a.clients||[],sum=a.availability_summary||{},workers=a.workers||[],others=a.other_active_actors||[];
   var ready=rows.filter(function(r){return r.execution_ready===true}).length;
-  $('#councilSummary').textContent='المجلس: '+(sum.AVAILABLE||0)+' متاح · '+ready+' جاهز تنفيذ · '+(sum.BUSY||0)+' مشغول · '+(sum.UNKNOWN||0)+' غير معلوم';
+  $('#councilSummary').textContent='متاح '+(sum.AVAILABLE||0)+' · جاهز تنفيذ '+ready+' · غير متاح '+(sum.OFFLINE||0)+' · غير مثبت '+(sum.UNKNOWN||0);
   $('#seatList').innerHTML=rows.map(function(r){
-    var task=(r.current_tasks||[])[0],taskText=task?(task.id||task.title||'TASK'):'NO_TASK';
-    var exec=r.execution_ready?'EXEC_READY':'COORD_ONLY';
-    var detail=exec+' · '+(r.work_phase||'—')+' · '+taskText+' · '+(r.reason||r.source||'—')+' · NEXT='+(r.required_action||'—');
-    return '<div class="list-row"><div class="grow"><strong>'+esc(r.seat)+' · '+esc(r.presence||'AWAY')+'</strong><small>'+esc(detail)+'</small></div>'+badge(r.availability||'UNKNOWN')+'</div>'
+    var task=(r.current_tasks||[])[0],taskText=task?(task.id||task.title||'TASK'):'لا مهمة';
+    var live=r.execution_ready?'جاهز للتنفيذ':'غير مربوط حي';
+    var avail=availLabel(r.availability);
+    var detail=avail+' · '+live+' · '+(r.work_phase||'—')+' · '+taskText;
+    return '<div class="list-row"><div class="grow"><strong>'+esc(r.seat)+' · '+esc(r.presence||'AWAY')+'</strong><small>'+esc(detail)+'</small></div>'+badge(r.execution_ready?'ONLINE':(r.availability||'UNKNOWN'))+'</div>'
   }).join('')||'<div class="empty">لا توجد بيانات أعضاء.</div>';
   $('#workerList').innerHTML=workers.map(function(r){
     var detail=(r.kind||'WORKER')+' · '+(r.reason||'—')+' · heartbeat='+(r.heartbeat||'—');
@@ -307,18 +329,22 @@ function renderResources(){
     ['storage_free_gb_known_total','STORAGE FREE GB'],['last_verified_at','LAST PROBE'],['blockers','BLOCKER']
   ]);
 }
+function renderWorkBoard(){
+  var b=boardSnap||{now:[],tasks:[],summary:{}};
+  var sm=b.summary||{}, now=b.now||[], all=b.tasks||[];
+  var rows=boardFull?all:now;
+  $('#tasksTable').innerHTML=table(rows,[
+    ['status','الحالة'],['id','المهمة'],['title','العنوان'],['owner','المالك'],
+    ['priority','الأولوية'],['blocker','الحاجز'],['next_checkpoint','الخطوة التالية']
+  ]);
+  $('#workStats').textContent=(now.length)+' NOW · دفتر '+(b.ledger_total||all.length)+' · جارٍ '+(sm.IN_PROGRESS||0)+' · محجوب '+(sm.BLOCKED||0)+' · جاهز '+(sm.READY||0);
+  var toggle=$('#boardToggle'); if(toggle) toggle.textContent=boardFull?'عرض NOW فقط':'عرض الدفتر كاملاً';
+}
 async function extras(){
   try{var a=await api('/api/client-activity?lite=true');renderAvailability(a)}catch(e){console.error('client-activity',e)}
   try{var c=await api('/api/cognitive');renderCognitive(c)}catch(e){console.error('cognitive',e)}
-  try{
-    var b=await api('/api/council-board'),rows=b.tasks||[],sm=b.summary||{};
-    $('#tasksTable').innerHTML=table(rows,[
-      ['stage','DONE / DOING / NEXT'],['id','TASK'],['owner','OWNER'],['model','MODEL'],
-      ['start','START'],['last_proof','LAST PROOF'],['reviewer','REVIEWER'],
-      ['review_status','REVIEW STATUS'],['next_checkpoint','NEXT CHECKPOINT'],['blocker','BLOCKER']
-    ]);
-    $('#workStats').textContent=(sm.IN_PROGRESS||0)+' DOING | '+(sm.NEXT||0)+' NEXT | '+(sm.DONE||0)+' DONE | live projection';
-  }catch(e){console.error('council-board',e)}
+  try{var en=await api('/api/engines');renderEngines(en)}catch(e){console.error('engines',e)}
+  try{boardSnap=await api('/api/council-board');renderWorkBoard()}catch(e){console.error('council-board',e)}
   try{var r=await api('/api/receipts');$('#receiptsTable').innerHTML=table(r.recent,[['name','RECEIPT'],['bytes','BYTES'],['path','PATH']])}catch(e){console.error('receipts',e)}
   try{renderResources()}catch(e){console.error('resources',e)}
 }
@@ -352,7 +378,21 @@ async function diagnose(){
 }
 async function command(){
   var text=$('#commandInput').value.trim();if(!text||!targets.size)return;var b=$('#sendCommand');b.disabled=true;
-  try{var r=await api('/api/command',{method:'POST',body:JSON.stringify({text:text,targets:Array.from(targets)})});$('#commandOutput').textContent=JSON.stringify(r,null,2);toast('تم الإرسال إلى النسيج الكانوني')}
+  try{
+    var r=await api('/api/command',{method:'POST',body:JSON.stringify({text:text,targets:Array.from(targets)})});
+    var delivered=r.delivered_to||((r.results||[])[0]||{}).targets||[];
+    var unreachable=r.unreachable||[];
+    var why={SIGNED_OUT:'غائب',NOT_LIVE_BOUND:'غير مربوط حي',OFFLINE:'غير متاح'};
+    var lines=['أُرسل إلى: '+(delivered.join(' · ')||'—')];
+    if(unreachable.length){
+      lines.push('غير متاح / غير مربوط:');
+      unreachable.forEach(function(u){lines.push(' - '+(u.seat||'')+' · '+(why[u.reason]||u.reason||''))});
+    }
+    lines.push('المالك: '+(r.lock_owner||'RAIOS_SYSTEM'));
+    lines.push(JSON.stringify(r,null,2));
+    $('#commandOutput').textContent=lines.join('\n');
+    toast('أُرسل للأحياء · الغائبون ظاهرون دون تسليم مزيف')
+  }
   catch(e){
     var msg=e.message;
     try{var j=JSON.parse(msg);var d=j.detail||j;msg=(d.hint_ar||d.error||msg)+'\n'+JSON.stringify(d,null,2)}catch(_e){}
@@ -366,6 +406,7 @@ $$('.target').forEach(function(b){b.addEventListener('click',function(){
   else{targets.delete('ALL');$('.target[data-target="ALL"]').classList.remove('primary');targets.has(v)?targets.delete(v):targets.add(v);b.classList.toggle('primary')}
 })});
 $('#refreshBtn').addEventListener('click',refresh);$('#sendChat').addEventListener('click',sendChat);$('#searchBtn').addEventListener('click',runSearch);$('#diagnoseBtn').addEventListener('click',diagnose);$('#sendCommand').addEventListener('click',command);
+$('#boardToggle').addEventListener('click',function(){boardFull=!boardFull;renderWorkBoard()});
 $('#chatInput').addEventListener('keydown',function(e){if(e.key==='Enter'&&!e.shiftKey){e.preventDefault();sendChat()}});
 $('#searchInput').addEventListener('keydown',function(e){if(e.key==='Enter'){runSearch()}});
 $('#publicSearch').addEventListener('change',function(){var p=$('#publicQuery');p.style.display=this.checked?'block':'none';if(this.checked)p.focus()});

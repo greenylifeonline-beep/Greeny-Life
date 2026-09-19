@@ -104,9 +104,9 @@ def test_completion_report_requires_existing_evidence_and_closes_task(tmp_path):
     task=json.loads((repo/".ai-os/state/TASKS.json").read_text(encoding="utf-8"))["tasks"][1]
     assert queued["status"]=="REPORT_QUEUED" and out["reports_processed"]==1
     assert task["status"]=="DONE" and task["dispatch_status"]=="COMPLETE_EVIDENCE_VERIFIED"
-    locks=json.loads((repo/".ai-os/state/LOCKS.json").read_text(encoding="utf-8"))["locks"]
-    owned=[x for x in locks if x.get("task_id")=="NEXT" and x.get("lock_kind")=="COUNCIL_TASK_SCOPE"]
-    assert owned and all(x.get("status")=="RELEASED" for x in owned)
+    leases=[json.loads(x.read_text(encoding="utf-8")) for x in (repo/".ai-os/state/command-fabric/leases").glob("*.json")]
+    owned=[x for x in leases if x.get("task_id")=="NEXT"]
+    assert owned and all(x.get("state")=="RELEASED" for x in owned)
 
 def test_completion_report_with_missing_evidence_is_rejected(tmp_path):
     board,presence,_=setup(tmp_path);worker=Worker()
@@ -256,6 +256,27 @@ def test_active_canonical_lock_blocks_overlapping_dispatch(tmp_path):
     }]}),encoding="utf-8")
     with pytest.raises(ValueError,match="ACTIVE_CANONICAL_LOCK_CONFLICT"):
         board.dispatch("NEXT","C2",worker)
+
+
+def test_expired_agent_lease_does_not_block_dispatch_and_new_lock_is_system_owned(tmp_path):
+    board,presence,repo=setup(tmp_path);worker=Worker()
+    future=(datetime.now(timezone.utc)+timedelta(minutes=1)).isoformat()
+    past=(datetime.now(timezone.utc)-timedelta(minutes=5)).isoformat()
+    presence.write_text(json.dumps({"seats":{"C2":{"presence":"PRESENT",
+        "signature_valid":True,"lease_expires_at":future}}}),encoding="utf-8")
+    (repo/".ai-os/state/LOCKS.json").write_text(json.dumps({"locks":[{
+        "id":"EXPIRED-ABSENT","task_id":"OTHER","agent":"C9","scope":"src",
+        "status":"ACTIVE","expires_at":past,"owner":"RAIOS_SYSTEM"
+    }]}),encoding="utf-8")
+    out=board.dispatch("NEXT","C2",worker)
+    assert out["status"]=="DISPATCHED_PENDING_ACCEPTANCE"
+    locks=json.loads((repo/".ai-os/state/LOCKS.json").read_text(encoding="utf-8"))["locks"]
+    assert not [x for x in locks if x.get("lock_kind")=="COUNCIL_TASK_SCOPE"]
+    leases=[json.loads(x.read_text(encoding="utf-8")) for x in (repo/".ai-os/state/command-fabric/leases").glob("*.json")]
+    acquired=[x for x in leases if x.get("task_id")=="NEXT" and x.get("state")=="ACTIVE"]
+    assert acquired and all(x.get("owner")=="C2" and x.get("expires_at") for x in acquired)
+    expired=[x for x in locks if x.get("id")=="EXPIRED-ABSENT"][0]
+    assert expired["status"]=="ACTIVE"
 
 
 def test_system_first_coordination_receipt_then_single_broadcast(tmp_path):
@@ -482,3 +503,244 @@ def test_verified_unavailable_executor_backend_blocks_only_that_seat(tmp_path):
     out=board.dispatch("NEXT","C6",worker)
     assert out["status"]=="DISPATCHED_PENDING_ACCEPTANCE"
     assert out["target"]=="C6"
+
+
+def test_snapshot_v2_projects_live_work_fields_and_rejects_now_md_authority(tmp_path):
+    board,_,_=setup(tmp_path)
+    data=json.loads(board.tasks.read_text(encoding="utf-8"))
+    task=data["tasks"][1]
+    task.update(
+        model="qwen-test",started_at="2026-09-06T00:00:00+00:00",
+        review_by=["C7","C3"],review_status="PENDING_REVIEW",
+        next_step="prove runtime",blocker=None,
+    )
+    board.tasks.write_text(json.dumps(data),encoding="utf-8")
+    out=board.snapshot();row=next(x for x in out["tasks"] if x["id"]=="NEXT")
+    assert out["schema"]=="raios.council-board.v2"
+    assert out["legacy_now_md_authoritative"] is False
+    assert out["now_ne_full_ledger"] is True
+    assert isinstance(out["now"], list)
+    assert out["projection_sources"]==["TASKS","PRESENCE","TASK_CHECKPOINTS","RECEIPTS","EVIDENCE"]
+    assert row["stage"]=="NEXT" and row["model"]=="qwen-test"
+    assert row["reviewer"]==["C7","C3"] and row["review_status"]=="PENDING_REVIEW"
+    assert row["next_checkpoint"]=="prove runtime" and row["blocker"] is None
+
+
+def test_pending_acceptance_times_out_and_returns_to_ready(tmp_path):
+    board,presence,_=setup(tmp_path);worker=Worker()
+    future=(datetime.now(timezone.utc)+timedelta(minutes=5)).isoformat()
+    presence.write_text(json.dumps({"seats":{"C2":{"presence":"PRESENT","signature_valid":True,"lease_expires_at":future}}}),encoding="utf-8")
+    out=board.dispatch("NEXT","C2",worker)
+    data=json.loads(board.tasks.read_text(encoding="utf-8"));task=data["tasks"][1]
+    task["dispatched_at"]=(datetime.now(timezone.utc)-timedelta(minutes=2)).isoformat();task["acceptance_timeout_seconds"]=60
+    board.tasks.write_text(json.dumps(data),encoding="utf-8")
+    assert board._reconcile_pending_acceptances(data)==1
+    saved=json.loads(board.tasks.read_text(encoding="utf-8"))["tasks"][1]
+    assert saved["status"]=="READY" and saved["dispatch_status"]=="RETURNED_NO_ACCEPTANCE"
+    assert saved["return_reason"]=="ACCEPTANCE_TIMEOUT" and "assigned_to" not in saved
+    assert saved["last_dispatch_id"]==out["dispatch_id"]
+    assert saved["last_system_recovery_checkpoint"]["phase"]=="PENDING_ACCEPTANCE_TIMEOUT"
+
+def test_pending_acceptance_younger_than_timeout_is_unchanged(tmp_path):
+    board,presence,_=setup(tmp_path);worker=Worker()
+    future=(datetime.now(timezone.utc)+timedelta(minutes=5)).isoformat()
+    presence.write_text(json.dumps({"seats":{"C2":{"presence":"PRESENT","signature_valid":True,"lease_expires_at":future}}}),encoding="utf-8")
+    board.dispatch("NEXT","C2",worker);data=json.loads(board.tasks.read_text(encoding="utf-8"))
+    assert board._reconcile_pending_acceptances(data)==0
+    saved=json.loads(board.tasks.read_text(encoding="utf-8"))["tasks"][1]
+    assert saved["dispatch_status"]=="PENDING_ACCEPTANCE" and saved["assigned_to"]=="C2"
+
+def test_pending_acceptance_missing_timestamp_fails_closed(tmp_path):
+    board,presence,_=setup(tmp_path);worker=Worker()
+    future=(datetime.now(timezone.utc)+timedelta(minutes=5)).isoformat()
+    presence.write_text(json.dumps({"seats":{"C2":{"presence":"PRESENT","signature_valid":True,"lease_expires_at":future}}}),encoding="utf-8")
+    board.dispatch("NEXT","C2",worker);data=json.loads(board.tasks.read_text(encoding="utf-8"));task=data["tasks"][1];task.pop("dispatched_at",None)
+    assert board._reconcile_pending_acceptances(data)==0
+    assert task["acceptance_reconcile_state"]=="MISSING_DISPATCHED_AT" and task["assigned_to"]=="C2"
+
+def test_expired_pending_assignment_redispatches_same_cycle(tmp_path):
+    board,presence,_=setup(tmp_path);worker=Worker()
+    future=(datetime.now(timezone.utc)+timedelta(minutes=5)).isoformat()
+    presence.write_text(json.dumps({"seats":{"C2":{"presence":"PRESENT","signature_valid":True,"lease_expires_at":future}}}),encoding="utf-8")
+    board.dispatch("NEXT","C2",worker);data=json.loads(board.tasks.read_text(encoding="utf-8"));task=data["tasks"][1]
+    task["dispatched_at"]=(datetime.now(timezone.utc)-timedelta(minutes=2)).isoformat();task["acceptance_timeout_seconds"]=60
+    board.tasks.write_text(json.dumps(data),encoding="utf-8")
+    out=board.run_cycle(worker);saved=json.loads(board.tasks.read_text(encoding="utf-8"))["tasks"][1]
+    assert out["tasks_returned_unaccepted"]==1 and out["tasks_dispatched"]==1
+    assert saved["dispatch_status"]=="PENDING_ACCEPTANCE" and saved["assigned_to"]=="C2"
+
+def test_acceptance_timeout_override_has_30_second_floor(tmp_path):
+    board,presence,_=setup(tmp_path);worker=Worker()
+    future=(datetime.now(timezone.utc)+timedelta(minutes=5)).isoformat()
+    presence.write_text(json.dumps({"seats":{"C2":{"presence":"PRESENT","signature_valid":True,"lease_expires_at":future}}}),encoding="utf-8")
+    board.dispatch("NEXT","C2",worker);data=json.loads(board.tasks.read_text(encoding="utf-8"));task=data["tasks"][1]
+    task["acceptance_timeout_seconds"]=1;task["dispatched_at"]=(datetime.now(timezone.utc)-timedelta(seconds=20)).isoformat()
+    assert board._reconcile_pending_acceptances(data)==0
+    task["dispatched_at"]=(datetime.now(timezone.utc)-timedelta(seconds=31)).isoformat()
+    assert board._reconcile_pending_acceptances(data)==1
+    saved=json.loads(board.tasks.read_text(encoding="utf-8"))["tasks"][1]
+    assert saved["acceptance_timeout_seconds_applied"]==30
+
+
+class AttentionRoutes:
+    def __init__(self,session="S1",current=True):self.session=session;self.current=current
+    def snapshot(self):
+        return {"seats":[{"seat":"C2","session_id":self.session,"consumer_current":self.current,"auto_routable":self.current}]}
+
+class PulseWorker:
+    def __init__(self):self.calls=[]
+    def enqueue(self,sender,targets,text,task_id=None,*args,**kwargs):
+        self.calls.append((sender,targets,text,task_id));return {"message_id":f"MSG-pulse-{len(self.calls)}"}
+
+def attention_evidence(board,repo,mid="MSG-1000000000000000-abcdef01",*,task_id=None,
+                       actor=False,synthetic=False,session="S1",action_required=False,
+                       response_required=False,age=20):
+    now=datetime.now(timezone.utc);sent=(now-timedelta(seconds=age+1)).isoformat();delivered=(now-timedelta(seconds=age)).isoformat()
+    payload={"text":"NOTICE","to":["C2"],"task_id":task_id,"action_required":action_required,"response_required":response_required}
+    inbox=repo/".ai-os/state/command-fabric/inbox";inbox.mkdir(parents=True,exist_ok=True)
+    (inbox/f"{mid}.json").write_text(json.dumps({"schema":"raios.message.v1","message_id":mid,"payload":payload,"created_at":sent}),encoding="utf-8")
+    board.receipts.mkdir(parents=True,exist_ok=True)
+    (board.receipts/f"{mid}.send.json").write_text(json.dumps({"message_id":mid,"event":"SENT","at":sent,"targets":["C2"]}),encoding="utf-8")
+    (board.receipts/f"{mid}.C2.delivery.ack.receipt.json").write_text(json.dumps({"message_id":mid,"ack_type":"DELIVERY_ACK","at":delivered}),encoding="utf-8")
+    if actor:
+        (board.receipts/f"{mid}.C2.actor.ack.receipt.json").write_text(json.dumps({"schema":"raios.actor-ack.v1","message_id":mid,"seat":"C2","target":"C2","ack_type":"ACTOR_ACK","status":"READ","at":now.isoformat(),"synthetic":synthetic,"session_id":session,"task_id":task_id}),encoding="utf-8")
+    return mid
+
+def test_attention_delivery_without_actor_ack_remains_open_and_pulses(tmp_path):
+    board,_,repo=setup(tmp_path);board.routes=AttentionRoutes();worker=PulseWorker()
+    mid=attention_evidence(board,repo,age=20)
+    out=board._attention_followup_cycle(worker);state=board.attention_snapshot(mid)["states"][0]
+    assert state["lifecycle_state"]=="DELIVERED" and state["terminal_state"] is None
+    assert out["attention_pulses"]==1 and "ATTENTION_PULSE" in worker.calls[-1][2]
+    assert len(board._attention_pulse_rows(mid,"C2","ATTENTION_PULSE"))==1
+
+def test_genuine_current_session_actor_ack_closes_notice_only(tmp_path):
+    board,_,repo=setup(tmp_path);board.routes=AttentionRoutes();worker=PulseWorker()
+    mid=attention_evidence(board,repo,actor=True)
+    board._attention_followup_cycle(worker);state=board.attention_snapshot(mid)["states"][0]
+    assert state["attention_ack_at"] and state["terminal_state"]=="ACKNOWLEDGED_NO_ACTION"
+    assert not worker.calls
+
+def test_synthetic_or_stale_session_ack_never_closes_attention(tmp_path):
+    board,_,repo=setup(tmp_path);board.routes=AttentionRoutes();worker=PulseWorker()
+    mid=attention_evidence(board,repo,actor=True,synthetic=True,age=20)
+    board._attention_followup_cycle(worker);state=board.attention_snapshot(mid)["states"][0]
+    assert state["attention_ack_at"] is None and state["terminal_state"] is None
+    mid2=attention_evidence(board,repo,mid="MSG-1000000000000001-abcdef02",actor=True,session="OLD",age=20)
+    board._attention_followup_cycle(worker);state2=board.attention_snapshot(mid2)["states"][0]
+    assert state2["attention_ack_at"] is None
+
+def test_action_required_message_remains_open_after_read(tmp_path):
+    board,_,repo=setup(tmp_path);board.routes=AttentionRoutes();worker=PulseWorker()
+    mid=attention_evidence(board,repo,actor=True,action_required=True)
+    board._attention_followup_cycle(worker);state=board.attention_snapshot(mid)["states"][0]
+    assert state["lifecycle_state"]=="ATTENTION_ACKNOWLEDGED" and state["terminal_state"] is None
+
+def test_task_attention_transitions_accept_work_checkpoint_done_blocked(tmp_path):
+    board,_,repo=setup(tmp_path);board.routes=AttentionRoutes();worker=PulseWorker();mid=attention_evidence(board,repo,task_id="NEXT",actor=True)
+    data=json.loads(board.tasks.read_text(encoding="utf-8"));task=data["tasks"][1]
+    task.update(status="IN_PROGRESS",dispatch_status="ACCEPTED",assigned_to="C2",claimed_by="C2",accepted_at=datetime.now(timezone.utc).isoformat())
+    board.tasks.write_text(json.dumps(data),encoding="utf-8");board._attention_followup_cycle(worker)
+    assert board.attention_snapshot(mid)["states"][0]["lifecycle_state"]=="TASK_ACCEPTED"
+    data=json.loads(board.tasks.read_text(encoding="utf-8"));task=data["tasks"][1];task.update(dispatch_status="CHECKPOINT_SAVED",checkpoint_updated_at=datetime.now(timezone.utc).isoformat(),resume_checkpoint={"checkpoint_id":"CHK-x","created_at":datetime.now(timezone.utc).isoformat()});board.tasks.write_text(json.dumps(data),encoding="utf-8")
+    board.attention_cursor.write_text(json.dumps({"head":board._head(),"after":""}),encoding="utf-8");board._attention_followup_cycle(worker)
+    assert board.attention_snapshot(mid)["states"][0]["lifecycle_state"]=="WORKING"
+    data=json.loads(board.tasks.read_text(encoding="utf-8"));data["tasks"][1]["status"]="DONE";board.tasks.write_text(json.dumps(data),encoding="utf-8");board.attention_cursor.write_text(json.dumps({"head":board._head(),"after":""}),encoding="utf-8");board._attention_followup_cycle(worker)
+    assert board.attention_snapshot(mid)["states"][0]["terminal_state"]=="COMPLETED"
+    data=json.loads(board.tasks.read_text(encoding="utf-8"));data["tasks"][1]["status"]="BLOCKED";data["tasks"][1]["blocker"]="X";board.tasks.write_text(json.dumps(data),encoding="utf-8");board.attention_cursor.write_text(json.dumps({"head":board._head(),"after":""}),encoding="utf-8");board._attention_followup_cycle(worker)
+    assert board.attention_snapshot(mid)["states"][0]["terminal_state"]=="BLOCKED"
+
+def test_attention_backoff_and_no_pulse_before_due_or_after_terminal(tmp_path):
+    board,_,repo=setup(tmp_path);board.routes=AttentionRoutes();worker=PulseWorker();mid=attention_evidence(board,repo,age=5)
+    board._attention_followup_cycle(worker);assert not worker.calls
+    state=board.attention_snapshot(mid)["states"][0];base=board._attention_dt(state["delivery_ack_at"]);due=board._attention_dt(state["next_attention_at"])
+    assert int((due-base).total_seconds())==10
+    for i,sec in enumerate((10,30,60,120),1):
+        board._attention_event(mid,"C2","ATTENTION_PULSE",pulse_count=i,reason="test")
+        rebuilt=board._attention_rebuild(mid,"C2",{},board._attention_routes());delta=int((board._attention_dt(rebuilt["next_attention_at"])-base).total_seconds())
+        assert delta==(30,60,120,300)[i-1]
+    board.routes=AttentionRoutes();attention_evidence(board,repo,mid=mid,actor=True)
+    rebuilt=board._attention_rebuild(mid,"C2",{},board._attention_routes());assert rebuilt["terminal_state"]=="ACKNOWLEDGED_NO_ACTION"
+    assert board._attention_maybe_pulse(rebuilt,worker) is None
+
+def test_progress_pulse_only_when_stale_and_recent_checkpoint_suppresses(tmp_path,monkeypatch):
+    monkeypatch.setattr(council_board,"ATTENTION_PROGRESS_STALE_SECONDS",30)
+    board,_,repo=setup(tmp_path);board.routes=AttentionRoutes();worker=PulseWorker();mid=attention_evidence(board,repo,task_id="NEXT",actor=True)
+    data=json.loads(board.tasks.read_text(encoding="utf-8"));task=data["tasks"][1];old=(datetime.now(timezone.utc)-timedelta(seconds=40)).isoformat();task.update(status="IN_PROGRESS",dispatch_status="CHECKPOINT_SAVED",assigned_to="C2",claimed_by="C2",accepted_at=old,checkpoint_updated_at=old,resume_checkpoint={"checkpoint_id":"CHK-old","created_at":old});board.tasks.write_text(json.dumps(data),encoding="utf-8")
+    board._attention_followup_cycle(worker);assert any("PROGRESS_PULSE" in c[2] for c in worker.calls)
+    worker.calls.clear();data=json.loads(board.tasks.read_text(encoding="utf-8"));now=datetime.now(timezone.utc).isoformat();data["tasks"][1]["checkpoint_updated_at"]=now;data["tasks"][1]["resume_checkpoint"]["created_at"]=now;board.tasks.write_text(json.dumps(data),encoding="utf-8");board.attention_cursor.write_text(json.dumps({"head":board._head(),"after":""}),encoding="utf-8");board._attention_followup_cycle(worker)
+    assert not any("PROGRESS_PULSE" in c[2] for c in worker.calls)
+
+def test_runtime_state_missing_corrupt_or_head_mismatch_reconciles_from_receipts(tmp_path):
+    board,_,repo=setup(tmp_path);board.routes=AttentionRoutes();worker=PulseWorker();mid=attention_evidence(board,repo,actor=True)
+    board.attention_cursor.write_text('{bad',encoding='utf-8');board._attention_followup_cycle(worker)
+    state=board.attention_snapshot(mid)["states"][0];assert state["reconciled_from_durable_evidence"] is True
+    path=board.attention_runtime/f"{mid}.C2.json";path.unlink();board.attention_cursor.write_text(json.dumps({"head":"WRONG","after":"ZZZ"}),encoding="utf-8");board._attention_followup_cycle(worker)
+    assert board.attention_snapshot(mid)["states"][0]["terminal_state"]=="ACKNOWLEDGED_NO_ACTION"
+
+def test_duplicate_cycles_and_duplicate_actor_ack_are_idempotent(tmp_path):
+    board,_,repo=setup(tmp_path);board.routes=AttentionRoutes();worker=PulseWorker();mid=attention_evidence(board,repo,actor=True)
+    for _ in range(2):board.attention_cursor.write_text(json.dumps({"head":board._head(),"after":""}),encoding="utf-8");board._attention_followup_cycle(worker)
+    events=[load for load in board.receipts.glob("ATN-*.C2.attention-acknowledged.receipt.json") if json.loads(load.read_text(encoding="utf-8")).get("message_id")==mid]
+    assert len(events)==1 and board.attention_snapshot(mid)["count"]==1
+
+def test_attention_cycle_is_bounded_and_never_tracks_its_own_pulse(tmp_path,monkeypatch):
+    monkeypatch.setattr(council_board,"ATTENTION_MAX_ITEMS",3);monkeypatch.setattr(council_board,"ATTENTION_MAX_SECONDS",1.0)
+    board,_,repo=setup(tmp_path);board.routes=AttentionRoutes();worker=PulseWorker()
+    for i in range(8):attention_evidence(board,repo,mid=f"MSG-10000000000000{i:02d}-abcdef{i:02d}",age=1)
+    out=board._attention_followup_cycle(worker);assert out["attention_items_processed"]<=3
+    mid="MSG-1999999999999999-pulse000";attention_evidence(board,repo,mid=mid,age=30)
+    msg=repo/".ai-os/state/command-fabric/inbox"/f"{mid}.json";d=json.loads(msg.read_text(encoding="utf-8"));d["payload"]["text"]="ATTENTION_PULSE\nWORK_AUTHORITY=false";msg.write_text(json.dumps(d),encoding="utf-8")
+    assert board._attention_rebuild(mid,"C2",{},board._attention_routes()) is None
+
+def test_attention_budget_never_starves_first_durable_message(tmp_path,monkeypatch):
+    monkeypatch.setattr(council_board,"ATTENTION_MAX_SECONDS",0.05)
+    board,_,repo=setup(tmp_path);board.routes=AttentionRoutes();worker=PulseWorker()
+    mid=attention_evidence(board,repo,age=20)
+    real=board._attention_routes
+    def slow_routes():
+        import time as _time
+        _time.sleep(0.08)
+        return real()
+    monkeypatch.setattr(board,"_attention_routes",slow_routes)
+    out=board._attention_followup_cycle(worker)
+    assert out["attention_items_processed"]>=1
+    state=board.attention_snapshot(mid)["states"][0]
+    assert state["lifecycle_state"]=="DELIVERED"
+
+def test_attention_contract_creates_no_second_worker_or_transport(tmp_path):
+    board,_,_=setup(tmp_path)
+    assert board.attention_runtime.name=="attention"
+    assert not hasattr(board,"attention_worker") and not hasattr(board,"attention_transport")
+    assert board.fabric==board.repo/".ai-os/state/command-fabric"
+
+
+def test_new_dispatch_uses_command_fabric_lease_not_new_council_task_scope_lock(tmp_path):
+    board,presence,repo=setup(tmp_path);worker=Worker()
+    future=(datetime.now(timezone.utc)+timedelta(minutes=1)).isoformat()
+    presence.write_text(json.dumps({"seats":{"C2":{"presence":"PRESENT","signature_valid":True,"lease_expires_at":future}}}),encoding="utf-8")
+    before=json.loads(board.locks.read_text(encoding="utf-8")).get("locks",[]) if board.locks.exists() else []
+    out=board.dispatch("NEXT","C2",worker)
+    after=json.loads(board.locks.read_text(encoding="utf-8")).get("locks",[]) if board.locks.exists() else []
+    assert after==before
+    lease_files=list((repo/".ai-os/state/command-fabric/leases").glob("*.json"))
+    assert lease_files
+    leases=[json.loads(x.read_text(encoding="utf-8")) for x in lease_files]
+    owned=[x for x in leases if x.get("task_id")=="NEXT" and x.get("state")=="ACTIVE"]
+    assert owned and all(x.get("owner")=="C2" for x in owned)
+    assert out.get("scope_lease_ids")==[x["lease_id"] for x in owned]
+
+
+def test_task3_dispatch_rejects_route_identity_session_substitution(tmp_path):
+    board,presence,_=setup(tmp_path);worker=Worker()
+    future=(datetime.now(timezone.utc)+timedelta(minutes=1)).isoformat()
+    presence.write_text(json.dumps({"seats":{"C2":{"presence":"PRESENT","signature_valid":True,"lease_expires_at":future}}}),encoding="utf-8")
+    class SubstitutedRoutes:
+        def snapshot(self):
+            return {"seats":[{"seat":"C2","auto_routable":True,"binding_current":True,"consumer_current":True,
+                "actor_id":"ACTOR-A","session_id":"SESSION-A","device_id":"AG",
+                "consumer_actor_id":"ACTOR-B","consumer_session_id":"SESSION-B","consumer_device_id":"AG"}],
+                "auto_routable":["C2"],"coordination_available":["C2"]}
+    board.routes=SubstitutedRoutes()
+    with pytest.raises(ValueError,match="TARGET_NOT_LIVE_BOUND_CONSUMER"):
+        board.dispatch("NEXT","C2",worker)

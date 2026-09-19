@@ -1,7 +1,17 @@
 ﻿import argparse, json, subprocess, sys
 from pathlib import Path
-from datetime import datetime
-
+from datetime import datetime, timedelta, timezone
+def _lock_effective(x, now=None):
+    now=now or datetime.now(timezone.utc)
+    if x.get("status")!="ACTIVE": return False
+    exp=x.get("expires_at") or x.get("lease_expires_at")
+    if not exp: return True
+    try:
+        dt=datetime.fromisoformat(str(exp).replace("Z","+00:00"))
+        if dt.tzinfo is None: dt=dt.replace(tzinfo=timezone.utc)
+        return dt>now
+    except Exception:
+        return True
 ROOT=Path.cwd(); AI=ROOT/".ai-os"; ST=AI/"state"
 def load(p): return json.loads(p.read_text(encoding="utf-8-sig"))
 def save(p,x): p.write_text(json.dumps(x,indent=2,ensure_ascii=False)+"\n",encoding="utf-8")
@@ -15,7 +25,7 @@ def status(_):
     print("Project:",pr["project_name"]); print("Branch:",git("branch","--show-current")); print("HEAD:",git("rev-parse","HEAD"))
     print("Wave:",cs["active_wave"]); print("Goal:",cs["current_goal"])
     print("Active tasks:",sum(x.get("status") in ["READY","IN_PROGRESS","BLOCKED"] for x in t))
-    print("Active locks:",sum(x.get("status")=="ACTIVE" for x in l))
+    print("Active locks:",sum(_lock_effective(x) for x in l))
     print("Dirty:","yes" if git("status","--short") else "no")
 def snapshot(_):
     need(); x={"time":datetime.now().isoformat(),"branch":git("branch","--show-current"),"head":git("rev-parse","HEAD"),"status":git("status","--short").splitlines(),"tracked":len(git("ls-files").splitlines())}
@@ -43,9 +53,13 @@ def ov(a,b):
 def lock(a):
     d=load(ST/"LOCKS.json")
     for x in d["locks"]:
-        if x.get("status")=="ACTIVE" and ov(x["scope"],a.scope): sys.exit(f"Conflict: {x['id']} {x['agent']} {x['scope']}")
+        if _lock_effective(x) and ov(x["scope"],a.scope): sys.exit(f"Conflict: {x['id']} {x['agent']} {x['scope']}")
     lid="LOCK-"+datetime.now().strftime("%Y%m%d%H%M%S")
-    d["locks"].append({"id":lid,"task_id":a.task,"agent":a.agent,"scope":a.scope,"status":"ACTIVE"})
+    d["locks"].append({"id":lid,"task_id":a.task,"agent":a.agent,"scope":a.scope,"status":"ACTIVE",
+                       "owner":"RAIOS_SYSTEM","legal_owner":"RAIOS_SYSTEM","lease_holder":a.agent,
+                       "ownership_model":"SYSTEM_OWNED_AGENT_LEASED",
+                       "expires_at":(datetime.now(timezone.utc)+timedelta(minutes=30)).isoformat(),
+                       "recovery_policy":"AUTO_RECLAIM_AFTER_EXPIRY"})
     save(ST/"LOCKS.json",d); print(lid)
 def unlock(a):
     d=load(ST/"LOCKS.json"); f=False
@@ -83,4 +97,3 @@ for x in ["agent","task","status"]: q.add_argument("--"+x,required=True)
 for x in ["files","validation","evidence","next"]: q.add_argument("--"+x)
 q.set_defaults(f=handoff)
 a=p.parse_args(); a.f(a)
-

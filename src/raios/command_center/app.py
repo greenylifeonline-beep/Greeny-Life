@@ -9,6 +9,8 @@ from fastapi.responses import HTMLResponse
 from pydantic import BaseModel, Field
 from raios.search_cortex import SearchCortex
 from raios.ai_gateway import ModelRouter, RouteRequest
+from .coordination_truth import lock_is_effective
+from .engine_plane import snapshot as engine_snapshot
 from .message_worker import COUNCIL_SEATS, ROUTING_TARGETS, MessageWorker
 from .actor_routing import ActorRouteRegistry
 from .council_board import CouncilBoard
@@ -23,15 +25,17 @@ REPO=Path(os.getenv("RAIOS_CANONICAL_REPO",str(HERE.parents[2]))).resolve()
 MCP_ROOT=Path(os.getenv("RAIOS_MCP_ROOT",str(REPO))).resolve()
 RUNTIME=Path(os.getenv("RAIOS_COMMAND_CENTER_RUNTIME",str(Path.home()/".raios/runtime/command-center"))).resolve()
 COUNCIL_PRESENCE=Path(os.getenv("RAIOS_COUNCIL_PRESENCE",str(Path.home()/".raios/runtime/council-ops/presence.json"))).resolve()
+FACTORY_RUNTIME_LATEST=Path(os.getenv("RAIOS_FACTORY_RUNTIME_LATEST",str(Path.home()/".raios/runtime/factory-fabric/FACTORY-FABRIC-LATEST.json"))).resolve()
 C5=os.getenv("RAIOS_C5_URL","http://127.0.0.1:8766")
 CSRF=secrets.token_urlsafe(32)
-MESSAGE_WORKER=MessageWorker(REPO,RUNTIME,poll_seconds=5.0,max_messages_per_scan=50000,max_scan_seconds=30.0)
+MESSAGE_WORKER=None
 ACTOR_ROUTES=ActorRouteRegistry(REPO,presence_path=COUNCIL_PRESENCE)
 COUNCIL_BOARD=CouncilBoard(REPO,routes=ACTOR_ROUTES)
 SEARCH_CORTEX=SearchCortex()
 MODEL_ROUTER=ModelRouter(REPO)
 CLIENT_ACTIVITY=ClientActivityView(REPO,ACTOR_ROUTES)
 COUNCIL_OPS=CouncilOperations(REPO)
+MESSAGE_WORKER=MessageWorker(REPO,RUNTIME,poll_seconds=5.0,max_messages_per_scan=50000,max_scan_seconds=30.0,routes=ACTOR_ROUTES)
 MESSAGE_WORKER.configure_workflow(COUNCIL_BOARD)
 
 @asynccontextmanager
@@ -96,10 +100,15 @@ def council_lite():
   "auto_routable":list(snap.get("auto_routable") or []),"auto_routable_count":int(snap.get("auto_routable_count") or 0),
   "registered_count":len(seats),"seats":seats}
 def tasks_state():
- tasks=load(REPO/".ai-os/state/TASKS.json",{"tasks":[]})["tasks"]; locks=load(REPO/".ai-os/state/LOCKS.json",{"locks":[]})["locks"]
+ doc=load(REPO/".ai-os/state/TASKS.json",{"tasks":[]})
+ tasks=doc.get("tasks") or []; locks=load(REPO/".ai-os/state/LOCKS.json",{"locks":[]})["locks"]
+ from raios.command_center.board_now import now_tasks
+ now=now_tasks(tasks)
  return {"total":len(tasks),"ready":sum(t.get("status")=="READY" for t in tasks),"in_progress":sum(t.get("status")=="IN_PROGRESS" for t in tasks),
   "blocked":sum(t.get("status")=="BLOCKED" for t in tasks),"done":sum(t.get("status")=="DONE" for t in tasks),
-  "active_locks":sum(x.get("status")=="ACTIVE" for x in locks),"recent":tasks[-12:]}
+  "active_locks":sum(lock_is_effective(x) for x in locks),"recent":now[:12],"now":now,
+  "now_ne_full_ledger":True,"active_program_id":doc.get("active_program_id"),
+  "named_goal_id":doc.get("active_program_id")}
 def _presence_state(row):
  if not row:return "UNPROVEN"
  state=str(row.get("presence") or "UNPROVEN").upper()
@@ -147,8 +156,19 @@ def receipt_state():
  rows=sorted(rows,key=lambda x:x["mtime"],reverse=True)[:20]
  return {"count":len(rows),"recent":rows}
 def factory_state():
- report=REPO/".ai-os/reports/factory-fabric"; names=["RESOURCE","ASSIMILATION","TRAINING","COGNITIVE","C5_EXPERT_FOUNDRY","MODEL"]
- return {"fabric_present":(REPO/"src/raios/factory_fabric").is_dir(),"factories":[{"name":n,"state":"AVAILABLE"} for n in names],"report_root":str(report)}
+ fabric=(REPO/"src/raios/factory_fabric").is_dir()
+ runtime=load(FACTORY_RUNTIME_LATEST,{})
+ if runtime:
+  return {"fabric_present":fabric,"live_runtime_claimed":True,"runtime_path":str(FACTORY_RUNTIME_LATEST),
+          "schema":runtime.get("schema"),"generated_at":runtime.get("generated_at"),"runtime_status":runtime.get("status","UNKNOWN"),
+          "factories":runtime.get("factories",{}),"canonical_repo_mutation":runtime.get("canonical_repo_mutation",False),
+          "provider_mutation":runtime.get("provider_mutation",False),"automatic_canonical_promotion":runtime.get("automatic_canonical_promotion",False)}
+ return {"fabric_present":fabric,"live_runtime_claimed":False,"runtime_path":str(FACTORY_RUNTIME_LATEST),
+         "runtime_status":"UNPROVEN","factories":{},"canonical_repo_mutation":False,
+         "provider_mutation":False,"automatic_canonical_promotion":False}
+def goals_state():
+ from raios.goals.catalog import load_goals
+ return load_goals(REPO)
 def resource_state():
  return latest_resource_census(REPO)
 def cognitive_state():
@@ -160,6 +180,8 @@ def cognitive_state():
   "manager":manager,"search_latest":latest,"continuity":continuity,
   "shared_search_cortex":bool((loop.get("search_cortex") or {}).get("shared")) if isinstance(loop,dict) else False,
   "existing_kae_reused":bool((loop.get("assimilation") or {}).get("existing_kae_reused")) if isinstance(loop,dict) else False}
+def engine_state():
+ return engine_snapshot(REPO)
 def diagnostic_state():
  data=overview(); worker=MESSAGE_WORKER.status(); cognition=data.get("cognitive") or {}; loop=cognition.get("loop") or {}
  causes=[]
@@ -181,7 +203,7 @@ def overview():
   tcp_service("9Router",20128),service("NATS",4222)]
  task=tasks_state(); degraded=[x["name"] for x in services if x["state"]!="ONLINE"]
  return {"generated_at":utc(),"canonical_head":git("rev-parse","HEAD"),"remote_head":git("rev-parse","origin/ai-evolution-202608051809"),
-  "services":services,"tasks":task,"models":model_state(),"factories":factory_state(),"resources":resource_state(),"council":council_state(),"cognitive":cognitive_state(),
+  "services":services,"tasks":task,"goals":goals_state(),"models":model_state(),"factories":factory_state(),"resources":resource_state(),"council":council_state(),"cognitive":cognitive_state(),
   "maintenance":{"health":"HEALTHY" if not degraded else "ATTENTION","degraded":degraded,"auto_refresh":True,
    "auto_canonical_mutation":False,"self_update_policy":"LOCAL_RUNTIME_FROM_FAST_FORWARD_CANONICAL_ONLY_WITH_C1_CONFIRMATION"}}
 
@@ -262,6 +284,8 @@ def api_csrf():return {"csrf":CSRF,"service":"RAIOS_COMMAND_CENTER","direct_muta
 def api_overview():return overview()
 @app.get("/api/cognitive")
 def api_cognitive():return cognitive_state()
+@app.get("/api/engines")
+def api_engines():return engine_state()
 @app.post("/api/search")
 def api_search(req:SearchIn,x_raios_csrf:str|None=Header(None)):
  require_csrf(x_raios_csrf)
@@ -269,6 +293,8 @@ def api_search(req:SearchIn,x_raios_csrf:str|None=Header(None)):
   official_allowed=True,limit=req.limit,deep=req.deep,trace=True)
 @app.get("/api/tasks")
 def api_tasks():return tasks_state()
+@app.get("/api/goals")
+def api_goals():return goals_state()
 @app.get("/api/council")
 def api_council():return council_state()
 @app.get("/api/council-state")
@@ -363,14 +389,29 @@ def chat(req:ChatIn,x_raios_csrf:str|None=Header(None)):
 @app.post("/api/command")
 def command(req:CommandIn,x_raios_csrf:str|None=Header(None)):
  require_csrf(x_raios_csrf)
+ snap=ACTOR_ROUTES.snapshot()
  resolution=ACTOR_ROUTES.resolve(req.targets)
  targets=resolution["targets"]
  if resolution["rejected"]:
   raise HTTPException(400,{"error":"TARGET_UNKNOWN","targets":resolution["rejected"]})
+ want_all=any(str(x).upper() in {"ALL","ALL_AVAILABLE"} for x in req.targets)
+ unreachable=[]
+ delivered=set(str(x).upper() for x in targets)
+ requested={str(t).upper() for t in req.targets}
+ for row in snap.get("seats") or []:
+  seat=str(row.get("seat") or "").upper()
+  if not seat or seat in delivered or row.get("auto_routable") is True:
+   continue
+  if want_all or seat in requested:
+   reason=("SIGNED_OUT" if str(row.get("presence_state") or "").upper() in {"ABSENT","OFFLINE"}
+           else "NOT_LIVE_BOUND")
+   unreachable.append({"seat":seat,"reason":reason,"discovery_state":row.get("discovery_state"),
+                       "present":row.get("present") is True,"auto_routable":False})
  if not targets:
   lite=council_lite()
   raise HTTPException(409,{"error":"NO_LIVE_BOUND_TARGETS","auto_routable":resolution["auto_routable_snapshot"],
    "registered_count":lite["registered_count"],"active_workers":lite["active_workers"],
+   "unreachable":unreachable,
    "select_explicit":["C2","C8"],
    "hint_ar":"ALL يرسل فقط للمقاعد المربوطة الحية. لا يوجد مقعد حي الآن. اختر C2 أو C8 صراحة.",
    "hint_en":"ALL routes only to live-bound seats. None are live-bound. Select C2 or C8 explicitly."})
@@ -379,7 +420,9 @@ def command(req:CommandIn,x_raios_csrf:str|None=Header(None)):
  try:msg=MESSAGE_WORKER.enqueue("C1@COMMAND_CENTER",targets,notice,req.task_id,
   routing_modes=resolution["routing_modes"])
  except ValueError as exc:raise HTTPException(400,str(exc))
- return {"ok":True,"results":[{"targets":targets,"route":"CANONICAL_LOCAL_FABRIC",
+ return {"ok":True,"delivered_to":targets,"unreachable":unreachable,
+  "lock_owner":"RAIOS_SYSTEM","absent_agent_does_not_pin_files":True,
+  "results":[{"targets":targets,"route":"CANONICAL_LOCAL_FABRIC",
   "routing_modes":resolution["routing_modes"],"owner_selected_unbound":resolution["owner_selected_unbound"],
   "status":"SENT_PENDING_DELIVERY_ACK","message_id":msg["message_id"]}],
   "work_authority":False,"notice_only":True,"actor_ack_synthesized":False,

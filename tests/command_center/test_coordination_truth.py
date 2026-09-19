@@ -1,5 +1,7 @@
 from __future__ import annotations
 
+from datetime import datetime, timezone
+
 from raios.command_center.coordination_truth import (
     build_dispatch_plan,
     build_founder_brief,
@@ -10,7 +12,24 @@ from raios.command_center.coordination_truth import (
     founder_gate_satisfied,
     global_legacy_delete_gate_satisfied,
     legacy_delete_gate_satisfied,
+    lock_is_effective,
 )
+
+
+def test_expired_agent_lease_does_not_pin_files():
+    now = datetime(2026, 9, 17, tzinfo=timezone.utc)
+    assert lock_is_effective(
+        {"status": "ACTIVE", "expires_at": "2026-09-15T19:15:56+00:00",
+         "agent": "CHATGPT-NORMAL", "owner": "RAIOS_SYSTEM"},
+        now=now,
+    ) is False
+    assert lock_is_effective({"status": "ACTIVE", "owner": "RAIOS_SYSTEM"}, now=now) is True
+    assert lock_is_effective(
+        {"status": "RELEASED", "expires_at": "2026-09-18T00:00:00+00:00"}, now=now
+    ) is False
+    assert lock_is_effective(
+        {"status": "ACTIVE", "lease_expires_at": "2026-09-18T00:00:00+00:00"}, now=now
+    ) is True
 
 
 def test_lifecycle_distinguishes_done_current_required_waiting_and_stale():

@@ -108,3 +108,19 @@ def test_presence_atomic_falls_back_when_stable_name_is_pinned(tmp_path,monkeypa
  data=json.loads(target.read_text(encoding="utf-8"))
  assert data["seats"]["C3"]["presence"]=="PRESENT"
  assert list(tmp_path.glob("presence.json.*.tmp"))==[]
+
+
+def test_presence_idempotency_is_bounded(tmp_path):
+ op,_=setup(tmp_path)
+ state={"schema":"raios.council-presence.v1","seats":{"C2":{"presence":"PRESENT"}},"idempotency":{}}
+ for i in range(400):
+  state["idempotency"][f"k{i:04d}"]={"fingerprint":str(i),"result":{"n":i}}
+ dropped=council_operations.prune_idempotency(state, keep=256)
+ assert dropped==144 and len(state["idempotency"])==256
+ assert "k0000" not in state["idempotency"] and "k0399" in state["idempotency"]
+ op.presence_path.parent.mkdir(parents=True,exist_ok=True)
+ op.presence_path.write_text(json.dumps(state),encoding="utf-8")
+ out=op.compact_runtime()
+ assert out["idempotency_kept"]==256
+ saved=json.loads(op.presence_path.read_text(encoding="utf-8"))
+ assert saved["seats"]["C2"]["presence"]=="PRESENT"

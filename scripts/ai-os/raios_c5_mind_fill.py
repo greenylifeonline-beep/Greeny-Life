@@ -147,6 +147,12 @@ def fill() -> dict:
 def main() -> int:
     argparse.ArgumentParser(description="Fill C5 mind from important canonical/law files").parse_args()
     rec = fill()
+    out = getattr(sys.stdout, "reconfigure", None)
+    if callable(out):
+        try:
+            sys.stdout.reconfigure(encoding="utf-8", errors="replace")
+        except Exception:
+            pass
     print(
         json.dumps(
             {
@@ -163,7 +169,10 @@ def main() -> int:
             indent=2,
         )
     )
-    print(rec["markdown"])
+    try:
+        print(rec["markdown"])
+    except UnicodeEncodeError:
+        print(str(OUT_DIR / "LAST.md"))
     return 0
 
 

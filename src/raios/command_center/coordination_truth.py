@@ -33,6 +33,20 @@ def _parse_time(value: Any) -> datetime | None:
         return None
 
 
+def lock_is_effective(lock: dict[str, Any], *, now: datetime | None = None) -> bool:
+    """System owns locks. An expired or absent agent lease does not pin files."""
+    if str(lock.get("status") or "").upper() != "ACTIVE":
+        return False
+    expiry = lock.get("expires_at") or lock.get("lease_expires_at")
+    parsed = _parse_time(expiry)
+    if parsed is None:
+        return True
+    now = now or _utc_now()
+    if parsed.tzinfo is None:
+        parsed = parsed.replace(tzinfo=timezone.utc)
+    return parsed > now
+
+
 def task_claim_is_current(task: dict[str, Any], *, now: datetime | None = None,
                           recent_seconds: int = RECENT_ACTIVITY_SECONDS) -> bool:
     status = str(task.get("status") or "").upper()
