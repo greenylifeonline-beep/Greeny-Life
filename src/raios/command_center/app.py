@@ -27,6 +27,7 @@ RUNTIME=Path(os.getenv("RAIOS_COMMAND_CENTER_RUNTIME",str(Path.home()/".raios/ru
 COUNCIL_PRESENCE=Path(os.getenv("RAIOS_COUNCIL_PRESENCE",str(Path.home()/".raios/runtime/council-ops/presence.json"))).resolve()
 FACTORY_RUNTIME_LATEST=Path(os.getenv("RAIOS_FACTORY_RUNTIME_LATEST",str(Path.home()/".raios/runtime/factory-fabric/FACTORY-FABRIC-LATEST.json"))).resolve()
 C5=os.getenv("RAIOS_C5_URL","http://127.0.0.1:8766")
+MCP="http://127.0.0.1:8788"
 CSRF=secrets.token_urlsafe(32)
 MESSAGE_WORKER=None
 ACTOR_ROUTES=ActorRouteRegistry(REPO,presence_path=COUNCIL_PRESENCE)
@@ -76,8 +77,8 @@ def http_json(url,method="GET",body=None,timeout=8):
  except Exception as e:return 0,{"error":f"{type(e).__name__}:{e}"}
 def require_csrf(value):
  if not value or not secrets.compare_digest(value,CSRF):raise HTTPException(403,"CSRF_REQUIRED")
-def service(name,port,url=None):
- listening=tcp(port); code,body=http_json(url,timeout=3) if url and listening else (None,{})
+def service(name,port,url=None,timeout=3):
+ listening=tcp(port); code,body=http_json(url,timeout=timeout) if url and listening else (None,{})
  ready=listening and (not url or code==200)
  return {"name":name,"state":"ONLINE" if ready else ("DEGRADED" if listening else "OFFLINE"),"port":port,"http":code,"detail":body}
 def tcp_service(name,port):
@@ -87,7 +88,32 @@ def tcp_service(name,port):
 def live_plane():
  return {"schema":"raios.command-center.live-plane.v1","generated_at":utc(),
   "canonical_head":CANONICAL_HEAD,"self":{"name":"CommandCenter","port":8770,"state":"ONLINE","probe":"SELF"},
-  "services":[tcp_service("C5",8766),tcp_service("UniversalMCP",8788),tcp_service("9Router",20128),tcp_service("NATS",4222)]}
+  "services":[tcp_service("C5",8766),service("UniversalMCP",8788,MCP+"/health"),tcp_service("9Router",20128),tcp_service("NATS",4222)]}
+def mcp_bind():
+ code,body=http_json(MCP+"/health",timeout=3)
+ health=body if isinstance(body,dict) else {}
+ adapters=[]
+ channel=load(REPO/".ai-os/mcp/EXECUTION-CHANNEL.json",{})
+ for row in channel.get("runtimes") or []:
+  if row.get("adapter") is True:
+   adapters.append({"id":row.get("id"),"role":row.get("role"),"transport":row.get("transport"),
+                    "health_stamp":row.get("health"),"adapter":True})
+ live=code==200 and health.get("ok") is True and int(health.get("tool_count") or 0)==8 and health.get("ninth_tool") is not True and health.get("get_sse") is True
+ return {"schema":"raios.command-center.mcp-bind.v1","generated_at":utc(),"census_port":8788,
+  "endpoint":MCP+"/mcp","health_url":MCP+"/health","http":code,"live":live,
+  "second_gateway":False,"ninth_tool":False,"v1_execution_intent":"DENIED",
+  "client_gateway_ne_seat_bus":True,"internal_bus":"COMMAND_FABRIC",
+  "loopback_read_without_token":True,"writes_require_actor_grant":True,
+  "c2_grant_invented":False,"c6_grant_invented":False,
+  "client_channel":health.get("channel") or "MISSING","get_sse":health.get("get_sse") is True,
+  "stateless":health.get("stateless") is True,"session_count":health.get("session_count"),
+  "tools":health.get("tools") or [],"tool_count":health.get("tool_count"),
+  "head":health.get("head"),"head_source":health.get("head_source"),
+  "health":{k:health.get(k) for k in ("ok","service","transport","ninth_tool","second_gateway","law","channel","get_sse","stateless") if k in health},
+  "cursor_example":".ai-os/mcp/cursor-mcp.example.json","cursor_project_bind":".cursor/mcp.json",
+  "adapters_behind_gateway":adapters,
+  "law":["REUSE_EXISTING_UNIVERSAL_MCP","NO_SECOND_GATEWAY","NO_NINTH_TOOL","MCP_GATEWAY_NE_TRUTH_AUTHORITY",
+         "COMMAND_FABRIC_REMAINS_INTERNAL_BUS","MCP_HAS_STREAMABLE_HTTP_SESSION_CHANNEL"]}
 def council_lite():
  snap=ACTOR_ROUTES.snapshot(); seats=[]
  for row in snap.get("seats") or []:
@@ -101,12 +127,13 @@ def council_lite():
   "registered_count":len(seats),"seats":seats}
 def tasks_state():
  doc=load(REPO/".ai-os/state/TASKS.json",{"tasks":[]})
- tasks=doc.get("tasks") or []; locks=load(REPO/".ai-os/state/LOCKS.json",{"locks":[]})["locks"]
+ tasks=doc.get("tasks") or []
  from raios.command_center.board_now import now_tasks
  now=now_tasks(tasks)
  return {"total":len(tasks),"ready":sum(t.get("status")=="READY" for t in tasks),"in_progress":sum(t.get("status")=="IN_PROGRESS" for t in tasks),
   "blocked":sum(t.get("status")=="BLOCKED" for t in tasks),"done":sum(t.get("status")=="DONE" for t in tasks),
-  "active_locks":sum(lock_is_effective(x) for x in locks),"recent":now[:12],"now":now,
+  "active_locks":None,"locks_scanned":False,"locks_omitted_reason":"OVERVIEW_MUST_NOT_PARSE_FULL_LOCKS_LEDGER",
+  "recent":now[:12],"now":now,
   "now_ne_full_ledger":True,"active_program_id":doc.get("active_program_id"),
   "named_goal_id":doc.get("active_program_id")}
 def _presence_state(row):
@@ -199,10 +226,11 @@ def diagnostic_state():
   "score":score,"root_causes":causes,"services":data["services"],"worker":worker,"cognitive":cognition,
   "actions_executed":[],"canonical_mutation":False,"existing_first":True}
 def overview():
- services=[service("C5",8766,C5+"/health"),service("UniversalMCP",8788,"http://127.0.0.1:8788/health"),
+ services=[service("C5",8766,C5+"/health",timeout=15),service("UniversalMCP",8788,MCP+"/health"),
   tcp_service("9Router",20128),service("NATS",4222)]
  task=tasks_state(); degraded=[x["name"] for x in services if x["state"]!="ONLINE"]
- return {"generated_at":utc(),"canonical_head":git("rev-parse","HEAD"),"remote_head":git("rev-parse","origin/ai-evolution-202608051809"),
+ return {"generated_at":utc(),"canonical_head":CANONICAL_HEAD,"remote_head":os.getenv("RAIOS_REMOTE_HEAD","UNKNOWN"),
+  "head_source":"env_or_cached_ne_subprocess",
   "services":services,"tasks":task,"goals":goals_state(),"models":model_state(),"factories":factory_state(),"resources":resource_state(),"council":council_state(),"cognitive":cognitive_state(),
   "maintenance":{"health":"HEALTHY" if not degraded else "ATTENTION","degraded":degraded,"auto_refresh":True,
    "auto_canonical_mutation":False,"self_update_policy":"LOCAL_RUNTIME_FROM_FAST_FORWARD_CANONICAL_ONLY_WITH_C1_CONFIRMATION"}}
@@ -219,6 +247,10 @@ class AvailabilityIn(BaseModel):
  seat:str=Field(min_length=2,max_length=4)
  state:str=Field(pattern="^(AVAILABLE|BUSY|OFFLINE|UNKNOWN)$")
  reason:str=Field(default="",max_length=5000)
+class SelfCheckInIn(BaseModel):
+ seat:str=Field(pattern="^C(?:[1-9]|1[0-2])$")
+ auth:dict[str,Any]
+ idempotency_key:str=Field(min_length=1,max_length=200)
 class ModelRouteIn(BaseModel):
  capability:str=Field(min_length=2,max_length=100)
  privacy:str=Field(default="local_preferred",max_length=40)
@@ -275,9 +307,11 @@ def index():return (HERE/"index.html").read_text(encoding="utf-8")
 def bootstrap():
  return {"csrf":CSRF,"ui":"CANONICAL_COMMAND_CENTER","direct_mutation":False,
   "boot_mode":"FAST_PLANE_THEN_OVERVIEW","canonical_head":CANONICAL_HEAD,
-  "health":health(),"plane":live_plane(),"council_lite":council_lite(),"overview":None}
+  "health":health(),"plane":live_plane(),"mcp":mcp_bind(),"council_lite":council_lite(),"overview":None}
 @app.get("/api/plane")
 def api_plane():return live_plane()
+@app.get("/api/mcp")
+def api_mcp():return mcp_bind()
 @app.get("/api/csrf")
 def api_csrf():return {"csrf":CSRF,"service":"RAIOS_COMMAND_CENTER","direct_mutation":False}
 @app.get("/api/overview")
@@ -303,6 +337,13 @@ def api_council_state():
  return build_council_member_state(REPO,ACTOR_ROUTES,activity.get("clients",[]))
 @app.get("/api/actor-routes")
 def api_actor_routes():return ACTOR_ROUTES.snapshot()
+@app.post("/api/council/self-check-in")
+def api_council_self_check_in(req:SelfCheckInIn,x_raios_csrf:str|None=Header(None)):
+ require_csrf(x_raios_csrf)
+ try:
+  return COUNCIL_OPS.check_in(seat=req.seat,auth=req.auth,idem=req.idempotency_key)
+ except Exception as exc:
+  raise HTTPException(409,f"{type(exc).__name__}:{exc}")
 @app.get("/api/council-board")
 def api_council_board():return COUNCIL_BOARD.snapshot()
 @app.post("/api/task-dispatch")

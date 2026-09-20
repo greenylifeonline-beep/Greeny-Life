@@ -23,6 +23,7 @@ def test_professional_bilingual_working_surface_is_local_and_complete():
  assert "targets=new Set(['ALL'])" in text
  assert "محركات التنظيف والدمج والتصنيف" in text
  assert "/api/engines" in text
+ assert "/api/mcp" in text
 
 def test_health_and_bootstrap_bind_canonical_head(monkeypatch):
  monkeypatch.setattr(cc,"CANONICAL_HEAD","a"*40)
@@ -30,10 +31,11 @@ def test_health_and_bootstrap_bind_canonical_head(monkeypatch):
  monkeypatch.setattr(cc,"overview",lambda:{"canonical_head":"a"*40,"maintenance":{"health":"HEALTHY"}})
  monkeypatch.setattr(cc.MESSAGE_WORKER,"status",lambda:{"healthy":True,"workflow_enabled":True})
  monkeypatch.setattr(cc,"tcp",lambda port:False)
+ monkeypatch.setattr(cc,"mcp_bind",lambda:{"schema":"raios.command-center.mcp-bind.v1","live":False,"ninth_tool":False,"second_gateway":False})
  out=client.get("/api/bootstrap").json()
  assert out["ui"]=="CANONICAL_COMMAND_CENTER" and out["direct_mutation"] is False
  assert out["boot_mode"]=="FAST_PLANE_THEN_OVERVIEW" and out["overview"] is None
- assert "plane" in out and "council_lite" in out
+ assert "plane" in out and "council_lite" in out and "mcp" in out
  assert len(out["csrf"])>=32
  csrf=client.get("/api/csrf").json()
  assert csrf["csrf"]==cc.CSRF and csrf["service"]=="RAIOS_COMMAND_CENTER"
@@ -99,6 +101,29 @@ def test_availability_endpoint_is_coordination_only_and_c1_authenticated(monkeyp
  assert called["attested_by"]=="C1" and called["seat"]=="C2"
 
 
+def test_self_check_in_rebind_delegates_identity_proof_to_council_ops(monkeypatch):
+ seen={}
+ def check_in(**kwargs):
+  seen.update(kwargs)
+  return {"status":"PRESENT","seat":kwargs["seat"],"actor_binding":{"synthetic":False}}
+ monkeypatch.setattr(cc.COUNCIL_OPS,"check_in",check_in)
+ proof={"seat_id":"C6","SIGNATURE_VALID":True,"ISSUER_IDENTIFIED":True,"ISSUER_TRUSTED":True,
+  "PRINCIPAL_BOUND":True,"AUTHORITY_SOURCE_PROVENANCE":"CLIENT_SELF_PROOF",
+  "actor_id":"C6-REAL","origin_instance":"CLIENT","device_id":"DEVICE","session_id":"SESSION"}
+ out=client.post("/api/council/self-check-in",headers={"X-RAIOS-CSRF":cc.CSRF},
+  json={"seat":"C6","auth":proof,"idempotency_key":"rebind-1"})
+ assert out.status_code==200
+ assert seen=={"seat":"C6","auth":proof,"idem":"rebind-1"}
+ assert out.json()["actor_binding"]["synthetic"] is False
+
+
+def test_self_check_in_rebind_rejects_incomplete_identity_proof():
+ out=client.post("/api/council/self-check-in",headers={"X-RAIOS-CSRF":cc.CSRF},
+  json={"seat":"C6","auth":{"seat_id":"C6"},"idempotency_key":"rebind-bad"})
+ assert out.status_code==409
+ assert "AUTHENTICATED_SEAT_PROOF_REQUIRED" in out.json()["detail"]
+
+
 def test_successful_non_json_service_probe_is_online_without_body_exposure(monkeypatch):
  class Response:
   status=200
@@ -122,6 +147,35 @@ def test_9router_plane_is_tcp_only_and_does_not_fetch_dashboard(monkeypatch):
  row=cc.tcp_service("9Router",20128)
  assert row["state"]=="ONLINE" and row["probe"]=="TCP_ONLY" and called==[20128]
 
+
+def test_live_plane_mcp_uses_http_health_not_tcp_only(monkeypatch):
+ probed=[]
+ def fake_service(name,port,url=None,**_k):
+  probed.append((name,port,url))
+  return {"name":name,"port":port,"state":"ONLINE","http":200}
+ monkeypatch.setattr(cc,"service",fake_service)
+ monkeypatch.setattr(cc,"tcp_service",lambda name,port:{"name":name,"port":port,"state":"ONLINE","probe":"TCP_ONLY"})
+ plane=cc.live_plane()
+ names=[x["name"] for x in plane["services"]]
+ assert names==["C5","UniversalMCP","9Router","NATS"]
+ assert ("UniversalMCP",8788,"http://127.0.0.1:8788/health") in probed
+ mcp=next(x for x in plane["services"] if x["name"]=="UniversalMCP")
+ assert mcp.get("probe")!="TCP_ONLY"
+ assert next(x for x in plane["services"] if x["name"]=="9Router")["probe"]=="TCP_ONLY"
+
+def test_mcp_bind_surface_forbids_ninth_tool_and_second_gateway(monkeypatch):
+ monkeypatch.setattr(cc,"http_json",lambda *a,**k:(200,{"ok":True,"tool_count":8,"tools":["get_head","read_board","read_inbox","read_receipt","get_diff","post_opinion","send_packet","ack_packet"],"ninth_tool":False,"second_gateway":False,"head":"abc","head_source":"env","service":"raios-universal-mcp","transport":"streamable-http","law":"MCP_GATEWAY_NE_TRUTH_AUTHORITY","channel":"streamable-http-session","get_sse":True,"stateless":False}))
+ monkeypatch.setattr(cc,"load",lambda *a,**k:{"runtimes":[{"id":"c5-runtime","adapter":True,"role":"live brain","transport":"HTTP :8766","health":"ONLINE"}]})
+ out=cc.mcp_bind()
+ assert out["schema"]=="raios.command-center.mcp-bind.v1"
+ assert out["live"] is True and out["ninth_tool"] is False and out["second_gateway"] is False
+ assert out["census_port"]==8788 and out["endpoint"].endswith("/mcp")
+ assert out["v1_execution_intent"]=="DENIED"
+ assert out["client_gateway_ne_seat_bus"] is True
+ assert out["c2_grant_invented"] is False
+ assert out["get_sse"] is True and out["client_channel"]=="streamable-http-session"
+ assert "c5-runtime" in {x["id"] for x in out["adapters_behind_gateway"]}
+
 def test_maintenance_is_diagnostic_not_autonomous(monkeypatch):
  monkeypatch.setattr(cc,"diagnostic_state",lambda:{"health":"HEALTHY","score":100,"root_causes":[],"actions_executed":[],"canonical_mutation":False})
  out=client.post("/api/maintenance/diagnose",headers={"X-RAIOS-CSRF":cc.CSRF}).json()
@@ -141,6 +195,7 @@ def test_deployer_writes_launcher_as_real_lines():
  assert "[IO.File]::WriteAllText" in script
  assert '$launcher=@"' in script
  assert 'explorer.exe" "http://127.0.0.1:' in script
+ assert "C1AuthorizeWorkingTree" in script
 
 
 def test_council_identity_is_not_conflated_with_live_presence(tmp_path,monkeypatch):
@@ -179,6 +234,17 @@ def test_command_center_deployer_copies_internal_a2a_receipt_dependency():
  deploy=(cc.HERE.parents[2]/"scripts/runtime/Deploy-RAIOS-Command-Center.ps1").read_text(encoding="utf-8")
  assert "src\\raios\\a2a\\*" in deploy
  assert "$A2APkg" in deploy
+ assert "src\\raios\\command_fabric\\*" in deploy
+ assert "$FabricPkg" in deploy
+
+
+def test_command_fabric_package_import_does_not_load_c1c5_pipeline():
+ import sys
+ text=(cc.HERE.parent/"command_fabric"/"__init__.py").read_text(encoding="utf-8")
+ assert "def __getattr__" in text
+ assert "from .pipeline import execute, EXISTING_NATS_PROVIDER" not in text.split("def __getattr__",1)[0]
+ assert "raios.command_fabric.pipeline" not in sys.modules
+ assert "raios.c1c5" not in sys.modules
 
 
 def test_goals_catalog_is_named_view_over_tasks():
@@ -192,16 +258,20 @@ def test_goals_catalog_is_named_view_over_tasks():
 
 
 def test_overview_exposes_now_slice_and_named_goals(monkeypatch):
- monkeypatch.setattr(cc,"service",lambda name,port,url=None:{"name":name,"port":port,"state":"ONLINE","detail":{}})
+ monkeypatch.setattr(cc,"CANONICAL_HEAD","c"*40)
+ monkeypatch.setattr(cc,"service",lambda name,port,url=None,**_k:{"name":name,"port":port,"state":"ONLINE","detail":{}})
  monkeypatch.setattr(cc,"tcp_service",lambda name,port:{"name":name,"port":port,"state":"ONLINE","probe":"TCP_ONLY"})
- monkeypatch.setattr(cc,"git",lambda *a:"c"*40)
+ monkeypatch.setattr(cc,"git",lambda *a:(_ for _ in ()).throw(AssertionError("overview must not call git")))
  monkeypatch.setattr(cc,"model_state",lambda:{"ollama_online":False,"count":0,"models":[]})
  monkeypatch.setattr(cc,"factory_state",lambda:{"fabric_present":True,"live_runtime_claimed":False})
  monkeypatch.setattr(cc,"resource_state",lambda:{})
  monkeypatch.setattr(cc,"council_state",lambda:{"seats":[]})
  monkeypatch.setattr(cc,"cognitive_state",lambda:{"online":False})
  out=cc.overview()
+ assert out["canonical_head"]=="c"*40
+ assert out["head_source"]=="env_or_cached_ne_subprocess"
  assert out["tasks"]["now_ne_full_ledger"] is True
+ assert out["tasks"]["locks_scanned"] is False
  assert isinstance(out["tasks"]["now"],list)
  assert out["tasks"]["recent"]==out["tasks"]["now"][:12]
  assert out["goals"]["schema"]=="raios.goal-catalog.v1"

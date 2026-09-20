@@ -1,0 +1,43 @@
+{
+  "schema": "raios.c2-executive.receipt.v1",
+  "id": "20260919-151500-C2-MCP-SESSION-CHANNEL-D058",
+  "actor": "C2@AG",
+  "decision": "D-058",
+  "prior": ["D-057"],
+  "status": "MCP_SESSION_CHANNEL_LIVE_NOT_DONE",
+  "program_done": false,
+  "priority": ["MCP", "COMMAND_CENTER_BOARD"],
+  "c5_is_raios": true,
+  "mcp": {
+    "old_pid": 43452,
+    "pid": 33112,
+    "reload": "EXISTING_ENSURE_RELOAD_SAME_PORT",
+    "http_health": 200,
+    "tool_count": 8,
+    "channel": "streamable-http-session",
+    "get_sse": true,
+    "stateless": false,
+    "initialize_protocol": "2025-06-18",
+    "notify_http": 202,
+    "ninth_tool": false,
+    "second_gateway": false
+  },
+  "command_center": {
+    "tx": "TX-CC-C6-SELF-REAUTH-20260919T0226",
+    "old_listen_pid": 24044,
+    "listen_pid": 51976,
+    "health_http": 200,
+    "api_mcp_live": true,
+    "api_mcp_get_sse": true,
+    "client_channel": "streamable-http-session",
+    "second_command_center": false
+  },
+  "tests": "30 passed tests/mcp/test_mcp_health.py + tests/command_center/test_app.py",
+  "cursor_this_chat_raios_tools": "UNPROVEN_UNTIL_CLIENT_RELOAD",
+  "c2_grant_invented": false,
+  "c6_grant_invented": false,
+  "c6_impersonated": false,
+  "remaining": ["C6_LIVE_BIND_REQUIRED_BEFORE_P0", "CURSOR_MCP_CLIENT_RELOAD"],
+  "handoff": ".ai-os/handoffs/20260919-151500-C2-MCP-SESSION-CHANNEL-D058.md",
+  "gl005_proven": false
+}

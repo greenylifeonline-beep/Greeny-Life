@@ -145,6 +145,7 @@
       },
       "horizon_end": "2027-03-31",
       "horizon_start": "2026-09-04",
+      "entity": "GOAL",
       "id": "RAIOS-CAPABILITY-EVOLUTION-202609-202703",
       "laws": [
         "ONE_CANONICAL_TASK_LEDGER",
@@ -4180,7 +4181,7 @@
       "created_at": "2026-09-06T23:37:09.313651+00:00",
       "dependencies": [],
       "dispatch_authorized_by": "C1",
-      "dispatch_status": "PENDING_ACCEPTANCE",
+      "dispatch_status": "RETURNED_NO_ACCEPTANCE",
       "executor_backend_snapshot": null,
       "hard_constraints": [
         "NO_KAGGLE_GPU_WITHOUT_EXPLICIT_C1_AUTHORIZATION",
@@ -4190,29 +4191,32 @@
         "NO_SECOND_DEPLOYMENT_OR_MODEL_ROUTER"
       ],
       "id": "RAIOS-C2-QWEN38-CLOUD-INSTALL-20260907-01",
-      "last_acceptance_fingerprint": "3dfa9ef44f52d8ea1456409f8c4a21e14f1e7352097259e0632e1772b292dbcc",
+      "last_acceptance_fingerprint": "e2300e5736ca26d83a4d8f7160daf1d82db2051207648a809f6830469330f308",
       "last_acceptance_signature_mode": "SESSION_BOUND_ATTENDANCE_FINGERPRINT",
-      "last_accepted_at": "2026-09-09T00:20:42.026173+00:00",
+      "last_accepted_at": "2026-09-17T21:06:03.389914+00:00",
       "last_checkpoint_id": "CHK-8500204d4a2e41ef",
-      "last_claimed_by": "C2",
-      "last_dispatch_id": "DSP-d605a8460989460e",
+      "last_claimed_by": null,
+      "last_dispatch_id": "DSP-6f05efd0d1f54eb3",
       "last_dispatch_target": "C2",
-      "last_dispatched_at": "2026-09-09T00:18:29.786302+00:00",
+      "last_dispatched_at": "2026-09-19T20:27:31.022203+00:00",
       "last_system_recovery_checkpoint": {
         "schema": "raios.task-checkpoint.v1",
-        "checkpoint_id": "CHK-d8fff5f1ef414344",
+        "checkpoint_id": "CHK-5c1d48d6cbf94c7b",
         "task_id": "RAIOS-C2-QWEN38-CLOUD-INSTALL-20260907-01",
         "actor": "RAIOS-WORKER",
-        "phase": "ACCEPTED_NO_WORK_PROOF",
-        "summary": "Task acceptance was authenticated, but no post-acceptance executor/progress/checkpoint/evidence proof was observed. RAIOS returned the task to READY without claiming work occurred.",
+        "phase": "PENDING_ACCEPTANCE_TIMEOUT",
+        "summary": "Task dispatch was not accepted within the bounded acceptance window; assignment returned to READY.",
         "completed_steps": [],
         "changed_files": [],
         "validation": [],
         "evidence_refs": [],
-        "previous_checkpoint_id": "CHK-111e91a6b9da45e9",
-        "next_step": "Bind a verified execution backend or produce a first signed work checkpoint before claiming ACTIVE_VERIFIED.",
-        "blocker": "FIRST_WORK_PROOF_TIMEOUT",
-        "created_at": "2026-09-09T00:26:10.028561+00:00"
+        "next_step": "Redispatch only to a current eligible live-bound seat.",
+        "blocker": "ACCEPTANCE_TIMEOUT",
+        "created_at": "2026-09-19T22:45:33.639307+00:00",
+        "previous_dispatch_id": "DSP-6f05efd0d1f54eb3",
+        "previous_target": "C2",
+        "dispatched_at": "2026-09-19T20:27:31.022203+00:00",
+        "timeout_seconds": 60
       },
       "legacy_claim_reconciled": false,
       "next_step": "Resume this same C2 task when Cursor Agent entitlement resets/upgrades; do not consume Kaggle GPU or paid resources meanwhile.",
@@ -4249,8 +4253,8 @@
         "blocker": "LIGHTNING_402_NONE_ALLOCATABLE_AWAITING_C1_ENTITLEMENT",
         "created_at": "2026-09-09T00:31:51.155498+00:00"
       },
-      "return_reason": "TARGET_NOT_LIVE_BOUND_CONSUMER",
-      "returned_at": "2026-09-10T12:48:40.843093+00:00",
+      "return_reason": "ACCEPTANCE_TIMEOUT",
+      "returned_at": "2026-09-19T22:45:33.639262+00:00",
       "review_by": [
         "C3",
         "C7"
@@ -4272,15 +4276,7 @@
       "title": "C2 Qwen3.8-27B cloud-first installation and C5 activation",
       "updated_at": "2026-09-06T23:44:40.360763+00:00",
       "validation": "C5_MODEL_UPGRADED remains false until live Qwen inference + C5 route use + fallback + restart/reconnect are all machine-proven.",
-      "work_proof_state": "UNPROVEN",
-      "first_work_proof_deadline": "2026-09-09T00:32:20.429322+00:00",
-      "acceptance_fingerprint": "72a64be33475ea85439325788cbe5331f4ae07fc86f5319f43ca9536d29726b9",
-      "acceptance_signature_mode": "SESSION_BOUND_ATTENDANCE_FINGERPRINT",
-      "assigned_to": "C2",
-      "assigned_by": "C1",
-      "dispatched_by": "RAIOS-WORKER",
-      "dispatch_id": "DSP-1dc873e1b95c4b6f",
-      "dispatched_at": "2026-09-16T23:16:52.042665+00:00"
+      "work_proof_state": "UNPROVEN"
     },
     {
       "allowed_agents": [
@@ -4723,6 +4719,7 @@
     },
     {
       "id": "RAIOS-CANONICAL-CONVERGENCE-001",
+      "entity": "GOAL",
       "title": "التقارب التدريجي نحو الكانوني — ظاهر للمجلس",
       "objective": "Gradual convergence onto canonical (option 3). Visible to all workers. Operational first: 9Router, MessageWorker, council, Command Center binding to C5/MCP/factories/resources. No wholesale merge. No clean-tree rebuild. No deletion.",
       "status": "IN_PROGRESS",
@@ -4741,7 +4738,7 @@
       "system_owner": "RAIOS_SYSTEM",
       "created_at": "2026-09-16T22:18:15.331639+00:00",
       "started_at": "2026-09-16T22:18:15.331639+00:00",
-      "updated_at": "2026-09-16T22:18:15.331639+00:00",
+      "updated_at": "2026-09-19T15:15:00+00:00",
       "decision": "D-043",
       "visible_on_command_center": true,
       "board_visibility": "REQUIRED",
@@ -4756,11 +4753,26 @@
       "evidence": ".ai-os/reports/architecture/RAIOS-CANONICAL-CONVERGENCE-001/C1-ACCEPTANCE.json",
       "evidence_refs": [
         ".ai-os/reports/architecture/RAIOS-CANONICAL-CONVERGENCE-001/C1-ACCEPTANCE.json",
-        ".ai-os/state/DECISIONS.md"
+        ".ai-os/state/DECISIONS.md",
+        ".ai-os\\state\\command-fabric\\checkpoints\\C6-CONVERGENCE-RESTAMP-20260918.json",
+        ".ai-os/state/command-fabric/cc-cutover-2.out",
+        ".ai-os/state/command-fabric/cc-cutover-2.exit",
+        ".ai-os/receipts/c2-executive/20260918-233900-C2-PERSIST-E2E-D053.receipt.json",
+        ".ai-os/handoffs/20260918-233900-C2-PERSIST-E2E-D053.md",
+        ".ai-os/receipts/c2-executive/20260919-031800-C2-DIRECT-AGENT-CHANNEL-D054.receipt.json",
+        ".ai-os/handoffs/20260919-031800-C2-DIRECT-AGENT-CHANNEL-D054.md",
+        ".ai-os/receipts/c2-executive/20260919-053600-C2-MCP-HTTP-C6-OBSERVE-D055.receipt.json",
+        ".ai-os/handoffs/20260919-053600-C2-MCP-HTTP-C6-OBSERVE-D055.md",
+        ".ai-os/receipts/c2-executive/20260919-054700-C2-OPS-BIND-C6-NOTICE-D056.receipt.json",
+        ".ai-os/handoffs/20260919-054700-C2-OPS-BIND-C6-NOTICE-D056.md",
+        ".ai-os/receipts/c2-executive/20260919-071800-C2-MCP-CC-BOARD-D057.receipt.json",
+        ".ai-os/handoffs/20260919-071800-C2-MCP-CC-BOARD-D057.md",
+        ".ai-os/receipts/c2-executive/20260919-151500-C2-MCP-SESSION-CHANNEL-D058.receipt.json",
+        ".ai-os/handoffs/20260919-151500-C2-MCP-SESSION-CHANNEL-D058.md"
       ],
-      "validation": "Board lists this task; 9Router TCP proven; Command Center health; C2/C8 live-bound or blocker reported; C6 live-bind remains required before P0 mutation.",
-      "blocker": "C6_SIGNED_OUT; hung :8770/:8788 ACCESS_DENIED until C1 admin kill after disk clean; 9Router/NATS TCP down at last probe.",
-      "next_step": "Restore existing 9Router/worker/council/CC plane; do not merge cursor/*; do not fake C6.",
+      "validation": "Board lists this task; MCP :8788 has a Streamable HTTP session channel (GET SSE + POST JSON-RPC); Command Center /api/mcp live=true get_sse=true; C6 live-bind remains required before P0 mutation.",
+      "blocker": "RUNTIME_HEAD_DRIFT_CLOSED; C2_DIRECT_AGENT_CHANNEL_ACTOR_ACK_PROVEN; MCP_COMMAND_CENTER_HTTP_LIVE_TRUE; C5_HTTP_RECOVERED; OVERVIEW_HTTP_200; MCP_SESSION_CHANNEL_LIVE; REMAINING: C6_LIVE_BIND_REQUIRED_BEFORE_P0",
+      "next_step": "Keep task IN_PROGRESS. Reload Cursor MCP so this client lists RAIOS tools. C6 must self check-in to a current live-bound consumer. Do not impersonate C6. Do not start a second gateway.",
       "hard_constraints": [
         "NO_WHOLESALE_MERGE",
         "NO_CLEAN_TREE_REBUILD",
@@ -4774,7 +4786,9 @@
         "C1",
         "C2",
         "C8"
-      ]
+      ],
+      "last_proof_at": "2026-09-19T15:15:00+00:00",
+      "reconciliation_note": "D-058: MCP Streamable HTTP session channel live on :8788 PID 33112 after in-place reload of PID 43452. GET /mcp SSE 200. CC /api/mcp get_sse=true. C6 still SIGNED_OUT not impersonated. IN_PROGRESS."
     }
   ]
 }

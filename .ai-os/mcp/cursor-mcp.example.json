@@ -1,8 +1,8 @@
 {
   "mcpServers": {
     "raios": {
-      "url": "http://127.0.0.1:8787/mcp",
-      "comment": "LOCAL ONLY. ChatGPT Apps need public HTTPS or a Secure MCP Tunnel in front of this SAME process. Do not start a second MCP server. REAL_C2_CONNECTION_READY remains false until an external C2 posts an opinion."
+      "url": "http://127.0.0.1:8788/mcp",
+      "comment": "LOCAL ONLY. One Universal MCP on census port 8788. Streamable HTTP session channel: POST /mcp JSON-RPC, GET /mcp SSE, mcp-session-id on initialize. Loopback clients may call read tools without a token. Writes need an actor grant. Do not start :8787 as a second server. ChatGPT Apps need public HTTPS or a Secure MCP Tunnel in front of this SAME process. REAL_C2_CONNECTION_READY remains false until an external C2 posts an opinion. Copy to .cursor/mcp.json to bind Cursor. Reload Cursor MCP after the server process restarts."
     }
   }
 }

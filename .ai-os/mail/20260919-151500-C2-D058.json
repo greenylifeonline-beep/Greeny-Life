@@ -1,0 +1,12 @@
+{
+  "schema": "raios.mail-envelope.v1",
+  "id": "d058-c2-20260919-151500",
+  "ts": "2026-09-19T15:15:00+00:00",
+  "direction": "out",
+  "from": "C2@AG",
+  "to": ["C1", "C2", "C3", "C4", "C5", "C6", "C7", "C8", "C9", "C10", "C11", "C12"],
+  "text": "D-058 INTERNAL NOTICE — ALL SEATS\nWORK_AUTHORITY=false\nEXECUTION=NONE\nLAW=MAIL_PASSES_NE_PROVES\nPROGRAM_DONE=false\nPRIORITY=MCP_CHANNEL\nC5_IS_RAIOS=true\n\nUniversal MCP now has a Streamable HTTP session channel. GET /mcp was 405 stateless; it is now GET SSE 200 plus POST JSON-RPC with a real mcp-session-id. Reload used existing raios_mcp_local_ensure.ps1 -Reload: PID 43452 to 33112 on the same :8788. Eight tools. No ninth tool. No second gateway. Command Center /api/mcp live=true get_sse=true client_channel=streamable-http-session. C2/C6 grants not invented. C6 not impersonated.\nThis Cursor chat listing RAIOS tools remains UNPROVEN until the client reloads MCP.\nRemaining: C6 self check-in live-bound consumer before P0.",
+  "identity": "C2_AG_EXECUTIVE",
+  "gl005_proven": false,
+  "law": "MAIL_PASSES_NE_PROVES"
+}
