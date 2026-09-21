@@ -14,24 +14,29 @@ $NetworkStatePath = Join-Path $RuntimeRoot "network-resume.json"
 $NetworkResumeCooldownSeconds = 300
 $NetworkRequiredSuccesses = 2
 
-# Task registration must not be blocked by a stale continuity instance.
-# This repairs the one canonical task without creating a second watchdog.
-New-Item -ItemType Directory -Force -Path $RuntimeRoot | Out-Null
-$TracePath = Join-Path $RuntimeRoot "phase.log"
-$RunId = [guid]::NewGuid().ToString("N")
-function Mark-Phase([string]$Name) {
-    try { Add-Content -LiteralPath $TracePath -Value (([DateTimeOffset]::UtcNow.ToString("o")) + "|RUN=" + $RunId + "|PID=" + $PID + "|" + $Name) } catch {}
-}
+# Task registration must stay independent from runtime-state I/O.
+# This repairs the one canonical task without touching the continuity hot path.
 if ($InstallTask) {
-    $ScriptPath = Join-Path $PSScriptRoot "Maintain-RAIOS-Online.ps1"
-    $Arguments = '-NoProfile -NonInteractive -ExecutionPolicy Bypass -File "{0}" -Repo "{1}"' -f $ScriptPath, $Repo
-    $Action = New-ScheduledTaskAction -Execute "$env:SystemRoot\System32\WindowsPowerShell\v1.0\powershell.exe" -Argument $Arguments -WorkingDirectory $Repo
+    $LauncherPath = Join-Path $PSScriptRoot "Run-RAIOS-Continuity-Hidden.vbs"
+    if (-not (Test-Path -LiteralPath $LauncherPath)) { throw "RAIOS_CONTINUITY_LAUNCHER_MISSING" }
+    $Arguments = '"{0}" "{1}"' -f $LauncherPath, $Repo
+    $Action = New-ScheduledTaskAction -Execute "$env:SystemRoot\System32\wscript.exe" -Argument $Arguments -WorkingDirectory $Repo
     $Logon = New-ScheduledTaskTrigger -AtLogOn -User $env:USERNAME
     $Pulse = New-ScheduledTaskTrigger -Once -At (Get-Date).AddMinutes(1) -RepetitionInterval (New-TimeSpan -Minutes 1) -RepetitionDuration (New-TimeSpan -Days 3650)
-    $Settings = New-ScheduledTaskSettingsSet -MultipleInstances IgnoreNew -Hidden -StartWhenAvailable -RestartCount 3 -RestartInterval (New-TimeSpan -Minutes 1) -ExecutionTimeLimit (New-TimeSpan -Minutes 2) -AllowStartIfOnBatteries -DontStopIfGoingOnBatteries
+    $Settings = New-ScheduledTaskSettingsSet -MultipleInstances IgnoreNew -Hidden -StartWhenAvailable -RestartCount 3 -RestartInterval (New-TimeSpan -Minutes 1) -ExecutionTimeLimit (New-TimeSpan -Minutes 2) -AllowStartIfOnBatteries -DontStopIfGoingOnBatteries -DontStopOnIdleEnd
     Register-ScheduledTask -TaskName $TaskName -Action $Action -Trigger @($Logon,$Pulse) -Settings $Settings -Description "Canonical RAIOS continuity guard: C5, manager, Universal MCP, Command Center, 9Router, NATS and Ollama." -Force | Out-Null
     Write-Host "RAIOS_CONTINUITY_TASK_REGISTERED_WINDOWLESS"
     exit 0
+}
+[IO.Directory]::CreateDirectory($RuntimeRoot) | Out-Null
+$TracePath = Join-Path $RuntimeRoot "phase.log"
+$RunId = [guid]::NewGuid().ToString("N")
+$TraceEncoding = New-Object Text.UTF8Encoding($false)
+function Mark-Phase([string]$Name) {
+    try {
+        $line = ([DateTimeOffset]::UtcNow.ToString("o")) + "|RUN=" + $RunId + "|PID=" + $PID + "|" + $Name + [Environment]::NewLine
+        [IO.File]::AppendAllText($TracePath, $line, $TraceEncoding)
+    } catch {}
 }
 Mark-Phase "RUN_START"
 
@@ -68,26 +73,35 @@ try {
     function Write-JsonFileAtomic([string]$Path,[hashtable]$Value) {
         $Value["generated_at"] = [DateTimeOffset]::UtcNow.ToString("o")
         $tmp = $Path + ".tmp-" + [guid]::NewGuid().ToString("N")
+        $utf8 = [Text.UTF8Encoding]::new($false)
         try {
-            $Value | ConvertTo-Json -Depth 12 | Set-Content -LiteralPath $tmp -Encoding UTF8
-            Get-Content -LiteralPath $tmp -Raw | ConvertFrom-Json | Out-Null
-            Move-Item -LiteralPath $tmp -Destination $Path -Force
-        } finally { Remove-Item -LiteralPath $tmp -Force -ErrorAction SilentlyContinue }
-    }
-    function Write-AtomicJson([hashtable]$Value) {
-        $Value["generated_at"] = [DateTimeOffset]::UtcNow.ToString("o")
-        $tmp = Join-Path $RuntimeRoot ("status.json.tmp-" + [guid]::NewGuid().ToString("N"))
-        try {
-            $Value | ConvertTo-Json -Depth 12 | Set-Content -LiteralPath $tmp -Encoding UTF8
-            Get-Content -LiteralPath $tmp -Raw | ConvertFrom-Json | Out-Null
+            $json = $Value | ConvertTo-Json -Depth 12
+            [IO.File]::WriteAllText($tmp,$json,$utf8)
+            [void](ConvertFrom-Json ([IO.File]::ReadAllText($tmp,$utf8)))
             for ($i=0; $i -lt 5; $i++) {
-                try { Move-Item -LiteralPath $tmp -Destination $StatusPath -Force; return }
-                catch [System.UnauthorizedAccessException] {
+                try {
+                    if ([IO.File]::Exists($Path)) {
+                        $backup = $Path + ".replace-backup"
+                        [IO.File]::Replace($tmp,$Path,$backup,$true)
+                        if ([IO.File]::Exists($backup)) { [IO.File]::Delete($backup) }
+                    } else {
+                        [IO.File]::Move($tmp,$Path)
+                    }
+                    return
+                } catch [IO.IOException] {
+                    if ($i -eq 4) { throw }
+                    Start-Sleep -Milliseconds (25 * ($i + 1))
+                } catch [UnauthorizedAccessException] {
                     if ($i -eq 4) { throw }
                     Start-Sleep -Milliseconds (25 * ($i + 1))
                 }
             }
-        } finally { Remove-Item -LiteralPath $tmp -Force -ErrorAction SilentlyContinue }
+        } finally {
+            if ([IO.File]::Exists($tmp)) { try { [IO.File]::Delete($tmp) } catch {} }
+        }
+    }
+    function Write-AtomicJson([hashtable]$Value) {
+        Write-JsonFileAtomic -Path $StatusPath -Value $Value
     }
 
     $Head = (git -C $Repo rev-parse HEAD).Trim()
