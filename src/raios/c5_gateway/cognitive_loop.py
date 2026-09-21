@@ -458,6 +458,13 @@ def assimilate_turn(
     }
 
 
+def absorb_hermes_text(text: str, *, persist: bool = False) -> dict[str, Any]:
+    """Hermes provider slot beside absorb-digest. Not a ninth MCP tool."""
+    from raios.knowledge.hermes_ingest import ingest
+
+    return ingest(_repo_root(), text=text, persist=persist)
+
+
 def _bump_index(index_path: Path, digest: dict[str, Any]) -> None:
     postings: dict[str, list[str]] = {}
     docs = 0

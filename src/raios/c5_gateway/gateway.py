@@ -27,8 +27,10 @@ sys.path.insert(
 )
 
 from .ollama_client import (
+    CortexResult,
     OllamaCortexClient
 )
+from .model_fabric import C5ModelFabric
 
 from .learning_trace import (
     TrainingStore,
@@ -75,6 +77,7 @@ TRAINING_ROOT=Path(
 )
 
 client=OllamaCortexClient()
+model_fabric=C5ModelFabric()
 
 training=None
 
@@ -143,6 +146,27 @@ If no receipt exists: EVIDENCE=NONE_AVAILABLE.
 """
 
 
+def _raios_inference(messages, task_id=None):
+    """Use the single RAIOS Model Fabric first; legacy Ollama is bounded fallback."""
+    routed=model_fabric.chat(
+        messages, task_class="NORMAL_CHAT", privacy_class="local_preferred",
+        task_id=task_id, max_tokens=client.num_predict,
+    )
+    gateway=routed.get("gateway") or {}
+    dispatch=gateway.get("dispatch") or {}
+    if dispatch.get("ok") and dispatch.get("content"):
+        return CortexResult(
+            request_id=str(uuid.uuid4()), ok=True,
+            status_code=dispatch.get("http_status"),
+            model=str(dispatch.get("model_id") or "RAIOS_MODEL_FABRIC"),
+            content=str(dispatch.get("content") or ""), error=None,
+            latency_seconds=float(dispatch.get("latency_ms") or 0)/1000.0,
+            raw={"system_identity":"RAIOS/C5","model_fabric":True,"route":gateway},
+            created_at=utc(),
+        )
+    return client.chat(messages, stream=False, timeout=120.0)
+
+
 def execute_chat(
     text,
     language,
@@ -168,7 +192,7 @@ def execute_chat(
         else "Respond in the user requested language."
     )
 
-    result=client.chat(
+    result=_raios_inference(
         [
             {
                 "role":"system",
@@ -179,8 +203,7 @@ def execute_chat(
                 "content":grounded_text
             }
         ],
-        stream=False,
-        timeout=timeout_seconds
+        task_id=task_id,
     )
 
     store=TrainingStore(TRAINING_ROOT)
@@ -252,6 +275,8 @@ def execute_chat(
 
     return {
         "status":"OK",
+        "system_identity":"RAIOS/C5",
+        "model_fabric":True,
         "conversation_id":cid,
         "cortex_request_id":
             result.request_id,
@@ -284,47 +309,31 @@ def execute_chat(
 
 @app.get("/health")
 def health():
-
+    """Bounded runtime readiness. Inference benchmarking is intentionally separate."""
     try:
-
-        model_health=client.liveness()
-
+        registry=model_fabric.router.registry()
+        live_engines=[
+            row for row in (registry.get("providers") or [])
+            if row.get("availability") == "LIVE" and row.get("enabled") is not False
+        ]
+        fabric_ready=bool(live_engines)
+        fabric_error=None
     except Exception as e:
+        registry={}
+        live_engines=[]
+        fabric_ready=False
+        fabric_error=f"{type(e).__name__}:{e}"
 
-        return {
-            "status":"DEGRADED",
-            "gateway":True,
-            "student":False,
-            "main_cortex":False,
-            "main_cortex_state":"HOLD",
-            "error":
-                f"{type(e).__name__}:{e}",
-            "cognitive_loop":loop_status(include_summaries=False),
-            "environment":deployment_environment(),
-            "runtime_source":"CANONICAL_DEPLOYMENT",
-            "canonical_head":os.getenv("RAIOS_CANONICAL_HEAD","UNKNOWN"),
-            "timestamp":utc()
-        }
-
-    student_online=bool(model_health.get("available"))
     return {
-        "status":
-            "ONLINE"
-            if student_online
-            else
-            "DEGRADED",
-
+        "status":"ONLINE" if fabric_ready else "DEGRADED",
+        "system_identity":"RAIOS/C5",
         "gateway":True,
-        "student":student_online,
-        "student_model":client.model,
-        "student_model_inventory_checked":bool(model_health.get("model_inventory_checked")),
-        "student_model_presence":"DEFERRED_TO_READINESS",
-        "main_cortex":False,
-        "main_cortex_identity":"qwen3.6:35b-a3b",
-        "main_cortex_state":"HOLD",
-        "model":
-            client.model,
-
+        "model_fabric":True,
+        "model_fabric_ready":fabric_ready,
+        "live_engine_count":len(live_engines),
+        "live_engines":[str(x.get("model_id") or x.get("provider_id") or "") for x in live_engines],
+        "model_fabric_error":fabric_error,
+        "inference_probe":"SEPARATE_BOUNDED_PROBE",
         "cognitive_loop":loop_status(include_summaries=False),
         "environment":deployment_environment(),
         "runtime_source":"CANONICAL_DEPLOYMENT",

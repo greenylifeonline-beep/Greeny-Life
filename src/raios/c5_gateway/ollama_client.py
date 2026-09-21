@@ -103,6 +103,31 @@ class OllamaCortexClient:
             "model_inventory_checked":False
         }
 
+    def readiness(self, timeout=15):
+
+        payload={
+            "model":self.model,
+            "prompt":"Reply only READY",
+            "stream":False,
+            "think":False,
+            "keep_alive":0,
+            "options":{"num_ctx":512,"num_predict":4}
+        }
+        req=urllib.request.Request(
+            self.base_url+"/api/generate",
+            data=json.dumps(payload).encode("utf-8"),
+            headers={"Content-Type":"application/json"},
+            method="POST"
+        )
+        with urllib.request.urlopen(req,timeout=timeout) as r:
+            body=json.loads(r.read().decode("utf-8",errors="replace"))
+        return {
+            "available":True,
+            "inference_ready":True,
+            "model":body.get("model") or self.model,
+            "response_present":bool(str(body.get("response") or "").strip())
+        }
+
     def health(self):
 
         req=urllib.request.Request(

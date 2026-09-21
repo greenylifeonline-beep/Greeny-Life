@@ -76,6 +76,8 @@ class TrainingStore:
 
         path=self.root/"training-events.jsonl"
 
+        payload=asdict(turn)
+
         with path.open(
             "a",
             encoding="utf-8"
@@ -83,11 +85,18 @@ class TrainingStore:
 
             f.write(
                 json.dumps(
-                    asdict(turn),
+                    payload,
                     ensure_ascii=False
                 )
                 +"\n"
             )
+
+        try:
+            from raios.learning_evidence.collector import record_training_turn
+            record_training_turn(payload)
+        except Exception:
+            # Evidence telemetry must never break the primary learning trace.
+            pass
 
         return str(path)
 
