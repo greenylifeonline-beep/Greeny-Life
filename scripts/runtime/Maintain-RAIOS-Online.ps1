@@ -45,8 +45,13 @@ if (-not $mutex.WaitOne(0)) { Mark-Phase "MUTEX_BUSY"; Write-Host "RAIOS_CONTINU
 Mark-Phase "MUTEX_ACQUIRED"
 try {
     function Get-JsonHealth([string]$Url,[int]$Timeout=4) {
-        try { return Invoke-RestMethod -Uri $Url -TimeoutSec $Timeout }
-        catch { return $null }
+        try {
+            $curl = Join-Path $env:SystemRoot "System32\curl.exe"
+            if (-not [IO.File]::Exists($curl)) { return $null }
+            $payload = & $curl --silent --fail --max-time $Timeout --noproxy "*" $Url 2>$null
+            if ($LASTEXITCODE -ne 0 -or [string]::IsNullOrWhiteSpace(($payload -join ""))) { return $null }
+            return (($payload -join [Environment]::NewLine) | ConvertFrom-Json)
+        } catch { return $null }
     }
     function Test-Tcp([int]$Port) {
         try {
@@ -153,19 +158,12 @@ try {
     if (-not $ollamaHealth) {
         $ollama = Get-Command ollama.exe -ErrorAction SilentlyContinue
         $portOpen = Test-Tcp 11434
-        $ollamaProc = Get-Process -Name ollama -ErrorAction SilentlyContinue | Select-Object -First 1
-        if ($portOpen -and $ollamaProc) {
-            try {
-                Stop-Process -Id $ollamaProc.Id -Force -ErrorAction Stop
-                $actions.Add("RECYCLE_UNRESPONSIVE_OLLAMA")
-                Start-Sleep -Milliseconds 750
-            } catch {
-                $errors.Add("OLLAMA_RECYCLE_FAILED:" + $_.Exception.GetType().Name)
-            }
-        } elseif ($portOpen -and -not $ollamaProc) {
-            $errors.Add("PORT_11434_NON_OLLAMA_OWNER")
+        if ($portOpen) {
+            # Never terminate by process name: an open port with a failed API is evidence,
+            # not sufficient ownership proof for destructive recovery.
+            $errors.Add("OLLAMA_PORT_OPEN_HTTP_UNRESPONSIVE")
         }
-        if ($ollama -and -not (Test-Tcp 11434)) {
+        if ($ollama -and -not $portOpen) {
             Start-Process -FilePath $ollama.Source -ArgumentList @("serve") -WindowStyle Hidden -RedirectStandardOutput (Join-Path $RuntimeRoot "ollama.out.log") -RedirectStandardError (Join-Path $RuntimeRoot "ollama.err.log") | Out-Null
             $actions.Add("START_EXISTING_OLLAMA")
             for ($i=0; $i -lt 6; $i++) {
