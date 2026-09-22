@@ -84,3 +84,22 @@ def test_ollama_liveness_uses_version_endpoint_without_model_inventory(monkeypat
     }
     assert result["available"] is True
     assert result["model_inventory_checked"] is False
+
+def test_gateway_health_requires_model_fabric_readiness_not_version_only():
+    text = source()
+    health = text.split("def health():", 1)[1].split('@app.get("/v1/cognitive/status")', 1)[0]
+    assert "model_fabric.router.registry(probe_timeout=0.75)" in health
+    assert 'fabric_ready=None if local_probe_state == "TIMEOUT" else bool(live_engines)' in health
+    assert '"model_fabric_ready":fabric_ready' in health
+    assert '"inference_probe":"SEPARATE_BOUNDED_PROBE"' in health
+
+
+def test_readiness_probe_is_bounded_and_uses_real_generation():
+    text = OLLAMA.read_text(encoding="utf-8")
+    assert 'def readiness(self' in text
+    assert 'self.base_url+"/api/generate"' in text
+    assert '"prompt":"Reply only READY"' in text
+    assert '"num_ctx":512' in text
+    assert '"num_predict":4' in text
+    assert '"keep_alive":0' in text
+    assert '"inference_ready":True' in text

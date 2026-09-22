@@ -311,25 +311,28 @@ def execute_chat(
 def health():
     """Bounded runtime readiness. Inference benchmarking is intentionally separate."""
     try:
-        registry=model_fabric.router.registry()
+        registry=model_fabric.router.registry(probe_timeout=0.75)
         live_engines=[
             row for row in (registry.get("providers") or [])
             if row.get("availability") == "LIVE" and row.get("enabled") is not False
         ]
-        fabric_ready=bool(live_engines)
-        fabric_error=None
+        local_probe_state=str(registry.get("local_probe_state") or "CURRENT").upper()
+        fabric_ready=None if local_probe_state == "TIMEOUT" else bool(live_engines)
+        fabric_error="OLLAMA_INVENTORY_PROBE_TIMEOUT" if local_probe_state == "TIMEOUT" else None
     except Exception as e:
         registry={}
         live_engines=[]
         fabric_ready=False
+        local_probe_state="ERROR"
         fabric_error=f"{type(e).__name__}:{e}"
 
     return {
-        "status":"ONLINE" if fabric_ready else "DEGRADED",
+        "status":"ONLINE" if fabric_ready is True else ("UNKNOWN" if fabric_ready is None else "DEGRADED"),
         "system_identity":"RAIOS/C5",
         "gateway":True,
         "model_fabric":True,
         "model_fabric_ready":fabric_ready,
+        "model_fabric_probe_state":local_probe_state,
         "live_engine_count":len(live_engines),
         "live_engines":[str(x.get("model_id") or x.get("provider_id") or "") for x in live_engines],
         "model_fabric_error":fabric_error,

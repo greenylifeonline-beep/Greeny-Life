@@ -65,13 +65,15 @@ class ModelRouter:
             pass
         return "UNKNOWN"
 
-    def _ollama_models(self) -> list[dict[str, Any]]:
+    def _ollama_models(self, *, timeout: float = 4.0) -> tuple[list[dict[str, Any]], str]:
         req = urllib.request.Request(self.ollama_url + "/api/tags", method="GET")
         try:
-            with urllib.request.urlopen(req, timeout=4) as response:
+            with urllib.request.urlopen(req, timeout=max(0.1, float(timeout))) as response:
                 body = json.loads(response.read().decode("utf-8", errors="replace"))
+        except TimeoutError:
+            return [], "TIMEOUT"
         except Exception:
-            return []
+            return [], "UNAVAILABLE"
         out = []
         for row in body.get("models", []):
             name = str(row.get("name") or "")
@@ -93,7 +95,7 @@ class ModelRouter:
                 "tools": False,
                 "protocol": "ollama_chat",
             })
-        return out
+        return out, "CURRENT"
 
     @staticmethod
     def _infer_local_capabilities(name: str) -> list[str]:
@@ -146,15 +148,16 @@ class ModelRouter:
             providers.append(live)
         return providers
 
-    def registry(self) -> dict[str, Any]:
+    def registry(self, *, probe_timeout: float = 4.0) -> dict[str, Any]:
         cfg = self._load_config()
-        local_models = self._ollama_models()
+        local_models, local_probe_state = self._ollama_models(timeout=probe_timeout)
         providers = self._merge_declared_with_live(cfg, local_models)
         return {
             "schema": "raios.ai-gateway.registry.v1",
             "generated_at": utc(),
             "providers": providers,
             "local_model_count": len(local_models),
+            "local_probe_state": local_probe_state,
             "remote_declared_count": sum(1 for x in providers if not x.get("local")),
             "model_ne_council_seat": True,
             "second_bus_created": False,
