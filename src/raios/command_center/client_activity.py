@@ -449,10 +449,13 @@ class ClientActivityView:
                 "seat": seat,
                 "state": state,
                 "delivery_ack": bool(d),
-                "actor_ack": bool(a),
+                "actor_ack": bool(a) and a.get("ack_type") == "ACTOR_ACK" and a.get("synthetic") is not True,
                 "actor": a.get("actor"),
                 "session_id": a.get("session_id"),
+                "message_id": a.get("message_id") or message_id,
+                "timestamp": a.get("at"),
                 "synthetic": a.get("synthetic") if a else None,
+                "attempt": d.get("attempt") if d else 0,
             })
         return {
             "schema": "raios.notification-status.v1",
@@ -460,4 +463,68 @@ class ClientActivityView:
             "generated_at": _utc(),
             "clients": rows,
             "available_now": [r["seat"] for r in rows if r["state"] == "AVAILABLE_READ"],
+        }
+
+    def communication_trace(self, message_id: str) -> dict[str, Any]:
+        """Trace one message. DELIVERY_ACK is never ACTOR_ACK."""
+        mid = str(message_id or "").strip()
+        fabric = self.repo / ".ai-os" / "state" / "command-fabric"
+        send = _load(self.receipts / f"{mid}.send.json", {})
+        dead = fabric / "dead-letter" / f"{mid}.json"
+        status = self.notification_status(mid)
+        routed_seats = {str(x).upper() for x in (send.get("targets") or [])}
+        targets = []
+        retry = 0
+        for row in status.get("clients") or []:
+            delivery_ack = bool(row.get("delivery_ack"))
+            actor_ack = bool(row.get("actor_ack")) and row.get("synthetic") is not True
+            seat = str(row.get("seat") or "").upper()
+            if actor_ack:
+                phase = "ACTOR_ACK"
+            elif delivery_ack:
+                phase = "DELIVERY_ACK"
+            elif send and (not routed_seats or seat in routed_seats):
+                phase = "MESSAGE_ROUTED"
+            else:
+                phase = "NO_EVIDENCE"
+            try:
+                retry = max(retry, int(row.get("attempt") or 0))
+            except (TypeError, ValueError):
+                pass
+            targets.append({
+                "target_seat": row.get("seat"),
+                "target_actor": row.get("actor"),
+                "delivery_ack": delivery_ack,
+                "actor_ack": actor_ack,
+                "actor_id": row.get("actor"),
+                "session_id": row.get("session_id"),
+                "message_id": row.get("message_id") or mid,
+                "timestamp": row.get("timestamp"),
+                "synthetic": row.get("synthetic"),
+                "attempt": row.get("attempt") or 0,
+                "phase": phase,
+                "delivery_ack_ne_actor_ack": True,
+            })
+        dead_letter = dead.is_file()
+        created = bool(send) or any(t["phase"] != "NO_EVIDENCE" for t in targets)
+        return {
+            "schema": "raios.communication-trace.v1",
+            "message_id": mid,
+            "COMMAND": send.get("event") or ("SENT" if send else None),
+            "SOURCE_ACTOR": send.get("sender") or send.get("actor"),
+            "SOURCE_SESSION": send.get("session_id") or send.get("source_session"),
+            "ROUTE": send.get("route") or "CANONICAL_LOCAL_FABRIC",
+            "MESSAGE_CREATED": created,
+            "MESSAGE_ROUTED": bool(send) or any(t["delivery_ack"] or t["actor_ack"] for t in targets),
+            "DELIVERY_ACK": any(t["delivery_ack"] for t in targets),
+            "ACTOR_ACK": any(t["actor_ack"] for t in targets),
+            "RECEIPT": bool(send),
+            "FAILURE": "DEAD_LETTER" if dead_letter else None,
+            "RETRY": retry,
+            "DEAD_LETTER": dead_letter,
+            "TIMESTAMPS": {"sent_at": send.get("at"), "generated_at": _utc()},
+            "actor_ack_synthesized": False,
+            "delivery_ack_ne_actor_ack": True,
+            "targets": targets,
+            "notification": status,
         }

@@ -71,6 +71,19 @@ AVAILABILITY_ALLOWED = frozenset({
     "UNAVAILABLE",
 })
 
+PRESENTATION_STATE_ALLOWED = frozenset({
+    "AVAILABLE",
+    "BOUND_NO_HEARTBEAT",
+    "DELIVERY_ONLY",
+    "STALE_SESSION",
+    "LEASE_EXPIRED",
+    "UNBOUND",
+    "OFFLINE",
+    "UNKNOWN",
+})
+
+HEARTBEAT_FRESH_SECONDS = 90
+
 # Strict precedence (highest first) for presence_state selection
 PRESENCE_PRECEDENCE = (
     "EXTERNAL_SESSION",  # external packet wins for that seat
@@ -260,6 +273,77 @@ def _derive_route_state(row: dict[str, Any], presence_state: str, external: dict
     return "UNKNOWN"
 
 
+def _heartbeat_state(row: dict[str, Any]) -> tuple[str, bool]:
+    """last_seen age. Missing stamp is UNKNOWN, never OFFLINE."""
+    stamp = row.get("presence_last_seen") or row.get("presence_checked_in_at")
+    if not stamp:
+        return "UNKNOWN", False
+    try:
+        parsed = datetime.fromisoformat(str(stamp).replace("Z", "+00:00"))
+    except (TypeError, ValueError):
+        return "UNKNOWN", False
+    if parsed.tzinfo is None:
+        parsed = parsed.replace(tzinfo=timezone.utc)
+    age = (datetime.now(timezone.utc) - parsed).total_seconds()
+    if age < 0:
+        return "UNKNOWN", False
+    if age <= HEARTBEAT_FRESH_SECONDS:
+        return "FRESH", True
+    return "STALE", False
+
+
+def _actor_ack_view(activity_row: dict[str, Any] | None) -> dict[str, Any]:
+    ack = (activity_row or {}).get("last_actor_ack")
+    if not isinstance(ack, dict) or not ack:
+        return {
+            "actor_ack_state": "NO_ACTOR_ACK",
+            "actor_ack_capable": False,
+            "delivery_ack_ne_actor_ack": True,
+            "last_actor_ack": None,
+        }
+    if ack.get("synthetic") is True:
+        return {
+            "actor_ack_state": "SYNTHETIC_NOT_ACTOR_ACK",
+            "actor_ack_capable": False,
+            "delivery_ack_ne_actor_ack": True,
+            "last_actor_ack": ack,
+        }
+    has_identity = bool(ack.get("actor") or ack.get("session_id") or ack.get("message_id"))
+    return {
+        "actor_ack_state": "ACTOR_ACK_RECORDED" if has_identity else "ACK_PENDING",
+        "actor_ack_capable": has_identity,
+        "delivery_ack_ne_actor_ack": True,
+        "last_actor_ack": ack,
+    }
+
+
+def _presentation_state(
+    *,
+    presence_state: str,
+    binding_current: bool,
+    consumer_current: bool,
+    auto_routable: bool,
+    heartbeat_fresh: bool,
+    heartbeat_state: str,
+    identity_bound: bool,
+) -> str:
+    if presence_state == "ABSENT":
+        return "OFFLINE"
+    if presence_state == "EXPIRED":
+        return "LEASE_EXPIRED"
+    if presence_state == "STALE":
+        return "STALE_SESSION"
+    if binding_current and heartbeat_state == "STALE" and not heartbeat_fresh:
+        return "BOUND_NO_HEARTBEAT"
+    if binding_current and not consumer_current:
+        return "DELIVERY_ONLY"
+    if auto_routable and presence_state == "PRESENT":
+        return "AVAILABLE"
+    if not identity_bound and not binding_current:
+        return "UNBOUND"
+    return "UNKNOWN"
+
+
 def _derive_availability(
     presence_state: str,
     row: dict[str, Any],
@@ -365,19 +449,64 @@ def build_member_row(
     current_task = current_tasks[0] if current_tasks else None
     busy = work_state in {"EXECUTING", "ASSIGNED_PENDING_ACCEPTANCE", "BUSY", "BLOCKED_AWAITING_SYSTEM"}
 
+    identity_bound = bool(actor_id)
+    binding_current = row.get("binding_current") is True
+    consumer_current = row.get("consumer_current") is True
+    lease_current = _current(row.get("presence_lease_expires_at") or row.get("binding_lease_expires_at"))
+    auto_routable = row.get("auto_routable") is True and not external
+    heartbeat_state, heartbeat_fresh = _heartbeat_state(row)
+    ack_view = _actor_ack_view(activity_row)
+    presentation_state = _clamp(
+        _presentation_state(
+            presence_state=presence_state,
+            binding_current=binding_current,
+            consumer_current=consumer_current,
+            auto_routable=auto_routable,
+            heartbeat_fresh=heartbeat_fresh,
+            heartbeat_state=heartbeat_state,
+            identity_bound=identity_bound,
+        ),
+        PRESENTATION_STATE_ALLOWED,
+        "UNKNOWN",
+    )
+
     return {
         "seat": seat,
+        "seat_id": seat,
         "actor_role": row.get("actor_role") or seat_spec.get("actor_role"),
+        "role": row.get("actor_role") or seat_spec.get("actor_role"),
         "instance_role": row.get("instance_role") or seat_spec.get("instance_role"),
         "presence_state": presence_state,
         "presence_reason": presence_reason,
         "presence_state_allowed": sorted(PRESENCE_STATE_ALLOWED),
+        "presentation_state": presentation_state,
+        "identity_bound": identity_bound,
+        "session_current": binding_current and bool(session_id),
+        "consumer_current": consumer_current,
+        "lease_current": lease_current,
+        "lease_state": "CURRENT" if lease_current else ("EXPIRED" if row.get("presence_lease_expires_at") else "UNKNOWN"),
+        "heartbeat_state": heartbeat_state,
+        "heartbeat_fresh": heartbeat_fresh,
+        "last_seen": row.get("presence_last_seen") or row.get("presence_checked_in_at"),
+        "binding_state": "CURRENT" if binding_current else ("BOUND_STALE" if row.get("actor_id") else "UNBOUND"),
+        "consumer_state": "CURRENT" if consumer_current else "NOT_CURRENT",
+        "auto_routable": auto_routable,
+        "delivery_reachable": reachability in {"REACHABLE", "EXTERNAL_REACHABLE"},
+        "delivery_state": "REACHABLE" if reachability in {"REACHABLE", "EXTERNAL_REACHABLE"} else reachability,
+        "actor_ack_state": ack_view["actor_ack_state"],
+        "actor_ack_capable": ack_view["actor_ack_capable"],
+        "last_actor_ack": ack_view["last_actor_ack"],
         "reachability": reachability,
         "execution_location": execution_location,
         "work_state": work_state,
         "busy": busy,
         "current_task": current_task,
         "current_tasks": current_tasks,
+        "current_program": (activity_row or {}).get("current_program"),
+        "current_project": (activity_row or {}).get("current_project"),
+        "current_head_observed": (activity_row or {}).get("current_head_observed") or row.get("head_observed"),
+        "last_receipt": (activity_row or {}).get("last_receipt"),
+        "last_error": (activity_row or {}).get("last_error") or row.get("last_error"),
         "route_state": route_state,
         "availability": availability,
         "availability_reason": avail_reason,
@@ -386,8 +515,8 @@ def build_member_row(
         "session_id": session_id,
         "origin_instance": origin,
         "device_id": device_id,
+        "device": device_id,
         "present": presence_state == "PRESENT",
-        "auto_routable": row.get("auto_routable") is True and not external,
         "process_candidate": row.get("process_candidate") is True,
         "probe_pending": row.get("probe_pending") is True,
         "discovery_state": row.get("discovery_state"),
@@ -395,10 +524,13 @@ def build_member_row(
         "external_mode": str(external.get("mode")).upper() if external else None,
         "external_packet_ref": (external or {}).get("source_path"),
         "fake_internal_session": fake_internal,
+        "collapsed_online": False,
         "laws": {
             "UNKNOWN_NE_OFFLINE": True,
             "BUSY_NE_UNAVAILABLE": True,
             "PROCESS_WITHOUT_SIGNED_PRESENCE_NOT_AVAILABLE": True,
+            "DELIVERY_ACK_NE_ACTOR_ACK": True,
+            "C5_RUNTIME_NE_SEAT_PRESENCE": True,
             "C6_EXTERNAL_NO_FAKE_INTERNAL_SESSION": seat != "C6" or not external or fake_internal is False,
         },
     }
@@ -455,6 +587,9 @@ def build_council_member_state(
             "PROCESS_WITHOUT_SIGNED_PRESENCE_NOT_AVAILABLE",
             "C6_EXTERNAL_SESSION_OR_EXTERNAL_ONLY_NO_FAKE_INTERNAL",
             "ONE_PROJECTION_NO_SECOND_REGISTRY",
+            "DELIVERY_ACK_NE_ACTOR_ACK",
+            "C5_RUNTIME_NE_SEAT_PRESENCE",
+            "NO_COLLAPSED_ONLINE",
         ],
         "members": members,
         "by_seat": {m["seat"]: m for m in members},

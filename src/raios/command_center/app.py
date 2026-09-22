@@ -79,6 +79,22 @@ def require_csrf(value):
  if not value or not secrets.compare_digest(value,CSRF):raise HTTPException(403,"CSRF_REQUIRED")
 def service(name,port,url=None,timeout=3):
  listening=tcp(port); code,body=http_json(url,timeout=timeout) if url and listening else (None,{})
+ if name=="C5" and listening and isinstance(body,dict):
+  if code==0:
+   err=str(body.get("error") or "")
+   probe="TIMEOUT" if "Timeout" in err or "timed out" in err.lower() else "UNAVAILABLE"
+   return {"name":name,"state":"UNKNOWN" if probe=="TIMEOUT" else "UNAVAILABLE","port":port,"http":code,
+           "detail":body,"probe_state":probe,"timeout_ne_empty_inventory":True}
+  if code==200:
+   c5s=str(body.get("status") or "").upper()
+   probe=str(body.get("model_fabric_probe_state") or "").upper()
+   if probe=="TIMEOUT" or ("model_fabric_ready" in body and body.get("model_fabric_ready") is None):
+    return {"name":name,"state":"UNKNOWN","port":port,"http":code,"detail":body,
+            "probe_state":"TIMEOUT" if probe=="TIMEOUT" else "UNKNOWN",
+            "timeout_ne_empty_inventory":True,"runtime_reachable":True,
+            "model_fabric_error":body.get("model_fabric_error")}
+   if c5s in {"UNKNOWN","DEGRADED"}:
+    return {"name":name,"state":c5s,"port":port,"http":code,"detail":body,"probe_state":probe}
  ready=listening and (not url or code==200)
  return {"name":name,"state":"ONLINE" if ready else ("DEGRADED" if listening else "OFFLINE"),"port":port,"http":code,"detail":body}
 def tcp_service(name,port):
@@ -167,11 +183,55 @@ def council_state():
   "identity_ne_presence":True,"availability_ne_execution_readiness":True,
   "attendance_is_proof":True,"source_schema":snap.get("schema")}
 def model_state():
- code,body=http_json("http://127.0.0.1:11434/api/tags",timeout=4)
- models=[]
- if code==200:
-  for m in body.get("models",[]):models.append({"name":m.get("name"),"size":m.get("size"),"modified_at":m.get("modified_at")})
- return {"ollama_online":code==200,"count":len(models),"models":models,"active_c5":"qwen3:0.6b"}
+  """C5 model-fabric truth. TIMEOUT is not an empty successful inventory."""
+  code,body=http_json(C5+"/health",timeout=4)
+  err=str((body or {}).get("error") or "") if isinstance(body,dict) else ""
+  if code==0:
+    probe="TIMEOUT" if "Timeout" in err or "timed out" in err.lower() else "UNAVAILABLE"
+    return {"source":"C5_HEALTH","probe_state":probe,"http":code,
+            "ollama_online":False,"count":None if probe=="TIMEOUT" else 0,"models":[],
+            "timeout_ne_empty_inventory":True,"fabric_ready":None if probe=="TIMEOUT" else False,
+            "model_fabric_error":err or "C5_HEALTH_UNREACHABLE","active_c5":None}
+  if code!=200 or not isinstance(body,dict):
+    return {"source":"C5_HEALTH","probe_state":"UNAVAILABLE","http":code,
+            "ollama_online":False,"count":0,"models":[],"timeout_ne_empty_inventory":True,
+            "fabric_ready":False,"model_fabric_error":err or f"HTTP_{code}","active_c5":None}
+  probe=str(body.get("model_fabric_probe_state") or "UNKNOWN").upper()
+  fabric_ready=body.get("model_fabric_ready")
+  live=list(body.get("live_engines") or [])
+  count=body.get("live_engine_count")
+  if probe=="TIMEOUT" or ("model_fabric_ready" in body and fabric_ready is None):
+    return {"source":"C5_HEALTH","probe_state":"TIMEOUT","http":code,
+            "ollama_online":False,"count":None,"models":[],
+            "timeout_ne_empty_inventory":True,"fabric_ready":None,
+            "model_fabric_error":body.get("model_fabric_error") or "OLLAMA_INVENTORY_PROBE_TIMEOUT",
+            "c5_status":body.get("status"),"active_c5":None}
+  if probe in {"ERROR","UNAVAILABLE"}:
+    state="UNAVAILABLE"
+  elif fabric_ready is True:
+    state="CURRENT"
+  elif fabric_ready is False:
+    state="DEGRADED"
+  else:
+    state="UNKNOWN"
+  return {"source":"C5_HEALTH","probe_state":state,"http":code,
+          "ollama_online":fabric_ready is True,"count":count if count is not None else len(live),
+          "models":[{"name":x} for x in live],
+          "timeout_ne_empty_inventory":True,"fabric_ready":fabric_ready,
+          "model_fabric_error":body.get("model_fabric_error"),
+          "c5_status":body.get("status"),"active_c5":live[0] if live else None}
+
+def change_authority_state():
+  doc=load(REPO/".ai-os/mcp/CANONICAL-CHANGE-AUTHORITY.json",{})
+  if not doc:
+    return {"schema":"raios.change-authority-view.v1","state":"UNKNOWN","source_missing":True,
+            "canonical_head":CANONICAL_HEAD,"promotion":False,"auto_approval":False}
+  return {"schema":"raios.change-authority-view.v1","state":"CURRENT",
+          "canonical_branch":doc.get("canonical_branch"),"canonical_head":CANONICAL_HEAD,
+          "authority":doc.get("authority"),"approval_receipt_required":doc.get("approval_receipt_required"),
+          "workers_may_promote_without_c1_approval":doc.get("workers_may_promote_without_c1_approval") is True,
+          "promotion":False,"auto_approval":False,"silent_promote":False,
+          "law":doc.get("law") or []}
 def receipt_state():
  roots=[MCP_ROOT/".ai-os/mcp/receipts",MCP_ROOT/".ai-os/receipts/command-fabric",REPO/".ai-os/receipts/command-fabric"]
  rows=[]
@@ -232,6 +292,7 @@ def overview():
  return {"generated_at":utc(),"canonical_head":CANONICAL_HEAD,"remote_head":os.getenv("RAIOS_REMOTE_HEAD","UNKNOWN"),
   "head_source":"env_or_cached_ne_subprocess",
   "services":services,"tasks":task,"goals":goals_state(),"models":model_state(),"factories":factory_state(),"resources":resource_state(),"council":council_state(),"cognitive":cognitive_state(),
+  "change_authority":change_authority_state(),
   "maintenance":{"health":"HEALTHY" if not degraded else "ATTENTION","degraded":degraded,"auto_refresh":True,
    "auto_canonical_mutation":False,"self_update_policy":"LOCAL_RUNTIME_FROM_FAST_FORWARD_CANONICAL_ONLY_WITH_C1_CONFIRMATION"}}
 
@@ -410,6 +471,10 @@ def api_availability(req:AvailabilityIn,x_raios_csrf:str|None=Header(None)):
   raise HTTPException(409,f"{type(exc).__name__}:{exc}")
 @app.get("/api/notifications/{message_id}")
 def api_notification_status(message_id:str):return CLIENT_ACTIVITY.notification_status(message_id)
+@app.get("/api/communication-trace/{message_id}")
+def api_communication_trace(message_id:str):return CLIENT_ACTIVITY.communication_trace(message_id)
+@app.get("/api/change-authority")
+def api_change_authority():return change_authority_state()
 @app.get("/api/attention")
 def api_attention():return COUNCIL_BOARD.attention_snapshot()
 @app.get("/api/attention/{message_id}")
@@ -476,4 +541,5 @@ def health():
  worker=MESSAGE_WORKER.status()
  return {"status":"ONLINE","service":"RAIOS_COMMAND_CENTER",
   "canonical_head":CANONICAL_HEAD,"message_worker":worker,
-  "workflow_automation":worker.get("workflow_enabled") is True,"timestamp":utc()}
+  "workflow_automation":worker.get("workflow_enabled") is True,
+  "message_worker_ne_cc_readiness":True,"timestamp":utc()}
