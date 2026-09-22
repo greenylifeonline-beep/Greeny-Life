@@ -1,4 +1,4 @@
-param(
+﻿param(
     [string]$Repo = $(if ($env:RAIOS_CANONICAL_REPO) { $env:RAIOS_CANONICAL_REPO } else { (Resolve-Path (Join-Path $PSScriptRoot "..\..")).Path }),
     [switch]$InstallTask
 )
@@ -17,14 +17,36 @@ $NetworkRequiredSuccesses = 2
 # Task registration must stay independent from runtime-state I/O.
 # This repairs the one canonical task without touching the continuity hot path.
 if ($InstallTask) {
-    $LauncherPath = Join-Path $PSScriptRoot "Run-RAIOS-Continuity-Hidden.vbs"
-    if (-not (Test-Path -LiteralPath $LauncherPath)) { throw "RAIOS_CONTINUITY_LAUNCHER_MISSING" }
-    $Arguments = '"{0}" "{1}"' -f $LauncherPath, $Repo
-    $Action = New-ScheduledTaskAction -Execute "$env:SystemRoot\System32\wscript.exe" -Argument $Arguments -WorkingDirectory $Repo
-    $Logon = New-ScheduledTaskTrigger -AtLogOn -User $env:USERNAME
-    $Pulse = New-ScheduledTaskTrigger -Once -At (Get-Date).AddMinutes(1) -RepetitionInterval (New-TimeSpan -Minutes 1) -RepetitionDuration (New-TimeSpan -Days 3650)
-    $Settings = New-ScheduledTaskSettingsSet -MultipleInstances IgnoreNew -Hidden -StartWhenAvailable -RestartCount 3 -RestartInterval (New-TimeSpan -Minutes 1) -ExecutionTimeLimit (New-TimeSpan -Minutes 2) -AllowStartIfOnBatteries -DontStopIfGoingOnBatteries -DontStopOnIdleEnd
-    Register-ScheduledTask -TaskName $TaskName -Action $Action -Trigger @($Logon,$Pulse) -Settings $Settings -Description "Canonical RAIOS continuity guard: C5, manager, Universal MCP, Command Center, 9Router, NATS and Ollama." -Force | Out-Null
+    $LauncherPath = $PSCommandPath
+    if (-not [IO.File]::Exists($LauncherPath)) { throw "RAIOS_CONTINUITY_LAUNCHER_MISSING" }
+    $PowerShellPath = Join-Path $env:SystemRoot "System32\WindowsPowerShell\v1.0\powershell.exe"
+    if (-not [IO.File]::Exists($PowerShellPath)) { throw "RAIOS_CONTINUITY_POWERSHELL_MISSING" }
+    $Sid = [Security.Principal.WindowsIdentity]::GetCurrent().User.Value
+    $Account = [Security.Principal.WindowsIdentity]::GetCurrent().Name
+    $StartBoundary = (Get-Date).AddMinutes(1).ToString("yyyy-MM-ddTHH:mm:ss")
+    $EscLauncher = [Security.SecurityElement]::Escape($LauncherPath)
+    $EscRepo = [Security.SecurityElement]::Escape($Repo)
+    $EscPowerShell = [Security.SecurityElement]::Escape($PowerShellPath)
+    $EscSid = [Security.SecurityElement]::Escape($Sid)
+    $EscAccount = [Security.SecurityElement]::Escape($Account)
+    $TaskXml = @"
+<?xml version="1.0" encoding="UTF-16"?>
+<Task version="1.3" xmlns="http://schemas.microsoft.com/windows/2004/02/mit/task">
+  <RegistrationInfo><Description>Canonical RAIOS continuity guard.</Description></RegistrationInfo>
+  <Principals><Principal id="Author"><UserId>$EscSid</UserId><LogonType>InteractiveToken</LogonType></Principal></Principals>
+  <Settings><DisallowStartIfOnBatteries>false</DisallowStartIfOnBatteries><StopIfGoingOnBatteries>false</StopIfGoingOnBatteries><ExecutionTimeLimit>PT2M</ExecutionTimeLimit><Hidden>true</Hidden><MultipleInstancesPolicy>IgnoreNew</MultipleInstancesPolicy><RestartOnFailure><Count>3</Count><Interval>PT1M</Interval></RestartOnFailure><StartWhenAvailable>true</StartWhenAvailable><IdleSettings><StopOnIdleEnd>false</StopOnIdleEnd><RestartOnIdle>false</RestartOnIdle></IdleSettings><UseUnifiedSchedulingEngine>true</UseUnifiedSchedulingEngine></Settings>
+  <Triggers><LogonTrigger><UserId>$EscAccount</UserId></LogonTrigger><TimeTrigger><StartBoundary>$StartBoundary</StartBoundary><Repetition><Interval>PT1M</Interval><Duration>P3650D</Duration><StopAtDurationEnd>true</StopAtDurationEnd></Repetition></TimeTrigger></Triggers>
+  <Actions Context="Author"><Exec><Command>$EscPowerShell</Command><Arguments>-NoLogo -NoProfile -NonInteractive -ExecutionPolicy Bypass -WindowStyle Hidden -File &quot;$EscLauncher&quot; -Repo &quot;$EscRepo&quot;</Arguments><WorkingDirectory>$EscRepo</WorkingDirectory></Exec></Actions>
+</Task>
+"@
+    $TaskXmlPath = Join-Path ([IO.Path]::GetTempPath()) ("raios-continuity-task-" + [guid]::NewGuid().ToString("N") + ".xml")
+    try {
+        [IO.File]::WriteAllText($TaskXmlPath, $TaskXml, [Text.Encoding]::Unicode)
+        & "$env:SystemRoot\System32\schtasks.exe" /Create /TN $TaskName /XML $TaskXmlPath /F | Out-Null
+        if ($LASTEXITCODE -ne 0) { throw "RAIOS_CONTINUITY_TASK_REGISTER_FAILED:$LASTEXITCODE" }
+    } finally {
+        if ([IO.File]::Exists($TaskXmlPath)) { [IO.File]::Delete($TaskXmlPath) }
+    }
     Write-Host "RAIOS_CONTINUITY_TASK_REGISTERED_WINDOWLESS"
     exit 0
 }
@@ -35,7 +57,7 @@ $TraceEncoding = New-Object Text.UTF8Encoding($false)
 function Mark-Phase([string]$Name) {
     try {
         $line = ([DateTimeOffset]::UtcNow.ToString("o")) + "|RUN=" + $RunId + "|PID=" + $PID + "|" + $Name + [Environment]::NewLine
-        [IO.File]::AppendAllText($TracePath, $line, $TraceEncoding)
+        $line | Out-File -LiteralPath $TracePath -Encoding utf8 -Append
     } catch {}
 }
 Mark-Phase "RUN_START"
@@ -81,16 +103,14 @@ try {
         $utf8 = [Text.UTF8Encoding]::new($false)
         try {
             $json = $Value | ConvertTo-Json -Depth 12
-            [IO.File]::WriteAllText($tmp,$json,$utf8)
-            [void](ConvertFrom-Json ([IO.File]::ReadAllText($tmp,$utf8)))
+            $json | Out-File -LiteralPath $tmp -Encoding utf8
+            [void](ConvertFrom-Json (Get-Content -LiteralPath $tmp -Raw))
             for ($i=0; $i -lt 5; $i++) {
                 try {
-                    if ([IO.File]::Exists($Path)) {
-                        $backup = $Path + ".replace-backup"
-                        [IO.File]::Replace($tmp,$Path,$backup,$true)
-                        if ([IO.File]::Exists($backup)) { [IO.File]::Delete($backup) }
+                    if (Test-Path -LiteralPath $Path) {
+                        Move-Item -LiteralPath $tmp -Destination $Path -Force
                     } else {
-                        [IO.File]::Move($tmp,$Path)
+                        Move-Item -LiteralPath $tmp -Destination $Path
                     }
                     return
                 } catch [IO.IOException] {
@@ -102,7 +122,7 @@ try {
                 }
             }
         } finally {
-            if ([IO.File]::Exists($tmp)) { try { [IO.File]::Delete($tmp) } catch {} }
+            if (Test-Path -LiteralPath $tmp) { try { Remove-Item -LiteralPath $tmp -Force } catch {} }
         }
     }
     function Write-AtomicJson([hashtable]$Value) {

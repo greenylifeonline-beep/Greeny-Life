@@ -21,13 +21,26 @@ def test_existing_continuity_task_is_reused_with_periodic_self_healing():
     script = (RUNTIME / "Maintain-RAIOS-Online.ps1").read_text(encoding="utf-8")
     launcher = (RUNTIME / "Run-RAIOS-Continuity-Hidden.vbs").read_text(encoding="utf-8")
     assert '$TaskName = "RAIOS-C5-Permanent"' in script
-    assert "Register-ScheduledTask" in script
-    assert "RepetitionInterval" in script
-    assert "$env:SystemRoot\\System32\\wscript.exe" in script
-    assert "Run-RAIOS-Continuity-Hidden.vbs" in script
+    assert "Get-NetTCPConnection" not in script
+    assert "Get-Process -Name ollama" not in script
+    assert "Stop-Process -Id $ollamaProc.Id" not in script
+    assert "--max-time $Timeout" in script
+    assert '--noproxy "*"' in script
+    assert "$portOpen = Test-Tcp 11434" in script
+    assert "Register-ScheduledTask" not in script
+    assert "New-ScheduledTaskAction" not in script
+    assert "schtasks.exe" in script
+    assert "<Interval>PT1M</Interval>" in script
+    assert "<ExecutionTimeLimit>PT2M</ExecutionTimeLimit>" in script
+    assert "<MultipleInstancesPolicy>IgnoreNew</MultipleInstancesPolicy>" in script
+    assert "<StopOnIdleEnd>false</StopOnIdleEnd>" in script
+    assert "System32\\WindowsPowerShell\\v1.0\\powershell.exe" in script
+    assert "RAIOS_CONTINUITY_POWERSHELL_MISSING" in script
+    assert "RAIOS_CONTINUITY_LAUNCHER_MISSING" in script
+    assert "-NonInteractive -ExecutionPolicy Bypass -WindowStyle Hidden -File" in script
     assert "-NonInteractive -WindowStyle Hidden" in launcher
     assert "shell.Run(command, 0, True)" in launcher
-    assert "New-ScheduledTaskSettingsSet -MultipleInstances IgnoreNew -Hidden" in script
+    assert "New-ScheduledTaskSettingsSet" not in script
     assert "$routerOnline = Test-Tcp 20128" in script
     assert "node_modules\\9router\\cli.js" in script
     assert "Start-Process -FilePath $node.Source" in script
@@ -37,6 +50,16 @@ def test_existing_continuity_task_is_reused_with_periodic_self_healing():
     for service in ("C5", "MANAGER", "EVOLUTION", "COMMAND_CENTER", "ROUTER_9", "NATS", "OLLAMA"):
         assert service in script
     assert "auto_canonical_mutation = $false" in script
+
+
+def test_ollama_phase_requires_http_and_model_readiness():
+    script = (RUNTIME / "Maintain-RAIOS-Online.ps1").read_text(encoding="utf-8-sig")
+    assert 'Mark-Phase "OLLAMA_PORT_UP"' in script
+    assert 'Mark-Phase "OLLAMA_HTTP_READY"' in script
+    assert 'Mark-Phase "OLLAMA_MODEL_READY"' in script
+    assert 'if ($ollamaHttpReady -and $ollamaModelReady) { Mark-Phase "OLLAMA_OK" }' in script
+    assert 'if (-not $ollamaHttpReady) { $errors.Add("OLLAMA_HTTP_NOT_READY") }' in script
+    assert 'if ($ollamaHttpReady -and -not $ollamaModelReady) { $errors.Add("OLLAMA_MODEL_NOT_READY") }' in script
 
 
 def test_network_reconnect_resumes_only_safe_observers_windowlessly():
@@ -93,6 +116,15 @@ def test_c5_deploy_binds_the_durable_cognitive_store():
     assert 'Join-Path $RuntimeBase "cognitive-store\\v9"' in deploy
 
 
+def test_evolution_heartbeat_pid_requires_process_identity():
+    ensure = (RUNTIME / "Ensure-RAIOS-Cognitive-Loop.ps1").read_text(encoding="utf-8")
+    assert 'Get-CimInstance Win32_Process -Filter ("ProcessId=" + $ProcessId)' in ensure
+    assert '$ProcessRecord.Name -match "^python(?:w)?(?:\\.exe)?$"' in ensure
+    assert '$ExpectedEvolution = Join-Path $Repo "RAIOS\\V9\\runtime\\evolution_daemon.py"' in ensure
+    assert '"PID_IDENTITY_MISMATCH"' in ensure
+    assert '$Alive = $ProcessIdentity -and $StateCurrent' in ensure
+
+
 def test_evolution_loop_is_non_recursive_bounded_and_windowless():
     daemon = (ROOT / "RAIOS" / "V9" / "runtime" / "evolution_daemon.py").read_text(encoding="utf-8")
     brain = (ROOT / "RAIOS" / "V9" / "runtime" / "evolution_brain.py").read_text(encoding="utf-8")
@@ -140,6 +172,8 @@ def test_evolution_loop_is_non_recursive_bounded_and_windowless():
     assert "Start-Process -FilePath $PythonWindowless" in script
     assert "$PythonWindowless" in center_deploy
     assert "Start-Process $PythonWindowless" in center_deploy
+    assert "Get-NetTCPConnection" not in center_deploy
+    assert "Get-RaiosListenPid" in center_deploy
 
 
 def test_c5_truth_guard_preserves_c1_canonical_gl005_proof():
@@ -158,6 +192,8 @@ def test_c5_truth_guard_preserves_c1_canonical_gl005_proof():
 
 def test_c5_deploy_stages_off_live_app_and_supports_rollback():
     deploy = (RUNTIME / "Deploy-RAIOS-C5.ps1").read_text(encoding="utf-8")
+    assert "Get-NetTCPConnection" not in deploy
+    assert "Get-RaiosListenPid" in deploy
     assert '$StageAppRoot = Join-Path $RuntimeRoot "app.stage"' in deploy
     assert '$BackupAppRoot = Join-Path $RuntimeRoot "app.previous"' in deploy
     assert '-AppDir $StageAppRoot' in deploy
@@ -165,6 +201,6 @@ def test_c5_deploy_stages_off_live_app_and_supports_rollback():
     assert 'C5_CUTOVER_ROLLED_BACK' in deploy
     assert 'C5_LIVE_APP_MUTATION=false' in deploy
     assert 'C5_ROLLBACK_READY=true' in deploy
-    assert 'Copy-Item -Path (Join-Path $Repo' in deploy
+    assert 'Copy-Item -Path (Join-Path $SourceRoot' in deploy or 'Copy-Item -Path (Join-Path $Repo' in deploy
     assert '$dest = Join-Path $StageAppRoot' in deploy
     assert '$PackageDest = Join-Path $AppRoot' not in deploy
