@@ -12,7 +12,7 @@ def test_deploy_validates_staged_listener_before_cutover():
     final_start = text.index('$proc = Start-C5Process')
     assert stage_start < stage_health < old_stop < final_start
     assert 'C5_STAGE_VALIDATION=true' in text
-    assert "$stageListener.OwningProcess" in text
+    assert "$stageListenerPid = Get-RaiosListenPid $stagePort" in text
     assert "Get-Process -Id $oldPid -ErrorAction SilentlyContinue" in text
     assert "Stop-Process -Id $oldPid -Force -ErrorAction Stop" not in text
 
@@ -23,6 +23,16 @@ def test_deploy_fails_closed_on_stage_or_final_health_failure():
     assert 'CANONICAL_C5_CUTOVER_FAILED' in text
     assert '$health.canonical_head -eq $Head' in text
 
+
+def test_deploy_accepts_only_truthful_inventory_timeout_unknown():
+    text = DEPLOY.read_text(encoding="utf-8")
+    assert '$health.status -eq "UNKNOWN"' in text
+    assert '$health.model_fabric_probe_state -eq "TIMEOUT"' in text
+    assert '$health.model_fabric_error -eq "OLLAMA_INVENTORY_PROBE_TIMEOUT"' in text
+    assert '$health.gateway -eq $true' in text
+    assert '$health.model_fabric -eq $true' in text
+    assert '($onlineReady -or $inventoryTimeoutReady)' in text
+
 def test_deploy_refuses_dirty_canonical_sources():
     text = DEPLOY.read_text(encoding="utf-8")
     assert "$CanonicalSourcePaths" in text
@@ -30,3 +40,17 @@ def test_deploy_refuses_dirty_canonical_sources():
     assert "C5_CANONICAL_SOURCE_DIRTY" in text
     assert "src/raios/c5_gateway" in text
     assert "scripts/runtime/Deploy-RAIOS-C5.ps1" in text
+
+def test_deploy_can_stage_only_explicit_leased_overlay_files():
+    text = DEPLOY.read_text(encoding="utf-8")
+    assert '[string[]]$LeasedOverlayFiles' in text
+    assert 'C5_LEASED_OVERLAY_INVALID' in text
+    assert 'Copy-Item -LiteralPath $overlaySource -Destination $overlayTarget -Force' in text
+    assert 'leased_overlay_files' in text
+    assert 'RAIOS_STUDENT_KEEP_ALIVE = "0"' in text
+
+def test_leased_overlay_uses_clean_head_base_despite_unrelated_dirty_files():
+    text = DEPLOY.read_text(encoding='utf-8')
+    assert '$UseCleanHeadBase = $HeadOnlyRecovery -or ($LeasedOverlayFiles.Count -gt 0)' in text
+    assert 'if ($DirtyCanonicalSources.Count -gt 0 -and -not $UseCleanHeadBase)' in text
+    assert 'base_source = $(if ($UseCleanHeadBase)' in text
