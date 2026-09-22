@@ -229,6 +229,14 @@ def test_health_uses_cached_head_without_spawning_git(monkeypatch):
  health=client.get("/health").json()
  assert health["canonical_head"]=="b"*40 and health["status"]=="ONLINE"
 
+def test_health_readiness_does_not_wait_for_worker_heartbeat(monkeypatch):
+ worker={"healthy":False,"state":"DEGRADED","workflow_enabled":True}
+ monkeypatch.setattr(cc.MESSAGE_WORKER,"status",lambda:worker)
+ health=client.get("/health").json()
+ assert health["status"]=="ONLINE"
+ assert health["message_worker"]==worker
+ assert health["workflow_automation"] is True
+
 
 def test_command_center_deployer_copies_internal_a2a_receipt_dependency():
  deploy=(cc.HERE.parents[2]/"scripts/runtime/Deploy-RAIOS-Command-Center.ps1").read_text(encoding="utf-8")
