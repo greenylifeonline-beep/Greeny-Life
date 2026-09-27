@@ -891,10 +891,10 @@ def api_integration():
   c5_http,_=http_json(C5+"/health",timeout=0.8)
  mcp=mcp_bind()
  factory=load(FACTORY_RUNTIME_LATEST,{}) or {}
- live_bound=0
- cached=_ACTOR_ROUTES_CACHE.get("body")
- if isinstance(cached, dict):
-  live_bound=len([r for r in (cached.get("seats") or []) if isinstance(r,dict) and r.get("auto_routable") is True])
+ live_bound=sum(
+  1 for seat in COUNCIL_SEATS
+  if seat not in RAIOS_NOT_COUNCIL_SEATS and ACTOR_ROUTES.is_live_bound(seat)
+ )
  ecology=(REPO/"src/raios/factory_fabric/model_ecology.py").is_file()
  return integration_mesh_projection(plane=plane,worker=worker,hanging=hang,laws=laws,
   c5_http=c5_http,mcp_http=mcp.get("http"),mcp_live=mcp.get("live") is True,

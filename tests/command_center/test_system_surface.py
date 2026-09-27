@@ -295,10 +295,11 @@ def test_integration_mesh_does_not_fake_full_bind():
     )
     assert unbound["fake_integrated"] is False
     assert unbound["fully_integrated"] is False
-    assert unbound["overall"] == "CONTROL_PLANE_BOUND_SEATS_UNBOUND"
+    assert unbound["overall"] == "PARTIAL"
     assert unbound["actor_ack_proven"] is False
     by = {row["id"]: row for row in unbound["links"]}
     assert by["c5"]["state"] == "ONLINE"
+    assert by["nats"]["state"] == "OFFLINE"
     assert by["live-seats"]["state"] == "UNBOUND"
     tcp_only = integration_mesh_projection(
         plane={"services": [{"name": "C5", "state": "ONLINE", "port": 8766}]},
@@ -320,6 +321,7 @@ def test_integration_mesh_does_not_fake_full_bind():
             {"name": "C5", "state": "ONLINE", "port": 8766},
             {"name": "UniversalMCP", "state": "ONLINE", "port": 8788},
             {"name": "9Router", "state": "ONLINE", "port": 20128},
+            {"name": "NATS", "state": "ONLINE", "port": 4222},
         ]},
         worker={"healthy": True, "state": "ONLINE"},
         hanging={"system_informed": True, "open_count": 1},
@@ -335,3 +337,6 @@ def test_integration_mesh_does_not_fake_full_bind():
     assert bound["overall"] == "CONTROL_PLANE_AND_SEATS_BOUND"
     assert bound["fully_integrated"] is True
     assert bound["fake_integrated"] is False
+    by3 = {row["id"]: row for row in bound["links"]}
+    assert by3["nats"]["state"] == "ONLINE"
+    assert by3["live-seats"]["state"] == "BOUND"

@@ -1182,7 +1182,7 @@ def integration_mesh_projection(
         {"id": "ninerouter", "name": "9Router", "state": nr_state, "port": 20128,
          "role": "MODEL_ROUTER", "probe": "TCP_ONLY"},
         {"id": "nats", "name": "NATS", "state": nats_state, "port": 4222,
-         "role": "TRANSPORT", "optional": True, "probe": "TCP_ONLY"},
+         "role": "TRANSPORT", "optional": False, "probe": "TCP_ONLY"},
         {"id": "command-fabric", "name": "CommandFabric", "state": fabric_state,
          "role": "SEAT_BUS", "healthy": worker.get("healthy") is True},
         {"id": "direct-conversation", "name": "DirectConversation", "state": direct_state,
@@ -1213,9 +1213,12 @@ def integration_mesh_projection(
             "command-center": "ONLINE",
             "c5": "ONLINE",
             "mcp": "ONLINE",
+            "ninerouter": "ONLINE",
+            "nats": "ONLINE",
             "command-fabric": "ONLINE",
             "operator-laws": "VISIBLE",
             "direct-conversation": "WIRED",
+            "hanging-work": "INFORMED",
         }.items()
     )
     ninerouter_ok = nr_state == "ONLINE"
