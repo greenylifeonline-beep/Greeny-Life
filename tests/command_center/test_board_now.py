@@ -97,3 +97,17 @@ def test_hanging_work_notifies_system_without_mutating_ledger():
     assert "RUN-STALE" in out["stale_in_progress"]
     assert "READY-FREE" in [row["id"] for row in out["items"] if row["status"] == "READY" and not row["claimed_by"]]
     assert "DONE-1" not in {row["id"] for row in out["items"]}
+
+
+def test_load_tasks_document_caches_by_mtime(tmp_path):
+    from raios.command_center.board_now import load_tasks_document
+    path = tmp_path / "TASKS.json"
+    path.write_text('{"tasks":[{"id":"A","status":"READY"}]}', encoding="utf-8")
+    first = load_tasks_document(path, {"tasks": []})
+    second = load_tasks_document(path, {"tasks": []})
+    assert first is second
+    assert first["tasks"][0]["id"] == "A"
+    path.write_text('{"tasks":[{"id":"B","status":"BLOCKED"}]}', encoding="utf-8")
+    third = load_tasks_document(path, {"tasks": []})
+    assert third is not first
+    assert third["tasks"][0]["id"] == "B"

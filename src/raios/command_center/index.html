@@ -18,7 +18,8 @@ radial-gradient(700px 440px at 10% 105%,rgba(107,79,204,.11),transparent 65%),va
 button,input,textarea{font:inherit}button{color:inherit}.shell{min-height:100vh;display:grid;grid-template-columns:252px minmax(0,1fr)}
 .sidebar{position:sticky;top:0;height:100vh;padding:22px 15px;border-left:1px solid var(--line);background:rgba(7,17,26,.86);backdrop-filter:blur(22px);z-index:10}
 .brand{display:flex;align-items:center;gap:12px;padding:2px 8px 24px}.logo{width:44px;height:44px;border-radius:15px;display:grid;place-items:center;font-size:18px;font-weight:800;color:#061117;background:linear-gradient(140deg,var(--cyan),#7df3c1);box-shadow:0 0 35px rgba(69,215,232,.2)}.brand strong{display:block;font-size:15px;letter-spacing:.4px}.brand small{display:block;color:var(--muted);font-size:10px;letter-spacing:1.5px;margin-top:3px}
-.nav{display:grid;gap:5px}.nav button{width:100%;display:flex;align-items:center;gap:12px;text-align:right;border:1px solid transparent;background:transparent;color:var(--muted);padding:11px 12px;border-radius:12px;cursor:pointer;transition:.2s var(--ease)}.nav button:hover{color:var(--text);background:rgba(255,255,255,.035)}.nav button.active{color:var(--text);background:linear-gradient(100deg,rgba(69,215,232,.15),rgba(69,215,232,.04));border-color:rgba(69,215,232,.22);box-shadow:inset -3px 0 var(--cyan)}.nav i{font-style:normal;width:22px;text-align:center;color:var(--cyan)}
+.nav{display:grid;gap:5px;overflow:auto;max-height:calc(100vh - 220px)}.nav button{width:100%;display:flex;align-items:center;gap:12px;text-align:right;border:1px solid transparent;background:transparent;color:var(--muted);padding:11px 12px;border-radius:12px;cursor:pointer;transition:.2s var(--ease)}.nav button:hover{color:var(--text);background:rgba(255,255,255,.035)}.nav button.active{color:var(--text);background:linear-gradient(100deg,rgba(69,215,232,.15),rgba(69,215,232,.04));border-color:rgba(69,215,232,.22);box-shadow:inset -3px 0 var(--cyan)}.nav i{font-style:normal;width:22px;text-align:center;color:var(--cyan)}
+.nav-label{color:var(--muted);font-size:10px;letter-spacing:1.4px;padding:14px 12px 4px;text-transform:uppercase}
 .side-status{position:absolute;inset:auto 16px 18px;border-top:1px solid var(--line);padding-top:15px}.presence{display:flex;align-items:center;gap:9px;color:var(--soft);font-size:12px}.live-dot{width:8px;height:8px;border-radius:50%;background:var(--green);box-shadow:0 0 0 5px rgba(85,223,162,.08),0 0 16px var(--green)}.side-status small{display:block;color:var(--muted);margin-top:7px}
 .workspace{min-width:0}.topbar{height:82px;display:flex;align-items:center;justify-content:space-between;gap:20px;padding:0 28px;border-bottom:1px solid rgba(33,55,70,.75);background:rgba(7,16,25,.5);backdrop-filter:blur(15px);position:sticky;top:0;z-index:8}.title small{display:block;color:var(--cyan);font-size:10px;letter-spacing:1.7px;text-transform:uppercase}.title h1{font-size:20px;margin:3px 0 0}.top-actions{display:flex;align-items:center;gap:9px}.sync{display:flex;gap:8px;align-items:center;color:var(--muted);font-size:11px;margin-inline-end:4px}
 .btn{border:1px solid var(--line);background:var(--surface2);color:var(--text);padding:9px 13px;border-radius:11px;cursor:pointer;transition:.18s var(--ease)}.btn:hover{border-color:var(--line2);transform:translateY(-1px)}.btn.primary{background:linear-gradient(135deg,#157e97,#126179);border-color:#3bcde0;box-shadow:0 8px 28px rgba(18,116,143,.2)}.btn.ghost{background:transparent}.btn.danger{color:var(--red)}.btn:disabled{opacity:.55;cursor:wait;transform:none}
@@ -30,11 +31,12 @@ button,input,textarea{font:inherit}button{color:inherit}.shell{min-height:100vh;
 .service-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:10px}.service{border:1px solid var(--line);background:rgba(5,16,25,.52);border-radius:14px;padding:14px}.service-top{display:flex;justify-content:space-between;gap:8px;align-items:center}.service strong{font-size:13px}.service small{color:var(--muted);display:block;margin-top:12px}.bar{height:4px;border-radius:9px;background:#08131c;overflow:hidden;margin-top:12px}.bar i{display:block;height:100%;width:100%;background:linear-gradient(90deg,var(--cyan),var(--green))}
 .list{display:grid;gap:9px}.list-row{display:flex;align-items:center;justify-content:space-between;gap:12px;border:1px solid var(--line);background:rgba(6,17,26,.55);border-radius:12px;padding:11px 12px;min-width:0}.list-row .grow{min-width:0}.list-row strong{display:block;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;font-size:12px}.list-row small{color:var(--muted);display:block;margin-top:2px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
 .empty{padding:28px;text-align:center;color:var(--muted);border:1px dashed var(--line);border-radius:13px}
-.chat-layout{display:grid;grid-template-columns:minmax(0,1fr) 310px;gap:14px;height:calc(100vh - 130px);min-height:620px}.chat-panel{display:grid;grid-template-rows:auto 1fr auto;padding:0;overflow:hidden}.chat-head{display:flex;justify-content:space-between;align-items:center;padding:16px 18px;border-bottom:1px solid var(--line)}.thread{padding:22px;overflow:auto;scroll-behavior:smooth}.message{max-width:min(78%,760px);margin:0 0 16px}.message.user{margin-inline-start:0;margin-inline-end:auto}.message.ai{margin-inline-start:auto;margin-inline-end:0}.who{font-size:10px;color:var(--muted);margin:0 7px 5px}.bubble{padding:13px 15px;border:1px solid var(--line);border-radius:16px;white-space:pre-wrap;overflow-wrap:anywhere;line-height:1.75}.message.user .bubble{background:linear-gradient(135deg,#12687f,#15536b);border-bottom-left-radius:5px}.message.ai .bubble{background:#0a1823;border-bottom-right-radius:5px}.message.system .bubble{background:rgba(255,200,106,.05);color:var(--soft)}.message-meta{display:flex;gap:7px;flex-wrap:wrap;margin:6px 7px 0}.composer{border-top:1px solid var(--line);padding:14px;background:rgba(6,16,25,.72)}.compose-box{display:grid;grid-template-columns:1fr auto;gap:10px;align-items:end;border:1px solid var(--line2);background:#07141e;border-radius:15px;padding:8px}.compose-box textarea{width:100%;min-height:46px;max-height:150px;resize:none;border:0;outline:0;background:transparent;color:var(--text);padding:8px 10px;line-height:1.6}.compose-help{font-size:10px;color:var(--muted);margin:6px 8px 0}
+.dm-layout{display:grid;grid-template-columns:280px minmax(0,1fr);gap:14px;min-height:520px}.dm-peers{overflow:auto;max-height:64vh;display:grid;gap:8px}.dm-peer{display:flex;align-items:center;gap:10px;width:100%;text-align:right;border:1px solid var(--line);background:rgba(6,17,26,.55);border-radius:12px;padding:10px 12px;color:inherit;cursor:pointer}.dm-peer.active{border-color:rgba(69,215,232,.35);background:rgba(69,215,232,.08)}.dm-peer .dot{width:8px;height:8px;border-radius:50%;flex:0 0 auto}.dm-peer .dot.on{background:var(--green);box-shadow:0 0 10px var(--green)}.dm-peer .dot.off{background:var(--amber)}.dm-peer .meta{min-width:0;flex:1}.dm-peer strong{display:block;font-size:13px}.dm-peer small{display:block;color:var(--muted);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}.chat-layout{display:grid;grid-template-columns:minmax(0,1fr) 310px;gap:14px;height:calc(100vh - 130px);min-height:620px}.chat-panel{display:grid;grid-template-rows:auto 1fr auto;padding:0;overflow:hidden}.chat-head{display:flex;justify-content:space-between;align-items:center;padding:16px 18px;border-bottom:1px solid var(--line)}.thread{padding:22px;overflow:auto;scroll-behavior:smooth}.message{max-width:min(78%,760px);margin:0 0 16px}.message.user{margin-inline-start:0;margin-inline-end:auto}.message.ai{margin-inline-start:auto;margin-inline-end:0}.who{font-size:10px;color:var(--muted);margin:0 7px 5px}.bubble{padding:13px 15px;border:1px solid var(--line);border-radius:16px;white-space:pre-wrap;overflow-wrap:anywhere;line-height:1.75}.message.user .bubble{background:linear-gradient(135deg,#12687f,#15536b);border-bottom-left-radius:5px}.message.ai .bubble{background:#0a1823;border-bottom-right-radius:5px}.message.system .bubble{background:rgba(255,200,106,.05);color:var(--soft)}.message-meta{display:flex;gap:7px;flex-wrap:wrap;margin:6px 7px 0}.composer{border-top:1px solid var(--line);padding:14px;background:rgba(6,16,25,.72)}.compose-box{display:grid;grid-template-columns:1fr auto;gap:10px;align-items:end;border:1px solid var(--line2);background:#07141e;border-radius:15px;padding:8px}.compose-box textarea{width:100%;min-height:46px;max-height:150px;resize:none;border:0;outline:0;background:transparent;color:var(--text);padding:8px 10px;line-height:1.6}.compose-help{font-size:10px;color:var(--muted);margin:6px 8px 0}
 .inspector{overflow:auto}.fact{border-bottom:1px solid var(--line);padding:12px 0}.fact:first-child{padding-top:0}.fact:last-child{border:0}.fact label{display:block;color:var(--muted);font-size:10px;margin-bottom:4px}.fact strong{font-size:12px;overflow-wrap:anywhere}
 .search-box{display:grid;grid-template-columns:1fr auto;gap:10px}.search-box input,.public-query,input.text,textarea.text{width:100%;border:1px solid var(--line);background:#07141e;color:var(--text);outline:0;border-radius:12px;padding:12px}.search-box input:focus,.public-query:focus,textarea.text:focus{border-color:var(--cyan)}.options{display:flex;gap:12px;flex-wrap:wrap;margin-top:11px;color:var(--muted);font-size:11px}.toggle{display:flex;align-items:center;gap:7px;cursor:pointer}.toggle input{accent-color:var(--cyan)}.search-summary{display:flex;gap:8px;flex-wrap:wrap}.result{border:1px solid var(--line);background:rgba(6,17,26,.52);border-radius:14px;padding:14px;margin-top:10px}.result-head{display:flex;justify-content:space-between;gap:12px;align-items:center}.result p{color:var(--soft);margin:10px 0 0;white-space:pre-wrap;overflow-wrap:anywhere;max-height:150px;overflow:hidden}.citation{font:10px/1.5 Consolas,monospace;color:var(--cyan);margin-top:9px;overflow-wrap:anywhere}.conflict{border-color:rgba(255,118,136,.32);background:rgba(255,118,136,.05)}
 .planes{display:grid;grid-template-columns:repeat(3,1fr);gap:10px}.plane{padding:14px;border-radius:13px;border:1px solid var(--line);background:rgba(5,16,25,.52)}.plane span{display:block;color:var(--muted);font-size:10px}.plane strong{display:block;margin-top:7px;font-size:13px}
 table{width:100%;border-collapse:collapse;font-size:11px}th,td{text-align:right;padding:11px;border-bottom:1px solid var(--line);vertical-align:top}th{position:sticky;top:0;background:var(--surface);color:var(--muted);font-weight:500}.table-wrap{overflow:auto;max-height:520px}.code{font:11px/1.65 Consolas,monospace;white-space:pre-wrap;overflow-wrap:anywhere;background:#06131c;border:1px solid var(--line);border-radius:12px;padding:13px;color:var(--soft)}
+.chips{display:flex;flex-wrap:wrap;gap:5px;margin-top:6px}.filter-row{display:flex;gap:8px;flex-wrap:wrap;margin:0 0 10px}.seat-row small{white-space:normal}
 .spinner{width:15px;height:15px;display:inline-block;border:2px solid rgba(255,255,255,.25);border-top-color:#fff;border-radius:50%;animation:spin .75s linear infinite}@keyframes spin{to{transform:rotate(360deg)}}.toast{position:fixed;left:24px;bottom:24px;background:#122636;border:1px solid var(--line2);border-radius:12px;padding:11px 14px;box-shadow:var(--shadow);z-index:30;opacity:0;transform:translateY(8px);pointer-events:none;transition:.2s}.toast.show{opacity:1;transform:none}
 .mobile-nav{display:none}
 @media(max-width:1100px){.shell{grid-template-columns:82px 1fr}.brand>div:last-child,.nav span,.side-status small{display:none}.sidebar{padding:18px 10px}.brand{justify-content:center;padding-inline:0}.nav button{justify-content:center}.span3{grid-column:span 6}.span8,.span7,.span6,.span5,.span4{grid-column:span 12}.chat-layout{grid-template-columns:1fr}.inspector{display:none}}
@@ -52,8 +54,15 @@ table{width:100%;border-collapse:collapse;font-size:11px}th,td{text-align:right;
     <button data-view="search"><i>⌕</i><span>البحث والتحقق</span></button>
     <button data-view="cognitive"><i>◎</i><span>التعلم والاستيعاب</span></button>
     <button data-view="work"><i>▣</i><span>العمل والأدلة</span></button>
-    <button data-view="council"><i>◇</i><span>المجلس</span></button>
+    <button data-view="council"><i>◇</i><span>محادثة مباشرة</span></button>
     <button data-view="diagnostics"><i>⚙</i><span>التشخيص</span></button>
+    <div class="nav-label">Control Surface</div>
+    <button data-view="topology"><i>⬡</i><span>الطوبولوجيا</span></button>
+    <button data-view="fabric"><i>⇄</i><span>Command Fabric</span></button>
+    <button data-view="capabilities"><i>⟡</i><span>القدرات والمزوّدات</span></button>
+    <button data-view="factories"><i>🏭</i><span>المصانع والمحركات</span></button>
+    <button data-view="selfheal"><i>♻</i><span>الشفاء الذاتي</span></button>
+    <button data-view="incidents"><i>!</i><span>الحوادث</span></button>
   </nav>
   <div class="side-status"><div class="presence"><i class="live-dot" id="sideDot"></i><span id="liveText">جاري الاتصال…</span></div><small id="councilSummary">المجلس —</small><small id="headShort">HEAD —</small></div>
 </aside>
@@ -73,9 +82,24 @@ table{width:100%;border-collapse:collapse;font-size:11px}th,td{text-align:right;
     <article class="card kpi span3" style="--glow:rgba(255,200,106,.1)"><div class="kpi-label">الأدلة المسترجعة</div><div class="kpi-value" id="evidenceValue">—</div><div class="kpi-sub" id="evidenceSub">Search Cortex</div></article>
     <article class="card span8"><div class="card-head"><h2>الخدمات والبنية الحية</h2><span class="hint">قياس مباشر، لا ادعاء</span></div><div class="service-grid" id="servicesGrid"></div></article>
     <article class="card span4"><div class="card-head"><h2>ما يحتاج الانتباه</h2><span class="pill neutral" id="attentionCount">0</span></div><div class="list" id="attentionList"></div></article>
+    <article class="card span12"><div class="card-head"><h2>بوابة MCP الموحدة</h2><span class="hint">ثماني أدوات V1 · ليست حافلة المقاعد · ليست أداة تاسعة</span></div><div id="mcpBind"></div></article>
     <article class="card span7"><div class="card-head"><h2>العمل الآن</h2><button class="btn ghost" data-jump="work">لوحة العمل</button></div><div class="hint" style="margin:-8px 0 10px">سلطة TASKS.json · ليست NOW.md · ليست ذيل الدفتر</div><div class="list" id="recentTasks"></div></article>
     <article class="card span5"><div class="card-head"><h2>الهدف والبرنامج</h2><span class="hint">كتالوج مسمّى · ليست نواة</span></div><div class="list" id="goalsList"></div></article>
+    <article class="card span12"><div class="card-head"><h2>Live operational truth</h2><span class="hint" id="liveBoardHint">C8 Wave-06 certified · poll 20s · not rediscovered</span></div>
+      <div class="planes" id="liveBoardPlanes"></div>
+      <div class="list" id="liveTruthFacts"></div>
+      <div class="list" id="liveActors"></div>
+    </article>
     <article class="card span12"><div class="card-head"><h2>الدورة المعرفية</h2><button class="btn ghost" data-jump="cognitive">التفاصيل</button></div><div class="planes" id="overviewPlanes"></div></article>
+    <article class="card span6"><div class="card-head"><h2>سلطة التغيير</h2><span class="hint">قراءة فقط · لا ترقية صامتة</span></div><div class="list" id="changeAuthority"></div></article>
+    <article class="card span6"><div class="card-head"><h2>نسيج النماذج</h2><span class="hint">TIMEOUT ≠ جرد فارغ ناجح</span></div><div class="list" id="modelFabric"></div></article>
+    <article class="card span6"><div class="card-head"><h2>C5 تشغيل ≠ مقعد</h2><span class="hint">runtime مستقل عن حضور الممثل</span></div><div class="list" id="c5Truth"></div></article>
+    <article class="card span6"><div class="card-head"><h2>صحة المكوّنات</h2><span class="hint">UNKNOWN ≠ OFFLINE · C5 runtime ≠ seat</span></div><div class="list" id="runtimeHealth"></div></article>
+    <article class="card span6"><div class="card-head"><h2>حواجز مثبتة</h2><span class="hint">لا حوادث ملفّقة · EXTERNAL_NETWORK ≠ LOCAL_DOWN</span></div><div class="list" id="blockerList"></div></article>
+    <article class="card span6"><div class="card-head"><h2>Dirty CC · WAVE-02</h2><span class="hint">تصنيف مقيد · ليست مسحاً حياً لـ git</span></div><div class="list" id="dirtyClass"></div></article>
+    <article class="card span6"><div class="card-head"><h2>قوانين النظام</h2><span class="hint">لكل المقاعد · ليست قوانين محادثة</span></div><div class="list" id="operatorLaws"></div></article>
+    <article class="card span6"><div class="card-head"><h2>عمل معلّق</h2><span class="hint">NO_HANGING · ليست DONE ملفّقة</span></div><div class="list" id="hangingWork"></div></article>
+    <article class="card span12"><div class="card-head"><h2>تكامل النظام مع مركز الأوامر</h2><span class="hint">UNKNOWN يبقى UNKNOWN · لا INTEGRATED ملفّق</span></div><div class="planes" id="integrationPlanes"></div><div class="list" id="integrationLinks"></div></article>
   </div>
 </section>
 
@@ -122,6 +146,7 @@ table{width:100%;border-collapse:collapse;font-size:11px}th,td{text-align:right;
 <section class="view" id="work">
   <div class="grid">
     <article class="card span12"><div class="card-head"><h2>العمل الآن — شريحة TASKS</h2><div><span class="hint" id="workStats">—</span> <button class="btn ghost" id="boardToggle" type="button">عرض الدفتر كاملاً</button></div></div><div class="table-wrap" id="tasksTable"></div></article>
+    <article class="card span12"><div class="card-head"><h2>عمل معلّق ظاهر للنظام</h2><span class="hint">READY / IN_PROGRESS / BLOCKED · لا إخفاء</span></div><div class="list" id="hangingWorkBoard"></div></article>
     <article class="card span6"><div class="card-head"><h2>حقيقة دورة العمل</h2><span class="hint">تم · جارٍ · مطلوب · منتظر · قديم</span></div><div class="list" id="lifecycleList"></div></article>
     <article class="card span6"><div class="card-head"><h2>ملف المؤسس والمالك</h2><span class="hint">يُجهّز دائمًا حتى عند غياب C1</span></div><div class="list" id="founderBrief"></div></article>
     <article class="card span12"><div class="card-head"><h2>خطة التوزيع الذكية</h2><span class="hint">المسار الحرج · الأهلية · الجاهزية · التعارض</span></div><div class="list" id="dispatchPlan"></div></article>
@@ -132,10 +157,32 @@ table{width:100%;border-collapse:collapse;font-size:11px}th,td{text-align:right;
 
 <section class="view" id="council">
   <div class="grid">
-    <article class="card span8"><div class="card-head"><h2>تواصل المجلس عبر RAIOS</h2><span class="pill warn">ALL = الأحياء فقط · الغائب لا يُقفل ملفًا · المالك RAIOS_SYSTEM</span></div><div class="options" id="targets"><button class="btn primary target active" data-target="ALL">الجميع (الحي فقط)</button><button class="btn target" data-target="C1">C1</button><button class="btn target" data-target="C2">C2</button><button class="btn target" data-target="C3">C3</button><button class="btn target" data-target="C4">C4</button><button class="btn target" data-target="C5">C5</button><button class="btn target" data-target="C6">C6</button><button class="btn target" data-target="C7">C7</button><button class="btn target" data-target="C8">C8</button><button class="btn target" data-target="C9">C9</button><button class="btn target" data-target="C10">C10</button><button class="btn target" data-target="C11">C11</button><button class="btn target" data-target="C12">C12</button></div><textarea class="text" id="commandInput" style="min-height:150px;margin-top:14px" placeholder="اكتب إلى العاملين الأحياء…"></textarea><div style="display:flex;justify-content:flex-end;margin-top:10px"><button class="btn primary" id="sendCommand">إرسال موثّق</button></div><div class="code" id="commandOutput" style="margin-top:13px">ستظهر إيصالات الإرسال هنا: من استلم ومن غير متاح.</div></article>
+    <article class="card span12" style="padding:0;overflow:hidden">
+      <div class="dm-layout">
+        <div style="border-left:1px solid var(--line);padding:14px">
+          <div class="card-head"><h2>المقاعد</h2><span class="hint" id="dmOnlineHint">حي فقط يظهر أخضر</span></div>
+          <div class="dm-peers" id="dmPeers"></div>
+        </div>
+        <div class="chat-panel">
+          <div class="chat-head"><div><h2 id="dmTitle">محادثة مباشرة</h2><div class="hint" id="dmStatus">اختر وكيلاً أونلاين. HTTP 200 ≠ قراءة. القراءة = ACTOR_ACK.</div></div><span class="pill" id="dmPeerBadge">—</span></div>
+          <div class="thread" id="dmThread"></div>
+          <div class="composer"><div class="compose-box"><textarea id="dmInput" aria-label="رسالة مباشرة" placeholder="اكتب مباشرة إلى المقعد المختار…"></textarea><button class="btn primary" id="dmSend">إرسال</button></div><div class="compose-help">واحد لواحد على نسيج الأوامر القائم · ليست إذاعة مجلس · لا استلام دون تفاعل</div></div>
+        </div>
+      </div>
+    </article>
+    <article class="card span8"><div class="card-head"><h2>إذاعة المجلس (ليست محادثة)</h2><span class="pill warn">تواصل المجلس عبر RAIOS · ALL = الأحياء فقط · ليست واتساب · الغائب لا يُقفل ملفًا</span></div><div class="options" id="targets"><button class="btn primary target active" data-target="ALL">الجميع (الحي فقط)</button><button class="btn target" data-target="C1">C1</button><button class="btn target" data-target="C2">C2</button><button class="btn target" data-target="C3">C3</button><button class="btn target" data-target="C4">C4</button><button class="btn target" data-target="C5" data-raios-runtime="true">RAIOS/C5</button><button class="btn target" data-target="C6">C6</button><button class="btn target" data-target="C7">C7</button><button class="btn target" data-target="C8">C8</button><button class="btn target" data-target="C9">C9</button><button class="btn target" data-target="C10">C10</button><button class="btn target" data-target="C11">C11</button><button class="btn target" data-target="C12">C12</button></div><div class="options" style="margin-top:10px"><label class="toggle">INTENT <select id="commandIntent" class="text" style="width:auto;padding:6px 10px;margin-inline-start:8px"><option value="NOTICE">NOTICE</option><option value="REQUEST">REQUEST</option><option value="COMMAND">COMMAND</option><option value="REVIEW_REQUEST">REVIEW_REQUEST</option></select></label><span class="hint">UI intent · persisted kind = COMMAND · WORK_AUTHORITY=false · ليست محادثة مباشرة</span></div><textarea class="text" id="commandInput" style="min-height:150px;margin-top:14px" placeholder="إعلان للمجلس الحي — ليست محادثة واحد لواحد"></textarea><div style="display:flex;justify-content:flex-end;margin-top:10px"><button class="btn primary" id="sendCommand">إرسال موثّق</button></div><div class="code" id="commandOutput" style="margin-top:13px">إيصال الإرسال فقط. ليست قراءة وليست رداً.</div></article>
     <article class="card span4"><div class="card-head"><h2>من متاح ومن غير متاح</h2><span class="hint">حضور موقع ≠ تنفيذ</span></div><div class="list" id="seatList"></div></article>
     <article class="card span6"><div class="card-head"><h2>العامل</h2><span class="hint">نفس مصدر التنسيق</span></div><div class="list" id="workerList"></div></article>
     <article class="card span6"><div class="card-head"><h2>منفذون آخرون نشطون</h2><span class="hint">خارج المقاعد إن وُجدوا</span></div><div class="list" id="otherActorList"></div></article>
+    <article class="card span12"><div class="card-head"><h2>لوحة المجلس التشغيلية</h2><span class="hint">/api/council-state · AUTO_ROUTABLE ≠ ONLINE</span></div>
+      <div class="filter-row" id="seatFilters"><button class="btn ghost seat-filter active" data-filter="ALL">ALL</button><button class="btn ghost seat-filter" data-filter="ACK_PENDING">ACK_PENDING</button><button class="btn ghost seat-filter" data-filter="STALE">STALE</button><button class="btn ghost seat-filter" data-filter="UNBOUND">UNBOUND</button><button class="btn ghost seat-filter" data-filter="FAILED">FAILED</button></div>
+      <div class="table-wrap" id="councilBoardTable"></div>
+    </article>
+    <article class="card span6"><div class="card-head"><h2>حالة الهدف قبل الإرسال</h2><span class="hint">ربط · توجيه · نبض</span></div><div class="list" id="commandTargetStatus"></div></article>
+    <article class="card span6"><div class="card-head"><h2>تتبع الأمر</h2><span class="hint">DELIVERY_ACK ≠ ACTOR_ACK</span></div>
+      <div class="search-box"><input id="traceInput" placeholder="MESSAGE_ID"><button class="btn primary" id="traceBtn" type="button">تتبع</button></div>
+      <div class="code" id="traceOutput" style="margin-top:10px">لا تتبع بعد. HTTP 200 ≠ تنفيذ الممثل.</div>
+    </article>
   </div>
 </section>
 
@@ -144,6 +191,61 @@ table{width:100%;border-collapse:collapse;font-size:11px}th,td{text-align:right;
     <article class="card span4 kpi"><div class="kpi-label">درجة الصحة</div><div class="kpi-value" id="diagScore">—</div><div class="kpi-sub" id="diagState">لم يبدأ التشخيص</div><button class="btn primary" id="diagnoseBtn" style="margin-top:14px">تشخيص شامل الآن</button></article>
     <article class="card span8"><div class="card-head"><h2>الأسباب الجذرية</h2><span class="hint">تشخيص للقراءة فقط</span></div><div class="list" id="rootCauses"><div class="empty">ابدأ التشخيص لعرض الأسباب والإجراء الموصى به.</div></div></article>
     <article class="card span12"><div class="card-head"><h2>الاستمرارية الذاتية</h2><span class="pill" id="continuityBadge">—</span></div><div class="planes" id="continuityServices"></div></article>
+    <article class="card span6"><div class="card-head"><h2>صحة مركز القيادة</h2><span class="hint">HTTP ≠ MessageWorker</span></div><div class="list" id="ccSelfHealth"></div></article>
+    <article class="card span6"><div class="card-head"><h2>صحة المكوّنات المستقلة</h2><span class="hint">TIMEOUT ≠ OFFLINE</span></div><div class="list" id="runtimeHealthDiag"></div></article>
+    <article class="card span12"><div class="card-head"><h2>قوانين التشغيل الملزمة</h2><span class="hint">CORE-CONTRACT · SINGLE-TRUTH · /api/laws</span></div><div class="list" id="diagLaws"></div></article>
+  </div>
+</section>
+
+<section class="view" id="topology">
+  <div class="grid">
+    <article class="card span12"><div class="card-head"><h2>System Topology</h2><span class="hint">Command Center = projection · UNKNOWN stays UNKNOWN · PORT ≠ identity · Storage Authority = existing writers, not HTTP</span></div><div class="service-grid" id="topoNodes"></div></article>
+    <article class="card span12"><div class="card-head"><h2>Integration mesh</h2><span class="hint">CC ↔ C5 ↔ MCP ↔ 9Router ↔ Fabric ↔ factories · no fake INTEGRATED</span></div><div class="planes" id="topoIntegrationPlanes"></div><div class="list" id="topoIntegration"></div></article>
+    <article class="card span7"><div class="card-head"><h2>Canonical chain</h2><span class="hint">declared edges · not a second bus</span></div><div class="list" id="topoEdges"></div></article>
+    <article class="card span5"><div class="card-head"><h2>Deployment truth</h2><span class="hint">PROPOSED ≠ COMMITTED ≠ DEPLOYED</span></div><div class="list" id="topoHeads"></div></article>
+  </div>
+</section>
+<section class="view" id="fabric">
+  <div class="grid">
+    <article class="card span4 kpi"><div class="kpi-label">Fabric worker</div><div class="kpi-value" id="fabricState">—</div><div class="kpi-sub" id="fabricSub">MESSAGE_WORKER.status · no inbox walk</div></article>
+    <article class="card span8"><div class="card-head"><h2>Command Fabric</h2><span class="hint">DELIVERY_ACK ≠ ACTOR_ACK · backlog UNKNOWN unless proven</span></div><div class="list" id="fabricFacts"></div></article>
+    <article class="card span12"><div class="card-head"><h2>Receipts window</h2><span class="hint">bounded 20 · existing ledger</span></div><div class="table-wrap" id="fabricReceipts"></div></article>
+  </div>
+</section>
+<section class="view" id="capabilities">
+  <div class="grid">
+    <article class="card span12"><div class="card-head"><h2>Capability routing</h2><span class="hint">TASK → seat → capability → worker → receipt · no synthetic bind/ACK</span></div><div class="planes" id="capChain"></div></article>
+    <article class="card span6"><div class="card-head"><h2>Keepers / gated / reference</h2><span class="hint">classification ≠ process activation</span></div><div class="list" id="capKeepers"></div></article>
+    <article class="card span6"><div class="card-head"><h2>Providers</h2><span class="hint">provider ≠ core · live probe not on refresh unless engine plane</span></div><div class="list" id="capProviders"></div></article>
+    <article class="card span12"><div class="card-head"><h2>Reachability</h2><span class="hint">ZERO_CANONICAL_ISLAND remains CANDIDATE until WAL chain is proven</span></div><div class="table-wrap" id="capReach"></div></article>
+  </div>
+</section>
+<section class="view" id="factories">
+  <div class="grid">
+    <article class="card span3 kpi"><div class="kpi-label">Estate total</div><div class="kpi-value" id="factFound">—</div><div class="kpi-sub">C8 Wave-06 certified</div></article>
+    <article class="card span3 kpi"><div class="kpi-label">Reachable</div><div class="kpi-value" id="factReachable">—</div><div class="kpi-sub">DISCOVERED ≠ RUNNING</div></article>
+    <article class="card span3 kpi"><div class="kpi-label">Active / executing</div><div class="kpi-value" id="factActive">—</div><div class="kpi-sub" id="factExecSub">executing stays 0 unless proven</div></article>
+    <article class="card span3 kpi"><div class="kpi-label">Healthy / gated</div><div class="kpi-value" id="factHealthy">—</div><div class="kpi-sub" id="factGated">not activated</div></article>
+    <article class="card span12"><div class="card-head"><h2>Canonical factories</h2><span class="hint">PID ≠ ACTIVE · run_all not invoked on refresh</span></div><div class="table-wrap" id="factTable"></div></article>
+    <article class="card span3 kpi"><div class="kpi-label">Copies classified</div><div class="kpi-value" id="copyTotal">—</div><div class="kpi-sub">SAFE_TO_REMOVE_SOURCE=false · no cutover</div></article>
+    <article class="card span3 kpi"><div class="kpi-label">Wired unique</div><div class="kpi-value" id="copyWired">—</div><div class="kpi-sub">false_pass library · not a second CCEE</div></article>
+    <article class="card span3 kpi"><div class="kpi-label">Retained catalog</div><div class="kpi-value" id="copyHeld">—</div><div class="kpi-sub">EXTRACT_BEFORE_DELETE</div></article>
+    <article class="card span3 kpi"><div class="kpi-label">Pass-2 unique</div><div class="kpi-value" id="copyPass2">—</div><div class="kpi-sub">ONE_CANONICAL_TREE</div></article>
+    <article class="card span12"><div class="card-head"><h2>Copy classification</h2><span class="hint">pass-2 is operator class · MATRIX row class is pass-1 auto · git_scan=false · fold-tip provenance only</span></div><div class="table-wrap" id="copyTable"></div></article>
+    <article class="card span12"><div class="card-head"><h2>Wired unique capabilities</h2><span class="hint">PKT-C-001..003 · stdout is never supervisor PASS</span></div><div class="table-wrap" id="copyWiredTable"></div></article>
+    <article class="card span12"><div class="card-head"><h2>50-component estate</h2><span class="hint">Wave-04 map · independent_service counted separately</span></div><div class="table-wrap" id="compTable"></div></article>
+  </div>
+</section>
+<section class="view" id="selfheal">
+  <div class="grid">
+    <article class="card span4 kpi"><div class="kpi-label">Continuity</div><div class="kpi-value" id="healStatus">—</div><div class="kpi-sub">C6 owns writer · C2 projects</div></article>
+    <article class="card span8"><div class="card-head"><h2>Self-heal</h2><span class="hint">Maintain-RAIOS-Online.ps1 not touched</span></div><div class="list" id="healFacts"></div></article>
+    <article class="card span12"><div class="card-head"><h2>Storage classes</h2><span class="hint">no blanket delete · git ≠ event store</span></div><div class="list" id="storageClasses"></div></article>
+  </div>
+</section>
+<section class="view" id="incidents">
+  <div class="grid">
+    <article class="card span12"><div class="card-head"><h2>Incidents / errors</h2><span class="hint">no fabricated severity score · UNKNOWN and STALE preserved</span></div><div class="list" id="incidentList"></div></article>
   </div>
 </section>
 </main>
@@ -151,7 +253,7 @@ table{width:100%;border-collapse:collapse;font-size:11px}th,td{text-align:right;
 </div>
 
 <nav class="mobile-nav">
-<button class="active" data-view="overview">◈<br>الحالة</button><button data-view="chat">✦<br>RAIOS</button><button data-view="search">⌕<br>البحث</button><button data-view="cognitive">◎<br>التعلم</button><button data-view="work">▣<br>العمل</button><button data-view="council">◇<br>المجلس</button><button data-view="diagnostics">⚙<br>الفحص</button>
+<button class="active" data-view="overview">◈<br>الحالة</button><button data-view="chat">✦<br>RAIOS</button><button data-view="search">⌕<br>البحث</button><button data-view="cognitive">◎<br>التعلم</button><button data-view="work">▣<br>العمل</button><button data-view="council">◇<br>مباشر</button><button data-view="diagnostics">⚙<br>الفحص</button><button data-view="topology">⬡<br>طوبولوجيا</button><button data-view="fabric">⇄<br>Fabric</button><button data-view="factories">🏭<br>مصانع</button>
 </nav>
 <div class="toast" id="toast"></div>
 
@@ -159,16 +261,27 @@ table{width:100%;border-collapse:collapse;font-size:11px}th,td{text-align:right;
 (function(){
 'use strict';
 var csrf='', overviewData=null, targets=new Set(['ALL']), boardFull=false, boardSnap=null;
+var councilMembers=[], seatFilter='ALL', lastTrace=null, changeAuth=null, workerHealth=null;
 var conversationId=localStorage.getItem('raiosConversationId')||newId();
 var messages=readMessages();
-var titles={overview:'المشهد التشغيلي',chat:'محادثة RAIOS',search:'البحث والتحقق',cognitive:'التعلم والاستيعاب',work:'العمل والأدلة',council:'المجلس',diagnostics:'التشخيص'};
+var dmPeer=localStorage.getItem('raiosDirectPeer')||'C2';
+var dmTimer=null;
+var titles={overview:'المشهد التشغيلي',chat:'محادثة RAIOS',search:'البحث والتحقق',cognitive:'التعلم والاستيعاب',work:'العمل والأدلة',council:'محادثة مباشرة',diagnostics:'التشخيص',topology:'System Topology',fabric:'Command Fabric',capabilities:'القدرات والمزوّدات',factories:'المصانع والمحركات',selfheal:'الشفاء الذاتي',incidents:'الحوادث'};
 function $(s){return document.querySelector(s)} function $$(s){return Array.from(document.querySelectorAll(s))}
 function esc(v){return String(v==null?'':v).replace(/[&<>"']/g,function(m){return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[m]})}
 function newId(){var id=(crypto.randomUUID?crypto.randomUUID():Date.now()+'-'+Math.random());localStorage.setItem('raiosConversationId',id);return id}
 function readMessages(){try{return JSON.parse(localStorage.getItem('raiosChat')||'[]').slice(-40)}catch(e){return []}}
 function saveMessages(){localStorage.setItem('raiosChat',JSON.stringify(messages.slice(-40)))}
-function klass(s){s=String(s||'').toUpperCase();return /ONLINE|HEALTHY|DONE|PRESENT|PASS|READY_FOR_VALIDATION|AVAILABLE/.test(s)?'ok':/OFFLINE|BLOCKED|FAIL|DEGRADED|CONFLICT|STALE/.test(s)?'bad':'warn'}
+function klass(s){s=String(s||'').toUpperCase();if(s==='ONLINE'||s==='HEALTHY'||s==='DONE'||s==='PRESENT'||s==='PASS'||s==='READY_FOR_VALIDATION'||s==='AVAILABLE'||s==='CURRENT'||s==='FRESH'||s==='EXECUTION_READY'||s==='AUTO_ROUTABLE'||s==='ACTOR_ACK'||s==='CANONICAL_ACTIVE'||s==='CREATED'||s==='ROUTED'||s==='DELIVERED'||s==='DELIVERY_ACK'||s==='VISIBLE'||s==='WIRED'||s==='INFORMED'||s==='BOUND'||s==='CONTROL_PLANE_AND_SEATS_BOUND')return 'ok';if(s==='OFFLINE'||s==='BLOCKED'||s==='FAIL'||s==='DEGRADED'||s==='CONFLICT'||s==='DEAD_LETTER'||s==='LEASE_EXPIRED'||s==='BROKEN'||s==='FAILED'||s==='UNAVAILABLE'||s==='REMOTE_REGISTRY_UNAVAILABLE'||s==='MISSING'||s==='ABSENT')return 'bad';if(s==='UNKNOWN'||s==='STALE'||s==='UNPROVEN'||s==='GATED'||s==='CANONICAL_DORMANT'||s==='REFERENCE_ONLY'||s==='TIMEOUT'||s==='NOTICE'||s==='APPROVAL_REQUIRED'||s==='PARTIAL'||s==='UNBOUND'||s==='CONTROL_PLANE_BOUND_SEATS_UNBOUND')return 'warn';return 'warn'}
 function badge(s){return '<span class="badge '+klass(s)+'">'+esc(s||'UNPROVEN')+'</span>'}
+function shown(v,missing){return (v==null||v==='')?(missing||'UNKNOWN'):v}
+function seatPresentation(m){
+  if(!m)return 'UNKNOWN';
+  if(m.presentation_state)return m.presentation_state;
+  if(m.auto_routable===true)return 'AUTO_ROUTABLE';
+  if(String(m.presence_state||'').toUpperCase()==='ABSENT')return 'OFFLINE';
+  return m.presence_state||m.availability||'UNKNOWN';
+}
 function toast(t){var n=$('#toast');n.textContent=t;n.classList.add('show');setTimeout(function(){n.classList.remove('show')},2600)}
 async function api(url,opt){
   opt=opt||{};opt.headers=Object.assign({},opt.headers||{}, {'Content-Type':'application/json','X-RAIOS-CSRF':csrf});
@@ -184,19 +297,28 @@ function openView(id){
   $$('.nav button,.mobile-nav button').forEach(function(b){b.classList.toggle('active',b.dataset.view===id)});
   $('#pageTitle').textContent=titles[id]||'RAIOS';
   if(id==='chat')renderThread();
+  if(id==='council'){loadDirect().catch(function(e){console.error(e)}); if(dmTimer)clearInterval(dmTimer); dmTimer=setInterval(function(){if($('#council').classList.contains('active'))loadDirect(true).catch(function(){})},4000);}
+  else if(dmTimer){clearInterval(dmTimer);dmTimer=null;}
   if(id==='diagnostics')renderContinuity((((overviewData||{}).cognitive||{}).continuity||{}));
 }
 function renderOverview(o){
-  overviewData=o;var services=o.services||[], online=services.filter(function(x){return x.state==='ONLINE'}).length;
+  overviewData=o;  var services=o.services||[], online=services.filter(function(x){return x.state==='ONLINE'}).length;
+  var unknown=services.filter(function(x){return x.state==='UNKNOWN'||x.probe_state==='TIMEOUT'}).length;
+  var offline=services.filter(function(x){return x.state==='OFFLINE'}).length;
   var loop=((o.cognitive||{}).loop||{}), manager=(loop.manager||{}), latest=((o.cognitive||{}).search_latest||{});
   var managerOnline=manager.alive===true;var total=services.length+1;var live=online+(managerOnline?1:0);var healthy=live===total;
-  $('#healthValue').textContent=healthy?'100':'ATTN';$('#healthSub').textContent=healthy?'كل المكونات الأساسية تعمل':'توجد فجوة تحتاج معالجة';
+  var healthLabel=healthy?'ONLINE':(offline?'DEGRADED':(unknown?'UNKNOWN':'DEGRADED'));
+  $('#healthValue').textContent=healthLabel;$('#healthSub').textContent=healthy?'المكونات الأساسية ONLINE':(unknown&&!offline?'UNKNOWN ≠ OFFLINE · قياس ناقص':'توجد فجوة · ليست صحة ملفّقة');
   $('#servicesValue').textContent=live+'/'+total;$('#tasksValue').textContent=(o.tasks||{}).in_progress||0;
   $('#tasksSub').textContent=((o.tasks||{}).in_progress||0)+' جارٍ · '+((o.tasks||{}).ready||0)+' جاهزة · '+((o.tasks||{}).blocked||0)+' محجوبة · NOW '+(((o.tasks||{}).now||[]).length);
   $('#evidenceValue').textContent=latest.count==null?'—':latest.count;$('#evidenceSub').textContent=((latest.verification||{}).status||'لا بحث حديث');
   $('#headShort').textContent='HEAD '+String(o.canonical_head||'—').slice(0,10);
   $('#servicesGrid').innerHTML=services.map(function(x){
-    var latency=(x.detail||{}).latency_ms;return '<div class="service"><div class="service-top"><strong>'+esc(x.name)+'</strong>'+badge(x.state)+'</div><small>127.0.0.1:'+esc(x.port)+(latency?' · '+esc(latency)+'ms':'')+'</small><div class="bar"><i style="width:'+(x.state==='ONLINE'?100:18)+'%;background:'+(x.state==='ONLINE'?'':'var(--red)')+'"></i></div></div>'
+    var latency=(x.detail||{}).latency_ms;var extra='';
+    if(x.name==='UniversalMCP'){
+      extra=((x.detail||{}).tool_count!=null?' · '+esc(x.detail.tool_count)+' tools':'')+((x.detail||{}).head_source?' · '+esc(x.detail.head_source):'');
+    }
+    return '<div class="service"><div class="service-top"><strong>'+esc(x.name)+'</strong>'+badge(x.state)+'</div><small>127.0.0.1:'+esc(x.port)+extra+(latency?' · '+esc(latency)+'ms':'')+'</small><div class="bar"><i style="width:'+(x.state==='ONLINE'?100:18)+'%;background:'+(x.state==='ONLINE'?'':'var(--red)')+'"></i></div></div>'
   }).join('')+'<div class="service"><div class="service-top"><strong>Live Manager</strong>'+badge(managerOnline?'ONLINE':(manager.reason||'UNPROVEN'))+'</div><small>Heartbeat · '+esc(manager.age_seconds==null?'—':manager.age_seconds+'s')+'</small><div class="bar"><i style="width:'+(managerOnline?100:18)+'%;background:'+(managerOnline?'':'var(--red)')+'"></i></div></div>';
   var attention=services.filter(function(x){return x.state!=='ONLINE'}).map(function(x){return {name:x.name,detail:x.state}});
   if(!managerOnline)attention.push({name:'Live Manager',detail:manager.reason||'UNPROVEN'});
@@ -214,22 +336,90 @@ function renderOverview(o){
   $('#goalsList').innerHTML=goals.map(function(g){return '<div class="list-row"><div class="grow"><strong>'+esc(g.title||g.goal_id)+'</strong><small>'+esc(g.kind||'')+' · '+esc(g.goal_id||'')+'</small></div>'+badge(g.active?'ACTIVE':(g.status||'—'))+'</div>'}).join('')||'<div class="empty">لا هدف مسمّى على TASKS</div>';
   var planes=loop.planes||{};$('#overviewPlanes').innerHTML=['retrieve','assimilate','continuous_manager'].map(function(k){return '<div class="plane"><span>'+esc(k)+'</span><strong>'+badge(planes[k]===true?'ONLINE':'UNPROVEN')+'</strong></div>'}).join('');
   $('#liveText').textContent=healthy?'متصل ومستقر':'متصل · يحتاج انتباه';$('#sideDot').style.background=healthy?'var(--green)':'var(--amber)';
-  $('#lastSync').textContent=new Date(o.generated_at).toLocaleTimeString('ar');
+  $('#lastSync').textContent=new Date(o.generated_at).toLocaleTimeString('ar')+' · poll 20s';
   renderCognitive(o.cognitive||{});renderContinuity((o.cognitive||{}).continuity||{});
+  renderModelFabric(o.models||{});
+  renderChangeAuthority(o.change_authority||changeAuth||{});
+  renderC5Truth(o,councilMembers);
+  renderRuntimeHealth(o.runtime_health);
+  renderBlockers(o.operational_blockers);
+  renderDirtyClass();
+  renderOperatorLaws(o.operator_laws);
+  renderHangingWork((o.tasks||{}).hanging_work);
 }
 function renderThread(){
   var box=$('#thread');if(!messages.length){box.innerHTML='<div class="message ai system"><div class="who">RAIOS</div><div class="bubble">أنا جاهز. سأبحث في الأدلة المحلية أولًا، أوضح حدود الثقة، ثم أستوعب الناتج كـ DISCOVERED دون ترقية تلقائية.</div></div>';return}
   box.innerHTML=messages.map(function(m){return '<div class="message '+esc(m.role)+'"><div class="who">'+esc(m.who)+' · '+esc(m.time||'')+'</div><div class="bubble">'+esc(m.text)+'</div>'+(m.meta?'<div class="message-meta">'+m.meta.map(function(x){return badge(x)}).join('')+'</div>':'')+'</div>'}).join('');box.scrollTop=box.scrollHeight
 }
 function addMessage(role,who,text,meta){messages.push({role:role,who:who,text:text,time:new Date().toLocaleTimeString('ar',{hour:'2-digit',minute:'2-digit'}),meta:meta||[]});saveMessages();renderThread()}
+function dmPhaseLabel(p){p=String(p||'').toUpperCase();return ({READ:'قُرئ',REPLIED:'رُدّ',DELIVERED:'وُصل',SENT:'أُرسل',WAITING_PEER:'بانتظار الطرف',QUEUED:'في الانتظار'})[p]||p||'UNPROVEN'}
+function dmTick(m){
+  if(!m)return '○';
+  if(m.kind==='REPLY' || String(m.phase||'').toUpperCase()==='REPLIED') return '✓✓';
+  if(m.actor_ack) return '✓✓';
+  if(m.delivery_ack || String(m.phase||'').toUpperCase()==='DELIVERED') return '✓';
+  if(String(m.phase||'').toUpperCase()==='WAITING_PEER') return '◷';
+  return '○';
+}
+function renderDmPeers(listing){
+  var box=$('#dmPeers'); if(!box)return;
+  var peers=(listing&&listing.peers)||[];
+  $('#dmOnlineHint').textContent=(listing&&listing.online_count||0)+' مربوط حي';
+  box.innerHTML=peers.filter(function(p){return p.peer!=='C5'}).map(function(p){
+    var system=p.kind==='SYSTEM'||p.peer==='RAIOS';
+    var last=p.last_message||{}; var preview=last.text?String(last.text).slice(0,42): (p.online?(system?'النظام جاهز':'متاح للمحادثة'):'غير مربوط حي');
+    return '<button type="button" class="dm-peer'+(p.peer===dmPeer?' active':'')+'" data-peer="'+esc(p.peer)+'" data-kind="'+esc(p.kind||'SEAT')+'" aria-label="'+esc(p.peer)+'"><i class="dot '+(p.online?'on':'off')+'"></i><span class="meta"><strong>'+esc(system?'RAIOS · النظام':p.peer)+(p.unread_waiting_interaction?' · ينتظر تفاعلاً':'')+'</strong><small>'+esc(p.online?(preview||'متاح للمحادثة'):'غير مربوط حي · ليست قراءة')+'</small></span>'+badge(system?'SYSTEM':(p.online?'ONLINE':'WAITING'))+'</button>';
+  }).join('')||'<div class="empty">لا مقاعد</div>';
+  box.querySelectorAll('.dm-peer').forEach(function(b){b.addEventListener('click',function(){
+    if(b.dataset.kind==='SYSTEM'||b.dataset.peer==='RAIOS'){openView('chat');return;}
+    dmPeer=b.dataset.peer;localStorage.setItem('raiosDirectPeer',dmPeer);loadDirect().catch(function(e){console.error(e)})
+  })});
+}
+function renderDmThread(thread){
+  var box=$('#dmThread'); if(!box)return;
+  var peer=(thread&&thread.peer)||{};
+  $('#dmTitle').textContent='مباشر · '+(peer.peer||dmPeer);
+  $('#dmStatus').textContent=peer.online?'مربوط حي — ✓ وصول الصندوق · ✓✓ قراءة الممثل':'غير مربوط حي — الإرسال ينتظر الطرف ولا يُعد استلاماً';
+  $('#dmPeerBadge').textContent=peer.online?'ONLINE':(peer.discovery_state||'WAITING_PEER');
+  $('#dmPeerBadge').className='pill '+(peer.online?'ok':'warn');
+  var msgs=(thread&&thread.messages)||[];
+  if(!msgs.length){box.innerHTML='<div class="message ai system"><div class="who">RAIOS</div><div class="bubble">محادثة واحد لواحد مثل واتساب على النسيج القائم. ○ أُرسل · ✓ وصل الصندوق · ✓✓ قُرئ/رُدّ. إذاعة المجلس بالأسفل ليست هذه المحادثة.</div></div>';return;}
+  box.innerHTML=msgs.map(function(m){
+    var mine=m.from==='C1';
+    return '<div class="message '+(mine?'user':'ai')+'"><div class="who">'+esc(m.from)+' · '+esc((m.created_at||'').slice(11,16))+' · '+esc(dmTick(m))+'</div><div class="bubble">'+esc(m.text)+'</div><div class="message-meta">'+badge(dmPhaseLabel(m.phase))+(m.interaction?badge('INTERACTION'):'')+(m.message_id?badge(String(m.message_id).slice(0,18)):'')+'</div></div>';
+  }).join('');
+  box.scrollTop=box.scrollHeight;
+}
+async function loadDirect(silent){
+  var listing=await api('/api/direct-conversations');
+  renderDmPeers(listing);
+  var thread=await api('/api/direct-conversations/'+encodeURIComponent(dmPeer));
+  renderDmThread(thread);
+}
+async function sendDirect(){
+  var input=$('#dmInput'),text=input.value.trim(); if(!text||!dmPeer)return;
+  var btn=$('#dmSend'); btn.disabled=true;
+  try{
+    var r=await api('/api/direct-conversations/'+encodeURIComponent(dmPeer)+'/messages',{method:'POST',body:JSON.stringify({text:text})});
+    input.value='';
+    renderDmThread(await api('/api/direct-conversations/'+encodeURIComponent(dmPeer)));
+    renderDmPeers(await api('/api/direct-conversations'));
+    if(r.interaction) toast('تم التفاعل');
+    else if(r.message&&r.message.phase==='WAITING_PEER') toast('المقعد غير حي — الرسالة منتظرة وليست استلاماً');
+    else if(r.message&&r.message.phase==='DELIVERED') toast('وصلت الصندوق. القراءة تحتاج ✓✓ ACTOR_ACK');
+    else toast('أُرسلت. القراءة تحتاج ACTOR_ACK');
+  }catch(e){toast('تعذر الإرسال المباشر')}
+  finally{btn.disabled=false}
+}
 async function sendChat(){
   var input=$('#chatInput'),text=input.value.trim();if(!text)return;var btn=$('#sendChat');addMessage('user','C1',text);input.value='';btn.disabled=true;btn.innerHTML='<i class="spinner"></i>';
   try{
     var r=await api('/api/chat',{method:'POST',body:JSON.stringify({text:text,conversation_id:conversationId})});
     var g=r.grounding||{},a=r.assimilated||{},v=g.verification||{};
-    addMessage('ai','RAIOS · '+(r.model||'C5'),r.response||r.content||'لا يوجد رد',[v.status||'UNPROVEN',a.review_state||'NOT_ASSIMILATED']);
-    $('#chatModel').textContent=r.model||'—';$('#chatGrounding').textContent=(g.count||0)+' دليل · '+(g.latency_ms||0)+'ms';
-    $('#chatVerification').textContent=(v.status||'UNPROVEN')+' · '+(v.source_count||0)+' مصادر';
+    addMessage('ai','RAIOS · '+(r.model||'C5'),r.response||r.content||'لا يوجد رد',[r.execution_status||'C5_OK',v.status||'UNPROVEN',a.review_state||'NOT_ASSIMILATED']);
+    $('#chatModel').textContent=r.model||'—';
+    $('#chatGrounding').textContent=(g.count||0)+' دليل · '+(r.latency_ms||g.latency_ms||0)+'ms · '+esc(r.route||'C5_/v1/chat');
+    $('#chatVerification').textContent=(v.status||'UNPROVEN')+' · req '+(r.request_id||'—').slice(0,8);
     $('#chatAssimilation').textContent=(a.review_state||'UNPROVEN')+(a.skill_candidate?' · '+a.skill_candidate:'');
   }catch(e){addMessage('system','SYSTEM','تعذر إكمال الجولة: '+e.message,['ERROR'])}finally{btn.disabled=false;btn.textContent='إرسال';input.focus()}
 }
@@ -255,8 +445,10 @@ function renderCognitive(c){
   $('#learningLaws').innerHTML=(loop.law||[]).map(function(x){return '<div class="list-row"><div class="grow"><strong>'+esc(x)+'</strong><small>Enforced boundary</small></div>'+badge('ACTIVE')+'</div>'}).join('');
 }
 function renderEngines(e){
-  var rows=e.engines||[], live=e.live_ids||[], drown=e.drowning_controls||{};
-  $('#engineStats').textContent='حي '+(live.length)+' · جرد ≠ تنفيذ · حضور '+(drown.presence_bytes==null?'—':drown.presence_bytes)+' بايت · RapidFuzz موجود · datasketch مرشح غير مثبت';
+  var rows=e.engines||[], live=e.live_ids||[], drown=e.drowning_controls||{}, last=e.last_receipts||{};
+  var ok=last.mind_fill_ok===true || (last.mind_fill_ok==null && !!last.mind_fill_ts);
+  var mf=ok?('امتصاص '+(last.mind_fill_files!=null?last.mind_fill_files:'')+' نجح — الإيصال لا الطرفية'):'إيصال امتصاص غير مثبت';
+  $('#engineStats').textContent='حي '+(live.length)+' · '+mf+' · جرد ≠ تنفيذ · حضور '+(drown.presence_bytes==null?'—':drown.presence_bytes)+' بايت · RapidFuzz موجود · datasketch مرشح غير مثبت';
   var keep=rows.filter(function(r){return r.live_keeper});
   var rest=rows.filter(function(r){return !r.live_keeper}).slice(0,8);
   $('#engineList').innerHTML=keep.concat(rest).map(function(r){
@@ -270,11 +462,11 @@ function renderContinuity(c){
 }
 function renderCouncilLite(lite){
   var rows=lite.seats||[], live=(lite.auto_routable||[]).length;
-  $('#councilSummary').textContent='المجلس: '+(rows.length)+' مسجّل · '+live+' مربوط حي · عاملون C1/C2/C8';
+  $('#councilSummary').textContent='المجلس: '+(rows.length)+' مسجّل · '+live+' AUTO_ROUTABLE · عاملون C1/C2/C8';
   if(!rows.length){$('#seatList').innerHTML='<div class="empty">لا توجد مقاعد في SEAT-MAP.</div>';return}
   $('#seatList').innerHTML=rows.map(function(r){
-    var st=r.auto_routable?'LIVE_BOUND':(r.present?'PRESENT_UNBOUND':(r.discovery_state||'UNBOUND'));
-    return '<div class="list-row"><div class="grow"><strong>'+esc(r.seat)+' · '+esc(r.actor_role||'')+'</strong><small>'+esc(st)+' · '+esc(r.actor_id||r.origin_instance||'—')+'</small></div>'+badge(r.auto_routable?'ONLINE':(r.present?'PRESENT':'AWAY'))+'</div>'
+    var st=r.auto_routable?'AUTO_ROUTABLE':(r.present?'PRESENT_UNBOUND':(r.discovery_state||'UNBOUND'));
+    return '<div class="list-row"><div class="grow"><strong>'+esc(r.seat)+' · '+esc(r.actor_role||'')+'</strong><small>'+esc(st)+' · '+esc(r.actor_id||r.origin_instance||'—')+'</small></div>'+badge(st)+'</div>'
   }).join('');
 }
 function availLabel(s){s=String(s||'').toUpperCase();return {AVAILABLE:'متاح',BUSY:'مشغول',OFFLINE:'غير متاح',UNKNOWN:'غير مثبت',ONLINE:'حي'}[s]||s}
@@ -287,7 +479,7 @@ function renderAvailability(a){
     var live=r.execution_ready?'جاهز للتنفيذ':'غير مربوط حي';
     var avail=availLabel(r.availability);
     var detail=avail+' · '+live+' · '+(r.work_phase||'—')+' · '+taskText;
-    return '<div class="list-row"><div class="grow"><strong>'+esc(r.seat)+' · '+esc(r.presence||'AWAY')+'</strong><small>'+esc(detail)+'</small></div>'+badge(r.execution_ready?'ONLINE':(r.availability||'UNKNOWN'))+'</div>'
+    return '<div class="list-row"><div class="grow"><strong>'+esc(r.seat)+' · '+esc(r.presence||'AWAY')+'</strong><small>'+esc(detail)+'</small></div>'+badge(r.execution_ready?'EXECUTION_READY':(r.availability||'UNKNOWN'))+'</div>'
   }).join('')||'<div class="empty">لا توجد بيانات أعضاء.</div>';
   $('#workerList').innerHTML=workers.map(function(r){
     var detail=(r.kind||'WORKER')+' · '+(r.reason||'—')+' · heartbeat='+(r.heartbeat||'—');
@@ -332,21 +524,356 @@ function renderResources(){
 function renderWorkBoard(){
   var b=boardSnap||{now:[],tasks:[],summary:{}};
   var sm=b.summary||{}, now=b.now||[], all=b.tasks||[];
-  var rows=boardFull?all:now;
+  var byId={};
+  (((overviewData||{}).tasks||{}).operator_tasks||[]).forEach(function(t){if(t&&t.id)byId[t.id]=t});
+  var rows=(boardFull?all:now).map(function(t){
+    var extra=byId[t.id]||{};
+    return Object.assign({},t,{operator_bucket:extra.operator_bucket||t.operator_bucket||t.status,assigned_to:t.assigned_to||t.claimed_by||extra.assigned_to});
+  });
   $('#tasksTable').innerHTML=table(rows,[
-    ['status','الحالة'],['id','المهمة'],['title','العنوان'],['owner','المالك'],
-    ['priority','الأولوية'],['blocker','الحاجز'],['next_checkpoint','الخطوة التالية']
+    ['operator_bucket','BUCKET'],['status','الحالة'],['id','المهمة'],['title','العنوان'],['owner','المالك'],
+    ['assigned_to','ASSIGNED'],['priority','الأولوية'],['blocker','الحاجز'],['next_checkpoint','الخطوة التالية']
   ]);
-  $('#workStats').textContent=(now.length)+' NOW · دفتر '+(b.ledger_total||all.length)+' · جارٍ '+(sm.IN_PROGRESS||0)+' · محجوب '+(sm.BLOCKED||0)+' · جاهز '+(sm.READY||0);
+  var ob=(overviewData&&overviewData.tasks&&overviewData.tasks.operator_buckets)||{};
+  $('#workStats').textContent=(now.length)+' NOW · دفتر '+(b.ledger_total||all.length)+' · READY '+(ob.READY||sm.READY||0)+' · ASSIGNED '+(ob.ASSIGNED||0)+' · RUNNING '+(ob.RUNNING||0)+' · BLOCKED '+(ob.BLOCKED||sm.BLOCKED||0)+' · WAITING '+(ob.WAITING||0)+' · COMPLETE '+(ob.COMPLETE||0)+' · FAILED '+(ob.FAILED||0);
   var toggle=$('#boardToggle'); if(toggle) toggle.textContent=boardFull?'عرض NOW فقط':'عرض الدفتر كاملاً';
 }
+function renderModelFabric(m){
+  var el=$('#modelFabric'); if(!el)return;
+  var probe=shown(m.probe_state,'UNKNOWN');
+  var inv=shown(m.inventory_state, probe==='TIMEOUT'?'UNKNOWN':'UNKNOWN');
+  el.innerHTML=
+    '<div class="list-row"><div class="grow"><strong>probe</strong><small>timeout_ne_empty_inventory='+esc(m.timeout_ne_empty_inventory)+' · TIMEOUT ≠ MODELS=0</small></div>'+badge(probe)+'</div>'+
+    '<div class="list-row"><div class="grow"><strong>inventory_state</strong><small>count '+esc(m.count==null?'NULL':m.count)+' · TIMEOUT count is null · TIMEOUT ≠ MODELS=0</small></div>'+badge(inv)+'</div>'+
+    '<div class="list-row"><div class="grow"><strong>local_ollama</strong><small>REMOTE_REGISTRY_NE_LOCAL_OLLAMA='+esc(m.REMOTE_REGISTRY_NE_LOCAL_OLLAMA)+'</small></div>'+badge(shown(m.local_ollama_state,'UNKNOWN'))+'</div>'+
+    '<div class="list-row"><div class="grow"><strong>remote_registry</strong><small>'+esc(m.model_fabric_error||'—')+'</small></div>'+badge(shown(m.remote_registry_state,'UNKNOWN'))+'</div>'+
+    '<div class="list-row"><div class="grow"><strong>fabric_ready</strong><small>qwen_pull_blocks_command_center='+esc(m.qwen_pull_blocks_command_center)+'</small></div>'+badge(shown(m.fabric_ready,'UNKNOWN'))+'</div>';
+}
+function renderChangeAuthority(doc){
+  var el=$('#changeAuthority'); if(!el)return;
+  changeAuth=doc||{};
+  el.innerHTML=
+    '<div class="list-row"><div class="grow"><strong>'+esc(shown(doc.canonical_branch))+'</strong><small>HEAD '+esc(String(doc.canonical_head||'UNKNOWN').slice(0,12))+'</small></div>'+badge(shown(doc.state,'UNKNOWN'))+'</div>'+
+    '<div class="list-row"><div class="grow"><strong>approval '+esc(shown(doc.approval_state,'UNKNOWN'))+'</strong><small>task '+esc(shown(doc.task_id))+' · base '+esc(String(doc.base_head||'UNKNOWN').slice(0,12))+'</small></div>'+badge(shown(doc.promotion_state,'READ_ONLY_NO_AUTO_PROMOTE'))+'</div>'+
+    '<div class="list-row"><div class="grow"><strong>staged '+esc(shown(doc.staged_diff_sha256))+'</strong><small>lease '+esc(shown(doc.lease))+' · expiry '+esc(shown(doc.expiry))+'</small></div>'+badge(doc.promotion===false?'NO_AUTO_PROMOTE':'UNKNOWN')+'</div>'+
+    '<div class="list-row"><div class="grow"><strong>PROPOSED ≠ COMMITTED ≠ DEPLOYED</strong><small>auto_approval='+esc(doc.auto_approval)+' · C1 remains authority</small></div>'+badge('READ_ONLY')+'</div>';
+}
+function renderRuntimeHealth(h){
+  var html=function(items){
+    return (items||[]).map(function(c){
+      return '<div class="list-row"><div class="grow"><strong>'+esc(c.name)+'</strong><small>'+esc(c.kind||'')+' · unknown_ne_offline='+esc(c.unknown_ne_offline)+'</small></div>'+badge(shown(c.state,'UNKNOWN'))+'</div>'
+    }).join('')||'<div class="empty">UNKNOWN runtime health</div>';
+  };
+  var el=$('#runtimeHealth'); if(el) el.innerHTML=html((h||{}).components);
+  var d=$('#runtimeHealthDiag'); if(d) d.innerHTML=html((h||{}).components);
+}
+function renderBlockers(doc, extra){
+  var el=$('#blockerList'); if(!el)return;
+  var items=((doc&&doc.items)||[]).concat((extra&&extra.items)||[]);
+  var seen={}; var uniq=[];
+  items.forEach(function(x){
+    var k=(x.BLOCKER_ID||x.code||'')+'|'+(x.seat||x.surface||x.TARGET||'');
+    if(seen[k])return; seen[k]=true; uniq.push(x);
+  });
+  el.innerHTML=uniq.length?uniq.map(function(x){
+    return '<div class="list-row"><div class="grow"><strong>'+esc(x.BLOCKER_ID||x.code)+'</strong><small>'+esc(x.TYPE||x.code)+' · '+esc(x.TARGET||x.seat||x.surface||'')+' · '+esc(x.STATUS||x.PROVIDER||'')+'</small></div>'+badge(x.code||'BLOCKER')+'</div>'
+  }).join():'<div class="empty">لا حاجز مثبت سوى السجل الخارجي إن وُجد</div>';
+}
+function renderC5Truth(o,members){
+  var el=$('#c5Truth'); if(!el)return;
+  var svc=(o.services||[]).filter(function(x){return x.name==='C5'})[0]||{};
+  var seat=(members||[]).filter(function(x){return x.seat==='C5'})[0]||{};
+  el.innerHTML=
+    '<div class="list-row"><div class="grow"><strong>C5 runtime</strong><small>port 8766 · probe '+esc(shown(svc.probe_state,svc.state))+'</small></div>'+badge(shown(svc.state,'UNKNOWN'))+'</div>'+
+    '<div class="list-row"><div class="grow"><strong>C5 seat</strong><small>'+esc(seatPresentation(seat))+' · actor '+esc(shown(seat.actor_id,'NOT_BOUND'))+'</small></div>'+badge(seatPresentation(seat))+'</div>'+
+    '<div class="list-row"><div class="grow"><strong>law</strong><small>C5_RUNTIME_NE_SEAT_PRESENCE</small></div>'+badge('DISTINCT')+'</div>';
+}
+function renderDirtyClass(){
+  var el=$('#dirtyClass'); if(!el)return;
+  var rows=[['actor_routing.py','FOREIGN-ACTIVE'],['council_board.py','INTEGRATE'],['index.html','INTEGRATE'],['engine_plane.py','KEEP/PROMOTE'],['task_actions.py','KEEP/PROMOTE'],['test_client_activity.py','KEEP/PROMOTE'],['council_board.py.tmp-c3','STALE/SUPERSEDED'],['operational_projection.py','KEEP/PROMOTE']];
+  el.innerHTML=rows.map(function(r){return '<div class="list-row"><div class="grow"><strong>'+esc(r[0])+'</strong><small>WAVE-02 classification · not live git scan</small></div>'+badge(r[1])+'</div>'}).join('');
+}
+function renderOperatorLaws(doc){
+  doc=doc||{};
+  var html=(doc.laws||[]).slice(0,16).map(function(l){
+    return '<div class="list-row"><div class="grow"><strong>'+esc(l.id)+'</strong><small>'+esc(l.ar||l.en||'')+'</small></div>'+badge(doc.chat_only===false?'SYSTEM':'CHAT')+'</div>';
+  }).join('')||'<div class="empty">UNPROVEN laws</div>';
+  var a=$('#operatorLaws'); if(a) a.innerHTML=html;
+  var d=$('#diagLaws'); if(d) d.innerHTML=html;
+}
+function renderHangingWork(h){
+  h=h||{};
+  var items=h.items||[];
+  var html=items.length?items.slice(0,12).map(function(x){
+    return '<div class="list-row"><div class="grow"><strong>'+esc(x.id)+'</strong><small>'+esc(x.claimed_by||'UNCLAIMED')+(x.blocker?' · '+esc(x.blocker):'')+(x.stale?' · STALE':'')+'</small></div>'+badge(x.status)+'</div>';
+  }).join():'<div class="empty">لا عمل معلّق في الشريحة</div>';
+  var a=$('#hangingWork'); if(a) a.innerHTML='<div class="list-row"><div class="grow"><strong>open '+esc(h.open_count||0)+'</strong><small>stale '+esc((h.stale_in_progress||[]).length)+' · READY بلا مالك '+esc(h.ready_unclaimed_count||0)+'</small></div>'+badge(h.system_informed?'INFORMED':'UNPROVEN')+'</div>'+html;
+  var b=$('#hangingWorkBoard'); if(b) b.innerHTML=a?a.innerHTML:html;
+}
+function renderIntegration(mesh){
+  mesh=mesh||{};
+  var planesHtml=(mesh.links||[]).slice(0,8).map(function(x){
+    return '<div class="plane"><span>'+esc(x.name)+'</span><strong>'+badge(shown(x.state))+'</strong></div>';
+  }).join('');
+  var listHtml=(mesh.links||[]).map(function(x){
+    return '<div class="list-row"><div class="grow"><strong>'+esc(x.name)+'</strong><small>'+esc(x.role||'')+(x.port?' · :'+esc(x.port):'')+' · '+esc(x.probe||'')+'</small></div>'+badge(shown(x.state))+'</div>';
+  }).join('')||'<div class="empty">UNPROVEN mesh</div>';
+  listHtml='<div class="list-row"><div class="grow"><strong>overall</strong><small>fully_integrated='+esc(mesh.fully_integrated)+' · fake_integrated='+esc(mesh.fake_integrated)+' · live_bound='+esc(mesh.live_bound_count)+' · actor_ack_proven='+esc(mesh.actor_ack_proven)+'</small></div>'+badge(shown(mesh.overall))+'</div>'+listHtml;
+  var p=$('#integrationPlanes'); if(p) p.innerHTML=planesHtml;
+  var l=$('#integrationLinks'); if(l) l.innerHTML=listHtml;
+  var tp=$('#topoIntegrationPlanes'); if(tp) tp.innerHTML=planesHtml;
+  var tl=$('#topoIntegration'); if(tl) tl.innerHTML=listHtml;
+}
+function renderTopology(t){
+  t=t||{};
+  var core=((overviewData||{}).services||[]).map(function(x){
+    return {name:x.name,state:x.state,kind:'RUNTIME_SERVICE',port:x.port,probe:x.probe||'HTTP',detail:''};
+  });
+  var nodes=core.concat(t.nodes||[]);
+  var el=$('#topoNodes'); if(el) el.innerHTML=nodes.map(function(x){
+    var st=String(x.state||'UNKNOWN').toUpperCase();
+    var bar=st==='ONLINE'?100:18;
+    var col=st==='ONLINE'?'':(st==='UNKNOWN'||st==='STALE'?'var(--amber)':'var(--red)');
+    return '<div class="service"><div class="service-top"><strong>'+esc(x.name)+'</strong>'+badge(x.state||'UNKNOWN')+'</div><small>'+esc(x.kind||'')+' · probe '+esc(x.probe||'NONE')+(x.port?' · :'+esc(x.port):'')+' · '+esc(x.detail||x.authority||'')+'</small><div class="bar"><i style="width:'+bar+'%;background:'+col+'"></i></div></div>'
+  }).join('')||'<div class="empty">UNKNOWN topology</div>';
+  var ed=$('#topoEdges'); if(ed) ed.innerHTML=(t.edges||[]).map(function(e){
+    return '<div class="list-row"><div class="grow"><strong>'+esc(e.from)+' → '+esc(e.to)+'</strong><small>'+esc(e.class)+'</small></div>'+badge(e.class)+'</div>'
+  }).join('')||'<div class="empty">no edges</div>';
+  var h=t.heads||{}; var ct=t.current_truth||{};
+  var ch=ct.canonical_head||{}; var dh=ct.deployed_head||{}; var rh=ct.runtime_head||{}; var oh=ct.observed_head||{};
+  var hd=$('#topoHeads'); if(hd) hd.innerHTML=
+    '<div class="list-row"><div class="grow"><strong>canonical_head</strong><small>'+esc(shown(ch.value||t.canonical_head||h.CANONICAL_HEAD))+'</small></div>'+badge(shown(t.canonical_branch))+'</div>'+
+    '<div class="list-row"><div class="grow"><strong>deployed_head</strong><small>'+esc(shown(dh.value||h.DEPLOYED_HEAD))+'</small></div>'+badge((h.drift||[]).length?'DRIFT':'ALIGNED')+'</div>'+
+    '<div class="list-row"><div class="grow"><strong>runtime_head</strong><small>'+esc(shown(rh.value||h.RUNTIME_HEAD))+'</small></div>'+badge(ct.c2_overlay_deployed?'C2_OVERLAY':'GIT_BASE')+'</div>'+
+    '<div class="list-row"><div class="grow"><strong>observed_head</strong><small>'+esc(shown(oh.value||h.ACTOR_OBSERVED_HEAD))+'</small></div>'+badge(ct.CURRENT_json_absent?'CURRENT.json ABSENT':'CURRENT.json')+'</div>'+
+    '<div class="list-row"><div class="grow"><strong>projection_ne_authority</strong><small>fake_online='+esc(t.fake_online)+' · generic_head_omitted='+esc(ct.generic_head_omitted)+'</small></div>'+badge('READ_ONLY')+'</div>';
+}
+function renderFabric(f){
+  f=f||{};
+  var st=$('#fabricState'); if(st) st.textContent=shown(f.worker_state);
+  var sub=$('#fabricSub'); if(sub) sub.textContent='inbox_scanned='+esc(f.inbox_files_scanned)+' · synthetic_ack='+esc(f.synthetic_ack);
+  var el=$('#fabricFacts'); if(el) el.innerHTML=
+    ['worker_id','thread_alive','heartbeat_current','workflow_enabled','pending','delivery','ack','dead_letter','orphan_deliveries','backlog','last_error'].map(function(k){
+      return '<div class="list-row"><div class="grow"><strong>'+esc(k)+'</strong><small>UNKNOWN unless proven</small></div>'+badge(shown(f[k]))+'</div>'
+    }).join('');
+  var rec=$('#fabricReceipts'); if(rec) rec.innerHTML=table(f.receipts_recent,[['name','RECEIPT'],['bytes','BYTES'],['path','PATH']]);
+}
+function renderCapabilities(c, reach){
+  c=c||{};
+  var ch=$('#capChain'); if(ch) ch.innerHTML=(c.chain||[]).map(function(k){return '<div class="plane"><span>step</span><strong>'+esc(k)+'</strong></div>'}).join('');
+  var rows=(c.keepers||[]).concat(c.gated||[]).concat(c.reference_only||[]);
+  var k=$('#capKeepers'); if(k) k.innerHTML=rows.map(function(r){
+    return '<div class="list-row"><div class="grow"><strong>'+esc(r.id)+'</strong><small>activated='+esc(r.activated_this_wave)+' · '+esc(r.activation_mode||r.terminal_reason||r.role)+'</small></div>'+badge(r.role)+'</div>'
+  }).join('')||'<div class="empty">UNKNOWN capabilities</div>';
+  var p=$('#capProviders'); if(p){
+    var prov=c.providers_declared||[];
+    p.innerHTML=prov.slice(0,16).map(function(r){
+      return '<div class="list-row"><div class="grow"><strong>'+esc(r.PROVIDER||r.CAPABILITY)+'</strong><small>'+esc(r.source||'')+' · live_probe='+esc(r.live_probe)+'</small></div>'+badge(shown(r.HEALTH,'UNKNOWN'))+'</div>'
+    }).join('')||'<div class="empty">declared providers UNKNOWN until probed</div>';
+  }
+  var rch=$('#capReach'); if(rch) rch.innerHTML=table((reach&&reach.edges)||[],[['id','ID'],['kind','KIND'],['inbound','IN'],['outbound','OUT'],['terminal_reason','TERMINAL'],['live_chain','CHAIN']]);
+}
+function renderCopyEstate(ce){
+  ce=ce||{};
+  var set=function(id,v){var n=$(id); if(n) n.textContent=v==null?'—':v};
+  set('#copyTotal', ce.copies_total!=null?ce.copies_total:(ce.copies||[]).length);
+  set('#copyWired', (ce.capabilities_wired||[]).length);
+  set('#copyHeld', (ce.capabilities_retained||[]).length);
+  var p2=ce.copy_pass2||{};
+  set('#copyPass2', p2.UNIQUE_VALUE_CANDIDATE!=null?p2.UNIQUE_VALUE_CANDIDATE:'—');
+  var ct=$('#copyTable'); if(ct) ct.innerHTML=table(ce.copies||[],[['branch','COPY'],['kind','KIND'],['classification','CLASS'],['unique_commit_count','UNIQUE'],['extraction_required_now','EXTRACT NOW'],['SAFE_TO_REMOVE_SOURCE','SAFE REMOVE']]);
+  var wt=$('#copyWiredTable'); if(wt) wt.innerHTML=table(ce.capabilities_wired||[],[['id','ID'],['symbol','SYMBOL'],['packet','PACKET'],['wire_state','WIRE'],['canonical_location','CANONICAL']]);
+}
+function renderFactories(e){
+  e=e||{}; var c8=e.c8_wave06||{};
+  var set=function(id,v){var n=$(id); if(n) n.textContent=v==null?'—':v};
+  set('#factFound', c8.FACTORY_COMPONENTS_TOTAL!=null?c8.FACTORY_COMPONENTS_TOTAL:e.wave04_total);
+  set('#factReachable', c8.RUNTIME_REACHABLE!=null?c8.RUNTIME_REACHABLE:e.estate_reachable);
+  set('#factActive', (c8.ACTIVE!=null?c8.ACTIVE:e.estate_active)+' / '+(c8.EXECUTING!=null?c8.EXECUTING:e.estate_executing));
+  set('#factHealthy', (c8.HEALTHY!=null?c8.HEALTHY:e.estate_healthy)+' / gated '+(e.factories_gated||0));
+  var es=$('#factExecSub'); if(es) es.textContent='ACTIVE '+shown(c8.ACTIVE)+' · EXECUTING '+shown(c8.EXECUTING)+' · not rediscovered';
+  var ft=$('#factTable'); if(ft) ft.innerHTML=table(e.factories,[['id','FACTORY'],['operator_class','CLASS'],['live_status','LIVE'],['matrix_status','MATRIX'],['path','PATH'],['input_to_receipt_proven','CYCLE'],['gated','GATED']]);
+  var ct=$('#compTable'); if(ct) ct.innerHTML=table((e.components||[]).slice(0,50),[['family','FAMILY'],['operator_class','CLASS'],['wave04_role','WAVE04'],['independent_service','INDEP SVC'],['path','PATH']]);
+  renderCopyEstate(e.copy_estate||{});
+}
+function renderLiveBoard(b){
+  b=b||{};
+  var planes=$('#liveBoardPlanes'); if(planes){
+    var items=[['C5',(b.C5||{}).state],['MCP',(b.MCP||{}).state],['CC',(b.COMMAND_CENTER||{}).state],['9R',(b.NINEROUTER||{}).state],['FABRIC',(b.COMMAND_FABRIC||{}).worker_healthy===true?'HEALTHY':'UNPROVEN']];
+    planes.innerHTML=items.map(function(x){return '<div class="plane"><span>'+esc(x[0])+'</span><strong>'+badge(shown(x[1]))+'</strong></div>'}).join('');
+  }
+  var hint=$('#liveBoardHint'); if(hint) hint.textContent=(b.freshness||'LIVE')+(b.stale?' · STALE':' · current')+' · C8 certified '+shown((b.c8_wave06||{}).FACTORY_COMPONENTS_TOTAL)+' / reachable '+shown(b.FACTORIES_REACHABLE);
+  var facts=$('#liveTruthFacts'); if(facts){
+    var live=b.c8_live||{}; var ff=b.factory_fabric||{}; var dep=b.deployment||{}; var prov=b.providers||{};
+    var rows=[
+      ['HEAD', shown((b.HEADS||{}).CANONICAL_HEAD || dep.canonical_head)],
+      ['TX', shown(dep.transaction_id)],
+      ['C2_BLOCKERS_REMAINING', shown(b.C2_BLOCKERS_REMAINING)],
+      ['ZERO_KNOWLEDGE_ISLAND', shown((b.knowledge||{}).zero_knowledge_island)],
+      ['FACTORY_FABRIC', shown((ff.status))],
+      ['RESOURCE_FACTORY', shown(((ff.resource_factory)||{}).selected_resource)],
+      ['OLLAMA', shown(((prov.ollama)||{}).status)],
+      ['NATS', shown(((prov.nats)||{}).status)],
+      ['LIGHTNING', shown(((prov.lightning_ai)||{}).status)],
+      ['DEEPSEEK', shown(((prov.deepseek_api)||{}).status)],
+      ['MCP_SINGLETON', shown(b.MCP_SINGLETON)],
+      ['SAFE8_LIVE_ACTIVATED', shown(b.SAFE8_LIVE_ACTIVATED)]
+    ];
+    facts.innerHTML=rows.map(function(x){return '<div class="list-row"><div class="grow"><strong>'+esc(x[0])+'</strong></div>'+badge(x[1])+'</div>'}).join('');
+  }
+  var el=$('#liveActors'); if(!el)return;
+  var live=b.live_bound||[];
+  var raios=b.raios||{};
+  el.innerHTML='<div class="list-row"><div class="grow"><strong>RAIOS</strong><small>'+esc(raios.chat_path||'/api/chat')+' · not a council seat</small></div>'+badge('RUNTIME')+'</div>'+(live.length?live.map(function(a){
+    return '<div class="list-row"><div class="grow"><strong>'+esc(a.seat)+'</strong><small>actor '+esc(shown(a.actor_id,'UNBOUND'))+' · sess '+esc(shown(a.session_id,'NO_SESSION'))+' · '+esc(a.operator_state)+'</small></div>'+badge(a.auto_routable?'AUTO_ROUTABLE':a.operator_state)+'</div>'
+  }).join():'<div class="list-row"><div class="grow"><strong>NO_LIVE_BOUND_ACTORS</strong><small>historical seats are not ONLINE</small></div>'+badge('OFFLINE')+'</div>');
+}
+function renderSelfHeal(h, storage){
+  h=h||{};
+  var st=$('#healStatus'); if(st) st.textContent=shown(h.status);
+  var el=$('#healFacts'); if(el) el.innerHTML=
+    ['current_continuity_run','last_successful_cycle','active_recovery','component_repaired','failure_classification','recovery_outcome','cooldown','next_eligible_recovery'].map(function(k){
+      return '<div class="list-row"><div class="grow"><strong>'+esc(k)+'</strong></div>'+badge(shown(h[k]))+'</div>'
+    }).join('');
+  var sc=$('#storageClasses'); if(sc) sc.innerHTML=((storage&&storage.classes)||[]).map(function(c){
+    return '<div class="list-row"><div class="grow"><strong>'+esc(c.class)+'</strong><small>'+esc((c.paths||[]).slice(0,3).join(' · '))+' · delete='+esc(c.delete)+'</small></div>'+badge('KEEP')+'</div>'
+  }).join('')||'<div class="empty">storage classes UNKNOWN</div>';
+}
+function renderIncidents(inc){
+  var el=$('#incidentList'); if(!el)return;
+  var items=(inc&&inc.items)||[];
+  el.innerHTML=items.length?items.map(function(x){
+    return '<div class="list-row"><div class="grow"><strong>'+esc(x.category)+'</strong><small>'+esc(x.surface||x.task_id||x.engine||'')+' · '+esc(x.state||x.blocker||'')+'</small></div>'+badge(x.category==='UNKNOWN'?'UNKNOWN':(x.state||x.category))+'</div>'
+  }).join():'<div class="empty">لا حوادث مثبتة — UNKNOWN ليس ONLINE</div>';
+}
+function memberPassesFilter(m){
+  var pres=seatPresentation(m);
+  if(seatFilter==='ALL')return true;
+  if(seatFilter==='ACK_PENDING')return m.actor_ack_state==='NO_ACTOR_ACK'||m.actor_ack_state==='ACK_PENDING'||m.actor_ack_state==='SYNTHETIC_NOT_ACTOR_ACK';
+  if(seatFilter==='STALE')return pres==='STALE_SESSION'||pres==='BOUND_NO_HEARTBEAT'||pres==='LEASE_EXPIRED'||m.heartbeat_state==='STALE';
+  if(seatFilter==='UNBOUND')return pres==='UNBOUND'||m.binding_state==='UNBOUND';
+  if(seatFilter==='FAILED')return !!m.last_error;
+  return true;
+}
+function renderCouncilMembers(state){
+  councilMembers=(state&&state.members)||councilMembers||[];
+  var rows=councilMembers.filter(memberPassesFilter);
+  var ready=councilMembers.filter(function(m){return m.execution_ready===true}).length;
+  $('#councilSummary').textContent='C1–C12 · EXECUTION_READY '+ready+' · filter '+seatFilter+' · poll not stream';
+  if($('#seatList'))$('#seatList').innerHTML=rows.map(function(m){
+    var task=m.current_task&&(m.current_task.id||m.current_task.title)||'NO_TASK';
+    return '<div class="list-row seat-row"><div class="grow"><strong>'+esc(m.seat)+' · '+esc(shown(m.role||m.actor_role))+'</strong><small>'+
+      esc(shown(m.actor_id,'NOT_BOUND'))+' · sess '+esc(shown(m.session_id,'NO_SESSION'))+' · '+esc(task)+
+      '</small><div class="chips">'+badge(seatPresentation(m))+
+      badge(m.identity_bound?'identity_bound':'UNBOUND_ID')+
+      badge(m.session_current?'session_current':'session_unknown')+
+      badge(m.consumer_current?'consumer_current':'consumer_not_current')+
+      badge(m.lease_current?'lease_current':shown(m.lease_state,'LEASE_UNKNOWN'))+
+      badge(m.heartbeat_fresh?'heartbeat_fresh':shown(m.heartbeat_state,'HEARTBEAT_UNKNOWN'))+
+      badge(m.auto_routable?'auto_routable':'not_routable')+
+      badge(m.delivery_reachable?'delivery_reachable':shown(m.delivery_state,'DELIVERY_UNKNOWN'))+
+      badge(m.actor_ack_capable?'actor_ack_capable':(m.actor_ack_state||'NO_ACTOR_ACK'))+
+      '</div></div></div>'
+  }).join('')||'<div class="empty">UNKNOWN council members</div>';
+  var cols=[['seat','SEAT'],['role','ROLE'],['actor_id','ACTOR'],['session_id','SESSION'],['device','DEVICE'],['presentation_state','PRESENTATION'],['identity_bound','ID_BOUND'],['session_current','SESSION_CUR'],['consumer_current','CONSUMER'],['lease_current','LEASE'],['heartbeat_fresh','HB_FRESH'],['auto_routable','ROUTABLE'],['delivery_reachable','DELIVERY'],['actor_ack_capable','ACK_CAPABLE'],['current_program','PROGRAM'],['current_project','PROJECT'],['current_task','TASK'],['last_seen','LAST_SEEN'],['last_error','LAST_ERROR']];
+  var tableRows=rows.map(function(m){
+    var row=Object.assign({},m);
+    row.presentation_state=seatPresentation(m);
+    row.role=m.role||m.actor_role;
+    row.device=m.device||m.device_id;
+    row.actor_id=shown(m.actor_id,'NOT_BOUND');
+    row.session_id=shown(m.session_id,'NO_SESSION');
+    row.current_program=shown(m.current_program);
+    row.current_project=shown(m.current_project);
+    row.current_task=m.current_task?(m.current_task.id||m.current_task.title||shown(m.current_task)):'UNKNOWN';
+    return row;
+  });
+  var tbl=$('#councilBoardTable'); if(tbl) tbl.innerHTML=table(tableRows,cols);
+  renderCommandTargets();
+  if(overviewData)renderC5Truth(overviewData,councilMembers);
+}
+function renderCommandTargets(){
+  var el=$('#commandTargetStatus'); if(!el)return;
+  var want=Array.from(targets);
+  var rows=councilMembers||[];
+  var shownRows=want.indexOf('ALL')>=0?rows.filter(function(m){return m.auto_routable===true}):rows.filter(function(m){return want.indexOf(m.seat)>=0});
+  el.innerHTML=shownRows.map(function(m){
+    return '<div class="list-row"><div class="grow"><strong>'+esc(m.seat)+'</strong><small>'+esc(seatPresentation(m))+' · bind '+esc(shown(m.binding_state))+' · hb '+esc(shown(m.heartbeat_state))+'</small></div>'+badge(m.auto_routable?'AUTO_ROUTABLE':'NOT_ROUTABLE')+'</div>'
+  }).join('')||'<div class="empty">NO_LIVE_BOUND_TARGETS or empty selection</div>';
+}
+function renderTrace(t){
+  lastTrace=t||{};
+  var el=$('#traceOutput'); if(!el)return;
+  var life=t.LIFECYCLE||[];
+  var facts=[
+    '<div class="list-row"><div class="grow"><strong>WHO SENT</strong><small>session '+esc(shown(t.WHICH_SESSION||t.SOURCE_SESSION))+'</small></div>'+badge(shown(t.WHO_SENT||t.SOURCE_ACTOR))+'</div>',
+    '<div class="list-row"><div class="grow"><strong>LIFECYCLE</strong><small>CREATED → ROUTED → DELIVERED → DELIVERY_ACK → ACTOR_ACK</small></div>'+life.map(function(x){return badge(x)}).join(' ')+'</div>',
+    '<div class="list-row"><div class="grow"><strong>DELIVERY_ACK ≠ ACTOR_ACK</strong><small>HTTP_200_NE_ACTOR_ACK · synthesized='+esc(t.actor_ack_synthesized)+'</small></div>'+badge(t.ACTOR_ACK?'ACTOR_ACK':'NO_ACTOR_ACK')+'</div>'
+  ];
+  (t.actor_acks||[]).forEach(function(a){
+    facts.push('<div class="list-row"><div class="grow"><strong>ACTOR_ACK '+esc(shown(a.seat))+'</strong><small>actor '+esc(shown(a.actor_id))+' · sess '+esc(shown(a.session_id))+' · '+esc(shown(a.timestamp))+' · '+esc(shown(a.message_id))+'</small></div>'+badge('ACTOR_ACK')+'</div>');
+  });
+  (t.targets||[]).forEach(function(x){
+    facts.push('<div class="list-row"><div class="grow"><strong>'+esc(x.target_seat||'?')+'</strong><small>phase '+esc(x.phase||'NO_EVIDENCE')+' · retry '+esc(x.attempt||0)+(x.synthetic?' · SYNTHETIC_NOT_ACTOR_ACK':'')+'</small></div>'+badge(x.actor_ack?'ACTOR_ACK':(x.delivery_ack?'DELIVERY_ACK':(x.phase||'NO_EVIDENCE')))+'</div>');
+  });
+  var raw=['SEND='+shown(t.COMMAND||t.MESSAGE_CREATED),'DELIVERY='+t.DELIVERY_ACK,'ACTOR_ACK='+t.ACTOR_ACK,'MESSAGE_ID='+shown(t.message_id),'ROUTE='+shown(t.ROUTE),'DEAD_LETTER='+t.DEAD_LETTER,'RETRY='+shown(t.RETRY,0),'FAILURE='+shown(t.FAILURE),'delivery_ack_ne_actor_ack='+t.delivery_ack_ne_actor_ack,'actor_ack_synthesized='+t.actor_ack_synthesized,'HTTP_200_NE_ACTOR_ACK=true'];
+  el.innerHTML=facts.join('')+'<details style="margin-top:10px"><summary class="hint">raw evidence</summary><div class="code">'+esc(raw.join('\n'))+'</div></details>';
+}
+function renderHermes(m){
+  var el=$('#hermesView'); if(!el)return;
+  var ads=(m&&m.adapters_behind_gateway)||[];
+  var hit=ads.filter(function(a){return String(a.id||a.role||'').toLowerCase().indexOf('hermes')>=0});
+  el.innerHTML=
+    '<div class="list-row"><div class="grow"><strong>hermes-knowledge-ingest</strong><small>provider adapter · not Core · not Scheduler · not MCP · not Command Plane</small></div>'+badge(hit.length?'ADAPTER_VISIBLE':'NOT_LIVE_PROBED')+'</div>'+
+    '<div class="list-row"><div class="grow"><strong>certification</strong><small>standing: NOT_YET_CERTIFIED unless newer evidence</small></div>'+badge('NOT_YET_CERTIFIED')+'</div>';
+}
+function renderCcHealth(h,w){
+  var el=$('#ccSelfHealth'); if(!el)return;
+  workerHealth=w||workerHealth||{};
+  el.innerHTML=
+    '<div class="list-row"><div class="grow"><strong>CC HTTP</strong><small>'+esc(shown(h&&h.service))+'</small></div>'+badge(shown(h&&h.status,'UNKNOWN'))+'</div>'+
+    '<div class="list-row"><div class="grow"><strong>MessageWorker</strong><small>message_worker_ne_cc_readiness='+esc(h&&h.message_worker_ne_cc_readiness)+'</small></div>'+badge(workerHealth.healthy===true?'HEALTHY':(workerHealth.state||'UNKNOWN'))+'</div>'+
+    '<div class="list-row"><div class="grow"><strong>operator laws</strong><small>chat_only='+esc(h&&h.operator_laws&&h.operator_laws.chat_only)+' · count '+esc(h&&h.operator_laws&&h.operator_laws.count)+'</small></div>'+badge((h&&h.operator_laws&&h.operator_laws.count)?'VISIBLE':'MISSING')+'</div>'+
+    '<div class="list-row"><div class="grow"><strong>refresh</strong><small>setInterval 20s · not event stream · no /api/command/board route</small></div>'+badge('POLL')+'</div>';
+}
+async function apiBounded(url,ms){
+  var c=new AbortController(); var t=setTimeout(function(){c.abort()},ms||8000);
+  try{return await api(url,{signal:c.signal})}
+  finally{clearTimeout(t)}
+}
+function renderMcp(m){
+  if(!m){return}
+  var tools=m.tools||[];
+  var ads=m.adapters_behind_gateway||[];
+  $('#mcpBind').innerHTML='<div class="list">'+
+    '<div class="list-row"><div class="grow"><strong>'+esc(m.endpoint||'')+'</strong><small>census :'+esc(m.census_port)+' · '+esc(m.health_url||'')+'</small></div>'+badge(m.live?'ONLINE':'OFFLINE')+'</div>'+
+    '<div class="list-row"><div class="grow"><strong>'+esc((tools.join(' · '))||'—')+'</strong><small>V1 tools='+esc(m.tool_count)+' · ninth='+esc(m.ninth_tool)+' · second_gateway='+esc(m.second_gateway)+'</small></div>'+badge(m.loopback_read_without_token?'LOOPBACK READ':'AUTH')+'</div>'+
+    '<div class="list-row"><div class="grow"><strong>العميل: .cursor/mcp.json</strong><small>القراءة المحلية بلا رمز · الكتابة تحتاج منحة ممثل · MCP ليست حافلة المقاعد</small></div>'+badge('BIND')+'</div>'+
+    (ads.length?ads.slice(0,8).map(function(a){return '<div class="list-row"><div class="grow"><strong>'+esc(a.id)+'</strong><small>'+esc(a.role||'')+' · '+esc(a.transport||'')+'</small></div>'+badge('ADAPTER')+'</div>'}).join(''):'')+
+  '</div>';
+}
 async function extras(){
+  try{var lb=await apiBounded('/api/live-board',8000);renderLiveBoard(lb); if(lb&&lb.hanging_work) renderHangingWork(lb.hanging_work)}catch(e){console.error('live-board',e)}
+  try{var m=await api('/api/mcp');renderMcp(m);renderHermes(m)}catch(e){console.error('mcp',e)}
   try{var a=await api('/api/client-activity?lite=true');renderAvailability(a)}catch(e){console.error('client-activity',e)}
+  try{var cs=await api('/api/council-state');renderCouncilMembers(cs); if(cs.operational_blockers) renderBlockers((overviewData||{}).operational_blockers, cs.operational_blockers)}catch(e){console.error('council-state',e)}
+  try{var ca=await api('/api/change-authority');renderChangeAuthority(ca)}catch(e){console.error('change-authority',e)}
+  try{var h=await api('/health'); var w=await api('/api/message-worker');renderCcHealth(h,w)}catch(e){console.error('cc-health',e)}
   try{var c=await api('/api/cognitive');renderCognitive(c)}catch(e){console.error('cognitive',e)}
   try{var en=await api('/api/engines');renderEngines(en)}catch(e){console.error('engines',e)}
-  try{boardSnap=await api('/api/council-board');renderWorkBoard()}catch(e){console.error('council-board',e)}
+  try{boardSnap=await apiBounded('/api/council-board',8000);renderWorkBoard()}catch(e){console.error('council-board',e); var wt=$('#workStats'); if(wt&&!boardSnap)wt.textContent='council-board STALE/TIMEOUT · use NOW from overview'}
   try{var r=await api('/api/receipts');$('#receiptsTable').innerHTML=table(r.recent,[['name','RECEIPT'],['bytes','BYTES'],['path','PATH']])}catch(e){console.error('receipts',e)}
   try{renderResources()}catch(e){console.error('resources',e)}
+  try{var topo=await apiBounded('/api/system-topology',8000);renderTopology(topo)}catch(e){console.error('topology',e)}
+  try{var fe=await apiBounded('/api/factory-estate',8000);renderFactories(fe)}catch(e){console.error('factory-estate',e)}
+  try{var ce=await apiBounded('/api/copy-estate',8000);renderCopyEstate(ce)}catch(e){console.error('copy-estate',e)}
+  try{var fab=await apiBounded('/api/fabric',5000);renderFabric(fab)}catch(e){console.error('fabric',e)}
+  try{var sh=await apiBounded('/api/self-heal',4000); var stg=await apiBounded('/api/storage-classes',3000);renderSelfHeal(sh,stg)}catch(e){console.error('self-heal',e)}
+  try{var cr=await apiBounded('/api/capability-routing',8000); var rh=await apiBounded('/api/reachability',3000);renderCapabilities(cr,rh)}catch(e){console.error('capabilities',e)}
+  try{var inc=await apiBounded('/api/incidents',8000);renderIncidents(inc)}catch(e){console.error('incidents',e)}
+  try{var laws=await apiBounded('/api/laws',4000);renderOperatorLaws(laws)}catch(e){console.error('laws',e)}
+  try{var mesh=await apiBounded('/api/integration',8000);renderIntegration(mesh)}catch(e){console.error('integration',e)}
+  renderDirtyClass();
 }
 async function refresh(){
   var b=$('#refreshBtn');b.disabled=true;
@@ -363,6 +890,7 @@ async function boot(){
   $('#liveText').textContent='متصل';$('#sideDot').style.background='var(--green)';
   $('#headShort').textContent='HEAD '+String(b.canonical_head||'—').slice(0,10);
   if(b.council_lite)renderCouncilLite(b.council_lite);
+  if(b.mcp)renderMcp(b.mcp);
   if(b.overview)renderOverview(b.overview);
   renderThread();
   extras().catch(function(e){console.error(e);toast('التفاصيل الجزئية تعذرت — اللوحة متصلة')});
@@ -378,20 +906,26 @@ async function diagnose(){
 }
 async function command(){
   var text=$('#commandInput').value.trim();if(!text||!targets.size)return;var b=$('#sendCommand');b.disabled=true;
+  renderCommandTargets();
   try{
-    var r=await api('/api/command',{method:'POST',body:JSON.stringify({text:text,targets:Array.from(targets)})});
+    var intent=($('#commandIntent')&&$('#commandIntent').value)||'NOTICE';
+    var r=await api('/api/command',{method:'POST',body:JSON.stringify({text:text,targets:Array.from(targets),intent:intent})});
     var delivered=r.delivered_to||((r.results||[])[0]||{}).targets||[];
     var unreachable=r.unreachable||[];
+    var mid=((r.results||[])[0]||{}).message_id;
     var why={SIGNED_OUT:'غائب',NOT_LIVE_BOUND:'غير مربوط حي',OFFLINE:'غير متاح'};
-    var lines=['أُرسل إلى: '+(delivered.join(' · ')||'—')];
+    var lines=['SEND receipt MESSAGE_ID: '+(mid||'UNKNOWN'),'ROUTE: CANONICAL_LOCAL_FABRIC','INTENT: '+(r.intent||intent),'PERSISTED_KIND: '+(r.persisted_kind||'COMMAND'),'HTTP 200 ≠ ACTOR_ACK','QUEUED/SENT_PENDING_DELIVERY_ACK','أُرسل إلى: '+(delivered.join(' · ')||'—')];
     if(unreachable.length){
       lines.push('غير متاح / غير مربوط:');
       unreachable.forEach(function(u){lines.push(' - '+(u.seat||'')+' · '+(why[u.reason]||u.reason||''))});
     }
     lines.push('المالك: '+(r.lock_owner||'RAIOS_SYSTEM'));
-    lines.push(JSON.stringify(r,null,2));
     $('#commandOutput').textContent=lines.join('\n');
-    toast('أُرسل للأحياء · الغائبون ظاهرون دون تسليم مزيف')
+    if(mid){
+      $('#traceInput').value=mid;
+      try{renderTrace(await api('/api/communication-trace/'+encodeURIComponent(mid)))}catch(te){console.error('trace',te)}
+    }
+    toast(r.interaction?'تم التفاعل':'أُرسل إعلان المجلس — ليست قراءة وليست محادثة مباشرة')
   }
   catch(e){
     var msg=e.message;
@@ -402,12 +936,17 @@ async function command(){
 $$('.nav button,.mobile-nav button').forEach(function(b){b.addEventListener('click',function(){openView(b.dataset.view)})});
 $$('[data-jump]').forEach(function(b){b.addEventListener('click',function(){openView(b.dataset.jump)})});
 $$('.target').forEach(function(b){b.addEventListener('click',function(){
+  if(b.dataset.raiosRuntime==='true'){openView('chat');toast('RAIOS/C5 زمن تشغيل — استخدم محادثة RAIOS لا مقعد Fabric');return;}
   var v=b.dataset.target;if(v==='ALL'){targets=new Set(['ALL']);$$('.target').forEach(function(x){x.classList.toggle('primary',x===b)})}
   else{targets.delete('ALL');$('.target[data-target="ALL"]').classList.remove('primary');targets.has(v)?targets.delete(v):targets.add(v);b.classList.toggle('primary')}
+  renderCommandTargets();
 })});
-$('#refreshBtn').addEventListener('click',refresh);$('#sendChat').addEventListener('click',sendChat);$('#searchBtn').addEventListener('click',runSearch);$('#diagnoseBtn').addEventListener('click',diagnose);$('#sendCommand').addEventListener('click',command);
+$$('.seat-filter').forEach(function(b){b.addEventListener('click',function(){seatFilter=b.dataset.filter;$$('.seat-filter').forEach(function(x){x.classList.toggle('active',x===b)});renderCouncilMembers({members:councilMembers})})});
+var traceBtn=$('#traceBtn'); if(traceBtn) traceBtn.addEventListener('click',function(){var id=($('#traceInput').value||'').trim(); if(!id)return; api('/api/communication-trace/'+encodeURIComponent(id)).then(renderTrace).catch(function(e){$('#traceOutput').textContent='TRACE_UNAVAILABLE\n'+e.message})});
+$('#refreshBtn').addEventListener('click',refresh);$('#sendChat').addEventListener('click',sendChat);$('#searchBtn').addEventListener('click',runSearch);$('#diagnoseBtn').addEventListener('click',diagnose);$('#sendCommand').addEventListener('click',command);$('#dmSend').addEventListener('click',sendDirect);
 $('#boardToggle').addEventListener('click',function(){boardFull=!boardFull;renderWorkBoard()});
 $('#chatInput').addEventListener('keydown',function(e){if(e.key==='Enter'&&!e.shiftKey){e.preventDefault();sendChat()}});
+$('#dmInput').addEventListener('keydown',function(e){if(e.key==='Enter'&&!e.shiftKey){e.preventDefault();sendDirect()}});
 $('#searchInput').addEventListener('keydown',function(e){if(e.key==='Enter'){runSearch()}});
 $('#publicSearch').addEventListener('change',function(){var p=$('#publicQuery');p.style.display=this.checked?'block':'none';if(this.checked)p.focus()});
 $('#newChat').addEventListener('click',function(){messages=[];localStorage.removeItem('raiosChat');conversationId=newId();renderThread();toast('بدأت محادثة جديدة')});

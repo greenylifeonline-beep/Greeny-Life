@@ -1,0 +1,61 @@
+{
+  "seat": "C8",
+  "from": "C2",
+  "impersonated": false,
+  "c2_used_c8_auth": false,
+  "status": "DISPATCHED_AWAITING_C8_LIVE_BIND_AND_ACCEPTANCE",
+  "authority": "C1_DIRECT_ARABIC_C6_AND_C8_MUST_WORK_NO_HANGING",
+  "wal_written": false,
+  "gl005_proven": false,
+  "consumer_heartbeat": {
+    "stamp_state": "ONLINE",
+    "lease_expires_at": "2026-09-26T16:17:28.361313+00:00",
+    "live_bound": false,
+    "class": "STALE"
+  },
+  "law": [
+    "NO_HANGING_TASK_WITHOUT_SYSTEM_NOTICE",
+    "SAFE_TO_REMOVE_SOURCE_FALSE",
+    "COPY_ESTATE_CUTOVER_FALSE_UNTIL_UNIQUE_VALUE_ZERO",
+    "COMPLETE_ASSIGNED_WORK",
+    "NO_FAKE_RESULT",
+    "LAWS_SYSTEM_VISIBLE"
+  ],
+  "system_laws_surface": "/api/laws",
+  "cc_promotion": {
+    "decision": "D-059",
+    "laws_chat_only": false,
+    "fully_integrated": false
+  },
+  "required_action": "SELF_CHECK_IN_THEN_CONTINUE_CONVERGENCE_AND_COPY_UNIQUE",
+  "tasks": [
+    "RAIOS-CANONICAL-CONVERGENCE-001",
+    "copy-estate remaining unique symbols (non-model)",
+    "C8 knowledge/intelligence closure on retained catalog"
+  ],
+  "task_state_observed": {
+    "RAIOS-CANONICAL-CONVERGENCE-001": "IN_PROGRESS_ALLOWED_C1_C2_C8_CLAIMED_BY_NULL",
+    "copy_estate": {
+      "copies_total": 21,
+      "unique_value_unwired_count": 39,
+      "SAFE_TO_REMOVE_SOURCE": false,
+      "cutover": false,
+      "NEEDS_C6_OR_C1_REVIEW": 1
+    }
+  },
+  "ensure_path": "scripts/runtime/Ensure-RAIOS-Seat-Sessions.ps1 -Seat C8",
+  "ensure_gate": "RAIOS_C8_PROVIDER_LIVE=1 only when Desktop Commander/opencode provider is actually live",
+  "session_start": {
+    "attempted": true,
+    "pythonw_pid": 23752,
+    "session_id": "C8-339d46f93f40416f893588d9666d6767",
+    "heartbeat_refreshed": false,
+    "class": "PROCESS_LIVE_LEASE_STALE"
+  },
+  "next": [
+    "C8 self-binds live consumer (Desktop Commander auth). C2 recovers C8 only if provider is discovered; C2 does not fabricate presence.",
+    "Extract/merge remaining unique copy-estate symbols in place. Do not delete sources.",
+    "Continue RAIOS-CANONICAL-CONVERGENCE-001 operational first. No wholesale merge.",
+    "Write dated C8 receipt."
+  ]
+}

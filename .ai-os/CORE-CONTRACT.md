@@ -62,3 +62,16 @@ Historical absolute paths that point to retired/noncanonical trees are provenanc
 
 ## Completion
 A task is complete only when changes, validation, evidence, and handoff state are recorded.
+
+These laws bind every seat, engine, Command Center surface, client, and worker. They are system law, not chat-only reminders:
+
+1. COMPLETE_ASSIGNED_WORK — assigned work must be finished. Stopping with an incomplete result is forbidden.
+2. NO_ABBREVIATION — no silent shortcut that drops required discovery, proof, reuse, upgrade, validation, or handoff.
+3. NO_CONFLICT — do not contradict canonical law, an active lock/lease, or another live writer on the same scope.
+4. NO_DUPLICATION — existing-first. No second control plane, task ledger, message bus, Command Center, or MCP.
+5. NO_FAKE_RESULT — HTTP 200 is not Actor ACK; TIMEOUT is not empty success; presence is not execution; a green badge is not proof.
+6. NO_FAKE_DONE — TASKS `DONE` requires recorded evidence. Do not stamp complete to hide unfinished work.
+7. NO_HANGING_WITHOUT_NOTICE — open READY / IN_PROGRESS / BLOCKED work must remain visible on Command Center until closed or honestly blocked.
+8. LAWS_SYSTEM_VISIBLE — Command Center must project these laws to every operator. A rule that exists only in one chat is not in force for the system.
+9. ONE_COMMAND_CENTER — repair and promote the existing Command Center in place. Do not replace it.
+10. DELIVERY_ACK_NE_ACTOR_ACK — fabric delivery is not a human/agent read. Interaction is required before treating a peer as having received the work.

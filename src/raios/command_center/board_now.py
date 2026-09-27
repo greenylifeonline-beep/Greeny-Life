@@ -1,8 +1,43 @@
 """Canonical NOW slice over TASKS.json. Not a second ledger. NOW.md is not authority."""
 from __future__ import annotations
 
+import json
+import threading
 from datetime import datetime, timezone
+from pathlib import Path
 from typing import Any
+
+_TASKS_GUARD = threading.Lock()
+_TASKS_CACHE: dict[str, Any] = {"key": None, "mtime": None, "size": None, "doc": None}
+
+
+def load_tasks_document(path: Path | str, default: dict[str, Any] | None = None) -> dict[str, Any]:
+    """Load TASKS.json once per mtime. Not a second ledger. Failed parse keeps last good cache."""
+    fallback = default if isinstance(default, dict) else {"tasks": []}
+    target = Path(path)
+    try:
+        st = target.stat()
+    except OSError:
+        return dict(fallback)
+    key = str(target.resolve())
+    with _TASKS_GUARD:
+        cached = _TASKS_CACHE
+        if (
+            cached.get("key") == key
+            and cached.get("mtime") == st.st_mtime
+            and cached.get("size") == st.st_size
+            and isinstance(cached.get("doc"), dict)
+        ):
+            return cached["doc"]
+        try:
+            doc = json.loads(target.read_text(encoding="utf-8-sig"))
+        except (OSError, json.JSONDecodeError, UnicodeDecodeError):
+            prior = cached.get("doc")
+            return prior if isinstance(prior, dict) and cached.get("key") == key else dict(fallback)
+        if not isinstance(doc, dict):
+            return dict(fallback)
+        _TASKS_CACHE.update({"key": key, "mtime": st.st_mtime, "size": st.st_size, "doc": doc})
+        return doc
 
 PRIO = {"CRITICAL": 0, "HIGH": 1, "MEDIUM": 2, "LOW": 3}
 INDEPENDENT_STATES = (

@@ -1,0 +1,75 @@
+{
+  "seat": "C6",
+  "from": "C2",
+  "impersonated": false,
+  "c2_used_c6_auth": false,
+  "c2_started_c6_session": false,
+  "status": "DISPATCHED_AWAITING_C6_LIVE_BIND_AND_ACCEPTANCE",
+  "authority": "C1_DIRECT_ARABIC_C6_AND_C8_MUST_WORK_NO_HANGING",
+  "wal_written": false,
+  "gl005_proven": false,
+  "consumer_heartbeat": {
+    "stamp_state": "ONLINE",
+    "lease_expires_at": "2026-09-10T21:33:24.332730+00:00",
+    "live_bound": false,
+    "class": "STALE"
+  },
+  "law": [
+    "NO_HANGING_TASK_WITHOUT_SYSTEM_NOTICE",
+    "NO_SYNTHETIC_ACTOR_ACK",
+    "C2_MUST_NOT_STEAL_C6_CLAIMS_OR_OWNED_SOURCES",
+    "COMPLETE_ASSIGNED_WORK",
+    "NO_FAKE_RESULT",
+    "LAWS_SYSTEM_VISIBLE"
+  ],
+  "system_laws_surface": "/api/laws",
+  "cc_promotion": {
+    "decision": "D-059",
+    "live_tx": "C6-WORKER-PRIORITY-20260927-03",
+    "laws_chat_only": false,
+    "fully_integrated": false,
+    "actor_ack_proven": false
+  },
+  "required_action": "SELF_CHECK_IN_THEN_ACCEPT_READY_TASKS",
+  "priority_order": [
+    "RAIOS-UCF-SEAT-SESSION-RECOVERY-IN-PLACE-20260927-01",
+    "RAIOS-UCF-PROVIDER-OWNED-SEAT-LIFECYCLE-20260927-01",
+    "RAIOS-GOV-AUTHORITY-CONTINUITY-001",
+    "RAIOS-C6-COMMAND-FABRIC-RESILIENCE-WAVE-01-20260923",
+    "COMMAND_FABRIC_WORKER_STARVATION",
+    "RAIOS-UCF-SYSTEM-LEASE-AND-COMMUNICATION-REMEDIATION-001",
+    "RAIOS-LEARNING-INDEPENDENT-REVIEW-C6-20260907"
+  ],
+  "tasks": [
+    "RAIOS-UCF-SEAT-SESSION-RECOVERY-IN-PLACE-20260927-01",
+    "RAIOS-UCF-PROVIDER-OWNED-SEAT-LIFECYCLE-20260927-01",
+    "RAIOS-GOV-AUTHORITY-CONTINUITY-001",
+    "RAIOS-C6-COMMAND-FABRIC-RESILIENCE-WAVE-01-20260923",
+    "COMMAND_FABRIC_WORKER_STARVATION",
+    "RAIOS-UCF-SYSTEM-LEASE-AND-COMMUNICATION-REMEDIATION-001",
+    "RAIOS-UCF-PRIORITY-INTAKE-BOUNDEDNESS-20260927-01",
+    "RAIOS-UCF-CC-TRANSACTION-ENGINE-AUTHORITY-20260927-01",
+    "RAIOS-LEARNING-INDEPENDENT-REVIEW-C6-20260907",
+    "GL-004"
+  ],
+  "task_state_observed": {
+    "RAIOS-UCF-SEAT-SESSION-RECOVERY-IN-PLACE-20260927-01": "READY_RETURNED_ABSENT_NOT_LIVE_BOUND",
+    "RAIOS-UCF-PROVIDER-OWNED-SEAT-LIFECYCLE-20260927-01": "READY_RETURNED_ABSENT_NOT_LIVE_BOUND",
+    "RAIOS-GOV-AUTHORITY-CONTINUITY-001": "READY_RETURNED_ABSENT_NOT_LIVE_BOUND",
+    "RAIOS-C6-COMMAND-FABRIC-RESILIENCE-WAVE-01-20260923": "READY_RETURNED_ABSENT_NOT_LIVE_BOUND",
+    "RAIOS-LEARNING-INDEPENDENT-REVIEW-C6-20260907": "READY_RETURNED_NO_ACCEPTANCE"
+  },
+  "owned_sources_do_not_overwrite": [
+    "src/raios/command_center/message_worker.py",
+    "src/raios/council_ops/session_agent.py",
+    "src/raios/command_center/coordination_truth.py",
+    "scripts/runtime/Start-RAIOS-Seat-Session.ps1",
+    "scripts/runtime/Ensure-RAIOS-Seat-Sessions.ps1"
+  ],
+  "next": [
+    "C6 self-signs live consumer heartbeat with C6 auth (C2 will not impersonate).",
+    "Accept and close the five READY C6-only tasks; do not leave them silent.",
+    "SeatSessionRecoveryInPlace first: recover provider-live seats without stale binding.",
+    "Write dated C6 receipt. Silent ACK is not enough."
+  ]
+}

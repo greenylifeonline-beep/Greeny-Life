@@ -1034,3 +1034,216 @@ def incidents_projection(
         "count": min(len(unique), MAX_INCIDENTS),
         "law": ["NO_FAKE_ONLINE", "UNKNOWN_STAYS_UNKNOWN", "STALE_STAYS_STALE"],
     }
+
+
+SINGLE_TRUTH_POLICY_REL = Path(".ai-os") / "governance" / "RAIOS-SINGLE-TRUTH-POLICY.json"
+CORE_CONTRACT_REL = Path(".ai-os") / "CORE-CONTRACT.md"
+
+CANONICAL_OPERATOR_LAWS: tuple[dict[str, str], ...] = (
+    {"id": "COMPLETE_ASSIGNED_WORK", "en": "Assigned work must be finished. Incomplete stop is forbidden.",
+     "ar": "العمل الموكول يُتم. التوقف الناقص ممنوع."},
+    {"id": "NO_ABBREVIATION", "en": "No silent shortcut that drops discovery, proof, validation, or handoff.",
+     "ar": "لا اختزال صامت يسقط الاكتشاف أو الإثبات أو التحقق أو التسليم."},
+    {"id": "NO_CONFLICT", "en": "Do not contradict canonical law, an active lock, or another live writer.",
+     "ar": "لا تضارب مع القانون أو القفل الحي أو كاتب آخر على نفس النطاق."},
+    {"id": "NO_DUPLICATION", "en": "Existing-first. No second control plane, ledger, bus, or Command Center.",
+     "ar": "الموجود أولاً. لا سطح سيطرة ثانٍ ولا دفتر ولا حافلة ولا مركز أوامر بديل."},
+    {"id": "NO_FAKE_RESULT", "en": "HTTP 200 is not Actor ACK. TIMEOUT is not empty success. Presence is not execution.",
+     "ar": "HTTP 200 ليست قراءة الممثل. المهلة ليست نجاحاً فارغاً. الحضور ليس تنفيذاً."},
+    {"id": "NO_FAKE_DONE", "en": "TASKS DONE requires recorded evidence. Do not stamp complete to hide unfinished work.",
+     "ar": "DONE يتطلب دليلاً مسجلاً. لا تُختم مكتملة لإخفاء عمل ناقص."},
+    {"id": "NO_HANGING_WITHOUT_NOTICE", "en": "Open READY/IN_PROGRESS/BLOCKED work stays visible on Command Center.",
+     "ar": "العمل المفتوح يبقى ظاهراً على مركز الأوامر حتى يُغلق أو يُحجب بصدق."},
+    {"id": "LAWS_SYSTEM_VISIBLE", "en": "Laws must be projected by Command Center to every operator, not chat-only.",
+     "ar": "القوانين ظاهرة في النظام لكل المقاعد، وليست قوانين محادثة فقط."},
+    {"id": "EXISTING_FIRST", "en": "Discover, prove, reuse, upgrade in place before creating.",
+     "ar": "اكتشف وأثبت وأعد الاستخدام ثم رقِّ في المكان قبل الإنشاء."},
+    {"id": "ONE_COMMAND_CENTER", "en": "Repair and promote the existing Command Center. Do not replace it.",
+     "ar": "أصلح ورقِّ مركز الأوامر القائم. لا تستبدله."},
+    {"id": "DELIVERY_ACK_NE_ACTOR_ACK", "en": "Fabric delivery is not a human/agent read. Interaction is required.",
+     "ar": "إيصال التسليم ليس قراءة. التفاعل مطلوب قبل اعتبار الطرف مستلماً."},
+    {"id": "C5_RUNTIME_NE_SEAT_PRESENCE", "en": "RAIOS/C5 is runtime. It is not a fabric council seat.",
+     "ar": "RAIOS/C5 زمن تشغيل وليس مقعد مجلس."},
+)
+
+
+def operator_laws_projection(repo: Path | None = None) -> dict[str, Any]:
+    """Project C1 operator laws from CORE-CONTRACT + SINGLE-TRUTH. Not a second constitution."""
+    policy: dict[str, Any] = {}
+    contract_present = False
+    if repo is not None:
+        root = Path(repo)
+        policy = _load(root / SINGLE_TRUTH_POLICY_REL, {})
+        contract_present = (root / CORE_CONTRACT_REL).is_file()
+    block = policy.get("completion_operator_laws") if isinstance(policy, dict) else {}
+    if not isinstance(block, dict):
+        block = {}
+    extra_ids = [str(x) for x in (block.get("laws") or []) if str(x).strip()]
+    by_id = {row["id"]: dict(row) for row in CANONICAL_OPERATOR_LAWS}
+    for law_id in extra_ids:
+        by_id.setdefault(law_id, {"id": law_id, "en": law_id, "ar": law_id})
+    laws = list(by_id.values())
+    return {
+        "schema": "raios.operator-laws.v1",
+        "observed_at": _utc(),
+        "authority": block.get("authority") or "C1",
+        "state_owner": block.get("state_owner") or "RAIOS_SYSTEM",
+        "chat_only": False,
+        "binds": list(block.get("binds") or ["ALL_SEATS", "COMMAND_CENTER", "ENGINES", "CLIENTS", "WORKERS"]),
+        "surface": block.get("surface") or "/api/laws",
+        "mandatory": block.get("mandatory") is not False,
+        "sources": [str(CORE_CONTRACT_REL), str(SINGLE_TRUTH_POLICY_REL)],
+        "core_contract_present": contract_present,
+        "policy_present": bool(block),
+        "second_constitution": False,
+        "count": len(laws),
+        "laws": laws,
+        "ids": [row["id"] for row in laws],
+    }
+
+
+def integration_mesh_projection(
+    *,
+    plane: dict[str, Any] | None = None,
+    worker: dict[str, Any] | None = None,
+    hanging: dict[str, Any] | None = None,
+    laws: dict[str, Any] | None = None,
+    c5_http: int | None = None,
+    mcp_http: int | None = None,
+    mcp_live: bool | None = None,
+    factory_runtime: dict[str, Any] | None = None,
+    live_bound_count: int = 0,
+    ecology_source_present: bool | None = None,
+    direct_second_bus: bool = False,
+) -> dict[str, Any]:
+    """Honest CC↔runtime interconnection. TIMEOUT/TCP-only stay UNKNOWN. Not a second bus."""
+    plane = plane if isinstance(plane, dict) else {}
+    worker = worker if isinstance(worker, dict) else {}
+    hanging = hanging if isinstance(hanging, dict) else {}
+    laws = laws if isinstance(laws, dict) else {}
+    factory_runtime = factory_runtime if isinstance(factory_runtime, dict) else {}
+    by_name = {
+        str(row.get("name") or ""): row
+        for row in (plane.get("services") or [])
+        if isinstance(row, dict)
+    }
+
+    def _svc(name: str) -> dict[str, Any]:
+        return by_name.get(name) or {}
+
+    c5_tcp = str((_svc("C5") or {}).get("state") or "").upper()
+    if c5_http == 200:
+        c5_state = "ONLINE"
+    elif c5_tcp in {"ONLINE", "UNKNOWN"} and c5_http != 200:
+        c5_state = "UNKNOWN"
+    elif c5_tcp == "OFFLINE":
+        c5_state = "OFFLINE"
+    else:
+        c5_state = c5_tcp or "UNKNOWN"
+
+    mcp_tcp = str((_svc("UniversalMCP") or {}).get("state") or "").upper()
+    if mcp_live is True or mcp_http == 200:
+        mcp_state = "ONLINE"
+    elif mcp_http == 0 or mcp_tcp in {"UNKNOWN", "ONLINE"}:
+        mcp_state = "UNKNOWN" if mcp_http != 200 else "ONLINE"
+    else:
+        mcp_state = mcp_tcp or "UNKNOWN"
+
+    nr_state = str((_svc("9Router") or {}).get("state") or "UNKNOWN").upper() or "UNKNOWN"
+    nats_state = str((_svc("NATS") or {}).get("state") or "UNKNOWN").upper() or "UNKNOWN"
+    if worker.get("healthy") is True:
+        fabric_state = str(worker.get("state") or "ONLINE")
+    elif worker.get("healthy") is False:
+        fabric_state = "DEGRADED"
+    else:
+        fabric_state = str(worker.get("state") or "UNKNOWN") or "UNKNOWN"
+    factory_status = str(
+        factory_runtime.get("status") or factory_runtime.get("FACTORY_FABRIC") or ""
+    ).upper()
+    if factory_runtime.get("ok") is True:
+        factory_status = "PASS"
+    if not factory_runtime:
+        factory_status = "UNPROVEN"
+    ecology_state = "WIRED" if ecology_source_present is True else (
+        "ABSENT" if ecology_source_present is False else "UNKNOWN"
+    )
+    laws_state = "VISIBLE" if int(laws.get("count") or 0) > 0 and laws.get("chat_only") is False else "MISSING"
+    hanging_state = "INFORMED" if hanging.get("system_informed") is True else "UNPROVEN"
+    seats_state = "BOUND" if int(live_bound_count or 0) > 0 else "UNBOUND"
+    direct_state = "WIRED" if direct_second_bus is False else "SECOND_BUS_FORBIDDEN"
+
+    links = [
+        {"id": "command-center", "name": "CommandCenter", "state": "ONLINE", "port": 8770,
+         "role": "PROJECTION_SURFACE", "probe": "SELF"},
+        {"id": "c5", "name": "C5", "state": c5_state, "port": 8766,
+         "role": "RUNTIME", "http": c5_http, "tcp_ne_http": c5_http != 200},
+        {"id": "mcp", "name": "UniversalMCP", "state": mcp_state, "port": 8788,
+         "role": "CLIENT_GATEWAY", "http": mcp_http, "live": mcp_live is True},
+        {"id": "ninerouter", "name": "9Router", "state": nr_state, "port": 20128,
+         "role": "MODEL_ROUTER", "probe": "TCP_ONLY"},
+        {"id": "nats", "name": "NATS", "state": nats_state, "port": 4222,
+         "role": "TRANSPORT", "optional": True, "probe": "TCP_ONLY"},
+        {"id": "command-fabric", "name": "CommandFabric", "state": fabric_state,
+         "role": "SEAT_BUS", "healthy": worker.get("healthy") is True},
+        {"id": "direct-conversation", "name": "DirectConversation", "state": direct_state,
+         "role": "ONE_TO_ONE", "second_bus": direct_second_bus},
+        {"id": "operator-laws", "name": "OperatorLaws", "state": laws_state,
+         "role": "SYSTEM_VISIBLE", "count": laws.get("count")},
+        {"id": "hanging-work", "name": "HangingWork", "state": hanging_state,
+         "role": "TASK_NOTICE", "open_count": hanging.get("open_count")},
+        {"id": "factory-fabric", "name": "FactoryFabric", "state": factory_status or "UNPROVEN",
+         "role": "FACTORIES", "file_present": bool(factory_runtime)},
+        {"id": "ecomodel", "name": "EcoModel", "state": ecology_state,
+         "role": "MODEL_ECOLOGY", "source": "src/raios/factory_fabric/model_ecology.py"},
+        {"id": "live-seats", "name": "LiveBoundSeats", "state": seats_state,
+         "role": "CONSUMERS", "count": int(live_bound_count or 0)},
+    ]
+
+    by_id = {row["id"]: row for row in links}
+
+    def _critical_ok(link_id: str, want: str) -> bool:
+        state = str((by_id.get(link_id) or {}).get("state") or "").upper()
+        if link_id == "command-fabric":
+            return worker.get("healthy") is True or state in {"ONLINE", "HEALTHY"}
+        return state == want
+
+    critical_ok = all(
+        _critical_ok(k, v)
+        for k, v in {
+            "command-center": "ONLINE",
+            "c5": "ONLINE",
+            "mcp": "ONLINE",
+            "command-fabric": "ONLINE",
+            "operator-laws": "VISIBLE",
+            "direct-conversation": "WIRED",
+        }.items()
+    )
+    ninerouter_ok = nr_state == "ONLINE"
+    if critical_ok and int(live_bound_count or 0) > 0 and ninerouter_ok:
+        overall = "CONTROL_PLANE_AND_SEATS_BOUND"
+    elif critical_ok:
+        overall = "CONTROL_PLANE_BOUND_SEATS_UNBOUND"
+    elif any(str(x.get("state") or "").upper() in {"ONLINE", "VISIBLE", "WIRED", "INFORMED", "PASS"} for x in links):
+        overall = "PARTIAL"
+    else:
+        overall = "UNPROVEN"
+    return {
+        "schema": "raios.integration-mesh.v1",
+        "observed_at": _utc(),
+        "overall": overall,
+        "fully_integrated": overall == "CONTROL_PLANE_AND_SEATS_BOUND",
+        "fake_integrated": False,
+        "second_command_center": False,
+        "second_message_bus": False,
+        "live_bound_count": int(live_bound_count or 0),
+        "actor_ack_proven": False,
+        "hanging_open_count": hanging.get("open_count"),
+        "links": links,
+        "law": [
+            "UNKNOWN_STAYS_UNKNOWN",
+            "TCP_NE_HTTP_IDENTITY",
+            "NO_FAKE_INTEGRATED",
+            "LIVE_BOUND_REQUIRED_FOR_ACTOR_ACK",
+            "ONE_COMMAND_CENTER",
+        ],
+    }

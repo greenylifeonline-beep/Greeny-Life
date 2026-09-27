@@ -217,6 +217,22 @@ def test_builder_writes_dump_and_endpoint_note(tmp_path):
     assert Path(built["dump_path"]).exists()
 
 
+def test_persist_false_does_not_write_dump_and_projects_completion_laws(tmp_path):
+    repo = tmp_path / "repo"
+    (repo / ".ai-os/mcp").mkdir(parents=True)
+    (repo / ".ai-os/state").mkdir(parents=True)
+    (repo / ".ai-os/mcp/SEAT-MAP.json").write_text(json.dumps({"seats": {}}), encoding="utf-8")
+    (repo / ".ai-os/state/TASKS.json").write_text(json.dumps({"tasks": []}), encoding="utf-8")
+    (repo / ".ai-os/state/LOCKS.json").write_text(json.dumps({"locks": []}), encoding="utf-8")
+    built = build_council_member_state(repo, Routes(_base_seats()), persist=False)
+    assert built["persisted"] is False
+    assert built["dump_path"] is None
+    assert not (repo / ".ai-os/state/COUNCIL-MEMBER-STATE.json").exists()
+    assert "LAWS_SYSTEM_VISIBLE" in built["laws"]
+    assert "NO_FAKE_DONE" in built["laws"]
+    assert "COMPLETE_ASSIGNED_WORK" in built["laws"]
+
+
 def test_unknown_presentation_not_offline():
     row = {
         "seat": "C8",

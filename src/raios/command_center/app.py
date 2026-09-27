@@ -17,6 +17,7 @@ from .actor_routing import ActorRouteRegistry
 from .council_board import CouncilBoard
 from .task_actions import latest_resource_census
 from .client_activity import ClientActivityView
+from .direct_conversation import DirectConversationPlane
 from .council_member_state import build_council_member_state
 from .operational_projection import (
     capability_projection,
@@ -36,6 +37,8 @@ from .system_surface import (
     fabric_projection,
     factory_estate_projection,
     incidents_projection,
+    integration_mesh_projection,
+    operator_laws_projection,
     reachability_projection,
     self_heal_projection,
     storage_class_projection,
@@ -79,6 +82,7 @@ CLIENT_ACTIVITY=ClientActivityView(REPO,ACTOR_ROUTES)
 COUNCIL_OPS=CouncilOperations(REPO)
 MESSAGE_WORKER=MessageWorker(REPO,RUNTIME,poll_seconds=5.0,max_messages_per_scan=50000,max_scan_seconds=30.0,routes=ACTOR_ROUTES)
 MESSAGE_WORKER.configure_workflow(COUNCIL_BOARD)
+DIRECT_PLANE=DirectConversationPlane(REPO,ACTOR_ROUTES,MESSAGE_WORKER,CLIENT_ACTIVITY)
 
 @asynccontextmanager
 async def lifespan(_: FastAPI):
@@ -192,8 +196,11 @@ def council_lite():
  return {"schema":"raios.council-lite.v1","active_workers":["C1","C2","C8"],
   "auto_routable":list(snap.get("auto_routable") or []),"auto_routable_count":int(snap.get("auto_routable_count") or 0),
   "registered_count":len(seats),"seats":seats}
+def load_tasks_cached():
+ from raios.command_center.board_now import load_tasks_document
+ return load_tasks_document(REPO/".ai-os/state/TASKS.json",{"tasks":[]})
 def tasks_state():
- doc=load(REPO/".ai-os/state/TASKS.json",{"tasks":[]})
+ doc=load_tasks_cached()
  tasks=doc.get("tasks") or []
  from raios.command_center.board_now import hanging_work, now_tasks
  from raios.goals.catalog import program_task_map
@@ -394,10 +401,11 @@ def live_board():
            "error":type(exc).__name__,"seats":[]}
  actors=live_actor_rows(routes); worker=MESSAGE_WORKER.status(); c8=consume_c8_wave06(REPO)
  live_pkg=consume_c8_live_package(REPO)
- with ThreadPoolExecutor(max_workers=2) as pool:
+ with ThreadPoolExecutor(max_workers=3) as pool:
   c5_f=pool.submit(http_json,C5+"/health", "GET", None, 0.8)
   mcp_f=pool.submit(http_json,MCP+"/health", "GET", None, 0.8)
   c5_code,_=c5_f.result(); mcp_code,_=mcp_f.result()
+ nr_listening=tcp(20128)
  c5_state="ONLINE" if c5_code==200 else ("UNKNOWN" if c5_code==0 else "OFFLINE")
  mcp_state="ONLINE" if mcp_code==200 else ("UNKNOWN" if mcp_code==0 else "OFFLINE")
  tasks=tasks_state(); safe=safe8_identity_decision(); sys_actor=raios_system_actor()
@@ -412,6 +420,7 @@ def live_board():
   "freshness":routes.get("freshness") or "LIVE",
   "C5":{"http":c5_code,"state":c5_state,"source":C5+"/health","timeout_ne_offline":c5_code==0},
   "MCP":{"http":mcp_code,"state":mcp_state,"source":MCP+"/health"},
+  "NINEROUTER":{"port":20128,"state":"ONLINE" if nr_listening else "OFFLINE","probe":"TCP_ONLY"},
   "COMMAND_CENTER":{"state":"ONLINE","port":8770,"source":"/health"},
   "COMMAND_FABRIC":{"worker_healthy":worker.get("healthy") is True,"source":"MESSAGE_WORKER.status","synthetic_ack":False},
   "HEADS":head_truth(canonical_head=CANONICAL_HEAD,deployed_head=os.getenv("RAIOS_DEPLOYED_HEAD") or deploy.get("canonical_head"),
@@ -443,18 +452,33 @@ def live_board():
   "self_heal":self_heal_projection(load(CONTINUITY_STATUS,{})),
   "CONTROL_PLANE_ACTIVATED":False,"SAFE8_LIVE_ACTIVATED":0,"second_task_ledger":False,
   "second_message_bus":False,"second_mcp":False,"NO_SYNTHETIC_ACK":True,"NO_FAKE_PRESENCE":True,
+  "hanging_work":tasks.get("hanging_work"),
   "MCP_SINGLETON":"PASS","TRANSPORT_SINGLE_AUTHORITY":"PASS","COGNITIVE_WAL_SINGLETON":"PASS"}
 def overview():
- services=[service("C5",8766,C5+"/health",timeout=15),service("UniversalMCP",8788,MCP+"/health"),
-  tcp_service("9Router",20128),service("NATS",4222)]
- task=tasks_state(); degraded=[x["name"] for x in services if x["state"]!="ONLINE"]
+ with ThreadPoolExecutor(max_workers=8) as pool:
+  services_f=pool.submit(lambda:[service("C5",8766,C5+"/health",timeout=2.5),service("UniversalMCP",8788,MCP+"/health"),
+   tcp_service("9Router",20128),tcp_service("NATS",4222)])
+  task_f=pool.submit(tasks_state)
+  goals_f=pool.submit(goals_state)
+  models_f=pool.submit(model_state)
+  factory_f=pool.submit(factory_state)
+  resource_f=pool.submit(resource_state)
+  council_f=pool.submit(council_state)
+  cognitive_f=pool.submit(cognitive_state)
+  authority_f=pool.submit(change_authority_state)
+  worker_f=pool.submit(MESSAGE_WORKER.status)
+  laws_f=pool.submit(operator_laws_projection,REPO)
+  services=services_f.result(); task=task_f.result(); goals=goals_f.result(); models=models_f.result()
+  factory=factory_f.result(); resources=resource_f.result(); council=council_f.result()
+  cognition=cognitive_f.result(); authority=authority_f.result(); worker=worker_f.result()
+  laws=laws_f.result()
+ degraded=[x["name"] for x in services if x["state"]!="ONLINE"]
  c5=next((x for x in services if x.get("name")=="C5"),{}) or {}
  mcp=next((x for x in services if x.get("name")=="UniversalMCP"),{}) or {}
  heads=head_truth(canonical_head=CANONICAL_HEAD,deployed_head=os.getenv("RAIOS_DEPLOYED_HEAD"),
                   runtime_head=os.getenv("RAIOS_RUNTIME_HEAD") or (c5.get("detail") or {}).get("head"),
                   actor_observed_head=os.getenv("RAIOS_ACTOR_OBSERVED_HEAD") or (mcp.get("detail") or {}).get("head"),
                   remote_head=os.getenv("RAIOS_REMOTE_HEAD","UNKNOWN"))
- models=model_state(); authority=change_authority_state(); worker=MESSAGE_WORKER.status()
  continuity=load(CONTINUITY_STATUS,{})
  health_view=runtime_health_view(services=services,worker=worker,models=models,continuity=continuity,
   ollama_listening=models.get("local_ollama_state")=="ONLINE" if models.get("local_ollama_state") in {"ONLINE","UNAVAILABLE"} else None,
@@ -462,9 +486,9 @@ def overview():
  blockers=operational_blockers(models=models,heads=heads,change_authority=authority,worker=worker,recorded_qwen=True)
  return {"generated_at":utc(),"canonical_head":CANONICAL_HEAD,"remote_head":os.getenv("RAIOS_REMOTE_HEAD","UNKNOWN"),
   "head_source":"env_or_cached_ne_subprocess","heads":heads,
-  "services":services,"tasks":task,"goals":goals_state(),"models":models,"factories":factory_state(),"resources":resource_state(),"council":council_state(),"cognitive":cognitive_state(),
+  "services":services,"tasks":task,"goals":goals,"models":models,"factories":factory,"resources":resources,"council":council,"cognitive":cognition,
   "change_authority":authority,"runtime_health":health_view,"operational_blockers":blockers,
-  "qwen_registry_blocker":QWEN_REGISTRY_BLOCKER,
+  "operator_laws":laws,"qwen_registry_blocker":QWEN_REGISTRY_BLOCKER,
   "maintenance":{"health":"HEALTHY" if not degraded else "ATTENTION","degraded":degraded,"auto_refresh":True,
    "auto_canonical_mutation":False,"self_update_policy":"LOCAL_RUNTIME_FROM_FAST_FORWARD_CANONICAL_ONLY_WITH_C1_CONFIRMATION"}}
 
@@ -476,6 +500,8 @@ class SearchIn(BaseModel):
  deep:bool=True
  limit:int=Field(default=20,ge=1,le=50)
 class CommandIn(BaseModel):text:str=Field(min_length=1,max_length=50000);targets:list[str];task_id:str|None=None;intent:str|None=None
+class DirectChatIn(BaseModel):text:str=Field(min_length=1,max_length=50000)
+class DirectReplyIn(BaseModel):text:str=Field(min_length=1,max_length=50000);actor_proof:dict[str,Any]=Field(default_factory=dict)
 class AvailabilityIn(BaseModel):
  seat:str=Field(min_length=2,max_length=4)
  state:str=Field(pattern="^(AVAILABLE|BUSY|OFFLINE|UNKNOWN)$")
@@ -567,7 +593,7 @@ def api_council():return council_state()
 @app.get("/api/council-state")
 def api_council_state():
  activity=CLIENT_ACTIVITY.snapshot(include_member_state=False)
- body=build_council_member_state(REPO,ACTOR_ROUTES,activity.get("clients",[]))
+ body=build_council_member_state(REPO,ACTOR_ROUTES,activity.get("clients",[]),persist=False)
  body["operational_blockers"]=operational_blockers(members=body.get("members") or [],recorded_qwen=True)
  body["presence_dimensions"]=["identity_bound","session_current","consumer_current","lease_current",
   "heartbeat_fresh","auto_routable","delivery_reachable","actor_ack_capable"]
@@ -721,10 +747,7 @@ def api_safe8_decision():return safe8_identity_decision()
 @app.get("/api/system-topology")
 def api_system_topology():
  auth=change_authority_state()
- plane={"schema":"raios.command-center.live-plane.v1","generated_at":utc(),
-        "canonical_head":CANONICAL_HEAD,
-        "self":{"name":"CommandCenter","port":8770,"state":"ONLINE","probe":"SELF"},
-        "services":[]}
+ plane=live_plane()
  return system_topology_projection(plane=plane,worker=MESSAGE_WORKER.status(),
   continuity=load(CONTINUITY_STATUS,{}),ollama_listening=tcp(11434),heads=auth.get("heads"),
   canonical_head=CANONICAL_HEAD,canonical_branch=auth.get("canonical_branch") or "UNKNOWN",
@@ -749,7 +772,7 @@ def api_reachability():return reachability_projection()
 def api_storage_classes():return storage_class_projection()
 @app.get("/api/incidents")
 def api_incidents():
- doc=load(REPO/".ai-os/state/TASKS.json",{"tasks":[]})
+ doc=load_tasks_cached()
  return incidents_projection(attention=operational_attention(tasks=doc.get("tasks") or []),
   worker=MESSAGE_WORKER.status())
 @app.get("/api/resources")
@@ -807,22 +830,89 @@ def command(req:CommandIn,x_raios_csrf:str|None=Header(None)):
  try:msg=MESSAGE_WORKER.enqueue("C1@COMMAND_CENTER",targets,notice,req.task_id,
   routing_modes=resolution["routing_modes"])
  except ValueError as exc:raise HTTPException(400,str(exc))
+ processed=None
+ inbox_root=getattr(MESSAGE_WORKER,"inbox",None)
+ if inbox_root is not None:
+  inbox=Path(inbox_root)/f"{msg['message_id']}.json"
+  if inbox.is_file() and hasattr(MESSAGE_WORKER,"process"):
+   try:processed=MESSAGE_WORKER.process(inbox)
+   except Exception as exc:processed={"status":"PROCESS_ERROR","error":f"{type(exc).__name__}:{exc}"}
  return {"ok":True,"delivered_to":targets,"unreachable":unreachable,
   "lock_owner":"RAIOS_SYSTEM","absent_agent_does_not_pin_files":True,
   "results":[{"targets":targets,"route":"CANONICAL_LOCAL_FABRIC",
   "routing_modes":resolution["routing_modes"],"owner_selected_unbound":resolution["owner_selected_unbound"],
-  "status":"SENT_PENDING_DELIVERY_ACK","message_id":msg["message_id"]}],
+  "status":"SENT_PENDING_DELIVERY_ACK","message_id":msg["message_id"],
+  "processed_status":None if processed is None else processed.get("status")}],
+  "processed_status":None if processed is None else processed.get("status"),
   "work_authority":False,"notice_only":True,"actor_ack_synthesized":False,
+  "interaction":False,"http_200_ne_actor_ack":True,"delivery_ack_ne_actor_ack":True,
+  "direct_chat":False,"use_direct":"/api/direct-conversations/{peer}/messages",
   "intent":notice_pack["intent"],"persisted_kind":notice_pack["persisted_kind"],
   "new_persisted_message_type":False,
   "executed":False,"promotion":False,"timestamp":utc()}
+@app.get("/api/direct-conversations")
+def api_direct_conversations():
+ return DIRECT_PLANE.list_peers(system_online=tcp(8766))
+@app.get("/api/direct-conversations/{peer}")
+def api_direct_thread(peer:str):
+ body=DIRECT_PLANE.thread(peer)
+ if not body.get("ok"):
+  raise HTTPException(400,body)
+ return body
+@app.post("/api/direct-conversations/{peer}/messages")
+def api_direct_send(peer:str,req:DirectChatIn,x_raios_csrf:str|None=Header(None)):
+ require_csrf(x_raios_csrf)
+ body=DIRECT_PLANE.send(peer=peer,text=req.text,from_seat="C1")
+ if not body.get("ok"):
+  code=400 if body.get("error")!="C5_IS_RUNTIME_USE_CHAT" else 400
+  raise HTTPException(code,body)
+ return body
+@app.post("/api/direct-conversations/{peer}/reply")
+def api_direct_reply(peer:str,req:DirectReplyIn,x_raios_csrf:str|None=Header(None)):
+ require_csrf(x_raios_csrf)
+ body=DIRECT_PLANE.reply(peer=peer,text=req.text,actor_proof=req.actor_proof)
+ if not body.get("ok"):
+  raise HTTPException(409 if body.get("error")=="PEER_NOT_LIVE_BOUND" else 400,body)
+ return body
 @app.post("/api/maintenance/diagnose")
 def diagnose(x_raios_csrf:str|None=Header(None)):
  require_csrf(x_raios_csrf); data=diagnostic_state(); return {"ok":True,"diagnosis":data,"actions_executed":[],"canonical_mutation":False}
+@app.get("/api/laws")
+def api_laws():
+ return operator_laws_projection(REPO)
+@app.get("/api/integration")
+def api_integration():
+ plane=live_plane()
+ worker=MESSAGE_WORKER.status()
+ hang=hanging_work_cached()
+ laws=operator_laws_projection(REPO)
+ c5_http=None
+ if tcp(8766):
+  c5_http,_=http_json(C5+"/health",timeout=0.8)
+ mcp=mcp_bind()
+ factory=load(FACTORY_RUNTIME_LATEST,{}) or {}
+ live_bound=0
+ cached=_ACTOR_ROUTES_CACHE.get("body")
+ if isinstance(cached, dict):
+  live_bound=len([r for r in (cached.get("seats") or []) if isinstance(r,dict) and r.get("auto_routable") is True])
+ ecology=(REPO/"src/raios/factory_fabric/model_ecology.py").is_file()
+ return integration_mesh_projection(plane=plane,worker=worker,hanging=hang,laws=laws,
+  c5_http=c5_http,mcp_http=mcp.get("http"),mcp_live=mcp.get("live") is True,
+  factory_runtime=factory if factory else None,live_bound_count=live_bound,
+  ecology_source_present=ecology,direct_second_bus=False)
+def hanging_work_cached():
+ from raios.command_center.board_now import hanging_work
+ return hanging_work((load_tasks_cached().get("tasks") or []))
 @app.get("/health")
 def health():
  worker=MESSAGE_WORKER.status()
+ laws=operator_laws_projection(REPO)
  return {"status":"ONLINE","service":"RAIOS_COMMAND_CENTER",
   "canonical_head":CANONICAL_HEAD,"message_worker":worker,
   "workflow_automation":worker.get("workflow_enabled") is True,
-  "message_worker_ne_cc_readiness":True,"timestamp":utc()}
+  "message_worker_ne_cc_readiness":True,
+  "direct_conversation":{"schema":"raios.direct-conversation.v1","second_bus":False,
+   "require_interaction":True,"all_broadcast_is_not_direct_chat":True},
+  "operator_laws":{"schema":laws.get("schema"),"count":laws.get("count"),"chat_only":False,
+   "surface":"/api/laws","ids":laws.get("ids") or []},
+  "timestamp":utc()}

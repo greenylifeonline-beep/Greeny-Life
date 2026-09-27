@@ -1,0 +1,37 @@
+{
+  "schema": "raios.receipt.v1",
+  "id": "C2-CC-PROMOTION-LAWS-INTEGRATION-20260927-03",
+  "actor": "C2-CURSOR",
+  "authority": "C1_DIRECT_ARABIC_COMPLETE_WORK_PROMOTE_CC_SYSTEM_LAWS",
+  "observed_at": "2026-09-27T17:50:00Z",
+  "transaction": "C6-WORKER-PRIORITY-20260927-03",
+  "canonical_head": "2038faf3528a3554a46494f2cb16dcc0cf8a7a09",
+  "second_command_center": false,
+  "second_message_bus": false,
+  "c6_sources_overwritten": false,
+  "tasks_fake_done": false,
+  "actor_ack_proven": false,
+  "tests": {
+    "focused": "8 passed",
+    "prior_combined": "63 passed after 3 fixes"
+  },
+  "live": {
+    "health": "ONLINE",
+    "worker_state": "ONLINE",
+    "laws_count": 12,
+    "laws_chat_only": false,
+    "api_laws": 200,
+    "fully_integrated": false,
+    "fake_integrated": false
+  },
+  "overlay_files": [
+    "app.py",
+    "index.html",
+    "system_surface.py",
+    "board_now.py",
+    "council_member_state.py",
+    "catalog.py"
+  ],
+  "handoff": ".ai-os/handoffs/20260927-203800-C2-COMMAND-CENTER-PROMOTION-LAWS-INTEGRATION.md",
+  "decision": "D-059"
+}

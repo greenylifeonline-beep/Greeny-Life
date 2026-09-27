@@ -540,8 +540,10 @@ def build_council_member_state(
     repo: Path,
     routes,
     activity_clients: list[dict[str, Any]] | None = None,
+    *,
+    persist: bool = True,
 ) -> dict[str, Any]:
-    """Build C1–C12 projection and refresh `.ai-os/state/COUNCIL-MEMBER-STATE.json`.
+    """Build C1–C12 projection. HTTP GET should pass persist=False.
 
     Pass ``activity_clients`` from ClientActivityView to avoid recursion; when omitted,
     projection uses route/external evidence only (no second registry).
@@ -590,6 +592,14 @@ def build_council_member_state(
             "DELIVERY_ACK_NE_ACTOR_ACK",
             "C5_RUNTIME_NE_SEAT_PRESENCE",
             "NO_COLLAPSED_ONLINE",
+            "COMPLETE_ASSIGNED_WORK",
+            "NO_FAKE_RESULT",
+            "NO_FAKE_DONE",
+            "NO_HANGING_WITHOUT_NOTICE",
+            "LAWS_SYSTEM_VISIBLE",
+            "NO_DUPLICATION",
+            "NO_ABBREVIATION",
+            "NO_CONFLICT",
         ],
         "members": members,
         "by_seat": {m["seat"]: m for m in members},
@@ -604,8 +614,13 @@ def build_council_member_state(
         },
     }
     dump_path = repo / ".ai-os" / "state" / "COUNCIL-MEMBER-STATE.json"
-    _atomic(dump_path, payload)
-    payload["dump_path"] = str(dump_path)
+    if persist:
+        _atomic(dump_path, payload)
+        payload["dump_path"] = str(dump_path)
+        payload["persisted"] = True
+    else:
+        payload["dump_path"] = None
+        payload["persisted"] = False
     return payload
 
 

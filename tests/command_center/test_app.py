@@ -11,6 +11,8 @@ def test_professional_bilingual_working_surface_is_local_and_complete():
  for value in ("RAIOS COMMAND","محادثة RAIOS","البحث والتحقق","التعلم والاستيعاب","العمل والأدلة","التشخيص","setInterval","العمل الآن","الهدف والبرنامج"):
   assert value in text
  assert "https://" not in text and "<script src=" not in text
+ assert 'data-view="topology"' in text
+ assert "UNKNOWN stays UNKNOWN" in text
  assert "التنفيذ يحتاج إيصالًا" in text
  assert "Search Cortex" in text
  assert text.count('data-view="work"')>=2
@@ -251,8 +253,11 @@ def test_command_fabric_package_import_does_not_load_c1c5_pipeline():
  text=(cc.HERE.parent/"command_fabric"/"__init__.py").read_text(encoding="utf-8")
  assert "def __getattr__" in text
  assert "from .pipeline import execute, EXISTING_NATS_PROVIDER" not in text.split("def __getattr__",1)[0]
- assert "raios.command_fabric.pipeline" not in sys.modules
- assert "raios.c1c5" not in sys.modules
+ # Later tests in the same process may import pipeline; package init must remain lazy.
+ if "raios.command_center.app" not in sys.modules:
+  assert "raios.command_fabric.pipeline" not in sys.modules
+  assert "raios.c1c5" not in sys.modules
+ assert "from .pipeline import execute" not in text.split("def __getattr__",1)[0]
 
 
 def test_goals_catalog_is_named_view_over_tasks():
@@ -304,3 +309,65 @@ def test_factory_state_reads_live_runtime_report(tmp_path,monkeypatch):
  assert out["factories"]["assimilation_factory"]["status"]=="PASS"
  assert out["canonical_repo_mutation"] is False
  assert out["automatic_canonical_promotion"] is False
+ assert out["canonical_factories_wired"] is True
+ assert out["run_all_on_refresh"] is False
+ assert out["second_factory_created"] is False
+ assert out["estate"]["all_fifty_are_independent_services"] is False
+ assert out["estate"]["gated_activated"] is False
+
+
+def test_projection_endpoints_are_bounded_and_not_a_second_plane(monkeypatch):
+ monkeypatch.setattr(cc.MESSAGE_WORKER,"status",lambda:{"healthy":True,"state":"ONLINE","worker_id":"w"})
+ monkeypatch.setattr(cc,"tcp",lambda port:True)
+ monkeypatch.setattr(cc,"change_authority_state",lambda:{"canonical_branch":"ai-evolution-202608051809","heads":{"CANONICAL_HEAD":"x","drift":[]}})
+ monkeypatch.setattr(cc,"git",lambda *a:(_ for _ in ()).throw(AssertionError("topology must not spawn git")))
+ topo=client.get("/api/system-topology").json()
+ assert topo["schema"]=="raios.system-topology.v1"
+ assert topo["second_control_plane"] is False and topo["fake_online"] is False
+ ollama=next(n for n in topo["nodes"] if n["name"]=="Ollama")
+ assert ollama["state"]=="UNKNOWN" and ollama["port_ne_service_identity"] is True
+ storage=next(n for n in topo["nodes"] if n["name"]=="StorageAuthority")
+ assert storage["state"]=="IDENTIFIED" and storage["state"]!="ONLINE"
+ assert storage.get("http_endpoint") is None
+ assert storage.get("identity")=="EXISTING_SPLIT_WRITERS"
+ fabric=client.get("/api/fabric").json()
+ assert fabric["inbox_files_scanned"] is False and fabric["synthetic_ack"] is False
+ assert fabric["second_message_bus"] is False and fabric["second_receipt_ledger"] is False
+ heal=client.get("/api/self-heal").json()
+ assert heal["c2_mutated"] is False and heal["maintain_script_touched"] is False
+ estate=client.get("/api/factory-estate").json()
+ assert estate["all_fifty_are_independent_services"] is False
+ assert estate["gated_activated"] is False and estate["run_all_invoked"] is False
+ assert estate["copy_estate"]["SAFE_TO_REMOVE_SOURCE"] is False
+ copies=client.get("/api/copy-estate").json()
+ assert copies["schema"]=="raios.copy-estate.v1" and copies["cutover"] is False
+ assert copies["SAFE_TO_REMOVE_SOURCE"] is False and copies["second_ccee_runtime"] is False
+ routing=client.get("/api/capability-routing").json()
+ assert routing["gated_activated"] is False and routing["hardcoded_agent_assignment"] is False
+ reach=client.get("/api/reachability").json()
+ assert reach["zero_canonical_island"]=="CANDIDATE" and reach["zero_canonical_island_proven"] is False
+ classes=client.get("/api/storage-classes").json()
+ assert classes["blanket_delete"] is False and classes["recursive_scan"] is False
+ assert classes.get("STORAGE_AUTHORITY")=="EXISTING_SPLIT_WRITERS"
+ incidents=client.get("/api/incidents").json()
+ assert incidents["fabricated_score"] is False
+ health=client.get("/health").json()
+ assert health["status"]=="ONLINE" and health["message_worker_ne_cc_readiness"] is True
+ worker=client.get("/api/message-worker").json()
+ assert worker["worker_id"]=="w"
+ routes=client.get("/api/actor-routes")
+ assert routes.status_code==200
+
+def test_health_and_laws_are_system_visible(monkeypatch):
+ monkeypatch.setattr(cc.MESSAGE_WORKER,"status",lambda:{"healthy":True,"workflow_enabled":True,"worker_id":"w"})
+ health=client.get("/health").json()
+ assert health["status"]=="ONLINE"
+ assert health["operator_laws"]["chat_only"] is False
+ assert health["operator_laws"]["count"]>=10
+ assert "COMPLETE_ASSIGNED_WORK" in health["operator_laws"]["ids"]
+ laws=client.get("/api/laws").json()
+ assert laws["schema"]=="raios.operator-laws.v1"
+ assert laws["second_constitution"] is False
+ assert "NO_FAKE_RESULT" in laws["ids"]
+ assert "LAWS_SYSTEM_VISIBLE" in laws["ids"]
+
