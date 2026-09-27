@@ -10,10 +10,12 @@ from raios.ai_gateway.router import ModelRouter
 
 
 def _repo_root() -> Path:
-    env = os.environ.get("RAIOS_REPO_ROOT")
-    if env:
-        return Path(env).resolve()
-    # src/raios/c5_gateway/model_fabric.py -> repo root
+    for key in ("RAIOS_CANONICAL_REPO", "RAIOS_REPO_ROOT"):
+        env = os.environ.get(key)
+        if env:
+            return Path(env).resolve()
+    # src/raios/c5_gateway/model_fabric.py -> repo root when running from the tree.
+    # Deployed copies live under ~/.raios/runtime/c5/app; parents[3] is not the repo.
     return Path(__file__).resolve().parents[3]
 
 
@@ -26,11 +28,12 @@ class C5ModelFabric:
     def __init__(self, repo: Path | None = None) -> None:
         self.repo = (repo or _repo_root()).resolve()
         self.router = ModelRouter(self.repo)
-        self.student_default = (
-            os.getenv("RAIOS_STUDENT_MODEL")
-            or os.getenv("RAIOS_MAIN_CORTEX")
-            or "qwen3:0.6b"
-        )
+        student = os.getenv("RAIOS_STUDENT_MODEL") or "qwen3:0.6b"
+        if student.strip().lower().startswith("qwen3.6:35b"):
+            student = "qwen3:0.6b"
+        self.student_default = student
+        self.main_cortex_identity = os.getenv("RAIOS_MAIN_CORTEX") or "qwen3.6:35b-a3b"
+        self.main_cortex_state = "HOLD"
 
     def chat(
         self,

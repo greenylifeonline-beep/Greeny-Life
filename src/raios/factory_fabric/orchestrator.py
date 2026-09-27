@@ -134,10 +134,10 @@ def foundry_probe(max_files: int = 120, case_limit: int = 120) -> dict[str, Any]
     }
 
 
-def model_ecology_probe() -> dict[str, Any]:
+def model_ecology_probe(*, live_accounts: bool | None = None) -> dict[str, Any]:
     from .model_ecology import classify_local_models
 
-    result = classify_local_models(repo_root(), runtime_root())
+    result = classify_local_models(repo_root(), runtime_root(), live_accounts=live_accounts)
     return {
         "factory": "MODEL_ECOLOGY",
         "status": "PASS",
@@ -146,6 +146,16 @@ def model_ecology_probe() -> dict[str, Any]:
         "runtime_dependency_count": result["runtime_dependency_count"],
         "remote_migration_required_count": result["remote_migration_required_count"],
         "source_removable_true_count": result["source_removable_true_count"],
+        "main_cortex": result.get("main_cortex"),
+        "student_runtime_model": result.get("student_runtime_model"),
+        "model_fabric": result.get("model_fabric"),
+        "ninerouter": result.get("ninerouter"),
+        "factories_fed": result.get("factories_fed"),
+        "account_bindings": result.get("account_bindings"),
+        "copy_estate_model_symbols": result.get("copy_estate_model_symbols"),
+        "PAID_RESOURCE_CREATED": False,
+        "GPU_SESSION_STARTED": False,
+        "copy_estate_source_cutover": False,
         "report_path": result["report_path"],
     }
 
@@ -194,7 +204,7 @@ def run_all(*, max_files: int = 120, case_limit: int = 120, live_resource: bool 
         "cognitive_factory": cognitive_factory_probe(),
         "training_factory": training_factory_probe(),
         "expert_foundry": foundry_probe(max_files=max_files, case_limit=case_limit),
-        "model_ecology": model_ecology_probe(),
+        "model_ecology": model_ecology_probe(live_accounts=live_resource),
     }
     all_pass = all(str(x.get("status", "")).startswith("PASS") for x in results.values())
     report = {

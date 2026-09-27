@@ -17,6 +17,12 @@ def test_raios_c5_uses_single_model_fabric_as_default_inference_path():
     assert '"model_fabric":True' in text
 
 
+def test_student_default_never_falls_back_to_main_cortex():
+    text = (ROOT / "src" / "raios" / "c5_gateway" / "model_fabric.py").read_text(encoding="utf-8")
+    assert "or os.getenv(\"RAIOS_MAIN_CORTEX\")" not in text
+    assert 'self.main_cortex_state = "HOLD"' in text
+
+
 def test_legacy_ollama_client_is_fallback_not_primary_chat_path():
     text = source()
     helper = text.split("def _raios_inference(", 1)[1].split("def execute_chat(", 1)[0]

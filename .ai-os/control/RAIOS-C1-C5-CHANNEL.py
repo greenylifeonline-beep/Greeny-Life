@@ -1,4 +1,4 @@
-"""Thin C1@AG → C5-PUBLIC operator channel. Existing USER-ROUTER only. Local 8766."""
+﻿"""Thin C1@AG -> C5-PUBLIC operator channel. Existing USER-ROUTER only. Local 8766."""
 from __future__ import annotations
 
 import hashlib
@@ -15,7 +15,7 @@ from pathlib import Path
 os.environ.setdefault("PYTHONUTF8", "1")
 os.environ.setdefault("PYTHONIOENCODING", "utf-8")
 
-ROOT = Path(r"C:\Users\Ghanam\Documents\Codex\Greeny-Life-Repair")
+ROOT = Path(r"C:\Users\Ghanam\Documents\Codex\Greeny-Life")
 CONTROL = ROOT / ".ai-os" / "control"
 ROUTER = CONTROL / "RAIOS-USER-ROUTER-V1.py"
 SESSION = CONTROL / "C1-C5-SESSION.json"
@@ -34,7 +34,7 @@ CLAIM_RE = re.compile(
     r"(?i)\b(executed|started|initialized|running|completed|confirmed|deployed|"
     r"connected|repaired|wrote|changed|initialized with distributed|"
     r"distributed tools|parallel execution confirmed)\b|"
-    r"تم التنفيذ|تم التشغيل|تم التهيئة|نفّذت|نفذت الآن"
+    + "تم التنفيذ|تم التشغيل|تم التهيئة|نفّذت|نفذت الآن"
 )
 
 
@@ -93,6 +93,9 @@ def compact_context():
         for t in tasks
         if t.get("id")
     ) or "UNKNOWN"
+    hanging_open = sum(
+        1 for t in tasks if str(t.get("status") or "").upper() in {"READY", "IN_PROGRESS", "BLOCKED"}
+    )
     active_locks = "; ".join(
         f"{x.get('task_id')}:{x.get('scope')}"
         for x in locks
@@ -135,6 +138,8 @@ def compact_context():
             f"CURRENT_BRANCH={git_one('branch', '--show-current')}",
             f"CURRENT_PHASE={v9.get('current_phase') or 'UNKNOWN'}",
             "CURRENT_BLOCKERS=C5_HTTP_CHAT_DOES_NOT_EXECUTE_GL_TASKS;C5_HAS_NO_TOOL_RUNTIME_ON_THIS_TURN",
+            f"CURRENT_HANGING_OPEN_COUNT={hanging_open}",
+            "LAW=NO_HANGING_TASK_WITHOUT_SYSTEM_NOTICE",
             "CURRENT_TRUE_FLAGS=" + (",".join(true_flags) or "UNKNOWN"),
             "CURRENT_FALSE_FLAGS=" + ";".join(false_vals),
             f"CURRENT_ACTIVE_TASKS={board}",
@@ -495,7 +500,7 @@ def interactive():
     router = load_router()
     sess = load_session()
     corr = sess["correlation_id"]
-    print("RAIOS C1↔C5  local HTTP 127.0.0.1:8766")
+    print("RAIOS C1<->C5  local HTTP 127.0.0.1:8766")
     print(f"SENDER=C1@AG  RECEIVER=C5@AG  SESSION_ID={sess.get('session_id')}  CORRELATION={corr}")
     print("Plain chat stays chat. Task envelopes use schema raios.c1c5.task-envelope.v1")
     print("Ctrl+C exits. /new starts a fresh logical session.")
@@ -549,10 +554,15 @@ def prove():
         "C1_C5_CHANNEL_LIVE": live,
         "TRANSPORT_USED": "HTTP_FALLBACK",
         "CANONICAL_NATS_USED": False,
+        "C1_C5_CANONICAL_FABRIC_PROVEN": False,
+        "HTTP_PRIMARY": True,
+        "USER_ROUTER_PRESENT": ROUTER.is_file(),
         "correlation_id": corr,
+        "observed_at": utc(),
         "turn1": {"message_id": r1.get("message_id"), "status": r1.get("status"), "response": v1},
         "turn2": {"message_id": r2.get("message_id"), "status": r2.get("status"), "response": v2},
     }
+    CHANNEL_PROOF.write_text(json.dumps(report, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
     print(json.dumps(report, ensure_ascii=False, indent=2))
     print("\nC5> [1]\n" + v1 + "\n\nC5> [2]\n" + v2)
     return 0 if live else 2
@@ -587,6 +597,7 @@ def accept4():
             rec["PASS"] = rec["PASS"] and ("C5@AG" in rec["RESPONSE"]) and not re.search(
                 r"GL-00[2-4]", rec["RESPONSE"], re.I
             )
+
         if "هل نفذت" in msg:
             rec["PASS"] = rec["PASS"] and rec["RESPONSE"].lstrip().startswith("NOT_PROVEN")
         if "الأدلة" in msg or "ادلة" in msg:

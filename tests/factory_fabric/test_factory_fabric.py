@@ -12,7 +12,7 @@ os.environ.setdefault("NO_LLM_CALLS", "true")
 os.environ.setdefault("RAIOS_RESOURCE_LIVE", "0")
 
 from raios.factory_fabric.assimilation import build_curriculum
-from raios.factory_fabric.state_import import DonorRoot, import_factory_estate
+from raios.factory_fabric.state_import import DonorRoot, import_factory_estate, load_imported_jsonl_events
 
 
 def test_estate_import_is_content_addressed_and_source_read_only(tmp_path):
@@ -54,6 +54,30 @@ def test_assimilation_consumes_imported_event_stream(tmp_path):
     assert report["unique_materials"] == 2
     assert report["assimilation_units"] >= 1
     assert report["source_dependency"] == "EXTERNALIZED_FACTORY_ESTATE"
+
+
+def test_estate_import_replaces_superseded_append_only_snapshot(tmp_path):
+    donor = tmp_path / "donor"
+    donor.mkdir()
+    source = donor / "training-events.jsonl"
+    source.write_text(json.dumps({"training_turn_id": "T1"}) + "\n", encoding="utf-8")
+    (donor / "zzz-after-training.txt").write_text("unrelated", encoding="utf-8")
+    runtime = tmp_path / "runtime"
+    first = import_factory_estate(runtime, [DonorRoot("c5-live-runtime", donor)])
+    first_entry = next(x for x in first["entries"] if x.get("source_relative") == "training-events.jsonl")
+    first_object = Path(first_entry["object_path"])
+
+    with source.open("a", encoding="utf-8") as handle:
+        handle.write(json.dumps({"training_turn_id": "T2"}) + "\n")
+
+    second = import_factory_estate(runtime, [DonorRoot("c5-live-runtime", donor)])
+    current = [x for x in second["entries"] if x.get("source_relative") == "training-events.jsonl"]
+    assert len(current) == 1
+    assert current[0]["source_sha256"] != first_entry["source_sha256"]
+    assert Path(current[0]["object_path"]).is_file()
+    assert not first_object.exists()
+    rows = load_imported_jsonl_events(runtime)
+    assert [row["event"]["training_turn_id"] for row in rows] == ["T1", "T2"]
 
 
 def test_estate_import_can_select_reference_files(tmp_path):
@@ -178,6 +202,50 @@ def test_model_ecology_parses_ollama_sizes_before_classification():
     assert parse_size_text("unknown") == 0
 
 
+def test_main_cortex_is_never_selected_as_student(monkeypatch):
+    from raios.factory_fabric import model_ecology
+
+    monkeypatch.setenv("RAIOS_STUDENT_MODEL", "qwen3.6:35b-a3b")
+
+    class _Resp:
+        def __enter__(self):
+            return self
+
+        def __exit__(self, *args):
+            return False
+
+        def read(self):
+            return b'{"status":"ONLINE","live_engines":["qwen3:0.6b"]}'
+
+    monkeypatch.setattr(model_ecology.urllib.request, "urlopen", lambda *a, **k: _Resp())
+    assert model_ecology.runtime_model() == "qwen3:0.6b"
+    rows = model_ecology.classify_records(
+        [{"name": "qwen3.6:35b-a3b", "size_bytes": 23 * 1024**3}],
+        runtime_model="qwen3:0.6b",
+    )
+    assert rows[0]["canonical_role"] == "MAIN_CORTEX_C1_OWNED"
+    assert rows[0]["currently_bound"] is False
+
+
+def test_runtime_model_reads_live_engines(monkeypatch):
+    from raios.factory_fabric import model_ecology
+
+    class _Resp:
+        def __enter__(self):
+            return self
+
+        def __exit__(self, *args):
+            return False
+
+        def read(self):
+            return b'{"status":"ONLINE","live_engines":["qwen3:0.6b"],"model_fabric_ready":true}'
+
+    monkeypatch.delenv("RAIOS_C5_MODEL", raising=False)
+    monkeypatch.delenv("RAIOS_STUDENT_MODEL", raising=False)
+    monkeypatch.setattr(model_ecology.urllib.request, "urlopen", lambda *a, **k: _Resp())
+    assert model_ecology.runtime_model() == "qwen3:0.6b"
+
+
 def test_orchestrator_model_ecology_module_is_present():
     from raios.factory_fabric import model_ecology
 
@@ -245,3 +313,55 @@ def test_resource_factory_probe_defaults_to_non_live_overlay():
     assert report["control"]["provider_mutation"] is False
     assert report["model_factory"]["gpu_session_started"] is False
     assert report["model_factory"]["paid_resource_created"] is False
+
+
+def test_estate_import_compacts_historical_append_only_debt_when_latest_known(tmp_path):
+    donor = tmp_path / "donor"
+    donor.mkdir()
+    source = donor / "training-events.jsonl"
+    runtime = tmp_path / "runtime"
+    source.write_text('{"training_turn_id":"T1"}\n', encoding="utf-8")
+    historical_bytes = source.read_bytes()
+    import_factory_estate(runtime, [DonorRoot("c5-live-runtime", donor)])
+    source.write_text('{"training_turn_id":"T1"}\n{"training_turn_id":"T2"}\n', encoding="utf-8")
+    second = import_factory_estate(runtime, [DonorRoot("c5-live-runtime", donor)])
+    latest_hash = next(x["source_sha256"] for x in second["entries"] if x.get("source_relative") == "training-events.jsonl")
+    # Reintroduce historical debt while the latest object remains known.
+    manifest = runtime / "estate" / "manifests" / "FACTORY-ESTATE.json"
+    data = json.loads(manifest.read_text(encoding="utf-8"))
+    old_objects = list((runtime / "estate" / "objects").glob("*.jsonl"))
+    assert len(old_objects) == 1  # normal path already compacted
+    import hashlib
+    old_bytes = historical_bytes
+    old_hash = hashlib.sha256(old_bytes).hexdigest()
+    old_copy = runtime / "estate" / "objects" / (old_hash + ".jsonl")
+    old_copy.write_bytes(old_bytes)
+    data["entries"].append({"donor":"c5-live-runtime","source_root":str(donor),"source_relative":"training-events.jsonl","source_sha256":old_hash,"size_bytes":old_copy.stat().st_size,"object_path":str(old_copy),"status":"IMPORTED"})
+    manifest.write_text(json.dumps(data), encoding="utf-8")
+    third = import_factory_estate(runtime, [DonorRoot("c5-live-runtime", donor)])
+    current = [x for x in third["entries"] if x.get("source_relative") == "training-events.jsonl"]
+    assert [x["source_sha256"] for x in current] == [latest_hash]
+    assert not old_copy.exists()
+
+
+def test_compaction_defers_locked_object_delete_without_failing_import(tmp_path, monkeypatch):
+    donor = tmp_path / "donor"
+    donor.mkdir()
+    source = donor / "training-events.jsonl"
+    runtime = tmp_path / "runtime"
+    source.write_text('{"training_turn_id":"T1"}\n', encoding="utf-8")
+    first = import_factory_estate(runtime, [DonorRoot("c5-live-runtime", donor)])
+    old = Path(first["entries"][0]["object_path"])
+    source.write_text('{"training_turn_id":"T1"}\n{"training_turn_id":"T2"}\n', encoding="utf-8")
+    real_unlink = Path.unlink
+    def locked_unlink(path, *args, **kwargs):
+        if path == old:
+            raise PermissionError(32, "sharing violation", str(path))
+        return real_unlink(path, *args, **kwargs)
+    monkeypatch.setattr(Path, "unlink", locked_unlink)
+    result = import_factory_estate(runtime, [DonorRoot("c5-live-runtime", donor)])
+    assert result["pending_delete_count"] == 1
+    assert str(old) in result["pending_delete"]
+    assert old.exists()
+    current = [x for x in result["entries"] if x.get("source_relative") == "training-events.jsonl"]
+    assert len(current) == 1

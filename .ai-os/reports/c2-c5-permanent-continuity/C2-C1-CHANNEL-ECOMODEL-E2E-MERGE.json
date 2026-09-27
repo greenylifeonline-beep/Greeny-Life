@@ -1,0 +1,107 @@
+{
+  "schema": "raios.c2.c1-channel-ecomodel-e2e-merge.v1",
+  "authority": "C1",
+  "actor": "C2-CURSOR",
+  "observed_at": "2026-09-27T02:16:27.688977+00:00",
+  "canonical_head": "0324e666dd7768f78858f59b3c83039125c26c27",
+  "canonical_branch": "ai-evolution-202608051809",
+  "law": [
+    "DISCOVER_PROVE_REUSE_UPGRADE_UNIFY_LINK",
+    "REPAIR_IN_PLACE",
+    "NO_HANGING_TASK_WITHOUT_SYSTEM_NOTICE",
+    "NO_SECOND_CONTROL_PLANE",
+    "SAFE_TO_REMOVE_SOURCE_FALSE",
+    "CUTOVER_EXECUTED_FALSE"
+  ],
+  "c1_raios_communication": {
+    "priority": 1,
+    "C1_C5_CHANNEL_LIVE": true,
+    "PROVEN_E2E": true,
+    "USER_ROUTER_PRESENT": true,
+    "USER_ROUTER": ".ai-os/control/RAIOS-USER-ROUTER-V1.py",
+    "CHANNEL": ".ai-os/control/RAIOS-C1-C5-CHANNEL.py",
+    "proof": ".ai-os/control/C1-C5-CHANNEL-PROOF.json",
+    "transport": "HTTP_FALLBACK",
+    "C1_C5_CANONICAL_FABRIC_PROVEN": false,
+    "arabic_firewall_repaired": true,
+    "channel_proof_persisted": true,
+    "correlation_id": "COR-C1C5-PROOF-2026-09-27T021511.637437+0000",
+    "fabric_notice_to_c1": "MSG-1790475484445992-c6984494",
+    "actor_ack_synthesized": false
+  },
+  "ecomodel": {
+    "canonical": "src/raios/factory_fabric/model_ecology.py",
+    "probe": "PASS",
+    "local_model_count": 1,
+    "runtime_dependency_count": 1,
+    "models": ["qwen3:0.6b"],
+    "canonical_role": "ACTIVE_RUNTIME_MODEL",
+    "currently_bound": true,
+    "reads_live_engines": true,
+    "auto_promote": false,
+    "model_deleted": false,
+    "report": "C:\\Users\\Ghanam\\.raios\\runtime\\factory-fabric\\model-ecology\\MODEL-ECOLOGY.json"
+  },
+  "model_fabric": {
+    "canonical": "src/raios/c5_gateway/model_fabric.py",
+    "c5_health": "ONLINE",
+    "model_fabric_ready": true,
+    "live_engine_count": 1,
+    "live_engines": ["qwen3:0.6b"],
+    "main_cortex_state": "HOLD",
+    "second_gateway": false
+  },
+  "copy_estate": {
+    "copies_total": 21,
+    "cutover": false,
+    "SAFE_TO_REMOVE_SOURCE": false,
+    "capabilities_wired": 6,
+    "unique_value_unwired_count": 39,
+    "merge_executed": false,
+    "models_merged_via": [
+      "src/raios/factory_fabric/model_ecology.py",
+      "src/raios/c5_gateway/model_fabric.py"
+    ]
+  },
+  "hanging_work": {
+    "schema": "raios.hanging-work.v1",
+    "open_count": 53,
+    "in_progress_count": 8,
+    "blocked_count": 0,
+    "ready_unclaimed_count": 44,
+    "stale_in_progress": [
+      "RAIOS-LONG-HORIZON-TASK-BOARD-20260904-01",
+      "RAIOS-TRANSACTIONAL-DEPLOYMENT-20260906-01",
+      "RAIOS-COMMAND-FABRIC-ATTENTION-FOLLOWUP-20260907-01",
+      "RAIOS-CNS-RUNTIME-DEPENDENCY-DEPLOY-20260908-01",
+      "RAIOS-COUNCIL-MEMBER-STATE-RUNTIME-DEPENDENCY-20260908-01",
+      "RAIOS-CANONICAL-CONVERGENCE-001",
+      "RAIOS-UCF-PROVIDER-OWNED-SEAT-LIFECYCLE-20260927-01",
+      "RAIOS-GOV-AUTHORITY-CONTINUITY-001"
+    ],
+    "mutated_tasks_ledger": false,
+    "fake_done": false,
+    "system_informed": true,
+    "live_command_center_projection": "SOURCE_READY_DEPLOYED_CC_STILL_OLD_UNTIL_C1_CUTOVER",
+    "surfaces": [
+      "src/raios/command_center/board_now.py#hanging_work",
+      "GET /api/tasks hanging_work (after CC redeploy)",
+      "C1-C5 grounding CURRENT_HANGING_OPEN_COUNT",
+      "raios.system.hanging_work capability"
+    ]
+  },
+  "validation": {
+    "pytest_focused": "57 passed",
+    "C5_HEALTH": "ONLINE",
+    "ECOMODEL_PROBE": "PASS",
+    "C1_C5_CHANNEL_LIVE": true
+  },
+  "not_done": [
+    "53 open TASKS.json rows remain; informed, not falsely closed",
+    "39 unique copy symbols remain RETAINED_CATALOG; C8 cutover unauthorized",
+    "Command Center live :8770 still old code until C1 cutover",
+    "Main Cortex qwen3.6:35b-a3b HOLD",
+    "Natural RAIOS-C5-Permanent two consecutive LastResult=0 still unproven from prior continuity wave",
+    "NATS not primary; Command Fabric E2E not claimed"
+  ]
+}

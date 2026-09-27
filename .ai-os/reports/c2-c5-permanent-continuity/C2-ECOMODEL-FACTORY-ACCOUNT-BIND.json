@@ -1,0 +1,111 @@
+{
+  "schema": "raios.c2.ecomodel-factory-account-bind.v1",
+  "actor": "C2-CURSOR",
+  "authority": "C1_ARABIC_ORDER_CLOSE_HOLD_FEED_ACCOUNTS",
+  "observed_at": "2026-09-27T02:45:00Z",
+  "canonical_head": "0324e666dd7768f78858f59b3c83039125c26c27",
+  "PAID_RESOURCE_CREATED": false,
+  "GPU_SESSION_STARTED": false,
+  "main_cortex": {
+    "identity": "qwen3.6:35b-a3b",
+    "owner": "C1",
+    "state": "HOLD",
+    "student_forbidden": true,
+    "currently_bound": false,
+    "weights_present": false,
+    "closed_as": "LAW_NOT_RUNTIME",
+    "model_fabric_student_fallback_to_main_cortex_removed": true
+  },
+  "ecomodel": {
+    "schema": "raios.model-ecology.v2",
+    "live_accounts": true,
+    "status": "PASS",
+    "local_model_count": 26,
+    "student_runtime_model": "qwen3:0.6b",
+    "roles": {
+      "ACTIVE_RUNTIME_MODEL": 1,
+      "RETAINED_CATALOG": 23,
+      "REMOTE_ACCOUNT_VISIBLE": 1,
+      "MAIN_CORTEX_C1_OWNED": 1
+    },
+    "copy_estate_model_symbols": 23,
+    "copy_estate_source_cutover": false,
+    "SAFE_TO_REMOVE_SOURCE": false,
+    "report_path": "C:\\Users\\Ghanam\\.raios\\runtime\\factory-fabric\\model-ecology\\MODEL-ECOLOGY.json",
+    "factories_fed": [
+      "assimilation_factory",
+      "cognitive_factory",
+      "expert_foundry",
+      "model_ecology",
+      "resource_factory",
+      "training_factory"
+    ]
+  },
+  "model_fabric": {
+    "c5_status": "ONLINE",
+    "ready": true,
+    "live_engines": ["qwen3:0.6b"],
+    "live_engine_count": 1
+  },
+  "ninerouter": {
+    "tcp_open": true,
+    "bind": "127.0.0.1:20128",
+    "RESOURCE_AUTHORITY": false,
+    "http_catalog": "UNPROVEN_OPEN_CONNECTIONS",
+    "continuity_proof": "TCP_LISTENER",
+    "restarted": false
+  },
+  "account_bindings": {
+    "KAGGLE_C1": "PARTIAL_BOUND",
+    "KAGGLE_PARTNER": "AUTH_REQUIRED",
+    "ORACLE_01": "AUTH_REQUIRED",
+    "LIGHTNING_01": "AUTH_REQUIRED",
+    "LIGHTNING_PARTNER": "AUTH_REQUIRED",
+    "COLAB_01": "AUTH_REQUIRED",
+    "MODAL_01": "AUTH_REQUIRED",
+    "MODAL_PARTNER": "AUTH_REQUIRED",
+    "LOCAL_AG": "REACHABLE",
+    "NINEROUTER": "LISTENER_OK_HTTP_UNPROVEN"
+  },
+  "command_center": {
+    "full_transactional_cutover": false,
+    "c6_transaction_preserved": "C6-WORKER-PRIORITY-20260927-03",
+    "c6_owned_files_copied": false,
+    "surgical_hanging_work_overlay": true,
+    "live_hanging_work": {
+      "present": true,
+      "open_count": 54,
+      "in_progress_count": 9,
+      "ready_unclaimed_count": 44,
+      "mutated_tasks_ledger": false
+    }
+  },
+  "continuity_two_natural_cycles": {
+    "closed": false,
+    "task": "RAIOS-C5-Permanent",
+    "status": "Running",
+    "last_result": -2147020576,
+    "last_result_class": "IGNORE_NEW_INSTANCE_RUNNING",
+    "pid_killed": false,
+    "system_informed": true
+  },
+  "tests": {
+    "focused": "36 passed",
+    "files": [
+      "tests/factory_fabric/test_factory_fabric.py",
+      "tests/factory_fabric/test_model_estate_binding.py",
+      "tests/c5_gateway/test_raios_model_fabric_default.py",
+      "tests/command_center/test_live_activation.py",
+      "tests/command_center/test_copy_estate.py"
+    ]
+  },
+  "law": [
+    "MAIN_CORTEX_NE_STUDENT",
+    "EXISTING_ACCOUNTS_ONLY",
+    "NO_PAID_RESOURCE_CREATED",
+    "NINEROUTER_NE_RESOURCE_AUTHORITY",
+    "COPY_ESTATE_EXTRACT_NE_DELETE",
+    "NO_HANGING_TASK_WITHOUT_SYSTEM_NOTICE",
+    "DO_NOT_OVERWRITE_C6_MESSAGE_WORKER"
+  ]
+}

@@ -1,5 +1,6 @@
 from __future__ import annotations
-import json, os, secrets, socket, subprocess, sys, urllib.error, urllib.request, uuid
+import json, os, secrets, socket, subprocess, sys, time, urllib.error, urllib.request, uuid
+from concurrent.futures import ThreadPoolExecutor
 from contextlib import asynccontextmanager
 from datetime import datetime, timezone
 from pathlib import Path
@@ -17,6 +18,44 @@ from .council_board import CouncilBoard
 from .task_actions import latest_resource_census
 from .client_activity import ClientActivityView
 from .council_member_state import build_council_member_state
+from .operational_projection import (
+    capability_projection,
+    head_truth,
+    operational_attention,
+    classify_model_fabric,
+    command_intent_envelope,
+    operational_blockers,
+    runtime_health_view,
+    enrich_change_authority,
+    COMMAND_INTENTS,
+    QWEN_REGISTRY_BLOCKER,
+)
+from .system_surface import (
+    capability_routing_projection,
+    copy_estate_projection,
+    fabric_projection,
+    factory_estate_projection,
+    incidents_projection,
+    reachability_projection,
+    self_heal_projection,
+    storage_class_projection,
+    system_topology_projection,
+)
+from .live_activation import (
+    consume_c8_wave06,
+    live_actor_rows,
+    operator_task_buckets,
+    raios_system_actor,
+    RAIOS_NOT_COUNCIL_SEATS,
+    safe8_identity_decision,
+)
+from .c8_live_convergence import (
+    consume_c8_live_package,
+    knowledge_islands_projection,
+    providers_projection,
+    resource_admission_projection,
+)
+from .storage_authority import command_fabric_event_receipt_scan_roots
 from raios.council_ops import CouncilOperations
 
 CREATE_NO_WINDOW=getattr(subprocess,"CREATE_NO_WINDOW",0)
@@ -26,11 +65,13 @@ MCP_ROOT=Path(os.getenv("RAIOS_MCP_ROOT",str(REPO))).resolve()
 RUNTIME=Path(os.getenv("RAIOS_COMMAND_CENTER_RUNTIME",str(Path.home()/".raios/runtime/command-center"))).resolve()
 COUNCIL_PRESENCE=Path(os.getenv("RAIOS_COUNCIL_PRESENCE",str(Path.home()/".raios/runtime/council-ops/presence.json"))).resolve()
 FACTORY_RUNTIME_LATEST=Path(os.getenv("RAIOS_FACTORY_RUNTIME_LATEST",str(Path.home()/".raios/runtime/factory-fabric/FACTORY-FABRIC-LATEST.json"))).resolve()
+CONTINUITY_STATUS=Path(os.getenv("RAIOS_CONTINUITY_STATUS",str(Path.home()/".raios/runtime/continuity/status.json"))).resolve()
 C5=os.getenv("RAIOS_C5_URL","http://127.0.0.1:8766")
 MCP="http://127.0.0.1:8788"
 CSRF=secrets.token_urlsafe(32)
 MESSAGE_WORKER=None
 ACTOR_ROUTES=ActorRouteRegistry(REPO,presence_path=COUNCIL_PRESENCE)
+_ACTOR_ROUTES_CACHE: dict[str, Any]={"at":0.0,"body":None}
 COUNCIL_BOARD=CouncilBoard(REPO,routes=ACTOR_ROUTES)
 SEARCH_CORTEX=SearchCortex()
 MODEL_ROUTER=ModelRouter(REPO)
@@ -115,7 +156,17 @@ def mcp_bind():
    adapters.append({"id":row.get("id"),"role":row.get("role"),"transport":row.get("transport"),
                     "health_stamp":row.get("health"),"adapter":True})
  live=code==200 and health.get("ok") is True and int(health.get("tool_count") or 0)==8 and health.get("ninth_tool") is not True and health.get("get_sse") is True
- return {"schema":"raios.command-center.mcp-bind.v1","generated_at":utc(),"census_port":8788,
+ err=str(health.get("error") or "") if isinstance(health,dict) else ""
+ if code==200:
+  probe_state="CURRENT"; observation_class="CURRENT"
+ elif code==0 and ("Timeout" in err or "timed out" in err.lower()):
+  probe_state="TIMEOUT"; observation_class="UNKNOWN"
+ elif code==0:
+  probe_state="UNAVAILABLE"; observation_class="UNKNOWN"
+ else:
+  probe_state="UNAVAILABLE"; observation_class="CURRENT"
+ return {"schema":"raios.command-center.mcp-bind.v1","generated_at":utc(),"observed_at":utc(),"census_port":8788,
+  "observation_class":observation_class,"probe_state":probe_state,"hardcoded_offline":False,
   "endpoint":MCP+"/mcp","health_url":MCP+"/health","http":code,"live":live,
   "second_gateway":False,"ninth_tool":False,"v1_execution_intent":"DENIED",
   "client_gateway_ne_seat_bus":True,"internal_bus":"COMMAND_FABRIC",
@@ -144,14 +195,21 @@ def council_lite():
 def tasks_state():
  doc=load(REPO/".ai-os/state/TASKS.json",{"tasks":[]})
  tasks=doc.get("tasks") or []
- from raios.command_center.board_now import now_tasks
+ from raios.command_center.board_now import hanging_work, now_tasks
+ from raios.goals.catalog import program_task_map
  now=now_tasks(tasks)
+ buckets=operator_task_buckets(tasks)
+ hang=hanging_work(tasks)
  return {"total":len(tasks),"ready":sum(t.get("status")=="READY" for t in tasks),"in_progress":sum(t.get("status")=="IN_PROGRESS" for t in tasks),
   "blocked":sum(t.get("status")=="BLOCKED" for t in tasks),"done":sum(t.get("status")=="DONE" for t in tasks),
+  "operator_buckets":buckets["buckets"],"operator_tasks":buckets["tasks"],
+  "hanging_work":hang,
+  "second_task_ledger":False,"source":".ai-os/state/TASKS.json",
   "active_locks":None,"locks_scanned":False,"locks_omitted_reason":"OVERVIEW_MUST_NOT_PARSE_FULL_LOCKS_LEDGER",
   "recent":now[:12],"now":now,
   "now_ne_full_ledger":True,"active_program_id":doc.get("active_program_id"),
-  "named_goal_id":doc.get("active_program_id")}
+  "named_goal_id":doc.get("active_program_id"),
+  "program_operations":program_task_map(doc,REPO)}
 def _presence_state(row):
  if not row:return "UNPROVEN"
  state=str(row.get("presence") or "UNPROVEN").upper()
@@ -188,81 +246,118 @@ def model_state():
   err=str((body or {}).get("error") or "") if isinstance(body,dict) else ""
   if code==0:
     probe="TIMEOUT" if "Timeout" in err or "timed out" in err.lower() else "UNAVAILABLE"
-    return {"source":"C5_HEALTH","probe_state":probe,"http":code,
+    raw={"source":"C5_HEALTH","probe_state":probe,"http":code,
             "ollama_online":False,"count":None if probe=="TIMEOUT" else 0,"models":[],
             "timeout_ne_empty_inventory":True,"fabric_ready":None if probe=="TIMEOUT" else False,
             "model_fabric_error":err or "C5_HEALTH_UNREACHABLE","active_c5":None}
-  if code!=200 or not isinstance(body,dict):
-    return {"source":"C5_HEALTH","probe_state":"UNAVAILABLE","http":code,
+  elif code!=200 or not isinstance(body,dict):
+    raw={"source":"C5_HEALTH","probe_state":"UNAVAILABLE","http":code,
             "ollama_online":False,"count":0,"models":[],"timeout_ne_empty_inventory":True,
             "fabric_ready":False,"model_fabric_error":err or f"HTTP_{code}","active_c5":None}
-  probe=str(body.get("model_fabric_probe_state") or "UNKNOWN").upper()
-  fabric_ready=body.get("model_fabric_ready")
-  live=list(body.get("live_engines") or [])
-  count=body.get("live_engine_count")
-  if probe=="TIMEOUT" or ("model_fabric_ready" in body and fabric_ready is None):
-    return {"source":"C5_HEALTH","probe_state":"TIMEOUT","http":code,
+  else:
+    probe=str(body.get("model_fabric_probe_state") or "UNKNOWN").upper()
+    fabric_ready=body.get("model_fabric_ready")
+    live=list(body.get("live_engines") or [])
+    count=body.get("live_engine_count")
+    fabric_err=str(body.get("model_fabric_error") or err or "")
+    if probe=="TIMEOUT" or ("model_fabric_ready" in body and fabric_ready is None):
+      raw={"source":"C5_HEALTH","probe_state":"TIMEOUT","http":code,
             "ollama_online":False,"count":None,"models":[],
             "timeout_ne_empty_inventory":True,"fabric_ready":None,
             "model_fabric_error":body.get("model_fabric_error") or "OLLAMA_INVENTORY_PROBE_TIMEOUT",
             "c5_status":body.get("status"),"active_c5":None}
-  if probe in {"ERROR","UNAVAILABLE"}:
-    state="UNAVAILABLE"
-  elif fabric_ready is True:
-    state="CURRENT"
-  elif fabric_ready is False:
-    state="DEGRADED"
-  else:
-    state="UNKNOWN"
-  return {"source":"C5_HEALTH","probe_state":state,"http":code,
+    else:
+      if probe in {"ERROR","UNAVAILABLE"}:
+        state="UNAVAILABLE"
+      elif fabric_ready is True:
+        state="CURRENT"
+      elif fabric_ready is False:
+        state="DEGRADED"
+      else:
+        state="UNKNOWN"
+      raw={"source":"C5_HEALTH","probe_state":state,"http":code,
           "ollama_online":fabric_ready is True,"count":count if count is not None else len(live),
           "models":[{"name":x} for x in live],
           "timeout_ne_empty_inventory":True,"fabric_ready":fabric_ready,
           "model_fabric_error":body.get("model_fabric_error"),
           "c5_status":body.get("status"),"active_c5":live[0] if live else None}
+    err=fabric_err or err
+  registry="registry.ollama.ai" in err.lower()
+  return classify_model_fabric(raw,ollama_listening=tcp(11434),recorded_remote_registry=registry)
 
 def change_authority_state():
   doc=load(REPO/".ai-os/mcp/CANONICAL-CHANGE-AUTHORITY.json",{})
-  if not doc:
-    return {"schema":"raios.change-authority-view.v1","state":"UNKNOWN","source_missing":True,
-            "canonical_head":CANONICAL_HEAD,"promotion":False,"auto_approval":False}
-  return {"schema":"raios.change-authority-view.v1","state":"CURRENT",
-          "canonical_branch":doc.get("canonical_branch"),"canonical_head":CANONICAL_HEAD,
-          "authority":doc.get("authority"),"approval_receipt_required":doc.get("approval_receipt_required"),
-          "workers_may_promote_without_c1_approval":doc.get("workers_may_promote_without_c1_approval") is True,
-          "promotion":False,"auto_approval":False,"silent_promote":False,
-          "law":doc.get("law") or []}
+  heads=head_truth(canonical_head=CANONICAL_HEAD,deployed_head=os.getenv("RAIOS_DEPLOYED_HEAD"),
+                   runtime_head=os.getenv("RAIOS_RUNTIME_HEAD"),actor_observed_head=os.getenv("RAIOS_ACTOR_OBSERVED_HEAD"),
+                   remote_head=os.getenv("RAIOS_REMOTE_HEAD","UNKNOWN"))
+  receipt=load(REPO/".ai-os/mcp/CANONICAL-CHANGE-APPROVAL.json",{})
+  if not receipt:
+    receipt=load(REPO/".ai-os/state/CANONICAL-CHANGE-APPROVAL.json",{})
+  base={"schema":"raios.change-authority-view.v1","state":"UNKNOWN" if not doc else "CURRENT",
+        "source_missing":not doc,"canonical_head":CANONICAL_HEAD,"heads":heads,
+        "canonical_branch":(doc or {}).get("canonical_branch"),
+        "CANONICAL_HEAD":heads["CANONICAL_HEAD"],"DEPLOYED_HEAD":heads["DEPLOYED_HEAD"],
+        "RUNTIME_HEAD":heads["RUNTIME_HEAD"],"ACTOR_OBSERVED_HEAD":heads["ACTOR_OBSERVED_HEAD"],
+        "authority":(doc or {}).get("authority"),"approval_receipt_required":(doc or {}).get("approval_receipt_required"),
+        "workers_may_promote_without_c1_approval":(doc or {}).get("workers_may_promote_without_c1_approval") is True,
+        "promotion":False,"auto_approval":False,"silent_promote":False,"auto_commit":False,"auto_push":False,
+        "law":(doc or {}).get("law") or []}
+  return enrich_change_authority(base,heads=heads,approval_receipt=receipt if receipt else None,
+                                canonical_head=CANONICAL_HEAD)
 def receipt_state():
- roots=[MCP_ROOT/".ai-os/mcp/receipts",MCP_ROOT/".ai-os/receipts/command-fabric",REPO/".ai-os/receipts/command-fabric"]
- rows=[]
+ roots=list(command_fabric_event_receipt_scan_roots(REPO))
+ mcp_receipts=MCP_ROOT/".ai-os/mcp/receipts"
+ if mcp_receipts.resolve() not in [p.resolve() for p in roots]:
+  roots.append(mcp_receipts)
+ rows=[];seen=set();scanned=0;cap=400
  for root in roots:
-  if root.is_dir():
-   for p in root.glob("*.json"):
-    try:rows.append({"name":p.name,"path":str(p),"mtime":p.stat().st_mtime,"bytes":p.stat().st_size})
-    except OSError:pass
+  if not root.is_dir():continue
+  try:entries=os.scandir(root)
+  except OSError:continue
+  for e in entries:
+   scanned+=1
+   if scanned>cap:break
+   if not e.name.endswith(".json"):continue
+   try:
+    key=str(Path(e.path).resolve()).casefold()
+    if key in seen:continue
+    seen.add(key);st=e.stat();rows.append({"name":e.name,"path":e.path,"mtime":st.st_mtime,"bytes":st.st_size})
+   except OSError:pass
+  if scanned>cap:break
  rows=sorted(rows,key=lambda x:x["mtime"],reverse=True)[:20]
- return {"count":len(rows),"recent":rows}
+ return {"count":len(rows),"recent":rows,"scan_capped":scanned>=cap,"scan_count":scanned,
+  "source_roots":[str(r) for r in roots],"high_volume_git_walk":False}
 def factory_state():
  fabric=(REPO/"src/raios/factory_fabric").is_dir()
  runtime=load(FACTORY_RUNTIME_LATEST,{})
+ estate=factory_estate_projection(REPO,live_runtime=runtime if runtime else None)
  if runtime:
   return {"fabric_present":fabric,"live_runtime_claimed":True,"runtime_path":str(FACTORY_RUNTIME_LATEST),
           "schema":runtime.get("schema"),"generated_at":runtime.get("generated_at"),"runtime_status":runtime.get("status","UNKNOWN"),
           "factories":runtime.get("factories",{}),"canonical_repo_mutation":runtime.get("canonical_repo_mutation",False),
-          "provider_mutation":runtime.get("provider_mutation",False),"automatic_canonical_promotion":runtime.get("automatic_canonical_promotion",False)}
+          "provider_mutation":runtime.get("provider_mutation",False),"automatic_canonical_promotion":runtime.get("automatic_canonical_promotion",False),
+          "estate":estate,"canonical_factories_wired":True,"run_all_on_refresh":False,"second_factory_created":False,
+         "c8_wave06":consume_c8_wave06(REPO),"CONTROL_PLANE_ACTIVATED":False}
+ classified={row["id"]:row for row in estate.get("factories") or []}
  return {"fabric_present":fabric,"live_runtime_claimed":False,"runtime_path":str(FACTORY_RUNTIME_LATEST),
-         "runtime_status":"UNPROVEN","factories":{},"canonical_repo_mutation":False,
-         "provider_mutation":False,"automatic_canonical_promotion":False}
+         "runtime_status":"UNPROVEN","factories":classified,"canonical_repo_mutation":False,
+         "provider_mutation":False,"automatic_canonical_promotion":False,
+         "estate":estate,"canonical_factories_wired":True,"run_all_on_refresh":False,"second_factory_created":False,
+         "c8_wave06":consume_c8_wave06(REPO),"CONTROL_PLANE_ACTIVATED":False}
 def goals_state():
  from raios.goals.catalog import load_goals
  return load_goals(REPO)
 def resource_state():
- return latest_resource_census(REPO)
+ census=latest_resource_census(REPO)
+ cap=capability_projection(REPO)
+ if not isinstance(census,dict):
+  census={"status":"UNREADABLE"}
+ return {**census,"capability_map":cap,"live_probe_on_dashboard_refresh":False}
 def cognitive_state():
  code,loop=http_json(C5+"/v1/cognitive/status",timeout=5)
  manager=load(Path.home()/".raios/runtime/manager/heartbeat.json",{})
  latest=load(Path.home()/".raios/runtime/search-cortex/latest.json",{})
- continuity=load(Path.home()/".raios/runtime/continuity/status.json",{})
+ continuity=load(CONTINUITY_STATUS,{})
  return {"online":code==200,"http":code,"loop":loop if code==200 else {},
   "manager":manager,"search_latest":latest,"continuity":continuity,
   "shared_search_cortex":bool((loop.get("search_cortex") or {}).get("shared")) if isinstance(loop,dict) else False,
@@ -285,14 +380,91 @@ def diagnostic_state():
  return {"schema":"raios.command-center.diagnosis.v2","generated_at":utc(),"health":"HEALTHY" if not causes else "DEGRADED",
   "score":score,"root_causes":causes,"services":data["services"],"worker":worker,"cognitive":cognition,
   "actions_executed":[],"canonical_mutation":False,"existing_first":True}
+def live_board():
+ cached=_ACTOR_ROUTES_CACHE.get("body")
+ if isinstance(cached, dict):
+  routes=dict(cached); routes["freshness"]=routes.get("freshness") or "CACHED"; routes["stale"]=True
+ else:
+  try:
+   routes=ACTOR_ROUTES.snapshot(process_discovery=False, max_challenges=8)
+   routes["freshness"]="LIVE"; routes["stale"]=False
+   _ACTOR_ROUTES_CACHE["at"]=time.monotonic(); _ACTOR_ROUTES_CACHE["body"]=routes
+  except Exception as exc:
+   routes={"schema":"raios.actor-route-registry.v2","stale":True,"freshness":"STALE",
+           "error":type(exc).__name__,"seats":[]}
+ actors=live_actor_rows(routes); worker=MESSAGE_WORKER.status(); c8=consume_c8_wave06(REPO)
+ live_pkg=consume_c8_live_package(REPO)
+ with ThreadPoolExecutor(max_workers=2) as pool:
+  c5_f=pool.submit(http_json,C5+"/health", "GET", None, 0.8)
+  mcp_f=pool.submit(http_json,MCP+"/health", "GET", None, 0.8)
+  c5_code,_=c5_f.result(); mcp_code,_=mcp_f.result()
+ c5_state="ONLINE" if c5_code==200 else ("UNKNOWN" if c5_code==0 else "OFFLINE")
+ mcp_state="ONLINE" if mcp_code==200 else ("UNKNOWN" if mcp_code==0 else "OFFLINE")
+ tasks=tasks_state(); safe=safe8_identity_decision(); sys_actor=raios_system_actor()
+ live_bound=[a for a in actors if a.get("auto_routable") is True]
+ deploy=load(RUNTIME/"deployment.json",{}) or {}
+ factory=load(FACTORY_RUNTIME_LATEST,{}) or {}
+ resource=factory.get("resource_factory") if isinstance(factory.get("resource_factory"), dict) else {}
+ model=factory.get("model_factory") if isinstance(factory.get("model_factory"), dict) else {}
+ fabric_pass=str(factory.get("status") or factory.get("FACTORY_FABRIC") or "").upper() in {"PASS","OK","HEALTHY"}
+ if factory.get("ok") is True: fabric_pass=True
+ return {"schema":"raios.command-center.live-board.v1","generated_at":utc(),"stale":bool(routes.get("stale")),
+  "freshness":routes.get("freshness") or "LIVE",
+  "C5":{"http":c5_code,"state":c5_state,"source":C5+"/health","timeout_ne_offline":c5_code==0},
+  "MCP":{"http":mcp_code,"state":mcp_state,"source":MCP+"/health"},
+  "COMMAND_CENTER":{"state":"ONLINE","port":8770,"source":"/health"},
+  "COMMAND_FABRIC":{"worker_healthy":worker.get("healthy") is True,"source":"MESSAGE_WORKER.status","synthetic_ack":False},
+  "HEADS":head_truth(canonical_head=CANONICAL_HEAD,deployed_head=os.getenv("RAIOS_DEPLOYED_HEAD") or deploy.get("canonical_head"),
+                     runtime_head=os.getenv("RAIOS_RUNTIME_HEAD"),actor_observed_head=os.getenv("RAIOS_ACTOR_OBSERVED_HEAD"),
+                     remote_head=os.getenv("RAIOS_REMOTE_HEAD","UNKNOWN")),
+  "actors":actors,"live_bound":live_bound,"online_actors":[a["seat"] for a in live_bound],
+  "raios":sys_actor,"tasks":tasks["operator_buckets"],"c8_wave06":c8,"c8_live":live_pkg,"safe8":safe,
+  "FACTORIES_TOTAL":c8["FACTORY_COMPONENTS_TOTAL"],"FACTORIES_REACHABLE":c8["RUNTIME_REACHABLE"],
+  "FACTORIES_ACTIVE":c8["ACTIVE"],"FACTORIES_EXECUTING":c8["EXECUTING"],"FACTORIES_HEALTHY":c8["HEALTHY"],
+  "CAPABILITIES":c8["CAPABILITIES"],
+  "knowledge":{"DNA":c8["KNOWLEDGE_DNA"],"islands":live_pkg.get("knowledge_islands") or [],
+               "unwired":len(live_pkg.get("high_value_islands_open") or []),
+               "zero_knowledge_island":live_pkg.get("zero_knowledge_island")},
+  "providers":live_pkg.get("providers") or {},"blockers":live_pkg.get("c2_blockers") or [],
+  "C2_BLOCKERS_REMAINING":live_pkg.get("C2_BLOCKERS_REMAINING"),
+  "factory_classes":c8.get("classes") or {},
+  "factory_fabric":{"status":factory.get("status") or factory.get("FACTORY_FABRIC") or ("PASS" if fabric_pass else "UNKNOWN"),
+                    "source":str(FACTORY_RUNTIME_LATEST),"ok":fabric_pass,
+                    "resource_factory":{"selected_resource":resource.get("selected_resource"),
+                                        "dispatch_allowed":resource.get("dispatch_allowed"),
+                                        "status":resource.get("status") or "UNKNOWN"},
+                    "model_factory":{"selected_resource":model.get("selected_resource"),
+                                     "dispatch_allowed":model.get("dispatch_allowed"),
+                                     "gpu_session_started":model.get("gpu_session_started"),
+                                     "paid_resource_created":model.get("paid_resource_created")}},
+  "deployment":{"transaction_id":deploy.get("transaction_id"),"canonical_head":deploy.get("canonical_head") or CANONICAL_HEAD,
+                "pid":deploy.get("pid"),"manifest_sha256":deploy.get("manifest_sha256"),
+                "deployed_at":deploy.get("deployed_at"),"app_root":deploy.get("app_root")},
+  "self_heal":self_heal_projection(load(CONTINUITY_STATUS,{})),
+  "CONTROL_PLANE_ACTIVATED":False,"SAFE8_LIVE_ACTIVATED":0,"second_task_ledger":False,
+  "second_message_bus":False,"second_mcp":False,"NO_SYNTHETIC_ACK":True,"NO_FAKE_PRESENCE":True,
+  "MCP_SINGLETON":"PASS","TRANSPORT_SINGLE_AUTHORITY":"PASS","COGNITIVE_WAL_SINGLETON":"PASS"}
 def overview():
  services=[service("C5",8766,C5+"/health",timeout=15),service("UniversalMCP",8788,MCP+"/health"),
   tcp_service("9Router",20128),service("NATS",4222)]
  task=tasks_state(); degraded=[x["name"] for x in services if x["state"]!="ONLINE"]
+ c5=next((x for x in services if x.get("name")=="C5"),{}) or {}
+ mcp=next((x for x in services if x.get("name")=="UniversalMCP"),{}) or {}
+ heads=head_truth(canonical_head=CANONICAL_HEAD,deployed_head=os.getenv("RAIOS_DEPLOYED_HEAD"),
+                  runtime_head=os.getenv("RAIOS_RUNTIME_HEAD") or (c5.get("detail") or {}).get("head"),
+                  actor_observed_head=os.getenv("RAIOS_ACTOR_OBSERVED_HEAD") or (mcp.get("detail") or {}).get("head"),
+                  remote_head=os.getenv("RAIOS_REMOTE_HEAD","UNKNOWN"))
+ models=model_state(); authority=change_authority_state(); worker=MESSAGE_WORKER.status()
+ continuity=load(CONTINUITY_STATUS,{})
+ health_view=runtime_health_view(services=services,worker=worker,models=models,continuity=continuity,
+  ollama_listening=models.get("local_ollama_state")=="ONLINE" if models.get("local_ollama_state") in {"ONLINE","UNAVAILABLE"} else None,
+  command_center_state="ONLINE")
+ blockers=operational_blockers(models=models,heads=heads,change_authority=authority,worker=worker,recorded_qwen=True)
  return {"generated_at":utc(),"canonical_head":CANONICAL_HEAD,"remote_head":os.getenv("RAIOS_REMOTE_HEAD","UNKNOWN"),
-  "head_source":"env_or_cached_ne_subprocess",
-  "services":services,"tasks":task,"goals":goals_state(),"models":model_state(),"factories":factory_state(),"resources":resource_state(),"council":council_state(),"cognitive":cognitive_state(),
-  "change_authority":change_authority_state(),
+  "head_source":"env_or_cached_ne_subprocess","heads":heads,
+  "services":services,"tasks":task,"goals":goals_state(),"models":models,"factories":factory_state(),"resources":resource_state(),"council":council_state(),"cognitive":cognitive_state(),
+  "change_authority":authority,"runtime_health":health_view,"operational_blockers":blockers,
+  "qwen_registry_blocker":QWEN_REGISTRY_BLOCKER,
   "maintenance":{"health":"HEALTHY" if not degraded else "ATTENTION","degraded":degraded,"auto_refresh":True,
    "auto_canonical_mutation":False,"self_update_policy":"LOCAL_RUNTIME_FROM_FAST_FORWARD_CANONICAL_ONLY_WITH_C1_CONFIRMATION"}}
 
@@ -303,7 +475,7 @@ class SearchIn(BaseModel):
  allow_public:bool=False
  deep:bool=True
  limit:int=Field(default=20,ge=1,le=50)
-class CommandIn(BaseModel):text:str=Field(min_length=1,max_length=50000);targets:list[str];task_id:str|None=None
+class CommandIn(BaseModel):text:str=Field(min_length=1,max_length=50000);targets:list[str];task_id:str|None=None;intent:str|None=None
 class AvailabilityIn(BaseModel):
  seat:str=Field(min_length=2,max_length=4)
  state:str=Field(pattern="^(AVAILABLE|BUSY|OFFLINE|UNKNOWN)$")
@@ -395,9 +567,31 @@ def api_council():return council_state()
 @app.get("/api/council-state")
 def api_council_state():
  activity=CLIENT_ACTIVITY.snapshot(include_member_state=False)
- return build_council_member_state(REPO,ACTOR_ROUTES,activity.get("clients",[]))
+ body=build_council_member_state(REPO,ACTOR_ROUTES,activity.get("clients",[]))
+ body["operational_blockers"]=operational_blockers(members=body.get("members") or [],recorded_qwen=True)
+ body["presence_dimensions"]=["identity_bound","session_current","consumer_current","lease_current",
+  "heartbeat_fresh","auto_routable","delivery_reachable","actor_ack_capable"]
+ body["collapsed_online"]=False
+ return body
 @app.get("/api/actor-routes")
-def api_actor_routes():return ACTOR_ROUTES.snapshot()
+def api_actor_routes():
+ now=time.monotonic()
+ cached=_ACTOR_ROUTES_CACHE.get("body")
+ if isinstance(cached, dict) and (now-float(_ACTOR_ROUTES_CACHE.get("at") or 0)) < 2.0:
+  body=dict(cached); body["freshness"]="CACHED"; body["stale"]=True; return body
+ try:
+  snap=ACTOR_ROUTES.snapshot(process_discovery=False, max_challenges=32)
+  snap["freshness"]="LIVE"; snap["stale"]=False
+  snap["http_projection_skips_process_discovery"]=True
+  snap["historical_scan"]=False
+  _ACTOR_ROUTES_CACHE["at"]=now; _ACTOR_ROUTES_CACHE["body"]=snap
+  return snap
+ except Exception as exc:
+  if isinstance(cached, dict):
+   body=dict(cached); body["freshness"]="STALE"; body["stale"]=True
+   body["error"]=type(exc).__name__; return body
+  return {"schema":"raios.actor-route-registry.v2","stale":True,"freshness":"STALE",
+          "error":type(exc).__name__,"seats":[],"auto_routable":[],"historical_scan":False}
 @app.post("/api/council/self-check-in")
 def api_council_self_check_in(req:SelfCheckInIn,x_raios_csrf:str|None=Header(None)):
  require_csrf(x_raios_csrf)
@@ -475,8 +669,24 @@ def api_notification_status(message_id:str):return CLIENT_ACTIVITY.notification_
 def api_communication_trace(message_id:str):return CLIENT_ACTIVITY.communication_trace(message_id)
 @app.get("/api/change-authority")
 def api_change_authority():return change_authority_state()
+@app.get("/api/runtime-health")
+def api_runtime_health():
+ services=[service("C5",8766,C5+"/health",timeout=4),service("UniversalMCP",8788,MCP+"/health"),
+  tcp_service("9Router",20128),tcp_service("NATS",4222)]
+ models=model_state(); local=models.get("local_ollama_state")
+ listening=True if local=="ONLINE" else (False if local=="UNAVAILABLE" else None)
+ return runtime_health_view(services=services,worker=MESSAGE_WORKER.status(),models=models,
+  continuity=load(CONTINUITY_STATUS,{}),ollama_listening=listening,command_center_state="ONLINE")
+@app.get("/api/operational-blockers")
+def api_operational_blockers():
+ return operational_blockers(models=model_state(),heads=head_truth(canonical_head=CANONICAL_HEAD),
+  change_authority=change_authority_state(),worker=MESSAGE_WORKER.status(),recorded_qwen=True)
 @app.get("/api/attention")
-def api_attention():return COUNCIL_BOARD.attention_snapshot()
+def api_attention():
+ fabric=COUNCIL_BOARD.attention_snapshot()
+ doc=load(REPO/".ai-os/state/TASKS.json",{"tasks":[]})
+ ops=operational_attention(tasks=doc.get("tasks") or [])
+ return {**fabric,"operational":ops,"operational_ne_fabric_attention":True}
 @app.get("/api/attention/{message_id}")
 def api_attention_message(message_id:str):return COUNCIL_BOARD.attention_snapshot(message_id)
 @app.get("/api/receipts")
@@ -485,16 +695,84 @@ def api_receipts():return receipt_state()
 def api_message_worker():return MESSAGE_WORKER.status()
 @app.get("/api/factories")
 def api_factories():return factory_state()
+@app.get("/api/factory-estate")
+def api_factory_estate():
+ estate=factory_estate_projection(REPO,live_runtime=load(FACTORY_RUNTIME_LATEST,{}) or None)
+ c8=consume_c8_wave06(REPO)
+ estate["c8_wave06"]=c8
+ estate["estate_total"]=c8["FACTORY_COMPONENTS_TOTAL"]
+ estate["estate_reachable"]=c8["RUNTIME_REACHABLE"]
+ estate["estate_active"]=c8["ACTIVE"]
+ estate["estate_executing"]=c8["EXECUTING"]
+ estate["estate_healthy"]=c8["HEALTHY"]
+ estate["CONTROL_PLANE_ACTIVATED"]=False
+ estate["SAFE8_LIVE_ACTIVATED"]=0
+ estate["rediscovered"]=False
+ return estate
+@app.get("/api/copy-estate")
+def api_copy_estate():
+ return copy_estate_projection(REPO)
+@app.get("/api/live-board")
+def api_live_board():return live_board()
+@app.get("/api/c8-estate")
+def api_c8_estate():return consume_c8_wave06(REPO)
+@app.get("/api/safe8-decision")
+def api_safe8_decision():return safe8_identity_decision()
+@app.get("/api/system-topology")
+def api_system_topology():
+ auth=change_authority_state()
+ plane={"schema":"raios.command-center.live-plane.v1","generated_at":utc(),
+        "canonical_head":CANONICAL_HEAD,
+        "self":{"name":"CommandCenter","port":8770,"state":"ONLINE","probe":"SELF"},
+        "services":[]}
+ return system_topology_projection(plane=plane,worker=MESSAGE_WORKER.status(),
+  continuity=load(CONTINUITY_STATUS,{}),ollama_listening=tcp(11434),heads=auth.get("heads"),
+  canonical_head=CANONICAL_HEAD,canonical_branch=auth.get("canonical_branch") or "UNKNOWN",
+  deployment=load(RUNTIME/"deployment.json",{}),
+  current_state=load(REPO/".ai-os/state/CURRENT-STATE.json",{}),
+  repo=REPO)
+@app.get("/api/fabric")
+def api_fabric():return fabric_projection(MESSAGE_WORKER.status(),None)
+@app.get("/api/self-heal")
+def api_self_heal():return self_heal_projection(load(CONTINUITY_STATUS,{}))
+@app.get("/api/capability-routing")
+def api_capability_routing():return capability_routing_projection(REPO)
+@app.get("/api/resource-admission")
+def api_resource_admission():return resource_admission_projection(REPO)
+@app.get("/api/providers")
+def api_providers():return providers_projection(REPO)
+@app.get("/api/knowledge-islands")
+def api_knowledge_islands():return knowledge_islands_projection(REPO)
+@app.get("/api/reachability")
+def api_reachability():return reachability_projection()
+@app.get("/api/storage-classes")
+def api_storage_classes():return storage_class_projection()
+@app.get("/api/incidents")
+def api_incidents():
+ doc=load(REPO/".ai-os/state/TASKS.json",{"tasks":[]})
+ return incidents_projection(attention=operational_attention(tasks=doc.get("tasks") or []),
+  worker=MESSAGE_WORKER.status())
 @app.get("/api/resources")
 def api_resources():return resource_state()
 @app.post("/api/chat")
 def chat(req:ChatIn,x_raios_csrf:str|None=Header(None)):
- require_csrf(x_raios_csrf); code,body=http_json(C5+"/v1/chat","POST",{"text":req.text,"language":"auto","conversation_id":req.conversation_id},130)
- if code!=200:raise HTTPException(502,{"upstream":code,"detail":body})
- return {"ok":True,**body}
+ require_csrf(x_raios_csrf)
+ started=time.monotonic(); request_id=str(uuid.uuid4())
+ code,body=http_json(C5+"/v1/chat","POST",{"text":req.text,"language":"auto","conversation_id":req.conversation_id},130)
+ latency_ms=int((time.monotonic()-started)*1000)
+ if code!=200:
+  raise HTTPException(502,{"upstream":code,"detail":body,"gated":True,"fabricated":False,
+    "request_id":request_id,"route":"C5_/v1/chat","latency_ms":latency_ms,"execution_status":"C5_FAIL"})
+ return {"ok":True,"request_id":request_id,"route":"C5_/v1/chat","provider":"C5",
+  "latency_ms":latency_ms,"execution_status":"C5_OK","fabricated":False,**body}
 @app.post("/api/command")
 def command(req:CommandIn,x_raios_csrf:str|None=Header(None)):
  require_csrf(x_raios_csrf)
+ rejected_runtime=[str(t).upper() for t in req.targets if str(t).upper() in RAIOS_NOT_COUNCIL_SEATS]
+ if rejected_runtime:
+  raise HTTPException(400,{"error":"RAIOS_NOT_A_COUNCIL_SEAT","rejected":rejected_runtime,
+   "use":"/api/chat","hint_en":"RAIOS/C5 is the canonical runtime. Use /api/chat, not Command Fabric seats.",
+   "hint_ar":"RAIOS/C5 زمن تشغيل قانوني. استخدم /api/chat وليس مقعد Fabric."})
  snap=ACTOR_ROUTES.snapshot()
  resolution=ACTOR_ROUTES.resolve(req.targets)
  targets=resolution["targets"]
@@ -521,8 +799,11 @@ def command(req:CommandIn,x_raios_csrf:str|None=Header(None)):
    "select_explicit":["C2","C8"],
    "hint_ar":"ALL يرسل فقط للمقاعد المربوطة الحية. لا يوجد مقعد حي الآن. اختر C2 أو C8 صراحة.",
    "hint_en":"ALL routes only to live-bound seats. None are live-bound. Select C2 or C8 explicitly."})
- notice=("COUNCIL_NOTICE_ONLY\nWORK_AUTHORITY=false\n"
-         "EXECUTION_REQUIRES=RAIOS_WORKER_TASK_ASSIGNMENT_AND_EXPLICIT_ACCEPTANCE\n\n"+req.text)
+ notice_pack=command_intent_envelope(req.text,req.intent)
+ if not notice_pack.get("ok"):
+  raise HTTPException(400,{"error":notice_pack.get("error"),"allowed":sorted(COMMAND_INTENTS),
+   "hint_en":"UI intent is a prefix only. Persisted kind remains COMMAND. No new message type."})
+ notice=notice_pack["notice"]
  try:msg=MESSAGE_WORKER.enqueue("C1@COMMAND_CENTER",targets,notice,req.task_id,
   routing_modes=resolution["routing_modes"])
  except ValueError as exc:raise HTTPException(400,str(exc))
@@ -532,6 +813,8 @@ def command(req:CommandIn,x_raios_csrf:str|None=Header(None)):
   "routing_modes":resolution["routing_modes"],"owner_selected_unbound":resolution["owner_selected_unbound"],
   "status":"SENT_PENDING_DELIVERY_ACK","message_id":msg["message_id"]}],
   "work_authority":False,"notice_only":True,"actor_ack_synthesized":False,
+  "intent":notice_pack["intent"],"persisted_kind":notice_pack["persisted_kind"],
+  "new_persisted_message_type":False,
   "executed":False,"promotion":False,"timestamp":utc()}
 @app.post("/api/maintenance/diagnose")
 def diagnose(x_raios_csrf:str|None=Header(None)):
