@@ -1,0 +1,25 @@
+name: neurolingua-sensory
+on:
+  pull_request:
+    paths:
+      - src/raios/neuro_lingua/**
+      - tests/neuro_lingua/test_sensory_contract.py
+      - .github/workflows/neurolingua-sensory.yml
+  push:
+    branches: [ai-evolution-202608051809]
+    paths:
+      - src/raios/neuro_lingua/**
+      - tests/neuro_lingua/test_sensory_contract.py
+      - .github/workflows/neurolingua-sensory.yml
+jobs:
+  sensory-contract:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - name: install pytest
+        run: pip install pytest
+      - name: sensory contract
+        run: python3 -m pytest tests/neuro_lingua/test_sensory_contract.py -q
