@@ -2,7 +2,7 @@ name: govern
 on:
   pull_request:
   push:
-    branches: [main]
+    branches: [ai-evolution-202608051809]
 jobs:
   gate:
     runs-on: ubuntu-latest
@@ -21,8 +21,8 @@ jobs:
       # repo). Make it required only once classes earn ELIGIBLE.
       - name: calibration gate (advisory on a young ledger)
         run: govern gate || echo "::notice::gate GATE — no auto-merge eligibility yet"
-      - name: score merged receipts (main only)
-        if: github.ref == 'refs/heads/main'
+      - name: score merged receipts (canonical only)
+        if: github.ref == 'refs/heads/ai-evolution-202608051809'
         run: |
-          git fetch origin main
+          git fetch origin ai-evolution-202608051809
           govern score --all || true
