@@ -33,6 +33,22 @@ def test_estate_import_is_content_addressed_and_source_read_only(tmp_path):
     assert result["objects_copied"] == 1
     assert result["objects_reused"] == 1
     assert result["source_mutation"] is False
+    assert result["cas_reconciliation"] == {
+        "removed_temp_parts": 0,
+        "removed_publish_locks": 0,
+    }
+    assert set(result["authority_axes"]) == {
+        "storage_status",
+        "validation_status",
+        "trust_status",
+        "canonical_status",
+    }
+    imported = [x for x in result["entries"] if x.get("status") == "IMPORTED"]
+    assert imported
+    assert all(x["storage_status"] == "STORED" for x in imported)
+    assert all(x["validation_status"] == "UNVALIDATED" for x in imported)
+    assert all(x["trust_status"] == "UNTRUSTED" for x in imported)
+    assert all(x["canonical_status"] == "NOT_CANONICAL" for x in imported)
     assert before == {p.name: p.read_bytes() for p in donor.iterdir()}
 
 
