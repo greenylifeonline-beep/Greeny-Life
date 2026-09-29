@@ -133,4 +133,3 @@ def test_certifier_has_no_retired_repair_root_fallback():
     ).read_text(encoding="utf-8")
     assert "Greeny-Life-Repair" not in source
     assert "RAIOS_CANONICAL_ROOT" in source
-\n
