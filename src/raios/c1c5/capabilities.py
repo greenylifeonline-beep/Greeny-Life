@@ -10,6 +10,7 @@ from typing import Any, Callable
 CAPABILITY_HEALTH = "c5.self_inspect.health"
 CAPABILITY_HANGING = "raios.system.hanging_work"
 CAPABILITY_ECOLOGY = "raios.system.model_ecology"
+CAPABILITY_FILE_INTELLIGENCE = "raios.system.file_intelligence"
 
 _READ_ONLY = {
     "RISK_CLASS": "LOW",
@@ -23,6 +24,7 @@ CONTRACTS: dict[str, dict[str, Any]] = {
     CAPABILITY_HEALTH: {"CAPABILITY_ID": CAPABILITY_HEALTH, **_READ_ONLY},
     CAPABILITY_HANGING: {"CAPABILITY_ID": CAPABILITY_HANGING, **_READ_ONLY},
     CAPABILITY_ECOLOGY: {"CAPABILITY_ID": CAPABILITY_ECOLOGY, **_READ_ONLY},
+    CAPABILITY_FILE_INTELLIGENCE: {"CAPABILITY_ID": CAPABILITY_FILE_INTELLIGENCE, **_READ_ONLY},
 }
 
 UNKNOWN_CAPABILITY = "UNKNOWN_CAPABILITY"
@@ -74,6 +76,14 @@ def _model_ecology() -> dict[str, Any]:
     return out
 
 
+def _file_intelligence() -> dict[str, Any]:
+    from raios.file_intelligence import tool_health
+
+    out = tool_health()
+    out["LIVE"] = True
+    return out
+
+
 def invoke(capability_id: str, *, health: HealthFn | None = None) -> dict[str, Any]:
     contract = get_contract(capability_id)
     if capability_id == CAPABILITY_HEALTH:
@@ -84,4 +94,6 @@ def invoke(capability_id: str, *, health: HealthFn | None = None) -> dict[str, A
         return {"INVOKED": True, "contract": contract, "result": _hanging_work()}
     if capability_id == CAPABILITY_ECOLOGY:
         return {"INVOKED": True, "contract": contract, "result": _model_ecology()}
+    if capability_id == CAPABILITY_FILE_INTELLIGENCE:
+        return {"INVOKED": True, "contract": contract, "result": _file_intelligence()}
     raise ValueError(CAPABILITY_NOT_AUTHORIZED)
