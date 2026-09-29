@@ -264,6 +264,8 @@ def classify_file(path: str | Path) -> dict[str, Any]:
     suffix = target.suffix.lower()
     try:
         sample = target.read_bytes()[:8192]
+        if b"\\x00" in sample:
+            raise UnicodeDecodeError("utf-8", sample, 0, 1, "NUL byte indicates binary content")
         text = sample.decode("utf-8")
         if suffix == ".json":
             json.loads(target.read_text(encoding="utf-8-sig"))
