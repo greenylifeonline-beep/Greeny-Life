@@ -152,6 +152,8 @@ def validate_packet(packet: dict[str, Any], token: str, allowed_actors: set[str]
     )
     if any(k not in packet for k in required):
         return "MISSING_FIELDS"
+    if not str(packet.get("return_path") or "").strip():
+        return "MISSING_RETURN_PATH"
     if packet["packet_id"] == packet["correlation_id"]:
         return "INVALID_PACKET"
     if packet.get("target") not in TARGETS:
