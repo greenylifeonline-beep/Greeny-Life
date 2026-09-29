@@ -272,14 +272,36 @@
         "automatic canonical promotion disabled"
       ],
       "pending_value": {
-        "capability": "crash-safe CAS temp-write/fsync/exclusive-publish/reconciliation",
-        "status": "DEFERRED_CONFLICT_AVOIDANCE",
-        "reason": "local C2 has active uncommitted edits in src/raios/factory_fabric/state_import.py; do not overlap"
+        "capability": "crash-safe CAS temp-write/fsync/hash-verify/exclusive-publish/residue-reconciliation",
+        "status": "EXTRACTED_UNWIRED_PENDING_C2_CONVERGENCE",
+        "canonical_artifacts": [
+          {
+            "path": "src/raios/factory_fabric/cas_durability.py",
+            "commit": "865ed1ba32a516c142e4fbfbc31d57d58db7cbc7"
+          },
+          {
+            "path": "tests/factory_fabric/test_cas_durability.py",
+            "commit": "fded74b57465f921e646428af4d8d4a29658da28"
+          }
+        ],
+        "verification": {
+          "isolated_pytest_status": "PASS",
+          "tests_passed": 4,
+          "tests_failed": 0,
+          "covered": [
+            "idempotent immutable publish",
+            "existing-object hash tamper fail-closed",
+            "temp/lock crash residue reconciliation without object deletion",
+            "Windows/filesystem hard-link fallback via exclusive sidecar lock"
+          ]
+        },
+        "wiring_status": "NOT_WIRED_TO_STATE_IMPORT",
+        "reason": "Local C2 has active edits in src/raios/factory_fabric/state_import.py; helper extracted separately to avoid overlap."
       },
-      "decision": "KEEP_DONOR_UNTIL_CAS_VALUE_ASSIMILATED"
+      "decision": "DONOR_REMOTE_RETIRED_RECOVERY_HELD_CAS_VALUE_EXTRACTED"
     }
   ],
-  "updated_at": "2026-09-29T20:26:00+03:00",
+  "updated_at": "2026-09-29T21:37:00+03:00",
   "pending_remote_ref_deletions": [],
   "branch_reviews": [
     {
@@ -410,5 +432,14 @@
     "required_pull_request_reviews": null,
     "required_status_checks": null,
     "note": "Protection prevents destructive ref operations without imposing a new PR-only workflow."
+  },
+  "post_retirement_value_extraction": {
+    "status": "PASS",
+    "capability": "FACTORY_FABRIC_CAS_DURABILITY",
+    "second_runtime_created": false,
+    "second_registry_created": false,
+    "state_import_modified": false,
+    "c2_scope_modified": false,
+    "next_gate": "WIRE_CAS_HELPER_AFTER_C2_STATE_IMPORT_CONVERGENCE"
   }
 }
