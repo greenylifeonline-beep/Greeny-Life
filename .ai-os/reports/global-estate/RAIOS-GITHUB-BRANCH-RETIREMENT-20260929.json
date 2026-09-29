@@ -441,5 +441,30 @@
     "state_import_modified": false,
     "c2_scope_modified": false,
     "next_gate": "WIRE_CAS_HELPER_AFTER_C2_STATE_IMPORT_CONVERGENCE"
+  },
+  "post_retirement_hardening": {
+    "status": "PASS",
+    "retired_root_resurrection_guard": {
+      "retired_path": "C:\\\\Users\\\\Ghanam\\\\Documents\\\\Codex\\\\Greeny-Life-Repair",
+      "active_certifier_fallback_removed": true,
+      "canonical_root_resolution": [
+        "RAIOS_CANONICAL_ROOT",
+        "RAIOS_REPAIR_ROOT compatibility alias",
+        "git rev-parse --show-toplevel",
+        "package-relative fallback"
+      ],
+      "commits": [
+        "33bb48ed76d9487854b8b6c95c4ccb73a4ddfebc",
+        "c3fd024a64af5897b7d94537c4ee71795c1f941d",
+        "a4744575989d9b6bb91a932a7039f15e3873f8b2"
+      ],
+      "static_verification": {
+        "retired_path_literal_present_in_certifier": false,
+        "WINDOWS_REPAIR_symbol_present": false,
+        "RAIOS_CANONICAL_ROOT_present": true,
+        "regression_test_present": true
+      },
+      "workflow_note": "No new GitHub Actions run was observed for the Contents-API commits; do not claim CI execution."
+    }
   }
 }
