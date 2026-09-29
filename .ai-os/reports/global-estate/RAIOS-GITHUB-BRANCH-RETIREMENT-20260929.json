@@ -142,25 +142,25 @@
   "remaining_branches": [
     {
       "branch": "ai-evolution-202608051809",
-      "sha": "0d4a207a34cb8294a71ca04211406836b98cca12",
+      "sha": "19e3208dc152cbc6a206e0b870dcf5bdc49a98dc",
       "decision": "KEEP_CANONICAL"
     },
     {
       "branch": "main",
       "sha": "da67f44963fafde67df52cb62ab32f75fe725df0",
-      "decision": "HOLD_DONOR_REVIEW",
-      "reason": "legacy business/commercial estate requires semantic salvage proof before removal"
+      "decision": "KEEP_DONOR_PENDING_COMMERCIAL_SALVAGE",
+      "reason": "unverified historical supplier/customer/market data and legacy business value remain under controlled review; do not promote as current truth"
     },
     {
       "branch": "codex-clean",
       "sha": "98b952417c19d61d269a5681ef0ccc4aba959738",
-      "decision": "HOLD_DONOR_REVIEW",
-      "reason": "contains historical Cognitive Learning / Shared Cognitive Exchange reference material with safety concepts still under extraction"
+      "decision": "KEEP_DONOR_PENDING_CAS_ASSIMILATION",
+      "reason": "crash-safe CAS temp-write/fsync/hash-verify/exclusive-publish/reconciliation value is not yet bound into canonical state_import; C2 has active local edits in that scope"
     }
   ],
   "verification": {
     "branches_before_wave": 24,
-    "branches_after_retirement": 6,
+    "branches_after_retirement": 3,
     "open_pull_requests_after_retirement": 0,
     "local_working_tree_modified": false,
     "c2_scope_modified": false,
@@ -276,11 +276,7 @@
     }
   ],
   "updated_at": "2026-09-29T20:26:00+03:00",
-  "pending_remote_ref_deletions": [
-    "cursor/c2-evidence-reuse-preparation-4247",
-    "v9-neurolingua-semantic-kernel",
-    "raios/gl-005-convergence"
-  ],
+  "pending_remote_ref_deletions": [],
   "branch_reviews": [
     {
       "branch": "raios/gl-005-convergence",
@@ -295,5 +291,30 @@
         "promoting a second endpoint/orchestrator would create duplicate decision surface and authority ambiguity"
       ]
     }
-  ]
+  ],
+  "current_state": {
+    "branch_count": 3,
+    "branches": [
+      {
+        "branch": "ai-evolution-202608051809",
+        "sha": "19e3208dc152cbc6a206e0b870dcf5bdc49a98dc"
+      },
+      {
+        "branch": "codex-clean",
+        "sha": "98b952417c19d61d269a5681ef0ccc4aba959738"
+      },
+      {
+        "branch": "main",
+        "sha": "da67f44963fafde67df52cb62ab32f75fe725df0"
+      }
+    ],
+    "open_pull_requests": 0,
+    "remote_archive_refs": 0,
+    "status": "CONVERGED_TO_CANONICAL_PLUS_TWO_DONORS"
+  },
+  "remote_archive_ref_cleanup": {
+    "status": "COMPLETE",
+    "refs_remaining": 0,
+    "authority": "canonical evidence manifest; no parallel archive refs retained"
+  }
 }
