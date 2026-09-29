@@ -11,7 +11,6 @@ import uuid
 from pathlib import Path
 from typing import Any
 
-WINDOWS_REPAIR = Path(r"C:\Users\Ghanam\Documents\Codex\Greeny-Life-Repair")
 
 
 def resolve_repair_root() -> Path:
