@@ -20,6 +20,8 @@ LEASE_UNKNOWN = "LEASE_UNKNOWN"
 LEASE_EXPIRED = "LEASE_EXPIRED"
 WRONG_OWNER = "WRONG_OWNER_RELEASE_DENIED"
 LEASE_FAIL_CLOSED = "LEASE_FAIL_CLOSED"
+STALE_LEASE_FENCE = "STALE_LEASE_FENCE"
+LEASE_FENCED = "FENCED"
 
 SCHEMA = "raios.write-lease.v2"
 
@@ -126,6 +128,7 @@ class CommandLeaseAdapter:
             "schema": SCHEMA,
             "lease_id": lid,
             "fence_token": epoch,
+            "generation": 1,
             "owner": owner,
             "owner_identity": owner,
             "scope": scope,
@@ -149,38 +152,94 @@ class CommandLeaseAdapter:
         out["IDEMPOTENT_REACQUIRE"] = False
         return out
 
-    def validate(self, lease_id: str, *, owner: str | None = None) -> dict[str, Any]:
+    def validate(
+        self,
+        lease_id: str,
+        *,
+        owner: str | None = None,
+        expected_fence_token: int | None = None,
+        expected_generation: int | None = None,
+    ) -> dict[str, Any]:
         rec = _load(self._path(lease_id))
         if not rec:
             return {"ok": False, "code": LEASE_UNKNOWN}
+        if owner is not None and rec.get("owner") != owner:
+            return {"ok": False, "code": WRONG_OWNER, "lease": rec}
+        generation = int(rec.get("generation") or 1)
+        fence_token = int(rec.get("fence_token") or 0)
+        if expected_generation is not None and generation != int(expected_generation):
+            return {"ok": False, "code": STALE_LEASE_FENCE, "lease": rec}
+        if expected_fence_token is not None and fence_token != int(expected_fence_token):
+            return {"ok": False, "code": STALE_LEASE_FENCE, "lease": rec}
         if rec.get("state") != "ACTIVE":
             return {"ok": False, "code": rec.get("state") or LEASE_FAIL_CLOSED, "lease": rec}
         if _parse(str(rec.get("expires_at") or "")) <= _utc():
             return {"ok": False, "code": LEASE_EXPIRED, "lease": rec}
-        if owner is not None and rec.get("owner") != owner:
-            return {"ok": False, "code": WRONG_OWNER, "lease": rec}
         return {"ok": True, "lease": rec}
 
-    def renew(self, lease_id: str, *, owner: str, ttl_seconds: int = 120) -> dict[str, Any]:
-        v = self.validate(lease_id, owner=owner)
+    def renew(
+        self,
+        lease_id: str,
+        *,
+        owner: str,
+        ttl_seconds: int = 120,
+        expected_fence_token: int | None = None,
+        expected_generation: int | None = None,
+    ) -> dict[str, Any]:
+        v = self.validate(
+            lease_id,
+            owner=owner,
+            expected_fence_token=expected_fence_token,
+            expected_generation=expected_generation,
+        )
         if not v.get("ok"):
             return v
         rec = dict(v["lease"])
-        rec["expires_at"] = _iso(_utc() + timedelta(seconds=int(ttl_seconds)))
-        rec["renewed_at"] = _iso()
+        t = _utc()
+        previous_token = int(rec.get("fence_token") or 0)
+        rec["generation"] = int(rec.get("generation") or 1) + 1
+        rec["fence_token"] = max(previous_token + 1, int(t.timestamp() * 1_000_000))
+        rec["expires_at"] = _iso(t + timedelta(seconds=int(ttl_seconds)))
+        rec["renewed_at"] = _iso(t)
         _atomic(self._path(lease_id), rec)
         return {"ok": True, "lease": rec}
 
-    def release(self, lease_id: str, *, owner: str) -> dict[str, Any]:
-        rec = _load(self._path(lease_id))
-        if not rec:
-            return {"ok": False, "code": LEASE_UNKNOWN}
-        if rec.get("owner") != owner:
-            return {"ok": False, "code": WRONG_OWNER}
+    def release(
+        self,
+        lease_id: str,
+        *,
+        owner: str,
+        expected_fence_token: int | None = None,
+        expected_generation: int | None = None,
+    ) -> dict[str, Any]:
+        v = self.validate(
+            lease_id,
+            owner=owner,
+            expected_fence_token=expected_fence_token,
+            expected_generation=expected_generation,
+        )
+        if not v.get("ok"):
+            return v
+        rec = dict(v["lease"])
         rec["state"] = "RELEASED"
         rec["released_at"] = _iso()
         _atomic(self._path(lease_id), rec)
         return {"ok": True, "lease": rec, "PROVENANCE_ERASED": False}
+
+    def fence(self, lease_id: str, *, owner: str | None = None) -> dict[str, Any]:
+        rec = _load(self._path(lease_id))
+        if not rec:
+            return {"ok": False, "code": LEASE_UNKNOWN}
+        if owner is not None and rec.get("owner") != owner:
+            return {"ok": False, "code": WRONG_OWNER, "lease": rec}
+        t = _utc()
+        previous_token = int(rec.get("fence_token") or 0)
+        rec["generation"] = int(rec.get("generation") or 1) + 1
+        rec["fence_token"] = max(previous_token + 1, int(t.timestamp() * 1_000_000))
+        rec["state"] = LEASE_FENCED
+        rec["fenced_at"] = _iso(t)
+        _atomic(self._path(lease_id), rec)
+        return {"ok": True, "lease": rec}
 
     def expire(self, lease_id: str) -> dict[str, Any]:
         rec = _load(self._path(lease_id))
