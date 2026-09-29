@@ -6,7 +6,7 @@
   "canonical": {
     "repository": "greenylifeonline-beep/Greeny-Life",
     "default_branch": "ai-evolution-202608051809",
-    "observed_head": "141c64fe31eeafb978cb082197ffe9c946116c88",
+    "observed_head": "6360fce1ecd39b273556dd8bf40e4298aad19e98",
     "github_branch_count": 1,
     "single_branch_visible": true,
     "protected": true,
@@ -190,7 +190,14 @@
         "separate storage/validation/trust/canonical status",
         "content-addressed reference semantics"
       ],
-      "integration_rule": "Extract into existing Factory/Command Fabric; do not restore standalone exchange runtime."
+      "integration_rule": "Extract into existing Factory/Command Fabric; do not restore standalone exchange runtime.",
+      "status": "ABSORBED",
+      "absorbed_into": [
+        "src/raios/command_fabric/lease.py",
+        "src/raios/command_fabric/pipeline.py",
+        "src/raios/factory_fabric/cas_durability.py",
+        "src/raios/factory_fabric/state_import.py"
+      ]
     },
     {
       "source": "cursor/c2-evidence-reuse-preparation-4247",
@@ -224,16 +231,75 @@
     "never_run_gc_before_bundle_verified": true
   },
   "next_gate": [
-    "Verify recovery bundle and SHA256.",
-    "Update this report with verified bundle hash and missing-object count.",
-    "Extract donor-only safeguards/tests into existing canonical capabilities without parallel runtime.",
-    "Remove temporary local recovery refs only after bundle verification.",
-    "Do not run aggressive git gc until recovery proof is sealed."
+    "Verify the local historical Git recovery bundle and record SHA256/missing-object count; do not run aggressive git gc before this proof.",
+    "Evaluate C2 build_c2_index.py donor value against current Master Estate/Deep Forensic tools and extract only unique read-only behavior if any.",
+    "Evaluate PR15 C5 identity regression-test intent against current canonical C5 tests; retain only missing coverage.",
+    "Keep GL-005 residual aggregation as optional MasterMind view only; do not restore a second authority/orchestrator."
   ],
   "protection_observation": {
     "branch_api_protected_flag": true,
     "rulesets_visible_count": 0,
     "detailed_branch_protection_read": "FORBIDDEN_BY_GITHUB_APP_ADMIN_SCOPE",
     "conclusion": "Protection is active at branch metadata level; exact protection settings cannot be verified through this integration."
+  },
+  "donor_assimilation": {
+    "status": "VERIFIED",
+    "command_fabric": {
+      "status": "ABSORBED_AND_TESTED",
+      "lease_fencing_commit": "86e89b132a59a14224052010fbaeae4319b859e5",
+      "pipeline_binding_commit": "f8095bd31ca20555ac7dcdae1e62dfd18914afa3",
+      "tests_commit": "c4f88dd3601796101703c00eb4f72808a6bcb9a0",
+      "properties": [
+        "generation-bound write leases",
+        "monotonic fence token",
+        "stale worker fail-closed validation",
+        "pre-side-effect fence validation",
+        "release bound to expected generation and token"
+      ],
+      "second_registry_created": false
+    },
+    "factory_fabric": {
+      "status": "ABSORBED_AND_TESTED",
+      "implementation_commit": "5d41b8430ab272d791dacf5130d0c173ea01ec0e",
+      "tests_commit": "90696321d3bc252ab50736077afaea07e38a029d",
+      "properties": [
+        "durable CAS publish_verified_copy",
+        "crash residue reconciliation",
+        "superseded logical snapshot compaction",
+        "Windows sharing-violation pending_delete",
+        "separate storage/validation/trust/canonical authority axes"
+      ],
+      "second_runtime_created": false
+    },
+    "file_intelligence": {
+      "status": "ABSORBED_BY_PARALLEL_CANONICAL_WAVE",
+      "commits": [
+        "500e91b99aa1959fbd85a542847af47b23af8445",
+        "5448acf0280988345a97e2cf5fe6befcc1b9d74c",
+        "cddf2453a46c11928979b6a12c93c8e44328b09f",
+        "97ffe449875424d9992452a009dc83e915d0c930"
+      ],
+      "canonical_source": "src/raios/file_intelligence.py",
+      "canonical_tests": "tests/file_intelligence/test_file_intelligence.py",
+      "historical_parallel_packages_restored": false
+    }
+  },
+  "independent_validation": {
+    "workflow": "govern",
+    "workflow_run_id": 36624271363,
+    "job_id": 109597114564,
+    "validated_head": "6360fce1ecd39b273556dd8bf40e4298aad19e98",
+    "canonical_fabric_regression": "PASS",
+    "tests_passed": 51,
+    "tests_failed": 0,
+    "duration_seconds": 2.14,
+    "dependencies": [
+      "pytest",
+      "pytest-asyncio",
+      "pydantic",
+      "PyYAML"
+    ],
+    "workflow_commit": "6360fce1ecd39b273556dd8bf40e4298aad19e98",
+    "note": "Two prior CI attempts failed during test collection because runner dependencies pydantic then PyYAML were absent; no test assertion failed in those attempts."
   }
 }
