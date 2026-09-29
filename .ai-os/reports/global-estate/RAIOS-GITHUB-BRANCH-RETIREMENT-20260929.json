@@ -120,6 +120,18 @@
       "sha": "f48e80b63d405a5483cf21822aa4ac618888bd55",
       "pr": 15,
       "reason": "runtime fix already canonical; reusable regression intent ported and live-probed successfully"
+    },
+    {
+      "branch": "v9-neurolingua-semantic-kernel",
+      "sha": "79ba97031e0b0fd740fd890cbf9ba0451597783d",
+      "pr": 12,
+      "reason": "unique fail-closed transport invariants extracted into canonical; remaining content historical/superseded"
+    },
+    {
+      "branch": "cursor/c2-evidence-reuse-preparation-4247",
+      "sha": "c36906757f7dce17cbcbb2d3cf9fcb5c8f53f6cc",
+      "pr": 13,
+      "reason": "evidence-index script classified reference-only; current canonical estate/forensic authority is broader"
     }
   ],
   "remaining_branches": [
@@ -141,21 +153,10 @@
       "reason": "contains historical Cognitive Learning / Shared Cognitive Exchange reference material with safety concepts still under extraction"
     },
     {
-      "branch": "cursor/c2-evidence-reuse-preparation-4247",
-      "sha": "c36906757f7dce17cbcbb2d3cf9fcb5c8f53f6cc",
-      "decision": "HOLD_DONOR_REVIEW",
-      "reason": "build_c2_index.py read-only evidence reuse capability still under assimilation review"
-    },
-    {
       "branch": "raios/gl-005-convergence",
       "sha": "3d9f58136d318ba07d743e127ab1e433605ce1ea",
       "decision": "HOLD_INTERFACE_VALUE_REVIEW",
       "reason": "possible unified-operation aggregation interface; no separate authority/runtime to be restored"
-    },
-    {
-      "branch": "v9-neurolingua-semantic-kernel",
-      "sha": "79ba97031e0b0fd740fd890cbf9ba0451597783d",
-      "decision": "HOLD_FINAL_SUBSUMPTION_CHECK"
     }
   ],
   "verification": {
@@ -194,7 +195,54 @@
         "old c5_bind/named_cortex_from_registry API assertions"
       ],
       "decision": "SAFE_TO_RETIRE_BRANCH"
+    },
+    {
+      "donor_branch": "v9-neurolingua-semantic-kernel",
+      "donor_sha": "79ba97031e0b0fd740fd890cbf9ba0451597783d",
+      "donor_pr": 12,
+      "retained_value": [
+        "fail closed when return_path is blank",
+        "explicit invalid HMAC signature regression coverage"
+      ],
+      "canonical_changes": [
+        {
+          "path": "scripts/ai-os/raios_transport/packet.py",
+          "commit": "0606d14fe65f8a7a5b69b7fd165a0bdb4b3882d3"
+        },
+        {
+          "path": "scripts/ai-os/raios_transport/tests/test_stage04.py",
+          "commit": "0f4b676023a71561b7b79a2ba2f07f945fb9ca64"
+        }
+      ],
+      "live_probe": {
+        "invalid_signature": "INVALID_SIGNATURE",
+        "empty_return_path": "MISSING_RETURN_PATH"
+      },
+      "superseded_test_intents": [
+        "lease conflict/expiry/idempotent reacquire covered by canonical Command Fabric CF005-CF010/CF024",
+        "duplicate execution suppression covered by CF011 and canonical transport tests",
+        "replay/expiry already covered by canonical packet tests",
+        "old 8787/Cursor-local topology is historical"
+      ],
+      "decision": "SAFE_TO_RETIRE_BRANCH"
+    },
+    {
+      "donor_branch": "cursor/c2-evidence-reuse-preparation-4247",
+      "donor_sha": "c36906757f7dce17cbcbb2d3cf9fcb5c8f53f6cc",
+      "donor_pr": 13,
+      "reviewed_value": "build_c2_index.py plus evidence reuse/hash/topic/contradiction outputs",
+      "decision": "REFERENCE_ONLY_NO_PROMOTION",
+      "reason": [
+        "script hard-codes historical August refs and session topology",
+        "creates a parallel Evidence-Reuse Index rather than extending current canonical evidence authority",
+        "canonical Master Estate and Deep Legacy Forensic reports already provide broader surface, lineage, duplicate, capability, unresolved and reuse/archive/delete coverage",
+        "promoting it would recreate a duplicate evidence registry contrary to Single-Truth"
+      ]
     }
   ],
-  "updated_at": "2026-09-29T20:26:00+03:00"
+  "updated_at": "2026-09-29T20:26:00+03:00",
+  "pending_remote_ref_deletions": [
+    "v9-neurolingua-semantic-kernel",
+    "cursor/c2-evidence-reuse-preparation-4247"
+  ]
 }
