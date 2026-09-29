@@ -6,9 +6,12 @@
   "canonical": {
     "repository": "greenylifeonline-beep/Greeny-Life",
     "default_branch": "ai-evolution-202608051809",
-    "observed_head": "7068ab12834fd8e13c240a42e50019bb612d5bb8",
+    "observed_head": "141c64fe31eeafb978cb082197ffe9c946116c88",
     "github_branch_count": 1,
-    "single_branch_visible": true
+    "single_branch_visible": true,
+    "protected": true,
+    "open_pr_count": 0,
+    "open_prs": []
   },
   "invariants": {
     "single_source_single_truth": true,
@@ -27,7 +30,8 @@
   "branch_ref_cleanup": {
     "github_historical_branch_refs_remaining": 0,
     "github_canonical_branch_refs_remaining": 1,
-    "note": "Historical branch refs disappeared during convergence. Critical commit objects were rechecked by immutable SHA after ref removal."
+    "note": "Historical branch refs disappeared during convergence. Critical commit objects were rechecked by immutable SHA after ref removal.",
+    "open_pull_requests_remaining": 0
   },
   "critical_commit_object_verification": [
     {
@@ -225,5 +229,11 @@
     "Extract donor-only safeguards/tests into existing canonical capabilities without parallel runtime.",
     "Remove temporary local recovery refs only after bundle verification.",
     "Do not run aggressive git gc until recovery proof is sealed."
-  ]
+  ],
+  "protection_observation": {
+    "branch_api_protected_flag": true,
+    "rulesets_visible_count": 0,
+    "detailed_branch_protection_read": "FORBIDDEN_BY_GITHUB_APP_ADMIN_SCOPE",
+    "conclusion": "Protection is active at branch metadata level; exact protection settings cannot be verified through this integration."
+  }
 }
