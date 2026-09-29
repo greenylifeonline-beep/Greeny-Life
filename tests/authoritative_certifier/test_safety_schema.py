@@ -123,3 +123,14 @@ def test_fixture_matches_live_receipt_safety_contract():
     assert "active_wave_overwritten" not in safety
     assert safety["authoritative_current_goal_overwritten"] is False
     assert safety["authoritative_active_wave_overwritten"] is False
+
+def test_certifier_has_no_retired_repair_root_fallback():
+    source = (
+        REPO
+        / "_raios-authoritative-certifier"
+        / "src"
+        / "raios_authoritative_certifier.py"
+    ).read_text(encoding="utf-8")
+    assert "Greeny-Life-Repair" not in source
+    assert "RAIOS_CANONICAL_ROOT" in source
+\n
