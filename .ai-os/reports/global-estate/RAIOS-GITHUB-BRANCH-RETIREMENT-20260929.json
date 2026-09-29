@@ -166,7 +166,11 @@
     "main_remote_ref_deleted": true,
     "codex_clean_remote_ref_deleted": true,
     "recovery_provenance_preserved": true,
-    "raw_donor_history_deleted": false
+    "raw_donor_history_deleted": false,
+    "canonical_branch_protected": true,
+    "force_push_allowed": false,
+    "branch_deletion_allowed": false,
+    "single_remote_branch": true
   },
   "assimilations": [
     {
@@ -387,12 +391,24 @@
     "branches": [
       {
         "branch": "ai-evolution-202608051809",
-        "sha": "94d3c81d9e034e463270b21e26699875220d27e1"
+        "sha": "1f62910dd2a033a01bf78109172384f2ebaf3c27",
+        "protected": true
       }
     ],
     "historical_operational_branch_refs_remaining": 0,
     "cursor_branch_refs_remaining": 0,
     "old_main_ref_remaining": false,
     "codex_clean_ref_remaining": false
+  },
+  "canonical_branch_protection": {
+    "enabled": true,
+    "github_branch_list_protected_true": true,
+    "api_update_http": 200,
+    "enforce_admins": true,
+    "allow_force_pushes": false,
+    "allow_deletions": false,
+    "required_pull_request_reviews": null,
+    "required_status_checks": null,
+    "note": "Protection prevents destructive ref operations without imposing a new PR-only workflow."
   }
 }
