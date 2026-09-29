@@ -114,6 +114,12 @@
       "sha": "2a834cc86c05642d59e3e2837e411751190aa7b4",
       "pr": 14,
       "reason": "nested safety schema fix and tests exist in canonical"
+    },
+    {
+      "branch": "cursor/c5-screen-identity-4540",
+      "sha": "f48e80b63d405a5483cf21822aa4ac618888bd55",
+      "pr": 15,
+      "reason": "runtime fix already canonical; reusable regression intent ported and live-probed successfully"
     }
   ],
   "remaining_branches": [
@@ -141,12 +147,6 @@
       "reason": "build_c2_index.py read-only evidence reuse capability still under assimilation review"
     },
     {
-      "branch": "cursor/c5-screen-identity-4540",
-      "sha": "f48e80b63d405a5483cf21822aa4ac618888bd55",
-      "decision": "HOLD_TEST_VALUE_REVIEW",
-      "reason": "runtime fix largely absorbed but branch carries potentially useful C5 identity regression tests/workflow"
-    },
-    {
       "branch": "raios/gl-005-convergence",
       "sha": "3d9f58136d318ba07d743e127ab1e433605ce1ea",
       "decision": "HOLD_INTERFACE_VALUE_REVIEW",
@@ -160,12 +160,41 @@
   ],
   "verification": {
     "branches_before_wave": 24,
-    "branches_after_retirement": 7,
+    "branches_after_retirement": 6,
     "open_pull_requests_after_retirement": 0,
     "local_working_tree_modified": false,
     "c2_scope_modified": false,
     "merge_executed": false,
     "reset_executed": false,
     "checkout_executed": false
-  }
+  },
+  "assimilations": [
+    {
+      "donor_branch": "cursor/c5-screen-identity-4540",
+      "donor_sha": "f48e80b63d405a5483cf21822aa4ac618888bd55",
+      "donor_pr": 15,
+      "retained_value": "C5 optional-dependency identity regression intent",
+      "canonical_artifact": "tests/c5_screen/test_optional_dependency_independence.py",
+      "canonical_commit": "6e5a7c1d1f3f9455b9c9cfaa1d0b1512d4f2ea66",
+      "live_probe": {
+        "whoami_ok": true,
+        "from": "C5",
+        "parent": "C1",
+        "paid_api": false,
+        "gl005_proven": false,
+        "wal_written": false,
+        "identity_ok": true,
+        "kind": "whoami",
+        "answer_has_C5": true,
+        "wal_unchanged": true
+      },
+      "historical_only_not_promoted": [
+        "D081 CI commit identity receipt assertions",
+        "D082-D084 stage-0 port/session assertions bound to old 8787/Cursor topology",
+        "old c5_bind/named_cortex_from_registry API assertions"
+      ],
+      "decision": "SAFE_TO_RETIRE_BRANCH"
+    }
+  ],
+  "updated_at": "2026-09-29T20:26:00+03:00"
 }
