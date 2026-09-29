@@ -15,11 +15,15 @@ WINDOWS_REPAIR = Path(r"C:\Users\Ghanam\Documents\Codex\Greeny-Life-Repair")
 
 
 def resolve_repair_root() -> Path:
-    env = os.environ.get("RAIOS_REPAIR_ROOT", "").strip()
+    # Canonical root is explicit or derived from the current checkout.
+    # RAIOS_REPAIR_ROOT remains a compatibility alias only; no retired
+    # filesystem tree is ever selected implicitly.
+    env = (
+        os.environ.get("RAIOS_CANONICAL_ROOT", "").strip()
+        or os.environ.get("RAIOS_REPAIR_ROOT", "").strip()
+    )
     if env:
         return Path(env).resolve()
-    if WINDOWS_REPAIR.exists():
-        return WINDOWS_REPAIR.resolve()
     try:
         top = subprocess.check_output(
             ["git", "rev-parse", "--show-toplevel"],
