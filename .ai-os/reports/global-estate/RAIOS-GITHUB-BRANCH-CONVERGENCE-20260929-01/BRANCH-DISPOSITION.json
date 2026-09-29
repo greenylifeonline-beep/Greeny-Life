@@ -205,7 +205,20 @@
       "value": [
         "build_c2_index.py read-only evidence reuse/hash/topic/contradiction indexing"
       ],
-      "integration_rule": "Reuse as inspection capability only; do not create a second registry."
+      "integration_rule": "Reuse as inspection capability only; do not create a second registry.",
+      "status": "REFERENCE_ONLY_NO_PROMOTION",
+      "decision": "Superseded by canonical Master Estate / Deep Forensic coverage; do not restore a second evidence registry.",
+      "retained_principles": [
+        "hash each unique blob once",
+        "do not treat historical report claims as current runtime truth",
+        "read-only evidence classification"
+      ],
+      "rejection_reasons": [
+        "hard-coded retired branch set",
+        "hard-coded /workspace execution root",
+        "writes a separate c2-evidence-preparation registry",
+        "canonical estate tooling now provides broader coverage"
+      ]
     },
     {
       "source": "cursor/c5-screen-identity-4540",
@@ -213,7 +226,16 @@
       "value": [
         "C5 identity/no-pydantic regression tests and historical Stage-0 receipts"
       ],
-      "integration_rule": "Retain test intent only where not already covered by current C5 runtime."
+      "integration_rule": "Retain test intent only where not already covered by current C5 runtime.",
+      "status": "ABSORBED_TEST_INTENT",
+      "absorbed_into": [
+        "tests/c5_screen/test_optional_dependency_independence.py"
+      ],
+      "historical_only": [
+        "D081 CI commit identity receipt",
+        "D082-D084 Stage-0 session/port/fabric receipts"
+      ],
+      "decision": "Keep current optional-dependency/public-identity regression; do not reintroduce session-specific historical receipt assertions as current truth."
     },
     {
       "source": "raios/gl-005-convergence",
@@ -221,7 +243,9 @@
       "value": [
         "unified operational aggregation surface"
       ],
-      "integration_rule": "Optional aggregation inside existing MasterMind only; no new authority or orchestrator."
+      "integration_rule": "Optional aggregation inside existing MasterMind only; no new authority or orchestrator.",
+      "status": "REFERENCE_ONLY_NO_RUNTIME_PROMOTION",
+      "decision": "Existing MasterMind/Egypt Brain/commercial/trade components remain authoritative; unified aggregation may only be a future view, never a second orchestrator."
     }
   ],
   "recovery": {
@@ -232,9 +256,8 @@
   },
   "next_gate": [
     "Verify the local historical Git recovery bundle and record SHA256/missing-object count; do not run aggressive git gc before this proof.",
-    "Evaluate C2 build_c2_index.py donor value against current Master Estate/Deep Forensic tools and extract only unique read-only behavior if any.",
-    "Evaluate PR15 C5 identity regression-test intent against current canonical C5 tests; retain only missing coverage.",
-    "Keep GL-005 residual aggregation as optional MasterMind view only; do not restore a second authority/orchestrator."
+    "After bundle verification, remove temporary local archive tags/refs created during convergence if they are not required by the verified recovery bundle.",
+    "Do not restore historical branch refs or parallel runtimes."
   ],
   "protection_observation": {
     "branch_api_protected_flag": true,
@@ -301,5 +324,11 @@
     ],
     "workflow_commit": "6360fce1ecd39b273556dd8bf40e4298aad19e98",
     "note": "Two prior CI attempts failed during test collection because runner dependencies pydantic then PyYAML were absent; no test assertion failed in those attempts."
+  },
+  "donor_value_closure": {
+    "c2_evidence_reuse": "REFERENCE_ONLY_NO_PROMOTION",
+    "c5_identity_tests": "ABSORBED_TEST_INTENT",
+    "gl005_aggregation": "REFERENCE_ONLY_NO_RUNTIME_PROMOTION",
+    "unresolved_promotion_required": 0
   }
 }
