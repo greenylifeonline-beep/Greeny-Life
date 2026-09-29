@@ -17,7 +17,7 @@ jobs:
         run: govern status
       - name: canonical fabric regression
         run: |
-          python -m pip install pytest
+          python -m pip install pytest pytest-asyncio pydantic
           python -m pytest tests/command_fabric/test_control_fabric.py tests/factory_fabric/test_cas_durability.py tests/factory_fabric/test_factory_fabric.py -q
       # Advisory until a track record exists: a fresh install has an empty
       # ledger, and hard-failing GATE on every PR before any claim is scored
