@@ -166,7 +166,11 @@
     "c2_scope_modified": false,
     "merge_executed": false,
     "reset_executed": false,
-    "checkout_executed": false
+    "checkout_executed": false,
+    "remote_branches_before_final_retirement": 3,
+    "open_pull_requests": 0,
+    "workflow_legacy_ref_hits": 0,
+    "recovery_trees_verified": 5
   },
   "assimilations": [
     {
@@ -276,7 +280,10 @@
     }
   ],
   "updated_at": "2026-09-29T20:26:00+03:00",
-  "pending_remote_ref_deletions": [],
+  "pending_remote_ref_deletions": [
+    "main",
+    "codex-clean"
+  ],
   "branch_reviews": [
     {
       "branch": "raios/gl-005-convergence",
@@ -290,6 +297,33 @@
         "UAE/Norway UNAVAILABLE labels add no executable capability",
         "promoting a second endpoint/orchestrator would create duplicate decision surface and authority ambiguity"
       ]
+    },
+    {
+      "branch": "main",
+      "sha": "da67f44963fafde67df52cb62ab32f75fe725df0",
+      "decision": "REMOTE_REF_SAFE_TO_RETIRE_WITH_RECOVERY_HOLD",
+      "reason": [
+        "GitHub default branch is canonical ai-evolution-202608051809",
+        "no open PR depends on main",
+        "no canonical workflow references main",
+        "raw main tree preserved and verified in CANONICAL_RECOVERY_ASSET",
+        "historical supplier/customer/market candidates are already represented in canonical deep-legacy forensic evidence as noncanonical validation-required records"
+      ],
+      "current_truth_policy": "HISTORICAL_COMMERCIAL_RECORDS_NE_CURRENT_CANONICAL_TRUTH",
+      "recovery_ref": "refs/raios-recovery/github-main-20260929"
+    },
+    {
+      "branch": "codex-clean",
+      "sha": "98b952417c19d61d269a5681ef0ccc4aba959738",
+      "decision": "REMOTE_REF_SAFE_TO_RETIRE_WITH_RECOVERY_HOLD",
+      "reason": [
+        "useful authority-separation value assimilated into canonical Factory Fabric",
+        "lease fencing already canonical",
+        "remaining crash-safe CAS donor value is deferred solely to avoid overlap with active C2 state_import.py edits",
+        "full donor tree preserved and verified in CANONICAL_RECOVERY_ASSET"
+      ],
+      "pending_assimilation": "CRASH_SAFE_CAS_PUBLISH_AND_RECONCILIATION_AFTER_C2_STATE_IMPORT_CONVERGENCE",
+      "recovery_ref": "refs/raios-recovery/github-codex-clean-20260929"
     }
   ],
   "current_state": {
@@ -316,5 +350,49 @@
     "status": "COMPLETE",
     "refs_remaining": 0,
     "authority": "canonical evidence manifest; no parallel archive refs retained"
+  },
+  "recovery_asset": {
+    "path": "C:\\Users\\Ghanam\\OneDrive\\projects\\Greeny-Life-RETIRED-20260820-084036",
+    "terminal_state": "CANONICAL_RECOVERY_ASSET",
+    "working_payload_retired": true,
+    "runtime_required": false,
+    "refs_verified": [
+      {
+        "source_branch": "main",
+        "source_sha": "da67f44963fafde67df52cb62ab32f75fe725df0",
+        "recovery_ref": "refs/raios-recovery/github-main-20260929",
+        "files": 616,
+        "tree_ok": true
+      },
+      {
+        "source_branch": "codex-clean",
+        "source_sha": "98b952417c19d61d269a5681ef0ccc4aba959738",
+        "recovery_ref": "refs/raios-recovery/github-codex-clean-20260929",
+        "files": 1801,
+        "tree_ok": true
+      },
+      {
+        "source_branch": "cursor/c2-evidence-reuse-preparation-4247",
+        "source_sha": "c36906757f7dce17cbcbb2d3cf9fcb5c8f53f6cc",
+        "recovery_ref": "refs/raios-recovery/github-c2-evidence-20260929",
+        "files": 630,
+        "tree_ok": true
+      },
+      {
+        "source_branch": "v9-neurolingua-semantic-kernel",
+        "source_sha": "79ba97031e0b0fd740fd890cbf9ba0451597783d",
+        "recovery_ref": "refs/raios-recovery/github-v9-20260929",
+        "files": 2332,
+        "tree_ok": true
+      },
+      {
+        "source_branch": "raios/gl-005-convergence",
+        "source_sha": "3d9f58136d318ba07d743e127ab1e433605ce1ea",
+        "recovery_ref": "refs/raios-recovery/github-gl005-20260929",
+        "files": 1327,
+        "tree_ok": true
+      }
+    ],
+    "role": "RECOVERY_PROVENANCE_ONLY_NOT_RUNTIME"
   }
 }
