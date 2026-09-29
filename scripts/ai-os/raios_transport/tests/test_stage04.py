@@ -151,6 +151,33 @@ class PacketTests(unittest.TestCase):
         pkt["payload"] = {"x": 2}
         self.assertEqual(validate_packet(pkt, TOKEN, {"C2"}), "INVALID_SCHEMA")
 
+    def test_invalid_signature_fails_closed(self):
+        pkt = build_packet(
+            token=TOKEN,
+            actor="C2",
+            target="C5-PUBLIC",
+            payload={"x": 1},
+            sender_runtime="C2@AG",
+            receiver_runtime="C5@AG",
+            role_id="C2",
+        )
+        pkt["signature"] = "0" * 64
+        self.assertEqual(validate_packet(pkt, TOKEN, {"C2"}), "INVALID_SIGNATURE")
+
+    def test_missing_return_path_fails_closed(self):
+        pkt = build_packet(
+            token=TOKEN,
+            actor="C2",
+            target="C5-PUBLIC",
+            payload={"x": 1},
+            sender_runtime="C2@AG",
+            receiver_runtime="C5@AG",
+            role_id="C2",
+        )
+        pkt["return_path"] = ""
+        pkt["signature"] = __import__("raios_transport.packet", fromlist=["sign"]).sign(pkt, TOKEN)
+        self.assertEqual(validate_packet(pkt, TOKEN, {"C2"}), "MISSING_RETURN_PATH")
+
     def test_replay_and_expiry(self):
         pkt = build_packet(
             token=TOKEN,
