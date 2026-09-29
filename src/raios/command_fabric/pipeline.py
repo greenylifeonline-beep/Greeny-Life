@@ -85,8 +85,9 @@ def execute(
     replay = bool(ucp_result.get("NO_OP") or ucp_result.get("STATUS") == "ALREADY_APPLIED")
 
     scope = f"{target}:{cap}"
+    principal = str(auth.get("PRINCIPAL") or "C1@AG")
     lease = leases.acquire(
-        owner=str(auth.get("PRINCIPAL") or "C1@AG"),
+        owner=principal,
         scope=scope,
         task_id=task_id,
         correlation_id=corr,
@@ -111,6 +112,29 @@ def execute(
             "NATS_AT_LEAST_ONCE": True,
         }
 
+    lease_id = str(lease["lease_id"])
+    lease_fence_token = int(lease.get("fence_token") or 0)
+    lease_generation = int(lease.get("generation") or 1)
+    lease_check = leases.validate(
+        lease_id,
+        owner=principal,
+        expected_fence_token=lease_fence_token,
+        expected_generation=lease_generation,
+    )
+    if not lease_check.get("ok"):
+        return {
+            "ok": False,
+            "STATUS": "REJECTED",
+            "FAIL_CLOSED": lease_check.get("code"),
+            "LEASE_ACQUIRED": True,
+            "LEASE_FENCE_VALIDATED": False,
+            "lease": lease_check,
+            "COMMAND_FABRIC_E2E_PROVEN": False,
+            "EXACT_MISSING_SEGMENT": "LEASE_FENCE_VALIDATE",
+            "EXACTLY_ONCE_CLAIMED": False,
+            "NATS_AT_LEAST_ONCE": True,
+        }
+
     subject = f"{SUBJECT_ROOT}.commands.{target.replace('@', '').replace('/', '')}"
     result_subject = f"{SUBJECT_ROOT}.results.{corr}"
     envelope = {
@@ -126,11 +150,33 @@ def execute(
         "nats_msg_id": f"raios:cmd:{task_id}:{idem}",
         "capability": cap,
         "subject": subject,
+        "lease_id": lease_id,
+        "lease_generation": lease_generation,
+        "lease_fence_token": lease_fence_token,
     }
     pub = transport.publish(envelope)
     deliveries = transport.deliver_all(duplicate=force_duplicate_delivery)
     invoked = None
     status = "ALREADY_APPLIED" if replay else "COMPLETED"
+    pre_effect_lease = leases.validate(
+        lease_id,
+        owner=principal,
+        expected_fence_token=lease_fence_token,
+        expected_generation=lease_generation,
+    )
+    if not pre_effect_lease.get("ok"):
+        return {
+            "ok": False,
+            "STATUS": "REJECTED",
+            "FAIL_CLOSED": pre_effect_lease.get("code"),
+            "LEASE_ACQUIRED": True,
+            "LEASE_FENCE_VALIDATED": False,
+            "lease": pre_effect_lease,
+            "COMMAND_FABRIC_E2E_PROVEN": False,
+            "EXACT_MISSING_SEGMENT": "LEASE_FENCE_PRE_EFFECT",
+            "EXACTLY_ONCE_CLAIMED": False,
+            "NATS_AT_LEAST_ONCE": True,
+        }
     if not replay:
         invoked = capabilities.invoke(cap, health=health)
         live = bool((invoked.get("result") or {}).get("LIVE"))
@@ -147,7 +193,12 @@ def execute(
         capability=invoked,
         status=status,
     )
-    rel = leases.release(str(lease["lease_id"]), owner=str(auth.get("PRINCIPAL") or "C1@AG"))
+    rel = leases.release(
+        lease_id,
+        owner=principal,
+        expected_fence_token=lease_fence_token,
+        expected_generation=lease_generation,
+    )
     nats_primary = route["selected_transport"] == NATS and bool(pub.get("STORED"))
     e2e = bool(
         auth.get("AUTHORITY_SOURCE")
@@ -167,6 +218,9 @@ def execute(
         "AUTH": auth,
         "AUTHORITY_RESULT": auth.get("AUTHORITY_SOURCE"),
         "LEASE_ID": lease.get("lease_id"),
+        "LEASE_GENERATION": lease_generation,
+        "LEASE_FENCE_TOKEN": lease_fence_token,
+        "LEASE_FENCE_VALIDATED": True,
         "LEASE_ACQUIRE_RESULT": "ACQUIRED" if not lease.get("IDEMPOTENT_REACQUIRE") else "IDEMPOTENT_REACQUIRE",
         "LEASE_OWNER": lease.get("owner"),
         "LEASE_SCOPE": lease.get("scope"),
