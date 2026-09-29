@@ -1,0 +1,229 @@
+{
+  "schema": "raios.github-branch-convergence.v1",
+  "task_id": "RAIOS-GITHUB-BRANCH-CONVERGENCE-20260929-01",
+  "authority": "C1",
+  "observed_date": "2026-09-29",
+  "canonical": {
+    "repository": "greenylifeonline-beep/Greeny-Life",
+    "default_branch": "ai-evolution-202608051809",
+    "observed_head": "7068ab12834fd8e13c240a42e50019bb612d5bb8",
+    "github_branch_count": 1,
+    "single_branch_visible": true
+  },
+  "invariants": {
+    "single_source_single_truth": true,
+    "no_second_command_fabric": true,
+    "no_parallel_runtime": true,
+    "no_worktree_created": true,
+    "no_historical_wholesale_merge": true,
+    "historical_value_extracted_selectively": true
+  },
+  "push_gate": {
+    "noncanonical_remote_ref_policy": "DENY",
+    "observed_result": "RAIOS_PUSH_GATE=DENY reason=NONCANONICAL_REMOTE_REF",
+    "decision": "DO_NOT_BYPASS",
+    "consequence": "Use canonical evidence plus one local recovery bundle instead of archive/* remote refs."
+  },
+  "branch_ref_cleanup": {
+    "github_historical_branch_refs_remaining": 0,
+    "github_canonical_branch_refs_remaining": 1,
+    "note": "Historical branch refs disappeared during convergence. Critical commit objects were rechecked by immutable SHA after ref removal."
+  },
+  "critical_commit_object_verification": [
+    {
+      "source": "main",
+      "sha": "da67f44963fafde67df52cb62ab32f75fe725df0",
+      "accessible_after_ref_removal": true,
+      "classification": "HISTORICAL_BUSINESS_ESTATE_REFERENCE"
+    },
+    {
+      "source": "codex-clean",
+      "sha": "98b952417c19d61d269a5681ef0ccc4aba959738",
+      "accessible_after_ref_removal": true,
+      "classification": "DONOR_REFERENCE_COGNITIVE_EXCHANGE"
+    },
+    {
+      "source": "v9-neurolingua-semantic-kernel",
+      "sha": "79ba97031e0b0fd740fd890cbf9ba0451597783d",
+      "accessible_after_ref_removal": true,
+      "classification": "HISTORICAL_SUPERSEDED_NEUROLINGUA"
+    },
+    {
+      "source": "raios/gl-005-convergence",
+      "sha": "3d9f58136d318ba07d743e127ab1e433605ce1ea",
+      "accessible_after_ref_removal": true,
+      "classification": "DONOR_AGGREGATION_ONLY"
+    },
+    {
+      "source": "cursor/c2-evidence-reuse-preparation-4247",
+      "sha": "c36906757f7dce17cbcbb2d3cf9fcb5c8f53f6cc",
+      "accessible_after_ref_removal": true,
+      "classification": "DONOR_TOOL_EVIDENCE_REUSE"
+    },
+    {
+      "source": "cursor/c5-screen-identity-4540",
+      "sha": "f48e80b63d405a5483cf21822aa4ac618888bd55",
+      "accessible_after_ref_removal": true,
+      "classification": "DONOR_TESTS_C5_IDENTITY"
+    },
+    {
+      "source": "cursor/raios-live-assimilation-147d",
+      "sha": "2d41ef264bdda70b1ba0f0588585ee740aea3ff2",
+      "accessible_after_ref_removal": true,
+      "classification": "HISTORICAL_PARALLEL_LEARNING_LINEAGE"
+    }
+  ],
+  "absorbed_or_historical": [
+    {
+      "branch": "c6-engine-consolidation-wave02",
+      "sha": "8091dfac234668bb982e303d5bdceafb37a3336b",
+      "disposition": "ABSORBED_CANONICAL_ANCESTOR"
+    },
+    {
+      "branch": "rf-wave05-executable-reservoir",
+      "sha": "4f3e6b9cbd999a1b602c7e82f8de7a7a3b06e562",
+      "disposition": "ABSORBED_CANONICAL_ANCESTOR"
+    },
+    {
+      "branch": "cursor/setup-dev-environment-ee89",
+      "sha": "31449c23905ab02f43360762ababbe4bca759997",
+      "pr": 1,
+      "disposition": "SUPERSEDED_DEPENDENCIES_PRESENT"
+    },
+    {
+      "branch": "cursor/neurolingua-semantic-kernel-4f9d",
+      "sha": "0c9b4f6a64255e64aa73d90cb178774623e3eb01",
+      "pr": 11,
+      "disposition": "SUPERSEDED_BY_CANONICAL_NEUROLINGUA"
+    },
+    {
+      "branch": "cursor/raios-certifier-safety-schema-4540",
+      "sha": "2a834cc86c05642d59e3e2837e411751190aa7b4",
+      "pr": 14,
+      "disposition": "EXACT_SAFETY_FIX_PRESENT_IN_CANONICAL"
+    },
+    {
+      "branch": "pr/authoritative-certifier-forensic",
+      "sha": "d2ab122fe25e3ab16b91afbc3267cd47778f6dba",
+      "disposition": "ABSORBED_CERTIFIER_LINEAGE"
+    },
+    {
+      "branch": "pr/cairo-shipment-origin-salvage",
+      "sha": "7031ffc1de5f34ddefc77d622d8eedc8cb12892d",
+      "disposition": "ABSORBED_30_OF_30_CAIRO_ORIGIN"
+    },
+    {
+      "branch": "pr/nl0-semantic-kernel",
+      "sha": "f7c23759b59be72456af59a87d8c48b13827fa7b",
+      "disposition": "ABSORBED_NEUROLINGUA_LINEAGE"
+    }
+  ],
+  "stacked_cursor_chain": [
+    {
+      "pr": 2,
+      "branch": "cursor/a17-integration-wave-f3c7",
+      "sha": "4475a1cff3c506883848242fe2d4b060f33a47e5"
+    },
+    {
+      "pr": 3,
+      "branch": "cursor/a17-cursor-parallel-f3c7",
+      "sha": "b2a1645d32c5de8e8fb19d14445b6585c875653e"
+    },
+    {
+      "pr": 4,
+      "branch": "cursor/a18-ccee-foundation-f3c7",
+      "sha": "edb344eac48a010f18a0ecdb2b7fd4c8b1e58fb5"
+    },
+    {
+      "pr": 5,
+      "branch": "cursor/file-intelligence-parallel-f3c7",
+      "sha": "79569cde5573fdd24da2268481f22f43aa74b0dd"
+    },
+    {
+      "pr": 6,
+      "branch": "cursor/file-intelligence-fabric-f3c7",
+      "sha": "a6e121e8fbdededaf44507dd3387a2f48565a950"
+    },
+    {
+      "pr": 7,
+      "branch": "cursor/file-intelligence-authority-f3c7",
+      "sha": "223386b53be5b6c6e4b9cf65b74f97fa4fc48605"
+    },
+    {
+      "pr": 8,
+      "branch": "cursor/raios-repair-boot-41f5",
+      "sha": "c2847e28a2d2b09e04b57684eee65236c96427a7"
+    },
+    {
+      "pr": 9,
+      "branch": "cursor/raios-false-pass-training-147d",
+      "sha": "4b0b51af31685b49df181641c2e88d16f4b8c3d3"
+    },
+    {
+      "pr": 10,
+      "branch": "cursor/raios-live-assimilation-147d",
+      "sha": "2d41ef264bdda70b1ba0f0588585ee740aea3ff2",
+      "contains_all_previous_chain_heads": true
+    }
+  ],
+  "stacked_chain_evidence": {
+    "ancestry_verified": true,
+    "head_pr10_contains_pr2_through_pr9_history": true,
+    "engine_estate_physical_zero_leftover_gate": true,
+    "physical_merged_source_leftovers": 0,
+    "physical_external_reference_payloads": 0,
+    "physical_unclassified_engine_paths": 0,
+    "competing_same_role": 0,
+    "disposition": "HISTORICAL_PARALLEL_PACKAGES_NOT_RUNTIME_AUTHORITIES"
+  },
+  "donor_value_retained_for_extraction": [
+    {
+      "source": "codex-clean",
+      "sha": "98b952417c19d61d269a5681ef0ccc4aba959738",
+      "value": [
+        "lease fencing generations",
+        "crash-safe CAS reconciliation",
+        "separate storage/validation/trust/canonical status",
+        "content-addressed reference semantics"
+      ],
+      "integration_rule": "Extract into existing Factory/Command Fabric; do not restore standalone exchange runtime."
+    },
+    {
+      "source": "cursor/c2-evidence-reuse-preparation-4247",
+      "sha": "c36906757f7dce17cbcbb2d3cf9fcb5c8f53f6cc",
+      "value": [
+        "build_c2_index.py read-only evidence reuse/hash/topic/contradiction indexing"
+      ],
+      "integration_rule": "Reuse as inspection capability only; do not create a second registry."
+    },
+    {
+      "source": "cursor/c5-screen-identity-4540",
+      "sha": "f48e80b63d405a5483cf21822aa4ac618888bd55",
+      "value": [
+        "C5 identity/no-pydantic regression tests and historical Stage-0 receipts"
+      ],
+      "integration_rule": "Retain test intent only where not already covered by current C5 runtime."
+    },
+    {
+      "source": "raios/gl-005-convergence",
+      "sha": "3d9f58136d318ba07d743e127ab1e433605ce1ea",
+      "value": [
+        "unified operational aggregation surface"
+      ],
+      "integration_rule": "Optional aggregation inside existing MasterMind only; no new authority or orchestrator."
+    }
+  ],
+  "recovery": {
+    "method": "ONE_LOCAL_GIT_BUNDLE_PLUS_CANONICAL_MANIFEST",
+    "bundle_path": "C:\\Users\\Ghanam\\.raios\\runtime\\evidence\\github-branch-convergence-20260929\\HISTORICAL-GITHUB-BRANCHES.bundle",
+    "bundle_status": "BUILD_OR_VERIFY_IN_PROGRESS_AT_REPORT_CREATION",
+    "never_run_gc_before_bundle_verified": true
+  },
+  "next_gate": [
+    "Verify recovery bundle and SHA256.",
+    "Update this report with verified bundle hash and missing-object count.",
+    "Extract donor-only safeguards/tests into existing canonical capabilities without parallel runtime.",
+    "Remove temporary local recovery refs only after bundle verification.",
+    "Do not run aggressive git gc until recovery proof is sealed."
+  ]
+}
