@@ -18,7 +18,7 @@ ROOT = Path(__file__).resolve().parents[3]
 if str(Path(__file__).resolve().parent.parent) not in sys.path:
     sys.path.insert(0, str(Path(__file__).resolve().parent.parent))
 
-from raios_mcp.gateway import LAW, LOOPBACK_READ_TOOLS, V1_TOOLS, Gateway, GatewayError  # noqa: E402
+from raios_mcp.gateway import LAW, LOOPBACK_READ_TOOLS, REGISTERED_TOOLS, Gateway, GatewayError  # noqa: E402
 
 PROTOCOL = "2025-03-26"
 SUPPORTED_PROTOCOL = ("2024-11-05", "2025-03-26", "2025-06-18")
@@ -145,10 +145,11 @@ def handle_rpc(gw: Gateway, actor_token: str | None, message: dict, loopback: bo
             {
                 "protocolVersion": proto,
                 "capabilities": {"tools": {"listChanged": False}},
-                "serverInfo": {"name": "raios-universal-mcp", "version": "1.0.0"},
+                "serverInfo": {"name": "raios-universal-mcp", "version": "1.1.0"},
                 "instructions": (
                     f"{LAW}. Streamable HTTP session channel. POST /mcp JSON-RPC; GET /mcp SSE; "
-                    "loopback reads without token; writes need an actor grant. No WebSocket. "
+                    "loopback reads without token; writes need an actor grant. Remote execution uses "
+                    "execute_scoped_task through policy-allowlisted providers only. No WebSocket. "
                     "No SQLite. No raw shell. No PASS writes. Authority ≠ bypass invariants."
                 ),
             },
@@ -210,13 +211,16 @@ def _write_stdio_message(msg: dict) -> None:
 
 def serve_stdio(gw: Gateway) -> int:
     token = os.environ.get("RAIOS_MCP_TOKEN")
-    while True:
-        message = _read_stdio_message()
-        if message is None:
-            return 0
-        reply = handle_rpc(gw, token, message)
-        if reply is not None:
-            _write_stdio_message(reply)
+    try:
+        while True:
+            message = _read_stdio_message()
+            if message is None:
+                return 0
+            reply = handle_rpc(gw, token, message)
+            if reply is not None:
+                _write_stdio_message(reply)
+    finally:
+        gw.close()
 
 
 def sse_wrap(payload: dict) -> bytes:
@@ -306,7 +310,7 @@ class Handler(BaseHTTPRequestHandler):
         path = urlparse(self.path).path
         if path in {"/health", "/", "/ready"}:
             head, head_source = canonical_head(ROOT)
-            tools = list(V1_TOOLS)
+            tools = list(REGISTERED_TOOLS)
             self._send_json(
                 200,
                 {
@@ -315,12 +319,14 @@ class Handler(BaseHTTPRequestHandler):
                     "transport": "streamable-http",
                     "websocket": False,
                     "sqlite": False,
-                    "ninth_tool": False,
+                    "ninth_tool": True,
                     "second_gateway": False,
                     "law": LAW,
                     "gl005_proven": False,
                     "remote_c2_ready": False,
-                    "endpoint_local": True,
+                    "endpoint_local": str(self.server.server_address[0]) in {"127.0.0.1", "::1", "localhost"},
+                    "external_gateway": str(self.server.server_address[0]) not in {"127.0.0.1", "::1", "localhost"},
+                    "hosted_dcr_required": False,
                     "head": head,
                     "head_source": head_source,
                     "tool_count": len(tools),
@@ -371,8 +377,9 @@ class Handler(BaseHTTPRequestHandler):
                     "session": session,
                     "get_sse": True,
                     "stateless": False,
-                    "ninth_tool": False,
+                    "ninth_tool": True,
                     "second_gateway": False,
+                    "hosted_dcr_required": False,
                     "transport": "streamable-http",
                 },
                 session=session,
@@ -480,6 +487,7 @@ def serve_http(gw: Gateway, host: str, port: int, tls_cert: str | None = None, t
         httpd.serve_forever(poll_interval=0.25)
     finally:
         httpd.server_close()
+        gw.close()
         for sig, handler in previous.items():
             try:
                 signal.signal(sig, handler)
