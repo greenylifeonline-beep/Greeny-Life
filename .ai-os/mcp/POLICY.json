@@ -61,7 +61,6 @@
   "phase3_tools_not_registered": [
     "run_build",
     "run_runtime_probe",
-    "execute_scoped_task",
     "run_sandboxed_command",
     "broadcast_message"
   ],
@@ -98,7 +97,8 @@
         "get_diff",
         "post_opinion",
         "send_packet",
-        "ack_packet"
+        "ack_packet",
+        "execute_scoped_task"
       ],
       "deny": [
         "shell",
@@ -128,7 +128,8 @@
         "run_targeted_test",
         "run_build",
         "shell",
-        "set_proven"
+        "set_proven",
+        "execute_scoped_task"
       ]
     },
     "C3": {
@@ -152,7 +153,8 @@
         "run_targeted_test",
         "run_build",
         "shell",
-        "set_proven"
+        "set_proven",
+        "execute_scoped_task"
       ]
     },
     "C4": {
@@ -173,13 +175,14 @@
         "write_handoff",
         "run_targeted_test",
         "shell",
-        "set_proven"
+        "set_proven",
+        "execute_scoped_task"
       ]
     },
     "C5": {
       "actor_role": "RAIOS",
       "instance_role": "c1-assistant",
-      "notes": "RAIOS is C1 Cursor's loyal assistant. Same eight V1 cognitive tools. Inherits fail-closed. Cannot promote, grant PASS, or write product.",
+      "notes": "RAIOS is C1 Cursor's loyal assistant. Eight V1 cognitive tools plus scoped Remote Capability execution. Inherits fail-closed. Cannot promote, grant PASS, write product, or use raw shell.",
       "tools": [
         "get_head",
         "read_board",
@@ -188,7 +191,8 @@
         "get_diff",
         "post_opinion",
         "send_packet",
-        "ack_packet"
+        "ack_packet",
+        "execute_scoped_task"
       ],
       "deny": [
         "shell",
@@ -216,5 +220,34 @@
       "C2_SEAT_IS_CHATGPT"
     ],
     "note": "Minimal overlay only. Does not rewrite actors, laws, or C1/C2 seat identity."
+  },
+  "execution_tools": [
+    "execute_scoped_task"
+  ],
+  "phase3_tools_registered": [
+    "execute_scoped_task"
+  ],
+  "providers": {
+    "desktop_commander": {
+      "enabled": true,
+      "capability": "remote",
+      "authority": "RAIOS-C5",
+      "transport": "local_stdio",
+      "hosted_remote_required": false,
+      "provider_source": "RAIOS_OWNED_0.2.51",
+      "node": "C:\\Program Files\\nodejs\\node.exe",
+      "entry": "C:\\Users\\Ghanam\\.raios\\runtime\\providers\\desktop-commander\\source\\candidate-20260927-175803\\dist\\index.js",
+      "timeout_seconds": 30,
+      "max_result_chars": 20000,
+      "read_tools": [
+        "read_file",
+        "read_multiple_files",
+        "list_directory",
+        "get_file_info",
+        "list_processes"
+      ],
+      "write_tools": [],
+      "notes": "Phase-1 read-only cutover. Mutations remain disabled until scoped lease enforcement is proven. Hosted Desktop Commander Remote is not required."
+    }
   }
 }
