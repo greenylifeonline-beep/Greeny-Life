@@ -249,5 +249,27 @@
       "write_tools": [],
       "notes": "Phase-1 read-only cutover. Mutations remain disabled until scoped lease enforcement is proven. Hosted Desktop Commander Remote is not required."
     }
+  },
+  "external_gateway": {
+    "owner": "RAIOS",
+    "authority": "RAIOS-C5",
+    "canonical_process": "raios-universal-mcp",
+    "local_upstream": "http://127.0.0.1:8788/mcp",
+    "endpoint_path": "/mcp",
+    "same_process": true,
+    "second_gateway": false,
+    "hosted_dcr_required": false,
+    "external_transport": "SECURE_MCP_TUNNEL_OR_DIRECT_TLS",
+    "transport_is_authority": false,
+    "gateway_owns": [
+      "authentication",
+      "authorization",
+      "policy",
+      "sessions",
+      "audit",
+      "capability_routing"
+    ],
+    "raw_shell": false,
+    "notes": "External connectivity must terminate at this same Universal MCP. A tunnel may carry HTTPS/MCP traffic but never becomes a control plane or capability authority."
   }
 }
