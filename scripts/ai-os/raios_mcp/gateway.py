@@ -12,6 +12,8 @@ from datetime import datetime, timezone
 from pathlib import Path
 from typing import Any
 
+from .desktop_commander_provider import DesktopCommanderProvider, DesktopCommanderProviderError
+
 REPO = "greenylifeonline-beep/Greeny-Life"
 BRANCH = "v9-neurolingua-semantic-kernel"
 LAW = "MCP_GATEWAY_NE_TRUTH_AUTHORITY"
@@ -25,6 +27,9 @@ V1_TOOLS = (
     "send_packet",
     "ack_packet",
 )
+EXECUTION_TOOLS = ("execute_scoped_task",)
+REGISTERED_TOOLS = V1_TOOLS + EXECUTION_TOOLS
+LOOPBACK_READ_TOOLS = {"get_head", "read_board", "read_inbox", "read_receipt", "get_diff"}
 WRITE_TOOLS = {"post_opinion", "send_packet", "ack_packet"}
 WRITE_IDENTITY = (
     "actor_id",
@@ -125,7 +130,7 @@ def mcp_to_opencode_seam(root: Path | None = None) -> dict[str, Any]:
         "new_mcp_tools": False,
         "shell_via_mcp": False,
         "execution_proven": False,
-        "mcp_tool_count": len(V1_TOOLS),
+        "mcp_tool_count": len(REGISTERED_TOOLS),
         "duplicate_mcp": False,
         "status": "BINARY_PRESENT_NOT_EXECUTED" if binary else str(declared.get("status") or "PREP_NOT_INSTALLED"),
         "declared_version": declared.get("declared_version"),
@@ -157,6 +162,7 @@ class Gateway:
     actors: dict[str, Actor]
     audit_path: Path | None = None
     _packet_ids: set[str] = field(default_factory=set)
+    _remote_provider: DesktopCommanderProvider | None = field(default=None, init=False, repr=False)
 
     def __post_init__(self) -> None:
         self.audit_path = self.audit_path or (self.root / ".ai-os" / "mcp" / "AUDIT.jsonl")
@@ -181,7 +187,7 @@ class Gateway:
             grant = token_by_id.get(actor_id) or {}
             policy_tools = list(spec.get("tools") or [])
             requested_scopes = list(grant.get("scopes") or policy_tools)
-            scopes = [s for s in requested_scopes if s in policy_tools and s in V1_TOOLS]
+            scopes = [s for s in requested_scopes if s in policy_tools and s in REGISTERED_TOOLS]
             raw = str(grant.get("token") or "")
             actors[actor_id] = Actor(
                 actor_id=actor_id,
@@ -194,6 +200,19 @@ class Gateway:
                 expires_at=grant.get("expires_at"),
             )
         return cls(root=root, policy=policy, actors=actors)
+
+    def loopback_reader(self) -> Actor:
+        tools = sorted(LOOPBACK_READ_TOOLS)
+        return Actor(
+            actor_id="LOOPBACK",
+            actor_role="LOCAL_READER",
+            instance_role="loopback",
+            tools=tools,
+            deny=[],
+            token_sha256="",
+            scopes=tools,
+            expires_at=None,
+        )
 
     def authenticate(self, token: str | None) -> Actor:
         if not token:
@@ -209,7 +228,7 @@ class Gateway:
         raise GatewayError("UNAUTHENTICATED", "unknown token", 401)
 
     def tool_schemas(self) -> list[dict]:
-        return [
+        tools = [
             {
                 "name": name,
                 "description": f"RAIOS V1 {name}. Streamable HTTP. {LAW}. Never writes GL005_PROVEN.",
@@ -217,6 +236,31 @@ class Gateway:
             }
             for name in V1_TOOLS
         ]
+        tools.append(
+            {
+                "name": "execute_scoped_task",
+                "description": (
+                    "RAIOS Remote Capability execution seam. Phase-1 is READ_ONLY and routes only "
+                    "policy-allowlisted operations to the owned Desktop Commander LOCAL stdio MCP. "
+                    "No hosted Desktop Commander Remote and no raw shell."
+                ),
+                "inputSchema": {
+                    "type": "object",
+                    "required": ["provider", "capability", "operation", "execution_intent", "authority_scope"],
+                    "properties": {
+                        "provider": {"type": "string", "const": "desktop_commander"},
+                        "capability": {"type": "string", "const": "remote"},
+                        "operation": {"type": "string"},
+                        "arguments": {"type": "object"},
+                        "mode": {"type": "string", "enum": ["READ_ONLY"]},
+                        "execution_intent": {"type": "string", "const": "SCOPED"},
+                        "authority_scope": {"type": "string", "enum": ["REMOTE_CAPABILITY", "REMOTE_CAPABILITY_READ"]},
+                    },
+                    "additionalProperties": True,
+                },
+            }
+        )
+        return tools
 
     def call(self, actor: Actor, tool: str, arguments: dict[str, Any] | None) -> dict:
         arguments = dict(arguments or {})
@@ -237,8 +281,8 @@ class Gateway:
         }
         if tool in forbidden:
             raise GatewayError("TOOL_NOT_FOUND", f"tool {tool} is not registered", 404)
-        if tool not in V1_TOOLS:
-            raise GatewayError("TOOL_NOT_FOUND", f"{tool} is not in V1", 404)
+        if tool not in REGISTERED_TOOLS:
+            raise GatewayError("TOOL_NOT_FOUND", f"{tool} is not registered", 404)
         if tool in actor.deny or tool not in actor.tools or tool not in actor.scopes:
             raise GatewayError("CAPABILITY_DENIED", f"{actor.actor_id} cannot {tool}", 403)
         self._bind_identity(actor, tool, arguments)
@@ -261,8 +305,11 @@ class Gateway:
         if promo not in {"NONE", "NO", "FALSE"}:
             raise GatewayError("ESCALATION_DENIED", "promotion_intent is not allowed on the connector", 403)
         exec_intent = str(arguments.get("execution_intent") or "NONE").upper()
-        if exec_intent not in {"NONE", "NO", "FALSE"}:
-            raise GatewayError("ESCALATION_DENIED", "V1 connector does not execute", 403)
+        if tool == "execute_scoped_task":
+            if exec_intent != "SCOPED":
+                raise GatewayError("EXECUTION_INTENT_REQUIRED", "execute_scoped_task requires SCOPED execution_intent", 403)
+        elif exec_intent not in {"NONE", "NO", "FALSE"}:
+            raise GatewayError("ESCALATION_DENIED", "cognitive V1 tools do not execute", 403)
         if tool not in WRITE_TOOLS:
             return
         missing = [key for key in WRITE_IDENTITY if not str(arguments.get(key) or "").strip()]
@@ -290,6 +337,20 @@ class Gateway:
         expected = payload_hash_of(arguments)
         if arguments["payload_hash"] != expected:
             raise GatewayError("PAYLOAD_HASH_MISMATCH", "payload_hash does not match body", 400)
+
+    def _desktop_commander(self) -> DesktopCommanderProvider:
+        providers = self.policy.get("providers") or {}
+        config = dict(providers.get("desktop_commander") or {})
+        if not config.get("enabled", False):
+            raise GatewayError("PROVIDER_DISABLED", "desktop_commander provider is not enabled", 503)
+        if self._remote_provider is None:
+            self._remote_provider = DesktopCommanderProvider(config)
+        return self._remote_provider
+
+    def close(self) -> None:
+        if self._remote_provider is not None:
+            self._remote_provider.close()
+            self._remote_provider = None
 
     def _audit(self, actor: Actor, tool: str, status: str, arguments: dict) -> None:
         append_jsonl(
@@ -331,6 +392,46 @@ class Gateway:
         append_jsonl(self.root / ".ai-os" / "mcp" / "packets.jsonl", rec)
         self._packet_ids.add(arguments["packet_id"])
         return rec
+
+    def tool_execute_scoped_task(self, actor: Actor, arguments: dict) -> dict:
+        provider_name = str(arguments.get("provider") or "").strip().lower()
+        capability = str(arguments.get("capability") or "").strip().lower()
+        operation = str(arguments.get("operation") or "").strip()
+        mode = str(arguments.get("mode") or "READ_ONLY").strip().upper()
+        scope = str(arguments.get("authority_scope") or "").strip().upper()
+        task_arguments = arguments.get("arguments") or {}
+
+        if provider_name != "desktop_commander" or capability != "remote":
+            raise GatewayError("PROVIDER_DENIED", "only remote/desktop_commander is registered in this slice", 403)
+        if mode != "READ_ONLY":
+            raise GatewayError("MUTATION_NOT_ENABLED", "Remote Capability mutations are not enabled in this slice", 403)
+        if scope not in {"REMOTE_CAPABILITY", "REMOTE_CAPABILITY_READ"}:
+            raise GatewayError("AUTHORITY_SCOPE_DENIED", "remote capability scope required", 403)
+        if not operation:
+            raise GatewayError("MISSING_IDENTITY", "operation is required", 400)
+        if not isinstance(task_arguments, dict):
+            raise GatewayError("INVALID_ARGUMENTS", "arguments must be an object", 400)
+
+        try:
+            result = self._desktop_commander().call(operation, task_arguments, read_only=True)
+        except DesktopCommanderProviderError as err:
+            raise GatewayError(err.code, err.message, 502) from err
+
+        return self._receipt(
+            {
+                "tool": "execute_scoped_task",
+                "actor_id": actor.actor_id,
+                "capability": "remote",
+                "provider": "desktop_commander",
+                "provider_transport": "local_stdio",
+                "hosted_remote_required": False,
+                "mode": "READ_ONLY",
+                "operation": operation,
+                "result": result,
+                "raw_shell": False,
+                "mutation_enabled": False,
+            }
+        )
 
     def tool_get_head(self, actor: Actor, arguments: dict) -> dict:
         return self._receipt(
