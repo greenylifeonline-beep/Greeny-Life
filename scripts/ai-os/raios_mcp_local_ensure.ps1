@@ -1,4 +1,4 @@
-param([int]$Port = 8788)
+param([int]$Port = 8788, [switch]$Reload)
 
 $ErrorActionPreference = "Stop"
 $Repo = (Resolve-Path (Join-Path $PSScriptRoot "..\..")).Path
@@ -17,12 +17,21 @@ if ($Listener) {
     if ($Info.CommandLine -notmatch "raios_mcp[\\/]server\.py") {
         throw "Port $Port is owned by $($Info.Name), PID $($Listener.OwningProcess)."
     }
-    $Health = Invoke-RestMethod $HealthUrl -TimeoutSec 5
-    if ($Health.ok -and @($Health.tools).Count -eq 8) {
-        Write-Output "LOCAL_MCP_ALREADY_HEALTHY port=$Port pid=$($Listener.OwningProcess) tools=8"
+    $Health = $null
+    try { $Health = Invoke-RestMethod $HealthUrl -TimeoutSec 5 } catch {}
+    if (-not $Reload -and $Health -and $Health.ok -and @($Health.tools).Count -eq 9 -and @($Health.tools) -contains "execute_scoped_task") {
+        Write-Output "LOCAL_MCP_ALREADY_HEALTHY port=$Port pid=$($Listener.OwningProcess) tools=9"
         exit 0
     }
-    throw "Existing local MCP listener is unhealthy."
+    if (-not $Reload) {
+        throw "Existing local MCP listener needs reload or is unhealthy."
+    }
+    if ([int]$Listener.OwningProcess -le 4) { throw "Refusing unsafe listener PID $($Listener.OwningProcess)." }
+    Stop-Process -Id ([int]$Listener.OwningProcess) -Force
+    for ($i = 0; $i -lt 40; $i++) {
+        if (-not (Get-Process -Id ([int]$Listener.OwningProcess) -ErrorAction SilentlyContinue)) { break }
+        Start-Sleep -Milliseconds 250
+    }
 }
 $Stdout = Join-Path $ReceiptDir "LOCAL-MCP-$Port.stdout.log"
 $Stderr = Join-Path $ReceiptDir "LOCAL-MCP-$Port.stderr.log"
@@ -37,11 +46,11 @@ if ($Process.HasExited) {
 
 $Health = Invoke-RestMethod $HealthUrl -TimeoutSec 5
 $Tools = @($Health.tools)
-if (-not $Health.ok -or $Tools.Count -ne 8) {
+if (-not $Health.ok -or $Tools.Count -ne 9) {
     throw "Local MCP health validation failed."
 }
-if ($Tools -notcontains "send_packet" -or $Tools -notcontains "ack_packet") {
-    throw "Required packet tools are missing."
+if ($Tools -notcontains "send_packet" -or $Tools -notcontains "ack_packet" -or $Tools -notcontains "execute_scoped_task") {
+    throw "Required MCP tools are missing."
 }
 
 Write-Output "LOCAL_MCP_STARTED port=$Port pid=$($Process.Id) tools=$($Tools.Count)"
