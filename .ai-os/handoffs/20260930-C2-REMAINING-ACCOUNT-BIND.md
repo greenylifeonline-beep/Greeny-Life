@@ -1,0 +1,11 @@
+# Handoff
+- Agent: cursor
+- Task: RAIOS-REMAINING-ACCOUNT-BIND-20260930-01
+- Status: IN_PROGRESS
+- Files: .ai-os/reports/resource-fabric/RAIOS-RESOURCE-FABRIC-LIVE-ACCOUNT-BINDING-WAVE-02/Install-Remaining-CLIs.ps1;Run-Oracle-Login.ps1;Run-Gcloud-ADC-Login.ps1;Run-Lightning-Login.ps1;LIVE-SESSION-BIND-20260928.json
+- Validation: Lightning live probe REACHABLE greenylifeonline-org. oci.exe 3.94.1 at C:\o\Scripts (MAX_PATH workaround). gcloud.cmd present at C:\gcloud-sdk\google-cloud-sdk\bin. Oracle config and Google ADC still AUTH_REQUIRED until C1 browser login. No VM. No Colab GPU. PAID_RESOURCE_CREATED=false.
+- Evidence: LIVE-SESSION-BIND-20260928.json Lightning overlay; oci --version 3.94.1; gcloud.cmd on disk.
+- Next: C1 runs Oracle then Google ADC logins in two new PowerShell windows. Then reprobe overlay. Do not complete task until ADC + oci session files exist.
+- Branch: ai-evolution-202608051809
+- HEAD: not re-proved this handoff
+- Constraints: Do not steal C6 session scripts. Do not kill RAIOS-C5-Permanent. Do not paste secrets in chat. HF rotate still required.
