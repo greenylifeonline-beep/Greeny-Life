@@ -176,7 +176,6 @@ def compare(base, new):
         "canonical_branch",
         "branch",
         "local_head",
-        "dirty_tracked_sha256",
     ):
         before = base.get(key)
         after = new.get(key)
@@ -189,6 +188,15 @@ def compare(base, new):
     new_remote = new.get("remote_observed_head") or new.get("remote_tracking_head")
     if base_remote is not None and new_remote is not None and base_remote != new_remote:
         drift["remote_canonical_head"] = {"before": base_remote, "after": new_remote}
+
+    # Git index metadata is only a bounded probe aid, never semantic source
+    # identity. Treat only a proven clean/dirty state transition as workspace
+    # drift; dirty-to-dirty remains fail-closed for mutation without blocking
+    # runtime continuation.
+    base_clean = base.get("working_tree_clean")
+    new_clean = new.get("working_tree_clean")
+    if isinstance(base_clean, bool) and isinstance(new_clean, bool) and base_clean != new_clean:
+        drift["working_tree_clean"] = {"before": base_clean, "after": new_clean}
     return drift
 
 def verification_pending(base, new):
@@ -197,7 +205,6 @@ def verification_pending(base, new):
         "canonical_branch",
         "branch",
         "local_head",
-        "dirty_tracked_sha256",
     )
     missing = [
         key for key in required
