@@ -260,6 +260,35 @@ def read_new_log(path,offset):
     except Exception:
         return "",offset
 
+def bounded_stdout_online_evidence(path,tail_bytes=128*1024,freshness_bytes=64*1024):
+    """Recover a missed reconnect edge without scanning the whole log.
+
+    ONLINE is proven only when the newest transport marker in the bounded
+    stdout tail is a reconnect marker and that marker is still near the tail.
+    Process shape alone is never treated as transport proof.
+    """
+    try:
+        size=os.path.getsize(path)
+        start=max(0,size-tail_bytes)
+        with open(path,"rb") as f:
+            f.seek(start)
+            data=f.read(tail_bytes)
+        text=data.decode("utf-8","replace")
+        latest_online=max((text.rfind(m) for m in TRANSPORT_RECONNECT_MARKERS),default=-1)
+        latest_offline=max((text.rfind(m) for m in TRANSPORT_DISCONNECT_MARKERS),default=-1)
+        if latest_online < 0 or latest_online <= latest_offline:
+            return None
+        if len(text)-latest_online > freshness_bytes:
+            return None
+        return {
+            "source":"BOUNDED_STDOUT_TAIL",
+            "tail_bytes":len(data),
+            "marker_offset":start+latest_online,
+            "latest_offline_offset":(start+latest_offline) if latest_offline >= 0 else None,
+        }
+    except Exception:
+        return None
+
 def _checkpoint_placeholder(reason, *, scheduled=False, queued=False, error=None, pid=None):
     return {
         "ok": error is None,
@@ -502,6 +531,12 @@ def supervise_owned():
 
         disconnect_event=any(marker in err_chunk for marker in TRANSPORT_DISCONNECT_MARKERS)
         reconnect_event=any(marker in out_chunk for marker in TRANSPORT_RECONNECT_MARKERS)
+        bounded_reconnect_evidence=None
+        if transport_online is False and process_channel_up and not reconnect_event:
+            bounded_reconnect_evidence=bounded_stdout_online_evidence(OWNED_STDOUT)
+            if bounded_reconnect_evidence:
+                reconnect_event=True
+                trace("RECONNECT_EDGE_RECOVERED",**bounded_reconnect_evidence)
 
         if transport_online is None:
             transport_online=process_channel_up
@@ -540,6 +575,9 @@ def supervise_owned():
                 stdout_offset,
                 stderr_offset,
             )
+            if bounded_reconnect_evidence:
+                transport["transport_evidence"]=bounded_reconnect_evidence
+                atomic_json(TRANSPORT_STATE,transport)
             trace(
                 "RECONNECT_COMPARE",
                 proof_hash=checkpoint.get("proof_hash"),
