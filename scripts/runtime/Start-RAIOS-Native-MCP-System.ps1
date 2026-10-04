@@ -103,9 +103,9 @@ try{
  $env:RAIOS_MCP_C1_TOKEN=[string]$c1.token
  $env:RAIOS_NATIVE_TUNNEL_AUTHORITY='RAIOS-C5-SCM'
  New-Item -ItemType Directory -Path (Split-Path $OwnerFile) -Force|Out-Null
- Remove-Item -LiteralPath $OwnerFile -Force -ErrorAction SilentlyContinue
- Remove-Item -LiteralPath $HealthFile -Force -ErrorAction SilentlyContinue
-
+ # Owner/health files are projections. Never delete them during bootstrap:
+ # publish fresh truth over them when the new generation is ready. This avoids
+ # destructive gaps and Windows file-lock races during generation handoff.
  $p=Start-Process -FilePath $Client -ArgumentList @('run','--profile-dir',$ProfileDir,'--profile','raios-native') -WorkingDirectory $Root -WindowStyle Hidden -PassThru
  Write-Host ('NATIVE_TUNNEL_CHILD_PID='+$p.Id)
  Write-OwnerState -ChildPid $p.Id -TransportAlive $false -BackendReady $false
