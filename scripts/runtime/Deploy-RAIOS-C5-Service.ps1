@@ -19,6 +19,7 @@ $Live=Join-Path $Root 'RAIOS-C5-Service.exe'
 $Stage=Join-Path $Root 'RAIOS-C5-Service.stage.exe'
 $Previous=Join-Path $Root 'RAIOS-C5-Service.previous.exe'
 $Receipt=Join-Path $Root 'service-deploy-receipt.json'
+$GenerationState=Join-Path $Root 'current-generation.json'
 $Csc='C:\Windows\Microsoft.NET\Framework64\v4.0.30319\csc.exe'
 $Python='C:\Users\Ghanam\AppData\Local\Programs\Python\Python314\python.exe'
 $RollbackRoot=Join-Path $env:LOCALAPPDATA ('Temp\raios-c5-deploy-rollback-'+[DateTime]::UtcNow.ToString('yyyyMMdd-HHmmss'))
@@ -216,12 +217,13 @@ try{
  Write-DeployPhase 'SERVICE_STARTED'
 
  $deadline=[DateTimeOffset]::UtcNow.AddSeconds(180)
- $state=$null;$dcrState=$null;$laneState=$null;$shape=$null;$nativeReady=$false;$svc=$null
+ $state=$null;$dcrState=$null;$laneState=$null;$generation=$null;$shape=$null;$nativeReady=$false;$svc=$null
  do{
   Start-Sleep -Seconds 2
   try{$state=Get-Content (Join-Path $Root 'state.json') -Raw|ConvertFrom-Json}catch{$state=$null}
   try{$dcrState=Get-Content 'C:\Users\Ghanam\.raios\runtime\remote-access\rdc-system-direct\rdc-supervisor-state.json' -Raw|ConvertFrom-Json}catch{$dcrState=$null}
   try{$laneState=Get-Content (Join-Path $Root 'user-lane-state.json') -Raw|ConvertFrom-Json}catch{$laneState=$null}
+  try{$generation=Get-Content $GenerationState -Raw|ConvertFrom-Json}catch{$generation=$null}
   $svc=Get-CimInstance Win32_Service -Filter "Name='RAIOS-C5'"
   $nativeReady=Test-NativeMcpTunnelReady
   $shape=Get-NativeShape
@@ -236,6 +238,7 @@ try{
     (Get-FileHash $NativeLauncher -Algorithm SHA256).Hash -eq (Get-FileHash $RuntimeNativeLauncher -Algorithm SHA256).Hash
   )
   $laneOk=[bool]($laneState -and $laneState.role -eq 'INTERACTIVE_SESSION_ADAPTER' -and $laneState.control_authority -eq 'RAIOS-C5-SCM' -and $laneState.can_start_dcr_supervisor -eq $false -and $laneState.can_start_native_tunnel -eq $false -and $laneState.can_promote_source -eq $false)
+  $generationOk=[bool]($generation -and $generation.role -eq 'LEADER' -and $generation.authority -eq 'RAIOS-C5-SCM' -and [int]$generation.service_pid -eq $svcPid -and $generation.acceptance -eq 'PASS' -and $generation.ok -eq $true)
   $ok=[bool](
     $svc -and $svc.State -eq 'Running' -and $svcPid -gt 4 -and $imageOk -and $runtimeAligned -and
     $state -and $state.status -eq 'ONLINE' -and $state.control_authority -eq 'RAIOS-C5-SCM' -and
@@ -243,13 +246,13 @@ try{
     [int]$state.dcr_supervisor_pid -gt 4 -and $state.dcr_ready -eq $true -and $state.dcr_owned_by_service -eq $true -and
     [int]$state.native_tunnel_owner_pid -gt 4 -and $state.native_tunnel_ready -eq $true -and $state.native_tunnel_owned_by_service -eq $true -and
     $dcrState -and $dcrState.authority -eq 'RAIOS-C5' -and $dcrState.status -eq 'ONLINE' -and
-    $dcrOwned -and $dcrShapeOk -and $laneOk -and
+    $dcrOwned -and $dcrShapeOk -and $laneOk -and $generationOk -and
     $nativeReady -and @($shape.System).Count -eq 1 -and @($shape.Console).Count -eq 0
   )
  }until($ok -or [DateTimeOffset]::UtcNow -ge $deadline)
 
  if(-not $ok){throw 'C5_ACCEPTANCE_FAILED'}
- Write-DeployPhase 'ACCEPTANCE_PASS' @{service_pid=$svcPid;dcr_pid=[int]$state.dcr_supervisor_pid;native_pid=[int]$state.native_tunnel_owner_pid}
+ Write-DeployPhase 'ACCEPTANCE_PASS' @{service_pid=$svcPid;dcr_pid=[int]$state.dcr_supervisor_pid;native_pid=[int]$state.native_tunnel_owner_pid;generation_id=[string]$generation.generation_id}
 
  $after=Get-CimInstance Win32_Service -Filter "Name='RAIOS-C5'"
  $cleanup=Retire-LegacyArtifacts -CurrentServicePath $Live
@@ -281,6 +284,9 @@ try{
   user_lane_role='INTERACTIVE_SESSION_ADAPTER'
   user_lane_control_authority=$false
   scheduler_authority=$false
+  generation_id=[string]$generation.generation_id
+  generation_role=[string]$generation.role
+  generation_acceptance=[string]$generation.acceptance
   legacy_tasks_removed=@($cleanup.tasks)
   obsolete_service_binaries_removed=@($cleanup.binaries)
   rollback_available=(Test-Path -LiteralPath $Previous)
