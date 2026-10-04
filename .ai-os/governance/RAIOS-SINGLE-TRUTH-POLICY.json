@@ -297,5 +297,28 @@
     "reuse_before_build": true,
     "acquired_tool_ne_parallel_authority": true,
     "native_raios_primary_channel": true
+  },
+  "resource_service_contract": {
+    "mandatory": true,
+    "primary_channel": "NATIVE_RAIOS",
+    "control_authority": "RAIOS-C5-SCM",
+    "law": "ALL_RAIOS_OWNED_OR_ACQUIRED_CAPABILITIES_SERVE_PRIMARY_NATIVE_RAIOS_CHANNEL",
+    "rules": [
+      "OWNED_RESOURCE_SERVES_NATIVE_RAIOS",
+      "ACQUIRED_RESOURCE_SERVES_NATIVE_RAIOS",
+      "PROVIDER_NE_AUTHORITY",
+      "RESOURCE_NE_PARALLEL_CONTROL_PLANE",
+      "RESOURCE_REUSE_BEFORE_BUILD",
+      "PRIMARY_CHANNEL_RECOVERY_HAS_PRIORITY",
+      "NO_DUPLICATE_RUNTIME_GATEWAY_WATCHDOG_OR_TASK_AUTHORITY"
+    ],
+    "provider_model": {
+      "independent_process_allowed": true,
+      "independent_authority_forbidden": true,
+      "independent_task_ledger_forbidden": true,
+      "independent_mcp_gateway_forbidden": true,
+      "health_reports_to_c5": true,
+      "recovery_reports_to_c5": true
+    }
   }
 }
