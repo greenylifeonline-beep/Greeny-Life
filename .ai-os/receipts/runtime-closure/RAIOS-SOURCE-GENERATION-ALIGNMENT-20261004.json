@@ -1,0 +1,53 @@
+{
+  "schema": "raios.source-generation-alignment.v1",
+  "observed_at": "2026-10-04T12:35:00Z",
+  "branch": "ai-evolution-202608051809",
+  "source_leader": {
+    "location": "origin",
+    "head": "6060255d500e5c2f2f0803a34a35ccb335588d99",
+    "role": "LEADER",
+    "promotion_authority": "C1",
+    "force_overwrite_forbidden": true
+  },
+  "local_projection": {
+    "head": "dfc08e62a6392af53c9995e74278a5ba6d153a84",
+    "role": "FOLLOWER_HISTORY",
+    "authority": false,
+    "merge_base": "c252725c1da60272415ff1ec17607325295741a8",
+    "local_only_historical_commits": [
+      "cd878ee4584721fdf4c44ce9cb61d8e09957a339",
+      "dfc08e62a6392af53c9995e74278a5ba6d153a84"
+    ],
+    "rule": "LOCAL_HEAD_NE_SOURCE_TRUTH_WHEN_REMOTE_ACCEPTED_GENERATION_IS_NEWER"
+  },
+  "aligned_critical_paths": {
+    "scripts/runtime/Maintain-RAIOS-Online.ps1": "f11d2cadc2ebe915e00911c0eb4d86f39fd0f87b",
+    "scripts/runtime/Deploy-RAIOS-C5-Service.ps1": "46178825e05b225209db0f36d87dce203eb9654c",
+    "scripts/runtime/RAIOS.C5.ServiceHost.cs": "451ad13e71046d0ee172dc19611302077926b7a8",
+    "scripts/runtime/Start-RAIOS-Native-MCP-System.ps1": "96cf07c4ff4890541e0c1191fa7d35fc76a4798d",
+    "scripts/runtime/c5-service/Invoke-RAIOS-C5-UserLane.ps1": "f602c150dbd5ab03cfc1cb90a96c90115aec32f4",
+    "scripts/runtime/continuity/reap_stale_rdc_sessions.py": "1a020696d3a42a48e3c53f602b3cddb302970e4a",
+    ".ai-os/governance/RAIOS-SINGLE-TRUTH-POLICY.json": "ef0a10e8bec3a8cbea9278e1a60884d0c0c1a88d"
+  },
+  "runtime_generation": {
+    "leader_pid": 19364,
+    "role": "LEADER",
+    "primary_channel": "NATIVE_RAIOS",
+    "predecessor_policy": "FOLLOW_MIGRATE_DRAIN"
+  },
+  "laws": [
+    "LATEST_ACCEPTED_RAIOS_GENERATION_IS_SINGLE_LEADER",
+    "OLDER_GENERATION_FOLLOW_MIGRATE_DRAIN",
+    "PID_RECENCY_NE_GENERATION_AUTHORITY",
+    "MCP_GATEWAY_NE_TRUTH_AUTHORITY",
+    "ALL_RAIOS_OWNED_OR_ACQUIRED_CAPABILITIES_SERVE_PRIMARY_NATIVE_RAIOS_CHANNEL"
+  ],
+  "mutation_policy": {
+    "automatic_merge": false,
+    "automatic_rebase": false,
+    "force_push": false,
+    "reset_clean": false,
+    "runtime_continuity_nonblocking": true
+  },
+  "ok": true
+}
