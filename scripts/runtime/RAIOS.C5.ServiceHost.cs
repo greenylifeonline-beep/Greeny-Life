@@ -17,6 +17,8 @@ namespace RAIOS.ControlPlane
         static readonly string Root = @"C:\Users\Ghanam\.raios\runtime\continuity\c5-service";
         static readonly string StatePath = Path.Combine(Root, "state.json");
         static readonly string WalPath = Path.Combine(Root, "wal.jsonl");
+        static readonly string GenerationStatePath = Path.Combine(Root, "current-generation.json");
+        static readonly string GenerationReceiptPath = Path.Combine(Root, "generation-promotion-receipt.json");
         static readonly string BrokerRequest = @"C:\Users\Ghanam\.raios\runtime\continuity\privileged-exec\CURRENT.request.json";
         static readonly string BrokerScript = @"C:\Users\Ghanam\.raios\runtime\continuity\privileged-exec\Invoke-RAIOS-Privileged-Broker.ps1";
         static readonly string UserLaneScript = Path.Combine(Root, "Invoke-RAIOS-C5-UserLane.ps1");
@@ -56,6 +58,12 @@ namespace RAIOS.ControlPlane
         DateTime headlessRepairStartedUtc = DateTime.MinValue;
         uint userLaneSession = 0xFFFFFFFF;
         string lastHash = "";
+        string generationId = "";
+        string generationBinaryHash = "";
+        string generationBinaryPath = "";
+        DateTime generationStartedUtc = DateTime.MinValue;
+        string lastGenerationRole = "";
+        string lastGenerationFailure = "";
         readonly JavaScriptSerializer json = new JavaScriptSerializer();
 
         public C5Service()
@@ -72,8 +80,10 @@ namespace RAIOS.ControlPlane
             CleanupRuntimeDebris();
             RotateWalIfNeeded();
             InitWalChain();
+            InitializeGenerationIdentity();
+            WriteGenerationState("CANDIDATE_EXCLUSIVE", "BOOTSTRAP");
             CleanupStaleSessionChildren();
-            Wal("SERVICE_START", null);
+            Wal("SERVICE_START", new Dictionary<string, object>{{"generation_id",generationId},{"generation_role","CANDIDATE_EXCLUSIVE"}});
             worker = new Thread(WorkerLoop);
             worker.IsBackground = true;
             worker.Name = "RAIOS-C5-ControlPlane";
@@ -82,7 +92,8 @@ namespace RAIOS.ControlPlane
 
         protected override void OnStop()
         {
-            Wal("SERVICE_STOP_REQUEST", null);
+            WriteGenerationState("DRAINING", "SERVICE_STOP");
+            Wal("SERVICE_STOP_REQUEST", new Dictionary<string, object>{{"generation_id",generationId}});
             stop.Set();
             KillUserLaneTree();
             KillDcrSupervisorTree();
@@ -139,6 +150,7 @@ namespace RAIOS.ControlPlane
                     if ((now - lastHeartbeat).TotalSeconds >= 2)
                     {
                         WriteState("ONLINE", null);
+                        UpdateGenerationPromotion();
                         lastHeartbeat = now;
                     }
                 }
@@ -146,6 +158,7 @@ namespace RAIOS.ControlPlane
                 {
                     Wal("WORKER_ERROR", new Dictionary<string, object>{{"error", ex.GetType().Name + ":" + ex.Message}});
                     WriteState("DEGRADED", ex.GetType().Name);
+                    WriteGenerationState("DEGRADED", ex.GetType().Name);
                     Thread.Sleep(1000);
                 }
             }
@@ -803,6 +816,100 @@ namespace RAIOS.ControlPlane
             if (pid <= 4) return false;
             try { using (Process p = Process.GetProcessById(pid)) { return !p.HasExited; } }
             catch { return false; }
+        }
+
+        void InitializeGenerationIdentity()
+        {
+            generationStartedUtc = DateTime.UtcNow;
+            try
+            {
+                using (Process p = Process.GetCurrentProcess())
+                {
+                    try { generationStartedUtc = p.StartTime.ToUniversalTime(); } catch {}
+                    try { generationBinaryPath = p.MainModule.FileName; } catch { generationBinaryPath = ""; }
+                }
+            }
+            catch {}
+            if (String.IsNullOrWhiteSpace(generationBinaryPath))
+                generationBinaryPath = Path.Combine(Root, "RAIOS-C5-Service.exe");
+            try
+            {
+                using (SHA256 sha = SHA256.Create())
+                using (FileStream fs = new FileStream(generationBinaryPath, FileMode.Open, FileAccess.Read, FileShare.ReadWrite))
+                    generationBinaryHash = BitConverter.ToString(sha.ComputeHash(fs)).Replace("-", "").ToLowerInvariant();
+            }
+            catch { generationBinaryHash = "UNKNOWN"; }
+            generationId = generationBinaryHash + "::" + generationStartedUtc.ToString("o");
+        }
+
+        void UpdateGenerationPromotion()
+        {
+            bool dcrOwned = IsPidAlive(dcrSupervisorPid) && IsDcrOwnedByCurrentService();
+            bool nativeReady = IsNativeTunnelReady();
+            bool nativeOwned = nativeReady && IsNativeOwnedByCurrentService();
+            bool mcpReady = IsLocalMcpReady();
+
+            if (dcrOwned && nativeOwned && mcpReady)
+            {
+                WriteGenerationState("LEADER", null);
+                return;
+            }
+
+            var missing = new List<string>();
+            if (!dcrOwned) missing.Add("DCR");
+            if (!nativeOwned) missing.Add("NATIVE");
+            if (!mcpReady) missing.Add("MCP");
+            WriteGenerationState("CANDIDATE_EXCLUSIVE", String.Join("+", missing.ToArray()));
+        }
+
+        void WriteGenerationState(string role, string failure)
+        {
+            if (String.IsNullOrWhiteSpace(generationId)) InitializeGenerationIdentity();
+            string normalizedFailure = failure ?? "";
+            if (role == lastGenerationRole && normalizedFailure == lastGenerationFailure) return;
+
+            var obj = new Dictionary<string, object>();
+            obj["schema"] = "raios.runtime-generation.v3";
+            obj["observed_at"] = DateTime.UtcNow.ToString("o");
+            obj["generation_id"] = generationId;
+            obj["role"] = role;
+            obj["authority"] = "RAIOS-C5-SCM";
+            obj["service_pid"] = Process.GetCurrentProcess().Id;
+            obj["service_binary"] = generationBinaryPath;
+            obj["binary_sha256"] = generationBinaryHash;
+            obj["started_at"] = generationStartedUtc.ToString("o");
+            obj["predecessor_policy"] = "FOLLOW_MIGRATE_DRAIN";
+            obj["predecessor_authority_allowed"] = false;
+            obj["native_raios_role"] = "PRIMARY_CHANNEL";
+            obj["rdc_role"] = "REMOTE_CAPABILITY_PROVIDER";
+            obj["scheduler_authority"] = false;
+            obj["resource_law"] = "ALL_RAIOS_OWNED_OR_ACQUIRED_CAPABILITIES_SERVE_PRIMARY_NATIVE_RAIOS_CHANNEL";
+            obj["dcr_supervisor_pid"] = dcrSupervisorPid > 4 ? (object)dcrSupervisorPid : null;
+            obj["native_tunnel_pid"] = nativeTunnelPid > 4 ? (object)nativeTunnelPid : null;
+            obj["mcp_ready"] = IsLocalMcpReady();
+            obj["failure"] = String.IsNullOrWhiteSpace(failure) ? null : (object)failure;
+            obj["acceptance"] = role == "LEADER" ? "PASS" : "PENDING";
+            obj["ok"] = role == "LEADER";
+
+            try
+            {
+                File.WriteAllText(GenerationStatePath, json.Serialize(obj), new UTF8Encoding(false));
+                if (role == "LEADER" && lastGenerationRole != "LEADER")
+                {
+                    File.WriteAllText(GenerationReceiptPath, json.Serialize(obj), new UTF8Encoding(false));
+                    Wal("GENERATION_PROMOTED", new Dictionary<string, object>{{"generation_id",generationId},{"service_pid",Process.GetCurrentProcess().Id}});
+                }
+                else if (lastGenerationRole != role || lastGenerationFailure != normalizedFailure)
+                {
+                    Wal("GENERATION_STATE", new Dictionary<string, object>{{"generation_id",generationId},{"role",role},{"failure",normalizedFailure}});
+                }
+                lastGenerationRole = role;
+                lastGenerationFailure = normalizedFailure;
+            }
+            catch (Exception ex)
+            {
+                Wal("GENERATION_STATE_WRITE_FAILED", new Dictionary<string, object>{{"generation_id",generationId},{"error",ex.GetType().Name}});
+            }
         }
 
         void WriteState(string status, string error)
