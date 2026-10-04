@@ -209,7 +209,10 @@
       "LATEST_ACCEPTED_GENERATION_ONLY",
       "GENERATION_FENCING_REQUIRED",
       "PROMOTION_REQUIRES_LIVE_ACCEPTANCE_AND_RECEIPT",
-      "PID_RECENCY_NE_GENERATION_AUTHORITY"
+      "PID_RECENCY_NE_GENERATION_AUTHORITY",
+      "LATEST_ACCEPTED_RAIOS_GENERATION_IS_SINGLE_LEADER",
+      "FAILED_CANDIDATE_NE_LEADER",
+      "OLDER_GENERATION_FOLLOW_MIGRATE_DRAIN"
     ],
     "runtime_enforced": true,
     "required_live_proof": [
@@ -282,7 +285,17 @@
     "resource_law": "ALL_RAIOS_OWNED_OR_ACQUIRED_CAPABILITIES_SERVE_PRIMARY_NATIVE_RAIOS_CHANNEL",
     "generation_state_authority": "RAIOS-C5-SCM",
     "generation_state_path": "C:\\Users\\Ghanam\\.raios\\runtime\\continuity\\c5-service\\current-generation.json",
-    "generation_promotion_receipt": "C:\\Users\\Ghanam\\.raios\\runtime\\continuity\\c5-service\\generation-promotion-receipt.json"
+    "generation_promotion_receipt": "C:\\Users\\Ghanam\\.raios\\runtime\\continuity\\c5-service\\generation-promotion-receipt.json",
+    "resource_fabric": {
+      "law": "ALL_RAIOS_OWNED_OR_ACQUIRED_CAPABILITIES_SERVE_PRIMARY_NATIVE_RAIOS_CHANNEL",
+      "primary_channel": "NATIVE_RAIOS",
+      "provider_ne_authority": true,
+      "acquired_tool_ne_parallel_control_plane": true,
+      "reuse_before_build": true,
+      "duplicate_runtime_forbidden": true,
+      "duplicate_gateway_forbidden": true,
+      "primary_channel_recovery_priority": true
+    }
   },
   "primary_channel_resource_law": {
     "mandatory": true,
@@ -423,5 +436,40 @@
     "primary_channel_rule": "NATIVE_RAIOS_FOLLOWS_CURRENT_LEADER_GENERATION",
     "rdc_rule": "RDC_PROVIDER_FOLLOWS_CURRENT_LEADER_GENERATION",
     "scheduler_rule": "TASK_SCHEDULER_NE_GENERATION_AUTHORITY"
+  },
+  "runtime_generation_policy": {
+    "mandatory": true,
+    "authority": "RAIOS-C5-SCM",
+    "leader_selection": "LATEST_ACCEPTED_GENERATION",
+    "candidate_role": "CANDIDATE_EXCLUSIVE",
+    "promotion_requires": [
+      "SERVICE_RUNNING",
+      "BINARY_HASH_PROVEN",
+      "NATIVE_RAIOS_READY",
+      "DCR_PROVIDER_READY",
+      "UNIVERSAL_MCP_READY",
+      "LIVE_ACCEPTANCE_RECEIPT"
+    ],
+    "leader_role": "LEADER",
+    "predecessor_policy": "FOLLOW_MIGRATE_DRAIN",
+    "predecessor_authority_allowed": false,
+    "stale_generation_may_not_own": [
+      "NATIVE_RAIOS",
+      "RDC_PROVIDER",
+      "SCHEDULER_AUTHORITY",
+      "CONTROL_PLANE",
+      "MCP_GATEWAY",
+      "WATCHDOG"
+    ],
+    "pid_alone_is_not_generation_identity": true,
+    "generation_identity": [
+      "SERVICE_PID",
+      "SERVICE_START_TIME",
+      "BINARY_SHA256",
+      "ACCEPTANCE_PROOF"
+    ],
+    "rollback_rule": "ONLY_LAST_ACCEPTED_GENERATION_MAY_BECOME_AUTHORITY",
+    "failed_candidate_rule": "DEGRADED_NE_LEADER",
+    "law": "LATEST_ACCEPTED_RAIOS_GENERATION_IS_SINGLE_LEADER"
   }
 }
