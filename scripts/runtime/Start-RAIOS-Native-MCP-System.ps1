@@ -46,10 +46,8 @@ function Write-OwnerState([int]$ChildPid,[bool]$TransportAlive,[bool]$BackendRea
   transport_alive=$TransportAlive
   backend_ready=$BackendReady
  }
- New-Item -ItemType Directory -Path (Split-Path $OwnerFile) -Force|Out-Null
- $tmp=$OwnerFile+'.tmp-'+[guid]::NewGuid().ToString('N')
- $o|ConvertTo-Json -Depth 5|Set-Content -LiteralPath $tmp -Encoding UTF8
- Move-Item -LiteralPath $tmp -Destination $OwnerFile -Force
+ [IO.Directory]::CreateDirectory((Split-Path $OwnerFile))|Out-Null
+ $o|ConvertTo-Json -Depth 5|Set-Content -LiteralPath $OwnerFile -Encoding UTF8
 }
 
 function Test-Ready {
