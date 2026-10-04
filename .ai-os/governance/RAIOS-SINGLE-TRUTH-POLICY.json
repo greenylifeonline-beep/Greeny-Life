@@ -200,7 +200,12 @@
       "PREVIOUS_GENERATIONS_FOLLOW_MIGRATE_DRAIN",
       "PID_ALONE_NE_GENERATION_IDENTITY",
       "NO_PROMOTION_WITHOUT_NATIVE_RAIOS",
-      "NO_PASS_AFTER_FAILED_ACCEPTANCE"
+      "NO_PASS_AFTER_FAILED_ACCEPTANCE",
+      "LATEST_PROVEN_GENERATION_SINGLE_LEADER",
+      "UNPROVEN_GENERATION_NE_LEADER",
+      "OLDER_GENERATIONS_FOLLOW_MIGRATE_DRAIN",
+      "GENERATION_PID_NE_IDENTITY",
+      "NO_HIDDEN_AUTHORITY_ROLLBACK"
     ],
     "runtime_enforced": true,
     "required_live_proof": [
@@ -270,7 +275,10 @@
       "resume_processing_after_recovery": true,
       "manual_restore_not_final_acceptance": true
     },
-    "resource_law": "ALL_RAIOS_OWNED_OR_ACQUIRED_CAPABILITIES_SERVE_PRIMARY_NATIVE_RAIOS_CHANNEL"
+    "resource_law": "ALL_RAIOS_OWNED_OR_ACQUIRED_CAPABILITIES_SERVE_PRIMARY_NATIVE_RAIOS_CHANNEL",
+    "generation_state_authority": "RAIOS-C5-SCM",
+    "generation_state_path": "C:\\Users\\Ghanam\\.raios\\runtime\\continuity\\c5-service\\current-generation.json",
+    "generation_promotion_receipt": "C:\\Users\\Ghanam\\.raios\\runtime\\continuity\\c5-service\\generation-promotion-receipt.json"
   },
   "primary_channel_resource_law": {
     "mandatory": true,
@@ -354,5 +362,31 @@
     "rollback_generation_requires_explicit_failed_promotion_and_proof": true,
     "pid_alone_ne_generation_identity": true,
     "no_pass_after_failed_acceptance": true
+  },
+  "generation_policy": {
+    "mandatory": true,
+    "identity": [
+      "service_pid",
+      "service_started_at",
+      "service_binary_sha256"
+    ],
+    "candidate_role": "CANDIDATE_EXCLUSIVE",
+    "leader_role": "LEADER",
+    "leader_acceptance_requires": [
+      "DCR_OWNED_BY_SAME_GENERATION",
+      "NATIVE_RAIOS_OWNED_BY_SAME_GENERATION",
+      "UNIVERSAL_MCP_READY",
+      "NO_LEGACY_PROVIDER_OWNER"
+    ],
+    "predecessor_policy": [
+      "FOLLOWER",
+      "MIGRATE",
+      "DRAIN"
+    ],
+    "predecessor_authority_allowed": false,
+    "hidden_rollback_to_old_authority": false,
+    "pid_only_generation_identity_forbidden": true,
+    "latest_unproven_generation_ne_leader": true,
+    "latest_proven_generation_is_single_leader": true
   }
 }
