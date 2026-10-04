@@ -190,7 +190,12 @@
       "COGNITIVE_RECOVERY_PRIORITY_ZERO",
       "CHECKPOINT_NE_RUNTIME_STOP",
       "SELF_HEAL_REQUIRED",
-      "LIVE_EVIDENCE_REQUIRED_FOR_DONE"
+      "LIVE_EVIDENCE_REQUIRED_FOR_DONE",
+      "ALL_RAIOS_OWNED_OR_ACQUIRED_CAPABILITIES_SERVE_PRIMARY_NATIVE_RAIOS_CHANNEL",
+      "NATIVE_RAIOS_PRIMARY_CHANNEL",
+      "ACQUIRED_TOOL_NE_PARALLEL_CONTROL_PLANE",
+      "RESOURCE_REUSE_BEFORE_BUILD",
+      "PRIMARY_CHANNEL_RECOVERY_HAS_PRIORITY"
     ],
     "runtime_enforced": true,
     "required_live_proof": [
@@ -257,5 +262,40 @@
       "resume_processing_after_recovery": true,
       "manual_restore_not_final_acceptance": true
     }
+  },
+  "primary_channel_resource_law": {
+    "mandatory": true,
+    "primary_channel": "NATIVE_RAIOS",
+    "control_authority": "RAIOS-C5-SCM",
+    "law": "ALL_RAIOS_OWNED_OR_ACQUIRED_CAPABILITIES_SERVE_PRIMARY_NATIVE_RAIOS_CHANNEL",
+    "owned_or_acquired_resources": {
+      "default_role": "CAPABILITY_OR_PROVIDER",
+      "must_serve_primary_channel": true,
+      "control_authority": false,
+      "parallel_control_plane_forbidden": true,
+      "second_runtime_forbidden": true,
+      "second_gateway_forbidden": true,
+      "second_task_authority_forbidden": true,
+      "second_watchdog_authority_forbidden": true
+    },
+    "routing": {
+      "universal_mcp": "GATEWAY_NOT_AUTHORITY",
+      "rdc": "REMOTE_CAPABILITY_PROVIDER_NOT_AUTHORITY",
+      "nats": "TRANSPORT_NOT_AUTHORITY",
+      "manager": "COGNITIVE_MANAGER",
+      "evolution": "COGNITIVE_EVOLUTION",
+      "router": "MODEL_AND_PROVIDER_ROUTING",
+      "provider_adapters": "CAPABILITY_PROVIDERS"
+    },
+    "operational_priority": [
+      "KEEP_NATIVE_RAIOS_REACHABLE",
+      "RESTORE_COGNITIVE_MANAGER_AND_EVOLUTION",
+      "RESTORE_UNIVERSAL_MCP_AND_C5_GATEWAY",
+      "RESTORE_REMOTE_CAPABILITY_PROVIDER",
+      "RESTORE_AUXILIARY_CAPABILITIES"
+    ],
+    "reuse_before_build": true,
+    "acquired_tool_ne_parallel_authority": true,
+    "native_raios_primary_channel": true
   }
 }
