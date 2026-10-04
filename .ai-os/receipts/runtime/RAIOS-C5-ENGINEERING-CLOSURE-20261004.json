@@ -1,0 +1,115 @@
+{
+  "schema": "raios.c5.engineering-closure.v1",
+  "observed_at": "2026-10-04T02:29:26.4062766Z",
+  "branch": "ai-evolution-202608051809",
+  "governance_commit": "2d5c843df54268acbc0f15cfc5daa3e151d44807",
+  "code_commit": "1535966303d40d2de9764beaac012f5c9671fbe4",
+  "acceptance": "PASS",
+  "control_plane": {
+    "status": "ONLINE",
+    "service_pid": 17904,
+    "control_authority": "RAIOS-C5-SCM",
+    "single_control_authority": true,
+    "scheduler_authority": false
+  },
+  "native_raios": {
+    "role": "SINGLE_EXTERNAL_RAIOS_CHANNEL",
+    "ready": true,
+    "transport_alive": true,
+    "owned_by_service": true,
+    "owner_pid": 22260,
+    "launcher_pid": 23932,
+    "authority": "RAIOS-C5-SCM",
+    "live_mcp_proof": true
+  },
+  "dcr_provider": {
+    "role": "REMOTE_CAPABILITY_PROVIDER",
+    "control_authority": false,
+    "status": "ONLINE",
+    "supervisor_pid": 19664,
+    "owner_pid": 17904,
+    "parent_pid": 17904,
+    "owned_remote_count": 1,
+    "owned_local_mcp_count": 1,
+    "legacy_remote_count": 0,
+    "action": "NO_ACTION",
+    "provider_source": "RAIOS_OWNED_0.2.51"
+  },
+  "maintenance": {
+    "status": "ONLINE",
+    "services": {
+      "C5": true,
+      "MANAGER": true,
+      "EVOLUTION": true,
+      "COMMAND_CENTER": true,
+      "UNIVERSAL_MCP": true,
+      "NATIVE_MCP_TUNNEL": true,
+      "ROUTER_9": true,
+      "NATS": true,
+      "OLLAMA": false
+    },
+    "errors": [],
+    "nonblocking_capability_warnings": [
+      "OLLAMA_OPTIONAL_NOT_READY",
+      "SEAT_SESSION_RESTORE_FAILED:RuntimeException"
+    ],
+    "resume_monitor_ok": true,
+    "reconciliation_required": false,
+    "checkpoint_nonblocking": true,
+    "recovery_role": "RECOVERY_CONTROLLER",
+    "scheduler_authority": false,
+    "services_ok_phase": {
+      "run_id": "1f2f953d11ee465e976bb95b47b804d0",
+      "at": "2026-10-04T02:20:05.0252902+00:00"
+    },
+    "manager_observation": {
+      "source_snapshot_generated_at": "2026-10-04T02:21:00.118784+00:00",
+      "source_id": "CONTINUITY_MAINTENANCE",
+      "source_status": "ONLINE",
+      "observed_core_services_all_true": true
+    }
+  },
+  "evolution_self_heal": {
+    "test": "KILL_THEN_AUTORECOVER_RESUME",
+    "killed_pid": 16644,
+    "recovered_pid": 24492,
+    "wal": "C:\\Users\\Ghanam\\.raios\\runtime\\cognitive-store\\v9\\wal\\cognitive-events.jsonl",
+    "same_canonical_wal": true,
+    "cursor_before": 51004,
+    "cursor_after": 51224,
+    "processed_total_after": 51224,
+    "state_after": "ACTIVE",
+    "has_more_after": false,
+    "manual_restore": false
+  },
+  "cleanup": {
+    "task_scheduler_authority_retired": true,
+    "removed_tasks": [
+      "RAIOS-C5-Permanent",
+      "RAIOS-RemoteDesktopCommander"
+    ],
+    "retained_service_binaries": [
+      "RAIOS-C5-Service.exe",
+      "RAIOS-C5-Service.previous.exe"
+    ],
+    "removed_root_duplicate_sources": [
+      "scripts/runtime/reap_stale_rdc_sessions.py",
+      "scripts/runtime/Invoke-RAIOS-C5-UserLane.ps1"
+    ],
+    "runtime_source_duplicate_removed": "RAIOS.C5.ServiceHost.cs"
+  },
+  "evidence_policy": {
+    "live_evidence_required_for_done": true,
+    "no_fake_pass": true,
+    "checkpoint_ne_runtime_stop": true,
+    "mutation_fail_closed": true
+  },
+  "caveats": {
+    "mutation_allowed": false,
+    "reason": "dirty_worktree_protection",
+    "local_git_head": "dfc08e62a6392af53c9995e74278a5ba6d153a84",
+    "local_git_history_convergence": "SEPARATE_REPOSITORY_CONVERGENCE_REQUIRED",
+    "pytest_environment": "PYTEST_NOT_INSTALLED",
+    "live_acceptance_primary": true
+  }
+}
