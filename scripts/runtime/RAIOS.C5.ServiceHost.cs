@@ -45,6 +45,9 @@ namespace RAIOS.ControlPlane
         int nativeTunnelPid = 0;
         int nativeTunnelLauncherPid = 0;
         DateTime nativeTunnelLauncherStartedUtc = DateTime.MinValue;
+        int nativeTransportFailureCount = 0;
+        DateTime nativeTransportFailureSinceUtc = DateTime.MinValue;
+        int nativeLaunchFailureCount = 0;
         int headlessRepairPid = 0;
         DateTime dcrRetryAfterUtc = DateTime.MinValue;
         DateTime tunnelRetryAfterUtc = DateTime.MinValue;
@@ -368,6 +371,46 @@ namespace RAIOS.ControlPlane
             return IsNativeTunnelTransportAlive() && IsLocalMcpReady();
         }
 
+        void ResetNativeTransportFailures()
+        {
+            nativeTransportFailureCount = 0;
+            nativeTransportFailureSinceUtc = DateTime.MinValue;
+        }
+
+        bool NativeTransportFailureRequiresRestart(int pid)
+        {
+            DateTime now = DateTime.UtcNow;
+            if (nativeTransportFailureCount == 0)
+            {
+                nativeTransportFailureSinceUtc = now;
+                Wal("NATIVE_TUNNEL_TRANSPORT_DEGRADED_GRACE_START",
+                    new Dictionary<string, object>{{"pid",pid},{"minimum_failures",6},{"minimum_seconds",30}});
+            }
+            nativeTransportFailureCount++;
+            double elapsed = nativeTransportFailureSinceUtc == DateTime.MinValue
+                ? 0 : (now - nativeTransportFailureSinceUtc).TotalSeconds;
+            if (nativeTransportFailureCount < 6 || elapsed < 30) return false;
+            Wal("NATIVE_TUNNEL_TRANSPORT_DEGRADED_GRACE_EXHAUSTED",
+                new Dictionary<string, object>{{"pid",pid},{"failures",nativeTransportFailureCount},{"elapsed_seconds",elapsed}});
+            return true;
+        }
+
+        int ScheduleNativeRetryBackoff(string reason)
+        {
+            nativeLaunchFailureCount = Math.Min(nativeLaunchFailureCount + 1, 5);
+            int seconds = Math.Min(300, 15 * (1 << (nativeLaunchFailureCount - 1)));
+            tunnelRetryAfterUtc = DateTime.UtcNow.AddSeconds(seconds);
+            Wal("NATIVE_TUNNEL_RETRY_BACKOFF",
+                new Dictionary<string, object>{{"reason",reason},{"failure_count",nativeLaunchFailureCount},{"seconds",seconds},{"retry_after_utc",tunnelRetryAfterUtc.ToString("o")}});
+            return seconds;
+        }
+
+        void ResetNativeRecoveryCounters()
+        {
+            ResetNativeTransportFailures();
+            nativeLaunchFailureCount = 0;
+        }
+
         void EnsureNativeTunnel()
         {
             var systemTunnels = new List<Process>();
@@ -428,18 +471,25 @@ namespace RAIOS.ControlPlane
             if (declaredNativePid > 4)
             {
                 nativeTunnelPid = declaredNativePid;
-                if (IsNativeTunnelTransportAlive()) return;
+                if (IsNativeTunnelTransportAlive())
+                {
+                    ResetNativeRecoveryCounters();
+                    return;
+                }
                 try
                 {
                     using (Process declared = Process.GetProcessById(declaredNativePid))
                         if ((DateTime.UtcNow - declared.StartTime.ToUniversalTime()).TotalSeconds <= 120) return;
                 }
                 catch {}
+                if (!NativeTransportFailureRequiresRestart(declaredNativePid)) return;
                 bool declaredClosed = KillProcessTreeVerified(declaredNativePid, 5000);
                 nativeTunnelPid = 0;
+                ResetNativeTransportFailures();
                 Wal(declaredClosed ? "NATIVE_TUNNEL_TRANSPORT_UNHEALTHY_CLOSED" : "NATIVE_TUNNEL_TRANSPORT_UNHEALTHY_CLOSE_FAILED",
                     new Dictionary<string, object>{{"pid",declaredNativePid}});
-                tunnelRetryAfterUtc = DateTime.UtcNow.AddSeconds(declaredClosed ? 2 : 15);
+                if (declaredClosed) ScheduleNativeRetryBackoff("DECLARED_TRANSPORT_UNHEALTHY");
+                else tunnelRetryAfterUtc = DateTime.UtcNow.AddSeconds(30);
                 return;
             }
 
@@ -473,7 +523,11 @@ namespace RAIOS.ControlPlane
                 // Preserve a healthy transport while the MCP backend repairs.
                 // Backend readiness gates Native RAIOS availability, not tunnel
                 // process survival.
-                if (IsNativeTunnelTransportAlive()) return;
+                if (IsNativeTunnelTransportAlive())
+                {
+                    ResetNativeRecoveryCounters();
+                    return;
+                }
 
                 bool startupGrace = false;
                 try { startupGrace = (DateTime.UtcNow - existing.StartTime.ToUniversalTime()).TotalSeconds <= 120; }
@@ -481,17 +535,19 @@ namespace RAIOS.ControlPlane
                 if (startupGrace) return;
 
                 int unhealthyPid = existing.Id;
+                if (!NativeTransportFailureRequiresRestart(unhealthyPid)) return;
                 bool killed = KillProcessTreeVerified(unhealthyPid, 5000);
                 try { existing.Dispose(); } catch {}
                 nativeTunnelPid = 0;
+                ResetNativeTransportFailures();
                 if (!killed)
                 {
                     Wal("NATIVE_TUNNEL_UNHEALTHY_CLOSE_FAILED", new Dictionary<string, object>{{"pid",unhealthyPid}});
-                    tunnelRetryAfterUtc = DateTime.UtcNow.AddSeconds(15);
+                    tunnelRetryAfterUtc = DateTime.UtcNow.AddSeconds(30);
                     return;
                 }
                 Wal("NATIVE_TUNNEL_UNHEALTHY_CLOSED", new Dictionary<string, object>{{"pid",unhealthyPid}});
-                tunnelRetryAfterUtc = DateTime.UtcNow.AddSeconds(2);
+                ScheduleNativeRetryBackoff("TRANSPORT_UNHEALTHY");
                 return;
             }
 
@@ -510,9 +566,12 @@ namespace RAIOS.ControlPlane
                             && Math.Abs((started - nativeTunnelLauncherStartedUtc).TotalSeconds) <= 2;
                         if (launcherAlive && (DateTime.UtcNow - nativeTunnelLauncherStartedUtc).TotalSeconds > 120)
                         {
-                            bool closed = KillProcessTreeVerified(nativeTunnelLauncherPid, 5000);
+                            int timedOutPid = nativeTunnelLauncherPid;
+                            bool closed = KillProcessTreeVerified(timedOutPid, 5000);
                             Wal(closed ? "NATIVE_TUNNEL_LAUNCHER_TIMEOUT_CLOSED" : "NATIVE_TUNNEL_LAUNCHER_TIMEOUT_CLOSE_FAILED",
-                                new Dictionary<string, object>{{"pid",nativeTunnelLauncherPid}});
+                                new Dictionary<string, object>{{"pid",timedOutPid}});
+                            if (closed) ScheduleNativeRetryBackoff("LAUNCHER_TIMEOUT");
+                            else tunnelRetryAfterUtc = DateTime.UtcNow.AddSeconds(30);
                             launcherAlive = false;
                         }
                     }
