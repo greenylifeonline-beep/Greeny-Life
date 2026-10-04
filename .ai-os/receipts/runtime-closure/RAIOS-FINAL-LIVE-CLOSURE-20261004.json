@@ -1,0 +1,142 @@
+﻿{
+    "schema":  "raios.final-live-closure.v3",
+    "evidence_observed_at":  "2026-10-04T12:19:17.9308143Z",
+    "result":  "PASS",
+    "ok":  true,
+    "runtime":  {
+                    "status":  "ONLINE",
+                    "service_pid":  19364,
+                    "control_authority":  "RAIOS-C5-SCM",
+                    "single_control_authority":  true,
+                    "scheduler_authority":  false,
+                    "user_lane_role":  "INTERACTIVE_SESSION_ADAPTER",
+                    "user_lane_authority":  false
+                },
+    "generation":  {
+                       "generation_id":  "7c58a9ad54e8017d5510c0c313f4caa2611f442c8f5825574aed2685320ed188::2026-10-04T04:26:36.2099589Z",
+                       "role":  "LEADER",
+                       "service_pid":  19364,
+                       "binary_sha256":  "7c58a9ad54e8017d5510c0c313f4caa2611f442c8f5825574aed2685320ed188",
+                       "predecessor_policy":  "FOLLOW_MIGRATE_DRAIN",
+                       "predecessor_authority_allowed":  false,
+                       "previous_generations":  "FOLLOWER_DRAINED",
+                       "acceptance":  "PASS",
+                       "maintain_generation_reconciliation_bound":  true,
+                       "reconciliation_source":  "scripts/runtime/Maintain-RAIOS-Online.ps1"
+                   },
+    "primary_native_raios":  {
+                                 "role":  "PRIMARY_CHANNEL",
+                                 "service_pid":  19364,
+                                 "launcher_pid":  10960,
+                                 "child_pid":  14904,
+                                 "transport_alive":  true,
+                                 "backend_ready":  true,
+                                 "owned_by_service":  true
+                             },
+    "rdc_provider":  {
+                         "role":  "REMOTE_CAPABILITY_PROVIDER",
+                         "authority":  false,
+                         "owner_pid":  19364,
+                         "supervisor_pid":  6260,
+                         "remote_count":  1,
+                         "local_mcp_count":  1,
+                         "legacy_count":  0,
+                         "provider_source":  "RAIOS_OWNED_0.2.51"
+                     },
+    "universal_mcp":  {
+                          "ok":  true,
+                          "tool_count":  8,
+                          "second_gateway":  false,
+                          "gateway_not_authority":  true,
+                          "runtime_head":  "dfc08e62a6392af53c9995e74278a5ba6d153a84",
+                          "branch":  "ai-evolution-202608051809",
+                          "law":  "MCP_GATEWAY_NE_TRUTH_AUTHORITY"
+                      },
+    "maintenance":  {
+                        "status":  "ONLINE",
+                        "recovery_role":  "RECOVERY_CONTROLLER",
+                        "scheduler_authority":  false,
+                        "self_healing":  true,
+                        "services":  {
+                                         "C5":  true,
+                                         "MANAGER":  true,
+                                         "EVOLUTION":  true,
+                                         "COMMAND_CENTER":  true,
+                                         "UNIVERSAL_MCP":  true,
+                                         "NATIVE_MCP_TUNNEL":  true,
+                                         "ROUTER_9":  true,
+                                         "NATS":  true
+                                     },
+                        "errors":  [
+
+                                   ],
+                        "nonblocking_warnings":  [
+                                                     "OLLAMA_OPTIONAL_NOT_READY"
+                                                 ],
+                        "manager_received_continuity_projection":  true
+                    },
+    "evolution":  {
+                      "current_pid":  20624,
+                      "current_state":  "IDLE_COGNITION",
+                      "wal":  "C:\\Users\\Ghanam\\.raios\\runtime\\cognitive-store\\v9\\wal\\cognitive-events.jsonl",
+                      "current_cursor_position":  52482,
+                      "current_processed_events":  52482,
+                      "has_more":  false,
+                      "continuous_background_cognition":  true,
+                      "auto_recovery_proof":  {
+                                                  "previous_killed_pid":  16644,
+                                                  "recovered_pid":  24492,
+                                                  "manual_restart":  false,
+                                                  "same_wal":  true,
+                                                  "cursor_before":  51004,
+                                                  "cursor_after":  51181,
+                                                  "resumed_processing":  true
+                                              }
+                  },
+    "learning":  {
+                     "chain_id":  "chain:405f1dc5daa197307de5bee3330bf750",
+                     "proof_hash":  "2f9ded17c8b66ec1f65ae69084c3049d061c5c362c4ea361ad521c13f6ae55b6",
+                     "independent_verification":  true,
+                     "reviewer":  "C7",
+                     "reviewer_identity":  "C7-OPENCODE",
+                     "review_sha256":  "d232a65ed282d46db762f4210bbb5e46049ed427ccd7b0b9ab7b6f5fc1e610db",
+                     "negative_tests_passed":  true,
+                     "claims":  {
+                                    "LEARNING_CLOSED":  true,
+                                    "CAPABILITY_GROWTH":  true,
+                                    "SELF_REPAIR_SUCCESS":  true,
+                                    "CANONICAL_PROMOTION":  false
+                                },
+                     "canonical_promotion_authorized":  false,
+                     "learning_debt_open_count":  0,
+                     "focused_tests":  "20 passed in 4.97s",
+                     "canonical_promotion_blockers":  [
+                                                          "CANONICAL_PROMOTION_NOT_AUTHORIZED"
+                                                      ]
+                 },
+    "governance":  {
+                       "latest_generation_governance_commit":  "04632409f2356d7095a67d49ecbcb2f5053de2e1",
+                       "resource_law":  "ALL_RAIOS_OWNED_OR_ACQUIRED_CAPABILITIES_SERVE_PRIMARY_NATIVE_RAIOS_CHANNEL",
+                       "laws":  [
+                                    "RAIOS_C5_SCM_SINGLE_CONTROL_AUTHORITY",
+                                    "NATIVE_RAIOS_PRIMARY_CHANNEL",
+                                    "PROVIDER_NE_AUTHORITY",
+                                    "LATEST_ACCEPTED_GENERATION_ONLY",
+                                    "OLDER_GENERATIONS_FOLLOW_MIGRATE_DRAIN",
+                                    "GENERATION_FENCING_REQUIRED",
+                                    "SELF_HEAL_REQUIRED",
+                                    "LIVE_EVIDENCE_REQUIRED_FOR_DONE"
+                                ]
+                   },
+    "mutation_gate":  {
+                          "mutation_allowed":  false,
+                          "reconciliation_required":  true,
+                          "runtime_continuation_allowed":  true,
+                          "note":  "Fail-closed mutation gate is nonblocking for runtime continuity."
+                      },
+    "final_validation":  {
+                             "learning_debt_empty":  true,
+                             "learning_tests_passed":  true,
+                             "independent_review_approved":  true
+                         }
+}
