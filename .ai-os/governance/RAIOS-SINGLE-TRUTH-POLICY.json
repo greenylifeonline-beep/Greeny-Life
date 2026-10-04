@@ -195,7 +195,12 @@
       "NATIVE_RAIOS_PRIMARY_CHANNEL",
       "ACQUIRED_TOOL_NE_PARALLEL_CONTROL_PLANE",
       "RESOURCE_REUSE_BEFORE_BUILD",
-      "PRIMARY_CHANNEL_RECOVERY_HAS_PRIORITY"
+      "PRIMARY_CHANNEL_RECOVERY_HAS_PRIORITY",
+      "LATEST_ACCEPTED_GENERATION_IS_SINGLE_LEADER",
+      "PREVIOUS_GENERATIONS_FOLLOW_MIGRATE_DRAIN",
+      "PID_ALONE_NE_GENERATION_IDENTITY",
+      "NO_PROMOTION_WITHOUT_NATIVE_RAIOS",
+      "NO_PASS_AFTER_FAILED_ACCEPTANCE"
     ],
     "runtime_enforced": true,
     "required_live_proof": [
@@ -213,12 +218,13 @@
     "windows_service": "RAIOS-C5",
     "task_scheduler_authority": false,
     "native_raios": {
-      "role": "SINGLE_EXTERNAL_RAIOS_CHANNEL",
+      "role": "PRIMARY_CHANNEL",
       "owner": "RAIOS-C5-SCM",
       "singleton": true,
       "headless_boot": true,
       "requires_user_session": false,
-      "second_native_tunnel_forbidden": true
+      "second_native_tunnel_forbidden": true,
+      "generation_fenced": true
     },
     "rdc_provider": {
       "role": "REMOTE_CAPABILITY_PROVIDER",
@@ -226,7 +232,9 @@
       "control_authority": false,
       "provider_ne_core": true,
       "fallback_and_remote_execution": true,
-      "second_control_plane": false
+      "second_control_plane": false,
+      "generation_fenced": true,
+      "follows_latest_accepted_generation": true
     },
     "user_lane": {
       "role": "INTERACTIVE_SESSION_ADAPTER",
@@ -261,7 +269,8 @@
       "auto_recovery_mandatory": true,
       "resume_processing_after_recovery": true,
       "manual_restore_not_final_acceptance": true
-    }
+    },
+    "resource_law": "ALL_RAIOS_OWNED_OR_ACQUIRED_CAPABILITIES_SERVE_PRIMARY_NATIVE_RAIOS_CHANNEL"
   },
   "primary_channel_resource_law": {
     "mandatory": true,
@@ -320,5 +329,30 @@
       "health_reports_to_c5": true,
       "recovery_reports_to_c5": true
     }
+  },
+  "runtime_generation_contract": {
+    "mandatory": true,
+    "generation_identity": [
+      "service_binary_sha256",
+      "service_started_at",
+      "source_head",
+      "proof_hash"
+    ],
+    "candidate_role": "CANDIDATE_EXCLUSIVE",
+    "leader_role": "LEADER",
+    "promotion_requires": [
+      "SCM_RUNNING",
+      "DCR_OWNER_MATCHES_GENERATION",
+      "NATIVE_OWNER_MATCHES_GENERATION",
+      "UNIVERSAL_MCP_CONTRACT_PASS",
+      "LIVE_ACCEPTANCE_RECEIPT_READBACK"
+    ],
+    "latest_accepted_generation_is_single_leader": true,
+    "previous_generations_policy": "FOLLOW_MIGRATE_DRAIN",
+    "previous_generation_authority_allowed": false,
+    "previous_generation_provider_ownership_allowed": false,
+    "rollback_generation_requires_explicit_failed_promotion_and_proof": true,
+    "pid_alone_ne_generation_identity": true,
+    "no_pass_after_failed_acceptance": true
   }
 }
