@@ -1,4 +1,4 @@
-﻿$ErrorActionPreference='Continue'
+$ErrorActionPreference='Continue'
 $Root='C:\Users\Ghanam\.raios\runtime\continuity\c5-service'
 $Repo='C:\Users\Ghanam\Documents\Codex\Greeny-Life'
 $Python='C:\Users\Ghanam\AppData\Local\Programs\Python\Python314\python.exe'
@@ -17,35 +17,14 @@ $RepairTimeoutSeconds=720
 $CanonicalContinuityRoot=Join-Path $Repo 'scripts\runtime\continuity'
 $RuntimeContinuityRoot=Split-Path $Root
 
-function Sync-CanonicalContinuity {
- try {
-  foreach($name in @('raios_reconnect_checkpoint.py','reap_stale_rdc_sessions.py')){
-   $src=Join-Path $CanonicalContinuityRoot $name
-   $dst=Join-Path $RuntimeContinuityRoot $name
-   if(-not(Test-Path -LiteralPath $src)){continue}
-   $copy=$true
-   if(Test-Path -LiteralPath $dst){
-    try{$copy=((Get-FileHash -Algorithm SHA256 -LiteralPath $src).Hash -ne (Get-FileHash -Algorithm SHA256 -LiteralPath $dst).Hash)}catch{$copy=$true}
-   }
-   if($copy){
-    $tmp=$dst+'.tmp-'+[guid]::NewGuid().ToString('N')
-    Copy-Item -LiteralPath $src -Destination $tmp -Force
-    Move-Item -LiteralPath $tmp -Destination $dst -Force
-   }
-  }
- }catch{
-  try{('CANONICAL_CONTINUITY_SYNC_FAIL|'+[DateTimeOffset]::UtcNow.ToString('o')+'|'+$_.Exception.Message)|Add-Content -LiteralPath $Err -Encoding UTF8}catch{}
- }
-}
+# Runtime deployment is owned only by the canonical C5 deployer/SCM.
+# UserLane is an interactive adapter and never copies or promotes source.
 New-Item -ItemType Directory -Path $Root -Force | Out-Null
-Sync-CanonicalContinuity
 $mutex=[Threading.Mutex]::new($false,'Local\RAIOS-C5-UserLane-v2')
 $owned=$false
 try{$owned=$mutex.WaitOne(0)}catch [Threading.AbandonedMutexException]{$owned=$true}
 if(-not $owned){exit 0}
 $script:dcrProc=$null;$script:dcrProcOwned=$false;$script:maintProc=$null
-$env:RAIOS_DCR_AUTHORITY='RAIOS-C5'
-$env:RAIOS_DCR_OWNER_PID=[string]$PID
 $script:lastRepairAttempt=[DateTimeOffset]::MinValue
 $script:maintStartedAt=[DateTimeOffset]::MinValue
 
@@ -59,12 +38,22 @@ function Test-TcpFast([int]$Port){
  }catch{return $false}
 }
 function Test-NativeMcpTunnelReady {
+ try{
+  $m=Invoke-RestMethod -Uri 'http://127.0.0.1:8788/health' -TimeoutSec 3
+  if(-not($m.ok -eq $true -and [int]$m.tool_count -eq 8 -and $m.second_gateway -eq $false)){return $false}
+ }catch{return $false}
  if(-not(Test-Path -LiteralPath $NativeTunnelHealthFile)){return $false}
  try{
   $base=(Get-Content -LiteralPath $NativeTunnelHealthFile -Raw).Trim()
   if($base -notmatch '^http://127\.0\.0\.1:\d+$'){return $false}
+ }catch{return $false}
+ try{
   $r=Invoke-WebRequest -UseBasicParsing -Uri ($base+'/readyz') -TimeoutSec 3
-  return ($r.StatusCode -eq 200 -and $r.Content.Trim() -eq 'ready')
+  if($r.StatusCode -eq 200 -and $r.Content.Trim().StartsWith('ready',[StringComparison]::OrdinalIgnoreCase)){return $true}
+ }catch{}
+ try{
+  $r=Invoke-WebRequest -UseBasicParsing -Uri ($base+'/metrics') -TimeoutSec 3
+  return ($r.StatusCode -eq 200)
  }catch{return $false}
 }
 function Get-NativeHealth {
@@ -86,14 +75,20 @@ function Write-State([string]$status,$health){
   $transportState=$null
   try{$transportState=Get-Content -LiteralPath $Transport -Raw|ConvertFrom-Json}catch{}
   $obj=[ordered]@{
-   schema='raios.c5.user-lane.state.v2'
+   schema='raios.c5.user-lane.state.v3'
    observed_at=[DateTimeOffset]::UtcNow.ToString('o')
+   role='INTERACTIVE_SESSION_ADAPTER'
+   control_authority='RAIOS-C5-SCM'
+   can_start_dcr_supervisor=$false
+   can_start_native_tunnel=$false
+   can_promote_source=$false
    status=$status
    pid=$PID
    session_id=[Diagnostics.Process]::GetCurrentProcess().SessionId
    dcr_pid=$(if($script:dcrProc -and -not $script:dcrProc.HasExited){$script:dcrProc.Id}else{$null})
    maintain_pid=$(if($script:maintProc -and -not $script:maintProc.HasExited){$script:maintProc.Id}else{$null})
-   native_ready=$(if($health){[bool]$health.Ready}else{$false})
+   native_ready=$(if($health){[bool]$health.Ports.NATIVE_MCP_TUNNEL}else{$false})
+   overall_ready=$(if($health){[bool]$health.Ready}else{$false})
    native_ports=$(if($health){$health.Ports}else{$null})
    last_repair_attempt=$(if($script:lastRepairAttempt -ne [DateTimeOffset]::MinValue){$script:lastRepairAttempt.ToString('o')}else{$null})
    repair_cooldown_seconds=$RepairCooldownSeconds
@@ -161,35 +156,20 @@ function Get-ExistingDcrSupervisor {
 }
 function Ensure-Dcr {
  try{
-  if($script:dcrProc){
-   try{$script:dcrProc.Refresh()}catch{}
-   if(-not $script:dcrProc.HasExited){return}
-   $script:dcrProc=$null
-   $script:dcrProcOwned=$false
-  }
-
+  # SCM is the only DCR launcher. UserLane only observes the RAIOS-owned
+  # RemoteCapability provider and can never create a second authority.
+  $script:dcrProcOwned=$false
   $existing=Get-ExistingDcrSupervisor
   if($existing){
    try{
     $script:dcrProc=[Diagnostics.Process]::GetProcessById([int]$existing.Pid)
-    if(-not $script:dcrProc.HasExited){
-     $script:dcrProcOwned=([int]$existing.ParentPid -eq $PID -or [int]$existing.OwnerPid -eq $PID)
-     ('DCR_SUPERVISOR_ADOPT|'+[DateTimeOffset]::UtcNow.ToString('o')+'|PID='+$script:dcrProc.Id+'|OWNER='+$existing.OwnerPid+'|OWNED_BY_LANE='+$script:dcrProcOwned)|Add-Content -LiteralPath $Out -Encoding UTF8
-     return
-    }
-   }catch{
-    $script:dcrProc=$null
-    $script:dcrProcOwned=$false
-   }
+    if(-not $script:dcrProc.HasExited){return}
+   }catch{}
   }
-
-  $script:dcrProc=Start-Process -FilePath $Python -ArgumentList @($Dcr,'--supervise') -WorkingDirectory (Split-Path $Dcr) -WindowStyle Hidden -RedirectStandardOutput $DcrOut -RedirectStandardError $DcrErr -PassThru
-  $script:dcrProcOwned=$true
-  ('DCR_SUPERVISOR_START|'+[DateTimeOffset]::UtcNow.ToString('o')+'|PID='+$script:dcrProc.Id+'|PARENT='+$PID)|Add-Content -LiteralPath $Out -Encoding UTF8
+  $script:dcrProc=$null
  }catch{
   $script:dcrProc=$null
   $script:dcrProcOwned=$false
-  try{('DCR_START_FAIL|'+[DateTimeOffset]::UtcNow.ToString('o')+'|'+$_.Exception.Message)|Add-Content -LiteralPath $Err -Encoding UTF8}catch{}
  }
 }
 function Ensure-NativeRecovery($health){
