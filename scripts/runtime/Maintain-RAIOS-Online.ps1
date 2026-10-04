@@ -1168,6 +1168,85 @@ try {
     $coreServiceKeys=@('C5','MANAGER','EVOLUTION','COMMAND_CENTER','UNIVERSAL_MCP','NATIVE_MCP_TUNNEL','ROUTER_9','NATS')
     $localReady = -not [bool](@($coreServiceKeys|Where-Object{-not [bool]$services[$_]}).Count)
 
+    # Persist the currently proven runtime generation. This is a projection of
+    # live SCM/DCR/Native truth, never a competing authority. A generation is
+    # LEADER only when all core services are healthy and both owned providers
+    # prove ownership by this exact SCM service PID.
+    try {
+        $generationPath = Join-Path $StableUserProfile ".raios\runtime\continuity\c5-service\current-generation.json"
+        $generationReceiptPath = Join-Path $StableUserProfile ".raios\runtime\continuity\c5-service\generation-promotion-receipt.json"
+        $dcrGenerationPath = Join-Path $StableUserProfile ".raios\runtime\remote-access\rdc-system-direct\rdc-supervisor-state.json"
+        $nativeGenerationPath = Join-Path $StableUserProfile ".raios\runtime\mcp-tunnel\health\raios-native.owner.json"
+        $svcGeneration = Get-CimInstance Win32_Service -Filter "Name='RAIOS-C5'"
+        $servicePidGeneration = [int]$svcGeneration.ProcessId
+        $serviceExeGeneration = ([string]$svcGeneration.PathName).Trim('"')
+        $serviceProcGeneration = Get-Process -Id $servicePidGeneration -ErrorAction Stop
+        $serviceHashGeneration = (Get-FileHash -LiteralPath $serviceExeGeneration -Algorithm SHA256).Hash.ToLowerInvariant()
+        $serviceStartedGeneration = $serviceProcGeneration.StartTime.ToUniversalTime().ToString('o')
+        $dcrGeneration = Get-Content -LiteralPath $dcrGenerationPath -Raw | ConvertFrom-Json
+        $nativeGeneration = Get-Content -LiteralPath $nativeGenerationPath -Raw | ConvertFrom-Json
+        $dcrGenerationReady = [bool](
+            $dcrGeneration.status -eq 'ONLINE' -and
+            [int]$dcrGeneration.owner_pid -eq $servicePidGeneration -and
+            [int]$dcrGeneration.supervisor_parent_pid -eq $servicePidGeneration -and
+            @($dcrGeneration.owned_remote_pids).Count -eq 1 -and
+            @($dcrGeneration.owned_local_mcp_pids).Count -eq 1 -and
+            @($dcrGeneration.legacy_remote_pids).Count -eq 0
+        )
+        $nativeGenerationReady = [bool](
+            [int]$nativeGeneration.service_pid -eq $servicePidGeneration -and
+            [int]$nativeGeneration.child_pid -gt 4 -and
+            $nativeGeneration.transport_alive -eq $true -and
+            $nativeGeneration.backend_ready -eq $true
+        )
+        $generationReady = [bool]($localReady -and $dcrGenerationReady -and $nativeGenerationReady)
+        $generationValue = [ordered]@{
+            schema='raios.runtime-generation.v2'
+            observed_at=[DateTimeOffset]::UtcNow.ToString('o')
+            generation_id=($serviceHashGeneration+'::'+$serviceStartedGeneration)
+            role=$(if($generationReady){'LEADER'}else{'DEGRADED'})
+            authority='RAIOS-C5-SCM'
+            service_pid=$servicePidGeneration
+            service_binary=$serviceExeGeneration
+            binary_sha256=$serviceHashGeneration
+            started_at=$serviceStartedGeneration
+            predecessor_policy='FOLLOW_MIGRATE_DRAIN'
+            predecessor_authority_allowed=$false
+            native_raios=[ordered]@{
+                role='PRIMARY_CHANNEL'
+                service_pid=[int]$nativeGeneration.service_pid
+                launcher_pid=[int]$nativeGeneration.launcher_pid
+                child_pid=[int]$nativeGeneration.child_pid
+                transport_alive=[bool]$nativeGeneration.transport_alive
+                backend_ready=[bool]$nativeGeneration.backend_ready
+            }
+            rdc=[ordered]@{
+                role='REMOTE_CAPABILITY_PROVIDER'
+                authority=$false
+                owner_pid=[int]$dcrGeneration.owner_pid
+                supervisor_pid=[int]$dcrGeneration.supervisor_pid
+                remote_count=@($dcrGeneration.owned_remote_pids).Count
+                local_mcp_count=@($dcrGeneration.owned_local_mcp_pids).Count
+                legacy_count=@($dcrGeneration.legacy_remote_pids).Count
+            }
+            scheduler_authority=$false
+            resource_law='ALL_RAIOS_OWNED_OR_ACQUIRED_CAPABILITIES_SERVE_PRIMARY_NATIVE_RAIOS_CHANNEL'
+            previous_generations=$(if($generationReady){'FOLLOWER_DRAINED'}else{'FOLLOW_MIGRATE_DRAIN'})
+            acceptance=$(if($generationReady){'PASS'}else{'BLOCKED'})
+            ok=$generationReady
+        }
+        Write-JsonFileAtomic -Path $generationPath -Value $generationValue
+        if($generationReady){
+            Write-JsonFileAtomic -Path $generationReceiptPath -Value $generationValue
+            Mark-Phase 'GENERATION_LEADER_SYNCED'
+        }else{
+            Mark-Phase 'GENERATION_DEGRADED_SYNCED'
+        }
+    } catch {
+        $errors.Add('GENERATION_PROJECTION_FAILED:'+$_.Exception.GetType().Name)
+        Mark-Phase 'GENERATION_PROJECTION_FAILED'
+    }
+
     # Recovery attempts are provisional evidence. Once the corresponding live
     # service is independently verified healthy in this same cycle, retire only
     # that service's transient recovery error; never let a failed attempt
