@@ -1,0 +1,176 @@
+FFFFFFFFFFF                                                              [100%]
+=================================== FAILURES ===================================
+________________ test_denied_operation_does_not_start_provider _________________
+
+provider = (<raios_mcp.desktop_commander_provider.DesktopCommanderProvider object at 0x7f72b7f5edb0>, PosixPath('/tmp/pytest-of-agent/pytest-12/test_denied_operation_does_not0'))
+
+    def test_denied_operation_does_not_start_provider(provider):
+        p,root=provider
+        with pytest.raises(DesktopCommanderProviderError) as e:p.call('run_command',{'command':'anything'})
+>       assert e.value.code=='PROVIDER_TOOL_DENIED'
+E       AssertionError: assert 'PROVIDER_TOOL_NOT_FOUND' == 'PROVIDER_TOOL_DENIED'
+E         
+E         - PROVIDER_TOOL_DENIED
+E         + PROVIDER_TOOL_NOT_FOUND
+
+tests/mcp/test_provider_execution.py:47: AssertionError
+___________________ test_discovery_exports_function_schemas ____________________
+
+provider = (<raios_mcp.desktop_commander_provider.DesktopCommanderProvider object at 0x7f72b7aaf680>, PosixPath('/tmp/pytest-of-agent/pytest-12/test_discovery_exports_functio0'))
+
+    def test_discovery_exports_function_schemas(provider):
+        p,_=provider
+        status=p.call('__list_tools__')
+>       assert status['sdk']=='mcp'
+               ^^^^^^^^^^^^^
+E       KeyError: 'sdk'
+
+tests/mcp/test_provider_execution.py:53: KeyError
+_______________ test_real_sdk_execution_and_argument_validation ________________
+
+provider = (<raios_mcp.desktop_commander_provider.DesktopCommanderProvider object at 0x7f72b7afddc0>, PosixPath('/tmp/pytest-of-agent/pytest-12/test_real_sdk_execution_and_ar0'))
+
+    def test_real_sdk_execution_and_argument_validation(provider):
+        p,root=provider
+        r=p.call('read_file',{'path':'ok'})
+        assert r['result']['content'][0]['text']=='read:ok'
+        with pytest.raises(DesktopCommanderProviderError) as e:p.call('read_file',{'path':42})
+>       assert e.value.code=='INVALID_ARGUMENTS'
+E       AssertionError: assert 'MCP_PROVIDER_TIMEOUT' == 'INVALID_ARGUMENTS'
+E         
+E         - INVALID_ARGUMENTS
+E         + MCP_PROVIDER_TIMEOUT
+
+tests/mcp/test_provider_execution.py:63: AssertionError
+______ test_hung_child_has_bounded_timeout_and_next_call_recovers[False] _______
+
+provider = (<raios_mcp.desktop_commander_provider.DesktopCommanderProvider object at 0x7f72b7aaee40>, PosixPath('/tmp/pytest-of-agent/pytest-12/test_hung_child_has_bounded_ti0'))
+startup = False
+
+    @pytest.mark.parametrize('startup',[False,True])
+    def test_hung_child_has_bounded_timeout_and_next_call_recovers(provider,startup):
+        p,root=provider
+        if startup:(root/'stall_start').touch()
+        start=time.monotonic()
+        with pytest.raises(DesktopCommanderProviderError) as e:p.call('read_file',{'path':'hang'})
+        assert e.value.code=='MCP_PROVIDER_TIMEOUT'
+        assert time.monotonic()-start<5
+        pid=int((root/'pid').read_text())
+        if os.name!='nt':
+>           with pytest.raises(ProcessLookupError):os.kill(pid,0)
+                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E           Failed: DID NOT RAISE ProcessLookupError
+
+tests/mcp/test_provider_execution.py:76: Failed
+_______ test_hung_child_has_bounded_timeout_and_next_call_recovers[True] _______
+
+provider = (<raios_mcp.desktop_commander_provider.DesktopCommanderProvider object at 0x7f72b7aae300>, PosixPath('/tmp/pytest-of-agent/pytest-12/test_hung_child_has_bounded_ti1'))
+startup = True
+
+    @pytest.mark.parametrize('startup',[False,True])
+    def test_hung_child_has_bounded_timeout_and_next_call_recovers(provider,startup):
+        p,root=provider
+        if startup:(root/'stall_start').touch()
+        start=time.monotonic()
+        with pytest.raises(DesktopCommanderProviderError) as e:p.call('read_file',{'path':'hang'})
+        assert e.value.code=='MCP_PROVIDER_TIMEOUT'
+        assert time.monotonic()-start<5
+        pid=int((root/'pid').read_text())
+        if os.name!='nt':
+>           with pytest.raises(ProcessLookupError):os.kill(pid,0)
+                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E           Failed: DID NOT RAISE ProcessLookupError
+
+tests/mcp/test_provider_execution.py:76: Failed
+__________ test_busy_provider_and_status_never_wait_for_running_tool ___________
+
+provider = (<raios_mcp.desktop_commander_provider.DesktopCommanderProvider object at 0x7f72b7aada90>, PosixPath('/tmp/pytest-of-agent/pytest-12/test_busy_provider_and_status_0'))
+
+    def test_busy_provider_and_status_never_wait_for_running_tool(provider):
+        p,root=provider; failures=[]
+        def run():
+            try:p.call('read_file',{'path':'hang'})
+            except DesktopCommanderProviderError as e:failures.append(e.code)
+        t=threading.Thread(target=run);t.start()
+        try:
+            deadline=time.monotonic()+2
+            while not (root/'calls').exists() and time.monotonic()<deadline:time.sleep(.01)
+            assert (root/'calls').exists()
+>           start=time.monotonic();assert p.status()['busy'] is True
+                                          ^^^^^^^^^^^^^^^^^^
+E           KeyError: 'busy'
+
+tests/mcp/test_provider_execution.py:90: KeyError
+_________________ test_provider_error_does_not_expose_contents _________________
+
+provider = (<raios_mcp.desktop_commander_provider.DesktopCommanderProvider object at 0x7f72b7b1e690>, PosixPath('/tmp/pytest-of-agent/pytest-12/test_provider_error_does_not_e0'))
+
+    def test_provider_error_does_not_expose_contents(provider):
+        p,_=provider
+        with pytest.raises(DesktopCommanderProviderError) as e:p.call('read_file',{'path':'fail'})
+        assert e.value.code=='PROVIDER_TOOL_ERROR'
+>       assert 'SECRET_DO_NOT_EXPOSE' not in str(e.value)
+E       assert 'SECRET_DO_NOT_EXPOSE' not in '[{"type": "...OT_EXPOSE"}]'
+E         
+E         'SECRET_DO_NOT_EXPOSE' is contained here:
+E           [{"type": "text", "text": "SECRET_DO_NOT_EXPOSE"}]
+E         ?                            ++++++++++++++++++++
+
+tests/mcp/test_provider_execution.py:101: AssertionError
+_______________________ test_invalid_timeout_rejected[0] _______________________
+
+value = 0
+
+    @pytest.mark.parametrize('value',[0,-1,float('inf'),float('nan')])
+    def test_invalid_timeout_rejected(value):
+>       with pytest.raises(DesktopCommanderProviderError) as e:DesktopCommanderProvider({'timeout_seconds':value})
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E       Failed: DID NOT RAISE DesktopCommanderProviderError
+
+tests/mcp/test_provider_execution.py:105: Failed
+______________________ test_invalid_timeout_rejected[-1] _______________________
+
+value = -1
+
+    @pytest.mark.parametrize('value',[0,-1,float('inf'),float('nan')])
+    def test_invalid_timeout_rejected(value):
+>       with pytest.raises(DesktopCommanderProviderError) as e:DesktopCommanderProvider({'timeout_seconds':value})
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E       Failed: DID NOT RAISE DesktopCommanderProviderError
+
+tests/mcp/test_provider_execution.py:105: Failed
+______________________ test_invalid_timeout_rejected[inf] ______________________
+
+value = inf
+
+    @pytest.mark.parametrize('value',[0,-1,float('inf'),float('nan')])
+    def test_invalid_timeout_rejected(value):
+>       with pytest.raises(DesktopCommanderProviderError) as e:DesktopCommanderProvider({'timeout_seconds':value})
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E       Failed: DID NOT RAISE DesktopCommanderProviderError
+
+tests/mcp/test_provider_execution.py:105: Failed
+______________________ test_invalid_timeout_rejected[nan] ______________________
+
+value = nan
+
+    @pytest.mark.parametrize('value',[0,-1,float('inf'),float('nan')])
+    def test_invalid_timeout_rejected(value):
+>       with pytest.raises(DesktopCommanderProviderError) as e:DesktopCommanderProvider({'timeout_seconds':value})
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E       Failed: DID NOT RAISE DesktopCommanderProviderError
+
+tests/mcp/test_provider_execution.py:105: Failed
+=========================== short test summary info ============================
+FAILED tests/mcp/test_provider_execution.py::test_denied_operation_does_not_start_provider
+FAILED tests/mcp/test_provider_execution.py::test_discovery_exports_function_schemas
+FAILED tests/mcp/test_provider_execution.py::test_real_sdk_execution_and_argument_validation
+FAILED tests/mcp/test_provider_execution.py::test_hung_child_has_bounded_timeout_and_next_call_recovers[False]
+FAILED tests/mcp/test_provider_execution.py::test_hung_child_has_bounded_timeout_and_next_call_recovers[True]
+FAILED tests/mcp/test_provider_execution.py::test_busy_provider_and_status_never_wait_for_running_tool
+FAILED tests/mcp/test_provider_execution.py::test_provider_error_does_not_expose_contents
+FAILED tests/mcp/test_provider_execution.py::test_invalid_timeout_rejected[0]
+FAILED tests/mcp/test_provider_execution.py::test_invalid_timeout_rejected[-1]
+FAILED tests/mcp/test_provider_execution.py::test_invalid_timeout_rejected[inf]
+FAILED tests/mcp/test_provider_execution.py::test_invalid_timeout_rejected[nan]
+11 failed in 3.10s

@@ -4813,6 +4813,26 @@
       "evidence": ".ai-os/reports/mcp/RAIOS-NATIVE-MCP-RELIABILITY-20261005/VALIDATION.json",
       "review_branch": "fix/raios-native-mcp-reliability-20261005",
       "next_action": "Merge reviewed branch, reload existing canonical Universal MCP and native tunnel owner, then verify authenticated get_head/read_board and native readiness"
+    },
+    {
+      "id": "RAIOS-EXECUTION-CONFIG-20261005",
+      "title": "RAIOS executable MCP configuration and bounded provider",
+      "objective": "Unify configuration and tool readiness; use official local MCP SDK with bounded execution and preserve host changes",
+      "scope": [
+        "scripts/ai-os/raios_mcp;scripts/ai-os/raios_mcp_local_ensure.ps1;scripts/runtime/Start-RAIOS-Native-MCP-System.ps1;.ai-os/mcp/POLICY.json;tests/mcp"
+      ],
+      "dependencies": [],
+      "allowed_agents": [
+        "codex"
+      ],
+      "validation": "MCP protocol, execution, fault and readiness tests; Windows deployment separately proven",
+      "status": "BLOCKED",
+      "claimed_by": "codex",
+      "source_status": "VERIFIED",
+      "deployment_status": "NOT_PERFORMED",
+      "updated_at": "2026-10-05T02:02:21.860941+00:00",
+      "blocker": "Full Windows source reconciliation and authenticated native execution/mutation proof unavailable. Source upgrade tested; live service not changed.",
+      "evidence": ".ai-os/reports/mcp/RAIOS-EXECUTION-CONFIG-20261005/VALIDATION.json"
     }
   ]
 }

@@ -1,0 +1,131 @@
+F----------------------------------------
+FF                                                                      [100%]
+=================================== FAILURES ===================================
+_________ test_partial_body_times_out_while_health_remains_responsive __________
+
+tmp_path = PosixPath('/tmp/pytest-of-agent/pytest-15/test_partial_body_times_out_wh0')
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x7ff79c992ab0>
+
+    def test_partial_body_times_out_while_health_remains_responsive(tmp_path,monkeypatch):
+        monkeypatch.setattr(server,'REQUEST_IO_TIMEOUT_SECONDS',.2,raising=False)
+        handler=type('BoundedTestHandler',(server.Handler,),{'gateway':Gateway.from_root(tmp_path,grants=[])})
+        httpd=server.ReuseHTTPServer(('127.0.0.1',0),handler)
+        thread=threading.Thread(target=httpd.serve_forever,daemon=True);thread.start()
+        sock=socket.create_connection(httpd.server_address,timeout=2)
+        try:
+            sock.sendall(b'POST /mcp HTTP/1.1\r\nHost: localhost\r\nContent-Length: 100\r\n\r\n{')
+            conn=http.client.HTTPConnection(*httpd.server_address,timeout=1)
+            start=time.monotonic();conn.request('GET','/health');r=conn.getresponse()
+            assert r.status==200;r.read();conn.close();assert time.monotonic()-start<1
+>           reply=sock.recv(4096)
+                  ^^^^^^^^^^^^^^^
+E           TimeoutError: timed out
+
+tests/mcp/test_http_bounds.py:23: TimeoutError
+----------------------------- Captured stderr call -----------------------------
+mcp-http: "GET /health HTTP/1.1" 200 -
+mcp-http: "POST /mcp HTTP/1.1" 400 -
+----------------------------------------
+Exception occurred during processing of request from ('127.0.0.1', 50772)
+Traceback (most recent call last):
+  File "/workspace/raios-execution/scripts/ai-os/raios_mcp/server.py", line 485, in _do_POST_bounded
+    message = json.loads(raw.decode("utf-8") or "{}")
+              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/json/__init__.py", line 346, in loads
+    return _default_decoder.decode(s)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/json/decoder.py", line 338, in decode
+    obj, end = self.raw_decode(s, idx=_w(s, 0).end())
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/json/decoder.py", line 354, in raw_decode
+    obj, end = self.scan_once(s, idx)
+               ^^^^^^^^^^^^^^^^^^^^^^
+json.decoder.JSONDecodeError: Expecting property name enclosed in double quotes: line 1 column 2 (char 1)
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/socketserver.py", line 697, in process_request_thread
+    self.finish_request(request, client_address)
+  File "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/socketserver.py", line 362, in finish_request
+    self.RequestHandlerClass(request, client_address, self)
+  File "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/socketserver.py", line 766, in __init__
+    self.handle()
+  File "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/http/server.py", line 440, in handle
+    self.handle_one_request()
+  File "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/http/server.py", line 428, in handle_one_request
+    method()
+  File "/workspace/raios-execution/scripts/ai-os/raios_mcp/server.py", line 457, in do_POST
+    self._do_POST_bounded()
+  File "/workspace/raios-execution/scripts/ai-os/raios_mcp/server.py", line 487, in _do_POST_bounded
+    self._send_json(400, {"ok": False, "error": "INVALID_JSON"}, session=session)
+  File "/workspace/raios-execution/scripts/ai-os/raios_mcp/server.py", line 327, in _send_json
+    self._send_bytes(code, data, "application/json; charset=utf-8", session=session)
+  File "/workspace/raios-execution/scripts/ai-os/raios_mcp/server.py", line 317, in _send_bytes
+    self.wfile.write(body)
+  File "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/socketserver.py", line 845, in write
+    self._sock.sendall(b)
+BrokenPipeError: [Errno 32] Broken pipe
+----------------------------------------
+_______________ test_oversized_body_is_rejected_without_draining _______________
+
+tmp_path = PosixPath('/tmp/pytest-of-agent/pytest-15/test_oversized_body_is_rejecte0')
+
+    def test_oversized_body_is_rejected_without_draining(tmp_path):
+        handler=type('BoundedTestHandler',(server.Handler,),{'gateway':Gateway.from_root(tmp_path,grants=[])})
+        httpd=server.ReuseHTTPServer(('127.0.0.1',0),handler)
+        thread=threading.Thread(target=httpd.serve_forever,daemon=True);thread.start()
+        sock=socket.create_connection(httpd.server_address,timeout=1)
+        try:
+            sock.sendall(f'POST /mcp HTTP/1.1\r\nHost: localhost\r\nContent-Length: {server.MAX_REQUEST_BYTES+1}\r\n\r\n'.encode())
+>           assert b'413' in sock.recv(4096)
+                             ^^^^^^^^^^^^^^^
+E           TimeoutError: timed out
+
+tests/mcp/test_http_bounds.py:36: TimeoutError
+----------------------------- Captured stderr call -----------------------------
+mcp-http: "POST /mcp HTTP/1.1" 413 -
+----------------------------------------
+Exception occurred during processing of request from ('127.0.0.1', 52610)
+Traceback (most recent call last):
+  File "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/socketserver.py", line 697, in process_request_thread
+    self.finish_request(request, client_address)
+  File "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/socketserver.py", line 362, in finish_request
+    self.RequestHandlerClass(request, client_address, self)
+  File "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/socketserver.py", line 766, in __init__
+    self.handle()
+  File "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/http/server.py", line 440, in handle
+    self.handle_one_request()
+  File "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/http/server.py", line 428, in handle_one_request
+    method()
+  File "/workspace/raios-execution/scripts/ai-os/raios_mcp/server.py", line 457, in do_POST
+    self._do_POST_bounded()
+  File "/workspace/raios-execution/scripts/ai-os/raios_mcp/server.py", line 481, in _do_POST_bounded
+    self._send_json(413, {"ok": False, "error": "REQUEST_TOO_LARGE", "max_bytes": MAX_REQUEST_BYTES}, session=session)
+--------------------------- Captured stderr teardown ---------------------------
+BrokenPipeError: [Errno 32] Broken pipe
+_____________ test_head_reads_git_worktree_and_ignores_environment _____________
+
+tmp_path = PosixPath('/tmp/pytest-of-agent/pytest-15/test_head_reads_git_worktree_a0')
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x7ff79c9d8410>
+
+    def test_head_reads_git_worktree_and_ignores_environment(tmp_path,monkeypatch):
+        metadata=tmp_path/'metadata';metadata.mkdir()
+        common=tmp_path/'common';(common/'refs/heads').mkdir(parents=True)
+        (metadata/'HEAD').write_text('ref: refs/heads/test\n')
+        (metadata/'commondir').write_text('../common\n')
+        (tmp_path/'.git').write_text('gitdir: metadata\n')
+        sha='a'*40;(common/'refs/heads/test').write_text(sha+'\n')
+        monkeypatch.setenv('RAIOS_CANONICAL_HEAD','b'*40)
+>       assert server.canonical_head(tmp_path)==(sha,'git-file')
+E       AssertionError: assert ('bbbbbbbbbbb...bbbbb', 'env') == ('aaaaaaaaaaa...', 'git-file')
+E         
+E         At index 0 diff: 'bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb' != 'aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa'
+E         Use -v to get more diff
+
+tests/mcp/test_http_bounds.py:48: AssertionError
+=========================== short test summary info ============================
+FAILED tests/mcp/test_http_bounds.py::test_partial_body_times_out_while_health_remains_responsive
+FAILED tests/mcp/test_http_bounds.py::test_oversized_body_is_rejected_without_draining
+FAILED tests/mcp/test_http_bounds.py::test_head_reads_git_worktree_and_ignores_environment
+3 failed in 3.56s

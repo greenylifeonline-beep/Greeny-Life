@@ -1,1 +1,4 @@
-# stdlib only. Streamable HTTP MCP in server.py. No SQLite, Redis, JWT plane, or WebSocket.
+# Local owned provider client; the existing HTTP/stdio gateway stays canonical.
+# SDK and jsonschema are MIT licensed. Python >=3.10; no hosted subscription.
+mcp==1.30.0
+jsonschema==4.26.0

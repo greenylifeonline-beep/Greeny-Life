@@ -20,6 +20,7 @@ HEALTH = {"ok": True, "service": "raios-universal-mcp", "transport": "streamable
 CASES = [
     ("current", {}, True),
     ("reordered", {"tools": list(reversed(TOOLS))}, True),
+    ("policy_extension", {"tools": TOOLS + ["future_scoped_tool"], "tool_count": len(TOOLS)+1}, True),
     ("legacy_eight", {"tools": TOOLS[:-1], "tool_count": 8}, False),
     ("missing_execution", {"tools": TOOLS[:-1] + ["unknown"]}, False),
     ("duplicate", {"tools": TOOLS[:-1] + [TOOLS[0]]}, False),
@@ -49,9 +50,15 @@ def readiness_results(tmp_path_factory):
     fixtures.write_text(json.dumps([{ "name": name, "health": {**HEALTH, **patch}}
                                     for name, patch, _ in CASES]), encoding="utf-8")
     driver = tmp / "probe.ps1"
-    driver.write_text('''param([string]$Launcher,[string]$Fixtures)
+    driver.write_text('''param([string]$Launcher,[string]$Fixtures,[string]$SourceRepo,[string]$ProbeRepo)
 $ErrorActionPreference='Stop'
 Set-StrictMode -Version Latest
+$Repo=$ProbeRepo
+New-Item -ItemType Directory -Force (Join-Path $Repo '.ai-os/mcp')|Out-Null
+New-Item -ItemType Directory -Force (Join-Path $Repo 'scripts/ai-os/raios_mcp')|Out-Null
+$helper=Join-Path $SourceRepo 'scripts/ai-os/raios_mcp/Readiness.ps1'
+if(Test-Path $helper){Copy-Item $helper (Join-Path $Repo 'scripts/ai-os/raios_mcp/Readiness.ps1')}
+$originalPolicy=Get-Content (Join-Path $SourceRepo '.ai-os/mcp/POLICY.json') -Raw|ConvertFrom-Json
 $tokens=$null; $errors=$null
 $ast=[Management.Automation.Language.Parser]::ParseFile($Launcher,[ref]$tokens,[ref]$errors)
 if($errors.Count){throw 'LAUNCHER_PARSE_FAILED'}
@@ -61,6 +68,9 @@ Invoke-Expression $fn.Extent.Text
 function Invoke-RestMethod { param($Uri,$TimeoutSec) if($script:fail){throw 'offline'}; return $script:health }
 $out=@{}
 foreach($case in (Get-Content -LiteralPath $Fixtures -Raw|ConvertFrom-Json)){
+ $policy=$originalPolicy|ConvertTo-Json -Depth 30|ConvertFrom-Json
+ if($case.name -eq 'policy_extension'){$policy.execution_tools=@($policy.execution_tools)+@('future_scoped_tool')}
+ $policy|ConvertTo-Json -Depth 30|Set-Content (Join-Path $Repo '.ai-os/mcp/POLICY.json') -Encoding UTF8
  $script:health=$case.health; $script:fail=$false
  $out[$case.name]=[bool](Test-LocalMcpReady)
 }
@@ -72,7 +82,8 @@ $out|ConvertTo-Json -Compress
                XDG_DATA_HOME=str(tmp / "data"), POWERSHELL_TELEMETRY_OPTOUT="1")
     proc = subprocess.run([pwsh, "-NoLogo", "-NoProfile", "-File", str(driver),
                            "-Launcher", str(ROOT / "scripts/runtime/Start-RAIOS-Native-MCP-System.ps1"),
-                           "-Fixtures", str(fixtures)], capture_output=True, text=True, timeout=30, env=env)
+                           "-Fixtures", str(fixtures), "-SourceRepo", str(ROOT),
+                           "-ProbeRepo", str(tmp / 'repo')], capture_output=True, text=True, timeout=30, env=env)
     assert proc.returncode == 0, proc.stderr
     return json.loads(proc.stdout)
 

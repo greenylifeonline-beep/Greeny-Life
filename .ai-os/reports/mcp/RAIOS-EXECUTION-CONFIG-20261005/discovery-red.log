@@ -1,0 +1,16 @@
+F                                                                        [100%]
+=================================== FAILURES ===================================
+___________________ test_discovery_schema_bytes_are_bounded ____________________
+
+provider = (<raios_mcp.desktop_commander_provider.DesktopCommanderProvider object at 0x7f517a56eff0>, PosixPath('/tmp/pytest-of-agent/pytest-26/test_discovery_schema_bytes_ar0'))
+
+    def test_discovery_schema_bytes_are_bounded(provider):
+        p,_=provider;p.max_discovery_bytes=10
+>       with pytest.raises(DesktopCommanderProviderError) as e:p.call('__list_tools__')
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E       Failed: DID NOT RAISE DesktopCommanderProviderError
+
+tests/mcp/test_provider_execution.py:132: Failed
+=========================== short test summary info ============================
+FAILED tests/mcp/test_provider_execution.py::test_discovery_schema_bytes_are_bounded
+1 failed in 0.60s

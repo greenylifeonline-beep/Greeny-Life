@@ -1,0 +1,129 @@
+..F..................FFFF                                                [100%]
+=================================== FAILURES ===================================
+_______________ test_native_readiness_contract[policy_extension] _______________
+
+readiness_results = {'incomplete': False, 'string_bool': False, 'current': True, 'string_count': False, ...}
+name = 'policy_extension'
+patch = {'tools': ['get_head', 'read_board', 'read_inbox', 'read_receipt', 'get_diff', 'post_opinion', ...], 'tool_count': 10}
+expected = True
+
+    @pytest.mark.parametrize("name,patch,expected", CASES, ids=[case[0] for case in CASES])
+    def test_native_readiness_contract(readiness_results, name, patch, expected):
+>       assert readiness_results[name] is expected
+E       assert False is True
+
+tests/mcp/test_native_readiness.py:93: AssertionError
+_________ test_partial_body_times_out_while_health_remains_responsive __________
+
+tmp_path = PosixPath('/tmp/pytest-of-agent/pytest-14/test_partial_body_times_out_wh0')
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x7f9fc317a120>
+
+    def test_partial_body_times_out_while_health_remains_responsive(tmp_path,monkeypatch):
+        monkeypatch.setattr(server,'REQUEST_IO_TIMEOUT_SECONDS',.2,raising=False)
+        handler=type('BoundedTestHandler',(server.Handler,),{'gateway':Gateway.from_root(tmp_path,grants=[])})
+>       httpd=server.ReuseHTTPServer(('127.0.0.1',0),handler)
+              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+tests/mcp/test_http_bounds.py:15: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+/opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/socketserver.py:453: in __init__
+    self.socket = socket.socket(self.address_family,
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = <socket.socket fd=-1, family=0, type=0, proto=0>
+family = <AddressFamily.AF_INET: 2>, type = <SocketKind.SOCK_STREAM: 1>
+proto = 0, fileno = None
+
+    def __init__(self, family=-1, type=-1, proto=-1, fileno=None):
+        # For user code address family and type values are IntEnum members, but
+        # for the underlying _socket.socket they're just integers. The
+        # constructor of _socket.socket converts the given argument to an
+        # integer automatically.
+        if fileno is None:
+            if family == -1:
+                family = AF_INET
+            if type == -1:
+                type = SOCK_STREAM
+            if proto == -1:
+                proto = 0
+>       _socket.socket.__init__(self, family, type, proto, fileno)
+E       PermissionError: [Errno 1] Operation not permitted
+
+/opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/socket.py:233: PermissionError
+_______________ test_oversized_body_is_rejected_without_draining _______________
+
+tmp_path = PosixPath('/tmp/pytest-of-agent/pytest-14/test_oversized_body_is_rejecte0')
+
+    def test_oversized_body_is_rejected_without_draining(tmp_path):
+        handler=type('BoundedTestHandler',(server.Handler,),{'gateway':Gateway.from_root(tmp_path,grants=[])})
+>       httpd=server.ReuseHTTPServer(('127.0.0.1',0),handler)
+              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+tests/mcp/test_http_bounds.py:31: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+/opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/socketserver.py:453: in __init__
+    self.socket = socket.socket(self.address_family,
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = <socket.socket fd=-1, family=0, type=0, proto=0>
+family = <AddressFamily.AF_INET: 2>, type = <SocketKind.SOCK_STREAM: 1>
+proto = 0, fileno = None
+
+    def __init__(self, family=-1, type=-1, proto=-1, fileno=None):
+        # For user code address family and type values are IntEnum members, but
+        # for the underlying _socket.socket they're just integers. The
+        # constructor of _socket.socket converts the given argument to an
+        # integer automatically.
+        if fileno is None:
+            if family == -1:
+                family = AF_INET
+            if type == -1:
+                type = SOCK_STREAM
+            if proto == -1:
+                proto = 0
+>       _socket.socket.__init__(self, family, type, proto, fileno)
+E       PermissionError: [Errno 1] Operation not permitted
+
+/opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/socket.py:233: PermissionError
+_____________ test_head_reads_git_worktree_and_ignores_environment _____________
+
+tmp_path = PosixPath('/tmp/pytest-of-agent/pytest-14/test_head_reads_git_worktree_a0')
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x7f9fc317a000>
+
+    def test_head_reads_git_worktree_and_ignores_environment(tmp_path,monkeypatch):
+        metadata=tmp_path/'metadata';metadata.mkdir()
+        common=tmp_path/'common';(common/'refs/heads').mkdir(parents=True)
+        (metadata/'HEAD').write_text('ref: refs/heads/test\n')
+        (metadata/'commondir').write_text('../common\n')
+        (tmp_path/'.git').write_text('gitdir: metadata\n')
+        sha='a'*40;(common/'refs/heads/test').write_text(sha+'\n')
+        monkeypatch.setenv('RAIOS_CANONICAL_HEAD','b'*40)
+>       assert server.canonical_head(tmp_path)==(sha,'git-file')
+E       AssertionError: assert ('bbbbbbbbbbb...bbbbb', 'env') == ('aaaaaaaaaaa...', 'git-file')
+E         
+E         At index 0 diff: 'bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb' != 'aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa'
+E         Use -v to get more diff
+
+tests/mcp/test_http_bounds.py:48: AssertionError
+___________________ test_canonical_head_never_uses_stale_env ___________________
+
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x7f9fc3172870>
+tmp_path = PosixPath('/tmp/pytest-of-agent/pytest-14/test_canonical_head_never_uses0')
+
+    def test_canonical_head_never_uses_stale_env(monkeypatch, tmp_path):
+        monkeypatch.setenv("RAIOS_CANONICAL_HEAD", "abc123def456")
+        sha, source = canonical_head(tmp_path)
+>       assert sha == "unknown"
+E       AssertionError: assert 'abc123def456' == 'unknown'
+E         
+E         - unknown
+E         + abc123def456
+
+tests/mcp/test_mcp_health.py:22: AssertionError
+=========================== short test summary info ============================
+FAILED tests/mcp/test_native_readiness.py::test_native_readiness_contract[policy_extension]
+FAILED tests/mcp/test_http_bounds.py::test_partial_body_times_out_while_health_remains_responsive
+FAILED tests/mcp/test_http_bounds.py::test_oversized_body_is_rejected_without_draining
+FAILED tests/mcp/test_http_bounds.py::test_head_reads_git_worktree_and_ignores_environment
+FAILED tests/mcp/test_mcp_health.py::test_canonical_head_never_uses_stale_env
+5 failed, 20 passed in 0.62s

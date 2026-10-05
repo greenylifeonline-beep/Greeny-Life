@@ -4,6 +4,8 @@ $ErrorActionPreference = "Stop"
 $Repo = (Resolve-Path (Join-Path $PSScriptRoot "..\..")).Path
 $Python = Join-Path $Repo ".venv\Scripts\python.exe"
 $Server = Join-Path $Repo "scripts\ai-os\raios_mcp\server.py"
+$PolicyPath = Join-Path $Repo '.ai-os\mcp\POLICY.json'
+. (Join-Path $Repo 'scripts\ai-os\raios_mcp\Readiness.ps1')
 $ReceiptDir = Join-Path $Repo ".ai-os\receipts\command-fabric"
 $HealthUrl = "http://127.0.0.1:$Port/health"
 
@@ -19,8 +21,8 @@ if ($Listener) {
     }
     $Health = $null
     try { $Health = Invoke-RestMethod $HealthUrl -TimeoutSec 5 } catch {}
-    if (-not $Reload -and $Health -and $Health.ok -and @($Health.tools).Count -eq 9 -and @($Health.tools) -contains "execute_scoped_task") {
-        Write-Output "LOCAL_MCP_ALREADY_HEALTHY port=$Port pid=$($Listener.OwningProcess) tools=9"
+    if (-not $Reload -and (Test-RaiosMcpHealth -Health $Health -PolicyPath $PolicyPath)) {
+        Write-Output "LOCAL_MCP_ALREADY_HEALTHY port=$Port pid=$($Listener.OwningProcess) tools=$(@($Health.tools).Count)"
         exit 0
     }
     if (-not $Reload) {
@@ -46,11 +48,8 @@ if ($Process.HasExited) {
 
 $Health = Invoke-RestMethod $HealthUrl -TimeoutSec 5
 $Tools = @($Health.tools)
-if (-not $Health.ok -or $Tools.Count -ne 9) {
-    throw "Local MCP health validation failed."
-}
-if ($Tools -notcontains "send_packet" -or $Tools -notcontains "ack_packet" -or $Tools -notcontains "execute_scoped_task") {
-    throw "Required MCP tools are missing."
+if (-not (Test-RaiosMcpHealth -Health $Health -PolicyPath $PolicyPath)) {
+    throw "Local MCP health does not match the repository tool and transport contract."
 }
 
 Write-Output "LOCAL_MCP_STARTED port=$Port pid=$($Process.Id) tools=$($Tools.Count)"

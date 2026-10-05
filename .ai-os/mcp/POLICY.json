@@ -40,7 +40,7 @@
     "ELEVATION_REQUEST_NE_SELF_PROMOTE"
   ],
   "repository": "greenylifeonline-beep/Greeny-Life",
-  "branch": "v9-neurolingua-semantic-kernel",
+  "branch": "ai-evolution-202608051809",
   "v1_tools": [
     "get_head",
     "read_board",
@@ -247,7 +247,9 @@
         "list_processes"
       ],
       "write_tools": [],
-      "notes": "Phase-1 read-only cutover. Mutations remain disabled until scoped lease enforcement is proven. Hosted Desktop Commander Remote is not required."
+      "notes": "Phase-1 read-only cutover. Mutations remain disabled until scoped lease enforcement is proven. Hosted Desktop Commander Remote is not required.",
+      "client_sdk": "mcp==1.30.0",
+      "admission_timeout_seconds": 0.1
     }
   },
   "external_gateway": {

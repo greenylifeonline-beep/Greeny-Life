@@ -15,7 +15,7 @@ from typing import Any
 from .desktop_commander_provider import DesktopCommanderProvider, DesktopCommanderProviderError
 
 REPO = "greenylifeonline-beep/Greeny-Life"
-BRANCH = "v9-neurolingua-semantic-kernel"
+BRANCH = "ai-evolution-202608051809"
 LAW = "MCP_GATEWAY_NE_TRUTH_AUTHORITY"
 GIT_TIMEOUT_SECONDS = 5.0
 V1_TOOLS = (
@@ -186,6 +186,14 @@ class Gateway:
     @classmethod
     def from_root(cls, root: Path, tokens: dict[str, str] | None = None, grants: list[dict] | None = None) -> "Gateway":
         policy = load_json(root / ".ai-os" / "mcp" / "POLICY.json", {})
+        if "v1_tools" in policy or "execution_tools" in policy:
+            configured = list(policy.get("v1_tools") or []) + list(policy.get("execution_tools") or [])
+            if (any(not isinstance(name, str) for name in configured)
+                    or len(configured) != len(set(configured))
+                    or set(configured) != set(REGISTERED_TOOLS)):
+                raise GatewayError("CONFIGURATION_MISMATCH", "policy and registered MCP tools disagree", 503)
+        seat_map = load_json(root / ".ai-os" / "mcp" / "SEAT-MAP.json", {})
+        seats = seat_map.get("seats", {}) if seat_map.get("knowledge_state") == "CANONICAL" else {}
         loaded: list[dict] = list(grants or [])
         if tokens:
             loaded.extend({"actor_id": k, "token": v} for k, v in tokens.items())
@@ -198,14 +206,15 @@ class Gateway:
             if actor_id == "C0":
                 continue
             grant = token_by_id.get(actor_id) or {}
+            seat = seats.get(actor_id) or {}
             policy_tools = list(spec.get("tools") or [])
             requested_scopes = list(grant.get("scopes") or policy_tools)
             scopes = [s for s in requested_scopes if s in policy_tools and s in REGISTERED_TOOLS]
             raw = str(grant.get("token") or "")
             actors[actor_id] = Actor(
                 actor_id=actor_id,
-                actor_role=spec["actor_role"],
-                instance_role=spec["instance_role"],
+                actor_role=seat.get("actor_role") or spec["actor_role"],
+                instance_role=seat.get("instance_role") or spec["instance_role"],
                 tools=policy_tools,
                 deny=list(spec.get("deny") or []),
                 token_sha256=sha256_text(raw) if raw else "",
