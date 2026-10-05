@@ -1,6 +1,7 @@
 from pathlib import Path
 import json
 import os
+import subprocess
 import sys
 import threading
 from http.server import ThreadingHTTPServer
@@ -43,6 +44,11 @@ def test_canonical_head_unknown_without_git(monkeypatch, tmp_path):
 
 
 def test_health_http_is_fast_and_lists_registered_tools(tmp_path):
+    # get_head must prove real repository metadata rather than return empty
+    # strings from a failed Git process in a directory with no repository.
+    subprocess.run(["git", "init", "-b", "test-mcp"], cwd=tmp_path, check=True, capture_output=True)
+    subprocess.run(["git", "-c", "user.name=MCP Test", "-c", "user.email=mcp@test.invalid",
+                    "commit", "--allow-empty", "-m", "fixture"], cwd=tmp_path, check=True, capture_output=True)
     Handler.gateway = Gateway.from_root(tmp_path, grants=[])
     httpd = ThreadingHTTPServer(("127.0.0.1", 0), Handler)
     httpd.daemon_threads = True
@@ -87,6 +93,10 @@ def test_health_http_is_fast_and_lists_registered_tools(tmp_path):
             ).read().decode()
         )
         assert read_rpc["result"]["isError"] is False
+        metadata = json.loads(read_rpc["result"]["content"][0]["text"])
+        expected_head = subprocess.check_output(["git", "rev-parse", "HEAD"], cwd=tmp_path, text=True).strip()
+        assert metadata["head"] == expected_head
+        assert metadata["branch"] == "test-mcp"
         deny = json.dumps(
             {"jsonrpc": "2.0", "id": 3, "method": "tools/call", "params": {"name": "send_packet", "arguments": {"to": ["C2"], "text": "x"}}}
         ).encode()

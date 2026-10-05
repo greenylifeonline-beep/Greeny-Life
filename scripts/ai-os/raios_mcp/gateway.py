@@ -1,4 +1,4 @@
-"""RAIOS MCP V1 gateway: 8 tools, Streamable HTTP, no second WAL, no shell."""
+"""RAIOS MCP gateway: V1 tools plus scoped execution, no second WAL, no shell."""
 from __future__ import annotations
 
 import hashlib
@@ -17,6 +17,7 @@ from .desktop_commander_provider import DesktopCommanderProvider, DesktopCommand
 REPO = "greenylifeonline-beep/Greeny-Life"
 BRANCH = "v9-neurolingua-semantic-kernel"
 LAW = "MCP_GATEWAY_NE_TRUTH_AUTHORITY"
+GIT_TIMEOUT_SECONDS = 5.0
 V1_TOOLS = (
     "get_head",
     "read_board",
@@ -102,7 +103,19 @@ def append_jsonl(path: Path, rec: dict) -> None:
 
 
 def git(root: Path, *args: str) -> str:
-    r = subprocess.run(["git", *args], cwd=root, text=True, capture_output=True)
+    """Bound every gateway Git operation; never turn a failed command into success."""
+    try:
+        r = subprocess.run(
+            ["git", *args], cwd=root, capture_output=True, encoding="utf-8", errors="replace",
+            timeout=GIT_TIMEOUT_SECONDS, check=True,
+        )
+    except subprocess.TimeoutExpired as err:
+        # subprocess.run kills and waits for its child before raising.
+        raise GatewayError("GIT_TIMEOUT", "Git exceeded its execution deadline", 504) from err
+    except subprocess.CalledProcessError as err:
+        raise GatewayError("GIT_FAILED", "Git could not read repository state", 503) from err
+    except OSError as err:
+        raise GatewayError("GIT_UNAVAILABLE", "Git could not be started", 503) from err
     return (r.stdout or "").strip()
 
 
@@ -266,11 +279,14 @@ class Gateway:
         arguments = dict(arguments or {})
         try:
             result = self._call(actor, tool, arguments)
-            self._audit(actor, tool, "ok", arguments)
-            return result
-        except GatewayError as err:
-            self._audit(actor, tool, err.code, arguments)
+        except Exception as err:
+            status = err.code if isinstance(err, GatewayError) else "INTERNAL_ERROR"
+            self._audit(actor, tool, status, arguments)
             raise
+        # Keep this outside the execution try: a failed audit must not be retried
+        # or cause a successful operation to run again.
+        self._audit(actor, tool, "ok", arguments)
+        return result
 
     def _call(self, actor: Actor, tool: str, arguments: dict[str, Any]) -> dict:
         forbidden = set(self.policy.get("forbidden_tools") or []) | {
@@ -353,17 +369,25 @@ class Gateway:
             self._remote_provider = None
 
     def _audit(self, actor: Actor, tool: str, status: str, arguments: dict) -> None:
-        append_jsonl(
-            self.audit_path,
-            {
-                "ts": utc(),
-                "actor_id": actor.actor_id,
-                "tool": tool,
-                "status": status,
-                "packet_id": arguments.get("packet_id"),
-                "gl005_proven": False,
-            },
-        )
+        try:
+            append_jsonl(
+                self.audit_path,
+                {
+                    "ts": utc(),
+                    "actor_id": actor.actor_id,
+                    "tool": tool,
+                    "status": status,
+                    "packet_id": arguments.get("packet_id"),
+                    "gl005_proven": False,
+                },
+            )
+        except OSError as err:
+            raise GatewayError(
+                "AUDIT_UNAVAILABLE",
+                "Audit record could not be written. The operation may have completed; "
+                "reconcile mutation outcomes before retrying.",
+                503,
+            ) from err
 
     def _receipt(self, payload: dict) -> dict:
         body = json.dumps(payload, ensure_ascii=False, sort_keys=True)

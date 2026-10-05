@@ -1,0 +1,93 @@
+{
+  "schema": "raios.mcp-reliability-validation.v1",
+  "task_id": "RAIOS-NATIVE-MCP-RELIABILITY-20261005",
+  "recorded_at_utc": "2026-10-04T22:02:45.327199+00:00",
+  "user_date_cairo": "2026-10-05",
+  "base_commit": "98e31d4bd506034b7fc6bd28c462d30e86c66628",
+  "branch": "fix/raios-native-mcp-reliability-20261005",
+  "source_validation": "PASSED",
+  "native_runtime_deployed": false,
+  "external_mcp_recovery_proven": false,
+  "gl005_proven": false,
+  "checks": [
+    {
+      "command": "RAIOS_TEST_PWSH=/tmp/raios-pwsh/pwsh /workspace/raios-test-env/bin/python -m pytest tests/mcp -q --tb=short",
+      "exit_code": 0,
+      "passed": 55,
+      "failed": 0,
+      "skipped": 0,
+      "evidence": "mcp-tests.log"
+    },
+    {
+      "command": "/workspace/raios-test-env/bin/python -m pytest -q --tb=short",
+      "exit_code": 0,
+      "passed": 83,
+      "failed": 0,
+      "testpaths": "tests/neuro_lingua (pytest.ini)",
+      "evidence": "project-tests.log"
+    },
+    {
+      "command": "python -m py_compile scripts/ai-os/raios_mcp/gateway.py scripts/ai-os/raios_mcp/server.py",
+      "exit_code": 0
+    },
+    {
+      "command": "git diff --check",
+      "exit_code": 0
+    }
+  ],
+  "red_phase": {
+    "runtime_and_protocol_cases_failed_before_fix": 20,
+    "readiness_failed_before_fix": 4,
+    "readiness_passed_before_fix": 16,
+    "readiness_evidence": "readiness-before-fix.log"
+  },
+  "baseline_failures": [
+    {
+      "command": "python scripts/ai-os/raios_mcp_check.py",
+      "observed_on_base_and_patched": true,
+      "failure": "C1 role matches seat map",
+      "evidence": "legacy-gateway-before-fix.log"
+    },
+    {
+      "command": "python scripts/ai-os/raios_mcp_security_check.py",
+      "observed_on_base_and_patched": true,
+      "failure": "C2 read_receipt ALLOWED, proven false",
+      "root_reason": "GL005-MUTATION-OBSERVE.json is not present in the source snapshot",
+      "evidence": "legacy-security-before-fix.log"
+    }
+  ],
+  "additional_suite_limitations": [
+    {
+      "command": "python -m pytest tests/command_center -q",
+      "collection_errors": [
+        "test_app.py: fastapi is not installed in the focused test environment",
+        "test_cc_truth_wave.py: fastapi is not installed in the focused test environment",
+        "test_copy_estate.py: raios.command_center.storage_authority absent from source snapshot",
+        "test_system_surface.py: raios.command_center.storage_authority absent from source snapshot"
+      ],
+      "not_claimed_passed": true
+    }
+  ],
+  "review": {
+    "independent_review_performed": true,
+    "blocking_findings": 0,
+    "windows_powershell_5_1_execution_proven": false,
+    "powershell_test_runtime": "7.5.3 on Linux"
+  },
+  "file_sha256": {
+    "scripts/ai-os/raios_mcp/gateway.py": "e2a5c2a3734f3fe9feba3f1175d49a649de0bfab6b7e53b75d6ada72fc56c039",
+    "scripts/ai-os/raios_mcp/server.py": "3a6b3202d997ba90bfa1f794599e0e1bcc6e04c6af2c8f72c2ab9a5d8fe2cbd1",
+    "scripts/runtime/Start-RAIOS-Native-MCP-System.ps1": "97a3905255f786457f891567eb9af977f20eb55d1c2db6e077bb136a4ed411b4",
+    "tests/mcp/test_mcp_health.py": "bf0b7827d1a2229ee932664559ae1bb01fdbcc7fa0fab899ba0bbc2f6c2db902",
+    "tests/mcp/test_mcp_reliability.py": "68ab1eb29dc2fc74fa1ab0f12b703e1d2ad6ab9d3e033ed81748e04c7b99d85c",
+    "tests/mcp/test_native_readiness.py": "aa366b424d614d1929abbd1689b00c13302df8b2ffb39f1803d3ba50652af16a"
+  },
+  "evidence_sha256": {
+    "mcp-tests.log": "3e29667577bff540bf6727bdd7ff13f0f694d52dfabf6cbfe6b5814ae592dff8",
+    "project-tests.log": "042c20beb56254524205666740d1fadfaaa9ce30f1d2bc3c9bf9aa5b0e5d374d",
+    "readiness-before-fix.log": "b3a936f16041c80f462bceeced6d47d897048bd05e35b6ef7a740f9a62170af5",
+    "legacy-gateway-before-fix.log": "766ba04bd9fdc2949d93ff26687c21026ee88206768d640a2c146424ab4f58b6",
+    "legacy-security-before-fix.log": "9035404f345621414b8948e56e2974ceec407ee172b631862bb2aaebcae2f1fa"
+  },
+  "deployment_blocker": "Desktop Commander monthly quota prevents native device execution; source branch must be merged and existing MCP/native tunnel services reloaded and checked on the canonical host"
+}

@@ -4789,6 +4789,30 @@
       ],
       "last_proof_at": "2026-09-19T15:15:00+00:00",
       "reconciliation_note": "D-058: MCP Streamable HTTP session channel live on :8788 PID 33112 after in-place reload of PID 43452. GET /mcp SSE 200. CC /api/mcp get_sse=true. C6 still SIGNED_OUT not impersonated. IN_PROGRESS."
+    },
+    {
+      "id": "RAIOS-NATIVE-MCP-RELIABILITY-20261005",
+      "title": "Repair Native MCP readiness, Git bounds and error responses",
+      "objective": "Fix the three user-reported defects with regression tests and evidence; live deployment remains unverified until device access is available",
+      "scope": [
+        "scripts/ai-os/raios_mcp",
+        "scripts/runtime/Start-RAIOS-Native-MCP-System.ps1",
+        "tests/mcp",
+        ".ai-os/reports/mcp/RAIOS-NATIVE-MCP-RELIABILITY-20261005"
+      ],
+      "dependencies": [],
+      "allowed_agents": [
+        "codex"
+      ],
+      "validation": "MCP pytest suite; native PowerShell readiness behavior; MCP regression and security checks",
+      "status": "BLOCKED",
+      "claimed_by": "codex",
+      "source_status": "VERIFIED",
+      "deployment_status": "NOT_PERFORMED",
+      "blocked_reason": "Desktop Commander monthly quota prevents native device execution; source branch must be merged and existing MCP/native tunnel services reloaded and checked on the canonical host",
+      "evidence": ".ai-os/reports/mcp/RAIOS-NATIVE-MCP-RELIABILITY-20261005/VALIDATION.json",
+      "review_branch": "fix/raios-native-mcp-reliability-20261005",
+      "next_action": "Merge reviewed branch, reload existing canonical Universal MCP and native tunnel owner, then verify authenticated get_head/read_board and native readiness"
     }
   ]
 }

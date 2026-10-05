@@ -130,10 +130,49 @@ def jsonrpc_result(req_id, result=None, error=None) -> dict:
     return {"jsonrpc": "2.0", "id": req_id, "result": result}
 
 
-def handle_rpc(gw: Gateway, actor_token: str | None, message: dict, loopback: bool = False) -> dict | None:
+def _log_rpc_failure(err: Exception) -> str:
+    """Correlate failures without logging tokens, arguments, file contents or stderr."""
+    error_id = uuid.uuid4().hex
+    cause = err.__cause__ or err
+    try:
+        sys.stderr.write(f"mcp-rpc: error_id={error_id} exception={type(cause).__name__}\n")
+    except (OSError, ValueError):
+        # A diagnostic sink failure must not break the protocol error response.
+        pass
+    return error_id
+
+
+def _tool_error(req_id, code: str, message: str, error_id: str | None = None) -> dict:
+    payload = {"ok": False, "error": code, "message": message, "gl005_proven": False, "law": LAW}
+    if error_id:
+        payload["error_id"] = error_id
+    return jsonrpc_result(
+        req_id,
+        {"content": [{"type": "text", "text": json.dumps(payload, ensure_ascii=False)}], "isError": True},
+    )
+
+
+def handle_rpc(gw: Gateway, actor_token: str | None, message: object, loopback: bool = False) -> dict | None:
+    """Shared HTTP/stdio exception boundary; ordinary failures never close the channel."""
+    if not isinstance(message, dict):
+        return jsonrpc_result(None, error={"code": -32600, "message": "invalid request"})
+    req_id = message.get("id")
+    if req_id is not None and (isinstance(req_id, bool) or not isinstance(req_id, (str, int, float))):
+        return jsonrpc_result(None, error={"code": -32600, "message": "invalid request id"})
+    try:
+        return _handle_rpc(gw, actor_token, message, loopback)
+    except Exception as err:
+        error_id = _log_rpc_failure(err)
+        return jsonrpc_result(req_id, error={
+            "code": -32603, "message": "Internal server error",
+            "data": {"error_id": error_id, "gl005_proven": False},
+        })
+
+
+def _handle_rpc(gw: Gateway, actor_token: str | None, message: dict, loopback: bool) -> dict | None:
     method = message.get("method")
     req_id = message.get("id")
-    if method is None:
+    if not isinstance(method, str) or not method:
         return jsonrpc_result(req_id, error={"code": -32600, "message": "invalid request"})
     if str(method).startswith("notifications/"):
         return None
@@ -159,8 +198,13 @@ def handle_rpc(gw: Gateway, actor_token: str | None, message: dict, loopback: bo
     if method == "tools/list":
         return jsonrpc_result(req_id, {"tools": gw.tool_schemas()})
     if method == "tools/call":
-        params = message.get("params") or {}
+        params = message.get("params", {})
+        if not isinstance(params, dict):
+            return jsonrpc_result(req_id, error={"code": -32602, "message": "tool params must be an object"})
         name = params.get("name")
+        arguments = params.get("arguments", {})
+        if not isinstance(name, str) or not name or not isinstance(arguments, dict):
+            return jsonrpc_result(req_id, error={"code": -32602, "message": "tool name and object arguments required"})
         try:
             actor = gw.authenticate(actor_token)
         except GatewayError as err:
@@ -169,16 +213,19 @@ def handle_rpc(gw: Gateway, actor_token: str | None, message: dict, loopback: bo
             else:
                 return jsonrpc_result(req_id, error={"code": -32001, "message": err.code + ": " + err.message})
         try:
-            result = gw.call(actor, name, params.get("arguments") or {})
+            result = gw.call(actor, name, arguments)
             return jsonrpc_result(
                 req_id,
                 {"content": [{"type": "text", "text": json.dumps(result, ensure_ascii=False)}], "isError": False},
             )
         except GatewayError as err:
-            payload = {"ok": False, "error": err.code, "message": err.message, "gl005_proven": False, "law": LAW}
-            return jsonrpc_result(
-                req_id,
-                {"content": [{"type": "text", "text": json.dumps(payload, ensure_ascii=False)}], "isError": True},
+            error_id = _log_rpc_failure(err) if err.__cause__ else None
+            return _tool_error(req_id, err.code, err.message, error_id)
+        except Exception as err:
+            return _tool_error(
+                req_id, "INTERNAL_ERROR",
+                "Tool execution failed. The operation may have completed; reconcile mutation outcomes before retrying.",
+                _log_rpc_failure(err),
             )
     return jsonrpc_result(req_id, error={"code": -32601, "message": f"method not found: {method}"})
 
@@ -436,7 +483,7 @@ class Handler(BaseHTTPRequestHandler):
         raw = self.rfile.read(length) if length else b"{}"
         try:
             message = json.loads(raw.decode("utf-8") or "{}")
-        except json.JSONDecodeError:
+        except (json.JSONDecodeError, UnicodeDecodeError):
             self._send_json(400, {"ok": False, "error": "INVALID_JSON"}, session=session)
             return
         reply = handle_rpc(self.gateway, self._token(), message, loopback=self._loopback())
