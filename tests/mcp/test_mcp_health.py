@@ -16,11 +16,11 @@ def test_census_port_is_8788_one_gateway():
     assert CENSUS_PORT == 8788
 
 
-def test_canonical_head_prefers_env(monkeypatch, tmp_path):
+def test_canonical_head_never_uses_stale_env(monkeypatch, tmp_path):
     monkeypatch.setenv("RAIOS_CANONICAL_HEAD", "abc123def456")
     sha, source = canonical_head(tmp_path)
-    assert sha == "abc123def456"
-    assert source == "env"
+    assert sha == "unknown"
+    assert source == "unknown"
 
 
 def test_canonical_head_reads_git_file_not_subprocess(monkeypatch, tmp_path):

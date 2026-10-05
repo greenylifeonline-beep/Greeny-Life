@@ -4,6 +4,7 @@ from __future__ import annotations
 import argparse
 import json
 import os
+import re
 import ssl
 import sys
 import time
@@ -27,6 +28,7 @@ SESSION_TTL_SECONDS = int(os.getenv("RAIOS_MCP_SESSION_TTL_SECONDS") or "3600")
 MAX_REQUEST_BYTES = int(os.getenv("RAIOS_MCP_MAX_REQUEST_BYTES") or str(1024 * 1024))
 MAX_SESSIONS = max(1, int(os.getenv("RAIOS_MCP_MAX_SESSIONS") or "4096"))
 MAX_CONCURRENT_REQUESTS = max(1, int(os.getenv("RAIOS_MCP_MAX_CONCURRENT_REQUESTS") or "64"))
+REQUEST_IO_TIMEOUT_SECONDS = max(.1, float(os.getenv("RAIOS_MCP_REQUEST_IO_TIMEOUT_SECONDS") or "5"))
 SESSIONS: dict[str, float] = {}
 SESSIONS_LOCK = threading.RLock()
 REQUEST_SLOTS = threading.BoundedSemaphore(MAX_CONCURRENT_REQUESTS)
@@ -81,38 +83,45 @@ def issue_session(existing: str | None) -> str:
 
 
 def canonical_head(root: Path | None = None) -> tuple[str, str]:
-    """Request-path head. Never subprocess git — that hangs this dirty tree."""
-    env = (os.getenv("RAIOS_CANONICAL_HEAD") or "").strip()
-    if env:
-        return env, "env"
-    git_dir = (root or ROOT) / ".git"
+    """Read real Git metadata, including worktrees, without Git or stale env."""
+    git_dir = (root or ROOT) / '.git'
     try:
-        raw = (git_dir / "HEAD").read_text(encoding="utf-8").strip()
-    except OSError:
-        return "unknown", "unknown"
-    if raw.startswith("ref:"):
-        ref = raw.split(":", 1)[1].strip().replace("\\", "/")
-        if ".." in ref.split("/"):
-            return "unknown", "unknown"
-        ref_path = git_dir.joinpath(*Path(ref).parts)
-        try:
-            sha = ref_path.read_text(encoding="utf-8").strip()
-        except OSError:
-            packed = git_dir / "packed-refs"
-            try:
-                for line in packed.read_text(encoding="utf-8").splitlines():
-                    if line.startswith("#") or " " not in line:
+        if git_dir.is_file():
+            marker = git_dir.read_text(encoding='utf-8').strip()
+            if not marker.startswith('gitdir:'):
+                return 'unknown', 'unknown'
+            target = Path(marker.split(':', 1)[1].strip())
+            git_dir = target if target.is_absolute() else git_dir.parent / target
+        common_dir = git_dir
+        if (git_dir / 'commondir').is_file():
+            target = Path((git_dir / 'commondir').read_text(encoding='utf-8').strip())
+            common_dir = target if target.is_absolute() else git_dir / target
+        raw = (git_dir / 'HEAD').read_text(encoding='utf-8').strip()
+        if raw.startswith('ref:'):
+            ref = raw.split(':', 1)[1].strip()
+            if not ref.startswith('refs/') or any(p in {'', '.', '..'} for p in ref.split('/')) or '\\' in ref:
+                return 'unknown', 'unknown'
+            sha = None
+            for directory in (git_dir, common_dir):
+                path = directory.joinpath(*ref.split('/'))
+                if path.is_file():
+                    sha = path.read_text(encoding='utf-8').strip()
+                    break
+            if sha is None:
+                for line in (common_dir / 'packed-refs').read_text(encoding='utf-8').splitlines():
+                    if line.startswith(('#', '^')):
                         continue
-                    sha, name = line.split(" ", 1)
-                    if name.strip() == ref:
-                        return sha.strip()[:40], "git-file"
-            except OSError:
-                return "unknown", "unknown"
-            return "unknown", "unknown"
-        return sha[:40], "git-file"
-    if len(raw) >= 40:
-        return raw[:40], "git-file"
-    return "unknown", "unknown"
+                    fields = line.split()
+                    if len(fields) == 2 and fields[1] == ref:
+                        sha = fields[0]
+                        break
+        else:
+            sha = raw
+        if isinstance(sha, str) and re.fullmatch(r'[0-9a-fA-F]{40}', sha):
+            return sha.lower(), 'git-file'
+    except (OSError, UnicodeError, ValueError):
+        pass
+    return 'unknown', 'unknown'
 
 
 def default_gateway() -> Gateway:
@@ -277,6 +286,10 @@ def sse_wrap(payload: dict) -> bytes:
 class Handler(BaseHTTPRequestHandler):
     gateway: Gateway
 
+    def setup(self) -> None:
+        super().setup()
+        self.connection.settimeout(REQUEST_IO_TIMEOUT_SECONDS)
+
     def log_message(self, fmt: str, *args) -> None:
         sys.stderr.write("mcp-http: " + (fmt % args) + "\n")
 
@@ -357,7 +370,7 @@ class Handler(BaseHTTPRequestHandler):
         path = urlparse(self.path).path
         if path in {"/health", "/", "/ready"}:
             head, head_source = canonical_head(ROOT)
-            tools = list(REGISTERED_TOOLS)
+            tools = [tool["name"] for tool in self.gateway.tool_schemas()]
             self._send_json(
                 200,
                 {
@@ -366,7 +379,11 @@ class Handler(BaseHTTPRequestHandler):
                     "transport": "streamable-http",
                     "websocket": False,
                     "sqlite": False,
-                    "ninth_tool": True,
+                    "ninth_tool": "execute_scoped_task" in tools,
+                    "transport_ready": True,
+                    "execution_mode": "READ_ONLY",
+                    "execution_ready": False,
+                    "execution_ready_reason": "provider runtime must be probed through an authenticated scoped call",
                     "second_gateway": False,
                     "law": LAW,
                     "gl005_proven": False,
@@ -470,17 +487,33 @@ class Handler(BaseHTTPRequestHandler):
             self._send_json(400, {"ok": False, "error": "INVALID_CONTENT_LENGTH"}, session=session)
             return
         if length < 0 or length > MAX_REQUEST_BYTES:
-            # Do not leave unread request bytes on Windows: that can reset the TCP
-            # connection before the client receives the structured 413 response.
-            remaining = max(length, 0)
-            while remaining:
-                chunk = self.rfile.read(min(remaining, 64 * 1024))
-                if not chunk:
-                    break
-                remaining -= len(chunk)
+            # Never drain an untrusted declared length. Close after the response.
+            self.close_connection = True
             self._send_json(413, {"ok": False, "error": "REQUEST_TOO_LARGE", "max_bytes": MAX_REQUEST_BYTES}, session=session)
             return
-        raw = self.rfile.read(length) if length else b"{}"
+        chunks = []
+        remaining = length
+        deadline = time.monotonic() + REQUEST_IO_TIMEOUT_SECONDS
+        try:
+            while remaining:
+                budget = deadline - time.monotonic()
+                if budget <= 0:
+                    raise TimeoutError()
+                self.connection.settimeout(budget)
+                chunk = self.rfile.read1(min(remaining, 64 * 1024))
+                if not chunk:
+                    self.close_connection = True
+                    self._send_json(400, {"ok": False, "error": "INCOMPLETE_BODY"}, session=session)
+                    return
+                chunks.append(chunk)
+                remaining -= len(chunk)
+        except TimeoutError:
+            self.close_connection = True
+            self._send_json(408, {"ok": False, "error": "REQUEST_TIMEOUT"}, session=session)
+            return
+        finally:
+            self.connection.settimeout(REQUEST_IO_TIMEOUT_SECONDS)
+        raw = b''.join(chunks) if length else b'{}'
         try:
             message = json.loads(raw.decode("utf-8") or "{}")
         except (json.JSONDecodeError, UnicodeDecodeError):

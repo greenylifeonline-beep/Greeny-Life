@@ -1,0 +1,65 @@
+{
+  "schema": "raios.mcp-execution-source-validation.v1",
+  "task_id": "RAIOS-EXECUTION-CONFIG-20261005",
+  "recorded_at_utc": "2026-10-05T02:02:21.860941+00:00",
+  "base_local_commit": "44b716db48aeb4ca0f02cd6eab545ada88dab886",
+  "base_github_commit": "c4ab8865f836b43cf485166324e2e9872a007c44",
+  "source_status": "VERIFIED",
+  "native_deployment": "NOT_PERFORMED",
+  "native_mutation_execution_proven": false,
+  "live_channel_upgraded": false,
+  "actual_owned_node_provider_tested": false,
+  "gl005_proven": false,
+  "checks": {
+    "mcp": {
+      "passed": 79,
+      "failed": 0,
+      "skipped": 0,
+      "evidence": "mcp-tests.log"
+    },
+    "default_project_suite": {
+      "passed": 83,
+      "failed": 0,
+      "scope": "tests/neuro_lingua via pytest.ini",
+      "evidence": "project-tests.log"
+    },
+    "pip_check": "PASSED",
+    "python_compileall": "PASSED",
+    "git_diff_check": "PASSED",
+    "fastapi_dependency_compatibility": "FastAPI 0.142.2 installed alongside SDK 1.30.0; pip check clean"
+  },
+  "review": {
+    "independent": true,
+    "important_findings": 4,
+    "fixed_with_red_green": 4,
+    "details": [
+      "frame limits before SDK parse",
+      "no bad-frame secret logging",
+      "schema validation in cancellable child process",
+      "all discovered tools count towards limits"
+    ]
+  },
+  "limitations": [
+    "Windows PowerShell 5.1 and Windows Job Object cleanup not exercised",
+    "actual owned Desktop Commander Node entrypoint not tested; real stdio MCP Python fixtures tested",
+    "host committed source remains unavailable and differs from GitHub",
+    "mutations remain disabled until scoped lease/path/idempotency proven",
+    "SDK process lifecycle private helpers depend on pinned 1.30.0",
+    "SDK local function execution proven in fixture; local model/Ollama inference not installed or tested",
+    "total HTTP/SSE saturation and all native tools not claimed tested",
+    "lockfile verified on Python 3.12 Linux; Windows conditional dependencies require native validation"
+  ],
+  "sha256": {
+    "scripts/ai-os/raios_mcp/desktop_commander_provider.py": "f18a90f970e05effd04875cdf08854b31191c26599ff0a3302f5050839a5f77c",
+    "scripts/ai-os/raios_mcp/bounded_stdio.py": "0c340f8ada80b7fb4f6f2bcd682e948a524c43f6f476dd60d8da85dd94d82544",
+    "scripts/ai-os/raios_mcp/schema_validator.py": "0f2059859596383abcc9652b392d0f4a6aa1c8be92f8089122eeb358cb614950",
+    "scripts/ai-os/raios_mcp/Readiness.ps1": "6d5687de7861bbfa0f57cb4184531a2636e45d086fe89c459a1dc2733a2a8097",
+    "scripts/ai-os/raios_mcp/gateway.py": "6d20203fb8b0f34cf43224bcf158a9daafced771623f1945de295777f7268fa8",
+    "scripts/ai-os/raios_mcp/server.py": "9a8ff907124bde3ac9d4780d40834ceb488a4bebd2ddefd82cca0726d8ade994",
+    "scripts/ai-os/raios_mcp/requirements.txt": "ca258703582b326904fb61a540a8f3e24581ca2bd8064a07c7fab955c08ce0af",
+    "scripts/ai-os/raios_mcp/requirements.lock.txt": "57b434deb7f63660a569ae0b9c929e9e6faae6d20439533f71e326b8d3f71b36",
+    "scripts/ai-os/raios_mcp_local_ensure.ps1": "30f71ef945ae822f167be21552b5b15dac7f92d510f6bb553779577a9cb7cc69",
+    "scripts/runtime/Start-RAIOS-Native-MCP-System.ps1": "87307e2995cc3472dc062fbdf2b45f201a466dd343003dd85e58b5c87fb6e6fa",
+    ".ai-os/mcp/POLICY.json": "aca090ec8df8cc3a979d57f37f99cd45982aff11eef7cc75acaf82d71bd3b3a5"
+  }
+}

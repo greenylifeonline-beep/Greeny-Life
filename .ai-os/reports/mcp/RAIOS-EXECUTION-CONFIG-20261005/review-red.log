@@ -1,0 +1,91 @@
+FFFF                                                                     [100%]
+=================================== FAILURES ===================================
+_______________ test_invalid_frame_never_logs_provider_contents ________________
+
+provider = (<raios_mcp.desktop_commander_provider.DesktopCommanderProvider object at 0x7f7b2a036fc0>, PosixPath('/tmp/pytest-of-agent/pytest-22/test_invalid_frame_never_logs_0'))
+caplog = <_pytest.logging.LogCaptureFixture object at 0x7f7b2a06d3d0>
+
+    def test_invalid_frame_never_logs_provider_contents(provider,caplog):
+        p,root=provider;(root/'malformed').touch()
+        with caplog.at_level(logging.ERROR), pytest.raises(DesktopCommanderProviderError):p.call('read_file',{'path':'ok'})
+>       assert 'SECRET_INVALID_FRAME' not in caplog.text
+E       AssertionError: assert 'SECRET_INVALID_FRAME' not in 'ERROR    mc.../v/missing\n'
+E         
+E         'SECRET_INVALID_FRAME' is contained here:
+E           id': ... 'SECRET_INVALID_FRAME'}, input_type=dict]
+E         ?           ++++++++++++++++++++
+E               For further information visit https://errors.pydantic.dev/2.13/v/missing
+E           JSONRPCNotification.method
+E             Field required [type=missing, input_value={'jsonrpc': '2.0', 'id': ... 'SECRET_INVALID_FRAME'}, input_type=dict]...
+E         
+E         ...Full output truncated (7 lines hidden), use '-vv' to show
+
+tests/mcp/test_provider_execution.py:118: AssertionError
+------------------------------ Captured log call -------------------------------
+ERROR    mcp.client.stdio:__init__.py:157 Failed to parse JSONRPC message from server
+Traceback (most recent call last):
+  File "/workspace/raios-sdk-env/lib/python3.12/site-packages/mcp/client/stdio/__init__.py", line 155, in stdout_reader
+    message = types.JSONRPCMessage.model_validate_json(line)
+              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/workspace/raios-sdk-env/lib/python3.12/site-packages/pydantic/main.py", line 782, in model_validate_json
+    return cls.__pydantic_validator__.validate_json(
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+pydantic_core._pydantic_core.ValidationError: 4 validation errors for JSONRPCMessage
+JSONRPCRequest.method
+  Field required [type=missing, input_value={'jsonrpc': '2.0', 'id': ... 'SECRET_INVALID_FRAME'}, input_type=dict]
+    For further information visit https://errors.pydantic.dev/2.13/v/missing
+JSONRPCNotification.method
+  Field required [type=missing, input_value={'jsonrpc': '2.0', 'id': ... 'SECRET_INVALID_FRAME'}, input_type=dict]
+    For further information visit https://errors.pydantic.dev/2.13/v/missing
+JSONRPCResponse.result
+  Input should be an object [type=dict_type, input_value='SECRET_INVALID_FRAME', input_type=str]
+    For further information visit https://errors.pydantic.dev/2.13/v/dict_type
+JSONRPCError.error
+  Field required [type=missing, input_value={'jsonrpc': '2.0', 'id': ... 'SECRET_INVALID_FRAME'}, input_type=dict]
+    For further information visit https://errors.pydantic.dev/2.13/v/missing
+_____________ test_unterminated_frame_is_bounded_before_sdk_parse ______________
+
+provider = (<raios_mcp.desktop_commander_provider.DesktopCommanderProvider object at 0x7f7b28da9160>, PosixPath('/tmp/pytest-of-agent/pytest-22/test_unterminated_frame_is_bou0'))
+
+    def test_unterminated_frame_is_bounded_before_sdk_parse(provider):
+        p,root=provider;p.max_frame_bytes=65536;(root/'large_frame').touch()
+        with pytest.raises(DesktopCommanderProviderError) as e:p.call('read_file',{'path':'ok'})
+>       assert e.value.code=='PROVIDER_FRAME_TOO_LARGE'
+E       AssertionError: assert 'MCP_PROVIDER_TIMEOUT' == 'PROVIDER_FRAME_TOO_LARGE'
+E         
+E         - PROVIDER_FRAME_TOO_LARGE
+E         + MCP_PROVIDER_TIMEOUT
+
+tests/mcp/test_provider_execution.py:123: AssertionError
+_____________ test_disallowed_discovery_tools_count_towards_limit ______________
+
+provider = (<raios_mcp.desktop_commander_provider.DesktopCommanderProvider object at 0x7f7b28da88f0>, PosixPath('/tmp/pytest-of-agent/pytest-22/test_disallowed_discovery_tool0'))
+
+    def test_disallowed_discovery_tools_count_towards_limit(provider):
+        p,root=provider;p.max_tools=1;(root/'many_tools').touch()
+>       with pytest.raises(DesktopCommanderProviderError) as e:p.call('__list_tools__')
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E       Failed: DID NOT RAISE DesktopCommanderProviderError
+
+tests/mcp/test_provider_execution.py:127: Failed
+____________ test_expensive_schema_validation_cannot_block_gateway _____________
+
+provider = (<raios_mcp.desktop_commander_provider.DesktopCommanderProvider object at 0x7f7b28da93d0>, PosixPath('/tmp/pytest-of-agent/pytest-22/test_expensive_schema_validati0'))
+
+    def test_expensive_schema_validation_cannot_block_gateway(provider):
+        p,root=provider;p.timeout_seconds=.4;(root/'unsafe_schema').touch()
+        start=time.monotonic()
+        with pytest.raises(DesktopCommanderProviderError) as e:p.call('read_file',{'path':'a'*26+'!'})
+        assert e.value.code=='MCP_PROVIDER_TIMEOUT'
+>       assert time.monotonic()-start<1.5
+E       assert (17077.472822298 - 17075.298282435) < 1.5
+E        +  where 17077.472822298 = <built-in function monotonic>()
+E        +    where <built-in function monotonic> = time.monotonic
+
+tests/mcp/test_provider_execution.py:135: AssertionError
+=========================== short test summary info ============================
+FAILED tests/mcp/test_provider_execution.py::test_invalid_frame_never_logs_provider_contents
+FAILED tests/mcp/test_provider_execution.py::test_unterminated_frame_is_bounded_before_sdk_parse
+FAILED tests/mcp/test_provider_execution.py::test_disallowed_discovery_tools_count_towards_limit
+FAILED tests/mcp/test_provider_execution.py::test_expensive_schema_validation_cannot_block_gateway
+4 failed, 13 deselected in 4.21s
