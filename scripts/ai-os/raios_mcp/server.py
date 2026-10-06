@@ -81,37 +81,35 @@ def issue_session(existing: str | None) -> str:
 
 
 def canonical_head(root: Path | None = None) -> tuple[str, str]:
-    """Request-path head. Never subprocess git — that hangs this dirty tree."""
-    env = (os.getenv("RAIOS_CANONICAL_HEAD") or "").strip()
-    if env:
-        return env, "env"
+    """Live repository projection; launch-time env is not current Git truth."""
+    import re
     git_dir = (root or ROOT) / ".git"
+    def verified(value: str) -> tuple[str, str]:
+        value = value.strip()
+        if re.fullmatch(r"[0-9a-fA-F]{40}", value):
+            return value.lower(), "git-file"
+        return "unknown", "unknown"
     try:
         raw = (git_dir / "HEAD").read_text(encoding="utf-8").strip()
-    except OSError:
-        return "unknown", "unknown"
-    if raw.startswith("ref:"):
-        ref = raw.split(":", 1)[1].strip().replace("\\", "/")
-        if ".." in ref.split("/"):
+        if not raw.startswith("ref:"):
+            return verified(raw)
+        ref = raw.split(":", 1)[1].strip()
+        if not ref.startswith("refs/") or any(p in {"", ".", ".."} for p in ref.split("/")):
             return "unknown", "unknown"
-        ref_path = git_dir.joinpath(*Path(ref).parts)
+        if not re.fullmatch(r"refs/[A-Za-z0-9_./-]+", ref):
+            return "unknown", "unknown"
+        ref_path = git_dir.joinpath(*ref.split("/"))
         try:
-            sha = ref_path.read_text(encoding="utf-8").strip()
-        except OSError:
-            packed = git_dir / "packed-refs"
-            try:
-                for line in packed.read_text(encoding="utf-8").splitlines():
-                    if line.startswith("#") or " " not in line:
-                        continue
-                    sha, name = line.split(" ", 1)
-                    if name.strip() == ref:
-                        return sha.strip()[:40], "git-file"
-            except OSError:
-                return "unknown", "unknown"
-            return "unknown", "unknown"
-        return sha[:40], "git-file"
-    if len(raw) >= 40:
-        return raw[:40], "git-file"
+            return verified(ref_path.read_text(encoding="utf-8"))
+        except FileNotFoundError:
+            for line in (git_dir / "packed-refs").read_text(encoding="utf-8").splitlines():
+                if line.startswith(("#", "^")) or " " not in line:
+                    continue
+                sha, name = line.split(" ", 1)
+                if name.strip() == ref:
+                    return verified(sha)
+    except (OSError, UnicodeError):
+        pass
     return "unknown", "unknown"
 
 
@@ -148,7 +146,9 @@ def handle_rpc(gw: Gateway, actor_token: str | None, message: dict, loopback: bo
                 "serverInfo": {"name": "raios-universal-mcp", "version": "1.0.0"},
                 "instructions": (
                     f"{LAW}. Streamable HTTP session channel. POST /mcp JSON-RPC; GET /mcp SSE; "
-                    "loopback reads without token; writes need an actor grant. No WebSocket. "
+                    "loopback reads without token; writes need an actor grant. "
+                    "Delegated execution is admitted only on send_packet for the existing capability allowlist, "
+                    "with a short grant, nonce, and lease fence. No shell. No WebSocket. "
                     "No SQLite. No raw shell. No PASS writes. Authority ≠ bypass invariants."
                 ),
             },
@@ -304,6 +304,18 @@ class Handler(BaseHTTPRequestHandler):
 
     def do_GET(self) -> None:  # noqa: N802
         path = urlparse(self.path).path
+        if path in {"/.well-known/oauth-protected-resource", "/.well-known/oauth-protected-resource/mcp"}:
+            host = (self.headers.get("Host") or f"127.0.0.1:{CENSUS_PORT}").strip()
+            scheme = "https" if isinstance(self.connection, ssl.SSLSocket) else "http"
+            self._send_json(
+                200,
+                {
+                    "resource": f"{scheme}://{host}/mcp",
+                    "resource_name": "RAIOS Universal MCP",
+                    "scopes_supported": [],
+                },
+            )
+            return
         if path in {"/health", "/", "/ready"}:
             head, head_source = canonical_head(ROOT)
             tools = list(V1_TOOLS)
@@ -316,6 +328,8 @@ class Handler(BaseHTTPRequestHandler):
                     "websocket": False,
                     "sqlite": False,
                     "ninth_tool": False,
+                    "shell_via_mcp": False,
+                    "scoped_execution": "SEND_PACKET_ALLOWLIST",
                     "second_gateway": False,
                     "law": LAW,
                     "gl005_proven": False,

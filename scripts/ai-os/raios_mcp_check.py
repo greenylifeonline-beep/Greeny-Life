@@ -206,7 +206,12 @@ def main() -> int:
     check(health["gl005_proven"] is False, "health proven stays false")
     check(health["sqlite"] is False, "health sqlite false")
     check(health["websocket"] is False, "health websocket false")
+    check(health.get("ninth_tool") is False, "no ninth MCP tool")
+    check(health.get("second_gateway") is False, "no second gateway")
     check(health["transport"] == "streamable-http", "streamable HTTP advertised")
+    check(len(health["tools"]) == 8, "eight v1 tools")
+    check("send_packet" in health["tools"] and "ack_packet" in health["tools"], "packet tools listed")
+    check(health.get("head_source") in {"env", "git-file", "unknown"}, "health head is non-blocking")
 
     init = json.dumps({"jsonrpc": "2.0", "id": 1, "method": "initialize", "params": {}}).encode()
     sse_req = Request(

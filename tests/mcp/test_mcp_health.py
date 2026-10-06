@@ -15,11 +15,29 @@ def test_census_port_is_8788_one_gateway():
     assert CENSUS_PORT == 8788
 
 
-def test_canonical_head_prefers_env(monkeypatch, tmp_path):
-    monkeypatch.setenv("RAIOS_CANONICAL_HEAD", "abc123def456")
-    sha, source = canonical_head(tmp_path)
-    assert sha == "abc123def456"
-    assert source == "env"
+def test_canonical_head_does_not_trust_env_without_git(monkeypatch, tmp_path):
+    monkeypatch.setenv("RAIOS_CANONICAL_HEAD", "a" * 40)
+    assert canonical_head(tmp_path) == ("unknown", "unknown")
+
+
+def test_canonical_head_tracks_git_when_env_is_stale(monkeypatch, tmp_path):
+    monkeypatch.setenv("RAIOS_CANONICAL_HEAD", "a" * 40)
+    git = tmp_path / ".git"
+    ref = git / "refs" / "heads" / "main"
+    ref.parent.mkdir(parents=True)
+    (git / "HEAD").write_text("ref: refs/heads/main\n", encoding="utf-8")
+    ref.write_text("b" * 40, encoding="utf-8")
+    assert canonical_head(tmp_path) == ("b" * 40, "git-file")
+    ref.write_text("c" * 40, encoding="utf-8")
+    assert canonical_head(tmp_path) == ("c" * 40, "git-file")
+
+
+def test_canonical_head_rejects_malformed_git_with_env(monkeypatch, tmp_path):
+    monkeypatch.setenv("RAIOS_CANONICAL_HEAD", "a" * 40)
+    git = tmp_path / ".git"
+    git.mkdir()
+    (git / "HEAD").write_text("z" * 40, encoding="utf-8")
+    assert canonical_head(tmp_path) == ("unknown", "unknown")
 
 
 def test_canonical_head_reads_git_file_not_subprocess(monkeypatch, tmp_path):
@@ -42,7 +60,7 @@ def test_canonical_head_unknown_without_git(monkeypatch, tmp_path):
     assert source == "unknown"
 
 
-def test_health_http_is_fast_and_lists_eight_tools(tmp_path):
+def test_health_http_lists_eight_tools(tmp_path):
     Handler.gateway = Gateway.from_root(tmp_path, grants=[])
     httpd = ThreadingHTTPServer(("127.0.0.1", 0), Handler)
     httpd.daemon_threads = True
@@ -54,7 +72,10 @@ def test_health_http_is_fast_and_lists_eight_tools(tmp_path):
         assert health["ok"] is True
         assert health["tool_count"] == 8
         assert health["tools"] == list(V1_TOOLS)
+        assert "execute_scoped_task" not in health["tools"]
+        assert "compiled_service_marker" not in health
         assert health["ninth_tool"] is False
+        assert health["shell_via_mcp"] is False
         assert health["second_gateway"] is False
         assert health["head_source"] in {"env", "git-file", "unknown"}
         init = json.dumps({"jsonrpc": "2.0", "id": 1, "method": "initialize", "params": {}}).encode()

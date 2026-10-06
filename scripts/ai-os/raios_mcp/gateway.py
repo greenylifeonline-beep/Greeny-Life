@@ -6,6 +6,7 @@ import json
 import re
 import shutil
 import subprocess
+import sys
 import uuid
 from dataclasses import dataclass, field
 from datetime import datetime, timezone
@@ -13,7 +14,7 @@ from pathlib import Path
 from typing import Any
 
 REPO = "greenylifeonline-beep/Greeny-Life"
-BRANCH = "v9-neurolingua-semantic-kernel"
+BRANCH = "ai-evolution-202608051809"
 LAW = "MCP_GATEWAY_NE_TRUTH_AUTHORITY"
 V1_TOOLS = (
     "get_head",
@@ -26,6 +27,16 @@ V1_TOOLS = (
     "ack_packet",
 )
 WRITE_TOOLS = {"post_opinion", "send_packet", "ack_packet"}
+PASSIVE_EXECUTION = {"NONE", "NO", "FALSE"}
+DELEGATED_EXECUTION = {"DELEGATED", "STATUS", "CANCEL"}
+GRANT_MAX_SECONDS = 900
+LOOPBACK_READ_TOOLS = (
+    "get_head",
+    "read_board",
+    "read_inbox",
+    "read_receipt",
+    "get_diff",
+)
 WRITE_IDENTITY = (
     "actor_id",
     "actor_role",
@@ -167,6 +178,19 @@ class Gateway:
     @classmethod
     def from_root(cls, root: Path, tokens: dict[str, str] | None = None, grants: list[dict] | None = None) -> "Gateway":
         policy = load_json(root / ".ai-os" / "mcp" / "POLICY.json", {})
+        seat_map = load_json(root / ".ai-os" / "mcp" / "SEAT-MAP.json", {})
+        if seat_map.get("knowledge_state") == "CANONICAL" and isinstance(seat_map.get("seats"), dict):
+            policy = dict(policy)
+            policy["actors"] = {
+                actor_id: {
+                    "actor_role": spec["actor_role"],
+                    "instance_role": spec["instance_role"],
+                    "tools": list(spec.get("tools") or []),
+                    "deny": list(spec.get("deny") or []),
+                    "notes": spec.get("notes") or spec.get("name_en"),
+                }
+                for actor_id, spec in seat_map["seats"].items()
+            }
         loaded: list[dict] = list(grants or [])
         if tokens:
             loaded.extend({"actor_id": k, "token": v} for k, v in tokens.items())
@@ -207,6 +231,18 @@ class Gateway:
                     raise GatewayError("EXPIRED", "token expired", 401)
                 return actor
         raise GatewayError("UNAUTHENTICATED", "unknown token", 401)
+
+    def loopback_reader(self) -> Actor:
+        return Actor(
+            actor_id="LOOPBACK_READ",
+            actor_role="LOCAL_CLIENT",
+            instance_role="loopback",
+            tools=list(LOOPBACK_READ_TOOLS),
+            deny=["post_opinion", "send_packet", "ack_packet"],
+            token_sha256="",
+            scopes=list(LOOPBACK_READ_TOOLS),
+            expires_at=None,
+        )
 
     def tool_schemas(self) -> list[dict]:
         return [
@@ -261,8 +297,11 @@ class Gateway:
         if promo not in {"NONE", "NO", "FALSE"}:
             raise GatewayError("ESCALATION_DENIED", "promotion_intent is not allowed on the connector", 403)
         exec_intent = str(arguments.get("execution_intent") or "NONE").upper()
-        if exec_intent not in {"NONE", "NO", "FALSE"}:
-            raise GatewayError("ESCALATION_DENIED", "V1 connector does not execute", 403)
+        if exec_intent in DELEGATED_EXECUTION:
+            if tool != "send_packet":
+                raise GatewayError("ESCALATION_DENIED", "delegated execution is admitted only on send_packet", 403)
+        elif exec_intent not in PASSIVE_EXECUTION:
+            raise GatewayError("ESCALATION_DENIED", "V1 connector does not execute a shell", 403)
         if tool not in WRITE_TOOLS:
             return
         missing = [key for key in WRITE_IDENTITY if not str(arguments.get(key) or "").strip()]
@@ -345,12 +384,30 @@ class Gateway:
         )
 
     def tool_read_board(self, actor: Actor, arguments: dict) -> dict:
-        now = self.root / ".ai-os" / "board" / "NOW.md"
+        now_path = self.root / ".ai-os" / "board" / "NOW.md"
         opinions = load_jsonl(self.root / ".ai-os" / "board" / "opinions.jsonl")
+        src = Path(__file__).resolve().parents[3] / "src"
+        if str(src) not in sys.path:
+            sys.path.insert(0, str(src))
+        try:
+            tasks_doc = json.loads((self.root / ".ai-os" / "state" / "TASKS.json").read_text(encoding="utf-8-sig"))
+        except (OSError, json.JSONDecodeError):
+            tasks_doc = {"tasks": []}
+        from raios.command_center.board_now import now_tasks, render_md
+        now_rows = now_tasks(list(tasks_doc.get("tasks") or []))
+        canonical = render_md(tasks_doc, now_rows)
+        legacy = now_path.read_text(encoding="utf-8") if now_path.exists() else ""
+        text = canonical
+        if legacy.strip():
+            text = canonical + "\n\n## legacy NOW.md (not authority)\n\n" + legacy
         return self._receipt(
             {
                 "tool": "read_board",
-                "text": now.read_text(encoding="utf-8") if now.exists() else "",
+                "text": text,
+                "legacy_now_md": legacy[:8000],
+                "legacy_now_md_authoritative": False,
+                "tasks_now": now_rows,
+                "active_program_id": tasks_doc.get("active_program_id"),
                 "opinions": opinions[-20:],
             }
         )
@@ -434,7 +491,169 @@ class Gateway:
             }
         )
 
+    def _execution_scope(self, actor: Actor, capability: str) -> str:
+        return f"native:{actor.actor_id}:{capability}"
+
+    def _fabric(self):
+        src = str((self.root / "src").resolve())
+        if src not in sys.path:
+            sys.path.insert(0, src)
+        from raios.c1c5 import capabilities, receipts
+        from raios.command_fabric.lease import CommandLeaseAdapter
+
+        return capabilities, receipts, CommandLeaseAdapter
+
+    def _nonce_seen(self, digest: str) -> bool:
+        path = self.root / ".ai-os" / "mcp" / "execution-nonces.jsonl"
+        return any(row.get("nonce_sha256") == digest for row in load_jsonl(path))
+
+    def _remember_nonce(self, digest: str, actor: Actor, task_id: str) -> None:
+        append_jsonl(
+            self.root / ".ai-os" / "mcp" / "execution-nonces.jsonl",
+            {"ts": utc(), "actor_id": actor.actor_id, "task_id": task_id, "nonce_sha256": digest},
+        )
+
+    def _grant_deadline(self, arguments: dict) -> datetime:
+        grant_exp = str(arguments.get("grant_expires_at") or "").strip()
+        if not grant_exp:
+            raise GatewayError("MISSING_IDENTITY", "grant_expires_at is required", 400)
+        expires = parse_dt(grant_exp)
+        now = datetime.now(timezone.utc)
+        if expires <= now or (expires - now).total_seconds() > GRANT_MAX_SECONDS:
+            raise GatewayError("EXPIRED", "delegated grant must expire within 15 minutes", 401)
+        return expires
+
+    def _consume_nonce(self, actor: Actor, arguments: dict, task_id: str) -> None:
+        nonce = str(arguments.get("nonce") or "").strip()
+        if len(nonce) < 16:
+            raise GatewayError("MISSING_IDENTITY", "nonce is required", 400)
+        digest = sha256_text(nonce)
+        if self._nonce_seen(digest):
+            raise GatewayError("REPLAY", "nonce already used", 409)
+        self._remember_nonce(digest, actor, task_id)
+
+    def _delegated_execution(self, actor: Actor, arguments: dict, intent: str) -> dict:
+        capabilities, receipts, lease_cls = self._fabric()
+        capability = str(arguments.get("capability") or "").strip()
+        task_id = str(arguments.get("task_id") or "").strip()
+        idem = str(arguments.get("idempotency_key") or "").strip()
+        if any(token in capability.casefold() for token in ("shell", "bash", "cmd", "powershell")):
+            raise GatewayError("CAPABILITY_DENIED", "shell capabilities are not admitted", 403)
+        if intent == "DELEGATED" and capability not in capabilities.CONTRACTS:
+            raise GatewayError("CAPABILITY_DENIED", "capability is not on the existing allowlist", 403)
+        if intent != "CANCEL" and (not task_id or not idem):
+            raise GatewayError("MISSING_IDENTITY", "task_id and idempotency_key are required", 400)
+        receipt_dir = self.root / ".ai-os" / "receipts" / "command-fabric" / "native-execution"
+        if intent == "STATUS":
+            found = receipts.load(idem, directory=receipt_dir)
+            if not found:
+                raise GatewayError("NOT_FOUND", "execution receipt not found", 404)
+            if found.get("ACTOR_BOUND") != actor.actor_id:
+                raise GatewayError("CAPABILITY_DENIED", "receipt belongs to another actor", 403)
+            return {"operation": "STATUS", "receipt": found, "invoked": False, "shell": False}
+        if idem:
+            prior = receipts.load(idem, directory=receipt_dir)
+            if prior:
+                if prior.get("ACTOR_BOUND") != actor.actor_id:
+                    raise GatewayError("CAPABILITY_DENIED", "idempotency key belongs to another actor", 403)
+                return {"operation": intent, "receipt": prior, "invoked": False, "idempotent_replay": True, "shell": False}
+        scope = self._execution_scope(actor, capability or "cancel")
+        presented_scope = str(arguments.get("scope") or "").strip()
+        if presented_scope and presented_scope != scope:
+            raise GatewayError("IDENTITY_MISMATCH", "scope does not match actor and capability", 403)
+        leases = lease_cls(self.root / ".ai-os" / "state" / "command-fabric" / "leases")
+        lease_id = str(arguments.get("lease_id") or "").strip()
+        if intent == "CANCEL":
+            if not lease_id:
+                raise GatewayError("MISSING_IDENTITY", "lease_id is required to cancel", 400)
+            current = leases.validate(lease_id, owner="RAIOS_SYSTEM")
+            if not current.get("ok"):
+                raise GatewayError("ESCALATION_DENIED", str(current.get("code") or "LEASE_REJECTED"), 403)
+            holder = str((current.get("lease") or {}).get("lease_holder") or "")
+            if holder != actor.actor_id:
+                raise GatewayError("CAPABILITY_DENIED", "lease holder does not match token", 403)
+            released = leases.release(lease_id, owner="RAIOS_SYSTEM")
+            if not released.get("ok"):
+                raise GatewayError("ESCALATION_DENIED", str(released.get("code") or "LEASE_RELEASE_DENIED"), 403)
+            return {"operation": "CANCEL", "lease_id": lease_id, "released": True, "invoked": False, "shell": False}
+        expires = self._grant_deadline(arguments)
+        fence_raw = str(arguments.get("fence_token") or "").strip()
+        acquired = False
+        if lease_id or fence_raw:
+            if not lease_id or not fence_raw:
+                raise GatewayError("MISSING_IDENTITY", "lease_id and fence_token are both required", 400)
+            try:
+                fence_token = int(fence_raw)
+            except ValueError as exc:
+                raise GatewayError("ESCALATION_DENIED", "fence_token is not an integer", 403) from exc
+            fence = leases.validate_fence(lease_id, scope=scope, fence_token=fence_token)
+            if not fence.get("ok"):
+                raise GatewayError("ESCALATION_DENIED", str(fence.get("code") or "FENCE_REJECTED"), 403)
+            holder = str((fence.get("lease") or {}).get("lease_holder") or "")
+            if holder != actor.actor_id:
+                raise GatewayError("CAPABILITY_DENIED", "lease holder does not match token", 403)
+            self._consume_nonce(actor, arguments, task_id)
+        else:
+            self._consume_nonce(actor, arguments, task_id)
+            now = datetime.now(timezone.utc)
+            lease = leases.acquire(
+                owner="RAIOS_SYSTEM",
+                lease_holder=actor.actor_id,
+                scope=scope,
+                task_id=task_id,
+                correlation_id=str(arguments.get("correlation_id") or ""),
+                capability=capability,
+                resource_or_target="native",
+                idempotency_key=idem,
+                provenance_ref=f"NATIVE_DELEGATED::{actor.actor_id}",
+                ttl_seconds=max(1, min(120, int((expires - now).total_seconds()))),
+                head=str(arguments.get("requested_head") or ""),
+            )
+            if not lease.get("ok"):
+                raise GatewayError("ESCALATION_DENIED", str(lease.get("code") or "LEASE_REJECTED"), 403)
+            if str(lease.get("lease_holder") or "") != actor.actor_id:
+                raise GatewayError("CAPABILITY_DENIED", "lease holder does not match token", 403)
+            acquired = not bool(lease.get("IDEMPOTENT_REACQUIRE"))
+            lease_id = str(lease.get("lease_id") or "")
+        try:
+            invoked = capabilities.invoke(capability)
+        finally:
+            if acquired and lease_id:
+                leases.release(lease_id, owner="RAIOS_SYSTEM")
+        auth = {"PRINCIPAL": actor.actor_id, "AUTHORITY_SOURCE": "NATIVE_DELEGATED_GRANT"}
+        receipt = receipts.build(
+            env={
+                "task_id": task_id,
+                "correlation_id": arguments.get("correlation_id"),
+                "idempotency_key": idem,
+                "target": "native",
+                "requested_capability": capability,
+                "message_id": arguments.get("packet_id"),
+            },
+            auth=auth,
+            policy={"POLICY_RESULT": "ALLOW", "RISK_CLASS": "LOW"},
+            ucp={"STATUS": "ADMITTED", "NO_OP": False},
+            capability=invoked,
+            status="COMPLETED" if invoked and invoked.get("INVOKED") else "RECORDED",
+        )
+        receipt["CANONICAL_HEAD"] = arguments.get("requested_head")
+        receipt["SHELL"] = False
+        receipt["ACTOR_IS_STATIC_C1"] = False
+        receipts.persist(receipt, directory=receipt_dir)
+        return {
+            "operation": intent,
+            "receipt": receipt,
+            "invoked": bool(invoked and invoked.get("INVOKED")),
+            "lease_id": lease_id,
+            "shell": False,
+            "principal": actor.actor_id,
+        }
+
     def tool_send_packet(self, actor: Actor, arguments: dict) -> dict:
+        intent = str(arguments.get("execution_intent") or "NONE").upper()
+        if intent in DELEGATED_EXECUTION:
+            execution = self._delegated_execution(actor, arguments, intent)
+            return self._receipt({"tool": "send_packet", "execution": execution, "shell": False})
         to = arguments.get("to") or []
         if isinstance(to, str):
             to = [x.strip() for x in to.split(",") if x.strip()]
