@@ -12,3 +12,5 @@ Live listener PID 21944 still serves the previous nine-tool process. It was not 
 Loopback get_head returned HEAD dfc08e62a6392af53c9995e74278a5ba6d153a84 as LOOPBACK_READ. A non-grant bearer returned UNAUTHENTICATED and did not become C1. No token was disclosed. No delegated execution receipt was produced.
 
 Evolution consumed WAL events 1c0a9e7f-278b-4614-b09e-fefa88ff0023 (FAILURE) and 7dec703d-8131-44c6-b6e6-b6ae1d3b93ba (DECISION).
+
+Launch identity, still not done: `scripts/ai-os/raios_mcp_local_ensure.ps1` now writes `raios.universal-mcp-launch.v1` only for the process returned by its own Start-Process. The record carries pid, start time, command line, launcher, C5 generation, and the launch-source fingerprint. Ownership, reload, and hung recovery require that live process to match the record. CIM_ADOPTED, LEGACY_HEALTH_ADOPTED, and STARTED_CANONICAL are gone. The already-running listener was not given a backdated record and was not stopped. No delegated execution receipt exists.

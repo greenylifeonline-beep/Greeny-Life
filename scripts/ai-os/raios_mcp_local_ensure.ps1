@@ -47,59 +47,121 @@ function Test-RaiosMcpHealthy($Health) {
     if ($Health.head -ne $env:RAIOS_CANONICAL_HEAD -or $Health.head_source -ne "git-file") { return $false }
     return Test-RaiosMcpToolContract $Health
 }
-function Test-RaiosMcpIdentity($Health) {
-    if (-not $Health -or $Health.ok -ne $true) { return $false }
-    if ([string]$Health.service -ne "raios-universal-mcp") { return $false }
-    if ($Health.second_gateway -eq $true) { return $false }
-    return Test-RaiosMcpToolContract $Health
-}
 function Read-RaiosOwnerManifest {
     if (-not (Test-Path -LiteralPath $OwnerManifest)) { return $null }
     try { return Get-Content -LiteralPath $OwnerManifest -Raw | ConvertFrom-Json } catch { return $null }
 }
-function Test-RaiosOwnerManifest($Owner, [int]$ProcId, [int]$ListenPort) {
-    if ($null -eq $Owner) { return $false }
-    if ([int]$Owner.pid -ne $ProcId -or [int]$Owner.port -ne $ListenPort) { return $false }
-    if ([string]$Owner.repo -ne [IO.Path]::GetFullPath($Repo)) { return $false }
-    if ([string]$Owner.server -ne [IO.Path]::GetFullPath($Server)) { return $false }
-    return $true
-}
-function Write-RaiosOwnerManifest([int]$ProcId, [string]$Generation) {
-    New-Item -ItemType Directory -Force -Path $OwnerDir | Out-Null
-    $doc = [ordered]@{
-        schema = "raios.universal-mcp-owner.v1"; pid = $ProcId; port = $Port
-        repo = [IO.Path]::GetFullPath($Repo); server = [IO.Path]::GetFullPath($Server)
-        python = [IO.Path]::GetFullPath($Python); canonical_head = $env:RAIOS_CANONICAL_HEAD
-        generation = $Generation; written_at = [DateTimeOffset]::UtcNow.ToString("o")
-    }
-    $tmp = "$OwnerManifest.tmp.$PID"
-    [IO.File]::WriteAllText($tmp, (($doc | ConvertTo-Json -Depth 4) + [Environment]::NewLine), [Text.UTF8Encoding]::new($false))
-    Move-Item -LiteralPath $tmp -Destination $OwnerManifest -Force
-}
 function Get-RaiosProcessInfo([int]$ProcId) {
     try { return Get-CimInstance Win32_Process -Filter "ProcessId=$ProcId" -OperationTimeoutSec 8 } catch { return $null }
 }
-function Test-RaiosOurMcp([object]$Info, [int]$ProcId, [int]$ListenPort, $Health = $null) {
-    $owner = Read-RaiosOwnerManifest
-    if (Test-RaiosOwnerManifest $owner $ProcId $ListenPort) { return $true }
-    if ($null -ne $Info -and $ListenPort -eq 8788) {
-        $cmd = [string]$Info.CommandLine
-        $expected = [IO.Path]::GetFullPath($Server)
-        if (($cmd.IndexOf($expected, [StringComparison]::OrdinalIgnoreCase) -ge 0) -and ($cmd -match '--port\s+8788(?:\s|$)')) {
-            Write-RaiosOwnerManifest $ProcId "CIM_ADOPTED"
-            return $true
+function Get-RaiosProcessStartUtc([int]$ProcId, $Info) {
+    if ($Info -and $Info.CreationDate) {
+        return ([DateTime]$Info.CreationDate).ToUniversalTime().ToString("o")
+    }
+    try {
+        return (Get-Process -Id $ProcId -ErrorAction Stop).StartTime.ToUniversalTime().ToString("o")
+    } catch { return $null }
+}
+function Test-RaiosSameInstant([string]$Left, [string]$Right) {
+    try {
+        $a = [DateTimeOffset]::Parse($Left)
+        $b = [DateTimeOffset]::Parse($Right)
+        return [Math]::Abs(($a.UtcDateTime - $b.UtcDateTime).TotalSeconds) -lt 2
+    } catch { return $false }
+}
+function Get-RaiosC5GenerationId {
+    $path = Join-Path $env:USERPROFILE ".raios\runtime\continuity\c5-service\current-generation.json"
+    if (-not (Test-Path -LiteralPath $path)) { return $null }
+    try { $doc = Get-Content -LiteralPath $path -Raw -ErrorAction Stop | ConvertFrom-Json } catch { return $null }
+    $id = [string]$doc.generation_id
+    if ([string]$doc.schema -ne "raios.runtime-generation.v3") { return $null }
+    if ([string]$doc.authority -ne "RAIOS-C5-SCM") { return $null }
+    if ($id -notmatch '^[0-9a-f]{64}::\d{4}-\d{2}-\d{2}T') { return $null }
+    return $id
+}
+function Get-RaiosLaunchSourceFingerprint {
+    $serverPath = [IO.Path]::GetFullPath($Server)
+    $gatewayPath = [IO.Path]::GetFullPath((Join-Path $PSScriptRoot "raios_mcp\gateway.py"))
+    if (-not (Test-Path -LiteralPath $serverPath) -or -not (Test-Path -LiteralPath $gatewayPath)) { return $null }
+    $serverSha = (Get-FileHash -LiteralPath $serverPath -Algorithm SHA256).Hash.ToLowerInvariant()
+    $gatewaySha = (Get-FileHash -LiteralPath $gatewayPath -Algorithm SHA256).Hash.ToLowerInvariant()
+    $material = "server.py`n$serverSha`ngateway.py`n$gatewaySha`n"
+    $sha = [Security.Cryptography.SHA256]::Create()
+    try {
+        $fingerprint = ([BitConverter]::ToString($sha.ComputeHash([Text.Encoding]::UTF8.GetBytes($material)))).Replace("-", "").ToLowerInvariant()
+    } finally { $sha.Dispose() }
+    return [pscustomobject]@{
+        server_path = $serverPath
+        gateway_path = $gatewayPath
+        server_sha256 = $serverSha
+        gateway_sha256 = $gatewaySha
+        fingerprint = $fingerprint
+    }
+}
+function Write-RaiosLaunchIdentity($Process, $Info, $Source, [string]$GenerationId) {
+    if ($null -eq $Process -or $null -eq $Info -or $null -eq $Source) { throw "MCP_LAUNCH_IDENTITY_UNREADABLE" }
+    $started = Get-RaiosProcessStartUtc $Process.Id $Info
+    $command = [string]$Info.CommandLine
+    $launcherInfo = Get-RaiosProcessInfo $PID
+    $launcherStarted = Get-RaiosProcessStartUtc $PID $launcherInfo
+    $serverPath = [string]$Source.server_path
+    if (-not $started -or -not $command -or -not $launcherStarted) { throw "MCP_LAUNCH_IDENTITY_UNREADABLE::$($Process.Id)" }
+    if ($command.IndexOf($serverPath, [StringComparison]::OrdinalIgnoreCase) -lt 0) { throw "MCP_LAUNCH_COMMAND_MISMATCH::$($Process.Id)" }
+    if (-not $GenerationId) { throw "MCP_C5_GENERATION_UNREADABLE" }
+    $parentId = 0
+    if ($Info.ParentProcessId) { $parentId = [int]$Info.ParentProcessId }
+    if ($parentId -ne $PID) { throw "MCP_LAUNCH_PARENT_MISMATCH::$($Process.Id)" }
+    New-Item -ItemType Directory -Force -Path $OwnerDir | Out-Null
+    $doc = [ordered]@{
+        schema = "raios.universal-mcp-launch.v1"
+        observation = "PROCESS_START"
+        pid = [int]$Process.Id
+        port = $Port
+        started_at = $started
+        command_line = $command
+        launcher = [ordered]@{
+            pid = $PID
+            path = [IO.Path]::GetFullPath($PSCommandPath)
+            started_at = $launcherStarted
         }
+        c5_generation = $GenerationId
+        launch_source_path = $serverPath
+        launch_gateway_path = [string]$Source.gateway_path
+        launch_source_sha256 = [string]$Source.fingerprint
+        server_sha256 = [string]$Source.server_sha256
+        gateway_sha256 = [string]$Source.gateway_sha256
+        written_at = [DateTimeOffset]::UtcNow.ToString("o")
     }
-    if ($ListenPort -eq 8788 -and (Test-RaiosMcpIdentity $Health)) {
-        try {
-            $proc = Get-Process -Id $ProcId -ErrorAction Stop
-            if ($proc.ProcessName -in @("python", "pythonw")) {
-                Write-RaiosOwnerManifest $ProcId "LEGACY_HEALTH_ADOPTED"
-                return $true
-            }
-        } catch {}
-    }
-    return $false
+    $tmp = "$OwnerManifest.tmp.$PID"
+    [IO.File]::WriteAllText($tmp, (($doc | ConvertTo-Json -Depth 6) + [Environment]::NewLine), [Text.UTF8Encoding]::new($false))
+    Move-Item -LiteralPath $tmp -Destination $OwnerManifest -Force
+}
+function Test-RaiosLaunchIdentity($Info, [int]$ProcId, [int]$ListenPort) {
+    $owner = Read-RaiosOwnerManifest
+    if ($null -eq $owner -or $null -eq $Info) { return $false }
+    if ([string]$owner.schema -ne "raios.universal-mcp-launch.v1") { return $false }
+    if ([string]$owner.observation -ne "PROCESS_START") { return $false }
+    if ([int]$owner.pid -ne $ProcId -or [int]$owner.port -ne $ListenPort) { return $false }
+    $started = Get-RaiosProcessStartUtc $ProcId $Info
+    if (-not (Test-RaiosSameInstant $started ([string]$owner.started_at))) { return $false }
+    $command = [string]$Info.CommandLine
+    if (-not $command -or $command -ne [string]$owner.command_line) { return $false }
+    $launcherPath = [string]$owner.launcher.path
+    if (-not $launcherPath -or $launcherPath -ne [IO.Path]::GetFullPath($PSCommandPath)) { return $false }
+    if (-not $owner.launcher.pid -or -not $owner.launcher.started_at) { return $false }
+    $parentId = 0
+    if ($Info.ParentProcessId) { $parentId = [int]$Info.ParentProcessId }
+    if ($parentId -ne [int]$owner.launcher.pid) { return $false }
+    $launcherProc = Get-Process -Id ([int]$owner.launcher.pid) -ErrorAction SilentlyContinue
+    if ($launcherProc -and -not (Test-RaiosSameInstant $launcherProc.StartTime.ToUniversalTime().ToString("o") ([string]$owner.launcher.started_at))) { return $false }
+    $generation = Get-RaiosC5GenerationId
+    if (-not $generation -or [string]$owner.c5_generation -ne $generation) { return $false }
+    $source = Get-RaiosLaunchSourceFingerprint
+    if ($null -eq $source) { return $false }
+    if ([string]$owner.launch_source_path -ne [string]$source.server_path) { return $false }
+    if ([string]$owner.launch_source_sha256 -ne [string]$source.fingerprint) { return $false }
+    if ($command.IndexOf([string]$source.server_path, [StringComparison]::OrdinalIgnoreCase) -lt 0) { return $false }
+    return $true
 }
 function Stop-RaiosListenPid([int]$ProcId) {
     Stop-Process -Id $ProcId -Force -ErrorAction Stop
@@ -153,26 +215,19 @@ $OwningPid = Get-RaiosListenPid $Port
 if ($OwningPid) {
     $Info = Get-RaiosProcessInfo $OwningPid
     $Health = Get-RaiosMcpHealth $HealthUrl 2
-    if (-not (Test-RaiosOurMcp $Info $OwningPid $Port $Health)) {
-        $who = if ($Info) { $Info.Name } else { "unknown" }
-        throw "Port $Port is not proven RAIOS-owned: $who PID $OwningPid."
+    if ($null -eq $Info) { throw "MCP_LAUNCH_IDENTITY_UNREADABLE port=$Port pid=$OwningPid" }
+    if (-not (Test-RaiosLaunchIdentity $Info $OwningPid $Port)) {
+        throw "MCP_LAUNCH_IDENTITY_MISMATCH port=$Port pid=$OwningPid"
     }
     if (Test-RaiosMcpHealthy $Health) {
         if (-not $Reload) {
             Write-Output "LOCAL_MCP_ALREADY_HEALTHY port=$Port pid=$OwningPid tools=$($Health.tools.Count) head_source=$($Health.head_source)"
             exit 0
         }
-        if (-not (Test-RaiosOurMcp $Info $OwningPid $Port $Health)) {
-            throw "Port $Port is owned by another process, PID $OwningPid."
-        }
         Write-Output "LOCAL_MCP_RELOAD port=$Port pid=$OwningPid"
         Stop-RaiosListenPid $OwningPid
     } else {
         if ($NoRecover) { throw "Existing local MCP listener is unhealthy." }
-        if (-not (Test-RaiosOurMcp $Info $OwningPid $Port $Health)) {
-            $who = if ($Info) { $Info.Name } else { "unknown" }
-            throw "Port $Port is owned by $who, PID $OwningPid."
-        }
         Write-Output "LOCAL_MCP_RECOVER_HUNG port=$Port pid=$OwningPid"
         Stop-RaiosListenPid $OwningPid
     }
@@ -181,16 +236,30 @@ if ($OwningPid) {
 $Shadow = Get-RaiosListenPid 8787
 if ($Shadow) {
     $ShadowInfo = Get-RaiosProcessInfo $Shadow
-    if (Test-RaiosOurMcp $ShadowInfo $Shadow 8787 $null) {
+    if (Test-RaiosLaunchIdentity $ShadowInfo $Shadow 8787) {
         Write-Output "LOCAL_MCP_STOP_SHADOW port=8787 pid=$Shadow"
         Stop-RaiosListenPid $Shadow
+    } else {
+        Write-Output "MCP_SHADOW_LISTENER_UNPROVEN port=8787 pid=$Shadow"
     }
 }
+
+$GenerationId = Get-RaiosC5GenerationId
+if (-not $GenerationId) { throw "MCP_C5_GENERATION_UNREADABLE" }
+$SourceFingerprint = Get-RaiosLaunchSourceFingerprint
+if ($null -eq $SourceFingerprint) { throw "MCP_LAUNCH_SOURCE_MISSING" }
 
 $Stdout = Join-Path $ReceiptDir "LOCAL-MCP-$Port.stdout.log"
 $Stderr = Join-Path $ReceiptDir "LOCAL-MCP-$Port.stderr.log"
 $Arguments = @($Server, "--http", "--host", "127.0.0.1", "--port", "$Port")
 $Process = Start-Process -FilePath $Python -ArgumentList $Arguments -WorkingDirectory $Repo -RedirectStandardOutput $Stdout -RedirectStandardError $Stderr -WindowStyle Hidden -PassThru
+try {
+    $LaunchInfo = Get-RaiosProcessInfo $Process.Id
+    Write-RaiosLaunchIdentity -Process $Process -Info $LaunchInfo -Source $SourceFingerprint -GenerationId $GenerationId
+} catch {
+    if (-not $Process.HasExited) { Stop-RaiosListenPid $Process.Id }
+    throw
+}
 
 $Health = $null
 for ($i = 0; $i -lt 20; $i++) {
@@ -204,14 +273,24 @@ if ($Process.HasExited) {
     throw "Local MCP failed to start."
 }
 if (-not (Test-RaiosMcpHealthy $Health)) {
+    if (-not $Process.HasExited) { Stop-RaiosListenPid $Process.Id }
     throw "Local MCP health validation failed."
 }
 $LivePid = Get-RaiosListenPid $Port
-if (-not $LivePid) { throw "LOCAL_MCP_LISTENER_PID_MISSING_AFTER_START" }
-Write-RaiosOwnerManifest $LivePid "STARTED_CANONICAL"
+if ($LivePid -ne $Process.Id) {
+    if (-not $Process.HasExited) { Stop-RaiosListenPid $Process.Id }
+    throw "MCP_LISTENER_PID_NOT_LAUNCH_PID live=$LivePid launch=$($Process.Id)"
+}
+$LiveInfo = Get-RaiosProcessInfo $LivePid
+if (-not (Test-RaiosLaunchIdentity $LiveInfo $LivePid $Port)) {
+    if (-not $Process.HasExited) { Stop-RaiosListenPid $Process.Id }
+    throw "MCP_LAUNCH_IDENTITY_MISMATCH port=$Port pid=$LivePid"
+}
 
 Write-Output "LOCAL_MCP_STARTED port=$Port pid=$($Process.Id) tools=$($Health.tools.Count) head_source=$($Health.head_source)"
 Write-Output "HEALTH=$HealthUrl"
 Write-Output "GL005_PROVEN=$($Health.gl005_proven)"
 Write-Output "NINTH_TOOL=$($Health.ninth_tool)"
 Write-Output "SECOND_GATEWAY=$($Health.second_gateway)"
+Write-Output "LAUNCH_SOURCE_SHA256=$($SourceFingerprint.fingerprint)"
+Write-Output "C5_GENERATION=$GenerationId"
