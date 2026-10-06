@@ -206,10 +206,14 @@ def main() -> int:
     check(health["gl005_proven"] is False, "health proven stays false")
     check(health["sqlite"] is False, "health sqlite false")
     check(health["websocket"] is False, "health websocket false")
-    check(health.get("ninth_tool") is False, "no ninth MCP tool")
+    check(health.get("execute_scoped_task") is True, "execute_scoped_task is public")
+    check(health.get("raw_shell") is False, "no raw shell")
     check(health.get("second_gateway") is False, "no second gateway")
     check(health["transport"] == "streamable-http", "streamable HTTP advertised")
-    check(len(health["tools"]) == 8, "eight v1 tools")
+    check(health["tools"] == [
+        "get_head", "read_board", "read_inbox", "read_receipt", "get_diff",
+        "post_opinion", "send_packet", "ack_packet", "execute_scoped_task",
+    ], "exact nine-tool set")
     check("send_packet" in health["tools"] and "ack_packet" in health["tools"], "packet tools listed")
     check(health.get("head_source") in {"env", "git-file", "unknown"}, "health head is non-blocking")
 

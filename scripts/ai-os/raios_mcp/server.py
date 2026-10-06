@@ -18,7 +18,14 @@ ROOT = Path(__file__).resolve().parents[3]
 if str(Path(__file__).resolve().parent.parent) not in sys.path:
     sys.path.insert(0, str(Path(__file__).resolve().parent.parent))
 
-from raios_mcp.gateway import LAW, LOOPBACK_READ_TOOLS, V1_TOOLS, Gateway, GatewayError  # noqa: E402
+from raios_mcp.gateway import (  # noqa: E402
+    LAW,
+    LOOPBACK_READ_TOOLS,
+    V1_TOOLS,
+    Gateway,
+    GatewayError,
+    read_canonical_head,
+)
 
 PROTOCOL = "2025-03-26"
 SUPPORTED_PROTOCOL = ("2024-11-05", "2025-03-26", "2025-06-18")
@@ -82,35 +89,7 @@ def issue_session(existing: str | None) -> str:
 
 def canonical_head(root: Path | None = None) -> tuple[str, str]:
     """Live repository projection; launch-time env is not current Git truth."""
-    import re
-    git_dir = (root or ROOT) / ".git"
-    def verified(value: str) -> tuple[str, str]:
-        value = value.strip()
-        if re.fullmatch(r"[0-9a-fA-F]{40}", value):
-            return value.lower(), "git-file"
-        return "unknown", "unknown"
-    try:
-        raw = (git_dir / "HEAD").read_text(encoding="utf-8").strip()
-        if not raw.startswith("ref:"):
-            return verified(raw)
-        ref = raw.split(":", 1)[1].strip()
-        if not ref.startswith("refs/") or any(p in {"", ".", ".."} for p in ref.split("/")):
-            return "unknown", "unknown"
-        if not re.fullmatch(r"refs/[A-Za-z0-9_./-]+", ref):
-            return "unknown", "unknown"
-        ref_path = git_dir.joinpath(*ref.split("/"))
-        try:
-            return verified(ref_path.read_text(encoding="utf-8"))
-        except FileNotFoundError:
-            for line in (git_dir / "packed-refs").read_text(encoding="utf-8").splitlines():
-                if line.startswith(("#", "^")) or " " not in line:
-                    continue
-                sha, name = line.split(" ", 1)
-                if name.strip() == ref:
-                    return verified(sha)
-    except (OSError, UnicodeError):
-        pass
-    return "unknown", "unknown"
+    return read_canonical_head(root or ROOT)
 
 
 def default_gateway() -> Gateway:
@@ -147,8 +126,8 @@ def handle_rpc(gw: Gateway, actor_token: str | None, message: dict, loopback: bo
                 "instructions": (
                     f"{LAW}. Streamable HTTP session channel. POST /mcp JSON-RPC; GET /mcp SSE; "
                     "loopback reads without token; writes need an actor grant. "
-                    "Delegated execution is admitted only on send_packet for the existing capability allowlist, "
-                    "with a short grant, nonce, and lease fence. No shell. No WebSocket. "
+                    "Governed execution is execute_scoped_task. send_packet execution is temporary compatibility. "
+                    "Short grant, nonce, lease, and fence are required. No shell. No WebSocket. "
                     "No SQLite. No raw shell. No PASS writes. Authority ≠ bypass invariants."
                 ),
             },
@@ -327,9 +306,13 @@ class Handler(BaseHTTPRequestHandler):
                     "transport": "streamable-http",
                     "websocket": False,
                     "sqlite": False,
-                    "ninth_tool": False,
+                    "ninth_tool": True,
+                    "execute_scoped_task": True,
+                    "raw_shell": False,
                     "shell_via_mcp": False,
-                    "scoped_execution": "SEND_PACKET_ALLOWLIST",
+                    "duplicate_mcp": False,
+                    "scoped_execution": "EXECUTE_SCOPED_TASK",
+                    "send_packet_execution": "TEMPORARY_COMPATIBILITY",
                     "second_gateway": False,
                     "law": LAW,
                     "gl005_proven": False,
@@ -385,7 +368,8 @@ class Handler(BaseHTTPRequestHandler):
                     "session": session,
                     "get_sse": True,
                     "stateless": False,
-                    "ninth_tool": False,
+                    "ninth_tool": True,
+                    "execute_scoped_task": True,
                     "second_gateway": False,
                     "transport": "streamable-http",
                 },

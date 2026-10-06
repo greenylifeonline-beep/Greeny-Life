@@ -1,8 +1,9 @@
-"""RAIOS MCP V1 gateway: 8 tools, Streamable HTTP, no second WAL, no shell."""
+"""RAIOS MCP gateway: nine public tools, one execution plane, no shell."""
 from __future__ import annotations
 
 import hashlib
 import json
+import os
 import re
 import shutil
 import subprocess
@@ -25,8 +26,9 @@ V1_TOOLS = (
     "post_opinion",
     "send_packet",
     "ack_packet",
+    "execute_scoped_task",
 )
-WRITE_TOOLS = {"post_opinion", "send_packet", "ack_packet"}
+WRITE_TOOLS = {"post_opinion", "send_packet", "ack_packet", "execute_scoped_task"}
 PASSIVE_EXECUTION = {"NONE", "NO", "FALSE"}
 DELEGATED_EXECUTION = {"DELEGATED", "STATUS", "CANCEL"}
 GRANT_MAX_SECONDS = 900
@@ -112,9 +114,121 @@ def git(root: Path, *args: str) -> str:
     return (r.stdout or "").strip()
 
 
+def read_canonical_head(root: Path | None = None) -> tuple[str, str]:
+    """Repository head from the Git files. Launch PATH and env are not the head."""
+    base = root or Path.cwd()
+    git_dir = base / ".git"
+    def verified(value: str) -> tuple[str, str]:
+        value = value.strip()
+        if re.fullmatch(r"[0-9a-fA-F]{40}", value):
+            return value.lower(), "git-file"
+        return "unknown", "unknown"
+    try:
+        raw = (git_dir / "HEAD").read_text(encoding="utf-8").strip()
+        if not raw.startswith("ref:"):
+            return verified(raw)
+        ref = raw.split(":", 1)[1].strip()
+        if not ref.startswith("refs/") or any(part in {"", ".", ".."} for part in ref.split("/")):
+            return "unknown", "unknown"
+        if not re.fullmatch(r"refs/[A-Za-z0-9_./-]+", ref):
+            return "unknown", "unknown"
+        ref_path = git_dir.joinpath(*ref.split("/"))
+        try:
+            return verified(ref_path.read_text(encoding="utf-8"))
+        except FileNotFoundError:
+            for line in (git_dir / "packed-refs").read_text(encoding="utf-8").splitlines():
+                if line.startswith(("#", "^")) or " " not in line:
+                    continue
+                sha, name = line.split(" ", 1)
+                if name.strip() == ref:
+                    return verified(sha)
+    except (OSError, UnicodeError):
+        pass
+    return "unknown", "unknown"
+
+
+def stable_runtime_profile() -> Path | None:
+    """Profile that owns the live C5 generation file. Presence is a file check, not a constant."""
+    candidates: list[Path] = []
+    for key in ("RAIOS_STABLE_USER_PROFILE", "USERPROFILE", "HOME"):
+        raw = os.environ.get(key)
+        if raw:
+            candidates.append(Path(raw))
+    seen: set[str] = set()
+    for candidate in candidates:
+        key = str(candidate).lower()
+        if key in seen:
+            continue
+        seen.add(key)
+        marker = candidate / ".raios" / "runtime" / "continuity" / "c5-service" / "current-generation.json"
+        if marker.is_file():
+            return candidate
+    return None
+
+
+def resolve_opencode_binary() -> str | None:
+    """Find the installed OpenCode shim. A missing file stays absent."""
+    found = shutil.which("opencode")
+    if found:
+        path = Path(found)
+        cmd = path.with_name("opencode.CMD")
+        if cmd.is_file():
+            return str(cmd)
+        if path.is_file():
+            return str(path)
+    profile = stable_runtime_profile()
+    if profile is None:
+        return None
+    npm = profile / "AppData" / "Roaming" / "npm"
+    for name in ("opencode.CMD", "opencode.cmd", "opencode.exe"):
+        candidate = npm / name
+        if candidate.is_file():
+            return str(candidate)
+    return None
+
+
+_OPENCODE_VERSION_CACHE: dict[str, str | None] = {}
+
+
+def observed_opencode_version(binary: str) -> str | None:
+    if binary in _OPENCODE_VERSION_CACHE:
+        return _OPENCODE_VERSION_CACHE[binary]
+    target = Path(binary)
+    sibling = target.with_name("node_modules").joinpath("opencode-ai", "bin", "opencode.exe")
+    if not sibling.is_file():
+        sibling = target.parent.joinpath("node_modules", "opencode-ai", "bin", "opencode.exe")
+    if sibling.is_file():
+        target = sibling
+    env = os.environ.copy()
+    profile = stable_runtime_profile()
+    if profile is not None:
+        env["USERPROFILE"] = str(profile)
+        env["HOME"] = str(profile)
+        env["APPDATA"] = str(profile / "AppData" / "Roaming")
+        env["LOCALAPPDATA"] = str(profile / "AppData" / "Local")
+    try:
+        completed = subprocess.run(
+            [str(target), "--version"],
+            cwd=str(target.parent),
+            text=True,
+            capture_output=True,
+            timeout=12,
+            check=False,
+            env=env,
+        )
+    except (OSError, subprocess.TimeoutExpired):
+        _OPENCODE_VERSION_CACHE[binary] = None
+        return None
+    text = ((completed.stdout or "") + "\n" + (completed.stderr or "")).strip()
+    match = re.search(r"\d+\.\d+\.\d+", text)
+    version = match.group(0) if match else None
+    _OPENCODE_VERSION_CACHE[binary] = version
+    return version
+
+
 def mcp_to_opencode_seam(root: Path | None = None) -> dict[str, Any]:
     """Minimum existing MCP→OpenCode bind. Surfaces CODE_MODEL on get_head. No new tools. No shell."""
-    binary = shutil.which("opencode")
+    binary = resolve_opencode_binary()
     registry: dict[str, Any] = {}
     path = (root or Path.cwd()) / ".ai-os" / "MODEL-REGISTRY.json"
     if path.is_file():
@@ -132,6 +246,7 @@ def mcp_to_opencode_seam(root: Path | None = None) -> dict[str, Any]:
         "uses_role": str(declared.get("uses_role") or "CODE_MODEL"),
         "present": binary is not None,
         "binary": binary,
+        "observed_version": observed_opencode_version(binary) if binary else None,
         "install": False,
         "new_mcp_tools": False,
         "shell_via_mcp": False,
@@ -238,7 +353,7 @@ class Gateway:
             actor_role="LOCAL_CLIENT",
             instance_role="loopback",
             tools=list(LOOPBACK_READ_TOOLS),
-            deny=["post_opinion", "send_packet", "ack_packet"],
+            deny=["post_opinion", "send_packet", "ack_packet", "execute_scoped_task"],
             token_sha256="",
             scopes=list(LOOPBACK_READ_TOOLS),
             expires_at=None,
@@ -297,9 +412,16 @@ class Gateway:
         if promo not in {"NONE", "NO", "FALSE"}:
             raise GatewayError("ESCALATION_DENIED", "promotion_intent is not allowed on the connector", 403)
         exec_intent = str(arguments.get("execution_intent") or "NONE").upper()
+        if tool == "execute_scoped_task" and exec_intent in PASSIVE_EXECUTION:
+            arguments["execution_intent"] = "DELEGATED"
+            exec_intent = "DELEGATED"
         if exec_intent in DELEGATED_EXECUTION:
-            if tool != "send_packet":
-                raise GatewayError("ESCALATION_DENIED", "delegated execution is admitted only on send_packet", 403)
+            if tool not in {"execute_scoped_task", "send_packet"}:
+                raise GatewayError(
+                    "ESCALATION_DENIED",
+                    "governed execution is admitted on execute_scoped_task",
+                    403,
+                )
         elif exec_intent not in PASSIVE_EXECUTION:
             raise GatewayError("ESCALATION_DENIED", "V1 connector does not execute a shell", 403)
         if tool not in WRITE_TOOLS:
@@ -313,7 +435,7 @@ class Gateway:
             raise GatewayError("REPLAY", "packet_id already used", 409)
         if parse_dt(arguments["expires_at"]) <= datetime.now(timezone.utc):
             raise GatewayError("EXPIRED", "envelope expired", 401)
-        live_head = git(self.root, "rev-parse", "HEAD")
+        live_head, _head_source = read_canonical_head(self.root)
         if arguments["requested_head"] != live_head:
             raise GatewayError("STALE_HEAD", "requested_head does not match live HEAD", 409)
         live_branch = git(self.root, "branch", "--show-current") or BRANCH
@@ -372,11 +494,14 @@ class Gateway:
         return rec
 
     def tool_get_head(self, actor: Actor, arguments: dict) -> dict:
+        head, head_source = read_canonical_head(self.root)
+        branch = git(self.root, "branch", "--show-current") or BRANCH
         return self._receipt(
             {
                 "tool": "get_head",
-                "head": git(self.root, "rev-parse", "HEAD"),
-                "branch": git(self.root, "branch", "--show-current") or BRANCH,
+                "head": head,
+                "head_source": head_source,
+                "branch": branch,
                 "repository": REPO,
                 "actor_id": actor.actor_id,
                 "mcp_to_opencode": mcp_to_opencode_seam(self.root),
@@ -532,7 +657,38 @@ class Gateway:
             raise GatewayError("REPLAY", "nonce already used", 409)
         self._remember_nonce(digest, actor, task_id)
 
-    def _delegated_execution(self, actor: Actor, arguments: dict, intent: str) -> dict:
+    def _select_executor(self, capability: str) -> dict:
+        """One RAIOS execution plane. Local and cloud are domains, not a second brain."""
+        return {
+            "domain": "LOCAL",
+            "plane": "c1c5.capabilities",
+            "capability": capability,
+            "cloud_dispatched": False,
+            "second_plane": False,
+            "reasons": [
+                "capability_allowlist",
+                "read_only_contract",
+                "local_available",
+                "same_raios",
+            ],
+        }
+
+    def _record_execution_deprecation(self, actor: Actor, arguments: dict) -> None:
+        append_jsonl(
+            self.root / ".ai-os" / "mcp" / "execution-deprecation.jsonl",
+            {
+                "schema": "raios.mcp-execution-deprecation.v1",
+                "ts": utc(),
+                "tool": "send_packet",
+                "status": "TEMPORARY_COMPATIBILITY",
+                "replacement": "execute_scoped_task",
+                "actor_id": actor.actor_id,
+                "task_id": arguments.get("task_id"),
+                "capability": arguments.get("capability"),
+            },
+        )
+
+    def _delegated_execution(self, actor: Actor, arguments: dict, intent: str, *, require_fence: bool = False) -> dict:
         capabilities, receipts, lease_cls = self._fabric()
         capability = str(arguments.get("capability") or "").strip()
         task_id = str(arguments.get("task_id") or "").strip()
@@ -578,6 +734,8 @@ class Gateway:
             return {"operation": "CANCEL", "lease_id": lease_id, "released": True, "invoked": False, "shell": False}
         expires = self._grant_deadline(arguments)
         fence_raw = str(arguments.get("fence_token") or "").strip()
+        if require_fence and (not lease_id or not fence_raw):
+            raise GatewayError("MISSING_IDENTITY", "lease_id and fence_token are required", 400)
         acquired = False
         if lease_id or fence_raw:
             if not lease_id or not fence_raw:
@@ -615,6 +773,7 @@ class Gateway:
                 raise GatewayError("CAPABILITY_DENIED", "lease holder does not match token", 403)
             acquired = not bool(lease.get("IDEMPOTENT_REACQUIRE"))
             lease_id = str(lease.get("lease_id") or "")
+        executor = self._select_executor(capability)
         try:
             invoked = capabilities.invoke(capability)
         finally:
@@ -647,13 +806,42 @@ class Gateway:
             "lease_id": lease_id,
             "shell": False,
             "principal": actor.actor_id,
+            "executor": executor,
         }
+
+    def tool_execute_scoped_task(self, actor: Actor, arguments: dict) -> dict:
+        intent = str(arguments.get("execution_intent") or "DELEGATED").upper()
+        if intent not in DELEGATED_EXECUTION:
+            raise GatewayError("ESCALATION_DENIED", "execute_scoped_task admits governed execution only", 403)
+        execution = self._delegated_execution(
+            actor,
+            arguments,
+            intent,
+            require_fence=intent == "DELEGATED",
+        )
+        return self._receipt(
+            {
+                "tool": "execute_scoped_task",
+                "execution": execution,
+                "shell": False,
+                "compatibility_path": False,
+            }
+        )
 
     def tool_send_packet(self, actor: Actor, arguments: dict) -> dict:
         intent = str(arguments.get("execution_intent") or "NONE").upper()
         if intent in DELEGATED_EXECUTION:
-            execution = self._delegated_execution(actor, arguments, intent)
-            return self._receipt({"tool": "send_packet", "execution": execution, "shell": False})
+            self._record_execution_deprecation(actor, arguments)
+            execution = self._delegated_execution(actor, arguments, intent, require_fence=False)
+            return self._receipt(
+                {
+                    "tool": "send_packet",
+                    "execution": execution,
+                    "shell": False,
+                    "execution_compatibility": "TEMPORARY",
+                    "replacement_tool": "execute_scoped_task",
+                }
+            )
         to = arguments.get("to") or []
         if isinstance(to, str):
             to = [x.strip() for x in to.split(",") if x.strip()]

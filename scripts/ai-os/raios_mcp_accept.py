@@ -216,7 +216,7 @@ def rendezvous(gw: Gateway, receipt_name: str, live: bool) -> dict:
 
     expect_error(lambda: gw.call(c4, "post_opinion", write_envelope(c4, head0, {"text": "GL005_PROVEN=true"})), "FORBIDDEN_FIELD")
     expect_error(lambda: gw.call(c3, "run_targeted_test", {}), "TOOL_NOT_FOUND")
-    expect_error(lambda: gw.call(c3, "execute_scoped_task", {}), "TOOL_NOT_FOUND")
+    expect_error(lambda: gw.call(c3, "execute_scoped_task", {}), "MISSING_IDENTITY")
     expect_error(lambda: gw.call(c2, "write_product", {}), "TOOL_NOT_FOUND")
     expect_error(
         lambda: gw.call(c2, "post_opinion", write_envelope(c2, "0" * 40, {"text": "stale"})),

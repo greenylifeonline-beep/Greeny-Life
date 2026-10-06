@@ -10,6 +10,9 @@ def test_launch_record_is_not_a_retroactive_adoption():
     assert "CIM_ADOPTED" not in text
     assert "LEGACY_HEALTH_ADOPTED" not in text
     assert "STARTED_CANONICAL" not in text
+    assert "MCP_LIVE_BUT_UNOWNED" in text
+    assert "C1_EXPLICIT_QUARANTINE_RETIREMENT" in text
+    assert "ownership_proven = $false" in text
     assert "raios.universal-mcp-launch.v1" in text
     assert 'observation = "PROCESS_START"' in text
     for field in (
@@ -29,3 +32,7 @@ def test_existing_listener_is_not_rewritten_before_the_identity_gate():
     write = text.index("Write-RaiosLaunchIdentity -Process $Process")
     assert gate < start < write
     assert "Write-RaiosOwnerManifest" not in text
+    assert "MCP_LISTENER_PID_NOT_LAUNCH_PID" not in text
+    assert "PromoteOwnedGeneration" in text
+    assert "CONTRACT_DRIFT" in text
+    assert "LOCAL_MCP_PROMOTE_OWNED" in text

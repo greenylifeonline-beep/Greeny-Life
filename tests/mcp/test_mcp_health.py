@@ -60,7 +60,7 @@ def test_canonical_head_unknown_without_git(monkeypatch, tmp_path):
     assert source == "unknown"
 
 
-def test_health_http_lists_eight_tools(tmp_path):
+def test_health_http_lists_nine_tools(tmp_path):
     Handler.gateway = Gateway.from_root(tmp_path, grants=[])
     httpd = ThreadingHTTPServer(("127.0.0.1", 0), Handler)
     httpd.daemon_threads = True
@@ -70,12 +70,25 @@ def test_health_http_lists_eight_tools(tmp_path):
         host, port = httpd.server_address[:2]
         health = json.loads(urlopen(f"http://{host}:{port}/health", timeout=3).read().decode())
         assert health["ok"] is True
-        assert health["tool_count"] == 8
+        assert health["tool_count"] == 9
         assert health["tools"] == list(V1_TOOLS)
-        assert "execute_scoped_task" not in health["tools"]
+        assert health["tools"] == [
+            "get_head",
+            "read_board",
+            "read_inbox",
+            "read_receipt",
+            "get_diff",
+            "post_opinion",
+            "send_packet",
+            "ack_packet",
+            "execute_scoped_task",
+        ]
         assert "compiled_service_marker" not in health
-        assert health["ninth_tool"] is False
+        assert health["execute_scoped_task"] is True
+        assert health["ninth_tool"] is True
+        assert health["raw_shell"] is False
         assert health["shell_via_mcp"] is False
+        assert health["send_packet_execution"] == "TEMPORARY_COMPATIBILITY"
         assert health["second_gateway"] is False
         assert health["head_source"] in {"env", "git-file", "unknown"}
         init = json.dumps({"jsonrpc": "2.0", "id": 1, "method": "initialize", "params": {}}).encode()
