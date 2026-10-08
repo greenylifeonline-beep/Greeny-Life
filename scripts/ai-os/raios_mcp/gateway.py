@@ -17,6 +17,7 @@ from typing import Any
 REPO = "greenylifeonline-beep/Greeny-Life"
 BRANCH = "ai-evolution-202608051809"
 LAW = "MCP_GATEWAY_NE_TRUTH_AUTHORITY"
+GIT_TIMEOUT_SECONDS = 5.0
 V1_TOOLS = (
     "get_head",
     "read_board",
@@ -28,6 +29,7 @@ V1_TOOLS = (
     "ack_packet",
     "execute_scoped_task",
 )
+REGISTERED_TOOLS = V1_TOOLS
 WRITE_TOOLS = {"post_opinion", "send_packet", "ack_packet", "execute_scoped_task"}
 PASSIVE_EXECUTION = {"NONE", "NO", "FALSE"}
 DELEGATED_EXECUTION = {"DELEGATED", "STATUS", "CANCEL"}
@@ -110,7 +112,27 @@ def append_jsonl(path: Path, rec: dict) -> None:
 
 
 def git(root: Path, *args: str) -> str:
-    r = subprocess.run(["git", *args], cwd=root, text=True, capture_output=True)
+    """Bound every gateway Git operation. A timeout is not an empty success."""
+    env = os.environ.copy()
+    env.pop("GIT_DIR", None)
+    env.pop("GIT_WORK_TREE", None)
+    try:
+        r = subprocess.run(
+            ["git", *args],
+            cwd=root,
+            capture_output=True,
+            encoding="utf-8",
+            errors="replace",
+            timeout=GIT_TIMEOUT_SECONDS,
+            check=False,
+            env=env,
+        )
+    except subprocess.TimeoutExpired as err:
+        raise GatewayError("GIT_TIMEOUT", "Git exceeded its execution deadline", 504) from err
+    except OSError as err:
+        raise GatewayError("GIT_UNAVAILABLE", "Git could not be started", 503) from err
+    if r.returncode != 0:
+        raise GatewayError("GIT_FAILED", "Git could not read repository state", 503)
     return (r.stdout or "").strip()
 
 
@@ -373,11 +395,24 @@ class Gateway:
         arguments = dict(arguments or {})
         try:
             result = self._call(actor, tool, arguments)
-            self._audit(actor, tool, "ok", arguments)
-            return result
-        except GatewayError as err:
-            self._audit(actor, tool, err.code, arguments)
+        except Exception as err:
+            status = err.code if isinstance(err, GatewayError) else "INTERNAL_ERROR"
+            self._audit(actor, tool, status, arguments)
             raise
+        self._audit(actor, tool, "ok", arguments)
+        return result
+
+    def _git_branch(self, *, head_source: str) -> str:
+        """A Git-file head stays readable if branch lookup fails. A timeout never becomes success."""
+        try:
+            return git(self.root, "branch", "--show-current") or BRANCH
+        except GatewayError as err:
+            if head_source == "git-file" and err.code != "GIT_TIMEOUT":
+                return BRANCH
+            raise
+
+    def close(self) -> None:
+        return None
 
     def _call(self, actor: Actor, tool: str, arguments: dict[str, Any]) -> dict:
         forbidden = set(self.policy.get("forbidden_tools") or []) | {
@@ -438,7 +473,7 @@ class Gateway:
         live_head, _head_source = read_canonical_head(self.root)
         if arguments["requested_head"] != live_head:
             raise GatewayError("STALE_HEAD", "requested_head does not match live HEAD", 409)
-        live_branch = git(self.root, "branch", "--show-current") or BRANCH
+        live_branch = self._git_branch(head_source=_head_source)
         if arguments["branch"] not in {live_branch, BRANCH}:
             raise GatewayError("STALE_HEAD", "branch does not match live branch", 409)
         if arguments["repository"] not in {REPO, "greenylifeonline-beep/greeny-life", REPO.lower()}:
@@ -453,17 +488,25 @@ class Gateway:
             raise GatewayError("PAYLOAD_HASH_MISMATCH", "payload_hash does not match body", 400)
 
     def _audit(self, actor: Actor, tool: str, status: str, arguments: dict) -> None:
-        append_jsonl(
-            self.audit_path,
-            {
-                "ts": utc(),
-                "actor_id": actor.actor_id,
-                "tool": tool,
-                "status": status,
-                "packet_id": arguments.get("packet_id"),
-                "gl005_proven": False,
-            },
-        )
+        try:
+            append_jsonl(
+                self.audit_path,
+                {
+                    "ts": utc(),
+                    "actor_id": actor.actor_id,
+                    "tool": tool,
+                    "status": status,
+                    "packet_id": arguments.get("packet_id"),
+                    "gl005_proven": False,
+                },
+            )
+        except OSError as err:
+            raise GatewayError(
+                "AUDIT_UNAVAILABLE",
+                "Audit record could not be written. The operation may have completed; "
+                "reconcile mutation outcomes before retrying.",
+                503,
+            ) from err
 
     def _receipt(self, payload: dict) -> dict:
         body = json.dumps(payload, ensure_ascii=False, sort_keys=True)
@@ -495,7 +538,7 @@ class Gateway:
 
     def tool_get_head(self, actor: Actor, arguments: dict) -> dict:
         head, head_source = read_canonical_head(self.root)
-        branch = git(self.root, "branch", "--show-current") or BRANCH
+        branch = self._git_branch(head_source=head_source)
         return self._receipt(
             {
                 "tool": "get_head",

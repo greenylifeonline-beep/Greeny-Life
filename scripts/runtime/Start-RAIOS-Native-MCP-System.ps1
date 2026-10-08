@@ -15,12 +15,28 @@ $MutexName='Global\RAIOS_NATIVE_MCP_TUNNEL_OWNER_V1'
 function Test-LocalMcpReady {
  try{
   $m=Invoke-RestMethod -Uri 'http://127.0.0.1:8788/health' -TimeoutSec 3
-  $names=@($m.tools)
-  $expected=@('get_head','read_board','read_inbox','read_receipt','get_diff','post_opinion','send_packet','ack_packet','execute_scoped_task')
-  if ([int]$m.tool_count -ne 9 -or $names.Count -ne 9 -or $m.second_gateway -eq $true -or $m.raw_shell -eq $true -or $m.ok -ne $true) { return $false }
-  foreach ($name in $expected) { if ($names -notcontains $name) { return $false } }
-  foreach ($banned in @('shell','bash','run_command','run_sandboxed_command')) { if ($names -contains $banned) { return $false } }
-  return $true
+  $requiredTools=@('get_head','read_board','read_inbox','read_receipt','get_diff','post_opinion','send_packet','ack_packet','execute_scoped_task')
+  $tools=@($m.tools)
+  if($m.tool_count -isnot [int] -and $m.tool_count -isnot [long]){return $false}
+  if([int]$m.tool_count -ne 9 -or $tools.Count -ne 9 -or $m.tool_count -ne $tools.Count){return $false}
+  $names=[Collections.Generic.HashSet[string]]::new([StringComparer]::Ordinal)
+  foreach($tool in $tools){
+   if($tool -isnot [string] -or -not $names.Add($tool)){return $false}
+  }
+  if(-not $names.SetEquals([string[]]$requiredTools)){return $false}
+  foreach($banned in @('shell','bash','run_command','run_sandboxed_command')){ if($names.Contains($banned)){return $false} }
+  if($m.PSObject.Properties.Name -contains 'raw_shell' -and $m.raw_shell -ne $false){return $false}
+  if($m.PSObject.Properties.Name -contains 'duplicate_mcp' -and $m.duplicate_mcp -ne $false){return $false}
+  if($m.PSObject.Properties.Name -contains 'execute_scoped_task' -and $m.execute_scoped_task -ne $true){return $false}
+  return (
+   $m.ok -is [bool] -and $m.ok -eq $true -and
+   $m.service -ceq 'raios-universal-mcp' -and $m.transport -ceq 'streamable-http' -and
+   $m.second_gateway -is [bool] -and $m.second_gateway -eq $false -and
+   $m.get_sse -is [bool] -and $m.get_sse -eq $true -and
+   $m.stateless -is [bool] -and $m.stateless -eq $false -and
+   $m.channel -ceq 'streamable-http-session' -and
+   $m.hosted_dcr_required -is [bool] -and $m.hosted_dcr_required -eq $false
+  )
  }catch{return $false}
 }
 

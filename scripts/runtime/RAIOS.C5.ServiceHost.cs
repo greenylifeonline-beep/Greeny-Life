@@ -355,6 +355,8 @@ namespace RAIOS.ControlPlane
                         && body.Contains("\"raw_shell\":false")
                         && body.Contains("\"shell_via_mcp\":false")
                         && body.Contains("\"second_gateway\":false")
+                        && body.Contains("\"duplicate_mcp\":false")
+                        && body.Contains("\"hosted_dcr_required\":false")
                         && !body.Contains("\"tool_count\":8");
                 }
             }

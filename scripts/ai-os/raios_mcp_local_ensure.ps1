@@ -61,6 +61,7 @@ function Test-RaiosMcpToolContract($Health) {
     $count = [int]$ExpectedToolContract
     if ($tools.Count -ne $count -or [int]$Health.tool_count -ne $count -or $Health.second_gateway -eq $true) { return $false }
     if ($count -eq 9 -and ($Health.execute_scoped_task -ne $true -or $Health.raw_shell -eq $true)) { return $false }
+    if ($Health.duplicate_mcp -eq $true -or $Health.second_gateway -eq $true) { return $false }
     return $true
 }
 function Test-RaiosMcpHealthy($Health) {
@@ -324,8 +325,9 @@ function Write-RaiosListenerBinding($Info, [int]$ProcId) {
     Move-Item -LiteralPath $tmp -Destination $OwnerManifest -Force
 }
 function Stop-RaiosListenPid([int]$ProcId) {
+    if ($ProcId -le 4) { throw "Refusing unsafe listener PID $ProcId." }
     Stop-Process -Id $ProcId -Force -ErrorAction Stop
-    for ($i = 0; $i -lt 20; $i++) {
+    for ($i = 0; $i -lt 40; $i++) {
         Start-Sleep -Milliseconds 250
         if (-not (Get-Process -Id $ProcId -ErrorAction SilentlyContinue)) { return }
     }

@@ -1,13 +1,14 @@
 from pathlib import Path
 import json
 import os
+import subprocess
 import sys
 import threading
 from http.server import ThreadingHTTPServer
 from urllib.request import urlopen
 
 sys.path.insert(0, str(Path(__file__).resolve().parents[2] / "scripts" / "ai-os"))
-from raios_mcp.gateway import Gateway, V1_TOOLS  # noqa: E402
+from raios_mcp.gateway import REGISTERED_TOOLS, Gateway, V1_TOOLS  # noqa: E402
 from raios_mcp.server import CENSUS_PORT, Handler, canonical_head  # noqa: E402
 
 
@@ -89,6 +90,9 @@ def test_health_http_lists_nine_tools(tmp_path):
         assert health["raw_shell"] is False
         assert health["shell_via_mcp"] is False
         assert health["send_packet_execution"] == "TEMPORARY_COMPATIBILITY"
+        assert health["tools"] == list(REGISTERED_TOOLS)
+        assert health["duplicate_mcp"] is False
+        assert health["hosted_dcr_required"] is False
         assert health["second_gateway"] is False
         assert health["head_source"] in {"env", "git-file", "unknown"}
         init = json.dumps({"jsonrpc": "2.0", "id": 1, "method": "initialize", "params": {}}).encode()
@@ -105,22 +109,6 @@ def test_health_http_lists_nine_tools(tmp_path):
             ).read().decode()
         )
         assert rpc["result"]["serverInfo"]["name"] == "raios-universal-mcp"
-        head_call = json.dumps(
-            {"jsonrpc": "2.0", "id": 2, "method": "tools/call", "params": {"name": "get_head", "arguments": {}}}
-        ).encode()
-        from urllib.request import Request
-        read_rpc = json.loads(
-            urlopen(
-                Request(
-                    f"http://{host}:{port}/mcp",
-                    data=head_call,
-                    headers={"Content-Type": "application/json", "Accept": "application/json"},
-                    method="POST",
-                ),
-                timeout=3,
-            ).read().decode()
-        )
-        assert read_rpc["result"]["isError"] is False
         deny = json.dumps(
             {"jsonrpc": "2.0", "id": 3, "method": "tools/call", "params": {"name": "send_packet", "arguments": {"to": ["C2"], "text": "x"}}}
         ).encode()
@@ -277,6 +265,80 @@ def test_health_exposes_production_bounds(tmp_path):
         assert body["max_request_bytes"] == srv.MAX_REQUEST_BYTES
         assert "metrics" in body
         assert "uptime_seconds" in body
+    finally:
+        httpd.shutdown()
+        httpd.server_close()
+        thread.join(timeout=3)
+
+
+def test_get_head_reads_git_file_inside_deadline(tmp_path):
+    subprocess.run(["git", "init", "-b", "test-mcp"], cwd=tmp_path, check=True, capture_output=True)
+    subprocess.run(
+        ["git", "-c", "user.name=MCP Test", "-c", "user.email=mcp@test.invalid", "commit", "--allow-empty", "-m", "fixture"],
+        cwd=tmp_path,
+        check=True,
+        capture_output=True,
+    )
+    Handler.gateway = Gateway.from_root(tmp_path, grants=[])
+    httpd = ThreadingHTTPServer(("127.0.0.1", 0), Handler)
+    httpd.daemon_threads = True
+    thread = threading.Thread(target=httpd.serve_forever, daemon=True)
+    thread.start()
+    try:
+        host, port = httpd.server_address[:2]
+        body = json.dumps(
+            {"jsonrpc": "2.0", "id": 2, "method": "tools/call", "params": {"name": "get_head", "arguments": {}}}
+        ).encode()
+        from urllib.request import Request
+        reply = json.loads(urlopen(Request(
+            f"http://{host}:{port}/mcp",
+            data=body,
+            headers={"Content-Type": "application/json", "Accept": "application/json"},
+            method="POST",
+        ), timeout=20).read().decode())
+        assert reply["result"]["isError"] is False
+        metadata = json.loads(reply["result"]["content"][0]["text"])
+        expected = subprocess.check_output(["git", "rev-parse", "HEAD"], cwd=tmp_path, text=True).strip()
+        assert metadata["head"] == expected
+        assert metadata["head_source"] == "git-file"
+        assert metadata["branch"] == "test-mcp"
+    finally:
+        httpd.shutdown()
+        httpd.server_close()
+        thread.join(timeout=3)
+
+
+def test_loopback_cannot_execute_scoped_task(tmp_path):
+    Handler.gateway = Gateway.from_root(tmp_path, grants=[])
+    httpd = ThreadingHTTPServer(("127.0.0.1", 0), Handler)
+    httpd.daemon_threads = True
+    thread = threading.Thread(target=httpd.serve_forever, daemon=True)
+    thread.start()
+    try:
+        host, port = httpd.server_address[:2]
+        body = json.dumps({
+            "jsonrpc": "2.0",
+            "id": 10,
+            "method": "tools/call",
+            "params": {
+                "name": "execute_scoped_task",
+                "arguments": {
+                    "provider": "desktop_commander",
+                    "capability": "remote",
+                    "operation": "__list_tools__",
+                    "execution_intent": "SCOPED",
+                    "authority_scope": "REMOTE_CAPABILITY_READ",
+                },
+            },
+        }).encode()
+        from urllib.request import Request
+        reply = json.loads(urlopen(Request(
+            f"http://{host}:{port}/mcp",
+            data=body,
+            headers={"Content-Type": "application/json", "Accept": "application/json"},
+            method="POST",
+        ), timeout=3).read().decode())
+        assert "UNAUTHENTICATED" in str(reply.get("error") or reply)
     finally:
         httpd.shutdown()
         httpd.server_close()
