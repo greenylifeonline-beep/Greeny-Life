@@ -1,3 +1,5 @@
+# RAIOS_UNIVERSAL_CONNECTOR_FABRIC_V3
+# RAIOS_EXTERNAL_PRINCIPAL_PROFILE_V1
 """RAIOS MCP gateway: nine public tools, one execution plane, no shell."""
 from __future__ import annotations
 
@@ -97,6 +99,20 @@ def load_json(path: Path, default: Any) -> Any:
     if not path.exists():
         return default
     return json.loads(path.read_text(encoding="utf-8"))
+
+
+
+# RAIOS_EXTERNAL_CONNECTOR_REBIND_V1
+EXTERNAL_REBIND_REL = Path(".ai-os") / "mcp" / "EXTERNAL-CONNECTORS.json"
+
+def write_json_atomic(path: Path, payload: Any) -> None:
+    path.parent.mkdir(parents=True, exist_ok=True)
+    temp = path.with_name(path.name + ".tmp." + uuid.uuid4().hex)
+    temp.write_text(
+        json.dumps(payload, ensure_ascii=False, indent=2),
+        encoding="utf-8",
+    )
+    temp.replace(path)
 
 
 def load_jsonl(path: Path) -> list[dict]:
@@ -342,7 +358,7 @@ class Gateway:
             grant = token_by_id.get(actor_id) or {}
             policy_tools = list(spec.get("tools") or [])
             requested_scopes = list(grant.get("scopes") or policy_tools)
-            scopes = [s for s in requested_scopes if s in policy_tools and s in V1_TOOLS]
+            scopes = [s for s in requested_scopes if s in policy_tools and s in REGISTERED_TOOLS]
             raw = str(grant.get("token") or "")
             actors[actor_id] = Actor(
                 actor_id=actor_id,
@@ -356,18 +372,202 @@ class Gateway:
             )
         return cls(root=root, policy=policy, actors=actors)
 
+
+    def _external_rebind_state(self) -> dict:
+        path = self.root / EXTERNAL_REBIND_REL
+        state = load_json(
+            path,
+            {
+                "schema": "raios.external-connectors.v1",
+                "version": 1,
+                "bindings": [],
+                "pending": [],
+            },
+        )
+        if not isinstance(state, dict):
+            state = {}
+        state.setdefault("schema", "raios.external-connectors.v1")
+        state.setdefault("version", 1)
+        state.setdefault("bindings", [])
+        state.setdefault("pending", [])
+        return state
+
+    def _actor_from_external_binding(self, digest: str) -> Actor | None:
+        state = self._external_rebind_state()
+        now = datetime.now(timezone.utc)
+
+        contract = load_json(
+            self.root / ".ai-os" / "mcp" / "EXTERNAL-CONNECTOR-CONTRACT.json",
+            {},
+        )
+
+        profiles = (
+            contract.get("external_principal_profiles")
+            if isinstance(contract, dict)
+            else {}
+        ) or {}
+
+        for row in list(state.get("bindings") or []):
+            if str(row.get("fingerprint_sha256") or "") != digest:
+                continue
+
+            status = str(row.get("status") or "").upper()
+
+            if status not in {"ACTIVE", "GRACE"}:
+                continue
+
+            expiry = row.get("expires_at")
+            grace_until = row.get("grace_until")
+
+            if expiry and parse_dt(str(expiry)) <= now:
+                continue
+
+            if (
+                status == "GRACE"
+                and grace_until
+                and parse_dt(str(grace_until)) <= now
+            ):
+                continue
+
+            connector_id = str(row.get("connector_id") or "")
+            principal = str(row.get("principal") or "")
+
+            profile = profiles.get(connector_id)
+
+            if not isinstance(profile, dict):
+                continue
+
+            if str(profile.get("principal") or "") != principal:
+                continue
+
+            # External principals are explicitly not council seats.
+            if bool(profile.get("seat")):
+                continue
+
+            tools = [
+                str(x)
+                for x in list(profile.get("tools") or [])
+                if str(x) in REGISTERED_TOOLS
+            ]
+
+            scopes = [
+                str(x)
+                for x in list(profile.get("scopes") or [])
+                if str(x) in V1_TOOLS
+            ]
+
+            deny = [
+                str(x)
+                for x in list(profile.get("deny") or [])
+            ]
+
+            if not tools:
+                continue
+
+            return Actor(
+                actor_id=principal,
+                actor_role=str(
+                    profile.get("actor_role")
+                    or "EXTERNAL_DELEGATED_CLIENT"
+                ),
+                instance_role=str(
+                    profile.get("instance_role")
+                    or connector_id.lower()
+                ),
+                tools=tools,
+                deny=deny,
+                token_sha256=digest,
+                scopes=scopes,
+                expires_at=str(expiry) if expiry else None,
+            )
+
+        return None
+
+    def _record_pending_external_rebind(self, digest: str) -> None:
+        path = self.root / EXTERNAL_REBIND_REL
+        state = self._external_rebind_state()
+        pending = list(state.get("pending") or [])
+
+        now = utc()
+        matched = None
+
+        for row in pending:
+            if (
+                str(row.get("fingerprint_sha256") or "") == digest
+                and str(row.get("status") or "").upper() == "PENDING"
+            ):
+                matched = row
+                break
+
+        if matched is None:
+            matched = {
+                "fingerprint_sha256": digest,
+                "status": "PENDING",
+                "first_seen_at": now,
+                "last_seen_at": now,
+                "seen_count": 1,
+                "secret_material_persisted": False,
+            }
+            pending.append(matched)
+        else:
+            matched["last_seen_at"] = now
+            matched["seen_count"] = int(matched.get("seen_count") or 0) + 1
+
+        # Bound state size; this is state, not a second WAL.
+        pending = pending[-128:]
+
+        state["pending"] = pending
+        state["updated_at"] = now
+        write_json_atomic(path, state)
+
+        append_jsonl(
+            self.audit_path,
+            {
+                "ts": now,
+                "event": "EXTERNAL_CONNECTOR_PENDING_REBIND",
+                "fingerprint_sha256": digest,
+                "secret_material_persisted": False,
+                "gl005_proven": False,
+            },
+        )
+
+
     def authenticate(self, token: str | None) -> Actor:
         if not token:
             raise GatewayError("UNAUTHENTICATED", "missing token", 401)
+
         digest = sha256_text(token)
+
+        # Generation 0 / legacy primary credential.
         for actor in self.actors.values():
             if actor.token_sha256 and actor.token_sha256 == digest:
                 if actor.actor_id == "C0":
-                    raise GatewayError("C0_SEAT_ABOLISHED", "C0 is not a live seat", 403)
-                if actor.expires_at and parse_dt(actor.expires_at) <= datetime.now(timezone.utc):
+                    raise GatewayError(
+                        "C0_SEAT_ABOLISHED",
+                        "C0 is not a live seat",
+                        403,
+                    )
+                if (
+                    actor.expires_at
+                    and parse_dt(actor.expires_at)
+                    <= datetime.now(timezone.utc)
+                ):
                     raise GatewayError("EXPIRED", "token expired", 401)
                 return actor
-        raise GatewayError("UNAUTHENTICATED", "unknown token", 401)
+
+        # Universal connector generations.
+        rebound = self._actor_from_external_binding(digest)
+        if rebound is not None:
+            return rebound
+
+        # Never persist the presented secret: fingerprint only.
+        self._record_pending_external_rebind(digest)
+
+        raise GatewayError(
+            "CLIENT_REAUTH_REQUIRED",
+            "credential fingerprint captured for C1 connector rebind",
+            401,
+        )
 
     def loopback_reader(self) -> Actor:
         return Actor(
@@ -430,7 +630,69 @@ class Gateway:
         self._bind_identity(actor, tool, arguments)
         return getattr(self, f"tool_{tool}")(actor, arguments)
 
+
+    def _normalize_system_owned_envelope(
+        self,
+        actor: Actor,
+        tool: str,
+        arguments: dict,
+    ) -> None:
+        """
+        Universal Connector Fabric V3.
+
+        External clients express business intent only.
+        RAIOS owns protocol identity, live runtime truth,
+        envelope metadata and integrity fields.
+        """
+        if tool not in WRITE_TOOLS:
+            return
+
+        # Authenticated identity is authoritative.
+        # A client cannot impersonate C1/C2/etc by supplying fields.
+        arguments["actor_id"] = actor.actor_id
+        arguments["actor_role"] = actor.actor_role
+        arguments["instance_role"] = actor.instance_role
+
+        # Runtime truth comes from the live canonical tree.
+        live_head = git(self.root, "rev-parse", "HEAD")
+        live_branch = git(self.root, "branch", "--show-current") or BRANCH
+
+        arguments["repository"] = REPO
+        arguments["branch"] = live_branch
+        arguments["requested_head"] = live_head
+        arguments["authority_scope"] = ",".join(actor.scopes)
+
+        # IDs are system generated, never trusted from a connector.
+        arguments["session_id"] = "sess_" + uuid.uuid4().hex
+        arguments["packet_id"] = "pkt_" + uuid.uuid4().hex
+        arguments["correlation_id"] = "corr_" + uuid.uuid4().hex[:20]
+
+        # Cognitive connector writes are never executable or promotional.
+        if tool == "post_opinion":
+            arguments["write_intent"] = "OPINION_ONLY"
+        elif tool == "ack_packet":
+            arguments["write_intent"] = "ACK_ONLY"
+        else:
+            arguments["write_intent"] = "MESSAGE_ONLY"
+
+        arguments["execution_intent"] = "NONE"
+        arguments["promotion_intent"] = "NONE"
+
+        now = datetime.now(timezone.utc)
+
+        arguments["created_at"] = now.isoformat()
+        arguments["expires_at"] = datetime.fromtimestamp(
+            now.timestamp() + 900,
+            timezone.utc,
+        ).isoformat()
+
+        # Integrity is calculated last by RAIOS.
+        arguments.pop("payload_hash", None)
+        arguments["payload_hash"] = payload_hash_of(arguments)
+
+
     def _bind_identity(self, actor: Actor, tool: str, arguments: dict[str, Any]) -> None:
+        self._normalize_system_owned_envelope(actor, tool, arguments)
         if "head" in arguments and "requested_head" not in arguments:
             arguments["requested_head"] = arguments["head"]
         claimed = str(arguments.get("actor_id") or actor.actor_id).upper()
@@ -818,7 +1080,7 @@ class Gateway:
             lease_id = str(lease.get("lease_id") or "")
         executor = self._select_executor(capability)
         try:
-            invoked = capabilities.invoke(capability)
+            invoked = capabilities.invoke(capability, arguments.get("payload") or arguments.get("task_payload") or arguments)
         finally:
             if acquired and lease_id:
                 leases.release(lease_id, owner="RAIOS_SYSTEM")
@@ -860,7 +1122,7 @@ class Gateway:
             actor,
             arguments,
             intent,
-            require_fence=intent == "DELEGATED",
+            require_fence=(intent == "DELEGATED" and actor.actor_role != "EXTERNAL_DELEGATED_CLIENT"),
         )
         return self._receipt(
             {
