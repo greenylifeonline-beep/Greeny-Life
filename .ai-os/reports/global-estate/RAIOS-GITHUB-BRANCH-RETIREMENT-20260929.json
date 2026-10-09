@@ -1,0 +1,470 @@
+{
+  "schema": "raios.github-branch-retirement-evidence.v1",
+  "generated_at": "2026-09-29T20:26:00+03:00",
+  "authority": "C1",
+  "canonical_branch": "ai-evolution-202608051809",
+  "canonical_head_before_receipt": "0d4a207a34cb8294a71ca04211406836b98cca12",
+  "github_default_branch": "ai-evolution-202608051809",
+  "policy": [
+    "SINGLE_SOURCE_SINGLE_TRUTH",
+    "NO_WHOLESALE_MERGE_FROM_HISTORICAL_BRANCHES",
+    "EXTRACT_VALIDATE_BIND_PROVE_THEN_DELETE_REF",
+    "NO_SECOND_COMMAND_FABRIC",
+    "NO_PARALLEL_RUNTIME"
+  ],
+  "remote_archive_ref_attempt": {
+    "status": "DENIED_BY_RAIOS_PUSH_GATE",
+    "reason": "NONCANONICAL_REMOTE_REF",
+    "consequence": "Do not bypass gate; canonical evidence file is authoritative retirement record."
+  },
+  "retired_branches": [
+    {
+      "branch": "c6-engine-consolidation-wave02",
+      "sha": "8091dfac234668bb982e303d5bdceafb37a3336b",
+      "reason": "ancestor/subsumed by canonical engine-estate convergence"
+    },
+    {
+      "branch": "rf-wave05-executable-reservoir",
+      "sha": "4f3e6b9cbd999a1b602c7e82f8de7a7a3b06e562",
+      "reason": "ancestor/subsumed by canonical resource-fabric reservoir"
+    },
+    {
+      "branch": "pr/authoritative-certifier-forensic",
+      "sha": "d2ab122fe25e3ab16b91afbc3267cd47778f6dba",
+      "reason": "certifier implementation present in canonical"
+    },
+    {
+      "branch": "pr/cairo-shipment-origin-salvage",
+      "sha": "7031ffc1de5f34ddefc77d622d8eedc8cb12892d",
+      "reason": "30/30 canonical shipments already carry Cairo, Egypt origin"
+    },
+    {
+      "branch": "pr/nl0-semantic-kernel",
+      "sha": "f7c23759b59be72456af59a87d8c48b13827fa7b",
+      "reason": "NeuroLingua capability present and expanded in canonical"
+    },
+    {
+      "branch": "cursor/setup-dev-environment-ee89",
+      "sha": "31449c23905ab02f43360762ababbe4bca759997",
+      "pr": 1,
+      "reason": "Prisma dependencies already present in canonical; stale draft against old main"
+    },
+    {
+      "branch": "cursor/neurolingua-semantic-kernel-4f9d",
+      "sha": "0c9b4f6a64255e64aa73d90cb178774623e3eb01",
+      "pr": 11,
+      "reason": "NL-0 superseded by expanded canonical NeuroLingua"
+    },
+    {
+      "branch": "cursor/a17-integration-wave-f3c7",
+      "sha": "4475a1cff3c506883848242fe2d4b060f33a47e5",
+      "pr": 2,
+      "reason": "parallel A17 package retired; capabilities converged into canonical estate"
+    },
+    {
+      "branch": "cursor/a17-cursor-parallel-f3c7",
+      "sha": "b2a1645d32c5de8e8fb19d14445b6585c875653e",
+      "pr": 3,
+      "reason": "parallel live-learning package retired; canonical physical convergence reports zero same-role competitors"
+    },
+    {
+      "branch": "cursor/a18-ccee-foundation-f3c7",
+      "sha": "edb344eac48a010f18a0ecdb2b7fd4c8b1e58fb5",
+      "pr": 4,
+      "reason": "A18/CCEE parallel package retired into canonical engine/factory/evolution paths"
+    },
+    {
+      "branch": "cursor/file-intelligence-parallel-f3c7",
+      "sha": "79569cde5573fdd24da2268481f22f43aa74b0dd",
+      "pr": 5,
+      "reason": "isolated parallel file-intelligence package superseded by canonical estate/data-intelligence capabilities"
+    },
+    {
+      "branch": "cursor/file-intelligence-fabric-f3c7",
+      "sha": "a6e121e8fbdededaf44507dd3387a2f48565a950",
+      "pr": 6,
+      "reason": "file intelligence fabric donor retired after canonical convergence"
+    },
+    {
+      "branch": "cursor/file-intelligence-authority-f3c7",
+      "sha": "223386b53be5b6c6e4b9cf65b74f97fa4fc48605",
+      "pr": 7,
+      "reason": "authority/certification donor retired after canonical convergence"
+    },
+    {
+      "branch": "cursor/raios-repair-boot-41f5",
+      "sha": "c2847e28a2d2b09e04b57684eee65236c96427a7",
+      "pr": 8,
+      "reason": "diagnostic/boot donor retired; canonical runtime governance supersedes parallel package"
+    },
+    {
+      "branch": "cursor/raios-false-pass-training-147d",
+      "sha": "4b0b51af31685b49df181641c2e88d16f4b8c3d3",
+      "pr": 9,
+      "reason": "false-pass lesson absorbed into canonical fail-closed governance/training"
+    },
+    {
+      "branch": "cursor/raios-live-assimilation-147d",
+      "sha": "2d41ef264bdda70b1ba0f0588585ee740aea3ff2",
+      "pr": 10,
+      "reason": "parallel assimilation runtime retired; canonical learning/evolution path retained"
+    },
+    {
+      "branch": "cursor/raios-certifier-safety-schema-4540",
+      "sha": "2a834cc86c05642d59e3e2837e411751190aa7b4",
+      "pr": 14,
+      "reason": "nested safety schema fix and tests exist in canonical"
+    },
+    {
+      "branch": "cursor/c5-screen-identity-4540",
+      "sha": "f48e80b63d405a5483cf21822aa4ac618888bd55",
+      "pr": 15,
+      "reason": "runtime fix already canonical; reusable regression intent ported and live-probed successfully"
+    },
+    {
+      "branch": "v9-neurolingua-semantic-kernel",
+      "sha": "79ba97031e0b0fd740fd890cbf9ba0451597783d",
+      "pr": 12,
+      "reason": "unique fail-closed transport invariants extracted into canonical; remaining content historical/superseded"
+    },
+    {
+      "branch": "cursor/c2-evidence-reuse-preparation-4247",
+      "sha": "c36906757f7dce17cbcbb2d3cf9fcb5c8f53f6cc",
+      "pr": 13,
+      "reason": "evidence-index script classified reference-only; current canonical estate/forensic authority is broader"
+    },
+    {
+      "branch": "raios/gl-005-convergence",
+      "sha": "3d9f58136d318ba07d743e127ab1e433605ce1ea",
+      "reason": "duplicate read-only aggregation facade; no unique runtime/authority"
+    }
+  ],
+  "remaining_branches": [
+    {
+      "branch": "ai-evolution-202608051809",
+      "sha": "94d3c81d9e034e463270b21e26699875220d27e1",
+      "decision": "KEEP_CANONICAL_SOLE_REMOTE_BRANCH"
+    }
+  ],
+  "verification": {
+    "branches_before_wave": 24,
+    "branches_after_retirement": 1,
+    "open_pull_requests_after_retirement": 0,
+    "local_working_tree_modified": false,
+    "c2_scope_modified": false,
+    "merge_executed": false,
+    "reset_executed": false,
+    "checkout_executed": false,
+    "remote_branches_before_final_retirement": 3,
+    "open_pull_requests": 0,
+    "workflow_legacy_ref_hits": 0,
+    "recovery_trees_verified": 5,
+    "remote_branch_convergence_complete": true,
+    "github_default_branch": "ai-evolution-202608051809",
+    "remote_historical_branches_remaining": 0,
+    "remote_branches_after_final_retirement": 1,
+    "main_remote_ref_deleted": true,
+    "codex_clean_remote_ref_deleted": true,
+    "recovery_provenance_preserved": true,
+    "raw_donor_history_deleted": false,
+    "canonical_branch_protected": true,
+    "force_push_allowed": false,
+    "branch_deletion_allowed": false,
+    "single_remote_branch": true
+  },
+  "assimilations": [
+    {
+      "donor_branch": "cursor/c5-screen-identity-4540",
+      "donor_sha": "f48e80b63d405a5483cf21822aa4ac618888bd55",
+      "donor_pr": 15,
+      "retained_value": "C5 optional-dependency identity regression intent",
+      "canonical_artifact": "tests/c5_screen/test_optional_dependency_independence.py",
+      "canonical_commit": "6e5a7c1d1f3f9455b9c9cfaa1d0b1512d4f2ea66",
+      "live_probe": {
+        "whoami_ok": true,
+        "from": "C5",
+        "parent": "C1",
+        "paid_api": false,
+        "gl005_proven": false,
+        "wal_written": false,
+        "identity_ok": true,
+        "kind": "whoami",
+        "answer_has_C5": true,
+        "wal_unchanged": true
+      },
+      "historical_only_not_promoted": [
+        "D081 CI commit identity receipt assertions",
+        "D082-D084 stage-0 port/session assertions bound to old 8787/Cursor topology",
+        "old c5_bind/named_cortex_from_registry API assertions"
+      ],
+      "decision": "SAFE_TO_RETIRE_BRANCH"
+    },
+    {
+      "donor_branch": "v9-neurolingua-semantic-kernel",
+      "donor_sha": "79ba97031e0b0fd740fd890cbf9ba0451597783d",
+      "donor_pr": 12,
+      "retained_value": [
+        "fail closed when return_path is blank",
+        "explicit invalid HMAC signature regression coverage"
+      ],
+      "canonical_changes": [
+        {
+          "path": "scripts/ai-os/raios_transport/packet.py",
+          "commit": "0606d14fe65f8a7a5b69b7fd165a0bdb4b3882d3"
+        },
+        {
+          "path": "scripts/ai-os/raios_transport/tests/test_stage04.py",
+          "commit": "0f4b676023a71561b7b79a2ba2f07f945fb9ca64"
+        }
+      ],
+      "live_probe": {
+        "invalid_signature": "INVALID_SIGNATURE",
+        "empty_return_path": "MISSING_RETURN_PATH"
+      },
+      "superseded_test_intents": [
+        "lease conflict/expiry/idempotent reacquire covered by canonical Command Fabric CF005-CF010/CF024",
+        "duplicate execution suppression covered by CF011 and canonical transport tests",
+        "replay/expiry already covered by canonical packet tests",
+        "old 8787/Cursor-local topology is historical"
+      ],
+      "decision": "SAFE_TO_RETIRE_BRANCH"
+    },
+    {
+      "donor_branch": "cursor/c2-evidence-reuse-preparation-4247",
+      "donor_sha": "c36906757f7dce17cbcbb2d3cf9fcb5c8f53f6cc",
+      "donor_pr": 13,
+      "reviewed_value": "build_c2_index.py plus evidence reuse/hash/topic/contradiction outputs",
+      "decision": "REFERENCE_ONLY_NO_PROMOTION",
+      "reason": [
+        "script hard-codes historical August refs and session topology",
+        "creates a parallel Evidence-Reuse Index rather than extending current canonical evidence authority",
+        "canonical Master Estate and Deep Legacy Forensic reports already provide broader surface, lineage, duplicate, capability, unresolved and reuse/archive/delete coverage",
+        "promoting it would recreate a duplicate evidence registry contrary to Single-Truth"
+      ]
+    },
+    {
+      "donor_branch": "codex-clean",
+      "donor_sha": "98b952417c19d61d269a5681ef0ccc4aba959738",
+      "donor_package": "RAIOS-SHARED-COGNITIVE-EXCHANGE-REFERENCE-V2",
+      "retained_value": "separate storage/validation/trust/canonical authority dimensions",
+      "canonical_changes": [
+        {
+          "path": "src/raios/factory_fabric/cognitive.py",
+          "commit": "a5b91fae4b8ba12d3d28bbfc606a45b928dba903"
+        },
+        {
+          "path": "tests/factory_fabric/test_cognitive_factory.py",
+          "commit": "aba6f55a98f0e3f63e29bb5a3ab45d292ad6adce"
+        }
+      ],
+      "live_probe": {
+        "status": "PASS",
+        "storage_status": "STORED_VERIFIED",
+        "validation_status": "UNVALIDATED",
+        "trust_status": "UNTRUSTED",
+        "canonical_status": "NOT_CANONICAL",
+        "promotion_authority": false,
+        "authority_dimensions_separated": true
+      },
+      "already_present": [
+        "write lease fencing via fence_token in raios.write-lease.v2",
+        "validation/reference-only dispositions",
+        "automatic canonical promotion disabled"
+      ],
+      "pending_value": {
+        "capability": "crash-safe CAS temp-write/fsync/hash-verify/exclusive-publish/residue-reconciliation",
+        "status": "EXTRACTED_UNWIRED_PENDING_C2_CONVERGENCE",
+        "canonical_artifacts": [
+          {
+            "path": "src/raios/factory_fabric/cas_durability.py",
+            "commit": "865ed1ba32a516c142e4fbfbc31d57d58db7cbc7"
+          },
+          {
+            "path": "tests/factory_fabric/test_cas_durability.py",
+            "commit": "fded74b57465f921e646428af4d8d4a29658da28"
+          }
+        ],
+        "verification": {
+          "isolated_pytest_status": "PASS",
+          "tests_passed": 4,
+          "tests_failed": 0,
+          "covered": [
+            "idempotent immutable publish",
+            "existing-object hash tamper fail-closed",
+            "temp/lock crash residue reconciliation without object deletion",
+            "Windows/filesystem hard-link fallback via exclusive sidecar lock"
+          ]
+        },
+        "wiring_status": "NOT_WIRED_TO_STATE_IMPORT",
+        "reason": "Local C2 has active edits in src/raios/factory_fabric/state_import.py; helper extracted separately to avoid overlap."
+      },
+      "decision": "DONOR_REMOTE_RETIRED_RECOVERY_HELD_CAS_VALUE_EXTRACTED"
+    }
+  ],
+  "updated_at": "2026-09-29T21:37:00+03:00",
+  "pending_remote_ref_deletions": [],
+  "branch_reviews": [
+    {
+      "branch": "raios/gl-005-convergence",
+      "sha": "3d9f58136d318ba07d743e127ab1e433605ce1ea",
+      "decision": "SAFE_TO_RETIRE_NO_PROMOTION",
+      "classification": "DUPLICATE_READ_ONLY_FACADE",
+      "reason": [
+        "unified-operation invokes the same buildMasterMindDecisionPackage already canonical",
+        "customer context and trade corridor are already MasterMind agents",
+        "Egypt operating context is already represented in current operating-brain/MasterMind path",
+        "UAE/Norway UNAVAILABLE labels add no executable capability",
+        "promoting a second endpoint/orchestrator would create duplicate decision surface and authority ambiguity"
+      ]
+    },
+    {
+      "branch": "main",
+      "sha": "da67f44963fafde67df52cb62ab32f75fe725df0",
+      "decision": "REMOTE_REF_SAFE_TO_RETIRE_WITH_RECOVERY_HOLD",
+      "reason": [
+        "GitHub default branch is canonical ai-evolution-202608051809",
+        "no open PR depends on main",
+        "no canonical workflow references main",
+        "raw main tree preserved and verified in CANONICAL_RECOVERY_ASSET",
+        "historical supplier/customer/market candidates are already represented in canonical deep-legacy forensic evidence as noncanonical validation-required records"
+      ],
+      "current_truth_policy": "HISTORICAL_COMMERCIAL_RECORDS_NE_CURRENT_CANONICAL_TRUTH",
+      "recovery_ref": "refs/raios-recovery/github-main-20260929"
+    },
+    {
+      "branch": "codex-clean",
+      "sha": "98b952417c19d61d269a5681ef0ccc4aba959738",
+      "decision": "REMOTE_REF_SAFE_TO_RETIRE_WITH_RECOVERY_HOLD",
+      "reason": [
+        "useful authority-separation value assimilated into canonical Factory Fabric",
+        "lease fencing already canonical",
+        "remaining crash-safe CAS donor value is deferred solely to avoid overlap with active C2 state_import.py edits",
+        "full donor tree preserved and verified in CANONICAL_RECOVERY_ASSET"
+      ],
+      "pending_assimilation": "CRASH_SAFE_CAS_PUBLISH_AND_RECONCILIATION_AFTER_C2_STATE_IMPORT_CONVERGENCE",
+      "recovery_ref": "refs/raios-recovery/github-codex-clean-20260929"
+    }
+  ],
+  "current_state": {
+    "branch_count": 1,
+    "branches": [
+      {
+        "branch": "ai-evolution-202608051809",
+        "sha": "94d3c81d9e034e463270b21e26699875220d27e1"
+      }
+    ],
+    "open_pull_requests": 0,
+    "remote_archive_refs": 0,
+    "status": "REMOTE_BRANCH_CONVERGENCE_COMPLETE"
+  },
+  "remote_archive_ref_cleanup": {
+    "status": "COMPLETE",
+    "refs_remaining": 0,
+    "authority": "canonical evidence manifest; no parallel archive refs retained"
+  },
+  "recovery_asset": {
+    "path": "C:\\Users\\Ghanam\\OneDrive\\projects\\Greeny-Life-RETIRED-20260820-084036",
+    "terminal_state": "CANONICAL_RECOVERY_ASSET",
+    "working_payload_retired": true,
+    "runtime_required": false,
+    "refs_verified": [
+      {
+        "source_branch": "main",
+        "source_sha": "da67f44963fafde67df52cb62ab32f75fe725df0",
+        "recovery_ref": "refs/raios-recovery/github-main-20260929",
+        "files": 616,
+        "tree_ok": true
+      },
+      {
+        "source_branch": "codex-clean",
+        "source_sha": "98b952417c19d61d269a5681ef0ccc4aba959738",
+        "recovery_ref": "refs/raios-recovery/github-codex-clean-20260929",
+        "files": 1801,
+        "tree_ok": true
+      },
+      {
+        "source_branch": "cursor/c2-evidence-reuse-preparation-4247",
+        "source_sha": "c36906757f7dce17cbcbb2d3cf9fcb5c8f53f6cc",
+        "recovery_ref": "refs/raios-recovery/github-c2-evidence-20260929",
+        "files": 630,
+        "tree_ok": true
+      },
+      {
+        "source_branch": "v9-neurolingua-semantic-kernel",
+        "source_sha": "79ba97031e0b0fd740fd890cbf9ba0451597783d",
+        "recovery_ref": "refs/raios-recovery/github-v9-20260929",
+        "files": 2332,
+        "tree_ok": true
+      },
+      {
+        "source_branch": "raios/gl-005-convergence",
+        "source_sha": "3d9f58136d318ba07d743e127ab1e433605ce1ea",
+        "recovery_ref": "refs/raios-recovery/github-gl005-20260929",
+        "files": 1327,
+        "tree_ok": true
+      }
+    ],
+    "role": "RECOVERY_PROVENANCE_ONLY_NOT_RUNTIME"
+  },
+  "final_remote_state": {
+    "verified": true,
+    "branch_count": 1,
+    "default_branch": "ai-evolution-202608051809",
+    "branches": [
+      {
+        "branch": "ai-evolution-202608051809",
+        "sha": "1f62910dd2a033a01bf78109172384f2ebaf3c27",
+        "protected": true
+      }
+    ],
+    "historical_operational_branch_refs_remaining": 0,
+    "cursor_branch_refs_remaining": 0,
+    "old_main_ref_remaining": false,
+    "codex_clean_ref_remaining": false
+  },
+  "canonical_branch_protection": {
+    "enabled": true,
+    "github_branch_list_protected_true": true,
+    "api_update_http": 200,
+    "enforce_admins": true,
+    "allow_force_pushes": false,
+    "allow_deletions": false,
+    "required_pull_request_reviews": null,
+    "required_status_checks": null,
+    "note": "Protection prevents destructive ref operations without imposing a new PR-only workflow."
+  },
+  "post_retirement_value_extraction": {
+    "status": "PASS",
+    "capability": "FACTORY_FABRIC_CAS_DURABILITY",
+    "second_runtime_created": false,
+    "second_registry_created": false,
+    "state_import_modified": false,
+    "c2_scope_modified": false,
+    "next_gate": "WIRE_CAS_HELPER_AFTER_C2_STATE_IMPORT_CONVERGENCE"
+  },
+  "post_retirement_hardening": {
+    "status": "PASS",
+    "retired_root_resurrection_guard": {
+      "retired_path": "C:\\\\Users\\\\Ghanam\\\\Documents\\\\Codex\\\\Greeny-Life-Repair",
+      "active_certifier_fallback_removed": true,
+      "canonical_root_resolution": [
+        "RAIOS_CANONICAL_ROOT",
+        "RAIOS_REPAIR_ROOT compatibility alias",
+        "git rev-parse --show-toplevel",
+        "package-relative fallback"
+      ],
+      "commits": [
+        "33bb48ed76d9487854b8b6c95c4ccb73a4ddfebc",
+        "c3fd024a64af5897b7d94537c4ee71795c1f941d",
+        "a4744575989d9b6bb91a932a7039f15e3873f8b2"
+      ],
+      "static_verification": {
+        "retired_path_literal_present_in_certifier": false,
+        "WINDOWS_REPAIR_symbol_present": false,
+        "RAIOS_CANONICAL_ROOT_present": true,
+        "regression_test_present": true
+      },
+      "workflow_note": "No new GitHub Actions run was observed for the Contents-API commits; do not claim CI execution."
+    }
+  }
+}

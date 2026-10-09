@@ -1,0 +1,334 @@
+{
+  "schema": "raios.github-branch-convergence.v1",
+  "task_id": "RAIOS-GITHUB-BRANCH-CONVERGENCE-20260929-01",
+  "authority": "C1",
+  "observed_date": "2026-09-29",
+  "canonical": {
+    "repository": "greenylifeonline-beep/Greeny-Life",
+    "default_branch": "ai-evolution-202608051809",
+    "observed_head": "6360fce1ecd39b273556dd8bf40e4298aad19e98",
+    "github_branch_count": 1,
+    "single_branch_visible": true,
+    "protected": true,
+    "open_pr_count": 0,
+    "open_prs": []
+  },
+  "invariants": {
+    "single_source_single_truth": true,
+    "no_second_command_fabric": true,
+    "no_parallel_runtime": true,
+    "no_worktree_created": true,
+    "no_historical_wholesale_merge": true,
+    "historical_value_extracted_selectively": true
+  },
+  "push_gate": {
+    "noncanonical_remote_ref_policy": "DENY",
+    "observed_result": "RAIOS_PUSH_GATE=DENY reason=NONCANONICAL_REMOTE_REF",
+    "decision": "DO_NOT_BYPASS",
+    "consequence": "Use canonical evidence plus one local recovery bundle instead of archive/* remote refs."
+  },
+  "branch_ref_cleanup": {
+    "github_historical_branch_refs_remaining": 0,
+    "github_canonical_branch_refs_remaining": 1,
+    "note": "Historical branch refs disappeared during convergence. Critical commit objects were rechecked by immutable SHA after ref removal.",
+    "open_pull_requests_remaining": 0
+  },
+  "critical_commit_object_verification": [
+    {
+      "source": "main",
+      "sha": "da67f44963fafde67df52cb62ab32f75fe725df0",
+      "accessible_after_ref_removal": true,
+      "classification": "HISTORICAL_BUSINESS_ESTATE_REFERENCE"
+    },
+    {
+      "source": "codex-clean",
+      "sha": "98b952417c19d61d269a5681ef0ccc4aba959738",
+      "accessible_after_ref_removal": true,
+      "classification": "DONOR_REFERENCE_COGNITIVE_EXCHANGE"
+    },
+    {
+      "source": "v9-neurolingua-semantic-kernel",
+      "sha": "79ba97031e0b0fd740fd890cbf9ba0451597783d",
+      "accessible_after_ref_removal": true,
+      "classification": "HISTORICAL_SUPERSEDED_NEUROLINGUA"
+    },
+    {
+      "source": "raios/gl-005-convergence",
+      "sha": "3d9f58136d318ba07d743e127ab1e433605ce1ea",
+      "accessible_after_ref_removal": true,
+      "classification": "DONOR_AGGREGATION_ONLY"
+    },
+    {
+      "source": "cursor/c2-evidence-reuse-preparation-4247",
+      "sha": "c36906757f7dce17cbcbb2d3cf9fcb5c8f53f6cc",
+      "accessible_after_ref_removal": true,
+      "classification": "DONOR_TOOL_EVIDENCE_REUSE"
+    },
+    {
+      "source": "cursor/c5-screen-identity-4540",
+      "sha": "f48e80b63d405a5483cf21822aa4ac618888bd55",
+      "accessible_after_ref_removal": true,
+      "classification": "DONOR_TESTS_C5_IDENTITY"
+    },
+    {
+      "source": "cursor/raios-live-assimilation-147d",
+      "sha": "2d41ef264bdda70b1ba0f0588585ee740aea3ff2",
+      "accessible_after_ref_removal": true,
+      "classification": "HISTORICAL_PARALLEL_LEARNING_LINEAGE"
+    }
+  ],
+  "absorbed_or_historical": [
+    {
+      "branch": "c6-engine-consolidation-wave02",
+      "sha": "8091dfac234668bb982e303d5bdceafb37a3336b",
+      "disposition": "ABSORBED_CANONICAL_ANCESTOR"
+    },
+    {
+      "branch": "rf-wave05-executable-reservoir",
+      "sha": "4f3e6b9cbd999a1b602c7e82f8de7a7a3b06e562",
+      "disposition": "ABSORBED_CANONICAL_ANCESTOR"
+    },
+    {
+      "branch": "cursor/setup-dev-environment-ee89",
+      "sha": "31449c23905ab02f43360762ababbe4bca759997",
+      "pr": 1,
+      "disposition": "SUPERSEDED_DEPENDENCIES_PRESENT"
+    },
+    {
+      "branch": "cursor/neurolingua-semantic-kernel-4f9d",
+      "sha": "0c9b4f6a64255e64aa73d90cb178774623e3eb01",
+      "pr": 11,
+      "disposition": "SUPERSEDED_BY_CANONICAL_NEUROLINGUA"
+    },
+    {
+      "branch": "cursor/raios-certifier-safety-schema-4540",
+      "sha": "2a834cc86c05642d59e3e2837e411751190aa7b4",
+      "pr": 14,
+      "disposition": "EXACT_SAFETY_FIX_PRESENT_IN_CANONICAL"
+    },
+    {
+      "branch": "pr/authoritative-certifier-forensic",
+      "sha": "d2ab122fe25e3ab16b91afbc3267cd47778f6dba",
+      "disposition": "ABSORBED_CERTIFIER_LINEAGE"
+    },
+    {
+      "branch": "pr/cairo-shipment-origin-salvage",
+      "sha": "7031ffc1de5f34ddefc77d622d8eedc8cb12892d",
+      "disposition": "ABSORBED_30_OF_30_CAIRO_ORIGIN"
+    },
+    {
+      "branch": "pr/nl0-semantic-kernel",
+      "sha": "f7c23759b59be72456af59a87d8c48b13827fa7b",
+      "disposition": "ABSORBED_NEUROLINGUA_LINEAGE"
+    }
+  ],
+  "stacked_cursor_chain": [
+    {
+      "pr": 2,
+      "branch": "cursor/a17-integration-wave-f3c7",
+      "sha": "4475a1cff3c506883848242fe2d4b060f33a47e5"
+    },
+    {
+      "pr": 3,
+      "branch": "cursor/a17-cursor-parallel-f3c7",
+      "sha": "b2a1645d32c5de8e8fb19d14445b6585c875653e"
+    },
+    {
+      "pr": 4,
+      "branch": "cursor/a18-ccee-foundation-f3c7",
+      "sha": "edb344eac48a010f18a0ecdb2b7fd4c8b1e58fb5"
+    },
+    {
+      "pr": 5,
+      "branch": "cursor/file-intelligence-parallel-f3c7",
+      "sha": "79569cde5573fdd24da2268481f22f43aa74b0dd"
+    },
+    {
+      "pr": 6,
+      "branch": "cursor/file-intelligence-fabric-f3c7",
+      "sha": "a6e121e8fbdededaf44507dd3387a2f48565a950"
+    },
+    {
+      "pr": 7,
+      "branch": "cursor/file-intelligence-authority-f3c7",
+      "sha": "223386b53be5b6c6e4b9cf65b74f97fa4fc48605"
+    },
+    {
+      "pr": 8,
+      "branch": "cursor/raios-repair-boot-41f5",
+      "sha": "c2847e28a2d2b09e04b57684eee65236c96427a7"
+    },
+    {
+      "pr": 9,
+      "branch": "cursor/raios-false-pass-training-147d",
+      "sha": "4b0b51af31685b49df181641c2e88d16f4b8c3d3"
+    },
+    {
+      "pr": 10,
+      "branch": "cursor/raios-live-assimilation-147d",
+      "sha": "2d41ef264bdda70b1ba0f0588585ee740aea3ff2",
+      "contains_all_previous_chain_heads": true
+    }
+  ],
+  "stacked_chain_evidence": {
+    "ancestry_verified": true,
+    "head_pr10_contains_pr2_through_pr9_history": true,
+    "engine_estate_physical_zero_leftover_gate": true,
+    "physical_merged_source_leftovers": 0,
+    "physical_external_reference_payloads": 0,
+    "physical_unclassified_engine_paths": 0,
+    "competing_same_role": 0,
+    "disposition": "HISTORICAL_PARALLEL_PACKAGES_NOT_RUNTIME_AUTHORITIES"
+  },
+  "donor_value_retained_for_extraction": [
+    {
+      "source": "codex-clean",
+      "sha": "98b952417c19d61d269a5681ef0ccc4aba959738",
+      "value": [
+        "lease fencing generations",
+        "crash-safe CAS reconciliation",
+        "separate storage/validation/trust/canonical status",
+        "content-addressed reference semantics"
+      ],
+      "integration_rule": "Extract into existing Factory/Command Fabric; do not restore standalone exchange runtime.",
+      "status": "ABSORBED",
+      "absorbed_into": [
+        "src/raios/command_fabric/lease.py",
+        "src/raios/command_fabric/pipeline.py",
+        "src/raios/factory_fabric/cas_durability.py",
+        "src/raios/factory_fabric/state_import.py"
+      ]
+    },
+    {
+      "source": "cursor/c2-evidence-reuse-preparation-4247",
+      "sha": "c36906757f7dce17cbcbb2d3cf9fcb5c8f53f6cc",
+      "value": [
+        "build_c2_index.py read-only evidence reuse/hash/topic/contradiction indexing"
+      ],
+      "integration_rule": "Reuse as inspection capability only; do not create a second registry.",
+      "status": "REFERENCE_ONLY_NO_PROMOTION",
+      "decision": "Superseded by canonical Master Estate / Deep Forensic coverage; do not restore a second evidence registry.",
+      "retained_principles": [
+        "hash each unique blob once",
+        "do not treat historical report claims as current runtime truth",
+        "read-only evidence classification"
+      ],
+      "rejection_reasons": [
+        "hard-coded retired branch set",
+        "hard-coded /workspace execution root",
+        "writes a separate c2-evidence-preparation registry",
+        "canonical estate tooling now provides broader coverage"
+      ]
+    },
+    {
+      "source": "cursor/c5-screen-identity-4540",
+      "sha": "f48e80b63d405a5483cf21822aa4ac618888bd55",
+      "value": [
+        "C5 identity/no-pydantic regression tests and historical Stage-0 receipts"
+      ],
+      "integration_rule": "Retain test intent only where not already covered by current C5 runtime.",
+      "status": "ABSORBED_TEST_INTENT",
+      "absorbed_into": [
+        "tests/c5_screen/test_optional_dependency_independence.py"
+      ],
+      "historical_only": [
+        "D081 CI commit identity receipt",
+        "D082-D084 Stage-0 session/port/fabric receipts"
+      ],
+      "decision": "Keep current optional-dependency/public-identity regression; do not reintroduce session-specific historical receipt assertions as current truth."
+    },
+    {
+      "source": "raios/gl-005-convergence",
+      "sha": "3d9f58136d318ba07d743e127ab1e433605ce1ea",
+      "value": [
+        "unified operational aggregation surface"
+      ],
+      "integration_rule": "Optional aggregation inside existing MasterMind only; no new authority or orchestrator.",
+      "status": "REFERENCE_ONLY_NO_RUNTIME_PROMOTION",
+      "decision": "Existing MasterMind/Egypt Brain/commercial/trade components remain authoritative; unified aggregation may only be a future view, never a second orchestrator."
+    }
+  ],
+  "recovery": {
+    "method": "ONE_LOCAL_GIT_BUNDLE_PLUS_CANONICAL_MANIFEST",
+    "bundle_path": "C:\\Users\\Ghanam\\.raios\\runtime\\evidence\\github-branch-convergence-20260929\\HISTORICAL-GITHUB-BRANCHES.bundle",
+    "bundle_status": "BUILD_OR_VERIFY_IN_PROGRESS_AT_REPORT_CREATION",
+    "never_run_gc_before_bundle_verified": true
+  },
+  "next_gate": [
+    "Verify the local historical Git recovery bundle and record SHA256/missing-object count; do not run aggressive git gc before this proof.",
+    "After bundle verification, remove temporary local archive tags/refs created during convergence if they are not required by the verified recovery bundle.",
+    "Do not restore historical branch refs or parallel runtimes."
+  ],
+  "protection_observation": {
+    "branch_api_protected_flag": true,
+    "rulesets_visible_count": 0,
+    "detailed_branch_protection_read": "FORBIDDEN_BY_GITHUB_APP_ADMIN_SCOPE",
+    "conclusion": "Protection is active at branch metadata level; exact protection settings cannot be verified through this integration."
+  },
+  "donor_assimilation": {
+    "status": "VERIFIED",
+    "command_fabric": {
+      "status": "ABSORBED_AND_TESTED",
+      "lease_fencing_commit": "86e89b132a59a14224052010fbaeae4319b859e5",
+      "pipeline_binding_commit": "f8095bd31ca20555ac7dcdae1e62dfd18914afa3",
+      "tests_commit": "c4f88dd3601796101703c00eb4f72808a6bcb9a0",
+      "properties": [
+        "generation-bound write leases",
+        "monotonic fence token",
+        "stale worker fail-closed validation",
+        "pre-side-effect fence validation",
+        "release bound to expected generation and token"
+      ],
+      "second_registry_created": false
+    },
+    "factory_fabric": {
+      "status": "ABSORBED_AND_TESTED",
+      "implementation_commit": "5d41b8430ab272d791dacf5130d0c173ea01ec0e",
+      "tests_commit": "90696321d3bc252ab50736077afaea07e38a029d",
+      "properties": [
+        "durable CAS publish_verified_copy",
+        "crash residue reconciliation",
+        "superseded logical snapshot compaction",
+        "Windows sharing-violation pending_delete",
+        "separate storage/validation/trust/canonical authority axes"
+      ],
+      "second_runtime_created": false
+    },
+    "file_intelligence": {
+      "status": "ABSORBED_BY_PARALLEL_CANONICAL_WAVE",
+      "commits": [
+        "500e91b99aa1959fbd85a542847af47b23af8445",
+        "5448acf0280988345a97e2cf5fe6befcc1b9d74c",
+        "cddf2453a46c11928979b6a12c93c8e44328b09f",
+        "97ffe449875424d9992452a009dc83e915d0c930"
+      ],
+      "canonical_source": "src/raios/file_intelligence.py",
+      "canonical_tests": "tests/file_intelligence/test_file_intelligence.py",
+      "historical_parallel_packages_restored": false
+    }
+  },
+  "independent_validation": {
+    "workflow": "govern",
+    "workflow_run_id": 36624271363,
+    "job_id": 109597114564,
+    "validated_head": "6360fce1ecd39b273556dd8bf40e4298aad19e98",
+    "canonical_fabric_regression": "PASS",
+    "tests_passed": 51,
+    "tests_failed": 0,
+    "duration_seconds": 2.14,
+    "dependencies": [
+      "pytest",
+      "pytest-asyncio",
+      "pydantic",
+      "PyYAML"
+    ],
+    "workflow_commit": "6360fce1ecd39b273556dd8bf40e4298aad19e98",
+    "note": "Two prior CI attempts failed during test collection because runner dependencies pydantic then PyYAML were absent; no test assertion failed in those attempts."
+  },
+  "donor_value_closure": {
+    "c2_evidence_reuse": "REFERENCE_ONLY_NO_PROMOTION",
+    "c5_identity_tests": "ABSORBED_TEST_INTENT",
+    "gl005_aggregation": "REFERENCE_ONLY_NO_RUNTIME_PROMOTION",
+    "unresolved_promotion_required": 0
+  }
+}

@@ -98,6 +98,10 @@ def analyze_cognitive_estate(
             "category": category,
             "capability": capability,
             "disposition": disposition,
+            "storage_status": "STORED_VERIFIED",
+            "validation_status": "UNVALIDATED" if disposition != "REFERENCE_ONLY" else "REFERENCE_ONLY",
+            "trust_status": "UNTRUSTED",
+            "canonical_status": "NOT_CANONICAL",
             "promotion_authority": False,
         })
 
@@ -116,6 +120,7 @@ def analyze_cognitive_estate(
         "automatic_training": False,
         "automatic_canonical_promotion": False,
         "canonical_promotion_authority": False,
+        "authority_dimensions_separated": True,
         "second_wal_created": False,
         "second_event_bus_created": False,
         "source_mutation": False,

@@ -1,185 +1,475 @@
 {
-    "schema":  "raios.single-truth-policy.v1",
-    "authority":  {
-                      "final_promotion_authority":  "C1",
-                      "state_owner":  "RAIOS_SYSTEM",
-                      "permanent_worker_ownership":  false
-                  },
-    "canonical":  {
-                      "repository":  "C:\\Users\\Ghanam\\Documents\\Codex\\Greeny-Life",
-                      "branch":  "ai-evolution-202608051809",
-                      "one_canonical_tree":  true,
-                      "historical_copy_is_authority":  false,
-                      "archive_is_authority":  false,
-                      "runtime_snapshot_is_authority":  false
-                  },
-    "source_of_truth":  {
-                            "git_identity":  "CANONICAL",
-                            "tasks":  ".ai-os/state/TASKS.json",
-                            "locks":  ".ai-os/state/LOCKS.json",
-                            "seat_map":  ".ai-os/mcp/SEAT-MAP.json",
-                            "continuity":  ".ai-os/state/continuity/CURRENT.json",
-                            "resume_contract":  ".ai-os/governance/RAIOS-RESUME-CONTRACT.json"
-                        },
-    "runtime":  {
-                    "one_command_center":  true,
-                    "one_universal_mcp":  true,
-                    "second_gateway_forbidden":  true,
-                    "second_message_bus_forbidden":  true,
-                    "second_control_plane_forbidden":  true,
-                    "second_task_authority_forbidden":  true
-                },
-    "ports":  {
-                  "command_center_live":  8770,
-                  "command_center_stage":  9770,
-                  "universal_mcp_live":  8788,
-                  "universal_mcp_stage":  9788,
-                  "duplicate_live_binding_forbidden":  true,
-                  "arbitrary_new_port_forbidden":  true
-              },
-    "continuity":  {
-                       "resume_dont_rediscover":  true,
-                       "new_chat_resumes":  true,
-                       "new_client_resumes":  true,
-                       "new_session_resumes":  true,
-                       "closed_work_not_repeated":  true,
-                       "checkpoint_before_wave":  true
-                   },
-    "concurrency":  {
-                        "scoped_lease_required":  true,
-                        "atomic_shared_state_write_required":  true,
-                        "stale_write_rejected":  true,
-                        "unrelated_dirty_files_preserved":  true
-                    },
-    "command_fabric":  {
-                           "delivery_ne_actor_ack":  true,
-                           "actor_ack_must_be_real":  true,
-                           "synthetic_actor_ack_forbidden":  true,
-                           "route_requires_live_session":  true,
-                           "route_requires_current_binding":  true,
-                           "route_requires_current_consumer":  true
-                       },
-    "promotion":  {
-                      "c1_required":  true,
-                      "agent_push_forbidden":  true,
-                      "whole_branch_merge_forbidden":  true,
-                      "arbitrary_worktree_forbidden":  true
-                  },
-    "repair_in_place_law":  {
-                                "law_id":  "RAIOS-REPAIR-IN-PLACE-AND-NO-PROLIFERATION",
-                                "authority":  "C1",
-                                "state_owner":  "RAIOS_SYSTEM",
-                                "mandatory":  true,
-                                "primary_rule":  "REPAIR_EXISTING_BEFORE_CREATING_NEW",
-                                "sequence":  [
-                                                 "DISCOVER_EXISTING_IMPLEMENTATION",
-                                                 "VERIFY_CANONICAL_AND_RUNTIME_STATUS",
-                                                 "REPAIR_IN_PLACE",
-                                                 "EXTRACT_UNIQUE_VALUE_FROM_DUPLICATES_OR_LEGACY",
-                                                 "MERGE_UNIQUE_VALUE_INTO_EXISTING_CANONICAL_IMPLEMENTATION",
-                                                 "VERIFY_INTEGRATION_AND_RUNTIME_BEHAVIOR",
-                                                 "CUT_OVER_EXISTING_CANONICAL_AUTHORITY",
-                                                 "REMOVE_ONLY_PROVEN_REDUNDANT_DUPLICATES"
-                                             ],
-                                "creation_gate":  {
-                                                      "default":  "DENY",
-                                                      "new_component_allowed_only_if":  [
-                                                                                            "NO_EXISTING_IMPLEMENTATION_EXISTS",
-                                                                                            "OR_EXISTING_IMPLEMENTATION_IS_PROVEN_IRREPARABLE",
-                                                                                            "C1_AUTHORIZES_CREATION_AFTER_EVIDENCE"
-                                                                                        ],
-                                                      "forbidden_without_gate":  [
-                                                                                     "NEW_CONTROL_PLANE",
-                                                                                     "NEW_TASK_AUTHORITY",
-                                                                                     "NEW_MESSAGE_BUS",
-                                                                                     "NEW_RECEIPT_LEDGER",
-                                                                                     "NEW_BOOTSTRAP",
-                                                                                     "NEW_STORAGE_AUTHORITY",
-                                                                                     "NEW_CAPABILITY_REGISTRY",
-                                                                                     "NEW_PROVIDER_REGISTRY",
-                                                                                     "NEW_ENGINE_REGISTRY",
-                                                                                     "NEW_KNOWLEDGE_BASE",
-                                                                                     "NEW_WATCHDOG_OR_DAEMON",
-                                                                                     "PARALLEL_CANONICAL_TREE",
-                                                                                     "PARALLEL_RUNTIME_AUTHORITY"
-                                                                                 ]
-                                                  },
-                                "duplicate_rule":  {
-                                                       "blind_delete":  false,
-                                                       "blind_archive":  false,
-                                                       "blind_replace":  false,
-                                                       "required_before_removal":  [
-                                                                                       "INSPECT",
-                                                                                       "CLASSIFY",
-                                                                                       "EXTRACT_UNIQUE_VALUE",
-                                                                                       "MERGE_REQUIRED_VALUE",
-                                                                                       "VERIFY_CANONICAL_REPLACEMENT",
-                                                                                       "VERIFY_NO_ACTIVE_WRITER_OR_READER_DEPENDENCY",
-                                                                                       "C1_REMOVAL_AUTHORIZATION"
-                                                                                   ]
-                                                   },
-                                "coordination_rule":  {
-                                                          "task_authority":  "EXISTING_CANONICAL_TASK_SYSTEM",
-                                                          "locks_and_leases":  "MANDATORY",
-                                                          "scope_collision":  "FAIL_CLOSED",
-                                                          "concurrent_agents_must_not_duplicate_work":  true,
-                                                          "existing_task_coordinator_must_be_reused":  true,
-                                                          "existing_presence_and_session_binding_must_be_reused":  true,
-                                                          "automatic_next_task_assignment_target":  true
-                                                      },
-                                "required_existing_capabilities_to_recover_and_integrate":  [
-                                                                                                "TASK_COORDINATOR",
-                                                                                                "TASK_DISPATCHER",
-                                                                                                "ATTENDANCE",
-                                                                                                "PRESENCE",
-                                                                                                "SESSION_FINGERPRINT",
-                                                                                                "SEAT_BINDING",
-                                                                                                "AUTOPILOT",
-                                                                                                "COPILOT",
-                                                                                                "ENGINE_ESTATE",
-                                                                                                "ENGINE_ROUTING",
-                                                                                                "TEXT_COORDINATION",
-                                                                                                "GOAL_COORDINATION",
-                                                                                                "INTENT_COORDINATION",
-                                                                                                "CAPABILITY_ROUTING",
-                                                                                                "PROVIDER_ROUTING"
-                                                                                            ],
-                                "instruction_to_all_agents":  [
-                                                                  "DO_NOT_CREATE_A_REPLACEMENT_BEFORE_SEARCHING_THE_EXISTING_SYSTEM",
-                                                                  "DO_NOT_REIMPLEMENT_CAPABILITY_ALREADY_PRESENT",
-                                                                  "DO_NOT_DUPLICATE_ANOTHER_ACTIVE_AGENT_SCOPE",
-                                                                  "PREFER_REPAIR_AND_INTEGRATION_OVER_REPLACEMENT",
-                                                                  "PRESERVE_MONTHS_OF_UNIQUE_VALUE",
-                                                                  "USE_CANONICAL_TASK_LOCK_LEASE_AND_SESSION_TRUTH",
-                                                                  "REPORT_MISSING_OR_IRREPARABLE_COMPONENT_BEFORE_NEW_CREATION"
-                                                              ]
-                            },
-    "completion_operator_laws": {
-                                    "authority":  "C1",
-                                    "state_owner":  "RAIOS_SYSTEM",
-                                    "chat_only":  false,
-                                    "binds":  [
-                                                  "ALL_SEATS",
-                                                  "COMMAND_CENTER",
-                                                  "ENGINES",
-                                                  "CLIENTS",
-                                                  "WORKERS"
-                                              ],
-                                    "surface":  "/api/laws",
-                                    "mandatory":  true,
-                                    "laws":  [
-                                                 "COMPLETE_ASSIGNED_WORK",
-                                                 "NO_ABBREVIATION",
-                                                 "NO_CONFLICT",
-                                                 "NO_DUPLICATION",
-                                                 "NO_FAKE_RESULT",
-                                                 "NO_FAKE_DONE",
-                                                 "NO_HANGING_WITHOUT_NOTICE",
-                                                 "LAWS_SYSTEM_VISIBLE",
-                                                 "ONE_COMMAND_CENTER",
-                                                 "DELIVERY_ACK_NE_ACTOR_ACK",
-                                                 "EXISTING_FIRST",
-                                                 "C5_RUNTIME_NE_SEAT_PRESENCE"
-                                             ]
-                                }
+  "schema": "raios.single-truth-policy.v1",
+  "authority": {
+    "final_promotion_authority": "C1",
+    "state_owner": "RAIOS_SYSTEM",
+    "permanent_worker_ownership": false
+  },
+  "canonical": {
+    "repository": "C:\\Users\\Ghanam\\Documents\\Codex\\Greeny-Life",
+    "branch": "ai-evolution-202608051809",
+    "one_canonical_tree": true,
+    "historical_copy_is_authority": false,
+    "archive_is_authority": false,
+    "runtime_snapshot_is_authority": false
+  },
+  "source_of_truth": {
+    "git_identity": "CANONICAL",
+    "tasks": ".ai-os/state/TASKS.json",
+    "locks": ".ai-os/state/LOCKS.json",
+    "seat_map": ".ai-os/mcp/SEAT-MAP.json",
+    "continuity": ".ai-os/state/continuity/CURRENT.json",
+    "resume_contract": ".ai-os/governance/RAIOS-RESUME-CONTRACT.json"
+  },
+  "runtime": {
+    "one_command_center": true,
+    "one_universal_mcp": true,
+    "second_gateway_forbidden": true,
+    "second_message_bus_forbidden": true,
+    "second_control_plane_forbidden": true,
+    "second_task_authority_forbidden": true,
+    "cloud_first": true,
+    "local_model_download_default": false
+  },
+  "ports": {
+    "command_center_live": 8770,
+    "command_center_stage": 9770,
+    "universal_mcp_live": 8788,
+    "universal_mcp_stage": 9788,
+    "duplicate_live_binding_forbidden": true,
+    "arbitrary_new_port_forbidden": true
+  },
+  "continuity": {
+    "resume_dont_rediscover": true,
+    "new_chat_resumes": true,
+    "new_client_resumes": true,
+    "new_session_resumes": true,
+    "closed_work_not_repeated": true,
+    "checkpoint_before_wave": true
+  },
+  "concurrency": {
+    "scoped_lease_required": true,
+    "atomic_shared_state_write_required": true,
+    "stale_write_rejected": true,
+    "unrelated_dirty_files_preserved": true
+  },
+  "command_fabric": {
+    "delivery_ne_actor_ack": true,
+    "actor_ack_must_be_real": true,
+    "synthetic_actor_ack_forbidden": true,
+    "route_requires_live_session": true,
+    "route_requires_current_binding": true,
+    "route_requires_current_consumer": true
+  },
+  "promotion": {
+    "c1_required": true,
+    "agent_push_forbidden": true,
+    "whole_branch_merge_forbidden": true,
+    "arbitrary_worktree_forbidden": true
+  },
+  "repair_in_place_law": {
+    "law_id": "RAIOS-REPAIR-IN-PLACE-AND-NO-PROLIFERATION",
+    "authority": "C1",
+    "state_owner": "RAIOS_SYSTEM",
+    "mandatory": true,
+    "primary_rule": "REPAIR_EXISTING_BEFORE_CREATING_NEW",
+    "sequence": [
+      "DISCOVER_EXISTING_IMPLEMENTATION",
+      "VERIFY_CANONICAL_AND_RUNTIME_STATUS",
+      "REPAIR_IN_PLACE",
+      "EXTRACT_UNIQUE_VALUE_FROM_DUPLICATES_OR_LEGACY",
+      "MERGE_UNIQUE_VALUE_INTO_EXISTING_CANONICAL_IMPLEMENTATION",
+      "VERIFY_INTEGRATION_AND_RUNTIME_BEHAVIOR",
+      "CUT_OVER_EXISTING_CANONICAL_AUTHORITY",
+      "REMOVE_ONLY_PROVEN_REDUNDANT_DUPLICATES"
+    ],
+    "creation_gate": {
+      "default": "DENY",
+      "new_component_allowed_only_if": [
+        "NO_EXISTING_IMPLEMENTATION_EXISTS",
+        "OR_EXISTING_IMPLEMENTATION_IS_PROVEN_IRREPARABLE",
+        "C1_AUTHORIZES_CREATION_AFTER_EVIDENCE"
+      ],
+      "forbidden_without_gate": [
+        "NEW_CONTROL_PLANE",
+        "NEW_TASK_AUTHORITY",
+        "NEW_MESSAGE_BUS",
+        "NEW_RECEIPT_LEDGER",
+        "NEW_BOOTSTRAP",
+        "NEW_STORAGE_AUTHORITY",
+        "NEW_CAPABILITY_REGISTRY",
+        "NEW_PROVIDER_REGISTRY",
+        "NEW_ENGINE_REGISTRY",
+        "NEW_KNOWLEDGE_BASE",
+        "NEW_WATCHDOG_OR_DAEMON",
+        "PARALLEL_CANONICAL_TREE",
+        "PARALLEL_RUNTIME_AUTHORITY"
+      ]
+    },
+    "duplicate_rule": {
+      "blind_delete": false,
+      "blind_archive": false,
+      "blind_replace": false,
+      "required_before_removal": [
+        "INSPECT",
+        "CLASSIFY",
+        "EXTRACT_UNIQUE_VALUE",
+        "MERGE_REQUIRED_VALUE",
+        "VERIFY_CANONICAL_REPLACEMENT",
+        "VERIFY_NO_ACTIVE_WRITER_OR_READER_DEPENDENCY",
+        "C1_REMOVAL_AUTHORIZATION"
+      ]
+    },
+    "coordination_rule": {
+      "task_authority": "EXISTING_CANONICAL_TASK_SYSTEM",
+      "locks_and_leases": "MANDATORY",
+      "scope_collision": "FAIL_CLOSED",
+      "concurrent_agents_must_not_duplicate_work": true,
+      "existing_task_coordinator_must_be_reused": true,
+      "existing_presence_and_session_binding_must_be_reused": true,
+      "automatic_next_task_assignment_target": true
+    },
+    "required_existing_capabilities_to_recover_and_integrate": [
+      "TASK_COORDINATOR",
+      "TASK_DISPATCHER",
+      "ATTENDANCE",
+      "PRESENCE",
+      "SESSION_FINGERPRINT",
+      "SEAT_BINDING",
+      "AUTOPILOT",
+      "COPILOT",
+      "ENGINE_ESTATE",
+      "ENGINE_ROUTING",
+      "TEXT_COORDINATION",
+      "GOAL_COORDINATION",
+      "INTENT_COORDINATION",
+      "CAPABILITY_ROUTING",
+      "PROVIDER_ROUTING"
+    ],
+    "instruction_to_all_agents": [
+      "DO_NOT_CREATE_A_REPLACEMENT_BEFORE_SEARCHING_THE_EXISTING_SYSTEM",
+      "DO_NOT_REIMPLEMENT_CAPABILITY_ALREADY_PRESENT",
+      "DO_NOT_DUPLICATE_ANOTHER_ACTIVE_AGENT_SCOPE",
+      "PREFER_REPAIR_AND_INTEGRATION_OVER_REPLACEMENT",
+      "PRESERVE_MONTHS_OF_UNIQUE_VALUE",
+      "USE_CANONICAL_TASK_LOCK_LEASE_AND_SESSION_TRUTH",
+      "REPORT_MISSING_OR_IRREPARABLE_COMPONENT_BEFORE_NEW_CREATION"
+    ]
+  },
+  "completion_operator_laws": {
+    "authority": "C1",
+    "state_owner": "RAIOS_SYSTEM",
+    "chat_only": false,
+    "binds": [
+      "ALL_SEATS",
+      "COMMAND_CENTER",
+      "ENGINES",
+      "CLIENTS",
+      "WORKERS"
+    ],
+    "surface": "/api/laws",
+    "mandatory": true,
+    "laws": [
+      "COMPLETE_ASSIGNED_WORK",
+      "NO_ABBREVIATION",
+      "NO_CONFLICT",
+      "NO_DUPLICATION",
+      "NO_FAKE_RESULT",
+      "NO_FAKE_DONE",
+      "NO_HANGING_WITHOUT_NOTICE",
+      "LAWS_SYSTEM_VISIBLE",
+      "ONE_COMMAND_CENTER",
+      "DELIVERY_ACK_NE_ACTOR_ACK",
+      "EXISTING_FIRST",
+      "C5_RUNTIME_NE_SEAT_PRESENCE",
+      "SCM_SINGLE_CONTROL_AUTHORITY",
+      "NATIVE_RAIOS_SINGLE_EXTERNAL_CHANNEL",
+      "RDC_PROVIDER_NOT_AUTHORITY",
+      "USER_LANE_ADAPTER_NOT_AUTHORITY",
+      "MAINTENANCE_RECOVERY_CONTROLLER_NOT_AUTHORITY",
+      "COGNITIVE_RECOVERY_PRIORITY_ZERO",
+      "CHECKPOINT_NE_RUNTIME_STOP",
+      "SELF_HEAL_REQUIRED",
+      "LIVE_EVIDENCE_REQUIRED_FOR_DONE",
+      "ALL_RAIOS_OWNED_OR_ACQUIRED_CAPABILITIES_SERVE_PRIMARY_NATIVE_RAIOS_CHANNEL",
+      "NATIVE_RAIOS_PRIMARY_CHANNEL",
+      "ACQUIRED_TOOL_NE_PARALLEL_CONTROL_PLANE",
+      "RESOURCE_REUSE_BEFORE_BUILD",
+      "PRIMARY_CHANNEL_RECOVERY_HAS_PRIORITY",
+      "LATEST_ACCEPTED_GENERATION_IS_SINGLE_LEADER",
+      "PREVIOUS_GENERATIONS_FOLLOW_MIGRATE_DRAIN",
+      "PID_ALONE_NE_GENERATION_IDENTITY",
+      "NO_PROMOTION_WITHOUT_NATIVE_RAIOS",
+      "NO_PASS_AFTER_FAILED_ACCEPTANCE",
+      "LATEST_PROVEN_GENERATION_SINGLE_LEADER",
+      "UNPROVEN_GENERATION_NE_LEADER",
+      "OLDER_GENERATIONS_FOLLOW_MIGRATE_DRAIN",
+      "GENERATION_PID_NE_IDENTITY",
+      "NO_HIDDEN_AUTHORITY_ROLLBACK",
+      "LATEST_ACCEPTED_GENERATION_ONLY",
+      "GENERATION_FENCING_REQUIRED",
+      "PROMOTION_REQUIRES_LIVE_ACCEPTANCE_AND_RECEIPT",
+      "PID_RECENCY_NE_GENERATION_AUTHORITY",
+      "LATEST_ACCEPTED_RAIOS_GENERATION_IS_SINGLE_LEADER",
+      "FAILED_CANDIDATE_NE_LEADER",
+      "OLDER_GENERATION_FOLLOW_MIGRATE_DRAIN"
+    ],
+    "runtime_enforced": true,
+    "required_live_proof": [
+      "CONTROL_AUTHORITY_SINGLETON",
+      "NATIVE_RAIOS_END_TO_END",
+      "RDC_PROVIDER_SHAPE_1_PLUS_1_NO_LEGACY",
+      "COGNITIVE_MANAGER_ALIVE",
+      "EVOLUTION_ALIVE_SINGLE_WAL",
+      "MAINTENANCE_RESULT_DELIVERED_TO_MANAGER"
+    ]
+  },
+  "runtime_authority_contract": {
+    "mandatory": true,
+    "control_authority": "RAIOS-C5-SCM",
+    "windows_service": "RAIOS-C5",
+    "task_scheduler_authority": false,
+    "native_raios": {
+      "role": "PRIMARY_CHANNEL",
+      "owner": "RAIOS-C5-SCM",
+      "singleton": true,
+      "headless_boot": true,
+      "requires_user_session": false,
+      "second_native_tunnel_forbidden": true,
+      "generation_fenced": true
+    },
+    "rdc_provider": {
+      "role": "REMOTE_CAPABILITY_PROVIDER",
+      "owner": "RAIOS-C5-SCM",
+      "control_authority": false,
+      "provider_ne_core": true,
+      "fallback_and_remote_execution": true,
+      "second_control_plane": false,
+      "generation_fenced": true,
+      "follows_latest_accepted_generation": true
+    },
+    "user_lane": {
+      "role": "INTERACTIVE_SESSION_ADAPTER",
+      "control_authority": false,
+      "can_start_dcr_supervisor": false,
+      "can_start_native_tunnel": false,
+      "can_promote_source": false
+    },
+    "maintenance": {
+      "role": "RECOVERY_CONTROLLER",
+      "control_authority": false,
+      "scheduler_authority": false,
+      "bounded": true,
+      "idempotent": true,
+      "priority": [
+        "COGNITIVE_MANAGER_AND_EVOLUTION",
+        "UNIVERSAL_MCP",
+        "C5_GATEWAY",
+        "NATIVE_RAIOS_END_TO_END",
+        "ROUTER_AND_COMMAND_CENTER",
+        "LONG_REPAIRS"
+      ]
+    },
+    "checkpoint": {
+      "runtime_fail_soft": true,
+      "continuation_ne_mutation": true,
+      "mutation_fail_closed": true,
+      "uncertainty_ne_runtime_stop": true
+    },
+    "evolution": {
+      "single_cognitive_wal": "C:\\Users\\Ghanam\\.raios\\runtime\\cognitive-store\\v9\\wal\\cognitive-events.jsonl",
+      "auto_recovery_mandatory": true,
+      "resume_processing_after_recovery": true,
+      "manual_restore_not_final_acceptance": true
+    },
+    "resource_law": "ALL_RAIOS_OWNED_OR_ACQUIRED_CAPABILITIES_SERVE_PRIMARY_NATIVE_RAIOS_CHANNEL",
+    "generation_state_authority": "RAIOS-C5-SCM",
+    "generation_state_path": "C:\\Users\\Ghanam\\.raios\\runtime\\continuity\\c5-service\\current-generation.json",
+    "generation_promotion_receipt": "C:\\Users\\Ghanam\\.raios\\runtime\\continuity\\c5-service\\generation-promotion-receipt.json",
+    "resource_fabric": {
+      "law": "ALL_RAIOS_OWNED_OR_ACQUIRED_CAPABILITIES_SERVE_PRIMARY_NATIVE_RAIOS_CHANNEL",
+      "primary_channel": "NATIVE_RAIOS",
+      "provider_ne_authority": true,
+      "acquired_tool_ne_parallel_control_plane": true,
+      "reuse_before_build": true,
+      "duplicate_runtime_forbidden": true,
+      "duplicate_gateway_forbidden": true,
+      "primary_channel_recovery_priority": true
+    }
+  },
+  "primary_channel_resource_law": {
+    "mandatory": true,
+    "primary_channel": "NATIVE_RAIOS",
+    "control_authority": "RAIOS-C5-SCM",
+    "law": "ALL_RAIOS_OWNED_OR_ACQUIRED_CAPABILITIES_SERVE_PRIMARY_NATIVE_RAIOS_CHANNEL",
+    "owned_or_acquired_resources": {
+      "default_role": "CAPABILITY_OR_PROVIDER",
+      "must_serve_primary_channel": true,
+      "control_authority": false,
+      "parallel_control_plane_forbidden": true,
+      "second_runtime_forbidden": true,
+      "second_gateway_forbidden": true,
+      "second_task_authority_forbidden": true,
+      "second_watchdog_authority_forbidden": true
+    },
+    "routing": {
+      "universal_mcp": "GATEWAY_NOT_AUTHORITY",
+      "rdc": "REMOTE_CAPABILITY_PROVIDER_NOT_AUTHORITY",
+      "nats": "TRANSPORT_NOT_AUTHORITY",
+      "manager": "COGNITIVE_MANAGER",
+      "evolution": "COGNITIVE_EVOLUTION",
+      "router": "MODEL_AND_PROVIDER_ROUTING",
+      "provider_adapters": "CAPABILITY_PROVIDERS"
+    },
+    "operational_priority": [
+      "KEEP_NATIVE_RAIOS_REACHABLE",
+      "RESTORE_COGNITIVE_MANAGER_AND_EVOLUTION",
+      "RESTORE_UNIVERSAL_MCP_AND_C5_GATEWAY",
+      "RESTORE_REMOTE_CAPABILITY_PROVIDER",
+      "RESTORE_AUXILIARY_CAPABILITIES"
+    ],
+    "reuse_before_build": true,
+    "acquired_tool_ne_parallel_authority": true,
+    "native_raios_primary_channel": true
+  },
+  "resource_service_contract": {
+    "mandatory": true,
+    "primary_channel": "NATIVE_RAIOS",
+    "control_authority": "RAIOS-C5-SCM",
+    "law": "ALL_RAIOS_OWNED_OR_ACQUIRED_CAPABILITIES_SERVE_PRIMARY_NATIVE_RAIOS_CHANNEL",
+    "rules": [
+      "OWNED_RESOURCE_SERVES_NATIVE_RAIOS",
+      "ACQUIRED_RESOURCE_SERVES_NATIVE_RAIOS",
+      "PROVIDER_NE_AUTHORITY",
+      "RESOURCE_NE_PARALLEL_CONTROL_PLANE",
+      "RESOURCE_REUSE_BEFORE_BUILD",
+      "PRIMARY_CHANNEL_RECOVERY_HAS_PRIORITY",
+      "NO_DUPLICATE_RUNTIME_GATEWAY_WATCHDOG_OR_TASK_AUTHORITY"
+    ],
+    "provider_model": {
+      "independent_process_allowed": true,
+      "independent_authority_forbidden": true,
+      "independent_task_ledger_forbidden": true,
+      "independent_mcp_gateway_forbidden": true,
+      "health_reports_to_c5": true,
+      "recovery_reports_to_c5": true
+    }
+  },
+  "runtime_generation_contract": {
+    "mandatory": true,
+    "generation_identity": [
+      "service_binary_sha256",
+      "service_started_at",
+      "source_head",
+      "proof_hash"
+    ],
+    "candidate_role": "CANDIDATE_EXCLUSIVE",
+    "leader_role": "LEADER",
+    "promotion_requires": [
+      "SCM_RUNNING",
+      "DCR_OWNER_MATCHES_GENERATION",
+      "NATIVE_OWNER_MATCHES_GENERATION",
+      "UNIVERSAL_MCP_CONTRACT_PASS",
+      "LIVE_ACCEPTANCE_RECEIPT_READBACK"
+    ],
+    "latest_accepted_generation_is_single_leader": true,
+    "previous_generations_policy": "FOLLOW_MIGRATE_DRAIN",
+    "previous_generation_authority_allowed": false,
+    "previous_generation_provider_ownership_allowed": false,
+    "rollback_generation_requires_explicit_failed_promotion_and_proof": true,
+    "pid_alone_ne_generation_identity": true,
+    "no_pass_after_failed_acceptance": true
+  },
+  "generation_policy": {
+    "mandatory": true,
+    "identity": [
+      "service_pid",
+      "service_started_at",
+      "service_binary_sha256"
+    ],
+    "candidate_role": "CANDIDATE_EXCLUSIVE",
+    "leader_role": "LEADER",
+    "leader_acceptance_requires": [
+      "DCR_OWNED_BY_SAME_GENERATION",
+      "NATIVE_RAIOS_OWNED_BY_SAME_GENERATION",
+      "UNIVERSAL_MCP_READY",
+      "NO_LEGACY_PROVIDER_OWNER"
+    ],
+    "predecessor_policy": [
+      "FOLLOWER",
+      "MIGRATE",
+      "DRAIN"
+    ],
+    "predecessor_authority_allowed": false,
+    "hidden_rollback_to_old_authority": false,
+    "pid_only_generation_identity_forbidden": true,
+    "latest_unproven_generation_ne_leader": true,
+    "latest_proven_generation_is_single_leader": true
+  },
+  "generation_authority_contract": {
+    "mandatory": true,
+    "election_basis": [
+      "SERVICE_BINARY_SHA256",
+      "SERVICE_START_TIME",
+      "LIVE_ACCEPTANCE_PROOF"
+    ],
+    "candidate_role": "CANDIDATE_EXCLUSIVE",
+    "leader_role": "LEADER",
+    "leader_rule": "LATEST_ACCEPTED_GENERATION_ONLY",
+    "promotion_requires": [
+      "RAIOS_C5_RUNNING",
+      "DCR_OWNER_MATCHES_GENERATION",
+      "NATIVE_OWNER_MATCHES_GENERATION",
+      "NATIVE_TRANSPORT_ALIVE",
+      "NATIVE_BACKEND_READY",
+      "UNIVERSAL_MCP_CONTRACT_PASS",
+      "PERSISTED_RECEIPT_READBACK_PASS"
+    ],
+    "predecessor_policy": "FOLLOW_MIGRATE_DRAIN",
+    "predecessor_authority_allowed": false,
+    "stale_generation_policy": "DRAIN_AND_REMOVE_OWNERSHIP",
+    "generation_fencing_required": true,
+    "promotion_fail_closed": true,
+    "runtime_continuity_fail_soft": true,
+    "never_promote_on_pid_recency_alone": true,
+    "resource_inheritance_rule": "ALL_RAIOS_OWNED_OR_ACQUIRED_CAPABILITIES_FOLLOW_CURRENT_LEADER_GENERATION",
+    "primary_channel_rule": "NATIVE_RAIOS_FOLLOWS_CURRENT_LEADER_GENERATION",
+    "rdc_rule": "RDC_PROVIDER_FOLLOWS_CURRENT_LEADER_GENERATION",
+    "scheduler_rule": "TASK_SCHEDULER_NE_GENERATION_AUTHORITY"
+  },
+  "runtime_generation_policy": {
+    "mandatory": true,
+    "authority": "RAIOS-C5-SCM",
+    "leader_selection": "LATEST_ACCEPTED_GENERATION",
+    "candidate_role": "CANDIDATE_EXCLUSIVE",
+    "promotion_requires": [
+      "SERVICE_RUNNING",
+      "BINARY_HASH_PROVEN",
+      "NATIVE_RAIOS_READY",
+      "DCR_PROVIDER_READY",
+      "UNIVERSAL_MCP_READY",
+      "LIVE_ACCEPTANCE_RECEIPT"
+    ],
+    "leader_role": "LEADER",
+    "predecessor_policy": "FOLLOW_MIGRATE_DRAIN",
+    "predecessor_authority_allowed": false,
+    "stale_generation_may_not_own": [
+      "NATIVE_RAIOS",
+      "RDC_PROVIDER",
+      "SCHEDULER_AUTHORITY",
+      "CONTROL_PLANE",
+      "MCP_GATEWAY",
+      "WATCHDOG"
+    ],
+    "pid_alone_is_not_generation_identity": true,
+    "generation_identity": [
+      "SERVICE_PID",
+      "SERVICE_START_TIME",
+      "BINARY_SHA256",
+      "ACCEPTANCE_PROOF"
+    ],
+    "rollback_rule": "ONLY_LAST_ACCEPTED_GENERATION_MAY_BECOME_AUTHORITY",
+    "failed_candidate_rule": "DEGRADED_NE_LEADER",
+    "law": "LATEST_ACCEPTED_RAIOS_GENERATION_IS_SINGLE_LEADER"
+  }
 }

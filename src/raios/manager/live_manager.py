@@ -20,8 +20,143 @@ from dataclasses import dataclass
 from datetime import datetime, timezone
 from pathlib import Path
 from typing import Any
+from raios.orchestration.tasks_write import load_tasks_document, replace_tasks_document, StaleTasksWriteError
+
+def maintenance_observation(path: Path, now: datetime | None = None) -> tuple[bool, dict[str, Any]]:
+    """Bounded observation of existing continuity state; no execution authority."""
+    try:
+        if path.stat().st_size > 1048576:
+            return False, {"reason": "OVERSIZED"}
+        data = json.loads(path.read_text(encoding="utf-8-sig"))
+        stamp = data.get("generated_at") or data.get("observed_at") or data.get("timestamp")
+        at = datetime.fromisoformat(str(stamp).replace("Z", "+00:00"))
+        age = ((now or datetime.now(timezone.utc)) - at).total_seconds()
+        if not 0 <= age <= 900:
+            return False, {"reason": "STALE_OR_FUTURE"}
+        services = data.get("services", {})
+        if not isinstance(services, dict):
+            return False, {"reason": "INVALID_SERVICES"}
+        # Semantic content excludes heartbeat times, PIDs and raw logs.
+        payload = {"status": str(data.get("status", "UNKNOWN")),
+                   "services": {str(k): v for k, v in services.items() if isinstance(v, bool)},
+                   "observation_only": True, "engine_execution_proven": False}
+        context = data.get("maintenance_context", {})
+        if isinstance(context, dict):
+            payload["capability_context"] = {
+                "inventory_alignment": context.get("inventory_alignment", "UNKNOWN"),
+                "routing_authority": context.get("routing_authority"),
+                "engines": [{k: row.get(k) for k in ("id", "role", "activation_mode", "state", "health_source", "freshness", "execution_proven", "historical_execution_evidence")}
+                            for row in context.get("engines", [])[:25] if isinstance(row, dict)],
+                "automatic_inventory_execution": False,
+            }
+        return True, payload
+    except (OSError, ValueError, TypeError):
+        return False, {"reason": "UNAVAILABLE_OR_INVALID"}
+
+
+# Metrics collector
+class MetricsCollector:
+    """Thread-safe metrics with Prometheus-style exposition."""
+    
+    def __init__(self):
+        from collections import defaultdict
+        self._counters = {}
+        self._gauges = {}
+        self._histograms = {}
+        self._lock = threading.RLock()
+        self._start_time = time.time()
+    
+    def inc(self, name: str, value: float = 1.0, labels = None):
+        key = self._make_key(name, labels)
+        with self._lock:
+            self._counters[key] = self._counters.get(key, 0) + value
+    
+    def gauge(self, name: str, value: float, labels = None):
+        key = self._make_key(name, labels)
+        with self._lock:
+            self._gauges[key] = value
+    
+    def observe(self, name: str, value: float, labels = None):
+        key = self._make_key(name, labels)
+        with self._lock:
+            self._histograms[key] = self._histograms.get(key, []) + [value]
+            if len(self._histograms[key]) > 1000:
+                self._histograms[key] = self._histograms[key][-1000:]
+    
+    def _make_key(self, name: str, labels) -> str:
+        if not labels:
+            return name
+        label_str = ",".join(f'{k}="{v}"' for k, v in sorted(labels.items()))
+        return f'{name}{{{label_str}}}'
+    
+    def snapshot(self):
+        with self._lock:
+            return {
+                "counters": dict(self._counters),
+                "gauges": dict(self._gauges),
+                "histograms": {k: {"count": len(v), "sum": sum(v), "min": min(v), "max": max(v)} 
+                              for k, v in self._histograms.items() if v},
+                "uptime_seconds": time.time() - getattr(self, '_start_time', time.time()),
+            }
+
+metrics = MetricsCollector()
+
+metrics = MetricsCollector()
+
+class StructuredLogger:
+    """Structured JSON logger with context propagation."""
+    _level = 20  # INFO
+    _lock = threading.Lock()
+    
+    @classmethod
+    def set_level(cls, level: int):
+        cls._level = level
+    
+    @classmethod
+    def _log(cls, level: int, message: str, **kwargs):
+        if level < cls._level:
+            return
+        entry = {
+            "timestamp": datetime.now(timezone.utc).isoformat(),
+            "level": ["DEBUG", "INFO", "WARNING", "ERROR", "CRITICAL"][level // 10] if level in [10, 20, 30, 40, 50] else "UNKNOWN",
+            "logger": "live_manager",
+            "message": message,
+            "context": kwargs,
+            "pid": os.getpid(),
+            "thread": threading.get_ident(),
+        }
+        with cls._lock:
+            print(json.dumps(entry, ensure_ascii=False), file=sys.stdout)
+            MANAGER_ROOT.mkdir(parents=True, exist_ok=True)
+            with LOG_FILE.open("a", encoding="utf-8") as f:
+                f.write(json.dumps(entry, ensure_ascii=False) + "\n")
+    
+    @classmethod
+    def debug(cls, msg: str, **kw): cls._log(10, msg, **kw)
+    @classmethod
+    def info(cls, msg: str, **kw): cls._log(20, msg, **kw)
+    @classmethod
+    def warning(cls, msg: str, **kw): cls._log(30, msg, **kw)
+    @classmethod
+    def error(cls, msg: str, **kw): cls._log(40, msg, **kw)
+    @classmethod
+    def critical(cls, msg: str, **kw): cls._log(50, msg, **kw)
 
 CREATE_NO_WINDOW = getattr(subprocess, "CREATE_NO_WINDOW", 0)
+
+
+# MessageWorker availability
+try:
+    from raios.command_center.message_worker import (
+    MessageWorker,
+    MessagePriority,
+    MessageType,
+    EngineState,
+    EngineDescriptor,
+)
+    MESSAGE_WORKER_AVAILABLE = True
+except ImportError:
+    MESSAGE_WORKER_AVAILABLE = False
 
 
 def windowless_startupinfo():
@@ -34,6 +169,8 @@ def windowless_startupinfo():
 
 
 REPO = Path(__file__).resolve().parents[3]
+USER_PROFILE = Path(os.getenv("RAIOS_USER_PROFILE", os.getenv("USERPROFILE", str(Path.home())))).expanduser().resolve()
+RUNTIME_BASE = Path(os.getenv("RAIOS_RUNTIME_BASE", str(USER_PROFILE / ".raios" / "runtime"))).expanduser().resolve()
 SRC = REPO / "src"
 V9_RUNTIME = REPO / "RAIOS" / "V9" / "runtime"
 if str(V9_RUNTIME) not in sys.path:
@@ -47,9 +184,9 @@ TASKS = REPO / ".ai-os" / "state" / "TASKS.json"
 LOCKS = REPO / ".ai-os" / "state" / "LOCKS.json"
 MAIL_INBOX = REPO / ".ai-os" / "mail" / "INBOX.jsonl"
 MAIL_RECEIPT = REPO / ".ai-os" / "mail" / "COLLECT-RECEIPT.json"
-FACTORY_LATEST = Path.home() / ".raios" / "runtime" / "factory-fabric" / "FACTORY-FABRIC-LATEST.json"
-COUNCIL_PRESENCE = Path.home() / ".raios" / "runtime" / "council-ops" / "presence.json"
-MANAGER_ROOT = Path.home() / ".raios" / "runtime" / "manager"
+FACTORY_LATEST = RUNTIME_BASE / "factory-fabric" / "FACTORY-FABRIC-LATEST.json"
+COUNCIL_PRESENCE = RUNTIME_BASE / "council-ops" / "presence.json"
+MANAGER_ROOT = RUNTIME_BASE / "manager"
 HEARTBEAT = MANAGER_ROOT / "heartbeat.json"
 STATE = MANAGER_ROOT / "state.json"
 SOURCE_SNAPSHOT = MANAGER_ROOT / "source-snapshot.json"
@@ -63,7 +200,7 @@ INSTANCE_LOCK = MANAGER_ROOT / ".instance.lock"
 C5_HEALTH = "http://127.0.0.1:8766/health"
 C5_CHAT = "http://127.0.0.1:8766/v1/chat"
 CC_HEALTH = "http://127.0.0.1:8770/health"
-EVOLUTION_HEARTBEAT = Path.home() / ".raios" / "runtime" / "evolution-brain" / "heartbeat.json"
+EVOLUTION_HEARTBEAT = RUNTIME_BASE / "evolution-brain" / "heartbeat.json"
 OLLAMA_TAGS = "http://127.0.0.1:11434/api/tags"
 OLLAMA_EMBED = "http://127.0.0.1:11434/api/embed"
 EMBED_MODEL = "qwen3-embedding:0.6b"
@@ -147,23 +284,67 @@ def atomic_json(path: Path, value: Any) -> None:
 
 
 def write_heartbeat(value: dict[str, Any]) -> Path:
-    """Write the one manager heartbeat even when Windows pins its stable name."""
+    """Publish one live heartbeat with a stable projection on Windows.
+
+    The unique live snapshot is the durable fallback. The stable filename is a
+    projection for legacy readers and must never block manager progress.
+    """
+    live = HEARTBEAT.with_name(
+        f"heartbeat.live-{os.getpid()}-{time.time_ns()}.json"
+    )
+    atomic_json(live, value)
+    written = live
     try:
         atomic_json(HEARTBEAT, value)
         written = HEARTBEAT
     except PermissionError:
-        written = HEARTBEAT.with_name(
-            f"heartbeat.live-{os.getpid()}-{time.time_ns()}.json"
-        )
-        atomic_json(written, value)
+        # A reader may deny DELETE sharing and therefore block os.replace while
+        # still permitting an in-place rewrite. Keep this best-effort and never
+        # let projection publication stall the manager tick.
+        try:
+            payload = json.dumps(value, ensure_ascii=False, indent=2, default=str) + "\n"
+            with HEARTBEAT.open("w", encoding="utf-8") as handle:
+                handle.write(payload)
+                handle.flush()
+                os.fsync(handle.fileno())
+            json.loads(HEARTBEAT.read_text(encoding="utf-8"))
+            written = HEARTBEAT
+        except (OSError, PermissionError, json.JSONDecodeError):
+            written = live
     try:
-        versions = sorted(
-            HEARTBEAT.parent.glob("heartbeat.live-*.json"),
-            key=lambda candidate: candidate.stat().st_mtime_ns,
-            reverse=True,
-        )
-        for stale in versions[12:]:
+        versions: list[tuple[int, Path]] = []
+        with os.scandir(HEARTBEAT.parent) as entries:
+            for entry in entries:
+                if not entry.is_file(follow_symlinks=False):
+                    continue
+                if not (entry.name.startswith("heartbeat.live-") and entry.name.endswith(".json")):
+                    continue
+                versions.append(
+                    (entry.stat(follow_symlinks=False).st_mtime_ns, Path(entry.path))
+                )
+                if len(versions) >= 32:
+                    break
+        versions.sort(key=lambda item: item[0], reverse=True)
+        for _, stale in versions[12:]:
             stale.unlink(missing_ok=True)
+    except OSError:
+        pass
+
+    # Keep fallback publishing bounded. Transient Windows reader locks can
+    # leave temp projections behind; they are never authority and must not
+    # accumulate or become an input to health decisions.
+    try:
+        cutoff_ns = time.time_ns() - 120 * 1_000_000_000
+        seen = 0
+        for candidate in HEARTBEAT.parent.glob("heartbeat.json.tmp-*"):
+            if seen >= 64:
+                break
+            seen += 1
+            try:
+                if candidate.stat().st_mtime_ns < cutoff_ns:
+                    candidate.unlink(missing_ok=True)
+            except OSError:
+                pass
     except OSError:
         pass
     return written
@@ -436,11 +617,20 @@ class LiveManager:
         allow_task_write: bool = True,
         enable_refreshes: bool = True,
         enable_reasoning: bool = True,
+        message_worker: Optional[Any] = None,
     ):
         MANAGER_ROOT.mkdir(parents=True, exist_ok=True)
         self.allow_task_write = allow_task_write
         self.enable_refreshes = enable_refreshes
         self.enable_reasoning = enable_reasoning
+        self.message_worker = message_worker
+        self._mw_integration_enabled = MESSAGE_WORKER_AVAILABLE and message_worker is not None
+        if self._mw_integration_enabled:
+            self._register_manager_engines()
+            self._register_manager_circuit_breakers()
+            log("MessageWorker integration enabled")
+        else:
+            log("MessageWorker integration disabled" + (" (not available)" if not MESSAGE_WORKER_AVAILABLE else " (not provided)"))
         self.state = load_json(STATE, {
             "schema": "raios.manager-state.v1",
             "last_hashes": {},
@@ -453,6 +643,72 @@ class LiveManager:
         self._reason_inflight = False
         self._search_refresh_process: subprocess.Popen[Any] | None = None
         self._refresh_processes: dict[str, subprocess.Popen[Any]] = {}
+        self._evolution_recovery_process: subprocess.Popen[Any] | None = None
+        self._evolution_recovery_attempt = 0
+        self._evolution_recovery_next_at = 0.0
+        self._evolution_was_down = False
+        self._evolution_recovery_lock = threading.Lock()
+
+    def _register_manager_engines(self) -> None:
+        """Register core system engines with MessageWorker for health tracking."""
+        if not self._mw_integration_enabled:
+            return
+        
+        # Register C5 engine
+        self.message_worker.register_engine(EngineDescriptor(
+            engine_id="c5_brain",
+            engine_type="reasoning_engine",
+            endpoint=C5_CHAT,
+            health_check=lambda: http_json(C5_HEALTH, 2.0).get("live", False),
+            dependencies=["ollama"],
+            metadata={"critical": True, "endpoint": C5_HEALTH}
+        ))
+        
+        # Register Command Center engine
+        self.message_worker.register_engine(EngineDescriptor(
+            engine_id="command_center",
+            engine_type="api_gateway",
+            endpoint=CC_HEALTH,
+            health_check=lambda: http_json(CC_HEALTH, 2.0).get("live", False),
+            metadata={"critical": True, "endpoint": CC_HEALTH}
+        ))
+        
+        # Register Ollama engine
+        self.message_worker.register_engine(EngineDescriptor(
+            engine_id="ollama",
+            engine_type="model_server",
+            endpoint=OLLAMA_TAGS,
+            health_check=lambda: http_json(OLLAMA_TAGS, 3.0).get("live", False),
+            metadata={"critical": True, "endpoint": OLLAMA_TAGS}
+        ))
+        
+        # Register GitHub CLI engine
+        self.message_worker.register_engine(EngineDescriptor(
+            engine_id="github_cli",
+            engine_type="external_api",
+            health_check=lambda: run(["gh", "auth", "status"], timeout=5).get("ok", False),
+            metadata={"critical": False}
+        ))
+        
+        # Register Resource Fabric engine
+        self.message_worker.register_engine(EngineDescriptor(
+            engine_id="resource_fabric",
+            engine_type="resource_census",
+            health_check=lambda: True,  # Will be checked via census
+            metadata={"critical": True}
+        ))
+        
+        # Register Factory Fabric engines
+        self._register_factory_fabric_engines()
+        
+        # Subscribe to engine health signals
+        self._subscribe_engine_signals()
+        
+        # Start capability activation loop
+        self._start_capability_activation_loop()
+
+
+
 
     def _source(self, source_id: str, access: str, authority: str, trust: str, live: bool, payload: Any, evidence: list[str]) -> Source:
         return Source(source_id, access, authority, trust, live, "LIVE" if live else "UNAVAILABLE_OR_STALE", payload, evidence)
@@ -478,13 +734,15 @@ class LiveManager:
         gh_repo = run(["gh", "repo", "view", "greenylifeonline-beep/Greeny-Life", "--json", "nameWithOwner,viewerPermission"], timeout=6) if gh.get("ok") else {}
 
         official_snapshot = load_json(
-            Path.home() / ".raios" / "runtime" / "factory-fabric" / "foundry" / "data" / "official-source-snapshot.json",
+            RUNTIME_BASE / "factory-fabric" / "foundry" / "data" / "official-source-snapshot.json",
             {},
         )
         model_ecology = load_json(
-            Path.home() / ".raios" / "runtime" / "factory-fabric" / "model-ecology" / "MODEL-ECOLOGY.json",
+            RUNTIME_BASE / "factory-fabric" / "model-ecology" / "MODEL-ECOLOGY.json",
             {},
         )
+
+        maintenance_live, maintenance = maintenance_observation(RUNTIME_BASE / "continuity" / "status.json")
 
         active_tasks = [x for x in tasks.get("tasks", []) if x.get("status") not in {"DONE", "CANCELLED", "ARCHIVED"}]
         active_locks = [x for x in locks.get("locks", []) if x.get("status") == "ACTIVE"]
@@ -494,6 +752,8 @@ class LiveManager:
         ]
 
         return [
+            self._source("CONTINUITY_MAINTENANCE", "PRIVATE_INTERNAL", "RAIOS_INTERNAL", "HIGH", maintenance_live,
+                         maintenance, [str(RUNTIME_BASE / "continuity" / "status.json")]),
             self._source("CANONICAL_TASKS", "PRIVATE_INTERNAL", "CANONICAL", "HIGH", TASKS.is_file(),
                          {"active": active_tasks, "total": len(tasks.get("tasks", []))}, [str(TASKS)]),
             self._source("CANONICAL_LOCKS", "PRIVATE_INTERNAL", "CANONICAL", "HIGH", LOCKS.is_file(),
@@ -510,9 +770,9 @@ class LiveManager:
             self._source("GITHUB_MAIL", "PRIVATE_AUTHENTICATED_EXTERNAL", "UNVERIFIED_MESSAGE_INGRESS", "MEDIUM", bool(gh.get("ok")),
                          {"receipt": mail_receipt, "messages": mail}, [str(MAIL_INBOX)]),
             self._source("PUBLIC_OFFICIAL_KNOWLEDGE", "PUBLIC_EXTERNAL", "OFFICIAL_SOURCE", "HIGH", bool(official_snapshot),
-                         official_snapshot, [str(Path.home() / ".raios" / "runtime" / "factory-fabric" / "foundry" / "data" / "official-source-snapshot.json")]),
+                         official_snapshot, [str(RUNTIME_BASE / "factory-fabric" / "foundry" / "data" / "official-source-snapshot.json")]),
             self._source("MODEL_ECOLOGY", "PRIVATE_INTERNAL", "CANONICAL_CAPABILITY", "HIGH", bool(model_ecology), model_ecology,
-                         [str(Path.home() / ".raios" / "runtime" / "factory-fabric" / "model-ecology" / "MODEL-ECOLOGY.json")]),
+                         [str(RUNTIME_BASE / "factory-fabric" / "model-ecology" / "MODEL-ECOLOGY.json")]),
         ]
 
     def _docs(self, sources: list[Source]) -> list[dict[str, str]]:
@@ -602,6 +862,11 @@ class LiveManager:
                 "required_capabilities": caps or [],
             })
 
+        maintenance = by.get("CONTINUITY_MAINTENANCE")
+        if maintenance and (not maintenance.live or any(v is False for v in maintenance.payload.get("services", {}).values())):
+            gap("CONTINUITY_MAINTENANCE_REPAIR", 96, "Restore canonical continuity maintenance",
+                "Reconcile observed failed services through existing Maintain-RAIOS-Online and C5 recovery; prove health without adding a supervisor.",
+                ["scripts/runtime/Maintain-RAIOS-Online.ps1"], caps=["runtime_repair"])
         if not by["C5_LIVE_BRAIN"].live:
             gap(
                 "RESTORE_C5",
@@ -705,9 +970,7 @@ class LiveManager:
             return []
         created: list[str] = []
         for _ in range(5):
-            raw = TASKS.read_bytes()
-            before = hashlib.sha256(raw).hexdigest()
-            data = json.loads(raw.decode("utf-8-sig"))
+            data, before = load_tasks_document(TASKS)
             tasks = data.setdefault("tasks", [])
             ids = {str(x.get("id")) for x in tasks}
             active_gap_codes = {
@@ -752,11 +1015,12 @@ class LiveManager:
                 changed = True
             if not changed:
                 return created
-            if hashlib.sha256(TASKS.read_bytes()).hexdigest() != before:
+            try:
+                replace_tasks_document(TASKS, data, before, actor=MANAGER_ACTOR)
+            except StaleTasksWriteError:
                 created.clear()
                 time.sleep(0.05)
                 continue
-            atomic_json(TASKS, data)
             return created
         raise RuntimeError("TASKS_CONCURRENT_WRITE_RETRY_EXHAUSTED")
 
@@ -1031,6 +1295,7 @@ class LiveManager:
         elapsed = round((time.perf_counter() - started) * 1000, 3)
         result = {
             "schema": "raios.live-manager-tick.v2",
+            "state": "RUNNING",
             "generated_at": utc(),
             "manager_pid": os.getpid(),
             "snapshot_hash": snapshot_hash,
@@ -1077,15 +1342,194 @@ class LiveManager:
         atomic_json(STATE, self.state)
         return result
 
+    @staticmethod
+    def _pid_alive(pid: int) -> bool:
+        if int(pid or 0) <= 4:
+            return False
+        if os.name != "nt":
+            try:
+                os.kill(int(pid), 0)
+                return True
+            except OSError:
+                return False
+        try:
+            import ctypes
+
+            process_query_limited_information = 0x1000
+            still_active = 259
+            kernel32 = ctypes.windll.kernel32
+            handle = kernel32.OpenProcess(
+                process_query_limited_information, False, int(pid)
+            )
+            if not handle:
+                return False
+            try:
+                exit_code = ctypes.c_ulong()
+                if not kernel32.GetExitCodeProcess(handle, ctypes.byref(exit_code)):
+                    return False
+                return int(exit_code.value) == still_active
+            finally:
+                kernel32.CloseHandle(handle)
+        except Exception:
+            return False
+
+    def _evolution_heartbeat_live(self, max_age_seconds: float = 120.0) -> tuple[bool, dict[str, Any]]:
+        hb = load_json(EVOLUTION_HEARTBEAT, {})
+        if not isinstance(hb, dict):
+            return False, {}
+        try:
+            stamp = datetime.fromisoformat(str(hb.get("timestamp", "")).replace("Z", "+00:00"))
+            age = (datetime.now(timezone.utc) - stamp).total_seconds()
+        except Exception:
+            return False, hb
+        wal = str(hb.get("wal") or "")
+        state = str(hb.get("state") or "").upper()
+        same_wal = False
+        try:
+            same_wal = Path(wal).resolve() == Path(WAL_FILE).resolve()
+        except Exception:
+            same_wal = wal == str(WAL_FILE)
+        pid_alive = self._pid_alive(int(hb.get("pid") or 0))
+        return bool(
+            pid_alive
+            and 0 <= age <= max_age_seconds
+            and state in {"STARTING", "ACTIVE", "IDLE_COGNITION", "RUNNING", "ONLINE"}
+            and same_wal
+        ), hb
+
+    def _supervise_evolution_once(self) -> None:
+        with self._evolution_recovery_lock:
+            live, hb = self._evolution_heartbeat_live()
+            now_mono = time.monotonic()
+            if live:
+                state = str(hb.get("state") or "").upper()
+                if state == "STARTING":
+                    return
+                if self._evolution_was_down:
+                    self._evolution_was_down = False
+                    self._evolution_recovery_attempt = 0
+                    self._evolution_recovery_next_at = 0.0
+                    log(
+                        "Evolution self-heal recovered "
+                        f"pid={hb.get('pid')} wal={hb.get('wal')}"
+                    )
+                    try:
+                        event = build_event(
+                            event_type="RECOVERY",
+                            actor=MANAGER_ACTOR,
+                            intent="Recover Evolution daemon and resume canonical Cognitive WAL processing",
+                            success=True,
+                            tool="RAIOS_MANAGER_EVOLUTION_SELF_HEAL",
+                            output_ref={
+                                "pid": hb.get("pid"),
+                                "state": hb.get("state"),
+                                "wal": hb.get("wal"),
+                                "evolution_status": hb.get("evolution_status"),
+                            },
+                            evidence_refs=[str(EVOLUTION_HEARTBEAT), str(LOG_FILE)],
+                            confidence=1.0,
+                        )
+                        emit_event(event)
+                    except Exception as exc:
+                        log(f"Evolution recovery evidence emit FAIL {type(exc).__name__}: {exc}")
+                return
+
+            self._evolution_was_down = True
+            running = self._evolution_recovery_process
+            if running is not None and running.poll() is None:
+                return
+            if now_mono < self._evolution_recovery_next_at:
+                return
+
+            ensure = REPO / "scripts" / "runtime" / "Ensure-RAIOS-Cognitive-Loop.ps1"
+            if not ensure.is_file():
+                self._evolution_recovery_attempt += 1
+                self._evolution_recovery_next_at = now_mono + min(
+                    300.0, 15.0 * (2 ** min(self._evolution_recovery_attempt, 4))
+                )
+                log(f"Evolution self-heal blocked: missing {ensure}")
+                return
+
+            powershell = (
+                Path(os.environ.get("SystemRoot", r"C:\Windows"))
+                / "System32"
+                / "WindowsPowerShell"
+                / "v1.0"
+                / "powershell.exe"
+            )
+            args = [
+                str(powershell),
+                "-NoLogo",
+                "-NoProfile",
+                "-NonInteractive",
+                "-ExecutionPolicy",
+                "Bypass",
+                "-File",
+                str(ensure),
+                "-Repo",
+                str(REPO),
+            ]
+            env = os.environ.copy()
+            env["RAIOS_COGNITIVE_RECOVERY_OWNER"] = "RAIOS-MANAGER"
+            env["RAIOS_CANONICAL_REPO"] = str(REPO)
+            out_path = MANAGER_ROOT / "evolution-recovery.out.log"
+            err_path = MANAGER_ROOT / "evolution-recovery.err.log"
+            try:
+                with out_path.open("ab") as out_handle, err_path.open("ab") as err_handle:
+                    proc = subprocess.Popen(
+                        args,
+                        cwd=str(REPO),
+                        env=env,
+                        stdin=subprocess.DEVNULL,
+                        stdout=out_handle,
+                        stderr=err_handle,
+                        startupinfo=windowless_startupinfo(),
+                        creationflags=CREATE_NO_WINDOW,
+                    )
+                self._evolution_recovery_process = proc
+                self._evolution_recovery_attempt += 1
+                backoff = min(
+                    300.0, 15.0 * (2 ** min(self._evolution_recovery_attempt - 1, 4))
+                )
+                self._evolution_recovery_next_at = now_mono + backoff
+                log(
+                    "Evolution self-heal started "
+                    f"pid={proc.pid} attempt={self._evolution_recovery_attempt} "
+                    f"backoff_seconds={int(backoff)}"
+                )
+            except Exception as exc:
+                self._evolution_recovery_attempt += 1
+                self._evolution_recovery_next_at = now_mono + min(
+                    300.0, 15.0 * (2 ** min(self._evolution_recovery_attempt, 4))
+                )
+                log(f"Evolution self-heal start FAIL {type(exc).__name__}: {exc}")
+
+    def _start_evolution_supervisor(self) -> None:
+        def loop() -> None:
+            while True:
+                try:
+                    self._supervise_evolution_once()
+                except BaseException as exc:
+                    log(f"Evolution supervisor FAIL {type(exc).__name__}: {exc}")
+                time.sleep(5)
+
+        threading.Thread(
+            target=loop,
+            name="RAIOS-Manager-Evolution-Self-Heal",
+            daemon=True,
+        ).start()
+
     def daemon(self) -> None:
         MANAGER_ROOT.mkdir(parents=True, exist_ok=True)
         lock_handle = INSTANCE_LOCK.open("a+b")
         try:
             import msvcrt
 
-            lock_handle.seek(0)
-            if lock_handle.read(1) == b"":
-                lock_handle.seek(0)
+            # Do not read the lock byte on Windows. Some inherited ACL/file
+            # states allow append/lock but reject read(), which previously
+            # crashed the manager before singleton acquisition.
+            lock_handle.seek(0, os.SEEK_END)
+            if lock_handle.tell() == 0:
                 lock_handle.write(b"0")
                 lock_handle.flush()
             lock_handle.seek(0)
@@ -1149,6 +1593,7 @@ class LiveManager:
             name="RAIOS-Manager-Liveness-Pulse",
             daemon=True,
         ).start()
+        self._start_evolution_supervisor()
 
         while True:
             try:
@@ -1189,6 +1634,384 @@ class LiveManager:
                 except Exception:
                     pass
             time.sleep(LOCAL_TICK_SECONDS)
+
+
+
+
+    def _register_factory_fabric_engines(self) -> None:
+        """Register Factory Fabric engines with health checks."""
+        if not self._mw_integration_enabled:
+            return
+        
+        # Resource Factory
+        self.message_worker.register_engine(EngineDescriptor(
+            engine_id="resource_factory",
+            engine_type="resource_factory",
+            health_check=lambda: self._check_resource_factory(),
+            metadata={"critical": True, "factory": "RESOURCE_FACTORY"}
+        ))
+        
+        # Training Factory
+        self.message_worker.register_engine(EngineDescriptor(
+            engine_id="training_factory",
+            engine_type="training_factory",
+            health_check=lambda: self._check_training_factory(),
+            metadata={"critical": True, "factory": "TRAINING_FACTORY"}
+        ))
+        
+        # Expert Foundry
+        self.message_worker.register_engine(EngineDescriptor(
+            engine_id="expert_foundry",
+            engine_type="expert_foundry",
+            health_check=lambda: self._check_expert_foundry(),
+            metadata={"critical": True, "factory": "C5_EXPERT_FOUNDRY"}
+        ))
+        
+        # Model Ecology
+        self.message_worker.register_engine(EngineDescriptor(
+            engine_id="model_ecology",
+            engine_type="model_ecology",
+            health_check=lambda: self._check_model_ecology(),
+            metadata={"critical": True, "factory": "MODEL_ECOLOGY"}
+        ))
+        
+        # Assimilation Factory
+        self.message_worker.register_engine(EngineDescriptor(
+            engine_id="assimilation_factory",
+            engine_type="assimilation_factory",
+            health_check=lambda: self._check_assimilation_factory(),
+            metadata={"critical": True, "factory": "ASSIMILATION_FACTORY"}
+        ))
+        
+        # Cognitive Factory
+        self.message_worker.register_engine(EngineDescriptor(
+            engine_id="cognitive_factory",
+            engine_type="cognitive_factory",
+            health_check=lambda: self._check_cognitive_factory(),
+            metadata={"critical": True, "factory": "COGNITIVE_FACTORY"}
+        ))
+    
+    def _check_resource_factory(self) -> bool:
+        """Check Resource Factory health."""
+        try:
+            from raios.factory_fabric.orchestrator import resource_factory_probe
+            result = resource_factory_probe(live=True)
+            return str(result.get("status", "")).startswith("PASS")
+        except Exception as exc:
+            StructuredLogger.warning(f"Resource Factory health check failed: {exc}")
+            return False
+    
+    def _check_training_factory(self) -> bool:
+        """Check Training Factory health."""
+        try:
+            from raios.factory_fabric.orchestrator import training_factory_probe
+            result = training_factory_probe()
+            return str(result.get("status", "")).startswith("PASS")
+        except Exception as exc:
+            StructuredLogger.warning(f"Training Factory health check failed: {exc}")
+            return False
+    
+    def _check_expert_foundry(self) -> bool:
+        """Check Expert Foundry health."""
+        try:
+            from raios.factory_fabric.orchestrator import foundry_probe
+            result = foundry_probe(max_files=10, case_limit=10)
+            return str(result.get("status", "")).startswith("PASS")
+        except Exception as exc:
+            StructuredLogger.warning(f"Expert Foundry health check failed: {exc}")
+            return False
+    
+    def _check_model_ecology(self) -> bool:
+        """Check Model Ecology health."""
+        try:
+            from raios.factory_fabric.orchestrator import model_ecology_probe
+            result = model_ecology_probe(live_accounts=False)
+            return str(result.get("status", "")).startswith("PASS")
+        except Exception as exc:
+            StructuredLogger.warning(f"Model Ecology health check failed: {exc}")
+            return False
+    
+    def _check_assimilation_factory(self) -> bool:
+        """Check Assimilation Factory health."""
+        try:
+            from raios.factory_fabric.orchestrator import assimilation_probe
+            result = assimilation_probe()
+            return str(result.get("status", "")).startswith("PASS")
+        except Exception as exc:
+            StructuredLogger.warning(f"Assimilation Factory health check failed: {exc}")
+            return False
+    
+    def _check_cognitive_factory(self) -> bool:
+        """Check Cognitive Factory health."""
+        try:
+            from raios.factory_fabric.orchestrator import cognitive_factory_probe
+            result = cognitive_factory_probe()
+            return str(result.get("status", "")).startswith("PASS")
+        except Exception as exc:
+            StructuredLogger.warning(f"Cognitive Factory health check failed: {exc}")
+            return False
+
+
+
+
+    def _register_manager_circuit_breakers(self) -> None:
+        """Register circuit breakers for external dependencies."""
+        if not self._mw_integration_enabled:
+            return
+        
+        self.message_worker.register_circuit_breaker("c5_chat", failure_threshold=3, recovery_timeout=30.0)
+        self.message_worker.register_circuit_breaker("command_center", failure_threshold=3, recovery_timeout=30.0)
+        self.message_worker.register_circuit_breaker("ollama", failure_threshold=5, recovery_timeout=60.0)
+        self.message_worker.register_circuit_breaker("github_api", failure_threshold=5, recovery_timeout=120.0)
+        self.message_worker.register_circuit_breaker("ollama_embed", failure_threshold=3, recovery_timeout=60.0)
+        self.message_worker.register_circuit_breaker("subprocess_spawn", failure_threshold=3, recovery_timeout=30.0)
+
+
+
+
+    def _subscribe_engine_signals(self) -> None:
+        """Subscribe to engine health signals from MessageWorker."""
+        if not self._mw_integration_enabled:
+            return
+        
+        def on_engine_health(payload: dict):
+            engine_id = payload.get("engine_id")
+            healthy = payload.get("healthy")
+            if engine_id and healthy is not None:
+                engine = self.message_worker.get_engine(engine_id)
+                if engine:
+                    old_state = engine.state
+                    engine.state = EngineState.ACTIVE if healthy else EngineState.UNAVAILABLE
+                    engine.last_health_check = time.time()
+                    if old_state != engine.state:
+                        StructuredLogger.info(f"Engine {engine_id} state changed: {old_state.value} -> {engine.state.value}")
+                        metrics.inc("engine.state_changed", labels={"engine": engine_id, "new_state": engine.state.value})
+        
+        def on_circuit_breaker(payload: dict):
+            cb_name = payload.get("circuit")
+            state = payload.get("state")
+            if cb_name and state:
+                metrics.inc("circuit_breaker.state_changed", labels={"circuit": cb_name, "state": state})
+                StructuredLogger.warning(f"Circuit breaker {cb_name} -> {state}")
+        
+        self.message_worker.subscribe("ENGINE.HEALTH", on_engine_health)
+        self.message_worker.subscribe("CIRCUIT_BREAKER", on_circuit_breaker)
+        metrics.inc("engine.signals_subscribed", labels={"count": "2"})
+    
+    def _start_capability_activation_loop(self) -> None:
+        """Start the background capability activation loop."""
+        if not self._mw_integration_enabled:
+            return
+        
+        self._capability_loop_stop = threading.Event()
+        self._capability_loop_thread = threading.Thread(
+            target=self._capability_activation_loop,
+            name="RAIOS-Capability-Activation-Loop",
+            daemon=True,
+        )
+        self._capability_loop_thread.start()
+        StructuredLogger.info("Capability activation loop started")
+    
+    def _capability_activation_loop(self) -> None:
+        """Background loop that periodically checks engine health and activates capabilities."""
+        check_interval = 30.0  # Check every 30 seconds
+        activation_interval = 60.0  # Try activation every 60 seconds
+        last_activation = 0.0
+        
+        while not self._capability_loop_stop.is_set():
+            try:
+                # Periodic health checks
+                self._check_all_engine_health()
+                
+                # Periodic activation attempts
+                now = time.time()
+                if now - last_activation >= 60.0:
+                    self._attempt_engine_activation()
+                    last_activation = time.time()
+                
+                # Also check circuit breakers and try recovery
+                self._check_circuit_breakers_recovery()
+                
+            except Exception as exc:
+                StructuredLogger.error(f"Capability loop error: {exc}")
+                metrics.inc("capability_loop.error")
+            
+            self._capability_loop_stop.wait(30.0)
+    
+    def _check_all_engine_health(self) -> None:
+        """Check health of all registered engines and update their states."""
+        if not self._mw_integration_enabled:
+            return
+        
+        with self.message_worker._engine_lock:
+            for engine_id, engine in self.message_worker._engine_registry.items():
+                if engine.health_check:
+                    try:
+                        start = time.perf_counter()
+                        healthy = engine.health_check()
+                        latency = round((time.perf_counter() - start) * 1000, 3)
+                        
+                        old_state = engine.state
+                        engine.state = EngineState.ACTIVE if healthy else EngineState.UNAVAILABLE
+                        engine.last_health_check = time.time()
+                        engine.last_health_latency = latency
+                        
+                        if old_state != engine.state:
+                            StructuredLogger.info(f"Engine {engine_id} state changed: {old_state.value} -> {engine.state.value}")
+                            metrics.inc("engine.state_changed", labels={"engine": engine_id, "new_state": engine.state.value})
+                        
+                        metrics.observe("engine.health_check.latency_ms", latency, labels={"engine": engine_id})
+                        metrics.inc("engine.health_check", labels={"engine": engine_id, "result": "healthy" if healthy else "unhealthy"})
+                        
+                    except Exception as exc:
+                        StructuredLogger.error(f"Engine {engine_id} health check failed: {exc}")
+                        engine.state = EngineState.UNAVAILABLE
+                        metrics.inc("engine.health_check.error", labels={"engine": engine_id, "error": type(exc).__name__})
+    
+    def _attempt_engine_activation(self) -> None:
+        """Attempt to activate engines that are UNAVAILABLE but have dependencies met."""
+        if not self._mw_integration_enabled:
+            return
+        
+        with self.message_worker._engine_lock:
+            for engine_id, engine in self.message_worker._engine_registry.items():
+                if engine.state == EngineState.UNAVAILABLE and engine.activation_cmd:
+                    # Check if dependencies are met
+                    deps_met = True
+                    for dep_id in engine.dependencies:
+                        dep_engine = self.message_worker._engine_registry.get(dep_id)
+                        if not dep_engine or dep_engine.state not in (EngineState.ACTIVE, EngineState.AVAILABLE):
+                            deps_met = False
+                            break
+                    
+                    if deps_met:
+                        StructuredLogger.info(f"Attempting activation of engine {engine_id}")
+                        try:
+                            import subprocess
+                            result = subprocess.run(
+                                engine.activation_cmd,
+                                shell=True,
+                                check=True,
+                                timeout=60,
+                                capture_output=True,
+                                text=True,
+                                creationflags=CREATE_NO_WINDOW,
+                            )
+                            engine.state = EngineState.ACTIVATING
+                            StructuredLogger.info(f"Engine {engine_id} activation started")
+                            metrics.inc("engine.activation.started", labels={"engine": engine_id})
+                        except Exception as exc:
+                            StructuredLogger.warning(f"Engine {engine_id} activation failed: {exc}")
+                            metrics.inc("engine.activation.failed", labels={"engine": engine_id, "error": type(exc).__name__})
+    
+    def _check_circuit_breakers_recovery(self) -> None:
+        """Check if any OPEN circuit breakers can transition to HALF_OPEN."""
+        if not self._mw_integration_enabled:
+            return
+        
+        for name, cb in self.message_worker._circuit_breakers.items():
+            if cb.state == CircuitState.OPEN:
+                if time.time() - cb._last_failure_time >= cb.timeout:
+                    cb._state = CircuitState.HALF_OPEN
+                    cb._success_count = 0
+                    StructuredLogger.info(f"Circuit breaker {name} transitioned to HALF_OPEN")
+                    metrics.inc("circuit_breaker.half_open", labels={"circuit": name})
+                    self.emit_health_signal(f"CIRCUIT_BREAKER_HALF_OPEN", {"circuit": name})
+    
+
+    def enqueue_alert(self, targets: list[str], text: str, msg_type: str = "CONTROL", priority: MessagePriority = MessagePriority.HIGH, **kwargs) -> dict | None:
+        """Enqueue an alert via MessageWorker."""
+        if not self._mw_integration_enabled:
+            return None
+        try:
+            return self.message_worker.enqueue(
+                sender=MANAGER_ACTOR,
+                targets=targets,
+                text=text,
+                msg_type=msg_type,
+                priority=priority,
+                **kwargs
+            )
+        except Exception as exc:
+            StructuredLogger.warning(f"enqueue_alert FAIL: {exc}")
+            return None
+
+    def emit_health_signal(self, event: str, payload: dict) -> int:
+        """Emit a health signal via MessageWorker signal bus."""
+        if not self._mw_integration_enabled:
+            return 0
+        try:
+            return self.message_worker.emit_signal(f"HEALTH.{event}", payload)
+        except Exception as exc:
+            StructuredLogger.warning(f"emit_health_signal FAIL: {exc}")
+            return 0
+
+    def call_with_circuit_breaker(self, name: str, func: callable, fallback = None):
+        """Execute function with circuit breaker protection via MessageWorker."""
+        if not self._mw_integration_enabled:
+            return func()
+        try:
+            return self.message_worker.call_with_circuit_breaker(name, func, fallback)
+        except Exception as exc:
+            if fallback:
+                try:
+                    return fallback()
+                except Exception:
+                    pass
+            raise
+
+    def emit_failure_event(self, intent: str, tool: str, exception: Exception, metadata = None):
+        """Emit a FAILURE event via Cognitive Event Bus and MessageWorker signal."""
+        if not self._mw_integration_enabled:
+            return
+        try:
+            self.message_worker.emit_signal("FAILURE", {
+                "actor": MANAGER_ACTOR,
+                "intent": intent,
+                "tool": tool,
+                "exception_type": type(exception).__name__,
+                "message": str(exception),
+                "metadata": metadata or {},
+            })
+        except Exception as exc:
+            StructuredLogger.warning(f"emit_failure_event FAIL: {exc}")
+
+    def schedule_dead_letter_retry(self, mid: str, attempt: int):
+        """Schedule dead letter retry via MessageWorker."""
+        if not self._mw_integration_enabled:
+            return
+        try:
+            self.message_worker.schedule_dead_letter_retry(mid, attempt)
+        except Exception as exc:
+            StructuredLogger.warning(f"schedule_dead_letter_retry FAIL: {exc}")
+
+    def _emit_c5_reasoning_event(self, gaps: list, context: list, snapshot_hash: str, result: dict):
+        """Emit C5 reasoning event via MessageWorker."""
+        if not self._mw_integration_enabled:
+            return
+        try:
+            self.message_worker.emit_signal("C5_REASONING", {
+                "snapshot_hash": snapshot_hash,
+                "gap_count": len(gaps),
+                "context_count": len(context),
+                "ok": result.get("ok", False),
+                "latency_ms": result.get("latency_ms", 0),
+            })
+        except Exception:
+            pass
+
+
+    def stop(self) -> None:
+        """Stop the manager and all background loops."""
+        if hasattr(self, '_capability_loop_stop'):
+            self._capability_loop_stop.set()
+        if hasattr(self, '_capability_loop_thread') and self._capability_loop_thread.is_alive():
+            self._capability_loop_thread.join(timeout=5.0)
+        if self._mw_integration_enabled:
+            self.message_worker.stop()
+
+
+
 
 
 def refresh_resources() -> dict[str, Any]:

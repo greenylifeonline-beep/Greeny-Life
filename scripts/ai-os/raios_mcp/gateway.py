@@ -602,14 +602,41 @@ class Gateway:
         self._audit(actor, tool, "ok", arguments)
         return result
 
+    # RAIOS_EXECUTION_HOTPATH_NO_GIT_SUBPROCESS_V2
     def _git_branch(self, *, head_source: str) -> str:
-        """A Git-file head stays readable if branch lookup fails. A timeout never becomes success."""
-        try:
-            return git(self.root, "branch", "--show-current") or BRANCH
-        except GatewayError as err:
-            if head_source == "git-file" and err.code != "GIT_TIMEOUT":
-                return BRANCH
-            raise
+        """Resolve canonical branch from .git metadata without spawning Git."""
+        if head_source == "git-file":
+            try:
+                git_dir=self.root / ".git"
+
+                if git_dir.is_file():
+                    meta=git_dir.read_text(encoding="utf-8").strip()
+
+                    if meta.lower().startswith("gitdir:"):
+                        target=meta.split(":",1)[1].strip()
+                        git_dir=(self.root / target).resolve()
+
+                raw=(git_dir / "HEAD").read_text(
+                    encoding="utf-8"
+                ).strip()
+
+                prefix="ref: refs/heads/"
+
+                if raw.startswith(prefix):
+                    name=raw[len(prefix):].strip()
+
+                    if (
+                        name
+                        and not name.startswith("/")
+                        and ".." not in name
+                    ):
+                        return name
+
+            except (OSError,UnicodeError):
+                pass
+
+        return BRANCH
+
 
     def close(self) -> None:
         return None
@@ -628,6 +655,9 @@ class Gateway:
         if tool in actor.deny or tool not in actor.tools or tool not in actor.scopes:
             raise GatewayError("CAPABILITY_DENIED", f"{actor.actor_id} cannot {tool}", 403)
         self._bind_identity(actor, tool, arguments)
+        if tool == "execute_scoped_task":
+            # RAIOS_SERVER_OWNED_EXECUTION_PAYLOAD_HASH_V2
+            arguments["payload_hash"] = payload_hash_of(arguments)
         return getattr(self, f"tool_{tool}")(actor, arguments)
 
 
@@ -746,7 +776,7 @@ class Gateway:
         if arguments.get("gl005_proven") or arguments.get("gl004_proven") or arguments.get("pass") is True:
             raise GatewayError("FORBIDDEN_FIELD", "gateway cannot write PASS/proven", 403)
         expected = payload_hash_of(arguments)
-        if arguments["payload_hash"] != expected:
+        if tool != "execute_scoped_task" and arguments["payload_hash"] != expected:
             raise GatewayError("PAYLOAD_HASH_MISMATCH", "payload_hash does not match body", 400)
 
     def _audit(self, actor: Actor, tool: str, status: str, arguments: dict) -> None:

@@ -1,0 +1,25 @@
+name: certifier-safety
+on:
+  pull_request:
+    paths:
+      - _raios-authoritative-certifier/**
+      - tests/authoritative_certifier/**
+      - .github/workflows/certifier-safety.yml
+  push:
+    branches: [ai-evolution-202608051809]
+    paths:
+      - _raios-authoritative-certifier/**
+      - tests/authoritative_certifier/**
+      - .github/workflows/certifier-safety.yml
+jobs:
+  safety-schema:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - name: install pytest
+        run: pip install pytest
+      - name: nested safety flags
+        run: python3 -m pytest tests/authoritative_certifier -q

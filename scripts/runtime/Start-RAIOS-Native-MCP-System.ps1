@@ -142,8 +142,8 @@ try{
  Write-Host 'LOCAL_MCP_PROTOCOL_READY=true'
 
  $tokens=Get-Content -LiteralPath $TokenStore -Raw|ConvertFrom-Json
- $c1=@($tokens.actors|Where-Object{[string]$_.actor_id -eq 'C1'})|Select-Object -First 1
- if(-not $c1 -or [string]::IsNullOrWhiteSpace([string]$c1.token)){throw 'C1_TOKEN_GRANT_MISSING'}
+ $delegate=@($tokens.actors|Where-Object{[string]$_.actor_id -eq 'CHATGPT_NATIVE_DELEGATE'})|Select-Object -First 1
+ if(-not $delegate -or [string]::IsNullOrWhiteSpace([string]$delegate.token)){throw 'CHATGPT_NATIVE_DELEGATE_TOKEN_GRANT_MISSING'}
 
  $cipher=[IO.File]::ReadAllBytes($MachineSecret)
  $plainBytes=[Security.Cryptography.ProtectedData]::Unprotect($cipher,$null,[Security.Cryptography.DataProtectionScope]::LocalMachine)
@@ -151,7 +151,10 @@ try{
  if([string]::IsNullOrWhiteSpace($apiKey)){throw 'MACHINE_DPAPI_DECRYPT_EMPTY'}
 
  $env:CONTROL_PLANE_API_KEY=$apiKey
- $env:RAIOS_MCP_C1_TOKEN=[string]$c1.token
+ $env:RAIOS_MCP_TOKEN=[string]$delegate.token
+ $env:RAIOS_MCP_ACTOR='CHATGPT_NATIVE_DELEGATE'
+ $env:MCP_EXTRA_HEADERS="X-RAIOS-TOKEN: $($delegate.token)"
+ $env:MCP_DISCOVERY_EXTRA_HEADERS="X-RAIOS-TOKEN: $($delegate.token)"
  $env:RAIOS_NATIVE_TUNNEL_AUTHORITY='RAIOS-C5-SCM'
  New-Item -ItemType Directory -Path (Split-Path $OwnerFile) -Force|Out-Null
  # Owner/health files are projections. Never delete them during bootstrap:
@@ -188,7 +191,7 @@ try{
 }
 finally{
  Remove-Item Env:CONTROL_PLANE_API_KEY -ErrorAction SilentlyContinue
- Remove-Item Env:RAIOS_MCP_C1_TOKEN -ErrorAction SilentlyContinue
+ Remove-Item Env:RAIOS_MCP_TOKEN -ErrorAction SilentlyContinue
  Remove-Item Env:RAIOS_NATIVE_TUNNEL_AUTHORITY -ErrorAction SilentlyContinue
  Remove-Item Env:RAIOS_NATIVE_TUNNEL_OWNER_PID -ErrorAction SilentlyContinue
  try{

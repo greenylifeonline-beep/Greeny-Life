@@ -24,6 +24,7 @@ from raios.command_fabric.lease import (
     LEASE_CONFLICT,
     LEASE_EXPIRED,
     LEASE_UNKNOWN,
+    STALE_LEASE_FENCE,
     WRONG_OWNER,
     CommandLeaseAdapter,
 )
@@ -315,6 +316,81 @@ class ControlFabricDeltaTests(unittest.TestCase):
         rel = self.leases.release("L-does-not-exist", owner="C1@AG")
         self.assertFalse(rel["ok"])
         self.assertEqual(rel["code"], LEASE_UNKNOWN)
+
+    def test_CF025_ACQUIRE_BINDS_GENERATION_AND_FENCE_TOKEN(self):
+        rec = self.leases.acquire(
+            owner="C1@AG",
+            scope="C5:fenced",
+            task_id="T-FENCE",
+            correlation_id=CORR,
+            capability="fenced",
+            resource_or_target="C5",
+            idempotency_key="idem-fence",
+            provenance_ref="t",
+        )
+        self.assertTrue(rec["ok"])
+        self.assertEqual(rec["generation"], 1)
+        self.assertGreater(rec["fence_token"], 0)
+
+    def test_CF026_RENEW_ADVANCES_GENERATION_AND_REJECTS_STALE_TOKEN(self):
+        rec = self.leases.acquire(
+            owner="C1@AG",
+            scope="C5:renew-fence",
+            task_id="T-RENEW",
+            correlation_id=CORR,
+            capability="renew-fence",
+            resource_or_target="C5",
+            idempotency_key="idem-renew",
+            provenance_ref="t",
+        )
+        renewed = self.leases.renew(
+            rec["lease_id"],
+            owner="C1@AG",
+            expected_fence_token=rec["fence_token"],
+            expected_generation=rec["generation"],
+        )
+        self.assertTrue(renewed["ok"])
+        self.assertEqual(renewed["lease"]["generation"], 2)
+        self.assertGreater(renewed["lease"]["fence_token"], rec["fence_token"])
+        stale = self.leases.validate(
+            rec["lease_id"],
+            owner="C1@AG",
+            expected_fence_token=rec["fence_token"],
+            expected_generation=rec["generation"],
+        )
+        self.assertFalse(stale["ok"])
+        self.assertEqual(stale["code"], STALE_LEASE_FENCE)
+
+    def test_CF027_FENCE_INVALIDATES_OLD_WORKER_GENERATION(self):
+        rec = self.leases.acquire(
+            owner="C1@AG",
+            scope="C5:explicit-fence",
+            task_id="T-EXPLICIT-FENCE",
+            correlation_id=CORR,
+            capability="explicit-fence",
+            resource_or_target="C5",
+            idempotency_key="idem-explicit-fence",
+            provenance_ref="t",
+        )
+        fenced = self.leases.fence(rec["lease_id"], owner="C1@AG")
+        self.assertTrue(fenced["ok"])
+        self.assertEqual(fenced["lease"]["state"], "FENCED")
+        self.assertEqual(fenced["lease"]["generation"], 2)
+        stale = self.leases.validate(
+            rec["lease_id"],
+            owner="C1@AG",
+            expected_fence_token=rec["fence_token"],
+            expected_generation=rec["generation"],
+        )
+        self.assertFalse(stale["ok"])
+        self.assertEqual(stale["code"], STALE_LEASE_FENCE)
+
+    def test_CF028_PIPELINE_BINDS_AND_VALIDATES_FENCE(self):
+        out = self._run()
+        self.assertTrue(out["ok"])
+        self.assertTrue(out["LEASE_FENCE_VALIDATED"])
+        self.assertEqual(out["LEASE_GENERATION"], 1)
+        self.assertGreater(out["LEASE_FENCE_TOKEN"], 0)
 
 
 if __name__ == "__main__":

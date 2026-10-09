@@ -1,0 +1,24 @@
+FFF..F..............                                                     [100%]
+=================================== FAILURES ===================================
+___________________ test_native_readiness_contract[current] ____________________
+tests/mcp/test_native_readiness.py:79: in test_native_readiness_contract
+    assert readiness_results[name] is expected
+E   assert False is True
+__________________ test_native_readiness_contract[reordered] ___________________
+tests/mcp/test_native_readiness.py:79: in test_native_readiness_contract
+    assert readiness_results[name] is expected
+E   assert False is True
+_________________ test_native_readiness_contract[legacy_eight] _________________
+tests/mcp/test_native_readiness.py:79: in test_native_readiness_contract
+    assert readiness_results[name] is expected
+E   assert True is False
+________________ test_native_readiness_contract[count_mismatch] ________________
+tests/mcp/test_native_readiness.py:79: in test_native_readiness_contract
+    assert readiness_results[name] is expected
+E   assert True is False
+=========================== short test summary info ============================
+FAILED tests/mcp/test_native_readiness.py::test_native_readiness_contract[current]
+FAILED tests/mcp/test_native_readiness.py::test_native_readiness_contract[reordered]
+FAILED tests/mcp/test_native_readiness.py::test_native_readiness_contract[legacy_eight]
+FAILED tests/mcp/test_native_readiness.py::test_native_readiness_contract[count_mismatch]
+4 failed, 16 passed in 0.53s

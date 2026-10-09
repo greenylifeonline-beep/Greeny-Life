@@ -1,0 +1,41 @@
+{
+  "schema": "raios.source-generation-alignment.v2",
+  "observed_at": "2026-10-04T12:38:00Z",
+  "branch": "ai-evolution-202608051809",
+  "source_leader": {
+    "branch_ref": "refs/heads/ai-evolution-202608051809",
+    "selection": "LATEST_ACCEPTED_BRANCH_TIP",
+    "minimum_accepted_ancestor": "7806131169c3fc7f54727a1bcc5bcba392b689d1",
+    "rule": "CURRENT_TIP_MUST_BE_AT_OR_DESCENDANT_OF_MINIMUM_ACCEPTED_ANCESTOR",
+    "role": "LEADER"
+  },
+  "local_projection": {
+    "head": "dfc08e62a6392af53c9995e74278a5ba6d153a84",
+    "role": "FOLLOWER_HISTORY",
+    "authority": false,
+    "local_only_historical_commits": [
+      "cd878ee4584721fdf4c44ce9cb61d8e09957a339",
+      "dfc08e62a6392af53c9995e74278a5ba6d153a84"
+    ]
+  },
+  "critical_content_alignment": true,
+  "runtime_generation": {
+    "service_pid": 19364,
+    "role": "LEADER",
+    "primary_channel": "NATIVE_RAIOS",
+    "predecessor_policy": "FOLLOW_MIGRATE_DRAIN"
+  },
+  "laws": [
+    "LATEST_ACCEPTED_RAIOS_GENERATION_IS_SINGLE_LEADER",
+    "OLDER_GENERATION_FOLLOW_MIGRATE_DRAIN",
+    "PID_RECENCY_NE_GENERATION_AUTHORITY",
+    "ALL_RAIOS_OWNED_OR_ACQUIRED_CAPABILITIES_SERVE_PRIMARY_NATIVE_RAIOS_CHANNEL"
+  ],
+  "forbidden": [
+    "FORCE_PUSH",
+    "RESET_CLEAN",
+    "AUTOMATIC_REBASE",
+    "PARALLEL_CANONICAL_TREE"
+  ],
+  "ok": true
+}

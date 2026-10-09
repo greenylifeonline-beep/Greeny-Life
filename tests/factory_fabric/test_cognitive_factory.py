@@ -60,7 +60,13 @@ def test_cognitive_material_is_classified_and_deduplicated(tmp_path):
     assert by_capability["BENCHMARK_CANDIDATE"]["disposition"] == "REVIEW_REQUIRED"
     assert by_capability["SKILL_VALIDATION_CANDIDATE"]["disposition"] == "REVIEW_REQUIRED"
     assert by_capability["GOVERNANCE_REFERENCE"]["disposition"] == "REFERENCE_ONLY"
+    assert all(item["storage_status"] == "STORED_VERIFIED" for item in first["review_queue"])
+    assert by_capability["BENCHMARK_CANDIDATE"]["validation_status"] == "UNVALIDATED"
+    assert by_capability["GOVERNANCE_REFERENCE"]["validation_status"] == "REFERENCE_ONLY"
+    assert all(item["trust_status"] == "UNTRUSTED" for item in first["review_queue"])
+    assert all(item["canonical_status"] == "NOT_CANONICAL" for item in first["review_queue"])
     assert all(item["promotion_authority"] is False for item in first["review_queue"])
+    assert first["authority_dimensions_separated"] is True
     assert first["automatic_training"] is False
     assert first["automatic_canonical_promotion"] is False
     assert first["second_wal_created"] is False

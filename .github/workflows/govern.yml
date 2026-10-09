@@ -2,7 +2,7 @@ name: govern
 on:
   pull_request:
   push:
-    branches: [main]
+    branches: [ai-evolution-202608051809]
 jobs:
   gate:
     runs-on: ubuntu-latest
@@ -15,14 +15,18 @@ jobs:
         run: pip install ./packages/govern || pip install govern-kit
       - name: scoreboard
         run: govern status
+      - name: canonical fabric regression
+        run: |
+          python -m pip install pytest pytest-asyncio pydantic PyYAML
+          python -m pytest tests/command_fabric/test_control_fabric.py tests/factory_fabric/test_cas_durability.py tests/factory_fabric/test_factory_fabric.py -q
       # Advisory until a track record exists: a fresh install has an empty
       # ledger, and hard-failing GATE on every PR before any claim is scored
       # blocks humans, not automation (learned installing the first external
       # repo). Make it required only once classes earn ELIGIBLE.
       - name: calibration gate (advisory on a young ledger)
         run: govern gate || echo "::notice::gate GATE — no auto-merge eligibility yet"
-      - name: score merged receipts (main only)
-        if: github.ref == 'refs/heads/main'
+      - name: score merged receipts (canonical only)
+        if: github.ref == 'refs/heads/ai-evolution-202608051809'
         run: |
-          git fetch origin main
+          git fetch origin ai-evolution-202608051809
           govern score --all || true
