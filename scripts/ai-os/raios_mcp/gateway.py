@@ -1119,6 +1119,12 @@ class Gateway:
                 "generation_handoff_complete": generation_handoff.get("handoff_complete", False),
                 "generation_singleton_verdict": generation_handoff.get("singleton_verdict", "UNKNOWN"),
                 "generation_orphan_count": generation_handoff.get("orphan_generation_count"),
+                "generation_candidate_state": generation_handoff.get("candidate_state"),
+                "generation_candidate_relationship": generation_handoff.get("candidate_relationship"),
+                "generation_candidate_retirement_attempted": generation_handoff.get("candidate_retirement_attempted", False),
+                "generation_candidate_retirement_proven": generation_handoff.get("candidate_retirement_proven", False),
+                "generation_candidate_retirement_reason": generation_handoff.get("candidate_retirement_reason"),
+                "generation_repair_applied": generation_handoff.get("repair_applied", False),
                 "generation_duplicate_mcp": generation_handoff.get("duplicate_mcp"),
             }
         )
