@@ -684,8 +684,9 @@ class Gateway:
         arguments["instance_role"] = actor.instance_role
 
         # Runtime truth comes from the live canonical tree.
-        live_head = git(self.root, "rev-parse", "HEAD")
-        live_branch = git(self.root, "branch", "--show-current") or BRANCH
+        # RAIOS_WRITE_HOTPATH_NO_GIT_SUBPROCESS_V1
+        live_head, _head_source = read_canonical_head(self.root)
+        live_branch = self._git_branch(head_source=_head_source)
 
         arguments["repository"] = REPO
         arguments["branch"] = live_branch
@@ -705,7 +706,21 @@ class Gateway:
         else:
             arguments["write_intent"] = "MESSAGE_ONLY"
 
-        arguments["execution_intent"] = "NONE"
+        if tool == "execute_scoped_task":
+            requested_intent = str(
+                arguments.get("operation")
+                or arguments.get("execution_intent")
+                or "DELEGATED"
+            ).upper()
+            if requested_intent not in DELEGATED_EXECUTION:
+                raise GatewayError(
+                    "ESCALATION_DENIED",
+                    "execute_scoped_task operation is not admitted",
+                    403,
+                )
+            arguments["execution_intent"] = requested_intent
+        else:
+            arguments["execution_intent"] = "NONE"
         arguments["promotion_intent"] = "NONE"
 
         now = datetime.now(timezone.utc)
