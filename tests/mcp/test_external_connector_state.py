@@ -369,3 +369,50 @@ def test_connector_health_detects_delegate_binding_mismatch(tmp_path):
     assert health["chatgpt_native_binding_active"] is True
     assert health["chatgpt_native_delegate_token_present"] is True
     assert health["chatgpt_native_delegate_binding_matches"] is False
+
+
+def test_external_connector_state_accepts_windows_powershell_utf8_bom(tmp_path):
+    token = "chatgpt-native-test-token-123456789"
+    digest = gateway_module.sha256_text(token)
+
+    write_contract(
+        tmp_path,
+        {
+            "CHATGPT_NATIVE": {
+                "principal": "CHATGPT_NATIVE_DELEGATE",
+                "actor_role": "EXTERNAL_DELEGATED_CLIENT",
+                "instance_role": "chatgpt-native",
+                "tools": ["get_head"],
+                "scopes": ["get_head"],
+                "deny": [],
+                "seat": False,
+            }
+        },
+    )
+
+    path = tmp_path / ".ai-os" / "mcp" / "EXTERNAL-CONNECTORS.json"
+    payload = {
+        "schema": "raios.external-connectors.v1",
+        "version": 1,
+        "bindings": [
+            {
+                "fingerprint_sha256": digest,
+                "status": "ACTIVE",
+                "connector_id": "CHATGPT_NATIVE",
+                "principal": "CHATGPT_NATIVE_DELEGATE",
+            }
+        ],
+        "pending": [],
+    }
+    path.parent.mkdir(parents=True, exist_ok=True)
+    path.write_bytes(json.dumps(payload).encode("utf-8-sig"))
+
+    gw = gateway(tmp_path)
+    actor = gw.authenticate(token)
+
+    assert actor.actor_id == "CHATGPT_NATIVE_DELEGATE"
+    assert actor.tools == ["get_head"]
+    assert actor.scopes == ["get_head"]
+    health = gw.external_connector_health()
+    assert health["state_valid"] is True
+    assert health["chatgpt_native_binding_active"] is True
