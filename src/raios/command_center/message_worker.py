@@ -35,6 +35,7 @@ def atomic(path:Path,data:Any)->str:
 class MessageWorker:
     def __init__(self,repo:Path,runtime:Path,poll_seconds:float=1.0,max_attempts:int=5,
                  max_messages_per_scan:int=1000,max_scan_seconds:float=3.0,
+                 ack_redelivery_seconds:float=30.0,max_ack_redeliveries:int=5,
                  routes:Any=None,presence_path:Path|None=None,
                  bindings_path:Path|None=None,consumers_path:Path|None=None):
         self.repo=repo.resolve();self.runtime=runtime.resolve()
@@ -46,7 +47,9 @@ class MessageWorker:
         self.deliveries=self.fabric/"deliveries";self.dead=self.fabric/"dead-letter"
         self.state=self.runtime/"worker";self.poll_seconds=poll_seconds
         self.max_attempts=max_attempts;self.max_messages_per_scan=max(1,int(max_messages_per_scan))
-        self.max_scan_seconds=max(.05,float(max_scan_seconds));self.stop_event=threading.Event()
+        self.max_scan_seconds=max(.05,float(max_scan_seconds))
+        self.ack_redelivery_seconds=max(1.0,float(ack_redelivery_seconds))
+        self.max_ack_redeliveries=max(0,int(max_ack_redeliveries));self.stop_event=threading.Event()
         self.worker_id=f"RAIOS-WORKER@{socket.gethostname()}"
         self.canonical_head=os.getenv("RAIOS_CANONICAL_HEAD","").strip() or self._read_head_once()
         self.workflow=None;self.thread=None;self.heartbeat_thread=None
@@ -61,9 +64,13 @@ class MessageWorker:
         self._terminal_dirty=False
         for p in (self.inbox,self.outbox,self.receipts,self.deliveries,self.dead,self.state):
             p.mkdir(parents=True,exist_ok=True)
-        index=read_json(self.terminal_index,{"message_ids":[]}) or {"message_ids":[]}
+        index=read_json(self.terminal_index,{}) or {}
+        terminal_index_current=(
+            index.get("schema")=="raios.message-worker-terminal-index.v2"
+            and index.get("terminality_source")=="ACTOR_ACK_OR_COMPLETION"
+        )
         self._delivered_terminal={
-            str(x) for x in (index.get("message_ids") or []) if str(x).startswith("MSG-")
+            str(x) for x in (index.get("message_ids") or []) if terminal_index_current and str(x).startswith("MSG-")
         }
         self._routes=routes
         self._presence_path=presence_path
@@ -106,17 +113,46 @@ class MessageWorker:
     def _head(self)->str:return self.canonical_head
     def _attempts(self,mid:str)->dict[str,Any]:
         return read_json(self.state/f"{mid}.json",{"message_id":mid,"attempts":0}) or {"message_id":mid,"attempts":0}
-    def _historical_actor_ack(self,mid:str)->dict[str,Any]|None:
+    def _actor_ack_status(self,mid:str,targets:list[str])->dict[str,Any]:
+        expected={str(x).upper() for x in targets if str(x).strip()}
+        acked:dict[str,dict[str,Any]]={}
+        evidence:list[dict[str,Any]]=[]
         for path in self.receipts.glob(f"{mid}.*.ack.receipt.json"):
             row=read_json(path,{}) or {}
             if row.get("schema") not in {"raios.message-ack.v1","raios.actor-ack.v1"}:
                 continue
-            if str(row.get("status") or "").upper() not in {"ACKNOWLEDGED","READ","DONE"}:
+            if str(row.get("status") or "").upper() not in {"ACKNOWLEDGED","READ","DONE","COMPLETED"}:
                 continue
-            actor=str(row.get("actor") or "")
-            if actor and not actor.startswith("RAIOS-WORKER@"):
-                return {"path":str(path),"actor":actor,"status":row.get("status"),"at":row.get("at")}
-        return None
+            actor=str(row.get("actor") or row.get("actor_id") or "").upper()
+            if not actor or actor.startswith("RAIOS-WORKER@"):
+                continue
+            declared=str(row.get("target") or row.get("seat") or actor).upper()
+            item={"path":str(path),"actor":actor,"target":declared,
+                  "status":row.get("status"),"at":row.get("at") or row.get("observed_at")}
+            evidence.append(item)
+            if declared in expected:
+                acked[declared]=item
+        missing=sorted(expected-set(acked))
+        return {"complete":bool(expected) and not missing,"acked":acked,
+                "acked_targets":sorted(acked),"missing_targets":missing,
+                "evidence":evidence}
+
+    def _publish_actor_ack_terminal(self,mid:str,state:dict[str,Any],ack:dict[str,Any])->dict[str,Any]:
+        state.update(status="ACTOR_ACK",lifecycle_state="ACTOR_ACK",
+                     actor_ack=True,actor_ack_targets=ack.get("acked_targets") or [],
+                     actor_ack_evidence=ack.get("evidence") or [],
+                     actor_ack_at=utc(),updated_at=utc(),last_error=None)
+        atomic(self.state/f"{mid}.json",state)
+        atomic(self.receipts/f"{mid}.actor-ack.lifecycle.receipt.json",{
+            "schema":"raios.message-lifecycle-receipt.v1","message_id":mid,
+            "lifecycle_state":"ACTOR_ACK","terminal":True,
+            "actor_ack_targets":ack.get("acked_targets") or [],
+            "actor_ack_evidence":ack.get("evidence") or [],
+            "at":state["actor_ack_at"],"head":self._head(),
+            "delivery_ack_ne_actor_ack":True,
+        })
+        self._remember_terminal(mid)
+        return state
     def _validate(self,msg:Any,path:Path)->tuple[str,list[str]]:
         if not isinstance(msg,dict) or msg.get("schema")!="raios.message.v1":
             raise ValueError("INVALID_MESSAGE_SCHEMA")
@@ -158,8 +194,13 @@ class MessageWorker:
                 self._record(mid,target,"QUEUED_FOR_SEAT",int(state["attempts"])+1)
                 delivered.append(target)
             if delivered:
-                state.update(attempts=int(state["attempts"])+1,status="DELIVERED",
-                             targets=delivered,c6_gated=gated,updated_at=utc(),last_error=None)
+                delivered_at=state.get("delivered_at") or utc()
+                state.update(attempts=int(state["attempts"])+1,
+                             status="DELIVERED_PENDING_ACTOR_ACK",
+                             lifecycle_state="DELIVERED_PENDING_ACTOR_ACK",
+                             targets=delivered,c6_gated=gated,delivered_at=delivered_at,
+                             last_delivery_at=utc(),actor_ack=False,
+                             updated_at=utc(),last_error=None)
             else:
                 state.update(attempts=int(state["attempts"])+1,status="C6_NOT_LIVE_BOUND",
                              targets=[],c6_gated=gated,updated_at=utc(),
@@ -173,15 +214,52 @@ class MessageWorker:
                 if path.exists():atomic(self.dead/path.name,read_json(path,{"raw_path":str(path)}))
                 self._record(mid,"COMMAND_CENTER","DEAD_LETTER",state["attempts"],state["last_error"])
             atomic(self.state/f"{mid}.json",state);return state
+    def _redeliver_pending_actor_ack(self,path:Path,msg:dict[str,Any],
+                                     state:dict[str,Any],targets:list[str])->dict[str,Any]:
+        count=int(state.get("ack_redelivery_count") or 0)
+        if count>=self.max_ack_redeliveries:
+            state.update(status="BLOCKED_ACTOR_ACK",lifecycle_state="BLOCKED_ACTOR_ACK",
+                         actor_ack=False,actor_ack_blocked=True,
+                         updated_at=utc(),last_error="ACTOR_ACK_NOT_OBSERVED")
+            atomic(self.state/f"{path.stem}.json",state)
+            return state
+        stamp=state.get("last_delivery_at") or state.get("updated_at")
+        if stamp:
+            try:
+                changed=datetime.fromisoformat(str(stamp).replace("Z","+00:00"))
+                if (datetime.now(timezone.utc)-changed).total_seconds()<self.ack_redelivery_seconds:
+                    return state
+            except Exception:
+                pass
+        delivered=[]
+        for target in targets:
+            if target in {"C6","C6-LOCAL"} and not self._constitution_live_bound(target):
+                continue
+            dst=self.deliveries/target/f"{path.stem}.json"
+            atomic(dst,msg)
+            self._record(path.stem,target,"REDELIVERED_PENDING_ACTOR_ACK",
+                         int(state.get("attempts") or 0),
+                         "DELIVERY_ACK_NE_ACTOR_ACK")
+            delivered.append(target)
+        if delivered:
+            state.update(status="DELIVERED_PENDING_ACTOR_ACK",
+                         lifecycle_state="DELIVERED_PENDING_ACTOR_ACK",
+                         ack_redelivery_count=count+1,last_delivery_at=utc(),
+                         updated_at=utc(),last_error=None)
+            atomic(self.state/f"{path.stem}.json",state)
+        return state
+
     def configure_workflow(self,workflow:Any)->None:self.workflow=workflow
-    def _remember_delivered(self,mid:str)->None:
+    def _remember_terminal(self,mid:str)->None:
         if mid not in self._delivered_terminal:
             self._delivered_terminal.add(mid);self._terminal_dirty=True
     def _flush_terminal_index(self)->None:
         if not self._terminal_dirty:return
         atomic(self.terminal_index,{
-            "schema":"raios.message-worker-delivered-terminal-index.v1",
+            "schema":"raios.message-worker-terminal-index.v2",
             "generated_at":utc(),"head":self._head(),
+            "terminality_source":"ACTOR_ACK_OR_COMPLETION",
+            "delivery_ack_ne_actor_ack":True,
             "count":len(self._delivered_terminal),
             "message_ids":sorted(self._delivered_terminal),
         })
@@ -191,7 +269,9 @@ class MessageWorker:
     def _progress_heartbeat(self,result:dict[str,Any],phase:str,*,force:bool=False)->None:
         snapshot=dict(result)
         snapshot.update(scan_phase=phase,scan_in_progress=phase!="SCAN_COMPLETE",
-                        delivered_terminal_cache=len(self._delivered_terminal))
+                        delivered_terminal_cache=len(self._delivered_terminal),
+                        terminality_source="ACTOR_ACK_OR_COMPLETION",
+                        delivery_ack_ne_actor_ack=True)
         with self._progress_lock:self._progress_snapshot=snapshot
         ticker_alive=bool(self.heartbeat_thread and self.heartbeat_thread.is_alive())
         if force:
@@ -240,6 +320,8 @@ class MessageWorker:
             done.set();ticker.join(timeout=max(1.0,self.heartbeat_interval_seconds+0.5))
     def scan_once(self)->dict[str,Any]:
         result={"seen":0,"delivered":0,"retried":0,"dead_letter":0,"c6_gated":0,
+                "actor_ack":0,"pending_actor_ack":0,"redelivered":0,"actor_ack_blocked":0,
+                "legacy_delivery_state_migrated":0,
                 "terminal_cache_hits":0,"terminal_cache_warmed":0,
                 "historical_ack_recovered":0,"scan_budget_exhausted":False}
         deadline=time.monotonic()+self.max_scan_seconds
@@ -250,23 +332,42 @@ class MessageWorker:
             mid=path.stem
             if mid in self._delivered_terminal:
                 result["terminal_cache_hits"]+=1;return
+            msg=read_json(path,{}) or {}
+            targets=self._targets(msg) if isinstance(msg,dict) else []
             state=self._attempts(mid);status=str(state.get("status") or "").upper()
-            if status=="DELIVERED":
-                self._remember_delivered(mid);result["terminal_cache_warmed"]+=1;return
-            if status=="DEAD_LETTER":
-                historical_ack=self._historical_actor_ack(mid)
-                if historical_ack:
-                    state.update(status="DELIVERED",historical_ack=True,historical_actor_ack=historical_ack,
-                                 updated_at=utc(),last_error=None)
-                    atomic(self.state/f"{mid}.json",state)
-                    self._remember_delivered(mid);result["historical_ack_recovered"]+=1
+            ack=self._actor_ack_status(mid,targets)
+            if ack["complete"]:
+                self._publish_actor_ack_terminal(mid,state,ack)
+                result["actor_ack"]+=1
+                if status in {"DEAD_LETTER","DELIVERED","DELIVERED_PENDING_ACTOR_ACK","BLOCKED_ACTOR_ACK"}:
+                    result["historical_ack_recovered"]+=1
                 return
-            historical_ack=self._historical_actor_ack(mid)
-            if historical_ack:
-                state.update(status="DELIVERED",historical_ack=True,historical_actor_ack=historical_ack,
-                             updated_at=utc(),last_error=None)
+            if status in {"ACTOR_ACK","COMPLETED","SUPERSEDED","ARCHIVED"}:
+                self._remember_terminal(mid);result["terminal_cache_warmed"]+=1;return
+            if status=="DELIVERED":
+                # v1 migration: a delivery-only state was incorrectly terminal.
+                state.update(status="DELIVERED_PENDING_ACTOR_ACK",
+                             lifecycle_state="DELIVERED_PENDING_ACTOR_ACK",
+                             actor_ack=False,updated_at=utc(),
+                             last_error="LEGACY_DELIVERY_ACK_NE_ACTOR_ACK")
                 atomic(self.state/f"{mid}.json",state)
-                self._remember_delivered(mid);result["historical_ack_recovered"]+=1;return
+                status="DELIVERED_PENDING_ACTOR_ACK"
+                result["legacy_delivery_state_migrated"]+=1
+            if status in {"DELIVERED_PENDING_ACTOR_ACK","BLOCKED_ACTOR_ACK"}:
+                if status=="BLOCKED_ACTOR_ACK":
+                    result["actor_ack_blocked"]+=1
+                    return
+                before=int(state.get("ack_redelivery_count") or 0)
+                state=self._redeliver_pending_actor_ack(path,msg,state,targets)
+                after=int(state.get("ack_redelivery_count") or 0)
+                if after>before:result["redelivered"]+=1
+                if str(state.get("status") or "").upper()=="BLOCKED_ACTOR_ACK":
+                    result["actor_ack_blocked"]+=1
+                else:
+                    result["pending_actor_ack"]+=1
+                return
+            if status=="DEAD_LETTER":
+                return
             if status=="RETRY":
                 delay=min(60,2**max(0,int(state.get("attempts",0))-1))
                 try:
@@ -274,10 +375,10 @@ class MessageWorker:
                     if (datetime.now(timezone.utc)-changed).total_seconds()<delay:return
                 except Exception:pass
             state=self.process(path)
-            key={"DELIVERED":"delivered","RETRY":"retried","DEAD_LETTER":"dead_letter",
+            key={"DELIVERED_PENDING_ACTOR_ACK":"delivered","RETRY":"retried","DEAD_LETTER":"dead_letter",
                  "C6_NOT_LIVE_BOUND":"c6_gated"}[state["status"]]
             result[key]+=1
-            if state["status"] in {"DELIVERED","C6_NOT_LIVE_BOUND"}:self._remember_delivered(mid)
+            if state["status"]=="DELIVERED_PENDING_ACTOR_ACK":result["pending_actor_ack"]+=1
         def consume(after_name:str|None)->tuple[bool,str|None,bool]:
             found=after_name is None;last_done=None;reached_end=True;entries_scanned=0
             with os.scandir(self.inbox) as it:
