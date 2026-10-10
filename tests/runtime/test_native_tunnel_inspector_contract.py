@@ -49,6 +49,12 @@ def test_native_tunnel_inspector_redacts_captured_output():
     assert "[Array]::Clear($cipher" in text
 
 
+def test_native_tunnel_inspector_never_exits_host_shell():
+    text = inspector_text()
+    assert "exit 2" not in text
+    assert "exit 0" not in text
+
+
 def test_native_tunnel_inspector_parses_when_powershell_is_available(tmp_path):
     powershell = shutil.which("powershell.exe") or shutil.which("pwsh")
     if not powershell:
