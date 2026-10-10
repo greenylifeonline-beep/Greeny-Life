@@ -132,10 +132,16 @@ class MessageWorker:
             evidence.append(item)
             if declared in expected:
                 acked[declared]=item
+        if not expected and evidence:
+            recovered_targets=sorted({str(x.get("target") or x.get("actor") or "").upper()
+                                      for x in evidence if str(x.get("target") or x.get("actor") or "").strip()})
+            return {"complete":True,"acked":acked,"acked_targets":recovered_targets,
+                    "missing_targets":[],"evidence":evidence,
+                    "historical_unroutable_recovery":True}
         missing=sorted(expected-set(acked))
         return {"complete":bool(expected) and not missing,"acked":acked,
                 "acked_targets":sorted(acked),"missing_targets":missing,
-                "evidence":evidence}
+                "evidence":evidence,"historical_unroutable_recovery":False}
 
     def _publish_actor_ack_terminal(self,mid:str,state:dict[str,Any],ack:dict[str,Any])->dict[str,Any]:
         state.update(status="ACTOR_ACK",lifecycle_state="ACTOR_ACK",
