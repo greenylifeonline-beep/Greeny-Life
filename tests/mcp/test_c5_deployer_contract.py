@@ -67,3 +67,24 @@ def test_c5_phase_writer_accepts_ordered_diagnostics():
         "function Write-DeployPhase([string]$Name,[System.Collections.IDictionary]$Extra=$null)"
         in text
     )
+
+
+def test_c5_deployer_has_no_case_only_assignment_collisions():
+    text = deploy_text()
+    assignments = re.findall(
+        r"(?m)^\s*\$([A-Za-z_][A-Za-z0-9_]*)\s*=",
+        text,
+    )
+    spellings_by_logical = {}
+    for name in assignments:
+        spellings_by_logical.setdefault(name.lower(), set()).add(name)
+
+    collisions = {
+        logical: sorted(spellings)
+        for logical, spellings in spellings_by_logical.items()
+        if len(spellings) > 1
+    }
+    assert collisions == {}, (
+        "PowerShell variable names are case-insensitive; case-only assignment "
+        f"collisions are unsafe: {collisions}"
+    )
