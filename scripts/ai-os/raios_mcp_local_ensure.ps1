@@ -365,6 +365,16 @@ function Write-RaiosBoundedLifecycle($Value,[int]$Limit=128) {
 }
 function Write-RaiosGenerationHandoff([int]$CandidatePid,[int]$ActivePid,[string]$Reason) {
     $owner = Read-RaiosOwnerManifest
+    $priorProjection = $null
+    if (Test-Path -LiteralPath $LifecycleProjection) {
+        try { $priorProjection = Get-Content -LiteralPath $LifecycleProjection -Raw | ConvertFrom-Json } catch { $priorProjection = $null }
+    }
+    $preserveTransition = [bool](
+        $Reason -eq "STEADY_STATE_VERIFY" -and
+        $priorProjection -and
+        [string]$priorProjection.schema -eq "raios.mcp-generation-handoff.v1" -and
+        [string]$priorProjection.transition_reason -ne "STEADY_STATE_VERIFY"
+    )
     $previousPid = [int]$script:TransitionPreviousPid
     $previousAlive = Test-RaiosPidAlive $previousPid
     $candidateAlive = Test-RaiosPidAlive $CandidatePid
@@ -391,20 +401,41 @@ function Write-RaiosGenerationHandoff([int]$CandidatePid,[int]$ActivePid,[string
     )
     $previousState = $(if ($previousPid -le 4) { "NONE" } elseif ($previousPid -eq $ActivePid) { "ACTIVE" } elseif ($previousAlive) { "ORPHAN" } else { "RETIRED" })
     $candidateState = $(if ($CandidatePid -eq $ActivePid) { "ACTIVE" } elseif ($candidateAlive) { "ORPHAN" } else { "SUPERSEDED" })
+    $reportedReason = $Reason
+    $verificationReason = $null
+    $reportedPreviousPid = $(if ($previousPid -gt 4) { $previousPid } else { $null })
+    $reportedPreviousGeneration = $script:TransitionPreviousGeneration
+    $reportedPreviousStartedAt = $script:TransitionPreviousStartedAt
+    $reportedPreviousState = $previousState
+    $reportedCandidatePid = $CandidatePid
+    $reportedCandidateGeneration = $ownerGeneration
+    $reportedCandidateState = $candidateState
+    if ($preserveTransition) {
+        $reportedReason = [string]$priorProjection.transition_reason
+        $verificationReason = "STEADY_STATE_VERIFY"
+        $reportedPreviousPid = $priorProjection.previous_pid
+        $reportedPreviousGeneration = $priorProjection.previous_generation_id
+        $reportedPreviousStartedAt = $priorProjection.previous_started_at
+        $reportedPreviousState = [string]$priorProjection.previous_state
+        $reportedCandidatePid = $priorProjection.candidate_pid
+        $reportedCandidateGeneration = $priorProjection.candidate_generation_id
+        $reportedCandidateState = [string]$priorProjection.candidate_state
+    }
     $doc = [ordered]@{
         schema = "raios.mcp-generation-handoff.v1"
         observed_at = [DateTimeOffset]::UtcNow.ToString("o")
         authority = "RAIOS-C5-SCM"
         canonical_head = [string]$env:RAIOS_CANONICAL_HEAD
         port = $Port
-        transition_reason = $Reason
-        previous_pid = $(if ($previousPid -gt 4) { $previousPid } else { $null })
-        previous_generation_id = $script:TransitionPreviousGeneration
-        previous_started_at = $script:TransitionPreviousStartedAt
-        previous_state = $previousState
-        candidate_pid = $CandidatePid
-        candidate_generation_id = $ownerGeneration
-        candidate_state = $candidateState
+        transition_reason = $reportedReason
+        verification_reason = $verificationReason
+        previous_pid = $reportedPreviousPid
+        previous_generation_id = $reportedPreviousGeneration
+        previous_started_at = $reportedPreviousStartedAt
+        previous_state = $reportedPreviousState
+        candidate_pid = $reportedCandidatePid
+        candidate_generation_id = $reportedCandidateGeneration
+        candidate_state = $reportedCandidateState
         active_pid = $ActivePid
         active_generation_id = $ownerGeneration
         active_state = "ACTIVE"
