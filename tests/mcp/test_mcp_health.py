@@ -104,6 +104,8 @@ def test_health_http_lists_nine_tools(tmp_path):
         assert health["send_packet_execution"] == "TEMPORARY_COMPATIBILITY"
         assert health["tools"] == list(REGISTERED_TOOLS)
         assert health["duplicate_mcp"] is False
+        assert health["generation_duplicate_mcp"] is False
+        assert health["generation_duplicate_mcp"] == health["duplicate_mcp"]
         assert health["hosted_dcr_required"] is False
         assert health["second_gateway"] is False
         assert health["head_source"] in {"env", "git-file", "unknown"}
