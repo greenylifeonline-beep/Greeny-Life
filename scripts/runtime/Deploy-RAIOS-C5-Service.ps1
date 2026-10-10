@@ -302,19 +302,61 @@ try{
     [bool](Get-JsonProp $generation 'ok' $false) -eq $true
   )
   $ok=[bool](
-    $svc -and $svc.State -eq 'Running' -and $svcPid -gt 4 -and $imageOk -and $runtimeAligned -and
-    $state -and $state.status -eq 'ONLINE' -and $state.control_authority -eq 'RAIOS-C5-SCM' -and
-    $state.single_control_authority -eq $true -and $state.scheduler_authority -eq $false -and
-    [int]$state.dcr_supervisor_pid -gt 4 -and $state.dcr_ready -eq $true -and $state.dcr_owned_by_service -eq $true -and
-    [int]$state.native_tunnel_owner_pid -gt 4 -and $state.native_tunnel_ready -eq $true -and $state.native_tunnel_owned_by_service -eq $true -and
-    $dcrState -and $dcrState.authority -eq 'RAIOS-C5' -and $dcrState.status -eq 'ONLINE' -and
+    $svc -and [string]$svc.State -eq 'Running' -and $svcPid -gt 4 -and $imageOk -and $runtimeAligned -and
+    $null -ne $state -and
+    [string](Get-JsonProp $state 'status' '') -eq 'ONLINE' -and
+    [string](Get-JsonProp $state 'control_authority' '') -eq 'RAIOS-C5-SCM' -and
+    [bool](Get-JsonProp $state 'single_control_authority' $false) -eq $true -and
+    [bool](Get-JsonProp $state 'scheduler_authority' $true) -eq $false -and
+    [int](Get-JsonProp $state 'dcr_supervisor_pid' 0) -gt 4 -and
+    [bool](Get-JsonProp $state 'dcr_ready' $false) -eq $true -and
+    [bool](Get-JsonProp $state 'dcr_owned_by_service' $false) -eq $true -and
+    [int](Get-JsonProp $state 'native_tunnel_owner_pid' 0) -gt 4 -and
+    [bool](Get-JsonProp $state 'native_tunnel_ready' $false) -eq $true -and
+    [bool](Get-JsonProp $state 'native_tunnel_owned_by_service' $false) -eq $true -and
+    $null -ne $dcrState -and
+    [string](Get-JsonProp $dcrState 'authority' '') -eq 'RAIOS-C5' -and
+    [string](Get-JsonProp $dcrState 'status' '') -eq 'ONLINE' -and
     $dcrOwned -and $dcrShapeOk -and $laneOk -and $generationOk -and
     $nativeReady -and @($shape.System).Count -eq 1 -and @($shape.Console).Count -eq 0
   )
  }until($ok -or [DateTimeOffset]::UtcNow -ge $deadline)
 
- if(-not $ok){throw 'C5_ACCEPTANCE_FAILED'}
- Write-DeployPhase 'ACCEPTANCE_PASS' @{service_pid=$svcPid;dcr_pid=[int]$state.dcr_supervisor_pid;native_pid=[int]$state.native_tunnel_owner_pid;generation_id=[string]$generation.generation_id}
+ if(-not $ok){
+  $acceptanceSnapshot=[ordered]@{
+   service_running=[bool]($svc -and [string]$svc.State -eq 'Running')
+   service_pid=$svcPid
+   image_ok=$imageOk
+   runtime_aligned=$runtimeAligned
+   state_status=[string](Get-JsonProp $state 'status' '')
+   state_control_authority=[string](Get-JsonProp $state 'control_authority' '')
+   state_single_control_authority=[bool](Get-JsonProp $state 'single_control_authority' $false)
+   state_scheduler_authority=[bool](Get-JsonProp $state 'scheduler_authority' $true)
+   dcr_supervisor_pid=[int](Get-JsonProp $state 'dcr_supervisor_pid' 0)
+   dcr_ready=[bool](Get-JsonProp $state 'dcr_ready' $false)
+   dcr_owned_by_service=[bool](Get-JsonProp $state 'dcr_owned_by_service' $false)
+   native_tunnel_owner_pid=[int](Get-JsonProp $state 'native_tunnel_owner_pid' 0)
+   native_tunnel_ready=[bool](Get-JsonProp $state 'native_tunnel_ready' $false)
+   native_tunnel_owned_by_service=[bool](Get-JsonProp $state 'native_tunnel_owned_by_service' $false)
+   dcr_authority=[string](Get-JsonProp $dcrState 'authority' '')
+   dcr_status=[string](Get-JsonProp $dcrState 'status' '')
+   dcr_owned=$dcrOwned
+   dcr_shape_ok=$dcrShapeOk
+   lane_ok=$laneOk
+   generation_ok=$generationOk
+   native_ready=$nativeReady
+   native_system_count=@($shape.System).Count
+   native_console_count=@($shape.Console).Count
+  }
+  Write-DeployPhase 'ACCEPTANCE_FAILED' $acceptanceSnapshot
+  throw 'C5_ACCEPTANCE_FAILED'
+ }
+ Write-DeployPhase 'ACCEPTANCE_PASS' @{
+  service_pid=$svcPid
+  dcr_pid=[int](Get-JsonProp $state 'dcr_supervisor_pid' 0)
+  native_pid=[int](Get-JsonProp $state 'native_tunnel_owner_pid' 0)
+  generation_id=[string](Get-JsonProp $generation 'generation_id' '')
+ }
 
  $after=Get-CimInstance Win32_Service -Filter "Name='RAIOS-C5'"
  $cleanup=Retire-LegacyArtifacts -CurrentServicePath $Live
@@ -333,11 +375,11 @@ try{
   after_pid=[int]$after.ProcessId
   after_state=[string]$after.State
   after_image_path=[string]$after.PathName
-  dcr_supervisor_pid=[int]$state.dcr_supervisor_pid
-  dcr_status=[string]$dcrState.status
+  dcr_supervisor_pid=[int](Get-JsonProp $state 'dcr_supervisor_pid' 0)
+  dcr_status=[string](Get-JsonProp $dcrState 'status' '')
   dcr_provider_role='REMOTE_CAPABILITY_PROVIDER'
   dcr_control_authority=$false
-  dcr_owner_pid=[int]$dcrState.owner_pid
+  dcr_owner_pid=[int](Get-JsonProp $dcrState 'owner_pid' 0)
   native_tunnel_authority='RAIOS-C5-SCM'
   native_channel_role='SINGLE_EXTERNAL_RAIOS_CHANNEL'
   native_tunnel_ready=[bool]$nativeReady
@@ -346,9 +388,9 @@ try{
   user_lane_role='INTERACTIVE_SESSION_ADAPTER'
   user_lane_control_authority=$false
   scheduler_authority=$false
-  generation_id=[string]$generation.generation_id
-  generation_role=[string]$generation.role
-  generation_acceptance=[string]$generation.acceptance
+  generation_id=[string](Get-JsonProp $generation 'generation_id' '')
+  generation_role=[string](Get-JsonProp $generation 'role' '')
+  generation_acceptance=[string](Get-JsonProp $generation 'acceptance' '')
   legacy_tasks_removed=@($cleanup.tasks)
   obsolete_service_binaries_removed=@($cleanup.binaries)
   rollback_available=(Test-Path -LiteralPath $Previous)
