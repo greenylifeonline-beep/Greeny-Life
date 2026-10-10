@@ -198,22 +198,36 @@ $deploymentStarted=$false
 try{
  Write-DeployPhase 'CUTOVER_BEGIN'
  if((Get-Service RAIOS-C5).Status -ne 'Stopped'){
+  Write-DeployPhase 'SERVICE_STOP_BEGIN'
   Stop-Service RAIOS-C5 -Force
   (Get-Service RAIOS-C5).WaitForStatus('Stopped',[TimeSpan]::FromSeconds(30))
+  Write-DeployPhase 'SERVICE_STOP_PASS'
  }
 
+ Write-DeployPhase 'COPY_SERVICE_BINARY'
  Copy-Atomic $Stage $Live
+ Write-DeployPhase 'COPY_USER_LANE'
  Copy-Atomic $UserLane $RuntimeUserLane
+ Write-DeployPhase 'COPY_DCR_SUPERVISOR'
  Copy-Atomic $Dcr $RuntimeDcr
+ Write-DeployPhase 'COPY_RECONNECT_CHECKPOINT'
  Copy-Atomic $Checkpoint $RuntimeCheckpoint
+ Write-DeployPhase 'COPY_NATIVE_LAUNCHER'
  Copy-Atomic $NativeLauncher $RuntimeNativeLauncher
+ Write-DeployPhase 'RUNTIME_COPY_PASS'
 
+ Write-DeployPhase 'SC_CONFIG_BEGIN'
  & sc.exe config RAIOS-C5 binPath= $Live start= auto | Out-Null
  if($LASTEXITCODE -ne 0){throw 'SC_CONFIG_FAILED'}
+ Write-DeployPhase 'SC_FAILURE_POLICY_BEGIN'
  & sc.exe failure RAIOS-C5 reset= 86400 actions= restart/5000/restart/15000/restart/30000 | Out-Null
  if($LASTEXITCODE -ne 0){throw 'SC_FAILURE_CONFIG_FAILED'}
+ Write-DeployPhase 'SC_FAILUREFLAG_BEGIN'
  & sc.exe failureflag RAIOS-C5 1 | Out-Null
+ if($LASTEXITCODE -ne 0){throw 'SC_FAILUREFLAG_CONFIG_FAILED'}
+ Write-DeployPhase 'SC_CONFIG_PASS'
 
+ Write-DeployPhase 'SERVICE_START_BEGIN'
  Start-Service RAIOS-C5
  (Get-Service RAIOS-C5).WaitForStatus('Running',[TimeSpan]::FromSeconds(30))
  $deploymentStarted=$true
