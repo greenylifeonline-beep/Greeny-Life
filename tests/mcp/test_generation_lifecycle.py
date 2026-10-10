@@ -32,6 +32,11 @@ def _projection(profile: Path, *, active_pid: int = 111) -> Path:
                 "candidate_pid": 100,
                 "candidate_generation_id": "candidate",
                 "candidate_state": "SUPERSEDED",
+                "candidate_relationship": "EXITED",
+                "candidate_retirement_attempted": False,
+                "candidate_retirement_proven": True,
+                "candidate_retirement_reason": "PROCESS_EXITED",
+                "repair_applied": False,
                 "active_pid": active_pid,
                 "active_generation_id": "active",
                 "active_state": "ACTIVE",
@@ -63,6 +68,11 @@ def test_generation_handoff_explains_lineage_without_pid_guessing(tmp_path):
     assert view["previous_state"] == "RETIRED"
     assert view["candidate_pid"] == 100
     assert view["candidate_state"] == "SUPERSEDED"
+    assert view["candidate_relationship"] == "EXITED"
+    assert view["candidate_retirement_attempted"] is False
+    assert view["candidate_retirement_proven"] is True
+    assert view["candidate_retirement_reason"] == "PROCESS_EXITED"
+    assert view["repair_applied"] is False
     assert view["active_pid"] == 111
     assert view["active_state"] == "ACTIVE"
     assert view["active_listener_count"] == 1
@@ -109,7 +119,11 @@ def test_ensure_writes_bounded_generation_lifecycle_and_steady_state():
     assert '[int]$Limit=128' in text
     assert 'previous_state = $previousState' in text
     assert 'candidate_state = $candidateState' in text
-    assert 'active_state = "ACTIVE"' in text
+    assert 'candidate_relationship = [string]$candidateResolution.relationship' in text
+    assert 'candidate_retirement_attempted = [bool]$candidateResolution.retirement_attempted' in text
+    assert 'candidate_retirement_proven = [bool]$candidateResolution.retirement_proven' in text
+    assert 'repair_applied = [bool]$candidateResolution.retirement_attempted' in text
+    assert 'active_state = $activeState' in text
     assert 'orphan_generation_count = $orphanPids.Count' in text
     assert 'handoff_complete = $handoffComplete' in text
     assert 'singleton_verdict =' in text
@@ -117,6 +131,14 @@ def test_ensure_writes_bounded_generation_lifecycle_and_steady_state():
     assert '$preserveTransition' in text
     assert 'verification_reason = $verificationReason' in text
     assert '$priorProjection.transition_reason' in text
+    assert 'function Resolve-RaiosCandidateLifecycle' in text
+    assert 'function Test-RaiosOwnedLaunchCandidate' in text
+    assert 'function Get-RaiosParentLineageProof' in text
+    assert "ACTIVE_LINEAGE_PARENT" in text
+    assert "AUTO_RETIRED_PROVEN_ORPHAN" in text
+    assert "FAIL_CLOSED_LINEAGE_UNPROVEN" in text
+    assert '$effectiveCandidatePid = [int]$priorProjection.candidate_pid' in text
+    assert '$reportedCandidateState = [string]$priorProjection.candidate_state' not in text
 
 
 def test_get_head_and_health_expose_same_generation_verdict():
@@ -130,6 +152,11 @@ def test_get_head_and_health_expose_same_generation_verdict():
     assert '"generation_singleton_verdict": generation_handoff.get("singleton_verdict", "UNKNOWN")' in gateway
     assert '"generation_orphan_count": generation_handoff.get("orphan_generation_count")' in gateway
     assert '"verification_reason": raw.get("verification_reason")' in gateway
+    assert '"candidate_relationship": candidate_relationship' in gateway
+    assert '"candidate_retirement_attempted": candidate_retirement_attempted' in gateway
+    assert '"candidate_retirement_proven": candidate_retirement_proven' in gateway
+    assert '"candidate_retirement_reason": candidate_retirement_reason' in gateway
+    assert '"repair_applied": repair_applied' in gateway
     assert '"generation_duplicate_mcp": generation_handoff.get("duplicate_mcp")' in gateway
 
     assert '"generation_handoff": generation_handoff' in server
