@@ -391,6 +391,7 @@ class Handler(BaseHTTPRequestHandler):
         if path in {"/health", "/", "/ready"}:
             head, head_source = canonical_head(ROOT)
             tools = list(V1_TOOLS)
+            connector_health = self.gateway.external_connector_health()
             self._send_json(
                 200,
                 {
@@ -426,6 +427,13 @@ class Handler(BaseHTTPRequestHandler):
                     "max_concurrent_requests": MAX_CONCURRENT_REQUESTS,
                     "uptime_seconds": round(time.time() - STARTED_AT, 3),
                     "metrics": dict(METRICS),
+                    "external_connector_state_valid": bool(connector_health.get("state_valid")),
+                    "external_connector_contract_valid": bool(connector_health.get("contract_valid")),
+                    "external_connector_binding_count": int(connector_health.get("binding_count") or 0),
+                    "external_connector_active_binding_count": int(connector_health.get("active_binding_count") or 0),
+                    "external_connector_pending_count": int(connector_health.get("pending_count") or 0),
+                    "chatgpt_native_binding_active": bool(connector_health.get("chatgpt_native_binding_active")),
+                    "external_connector_error": connector_health.get("error"),
                 },
             )
             return
