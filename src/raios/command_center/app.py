@@ -159,7 +159,17 @@ def mcp_bind():
   if row.get("adapter") is True:
    adapters.append({"id":row.get("id"),"role":row.get("role"),"transport":row.get("transport"),
                     "health_stamp":row.get("health"),"adapter":True})
- live=code==200 and health.get("ok") is True and int(health.get("tool_count") or 0)==8 and health.get("ninth_tool") is not True and health.get("get_sse") is True
+ expected_tools=["get_head","read_board","read_inbox","read_receipt","get_diff","post_opinion","send_packet","ack_packet","execute_scoped_task"]
+ actual_tools=list(health.get("tools") or [])
+ live=(code==200 and health.get("ok") is True
+       and int(health.get("tool_count") or 0)==9
+       and actual_tools==expected_tools
+       and health.get("ninth_tool") is True
+       and health.get("execute_scoped_task") is True
+       and health.get("get_sse") is True
+       and health.get("second_gateway") is False
+       and health.get("duplicate_mcp") is False
+       and health.get("raw_shell") is False)
  err=str(health.get("error") or "") if isinstance(health,dict) else ""
  if code==200:
   probe_state="CURRENT"; observation_class="CURRENT"
@@ -172,7 +182,12 @@ def mcp_bind():
  return {"schema":"raios.command-center.mcp-bind.v1","generated_at":utc(),"observed_at":utc(),"census_port":8788,
   "observation_class":observation_class,"probe_state":probe_state,"hardcoded_offline":False,
   "endpoint":MCP+"/mcp","health_url":MCP+"/health","http":code,"live":live,
-  "second_gateway":False,"ninth_tool":False,"v1_execution_intent":"DENIED",
+  "second_gateway":health.get("second_gateway") is True,
+  "duplicate_mcp":health.get("duplicate_mcp") is True,
+  "ninth_tool":health.get("ninth_tool") is True,
+  "execute_scoped_task":health.get("execute_scoped_task") is True,
+  "raw_shell":health.get("raw_shell") is True,
+  "v1_execution_intent":"GOVERNED_DELEGATED_ONLY",
   "client_gateway_ne_seat_bus":True,"internal_bus":"COMMAND_FABRIC",
   "loopback_read_without_token":True,"writes_require_actor_grant":True,
   "c2_grant_invented":False,"c6_grant_invented":False,
@@ -183,7 +198,7 @@ def mcp_bind():
   "health":{k:health.get(k) for k in ("ok","service","transport","ninth_tool","second_gateway","law","channel","get_sse","stateless") if k in health},
   "cursor_example":".ai-os/mcp/cursor-mcp.example.json","cursor_project_bind":".cursor/mcp.json",
   "adapters_behind_gateway":adapters,
-  "law":["REUSE_EXISTING_UNIVERSAL_MCP","NO_SECOND_GATEWAY","NO_NINTH_TOOL","MCP_GATEWAY_NE_TRUTH_AUTHORITY",
+  "law":["REUSE_EXISTING_UNIVERSAL_MCP","NO_SECOND_GATEWAY","EXACT_NINE_TOOLS","NO_RAW_SHELL","MCP_GATEWAY_NE_TRUTH_AUTHORITY",
          "COMMAND_FABRIC_REMAINS_INTERNAL_BUS","MCP_HAS_STREAMABLE_HTTP_SESSION_CHANNEL"]}
 def council_lite():
  snap=ACTOR_ROUTES.snapshot(); seats=[]
