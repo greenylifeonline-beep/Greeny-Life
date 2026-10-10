@@ -430,6 +430,9 @@ class Gateway:
             "pending_count": 0,
             "active_binding_count": 0,
             "chatgpt_native_binding_active": False,
+            "chatgpt_native_delegate_token_present": False,
+            "chatgpt_native_delegate_binding_matches": False,
+            "token_store_valid": False,
             "error": None,
         }
         try:
@@ -452,6 +455,40 @@ class Gateway:
         }
         result["active_binding_count"] = len(active_ids)
         result["chatgpt_native_binding_active"] = "CHATGPT_NATIVE" in active_ids
+
+        # The native tunnel injects the CHATGPT_NATIVE_DELEGATE token from
+        # tokens.local.json. Compare only its SHA-256 digest against the active
+        # binding and expose booleans; never expose the token or fingerprint.
+        token_path = self.root / ".ai-os" / "mcp" / "tokens.local.json"
+        try:
+            token_doc = load_json(token_path, {})
+            actors = (
+                token_doc.get("actors")
+                if isinstance(token_doc, dict)
+                else None
+            )
+            if isinstance(actors, list):
+                result["token_store_valid"] = True
+                delegate_token = ""
+                for row in actors:
+                    if (
+                        isinstance(row, dict)
+                        and str(row.get("actor_id") or "") == "CHATGPT_NATIVE_DELEGATE"
+                    ):
+                        delegate_token = str(row.get("token") or "")
+                        break
+                result["chatgpt_native_delegate_token_present"] = bool(delegate_token)
+                if delegate_token:
+                    digest = sha256_text(delegate_token)
+                    result["chatgpt_native_delegate_binding_matches"] = any(
+                        isinstance(row, dict)
+                        and str(row.get("connector_id") or "") == "CHATGPT_NATIVE"
+                        and str(row.get("status") or "").upper() in {"ACTIVE", "GRACE"}
+                        and str(row.get("fingerprint_sha256") or "") == digest
+                        for row in bindings
+                    )
+        except (OSError, json.JSONDecodeError, UnicodeError):
+            result["token_store_valid"] = False
 
         try:
             contract = load_json(
