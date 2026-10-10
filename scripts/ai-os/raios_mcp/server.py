@@ -433,6 +433,9 @@ class Handler(BaseHTTPRequestHandler):
                     "external_connector_active_binding_count": int(connector_health.get("active_binding_count") or 0),
                     "external_connector_pending_count": int(connector_health.get("pending_count") or 0),
                     "chatgpt_native_binding_active": bool(connector_health.get("chatgpt_native_binding_active")),
+                    "chatgpt_native_delegate_token_present": bool(connector_health.get("chatgpt_native_delegate_token_present")),
+                    "chatgpt_native_delegate_binding_matches": bool(connector_health.get("chatgpt_native_delegate_binding_matches")),
+                    "external_connector_token_store_valid": bool(connector_health.get("token_store_valid")),
                     "external_connector_error": connector_health.get("error"),
                 },
             )
