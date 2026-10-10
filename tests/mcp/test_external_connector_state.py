@@ -203,16 +203,17 @@ def test_external_connector_health_is_non_secret_and_counts_state(tmp_path):
 
     health = gateway(tmp_path).external_connector_health()
 
-    assert health == {
-        "state_valid": True,
-        "contract_valid": True,
-        "binding_count": 2,
-        "pending_count": 1,
-        "active_binding_count": 2,
-        "chatgpt_native_binding_active": True,
-        "error": None,
-        "profile_count": 2,
-    }
+    assert health["state_valid"] is True
+    assert health["contract_valid"] is True
+    assert health["binding_count"] == 2
+    assert health["pending_count"] == 1
+    assert health["active_binding_count"] == 2
+    assert health["chatgpt_native_binding_active"] is True
+    assert health["chatgpt_native_delegate_token_present"] is False
+    assert health["chatgpt_native_delegate_binding_matches"] is False
+    assert health["token_store_valid"] is False
+    assert health["error"] is None
+    assert health["profile_count"] == 2
     assert "fingerprint" not in json.dumps(health).lower()
     assert "delegate" not in json.dumps(health).lower()
 
@@ -269,3 +270,102 @@ def test_pending_rebind_audit_failure_is_structured(tmp_path, monkeypatch):
 
     assert caught.value.code == "AUDIT_UNAVAILABLE"
     assert "do-not-leak" not in caught.value.message
+
+
+def write_token_store(root: Path, token: str):
+    path = root / ".ai-os" / "mcp" / "tokens.local.json"
+    path.parent.mkdir(parents=True, exist_ok=True)
+    path.write_text(
+        json.dumps(
+            {
+                "actors": [
+                    {
+                        "actor_id": "CHATGPT_NATIVE_DELEGATE",
+                        "token": token,
+                    }
+                ]
+            }
+        ),
+        encoding="utf-8",
+    )
+
+
+def test_connector_health_proves_delegate_binding_match_without_secret(tmp_path):
+    token = "test-chatgpt-native-token-123456789"
+    import hashlib
+
+    digest = hashlib.sha256(token.encode("utf-8")).hexdigest()
+
+    write_contract(
+        tmp_path,
+        {
+            "CHATGPT_NATIVE": {
+                "principal": "CHATGPT_NATIVE_DELEGATE",
+                "tools": ["get_head"],
+                "scopes": ["get_head"],
+                "deny": [],
+                "seat": False,
+            }
+        },
+    )
+    write_state(
+        tmp_path,
+        {
+            "bindings": [
+                {
+                    "fingerprint_sha256": digest,
+                    "status": "ACTIVE",
+                    "connector_id": "CHATGPT_NATIVE",
+                    "principal": "CHATGPT_NATIVE_DELEGATE",
+                }
+            ],
+            "pending": [],
+        },
+    )
+    write_token_store(tmp_path, token)
+
+    health = gateway(tmp_path).external_connector_health()
+
+    assert health["token_store_valid"] is True
+    assert health["chatgpt_native_delegate_token_present"] is True
+    assert health["chatgpt_native_delegate_binding_matches"] is True
+
+    rendered = json.dumps(health)
+    assert token not in rendered
+    assert digest not in rendered
+
+
+def test_connector_health_detects_delegate_binding_mismatch(tmp_path):
+    write_contract(
+        tmp_path,
+        {
+            "CHATGPT_NATIVE": {
+                "principal": "CHATGPT_NATIVE_DELEGATE",
+                "tools": ["get_head"],
+                "scopes": ["get_head"],
+                "deny": [],
+                "seat": False,
+            }
+        },
+    )
+    write_state(
+        tmp_path,
+        {
+            "bindings": [
+                {
+                    "fingerprint_sha256": "f" * 64,
+                    "status": "ACTIVE",
+                    "connector_id": "CHATGPT_NATIVE",
+                    "principal": "CHATGPT_NATIVE_DELEGATE",
+                }
+            ],
+            "pending": [],
+        },
+    )
+    write_token_store(tmp_path, "different-local-delegate-token-123456789")
+
+    health = gateway(tmp_path).external_connector_health()
+
+    assert health["chatgpt_native_binding_active"] is True
+    assert health["chatgpt_native_delegate_token_present"] is True
+    assert health["chatgpt_native_delegate_binding_matches"] is False
