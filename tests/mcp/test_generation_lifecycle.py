@@ -137,9 +137,39 @@ def test_ensure_writes_bounded_generation_lifecycle_and_steady_state():
     assert 'function Get-RaiosParentLineageProof' in text
     assert "ACTIVE_LINEAGE_PARENT" in text
     assert "AUTO_RETIRED_PROVEN_ORPHAN" in text
-    assert "FAIL_CLOSED_LINEAGE_UNPROVEN" in text
+    assert "FAIL_CLOSED_LINEAGE_UNPROVEN" not in text
+    assert "FAIL_CLOSED_LINEAGE_AND_OWNERSHIP_UNPROVEN" in text
+    assert '$ownedCandidate = [bool](Test-RaiosOwnedLaunchCandidate $owner $CandidatePid $ActivePid)' in text
+    assert "ACTIVE_LISTENER_PROOF_FAILED_BEFORE_RETIREMENT" in text
+    assert "RETIRED_ACTIVE_REVERIFY_FAILED" in text
+    assert "OWNED_NON_LISTENER_RETIRED_WITH_INCOMPLETE_LINEAGE" in text
+    assert 'candidate_active_reverified = [bool]$candidateResolution.active_reverified' in text
+    assert 'candidate_handoff_safe = [bool]$candidateResolution.handoff_safe' in text
+    assert '$candidateHandoffSafe = [bool]$candidateResolution.handoff_safe' in text
     assert '$effectiveCandidatePid = [int]$priorProjection.candidate_pid' in text
     assert '$reportedCandidateState = [string]$priorProjection.candidate_state' not in text
+
+
+def test_owned_candidate_proof_precedes_incomplete_lineage_fail_closed():
+    text = ENSURE.read_text(encoding="utf-8")
+    resolve_start = text.index("function Resolve-RaiosCandidateLifecycle")
+    resolve_end = text.index("function Write-RaiosGenerationHandoff", resolve_start)
+    block = text[resolve_start:resolve_end]
+
+    ownership = block.index(
+        "$ownedCandidate = [bool](Test-RaiosOwnedLaunchCandidate $owner $CandidatePid $ActivePid)"
+    )
+    incomplete = block.index("FAIL_CLOSED_LINEAGE_AND_OWNERSHIP_UNPROVEN")
+    retire = block.index("Stop-Process -Id $CandidatePid -Force -ErrorAction Stop")
+    reverify = block.index("RETIRED_ACTIVE_REVERIFY_FAILED")
+
+    assert ownership < incomplete
+    assert ownership < retire < reverify
+    assert "if (-not $ownedCandidate)" in block
+    assert "Test-RaiosMcpHealthy $healthBefore" in block
+    assert "Test-RaiosMcpHealthy $healthAfter" in block
+    assert "$listenersBefore.Count -eq 1" in block
+    assert "$listenersAfter.Count -eq 1" in block
 
 
 def test_get_head_and_health_expose_same_generation_verdict():
