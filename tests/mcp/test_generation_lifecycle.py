@@ -164,6 +164,12 @@ def test_get_head_and_health_expose_same_generation_verdict():
     assert '"generation_singleton_verdict": generation_handoff.get("singleton_verdict", "UNKNOWN")' in server
     assert '"generation_orphan_count": generation_handoff.get("orphan_generation_count")' in server
     assert '"generation_active_pid": generation_handoff.get("active_pid")' in server
+    assert '"generation_candidate_state": generation_handoff.get("candidate_state")' in server
+    assert '"generation_candidate_relationship": generation_handoff.get("candidate_relationship")' in server
+    assert '"generation_candidate_retirement_attempted": generation_handoff.get("candidate_retirement_attempted", False)' in server
+    assert '"generation_candidate_retirement_proven": generation_handoff.get("candidate_retirement_proven", False)' in server
+    assert '"generation_candidate_retirement_reason": generation_handoff.get("candidate_retirement_reason")' in server
+    assert '"generation_repair_applied": generation_handoff.get("repair_applied", False)' in server
 
 
 def test_health_duplicate_mcp_is_not_hardcoded_false_anymore():
