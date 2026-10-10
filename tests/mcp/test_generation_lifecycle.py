@@ -158,7 +158,8 @@ def test_get_head_and_health_expose_same_generation_verdict():
     assert '"candidate_retirement_proven": candidate_retirement_proven' in gateway
     assert '"candidate_retirement_reason": candidate_retirement_reason' in gateway
     assert '"repair_applied": repair_applied' in gateway
-    assert '"generation_duplicate_mcp": generation_handoff.get("duplicate_mcp")' in gateway
+    assert '"duplicate_mcp": bool(generation_handoff.get("duplicate_mcp") is True)' in gateway
+    assert '"generation_duplicate_mcp": bool(generation_handoff.get("duplicate_mcp") is True)' in gateway
 
     assert '"generation_handoff": generation_handoff' in server
     assert '"generation_handoff_complete": generation_handoff.get("handoff_complete", False)' in server
@@ -171,6 +172,8 @@ def test_get_head_and_health_expose_same_generation_verdict():
     assert '"generation_candidate_retirement_proven": generation_handoff.get("candidate_retirement_proven", False)' in server
     assert '"generation_candidate_retirement_reason": generation_handoff.get("candidate_retirement_reason")' in server
     assert '"generation_repair_applied": generation_handoff.get("repair_applied", False)' in server
+    assert '"duplicate_mcp": bool(generation_handoff.get("duplicate_mcp") is True)' in server
+    assert '"generation_duplicate_mcp": bool(generation_handoff.get("duplicate_mcp") is True)' in server
 
 
 def test_health_duplicate_mcp_is_not_hardcoded_false_anymore():
