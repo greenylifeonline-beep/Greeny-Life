@@ -16,6 +16,18 @@ def test_census_port_is_8788_one_gateway():
     assert CENSUS_PORT == 8788
 
 
+def test_policy_manifest_matches_registered_nine_tool_contract():
+    policy = json.loads(
+        (Path(__file__).resolve().parents[2] / ".ai-os/mcp/POLICY.json").read_text(
+            encoding="utf-8"
+        )
+    )
+    assert policy["v1_tools"] == list(V1_TOOLS)
+    assert policy["v1_tools"] == list(REGISTERED_TOOLS)
+    assert policy["v1_tools"][-1] == "execute_scoped_task"
+    assert len(policy["v1_tools"]) == 9
+
+
 def test_canonical_head_does_not_trust_env_without_git(monkeypatch, tmp_path):
     monkeypatch.setenv("RAIOS_CANONICAL_HEAD", "a" * 40)
     assert canonical_head(tmp_path) == ("unknown", "unknown")
