@@ -1049,11 +1049,24 @@ try {
             try { $lastMcpAttempt = [DateTimeOffset]::Parse([string]$mcpRecoveryState.last_attempt_at) } catch {}
         }
         $mcpHardDown = (-not $mcp) -or (-not (Test-Tcp 8788))
+        $mcpGenerationDegraded = [bool](
+            $mcp -and (
+                $mcp.generation_handoff_complete -ne $true -or
+                [string]$mcp.generation_singleton_verdict -ne 'PASS' -or
+                [int]$mcp.generation_orphan_count -gt 0 -or
+                $mcp.generation_duplicate_mcp -eq $true
+            )
+        )
+        # Generation lifecycle defects are already bounded by ownership proof
+        # inside raios_mcp_local_ensure.ps1. Do not leave a proven orphan alive
+        # for the generic 15-minute recovery cooldown.
         $mcpRecoveryDue = $mcpHardDown -or
+            $mcpGenerationDegraded -or
             (-not $mcpRecoveryState) -or
             ([string]$mcpRecoveryState.canonical_head -ne $canonicalHead) -or
             (([DateTimeOffset]::UtcNow - $lastMcpAttempt).TotalSeconds -ge $mcpRecoveryCooldownSeconds)
         if ($mcpRecoveryDue) {
+            if ($mcpGenerationDegraded) { Mark-Phase "MCP_GENERATION_REPAIR_BYPASS_COOLDOWN" }
             Mark-Phase "MCP_REPAIR_ATTEMPT"
             Write-JsonFileAtomic $mcpRecoveryStatePath @{
                 schema = "raios.mcp-recovery-state.v1"
