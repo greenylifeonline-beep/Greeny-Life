@@ -18,7 +18,7 @@ $RuntimeNativeLauncher=Join-Path $RuntimeTunnel 'Start-RAIOS-Native-MCP-System.p
 $Live=Join-Path $Root 'RAIOS-C5-Service.exe'
 $Stage=Join-Path $Root 'RAIOS-C5-Service.stage.exe'
 $Previous=Join-Path $Root 'RAIOS-C5-Service.previous.exe'
-$Receipt=Join-Path $Root 'service-deploy-receipt.json'
+$ReceiptPath=Join-Path $Root 'service-deploy-receipt.json'
 $GenerationState=Join-Path $Root 'current-generation.json'
 $Csc='C:\Windows\Microsoft.NET\Framework64\v4.0.30319\csc.exe'
 $Python='C:\Users\Ghanam\AppData\Local\Programs\Python\Python314\python.exe'
@@ -473,9 +473,9 @@ try{
   acceptance='PASS'
   ok=$true
  }
- $tmp=$Receipt+'.tmp-'+[guid]::NewGuid().ToString('N')
+ $tmp=$ReceiptPath+'.tmp-'+[guid]::NewGuid().ToString('N')
  $receipt|ConvertTo-Json -Depth 8|Set-Content -LiteralPath $tmp -Encoding UTF8
- Move-Item -LiteralPath $tmp -Destination $Receipt -Force
+ Move-Item -LiteralPath $tmp -Destination $ReceiptPath -Force
  Remove-Item -LiteralPath $MaintenanceIntent -Force -ErrorAction SilentlyContinue
  Remove-Item -LiteralPath $RollbackRoot -Recurse -Force -ErrorAction SilentlyContinue
  $receipt|ConvertTo-Json -Compress
