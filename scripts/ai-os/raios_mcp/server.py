@@ -26,6 +26,7 @@ from raios_mcp.gateway import (  # noqa: E402
     Gateway,
     GatewayError,
     read_canonical_head,
+    read_generation_handoff,
 )
 
 PROTOCOL = "2025-03-26"
@@ -392,6 +393,7 @@ class Handler(BaseHTTPRequestHandler):
             head, head_source = canonical_head(ROOT)
             tools = list(V1_TOOLS)
             connector_health = self.gateway.external_connector_health()
+            generation_handoff = read_generation_handoff()
             self._send_json(
                 200,
                 {
@@ -404,7 +406,15 @@ class Handler(BaseHTTPRequestHandler):
                     "execute_scoped_task": True,
                     "raw_shell": False,
                     "shell_via_mcp": False,
-                    "duplicate_mcp": False,
+                    "duplicate_mcp": bool(generation_handoff.get("duplicate_mcp") is True),
+                    "generation_handoff": generation_handoff,
+                    "generation_handoff_complete": generation_handoff.get("handoff_complete", False),
+                    "generation_singleton_verdict": generation_handoff.get("singleton_verdict", "UNKNOWN"),
+                    "generation_orphan_count": generation_handoff.get("orphan_generation_count"),
+                    "generation_active_pid": generation_handoff.get("active_pid"),
+                    "generation_candidate_pid": generation_handoff.get("candidate_pid"),
+                    "generation_previous_pid": generation_handoff.get("previous_pid"),
+                    "mcp_process_pid": os.getpid(),
                     "scoped_execution": "EXECUTE_SCOPED_TASK",
                     "send_packet_execution": "TEMPORARY_COMPATIBILITY",
                     "second_gateway": False,
