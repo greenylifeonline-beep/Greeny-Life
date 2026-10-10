@@ -13,6 +13,7 @@ from raios_mcp.gateway import read_generation_handoff  # noqa: E402
 ENSURE = ROOT / "scripts" / "ai-os" / "raios_mcp_local_ensure.ps1"
 SERVER = ROOT / "scripts" / "ai-os" / "raios_mcp" / "server.py"
 GATEWAY = ROOT / "scripts" / "ai-os" / "raios_mcp" / "gateway.py"
+POLICY = ROOT / ".ai-os" / "mcp" / "POLICY.json"
 
 
 def _projection(profile: Path, *, active_pid: int = 111) -> Path:
@@ -195,3 +196,24 @@ def test_mcp_ensure_powershell_parses_on_available_windows_shell():
         timeout=20,
     )
     assert proc.returncode == 0, proc.stderr or proc.stdout
+
+
+def test_runtime_truth_precedence_is_machine_readable():
+    policy = json.loads(POLICY.read_text(encoding="utf-8"))
+    precedence = policy["truth_precedence"]
+
+    assert precedence["schema"] == "raios.truth-precedence.v1"
+    assert precedence["order"] == [
+        "LIVE_RUNTIME_TRUTH",
+        "LOCAL_CANONICAL_REPOSITORY",
+        "GITHUB_MIRROR_HISTORY",
+    ]
+    assert precedence["remote_commit_is_live_proof"] is False
+    assert precedence["source_side_change_requires_live_verification"] is True
+    assert "runtime_health" in precedence["live_verification_requires"]
+    assert "owner_identity" in precedence["live_verification_requires"]
+    assert "canonical_head_match" in precedence["live_verification_requires"]
+    assert "receipt_or_equivalent_live_evidence" in precedence["live_verification_requires"]
+    assert "LIVE_RUNTIME_TRUTH_PRECEDES_SOURCE_PROJECTIONS" in policy["law"]
+    assert "REMOTE_COMMIT_NE_LIVE_DEPLOYMENT" in policy["law"]
+    assert "SOURCE_CHANGE_REQUIRES_LIVE_VERIFICATION" in policy["law"]
