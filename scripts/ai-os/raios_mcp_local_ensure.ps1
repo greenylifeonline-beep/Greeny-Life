@@ -500,7 +500,14 @@ if ($OwningPid) {
         }
     } elseif (Test-RaiosMcpHealthy $Health) {
         if (-not $Reload) {
+            Set-RaiosGenerationTransition -PreviousPid $OwningPid -Reason "STEADY_STATE_VERIFY"
+            $Steady = Write-RaiosGenerationHandoff -CandidatePid $OwningPid -ActivePid $OwningPid -Reason "STEADY_STATE_VERIFY"
             Write-Output "LOCAL_MCP_ALREADY_HEALTHY port=$Port pid=$OwningPid tools=$($Health.tools.Count) head_source=$($Health.head_source)"
+            Write-Output "GENERATION_ACTIVE_PID=$($Steady.active_pid)"
+            Write-Output "GENERATION_HANDOFF_COMPLETE=$($Steady.handoff_complete)"
+            Write-Output "GENERATION_SINGLETON_VERDICT=$($Steady.singleton_verdict)"
+            Write-Output "GENERATION_ORPHAN_COUNT=$($Steady.orphan_generation_count)"
+            Write-Output "GENERATION_DUPLICATE_MCP=$($Steady.duplicate_mcp)"
             exit 0
         }
         Write-Output "LOCAL_MCP_RELOAD port=$Port pid=$OwningPid"
