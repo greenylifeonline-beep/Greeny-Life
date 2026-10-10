@@ -253,6 +253,9 @@ def test_prior_orphan_is_reconciled_before_new_promotion_can_overwrite_projectio
     assert "historical_generation_head=$priorHead" in text
     assert "Test-RaiosOwnedLaunchCandidate $owner $orphanPid $activePid $priorHead" in text
     assert "Test-RaiosMcpHealthyForHead $activeHealthAfter $priorHead" in text
+    assert "$serviceGeneration = Get-RaiosC5GenerationId" in text
+    assert "[string]$owner.service_generation -eq [string]$serviceGeneration" in text
+    assert "$prior.service_generation_match = $true" in text
 
     call = text.index("$PriorRepair = Repair-RaiosPriorGenerationOrphans")
     identity = text.index("$Info = Get-RaiosProcessInfo $OwningPid", call)
