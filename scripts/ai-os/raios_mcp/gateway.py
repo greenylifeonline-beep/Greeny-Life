@@ -270,6 +270,7 @@ def read_generation_handoff(
         "authority": raw.get("authority"),
         "canonical_head": raw.get("canonical_head"),
         "transition_reason": raw.get("transition_reason"),
+        "verification_reason": raw.get("verification_reason"),
         "previous_pid": previous_pid,
         "previous_generation_id": raw.get("previous_generation_id"),
         "previous_state": previous_state,
