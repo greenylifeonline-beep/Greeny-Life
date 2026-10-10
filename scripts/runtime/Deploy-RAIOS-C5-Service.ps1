@@ -24,8 +24,11 @@ $Csc='C:\Windows\Microsoft.NET\Framework64\v4.0.30319\csc.exe'
 $Python='C:\Users\Ghanam\AppData\Local\Programs\Python\Python314\python.exe'
 $RollbackRoot=Join-Path $env:LOCALAPPDATA ('Temp\raios-c5-deploy-rollback-'+[DateTime]::UtcNow.ToString('yyyyMMdd-HHmmss'))
 $PhasePath=Join-Path $Root 'service-deploy-phase.json'
+$FailurePath=Join-Path $Root 'service-deploy-failure.json'
+$script:CurrentDeployPhase='BOOTSTRAP'
 
 function Write-DeployPhase([string]$Name,[hashtable]$Extra=$null){
+ $script:CurrentDeployPhase=$Name
  try{
   $o=[ordered]@{schema='raios.c5.service-deploy.phase.v1';observed_at=[DateTimeOffset]::UtcNow.ToString('o');phase=$Name;pid=$PID}
   if($Extra){foreach($k in $Extra.Keys){$o[$k]=$Extra[$k]}}
@@ -302,8 +305,43 @@ try{
  exit 0
 }
 catch{
- $failure=$_.Exception.Message
- Write-DeployPhase 'ROLLBACK_BEGIN' @{failure=$failure}
+ $err=$_
+ $failure=[string]$err.Exception.Message
+ $failureType=[string]$err.Exception.GetType().FullName
+ $failureId=[string]$err.FullyQualifiedErrorId
+ $failureStack=[string]$err.ScriptStackTrace
+ $failurePosition=[string]$err.InvocationInfo.PositionMessage
+ $failureCommand=[string]$err.InvocationInfo.MyCommand
+ $failurePhase=[string]$script:CurrentDeployPhase
+ try{
+  $svcFailure=Get-CimInstance Win32_Service -Filter "Name='RAIOS-C5'" -ErrorAction SilentlyContinue
+  $diag=[ordered]@{
+   schema='raios.c5.service-deploy.failure.v1'
+   observed_at=[DateTimeOffset]::UtcNow.ToString('o')
+   phase=$failurePhase
+   exception_type=$failureType
+   message=$failure
+   fully_qualified_error_id=$failureId
+   script_stack_trace=$failureStack
+   invocation_position=$failurePosition
+   invocation_command=$failureCommand
+   deployment_started=[bool]$deploymentStarted
+   rollback_root=$RollbackRoot
+   before_pid=$beforePid
+   before_state=$beforeState
+   service_state=$(if($svcFailure){[string]$svcFailure.State}else{'MISSING'})
+   service_pid=$(if($svcFailure){[int]$svcFailure.ProcessId}else{0})
+  }
+  $failureTmp=$FailurePath+'.tmp-'+[guid]::NewGuid().ToString('N')
+  $diag|ConvertTo-Json -Depth 8|Set-Content -LiteralPath $failureTmp -Encoding UTF8
+  Move-Item -LiteralPath $failureTmp -Destination $FailurePath -Force
+ }catch{}
+ Write-DeployPhase 'ROLLBACK_BEGIN' @{
+  failure=$failure
+  failed_phase=$failurePhase
+  exception_type=$failureType
+  fully_qualified_error_id=$failureId
+ }
  try{
   Stop-Service RAIOS-C5 -Force -ErrorAction SilentlyContinue
   (Get-Service RAIOS-C5).WaitForStatus('Stopped',[TimeSpan]::FromSeconds(20))
@@ -318,5 +356,5 @@ catch{
    (Get-Service RAIOS-C5).WaitForStatus('Running',[TimeSpan]::FromSeconds(30))
   }
  }catch{}
- throw ('C5_DEPLOY_ROLLED_BACK::'+$failure)
+ throw ('C5_DEPLOY_ROLLED_BACK::'+$failurePhase+'::'+$failureType+'::'+$failure)
 }
