@@ -114,6 +114,9 @@ def test_ensure_writes_bounded_generation_lifecycle_and_steady_state():
     assert 'handoff_complete = $handoffComplete' in text
     assert 'singleton_verdict =' in text
     assert '"STEADY_STATE_VERIFY"' in text
+    assert '$preserveTransition' in text
+    assert 'verification_reason = $verificationReason' in text
+    assert '$priorProjection.transition_reason' in text
 
 
 def test_get_head_and_health_expose_same_generation_verdict():
@@ -126,6 +129,7 @@ def test_get_head_and_health_expose_same_generation_verdict():
     assert '"generation_handoff_complete": generation_handoff.get("handoff_complete", False)' in gateway
     assert '"generation_singleton_verdict": generation_handoff.get("singleton_verdict", "UNKNOWN")' in gateway
     assert '"generation_orphan_count": generation_handoff.get("orphan_generation_count")' in gateway
+    assert '"verification_reason": raw.get("verification_reason")' in gateway
     assert '"generation_duplicate_mcp": generation_handoff.get("duplicate_mcp")' in gateway
 
     assert '"generation_handoff": generation_handoff' in server
