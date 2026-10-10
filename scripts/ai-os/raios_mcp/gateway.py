@@ -421,6 +421,60 @@ class Gateway:
         state.setdefault("version", 1)
         return state
 
+    def external_connector_health(self) -> dict[str, Any]:
+        """Non-secret connector readiness projection for health/self-heal."""
+        result = {
+            "state_valid": False,
+            "contract_valid": False,
+            "binding_count": 0,
+            "pending_count": 0,
+            "active_binding_count": 0,
+            "chatgpt_native_binding_active": False,
+            "error": None,
+        }
+        try:
+            state = self._external_rebind_state()
+        except GatewayError as err:
+            result["error"] = err.code
+            return result
+
+        result["state_valid"] = True
+        bindings = list(state.get("bindings") or [])
+        pending = list(state.get("pending") or [])
+        result["binding_count"] = len(bindings)
+        result["pending_count"] = len(pending)
+
+        active_ids = {
+            str(row.get("connector_id") or "")
+            for row in bindings
+            if isinstance(row, dict)
+            and str(row.get("status") or "").upper() in {"ACTIVE", "GRACE"}
+        }
+        result["active_binding_count"] = len(active_ids)
+        result["chatgpt_native_binding_active"] = "CHATGPT_NATIVE" in active_ids
+
+        try:
+            contract = load_json(
+                self.root / ".ai-os" / "mcp" / "EXTERNAL-CONNECTOR-CONTRACT.json",
+                {},
+            )
+        except (OSError, json.JSONDecodeError, UnicodeError):
+            result["error"] = "CONNECTOR_CONTRACT_INVALID"
+            return result
+
+        profiles = (
+            contract.get("external_principal_profiles")
+            if isinstance(contract, dict)
+            else None
+        )
+        if not isinstance(profiles, dict):
+            result["error"] = "CONNECTOR_CONTRACT_INVALID"
+            return result
+
+        result["contract_valid"] = True
+        result["profile_count"] = len(profiles)
+        return result
+
     def _actor_from_external_binding(self, digest: str) -> Actor | None:
         state = self._external_rebind_state()
         now = datetime.now(timezone.utc)
