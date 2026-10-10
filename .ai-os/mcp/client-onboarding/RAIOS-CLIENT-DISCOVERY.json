@@ -1,0 +1,56 @@
+{
+  "schema": "raios.client-discovery.v1",
+  "name": "raios",
+  "canonical_alias": "raios",
+  "protocol": "MCP",
+  "transport": "streamable-http",
+  "local_endpoint": "http://127.0.0.1:8788/mcp",
+  "external_endpoint_env": "RAIOS_EXTERNAL_MCP_URL",
+  "authentication": {
+    "type": "Bearer",
+    "header": "Authorization",
+    "binding": "RAIOS_GENERATION_BINDING",
+    "shared_token": false,
+    "per_client_principal": true
+  },
+  "governance": {
+    "one_mcp": true,
+    "one_gateway": true,
+    "second_mcp": false,
+    "second_gateway": false,
+    "raw_shell": false,
+    "c1_impersonation": false,
+    "system_owns_locks": true
+  },
+  "clients": {
+    "chatgpt": {
+      "connector_id": "CHATGPT_NATIVE",
+      "principal": "CHATGPT_NATIVE_DELEGATE",
+      "alias": "raios"
+    },
+    "claude": {
+      "connector_id": "CLAUDE_NATIVE",
+      "principal": "CLAUDE_NATIVE_DELEGATE",
+      "alias": "raios",
+      "mode": "REMOTE_HTTP_MCP"
+    },
+    "kimi": {
+      "connector_id": "KIMI_NATIVE",
+      "principal": "KIMI_NATIVE_DELEGATE",
+      "alias": "raios",
+      "mode": "HTTP_MCP"
+    },
+    "deepseek": {
+      "connector_id": "DEEPSEEK_NATIVE",
+      "principal": "DEEPSEEK_NATIVE_DELEGATE",
+      "alias": "raios",
+      "mode": "MCP_TO_FUNCTION_CALL_CLIENT_ADAPTER"
+    },
+    "generic": {
+      "connector_id": "GENERIC_AGENT",
+      "principal": "GENERIC_AGENT_DELEGATE",
+      "alias": "raios",
+      "mode": "HTTP_MCP"
+    }
+  }
+}

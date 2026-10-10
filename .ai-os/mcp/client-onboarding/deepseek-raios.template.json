@@ -1,0 +1,11 @@
+{
+  "name": "raios",
+  "mode": "client_side_mcp_to_function_call_adapter",
+  "mcp_url": "${RAIOS_MCP_URL}",
+  "credential_env": "RAIOS_DEEPSEEK_TOKEN",
+  "source_of_tools": "MCP tools/list",
+  "tool_execution": "MCP tools/call",
+  "deepseek_tool_type": "function",
+  "second_gateway": false,
+  "second_authority": false
+}

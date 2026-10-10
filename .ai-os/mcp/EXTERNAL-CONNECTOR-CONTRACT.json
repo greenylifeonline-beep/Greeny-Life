@@ -1,203 +1,433 @@
 {
-    "schema":  "raios.external-connector-rebind-contract.v1",
-    "authority":  "C1",
-    "runtime_authority":  "RAIOS-C5-SCM",
-    "gateway_law":  "MCP_GATEWAY_NE_TRUTH_AUTHORITY",
-    "model":  {
-                  "connector_identity":  true,
-                  "principal_identity":  true,
-                  "credential_generations":  true,
-                  "active_generation":  true,
-                  "previous_generation_grace":  true,
-                  "explicit_revoke":  true,
-                  "pending_unknown_capture":  true,
-                  "raw_secret_persistence":  false,
-                  "raw_secret_logging":  false,
-                  "fingerprint_algorithm":  "SHA-256"
-              },
-    "lifecycle":  [
-                      "DISCOVER",
-                      "PENDING_REBIND",
-                      "BOUND",
-                      "ACTIVE",
-                      "GRACE",
-                      "REVOKED"
-                  ],
-    "adapters":  [
-                     {
-                         "connector_id":  "CHATGPT_NATIVE",
-                         "type":  "MCP_EXTERNAL_CLIENT",
-                         "principal":  "CHATGPT_NATIVE_DELEGATE",
-                         "authentication":  "RAIOS_GENERATION_BINDING"
-                     },
-                     {
-                         "connector_id":  "HERMES",
-                         "type":  "PROVIDER_ADAPTER",
-                         "principal":  "HERMES_DELEGATE",
-                         "authentication":  "ADAPTER_SPECIFIC_WITH_RAIOS_BINDING"
-                     },
-                     {
-                         "connector_id":  "DCR",
-                         "type":  "CAPABILITY_PROVIDER",
-                         "principal":  null,
-                         "authentication":  "PROVIDER_MANAGED",
-                         "raios_role":  "EXTERNAL_CAPABILITY_PROVIDER"
-                     },
-                     {
-                         "connector_id":  "GENERIC_AGENT",
-                         "type":  "MCP_EXTERNAL_CLIENT",
-                         "principal":  null,
-                         "authentication":  "RAIOS_GENERATION_BINDING"
-                     }
-                 ],
-    "invariants":  {
-                       "second_mcp":  false,
-                       "second_gateway":  false,
-                       "second_native_channel":  false,
-                       "second_scheduler":  false,
-                       "raw_shell_via_mcp":  false,
-                       "C1_final_authority":  true,
-                       "system_owns_locks":  true
-                   },
-    "external_principal_profiles":  {
-                                        "CHATGPT_NATIVE":  {
-                                                               "connector_id":  "CHATGPT_NATIVE",
-                                                               "principal":  "CHATGPT_NATIVE_DELEGATE",
-                                                               "actor_role":  "EXTERNAL_DELEGATED_CLIENT",
-                                                               "instance_role":  "chatgpt-native",
-                                                               "tools":  [
-                                                                             "get_head",
-                                                                             "read_board",
-                                                                             "read_inbox",
-                                                                             "read_receipt",
-                                                                             "get_diff",
-                                                                             "post_opinion",
-                                                                             "send_packet",
-                                                                             "ack_packet",
-                                                                             "execute_scoped_task"
-                                                                         ],
-                                                               "scopes":  [
-                                                                              "get_head",
-                                                                              "read_board",
-                                                                              "read_inbox",
-                                                                              "read_receipt",
-                                                                              "get_diff",
-                                                                              "post_opinion",
-                                                                              "send_packet",
-                                                                              "ack_packet",
-                                                                              "execute_scoped_task"
-                                                                          ],
-                                                               "deny":  [
-                                                                            "permanent_ownership",
-                                                                            "permanent_lock",
-                                                                            "self_promote",
-                                                                            "force_history_rewrite",
-                                                                            "impersonate_worker",
-                                                                            "authorize_dispatch",
-                                                                            "approve_promotion",
-                                                                            "raw_shell"
-                                                                        ],
-                                                               "seat":  false,
-                                                               "c1_authority":  false,
-                                                               "provider_core":  false,
-                                                               "promotion_authority":  false,
-                                                               "raw_shell":  false
-                                                           },
-                                        "HERMES":  {
-                                                       "connector_id":  "HERMES",
-                                                       "principal":  "HERMES_DELEGATE",
-                                                       "actor_role":  "EXTERNAL_PROVIDER_ADAPTER",
-                                                       "instance_role":  "hermes-provider",
-                                                       "authentication":  "PROVIDER_MANAGED",
-                                                       "seat":  false,
-                                                       "c1_authority":  false,
-                                                       "provider_core":  false,
-                                                       "promotion_authority":  false,
-                                                       "raw_shell":  false,
-                                                       "deny":  [
-                                                                    "permanent_ownership",
-                                                                    "permanent_lock",
-                                                                    "self_promote",
-                                                                    "force_history_rewrite",
-                                                                    "impersonate_worker",
-                                                                    "authorize_dispatch",
-                                                                    "approve_promotion",
-                                                                    "raw_shell"
-                                                                ],
-                                                       "provider_adapter_only":  true
-                                                   },
-                                        "DCR":  {
-                                                    "connector_id":  "DCR",
-                                                    "principal":  "DCR_PROVIDER",
-                                                    "actor_role":  "EXTERNAL_CAPABILITY_PROVIDER",
-                                                    "instance_role":  "desktop-commander-provider",
-                                                    "authentication":  "PROVIDER_MANAGED",
-                                                    "seat":  false,
-                                                    "c1_authority":  false,
-                                                    "provider_core":  false,
-                                                    "promotion_authority":  false,
-                                                    "raw_shell":  false,
-                                                    "deny":  [
-                                                                 "permanent_ownership",
-                                                                 "permanent_lock",
-                                                                 "self_promote",
-                                                                 "force_history_rewrite",
-                                                                 "impersonate_worker",
-                                                                 "authorize_dispatch",
-                                                                 "approve_promotion",
-                                                                 "raw_shell"
-                                                             ]
-                                                }
-                                    },
-    "updated_at":  "2026-10-09T16:21:26.2660142+00:00",
-    "client_contract":  {
-                            "version":  "v3",
-                            "client_supplies":  [
-                                                    "operation",
-                                                    "payload"
-                                                ],
-                            "system_owned_fields":  [
-                                                        "actor_id",
-                                                        "actor_role",
-                                                        "instance_role",
-                                                        "session_id",
-                                                        "packet_id",
-                                                        "correlation_id",
-                                                        "repository",
-                                                        "branch",
-                                                        "requested_head",
-                                                        "authority_scope",
-                                                        "write_intent",
-                                                        "execution_intent",
-                                                        "promotion_intent",
-                                                        "created_at",
-                                                        "expires_at",
-                                                        "payload_hash"
-                                                    ],
-                            "server_owned_envelope":  true,
-                            "server_owned_identity":  true,
-                            "server_owned_hash":  true,
-                            "server_owned_runtime_truth":  true,
-                            "client_protocol_knowledge_required":  false
-                        },
-    "failure_policy":  {
-                           "connector_failure_must_not_restart_c5":  true,
-                           "connector_failure_must_not_create_second_mcp":  true,
-                           "connector_failure_must_not_create_second_gateway":  true,
-                           "unknown_identity":  "PENDING_REBIND",
-                           "invalid_profile":  "QUARANTINED",
-                           "provider_unavailable":  "DEGRADED",
-                           "recoverable_failure":  "RECOVERING",
-                           "fail_closed":  true,
-                           "other_connectors_continue":  true
-                       },
-    "credential_lifecycle":  {
-                                 "first_unknown_identity_requires_trust_anchor":  true,
-                                 "trusted_rotation_can_auto_promote":  true,
-                                 "active_generation":  "ACTIVE",
-                                 "previous_generation":  "GRACE",
-                                 "revoked_generation":  "REVOKED",
-                                 "raw_secret_persistence":  false,
-                                 "restart_required_for_generation_change":  false
-                             }
+  "schema": "raios.external-connector-rebind-contract.v1",
+  "authority": "C1",
+  "runtime_authority": "RAIOS-C5-SCM",
+  "gateway_law": "MCP_GATEWAY_NE_TRUTH_AUTHORITY",
+  "model": {
+    "connector_identity": true,
+    "principal_identity": true,
+    "credential_generations": true,
+    "active_generation": true,
+    "previous_generation_grace": true,
+    "explicit_revoke": true,
+    "pending_unknown_capture": true,
+    "raw_secret_persistence": false,
+    "raw_secret_logging": false,
+    "fingerprint_algorithm": "SHA-256"
+  },
+  "lifecycle": [
+    "DISCOVER",
+    "PENDING_REBIND",
+    "BOUND",
+    "ACTIVE",
+    "GRACE",
+    "REVOKED"
+  ],
+  "adapters": [
+    {
+      "connector_id": "CHATGPT_NATIVE",
+      "type": "MCP_EXTERNAL_CLIENT",
+      "principal": "CHATGPT_NATIVE_DELEGATE",
+      "authentication": "RAIOS_GENERATION_BINDING"
+    },
+    {
+      "connector_id": "HERMES",
+      "type": "PROVIDER_ADAPTER",
+      "principal": "HERMES_DELEGATE",
+      "authentication": "ADAPTER_SPECIFIC_WITH_RAIOS_BINDING"
+    },
+    {
+      "connector_id": "DCR",
+      "type": "CAPABILITY_PROVIDER",
+      "principal": null,
+      "authentication": "PROVIDER_MANAGED",
+      "raios_role": "EXTERNAL_CAPABILITY_PROVIDER"
+    },
+    {
+      "connector_id": "GENERIC_AGENT",
+      "type": "MCP_EXTERNAL_CLIENT",
+      "principal": "GENERIC_AGENT_DELEGATE",
+      "authentication": "RAIOS_GENERATION_BINDING",
+      "alias": "raios"
+    },
+    {
+      "connector_id": "CLAUDE_NATIVE",
+      "type": "MCP_EXTERNAL_CLIENT",
+      "principal": "CLAUDE_NATIVE_DELEGATE",
+      "authentication": "RAIOS_GENERATION_BINDING",
+      "alias": "raios"
+    },
+    {
+      "connector_id": "KIMI_NATIVE",
+      "type": "MCP_EXTERNAL_CLIENT",
+      "principal": "KIMI_NATIVE_DELEGATE",
+      "authentication": "RAIOS_GENERATION_BINDING",
+      "alias": "raios"
+    },
+    {
+      "connector_id": "DEEPSEEK_NATIVE",
+      "type": "MCP_EXTERNAL_CLIENT",
+      "principal": "DEEPSEEK_NATIVE_DELEGATE",
+      "authentication": "RAIOS_GENERATION_BINDING",
+      "alias": "raios"
+    }
+  ],
+  "invariants": {
+    "second_mcp": false,
+    "second_gateway": false,
+    "second_native_channel": false,
+    "second_scheduler": false,
+    "raw_shell_via_mcp": false,
+    "C1_final_authority": true,
+    "system_owns_locks": true
+  },
+  "external_principal_profiles": {
+    "CHATGPT_NATIVE": {
+      "connector_id": "CHATGPT_NATIVE",
+      "principal": "CHATGPT_NATIVE_DELEGATE",
+      "actor_role": "EXTERNAL_DELEGATED_CLIENT",
+      "instance_role": "chatgpt-native",
+      "tools": [
+        "get_head",
+        "read_board",
+        "read_inbox",
+        "read_receipt",
+        "get_diff",
+        "post_opinion",
+        "send_packet",
+        "ack_packet",
+        "execute_scoped_task"
+      ],
+      "scopes": [
+        "get_head",
+        "read_board",
+        "read_inbox",
+        "read_receipt",
+        "get_diff",
+        "post_opinion",
+        "send_packet",
+        "ack_packet",
+        "execute_scoped_task"
+      ],
+      "deny": [
+        "permanent_ownership",
+        "permanent_lock",
+        "self_promote",
+        "force_history_rewrite",
+        "impersonate_worker",
+        "authorize_dispatch",
+        "approve_promotion",
+        "raw_shell"
+      ],
+      "seat": false,
+      "c1_authority": false,
+      "provider_core": false,
+      "promotion_authority": false,
+      "raw_shell": false
+    },
+    "HERMES": {
+      "connector_id": "HERMES",
+      "principal": "HERMES_DELEGATE",
+      "actor_role": "EXTERNAL_PROVIDER_ADAPTER",
+      "instance_role": "hermes-provider",
+      "authentication": "PROVIDER_MANAGED",
+      "seat": false,
+      "c1_authority": false,
+      "provider_core": false,
+      "promotion_authority": false,
+      "raw_shell": false,
+      "deny": [
+        "permanent_ownership",
+        "permanent_lock",
+        "self_promote",
+        "force_history_rewrite",
+        "impersonate_worker",
+        "authorize_dispatch",
+        "approve_promotion",
+        "raw_shell"
+      ],
+      "provider_adapter_only": true
+    },
+    "DCR": {
+      "connector_id": "DCR",
+      "principal": "DCR_PROVIDER",
+      "actor_role": "EXTERNAL_CAPABILITY_PROVIDER",
+      "instance_role": "desktop-commander-provider",
+      "authentication": "PROVIDER_MANAGED",
+      "seat": false,
+      "c1_authority": false,
+      "provider_core": false,
+      "promotion_authority": false,
+      "raw_shell": false,
+      "deny": [
+        "permanent_ownership",
+        "permanent_lock",
+        "self_promote",
+        "force_history_rewrite",
+        "impersonate_worker",
+        "authorize_dispatch",
+        "approve_promotion",
+        "raw_shell"
+      ]
+    },
+    "CLAUDE_NATIVE": {
+      "connector_id": "CLAUDE_NATIVE",
+      "principal": "CLAUDE_NATIVE_DELEGATE",
+      "actor_role": "EXTERNAL_DELEGATED_CLIENT",
+      "instance_role": "claude-native",
+      "authentication": "RAIOS_GENERATION_BINDING",
+      "tools": [
+        "get_head",
+        "read_board",
+        "read_inbox",
+        "read_receipt",
+        "get_diff",
+        "post_opinion",
+        "send_packet",
+        "ack_packet",
+        "execute_scoped_task"
+      ],
+      "scopes": [
+        "get_head",
+        "read_board",
+        "read_inbox",
+        "read_receipt",
+        "get_diff",
+        "post_opinion",
+        "send_packet",
+        "ack_packet",
+        "execute_scoped_task"
+      ],
+      "deny": [
+        "permanent_ownership",
+        "permanent_lock",
+        "self_promote",
+        "force_history_rewrite",
+        "impersonate_worker",
+        "authorize_dispatch",
+        "approve_promotion",
+        "raw_shell"
+      ],
+      "seat": false,
+      "c1_authority": false,
+      "provider_core": false,
+      "promotion_authority": false,
+      "raw_shell": false,
+      "universal_alias": "raios"
+    },
+    "KIMI_NATIVE": {
+      "connector_id": "KIMI_NATIVE",
+      "principal": "KIMI_NATIVE_DELEGATE",
+      "actor_role": "EXTERNAL_DELEGATED_CLIENT",
+      "instance_role": "kimi-native",
+      "authentication": "RAIOS_GENERATION_BINDING",
+      "tools": [
+        "get_head",
+        "read_board",
+        "read_inbox",
+        "read_receipt",
+        "get_diff",
+        "post_opinion",
+        "send_packet",
+        "ack_packet",
+        "execute_scoped_task"
+      ],
+      "scopes": [
+        "get_head",
+        "read_board",
+        "read_inbox",
+        "read_receipt",
+        "get_diff",
+        "post_opinion",
+        "send_packet",
+        "ack_packet",
+        "execute_scoped_task"
+      ],
+      "deny": [
+        "permanent_ownership",
+        "permanent_lock",
+        "self_promote",
+        "force_history_rewrite",
+        "impersonate_worker",
+        "authorize_dispatch",
+        "approve_promotion",
+        "raw_shell"
+      ],
+      "seat": false,
+      "c1_authority": false,
+      "provider_core": false,
+      "promotion_authority": false,
+      "raw_shell": false,
+      "universal_alias": "raios"
+    },
+    "DEEPSEEK_NATIVE": {
+      "connector_id": "DEEPSEEK_NATIVE",
+      "principal": "DEEPSEEK_NATIVE_DELEGATE",
+      "actor_role": "EXTERNAL_DELEGATED_CLIENT",
+      "instance_role": "deepseek-native",
+      "authentication": "RAIOS_GENERATION_BINDING",
+      "tools": [
+        "get_head",
+        "read_board",
+        "read_inbox",
+        "read_receipt",
+        "get_diff",
+        "post_opinion",
+        "send_packet",
+        "ack_packet",
+        "execute_scoped_task"
+      ],
+      "scopes": [
+        "get_head",
+        "read_board",
+        "read_inbox",
+        "read_receipt",
+        "get_diff",
+        "post_opinion",
+        "send_packet",
+        "ack_packet",
+        "execute_scoped_task"
+      ],
+      "deny": [
+        "permanent_ownership",
+        "permanent_lock",
+        "self_promote",
+        "force_history_rewrite",
+        "impersonate_worker",
+        "authorize_dispatch",
+        "approve_promotion",
+        "raw_shell"
+      ],
+      "seat": false,
+      "c1_authority": false,
+      "provider_core": false,
+      "promotion_authority": false,
+      "raw_shell": false,
+      "universal_alias": "raios"
+    },
+    "GENERIC_AGENT": {
+      "connector_id": "GENERIC_AGENT",
+      "principal": "GENERIC_AGENT_DELEGATE",
+      "actor_role": "EXTERNAL_DELEGATED_CLIENT",
+      "instance_role": "generic-agent",
+      "authentication": "RAIOS_GENERATION_BINDING",
+      "tools": [
+        "get_head",
+        "read_board",
+        "read_inbox",
+        "read_receipt",
+        "get_diff",
+        "post_opinion",
+        "send_packet",
+        "ack_packet",
+        "execute_scoped_task"
+      ],
+      "scopes": [
+        "get_head",
+        "read_board",
+        "read_inbox",
+        "read_receipt",
+        "get_diff",
+        "post_opinion",
+        "send_packet",
+        "ack_packet",
+        "execute_scoped_task"
+      ],
+      "deny": [
+        "permanent_ownership",
+        "permanent_lock",
+        "self_promote",
+        "force_history_rewrite",
+        "impersonate_worker",
+        "authorize_dispatch",
+        "approve_promotion",
+        "raw_shell"
+      ],
+      "seat": false,
+      "c1_authority": false,
+      "provider_core": false,
+      "promotion_authority": false,
+      "raw_shell": false,
+      "universal_alias": "raios"
+    }
+  },
+  "updated_at": "2026-10-09T16:21:26.2660142+00:00",
+  "client_contract": {
+    "version": "v3",
+    "client_supplies": [
+      "operation",
+      "payload"
+    ],
+    "system_owned_fields": [
+      "actor_id",
+      "actor_role",
+      "instance_role",
+      "session_id",
+      "packet_id",
+      "correlation_id",
+      "repository",
+      "branch",
+      "requested_head",
+      "authority_scope",
+      "write_intent",
+      "execution_intent",
+      "promotion_intent",
+      "created_at",
+      "expires_at",
+      "payload_hash"
+    ],
+    "server_owned_envelope": true,
+    "server_owned_identity": true,
+    "server_owned_hash": true,
+    "server_owned_runtime_truth": true,
+    "client_protocol_knowledge_required": false
+  },
+  "failure_policy": {
+    "connector_failure_must_not_restart_c5": true,
+    "connector_failure_must_not_create_second_mcp": true,
+    "connector_failure_must_not_create_second_gateway": true,
+    "unknown_identity": "PENDING_REBIND",
+    "invalid_profile": "QUARANTINED",
+    "provider_unavailable": "DEGRADED",
+    "recoverable_failure": "RECOVERING",
+    "fail_closed": true,
+    "other_connectors_continue": true
+  },
+  "credential_lifecycle": {
+    "first_unknown_identity_requires_trust_anchor": true,
+    "trusted_rotation_can_auto_promote": true,
+    "active_generation": "ACTIVE",
+    "previous_generation": "GRACE",
+    "revoked_generation": "REVOKED",
+    "raw_secret_persistence": false,
+    "restart_required_for_generation_change": false
+  },
+  "universal_client_fabric": {
+    "schema": "raios.universal-client-fabric.v1",
+    "canonical_alias": "raios",
+    "one_mcp": true,
+    "one_gateway": true,
+    "one_command_plane": true,
+    "new_gateway_per_client": false,
+    "new_mcp_per_client": false,
+    "client_identity_is_not_c1": true,
+    "client_identity_is_not_seat": true,
+    "raw_shell": false,
+    "transport_is_not_authority": true,
+    "clients": [
+      "CHATGPT_NATIVE",
+      "CLAUDE_NATIVE",
+      "KIMI_NATIVE",
+      "DEEPSEEK_NATIVE",
+      "GENERIC_AGENT"
+    ]
+  },
+  "external_gateway": {
+    "canonical_alias": "raios",
+    "local_upstream": "http://127.0.0.1:8788/mcp",
+    "endpoint_path": "/mcp",
+    "same_process": true,
+    "second_gateway": false,
+    "raw_shell": false
+  }
 }

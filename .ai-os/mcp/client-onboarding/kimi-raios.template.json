@@ -1,0 +1,11 @@
+{
+  "mcpServers": {
+    "raios": {
+      "url": "${RAIOS_MCP_URL}",
+      "bearerTokenEnvVar": "RAIOS_KIMI_TOKEN",
+      "enabled": true,
+      "startupTimeoutMs": 30000,
+      "toolTimeoutMs": 120000
+    }
+  }
+}
