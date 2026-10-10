@@ -414,37 +414,82 @@ function Test-RaiosOwnedLaunchCandidate($Owner,[int]$CandidatePid,[int]$ActivePi
 }
 
 function Resolve-RaiosCandidateLifecycle([int]$CandidatePid,[int]$ActivePid) {
+    $base = @{
+        retirement_attempted = $false
+        retirement_proven = $false
+        retirement_reason = $null
+        active_reverified = $false
+        handoff_safe = $false
+    }
     if ($CandidatePid -le 4) {
-        return [pscustomobject]@{state='NONE';relationship='NONE';retirement_attempted=$false;retirement_proven=$false;retirement_reason=$null}
+        return [pscustomobject]($base + @{state='NONE';relationship='NONE';handoff_safe=$true})
     }
     if ($CandidatePid -eq $ActivePid) {
-        return [pscustomobject]@{state='ACTIVE';relationship='ACTIVE_LISTENER';retirement_attempted=$false;retirement_proven=$false;retirement_reason=$null}
+        return [pscustomobject]($base + @{state='ACTIVE';relationship='ACTIVE_LISTENER';handoff_safe=$true;active_reverified=$true})
     }
     if (-not (Test-RaiosPidAlive $CandidatePid)) {
-        return [pscustomobject]@{state='SUPERSEDED';relationship='EXITED';retirement_attempted=$false;retirement_proven=$true;retirement_reason='PROCESS_EXITED'}
+        return [pscustomobject]($base + @{
+            state='SUPERSEDED';relationship='EXITED';retirement_proven=$true;
+            retirement_reason='PROCESS_EXITED';handoff_safe=$true;active_reverified=$true
+        })
     }
 
     $lineage = Get-RaiosParentLineageProof $ActivePid
     if (@($lineage.pids) -contains $CandidatePid) {
-        return [pscustomobject]@{state='ACTIVE_LINEAGE_PARENT';relationship='ACTIVE_LINEAGE_PARENT';retirement_attempted=$false;retirement_proven=$true;retirement_reason='REQUIRED_ACTIVE_LINEAGE'}
-    }
-    if (-not [bool]$lineage.complete) {
-        return [pscustomobject]@{state='ORPHAN';relationship='LINEAGE_UNPROVEN';retirement_attempted=$false;retirement_proven=$false;retirement_reason='FAIL_CLOSED_LINEAGE_UNPROVEN'}
+        return [pscustomobject]($base + @{
+            state='ACTIVE_LINEAGE_PARENT';relationship='ACTIVE_LINEAGE_PARENT';
+            retirement_proven=$true;retirement_reason='REQUIRED_ACTIVE_LINEAGE';
+            handoff_safe=$true;active_reverified=$true
+        })
     }
 
+    # Ownership proof is stronger than ancestry completeness for a process that
+    # this ensure generation itself launched, recorded, and no longer owns the
+    # listening socket. Do not leave a proven owned non-listener orphan merely
+    # because Windows process ancestry is partially unreadable.
     $owner = Read-RaiosOwnerManifest
-    if (-not (Test-RaiosOwnedLaunchCandidate $owner $CandidatePid $ActivePid)) {
-        return [pscustomobject]@{state='ORPHAN';relationship='UNPROVEN_PROCESS';retirement_attempted=$false;retirement_proven=$false;retirement_reason='OWNERSHIP_NOT_PROVEN'}
+    $ownedCandidate = [bool](Test-RaiosOwnedLaunchCandidate $owner $CandidatePid $ActivePid)
+    if (-not $ownedCandidate) {
+        if (-not [bool]$lineage.complete) {
+            return [pscustomobject]($base + @{
+                state='ORPHAN';relationship='LINEAGE_AND_OWNERSHIP_UNPROVEN';
+                retirement_reason='FAIL_CLOSED_LINEAGE_AND_OWNERSHIP_UNPROVEN'
+            })
+        }
+        return [pscustomobject]($base + @{
+            state='ORPHAN';relationship='UNPROVEN_PROCESS';
+            retirement_reason='OWNERSHIP_NOT_PROVEN'
+        })
+    }
+
+    $activeInfoBefore = Get-RaiosProcessInfo $ActivePid
+    $listenersBefore = @(Get-RaiosListenPids $Port)
+    $healthBefore = Get-RaiosMcpHealth $HealthUrl 2
+    $activeProofBefore = [bool](
+        $activeInfoBefore -and
+        $listenersBefore.Count -eq 1 -and
+        [int]$listenersBefore[0] -eq $ActivePid -and
+        (Test-RaiosLaunchIdentity $activeInfoBefore $ActivePid $Port) -and
+        (Test-RaiosMcpHealthy $healthBefore)
+    )
+    if (-not $activeProofBefore) {
+        return [pscustomobject]($base + @{
+            state='ORPHAN';relationship='OWNED_NON_LISTENER_ACTIVE_PROOF_FAILED';
+            retirement_reason='ACTIVE_LISTENER_PROOF_FAILED_BEFORE_RETIREMENT'
+        })
     }
 
     $event = [ordered]@{
-        schema = 'raios.mcp-generation-retirement.v1'
+        schema = 'raios.mcp-generation-retirement.v2'
         observed_at = [DateTimeOffset]::UtcNow.ToString('o')
         authority = 'RAIOS-C5-SCM'
         canonical_head = [string]$env:RAIOS_CANONICAL_HEAD
         candidate_pid = $CandidatePid
         active_pid = $ActivePid
-        action = 'RETIRE_PROVEN_NON_LISTENER_CANDIDATE'
+        lineage_complete = [bool]$lineage.complete
+        ownership_proven = $true
+        active_proven_before = $true
+        action = 'RETIRE_PROVEN_OWNED_NON_LISTENER_CANDIDATE'
         result = 'STARTED'
     }
     try {
@@ -456,16 +501,55 @@ function Resolve-RaiosCandidateLifecycle([int]$CandidatePid,[int]$ActivePid) {
         if (Test-RaiosPidAlive $CandidatePid) {
             $event.result = 'FAILED_STILL_ALIVE'
             Write-RaiosBoundedLifecycle -Value $event
-            return [pscustomobject]@{state='ORPHAN';relationship='OWNED_NON_LISTENER';retirement_attempted=$true;retirement_proven=$false;retirement_reason='RETIREMENT_FAILED_STILL_ALIVE'}
+            return [pscustomobject]($base + @{
+                state='ORPHAN';relationship='OWNED_NON_LISTENER';
+                retirement_attempted=$true;retirement_reason='RETIREMENT_FAILED_STILL_ALIVE'
+            })
         }
+
+        $activeInfoAfter = Get-RaiosProcessInfo $ActivePid
+        $listenersAfter = @(Get-RaiosListenPids $Port)
+        $healthAfter = Get-RaiosMcpHealth $HealthUrl 2
+        $activeProofAfter = [bool](
+            $activeInfoAfter -and
+            $listenersAfter.Count -eq 1 -and
+            [int]$listenersAfter[0] -eq $ActivePid -and
+            (Test-RaiosLaunchIdentity $activeInfoAfter $ActivePid $Port) -and
+            (Test-RaiosMcpHealthy $healthAfter)
+        )
+        $event.active_proven_after = $activeProofAfter
+        if (-not $activeProofAfter) {
+            $event.result = 'RETIRED_ACTIVE_REVERIFY_FAILED'
+            Write-RaiosBoundedLifecycle -Value $event
+            return [pscustomobject]($base + @{
+                state='RETIRED';relationship='OWNED_NON_LISTENER_RETIRED_ACTIVE_UNVERIFIED';
+                retirement_attempted=$true;retirement_proven=$true;
+                retirement_reason='AUTO_RETIRED_BUT_ACTIVE_REVERIFY_FAILED';
+                active_reverified=$false;handoff_safe=$false
+            })
+        }
+
         $event.result = 'RETIRED'
         Write-RaiosBoundedLifecycle -Value $event
-        return [pscustomobject]@{state='RETIRED';relationship='OWNED_NON_LISTENER_RETIRED';retirement_attempted=$true;retirement_proven=$true;retirement_reason='AUTO_RETIRED_PROVEN_ORPHAN'}
+        $relationship = $(if ([bool]$lineage.complete) {
+            'OWNED_NON_LISTENER_RETIRED'
+        } else {
+            'OWNED_NON_LISTENER_RETIRED_WITH_INCOMPLETE_LINEAGE'
+        })
+        return [pscustomobject]($base + @{
+            state='RETIRED';relationship=$relationship;
+            retirement_attempted=$true;retirement_proven=$true;
+            retirement_reason='AUTO_RETIRED_PROVEN_ORPHAN';
+            active_reverified=$true;handoff_safe=$true
+        })
     } catch {
         $event.result = 'FAILED_EXCEPTION'
         $event.error_type = $_.Exception.GetType().Name
         Write-RaiosBoundedLifecycle -Value $event
-        return [pscustomobject]@{state='ORPHAN';relationship='OWNED_NON_LISTENER';retirement_attempted=$true;retirement_proven=$false;retirement_reason='RETIREMENT_EXCEPTION'}
+        return [pscustomobject]($base + @{
+            state='ORPHAN';relationship='OWNED_NON_LISTENER';
+            retirement_attempted=$true;retirement_reason='RETIREMENT_EXCEPTION'
+        })
     }
 }
 
@@ -520,11 +604,13 @@ function Write-RaiosGenerationHandoff([int]$CandidatePid,[int]$ActivePid,[string
     $serviceGenerationMatch = [bool]($ownerServiceGeneration -and $serviceGeneration -and $ownerServiceGeneration -eq $serviceGeneration)
     $activeListenerMatch = [bool]($listeners.Count -eq 1 -and [int]$listeners[0] -eq $ActivePid)
     $duplicateMcp = [bool]($listeners.Count -gt 1)
+    $candidateHandoffSafe = [bool]$candidateResolution.handoff_safe
     $handoffComplete = [bool](
         $activeAlive -and
         $activeListenerMatch -and
         -not $duplicateMcp -and
         $orphanPids.Count -eq 0 -and
+        $candidateHandoffSafe -and
         $ownerHeadMatch -and
         $serviceGenerationMatch
     )
@@ -548,6 +634,8 @@ function Write-RaiosGenerationHandoff([int]$CandidatePid,[int]$ActivePid,[string
         candidate_retirement_attempted = [bool]$candidateResolution.retirement_attempted
         candidate_retirement_proven = [bool]$candidateResolution.retirement_proven
         candidate_retirement_reason = $candidateResolution.retirement_reason
+        candidate_active_reverified = [bool]$candidateResolution.active_reverified
+        candidate_handoff_safe = [bool]$candidateResolution.handoff_safe
         repair_applied = [bool]$candidateResolution.retirement_attempted
         active_pid = $ActivePid
         active_generation_id = $ownerGeneration
