@@ -21,7 +21,11 @@ class MessageWorkerTests(unittest.TestCase):
             first=worker.scan_once();second=worker.scan_once()
             mid=msg["message_id"]
             self.assertEqual(first["delivered"],1)
+            self.assertEqual(first["pending_actor_ack"],1)
             self.assertEqual(second["delivered"],0)
+            state=json.loads((worker.state/f"{mid}.json").read_text())
+            self.assertEqual(state["status"],"DELIVERED_PENDING_ACTOR_ACK")
+            self.assertFalse(state["actor_ack"])
             registry=json.loads((worker.fabric/"WORKER-REGISTRY.json").read_text())
             self.assertEqual(registry["workers"][0]["owner"],"RAIOS_SYSTEM")
             self.assertFalse(registry["workers"][0]["permanent_lock"])
@@ -91,7 +95,7 @@ class MessageWorkerTests(unittest.TestCase):
             result=worker.scan_once()
             state=json.loads((worker.state/f"{mid}.json").read_text())
             self.assertEqual(result["dead_letter"],0)
-            self.assertEqual(state["status"],"DELIVERED")
+            self.assertEqual(state["status"],"ACTOR_ACK")
             self.assertTrue(state["historical_ack"])
             self.assertFalse((worker.dead/path.name).exists())
         finally:td.cleanup()
@@ -107,18 +111,29 @@ class MessageWorkerTests(unittest.TestCase):
             self.assertTrue((worker.dead/path.name).exists())
         finally:td.cleanup()
 
-    def test_delivered_terminal_index_skips_reloading_old_state_after_restart(self):
+    def test_actor_ack_terminal_index_skips_reloading_after_restart(self):
         td,worker=self.make_worker()
         try:
             msg=worker.enqueue("C1",["C2"],"hello")
             worker.scan_once()
             mid=msg["message_id"]
+            self.assertFalse(worker.terminal_index.exists())
+            receipt=worker.receipts/f"{mid}.C2.actor.ack.receipt.json"
+            receipt.write_text(json.dumps({
+                "schema":"raios.actor-ack.v1","message_id":mid,
+                "actor":"C2","target":"C2","status":"ACKNOWLEDGED",
+                "at":"2026-10-10T00:00:00Z"
+            }),encoding="utf-8")
+            acked=worker.scan_once()
+            self.assertEqual(acked["actor_ack"],1)
             self.assertTrue(worker.terminal_index.exists())
+            index=json.loads(worker.terminal_index.read_text())
+            self.assertEqual(index["terminality_source"],"ACTOR_ACK_OR_COMPLETION")
             restarted=MessageWorker(worker.repo,worker.runtime,poll_seconds=.01,max_attempts=3)
             original=restarted._attempts
             def guarded(message_id):
                 if message_id==mid:
-                    raise AssertionError("delivered state should be skipped by terminal index")
+                    raise AssertionError("actor-acked state should be skipped by terminal index")
                 return original(message_id)
             restarted._attempts=guarded
             result=restarted.scan_once()
@@ -176,7 +191,78 @@ class MessageWorkerTests(unittest.TestCase):
             third=worker.scan_once()
             recovered=json.loads(state_path.read_text())
             self.assertEqual(third["historical_ack_recovered"],1)
-            self.assertEqual(recovered["status"],"DELIVERED")
+            self.assertEqual(recovered["status"],"ACTOR_ACK")
+        finally:td.cleanup()
+
+    def test_delivery_ack_is_not_actor_ack_or_terminal(self):
+        td,worker=self.make_worker()
+        try:
+            msg=worker.enqueue("C1",["C2"],"needs actor ack")
+            result=worker.scan_once()
+            mid=msg["message_id"]
+            state=json.loads((worker.state/f"{mid}.json").read_text())
+            delivery_ack=json.loads((worker.receipts/f"{mid}.C2.delivery.ack.receipt.json").read_text())
+            self.assertEqual(result["delivered"],1)
+            self.assertEqual(delivery_ack["ack_type"],"DELIVERY_ACK")
+            self.assertEqual(state["status"],"DELIVERED_PENDING_ACTOR_ACK")
+            self.assertNotIn(mid,worker._delivered_terminal)
+            self.assertFalse(worker.terminal_index.exists())
+        finally:td.cleanup()
+
+    def test_multitarget_requires_all_actor_acks_before_terminality(self):
+        td,worker=self.make_worker()
+        try:
+            msg=worker.enqueue("C1",["C2","C3"],"all must ack")
+            worker.scan_once();mid=msg["message_id"]
+            (worker.receipts/f"{mid}.C2.actor.ack.receipt.json").write_text(json.dumps({
+                "schema":"raios.actor-ack.v1","message_id":mid,
+                "actor":"C2","target":"C2","status":"ACKNOWLEDGED",
+                "at":"2026-10-10T00:00:00Z"
+            }),encoding="utf-8")
+            partial=worker.scan_once()
+            state=json.loads((worker.state/f"{mid}.json").read_text())
+            self.assertEqual(partial["actor_ack"],0)
+            self.assertEqual(state["status"],"DELIVERED_PENDING_ACTOR_ACK")
+            (worker.receipts/f"{mid}.C3.actor.ack.receipt.json").write_text(json.dumps({
+                "schema":"raios.actor-ack.v1","message_id":mid,
+                "actor":"C3","target":"C3","status":"ACKNOWLEDGED",
+                "at":"2026-10-10T00:00:01Z"
+            }),encoding="utf-8")
+            complete=worker.scan_once()
+            state=json.loads((worker.state/f"{mid}.json").read_text())
+            self.assertEqual(complete["actor_ack"],1)
+            self.assertEqual(state["status"],"ACTOR_ACK")
+            self.assertIn(mid,worker._delivered_terminal)
+        finally:td.cleanup()
+
+    def test_pending_actor_ack_redelivery_is_bounded(self):
+        td,worker=self.make_worker()
+        try:
+            worker.ack_redelivery_seconds=0
+            worker.max_ack_redeliveries=1
+            msg=worker.enqueue("C1",["C2"],"bounded redelivery")
+            worker.scan_once();mid=msg["message_id"]
+            second=worker.scan_once()
+            self.assertEqual(second["redelivered"],1)
+            third=worker.scan_once()
+            state=json.loads((worker.state/f"{mid}.json").read_text())
+            self.assertEqual(third["actor_ack_blocked"],1)
+            self.assertEqual(state["status"],"BLOCKED_ACTOR_ACK")
+            self.assertEqual(state["ack_redelivery_count"],1)
+            self.assertNotIn(mid,worker._delivered_terminal)
+        finally:td.cleanup()
+
+    def test_legacy_delivery_terminal_index_is_not_trusted(self):
+        td,worker=self.make_worker()
+        try:
+            mid="MSG-legacy-terminal"
+            worker.terminal_index.parent.mkdir(parents=True,exist_ok=True)
+            worker.terminal_index.write_text(json.dumps({
+                "schema":"raios.message-worker-delivered-terminal-index.v1",
+                "message_ids":[mid]
+            }),encoding="utf-8")
+            restarted=MessageWorker(worker.repo,worker.runtime,poll_seconds=.01,max_attempts=3)
+            self.assertNotIn(mid,restarted._delivered_terminal)
         finally:td.cleanup()
 
     def test_long_workflow_keeps_heartbeat_alive_while_run_cycle_is_blocked(self):
