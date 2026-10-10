@@ -104,6 +104,7 @@ from pathlib import Path as _RaiosPath
 import base64 as _raios_base64
 import hashlib as _raios_hashlib
 import os as _raios_os
+import re
 import subprocess as _raios_subprocess
 
 _RAIOS_SCOPED_REPO_CAPABILITY = "engineering.scoped_repo_task"
@@ -139,6 +140,64 @@ def _raios_rel(root: _RaiosPath, raw: str) -> tuple[str, _RaiosPath]:
         raise ValueError("SECRET_PATH_DENIED")
     return rel, p
 
+
+def _raios_git_identity(root: _RaiosPath) -> tuple[str, str]:
+    """Read canonical branch + HEAD from Git metadata without spawning Git."""
+    git_dir = root / ".git"
+
+    if git_dir.is_file():
+        meta = git_dir.read_text(encoding="utf-8").strip()
+        if not meta.lower().startswith("gitdir:"):
+            raise RuntimeError("GIT_METADATA_INVALID")
+        target = meta.split(":", 1)[1].strip()
+        git_dir = (root / target).resolve()
+
+    raw = (git_dir / "HEAD").read_text(
+        encoding="utf-8"
+    ).strip()
+
+    if not raw.startswith("ref:"):
+        if re.fullmatch(r"[0-9a-fA-F]{40}", raw):
+            return "", raw.lower()
+        raise RuntimeError("GIT_HEAD_INVALID")
+
+    ref = raw.split(":", 1)[1].strip()
+
+    if (
+        not ref.startswith("refs/heads/")
+        or ".." in ref
+    ):
+        raise RuntimeError("GIT_REF_INVALID")
+
+    branch = ref[len("refs/heads/"):]
+
+    ref_path = git_dir.joinpath(*ref.split("/"))
+
+    if ref_path.is_file():
+        head = ref_path.read_text(
+            encoding="utf-8"
+        ).strip()
+    else:
+        head = ""
+
+        packed = git_dir / "packed-refs"
+
+        if packed.is_file():
+            for line in packed.read_text(
+                encoding="utf-8"
+            ).splitlines():
+                if not line or line.startswith(("#", "^")):
+                    continue
+                parts = line.split(" ", 1)
+                if len(parts) == 2 and parts[1].strip() == ref:
+                    head = parts[0].strip()
+                    break
+
+    if not re.fullmatch(r"[0-9a-fA-F]{40}", head):
+        raise RuntimeError("GIT_HEAD_INVALID")
+
+    return branch, head.lower()
+
 def _raios_git(root: _RaiosPath, args: list[str], timeout: int = 60) -> str:
     cp = _raios_subprocess.run(
         ["git", "-C", str(root), *args],
@@ -155,10 +214,9 @@ def _raios_git(root: _RaiosPath, args: list[str], timeout: int = 60) -> str:
 def _raios_scoped_repo_task(payload: dict | None = None) -> dict:
     p = dict(payload or {})
     root = _raios_repo_root(p)
-    branch = _raios_git(root, ["branch", "--show-current"])
+    branch, head_before = _raios_git_identity(root)
     if branch != "ai-evolution-202608051809":
         raise RuntimeError("WRONG_BRANCH::" + branch)
-    head_before = _raios_git(root, ["rev-parse", "HEAD"])
     expected_head = str(p.get("expected_head") or "").strip()
     if expected_head and expected_head != head_before:
         raise RuntimeError("STALE_HEAD")
@@ -259,7 +317,7 @@ def _raios_scoped_repo_task(payload: dict | None = None) -> dict:
         if not msg:
             raise ValueError("COMMIT_MESSAGE_REQUIRED")
         _raios_git(root, ["commit", "-m", msg, "--", *allowed], timeout=120)
-        head_after = _raios_git(root, ["rev-parse", "HEAD"])
+        _, head_after = _raios_git_identity(root)
         _raios_git(root, ["push", "origin", "ai-evolution-202608051809"], timeout=180)
         remote = _raios_git(root, ["ls-remote", "origin", "refs/heads/ai-evolution-202608051809"], timeout=60)
         remote_sha = remote.split()[0] if remote else ""
@@ -273,7 +331,7 @@ def _raios_scoped_repo_task(payload: dict | None = None) -> dict:
             "STAGED_PATHS": staged_paths,
         })
     else:
-        result["HEAD_AFTER"] = _raios_git(root, ["rev-parse", "HEAD"])
+        result["HEAD_AFTER"] = _raios_git_identity(root)[1]
 
     return result
 
