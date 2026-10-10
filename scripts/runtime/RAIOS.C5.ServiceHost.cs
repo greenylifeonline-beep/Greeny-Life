@@ -70,7 +70,7 @@ namespace RAIOS.ControlPlane
         public C5Service()
         {
             ServiceName = ServiceNameConst;
-            CanStop = false;
+            CanStop = true;
             CanShutdown = true;
             AutoLog = false;
         }
