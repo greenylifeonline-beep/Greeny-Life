@@ -479,10 +479,17 @@ class Gateway:
         state = self._external_rebind_state()
         now = datetime.now(timezone.utc)
 
-        contract = load_json(
-            self.root / ".ai-os" / "mcp" / "EXTERNAL-CONNECTOR-CONTRACT.json",
-            {},
-        )
+        try:
+            contract = load_json(
+                self.root / ".ai-os" / "mcp" / "EXTERNAL-CONNECTOR-CONTRACT.json",
+                {},
+            )
+        except (OSError, json.JSONDecodeError, UnicodeError) as err:
+            raise GatewayError(
+                "CONNECTOR_CONTRACT_INVALID",
+                "external connector contract is unreadable",
+                503,
+            ) from err
 
         profiles = (
             contract.get("external_principal_profiles")
@@ -613,18 +620,32 @@ class Gateway:
 
         state["pending"] = pending
         state["updated_at"] = now
-        write_json_atomic(path, state)
+        try:
+            write_json_atomic(path, state)
+        except OSError as err:
+            raise GatewayError(
+                "CONNECTOR_REBIND_STATE_UNAVAILABLE",
+                "connector rebind state could not be persisted",
+                503,
+            ) from err
 
-        append_jsonl(
-            self.audit_path,
-            {
-                "ts": now,
-                "event": "EXTERNAL_CONNECTOR_PENDING_REBIND",
-                "fingerprint_sha256": digest,
-                "secret_material_persisted": False,
-                "gl005_proven": False,
-            },
-        )
+        try:
+            append_jsonl(
+                self.audit_path,
+                {
+                    "ts": now,
+                    "event": "EXTERNAL_CONNECTOR_PENDING_REBIND",
+                    "fingerprint_sha256": digest,
+                    "secret_material_persisted": False,
+                    "gl005_proven": False,
+                },
+            )
+        except OSError as err:
+            raise GatewayError(
+                "AUDIT_UNAVAILABLE",
+                "connector rebind audit could not be written",
+                503,
+            ) from err
 
 
     def authenticate(self, token: str | None) -> Actor:
