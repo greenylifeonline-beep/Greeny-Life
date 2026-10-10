@@ -7,6 +7,7 @@ import pytest
 ROOT = Path(__file__).resolve().parents[2]
 sys.path.insert(0, str(ROOT / "scripts/ai-os"))
 
+from raios_mcp import gateway as gateway_module, server  # noqa: E402
 from raios_mcp.gateway import Gateway, GatewayError  # noqa: E402
 
 
@@ -214,3 +215,57 @@ def test_external_connector_health_is_non_secret_and_counts_state(tmp_path):
     }
     assert "fingerprint" not in json.dumps(health).lower()
     assert "delegate" not in json.dumps(health).lower()
+
+
+def test_invalid_connector_state_does_not_escape_as_jsonrpc_internal_error(tmp_path):
+    path = tmp_path / ".ai-os" / "mcp" / "EXTERNAL-CONNECTORS.json"
+    path.parent.mkdir(parents=True, exist_ok=True)
+    path.write_text("{broken", encoding="utf-8")
+    gw = gateway(tmp_path)
+
+    reply = server.handle_rpc(
+        gw,
+        "presented-token",
+        {
+            "jsonrpc": "2.0",
+            "id": 1,
+            "method": "tools/call",
+            "params": {"name": "get_head", "arguments": {}},
+        },
+    )
+
+    assert reply["error"]["code"] == -32001
+    assert "CONNECTOR_STATE_INVALID" in reply["error"]["message"]
+    assert reply["error"]["code"] != -32603
+
+
+def test_pending_rebind_state_write_failure_is_structured(tmp_path, monkeypatch):
+    write_state(tmp_path, {"bindings": [], "pending": []})
+    write_contract(tmp_path, {})
+
+    def broken_write(*args, **kwargs):
+        raise OSError("do-not-leak-path-details")
+
+    monkeypatch.setattr(gateway_module, "write_json_atomic", broken_write)
+
+    with pytest.raises(GatewayError) as caught:
+        gateway(tmp_path).authenticate("new-external-token")
+
+    assert caught.value.code == "CONNECTOR_REBIND_STATE_UNAVAILABLE"
+    assert "do-not-leak" not in caught.value.message
+
+
+def test_pending_rebind_audit_failure_is_structured(tmp_path, monkeypatch):
+    write_state(tmp_path, {"bindings": [], "pending": []})
+    write_contract(tmp_path, {})
+
+    def broken_audit(*args, **kwargs):
+        raise OSError("do-not-leak-audit-details")
+
+    monkeypatch.setattr(gateway_module, "append_jsonl", broken_audit)
+
+    with pytest.raises(GatewayError) as caught:
+        gateway(tmp_path).authenticate("new-external-token")
+
+    assert caught.value.code == "AUDIT_UNAVAILABLE"
+    assert "do-not-leak" not in caught.value.message
