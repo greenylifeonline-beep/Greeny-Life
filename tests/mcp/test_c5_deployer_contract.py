@@ -94,23 +94,43 @@ def test_c5_deployer_has_no_case_only_assignment_collisions():
     )
 
 
-def test_c5_deployer_parses_when_powershell_is_available():
+def test_c5_deployer_parses_when_powershell_is_available(tmp_path):
     powershell = shutil.which("powershell.exe") or shutil.which("pwsh")
     if not powershell:
         pytest.skip("PowerShell is not available on this test host")
 
-    command = (
-        "$ErrorActionPreference='Stop';"
-        "$tokens=$null;$errors=$null;"
-        "[Management.Automation.Language.Parser]::ParseFile("
-        "$args[0],[ref]$tokens,[ref]$errors)|Out-Null;"
-        "if($errors.Count){"
-        "$errors|ForEach-Object{[Console]::Error.WriteLine($_.Message)};"
-        "exit 1"
-        "}"
+    driver = tmp_path / "parse-c5-deployer.ps1"
+    driver.write_text(
+        """param([string]$Path)
+$ErrorActionPreference='Stop'
+$tokens=$null
+$errors=$null
+[Management.Automation.Language.Parser]::ParseFile(
+    $Path,
+    [ref]$tokens,
+    [ref]$errors
+) | Out-Null
+if($errors.Count){
+    $errors | ForEach-Object {
+        [Console]::Error.WriteLine($_.Message)
+    }
+    exit 1
+}
+exit 0
+""",
+        encoding="utf-8",
     )
     proc = subprocess.run(
-        [powershell, "-NoLogo", "-NoProfile", "-NonInteractive", "-Command", command, str(DEPLOY)],
+        [
+            powershell,
+            "-NoLogo",
+            "-NoProfile",
+            "-NonInteractive",
+            "-File",
+            str(driver),
+            "-Path",
+            str(DEPLOY),
+        ],
         capture_output=True,
         text=True,
         timeout=30,
