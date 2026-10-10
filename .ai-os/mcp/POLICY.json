@@ -37,7 +37,10 @@
     "SON_MUST_NOT_USURP_FATHER",
     "PRINTED_PASS_NE_EVIDENCE",
     "FIVE_SEATS_BIND_SAME_LAWS",
-    "ELEVATION_REQUEST_NE_SELF_PROMOTE"
+    "ELEVATION_REQUEST_NE_SELF_PROMOTE",
+    "LIVE_RUNTIME_TRUTH_PRECEDES_SOURCE_PROJECTIONS",
+    "REMOTE_COMMIT_NE_LIVE_DEPLOYMENT",
+    "SOURCE_CHANGE_REQUIRES_LIVE_VERIFICATION"
   ],
   "repository": "greenylifeonline-beep/Greeny-Life",
   "branch": "v9-neurolingua-semantic-kernel",
@@ -272,5 +275,25 @@
     ],
     "raw_shell": false,
     "notes": "External connectivity must terminate at this same Universal MCP. A tunnel may carry HTTPS/MCP traffic but never becomes a control plane or capability authority."
+  },
+  "truth_precedence": {
+    "schema": "raios.truth-precedence.v1",
+    "order": [
+      "LIVE_RUNTIME_TRUTH",
+      "LOCAL_CANONICAL_REPOSITORY",
+      "GITHUB_MIRROR_HISTORY"
+    ],
+    "local_canonical_root": "C:\\Users\\Ghanam\\Documents\\Codex\\Greeny-Life",
+    "local_canonical_branch": "ai-evolution-202608051809",
+    "remote_repository": "greenylifeonline-beep/Greeny-Life",
+    "remote_role": "MIRROR_HISTORY_COLLABORATION_RECOVERY",
+    "remote_commit_is_live_proof": false,
+    "source_side_change_requires_live_verification": true,
+    "live_verification_requires": [
+      "runtime_health",
+      "owner_identity",
+      "canonical_head_match",
+      "receipt_or_equivalent_live_evidence"
+    ]
   }
 }
