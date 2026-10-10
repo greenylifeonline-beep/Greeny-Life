@@ -375,21 +375,50 @@ class Gateway:
 
     def _external_rebind_state(self) -> dict:
         path = self.root / EXTERNAL_REBIND_REL
-        state = load_json(
-            path,
-            {
-                "schema": "raios.external-connectors.v1",
-                "version": 1,
-                "bindings": [],
-                "pending": [],
-            },
-        )
+        default = {
+            "schema": "raios.external-connectors.v1",
+            "version": 1,
+            "bindings": [],
+            "pending": [],
+        }
+        try:
+            state = load_json(path, default)
+        except (OSError, json.JSONDecodeError, UnicodeError) as err:
+            raise GatewayError(
+                "CONNECTOR_STATE_INVALID",
+                "external connector state is unreadable; preserve runtime state and reconcile it",
+                503,
+            ) from err
         if not isinstance(state, dict):
-            state = {}
+            raise GatewayError(
+                "CONNECTOR_STATE_INVALID",
+                "external connector state must be an object",
+                503,
+            )
+
+        bindings = state.get("bindings")
+        pending = state.get("pending")
+
+        if bindings is None:
+            bindings = []
+        if pending is None:
+            pending = []
+
+        if not isinstance(bindings, list) or not isinstance(pending, list):
+            raise GatewayError(
+                "CONNECTOR_STATE_INVALID",
+                "external connector bindings and pending state must be arrays",
+                503,
+            )
+
+        # Historical/corrupt non-object rows must not take down every connector.
+        # Ignore only malformed rows in-memory; never rewrite or destroy runtime
+        # state during authentication.
+        state = dict(state)
+        state["bindings"] = [row for row in bindings if isinstance(row, dict)]
+        state["pending"] = [row for row in pending if isinstance(row, dict)]
         state.setdefault("schema", "raios.external-connectors.v1")
         state.setdefault("version", 1)
-        state.setdefault("bindings", [])
-        state.setdefault("pending", [])
         return state
 
     def _actor_from_external_binding(self, digest: str) -> Actor | None:
@@ -406,6 +435,12 @@ class Gateway:
             if isinstance(contract, dict)
             else {}
         ) or {}
+        if not isinstance(profiles, dict):
+            raise GatewayError(
+                "CONNECTOR_CONTRACT_INVALID",
+                "external principal profiles must be an object",
+                503,
+            )
 
         for row in list(state.get("bindings") or []):
             if str(row.get("fingerprint_sha256") or "") != digest:
