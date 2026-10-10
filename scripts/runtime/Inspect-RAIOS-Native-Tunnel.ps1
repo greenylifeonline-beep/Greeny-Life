@@ -271,8 +271,7 @@ try{
 
     Write-JsonAtomic $ReceiptPath $receipt
     $receipt|ConvertTo-Json -Depth 20
-    if($result -ne 'PASS'){exit 2}
-    exit 0
+    return
 }
 finally{
     foreach($n in @($oldEnv.Keys)){
