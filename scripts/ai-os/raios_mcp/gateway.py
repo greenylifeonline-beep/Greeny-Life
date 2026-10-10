@@ -98,7 +98,7 @@ def parse_dt(value: str) -> datetime:
 def load_json(path: Path, default: Any) -> Any:
     if not path.exists():
         return default
-    return json.loads(path.read_text(encoding="utf-8"))
+    return json.loads(path.read_text(encoding="utf-8-sig"))
 
 
 
@@ -118,7 +118,7 @@ def write_json_atomic(path: Path, payload: Any) -> None:
 def load_jsonl(path: Path) -> list[dict]:
     if not path.exists():
         return []
-    return [json.loads(raw) for raw in path.read_text(encoding="utf-8").splitlines() if raw.strip()]
+    return [json.loads(raw) for raw in path.read_text(encoding="utf-8-sig").splitlines() if raw.strip()]
 
 
 def append_jsonl(path: Path, rec: dict) -> None:
