@@ -419,6 +419,8 @@ class Handler(BaseHTTPRequestHandler):
                     "generation_candidate_retirement_attempted": generation_handoff.get("candidate_retirement_attempted", False),
                     "generation_candidate_retirement_proven": generation_handoff.get("candidate_retirement_proven", False),
                     "generation_candidate_retirement_reason": generation_handoff.get("candidate_retirement_reason"),
+                    "generation_candidate_active_reverified": generation_handoff.get("candidate_active_reverified", False),
+                    "generation_candidate_handoff_safe": generation_handoff.get("candidate_handoff_safe", False),
                     "generation_repair_applied": generation_handoff.get("repair_applied", False),
                     "generation_previous_pid": generation_handoff.get("previous_pid"),
                     "mcp_process_pid": os.getpid(),
