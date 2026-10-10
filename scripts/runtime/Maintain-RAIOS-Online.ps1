@@ -182,6 +182,9 @@ function Test-RaiosUniversalMcpHealth($Health,[string]$ExpectedHead='') {
   if($Health.PSObject.Properties.Name -notcontains 'second_gateway' -or $Health.second_gateway -ne $false){return $false}
   if($Health.PSObject.Properties.Name -notcontains 'duplicate_mcp' -or $Health.duplicate_mcp -ne $false){return $false}
   if($Health.PSObject.Properties.Name -notcontains 'raw_shell' -or $Health.raw_shell -ne $false){return $false}
+  if($Health.PSObject.Properties.Name -notcontains 'generation_handoff_complete' -or $Health.generation_handoff_complete -ne $true){return $false}
+  if($Health.PSObject.Properties.Name -notcontains 'generation_singleton_verdict' -or [string]$Health.generation_singleton_verdict -ne 'PASS'){return $false}
+  if($Health.PSObject.Properties.Name -notcontains 'generation_orphan_count' -or [int]$Health.generation_orphan_count -ne 0){return $false}
   if($Health.PSObject.Properties.Name -contains 'service' -and [string]$Health.service -ne 'raios-universal-mcp'){return $false}
   if($ExpectedHead){
    if($Health.PSObject.Properties.Name -notcontains 'head' -or [string]$Health.head -ne $ExpectedHead){return $false}
