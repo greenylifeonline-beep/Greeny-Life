@@ -1125,7 +1125,8 @@ class Gateway:
                 "generation_candidate_retirement_proven": generation_handoff.get("candidate_retirement_proven", False),
                 "generation_candidate_retirement_reason": generation_handoff.get("candidate_retirement_reason"),
                 "generation_repair_applied": generation_handoff.get("repair_applied", False),
-                "generation_duplicate_mcp": generation_handoff.get("duplicate_mcp"),
+                "duplicate_mcp": bool(generation_handoff.get("duplicate_mcp") is True),
+                "generation_duplicate_mcp": bool(generation_handoff.get("duplicate_mcp") is True),
             }
         )
 
