@@ -93,6 +93,19 @@ function Write-MaintenanceIntent([string]$Reason,[int]$ValidityMinutes=10){
  Move-Item -LiteralPath $tmp -Destination $MaintenanceIntent -Force
 }
 
+function Get-ServiceExecutablePath([string]$PathName){
+ $raw=[Environment]::ExpandEnvironmentVariables(([string]$PathName).Trim())
+ if([string]::IsNullOrWhiteSpace($raw)){return ''}
+ if($raw.StartsWith('"')){
+  $end=$raw.IndexOf('"',1)
+  if($end -gt 1){return $raw.Substring(1,$end-1)}
+ }
+ if(Test-Path -LiteralPath $raw){return $raw}
+ $exeIndex=$raw.IndexOf('.exe',[StringComparison]::OrdinalIgnoreCase)
+ if($exeIndex -ge 0){return $raw.Substring(0,$exeIndex+4).Trim().Trim('"')}
+ return $raw.Trim('"')
+}
+
 function Stop-RaiosC5ForDeploy([int]$ExpectedPid,[string]$ExpectedPath){
  try{
   Stop-Service RAIOS-C5 -Force -ErrorAction Stop
@@ -105,7 +118,7 @@ function Stop-RaiosC5ForDeploy([int]$ExpectedPid,[string]$ExpectedPath){
   if([int]$svc.ProcessId -ne $ExpectedPid -or $ExpectedPid -le 4){
    throw ('C5_BOOTSTRAP_STOP_PID_MISMATCH::expected='+$ExpectedPid+'::observed='+[int]$svc.ProcessId)
   }
-  $expectedExe=([string]$ExpectedPath).Trim().Trim('"')
+  $expectedExe=Get-ServiceExecutablePath $ExpectedPath
   $proc=Get-CimInstance Win32_Process -Filter ('ProcessId='+$ExpectedPid) -ErrorAction Stop
   if(-not $proc){throw 'C5_BOOTSTRAP_STOP_PROCESS_MISSING'}
   $observedExe=[string]$proc.ExecutablePath
