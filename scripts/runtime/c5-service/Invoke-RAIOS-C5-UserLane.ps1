@@ -40,7 +40,16 @@ function Test-TcpFast([int]$Port){
 function Test-NativeMcpTunnelReady {
  try{
   $m=Invoke-RestMethod -Uri 'http://127.0.0.1:8788/health' -TimeoutSec 3
-  if(-not($m.ok -eq $true -and [int]$m.tool_count -eq 8 -and $m.second_gateway -eq $false)){return $false}
+  $required=@('get_head','read_board','read_inbox','read_receipt','get_diff','post_opinion','send_packet','ack_packet','execute_scoped_task')
+  $tools=@($m.tools)
+  if($m.ok -ne $true){return $false}
+  if([int]$m.tool_count -ne 9 -or $tools.Count -ne 9){return $false}
+  foreach($name in $required){if($tools -notcontains $name){return $false}}
+  if($m.execute_scoped_task -ne $true -or $m.raw_shell -ne $false){return $false}
+  if($m.second_gateway -ne $false -or $m.duplicate_mcp -ne $false){return $false}
+  if($m.generation_handoff_complete -ne $true){return $false}
+  if([string]$m.generation_singleton_verdict -ne 'PASS'){return $false}
+  if([int]$m.generation_orphan_count -ne 0){return $false}
  }catch{return $false}
  if(-not(Test-Path -LiteralPath $NativeTunnelHealthFile)){return $false}
  try{
