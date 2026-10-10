@@ -10,6 +10,7 @@ import time
 import uuid
 import signal
 import threading
+import traceback
 from http.server import BaseHTTPRequestHandler, ThreadingHTTPServer
 from pathlib import Path
 from urllib.parse import urlparse
@@ -111,10 +112,51 @@ def _log_rpc_failure(err: Exception) -> str:
     """Correlate failures without logging tokens, arguments, file contents, or stderr bodies."""
     error_id = uuid.uuid4().hex
     cause = err.__cause__ or err
+    frame_file = ""
+    frame_line = 0
+    frame_function = ""
     try:
-        sys.stderr.write(f"mcp-rpc: error_id={error_id} exception={type(cause).__name__}\n")
+        frames = traceback.extract_tb(cause.__traceback__ or err.__traceback__)
+        if frames:
+            frame = frames[-1]
+            try:
+                frame_file = str(Path(frame.filename).resolve().relative_to(ROOT.resolve()))
+            except (OSError, ValueError):
+                frame_file = Path(frame.filename).name
+            frame_line = int(frame.lineno)
+            frame_function = str(frame.name)
+    except Exception:
+        pass
+
+    diagnostic = {
+        "error_id": error_id,
+        "exception": type(cause).__name__,
+        "frame_file": frame_file,
+        "frame_line": frame_line,
+        "frame_function": frame_function,
+    }
+
+    try:
+        sys.stderr.write(
+            "mcp-rpc: "
+            f"error_id={error_id} "
+            f"exception={diagnostic['exception']} "
+            f"frame={frame_file}:{frame_line} "
+            f"function={frame_function}\n"
+        )
     except (OSError, ValueError):
         pass
+
+    # Durable, bounded-detail diagnostic receipt. Never include arguments,
+    # exception messages, tokens, payloads, file contents, or environment.
+    try:
+        path = ROOT / ".ai-os" / "receipts" / "command-fabric" / "mcp-rpc-errors.jsonl"
+        path.parent.mkdir(parents=True, exist_ok=True)
+        with path.open("a", encoding="utf-8") as handle:
+            handle.write(json.dumps(diagnostic, ensure_ascii=False) + "\n")
+    except (OSError, ValueError, TypeError):
+        pass
+
     return error_id
 
 
