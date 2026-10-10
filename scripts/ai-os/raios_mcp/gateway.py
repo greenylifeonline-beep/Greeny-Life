@@ -244,6 +244,23 @@ def read_generation_handoff(
     active_pid = int(raw.get("active_pid") or 0)
     consistent = active_pid == pid
     complete = bool(raw.get("handoff_complete")) and consistent
+    previous_pid = raw.get("previous_pid")
+    candidate_pid = raw.get("candidate_pid")
+    previous_state = raw.get("previous_state")
+    candidate_state = raw.get("candidate_state")
+    active_state = raw.get("active_state")
+    lineage = [
+        {"role": "PREVIOUS", "pid": previous_pid, "state": previous_state},
+        {"role": "CANDIDATE", "pid": candidate_pid, "state": candidate_state},
+        {"role": "ACTIVE", "pid": active_pid, "state": active_state},
+    ]
+    explanation = (
+        f"previous PID {previous_pid} is {previous_state}; "
+        f"candidate PID {candidate_pid} is {candidate_state}; "
+        f"active PID {active_pid} is {active_state}; "
+        f"handoff_complete={str(complete).lower()}; "
+        f"singleton={raw.get('singleton_verdict') or 'UNKNOWN'}"
+    )
     return {
         "schema": "raios.mcp-generation-handoff-view.v1",
         "status": "ACTIVE" if complete else "STALE_OR_INCOMPLETE",
@@ -253,15 +270,17 @@ def read_generation_handoff(
         "authority": raw.get("authority"),
         "canonical_head": raw.get("canonical_head"),
         "transition_reason": raw.get("transition_reason"),
-        "previous_pid": raw.get("previous_pid"),
+        "previous_pid": previous_pid,
         "previous_generation_id": raw.get("previous_generation_id"),
-        "previous_state": raw.get("previous_state"),
-        "candidate_pid": raw.get("candidate_pid"),
+        "previous_state": previous_state,
+        "candidate_pid": candidate_pid,
         "candidate_generation_id": raw.get("candidate_generation_id"),
-        "candidate_state": raw.get("candidate_state"),
+        "candidate_state": candidate_state,
         "active_pid": active_pid,
         "active_generation_id": raw.get("active_generation_id"),
-        "active_state": raw.get("active_state"),
+        "active_state": active_state,
+        "lineage": lineage,
+        "explanation": explanation,
         "active_listener_count": raw.get("active_listener_count"),
         "duplicate_mcp": raw.get("duplicate_mcp"),
         "orphan_generation_count": raw.get("orphan_generation_count"),
@@ -1081,6 +1100,8 @@ class Gateway:
                 "mcp_to_opencode": mcp_to_opencode_seam(self.root),
                 "mcp_process_pid": os.getpid(),
                 "generation_handoff": generation_handoff,
+                "generation_summary": generation_handoff.get("explanation"),
+                "generation_lineage": generation_handoff.get("lineage", []),
                 "generation_handoff_complete": generation_handoff.get("handoff_complete", False),
                 "generation_singleton_verdict": generation_handoff.get("singleton_verdict", "UNKNOWN"),
                 "generation_orphan_count": generation_handoff.get("orphan_generation_count"),
