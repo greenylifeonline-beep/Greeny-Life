@@ -407,6 +407,7 @@ class Handler(BaseHTTPRequestHandler):
                     "raw_shell": False,
                     "shell_via_mcp": False,
                     "duplicate_mcp": bool(generation_handoff.get("duplicate_mcp") is True),
+                    "generation_duplicate_mcp": bool(generation_handoff.get("duplicate_mcp") is True),
                     "generation_handoff": generation_handoff,
                     "generation_handoff_complete": generation_handoff.get("handoff_complete", False),
                     "generation_singleton_verdict": generation_handoff.get("singleton_verdict", "UNKNOWN"),
