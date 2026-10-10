@@ -252,6 +252,8 @@ def read_generation_handoff(
     candidate_retirement_attempted = bool(raw.get("candidate_retirement_attempted"))
     candidate_retirement_proven = bool(raw.get("candidate_retirement_proven"))
     candidate_retirement_reason = raw.get("candidate_retirement_reason")
+    candidate_active_reverified = bool(raw.get("candidate_active_reverified"))
+    candidate_handoff_safe = bool(raw.get("candidate_handoff_safe"))
     repair_applied = bool(raw.get("repair_applied"))
     active_state = raw.get("active_state")
     lineage = [
@@ -266,6 +268,8 @@ def read_generation_handoff(
         f"active PID {active_pid} is {active_state}; "
         f"retirement_attempted={str(candidate_retirement_attempted).lower()}; "
         f"retirement_proven={str(candidate_retirement_proven).lower()}; "
+        f"active_reverified={str(candidate_active_reverified).lower()}; "
+        f"candidate_handoff_safe={str(candidate_handoff_safe).lower()}; "
         f"handoff_complete={str(complete).lower()}; "
         f"singleton={raw.get('singleton_verdict') or 'UNKNOWN'}"
     )
@@ -289,6 +293,8 @@ def read_generation_handoff(
         "candidate_retirement_attempted": candidate_retirement_attempted,
         "candidate_retirement_proven": candidate_retirement_proven,
         "candidate_retirement_reason": candidate_retirement_reason,
+        "candidate_active_reverified": candidate_active_reverified,
+        "candidate_handoff_safe": candidate_handoff_safe,
         "repair_applied": repair_applied,
         "active_pid": active_pid,
         "active_generation_id": raw.get("active_generation_id"),
@@ -1124,6 +1130,8 @@ class Gateway:
                 "generation_candidate_retirement_attempted": generation_handoff.get("candidate_retirement_attempted", False),
                 "generation_candidate_retirement_proven": generation_handoff.get("candidate_retirement_proven", False),
                 "generation_candidate_retirement_reason": generation_handoff.get("candidate_retirement_reason"),
+                "generation_candidate_active_reverified": generation_handoff.get("candidate_active_reverified", False),
+                "generation_candidate_handoff_safe": generation_handoff.get("candidate_handoff_safe", False),
                 "generation_repair_applied": generation_handoff.get("repair_applied", False),
                 "duplicate_mcp": bool(generation_handoff.get("duplicate_mcp") is True),
                 "generation_duplicate_mcp": bool(generation_handoff.get("duplicate_mcp") is True),
