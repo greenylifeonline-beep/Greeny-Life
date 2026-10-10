@@ -151,6 +151,7 @@ function Stop-RaiosC5ForDeploy([int]$ExpectedPid,[string]$ExpectedPath){
 
   Write-DeployPhase 'BOOTSTRAP_NONSTOPPABLE_SERVICE_STOPPED' @{service_pid=$ExpectedPid}
   return 'OWNED_BOOTSTRAP_TERMINATION'
+ }
 }
 
 function Copy-Atomic([string]$SourcePath,[string]$TargetPath){
