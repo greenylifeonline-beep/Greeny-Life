@@ -36,6 +36,10 @@ WRITE_TOOLS = {"post_opinion", "send_packet", "ack_packet", "execute_scoped_task
 PASSIVE_EXECUTION = {"NONE", "NO", "FALSE"}
 DELEGATED_EXECUTION = {"DELEGATED", "STATUS", "CANCEL"}
 GRANT_MAX_SECONDS = 900
+EXECUTION_RESULT_MAX_CHARS = 20000
+SENSITIVE_FIELD_RE = re.compile(
+    r'(?i)(["\']?(?:api[_-]?key|access[_-]?token|refresh[_-]?token|password|secret)["\']?\s*[:=]\s*["\']?)([^"\',}\s]+)'
+)
 LOOPBACK_READ_TOOLS = (
     "get_head",
     "read_board",
@@ -83,6 +87,59 @@ def utc() -> str:
 
 def sha256_text(text: str) -> str:
     return hashlib.sha256(text.encode("utf-8")).hexdigest()
+
+
+def _redact_execution_text(text: str) -> str:
+    """Redact common credential forms before capability text leaves the gateway."""
+    redacted = SECRET_RE.sub("[REDACTED]", text)
+    redacted = re.sub(
+        r"(?i)(Bearer\s+)[A-Za-z0-9\-._~+/]{16,}",
+        r"\1[REDACTED]",
+        redacted,
+    )
+    redacted = SENSITIVE_FIELD_RE.sub(r"\1[REDACTED]", redacted)
+    return redacted
+
+
+def _execution_result_projection(invoked: Any) -> dict[str, Any] | None:
+    """Bounded transient client result. Raw file content is never receipt-persisted."""
+    if not isinstance(invoked, dict):
+        return None
+    out: dict[str, Any] = {}
+    for key in (
+        "INVOKED",
+        "CAPABILITY",
+        "OPERATION",
+        "PATH",
+        "SHA256",
+        "SIZE",
+        "BRANCH",
+        "HEAD_BEFORE",
+        "HEAD_AFTER",
+        "STATE_CHANGED",
+        "COMMIT_CREATED",
+        "REMOTE_HEAD",
+        "PUSH_PROVEN",
+        "STAGED_PATHS",
+    ):
+        if key in invoked:
+            out[key] = invoked[key]
+    if "TEXT" in invoked:
+        raw = str(invoked.get("TEXT") or "")
+        safe = _redact_execution_text(raw)
+        returned = safe[:EXECUTION_RESULT_MAX_CHARS]
+        out.update(
+            {
+                "TEXT": returned,
+                "CONTENT_RETURNED": True,
+                "TRUNCATED": len(safe) > EXECUTION_RESULT_MAX_CHARS,
+                "RETURNED_CHARS": len(returned),
+                "SOURCE_CHARS": len(raw),
+            }
+        )
+    elif out:
+        out["CONTENT_RETURNED"] = False
+    return out or None
 
 
 def parse_dt(value: str) -> datetime:
@@ -1428,10 +1485,17 @@ class Gateway:
         receipt["CANONICAL_HEAD"] = arguments.get("requested_head")
         receipt["SHELL"] = False
         receipt["ACTOR_IS_STATIC_C1"] = False
+        client_result = _execution_result_projection(invoked)
+        if client_result:
+            receipt["RESULT_METADATA"] = {
+                key: value for key, value in client_result.items() if key != "TEXT"
+            }
+            receipt["RESULT_CONTENT_PERSISTED"] = False
         receipts.persist(receipt, directory=receipt_dir)
         return {
             "operation": intent,
             "receipt": receipt,
+            "result": client_result,
             "invoked": bool(invoked and invoked.get("INVOKED")),
             "lease_id": lease_id,
             "shell": False,
