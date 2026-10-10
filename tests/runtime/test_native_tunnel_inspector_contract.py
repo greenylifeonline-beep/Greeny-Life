@@ -40,6 +40,15 @@ def test_native_tunnel_inspector_uses_official_read_surfaces():
     assert "/readyz" in text
 
 
+def test_native_tunnel_inspector_parses_official_main_channel_profile():
+    text = inspector_text()
+    assert "function Get-MainMcpUrl" in text
+    assert "channel" in text
+    assert "main" in text
+    assert "$serverUrl=Get-MainMcpUrl $profileText" in text
+    assert "$serverUrl -eq 'http://127.0.0.1:8788/mcp'" in text
+
+
 def test_native_tunnel_inspector_redacts_captured_output():
     text = inspector_text()
     assert "<redacted-secret>" in text
