@@ -45,6 +45,7 @@ class MessageWorker:
         self.inbox=self.fabric/"inbox";self.outbox=self.fabric/"outbox"
         self.receipts=self.repo/".ai-os/receipts/command-fabric"
         self.deliveries=self.fabric/"deliveries";self.dead=self.fabric/"dead-letter"
+        self.pending_ack=self.fabric/"pending-actor-ack";self.archive=self.fabric/"archive"
         self.state=self.runtime/"worker";self.poll_seconds=poll_seconds
         self.max_attempts=max_attempts;self.max_messages_per_scan=max(1,int(max_messages_per_scan))
         self.max_scan_seconds=max(.05,float(max_scan_seconds))
@@ -60,9 +61,12 @@ class MessageWorker:
         self._progress_snapshot:dict[str,Any]={}
         self.scan_cursor=self.state/"inbox-scan-cursor.json"
         self.terminal_index=self.state/"delivered-terminal-index.json"
+        self.pending_ack_index=self.state/"pending-actor-ack-index.jsonl"
+        self.pending_ack_cursor=self.state/"pending-actor-ack-index-cursor.json"
+        self._pending_index_lock=threading.Lock()
         self._delivered_terminal:set[str]=set()
         self._terminal_dirty=False
-        for p in (self.inbox,self.outbox,self.receipts,self.deliveries,self.dead,self.state):
+        for p in (self.inbox,self.outbox,self.receipts,self.deliveries,self.dead,self.pending_ack,self.archive,self.state):
             p.mkdir(parents=True,exist_ok=True)
         index=read_json(self.terminal_index,{}) or {}
         terminal_index_current=(
@@ -113,6 +117,41 @@ class MessageWorker:
     def _head(self)->str:return self.canonical_head
     def _attempts(self,mid:str)->dict[str,Any]:
         return read_json(self.state/f"{mid}.json",{"message_id":mid,"attempts":0}) or {"message_id":mid,"attempts":0}
+    def _append_pending_ack_index(self,mid:str)->None:
+        row={"schema":"raios.pending-actor-ack-index.v1","message_id":mid,"at":utc()}
+        raw=(json.dumps(row,ensure_ascii=False,separators=(",",":"))+"\n").encode("utf-8")
+        with self._pending_index_lock:
+            self.pending_ack_index.parent.mkdir(parents=True,exist_ok=True)
+            with self.pending_ack_index.open("ab") as handle:
+                handle.write(raw);handle.flush()
+
+    def _move_to_pending_ack(self,path:Path)->Path:
+        if path.parent.resolve()==self.pending_ack.resolve():
+            return path
+        dst=self.pending_ack/path.name
+        if path.exists():
+            if dst.exists():path.unlink(missing_ok=True)
+            else:os.replace(path,dst)
+        if dst.exists():self._append_pending_ack_index(dst.stem)
+        return dst
+
+    def _retain_message_content(self,msg:dict[str,Any])->bool:
+        payload=msg.get("payload") or {}
+        if payload.get("task_id") or payload.get("reply_to") or payload.get("evidence_refs"):
+            return True
+        return str(msg.get("kind") or "").upper() in {"DECISION","EVIDENCE","REVIEW_REQUEST","BLOCKER"}
+
+    def _finalize_terminal_message(self,path:Path,msg:dict[str,Any])->None:
+        if not path.exists():return
+        if self._retain_message_content(msg):
+            dst=self.archive/path.name
+            if dst.exists():path.unlink(missing_ok=True)
+            else:os.replace(path,dst)
+        else:
+            path.unlink(missing_ok=True)
+            try:(self.state/f"{path.stem}.json").unlink(missing_ok=True)
+            except OSError:pass
+
     def _actor_ack_status(self,mid:str,targets:list[str])->dict[str,Any]:
         expected={str(x).upper() for x in targets if str(x).strip()}
         acked:dict[str,dict[str,Any]]={}
@@ -211,13 +250,19 @@ class MessageWorker:
                 state.update(attempts=int(state["attempts"])+1,status="C6_NOT_LIVE_BOUND",
                              targets=[],c6_gated=gated,updated_at=utc(),
                              last_error="C6_NOT_LIVE_BOUND_CONSUMER")
-            atomic(self.state/f"{mid}.json",state);return state
+            atomic(self.state/f"{mid}.json",state)
+            if delivered and path.exists():
+                self._move_to_pending_ack(path)
+            return state
         except Exception as exc:
             state.update(attempts=int(state.get("attempts",0))+1,status="RETRY",
                          updated_at=utc(),last_error=f"{type(exc).__name__}:{exc}")
             if state["attempts"]>=self.max_attempts:
-                state["status"]="DEAD_LETTER"
-                if path.exists():atomic(self.dead/path.name,read_json(path,{"raw_path":str(path)}))
+                state["status"]="DEAD_LETTER";state["lifecycle_state"]="DEAD_LETTER"
+                if path.exists():
+                    dst=self.dead/path.name
+                    if dst.exists():path.unlink(missing_ok=True)
+                    else:os.replace(path,dst)
                 self._record(mid,"COMMAND_CENTER","DEAD_LETTER",state["attempts"],state["last_error"])
             atomic(self.state/f"{mid}.json",state);return state
     def _redeliver_pending_actor_ack(self,path:Path,msg:dict[str,Any],
@@ -324,34 +369,94 @@ class MessageWorker:
         try:return self.workflow.run_cycle(self)
         finally:
             done.set();ticker.join(timeout=max(1.0,self.heartbeat_interval_seconds+0.5))
+    def _pending_cursor_offset(self)->int:
+        row=read_json(self.pending_ack_cursor,{}) or {}
+        try:offset=int(row.get("offset") or 0)
+        except Exception:return 0
+        try:size=self.pending_ack_index.stat().st_size
+        except OSError:return 0
+        return offset if 0<=offset<=size else 0
+
+    def _write_pending_cursor(self,offset:int)->None:
+        atomic(self.pending_ack_cursor,{
+            "schema":"raios.pending-actor-ack-cursor.v1",
+            "offset":max(0,int(offset)),"updated_at":utc(),
+            "index":str(self.pending_ack_index),
+            "non_authoritative":True,
+        })
+
+    def _scan_pending_index(self,handle:Any,result:dict[str,Any],
+                            deadline:float,budget:int)->None:
+        if budget<=0 or not self.pending_ack_index.exists():return
+        start=self._pending_cursor_offset();wrapped=False;processed=0
+        while processed<budget and time.monotonic()<deadline:
+            try:
+                size=self.pending_ack_index.stat().st_size
+            except OSError:return
+            if size<=0:return
+            if start>=size:
+                if wrapped:return
+                start=0;wrapped=True
+            advanced=False
+            with self.pending_ack_index.open("rb") as stream:
+                stream.seek(start)
+                while processed<budget and time.monotonic()<deadline:
+                    raw=stream.readline()
+                    if not raw:break
+                    start=stream.tell();advanced=True
+                    try:row=json.loads(raw.decode("utf-8"))
+                    except (UnicodeDecodeError,json.JSONDecodeError):continue
+                    mid=str(row.get("message_id") or "")
+                    if not mid.startswith("MSG-"):continue
+                    path=self.pending_ack/f"{mid}.json"
+                    if not path.exists():continue
+                    result["pending_index_scanned"]+=1;processed+=1
+                    handle(path)
+                    self._progress_heartbeat(result,"PENDING_ACK_SCAN")
+            self._write_pending_cursor(start)
+            if not advanced:
+                if wrapped:return
+                start=0;wrapped=True
+
     def scan_once(self)->dict[str,Any]:
-        result={"seen":0,"delivered":0,"retried":0,"dead_letter":0,"c6_gated":0,
+        result={"seen":0,"inbox_scanned":0,"pending_index_scanned":0,
+                "delivered":0,"retried":0,"dead_letter":0,"c6_gated":0,
                 "actor_ack":0,"pending_actor_ack":0,"redelivered":0,"actor_ack_blocked":0,
                 "legacy_delivery_state_migrated":0,
                 "terminal_cache_hits":0,"terminal_cache_warmed":0,
-                "historical_ack_recovered":0,"scan_budget_exhausted":False}
+                "historical_ack_recovered":0,"scan_budget_exhausted":False,
+                "cursor_state":"QUEUE_COMPACTION_ACTIVE"}
         deadline=time.monotonic()+self.max_scan_seconds
-        cursor=self._load_scan_cursor();after=cursor.get("last_name") if cursor.get("valid") else None
-        result["cursor_state"]=cursor.get("reason")
+        inbox_deadline=time.monotonic()+(self.max_scan_seconds*.55)
+        total_budget=self.max_messages_per_scan
+        inbox_budget=max(1,total_budget//2)
+        pending_budget=max(1,total_budget-inbox_budget)
         self._progress_heartbeat(result,"SCAN_START",force=True)
+
         def handle(path:Path)->None:
             mid=path.stem
             if mid in self._delivered_terminal:
-                result["terminal_cache_hits"]+=1;return
+                result["terminal_cache_hits"]+=1
+                if path.exists():
+                    msg=read_json(path,{}) or {}
+                    self._finalize_terminal_message(path,msg)
+                return
             msg=read_json(path,{}) or {}
             targets=self._targets(msg) if isinstance(msg,dict) else []
             state=self._attempts(mid);status=str(state.get("status") or "").upper()
             ack=self._actor_ack_status(mid,targets)
             if ack["complete"]:
                 self._publish_actor_ack_terminal(mid,state,ack)
+                self._finalize_terminal_message(path,msg)
                 result["actor_ack"]+=1
                 if status in {"DEAD_LETTER","DELIVERED","DELIVERED_PENDING_ACTOR_ACK","BLOCKED_ACTOR_ACK"}:
                     result["historical_ack_recovered"]+=1
                 return
             if status in {"ACTOR_ACK","COMPLETED","SUPERSEDED","ARCHIVED"}:
-                self._remember_terminal(mid);result["terminal_cache_warmed"]+=1;return
+                self._remember_terminal(mid);result["terminal_cache_warmed"]+=1
+                self._finalize_terminal_message(path,msg)
+                return
             if status=="DELIVERED":
-                # v1 migration: a delivery-only state was incorrectly terminal.
                 state.update(status="DELIVERED_PENDING_ACTOR_ACK",
                              lifecycle_state="DELIVERED_PENDING_ACTOR_ACK",
                              actor_ack=False,updated_at=utc(),
@@ -360,6 +465,8 @@ class MessageWorker:
                 status="DELIVERED_PENDING_ACTOR_ACK"
                 result["legacy_delivery_state_migrated"]+=1
             if status in {"DELIVERED_PENDING_ACTOR_ACK","BLOCKED_ACTOR_ACK"}:
+                if path.parent.resolve()==self.inbox.resolve():
+                    path=self._move_to_pending_ack(path)
                 if status=="BLOCKED_ACTOR_ACK":
                     result["actor_ack_blocked"]+=1
                     return
@@ -385,45 +492,28 @@ class MessageWorker:
                  "C6_NOT_LIVE_BOUND":"c6_gated"}[state["status"]]
             result[key]+=1
             if state["status"]=="DELIVERED_PENDING_ACTOR_ACK":result["pending_actor_ack"]+=1
-        def consume(after_name:str|None)->tuple[bool,str|None,bool]:
-            found=after_name is None;last_done=None;reached_end=True;entries_scanned=0
-            with os.scandir(self.inbox) as it:
-                for entry in it:
-                    entries_scanned+=1
-                    if (time.monotonic()>=deadline or result["seen"]>=self.max_messages_per_scan
-                            or entries_scanned>self.max_messages_per_scan):
-                        result["scan_budget_exhausted"]=True;reached_end=False;break
-                    name=entry.name
-                    if not (name.startswith("MSG-") and name.endswith(".json")):continue
-                    if not found:
-                        if name==after_name:found=True
-                        continue
-                    if after_name is not None and name==after_name:continue
-                    path=Path(entry.path);result["seen"]+=1
-                    handle(path);last_done=name
-                    self._progress_heartbeat(result,"SCANNING")
-            return found,last_done,reached_end
-        found,last_done,reached_end=consume(after)
-        if after is not None and not found:
-            result["cursor_state"]="STALE_RECONCILE"
-            if time.monotonic()<deadline and result["seen"]<self.max_messages_per_scan:
-                _,last_done,reached_end=consume(None)
-            elif last_done is None:
-                self._commit_scan_cursor(None,"STALE_CURSOR_RESET")
-        elif after is not None and found and reached_end and last_done is None:
-            result["cursor_state"]="WRAP_RECONCILE"
-            if time.monotonic()<deadline and result["seen"]<self.max_messages_per_scan:
-                _,last_done,reached_end=consume(None)
-            elif last_done is None:
-                self._commit_scan_cursor(None,"WRAP_RESET")
-        if last_done is not None:
-            self._commit_scan_cursor(last_done,"BOUNDED_SCAN_PROGRESS")
+
+        entries=0
+        with os.scandir(self.inbox) as it:
+            for entry in it:
+                entries+=1
+                if (time.monotonic()>=inbox_deadline or result["inbox_scanned"]>=inbox_budget
+                        or entries>inbox_budget):
+                    result["scan_budget_exhausted"]=True;break
+                name=entry.name
+                if not (name.startswith("MSG-") and name.endswith(".json")):continue
+                result["seen"]+=1;result["inbox_scanned"]+=1
+                handle(Path(entry.path))
+                self._progress_heartbeat(result,"INBOX_SCAN")
+
+        self._scan_pending_index(handle,result,deadline,pending_budget)
         self._flush_terminal_index()
         if self.workflow is not None:
             self._progress_heartbeat(result,"WORKFLOW_START",force=True)
             result.update(self._run_workflow_with_heartbeat(result))
         self._progress_heartbeat(result,"SCAN_COMPLETE",force=True)
         return result
+
     def heartbeat(self,last:dict[str,Any]|None=None)->None:
         with self._heartbeat_write_lock:
             stamp=utc();expires=(datetime.now(timezone.utc)+timedelta(seconds=30)).isoformat();head=self._head()
