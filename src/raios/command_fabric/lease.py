@@ -96,6 +96,7 @@ class CommandLeaseAdapter:
         self,
         *,
         owner: str,
+        lease_holder: str | None = None,
         scope: str,
         task_id: str,
         correlation_id: str,
@@ -109,7 +110,10 @@ class CommandLeaseAdapter:
         existing = self.active_on_scope(scope)
         if existing:
             same_task = existing.get("task_id") == task_id and existing.get("idempotency_key") == idempotency_key
-            if existing.get("owner") == owner and same_task:
+            expected_holder = str(lease_holder or owner)
+            existing_holder = str(existing.get("lease_holder") or existing.get("owner") or "")
+            same_holder = existing_holder == expected_holder
+            if existing.get("owner") == owner and same_task and same_holder:
                 out = dict(existing)
                 out["IDEMPOTENT_REACQUIRE"] = True
                 out["ok"] = True
@@ -131,6 +135,7 @@ class CommandLeaseAdapter:
             "generation": 1,
             "owner": owner,
             "owner_identity": owner,
+            "lease_holder": str(lease_holder or owner),
             "scope": scope,
             "task_id": task_id,
             "correlation_id": correlation_id,
@@ -176,6 +181,32 @@ class CommandLeaseAdapter:
         if _parse(str(rec.get("expires_at") or "")) <= _utc():
             return {"ok": False, "code": LEASE_EXPIRED, "lease": rec}
         return {"ok": True, "lease": rec}
+
+    def validate_fence(
+        self,
+        lease_id: str,
+        *,
+        scope: str,
+        fence_token: int,
+    ) -> dict[str, Any]:
+        """Validate system-owned lease fencing without transferring ownership."""
+        result = self.validate(
+            lease_id,
+            expected_fence_token=fence_token,
+        )
+        if not result.get("ok"):
+            return result
+
+        lease = result.get("lease") or {}
+
+        if str(lease.get("scope") or "") != str(scope):
+            return {
+                "ok": False,
+                "code": STALE_LEASE_FENCE,
+                "lease": lease,
+            }
+
+        return result
 
     def renew(
         self,
