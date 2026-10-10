@@ -1,6 +1,8 @@
 from pathlib import Path
 import json
 import os
+import shutil
+import subprocess
 import sys
 
 ROOT = Path(__file__).resolve().parents[2]
@@ -67,6 +69,14 @@ def test_generation_handoff_explains_lineage_without_pid_guessing(tmp_path):
     assert view["duplicate_mcp"] is False
     assert view["orphan_generation_count"] == 0
     assert view["singleton_verdict"] == "PASS"
+    assert view["lineage"] == [
+        {"role": "PREVIOUS", "pid": 90, "state": "RETIRED"},
+        {"role": "CANDIDATE", "pid": 100, "state": "SUPERSEDED"},
+        {"role": "ACTIVE", "pid": 111, "state": "ACTIVE"},
+    ]
+    assert "previous PID 90 is RETIRED" in view["explanation"]
+    assert "candidate PID 100 is SUPERSEDED" in view["explanation"]
+    assert "active PID 111 is ACTIVE" in view["explanation"]
 
 
 def test_generation_handoff_fails_closed_when_projection_points_to_other_process(tmp_path):
@@ -111,6 +121,8 @@ def test_get_head_and_health_expose_same_generation_verdict():
     server = SERVER.read_text(encoding="utf-8")
 
     assert '"generation_handoff": generation_handoff' in gateway
+    assert '"generation_summary": generation_handoff.get("explanation")' in gateway
+    assert '"generation_lineage": generation_handoff.get("lineage", [])' in gateway
     assert '"generation_handoff_complete": generation_handoff.get("handoff_complete", False)' in gateway
     assert '"generation_singleton_verdict": generation_handoff.get("singleton_verdict", "UNKNOWN")' in gateway
     assert '"generation_orphan_count": generation_handoff.get("orphan_generation_count")' in gateway
@@ -127,3 +139,22 @@ def test_health_duplicate_mcp_is_not_hardcoded_false_anymore():
     text = SERVER.read_text(encoding="utf-8")
     assert '"duplicate_mcp": False' not in text
     assert '"duplicate_mcp": bool(generation_handoff.get("duplicate_mcp") is True)' in text
+
+
+def test_mcp_ensure_powershell_parses_on_available_windows_shell():
+    shell = shutil.which("pwsh") or shutil.which("powershell.exe") or shutil.which("powershell")
+    if not shell:
+        return
+    command = (
+        "$tokens=$null;$errors=$null;"
+        "[Management.Automation.Language.Parser]::ParseFile("
+        "'" + str(ENSURE).replace("'", "''") + "',[ref]$tokens,[ref]$errors)|Out-Null;"
+        "if($errors.Count){$errors|ForEach-Object{Write-Error $_.Message};exit 1};exit 0"
+    )
+    proc = subprocess.run(
+        [shell, "-NoLogo", "-NoProfile", "-NonInteractive", "-Command", command],
+        capture_output=True,
+        text=True,
+        timeout=20,
+    )
+    assert proc.returncode == 0, proc.stderr or proc.stdout
