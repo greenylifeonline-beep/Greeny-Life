@@ -248,6 +248,11 @@ def read_generation_handoff(
     candidate_pid = raw.get("candidate_pid")
     previous_state = raw.get("previous_state")
     candidate_state = raw.get("candidate_state")
+    candidate_relationship = raw.get("candidate_relationship")
+    candidate_retirement_attempted = bool(raw.get("candidate_retirement_attempted"))
+    candidate_retirement_proven = bool(raw.get("candidate_retirement_proven"))
+    candidate_retirement_reason = raw.get("candidate_retirement_reason")
+    repair_applied = bool(raw.get("repair_applied"))
     active_state = raw.get("active_state")
     lineage = [
         {"role": "PREVIOUS", "pid": previous_pid, "state": previous_state},
@@ -256,8 +261,11 @@ def read_generation_handoff(
     ]
     explanation = (
         f"previous PID {previous_pid} is {previous_state}; "
-        f"candidate PID {candidate_pid} is {candidate_state}; "
+        f"candidate PID {candidate_pid} is {candidate_state} "
+        f"({candidate_relationship or 'UNSPECIFIED'}); "
         f"active PID {active_pid} is {active_state}; "
+        f"retirement_attempted={str(candidate_retirement_attempted).lower()}; "
+        f"retirement_proven={str(candidate_retirement_proven).lower()}; "
         f"handoff_complete={str(complete).lower()}; "
         f"singleton={raw.get('singleton_verdict') or 'UNKNOWN'}"
     )
@@ -277,6 +285,11 @@ def read_generation_handoff(
         "candidate_pid": candidate_pid,
         "candidate_generation_id": raw.get("candidate_generation_id"),
         "candidate_state": candidate_state,
+        "candidate_relationship": candidate_relationship,
+        "candidate_retirement_attempted": candidate_retirement_attempted,
+        "candidate_retirement_proven": candidate_retirement_proven,
+        "candidate_retirement_reason": candidate_retirement_reason,
+        "repair_applied": repair_applied,
         "active_pid": active_pid,
         "active_generation_id": raw.get("active_generation_id"),
         "active_state": active_state,
