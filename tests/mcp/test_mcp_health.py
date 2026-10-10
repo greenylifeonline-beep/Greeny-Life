@@ -107,6 +107,16 @@ def test_health_http_lists_nine_tools(tmp_path):
         assert health["hosted_dcr_required"] is False
         assert health["second_gateway"] is False
         assert health["head_source"] in {"env", "git-file", "unknown"}
+        assert health["external_connector_state_valid"] is True
+        assert health["external_connector_contract_valid"] is False
+        assert health["external_connector_binding_count"] == 0
+        assert health["external_connector_active_binding_count"] == 0
+        assert health["external_connector_pending_count"] == 0
+        assert health["chatgpt_native_binding_active"] is False
+        assert health["chatgpt_native_delegate_token_present"] is False
+        assert health["chatgpt_native_delegate_binding_matches"] is False
+        assert health["external_connector_token_store_valid"] is False
+        assert health["external_connector_error"] == "CONNECTOR_CONTRACT_INVALID"
         init = json.dumps({"jsonrpc": "2.0", "id": 1, "method": "initialize", "params": {}}).encode()
         from urllib.request import Request
         rpc = json.loads(
