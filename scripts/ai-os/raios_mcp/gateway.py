@@ -204,6 +204,76 @@ def stable_runtime_profile() -> Path | None:
     return None
 
 
+def read_generation_handoff(
+    profile: Path | None = None,
+    current_pid: int | None = None,
+) -> dict[str, Any]:
+    """Read the bounded MCP generation projection. This is a runtime projection, never authority."""
+    runtime_profile = profile or stable_runtime_profile()
+    pid = int(current_pid or os.getpid())
+    unknown = {
+        "schema": "raios.mcp-generation-handoff-view.v1",
+        "status": "UNKNOWN",
+        "projection_present": False,
+        "projection_consistent_with_process": False,
+        "handoff_complete": False,
+        "singleton_verdict": "UNKNOWN",
+        "active_pid": pid,
+        "active_listener_count": None,
+        "duplicate_mcp": None,
+        "orphan_generation_count": None,
+        "orphan_pids": [],
+        "authority": "RAIOS-C5-SCM",
+    }
+    if runtime_profile is None:
+        unknown["reason"] = "RUNTIME_PROFILE_UNAVAILABLE"
+        return unknown
+    path = runtime_profile / ".raios" / "runtime" / "mcp" / "generation-handoff.json"
+    try:
+        raw = json.loads(path.read_text(encoding="utf-8-sig"))
+    except FileNotFoundError:
+        unknown["reason"] = "GENERATION_HANDOFF_PROJECTION_MISSING"
+        return unknown
+    except (OSError, UnicodeError, json.JSONDecodeError):
+        unknown["reason"] = "GENERATION_HANDOFF_PROJECTION_INVALID"
+        return unknown
+    if not isinstance(raw, dict) or raw.get("schema") != "raios.mcp-generation-handoff.v1":
+        unknown["reason"] = "GENERATION_HANDOFF_SCHEMA_INVALID"
+        return unknown
+
+    active_pid = int(raw.get("active_pid") or 0)
+    consistent = active_pid == pid
+    complete = bool(raw.get("handoff_complete")) and consistent
+    return {
+        "schema": "raios.mcp-generation-handoff-view.v1",
+        "status": "ACTIVE" if complete else "STALE_OR_INCOMPLETE",
+        "projection_present": True,
+        "projection_consistent_with_process": consistent,
+        "observed_at": raw.get("observed_at"),
+        "authority": raw.get("authority"),
+        "canonical_head": raw.get("canonical_head"),
+        "transition_reason": raw.get("transition_reason"),
+        "previous_pid": raw.get("previous_pid"),
+        "previous_generation_id": raw.get("previous_generation_id"),
+        "previous_state": raw.get("previous_state"),
+        "candidate_pid": raw.get("candidate_pid"),
+        "candidate_generation_id": raw.get("candidate_generation_id"),
+        "candidate_state": raw.get("candidate_state"),
+        "active_pid": active_pid,
+        "active_generation_id": raw.get("active_generation_id"),
+        "active_state": raw.get("active_state"),
+        "active_listener_count": raw.get("active_listener_count"),
+        "duplicate_mcp": raw.get("duplicate_mcp"),
+        "orphan_generation_count": raw.get("orphan_generation_count"),
+        "orphan_pids": list(raw.get("orphan_pids") or []),
+        "owner_head_match": raw.get("owner_head_match"),
+        "service_generation_match": raw.get("service_generation_match"),
+        "handoff_complete": complete,
+        "recorded_handoff_complete": bool(raw.get("handoff_complete")),
+        "singleton_verdict": raw.get("singleton_verdict"),
+    }
+
+
 def resolve_opencode_binary() -> str | None:
     """Find the installed OpenCode shim. A missing file stays absent."""
     found = shutil.which("opencode")
@@ -999,6 +1069,7 @@ class Gateway:
     def tool_get_head(self, actor: Actor, arguments: dict) -> dict:
         head, head_source = read_canonical_head(self.root)
         branch = self._git_branch(head_source=head_source)
+        generation_handoff = read_generation_handoff()
         return self._receipt(
             {
                 "tool": "get_head",
@@ -1008,6 +1079,12 @@ class Gateway:
                 "repository": REPO,
                 "actor_id": actor.actor_id,
                 "mcp_to_opencode": mcp_to_opencode_seam(self.root),
+                "mcp_process_pid": os.getpid(),
+                "generation_handoff": generation_handoff,
+                "generation_handoff_complete": generation_handoff.get("handoff_complete", False),
+                "generation_singleton_verdict": generation_handoff.get("singleton_verdict", "UNKNOWN"),
+                "generation_orphan_count": generation_handoff.get("orphan_generation_count"),
+                "generation_duplicate_mcp": generation_handoff.get("duplicate_mcp"),
             }
         )
 
