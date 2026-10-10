@@ -66,7 +66,7 @@ function Copy-Atomic([string]$SourcePath,[string]$TargetPath){
 function Test-LocalMcpReady {
  try{
   $m=Invoke-RestMethod -Uri 'http://127.0.0.1:8788/health' -TimeoutSec 3
-  return ($m.ok -eq $true -and [int]$m.tool_count -eq 8 -and $m.second_gateway -eq $false)
+  return ($m.ok -eq $true -and [int]$m.tool_count -eq 9 -and $m.execute_scoped_task -eq $true -and $m.second_gateway -eq $false)
  }catch{return $false}
 }
 
