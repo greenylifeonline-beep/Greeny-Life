@@ -1,5 +1,9 @@
 from pathlib import Path
 import re
+import shutil
+import subprocess
+
+import pytest
 
 ROOT = Path(__file__).resolve().parents[2]
 DEPLOY = ROOT / "scripts/runtime/Deploy-RAIOS-C5-Service.ps1"
@@ -88,3 +92,27 @@ def test_c5_deployer_has_no_case_only_assignment_collisions():
         "PowerShell variable names are case-insensitive; case-only assignment "
         f"collisions are unsafe: {collisions}"
     )
+
+
+def test_c5_deployer_parses_when_powershell_is_available():
+    powershell = shutil.which("powershell.exe") or shutil.which("pwsh")
+    if not powershell:
+        pytest.skip("PowerShell is not available on this test host")
+
+    command = (
+        "$ErrorActionPreference='Stop';"
+        "$tokens=$null;$errors=$null;"
+        "[Management.Automation.Language.Parser]::ParseFile("
+        "$args[0],[ref]$tokens,[ref]$errors)|Out-Null;"
+        "if($errors.Count){"
+        "$errors|ForEach-Object{[Console]::Error.WriteLine($_.Message)};"
+        "exit 1"
+        "}"
+    )
+    proc = subprocess.run(
+        [powershell, "-NoLogo", "-NoProfile", "-NonInteractive", "-Command", command, str(DEPLOY)],
+        capture_output=True,
+        text=True,
+        timeout=30,
+    )
+    assert proc.returncode == 0, proc.stderr
