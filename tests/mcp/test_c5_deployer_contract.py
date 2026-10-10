@@ -8,6 +8,8 @@ import pytest
 ROOT = Path(__file__).resolve().parents[2]
 DEPLOY = ROOT / "scripts/runtime/Deploy-RAIOS-C5-Service.ps1"
 SERVICE = ROOT / "scripts/runtime/RAIOS.C5.ServiceHost.cs"
+USERLANE = ROOT / "scripts/runtime/c5-service/Invoke-RAIOS-C5-UserLane.ps1"
+MAINTAIN = ROOT / "scripts/runtime/Maintain-RAIOS-Online.ps1"
 
 
 def deploy_text() -> str:
@@ -94,6 +96,25 @@ def test_c5_deployer_has_no_case_only_assignment_collisions():
     )
 
 
+
+def test_c5_userlane_uses_nine_tool_generation_health():
+    text = USERLANE.read_text(encoding="utf-8")
+    assert "tool_count -eq 8" not in text
+    assert "[int]$m.tool_count -ne 9" in text
+    assert "execute_scoped_task" in text
+    assert "generation_handoff_complete" in text
+    assert "generation_singleton_verdict" in text
+    assert "generation_orphan_count" in text
+    assert "'PASS'" in text
+
+
+def test_maintenance_requires_clean_generation_singleton():
+    text = MAINTAIN.read_text(encoding="utf-8")
+    assert "generation_handoff_complete" in text
+    assert "generation_singleton_verdict" in text
+    assert "generation_orphan_count" in text
+    assert "[int]$Health.generation_orphan_count -ne 0" in text
+
 def test_c5_deployer_parses_when_powershell_is_available(tmp_path):
     powershell = shutil.which("powershell.exe") or shutil.which("pwsh")
     if not powershell:
@@ -120,19 +141,20 @@ exit 0
 """,
         encoding="utf-8",
     )
-    proc = subprocess.run(
-        [
-            powershell,
-            "-NoLogo",
-            "-NoProfile",
-            "-NonInteractive",
-            "-File",
-            str(driver),
-            "-Path",
-            str(DEPLOY),
-        ],
-        capture_output=True,
-        text=True,
-        timeout=30,
-    )
-    assert proc.returncode == 0, proc.stderr
+    for target in (DEPLOY, USERLANE, MAINTAIN):
+        proc = subprocess.run(
+            [
+                powershell,
+                "-NoLogo",
+                "-NoProfile",
+                "-NonInteractive",
+                "-File",
+                str(driver),
+                "-Path",
+                str(target),
+            ],
+            capture_output=True,
+            text=True,
+            timeout=30,
+        )
+        assert proc.returncode == 0, f"{target}: {proc.stderr}"
