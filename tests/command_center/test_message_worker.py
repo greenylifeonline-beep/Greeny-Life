@@ -89,7 +89,7 @@ class MessageWorkerTests(unittest.TestCase):
         try:
             mid="MSG-historical"
             path=worker.inbox/f"{mid}.json"
-            path.write_text(json.dumps({"schema":"raios.message.v1","message_id":mid,"target":"C2-OBS","payload":{"text":"old"}}),encoding="utf-8")
+            path.write_text(json.dumps({"schema":"raios.message.v1","message_id":mid,"target":"C2-OBS","payload":{"text":"old","task_id":"T-HIST"}}),encoding="utf-8")
             receipt=worker.receipts/f"{mid}.C2-OBS.ack.receipt.json"
             receipt.write_text(json.dumps({"schema":"raios.message-ack.v1","message_id":mid,"actor":"C2-OBS","status":"ACKNOWLEDGED","at":"2026-08-27T00:00:00Z"}),encoding="utf-8")
             result=worker.scan_once()
@@ -161,16 +161,16 @@ class MessageWorkerTests(unittest.TestCase):
             self.assertGreaterEqual(len(phases),6)
             self.assertEqual(phases[0],"SCAN_START")
             self.assertEqual(phases[-1],"SCAN_COMPLETE")
-            self.assertIn("SCANNING",phases)
+            self.assertIn("INBOX_SCAN",phases)
             hb=json.loads((worker.state/"heartbeat.json").read_text())
             self.assertEqual(hb["last_scan"]["scan_phase"],"SCAN_COMPLETE")
             self.assertEqual(hb["head"],worker._head())
         finally:td.cleanup()
 
-    def test_dead_letter_is_not_reprocessed_but_can_recover_from_real_actor_ack(self):
+    def test_dead_letter_is_quarantined_and_not_reprocessed(self):
         td,worker=self.make_worker(max_attempts=1)
         try:
-            mid="MSG-dead-recover"
+            mid="MSG-dead-quarantine"
             path=worker.inbox/f"{mid}.json"
             path.write_text(json.dumps({
                 "schema":"wrong","message_id":mid,"target":"C2"
@@ -179,19 +179,13 @@ class MessageWorkerTests(unittest.TestCase):
             self.assertEqual(first["dead_letter"],1)
             state_path=worker.state/f"{mid}.json"
             first_state=json.loads(state_path.read_text())
+            self.assertFalse(path.exists())
+            self.assertTrue((worker.dead/f"{mid}.json").exists())
             second=worker.scan_once()
             second_state=json.loads(state_path.read_text())
             self.assertEqual(second["dead_letter"],0)
             self.assertEqual(second_state["attempts"],first_state["attempts"])
-            receipt=worker.receipts/f"{mid}.C2.actor.ack.receipt.json"
-            receipt.write_text(json.dumps({
-                "schema":"raios.actor-ack.v1","message_id":mid,
-                "actor":"C2","status":"ACKNOWLEDGED","at":"2026-09-05T00:00:00Z"
-            }),encoding="utf-8")
-            third=worker.scan_once()
-            recovered=json.loads(state_path.read_text())
-            self.assertEqual(third["historical_ack_recovered"],1)
-            self.assertEqual(recovered["status"],"ACTOR_ACK")
+            self.assertEqual(second_state["status"],"DEAD_LETTER")
         finally:td.cleanup()
 
     def test_delivery_ack_is_not_actor_ack_or_terminal(self):
@@ -212,7 +206,7 @@ class MessageWorkerTests(unittest.TestCase):
     def test_multitarget_requires_all_actor_acks_before_terminality(self):
         td,worker=self.make_worker()
         try:
-            msg=worker.enqueue("C1",["C2","C3"],"all must ack")
+            msg=worker.enqueue("C1",["C2","C3"],"all must ack","T-MULTI")
             worker.scan_once();mid=msg["message_id"]
             (worker.receipts/f"{mid}.C2.actor.ack.receipt.json").write_text(json.dumps({
                 "schema":"raios.actor-ack.v1","message_id":mid,
@@ -263,6 +257,68 @@ class MessageWorkerTests(unittest.TestCase):
             }),encoding="utf-8")
             restarted=MessageWorker(worker.repo,worker.runtime,poll_seconds=.01,max_attempts=3)
             self.assertNotIn(mid,restarted._delivered_terminal)
+        finally:td.cleanup()
+
+    def test_delivery_moves_message_out_of_inbox_into_pending_ack_lane(self):
+        td,worker=self.make_worker()
+        try:
+            msg=worker.enqueue("C1",["C2"],"compact inbox")
+            mid=msg["message_id"]
+            worker.scan_once()
+            self.assertFalse((worker.inbox/f"{mid}.json").exists())
+            self.assertTrue((worker.pending_ack/f"{mid}.json").exists())
+            self.assertTrue(worker.pending_ack_index.exists())
+            state=json.loads((worker.state/f"{mid}.json").read_text())
+            self.assertEqual(state["status"],"DELIVERED_PENDING_ACTOR_ACK")
+        finally:td.cleanup()
+
+    def test_unlinked_terminal_message_keeps_receipt_not_full_content(self):
+        td,worker=self.make_worker()
+        try:
+            msg=worker.enqueue("C1",["C2"],"transient message")
+            mid=msg["message_id"];worker.scan_once()
+            (worker.receipts/f"{mid}.C2.actor.ack.receipt.json").write_text(json.dumps({
+                "schema":"raios.actor-ack.v1","message_id":mid,
+                "actor":"C2","target":"C2","status":"ACKNOWLEDGED",
+                "at":"2026-10-10T00:00:00Z"
+            }),encoding="utf-8")
+            worker.scan_once()
+            self.assertFalse((worker.pending_ack/f"{mid}.json").exists())
+            self.assertFalse((worker.archive/f"{mid}.json").exists())
+            self.assertFalse((worker.state/f"{mid}.json").exists())
+            self.assertTrue((worker.receipts/f"{mid}.actor-ack.lifecycle.receipt.json").exists())
+        finally:td.cleanup()
+
+    def test_task_linked_terminal_message_is_archived(self):
+        td,worker=self.make_worker()
+        try:
+            msg=worker.enqueue("C1",["C2"],"retain task evidence","T-RETAIN")
+            mid=msg["message_id"];worker.scan_once()
+            (worker.receipts/f"{mid}.C2.actor.ack.receipt.json").write_text(json.dumps({
+                "schema":"raios.actor-ack.v1","message_id":mid,
+                "actor":"C2","target":"C2","status":"ACKNOWLEDGED",
+                "at":"2026-10-10T00:00:00Z"
+            }),encoding="utf-8")
+            worker.scan_once()
+            self.assertFalse((worker.pending_ack/f"{mid}.json").exists())
+            self.assertTrue((worker.archive/f"{mid}.json").exists())
+            state=json.loads((worker.state/f"{mid}.json").read_text())
+            self.assertEqual(state["status"],"ACTOR_ACK")
+        finally:td.cleanup()
+
+    def test_small_scan_budget_progresses_by_compacting_processed_inbox(self):
+        td,worker=self.make_worker()
+        try:
+            worker.max_messages_per_scan=4
+            mids=[]
+            for i in range(6):
+                msg=worker.enqueue("C1",["C2"],f"m-{i}")
+                mids.append(msg["message_id"])
+            for _ in range(4):
+                worker.scan_once()
+            remaining=list(worker.inbox.glob("MSG-*.json"))
+            self.assertEqual(remaining,[])
+            self.assertEqual(len(list(worker.pending_ack.glob("MSG-*.json"))),6)
         finally:td.cleanup()
 
     def test_long_workflow_keeps_heartbeat_alive_while_run_cycle_is_blocked(self):
