@@ -24,6 +24,7 @@ $Csc='C:\Windows\Microsoft.NET\Framework64\v4.0.30319\csc.exe'
 $Python='C:\Users\Ghanam\AppData\Local\Programs\Python\Python314\python.exe'
 $RollbackRoot=Join-Path $env:LOCALAPPDATA ('Temp\raios-c5-deploy-rollback-'+[DateTime]::UtcNow.ToString('yyyyMMdd-HHmmss'))
 $PhasePath=Join-Path $Root 'service-deploy-phase.json'
+$MaintenanceIntent=Join-Path $Root 'maintenance-stop.intent.json'
 $FailurePath=Join-Path $Root 'service-deploy-failure.json'
 $script:CurrentDeployPhase='BOOTSTRAP'
 
@@ -76,6 +77,67 @@ function Get-JsonProp($Object,[string]$Name,$Default=$null){
   if($null -eq $p){return $Default}
   return $p.Value
  }catch{return $Default}
+}
+
+function Write-MaintenanceIntent([string]$Reason,[int]$ValidityMinutes=10){
+ $intent=[ordered]@{
+  schema='raios.c5.maintenance-stop.v1'
+  authority='RAIOS_SYSTEM'
+  reason=$Reason
+  created_utc=[DateTimeOffset]::UtcNow.ToString('o')
+  expires_utc=[DateTimeOffset]::UtcNow.AddMinutes($ValidityMinutes).ToString('o')
+  pid=$PID
+ }
+ $tmp=$MaintenanceIntent+'.tmp-'+[guid]::NewGuid().ToString('N')
+ $intent|ConvertTo-Json -Depth 5|Set-Content -LiteralPath $tmp -Encoding UTF8
+ Move-Item -LiteralPath $tmp -Destination $MaintenanceIntent -Force
+}
+
+function Stop-RaiosC5ForDeploy([int]$ExpectedPid,[string]$ExpectedPath){
+ try{
+  Stop-Service RAIOS-C5 -Force -ErrorAction Stop
+  (Get-Service RAIOS-C5).WaitForStatus('Stopped',[TimeSpan]::FromSeconds(30))
+  return 'SCM_STOP'
+ }catch{
+  $svc=Get-CimInstance Win32_Service -Filter "Name='RAIOS-C5'" -ErrorAction Stop
+  if(-not $svc){throw 'C5_BOOTSTRAP_STOP_SERVICE_MISSING'}
+  if([string]$svc.State -ne 'Running'){throw}
+  if([int]$svc.ProcessId -ne $ExpectedPid -or $ExpectedPid -le 4){
+   throw ('C5_BOOTSTRAP_STOP_PID_MISMATCH::expected='+$ExpectedPid+'::observed='+[int]$svc.ProcessId)
+  }
+  $expectedExe=([string]$ExpectedPath).Trim().Trim('"')
+  $proc=Get-CimInstance Win32_Process -Filter ('ProcessId='+$ExpectedPid) -ErrorAction Stop
+  if(-not $proc){throw 'C5_BOOTSTRAP_STOP_PROCESS_MISSING'}
+  $observedExe=[string]$proc.ExecutablePath
+  if([string]::IsNullOrWhiteSpace($observedExe) -or -not [string]::Equals($observedExe,$expectedExe,[StringComparison]::OrdinalIgnoreCase)){
+   throw ('C5_BOOTSTRAP_STOP_IMAGE_MISMATCH::expected='+$expectedExe+'::observed='+$observedExe)
+  }
+  Write-DeployPhase 'BOOTSTRAP_NONSTOPPABLE_SERVICE_CONFIRMED' @{service_pid=$ExpectedPid;image=$observedExe}
+  Write-MaintenanceIntent -Reason 'CANSTOP_FALSE_BOOTSTRAP_CUTOVER' -ValidityMinutes 10
+
+  & sc.exe config RAIOS-C5 start= disabled | Out-Null
+  if($LASTEXITCODE -ne 0){throw 'C5_BOOTSTRAP_DISABLE_FAILED'}
+
+  & "$env:SystemRoot\System32\taskkill.exe" /PID $ExpectedPid /T /F | Out-Null
+  if($LASTEXITCODE -ne 0){
+   & sc.exe config RAIOS-C5 start= auto | Out-Null
+   throw 'C5_BOOTSTRAP_OWNED_PROCESS_TERMINATION_FAILED'
+  }
+
+  $deadline=[DateTimeOffset]::UtcNow.AddSeconds(30)
+  do{
+   Start-Sleep -Milliseconds 250
+   $svc=Get-CimInstance Win32_Service -Filter "Name='RAIOS-C5'" -ErrorAction SilentlyContinue
+   if($svc -and [string]$svc.State -eq 'Stopped'){break}
+  }while([DateTimeOffset]::UtcNow -lt $deadline)
+
+  if(-not $svc -or [string]$svc.State -ne 'Stopped'){
+   & sc.exe config RAIOS-C5 start= auto | Out-Null
+   throw 'C5_BOOTSTRAP_SERVICE_DID_NOT_REACH_STOPPED'
+  }
+
+  Write-DeployPhase 'BOOTSTRAP_NONSTOPPABLE_SERVICE_STOPPED' @{service_pid=$ExpectedPid}
+  return 'OWNED_BOOTSTRAP_TERMINATION'
 }
 
 function Copy-Atomic([string]$SourcePath,[string]$TargetPath){
@@ -226,9 +288,8 @@ try{
  Write-DeployPhase 'CUTOVER_BEGIN'
  if((Get-Service RAIOS-C5).Status -ne 'Stopped'){
   Write-DeployPhase 'SERVICE_STOP_BEGIN'
-  Stop-Service RAIOS-C5 -Force
-  (Get-Service RAIOS-C5).WaitForStatus('Stopped',[TimeSpan]::FromSeconds(30))
-  Write-DeployPhase 'SERVICE_STOP_PASS'
+  $stopMode=Stop-RaiosC5ForDeploy -ExpectedPid $beforePid -ExpectedPath $beforePath
+  Write-DeployPhase 'SERVICE_STOP_PASS' @{mode=$stopMode}
  }
 
  Write-DeployPhase 'COPY_SERVICE_BINARY'
@@ -401,6 +462,7 @@ try{
  $tmp=$Receipt+'.tmp-'+[guid]::NewGuid().ToString('N')
  $receipt|ConvertTo-Json -Depth 8|Set-Content -LiteralPath $tmp -Encoding UTF8
  Move-Item -LiteralPath $tmp -Destination $Receipt -Force
+ Remove-Item -LiteralPath $MaintenanceIntent -Force -ErrorAction SilentlyContinue
  Remove-Item -LiteralPath $RollbackRoot -Recurse -Force -ErrorAction SilentlyContinue
  $receipt|ConvertTo-Json -Compress
  exit 0
@@ -452,6 +514,7 @@ catch{
   if(Test-Path -LiteralPath $liveBak){Copy-Item -LiteralPath $liveBak -Destination $Live -Force}
   Restore-RuntimeFiles -Backups $runtimeBackups
   & sc.exe config RAIOS-C5 binPath= $beforePath start= auto | Out-Null
+  Remove-Item -LiteralPath $MaintenanceIntent -Force -ErrorAction SilentlyContinue
   if($beforeState -eq 'Running'){
    Start-Service RAIOS-C5
    (Get-Service RAIOS-C5).WaitForStatus('Running',[TimeSpan]::FromSeconds(30))
