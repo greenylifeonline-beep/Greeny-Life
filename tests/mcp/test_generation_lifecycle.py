@@ -14,6 +14,7 @@ ENSURE = ROOT / "scripts" / "ai-os" / "raios_mcp_local_ensure.ps1"
 SERVER = ROOT / "scripts" / "ai-os" / "raios_mcp" / "server.py"
 GATEWAY = ROOT / "scripts" / "ai-os" / "raios_mcp" / "gateway.py"
 POLICY = ROOT / ".ai-os" / "mcp" / "POLICY.json"
+MAINTAIN = ROOT / "scripts" / "runtime" / "Maintain-RAIOS-Online.ps1"
 
 
 def _projection(profile: Path, *, active_pid: int = 111) -> Path:
@@ -239,6 +240,19 @@ def test_mcp_ensure_powershell_parses_on_available_windows_shell():
         timeout=20,
     )
     assert proc.returncode == 0, proc.stderr or proc.stdout
+
+
+def test_generation_orphan_repair_bypasses_generic_maintenance_cooldown():
+    text = MAINTAIN.read_text(encoding="utf-8")
+
+    assert "$mcpGenerationDegraded = [bool](" in text
+    assert "$mcp.generation_handoff_complete -ne $true" in text
+    assert "[string]$mcp.generation_singleton_verdict -ne 'PASS'" in text
+    assert "[int]$mcp.generation_orphan_count -gt 0" in text
+    assert "$mcp.generation_duplicate_mcp -eq $true" in text
+    assert "$mcpGenerationDegraded -or" in text
+    assert 'Mark-Phase "MCP_GENERATION_REPAIR_BYPASS_COOLDOWN"' in text
+    assert 'Invoke-BoundedRecovery "MCP_REPAIR" $mcpEnsure @("-Port","8788") 120' in text
 
 
 def test_runtime_truth_precedence_is_machine_readable():
