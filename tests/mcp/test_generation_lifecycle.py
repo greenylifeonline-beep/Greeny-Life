@@ -242,6 +242,23 @@ def test_mcp_ensure_powershell_parses_on_available_windows_shell():
     assert proc.returncode == 0, proc.stderr or proc.stdout
 
 
+def test_prior_orphan_is_reconciled_before_new_promotion_can_overwrite_projection():
+    text = ENSURE.read_text(encoding="utf-8")
+
+    assert "function Repair-RaiosPriorGenerationOrphans" in text
+    assert "PRE_PROMOTION_RETIRE_PROVEN_PRIOR_ORPHAN" in text
+    assert "PRE_PROMOTION_ORPHAN_REPAIR" in text
+    assert "MCP_PRIOR_GENERATION_ORPHAN_UNRESOLVED" in text
+    assert "GENERATION_PRIOR_ORPHAN_REPAIR" in text
+    assert "historical_generation_head=$priorHead" in text
+    assert "Test-RaiosOwnedLaunchCandidate $owner $orphanPid $activePid $priorHead" in text
+    assert "Test-RaiosMcpHealthyForHead $activeHealthAfter $priorHead" in text
+
+    call = text.index("$PriorRepair = Repair-RaiosPriorGenerationOrphans")
+    identity = text.index("$Info = Get-RaiosProcessInfo $OwningPid", call)
+    assert call < identity
+
+
 def test_generation_orphan_repair_bypasses_generic_maintenance_cooldown():
     text = MAINTAIN.read_text(encoding="utf-8")
 
