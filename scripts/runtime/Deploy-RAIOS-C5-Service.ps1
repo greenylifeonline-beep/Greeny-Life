@@ -27,7 +27,7 @@ $PhasePath=Join-Path $Root 'service-deploy-phase.json'
 $FailurePath=Join-Path $Root 'service-deploy-failure.json'
 $script:CurrentDeployPhase='BOOTSTRAP'
 
-function Write-DeployPhase([string]$Name,[hashtable]$Extra=$null){
+function Write-DeployPhase([string]$Name,[System.Collections.IDictionary]$Extra=$null){
  $script:CurrentDeployPhase=$Name
  try{
   $o=[ordered]@{schema='raios.c5.service-deploy.phase.v1';observed_at=[DateTimeOffset]::UtcNow.ToString('o');phase=$Name;pid=$PID}
