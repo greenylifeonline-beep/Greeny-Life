@@ -122,3 +122,95 @@ def test_invalid_external_profile_shape_is_structured(tmp_path):
         gateway(tmp_path)._actor_from_external_binding(digest)
 
     assert caught.value.code == "CONNECTOR_CONTRACT_INVALID"
+
+
+def test_malformed_binding_deadline_fails_row_closed(tmp_path):
+    digest = "c" * 64
+    write_contract(
+        tmp_path,
+        {
+            "CHATGPT_NATIVE": {
+                "principal": "CHATGPT_NATIVE_DELEGATE",
+                "actor_role": "EXTERNAL_DELEGATED_CLIENT",
+                "instance_role": "chatgpt-native",
+                "tools": ["get_head"],
+                "scopes": ["get_head"],
+                "deny": [],
+                "seat": False,
+            }
+        },
+    )
+    write_state(
+        tmp_path,
+        {
+            "bindings": [
+                {
+                    "fingerprint_sha256": digest,
+                    "status": "ACTIVE",
+                    "connector_id": "CHATGPT_NATIVE",
+                    "principal": "CHATGPT_NATIVE_DELEGATE",
+                    "expires_at": "not-a-date",
+                }
+            ],
+            "pending": [],
+        },
+    )
+
+    assert gateway(tmp_path)._actor_from_external_binding(digest) is None
+
+
+def test_external_connector_health_is_non_secret_and_counts_state(tmp_path):
+    write_contract(
+        tmp_path,
+        {
+            "CHATGPT_NATIVE": {
+                "principal": "CHATGPT_NATIVE_DELEGATE",
+                "tools": ["get_head"],
+                "scopes": ["get_head"],
+                "deny": [],
+                "seat": False,
+            },
+            "GENERIC_AGENT": {
+                "principal": "GENERIC_AGENT_DELEGATE",
+                "tools": ["get_head"],
+                "scopes": ["get_head"],
+                "deny": [],
+                "seat": False,
+            },
+        },
+    )
+    write_state(
+        tmp_path,
+        {
+            "bindings": [
+                {
+                    "fingerprint_sha256": "d" * 64,
+                    "status": "ACTIVE",
+                    "connector_id": "CHATGPT_NATIVE",
+                    "principal": "CHATGPT_NATIVE_DELEGATE",
+                },
+                {
+                    "fingerprint_sha256": "e" * 64,
+                    "status": "GRACE",
+                    "connector_id": "GENERIC_AGENT",
+                    "principal": "GENERIC_AGENT_DELEGATE",
+                },
+            ],
+            "pending": [{"status": "PENDING"}],
+        },
+    )
+
+    health = gateway(tmp_path).external_connector_health()
+
+    assert health == {
+        "state_valid": True,
+        "contract_valid": True,
+        "binding_count": 2,
+        "pending_count": 1,
+        "active_binding_count": 2,
+        "chatgpt_native_binding_active": True,
+        "error": None,
+        "profile_count": 2,
+    }
+    assert "fingerprint" not in json.dumps(health).lower()
+    assert "delegate" not in json.dumps(health).lower()
