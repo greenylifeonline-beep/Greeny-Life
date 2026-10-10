@@ -51,6 +51,33 @@ function Test-PowerShellSource([string]$Path,[int]$TimeoutSeconds=15){
  }
 }
 
+function Read-JsonObjectSafe([string]$Path){
+ try{
+  if(-not(Test-Path -LiteralPath $Path)){return $null}
+  $raw=Get-Content -LiteralPath $Path -Raw
+  if([string]::IsNullOrWhiteSpace($raw)){return $null}
+  $obj=$raw|ConvertFrom-Json
+  if($null -eq $obj){return $null}
+  if($obj -is [System.Collections.IDictionary]){
+   $copy=[pscustomobject]@{}
+   foreach($k in @($obj.Keys)){
+    $copy|Add-Member -MemberType NoteProperty -Name ([string]$k) -Value $obj[$k] -Force
+   }
+   return $copy
+  }
+  return $obj
+ }catch{return $null}
+}
+
+function Get-JsonProp($Object,[string]$Name,$Default=$null){
+ if($null -eq $Object){return $Default}
+ try{
+  $p=$Object.PSObject.Properties[$Name]
+  if($null -eq $p){return $Default}
+  return $p.Value
+ }catch{return $Default}
+}
+
 function Copy-Atomic([string]$SourcePath,[string]$TargetPath){
  $dir=Split-Path $TargetPath
  [IO.Directory]::CreateDirectory($dir)|Out-Null
@@ -237,16 +264,20 @@ try{
  $state=$null;$dcrState=$null;$laneState=$null;$generation=$null;$shape=$null;$nativeReady=$false;$svc=$null
  do{
   Start-Sleep -Seconds 2
-  try{$state=Get-Content (Join-Path $Root 'state.json') -Raw|ConvertFrom-Json}catch{$state=$null}
-  try{$dcrState=Get-Content 'C:\Users\Ghanam\.raios\runtime\remote-access\rdc-system-direct\rdc-supervisor-state.json' -Raw|ConvertFrom-Json}catch{$dcrState=$null}
-  try{$laneState=Get-Content (Join-Path $Root 'user-lane-state.json') -Raw|ConvertFrom-Json}catch{$laneState=$null}
-  try{$generation=Get-Content $GenerationState -Raw|ConvertFrom-Json}catch{$generation=$null}
+  $state=Read-JsonObjectSafe (Join-Path $Root 'state.json')
+  $dcrState=Read-JsonObjectSafe 'C:\Users\Ghanam\.raios\runtime\remote-access\rdc-system-direct\rdc-supervisor-state.json'
+  $laneState=Read-JsonObjectSafe (Join-Path $Root 'user-lane-state.json')
+  $generation=Read-JsonObjectSafe $GenerationState
   $svc=Get-CimInstance Win32_Service -Filter "Name='RAIOS-C5'"
   $nativeReady=Test-NativeMcpTunnelReady
   $shape=Get-NativeShape
   $svcPid=[int]$(if($svc){$svc.ProcessId}else{0})
-  $dcrOwned=[bool]($dcrState -and [int]$dcrState.owner_pid -eq $svcPid)
-  $dcrShapeOk=[bool]($dcrState -and @($dcrState.owned_remote_pids).Count -eq 1 -and @($dcrState.owned_local_mcp_pids).Count -eq 1 -and @($dcrState.legacy_remote_pids).Count -eq 0)
+  $dcrOwnerPid=[int](Get-JsonProp $dcrState 'owner_pid' 0)
+  $dcrOwnedRemote=@(Get-JsonProp $dcrState 'owned_remote_pids' @())
+  $dcrOwnedLocal=@(Get-JsonProp $dcrState 'owned_local_mcp_pids' @())
+  $dcrLegacyRemote=@(Get-JsonProp $dcrState 'legacy_remote_pids' @())
+  $dcrOwned=[bool]($null -ne $dcrState -and $dcrOwnerPid -eq $svcPid)
+  $dcrShapeOk=[bool]($null -ne $dcrState -and $dcrOwnedRemote.Count -eq 1 -and $dcrOwnedLocal.Count -eq 1 -and $dcrLegacyRemote.Count -eq 0)
   $imageOk=[bool]($svc -and ([string]$svc.PathName).Trim('"') -eq $Live)
   $runtimeAligned=[bool](
     (Get-FileHash $UserLane -Algorithm SHA256).Hash -eq (Get-FileHash $RuntimeUserLane -Algorithm SHA256).Hash -and
@@ -254,8 +285,22 @@ try{
     (Get-FileHash $Checkpoint -Algorithm SHA256).Hash -eq (Get-FileHash $RuntimeCheckpoint -Algorithm SHA256).Hash -and
     (Get-FileHash $NativeLauncher -Algorithm SHA256).Hash -eq (Get-FileHash $RuntimeNativeLauncher -Algorithm SHA256).Hash
   )
-  $laneOk=[bool]($laneState -and $laneState.role -eq 'INTERACTIVE_SESSION_ADAPTER' -and $laneState.control_authority -eq 'RAIOS-C5-SCM' -and $laneState.can_start_dcr_supervisor -eq $false -and $laneState.can_start_native_tunnel -eq $false -and $laneState.can_promote_source -eq $false)
-  $generationOk=[bool]($generation -and $generation.role -eq 'LEADER' -and $generation.authority -eq 'RAIOS-C5-SCM' -and [int]$generation.service_pid -eq $svcPid -and $generation.acceptance -eq 'PASS' -and $generation.ok -eq $true)
+  $laneOk=[bool](
+    $null -ne $laneState -and
+    [string](Get-JsonProp $laneState 'role' '') -eq 'INTERACTIVE_SESSION_ADAPTER' -and
+    [string](Get-JsonProp $laneState 'control_authority' '') -eq 'RAIOS-C5-SCM' -and
+    [bool](Get-JsonProp $laneState 'can_start_dcr_supervisor' $true) -eq $false -and
+    [bool](Get-JsonProp $laneState 'can_start_native_tunnel' $true) -eq $false -and
+    [bool](Get-JsonProp $laneState 'can_promote_source' $true) -eq $false
+  )
+  $generationOk=[bool](
+    $null -ne $generation -and
+    [string](Get-JsonProp $generation 'role' '') -eq 'LEADER' -and
+    [string](Get-JsonProp $generation 'authority' '') -eq 'RAIOS-C5-SCM' -and
+    [int](Get-JsonProp $generation 'service_pid' 0) -eq $svcPid -and
+    [string](Get-JsonProp $generation 'acceptance' '') -eq 'PASS' -and
+    [bool](Get-JsonProp $generation 'ok' $false) -eq $true
+  )
   $ok=[bool](
     $svc -and $svc.State -eq 'Running' -and $svcPid -gt 4 -and $imageOk -and $runtimeAligned -and
     $state -and $state.status -eq 'ONLINE' -and $state.control_authority -eq 'RAIOS-C5-SCM' -and
