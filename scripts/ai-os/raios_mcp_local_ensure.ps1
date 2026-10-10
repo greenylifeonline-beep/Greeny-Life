@@ -394,7 +394,9 @@ function Test-RaiosOwnedLaunchCandidate($Owner,[int]$CandidatePid,[int]$ActivePi
     if (-not $Owner.launcher_pid -or [int]$Owner.launcher_pid -ne $CandidatePid) { return $false }
     if (-not $Owner.listener_pid -or [int]$Owner.listener_pid -ne $ActivePid) { return $false }
     $proofHead = $(if ($ExpectedCanonicalHead) { $ExpectedCanonicalHead } else { [string]$env:RAIOS_CANONICAL_HEAD })
-    if ($proofHead -notmatch '^[0-9a-fA-F]{40}    $serviceGeneration = Get-RaiosC5GenerationId
+    if ($proofHead -notmatch '^[0-9a-fA-F]{40}$') { return $false }
+    if ([string]$Owner.canonical_head -ne $proofHead) { return $false }
+    $serviceGeneration = Get-RaiosC5GenerationId
     if (-not $serviceGeneration -or [string]$Owner.service_generation -ne $serviceGeneration) { return $false }
 
     $info = Get-RaiosProcessInfo $CandidatePid
@@ -416,33 +418,8 @@ function Test-RaiosOwnedLaunchCandidate($Owner,[int]$CandidatePid,[int]$ActivePi
     return $true
 }
 
-function Repair-RaiosPriorGenerationOrphans {
-    if (-not (Test-Path -LiteralPath $LifecycleProjection)) {
-        return [pscustomobject]@{had_orphans=$false;complete=$true;repaired=@();remaining=@();reason='NO_PROJECTION'}
-    }
-    try {
-        $prior = Get-Content -LiteralPath $LifecycleProjection -Raw -ErrorAction Stop | ConvertFrom-Json
-    } catch {
-        return [pscustomobject]@{had_orphans=$false;complete=$true;repaired=@();remaining=@();reason='PROJECTION_UNREADABLE'}
-    }
-    if ([string]$prior.schema -ne 'raios.mcp-generation-handoff.v1') {
-        return [pscustomobject]@{had_orphans=$false;complete=$true;repaired=@();remaining=@();reason='PROJECTION_SCHEMA_OTHER'}
-    }
-
-    $priorOrphans = @($prior.orphan_pids | ForEach-Object { [int]$_ } | Where-Object { $_ -gt 4 } | Select-Object -Unique)
-    if ($priorOrphans.Count -eq 0) {
-        return [pscustomobject]@{had_orphans=$false;complete=$true;repaired=@();remaining=@();reason='NO_PRIOR_ORPHANS'}
-    }
-
-    $priorHead = [string]$prior.canonical_head
-    $activePid = [int]$prior.active_pid
-    $candidatePid = [int]$prior.candidate_pid
-    $owner = Read-RaiosOwnerManifest
-    $listeners = @(Get-RaiosListenPids $Port)
-    $activeInfo = Get-RaiosProcessInfo $activePid
-    $activeHealth = Get-RaiosMcpHealth $HealthUrl 2
-    $activeProof = [bool](
-        $priorHead -match '^[0-9a-fA-F]{40}    [string]$State,
+function New-RaiosCandidateResolution(
+    [string]$State,
     [string]$Relationship,
     [bool]$RetirementAttempted = $false,
     [bool]$RetirementProven = $false,
@@ -559,6 +536,189 @@ function Resolve-RaiosCandidateLifecycle([int]$CandidatePid,[int]$ActivePid) {
         $event.error_type = $_.Exception.GetType().Name
         Write-RaiosBoundedLifecycle -Value $event
         return New-RaiosCandidateResolution -State 'ORPHAN' -Relationship 'OWNED_NON_LISTENER' -RetirementAttempted $true -RetirementReason 'RETIREMENT_EXCEPTION'
+    }
+}
+
+function Repair-RaiosPriorGenerationOrphans {
+    if (-not (Test-Path -LiteralPath $LifecycleProjection)) {
+        return [pscustomobject]@{had_orphans=$false;complete=$true;repaired=@();remaining=@();reason='NO_PROJECTION'}
+    }
+    try {
+        $prior = Get-Content -LiteralPath $LifecycleProjection -Raw -ErrorAction Stop | ConvertFrom-Json
+    } catch {
+        return [pscustomobject]@{had_orphans=$false;complete=$true;repaired=@();remaining=@();reason='PROJECTION_UNREADABLE'}
+    }
+    if ([string]$prior.schema -ne 'raios.mcp-generation-handoff.v1') {
+        return [pscustomobject]@{had_orphans=$false;complete=$true;repaired=@();remaining=@();reason='PROJECTION_SCHEMA_OTHER'}
+    }
+
+    $priorOrphans = @(
+        $prior.orphan_pids |
+        ForEach-Object { [int]$_ } |
+        Where-Object { $_ -gt 4 } |
+        Select-Object -Unique
+    )
+    if ($priorOrphans.Count -eq 0) {
+        return [pscustomobject]@{had_orphans=$false;complete=$true;repaired=@();remaining=@();reason='NO_PRIOR_ORPHANS'}
+    }
+
+    $priorHead = [string]$prior.canonical_head
+    $activePid = [int]$prior.active_pid
+    $candidatePid = [int]$prior.candidate_pid
+    $owner = Read-RaiosOwnerManifest
+    $serviceGeneration = Get-RaiosC5GenerationId
+    $listeners = @(Get-RaiosListenPids $Port)
+    $activeInfo = Get-RaiosProcessInfo $activePid
+    $activeHealth = Get-RaiosMcpHealth $HealthUrl 2
+
+    $activeProof = [bool](
+        $priorHead -match '^[0-9a-fA-F]{40}$' -and
+        $owner -and
+        [int]$owner.listener_pid -eq $activePid -and
+        [string]$owner.canonical_head -eq $priorHead -and
+        $serviceGeneration -and
+        [string]$owner.service_generation -eq [string]$serviceGeneration -and
+        $listeners.Count -eq 1 -and
+        [int]$listeners[0] -eq $activePid -and
+        $activeInfo -and
+        (Test-RaiosMcpHealthyForHead $activeHealth $priorHead)
+    )
+    if (-not $activeProof) {
+        return [pscustomobject]@{
+            had_orphans=$true;complete=$false;repaired=@();remaining=$priorOrphans;
+            reason='PRIOR_ACTIVE_PROOF_FAILED'
+        }
+    }
+
+    $repaired = New-Object System.Collections.Generic.List[int]
+    $remaining = New-Object System.Collections.Generic.List[int]
+
+    foreach ($orphanPid in $priorOrphans) {
+        if (-not (Test-RaiosPidAlive $orphanPid)) {
+            [void]$repaired.Add($orphanPid)
+            continue
+        }
+
+        $lineage = Get-RaiosParentLineageProof $activePid
+        if (@($lineage.pids) -contains $orphanPid) {
+            [void]$remaining.Add($orphanPid)
+            continue
+        }
+
+        $owned = [bool](
+            $orphanPid -eq $candidatePid -and
+            (Test-RaiosOwnedLaunchCandidate $owner $orphanPid $activePid $priorHead)
+        )
+        if (-not $owned) {
+            [void]$remaining.Add($orphanPid)
+            continue
+        }
+
+        $event = [ordered]@{
+            schema='raios.mcp-generation-retirement.v2'
+            observed_at=[DateTimeOffset]::UtcNow.ToString('o')
+            authority='RAIOS-C5-SCM'
+            canonical_head=[string]$env:RAIOS_CANONICAL_HEAD
+            historical_generation_head=$priorHead
+            candidate_pid=$orphanPid
+            active_pid=$activePid
+            action='PRE_PROMOTION_RETIRE_PROVEN_PRIOR_ORPHAN'
+            result='STARTED'
+        }
+
+        try {
+            Stop-Process -Id $orphanPid -Force -ErrorAction Stop
+            for ($i = 0; $i -lt 40; $i++) {
+                Start-Sleep -Milliseconds 250
+                if (-not (Test-RaiosPidAlive $orphanPid)) { break }
+            }
+            if (Test-RaiosPidAlive $orphanPid) {
+                $event.result='FAILED_STILL_ALIVE'
+                Write-RaiosBoundedLifecycle -Value $event
+                [void]$remaining.Add($orphanPid)
+                continue
+            }
+
+            $listenersAfter = @(Get-RaiosListenPids $Port)
+            $activeHealthAfter = Get-RaiosMcpHealth $HealthUrl 2
+            $activeAfter = Get-RaiosProcessInfo $activePid
+            $activeStillProven = [bool](
+                $activeAfter -and
+                $listenersAfter.Count -eq 1 -and
+                [int]$listenersAfter[0] -eq $activePid -and
+                (Test-RaiosMcpHealthyForHead $activeHealthAfter $priorHead)
+            )
+            $event.active_proven_after=$activeStillProven
+
+            if (-not $activeStillProven) {
+                $event.result='RETIRED_ACTIVE_REVERIFY_FAILED'
+                Write-RaiosBoundedLifecycle -Value $event
+                [void]$remaining.Add($orphanPid)
+                continue
+            }
+
+            $event.result='RETIRED'
+            Write-RaiosBoundedLifecycle -Value $event
+            [void]$repaired.Add($orphanPid)
+        } catch {
+            $event.result='FAILED_EXCEPTION'
+            $event.error_type=$_.Exception.GetType().Name
+            Write-RaiosBoundedLifecycle -Value $event
+            [void]$remaining.Add($orphanPid)
+        }
+    }
+
+    $remainingUnique = @($remaining | Select-Object -Unique)
+    $complete = [bool]($remainingUnique.Count -eq 0)
+
+    if ($complete) {
+        $repairedPids = @($repaired)
+        if (
+            $prior.previous_pid -and
+            $repairedPids -contains [int]$prior.previous_pid -and
+            -not (Test-RaiosPidAlive ([int]$prior.previous_pid))
+        ) {
+            $prior.previous_state = 'RETIRED'
+        }
+        if (
+            $prior.candidate_pid -and
+            $repairedPids -contains [int]$prior.candidate_pid -and
+            -not (Test-RaiosPidAlive ([int]$prior.candidate_pid))
+        ) {
+            $prior.candidate_state = 'RETIRED'
+            $prior.candidate_relationship = 'PRIOR_OWNED_ORPHAN_RETIRED_BEFORE_PROMOTION'
+            $prior.candidate_retirement_attempted = $true
+            $prior.candidate_retirement_proven = $true
+            $prior.candidate_retirement_reason = 'PRE_PROMOTION_AUTO_RETIRED_PROVEN_ORPHAN'
+            $prior.candidate_active_reverified = $true
+            $prior.candidate_handoff_safe = $true
+        }
+
+        $prior.repair_applied = $true
+        $prior.orphan_generation_count = 0
+        $prior.orphan_pids = @()
+        $prior.active_state = 'ACTIVE'
+        $prior.active_listener_count = 1
+        $prior.active_listener_match = $true
+        $prior.duplicate_mcp = $false
+        $prior.owner_head_match = $true
+        $prior.service_generation = $serviceGeneration
+        $prior.service_generation_match = $true
+        $prior.handoff_complete = $true
+        $prior.singleton_verdict = 'PASS'
+        $prior.verification_reason = 'PRE_PROMOTION_ORPHAN_REPAIR'
+        $prior.observed_at = [DateTimeOffset]::UtcNow.ToString('o')
+
+        Write-RaiosAtomicJson -Path $LifecycleProjection -Value $prior
+        Write-RaiosBoundedLifecycle -Value $prior
+    }
+
+    return [pscustomobject]@{
+        had_orphans=$true
+        complete=$complete
+        repaired=@($repaired)
+        remaining=$remainingUnique
+        reason=$(if($complete){'PRIOR_ORPHANS_RETIRED'}else{'PRIOR_ORPHANS_UNRESOLVED'})
     }
 }
 
@@ -852,1404 +1012,8 @@ Write-Output "GENERATION_ACTIVE_STATE=$($Handoff.active_state)"
 Write-Output "GENERATION_HANDOFF_COMPLETE=$($Handoff.handoff_complete)"
 Write-Output "GENERATION_SINGLETON_VERDICT=$($Handoff.singleton_verdict)"
 Write-Output "GENERATION_ORPHAN_COUNT=$($Handoff.orphan_generation_count)"
-Write-Output "GENERATION_DUPLICATE_MCP=$($Handoff.duplicate_mcp)"
-Write-Output "HEALTH=$HealthUrl"
-Write-Output "GL005_PROVEN=$($Health.gl005_proven)"
-Write-Output "NINTH_TOOL=$($Health.ninth_tool)"
-Write-Output "SECOND_GATEWAY=$($Health.second_gateway)"
-Write-Output "LAUNCH_SOURCE_SHA256=$($SourceFingerprint.fingerprint)"
-Write-Output "C5_GENERATION=$GenerationId"
-) { return $false }
-    if ([string]$Owner.canonical_head -ne $proofHead) { return $false }
-    $serviceGeneration = Get-RaiosC5GenerationId
-    if (-not $serviceGeneration -or [string]$Owner.service_generation -ne $serviceGeneration) { return $false }
-
-    $info = Get-RaiosProcessInfo $CandidatePid
-    if ($null -eq $info) { return $false }
-    $started = Get-RaiosProcessStartUtc $CandidatePid $info
-    if (-not (Test-RaiosSameInstant $started ([string]$Owner.launcher_creation_time))) { return $false }
-
-    $expectedCmd = [string]$Owner.launcher_command_line
-    $liveCmd = [string]$info.CommandLine
-    if ([string]::IsNullOrWhiteSpace($liveCmd)) {
-        if ([string]$info.Name -notmatch '(?i)^python(w)?\.exe$') { return $false }
-        if ($expectedCmd -notmatch 'raios_mcp[\\/]server\.py') { return $false }
-    } elseif ($liveCmd.Trim() -ne $expectedCmd.Trim()) {
-        return $false
-    }
-
-    $listeners = @(Get-RaiosListenPids $Port)
-    if ($listeners -contains $CandidatePid) { return $false }
-    return $true
-}
-
-function New-RaiosCandidateResolution(
-    [string]$State,
-    [string]$Relationship,
-    [bool]$RetirementAttempted = $false,
-    [bool]$RetirementProven = $false,
-    [string]$RetirementReason = $null,
-    [bool]$ActiveReverified = $false,
-    [bool]$HandoffSafe = $false
-) {
-    return [pscustomobject][ordered]@{
-        state = $State
-        relationship = $Relationship
-        retirement_attempted = $RetirementAttempted
-        retirement_proven = $RetirementProven
-        retirement_reason = $RetirementReason
-        active_reverified = $ActiveReverified
-        handoff_safe = $HandoffSafe
-    }
-}
-
-function Resolve-RaiosCandidateLifecycle([int]$CandidatePid,[int]$ActivePid) {
-    if ($CandidatePid -le 4) {
-        return New-RaiosCandidateResolution -State 'NONE' -Relationship 'NONE' -HandoffSafe $true
-    }
-    if ($CandidatePid -eq $ActivePid) {
-        return New-RaiosCandidateResolution -State 'ACTIVE' -Relationship 'ACTIVE_LISTENER' -ActiveReverified $true -HandoffSafe $true
-    }
-    if (-not (Test-RaiosPidAlive $CandidatePid)) {
-        return New-RaiosCandidateResolution -State 'SUPERSEDED' -Relationship 'EXITED' -RetirementProven $true -RetirementReason 'PROCESS_EXITED' -ActiveReverified $true -HandoffSafe $true
-    }
-
-    $lineage = Get-RaiosParentLineageProof $ActivePid
-    if (@($lineage.pids) -contains $CandidatePid) {
-        return New-RaiosCandidateResolution -State 'ACTIVE_LINEAGE_PARENT' -Relationship 'ACTIVE_LINEAGE_PARENT' -RetirementProven $true -RetirementReason 'REQUIRED_ACTIVE_LINEAGE' -ActiveReverified $true -HandoffSafe $true
-    }
-
-    # Ownership proof is stronger than ancestry completeness for a process that
-    # this ensure generation itself launched, recorded, and no longer owns the
-    # listening socket. Do not leave a proven owned non-listener orphan merely
-    # because Windows process ancestry is partially unreadable.
-    $owner = Read-RaiosOwnerManifest
-    $ownedCandidate = [bool](Test-RaiosOwnedLaunchCandidate $owner $CandidatePid $ActivePid)
-    if (-not $ownedCandidate) {
-        if (-not [bool]$lineage.complete) {
-            return New-RaiosCandidateResolution -State 'ORPHAN' -Relationship 'LINEAGE_AND_OWNERSHIP_UNPROVEN' -RetirementReason 'FAIL_CLOSED_LINEAGE_AND_OWNERSHIP_UNPROVEN'
-        }
-        return New-RaiosCandidateResolution -State 'ORPHAN' -Relationship 'UNPROVEN_PROCESS' -RetirementReason 'OWNERSHIP_NOT_PROVEN'
-    }
-
-    $activeInfoBefore = Get-RaiosProcessInfo $ActivePid
-    $listenersBefore = @(Get-RaiosListenPids $Port)
-    $healthBefore = Get-RaiosMcpHealth $HealthUrl 2
-    $activeProofBefore = [bool](
-        $activeInfoBefore -and
-        $listenersBefore.Count -eq 1 -and
-        [int]$listenersBefore[0] -eq $ActivePid -and
-        (Test-RaiosLaunchIdentity $activeInfoBefore $ActivePid $Port) -and
-        (Test-RaiosMcpHealthy $healthBefore)
-    )
-    if (-not $activeProofBefore) {
-        return New-RaiosCandidateResolution -State 'ORPHAN' -Relationship 'OWNED_NON_LISTENER_ACTIVE_PROOF_FAILED' -RetirementReason 'ACTIVE_LISTENER_PROOF_FAILED_BEFORE_RETIREMENT'
-    }
-
-    $event = [ordered]@{
-        schema = 'raios.mcp-generation-retirement.v2'
-        observed_at = [DateTimeOffset]::UtcNow.ToString('o')
-        authority = 'RAIOS-C5-SCM'
-        canonical_head = [string]$env:RAIOS_CANONICAL_HEAD
-        candidate_pid = $CandidatePid
-        active_pid = $ActivePid
-        lineage_complete = [bool]$lineage.complete
-        ownership_proven = $true
-        active_proven_before = $true
-        action = 'RETIRE_PROVEN_OWNED_NON_LISTENER_CANDIDATE'
-        result = 'STARTED'
-    }
-    try {
-        Stop-Process -Id $CandidatePid -Force -ErrorAction Stop
-        for ($i = 0; $i -lt 40; $i++) {
-            Start-Sleep -Milliseconds 250
-            if (-not (Test-RaiosPidAlive $CandidatePid)) { break }
-        }
-        if (Test-RaiosPidAlive $CandidatePid) {
-            $event.result = 'FAILED_STILL_ALIVE'
-            Write-RaiosBoundedLifecycle -Value $event
-            return New-RaiosCandidateResolution -State 'ORPHAN' -Relationship 'OWNED_NON_LISTENER' -RetirementAttempted $true -RetirementReason 'RETIREMENT_FAILED_STILL_ALIVE'
-        }
-
-        $activeInfoAfter = Get-RaiosProcessInfo $ActivePid
-        $listenersAfter = @(Get-RaiosListenPids $Port)
-        $healthAfter = Get-RaiosMcpHealth $HealthUrl 2
-        $activeProofAfter = [bool](
-            $activeInfoAfter -and
-            $listenersAfter.Count -eq 1 -and
-            [int]$listenersAfter[0] -eq $ActivePid -and
-            (Test-RaiosLaunchIdentity $activeInfoAfter $ActivePid $Port) -and
-            (Test-RaiosMcpHealthy $healthAfter)
-        )
-        $event.active_proven_after = $activeProofAfter
-        if (-not $activeProofAfter) {
-            $event.result = 'RETIRED_ACTIVE_REVERIFY_FAILED'
-            Write-RaiosBoundedLifecycle -Value $event
-            return New-RaiosCandidateResolution -State 'RETIRED' -Relationship 'OWNED_NON_LISTENER_RETIRED_ACTIVE_UNVERIFIED' -RetirementAttempted $true -RetirementProven $true -RetirementReason 'AUTO_RETIRED_BUT_ACTIVE_REVERIFY_FAILED'
-        }
-
-        $event.result = 'RETIRED'
-        Write-RaiosBoundedLifecycle -Value $event
-        $relationship = $(if ([bool]$lineage.complete) {
-            'OWNED_NON_LISTENER_RETIRED'
-        } else {
-            'OWNED_NON_LISTENER_RETIRED_WITH_INCOMPLETE_LINEAGE'
-        })
-        return New-RaiosCandidateResolution -State 'RETIRED' -Relationship $relationship -RetirementAttempted $true -RetirementProven $true -RetirementReason 'AUTO_RETIRED_PROVEN_ORPHAN' -ActiveReverified $true -HandoffSafe $true
-    } catch {
-        $event.result = 'FAILED_EXCEPTION'
-        $event.error_type = $_.Exception.GetType().Name
-        Write-RaiosBoundedLifecycle -Value $event
-        return New-RaiosCandidateResolution -State 'ORPHAN' -Relationship 'OWNED_NON_LISTENER' -RetirementAttempted $true -RetirementReason 'RETIREMENT_EXCEPTION'
-    }
-}
-
-function Write-RaiosGenerationHandoff([int]$CandidatePid,[int]$ActivePid,[string]$Reason) {
-    $owner = Read-RaiosOwnerManifest
-    $priorProjection = $null
-    if (Test-Path -LiteralPath $LifecycleProjection) {
-        try { $priorProjection = Get-Content -LiteralPath $LifecycleProjection -Raw | ConvertFrom-Json } catch { $priorProjection = $null }
-    }
-    $preserveTransition = [bool](
-        $Reason -eq "STEADY_STATE_VERIFY" -and
-        $priorProjection -and
-        [string]$priorProjection.schema -eq "raios.mcp-generation-handoff.v1" -and
-        [string]$priorProjection.transition_reason -ne "STEADY_STATE_VERIFY"
-    )
-
-    $effectivePreviousPid = [int]$script:TransitionPreviousPid
-    $effectiveCandidatePid = $CandidatePid
-    $reportedReason = $Reason
-    $verificationReason = $null
-    $reportedPreviousGeneration = $script:TransitionPreviousGeneration
-    $reportedPreviousStartedAt = $script:TransitionPreviousStartedAt
-    $reportedCandidateGeneration = $(if ($owner -and $owner.generation_id) { [string]$owner.generation_id } else { $null })
-
-    if ($preserveTransition) {
-        $reportedReason = [string]$priorProjection.transition_reason
-        $verificationReason = "STEADY_STATE_VERIFY"
-        if ($priorProjection.previous_pid) { $effectivePreviousPid = [int]$priorProjection.previous_pid }
-        if ($priorProjection.candidate_pid) { $effectiveCandidatePid = [int]$priorProjection.candidate_pid }
-        $reportedPreviousGeneration = $priorProjection.previous_generation_id
-        $reportedPreviousStartedAt = $priorProjection.previous_started_at
-        $reportedCandidateGeneration = $priorProjection.candidate_generation_id
-    }
-
-    $previousAlive = Test-RaiosPidAlive $effectivePreviousPid
-    $activeAlive = Test-RaiosPidAlive $ActivePid
-    $candidateResolution = Resolve-RaiosCandidateLifecycle -CandidatePid $effectiveCandidatePid -ActivePid $ActivePid
-    $candidateState = [string]$candidateResolution.state
-    $previousState = $(if ($effectivePreviousPid -le 4) { "NONE" } elseif ($effectivePreviousPid -eq $ActivePid) { "ACTIVE" } elseif ($previousAlive) { "ORPHAN" } else { "RETIRED" })
-    $activeState = $(if ($activeAlive) { "ACTIVE" } else { "MISSING" })
-
-    $listeners = @(Get-RaiosListenPids $Port)
-    $orphanPids = New-Object System.Collections.Generic.List[int]
-    if ($previousState -eq 'ORPHAN') { [void]$orphanPids.Add($effectivePreviousPid) }
-    if ($candidateState -eq 'ORPHAN' -and -not $orphanPids.Contains($effectiveCandidatePid)) { [void]$orphanPids.Add($effectiveCandidatePid) }
-
-    $ownerHead = $(if ($owner -and $owner.canonical_head) { [string]$owner.canonical_head } else { $null })
-    $ownerGeneration = $(if ($owner -and $owner.generation_id) { [string]$owner.generation_id } else { $null })
-    $ownerServiceGeneration = $(if ($owner -and $owner.service_generation) { [string]$owner.service_generation } else { $null })
-    $serviceGeneration = Get-RaiosC5GenerationId
-    $ownerHeadMatch = [bool]($ownerHead -and $ownerHead -eq [string]$env:RAIOS_CANONICAL_HEAD)
-    $serviceGenerationMatch = [bool]($ownerServiceGeneration -and $serviceGeneration -and $ownerServiceGeneration -eq $serviceGeneration)
-    $activeListenerMatch = [bool]($listeners.Count -eq 1 -and [int]$listeners[0] -eq $ActivePid)
-    $duplicateMcp = [bool]($listeners.Count -gt 1)
-    $candidateHandoffSafe = [bool]$candidateResolution.handoff_safe
-    $handoffComplete = [bool](
-        $activeAlive -and
-        $activeListenerMatch -and
-        -not $duplicateMcp -and
-        $orphanPids.Count -eq 0 -and
-        $candidateHandoffSafe -and
-        $ownerHeadMatch -and
-        $serviceGenerationMatch
-    )
-
-    $doc = [ordered]@{
-        schema = "raios.mcp-generation-handoff.v1"
-        observed_at = [DateTimeOffset]::UtcNow.ToString("o")
-        authority = "RAIOS-C5-SCM"
-        canonical_head = [string]$env:RAIOS_CANONICAL_HEAD
-        port = $Port
-        transition_reason = $reportedReason
-        verification_reason = $verificationReason
-        previous_pid = $(if ($effectivePreviousPid -gt 4) { $effectivePreviousPid } else { $null })
-        previous_generation_id = $reportedPreviousGeneration
-        previous_started_at = $reportedPreviousStartedAt
-        previous_state = $previousState
-        candidate_pid = $(if ($effectiveCandidatePid -gt 4) { $effectiveCandidatePid } else { $null })
-        candidate_generation_id = $reportedCandidateGeneration
-        candidate_state = $candidateState
-        candidate_relationship = [string]$candidateResolution.relationship
-        candidate_retirement_attempted = [bool]$candidateResolution.retirement_attempted
-        candidate_retirement_proven = [bool]$candidateResolution.retirement_proven
-        candidate_retirement_reason = $candidateResolution.retirement_reason
-        candidate_active_reverified = [bool]$candidateResolution.active_reverified
-        candidate_handoff_safe = [bool]$candidateResolution.handoff_safe
-        repair_applied = [bool]$candidateResolution.retirement_attempted
-        active_pid = $ActivePid
-        active_generation_id = $ownerGeneration
-        active_state = $activeState
-        active_listener_count = $listeners.Count
-        active_listener_match = $activeListenerMatch
-        duplicate_mcp = $duplicateMcp
-        orphan_generation_count = $orphanPids.Count
-        orphan_pids = @($orphanPids)
-        owner_head_match = $ownerHeadMatch
-        service_generation = $serviceGeneration
-        service_generation_match = $serviceGenerationMatch
-        handoff_complete = $handoffComplete
-        singleton_verdict = $(if ($handoffComplete) { "PASS" } elseif ($duplicateMcp) { "FAIL_DUPLICATE_LISTENER" } elseif ($orphanPids.Count -gt 0) { "FAIL_ORPHAN_GENERATION" } else { "FAIL_INCOMPLETE_HANDOFF" })
-    }
-    Write-RaiosAtomicJson -Path $LifecycleProjection -Value $doc
-    Write-RaiosBoundedLifecycle -Value $doc
-    return [pscustomobject]$doc
-}
-
-function Stop-RaiosListenPid([int]$ProcId) {
-    if ($ProcId -le 4) { throw "Refusing unsafe listener PID $ProcId." }
-    Stop-Process -Id $ProcId -Force -ErrorAction Stop
-    for ($i = 0; $i -lt 40; $i++) {
-        Start-Sleep -Milliseconds 250
-        if (-not (Get-Process -Id $ProcId -ErrorAction SilentlyContinue)) { return }
-    }
-    throw "RAIOS_MCP_PROCESS_DID_NOT_STOP::$ProcId"
-}
-
-$Repo = (Resolve-Path (Join-Path $PSScriptRoot "..\..")).Path
-$PythonCandidates = @(
-    (Join-Path (Get-RaiosProfileRoot) ".raios\runtime\c5\.venv\Scripts\python.exe"),
-    (Join-Path $Repo ".venv\Scripts\python.exe")
-)
-$Python = $PythonCandidates | Where-Object { Test-Path $_ } | Select-Object -First 1
-$Server = Join-Path $Repo "scripts\ai-os\raios_mcp\server.py"
-$ReceiptDir = Join-Path $Repo ".ai-os\receipts\command-fabric"
-$OwnerDir = Join-Path (Get-RaiosProfileRoot) ".raios\runtime\mcp"
-$OwnerManifest = Join-Path $OwnerDir "universal-mcp-owner.json"
-$LifecycleProjection = Join-Path $OwnerDir "generation-handoff.json"
-$LifecycleLedger = Join-Path $OwnerDir "generation-lifecycle.jsonl"
-$script:TransitionPreviousPid = 0
-$script:TransitionPreviousGeneration = $null
-$script:TransitionPreviousStartedAt = $null
-$script:TransitionReason = "INITIAL_START"
-$HealthUrl = "http://127.0.0.1:$Port/health"
-
-if ($Port -ne 8788) { throw "MCP_CENSUS_PORT_IS_8788 refused port=$Port (no second gateway)" }
-if (-not (Test-Path $Python)) { throw "Missing Python: $Python" }
-if (-not (Test-Path $Server)) { throw "Missing MCP server: $Server" }
-New-Item -ItemType Directory -Force -Path $ReceiptDir | Out-Null
-
-$env:RAIOS_CANONICAL_HEAD = ""
-$GitDir = Join-Path $Repo ".git"
-$raw = (Get-Content -LiteralPath (Join-Path $GitDir "HEAD") -TotalCount 1 -ErrorAction Stop).Trim()
-if ($raw -match '^ref:\s*(refs/[A-Za-z0-9_./-]+)$') {
-    $ref = $Matches[1]
-    if (@($ref -split '/') -contains '..') { throw "INVALID_CANONICAL_REF" }
-    $refPath = Join-Path $GitDir ($ref -replace '/', '\')
-    if (Test-Path -LiteralPath $refPath) {
-        $env:RAIOS_CANONICAL_HEAD = (Get-Content -LiteralPath $refPath -TotalCount 1 -ErrorAction Stop).Trim()
-    } else {
-        foreach ($line in (Get-Content -LiteralPath (Join-Path $GitDir "packed-refs") -ErrorAction Stop)) {
-            if ($line -match '^([0-9a-fA-F]{40}) (.+)$' -and $Matches[2] -eq $ref) {
-                $env:RAIOS_CANONICAL_HEAD = $Matches[1]
-                break
-            }
-        }
-    }
-} elseif ($raw -match '^[0-9a-fA-F]{40}$') {
-    $env:RAIOS_CANONICAL_HEAD = $raw
-}
-if ($env:RAIOS_CANONICAL_HEAD -notmatch '^[0-9a-fA-F]{40}$') { throw "LIVE_CANONICAL_GIT_HEAD_REQUIRED" }
-
-$ListenPids = @(Get-RaiosListenPids $Port)
-if ($ListenPids.Count -gt 1) {
-    $ownership_proven = $false
-    throw "MCP_LIVE_BUT_UNOWNED port=$Port reason=REJECT_COMPETING_LISTENER"
-}
-$OwningPid = if ($ListenPids.Count -eq 1) { [int]$ListenPids[0] } else { $null }
-if ($OwningPid) {
-    $Info = Get-RaiosProcessInfo $OwningPid
-    $Health = Get-RaiosMcpHealth $HealthUrl 2
-    if ($null -eq $Info) { throw "MCP_LAUNCH_IDENTITY_UNREADABLE port=$Port pid=$OwningPid" }
-    if (-not (Test-RaiosLaunchIdentity $Info $OwningPid $Port)) {
-        if ($PromoteOwnedGeneration -and (Test-RaiosRecordedProcess $Info $OwningPid)) {
-            Write-Output "LOCAL_MCP_PROMOTE_OWNED port=$Port pid=$OwningPid reason=$script:RaiosIdentityReason"
-            Set-RaiosGenerationTransition -PreviousPid $OwningPid -Reason ([string]$script:RaiosIdentityReason)
-            Stop-RaiosListenPid $OwningPid
-        } else {
-            $ownership_proven = $false
-            throw "MCP_LIVE_BUT_UNOWNED port=$Port pid=$OwningPid reason=$script:RaiosIdentityReason"
-        }
-    } elseif (Test-RaiosMcpHealthy $Health) {
-        if (-not $Reload) {
-            Set-RaiosGenerationTransition -PreviousPid $OwningPid -Reason "STEADY_STATE_VERIFY"
-            $Steady = Write-RaiosGenerationHandoff -CandidatePid $OwningPid -ActivePid $OwningPid -Reason "STEADY_STATE_VERIFY"
-            Write-Output "LOCAL_MCP_ALREADY_HEALTHY port=$Port pid=$OwningPid tools=$($Health.tools.Count) head_source=$($Health.head_source)"
-            Write-Output "GENERATION_ACTIVE_PID=$($Steady.active_pid)"
-            Write-Output "GENERATION_HANDOFF_COMPLETE=$($Steady.handoff_complete)"
-            Write-Output "GENERATION_SINGLETON_VERDICT=$($Steady.singleton_verdict)"
-            Write-Output "GENERATION_ORPHAN_COUNT=$($Steady.orphan_generation_count)"
-            Write-Output "GENERATION_DUPLICATE_MCP=$($Steady.duplicate_mcp)"
-            exit 0
-        }
-        Write-Output "LOCAL_MCP_RELOAD port=$Port pid=$OwningPid"
-        Set-RaiosGenerationTransition -PreviousPid $OwningPid -Reason "RELOAD"
-        Stop-RaiosListenPid $OwningPid
-    } else {
-        $recordedContract = ""
-        $ownerNow = Read-RaiosOwnerManifest
-        if ($ownerNow -and $ownerNow.tool_contract_sha256) { $recordedContract = [string]$ownerNow.tool_contract_sha256 }
-        if ($PromoteOwnedGeneration -and (Test-RaiosRecordedProcess $Info $OwningPid)) {
-            Write-Output "LOCAL_MCP_PROMOTE_OWNED port=$Port pid=$OwningPid reason=CONTRACT_DRIFT"
-            Set-RaiosGenerationTransition -PreviousPid $OwningPid -Reason "CONTRACT_DRIFT"
-            Stop-RaiosListenPid $OwningPid
-        } elseif ($recordedContract -ne (Get-RaiosToolContractSha)) {
-            $ownership_proven = $false
-            throw "MCP_LIVE_BUT_UNOWNED port=$Port pid=$OwningPid reason=CONTRACT_DRIFT"
-        } elseif ($NoRecover) {
-            throw "Existing local MCP listener is unhealthy."
-        } else {
-            Write-Output "LOCAL_MCP_RECOVER_HUNG port=$Port pid=$OwningPid"
-            Set-RaiosGenerationTransition -PreviousPid $OwningPid -Reason "RECOVER_HUNG"
-            Stop-RaiosListenPid $OwningPid
-        }
-    }
-}
-
-$Shadow = Get-RaiosListenPid 8787
-if ($Shadow) {
-    $ShadowInfo = Get-RaiosProcessInfo $Shadow
-    if (Test-RaiosLaunchIdentity $ShadowInfo $Shadow 8787) {
-        Write-Output "LOCAL_MCP_STOP_SHADOW port=8787 pid=$Shadow"
-        Stop-RaiosListenPid $Shadow
-    } else {
-        Write-Output "MCP_SHADOW_LISTENER_UNPROVEN port=8787 pid=$Shadow"
-    }
-}
-
-$GenerationId = Get-RaiosC5GenerationId
-if (-not $GenerationId) { throw "MCP_C5_GENERATION_UNREADABLE" }
-$SourceFingerprint = Get-RaiosLaunchSourceFingerprint
-if ($null -eq $SourceFingerprint) { throw "MCP_LAUNCH_SOURCE_MISSING" }
-
-$Stdout = Join-Path $ReceiptDir "LOCAL-MCP-$Port.stdout.log"
-$Stderr = Join-Path $ReceiptDir "LOCAL-MCP-$Port.stderr.log"
-$Arguments = @($Server, "--http", "--host", "127.0.0.1", "--port", "$Port")
-Set-RaiosLaunchEnvironment
-$Process = Start-Process -FilePath $Python -ArgumentList $Arguments -WorkingDirectory $Repo -RedirectStandardOutput $Stdout -RedirectStandardError $Stderr -WindowStyle Hidden -PassThru
-try {
-    $LaunchInfo = Get-RaiosProcessInfo $Process.Id
-    Write-RaiosLaunchIdentity -Process $Process -Info $LaunchInfo -Source $SourceFingerprint -GenerationId $GenerationId
-} catch {
-    if (-not $Process.HasExited) { Stop-RaiosListenPid $Process.Id }
-    throw
-}
-
-$Health = $null
-for ($i = 0; $i -lt 20; $i++) {
-    Start-Sleep -Milliseconds 400
-    if ($Process.HasExited) { break }
-    $Health = Get-RaiosMcpHealth $HealthUrl 2
-    if (Test-RaiosMcpHealthy $Health) { break }
-}
-if ($Process.HasExited -and -not (Test-RaiosMcpHealthy $Health)) {
-    Get-Content $Stderr -ErrorAction SilentlyContinue
-    throw "Local MCP failed to start."
-}
-if (-not (Test-RaiosMcpHealthy $Health)) {
-    if (-not $Process.HasExited) { Stop-RaiosListenPid $Process.Id }
-    throw "Local MCP health validation failed."
-}
-$StartedPids = @(Get-RaiosListenPids $Port)
-if ($StartedPids.Count -ne 1) {
-    if (-not $Process.HasExited) { Stop-RaiosListenPid $Process.Id }
-    $ownership_proven = $false
-    throw "MCP_GENERATION_REJECTED port=$Port reason=REJECT_COMPETING_LISTENER"
-}
-$LivePid = [int]$StartedPids[0]
-$LiveInfo = Get-RaiosProcessInfo $LivePid
-if (-not (Test-RaiosLaunchIdentity $LiveInfo $LivePid $Port)) {
-    if (-not $Process.HasExited -and [int]$Process.Id -ne $LivePid) { Stop-RaiosListenPid $Process.Id }
-    $ownership_proven = $false
-    throw "MCP_GENERATION_REJECTED port=$Port pid=$LivePid reason=$script:RaiosIdentityReason"
-}
-Write-RaiosListenerBinding -Info $LiveInfo -ProcId $LivePid
-$Handoff = Write-RaiosGenerationHandoff -CandidatePid ([int]$Process.Id) -ActivePid $LivePid -Reason ([string]$script:TransitionReason)
-
-Write-Output "LOCAL_MCP_STARTED port=$Port pid=$($Process.Id) tools=$($Health.tools.Count) head_source=$($Health.head_source)"
-Write-Output "GENERATION_PREVIOUS_PID=$($Handoff.previous_pid)"
-Write-Output "GENERATION_CANDIDATE_PID=$($Handoff.candidate_pid)"
-Write-Output "GENERATION_ACTIVE_PID=$($Handoff.active_pid)"
-Write-Output "GENERATION_PREVIOUS_STATE=$($Handoff.previous_state)"
-Write-Output "GENERATION_CANDIDATE_STATE=$($Handoff.candidate_state)"
-Write-Output "GENERATION_ACTIVE_STATE=$($Handoff.active_state)"
-Write-Output "GENERATION_HANDOFF_COMPLETE=$($Handoff.handoff_complete)"
-Write-Output "GENERATION_SINGLETON_VERDICT=$($Handoff.singleton_verdict)"
-Write-Output "GENERATION_ORPHAN_COUNT=$($Handoff.orphan_generation_count)"
-Write-Output "GENERATION_DUPLICATE_MCP=$($Handoff.duplicate_mcp)"
-Write-Output "HEALTH=$HealthUrl"
-Write-Output "GL005_PROVEN=$($Health.gl005_proven)"
-Write-Output "NINTH_TOOL=$($Health.ninth_tool)"
-Write-Output "SECOND_GATEWAY=$($Health.second_gateway)"
-Write-Output "LAUNCH_SOURCE_SHA256=$($SourceFingerprint.fingerprint)"
-Write-Output "C5_GENERATION=$GenerationId"
- -and
-        $owner -and
-        [int]$owner.listener_pid -eq $activePid -and
-        [string]$owner.canonical_head -eq $priorHead -and
-        $listeners.Count -eq 1 -and
-        [int]$listeners[0] -eq $activePid -and
-        $activeInfo -and
-        (Test-RaiosMcpHealthyForHead $activeHealth $priorHead)
-    )
-    if (-not $activeProof) {
-        return [pscustomobject]@{had_orphans=$true;complete=$false;repaired=@();remaining=$priorOrphans;reason='PRIOR_ACTIVE_PROOF_FAILED'}
-    }
-
-    $repaired = New-Object System.Collections.Generic.List[int]
-    $remaining = New-Object System.Collections.Generic.List[int]
-    foreach ($orphanPid in $priorOrphans) {
-        if (-not (Test-RaiosPidAlive $orphanPid)) {
-            [void]$repaired.Add($orphanPid)
-            continue
-        }
-
-        $lineage = Get-RaiosParentLineageProof $activePid
-        if (@($lineage.pids) -contains $orphanPid) {
-            [void]$remaining.Add($orphanPid)
-            continue
-        }
-
-        $owned = [bool](
-            $orphanPid -eq $candidatePid -and
-            (Test-RaiosOwnedLaunchCandidate $owner $orphanPid $activePid $priorHead)
-        )
-        if (-not $owned) {
-            [void]$remaining.Add($orphanPid)
-            continue
-        }
-
-        $event = [ordered]@{
-            schema='raios.mcp-generation-retirement.v2'
-            observed_at=[DateTimeOffset]::UtcNow.ToString('o')
-            authority='RAIOS-C5-SCM'
-            canonical_head=[string]$env:RAIOS_CANONICAL_HEAD
-            historical_generation_head=$priorHead
-            candidate_pid=$orphanPid
-            active_pid=$activePid
-            action='PRE_PROMOTION_RETIRE_PROVEN_PRIOR_ORPHAN'
-            result='STARTED'
-        }
-        try {
-            Stop-Process -Id $orphanPid -Force -ErrorAction Stop
-            for ($i = 0; $i -lt 40; $i++) {
-                Start-Sleep -Milliseconds 250
-                if (-not (Test-RaiosPidAlive $orphanPid)) { break }
-            }
-            if (Test-RaiosPidAlive $orphanPid) {
-                $event.result='FAILED_STILL_ALIVE'
-                Write-RaiosBoundedLifecycle -Value $event
-                [void]$remaining.Add($orphanPid)
-                continue
-            }
-
-            $listenersAfter = @(Get-RaiosListenPids $Port)
-            $activeHealthAfter = Get-RaiosMcpHealth $HealthUrl 2
-            $activeAfter = Get-RaiosProcessInfo $activePid
-            $activeStillProven = [bool](
-                $activeAfter -and
-                $listenersAfter.Count -eq 1 -and
-                [int]$listenersAfter[0] -eq $activePid -and
-                (Test-RaiosMcpHealthyForHead $activeHealthAfter $priorHead)
-            )
-            $event.active_proven_after=$activeStillProven
-            if (-not $activeStillProven) {
-                $event.result='RETIRED_ACTIVE_REVERIFY_FAILED'
-                Write-RaiosBoundedLifecycle -Value $event
-                [void]$remaining.Add($orphanPid)
-                continue
-            }
-
-            $event.result='RETIRED'
-            Write-RaiosBoundedLifecycle -Value $event
-            [void]$repaired.Add($orphanPid)
-        } catch {
-            $event.result='FAILED_EXCEPTION'
-            $event.error_type=$_.Exception.GetType().Name
-            Write-RaiosBoundedLifecycle -Value $event
-            [void]$remaining.Add($orphanPid)
-        }
-    }
-
-    $remainingUnique = @($remaining | Select-Object -Unique)
-    $complete = [bool]($remainingUnique.Count -eq 0)
-    if ($complete) {
-        $prior.candidate_state = 'RETIRED'
-        $prior.candidate_relationship = 'PRIOR_OWNED_ORPHAN_RETIRED_BEFORE_PROMOTION'
-        $prior.candidate_retirement_attempted = $true
-        $prior.candidate_retirement_proven = $true
-        $prior.candidate_retirement_reason = 'PRE_PROMOTION_AUTO_RETIRED_PROVEN_ORPHAN'
-        $prior.candidate_active_reverified = $true
-        $prior.candidate_handoff_safe = $true
-        $prior.repair_applied = $true
-        $prior.orphan_generation_count = 0
-        $prior.orphan_pids = @()
-        $prior.handoff_complete = $true
-        $prior.singleton_verdict = 'PASS'
-        $prior.verification_reason = 'PRE_PROMOTION_ORPHAN_REPAIR'
-        $prior.observed_at = [DateTimeOffset]::UtcNow.ToString('o')
-        Write-RaiosAtomicJson -Path $LifecycleProjection -Value $prior
-        Write-RaiosBoundedLifecycle -Value $prior
-    }
-    return [pscustomobject]@{
-        had_orphans=$true
-        complete=$complete
-        repaired=@($repaired)
-        remaining=$remainingUnique
-        reason=$(if($complete){'PRIOR_ORPHANS_RETIRED'}else{'PRIOR_ORPHANS_UNRESOLVED'})
-    }
-}
-
-function New-RaiosCandidateResolution(
-    [string]$State,
-    [string]$Relationship,
-    [bool]$RetirementAttempted = $false,
-    [bool]$RetirementProven = $false,
-    [string]$RetirementReason = $null,
-    [bool]$ActiveReverified = $false,
-    [bool]$HandoffSafe = $false
-) {
-    return [pscustomobject][ordered]@{
-        state = $State
-        relationship = $Relationship
-        retirement_attempted = $RetirementAttempted
-        retirement_proven = $RetirementProven
-        retirement_reason = $RetirementReason
-        active_reverified = $ActiveReverified
-        handoff_safe = $HandoffSafe
-    }
-}
-
-function Resolve-RaiosCandidateLifecycle([int]$CandidatePid,[int]$ActivePid) {
-    if ($CandidatePid -le 4) {
-        return New-RaiosCandidateResolution -State 'NONE' -Relationship 'NONE' -HandoffSafe $true
-    }
-    if ($CandidatePid -eq $ActivePid) {
-        return New-RaiosCandidateResolution -State 'ACTIVE' -Relationship 'ACTIVE_LISTENER' -ActiveReverified $true -HandoffSafe $true
-    }
-    if (-not (Test-RaiosPidAlive $CandidatePid)) {
-        return New-RaiosCandidateResolution -State 'SUPERSEDED' -Relationship 'EXITED' -RetirementProven $true -RetirementReason 'PROCESS_EXITED' -ActiveReverified $true -HandoffSafe $true
-    }
-
-    $lineage = Get-RaiosParentLineageProof $ActivePid
-    if (@($lineage.pids) -contains $CandidatePid) {
-        return New-RaiosCandidateResolution -State 'ACTIVE_LINEAGE_PARENT' -Relationship 'ACTIVE_LINEAGE_PARENT' -RetirementProven $true -RetirementReason 'REQUIRED_ACTIVE_LINEAGE' -ActiveReverified $true -HandoffSafe $true
-    }
-
-    # Ownership proof is stronger than ancestry completeness for a process that
-    # this ensure generation itself launched, recorded, and no longer owns the
-    # listening socket. Do not leave a proven owned non-listener orphan merely
-    # because Windows process ancestry is partially unreadable.
-    $owner = Read-RaiosOwnerManifest
-    $ownedCandidate = [bool](Test-RaiosOwnedLaunchCandidate $owner $CandidatePid $ActivePid)
-    if (-not $ownedCandidate) {
-        if (-not [bool]$lineage.complete) {
-            return New-RaiosCandidateResolution -State 'ORPHAN' -Relationship 'LINEAGE_AND_OWNERSHIP_UNPROVEN' -RetirementReason 'FAIL_CLOSED_LINEAGE_AND_OWNERSHIP_UNPROVEN'
-        }
-        return New-RaiosCandidateResolution -State 'ORPHAN' -Relationship 'UNPROVEN_PROCESS' -RetirementReason 'OWNERSHIP_NOT_PROVEN'
-    }
-
-    $activeInfoBefore = Get-RaiosProcessInfo $ActivePid
-    $listenersBefore = @(Get-RaiosListenPids $Port)
-    $healthBefore = Get-RaiosMcpHealth $HealthUrl 2
-    $activeProofBefore = [bool](
-        $activeInfoBefore -and
-        $listenersBefore.Count -eq 1 -and
-        [int]$listenersBefore[0] -eq $ActivePid -and
-        (Test-RaiosLaunchIdentity $activeInfoBefore $ActivePid $Port) -and
-        (Test-RaiosMcpHealthy $healthBefore)
-    )
-    if (-not $activeProofBefore) {
-        return New-RaiosCandidateResolution -State 'ORPHAN' -Relationship 'OWNED_NON_LISTENER_ACTIVE_PROOF_FAILED' -RetirementReason 'ACTIVE_LISTENER_PROOF_FAILED_BEFORE_RETIREMENT'
-    }
-
-    $event = [ordered]@{
-        schema = 'raios.mcp-generation-retirement.v2'
-        observed_at = [DateTimeOffset]::UtcNow.ToString('o')
-        authority = 'RAIOS-C5-SCM'
-        canonical_head = [string]$env:RAIOS_CANONICAL_HEAD
-        candidate_pid = $CandidatePid
-        active_pid = $ActivePid
-        lineage_complete = [bool]$lineage.complete
-        ownership_proven = $true
-        active_proven_before = $true
-        action = 'RETIRE_PROVEN_OWNED_NON_LISTENER_CANDIDATE'
-        result = 'STARTED'
-    }
-    try {
-        Stop-Process -Id $CandidatePid -Force -ErrorAction Stop
-        for ($i = 0; $i -lt 40; $i++) {
-            Start-Sleep -Milliseconds 250
-            if (-not (Test-RaiosPidAlive $CandidatePid)) { break }
-        }
-        if (Test-RaiosPidAlive $CandidatePid) {
-            $event.result = 'FAILED_STILL_ALIVE'
-            Write-RaiosBoundedLifecycle -Value $event
-            return New-RaiosCandidateResolution -State 'ORPHAN' -Relationship 'OWNED_NON_LISTENER' -RetirementAttempted $true -RetirementReason 'RETIREMENT_FAILED_STILL_ALIVE'
-        }
-
-        $activeInfoAfter = Get-RaiosProcessInfo $ActivePid
-        $listenersAfter = @(Get-RaiosListenPids $Port)
-        $healthAfter = Get-RaiosMcpHealth $HealthUrl 2
-        $activeProofAfter = [bool](
-            $activeInfoAfter -and
-            $listenersAfter.Count -eq 1 -and
-            [int]$listenersAfter[0] -eq $ActivePid -and
-            (Test-RaiosLaunchIdentity $activeInfoAfter $ActivePid $Port) -and
-            (Test-RaiosMcpHealthy $healthAfter)
-        )
-        $event.active_proven_after = $activeProofAfter
-        if (-not $activeProofAfter) {
-            $event.result = 'RETIRED_ACTIVE_REVERIFY_FAILED'
-            Write-RaiosBoundedLifecycle -Value $event
-            return New-RaiosCandidateResolution -State 'RETIRED' -Relationship 'OWNED_NON_LISTENER_RETIRED_ACTIVE_UNVERIFIED' -RetirementAttempted $true -RetirementProven $true -RetirementReason 'AUTO_RETIRED_BUT_ACTIVE_REVERIFY_FAILED'
-        }
-
-        $event.result = 'RETIRED'
-        Write-RaiosBoundedLifecycle -Value $event
-        $relationship = $(if ([bool]$lineage.complete) {
-            'OWNED_NON_LISTENER_RETIRED'
-        } else {
-            'OWNED_NON_LISTENER_RETIRED_WITH_INCOMPLETE_LINEAGE'
-        })
-        return New-RaiosCandidateResolution -State 'RETIRED' -Relationship $relationship -RetirementAttempted $true -RetirementProven $true -RetirementReason 'AUTO_RETIRED_PROVEN_ORPHAN' -ActiveReverified $true -HandoffSafe $true
-    } catch {
-        $event.result = 'FAILED_EXCEPTION'
-        $event.error_type = $_.Exception.GetType().Name
-        Write-RaiosBoundedLifecycle -Value $event
-        return New-RaiosCandidateResolution -State 'ORPHAN' -Relationship 'OWNED_NON_LISTENER' -RetirementAttempted $true -RetirementReason 'RETIREMENT_EXCEPTION'
-    }
-}
-
-function Write-RaiosGenerationHandoff([int]$CandidatePid,[int]$ActivePid,[string]$Reason) {
-    $owner = Read-RaiosOwnerManifest
-    $priorProjection = $null
-    if (Test-Path -LiteralPath $LifecycleProjection) {
-        try { $priorProjection = Get-Content -LiteralPath $LifecycleProjection -Raw | ConvertFrom-Json } catch { $priorProjection = $null }
-    }
-    $preserveTransition = [bool](
-        $Reason -eq "STEADY_STATE_VERIFY" -and
-        $priorProjection -and
-        [string]$priorProjection.schema -eq "raios.mcp-generation-handoff.v1" -and
-        [string]$priorProjection.transition_reason -ne "STEADY_STATE_VERIFY"
-    )
-
-    $effectivePreviousPid = [int]$script:TransitionPreviousPid
-    $effectiveCandidatePid = $CandidatePid
-    $reportedReason = $Reason
-    $verificationReason = $null
-    $reportedPreviousGeneration = $script:TransitionPreviousGeneration
-    $reportedPreviousStartedAt = $script:TransitionPreviousStartedAt
-    $reportedCandidateGeneration = $(if ($owner -and $owner.generation_id) { [string]$owner.generation_id } else { $null })
-
-    if ($preserveTransition) {
-        $reportedReason = [string]$priorProjection.transition_reason
-        $verificationReason = "STEADY_STATE_VERIFY"
-        if ($priorProjection.previous_pid) { $effectivePreviousPid = [int]$priorProjection.previous_pid }
-        if ($priorProjection.candidate_pid) { $effectiveCandidatePid = [int]$priorProjection.candidate_pid }
-        $reportedPreviousGeneration = $priorProjection.previous_generation_id
-        $reportedPreviousStartedAt = $priorProjection.previous_started_at
-        $reportedCandidateGeneration = $priorProjection.candidate_generation_id
-    }
-
-    $previousAlive = Test-RaiosPidAlive $effectivePreviousPid
-    $activeAlive = Test-RaiosPidAlive $ActivePid
-    $candidateResolution = Resolve-RaiosCandidateLifecycle -CandidatePid $effectiveCandidatePid -ActivePid $ActivePid
-    $candidateState = [string]$candidateResolution.state
-    $previousState = $(if ($effectivePreviousPid -le 4) { "NONE" } elseif ($effectivePreviousPid -eq $ActivePid) { "ACTIVE" } elseif ($previousAlive) { "ORPHAN" } else { "RETIRED" })
-    $activeState = $(if ($activeAlive) { "ACTIVE" } else { "MISSING" })
-
-    $listeners = @(Get-RaiosListenPids $Port)
-    $orphanPids = New-Object System.Collections.Generic.List[int]
-    if ($previousState -eq 'ORPHAN') { [void]$orphanPids.Add($effectivePreviousPid) }
-    if ($candidateState -eq 'ORPHAN' -and -not $orphanPids.Contains($effectiveCandidatePid)) { [void]$orphanPids.Add($effectiveCandidatePid) }
-
-    $ownerHead = $(if ($owner -and $owner.canonical_head) { [string]$owner.canonical_head } else { $null })
-    $ownerGeneration = $(if ($owner -and $owner.generation_id) { [string]$owner.generation_id } else { $null })
-    $ownerServiceGeneration = $(if ($owner -and $owner.service_generation) { [string]$owner.service_generation } else { $null })
-    $serviceGeneration = Get-RaiosC5GenerationId
-    $ownerHeadMatch = [bool]($ownerHead -and $ownerHead -eq [string]$env:RAIOS_CANONICAL_HEAD)
-    $serviceGenerationMatch = [bool]($ownerServiceGeneration -and $serviceGeneration -and $ownerServiceGeneration -eq $serviceGeneration)
-    $activeListenerMatch = [bool]($listeners.Count -eq 1 -and [int]$listeners[0] -eq $ActivePid)
-    $duplicateMcp = [bool]($listeners.Count -gt 1)
-    $candidateHandoffSafe = [bool]$candidateResolution.handoff_safe
-    $handoffComplete = [bool](
-        $activeAlive -and
-        $activeListenerMatch -and
-        -not $duplicateMcp -and
-        $orphanPids.Count -eq 0 -and
-        $candidateHandoffSafe -and
-        $ownerHeadMatch -and
-        $serviceGenerationMatch
-    )
-
-    $doc = [ordered]@{
-        schema = "raios.mcp-generation-handoff.v1"
-        observed_at = [DateTimeOffset]::UtcNow.ToString("o")
-        authority = "RAIOS-C5-SCM"
-        canonical_head = [string]$env:RAIOS_CANONICAL_HEAD
-        port = $Port
-        transition_reason = $reportedReason
-        verification_reason = $verificationReason
-        previous_pid = $(if ($effectivePreviousPid -gt 4) { $effectivePreviousPid } else { $null })
-        previous_generation_id = $reportedPreviousGeneration
-        previous_started_at = $reportedPreviousStartedAt
-        previous_state = $previousState
-        candidate_pid = $(if ($effectiveCandidatePid -gt 4) { $effectiveCandidatePid } else { $null })
-        candidate_generation_id = $reportedCandidateGeneration
-        candidate_state = $candidateState
-        candidate_relationship = [string]$candidateResolution.relationship
-        candidate_retirement_attempted = [bool]$candidateResolution.retirement_attempted
-        candidate_retirement_proven = [bool]$candidateResolution.retirement_proven
-        candidate_retirement_reason = $candidateResolution.retirement_reason
-        candidate_active_reverified = [bool]$candidateResolution.active_reverified
-        candidate_handoff_safe = [bool]$candidateResolution.handoff_safe
-        repair_applied = [bool]$candidateResolution.retirement_attempted
-        active_pid = $ActivePid
-        active_generation_id = $ownerGeneration
-        active_state = $activeState
-        active_listener_count = $listeners.Count
-        active_listener_match = $activeListenerMatch
-        duplicate_mcp = $duplicateMcp
-        orphan_generation_count = $orphanPids.Count
-        orphan_pids = @($orphanPids)
-        owner_head_match = $ownerHeadMatch
-        service_generation = $serviceGeneration
-        service_generation_match = $serviceGenerationMatch
-        handoff_complete = $handoffComplete
-        singleton_verdict = $(if ($handoffComplete) { "PASS" } elseif ($duplicateMcp) { "FAIL_DUPLICATE_LISTENER" } elseif ($orphanPids.Count -gt 0) { "FAIL_ORPHAN_GENERATION" } else { "FAIL_INCOMPLETE_HANDOFF" })
-    }
-    Write-RaiosAtomicJson -Path $LifecycleProjection -Value $doc
-    Write-RaiosBoundedLifecycle -Value $doc
-    return [pscustomobject]$doc
-}
-
-function Stop-RaiosListenPid([int]$ProcId) {
-    if ($ProcId -le 4) { throw "Refusing unsafe listener PID $ProcId." }
-    Stop-Process -Id $ProcId -Force -ErrorAction Stop
-    for ($i = 0; $i -lt 40; $i++) {
-        Start-Sleep -Milliseconds 250
-        if (-not (Get-Process -Id $ProcId -ErrorAction SilentlyContinue)) { return }
-    }
-    throw "RAIOS_MCP_PROCESS_DID_NOT_STOP::$ProcId"
-}
-
-$Repo = (Resolve-Path (Join-Path $PSScriptRoot "..\..")).Path
-$PythonCandidates = @(
-    (Join-Path (Get-RaiosProfileRoot) ".raios\runtime\c5\.venv\Scripts\python.exe"),
-    (Join-Path $Repo ".venv\Scripts\python.exe")
-)
-$Python = $PythonCandidates | Where-Object { Test-Path $_ } | Select-Object -First 1
-$Server = Join-Path $Repo "scripts\ai-os\raios_mcp\server.py"
-$ReceiptDir = Join-Path $Repo ".ai-os\receipts\command-fabric"
-$OwnerDir = Join-Path (Get-RaiosProfileRoot) ".raios\runtime\mcp"
-$OwnerManifest = Join-Path $OwnerDir "universal-mcp-owner.json"
-$LifecycleProjection = Join-Path $OwnerDir "generation-handoff.json"
-$LifecycleLedger = Join-Path $OwnerDir "generation-lifecycle.jsonl"
-$script:TransitionPreviousPid = 0
-$script:TransitionPreviousGeneration = $null
-$script:TransitionPreviousStartedAt = $null
-$script:TransitionReason = "INITIAL_START"
-$HealthUrl = "http://127.0.0.1:$Port/health"
-
-if ($Port -ne 8788) { throw "MCP_CENSUS_PORT_IS_8788 refused port=$Port (no second gateway)" }
-if (-not (Test-Path $Python)) { throw "Missing Python: $Python" }
-if (-not (Test-Path $Server)) { throw "Missing MCP server: $Server" }
-New-Item -ItemType Directory -Force -Path $ReceiptDir | Out-Null
-
-$env:RAIOS_CANONICAL_HEAD = ""
-$GitDir = Join-Path $Repo ".git"
-$raw = (Get-Content -LiteralPath (Join-Path $GitDir "HEAD") -TotalCount 1 -ErrorAction Stop).Trim()
-if ($raw -match '^ref:\s*(refs/[A-Za-z0-9_./-]+)$') {
-    $ref = $Matches[1]
-    if (@($ref -split '/') -contains '..') { throw "INVALID_CANONICAL_REF" }
-    $refPath = Join-Path $GitDir ($ref -replace '/', '\')
-    if (Test-Path -LiteralPath $refPath) {
-        $env:RAIOS_CANONICAL_HEAD = (Get-Content -LiteralPath $refPath -TotalCount 1 -ErrorAction Stop).Trim()
-    } else {
-        foreach ($line in (Get-Content -LiteralPath (Join-Path $GitDir "packed-refs") -ErrorAction Stop)) {
-            if ($line -match '^([0-9a-fA-F]{40}) (.+)$' -and $Matches[2] -eq $ref) {
-                $env:RAIOS_CANONICAL_HEAD = $Matches[1]
-                break
-            }
-        }
-    }
-} elseif ($raw -match '^[0-9a-fA-F]{40}$') {
-    $env:RAIOS_CANONICAL_HEAD = $raw
-}
-if ($env:RAIOS_CANONICAL_HEAD -notmatch '^[0-9a-fA-F]{40}$') { throw "LIVE_CANONICAL_GIT_HEAD_REQUIRED" }
-
-$ListenPids = @(Get-RaiosListenPids $Port)
-if ($ListenPids.Count -gt 1) {
-    $ownership_proven = $false
-    throw "MCP_LIVE_BUT_UNOWNED port=$Port reason=REJECT_COMPETING_LISTENER"
-}
-$OwningPid = if ($ListenPids.Count -eq 1) { [int]$ListenPids[0] } else { $null }
-if ($OwningPid) {
-    $Info = Get-RaiosProcessInfo $OwningPid
-    $Health = Get-RaiosMcpHealth $HealthUrl 2
-    if ($null -eq $Info) { throw "MCP_LAUNCH_IDENTITY_UNREADABLE port=$Port pid=$OwningPid" }
-    if (-not (Test-RaiosLaunchIdentity $Info $OwningPid $Port)) {
-        if ($PromoteOwnedGeneration -and (Test-RaiosRecordedProcess $Info $OwningPid)) {
-            Write-Output "LOCAL_MCP_PROMOTE_OWNED port=$Port pid=$OwningPid reason=$script:RaiosIdentityReason"
-            Set-RaiosGenerationTransition -PreviousPid $OwningPid -Reason ([string]$script:RaiosIdentityReason)
-            Stop-RaiosListenPid $OwningPid
-        } else {
-            $ownership_proven = $false
-            throw "MCP_LIVE_BUT_UNOWNED port=$Port pid=$OwningPid reason=$script:RaiosIdentityReason"
-        }
-    } elseif (Test-RaiosMcpHealthy $Health) {
-        if (-not $Reload) {
-            Set-RaiosGenerationTransition -PreviousPid $OwningPid -Reason "STEADY_STATE_VERIFY"
-            $Steady = Write-RaiosGenerationHandoff -CandidatePid $OwningPid -ActivePid $OwningPid -Reason "STEADY_STATE_VERIFY"
-            Write-Output "LOCAL_MCP_ALREADY_HEALTHY port=$Port pid=$OwningPid tools=$($Health.tools.Count) head_source=$($Health.head_source)"
-            Write-Output "GENERATION_ACTIVE_PID=$($Steady.active_pid)"
-            Write-Output "GENERATION_HANDOFF_COMPLETE=$($Steady.handoff_complete)"
-            Write-Output "GENERATION_SINGLETON_VERDICT=$($Steady.singleton_verdict)"
-            Write-Output "GENERATION_ORPHAN_COUNT=$($Steady.orphan_generation_count)"
-            Write-Output "GENERATION_DUPLICATE_MCP=$($Steady.duplicate_mcp)"
-            exit 0
-        }
-        Write-Output "LOCAL_MCP_RELOAD port=$Port pid=$OwningPid"
-        Set-RaiosGenerationTransition -PreviousPid $OwningPid -Reason "RELOAD"
-        Stop-RaiosListenPid $OwningPid
-    } else {
-        $recordedContract = ""
-        $ownerNow = Read-RaiosOwnerManifest
-        if ($ownerNow -and $ownerNow.tool_contract_sha256) { $recordedContract = [string]$ownerNow.tool_contract_sha256 }
-        if ($PromoteOwnedGeneration -and (Test-RaiosRecordedProcess $Info $OwningPid)) {
-            Write-Output "LOCAL_MCP_PROMOTE_OWNED port=$Port pid=$OwningPid reason=CONTRACT_DRIFT"
-            Set-RaiosGenerationTransition -PreviousPid $OwningPid -Reason "CONTRACT_DRIFT"
-            Stop-RaiosListenPid $OwningPid
-        } elseif ($recordedContract -ne (Get-RaiosToolContractSha)) {
-            $ownership_proven = $false
-            throw "MCP_LIVE_BUT_UNOWNED port=$Port pid=$OwningPid reason=CONTRACT_DRIFT"
-        } elseif ($NoRecover) {
-            throw "Existing local MCP listener is unhealthy."
-        } else {
-            Write-Output "LOCAL_MCP_RECOVER_HUNG port=$Port pid=$OwningPid"
-            Set-RaiosGenerationTransition -PreviousPid $OwningPid -Reason "RECOVER_HUNG"
-            Stop-RaiosListenPid $OwningPid
-        }
-    }
-}
-
-$Shadow = Get-RaiosListenPid 8787
-if ($Shadow) {
-    $ShadowInfo = Get-RaiosProcessInfo $Shadow
-    if (Test-RaiosLaunchIdentity $ShadowInfo $Shadow 8787) {
-        Write-Output "LOCAL_MCP_STOP_SHADOW port=8787 pid=$Shadow"
-        Stop-RaiosListenPid $Shadow
-    } else {
-        Write-Output "MCP_SHADOW_LISTENER_UNPROVEN port=8787 pid=$Shadow"
-    }
-}
-
-$GenerationId = Get-RaiosC5GenerationId
-if (-not $GenerationId) { throw "MCP_C5_GENERATION_UNREADABLE" }
-$SourceFingerprint = Get-RaiosLaunchSourceFingerprint
-if ($null -eq $SourceFingerprint) { throw "MCP_LAUNCH_SOURCE_MISSING" }
-
-$Stdout = Join-Path $ReceiptDir "LOCAL-MCP-$Port.stdout.log"
-$Stderr = Join-Path $ReceiptDir "LOCAL-MCP-$Port.stderr.log"
-$Arguments = @($Server, "--http", "--host", "127.0.0.1", "--port", "$Port")
-Set-RaiosLaunchEnvironment
-$Process = Start-Process -FilePath $Python -ArgumentList $Arguments -WorkingDirectory $Repo -RedirectStandardOutput $Stdout -RedirectStandardError $Stderr -WindowStyle Hidden -PassThru
-try {
-    $LaunchInfo = Get-RaiosProcessInfo $Process.Id
-    Write-RaiosLaunchIdentity -Process $Process -Info $LaunchInfo -Source $SourceFingerprint -GenerationId $GenerationId
-} catch {
-    if (-not $Process.HasExited) { Stop-RaiosListenPid $Process.Id }
-    throw
-}
-
-$Health = $null
-for ($i = 0; $i -lt 20; $i++) {
-    Start-Sleep -Milliseconds 400
-    if ($Process.HasExited) { break }
-    $Health = Get-RaiosMcpHealth $HealthUrl 2
-    if (Test-RaiosMcpHealthy $Health) { break }
-}
-if ($Process.HasExited -and -not (Test-RaiosMcpHealthy $Health)) {
-    Get-Content $Stderr -ErrorAction SilentlyContinue
-    throw "Local MCP failed to start."
-}
-if (-not (Test-RaiosMcpHealthy $Health)) {
-    if (-not $Process.HasExited) { Stop-RaiosListenPid $Process.Id }
-    throw "Local MCP health validation failed."
-}
-$StartedPids = @(Get-RaiosListenPids $Port)
-if ($StartedPids.Count -ne 1) {
-    if (-not $Process.HasExited) { Stop-RaiosListenPid $Process.Id }
-    $ownership_proven = $false
-    throw "MCP_GENERATION_REJECTED port=$Port reason=REJECT_COMPETING_LISTENER"
-}
-$LivePid = [int]$StartedPids[0]
-$LiveInfo = Get-RaiosProcessInfo $LivePid
-if (-not (Test-RaiosLaunchIdentity $LiveInfo $LivePid $Port)) {
-    if (-not $Process.HasExited -and [int]$Process.Id -ne $LivePid) { Stop-RaiosListenPid $Process.Id }
-    $ownership_proven = $false
-    throw "MCP_GENERATION_REJECTED port=$Port pid=$LivePid reason=$script:RaiosIdentityReason"
-}
-Write-RaiosListenerBinding -Info $LiveInfo -ProcId $LivePid
-$Handoff = Write-RaiosGenerationHandoff -CandidatePid ([int]$Process.Id) -ActivePid $LivePid -Reason ([string]$script:TransitionReason)
-
-Write-Output "LOCAL_MCP_STARTED port=$Port pid=$($Process.Id) tools=$($Health.tools.Count) head_source=$($Health.head_source)"
-Write-Output "GENERATION_PREVIOUS_PID=$($Handoff.previous_pid)"
-Write-Output "GENERATION_CANDIDATE_PID=$($Handoff.candidate_pid)"
-Write-Output "GENERATION_ACTIVE_PID=$($Handoff.active_pid)"
-Write-Output "GENERATION_PREVIOUS_STATE=$($Handoff.previous_state)"
-Write-Output "GENERATION_CANDIDATE_STATE=$($Handoff.candidate_state)"
-Write-Output "GENERATION_ACTIVE_STATE=$($Handoff.active_state)"
-Write-Output "GENERATION_HANDOFF_COMPLETE=$($Handoff.handoff_complete)"
-Write-Output "GENERATION_SINGLETON_VERDICT=$($Handoff.singleton_verdict)"
-Write-Output "GENERATION_ORPHAN_COUNT=$($Handoff.orphan_generation_count)"
-Write-Output "GENERATION_DUPLICATE_MCP=$($Handoff.duplicate_mcp)"
-Write-Output "HEALTH=$HealthUrl"
-Write-Output "GL005_PROVEN=$($Health.gl005_proven)"
-Write-Output "NINTH_TOOL=$($Health.ninth_tool)"
-Write-Output "SECOND_GATEWAY=$($Health.second_gateway)"
-Write-Output "LAUNCH_SOURCE_SHA256=$($SourceFingerprint.fingerprint)"
-Write-Output "C5_GENERATION=$GenerationId"
-) { return $false }
-    if ([string]$Owner.canonical_head -ne $proofHead) { return $false }
-    $serviceGeneration = Get-RaiosC5GenerationId
-    if (-not $serviceGeneration -or [string]$Owner.service_generation -ne $serviceGeneration) { return $false }
-
-    $info = Get-RaiosProcessInfo $CandidatePid
-    if ($null -eq $info) { return $false }
-    $started = Get-RaiosProcessStartUtc $CandidatePid $info
-    if (-not (Test-RaiosSameInstant $started ([string]$Owner.launcher_creation_time))) { return $false }
-
-    $expectedCmd = [string]$Owner.launcher_command_line
-    $liveCmd = [string]$info.CommandLine
-    if ([string]::IsNullOrWhiteSpace($liveCmd)) {
-        if ([string]$info.Name -notmatch '(?i)^python(w)?\.exe$') { return $false }
-        if ($expectedCmd -notmatch 'raios_mcp[\\/]server\.py') { return $false }
-    } elseif ($liveCmd.Trim() -ne $expectedCmd.Trim()) {
-        return $false
-    }
-
-    $listeners = @(Get-RaiosListenPids $Port)
-    if ($listeners -contains $CandidatePid) { return $false }
-    return $true
-}
-
-function New-RaiosCandidateResolution(
-    [string]$State,
-    [string]$Relationship,
-    [bool]$RetirementAttempted = $false,
-    [bool]$RetirementProven = $false,
-    [string]$RetirementReason = $null,
-    [bool]$ActiveReverified = $false,
-    [bool]$HandoffSafe = $false
-) {
-    return [pscustomobject][ordered]@{
-        state = $State
-        relationship = $Relationship
-        retirement_attempted = $RetirementAttempted
-        retirement_proven = $RetirementProven
-        retirement_reason = $RetirementReason
-        active_reverified = $ActiveReverified
-        handoff_safe = $HandoffSafe
-    }
-}
-
-function Resolve-RaiosCandidateLifecycle([int]$CandidatePid,[int]$ActivePid) {
-    if ($CandidatePid -le 4) {
-        return New-RaiosCandidateResolution -State 'NONE' -Relationship 'NONE' -HandoffSafe $true
-    }
-    if ($CandidatePid -eq $ActivePid) {
-        return New-RaiosCandidateResolution -State 'ACTIVE' -Relationship 'ACTIVE_LISTENER' -ActiveReverified $true -HandoffSafe $true
-    }
-    if (-not (Test-RaiosPidAlive $CandidatePid)) {
-        return New-RaiosCandidateResolution -State 'SUPERSEDED' -Relationship 'EXITED' -RetirementProven $true -RetirementReason 'PROCESS_EXITED' -ActiveReverified $true -HandoffSafe $true
-    }
-
-    $lineage = Get-RaiosParentLineageProof $ActivePid
-    if (@($lineage.pids) -contains $CandidatePid) {
-        return New-RaiosCandidateResolution -State 'ACTIVE_LINEAGE_PARENT' -Relationship 'ACTIVE_LINEAGE_PARENT' -RetirementProven $true -RetirementReason 'REQUIRED_ACTIVE_LINEAGE' -ActiveReverified $true -HandoffSafe $true
-    }
-
-    # Ownership proof is stronger than ancestry completeness for a process that
-    # this ensure generation itself launched, recorded, and no longer owns the
-    # listening socket. Do not leave a proven owned non-listener orphan merely
-    # because Windows process ancestry is partially unreadable.
-    $owner = Read-RaiosOwnerManifest
-    $ownedCandidate = [bool](Test-RaiosOwnedLaunchCandidate $owner $CandidatePid $ActivePid)
-    if (-not $ownedCandidate) {
-        if (-not [bool]$lineage.complete) {
-            return New-RaiosCandidateResolution -State 'ORPHAN' -Relationship 'LINEAGE_AND_OWNERSHIP_UNPROVEN' -RetirementReason 'FAIL_CLOSED_LINEAGE_AND_OWNERSHIP_UNPROVEN'
-        }
-        return New-RaiosCandidateResolution -State 'ORPHAN' -Relationship 'UNPROVEN_PROCESS' -RetirementReason 'OWNERSHIP_NOT_PROVEN'
-    }
-
-    $activeInfoBefore = Get-RaiosProcessInfo $ActivePid
-    $listenersBefore = @(Get-RaiosListenPids $Port)
-    $healthBefore = Get-RaiosMcpHealth $HealthUrl 2
-    $activeProofBefore = [bool](
-        $activeInfoBefore -and
-        $listenersBefore.Count -eq 1 -and
-        [int]$listenersBefore[0] -eq $ActivePid -and
-        (Test-RaiosLaunchIdentity $activeInfoBefore $ActivePid $Port) -and
-        (Test-RaiosMcpHealthy $healthBefore)
-    )
-    if (-not $activeProofBefore) {
-        return New-RaiosCandidateResolution -State 'ORPHAN' -Relationship 'OWNED_NON_LISTENER_ACTIVE_PROOF_FAILED' -RetirementReason 'ACTIVE_LISTENER_PROOF_FAILED_BEFORE_RETIREMENT'
-    }
-
-    $event = [ordered]@{
-        schema = 'raios.mcp-generation-retirement.v2'
-        observed_at = [DateTimeOffset]::UtcNow.ToString('o')
-        authority = 'RAIOS-C5-SCM'
-        canonical_head = [string]$env:RAIOS_CANONICAL_HEAD
-        candidate_pid = $CandidatePid
-        active_pid = $ActivePid
-        lineage_complete = [bool]$lineage.complete
-        ownership_proven = $true
-        active_proven_before = $true
-        action = 'RETIRE_PROVEN_OWNED_NON_LISTENER_CANDIDATE'
-        result = 'STARTED'
-    }
-    try {
-        Stop-Process -Id $CandidatePid -Force -ErrorAction Stop
-        for ($i = 0; $i -lt 40; $i++) {
-            Start-Sleep -Milliseconds 250
-            if (-not (Test-RaiosPidAlive $CandidatePid)) { break }
-        }
-        if (Test-RaiosPidAlive $CandidatePid) {
-            $event.result = 'FAILED_STILL_ALIVE'
-            Write-RaiosBoundedLifecycle -Value $event
-            return New-RaiosCandidateResolution -State 'ORPHAN' -Relationship 'OWNED_NON_LISTENER' -RetirementAttempted $true -RetirementReason 'RETIREMENT_FAILED_STILL_ALIVE'
-        }
-
-        $activeInfoAfter = Get-RaiosProcessInfo $ActivePid
-        $listenersAfter = @(Get-RaiosListenPids $Port)
-        $healthAfter = Get-RaiosMcpHealth $HealthUrl 2
-        $activeProofAfter = [bool](
-            $activeInfoAfter -and
-            $listenersAfter.Count -eq 1 -and
-            [int]$listenersAfter[0] -eq $ActivePid -and
-            (Test-RaiosLaunchIdentity $activeInfoAfter $ActivePid $Port) -and
-            (Test-RaiosMcpHealthy $healthAfter)
-        )
-        $event.active_proven_after = $activeProofAfter
-        if (-not $activeProofAfter) {
-            $event.result = 'RETIRED_ACTIVE_REVERIFY_FAILED'
-            Write-RaiosBoundedLifecycle -Value $event
-            return New-RaiosCandidateResolution -State 'RETIRED' -Relationship 'OWNED_NON_LISTENER_RETIRED_ACTIVE_UNVERIFIED' -RetirementAttempted $true -RetirementProven $true -RetirementReason 'AUTO_RETIRED_BUT_ACTIVE_REVERIFY_FAILED'
-        }
-
-        $event.result = 'RETIRED'
-        Write-RaiosBoundedLifecycle -Value $event
-        $relationship = $(if ([bool]$lineage.complete) {
-            'OWNED_NON_LISTENER_RETIRED'
-        } else {
-            'OWNED_NON_LISTENER_RETIRED_WITH_INCOMPLETE_LINEAGE'
-        })
-        return New-RaiosCandidateResolution -State 'RETIRED' -Relationship $relationship -RetirementAttempted $true -RetirementProven $true -RetirementReason 'AUTO_RETIRED_PROVEN_ORPHAN' -ActiveReverified $true -HandoffSafe $true
-    } catch {
-        $event.result = 'FAILED_EXCEPTION'
-        $event.error_type = $_.Exception.GetType().Name
-        Write-RaiosBoundedLifecycle -Value $event
-        return New-RaiosCandidateResolution -State 'ORPHAN' -Relationship 'OWNED_NON_LISTENER' -RetirementAttempted $true -RetirementReason 'RETIREMENT_EXCEPTION'
-    }
-}
-
-function Write-RaiosGenerationHandoff([int]$CandidatePid,[int]$ActivePid,[string]$Reason) {
-    $owner = Read-RaiosOwnerManifest
-    $priorProjection = $null
-    if (Test-Path -LiteralPath $LifecycleProjection) {
-        try { $priorProjection = Get-Content -LiteralPath $LifecycleProjection -Raw | ConvertFrom-Json } catch { $priorProjection = $null }
-    }
-    $preserveTransition = [bool](
-        $Reason -eq "STEADY_STATE_VERIFY" -and
-        $priorProjection -and
-        [string]$priorProjection.schema -eq "raios.mcp-generation-handoff.v1" -and
-        [string]$priorProjection.transition_reason -ne "STEADY_STATE_VERIFY"
-    )
-
-    $effectivePreviousPid = [int]$script:TransitionPreviousPid
-    $effectiveCandidatePid = $CandidatePid
-    $reportedReason = $Reason
-    $verificationReason = $null
-    $reportedPreviousGeneration = $script:TransitionPreviousGeneration
-    $reportedPreviousStartedAt = $script:TransitionPreviousStartedAt
-    $reportedCandidateGeneration = $(if ($owner -and $owner.generation_id) { [string]$owner.generation_id } else { $null })
-
-    if ($preserveTransition) {
-        $reportedReason = [string]$priorProjection.transition_reason
-        $verificationReason = "STEADY_STATE_VERIFY"
-        if ($priorProjection.previous_pid) { $effectivePreviousPid = [int]$priorProjection.previous_pid }
-        if ($priorProjection.candidate_pid) { $effectiveCandidatePid = [int]$priorProjection.candidate_pid }
-        $reportedPreviousGeneration = $priorProjection.previous_generation_id
-        $reportedPreviousStartedAt = $priorProjection.previous_started_at
-        $reportedCandidateGeneration = $priorProjection.candidate_generation_id
-    }
-
-    $previousAlive = Test-RaiosPidAlive $effectivePreviousPid
-    $activeAlive = Test-RaiosPidAlive $ActivePid
-    $candidateResolution = Resolve-RaiosCandidateLifecycle -CandidatePid $effectiveCandidatePid -ActivePid $ActivePid
-    $candidateState = [string]$candidateResolution.state
-    $previousState = $(if ($effectivePreviousPid -le 4) { "NONE" } elseif ($effectivePreviousPid -eq $ActivePid) { "ACTIVE" } elseif ($previousAlive) { "ORPHAN" } else { "RETIRED" })
-    $activeState = $(if ($activeAlive) { "ACTIVE" } else { "MISSING" })
-
-    $listeners = @(Get-RaiosListenPids $Port)
-    $orphanPids = New-Object System.Collections.Generic.List[int]
-    if ($previousState -eq 'ORPHAN') { [void]$orphanPids.Add($effectivePreviousPid) }
-    if ($candidateState -eq 'ORPHAN' -and -not $orphanPids.Contains($effectiveCandidatePid)) { [void]$orphanPids.Add($effectiveCandidatePid) }
-
-    $ownerHead = $(if ($owner -and $owner.canonical_head) { [string]$owner.canonical_head } else { $null })
-    $ownerGeneration = $(if ($owner -and $owner.generation_id) { [string]$owner.generation_id } else { $null })
-    $ownerServiceGeneration = $(if ($owner -and $owner.service_generation) { [string]$owner.service_generation } else { $null })
-    $serviceGeneration = Get-RaiosC5GenerationId
-    $ownerHeadMatch = [bool]($ownerHead -and $ownerHead -eq [string]$env:RAIOS_CANONICAL_HEAD)
-    $serviceGenerationMatch = [bool]($ownerServiceGeneration -and $serviceGeneration -and $ownerServiceGeneration -eq $serviceGeneration)
-    $activeListenerMatch = [bool]($listeners.Count -eq 1 -and [int]$listeners[0] -eq $ActivePid)
-    $duplicateMcp = [bool]($listeners.Count -gt 1)
-    $candidateHandoffSafe = [bool]$candidateResolution.handoff_safe
-    $handoffComplete = [bool](
-        $activeAlive -and
-        $activeListenerMatch -and
-        -not $duplicateMcp -and
-        $orphanPids.Count -eq 0 -and
-        $candidateHandoffSafe -and
-        $ownerHeadMatch -and
-        $serviceGenerationMatch
-    )
-
-    $doc = [ordered]@{
-        schema = "raios.mcp-generation-handoff.v1"
-        observed_at = [DateTimeOffset]::UtcNow.ToString("o")
-        authority = "RAIOS-C5-SCM"
-        canonical_head = [string]$env:RAIOS_CANONICAL_HEAD
-        port = $Port
-        transition_reason = $reportedReason
-        verification_reason = $verificationReason
-        previous_pid = $(if ($effectivePreviousPid -gt 4) { $effectivePreviousPid } else { $null })
-        previous_generation_id = $reportedPreviousGeneration
-        previous_started_at = $reportedPreviousStartedAt
-        previous_state = $previousState
-        candidate_pid = $(if ($effectiveCandidatePid -gt 4) { $effectiveCandidatePid } else { $null })
-        candidate_generation_id = $reportedCandidateGeneration
-        candidate_state = $candidateState
-        candidate_relationship = [string]$candidateResolution.relationship
-        candidate_retirement_attempted = [bool]$candidateResolution.retirement_attempted
-        candidate_retirement_proven = [bool]$candidateResolution.retirement_proven
-        candidate_retirement_reason = $candidateResolution.retirement_reason
-        candidate_active_reverified = [bool]$candidateResolution.active_reverified
-        candidate_handoff_safe = [bool]$candidateResolution.handoff_safe
-        repair_applied = [bool]$candidateResolution.retirement_attempted
-        active_pid = $ActivePid
-        active_generation_id = $ownerGeneration
-        active_state = $activeState
-        active_listener_count = $listeners.Count
-        active_listener_match = $activeListenerMatch
-        duplicate_mcp = $duplicateMcp
-        orphan_generation_count = $orphanPids.Count
-        orphan_pids = @($orphanPids)
-        owner_head_match = $ownerHeadMatch
-        service_generation = $serviceGeneration
-        service_generation_match = $serviceGenerationMatch
-        handoff_complete = $handoffComplete
-        singleton_verdict = $(if ($handoffComplete) { "PASS" } elseif ($duplicateMcp) { "FAIL_DUPLICATE_LISTENER" } elseif ($orphanPids.Count -gt 0) { "FAIL_ORPHAN_GENERATION" } else { "FAIL_INCOMPLETE_HANDOFF" })
-    }
-    Write-RaiosAtomicJson -Path $LifecycleProjection -Value $doc
-    Write-RaiosBoundedLifecycle -Value $doc
-    return [pscustomobject]$doc
-}
-
-function Stop-RaiosListenPid([int]$ProcId) {
-    if ($ProcId -le 4) { throw "Refusing unsafe listener PID $ProcId." }
-    Stop-Process -Id $ProcId -Force -ErrorAction Stop
-    for ($i = 0; $i -lt 40; $i++) {
-        Start-Sleep -Milliseconds 250
-        if (-not (Get-Process -Id $ProcId -ErrorAction SilentlyContinue)) { return }
-    }
-    throw "RAIOS_MCP_PROCESS_DID_NOT_STOP::$ProcId"
-}
-
-$Repo = (Resolve-Path (Join-Path $PSScriptRoot "..\..")).Path
-$PythonCandidates = @(
-    (Join-Path (Get-RaiosProfileRoot) ".raios\runtime\c5\.venv\Scripts\python.exe"),
-    (Join-Path $Repo ".venv\Scripts\python.exe")
-)
-$Python = $PythonCandidates | Where-Object { Test-Path $_ } | Select-Object -First 1
-$Server = Join-Path $Repo "scripts\ai-os\raios_mcp\server.py"
-$ReceiptDir = Join-Path $Repo ".ai-os\receipts\command-fabric"
-$OwnerDir = Join-Path (Get-RaiosProfileRoot) ".raios\runtime\mcp"
-$OwnerManifest = Join-Path $OwnerDir "universal-mcp-owner.json"
-$LifecycleProjection = Join-Path $OwnerDir "generation-handoff.json"
-$LifecycleLedger = Join-Path $OwnerDir "generation-lifecycle.jsonl"
-$script:TransitionPreviousPid = 0
-$script:TransitionPreviousGeneration = $null
-$script:TransitionPreviousStartedAt = $null
-$script:TransitionReason = "INITIAL_START"
-$HealthUrl = "http://127.0.0.1:$Port/health"
-
-if ($Port -ne 8788) { throw "MCP_CENSUS_PORT_IS_8788 refused port=$Port (no second gateway)" }
-if (-not (Test-Path $Python)) { throw "Missing Python: $Python" }
-if (-not (Test-Path $Server)) { throw "Missing MCP server: $Server" }
-New-Item -ItemType Directory -Force -Path $ReceiptDir | Out-Null
-
-$env:RAIOS_CANONICAL_HEAD = ""
-$GitDir = Join-Path $Repo ".git"
-$raw = (Get-Content -LiteralPath (Join-Path $GitDir "HEAD") -TotalCount 1 -ErrorAction Stop).Trim()
-if ($raw -match '^ref:\s*(refs/[A-Za-z0-9_./-]+)$') {
-    $ref = $Matches[1]
-    if (@($ref -split '/') -contains '..') { throw "INVALID_CANONICAL_REF" }
-    $refPath = Join-Path $GitDir ($ref -replace '/', '\')
-    if (Test-Path -LiteralPath $refPath) {
-        $env:RAIOS_CANONICAL_HEAD = (Get-Content -LiteralPath $refPath -TotalCount 1 -ErrorAction Stop).Trim()
-    } else {
-        foreach ($line in (Get-Content -LiteralPath (Join-Path $GitDir "packed-refs") -ErrorAction Stop)) {
-            if ($line -match '^([0-9a-fA-F]{40}) (.+)$' -and $Matches[2] -eq $ref) {
-                $env:RAIOS_CANONICAL_HEAD = $Matches[1]
-                break
-            }
-        }
-    }
-} elseif ($raw -match '^[0-9a-fA-F]{40}$') {
-    $env:RAIOS_CANONICAL_HEAD = $raw
-}
-if ($env:RAIOS_CANONICAL_HEAD -notmatch '^[0-9a-fA-F]{40}$') { throw "LIVE_CANONICAL_GIT_HEAD_REQUIRED" }
-
-$ListenPids = @(Get-RaiosListenPids $Port)
-if ($ListenPids.Count -gt 1) {
-    $ownership_proven = $false
-    throw "MCP_LIVE_BUT_UNOWNED port=$Port reason=REJECT_COMPETING_LISTENER"
-}
-$OwningPid = if ($ListenPids.Count -eq 1) { [int]$ListenPids[0] } else { $null }
-if ($OwningPid) {
-    $Info = Get-RaiosProcessInfo $OwningPid
-    $Health = Get-RaiosMcpHealth $HealthUrl 2
-    if ($null -eq $Info) { throw "MCP_LAUNCH_IDENTITY_UNREADABLE port=$Port pid=$OwningPid" }
-    if (-not (Test-RaiosLaunchIdentity $Info $OwningPid $Port)) {
-        if ($PromoteOwnedGeneration -and (Test-RaiosRecordedProcess $Info $OwningPid)) {
-            Write-Output "LOCAL_MCP_PROMOTE_OWNED port=$Port pid=$OwningPid reason=$script:RaiosIdentityReason"
-            Set-RaiosGenerationTransition -PreviousPid $OwningPid -Reason ([string]$script:RaiosIdentityReason)
-            Stop-RaiosListenPid $OwningPid
-        } else {
-            $ownership_proven = $false
-            throw "MCP_LIVE_BUT_UNOWNED port=$Port pid=$OwningPid reason=$script:RaiosIdentityReason"
-        }
-    } elseif (Test-RaiosMcpHealthy $Health) {
-        if (-not $Reload) {
-            Set-RaiosGenerationTransition -PreviousPid $OwningPid -Reason "STEADY_STATE_VERIFY"
-            $Steady = Write-RaiosGenerationHandoff -CandidatePid $OwningPid -ActivePid $OwningPid -Reason "STEADY_STATE_VERIFY"
-            Write-Output "LOCAL_MCP_ALREADY_HEALTHY port=$Port pid=$OwningPid tools=$($Health.tools.Count) head_source=$($Health.head_source)"
-            Write-Output "GENERATION_ACTIVE_PID=$($Steady.active_pid)"
-            Write-Output "GENERATION_HANDOFF_COMPLETE=$($Steady.handoff_complete)"
-            Write-Output "GENERATION_SINGLETON_VERDICT=$($Steady.singleton_verdict)"
-            Write-Output "GENERATION_ORPHAN_COUNT=$($Steady.orphan_generation_count)"
-            Write-Output "GENERATION_DUPLICATE_MCP=$($Steady.duplicate_mcp)"
-            exit 0
-        }
-        Write-Output "LOCAL_MCP_RELOAD port=$Port pid=$OwningPid"
-        Set-RaiosGenerationTransition -PreviousPid $OwningPid -Reason "RELOAD"
-        Stop-RaiosListenPid $OwningPid
-    } else {
-        $recordedContract = ""
-        $ownerNow = Read-RaiosOwnerManifest
-        if ($ownerNow -and $ownerNow.tool_contract_sha256) { $recordedContract = [string]$ownerNow.tool_contract_sha256 }
-        if ($PromoteOwnedGeneration -and (Test-RaiosRecordedProcess $Info $OwningPid)) {
-            Write-Output "LOCAL_MCP_PROMOTE_OWNED port=$Port pid=$OwningPid reason=CONTRACT_DRIFT"
-            Set-RaiosGenerationTransition -PreviousPid $OwningPid -Reason "CONTRACT_DRIFT"
-            Stop-RaiosListenPid $OwningPid
-        } elseif ($recordedContract -ne (Get-RaiosToolContractSha)) {
-            $ownership_proven = $false
-            throw "MCP_LIVE_BUT_UNOWNED port=$Port pid=$OwningPid reason=CONTRACT_DRIFT"
-        } elseif ($NoRecover) {
-            throw "Existing local MCP listener is unhealthy."
-        } else {
-            Write-Output "LOCAL_MCP_RECOVER_HUNG port=$Port pid=$OwningPid"
-            Set-RaiosGenerationTransition -PreviousPid $OwningPid -Reason "RECOVER_HUNG"
-            Stop-RaiosListenPid $OwningPid
-        }
-    }
-}
-
-$Shadow = Get-RaiosListenPid 8787
-if ($Shadow) {
-    $ShadowInfo = Get-RaiosProcessInfo $Shadow
-    if (Test-RaiosLaunchIdentity $ShadowInfo $Shadow 8787) {
-        Write-Output "LOCAL_MCP_STOP_SHADOW port=8787 pid=$Shadow"
-        Stop-RaiosListenPid $Shadow
-    } else {
-        Write-Output "MCP_SHADOW_LISTENER_UNPROVEN port=8787 pid=$Shadow"
-    }
-}
-
-$GenerationId = Get-RaiosC5GenerationId
-if (-not $GenerationId) { throw "MCP_C5_GENERATION_UNREADABLE" }
-$SourceFingerprint = Get-RaiosLaunchSourceFingerprint
-if ($null -eq $SourceFingerprint) { throw "MCP_LAUNCH_SOURCE_MISSING" }
-
-$Stdout = Join-Path $ReceiptDir "LOCAL-MCP-$Port.stdout.log"
-$Stderr = Join-Path $ReceiptDir "LOCAL-MCP-$Port.stderr.log"
-$Arguments = @($Server, "--http", "--host", "127.0.0.1", "--port", "$Port")
-Set-RaiosLaunchEnvironment
-$Process = Start-Process -FilePath $Python -ArgumentList $Arguments -WorkingDirectory $Repo -RedirectStandardOutput $Stdout -RedirectStandardError $Stderr -WindowStyle Hidden -PassThru
-try {
-    $LaunchInfo = Get-RaiosProcessInfo $Process.Id
-    Write-RaiosLaunchIdentity -Process $Process -Info $LaunchInfo -Source $SourceFingerprint -GenerationId $GenerationId
-} catch {
-    if (-not $Process.HasExited) { Stop-RaiosListenPid $Process.Id }
-    throw
-}
-
-$Health = $null
-for ($i = 0; $i -lt 20; $i++) {
-    Start-Sleep -Milliseconds 400
-    if ($Process.HasExited) { break }
-    $Health = Get-RaiosMcpHealth $HealthUrl 2
-    if (Test-RaiosMcpHealthy $Health) { break }
-}
-if ($Process.HasExited -and -not (Test-RaiosMcpHealthy $Health)) {
-    Get-Content $Stderr -ErrorAction SilentlyContinue
-    throw "Local MCP failed to start."
-}
-if (-not (Test-RaiosMcpHealthy $Health)) {
-    if (-not $Process.HasExited) { Stop-RaiosListenPid $Process.Id }
-    throw "Local MCP health validation failed."
-}
-$StartedPids = @(Get-RaiosListenPids $Port)
-if ($StartedPids.Count -ne 1) {
-    if (-not $Process.HasExited) { Stop-RaiosListenPid $Process.Id }
-    $ownership_proven = $false
-    throw "MCP_GENERATION_REJECTED port=$Port reason=REJECT_COMPETING_LISTENER"
-}
-$LivePid = [int]$StartedPids[0]
-$LiveInfo = Get-RaiosProcessInfo $LivePid
-if (-not (Test-RaiosLaunchIdentity $LiveInfo $LivePid $Port)) {
-    if (-not $Process.HasExited -and [int]$Process.Id -ne $LivePid) { Stop-RaiosListenPid $Process.Id }
-    $ownership_proven = $false
-    throw "MCP_GENERATION_REJECTED port=$Port pid=$LivePid reason=$script:RaiosIdentityReason"
-}
-Write-RaiosListenerBinding -Info $LiveInfo -ProcId $LivePid
-$Handoff = Write-RaiosGenerationHandoff -CandidatePid ([int]$Process.Id) -ActivePid $LivePid -Reason ([string]$script:TransitionReason)
-
-Write-Output "LOCAL_MCP_STARTED port=$Port pid=$($Process.Id) tools=$($Health.tools.Count) head_source=$($Health.head_source)"
-Write-Output "GENERATION_PREVIOUS_PID=$($Handoff.previous_pid)"
-Write-Output "GENERATION_CANDIDATE_PID=$($Handoff.candidate_pid)"
-Write-Output "GENERATION_ACTIVE_PID=$($Handoff.active_pid)"
-Write-Output "GENERATION_PREVIOUS_STATE=$($Handoff.previous_state)"
-Write-Output "GENERATION_CANDIDATE_STATE=$($Handoff.candidate_state)"
-Write-Output "GENERATION_ACTIVE_STATE=$($Handoff.active_state)"
-Write-Output "GENERATION_HANDOFF_COMPLETE=$($Handoff.handoff_complete)"
-Write-Output "GENERATION_SINGLETON_VERDICT=$($Handoff.singleton_verdict)"
-Write-Output "GENERATION_ORPHAN_COUNT=$($Handoff.orphan_generation_count)"
+Write-Output "GENERATION_CANDIDATE_ACTIVE_REVERIFIED=$($Handoff.candidate_active_reverified)"
+Write-Output "GENERATION_CANDIDATE_HANDOFF_SAFE=$($Handoff.candidate_handoff_safe)"
 Write-Output "GENERATION_DUPLICATE_MCP=$($Handoff.duplicate_mcp)"
 Write-Output "HEALTH=$HealthUrl"
 Write-Output "GL005_PROVEN=$($Health.gl005_proven)"
