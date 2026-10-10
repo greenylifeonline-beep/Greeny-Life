@@ -136,8 +136,10 @@ def test_ensure_writes_bounded_generation_lifecycle_and_steady_state():
     assert '$preserveTransition' in text
     assert 'verification_reason = $verificationReason' in text
     assert '$priorProjection.transition_reason' in text
+    assert 'function New-RaiosCandidateResolution' in text
     assert 'function Resolve-RaiosCandidateLifecycle' in text
     assert 'function Test-RaiosOwnedLaunchCandidate' in text
+    assert '$base + @{' not in text
     assert 'function Get-RaiosParentLineageProof' in text
     assert "ACTIVE_LINEAGE_PARENT" in text
     assert "AUTO_RETIRED_PROVEN_ORPHAN" in text
