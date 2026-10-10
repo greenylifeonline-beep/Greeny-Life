@@ -164,6 +164,33 @@ function Get-RaiosC5AuthorizedOverlay([string]$CanonicalRepo,[string]$CanonicalH
  }catch{return $null}
 }
 
+function Test-RaiosUniversalMcpHealth($Health,[string]$ExpectedHead='') {
+ try {
+  if($null -eq $Health){return $false}
+  $required=@(
+   'get_head','read_board','read_inbox','read_receipt','get_diff',
+   'post_opinion','send_packet','ack_packet','execute_scoped_task'
+  )
+  if($Health.ok -ne $true){return $false}
+  if($Health.PSObject.Properties.Name -notcontains 'tool_count'){return $false}
+  if([int]$Health.tool_count -ne 9){return $false}
+  if($Health.PSObject.Properties.Name -notcontains 'tools'){return $false}
+  $tools=@($Health.tools)
+  if($tools.Count -ne 9){return $false}
+  foreach($name in $required){if($tools -notcontains $name){return $false}}
+  if($Health.PSObject.Properties.Name -notcontains 'execute_scoped_task' -or $Health.execute_scoped_task -ne $true){return $false}
+  if($Health.PSObject.Properties.Name -notcontains 'second_gateway' -or $Health.second_gateway -ne $false){return $false}
+  if($Health.PSObject.Properties.Name -notcontains 'duplicate_mcp' -or $Health.duplicate_mcp -ne $false){return $false}
+  if($Health.PSObject.Properties.Name -notcontains 'raw_shell' -or $Health.raw_shell -ne $false){return $false}
+  if($Health.PSObject.Properties.Name -contains 'service' -and [string]$Health.service -ne 'raios-universal-mcp'){return $false}
+  if($ExpectedHead){
+   if($Health.PSObject.Properties.Name -notcontains 'head' -or [string]$Health.head -ne $ExpectedHead){return $false}
+   if($Health.PSObject.Properties.Name -notcontains 'head_source' -or [string]$Health.head_source -ne 'git-file'){return $false}
+  }
+  return $true
+ }catch{return $false}
+}
+
 function Test-RaiosC5RecoveryGatewayReady($Health,[string]$ExpectedHead) {
  # Recovery admission is separate from deployment certification; final gates stay strict.
  return [bool]($Health -and $ExpectedHead -and
@@ -1007,7 +1034,7 @@ try {
 
     # Universal MCP is part of the same canonical continuity fabric; never create a second watchdog.
     $mcp = Get-JsonHealth "http://127.0.0.1:8788/health" 4
-    $mcpReady = [bool]($mcp -and $mcp.ok -eq $true -and $mcp.tool_count -eq 8 -and $mcp.second_gateway -eq $false -and [string]$mcp.head -eq $Head -and [string]$mcp.head_source -eq "git-file")
+    $mcpReady = [bool](Test-RaiosUniversalMcpHealth $mcp $Head)
     if (-not $mcpReady) {
         $mcpRecoveryStatePath = Join-Path $RuntimeRoot "mcp-recovery.json"
         $mcpRecoveryCooldownSeconds = 900
@@ -1036,7 +1063,7 @@ try {
                 $r = Invoke-BoundedRecovery "MCP_REPAIR" $mcpEnsure @("-Port","8788") 120; if (-not $r.ok) { throw ("MCP_BOUNDED_RECOVERY_FAILED timeout=" + $r.timed_out + " exit=" + $r.exit_code) }
                 $actions.Add("ENSURE_EXISTING_UNIVERSAL_MCP")
                 $mcp = Get-JsonHealth "http://127.0.0.1:8788/health" 4
-                $mcpReady = [bool]($mcp -and $mcp.ok -eq $true -and $mcp.tool_count -eq 8 -and $mcp.second_gateway -eq $false -and [string]$mcp.head -eq $Head -and [string]$mcp.head_source -eq "git-file")
+                $mcpReady = [bool](Test-RaiosUniversalMcpHealth $mcp $Head)
                 $mcpOutcome = if ($mcpReady) { "HEALTHY" } else { "DEPLOY_RETURNED_UNHEALTHY" }
                 Write-JsonFileAtomic $mcpRecoveryStatePath @{
                     schema = "raios.mcp-recovery-state.v1"
@@ -1066,7 +1093,7 @@ try {
 
     function Test-NativeMcpTunnelReady {
         $mcpHealth = Get-JsonHealth "http://127.0.0.1:8788/health" 3
-        if (-not ($mcpHealth -and $mcpHealth.ok -eq $true -and $mcpHealth.tool_count -eq 8 -and $mcpHealth.second_gateway -eq $false)) { return $false }
+        if (-not (Test-RaiosUniversalMcpHealth $mcpHealth $Head)) { return $false }
 
         $healthFile = Join-Path $StableUserProfile ".local\state\tunnel-client\health\raios-native.url"
         if (-not (Test-Path -LiteralPath $healthFile)) { return $false }
