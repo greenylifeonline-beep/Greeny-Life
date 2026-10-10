@@ -1,0 +1,69 @@
+from pathlib import Path
+import re
+
+ROOT = Path(__file__).resolve().parents[2]
+DEPLOY = ROOT / "scripts/runtime/Deploy-RAIOS-C5-Service.ps1"
+SERVICE = ROOT / "scripts/runtime/RAIOS.C5.ServiceHost.cs"
+
+
+def deploy_text() -> str:
+    return DEPLOY.read_text(encoding="utf-8")
+
+
+def service_text() -> str:
+    return SERVICE.read_text(encoding="utf-8")
+
+
+def test_c5_deployer_uses_nine_tool_contract():
+    text = deploy_text()
+    assert "tool_count -eq 9" in text
+    assert "execute_scoped_task -eq $true" in text
+    assert "tool_count -eq 8" not in text
+
+
+def test_c5_service_allows_governed_scm_stop():
+    text = service_text()
+    assert "CanStop = true;" in text
+    assert "CanStop = false;" not in text
+
+
+def test_c5_deploy_receipt_path_does_not_collide_with_receipt_object():
+    text = deploy_text()
+    assert "$ReceiptPath=Join-Path $Root 'service-deploy-receipt.json'" in text
+    assert "$receipt=[ordered]@{" in text
+    assert "$tmp=$ReceiptPath+'.tmp-'" in text
+    assert "Move-Item -LiteralPath $tmp -Destination $ReceiptPath -Force" in text
+
+    # PowerShell variable names are case-insensitive. Regressing to $Receipt
+    # for the path would alias $receipt and recreate AddHashTableToNonHashTable.
+    assert not re.search(
+        r"(?im)^\s*\$Receipt\s*=\s*Join-Path\s+\$Root\s+'service-deploy-receipt\.json'",
+        text,
+    )
+
+
+def test_c5_bootstrap_stop_is_owned_and_bounded():
+    text = deploy_text()
+    assert "function Stop-RaiosC5ForDeploy" in text
+    assert "C5_BOOTSTRAP_STOP_PID_MISMATCH" in text
+    assert "C5_BOOTSTRAP_STOP_IMAGE_MISMATCH" in text
+    assert "Write-MaintenanceIntent -Reason 'CANSTOP_FALSE_BOOTSTRAP_CUTOVER'" in text
+    assert 'taskkill.exe" /PID $ExpectedPid /T /F' in text
+    assert "BOOTSTRAP_NONSTOPPABLE_SERVICE_STOPPED" in text
+
+
+def test_c5_deployer_preserves_exact_failure_diagnostics():
+    text = deploy_text()
+    assert "$FailurePath=Join-Path $Root 'service-deploy-failure.json'" in text
+    assert "script_stack_trace=$failureStack" in text
+    assert "invocation_position=$failurePosition" in text
+    assert "fully_qualified_error_id=$failureId" in text
+    assert "failed_phase=$failurePhase" in text
+
+
+def test_c5_phase_writer_accepts_ordered_diagnostics():
+    text = deploy_text()
+    assert (
+        "function Write-DeployPhase([string]$Name,[System.Collections.IDictionary]$Extra=$null)"
+        in text
+    )
