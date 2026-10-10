@@ -37,6 +37,8 @@ def _projection(profile: Path, *, active_pid: int = 111) -> Path:
                 "candidate_retirement_attempted": False,
                 "candidate_retirement_proven": True,
                 "candidate_retirement_reason": "PROCESS_EXITED",
+                "candidate_active_reverified": True,
+                "candidate_handoff_safe": True,
                 "repair_applied": False,
                 "active_pid": active_pid,
                 "active_generation_id": "active",
@@ -73,6 +75,8 @@ def test_generation_handoff_explains_lineage_without_pid_guessing(tmp_path):
     assert view["candidate_retirement_attempted"] is False
     assert view["candidate_retirement_proven"] is True
     assert view["candidate_retirement_reason"] == "PROCESS_EXITED"
+    assert view["candidate_active_reverified"] is True
+    assert view["candidate_handoff_safe"] is True
     assert view["repair_applied"] is False
     assert view["active_pid"] == 111
     assert view["active_state"] == "ACTIVE"
@@ -187,6 +191,8 @@ def test_get_head_and_health_expose_same_generation_verdict():
     assert '"candidate_retirement_attempted": candidate_retirement_attempted' in gateway
     assert '"candidate_retirement_proven": candidate_retirement_proven' in gateway
     assert '"candidate_retirement_reason": candidate_retirement_reason' in gateway
+    assert '"candidate_active_reverified": candidate_active_reverified' in gateway
+    assert '"candidate_handoff_safe": candidate_handoff_safe' in gateway
     assert '"repair_applied": repair_applied' in gateway
     assert '"duplicate_mcp": bool(generation_handoff.get("duplicate_mcp") is True)' in gateway
     assert '"generation_duplicate_mcp": bool(generation_handoff.get("duplicate_mcp") is True)' in gateway
@@ -201,6 +207,8 @@ def test_get_head_and_health_expose_same_generation_verdict():
     assert '"generation_candidate_retirement_attempted": generation_handoff.get("candidate_retirement_attempted", False)' in server
     assert '"generation_candidate_retirement_proven": generation_handoff.get("candidate_retirement_proven", False)' in server
     assert '"generation_candidate_retirement_reason": generation_handoff.get("candidate_retirement_reason")' in server
+    assert '"generation_candidate_active_reverified": generation_handoff.get("candidate_active_reverified", False)' in server
+    assert '"generation_candidate_handoff_safe": generation_handoff.get("candidate_handoff_safe", False)' in server
     assert '"generation_repair_applied": generation_handoff.get("repair_applied", False)' in server
     assert '"duplicate_mcp": bool(generation_handoff.get("duplicate_mcp") is True)' in server
     assert '"generation_duplicate_mcp": bool(generation_handoff.get("duplicate_mcp") is True)' in server
