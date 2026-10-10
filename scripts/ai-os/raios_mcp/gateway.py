@@ -454,14 +454,20 @@ class Gateway:
             expiry = row.get("expires_at")
             grace_until = row.get("grace_until")
 
-            if expiry and parse_dt(str(expiry)) <= now:
-                continue
+            try:
+                if expiry and parse_dt(str(expiry)) <= now:
+                    continue
 
-            if (
-                status == "GRACE"
-                and grace_until
-                and parse_dt(str(grace_until)) <= now
-            ):
+                if (
+                    status == "GRACE"
+                    and grace_until
+                    and parse_dt(str(grace_until)) <= now
+                ):
+                    continue
+            except (TypeError, ValueError):
+                # One malformed historical binding must not crash every
+                # external connector request. Fail this row closed and allow
+                # normal rebind lifecycle to recover the presented identity.
                 continue
 
             connector_id = str(row.get("connector_id") or "")
